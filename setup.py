@@ -18,7 +18,10 @@ setup(
         "enthought.traits",
     ],
     extras_require = {
-        'tvtk': ['enthought.tvtk'],
+        'tvtk': [
+            'enthought.tvtk',
+            'enthought.persistence',
+        ],
     },
     namespace_packages = [
         "enthought",
