@@ -1942,7 +1942,13 @@ class DockGroup ( DockItem ):
     #---------------------------------------------------------------------------
 
     def _get_style ( self ):
-        return self.contents[0].style
+        # Make sure there is at least one item in the group:
+        if len( self.contents ) > 0:
+            # Return the first item's style:
+            return self.contents[0].style
+        
+        # Otherwise, return a default style for an empty group:
+        return 'horizontal'
 
     #---------------------------------------------------------------------------
     #  Implementation of the 'resizable' property:
