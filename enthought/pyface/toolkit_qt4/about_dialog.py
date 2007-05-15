@@ -25,7 +25,6 @@ DIALOG_TEXT = '''
 
       <p>
       %s<br>
-      Enthought Library  -  Build #%s<br>
       <br>
       Python %s<br>
       PyQt %s<br>
@@ -48,7 +47,7 @@ class AboutDialog_qt4(object):
     # 'AboutDialog' toolkit interface.
     ###########################################################################
 
-    def _tk_aboutdialog_create_contents(self, parent, version, py_version):
+    def _tk_aboutdialog_create_contents(self, parent, py_version):
         """ Creates the dialog contents. """
 
         label = QtGui.QLabel()
@@ -73,7 +72,7 @@ class AboutDialog_qt4(object):
         qt_version = QtCore.QT_VERSION_STR
 
         # Set the page contents.
-        label.setText(DIALOG_TEXT % (path, additions, version, py_version, pyqt_version, qt_version))
+        label.setText(DIALOG_TEXT % (path, additions, py_version, pyqt_version, qt_version))
 
         # Create the button.
         buttons = QtGui.QDialogButtonBox()

@@ -18,7 +18,6 @@
 import sys
 
 # Enthought library imports.
-from enthought.version import version
 from enthought.traits.api import Instance, List, String
 
 # Local imports.
@@ -51,13 +50,13 @@ class AboutDialog(Dialog):
         # ...this may be needed in the future though
         py_version = sys.version[0:sys.version.find("(")]
 
-        return self._tk_aboutdialog_create_contents(parent, version, py_version)
+        return self._tk_aboutdialog_create_contents(parent, py_version)
 
     ###########################################################################
     # 'AboutDialog' toolkit interface.
     ###########################################################################
 
-    def _tk_aboutdialog_create_contents(self, parent, version, py_version):
+    def _tk_aboutdialog_create_contents(self, parent, py_version):
         """ Creates the dialog contents.
         
         This must be reimplemented.

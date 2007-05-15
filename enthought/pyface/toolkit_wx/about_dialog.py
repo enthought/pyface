@@ -33,7 +33,6 @@ DIALOG_TEXT = '''
 
       <p>
       %s<br>
-      Enthought Library  -  Build #%s<br>
       <br>
       Python %s<br>
       wxPython %s<br>
@@ -61,7 +60,7 @@ class AboutDialog_wx(object):
     # 'AboutDialog' toolkit interface.
     ###########################################################################
 
-    def _tk_aboutdialog_create_contents(self, parent, version, py_version):
+    def _tk_aboutdialog_create_contents(self, parent, py_version):
         """ Creates the dialog contents. """
 
         if parent.GetParent() is not None:
@@ -97,7 +96,7 @@ class AboutDialog_wx(object):
 
         # Set the page contents.
         html.SetPage(
-            DIALOG_TEXT % (path, additions, version, py_version, wx_version, ok)
+            DIALOG_TEXT % (path, additions, py_version, wx_version, ok)
         )
 
         # Make the 'OK' button the default button.
