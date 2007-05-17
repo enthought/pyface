@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView
-from enthought.traits.api import Instance, on_extended_trait_change
+from enthought.traits.api import Delegate, Instance, on_trait_change
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -14,6 +14,12 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
     #### 'Action' interface ###################################################
 
+    # The action's unique identifier (may be None).
+    id = Delegate('view')
+
+    # The action's name (displayed on menus/tool bar tools etc).
+    name = Delegate('view')
+    
     # The action's style.
     style = 'toggle'
 
@@ -25,20 +31,6 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
-
-    #### Trait initializers ###################################################
-
-    def _id_default(self):
-        """ Trait initializer. """
-
-        return self.view.id
-
-    def _name_default(self):
-        """ Trait initializer. """
-
-        return self.view.name
-
-    #### Methods ##############################################################
 
     def perform(self, event):
         """ Perform the action. """
@@ -68,8 +60,8 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
     #### Trait change handlers ################################################
 
-    @on_extended_trait_change('view.visible')
-    def when_visible_changed_for_view(self, new):
+    @on_trait_change('view.visible')
+    def _when_visible_changed_for_view(self, new):
         """ Dynamic trait change handler. """
 
         self.checked = new

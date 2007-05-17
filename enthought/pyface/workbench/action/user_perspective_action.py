@@ -10,7 +10,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import on_extended_trait_change
+from enthought.traits.api import on_trait_change
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -42,8 +42,8 @@ class UserPerspectiveAction(WorkbenchAction):
 
     #### Trait change handlers ################################################
     
-    @on_extended_trait_change('window.active_perspective')
-    def when_window_active_perspective_changed(self, new):
+    @on_trait_change('window.active_perspective')
+    def _when_active_perspective_changed_for_window(self, new):
         """ Dynamic trait change handler. """
 
         self.enabled = self._is_user_perspective(new)

@@ -4,7 +4,7 @@
 # Enthought library imports.
 from enthought.pyface.action.api import Group, MenuManager
 from enthought.traits.api import Any, Bool, Instance, List
-from enthought.traits.api import on_extended_trait_change
+from enthought.traits.api import on_trait_change
 
 # Local imports.
 from perspective_menu_manager import PerspectiveMenuManager
@@ -89,7 +89,7 @@ class ViewMenuManager(MenuManager):
 
     #### Trait change handlers ################################################
 
-    @on_extended_trait_change('window.active_perspective')
+    @on_trait_change('window.active_perspective')
     def when_window_active_perspective_changed(self, new):
         """ Static trait change handler. """
 

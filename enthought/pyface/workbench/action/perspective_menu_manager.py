@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.action.api import Group, MenuManager
-from enthought.traits.api import Instance, List, on_extended_trait_change
+from enthought.traits.api import Instance, List, on_trait_change
 
 # Local imports.
 from delete_user_perspective_action import DeleteUserPerspectiveAction
@@ -52,6 +52,33 @@ class PerspectiveMenuManager(MenuManager):
         ]
 
         return groups
+
+    ###########################################################################
+    # 'PerspectiveMenuManager' interface.
+    ###########################################################################
+
+    @on_trait_change('window.perspectives')
+    @on_trait_change('window.perspectives_items')
+    def rebuild(self):
+        """ Rebuild the menu.
+
+        This is called when user perspectives have been added or removed.
+
+        """
+
+        # Clear out the old menu. This gives any actions that have trait
+        # listeners (i.e. the rename and delete actions!) a chance to unhook
+        # them.
+        self.destroy()
+
+        # Resetting the trait allows the initializer to run again (which will
+        # happen just as soon as we fire the 'changed' event).
+        self.reset_traits(['groups'])
+
+        # Let the associated menu know that we have changed.
+        self.changed = True
+
+        return
     
     ###########################################################################
     # Private interface.
@@ -89,43 +116,43 @@ class PerspectiveMenuManager(MenuManager):
 
         return group
 
-    def _rebuild(self):
-        """ Rebuild the menu.
+##     def _rebuild(self):
+##         """ Rebuild the menu.
 
-        This is called when user perspectives have been added or removed.
+##         This is called when user perspectives have been added or removed.
 
-        """
+##         """
 
-        # Clear out the old menu. This gives any actions that have trait
-        # listeners (i.e. the rename and delete actions!) a chance to unhook
-        # them.
-        self.destroy()
+##         # Clear out the old menu. This gives any actions that have trait
+##         # listeners (i.e. the rename and delete actions!) a chance to unhook
+##         # them.
+##         self.destroy()
 
-        # Resetting the trait allows the initializer to run again (which will
-        # happen just as soon as we fire the 'changed' event).
-        self.reset_traits(['groups'])
+##         # Resetting the trait allows the initializer to run again (which will
+##         # happen just as soon as we fire the 'changed' event).
+##         self.reset_traits(['groups'])
 
-        # Let the associated menu know that we have changed.
-        self.changed = True
+##         # Let the associated menu know that we have changed.
+##         self.changed = True
 
-        return
+##         return
         
-    #### Trait change handlers ################################################
+##     #### Trait change handlers ################################################
 
-    @on_extended_trait_change('window.perspectives')
-    def when_window_perspectives_changed(self, new):
-        """ Dynamic trait change handler. """
+##     @on_trait_change('window.perspectives')
+##     def _when_perspectives_changed_for_window(self, new):
+##         """ Dynamic trait change handler. """
 
-        self._rebuild()
+##         self._rebuild()
         
-        return
+##         return
 
-    @on_extended_trait_change('window.perspectives_items')
-    def when_window_perspectives_items_changed(self, event):
-        """ Dynamic trait change handler. """
+##     @on_trait_change('window.perspectives_items')
+##     def _when_perspectives_items_changed_for_window(self, event):
+##         """ Dynamic trait change handler. """
 
-        self._rebuild()
+##         self._rebuild()
         
-        return
+##         return
     
 #### EOF ######################################################################
