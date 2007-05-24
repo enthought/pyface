@@ -54,6 +54,9 @@ class Editor(HasTraits):
     # The current selection within the editor.
     selection = List
 
+    # The optional undo stack.
+    undo_stack = Instance('enthought.undo.api.IUndoStack')
+
     # The workbench window that the editor is in.
     #
     # The framework sets this when the editor is created.
@@ -120,6 +123,16 @@ class Editor(HasTraits):
             self._tk_editor_set_focus()
 
         return
+
+    #### Initializers #########################################################
+
+    def _undo_stack_default(self):
+        """ Trait initializer. """
+
+        # We make sure the undo package is entirely optional.
+        from enthought.undo.api import UndoStack
+
+        return UndoStack(undo_manager=self.window.workbench.undo_manager)
 
     ###########################################################################
     # 'Editor' toolkit interface.

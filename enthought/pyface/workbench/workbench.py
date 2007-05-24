@@ -42,6 +42,9 @@ class Workbench(HasTraits):
     # will. This is used to persist window layout information, etc.
     state_location = Str
 
+    # The optional undo manager.
+    undo_manager = Instance('enthought.undo.api.IUndoManager')
+
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
 
@@ -197,6 +200,14 @@ class Workbench(HasTraits):
 
     #### Initializers #########################################################
 
+    def _undo_manager_default(self):
+        """ Trait initializer. """
+
+        # We make sure the undo package is entirely optional.
+        from enthought.undo.api import UndoManager
+
+        return UndoManager()
+    
     def _user_perspective_manager_default(self):
         """ Trait initializer. """
 

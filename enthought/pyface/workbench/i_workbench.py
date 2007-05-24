@@ -23,6 +23,9 @@ class IWorkbench(Interface):
     # will. This is used to persist window layout information, etc.
     state_location = Str
 
+    # The optional undo manager.
+    undo_manager = Instance('enthought.undo.api.IUndoManager')
+
     # The user defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
 

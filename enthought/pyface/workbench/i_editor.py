@@ -34,6 +34,9 @@ class IEditor(Interface):
     # The current selection within the editor.
     selection = List
 
+    # The optional undo stack.
+    undo_stack = Instance('enthought.undo.api.IUndoStack')
+
     # The workbench window that the editor is in.
     #
     # The framework sets this when the editor is created.
