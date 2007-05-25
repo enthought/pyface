@@ -53,10 +53,13 @@ class WorkbenchWindowLayout_qt4(object):
         """ Adds an editor. """
 
         # Create the editor control if it hasn't already been done.
+        # ZZZ: We need to handle editor_closing and editor_closed as well.
         if editor.control is None:
             self.editor_opening = editor
             editor.control = editor.create_control(None)
             self.editor_opened = editor
+
+        self._qt4_monitor_focus(editor.control)
 
         self.window.control.centralWidget().addTab(editor.control, title)
 
@@ -65,6 +68,8 @@ class WorkbenchWindowLayout_qt4(object):
 
         dw = self._qt4_create_view_dock_widget(view)
         mw = self.window.control
+
+        self._qt4_monitor_focus(view.control)
 
         try:
             rel_dw = relative_to._qt4_dock
@@ -320,3 +325,45 @@ class WorkbenchWindowLayout_qt4(object):
 
         control.show()
         self.window.control.centralWidget().setCurrentWidget(control)
+
+    def _qt4_monitor_focus(self, control):
+        """ Install an event filter for a view or editor control to allow the
+        has_focus traits to be maintained.
+        """
+
+        # Create the monitoring object if needed.
+        try:
+            mon = self._qt4_monitor
+        except AttributeError:
+            mon = self._qt4_monitor = _Monitor(self.window)
+
+        control.installEventFilter(mon)
+
+
+class _Monitor(QtCore.QObject):
+    """ This class monitors a view or editor control and updates their
+    has_focus traits accordingly.
+    """
+
+    def __init__(self, window):
+        """ Initialise the instance. """
+
+        QtCore.QObject.__init__(self, window.control)
+
+        self._window = window
+
+    def eventFilter(self, obj, e):
+        """ Inspect any focus events. """
+
+        if isinstance(e, QtGui.QFocusEvent) and e.reason() != QtCore.Qt.PopupFocusReason:
+            for editor in self._window.editors:
+                if editor.control is obj:
+                    editor.has_focus = e.gotFocus()
+                    break
+            else:
+                for view in self._window.views:
+                    if view.control is obj:
+                        view.has_focus = e.gotFocus()
+                        break
+
+        return False
