@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'enthought.pyface',
-    version = '1.1.1',
+    version = '2.0.0',
     description  = 'Traits capable windowing framework',
     author       = 'Enthought, Inc',
     author_email = 'info@enthought.com',
@@ -16,6 +16,7 @@ setup(
         "enthought.logger",
         "enthought.naming",
         "enthought.traits",
+        "enthought.resource",
     ],
     extras_require = {
         'tvtk': [
