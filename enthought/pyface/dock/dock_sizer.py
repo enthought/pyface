@@ -1485,7 +1485,7 @@ class DockControl ( DockItem ):
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
-            size = self.control.GetBestFittingSize()
+            size = self.control.GetEffectiveMinSize()
             dx   = size.GetWidth()
             dy   = size.GetHeight()
             if self.width < 0:

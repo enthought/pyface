@@ -15,7 +15,7 @@
 
 # Major package imports
 from wxPython.sheet import wxPySheetCellEditor
-from wxPython.wx import wxSIZE_ALLOW_MINUS_ONE
+from wx import SIZE_ALLOW_MINUS_ONE
 
 # Enthought library imports
 from enthought.traits.api import false
@@ -78,7 +78,7 @@ class TraitSheetCellAdapter(wxPySheetCellEditor):
         #print 'TraitSheetCellAdapter.SetSize'
         self._editor.control.SetDimensions(rect.x, rect.y,
                                            rect.width+2, rect.height+2,
-                                           wxSIZE_ALLOW_MINUS_ONE)
+                                           SIZE_ALLOW_MINUS_ONE)
         return
 
     def Show(self, show, attr):

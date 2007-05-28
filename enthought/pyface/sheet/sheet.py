@@ -18,12 +18,8 @@ import wx
 from wx.sheet import Sheet as wxSheet
 from wx.sheet import SheetCellAttr, SheetCellRenderer, SheetCellEditor, PySheetTableBase, SheetCoords
 from wx.sheet import wxSHEET_AttrAny, wxSHEET_AttrCell
-from wxPython.wx import wxPoint
-#~ from wxPython.sheet import wxSheetTableMessage, \
-     #~ wxSHEETTABLE_NOTIFY_ROWS_APPENDED, wxSHEETTABLE_NOTIFY_ROWS_DELETED, \
-     #~ wxSHEETTABLE_NOTIFY_COLS_APPENDED, wxSHEETTABLE_NOTIFY_COLS_DELETED, \
-     #~ wxSHEETTABLE_REQUEST_VIEW_GET_VALUES, wxSHEET_VALUE_STRING
-from wxPython.wx import wxTheClipboard
+from wx import Point
+from wx import TheClipboard
 
 # Enthought library imports
 from enthought.pyface.api import Sorter, Widget
@@ -1019,9 +1015,9 @@ class Sheet(Widget):
             # that some in-process data is available
             data_object = wx.CustomDataObject(PythonObject)
             data_object.SetData('dummy')
-            if wxTheClipboard.Open():
-                wxTheClipboard.SetData(data_object)
-                wxTheClipboard.Close()
+            if TheClipboard.Open():
+                TheClipboard.SetData(data_object)
+                TheClipboard.Close()
             
         else:
             evt.Skip()
@@ -1367,7 +1363,7 @@ class Sheet(Widget):
 
         # the x,y coordinates here are Unscrolled coordinates.
         # They must be changed to scrolled coordinates.
-        x, y = self._sheet.CalcUnscrolledPosition( wxPoint(x, y))
+        x, y = self._sheet.CalcUnscrolledPosition( Point(x, y))
 
         # now we need to get the row and column from the sheet
         # but we need to first remove the RowLabel and ColumnLabel

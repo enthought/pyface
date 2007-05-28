@@ -21,8 +21,7 @@ from wx import Size as wxSize
 from wx import TRUE as wxTRUE
 from wxPython.sheet import wxPySheetCellRenderer as wxSheetCellRenderer
 from wxPython.sheet import wxSheetCellStringRenderer
-from wxPython.wx import wxBLACK_PEN, wxSOLID, wxBrush, wxRect,\
-                        wxTRANSPARENT_PEN, wxWHITE
+from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
 class SheetCellImageRenderer(wxSheetCellRenderer):
     """ A renderer which will display a cell-specific image in addition to some
@@ -59,9 +58,9 @@ class SheetCellImageRenderer(wxSheetCellRenderer):
         else:
             bgcolor = sheet.GetCellBackgroundColour(row, col)
         
-        dc.SetBackgroundMode(wxSOLID)
-        dc.SetBrush(wxBrush(bgcolor, wxSOLID))
-        dc.SetPen(wxTRANSPARENT_PEN)
+        dc.SetBackgroundMode(SOLID)
+        dc.SetBrush(Brush(bgcolor, SOLID))
+        dc.SetPen(TRANSPARENT_PEN)
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
 
         # find the correct image for this cell
@@ -75,8 +74,8 @@ class SheetCellImageRenderer(wxSheetCellRenderer):
             dc.DrawBitmap(bmp, rect.x, rect.y, wxTRUE)
 
         # draw any text that should be included
-        new_rect = wxRect(rect.x + width, rect.y,
-                          rect.width - width, rect.height)
+        new_rect = Rect(rect.x + width, rect.y,
+                        rect.width - width, rect.height)
         #print 'sheet: ', sheet
         self._string_renderer.Draw(sheet, attr, dc, new_rect,
                                    row, col, isSelected)

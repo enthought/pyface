@@ -18,11 +18,11 @@ import sys
 import wx
 from wx.grid import Grid as wxGrid
 from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
-from wxPython.grid import wxGridTableMessage, \
-     wxGRIDTABLE_NOTIFY_ROWS_APPENDED, wxGRIDTABLE_NOTIFY_ROWS_DELETED, \
-     wxGRIDTABLE_NOTIFY_COLS_APPENDED, wxGRIDTABLE_NOTIFY_COLS_DELETED, \
-     wxGRIDTABLE_REQUEST_VIEW_GET_VALUES, wxGRID_VALUE_STRING
-from wxPython.wx import wxTheClipboard
+from wx.grid import GridTableMessage, \
+     GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED, \
+     GRIDTABLE_NOTIFY_COLS_APPENDED, GRIDTABLE_NOTIFY_COLS_DELETED, \
+     GRIDTABLE_REQUEST_VIEW_GET_VALUES, GRID_VALUE_STRING
+from wx import TheClipboard
 
 # Enthought library imports
 from enthought.pyface.api import Sorter, Widget
@@ -262,8 +262,9 @@ class Grid(Widget):
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
         wx.EVT_KEY_DOWN(grid, self._on_key_down)
+
         # We handle key up events to handle ctrl+c copy
-        wx.EVT_KEY_UP(grid, self._on_key_up)
+        #wx.EVT_KEY_UP(grid, self._on_key_up)
         
         # We handle control resize events to adjust column widths
         wx.EVT_SIZE(grid, self._on_size)
@@ -290,11 +291,14 @@ class Grid(Widget):
         # Enable the tree as a drag and drop target.
         self._grid.SetDropTarget(PythonDropTarget(self))
 
+        # Flag set when columns are resizing.
+        self._user_col_size = False
+
         self.__autosize()
 
         self._edit = False
         wx.EVT_IDLE(grid, self._on_idle)
-
+        
         return
 
     def dispose(self):
@@ -389,8 +393,8 @@ class Grid(Widget):
         #       we may need a more general solution at some point.
 
         # make sure we update for any new values in the table
-        msg = wxGridTableMessage(self._grid_table_base,
-                                 wxGRIDTABLE_REQUEST_VIEW_GET_VALUES)
+        msg = GridTableMessage(self._grid_table_base,
+                               GRIDTABLE_REQUEST_VIEW_GET_VALUES)
         self._grid.ProcessTableMessage(msg)
         
         self._grid.ForceRefresh()
@@ -418,8 +422,8 @@ class Grid(Widget):
         
         if delta > 0:
             # rows were added
-            msg = wxGridTableMessage(self._grid_table_base,
-                                     wxGRIDTABLE_NOTIFY_ROWS_APPENDED, delta)
+            msg = GridTableMessage(self._grid_table_base,
+                                   GRIDTABLE_NOTIFY_ROWS_APPENDED, delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
@@ -427,9 +431,9 @@ class Grid(Widget):
 
             # why the arglist for the "rows deleted" message is different
             # from that of the "rows added" message is beyond me.
-            msg = wxGridTableMessage(self._grid_table_base,
-                                     wxGRIDTABLE_NOTIFY_ROWS_DELETED,
-                                     row_count, -delta)
+            msg = GridTableMessage(self._grid_table_base,
+                                   GRIDTABLE_NOTIFY_ROWS_DELETED,
+                                   row_count, -delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
@@ -440,22 +444,22 @@ class Grid(Widget):
         
         if delta > 0:
             # columns were added
-            msg = wxGridTableMessage(self._grid_table_base,
-                                     wxGRIDTABLE_NOTIFY_COLS_APPENDED, delta)
+            msg = GridTableMessage(self._grid_table_base,
+                                   GRIDTABLE_NOTIFY_COLS_APPENDED, delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
             # columns were deleted
-            msg = wxGridTableMessage(self._grid_table_base,
-                                     wxGRIDTABLE_NOTIFY_COLS_DELETED,
-                                     col_count, -delta)
+            msg = GridTableMessage(self._grid_table_base,
+                                   GRIDTABLE_NOTIFY_COLS_DELETED,
+                                   col_count, -delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
 
         # finally make sure we update for any new values in the table
-        msg = wxGridTableMessage(self._grid_table_base,
-                                 wxGRIDTABLE_REQUEST_VIEW_GET_VALUES)
+        msg = GridTableMessage(self._grid_table_base,
+                               GRIDTABLE_REQUEST_VIEW_GET_VALUES)
         grid.ProcessTableMessage(msg)
 
         if should_autosize:
@@ -1072,9 +1076,9 @@ class Grid(Widget):
             # that some in-process data is available
             data_object = wx.CustomDataObject(PythonObject)
             data_object.SetData('dummy')
-            if wxTheClipboard.Open():
-                wxTheClipboard.SetData(data_object)
-                wxTheClipboard.Close()
+            if TheClipboard.Open():
+                TheClipboard.SetData(data_object)
+                TheClipboard.Close()
             
         evt.Skip()
 
@@ -1569,7 +1573,7 @@ class _GridTableBase(PyGridTableBase):
             pass
 
         if typename == None:
-            typename = wxGRID_VALUE_STRING
+            typename = GRID_VALUE_STRING
 
         return typename
 
@@ -1732,8 +1736,8 @@ class _GridTableBase(PyGridTableBase):
         self._renderer_cache = {}
         return
 
-from wxPython.grid import wxPyGridCellEditor
-class DummyGridCellEditor(wxPyGridCellEditor):
+from wx.grid import PyGridCellEditor
+class DummyGridCellEditor(PyGridCellEditor):
 
     def Show(self, show, attr):
         return

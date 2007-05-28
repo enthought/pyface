@@ -11,8 +11,8 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from wxPython.wx import *
-from wxPython.stc import *
+from wx import *
+from wx.stc import *
 
 import keyword
 
@@ -28,7 +28,7 @@ demoText = """\
 #----------------------------------------------------------------------
 
 
-if wxPlatform == '__WXMSW__':
+if Platform == '__WXMSW__':
     faces = { 'times': 'Times New Roman',
               'mono' : 'Courier New',
               'helv' : 'Arial',
@@ -48,7 +48,7 @@ else:
 
 #----------------------------------------------------------------------
 
-class PythonSTC(wxStyledTextCtrl):
+class PythonSTC(StyledTextCtrl):
     def __init__(self, parent, ID):
         wxStyledTextCtrl.__init__(self, parent, ID,
                                   style = wxNO_FULL_REPAINT_ON_RESIZE)

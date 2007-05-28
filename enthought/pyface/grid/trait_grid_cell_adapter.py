@@ -14,22 +14,22 @@
 """ Adapter class to make trait editor controls work inside of a grid. """
 
 # Major package imports
-from wxPython.grid import wxPyGridCellEditor
-from wxPython.wx import wxSIZE_ALLOW_MINUS_ONE
+from wx.grid import PyGridCellEditor
+from wx import SIZE_ALLOW_MINUS_ONE
 
 # Enthought library imports
 from enthought.traits.api import false
 from enthought.traits.ui.api import default_handler
 from enthought.traits.ui.ui import UI
 
-class TraitGridCellAdapter(wxPyGridCellEditor):
+class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
     
     def __init__(self, trait_editor_factory, obj, name, description,
                  handler = None, context = None):
         """ Build a new TraitGridCellAdapter object. """
 
-        wxPyGridCellEditor.__init__(self)
+        PyGridCellEditor.__init__(self)
         self._factory = trait_editor_factory
         self._editor = None
         self._obj = obj
@@ -80,7 +80,7 @@ class TraitGridCellAdapter(wxPyGridCellEditor):
         #print 'TraitGridCellAdapter.SetSize'
         self._editor.control.SetDimensions(rect.x, rect.y,
                                            rect.width+2, rect.height+2,
-                                           wxSIZE_ALLOW_MINUS_ONE)
+                                           SIZE_ALLOW_MINUS_ONE)
         return
 
     def Show(self, show, attr):
@@ -134,7 +134,7 @@ class TraitGridCellAdapter(wxPyGridCellEditor):
             version only checks that the event has no modifiers.  F2 is special
             and will always start the editor.
         """
-        return wxPyGridCellEditor.base_IsAcceptedKey(self, evt)
+        return PyGridCellEditor.base_IsAcceptedKey(self, evt)
 
     def StartingKey(self, evt):
         """ If the editor is enabled by pressing keys on the grid, this will be

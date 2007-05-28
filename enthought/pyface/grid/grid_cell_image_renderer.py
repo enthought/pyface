@@ -18,27 +18,26 @@
 # Major package imports
 import wx
 
-from wxPython.grid import wxPyGridCellRenderer as wxGridCellRenderer
-from wxPython.grid import wxGridCellStringRenderer
-from wxPython.wx import wxBLACK_PEN, wxSOLID, wxBrush, wxRect,\
-                        wxTRANSPARENT_PEN, wxWHITE
+from wx.grid import PyGridCellRenderer
+from wx.grid import GridCellStringRenderer
+from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
-class GridCellImageRenderer(wxGridCellRenderer):
+class GridCellImageRenderer(PyGridCellRenderer):
     """ A renderer which will display a cell-specific image in addition to some
         text displayed in the same way the standard string renderer normally
         would. """
 
     def __init__(self, provider = None):
-        """ Build a new GridCellImageRenderer.
+        """ Build a new PyGridCellImageRenderer.
 
             'provider', if provided, should implement
             get_image_for_cell(row, col) to specify an image to appear
             in the cell at row, col. """
 
-        wxGridCellRenderer.__init__(self)
+        PyGridCellRenderer.__init__(self)
 
         # save the string renderer to use for text.
-        self._string_renderer = wxGridCellStringRenderer()
+        self._string_renderer = GridCellStringRenderer()
         
         self._provider = provider
 
@@ -56,9 +55,9 @@ class GridCellImageRenderer(wxGridCellRenderer):
         else:
             bgcolor = grid.GetCellBackgroundColour(row, col)
         
-        dc.SetBackgroundMode(wx.SOLID)
-        dc.SetBrush(wxBrush(bgcolor, wx.SOLID))
-        dc.SetPen(wx.TRANSPARENT_PEN)
+        dc.SetBackgroundMode(SOLID)
+        dc.SetBrush(Brush(bgcolor, SOLID))
+        dc.SetPen(TRANSPARENT_PEN)
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
 
         # find the correct image for this cell
@@ -95,7 +94,7 @@ class GridCellImageRenderer(wxGridCellRenderer):
             width = rect.x + rect.width - x
             height = rect.y + rect.height - y
             # draw any text that should be included
-            new_rect = wx.Rect(x, y, width, height)
+            new_rect = Rect(x, y, width, height)
             self._string_renderer.Draw(grid, attr, dc, new_rect,
                                        row, col, isSelected)
 
