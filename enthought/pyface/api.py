@@ -17,29 +17,8 @@ from toolkit import register_toolkit, select_toolkit, toolkit, Toolkit
 
 
 try:
-    import PyQt4
-
-    # Application window needs these (for the toolbar manager).
-    from image_cache import ImageCache
-    from widget import Widget
-
-    from about_dialog import AboutDialog
-    from application_window import ApplicationWindow
-    from confirmation_dialog import ConfirmationDialog, confirm
-    from constant import OK, CANCEL, YES, NO
-    from dialog import Dialog
-    from directory_dialog import DirectoryDialog
-    from file_dialog import FileDialog
-    from gui import GUI
-    from image_resource import ImageResource
-    from key_pressed_event import KeyPressedEvent
-    from message_dialog import MessageDialog, error, information, warning
-    from python_shell import PythonShell
-    from splash_screen import SplashScreen
-    from system_metrics import SystemMetrics
-    from window import Window
-
-except ImportError:
+    import wx
+    
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
     from widget import Widget
@@ -77,3 +56,24 @@ except ImportError:
 
     # Fix for broken Pycrust introspect module.
     import util.fix_introspect_bug
+
+except ImportError:
+    # Application window needs these (for the toolbar manager).
+    from image_cache import ImageCache
+    from widget import Widget
+
+    from about_dialog import AboutDialog
+    from application_window import ApplicationWindow
+    from confirmation_dialog import ConfirmationDialog, confirm
+    from constant import OK, CANCEL, YES, NO
+    from dialog import Dialog
+    from directory_dialog import DirectoryDialog
+    from file_dialog import FileDialog
+    from gui import GUI
+    from image_resource import ImageResource
+    from key_pressed_event import KeyPressedEvent
+    from message_dialog import MessageDialog, error, information, warning
+    from python_shell import PythonShell
+    from splash_screen import SplashScreen
+    from system_metrics import SystemMetrics
+    from window import Window
