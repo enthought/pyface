@@ -15,40 +15,65 @@
 # Toolkit management and selection.
 from toolkit import register_toolkit, select_toolkit, toolkit, Toolkit
 
-# Application window needs these (for the toolbar manager).
-from image_cache import ImageCache
-from widget import Widget
 
-from about_dialog import AboutDialog
-from application_window import ApplicationWindow
-from background_progress_dialog import BackgroundProgressDialog
-from confirmation_dialog import ConfirmationDialog, confirm
-from constant import OK, CANCEL, YES, NO
-from dialog import Dialog
-from directory_dialog import DirectoryDialog
-from expandable_panel import ExpandablePanel
-from file_dialog import FileDialog
-from filter import Filter
-from gui import GUI
-from heading_text import HeadingText
-from image_resource import ImageResource
-from image_widget import ImageWidget
-from key_pressed_event import KeyPressedEvent
-from layered_panel import LayeredPanel
-from mdi_application_window import MDIApplicationWindow
-from mdi_window_menu import MDIWindowMenu
-from message_dialog import MessageDialog, error, information, warning
-from multi_toolbar_window import MultiToolbarWindow
-from python_editor import PythonEditor
-from python_shell import PythonShell
-from single_choice_dialog import SingleChoiceDialog
-from sorter import Sorter
-from splash_screen import SplashScreen
-from split_application_window import SplitApplicationWindow
-from split_dialog import SplitDialog
-from split_panel import SplitPanel
-from system_metrics import SystemMetrics
-from window import Window
+try:
+    import PyQt4
 
-# Fix for broken Pycrust introspect module.
-import util.fix_introspect_bug
+    # Application window needs these (for the toolbar manager).
+    from image_cache import ImageCache
+    from widget import Widget
+
+    from about_dialog import AboutDialog
+    from application_window import ApplicationWindow
+    from confirmation_dialog import ConfirmationDialog, confirm
+    from constant import OK, CANCEL, YES, NO
+    from dialog import Dialog
+    from directory_dialog import DirectoryDialog
+    from file_dialog import FileDialog
+    from gui import GUI
+    from image_resource import ImageResource
+    from key_pressed_event import KeyPressedEvent
+    from message_dialog import MessageDialog, error, information, warning
+    from python_shell import PythonShell
+    from splash_screen import SplashScreen
+    from system_metrics import SystemMetrics
+    from window import Window
+
+except ImportError:
+    # Application window needs these (for the toolbar manager).
+    from image_cache import ImageCache
+    from widget import Widget
+
+    from about_dialog import AboutDialog
+    from application_window import ApplicationWindow
+    from background_progress_dialog import BackgroundProgressDialog
+    from confirmation_dialog import ConfirmationDialog, confirm
+    from constant import OK, CANCEL, YES, NO
+    from dialog import Dialog
+    from directory_dialog import DirectoryDialog
+    from expandable_panel import ExpandablePanel
+    from file_dialog import FileDialog
+    from filter import Filter
+    from gui import GUI
+    from heading_text import HeadingText
+    from image_resource import ImageResource
+    from image_widget import ImageWidget
+    from key_pressed_event import KeyPressedEvent
+    from layered_panel import LayeredPanel
+    from mdi_application_window import MDIApplicationWindow
+    from mdi_window_menu import MDIWindowMenu
+    from message_dialog import MessageDialog, error, information, warning
+    from multi_toolbar_window import MultiToolbarWindow
+    from python_editor import PythonEditor
+    from python_shell import PythonShell
+    from single_choice_dialog import SingleChoiceDialog
+    from sorter import Sorter
+    from splash_screen import SplashScreen
+    from split_application_window import SplitApplicationWindow
+    from split_dialog import SplitDialog
+    from split_panel import SplitPanel
+    from system_metrics import SystemMetrics
+    from window import Window
+
+    # Fix for broken Pycrust introspect module.
+    import util.fix_introspect_bug

@@ -15,10 +15,12 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, Int, Str
+from enthought.traits.api import Any, Instance, Int, Str
 
 # Local imports.
-from action.api import MenuBarManager, StatusBarManager, ToolBarManager
+# fixme: PyQt4 hack - no status bar manager in QT4 yet!
+##from action.api import StatusBarManager
+from action.api import MenuBarManager, ToolBarManager
 from image_resource import ImageResource
 from window import Window
 
@@ -52,7 +54,8 @@ class ApplicationWindow(Window):
     menu_bar_manager = Instance(MenuBarManager)
 
     # The status bar manager (None iff there is no status bar).
-    status_bar_manager = Instance(StatusBarManager)
+    # fixme: PyQt4 hack - no status bar manager in QT4 yet!
+    status_bar_manager = Any#Instance(StatusBarManager)
 
     # The tool bar manager (None iff there is no tool bar).
     tool_bar_manager = Instance(ToolBarManager)
