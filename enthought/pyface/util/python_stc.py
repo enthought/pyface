@@ -11,8 +11,8 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from wx import *
-from wx.stc import *
+import wx
+from wx import stc
 
 import keyword
 
@@ -28,7 +28,7 @@ demoText = """\
 #----------------------------------------------------------------------
 
 
-if Platform == '__WXMSW__':
+if wx.Platform == '__WXMSW__':
     faces = { 'times': 'Times New Roman',
               'mono' : 'Courier New',
               'helv' : 'Arial',
@@ -48,15 +48,15 @@ else:
 
 #----------------------------------------------------------------------
 
-class PythonSTC(StyledTextCtrl):
+class PythonSTC(stc.StyledTextCtrl):
     def __init__(self, parent, ID):
-        StyledTextCtrl.__init__(self, parent, ID,
-                                  style = NO_FULL_REPAINT_ON_RESIZE)
+        stc.StyledTextCtrl.__init__(self, parent, ID,
+                                  style = wx.NO_FULL_REPAINT_ON_RESIZE)
 
-        self.CmdKeyAssign(ord('B'), STC_SCMOD_CTRL, STC_CMD_ZOOMIN)
-        self.CmdKeyAssign(ord('N'), STC_SCMOD_CTRL, STC_CMD_ZOOMOUT)
+        self.CmdKeyAssign(ord('B'), stc.STC_SCMOD_CTRL, stc.STC_CMD_ZOOMIN)
+        self.CmdKeyAssign(ord('N'), stc.STC_SCMOD_CTRL, stc.STC_CMD_ZOOMOUT)
 
-        self.SetLexer(STC_LEX_PYTHON)
+        self.SetLexer(stc.STC_LEX_PYTHON)
         self.SetKeyWords(0, " ".join(keyword.kwlist))
 
         self.SetProperty("fold", "1")
@@ -66,96 +66,139 @@ class PythonSTC(StyledTextCtrl):
         self.SetViewWhiteSpace(False)
         #self.SetBufferedDraw(False)
 
-        self.SetEdgeMode(STC_EDGE_BACKGROUND)
+        self.SetEdgeMode(stc.STC_EDGE_BACKGROUND)
         self.SetEdgeColumn(78)
 
         # Setup a margin to hold fold markers
-        self.SetFoldFlags(16)  ###  WHAT IS THIS VALUE?  WHAT ARE THE OTHER FLAGS?  DOES IT MATTER?
+        ###  WHAT IS THIS VALUE?  WHAT ARE THE OTHER FLAGS?  DOES IT MATTER?
+        self.SetFoldFlags(16)  
         #mic
-        #self.SetMarginType(2, STC_MARGIN_SYMBOL)
-        #self.SetMarginMask(2, STC_MASK_FOLDERS)
+        #self.SetMarginType(2, stc.STC_MARGIN_SYMBOL)
+        #self.SetMarginMask(2, stc.STC_MASK_FOLDERS)
         #self.SetMarginSensitive(2, True)
         #self.SetMarginWidth(2, 12)
         # line numbers in the margin
-        self.SetMarginType(1, STC_MARGIN_NUMBER)
+        self.SetMarginType(1, stc.STC_MARGIN_NUMBER)
         self.SetMarginWidth(1, 25)
 
         if 0: # simple folder marks, like the old version
-            self.MarkerDefine(STC_MARKNUM_FOLDER, STC_MARK_ARROW, "navy", "navy")
-            self.MarkerDefine(STC_MARKNUM_FOLDEROPEN, STC_MARK_ARROWDOWN, "navy", "navy")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDER, 
+                              stc.STC_MARK_ARROW, "navy", "navy")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN, 
+                              stc.STC_MARK_ARROWDOWN, "navy", "navy")
             # Set these to an invisible mark
-            self.MarkerDefine(STC_MARKNUM_FOLDEROPENMID, STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERMIDTAIL, STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERSUB, STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERTAIL, STC_MARK_BACKGROUND, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID, 
+                              stc.STC_MARK_BACKGROUND, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL, 
+                              stc.STC_MARK_BACKGROUND, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB, 
+                              stc.STC_MARK_BACKGROUND, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL, 
+                              stc.STC_MARK_BACKGROUND, "white", "black")
 
         elif 0: # more involved "outlining" folder marks
-            self.MarkerDefine(STC_MARKNUM_FOLDEREND,     STC_MARK_BOXPLUSCONNECTED,  "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDEROPENMID, STC_MARK_BOXMINUSCONNECTED, "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERMIDTAIL, STC_MARK_TCORNER,  "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERTAIL,    STC_MARK_LCORNER,  "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDERSUB,     STC_MARK_VLINE,    "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDER,        STC_MARK_BOXPLUS,  "white", "black")
-            self.MarkerDefine(STC_MARKNUM_FOLDEROPEN,    STC_MARK_BOXMINUS, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEREND,     
+                              stc.STC_MARK_BOXPLUSCONNECTED, "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID, 
+                              stc.STC_MARK_BOXMINUSCONNECTED, 
+                              "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL, 
+                              stc.STC_MARK_TCORNER,  "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,    
+                              stc.STC_MARK_LCORNER,  "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB,     
+                              stc.STC_MARK_VLINE,    "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDER,        
+                              stc.STC_MARK_BOXPLUS,  "white", "black")
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,    
+                              stc.STC_MARK_BOXMINUS, "white", "black")
 
 
-        EVT_STC_UPDATEUI(self,    ID, self.OnUpdateUI)
-        EVT_STC_MARGINCLICK(self, ID, self.OnMarginClick)
+        stc.EVT_STC_UPDATEUI(self,    ID, self.OnUpdateUI)
+        stc.EVT_STC_MARGINCLICK(self, ID, self.OnMarginClick)
 
 
         # Make some styles,  The lexer defines what each style is used for, we
-        # just have to define what each style looks like.  This set is adapted from
-        # Scintilla sample property files.
+        # just have to define what each style looks like.  This set is adapted 
+        # from Scintilla sample property files.
 
         self.StyleClearAll()
 
         # Global default styles for all languages
-        self.StyleSetSpec(STC_STYLE_DEFAULT,     "face:%(helv)s,size:%(size)d" % faces)
-        self.StyleSetSpec(STC_STYLE_LINENUMBER,  "back:#C0C0C0,face:%(helv)s,size:%(size2)d" % faces)
-        self.StyleSetSpec(STC_STYLE_CONTROLCHAR, "face:%(other)s" % faces)
-        self.StyleSetSpec(STC_STYLE_BRACELIGHT,  "fore:#FFFFFF,back:#0000FF,bold")
-        self.StyleSetSpec(STC_STYLE_BRACEBAD,    "fore:#000000,back:#FF0000,bold")
+        self.StyleSetSpec(stc.STC_STYLE_DEFAULT,     
+                          "face:%(helv)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_STYLE_LINENUMBER,  
+                          "back:#C0C0C0,face:%(helv)s,size:%(size2)d" % faces)
+        self.StyleSetSpec(stc.STC_STYLE_CONTROLCHAR, 
+                          "face:%(other)s" % faces)
+        self.StyleSetSpec(stc.STC_STYLE_BRACELIGHT,  
+                          "fore:#FFFFFF,back:#0000FF,bold")
+        self.StyleSetSpec(stc.STC_STYLE_BRACEBAD,    
+                          "fore:#000000,back:#FF0000,bold")
 
         # Python styles
         # White space
-        self.StyleSetSpec(STC_P_DEFAULT, "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_DEFAULT, 
+                          "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
         # Comment
-        self.StyleSetSpec(STC_P_COMMENTLINE, "fore:#007F00,face:%(other)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_COMMENTLINE, 
+                          "fore:#007F00,face:%(other)s,size:%(size)d" % faces)
         # Number
-        self.StyleSetSpec(STC_P_NUMBER, "fore:#007F7F,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_NUMBER, 
+                          "fore:#007F7F,size:%(size)d" % faces)
         # String
-        self.StyleSetSpec(STC_P_STRING, "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_STRING, 
+                  "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
         # Single quoted string
-        self.StyleSetSpec(STC_P_CHARACTER, "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_CHARACTER, 
+                  "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
         # Keyword
-        self.StyleSetSpec(STC_P_WORD, "fore:#00007F,bold,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_WORD, 
+                          "fore:#00007F,bold,size:%(size)d" % faces)
         # Triple quotes
-        self.StyleSetSpec(STC_P_TRIPLE, "fore:#7F0000,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_TRIPLE, 
+                          "fore:#7F0000,size:%(size)d" % faces)
         # Triple double quotes
-        self.StyleSetSpec(STC_P_TRIPLEDOUBLE, "fore:#7F0000,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_TRIPLEDOUBLE, 
+                          "fore:#7F0000,size:%(size)d" % faces)
         # Class name definition
-        self.StyleSetSpec(STC_P_CLASSNAME, "fore:#0000FF,bold,underline,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_CLASSNAME, 
+                          "fore:#0000FF,bold,underline,size:%(size)d" % faces)
         # Function or method name definition
-        self.StyleSetSpec(STC_P_DEFNAME, "fore:#007F7F,bold,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_DEFNAME, 
+                          "fore:#007F7F,bold,size:%(size)d" % faces)
         # Operators
-        self.StyleSetSpec(STC_P_OPERATOR, "bold,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_OPERATOR, 
+                          "bold,size:%(size)d" % faces)
         # Identifiers
-        self.StyleSetSpec(STC_P_IDENTIFIER, "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_IDENTIFIER, 
+                          "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
         # Comment-blocks
-        self.StyleSetSpec(STC_P_COMMENTBLOCK, "fore:#7F7F7F,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_COMMENTBLOCK, 
+                          "fore:#7F7F7F,size:%(size)d" % faces)
         # End of line where string is not closed
-        self.StyleSetSpec(STC_P_STRINGEOL, "fore:#000000,face:%(mono)s,back:#E0C0E0,eol,size:%(size)d" % faces)
+        self.StyleSetSpec(stc.STC_P_STRINGEOL, 
+          "fore:#000000,face:%(mono)s,back:#E0C0E0,eol,size:%(size)d" % faces)
 
 
         self.SetCaretForeground("BLUE")
 
-        EVT_KEY_DOWN(self, self.OnKeyPressed)
+        wx.EVT_KEY_DOWN(self, self.OnKeyPressed)
 
 
     def OnKeyPressed(self, event):
         if self.CallTipActive():
             self.CallTipCancel()
-        key = event.KeyCode()
+
+        # KeyCode used to be a method.  Now it is an integer.
+        # Handle either case.
+        if type(event.KeyCode) is int:
+            # wx2.8+
+            key = event.KeyCode    
+        else:
+            # wx2.6
+            key = event.KeyCode()
+            
         if key == 32 and event.ControlDown():
             pos = self.GetCurrentPos()
             # Tips
@@ -164,6 +207,8 @@ class PythonSTC(StyledTextCtrl):
                 self.CallTipShow(pos, 'param1, param2')
             # Code completion
             else:
+                # fixme: What is this mess!!!
+                
                 #lst = []
                 #for x in range(50000):
                 #    lst.append('%05d' % x)
@@ -171,6 +216,7 @@ class PythonSTC(StyledTextCtrl):
                 #print len(st)
                 #self.AutoCompShow(0, st)
 
+                # fixme: What is this mess!!!
                 kw = keyword.kwlist[:]
                 kw.append("zzzzzz")
                 kw.append("aaaaa")
@@ -178,7 +224,7 @@ class PythonSTC(StyledTextCtrl):
                 kw.append("zzaaaaa")
                 kw.append("zzbaaaa")
                 kw.append("this_is_a_longer_value")
-                kw.append("this_is_a_much_much_much_much_much_much_much_longer_value")
+                kw.append("this_is_a_much_much_much_much_longer_value")
 
                 kw.sort()  # Python sorts are case sensitive
                 self.AutoCompSetIgnoreCase(False)  # so this needs to match
@@ -199,14 +245,18 @@ class PythonSTC(StyledTextCtrl):
             styleBefore = self.GetStyleAt(caretPos - 1)
 
         # check before
-        if charBefore and chr(charBefore) in "[]{}()" and styleBefore == STC_P_OPERATOR:
+        if (charBefore and
+            chr(charBefore) in "[]{}()" and
+            styleBefore==stc.STC_P_OPERATOR):
             braceAtCaret = caretPos - 1
 
         # check after
         if braceAtCaret < 0:
             charAfter = self.GetCharAt(caretPos)
             styleAfter = self.GetStyleAt(caretPos)
-            if charAfter and chr(charAfter) in "[]{}()" and styleAfter == STC_P_OPERATOR:
+            if (charAfter and 
+                chr(charAfter) in "[]{}()" and
+                styleAfter == stc.STC_P_OPERATOR):
                 braceAtCaret = caretPos
 
         if braceAtCaret >= 0:
@@ -229,7 +279,7 @@ class PythonSTC(StyledTextCtrl):
                 self.FoldAll()
             else:
                 lineClicked = self.LineFromPosition(evt.GetPosition())
-                if self.GetFoldLevel(lineClicked) & STC_FOLDLEVELHEADERFLAG:
+                if self.GetFoldLevel(lineClicked) & stc.STC_FOLDLEVELHEADERFLAG:
                     if evt.GetShift():
                         self.SetFoldExpanded(lineClicked, True)
                         self.Expand(lineClicked, True, True, 1)
@@ -250,15 +300,15 @@ class PythonSTC(StyledTextCtrl):
 
         # find out if we are folding or unfolding
         for lineNum in range(lineCount):
-            if self.GetFoldLevel(lineNum) & STC_FOLDLEVELHEADERFLAG:
+            if self.GetFoldLevel(lineNum) & stc.STC_FOLDLEVELHEADERFLAG:
                 expanding = not self.GetFoldExpanded(lineNum)
                 break;
 
         lineNum = 0
         while lineNum < lineCount:
             level = self.GetFoldLevel(lineNum)
-            if level & STC_FOLDLEVELHEADERFLAG and \
-               (level & STC_FOLDLEVELNUMBERMASK) == STC_FOLDLEVELBASE:
+            if level & stc.STC_FOLDLEVELHEADERFLAG and \
+               (level & stc.STC_FOLDLEVELNUMBERMASK) == stc.STC_FOLDLEVELBASE:
 
                 if expanding:
                     self.SetFoldExpanded(lineNum, True)
@@ -290,7 +340,7 @@ class PythonSTC(StyledTextCtrl):
             if level == -1:
                 level = self.GetFoldLevel(line)
 
-            if level & STC_FOLDLEVELHEADERFLAG:
+            if level & stc.STC_FOLDLEVELHEADERFLAG:
                 if force:
                     if visLevels > 1:
                         self.SetFoldExpanded(line, True)
@@ -315,12 +365,12 @@ _USE_PANEL = 1
 
 def runTest(frame, nb, log):
     if not _USE_PANEL:
-        ed = p = PythonSTC(nb, -1)
+        ed = p = stc.PythonSTC(nb, -1)
     else:
-        p = Panel(nb, -1, style = NO_FULL_REPAINT_ON_RESIZE)
+        p = wx.Panel(nb, -1, style = wx.NO_FULL_REPAINT_ON_RESIZE)
         ed = PythonSTC(p, -1)
-        s = BoxSizer(HORIZONTAL)
-        s.Add(ed, 1, EXPAND)
+        s = wx.BoxSizer(wx.HORIZONTAL)
+        s.Add(ed, 1, wx.EXPAND)
         p.SetSizer(s)
         p.SetAutoLayout(True)
 
@@ -330,7 +380,7 @@ def runTest(frame, nb, log):
     ed.Colourise(0, -1)
 
     # line numbers in the margin
-    ed.SetMarginType(1, STC_MARGIN_NUMBER)
+    ed.SetMarginType(1, stc.STC_MARGIN_NUMBER)
     ed.SetMarginWidth(1, 25)
 
     return p
@@ -350,14 +400,10 @@ be helpful.
 
 
 if __name__ == '__main__':
+    # fixme: This has been re-factored into not working.  No run module.
     import sys,os
     import run
     run.main(['', os.path.basename(sys.argv[0])])
 
-
-
-
-
-#----------------------------------------------------------------------
 #----------------------------------------------------------------------
 
