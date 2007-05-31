@@ -163,14 +163,7 @@ class _MenuItem(HasTraits):
         # enabled/disabled/checked state etc).
         item.action.on_trait_change(self._on_action_enabled_changed, 'enabled')
         item.action.on_trait_change(self._on_action_checked_changed, 'checked')
-        # ZZZ: Commented out for the moment because it triggers a very weird
-        # bug which (somehow) prevents the 'checked' handler set up above
-        # being called. Clues...
-        #   - it only happens if the toolkit is PyQt
-        #   - the trait name doesn't matter
-        #   - the fact that this is the 3rd call doesn't matter
-        #   - the fact that there are 3 calls *does* matter.
-        #item.action.on_trait_change(self._on_action_name_changed, 'name')
+        item.action.on_trait_change(self._on_action_name_changed, 'name')
 
         if controller is not None:
             self.controller = controller
