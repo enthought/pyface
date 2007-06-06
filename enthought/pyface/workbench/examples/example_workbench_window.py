@@ -22,10 +22,31 @@ from yellow_view import YellowView
 from enthought.pyface.api import toolkit
 from enthought.pyface.workbench.api import Editor, EditorManager
 
-class _TkEditorManager(EditorManager):
 
+class _TkEditorManager(EditorManager):
+    """ An editor manager to allow the example to work with Qt4. """
+    
     class _PyQt4PersonEditor(Editor):
+        """ A Qt4 editor for 'Person' objects. """
+
+        #######################################################################
+        # 'IEditor' interface.
+        #######################################################################
+
+        #### Initializers #####################################################
+        
+        def _name_default(self):
+            """ Trait initializer. """
+            
+            return str(self.obj)
+
+        #### Initializers #####################################################
+
         def create_control(self, parent):
+            """ Create the toolkit-specific control that represents the editor.
+
+            """
+
             from PyQt4 import QtGui
 
             lay = QtGui.QGridLayout()
@@ -43,14 +64,20 @@ class _TkEditorManager(EditorManager):
 
             return ui
 
-        def _name_default(self):
-            return str(self.obj)
+    #######################################################################
+    # 'IEditorManager' interface.
+    #######################################################################
 
-    def create_editor(self, window, obj):
+    def create_editor(self, window, obj, kind):
+        """ Create an editor for an object. """
+        
         if toolkit().name == 'qt4':
-            return self._PyQt4PersonEditor(window=window, obj=obj)
+            editor = self._PyQt4PersonEditor(window=window, obj=obj)
 
-        return EditorManager.create_editor(self, window, obj)
+        else:
+            editor = EditorManager.create_editor(self, window, obj, kind)
+
+        return editor
 
 
 class ExampleWorkbenchWindow(WorkbenchWindow):
@@ -84,8 +111,14 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
 
     #### Trait initializers ###################################################
 
-    # The replacement editor manager (until TraitsUI supports PyQt).
     def _editor_manager_default(self):
+        """ Trait initializer.
+
+        Here we return the replacement editor manager (until TraitsUI supports
+        PyQt).
+
+        """
+        
         return _TkEditorManager()
     
     def _menu_bar_manager_default(self):

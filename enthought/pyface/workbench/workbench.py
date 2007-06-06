@@ -171,19 +171,19 @@ class Workbench(HasTraits):
 
     #### Convenience methods on the active window #############################
     
-    def edit(self, obj, use_existing=True):
+    def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
 
-        return self.active_window.edit(obj, use_existing)
+        return self.active_window.edit(obj, kind, use_existing)
 
-    def get_editor(self, obj):
+    def get_editor(self, obj, kind=None):
         """ Return the editor that is editing an object.
 
         Returns None if no such editor exists.
 
         """
 
-        return self.active_window.get_editor(obj)
+        return self.active_window.get_editor(obj, kind)
 
     def get_editor_by_id(self, id):
         """ Return the editor with the specified Id.

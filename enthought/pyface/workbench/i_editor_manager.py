@@ -11,15 +11,21 @@ class IEditorManager(Interface):
     # The workbench window that the editor manager manages editors for ;^)
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
     
-    def create_editor(self, window, obj):
+    def create_editor(self, window, obj, kind):
         """ Create an editor for an object.
 
+        'kind' optionally contains any data required by the specific editor
+        manager implementation to decide what type of editor to create.
+        
         Returns None if no editor can be created for the resource.
 
         """
 
-    def get_editor(self, window, obj):
+    def get_editor(self, window, obj, kind):
         """ Get the editor that is currently editing an object.
+
+        'kind' optionally contains any data required by the specific editor
+        manager implementation to decide what type of editor to create.
 
         Returns None if no such editor exists.
 

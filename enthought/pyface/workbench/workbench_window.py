@@ -232,7 +232,7 @@ class WorkbenchWindow(ApplicationWindow):
         # editors etc).
         #
         # If we have a saved layout then try to restore it (it may not be
-        # totally possible, e.g. an editor may have been open for a resource
+        # totally possible, e.g. an editor may have been open for an object
         # that has been deleted outside of the application, but we try to do
         # the best we can!).
         filename = join(self.state_location, 'active_perspective_id')
@@ -342,14 +342,14 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    def create_editor(self, resource):
-        """ Creates an editor for a resource.
+    def create_editor(self, obj, kind=None):
+        """ Create an editor for an object.
 
-        Returns None if no editor can be created for the resource.
+        Returns None if no editor can be created for the object.
 
         """
 
-        return self.editor_manager.create_editor(self, resource)
+        return self.editor_manager.create_editor(self, obj, kind)
 
     def destroy_editors(self, editors):
         """ Destroy a list of editors. """
@@ -369,9 +369,13 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
     
-    def edit(self, obj, use_existing=True):
+    def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object.
 
+        'kind' is simply passed through to the window's editor manager to
+        allow it to create a particular kind of editor depending on context
+        etc.
+        
         If 'use_existing' is True and the object is already being edited in
         the window then the existing editor will be activated (i.e., given
         focus, brought to the front, etc.).
@@ -383,7 +387,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         if use_existing:
             # Is the object already being edited in the window?
-            editor = self.get_editor(obj)
+            editor = self.get_editor(obj, kind)
 
             if editor is not None:
                 # If so, activate the existing editor (i.e., bring it to the
@@ -392,24 +396,24 @@ class WorkbenchWindow(ApplicationWindow):
                 return editor
 
         # Otherwise, create an editor for it.
-        editor = self.create_editor(obj)
+        editor = self.create_editor(obj, kind)
 
         if editor is None:
-            logger.warn('no editor for resource [%s]', obj)
+            logger.warn('no editor for object [%s]', obj)
 
         self.add_editor(editor)
         self.activate_editor(editor)
 
         return editor
 
-    def get_editor(self, obj):
-        """ Returns the editor that is editing a resource.
+    def get_editor(self, obj, kind=None):
+        """ Returns the editor that is editing an object.
 
         Returns None if no such editor exists.
 
         """
 
-        return self.editor_manager.get_editor(self, obj)
+        return self.editor_manager.get_editor(self, obj, kind)
 
     def get_editor_by_id(self, id):
         """ Returns the editor with the specified Id.

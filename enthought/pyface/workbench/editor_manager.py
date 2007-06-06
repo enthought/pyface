@@ -23,24 +23,16 @@ class EditorManager(HasTraits):
     # 'IEditorManager' interface.
     ###########################################################################
     
-    def create_editor(self, window, obj):
-        """ Create an editor for an object.
-
-        Returns None if no editor can be created for the resource.
-
-        """
+    def create_editor(self, window, obj, kind):
+        """ Create an editor for an object. """
 
         return TraitsUIEditor(window=window, obj=obj)
 
-    def get_editor(self, window, obj):
-        """ Get the editor that is currently editing an object.
-
-        Returns None if no such editor exists.
-
-        """
+    def get_editor(self, window, obj, kind):
+        """ Get the editor that is currently editing an object. """
 
         for editor in window.editors:
-            if self._is_editing(editor, obj):
+            if self._is_editing(editor, obj, kind):
                 break
 
         else:
@@ -70,7 +62,7 @@ class EditorManager(HasTraits):
     # 'Protected' 'EditorManager'  interface.
     ###########################################################################
 
-    def _is_editing(self, editor, obj):
+    def _is_editing(self, editor, obj, kind):
         """ Return True if the editor is editing the object. """
 
         return editor.obj is obj
