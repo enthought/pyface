@@ -28,6 +28,10 @@ class Editor(HasTraits):
 
     #### 'IEditor' interface ##################################################
 
+    # The optional command stack.
+    command_stack = Instance('enthought.undo.api.ICommandStack')
+
+    # The workbench window that the editor is in.
     # The toolkit-specific control that represents the editor.
     #
     # The framework sets this to the value returned by 'create_control'.
@@ -54,10 +58,6 @@ class Editor(HasTraits):
     # The current selection within the editor.
     selection = List
 
-    # The optional undo stack.
-    undo_stack = Instance('enthought.undo.api.IUndoStack')
-
-    # The workbench window that the editor is in.
     #
     # The framework sets this when the editor is created.
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
@@ -126,13 +126,13 @@ class Editor(HasTraits):
 
     #### Initializers #########################################################
 
-    def _undo_stack_default(self):
+    def _command_stack_default(self):
         """ Trait initializer. """
 
         # We make sure the undo package is entirely optional.
-        from enthought.undo.api import UndoStack
+        from enthought.undo.api import CommandStack
 
-        return UndoStack(undo_manager=self.window.workbench.undo_manager)
+        return CommandStack(undo_manager=self.window.workbench.undo_manager)
 
     ###########################################################################
     # 'Editor' toolkit interface.

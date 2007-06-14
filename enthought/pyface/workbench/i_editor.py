@@ -8,6 +8,9 @@ from enthought.traits.api import Any, Bool, Instance, Interface, List, Str
 class IEditor(Interface):
     """ The editor interface. """
 
+    # The optional command stack.
+    command_stack = Instance('enthought.undo.api.ICommandStack')
+
     # The toolkit-specific control that represents the editor.
     #
     # The framework sets this to the value returned by 'create_control'.
@@ -33,9 +36,6 @@ class IEditor(Interface):
 
     # The current selection within the editor.
     selection = List
-
-    # The optional undo stack.
-    undo_stack = Instance('enthought.undo.api.IUndoStack')
 
     # The workbench window that the editor is in.
     #
