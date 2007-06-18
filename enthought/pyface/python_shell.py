@@ -14,10 +14,10 @@
 """ An interactive Python shell. """
 
 # Enthought library imports.
-from enthought.pyface.api import KeyPressedEvent
 from enthought.traits.api import Event
 
 # Local imports.
+from key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 
