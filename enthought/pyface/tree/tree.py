@@ -152,6 +152,9 @@ class Tree(Widget):
     # useful because the callback will be invoked even if the node label was
     # not actually changed.
     _label_edit_callback = Trait(None, Callable, None)
+    
+    # Flag for allowing selection events to be ignored
+    _ignore_selection_events = Bool(False)
 
     ###########################################################################
     # 'object' interface.
