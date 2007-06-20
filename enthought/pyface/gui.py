@@ -19,7 +19,7 @@ import logging
 from os.path import join
 
 # Enthought library imports.
-from enthought.ets.api import ETS
+from enthought.app_data_locator.api import AppDataLocator
 from enthought.io.api import File
 from enthought.traits.api import HasTraits, Bool, Str
 from enthought.util.api import deprecated
@@ -147,7 +147,7 @@ class GUI(HasTraits):
     def _state_location_default(self):
         """ Trait initializer. """
 
-        state_location = join(ETS.application_home, 'pyface', toolkit().name)
+        state_location = join(AppDataLocator.application_home, 'pyface', toolkit().name)
         try:
             File(state_location).create_folders()
 
