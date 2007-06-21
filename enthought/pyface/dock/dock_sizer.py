@@ -38,6 +38,9 @@ from idockable \
     
 from ifeature_tool \
     import IFeatureTool
+    
+# Define version dependent values:  
+wx_26 = (wx.__version__[:3] == '2.6') 
 
 #-------------------------------------------------------------------------------
 #  Constants:
@@ -1485,9 +1488,12 @@ class DockControl ( DockItem ):
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
-            size = self.control.GetEffectiveMinSize()
-            dx   = size.GetWidth()
-            dy   = size.GetHeight()
+            if wx_26:  
+                size = self.control.GetBestFittingSize()  
+            else:  
+                size = self.control.GetEffectiveMinSize()  
+            dx = size.GetWidth()
+            dy = size.GetHeight()
             if self.width < 0:
                 self.width, self.height = dx, dy
 
