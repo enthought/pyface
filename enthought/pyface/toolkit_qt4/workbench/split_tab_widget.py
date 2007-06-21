@@ -39,13 +39,12 @@ class SplitTabWidget(QtGui.QSplitter):
 
         # Find the first tab widget going down the left of the hierarchy.  This
         # will be the one in the top left corner.
-        ch_list = self.children()
-
-        if ch_list:
-            ch = ch_list[0]
+        if self.count() > 0:
+            ch = self.widget(0)
 
             while not isinstance(ch, _TabWidget):
-                ch = ch.children()[0]
+                assert isinstance(ch, QtGui.QSplitter)
+                ch = ch.widget(0)
         else:
             # There is not tab widget so create one.
             ch = _TabWidget(self)
@@ -358,15 +357,15 @@ class _TabWidget(QtGui.QTabWidget):
     def _close_tab(self):
         """ Close the current tab. """
 
-        # Reparent the widget so that it stays alive in case there is no other
-        # reference to it.
+        # Orphan the widget.  Note that this might cause it to be garbage
+        # collected if there is no other reference to it.
         # ZZZ: How do we feed this back to the workbench and what should we
         # really do with the widget?
         # ZZZ: Check the removeTab() ownership transfer is really working
         # properly.
         w = self.currentWidget()
         self.removeTab(self.currentIndex())
-        w.setParent(self._root)
+        w.setParent(None)
 
         self.still_needed()
 
