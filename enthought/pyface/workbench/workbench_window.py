@@ -140,7 +140,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('opening workbench window [%s]', self)
+        logger.debug('workbench window [%s] opening', self)
 
         # Trait notification.
         self.opening = event = Vetoable()
@@ -155,10 +155,10 @@ class WorkbenchWindow(ApplicationWindow):
             # Trait notification.
             self.opened = self
 
-            logger.debug('opened workbench window [%s]', self)
+            logger.debug('workbench window [%s] opened', self)
 
         else:
-            logger.debug('opening of workbench window [%s] vetoed', self)
+            logger.debug('workbench window [%s] open was etoed', self)
 
         # fixme: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
@@ -175,7 +175,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('closing workbench window [%s]', self)
+        logger.debug('workbench window [%s] closing', self)
 
         if self.control is not None:
             # Trait notification.
@@ -200,10 +200,10 @@ class WorkbenchWindow(ApplicationWindow):
                 # Trait notification.
                 self.closed = self
 
-                logger.debug('closed workbench window [%s]', self)
+                logger.debug('workbench window [%s] closed', self)
 
             else:
-                logger.debug('closing of workbench window [%s] vetoed', self)
+                logger.debug('workbench window [%s] close was vetoed', self)
 
         else:
             logger.debug('workbench window [%s] is not open', self)
