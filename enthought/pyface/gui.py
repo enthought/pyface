@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ import logging
 from os.path import join
 
 # Enthought library imports.
-from enthought.app_data_locator.api import AppDataLocator
+from enthought.etsconfig.api import ETSConfig
 from enthought.io.api import File
 from enthought.traits.api import HasTraits, Bool, Str
 from enthought.util.api import deprecated
@@ -81,7 +81,7 @@ class GUI(HasTraits):
         self.system_metrics = SystemMetrics()
 
         return
-    
+
     ###########################################################################
     # 'GUI' CLASS interface.
     ###########################################################################
@@ -96,7 +96,7 @@ class GUI(HasTraits):
 
         Returns an object with which the return value of the callable can be
         obtained.
-        
+
         """
 
         return cls._tk_gui_future_call(millisecs, callable, *args, **kw)
@@ -109,7 +109,7 @@ class GUI(HasTraits):
         cls._tk_gui_call_after(callable, *args, **kw)
 
         return
-    
+
     invoke_later = classmethod(invoke_later)
 
     # fixme: This method returns a toolit dependent value. We should either:-
@@ -122,20 +122,20 @@ class GUI(HasTraits):
 
         Returns an object with which the return value of the callable can be
         obtained.
-        
+
         """
 
         return cls._tk_gui_future_call(millisecs, setattr, obj, trait_name,new)
 
     set_trait_after = classmethod(set_trait_after)
-    
+
     def set_trait_later(cls, obj, trait_name, new):
         """ Sets a trait in the main GUI thread. """
 
         cls._tk_gui_call_after(setattr, obj, trait_name, new)
 
         return
-    
+
     set_trait_later = classmethod(set_trait_later)
 
     ###########################################################################
@@ -147,7 +147,7 @@ class GUI(HasTraits):
     def _state_location_default(self):
         """ Trait initializer. """
 
-        state_location = join(AppDataLocator.application_home, 'pyface', toolkit().name)
+        state_location = join(ETSConfig.application_home, 'pyface', toolkit().name)
         try:
             File(state_location).create_folders()
 
@@ -156,9 +156,9 @@ class GUI(HasTraits):
             pass
 
         logger.debug('GUI state location is [%s]', state_location)
-        
+
         return state_location
-    
+
     #### Methods ##############################################################
 
     def start_event_loop(self):
@@ -177,7 +177,7 @@ class GUI(HasTraits):
         self.started = False
 
         return
-    
+
     def stop_event_loop(self):
         """ Stop the GUI event loop. """
 
@@ -185,7 +185,7 @@ class GUI(HasTraits):
         self._tk_gui_exit_event_loop()
 
         return
-    
+
     #### Deprecated ###########################################################
 
     # FIXME v3: Remove.
@@ -196,7 +196,7 @@ class GUI(HasTraits):
         self.start_event_loop()
 
         return
-    
+
     ###########################################################################
     # Private 'GUI' interface.
     ###########################################################################
@@ -209,7 +209,7 @@ class GUI(HasTraits):
         self._tk_gui_busy_cursor(new)
 
         return
-    
+
     ###########################################################################
     # 'GUI' toolkit interface.
     ###########################################################################

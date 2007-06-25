@@ -13,6 +13,7 @@ setup(
     include_package_data = True,
     install_requires = [
         "enthought.debug",
+        "enthought.etsconfig",
         "enthought.logger",
         "enthought.naming",
         "enthought.traits",
