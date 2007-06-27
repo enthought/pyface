@@ -9,9 +9,8 @@
 #
 #------------------------------------------------------------------------------
 
-# Standard library imports.
-import sys
-import os
+# Enthought library imports.
+from enthought.etsconfig.api import ETSConfig
 
 
 # List of bundled toolkits.
@@ -37,53 +36,18 @@ def register_toolkit(name, package):
 
 
 def select_toolkit(*args, **kw):
-    """ Selects and initialises a low-level toolkit.  If a toolkit keyword
-    argument is specified then it specifies the toolkit to use.  Otherwise
-    sys.argv is searched for a '-toolkit' option.  Otherwise the value of the
-    ETS_TOOLKIT environment variable is used if set.  Otherwise the list of
-    of registered toolkits is tried in turn.
-    """
+    """ Selects and initialises a low-level toolkit based on ETSConfig. """
+
     global _toolkit
 
     # Only one toolkit can be selected because of the monkey patching of class
-    # dictionaries (and possibly for other reasons as well).  However that
-    # doesn't stop explicit use of different toolkits providing they can share
-    # event loops.
+    # dictionaries (and possibly for other reasons as well).
     if _toolkit is not None:
         return
 
-    # See if a toolkit was specified on the command line by the user.  We
-    # always do this so that it gets removed from the command line even if it
-    # gets overridden by something else.
-    tkit_argv = None
+    tkit_name = ETSConfig.toolkit
 
-    try:
-        idx = sys.argv.index('-toolkit')
-    except ValueError:
-        idx = -1
-
-    if idx >= 1 and idx < len(sys.argv) - 1:
-        tkit_argv = sys.argv[idx + 1]
-
-        # Remove the flag from the command line.  Note that it always gets
-        # removed even if it is not used.
-        del sys.argv[idx:idx + 2]
-
-    # See if a toolkit was specified programatically.
-    tkit_name = kw.get('toolkit')
-
-    # If not, see if it was specified on any command line.
-    if tkit_name is None:
-        tkit_name = tkit_argv
-
-        # If not, see if the environment variable is specified.
-        if tkit_name is None:
-            tkit_name = os.environ.get('ETS_TOOLKIT')
-    else:
-        # Remove the argument.
-        del kw['toolkit']
-
-    if tkit_name is None:
+    if tkit_name == "":
         # Search the list of registered toolkits.
         toolkits = _toolkits
     else:
