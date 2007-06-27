@@ -11,23 +11,57 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The abstract base class for all Pyface widgets. """
+""" The base interface for all pyface widgets. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits
-
-# Local imports.
-from gui import GUI
-from toolkit import patch_toolkit
+from enthought.traits.api import Any, Interface
 
 
-class Widget(HasTraits):
-    """ The abstract base class for all Pyface widgets.
+class IWidget(Interface):
+    """ The base interface for all pyface widgets.
 
     Pyface widgets delegate to a toolkit specific control.  Note that a widget
     is not necessarily a GUI object.
     """
+
+    #### 'Widget' interface ###################################################
+
+    # The toolkit specific control that represents the widget.
+    control = Any
+
+    # The control's optional parent control.
+    parent = Any
+
+    ###########################################################################
+    # 'Widget' interface.
+    ###########################################################################
+
+    def destroy(self):
+        """ Destroy the control if it exists. """
+
+    ###########################################################################
+    # Protected 'Widget' interface.
+    ###########################################################################
+
+    def _create(self):
+        """ Creates the toolkit specific control. """
+
+    def _create_control(self, parent):
+        """ Create and return the toolkit specific control that represents the
+        widget.
+        """
+
+# The following will be removed when everything has been moved to interfaces.
+
+# Enthought library imports.
+from enthought.traits.api import HasTraits
+
+# Local imports.
+from toolkit import patch_toolkit
+
+
+class Widget(HasTraits):
 
     __tko__ = 'Widget'
 
@@ -61,22 +95,6 @@ class Widget(HasTraits):
             self._tk_widget_destroy()
             self.control = None
 
-    # FIXME v3: Remove this.
-    def invoke_later(self, callable, *args, **kw):
-        """ Invokes a callable in the main GUI thread. """
-
-        GUI.invoke_later(callable, *args, **kw)
-
-        return
-    
-    # FIXME v3: Remove this.
-    def set_trait_later(self, obj, trait_name, new):
-        """ Sets a trait in the main GUI thread. """
-
-        GUI.set_trait_later(callable, *args, **kw)
-        
-        return
-
     ###########################################################################
     # Protected 'Widget' interface.
     ###########################################################################
@@ -86,7 +104,6 @@ class Widget(HasTraits):
 
         self.control = self._create_control(self.parent)
 
-    # FIXME v3: Why have this and _create()?
     def _create_control(self, parent):
         """ Create and return the toolkit specific control that represents the
         widget.

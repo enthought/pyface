@@ -19,6 +19,10 @@ import sys
 from enthought.etsconfig.api import ETSConfig
 
 
+# Get the toolkit agnostic parts of the API.
+from widget import IWidget
+
+
 def _init_toolkit():
     """ Initialise the current toolkit. """
 
@@ -45,7 +49,7 @@ def _init_toolkit():
             mdict[k] = v
 
 
-# Initialise the toolkit then disappear.
+# Get the toolkit specific parts of the API then disappear.
 _init_toolkit()
 del _init_toolkit
 
@@ -61,7 +65,6 @@ try:
     
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
-    from widget import Widget
 
     from about_dialog import AboutDialog
     from application_window import ApplicationWindow
@@ -100,7 +103,6 @@ try:
 except ImportError:
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
-    from widget import Widget
 
     from about_dialog import AboutDialog
     from application_window import ApplicationWindow
