@@ -40,7 +40,7 @@ def select_toolkit(*args, **kw):
     """ Selects and initialises a low-level toolkit.  If a toolkit keyword
     argument is specified then it specifies the toolkit to use.  Otherwise
     sys.argv is searched for a '-toolkit' option.  Otherwise the value of the
-    ENTHOUGHT_TOOLKIT environment variable is used if set.  Otherwise the list
+    ETS_TOOLKIT environment variable is used if set.  Otherwise the list of
     of registered toolkits is tried in turn.
     """
     global _toolkit
@@ -78,7 +78,7 @@ def select_toolkit(*args, **kw):
 
         # If not, see if the environment variable is specified.
         if tkit_name is None:
-            tkit_name = os.environ.get('ENTHOUGHT_TOOLKIT')
+            tkit_name = os.environ.get('ETS_TOOLKIT')
     else:
         # Remove the argument.
         del kw['toolkit']

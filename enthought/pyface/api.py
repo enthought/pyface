@@ -12,6 +12,50 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+# Standard library imports.
+import sys
+
+# Enthought library imports.
+from enthought.etsconfig.api import ETSConfig
+
+
+def _init_toolkit():
+    """ Initialise the current toolkit. """
+
+    # Get the toolkit.
+    toolkit = ETSConfig.toolkit
+
+    if not toolkit:
+        raise ValueError, "no toolkit was specified or found"
+
+    # Import the toolkit's pyface backend's API.
+    backend = 'enthought.pyface.ui.' + toolkit
+    api = backend + '.api'
+
+    try:
+        __import__(api)
+    except ImportError:
+        raise ImportError, "failed to import pyface backend %s" % backend
+
+    # Update this module with the backend's API.
+    mdict = sys.modules[__name__].__dict__
+
+    for k, v in sys.modules[api].__dict__.iteritems():
+        if not k.startswith('_'):
+            mdict[k] = v
+
+
+# Initialise the toolkit then disappear.
+_init_toolkit()
+del _init_toolkit
+
+
+# The rest of this module handles widgets that are wx specific or those that
+# use the ETS v2.x method of doing toolkit selection (which was never properly
+# used because we decided to break backwards compatibility and do it better in
+# ETS v3.x).  This will all be removed when everything has been ported to v3.x
+# and pyface becomes toolkit agnostic.
+
 # Toolkit management and selection.
 from toolkit import register_toolkit, select_toolkit, toolkit, Toolkit
 
