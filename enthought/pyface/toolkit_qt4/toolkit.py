@@ -12,8 +12,8 @@ import sys
 # Major package imports.
 from PyQt4 import QtCore, QtGui
 
-# Enthought library imports.
-from enthought.pyface.api import Toolkit
+# Internal Enthought library imports.
+from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
 from about_dialog import AboutDialog_qt4

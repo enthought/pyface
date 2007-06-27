@@ -10,7 +10,7 @@
 
 import wx
 
-from enthought.pyface.api import Toolkit
+from enthought.pyface.toolkit import Toolkit
 
 from about_dialog import AboutDialog_wx
 from application_window import ApplicationWindow_wx

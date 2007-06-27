@@ -29,12 +29,6 @@ def toolkit():
     return _toolkit
 
 
-def register_toolkit(name, package):
-    """ Registers an external toolkit. """
-    # Newly registered toolkits get priority over existing ones.
-    _toolkits.insert(0, (name, package))
-
-
 def select_toolkit(*args, **kw):
     """ Selects and initialises a low-level toolkit based on ETSConfig. """
 

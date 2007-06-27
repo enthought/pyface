@@ -26,7 +26,7 @@ from enthought.util.api import deprecated
 
 # Local imports.
 from system_metrics import SystemMetrics
-from toolkit import patch_toolkit, toolkit
+from toolkit import patch_toolkit
 
 
 # Logging.
@@ -63,7 +63,7 @@ class GUI(HasTraits):
         # The (optional) splash screen.
         self._splash_screen = splash_screen
 
-        if toolkit().name == 'wx':
+        if ETSConfig.toolkit == 'wx':
             # fixme: For now, we have disabled splash screens on non-Windows
             # platforms as on Linux they cause the application to hang when
             # they are supposed to close (allegedly, this is for applications
@@ -147,7 +147,7 @@ class GUI(HasTraits):
     def _state_location_default(self):
         """ Trait initializer. """
 
-        state_location = join(ETSConfig.application_home, 'pyface', toolkit().name)
+        state_location = join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
         try:
             File(state_location).create_folders()
 

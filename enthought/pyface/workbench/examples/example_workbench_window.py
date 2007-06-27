@@ -19,7 +19,7 @@ from yellow_view import YellowView
 
 # Until TraitsUI supports PyQt we provide an alternative editor manager that
 # creates bespoke editors if PyQt is the selected toolkit.
-from enthought.pyface.api import toolkit
+from enthought.etsconfig.api import ETSConfig
 from enthought.pyface.workbench.api import Editor, EditorManager
 
 
@@ -71,7 +71,7 @@ class _TkEditorManager(EditorManager):
     def create_editor(self, window, obj, kind):
         """ Create an editor for an object. """
         
-        if toolkit().name == 'qt4':
+        if ETSConfig.toolkit == 'qt4':
             editor = self._PyQt4PersonEditor(window=window, obj=obj)
 
         else:

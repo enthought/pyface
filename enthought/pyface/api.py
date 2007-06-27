@@ -56,10 +56,6 @@ del _init_toolkit
 # ETS v3.x).  This will all be removed when everything has been ported to v3.x
 # and pyface becomes toolkit agnostic.
 
-# Toolkit management and selection.
-from toolkit import register_toolkit, select_toolkit, toolkit, Toolkit
-
-
 try:
     import wx
     
