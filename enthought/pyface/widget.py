@@ -52,6 +52,25 @@ class IWidget(Interface):
         widget.
         """
 
+
+class MWidget(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IWidget interface.
+
+    Implements: _create()
+    """
+
+    ###########################################################################
+    # Protected 'Widget' interface.
+    ###########################################################################
+
+    def _create(self):
+        self.control = self._create_control(self.parent)
+
+    def _create_control(self, parent):
+        raise NotImplementedError
+
+
 # The following will be removed when everything has been moved to interfaces.
 
 # Enthought library imports.

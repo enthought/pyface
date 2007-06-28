@@ -20,7 +20,9 @@ from enthought.etsconfig.api import ETSConfig
 
 
 # Get the toolkit agnostic parts of the API.
-from widget import IWidget
+from constant import OK, CANCEL, YES, NO
+from widget import IWidget, MWidget
+from window import IWindow, MWindow
 
 
 def _init_toolkit():
@@ -70,7 +72,6 @@ try:
     from application_window import ApplicationWindow
     from background_progress_dialog import BackgroundProgressDialog
     from confirmation_dialog import ConfirmationDialog, confirm
-    from constant import OK, CANCEL, YES, NO
     from dialog import Dialog
     from directory_dialog import DirectoryDialog
     from expandable_panel import ExpandablePanel
@@ -95,7 +96,6 @@ try:
     from split_dialog import SplitDialog
     from split_panel import SplitPanel
     from system_metrics import SystemMetrics
-    from window import Window
 
     # Fix for broken Pycrust introspect module.
     import util.fix_introspect_bug
@@ -107,7 +107,6 @@ except ImportError:
     from about_dialog import AboutDialog
     from application_window import ApplicationWindow
     from confirmation_dialog import ConfirmationDialog, confirm
-    from constant import OK, CANCEL, YES, NO
     from dialog import Dialog
     from directory_dialog import DirectoryDialog
     from file_dialog import FileDialog
@@ -118,4 +117,3 @@ except ImportError:
     from python_shell import PythonShell
     from splash_screen import SplashScreen
     from system_metrics import SystemMetrics
-    from window import Window
