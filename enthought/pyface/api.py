@@ -55,6 +55,9 @@ def _init_toolkit():
         else:
             raise ImportError, "unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits)
 
+    # In case we have just decided on a toolkit, tell everybody else.
+    ETSConfig.toolkit = tk
+
     # Update this module with the backend's API.
     mdict = sys.modules[__name__].__dict__
 
