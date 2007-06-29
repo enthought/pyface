@@ -545,7 +545,7 @@ class WorkbenchWindowLayout_wx(object):
         return
 
     def _tk_workbenchwindowlayout_create(self):
-        """ Creates the initial window layout. """
+        """ Create and return the initial window layout. """
 
         # The view dock window is where all of the views live. It also contains
         # a nested dock window where all of the editors live.
@@ -575,7 +575,12 @@ class WorkbenchWindowLayout_wx(object):
 
         self._view_dock_window.control.SetSizer(view_dock_window_sizer)
 
-        return
+        # FIXME v3: The wx backend doesn't need this at the moment so we leave
+        # it until we work out what the proper thing to do is.  Maybe we should
+        # return view_dock_window_sizer and the call to SetSizer should be in
+        # ApplicationWindow._create() - depends on what other ApplicationWindow
+        # sub-classes do.
+        return None
 
     def _tk_workbenchwindowlayout_contains_view(self, view):
         """ Returns True if the view exists in the window layout. """

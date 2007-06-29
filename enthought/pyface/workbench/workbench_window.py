@@ -218,10 +218,10 @@ class WorkbenchWindow(ApplicationWindow):
     ###########################################################################
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """ Create and return the window contents. """
 
         # Create the initial window layout.
-        self.layout.create_initial_layout()
+        contents = self.layout.create_initial_layout()
 
         # Save the initial window layout so that we can reset it when changing
         # to a perspective that has not been seen yet.
@@ -243,7 +243,7 @@ class WorkbenchWindow(ApplicationWindow):
         else:
             self._create_layout()
 
-        return
+        return contents
 
     ###########################################################################
     # 'WorkbenchWindow' interface.

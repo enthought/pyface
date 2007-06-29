@@ -14,8 +14,10 @@
 """ A window that is split in two either horizontally or vertically. """
 
 
+# Enthought library imports.
+from enthought.pyface.api import ApplicationWindow
+
 # Local imports.
-from application_window import ApplicationWindow
 from split_widget import SplitWidget
 
 

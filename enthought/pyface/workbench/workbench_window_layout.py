@@ -178,11 +178,9 @@ class WorkbenchWindowLayout(HasTraits):
         return
 
     def create_initial_layout(self):
-        """ Creates the initial window layout. """
+        """ Create and return the initial window layout. """
 
-        self._tk_workbenchwindowlayout_create()
-
-        return
+        return self._tk_workbenchwindowlayout_create()
 
     def contains_view(self, view):
         """ Returns True if the view exists in the window layout.
@@ -325,7 +323,7 @@ class WorkbenchWindowLayout(HasTraits):
         raise NotImplementedError
 
     def _tk_workbenchwindowlayout_create(self):
-        """ Creates the initial window layout.
+        """ Create and return the initial window layout.
 
         This must be reimplemented.
         """

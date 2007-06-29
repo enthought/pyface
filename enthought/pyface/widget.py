@@ -25,7 +25,7 @@ class IWidget(Interface):
     is not necessarily a GUI object.
     """
 
-    #### 'Widget' interface ###################################################
+    #### 'IWidget' interface ###################################################
 
     # The toolkit specific control that represents the widget.
     control = Any
@@ -34,14 +34,14 @@ class IWidget(Interface):
     parent = Any
 
     ###########################################################################
-    # 'Widget' interface.
+    # 'IWidget' interface.
     ###########################################################################
 
     def destroy(self):
         """ Destroy the control if it exists. """
 
     ###########################################################################
-    # Protected 'Widget' interface.
+    # Protected 'IWidget' interface.
     ###########################################################################
 
     def _create(self):
@@ -61,7 +61,7 @@ class MWidget(object):
     """
 
     ###########################################################################
-    # Protected 'Widget' interface.
+    # Protected 'IWidget' interface.
     ###########################################################################
 
     def _create(self):

@@ -91,7 +91,7 @@ class IWorkbenchWindowLayout(Interface):
     def create_initial_layout(self):
         """ Creates the initial window layout.
 
-        Returns None.
+        Returns the layout.
 
         """
 

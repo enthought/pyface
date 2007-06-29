@@ -15,17 +15,15 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Instance, Int, Str
+from enthought.traits.api import Instance, Int, Str
 
 # Local imports.
-# fixme: PyQt4 hack - no status bar manager in QT4 yet!
-##from action.api import StatusBarManager
-from action.api import MenuBarManager, ToolBarManager
+from action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from image_resource import ImageResource
-from window import Window
+from window import IWindow
 
 
-class ApplicationWindow(Window):
+class IApplicationWindow(IWindow):
     """ A top-level application window.
     
     The application window has support for a menu bar, tool bar and a status
@@ -35,17 +33,7 @@ class ApplicationWindow(Window):
     '_create_contents' method.
     """
 
-    __tko__ = 'ApplicationWindow'
-
-    #### 'Window' interface ###################################################
-
-    # The size of the window.
-    size = (800, 600)
-    
-    # The window title.
-    title = Str('Pyface')
-
-    #### 'ApplicationWindow' interface ########################################
+    #### 'IApplicationWindow' interface #######################################
 
     # The window icon.  The default is toolkit specific.
     icon = Instance(ImageResource)
@@ -54,119 +42,74 @@ class ApplicationWindow(Window):
     menu_bar_manager = Instance(MenuBarManager)
 
     # The status bar manager (None iff there is no status bar).
-    # fixme: PyQt4 hack - no status bar manager in QT4 yet!
-    status_bar_manager = Any#Instance(StatusBarManager)
+    status_bar_manager = Instance(StatusBarManager)
 
     # The tool bar manager (None iff there is no tool bar).
     tool_bar_manager = Instance(ToolBarManager)
+
+    ###########################################################################
+    # Protected 'IApplicationWindow' interface.
+    ###########################################################################
+
+    def _create_contents(self, parent):
+        """ Create and return the window's contents.
+
+        parent is the parent control.
+        """
+
+    def _create_menu_bar(self, parent):
+        """ Creates the menu bar (if required).
+
+        parent is the parent control.
+        """
     
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
+    def _create_status_bar(self, parent):
+        """ Creates the status bar (if required).
 
-    def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        parent is the parent control.
+        """
 
-        # FIXME v3: This should probably invoke the superclass method rather
-        # than the toolkit method.  It's done this way at the moment to exactly
-        # replicate the v2 behaviour.
-        control = self._tk_window_create(parent)
+    def _create_tool_bar(self, parent):
+        """ Creates the tool bar (if required).
 
-        # Create the 'trim' widgets (menu, tool and status bars etc).
-        self._create_trim_widgets(control)
-
-        # FIXME v3: What's this for? To create a circular reference?
-        control._pyface_reference = self
-
-        return control
+        parent is the parent control.
+        """
     
-    ###########################################################################
-    # Protected 'ApplicationWindow' interface.
-    ###########################################################################
-
-    # FIXME v3: The parent argument is always self.control.
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window).
 
-        Currently these are the menu, tool and status bars.
+        parent is the parent control.
         """
 
+    def _set_window_icon(self):
+        """ Sets the window icon (if required). """
+    
+
+class MApplicationWindow(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IApplicationWindow interface.
+
+    Implements: _create_contents(), _create_trim_widgets()
+    """
+
+    ###########################################################################
+    # Protected 'IApplicationWindow' interface.
+    ###########################################################################
+
+    def _create_contents(self, parent):
+        """ Creates the window's contents. """
+
+        raise NotImplementedError
+
+    def _create_trim_widgets(self, parent):
+        """ Creates the 'trim' widgets (the widgets around the window). """
+
         # All of these are optional.
-        self._set_window_icon(parent)
+        self._set_window_icon()
         self._create_menu_bar(parent)
         self._create_tool_bar(parent)
         self._create_status_bar(parent)
         
         return
 
-    def _set_window_icon(self, parent):
-        """ Sets the window icon (if required). """
-
-        self._tk_applicationwindow_set_icon(parent, self.icon)
-
-        return
-    
-    def _create_menu_bar(self, parent):
-        """ Creates the menu bar (if required). """
-        
-        if self.menu_bar_manager is not None:
-            menu_bar = self.menu_bar_manager.create_menu_bar(parent)
-            self._tk_applicationwindow_set_menu_bar(parent, menu_bar)
-
-        return
-    
-    def _create_tool_bar(self, parent):
-        """ Creates the tool bar (if required). """
-        
-        if self.tool_bar_manager is not None:
-            tool_bar = self.tool_bar_manager.create_tool_bar(parent)
-            self._tk_applicationwindow_set_tool_bar(parent, tool_bar)
-
-        return
-    
-    def _create_status_bar(self, parent):
-        """ Creates the status bar (if required). """
-        
-        if self.status_bar_manager is not None:
-            status_bar = self.status_bar_manager.create_status_bar(parent)
-            self._tk_applicationwindow_set_status_bar(parent, status_bar)
-
-        return
-
-    ###########################################################################
-    # 'ApplicationWindow' toolkit interface.
-    ###########################################################################
-
-    def _tk_applicationwindow_set_icon(self, control, icon):
-        """ Sets the window icon.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_applicationwindow_set_menu_bar(self, control, menu_bar):
-        """ Sets the menu bar.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_applicationwindow_set_status_bar(self, control, status_bar):
-        """ Sets the status bar.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_applicationwindow_set_tool_bar(self, control, tool_bar):
-        """ Sets the tool bar.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-    
 #### EOF ######################################################################

@@ -149,9 +149,9 @@ class WorkbenchWindowLayout_qt4(object):
                 self._qt4_delete_view_dock_widget(v)
 
     def _tk_workbenchwindowlayout_create(self):
-        """ Creates the initial window layout. """
+        """ Create and return the initial window layout. """
 
-        self.window.control.setCentralWidget(SplitTabWidget())
+        return SplitTabWidget()
 
     def _tk_workbenchwindowlayout_contains_view(self, view):
         """ Returns True if the view exists in the window layout. """

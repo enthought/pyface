@@ -22,6 +22,9 @@ from enthought.etsconfig.api import ETSConfig
 # Get the toolkit agnostic parts of the API.
 from constant import OK, CANCEL, YES, NO
 from key_pressed_event import KeyPressedEvent
+
+# Get the interfaces and mixins needed by backends.
+from application_window import IApplicationWindow, MApplicationWindow
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -66,16 +69,13 @@ def _init_toolkit():
             mdict[k] = v
 
 
-# Get the toolkit specific parts of the API then disappear.
-_init_toolkit()
-del _init_toolkit
-
-
-# The rest of this module handles widgets that are wx specific or those that
+###############################################################################
+# This part of the module handles widgets that are wx specific or those that
 # use the ETS v2.x method of doing toolkit selection (which was never properly
 # used because we decided to break backwards compatibility and do it better in
 # ETS v3.x).  This will all be removed when everything has been ported to v3.x
 # and pyface becomes toolkit agnostic.
+###############################################################################
 
 try:
     import wx
@@ -84,7 +84,6 @@ try:
     from image_cache import ImageCache
 
     from about_dialog import AboutDialog
-    from application_window import ApplicationWindow
     from background_progress_dialog import BackgroundProgressDialog
     from confirmation_dialog import ConfirmationDialog, confirm
     from dialog import Dialog
@@ -119,7 +118,6 @@ except ImportError:
     from image_cache import ImageCache
 
     from about_dialog import AboutDialog
-    from application_window import ApplicationWindow
     from confirmation_dialog import ConfirmationDialog, confirm
     from dialog import Dialog
     from directory_dialog import DirectoryDialog
@@ -130,3 +128,10 @@ except ImportError:
     from python_shell import PythonShell
     from splash_screen import SplashScreen
     from system_metrics import SystemMetrics
+
+###############################################################################
+
+
+# Get the toolkit specific parts of the API then disappear.
+_init_toolkit()
+del _init_toolkit

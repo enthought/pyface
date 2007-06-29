@@ -18,10 +18,10 @@
 import wx
 
 # Enthought library imports.
+from enthought.pyface.api import ApplicationWindow
 from enthought.traits.api import Bool, Instance, Int, Tuple
 
 # Local imports.
-from application_window import ApplicationWindow
 from image_resource import ImageResource
 
 

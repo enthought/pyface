@@ -30,7 +30,7 @@ class IWindow(IWidget):
     (ie. its 'control' trait will be None until it is opened).
     """
 
-    #### 'Window' interface ###################################################
+    #### 'IWindow' interface ##################################################
     
     # The position of the window.
     position = Tuple
@@ -73,7 +73,7 @@ class IWindow(IWidget):
     opening = Event
     
     ###########################################################################
-    # 'Window' interface.
+    # 'IWindow' interface.
     ###########################################################################
 
     def open(self):
@@ -98,7 +98,7 @@ class IWindow(IWidget):
         """
 
     ###########################################################################
-    # Protected 'Window' interface.
+    # Protected 'IWindow' interface.
     ###########################################################################
 
     def _add_event_listeners(self):
@@ -114,7 +114,7 @@ class MWindow(object):
     """
 
     ###########################################################################
-    # 'Window' interface.
+    # 'IWindow' interface.
     ###########################################################################
 
     def open(self):
@@ -156,13 +156,13 @@ class MWindow(object):
         return confirm(self.control, message, title, cancel, default)
     
     ###########################################################################
-    # Protected 'Widget' interface.
+    # Protected 'IWidget' interface.
     ###########################################################################
 
     def _create(self):
         """ Creates the window's widget hierarchy. """
 
-        # Create the toolkit-specific control that represents the window.
+        # Create the toolkit-specific control.
         super(MWindow, self)._create()
 
         # Wire up event any event listeners required by the window.

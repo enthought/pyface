@@ -13,7 +13,6 @@ import wx
 from enthought.pyface.toolkit import Toolkit
 
 from about_dialog import AboutDialog_wx
-from application_window import ApplicationWindow_wx
 from confirmation_dialog import ConfirmationDialog_wx
 from dialog import Dialog_wx
 from directory_dialog import DirectoryDialog_wx
@@ -48,7 +47,6 @@ class Toolkit_wx(Toolkit):
     _MenuItem = _MenuItem_wx
     _Tool = _Tool_wx
     AboutDialog = AboutDialog_wx
-    ApplicationWindow = ApplicationWindow_wx
     ConfirmationDialog = ConfirmationDialog_wx
     Dialog = Dialog_wx
     DirectoryDialog = DirectoryDialog_wx
