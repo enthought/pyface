@@ -22,7 +22,7 @@ class KeyPressedEvent(HasTraits):
     # The keycode.
     key_code = Int
     
-    # The original wx KeyEvent:
+    # The original toolkit specific event.
     event = Any
 
 #### EOF ######################################################################

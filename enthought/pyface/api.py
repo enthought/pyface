@@ -21,6 +21,7 @@ from enthought.etsconfig.api import ETSConfig
 
 # Get the toolkit agnostic parts of the API.
 from constant import OK, CANCEL, YES, NO
+from key_pressed_event import KeyPressedEvent
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -28,20 +29,31 @@ from window import IWindow, MWindow
 def _init_toolkit():
     """ Initialise the current toolkit. """
 
+    # Toolkits to check for if none is explicitly specified.
+    known_toolkits = ('wx', 'qt4')
+
     # Get the toolkit.
     toolkit = ETSConfig.toolkit
 
-    if not toolkit:
-        raise ValueError, "no toolkit was specified or found"
+    if toolkit:
+        toolkits = (toolkit, )
+    else:
+        toolkits = known_toolkits
 
-    # Import the toolkit's pyface backend's API.
-    backend = 'enthought.pyface.ui.' + toolkit
-    api = backend + '.api'
+    for tk in toolkits:
+        # Import the toolkit's pyface backend's API.
+        api = 'enthought.pyface.ui.%s.api' % tk
 
-    try:
-        __import__(api)
-    except ImportError:
-        raise ImportError, "failed to import pyface backend %s" % backend
+        try:
+            __import__(api)
+            break
+        except ImportError:
+            pass
+    else:
+        if toolkit:
+            raise ImportError, "unable to import a pyface backend for the %s toolkit" % toolkit
+        else:
+            raise ImportError, "unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits)
 
     # Update this module with the backend's API.
     mdict = sys.modules[__name__].__dict__
@@ -81,7 +93,6 @@ try:
     from heading_text import HeadingText
     from image_resource import ImageResource
     from image_widget import ImageWidget
-    from key_pressed_event import KeyPressedEvent
     from layered_panel import LayeredPanel
     from mdi_application_window import MDIApplicationWindow
     from mdi_window_menu import MDIWindowMenu
@@ -112,7 +123,6 @@ except ImportError:
     from file_dialog import FileDialog
     from gui import GUI
     from image_resource import ImageResource
-    from key_pressed_event import KeyPressedEvent
     from message_dialog import MessageDialog, error, information, warning
     from python_shell import PythonShell
     from splash_screen import SplashScreen
