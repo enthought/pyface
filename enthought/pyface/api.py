@@ -20,11 +20,14 @@ from enthought.etsconfig.api import ETSConfig
 
 
 # Get the toolkit agnostic parts of the API.
+from confirmation_dialog import confirm
 from constant import OK, CANCEL, YES, NO
 from key_pressed_event import KeyPressedEvent
 
 # Get the interfaces and mixins needed by backends.
 from application_window import IApplicationWindow, MApplicationWindow
+from confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from dialog import IDialog, MDialog
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -85,8 +88,6 @@ try:
 
     from about_dialog import AboutDialog
     from background_progress_dialog import BackgroundProgressDialog
-    from confirmation_dialog import ConfirmationDialog, confirm
-    from dialog import Dialog
     from directory_dialog import DirectoryDialog
     from expandable_panel import ExpandablePanel
     from file_dialog import FileDialog
@@ -118,8 +119,6 @@ except ImportError:
     from image_cache import ImageCache
 
     from about_dialog import AboutDialog
-    from confirmation_dialog import ConfirmationDialog, confirm
-    from dialog import Dialog
     from directory_dialog import DirectoryDialog
     from file_dialog import FileDialog
     from gui import GUI

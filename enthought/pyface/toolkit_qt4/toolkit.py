@@ -17,7 +17,6 @@ from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
 from about_dialog import AboutDialog_qt4
-from confirmation_dialog import ConfirmationDialog_qt4
 from dialog import Dialog_qt4
 from directory_dialog import DirectoryDialog_qt4
 from file_dialog import FileDialog_qt4
@@ -48,7 +47,6 @@ class Toolkit_qt4(Toolkit):
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
     AboutDialog = AboutDialog_qt4
-    ConfirmationDialog = ConfirmationDialog_qt4
     Dialog = Dialog_qt4
     DirectoryDialog = DirectoryDialog_qt4
     Editor = Editor_qt4

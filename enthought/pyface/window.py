@@ -15,10 +15,10 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Event, Int, Str, Tuple
+from enthought.traits.api import Any, Event, Int, Tuple, Unicode
 
 # Local imports.
-from constant import NO, OK
+from constant import NO
 from key_pressed_event import KeyPressedEvent
 from widget import IWidget
 
@@ -35,17 +35,11 @@ class IWindow(IWidget):
     # The position of the window.
     position = Tuple
     
-    # The return code after the window is closed (this is useful in dialogs
-    # etc, to indicate whether the dialog was closed via 'Ok' or 'Cancel').
-    # FIXME v3: This should be in Dialog.
-    return_code = Int(OK)
-
     # The size of the window.
     size = Tuple
 
     # The window title.
-    # FIXME v3: Unicode
-    title = Str
+    title = Unicode
 
     #### Events #####
 
@@ -175,10 +169,11 @@ class MWindow(object):
 
 # Enthought library imports.
 from enthought.logger import logger
-from enthought.traits.api import Property
+from enthought.traits.api import Property, Str
 
 # Local imports.
 from widget import Widget
+from constant import OK
 
 
 class Window(Widget):

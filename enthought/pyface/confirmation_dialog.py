@@ -11,21 +11,23 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" A dialog that prompts the user for confirmation. """
+""" An interface for a dialog that prompts the user for confirmation. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Instance, Str
+from enthought.traits.api import Bool, Enum, Instance, Unicode
 
 # Local imports.
 from constant import CANCEL, NO, YES
-from dialog import Dialog
+from dialog import IDialog
 from image_resource import ImageResource
 
 
 def confirm(parent, message, title=None, cancel=False, default=NO):
     """ Convenience function to show a confirmation dialog. """
     
+    from enthought.pyface.api import ConfirmationDialog
+
     if title is None:
         title = "Confirmation"
 
@@ -40,17 +42,10 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
     return dialog.open()
 
 
-class ConfirmationDialog(Dialog):
-    """ A dialog that prompts the user for confirmation. """
+class IConfirmationDialog(IDialog):
+    """ An interface for a dialog that prompts the user for confirmation. """
 
-    __tko__ = 'ConfirmationDialog'
-
-    #### 'Dialog' interface ###################################################
-
-    # Is the dialog resizeable?
-    resizeable = False
-
-    #### 'ConfirmationDialog' interface #######################################
+    #### 'IConfirmationDialog' interface ######################################
 
     # Should the cancel button be displayed?
     cancel = Bool(False)
@@ -58,17 +53,23 @@ class ConfirmationDialog(Dialog):
     # The default button.
     default = Enum(NO, YES, CANCEL)
     
-    # The image displayed to the left of the message.  The default is toolkit
-    # specific.
+    # The image displayed with the message.  The default is toolkit specific.
     image = Instance(ImageResource)
 
     # The message displayed in the body of the dialog (use the inherited
     # 'title' trait to set the title of the dialog itself).
-    message = Str
+    message = Unicode
 
-    # Button labels.  The defaults are toolkit specific.
-    yes_label    = Str
-    no_label     = Str
-    cancel_label = Str
+    # The label for the 'no' button.  The default is toolkit specific.
+    no_label = Unicode
+
+    # The label for the 'yes' button.  The default is toolkit specific.
+    yes_label = Unicode
+
+
+class MConfirmationDialog(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IConfirmationDialog interface.
+    """
 
 #### EOF ######################################################################
