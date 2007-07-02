@@ -89,17 +89,12 @@ class MApplicationWindow(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IApplicationWindow interface.
 
-    Implements: _create_contents(), _create_trim_widgets()
+    Implements: _create_trim_widgets()
     """
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
     ###########################################################################
-
-    def _create_contents(self, parent):
-        """ Creates the window's contents. """
-
-        raise NotImplementedError
 
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window). """

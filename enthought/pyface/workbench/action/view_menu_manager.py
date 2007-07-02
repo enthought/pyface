@@ -68,9 +68,10 @@ class ViewMenuManager(MenuManager):
 
         logger.debug('refreshing view menu')
 
-        for view in self.window.views:
-            action_item = self._view_group.find(view.id)
-            action_item.action.checked = view.visible
+        if self._view_group is not None:
+            for view in self.window.views:
+                action_item = self._view_group.find(view.id)
+                action_item.action.checked = view.visible
 
         return
 

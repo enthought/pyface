@@ -16,14 +16,12 @@ from PyQt4 import QtCore, QtGui
 from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
-from about_dialog import AboutDialog_qt4
 from dialog import Dialog_qt4
 from directory_dialog import DirectoryDialog_qt4
 from file_dialog import FileDialog_qt4
 from gui import GUI_qt4
 from image_cache import ImageCache_qt4
 from image_resource import ImageResource_qt4
-from message_dialog import MessageDialog_qt4
 from python_shell import PythonShell_qt4
 from resource_manager import PyfaceResourceFactory_qt4
 from splash_screen import SplashScreen_qt4
@@ -46,7 +44,6 @@ class Toolkit_qt4(Toolkit):
 
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
-    AboutDialog = AboutDialog_qt4
     Dialog = Dialog_qt4
     DirectoryDialog = DirectoryDialog_qt4
     Editor = Editor_qt4
@@ -56,7 +53,6 @@ class Toolkit_qt4(Toolkit):
     ImageResource = ImageResource_qt4
     MenuBarManager = MenuBarManager_qt4
     MenuManager = MenuManager_qt4
-    MessageDialog = MessageDialog_qt4
     PyfaceResourceFactory = PyfaceResourceFactory_qt4
     PythonShell = PythonShell_qt4
     SplashScreen = SplashScreen_qt4

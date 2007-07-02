@@ -23,11 +23,14 @@ from enthought.etsconfig.api import ETSConfig
 from confirmation_dialog import confirm
 from constant import OK, CANCEL, YES, NO
 from key_pressed_event import KeyPressedEvent
+from message_dialog import error, information, warning
 
 # Get the interfaces and mixins needed by backends.
+from about_dialog import IAboutDialog, MAboutDialog
 from application_window import IApplicationWindow, MApplicationWindow
 from confirmation_dialog import IConfirmationDialog, MConfirmationDialog
 from dialog import IDialog, MDialog
+from message_dialog import IMessageDialog, MMessageDialog
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -86,7 +89,6 @@ try:
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
 
-    from about_dialog import AboutDialog
     from background_progress_dialog import BackgroundProgressDialog
     from directory_dialog import DirectoryDialog
     from expandable_panel import ExpandablePanel
@@ -99,7 +101,6 @@ try:
     from layered_panel import LayeredPanel
     from mdi_application_window import MDIApplicationWindow
     from mdi_window_menu import MDIWindowMenu
-    from message_dialog import MessageDialog, error, information, warning
     from multi_toolbar_window import MultiToolbarWindow
     from python_editor import PythonEditor
     from python_shell import PythonShell
@@ -118,12 +119,10 @@ except ImportError:
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
 
-    from about_dialog import AboutDialog
     from directory_dialog import DirectoryDialog
     from file_dialog import FileDialog
     from gui import GUI
     from image_resource import ImageResource
-    from message_dialog import MessageDialog, error, information, warning
     from python_shell import PythonShell
     from splash_screen import SplashScreen
     from system_metrics import SystemMetrics

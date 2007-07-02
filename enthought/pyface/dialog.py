@@ -78,20 +78,19 @@ class IDialog(IWindow):
     ###########################################################################
 
     def _create_buttons(self, parent):
-        """ Creates the buttons.
+        """ Create and return the buttons.
 
         parent is the parent control.
         """
 
     def _create_contents(self, parent):
-        """ Create and return the dialog contents (or None if the contents have
-        already been created, typically for a canned dialog).
+        """ Create the dialog contents.
 
         parent is the parent control.
         """
 
     def _create_dialog_area(self, parent):
-        """ Creates the main content of the dialog.
+        """ Create and return the main content of the dialog.
 
         parent is the parent control.
         """
@@ -104,8 +103,8 @@ class MDialog(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 
-    Implements: open(), _create_dialog_area()
-    Reimplements: _add_event_listeners()
+    Implements: open()
+    Reimplements: _add_event_listeners(), _create()
     """
 
     ###########################################################################
@@ -127,13 +126,15 @@ class MDialog(object):
         return self.return_code
 
     ###########################################################################
-    # Protected 'IDialog' interface.
+    # Protected 'IWidget' interface.
     ###########################################################################
 
-    def _create_dialog_area(self, parent):
-        """ Creates the main content of the dialog. """
+    def _create(self):
+        """ Creates the window's widget hierarchy. """
 
-        raise NotImplementedError
+        super(MDialog, self)._create()
+
+        self._create_contents(self.control)
 
     ###########################################################################
     # Protected 'IWindow' interface.

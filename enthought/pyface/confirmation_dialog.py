@@ -11,7 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" An interface for a dialog that prompts the user for confirmation. """
+""" The interface for a dialog that prompts the user for confirmation. """
 
 
 # Enthought library imports.
@@ -43,7 +43,7 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 
 
 class IConfirmationDialog(IDialog):
-    """ An interface for a dialog that prompts the user for confirmation. """
+    """ The interface for a dialog that prompts the user for confirmation. """
 
     #### 'IConfirmationDialog' interface ######################################
 

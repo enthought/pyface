@@ -11,19 +11,21 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" A dialog that displays a message. """
+""" The interface for a dialog that displays a message. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Str
+from enthought.traits.api import Enum, Unicode
 
 # Local imports.
-from dialog import Dialog
+from dialog import IDialog
 
 
 # Convenience functions.
 def information(parent, message, title='Information'):
     """ Convenience function to show an information message dialog. """
+
+    from enthought.pyface.api import MessageDialog
 
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='information'
@@ -35,6 +37,8 @@ def information(parent, message, title='Information'):
 def warning(parent, message, title='Warning'):
     """ Convenience function to show a warning message dialog. """
 
+    from enthought.pyface.api import MessageDialog
+
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='warning'
     )
@@ -45,6 +49,8 @@ def warning(parent, message, title='Warning'):
 def error(parent, message, title='Error'):
     """ Convenience function to show an error message dialog. """
 
+    from enthought.pyface.api import MessageDialog
+
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='error'
     )
@@ -53,33 +59,21 @@ def error(parent, message, title='Error'):
     return
 
 
-class MessageDialog(Dialog):
-    """ A dialog that displays a message. """
+class IMessageDialog(IDialog):
+    """ The interface for a dialog that displays a message. """
 
-    __tko__ = 'MessageDialog'
-
-    #### 'Dialog' interface ###################################################
-
-    # Is the dialog resizeable?
-    resizeable = False
-
-    #### 'MessageDialog' interface ############################################
+    #### 'IMessageDialog' interface ###########################################
     
     # The message to display in the dialog.
-    message = Str
+    message = Unicode
     
     # The severity of the message.
     severity = Enum('information', 'warning', 'error')
 
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
 
-    def _create_contents(self, parent):
-        """ Creates the window contents. """
-
-        # The toolkit is expected to create the whole thing when it creates the
-        # control.
-        return None
+class MMessageDialog(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IMessageDialog interface.
+    """
 
 #### EOF ######################################################################

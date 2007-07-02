@@ -11,57 +11,32 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" A simple 'About' dialog. """
+""" The interface for a simple 'About' dialog. """
 
-
-# Standard library imports.
-import sys
 
 # Enthought library imports.
-from enthought.traits.api import Instance, List, String
+from enthought.traits.api import Instance, List, Unicode
 
 # Local imports.
-from dialog import Dialog
+from dialog import IDialog
 from image_resource import ImageResource
 
 
-class AboutDialog(Dialog):
-    """ A simple 'About' dialog. """
+class IAboutDialog(IDialog):
+    """ The interface for a simple 'About' dialog. """
 
-    __tko__ = 'AboutDialog'
+    #### 'IAboutDialog' interface #############################################
 
-    #### 'AboutDialog' interface ##############################################
+    # Additional strings to be added to the dialog.
+    additions = List(Unicode)
 
     # The image displayed in the dialog.
     image = Instance(ImageResource, ImageResource('about'))
 
-    # Additional strings to be added to the dialog.
-    additions = List(String)
 
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
-
-    def _create_contents(self, parent):
-        """ Creates the window contents. """
-
-        # Get the version of Python we are running on.
-        # ...remove the more detailed info (build date, platform, etc.)
-        # ...this may be needed in the future though
-        py_version = sys.version[0:sys.version.find("(")]
-
-        return self._tk_aboutdialog_create_contents(parent, py_version)
-
-    ###########################################################################
-    # 'AboutDialog' toolkit interface.
-    ###########################################################################
-
-    def _tk_aboutdialog_create_contents(self, parent, py_version):
-        """ Creates the dialog contents.
-        
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
+class MAboutDialog(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IAboutDialog interface.
+    """
 
 ### EOF #######################################################################
