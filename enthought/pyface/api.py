@@ -30,6 +30,8 @@ from about_dialog import IAboutDialog, MAboutDialog
 from application_window import IApplicationWindow, MApplicationWindow
 from confirmation_dialog import IConfirmationDialog, MConfirmationDialog
 from dialog import IDialog, MDialog
+from directory_dialog import IDirectoryDialog, MDirectoryDialog
+from file_dialog import IFileDialog, MFileDialog
 from message_dialog import IMessageDialog, MMessageDialog
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
@@ -90,9 +92,7 @@ try:
     from image_cache import ImageCache
 
     from background_progress_dialog import BackgroundProgressDialog
-    from directory_dialog import DirectoryDialog
     from expandable_panel import ExpandablePanel
-    from file_dialog import FileDialog
     from filter import Filter
     from gui import GUI
     from heading_text import HeadingText
@@ -119,8 +119,6 @@ except ImportError:
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
 
-    from directory_dialog import DirectoryDialog
-    from file_dialog import FileDialog
     from gui import GUI
     from image_resource import ImageResource
     from python_shell import PythonShell

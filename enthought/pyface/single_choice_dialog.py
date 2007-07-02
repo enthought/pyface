@@ -18,10 +18,8 @@
 import wx
 
 # Enthought library imports.
+from enthought.pyface.api import Dialog
 from enthought.traits.api import List, Str, Any
-
-# Local imports.
-from dialog import Dialog
 
 
 class SingleChoiceDialog(Dialog):

@@ -17,8 +17,6 @@ from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
 from dialog import Dialog_qt4
-from directory_dialog import DirectoryDialog_qt4
-from file_dialog import FileDialog_qt4
 from gui import GUI_qt4
 from image_cache import ImageCache_qt4
 from image_resource import ImageResource_qt4
@@ -45,9 +43,7 @@ class Toolkit_qt4(Toolkit):
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
     Dialog = Dialog_qt4
-    DirectoryDialog = DirectoryDialog_qt4
     Editor = Editor_qt4
-    FileDialog = FileDialog_qt4
     GUI = GUI_qt4
     ImageCache = ImageCache_qt4
     ImageResource = ImageResource_qt4

@@ -11,77 +11,44 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" A dialog that allows the user to browse for a directory. """
+""" The interface for a dialog that allows the user to browse for a directory.
+"""
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Str, Trait
+from enthought.traits.api import Bool, Unicode
 
 # Local imports.
-from dialog import Dialog
+from dialog import IDialog
 
 
-class DirectoryDialog(Dialog):
-    """ A dialog that allows the user to browse for a directory. """
+class IDirectoryDialog(IDialog):
+    """ The interface for a dialog that allows the user to browse for a
+    directory.
+    """
 
-    __tko__ = 'DirectoryDialog'
+    #### 'IDirectoryDialog' interface #########################################
 
-    #### 'DirectoryDialog' interface ##########################################
-
-    # The 'action' that the user is peforming on the directory.
-    #
-    # fixme: Support something other than 'open'!
-    action = Trait('open', 'open')
-
-    # The default path.
-    default_path = Str
+    # The default path.  The default (ie. the default default path) is toolkit
+    # specific.
+    # FIXME v3: The default should be the current directory.  (It seems wx is
+    # the problem, although the file dialog does the right thing.)
+    default_path = Unicode
     
+    # The message to display in the dialog.  The default is toolkit specific.
+    message = Unicode
+
     # True iff the dialog should include a button that allows the user to
     # create a new directory.
     new_directory = Bool(True)
 
-    # The message to display in the dialog.  The default is toolkit specific.
-    message = Str
-
     # The path of the chosen directory.
-    path = Str
+    path = Unicode
 
-    ###########################################################################
-    # 'Window' interface.
-    ###########################################################################
 
-    def close(self):
-        """ Closes the window. """
-
-        # Get the path of the chosen directory.
-        self.path = self._tk_directorydialog_get_path()
-
-        # Let the window close as normal.
-        super(DirectoryDialog, self).close()
-
-        return
-    
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
-
-    def _create_contents(self, parent):
-        """ Creates the window contents. """
-
-        # The toolkit is expected to create the whole thing when it creates the
-        # control.
-        return None
-
-    ###########################################################################
-    # 'DirectoryDialog' toolkit interface.
-    ###########################################################################
-
-    def _tk_directorydialog_get_path(self):
-        """ Return the selected pathname.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
+class MDirectoryDialog(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IDirectoryDialog interface.
+    """
 
 #### EOF ######################################################################

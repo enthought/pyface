@@ -18,12 +18,12 @@
 import wx
 
 # Enthought library imports.
+from enthought.pyface.api import Dialog
 from enthought.naming.api import Binding, Context
 from enthought.naming.ui.api import NamingTree, NamingTreeModel
 from enthought.traits.api import Any, Instance, Str
 
 # Local imports.
-from dialog import Dialog
 from heading_text import HeadingText
 
 

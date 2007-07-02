@@ -13,8 +13,6 @@ import wx
 from enthought.pyface.toolkit import Toolkit
 
 from dialog import Dialog_wx
-from directory_dialog import DirectoryDialog_wx
-from file_dialog import FileDialog_wx
 from gui import GUI_wx
 from image_cache import ImageCache_wx
 from image_resource import ImageResource_wx
@@ -44,9 +42,7 @@ class Toolkit_wx(Toolkit):
     _MenuItem = _MenuItem_wx
     _Tool = _Tool_wx
     Dialog = Dialog_wx
-    DirectoryDialog = DirectoryDialog_wx
     Editor = Editor_wx
-    FileDialog = FileDialog_wx
     GUI = GUI_wx
     ImageCache = ImageCache_wx
     ImageResource = ImageResource_wx
