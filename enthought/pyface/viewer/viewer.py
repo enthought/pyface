@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.pyface.widget import Widget
+from enthought.pyface.api import Widget
 
 
 class Viewer(Widget):

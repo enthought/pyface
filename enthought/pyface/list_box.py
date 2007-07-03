@@ -5,11 +5,11 @@
 import wx
 
 # Enthought library imports.
+from enthought.pyface.api import Widget
 from enthought.traits.api import Event, Instance, Int
 
 # Local imports.
 from list_box_model import ListBoxModel
-from widget import Widget
 
 
 class ListBox(Widget):

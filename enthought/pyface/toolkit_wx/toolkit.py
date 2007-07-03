@@ -15,10 +15,8 @@ from enthought.pyface.toolkit import Toolkit
 from gui import GUI_wx
 from image_cache import ImageCache_wx
 from image_resource import ImageResource_wx
-from python_shell import PythonShell_wx
 from resource_manager import PyfaceResourceFactory_wx
 from system_metrics import SystemMetrics_wx
-from widget import Widget_wx
 
 from action.action_item import _MenuItem_wx, _Tool_wx
 from action.menu_bar_manager import MenuBarManager_wx
@@ -45,11 +43,9 @@ class Toolkit_wx(Toolkit):
     MenuBarManager = MenuBarManager_wx
     MenuManager = MenuManager_wx
     PyfaceResourceFactory = PyfaceResourceFactory_wx
-    PythonShell = PythonShell_wx
     SystemMetrics = SystemMetrics_wx
     ToolBarManager = ToolBarManager_wx
     View = View_wx
-    Widget = Widget_wx
     WorkbenchWindowLayout = WorkbenchWindowLayout_wx
 
     def init_toolkit(self, *args, **kw):

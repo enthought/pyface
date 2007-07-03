@@ -19,11 +19,11 @@ provides a visual indicator of the current state, a text label, and a
 import wx
 
 # Enthought library imports.
+from enthought.pyface.api import Widget
 from enthought.traits.api import Instance, Event, Str, Int, Bool
 
 # local imports
 from image_resource import ImageResource
-from widget import Widget
 from util.font_helper import new_font_like
 
 class ExpandableHeader(Widget):

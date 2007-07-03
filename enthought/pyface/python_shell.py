@@ -11,62 +11,38 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" An interactive Python shell. """
+""" The interface for an interactive Python shell. """
+
 
 # Enthought library imports.
 from enthought.traits.api import Event
 
 # Local imports.
 from key_pressed_event import KeyPressedEvent
-from widget import Widget
+from widget import IWidget
 
 
-class PythonShell(Widget):
-    """ An interactive Python shell. """
+class IPythonShell(IWidget):
+    """ The interface for an interactive Python shell. """
 
-    __tko__ = 'PythonShell'
+    #### 'IPythonShell' interface #############################################
 
+    # FIXME v3: This can probably be removed if it is not part of the API.
     # fixme: Hack for demo.
     command_executed = Event
-
-    #### 'PythonShell' interface ##############################################
 
     # A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
     ###########################################################################
-    # 'object' interface.
-    ###########################################################################
-
-    def __init__(self, parent, **traits):
-        """ Creates a new pager. """
-
-        # Base class constructor.
-        super(PythonShell, self).__init__(**traits)
-
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # Set up to be notified whenever a Python statement is executed:
-        self._tk_pythonshell_set_execute_callback(self._on_command_executed)
-
-        return
-
-    ###########################################################################
-    # 'PythonShell' interface.
+    # 'IPythonShell' interface.
     ###########################################################################
 
     def interpreter(self):
         """ Returns the code.InteractiveInterpreter instance. """
 
-        return self._tk_pythonshell_get_interpreter()
-
     def bind(self, name, value):
         """ Binds a name to a value in the interpreter's namespace. """
-
-        self.interpreter().locals[name] = value
-
-        return
 
     def execute_command(self, command, hidden=True):
         """ Execute a command in the interpreter.
@@ -75,49 +51,30 @@ class PythonShell(Widget):
         a blank line.
         """
 
-        self._tk_pythonshell_execute(command, hidden)
 
-        return
+class MPythonShell(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IPythonShell interface.
+
+    Implements: bind(), _on_command_executed()
+    """
+
+    ###########################################################################
+    # 'IPythonShell' interface.
+    ###########################################################################
+
+    def bind(self, name, value):
+        """ Binds a name to a value in the interpreter's namespace. """
+
+        self.interpreter().locals[name] = value
 
     ###########################################################################
     # Private interface.
     ###########################################################################
 
-    ##### trait event handlers ################################################
-
     def _on_command_executed(self):
         """ Called when a command has been executed in the shell. """
 
         self.command_executed = self
-
-        return
-
-    ###########################################################################
-    # 'PythonShell' toolkit interface.
-    ###########################################################################
-
-    def _tk_pythonshell_get_interpreter(self):
-        """ Return a reference to the InteractiveInterpreter instance.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_pythonshell_set_execute_callback(self, cb):
-        """ Set the callback to be invoked when a command is executed.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_pythonshell_execute(self, command, hidden):
-        """ Execute a command in the interpreter.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
 
 #### EOF ######################################################################

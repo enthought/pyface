@@ -18,12 +18,12 @@
 import wx.stc
 
 # Enthought library imports.
+from enthought.pyface.api import Widget
 from enthought.traits.api import Bool, HasTraits, Int, Str, Event
 
 # Local imports.
 from key_pressed_event import KeyPressedEvent
 from util.python_stc import PythonSTC, faces
-from widget import Widget
 
 
 class PythonEditor(Widget):

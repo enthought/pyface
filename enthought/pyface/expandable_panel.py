@@ -17,13 +17,13 @@
 # Major package imports.
 import wx
 
+from enthought.pyface.api import Widget
 from enthought.traits.api import Instance
 
 # Local imports.
 from expandable_header import ExpandableHeader
 from heading_text import HeadingText
 from image_resource import ImageResource
-from widget import Widget
 
 
 class ExpandablePanel(Widget):

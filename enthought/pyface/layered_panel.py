@@ -22,10 +22,8 @@ import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
 # Enthought library imports.
+from enthought.pyface.api import Widget
 from enthought.traits.api import Any, Str, Int
-
-# Local imports.
-from widget import Widget
 
 
 class LayeredPanel(Widget):

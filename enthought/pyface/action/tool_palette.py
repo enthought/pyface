@@ -14,7 +14,7 @@
 """ View of an ActionManager drawn as a rectangle of buttons. """
 
 import wx
-from enthought.pyface.widget import Widget
+from enthought.pyface.api import Widget
 
 from enthought.traits.api import Bool, Dict, Int, List, Tuple
 # HTML templates.
