@@ -995,10 +995,11 @@ class Sheet(Widget):
         #
         # Don't change the behavior if the <Control> key is pressed as this
         # has meaning to the edit control.
-        if evt.KeyCode() == wx.WXK_RETURN and not evt.ControlDown():
+        key_code = evt.GetKeyCode()
+        if key_code == wx.WXK_RETURN and not evt.ControlDown():
             self._move_to_next_cell(evt.ShiftDown())
 
-        elif evt.KeyCode() == wx.WXK_TAB and not evt.ControlDown():
+        elif key_code == wx.WXK_TAB and not evt.ControlDown():
             if evt.ShiftDown():
                 # fixme: in a split window the shift tab is being eaten
                 # by tabbing between the splits
@@ -1006,7 +1007,7 @@ class Sheet(Widget):
 
             else:
                 self._move_to_next_cell()
-        elif evt.KeyCode() == ASCII_C:
+        elif key_code == ASCII_C:
             data = self.__get_drag_value()
             # deposit the data in our singleton clipboard
             enClipboard.data = data

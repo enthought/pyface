@@ -207,10 +207,11 @@ class Grid(wxGrid):
         #
         # Don't change the behavior if the <Control> key is pressed as this
         # has meaning to the edit control.
-        if evt.KeyCode() == wx.WXK_RETURN and not evt.ControlDown():
+        key_code = evt.GetKeyCode()
+        if key_code == wx.WXK_RETURN and not evt.ControlDown():
             self._move_to_next_cell(evt.ShiftDown())
 
-        elif evt.KeyCode() == wx.WXK_TAB and not evt.ControlDown():
+        elif key_code == wx.WXK_TAB and not evt.ControlDown():
             if evt.ShiftDown():
                 self._move_to_previous_cell()
 
