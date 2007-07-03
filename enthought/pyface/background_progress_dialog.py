@@ -19,12 +19,12 @@ import wx
 
 # Enthought library imports
 from enthought.logger import logger
+from enthought.pyface.api import Window
 from enthought.traits.api import *
 
 # Application specific imports.
 
 # Local imports.
-from window import Window
 from constant import OK, CANCEL
 
 

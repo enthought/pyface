@@ -33,6 +33,7 @@ from dialog import IDialog, MDialog
 from directory_dialog import IDirectoryDialog, MDirectoryDialog
 from file_dialog import IFileDialog, MFileDialog
 from message_dialog import IMessageDialog, MMessageDialog
+from splash_screen import ISplashScreen, MSplashScreen
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -106,7 +107,6 @@ try:
     from python_shell import PythonShell
     from single_choice_dialog import SingleChoiceDialog
     from sorter import Sorter
-    from splash_screen import SplashScreen
     from split_application_window import SplitApplicationWindow
     from split_dialog import SplitDialog
     from split_panel import SplitPanel
@@ -122,7 +122,6 @@ except ImportError:
     from gui import GUI
     from image_resource import ImageResource
     from python_shell import PythonShell
-    from splash_screen import SplashScreen
     from system_metrics import SystemMetrics
 
 ###############################################################################

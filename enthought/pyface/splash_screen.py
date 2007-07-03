@@ -11,7 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" A splash screen. """
+""" The interface for a splash screen. """
 
 
 # Standard library imports.
@@ -19,20 +19,18 @@ from logging import DEBUG
 
 # Enthought library imports.
 from enthought.logger import logger
-from enthought.traits.api import Any, Bool, Font, Instance, Int, Str, Tuple
+from enthought.traits.api import Any, Bool, Font, Instance, Int, Tuple, Unicode
 
 # Local imports.
 from image_resource import ImageResource
 from splash_screen_log_handler import SplashScreenLogHandler
-from window import Window
+from window import IWindow
 
 
-class SplashScreen(Window):
-    """ A splash screen. """
+class ISplashScreen(IWindow):
+    """ The interface for a splash screen. """
 
-    __tko__ = 'SplashScreen'
-
-    #### 'SplashScreen' interface #############################################
+    #### 'ISplashScreen' interface ############################################
     
     # The image to display on the splash screen.
     image = Instance(ImageResource, ImageResource('splash'))
@@ -45,32 +43,41 @@ class SplashScreen(Window):
     show_log_messages = Bool(True)
 
     # Optional text to display on top of the splash image.
-    text = Str
+    text = Unicode
 
     # The text color.
-    # ZZZ: When TraitsUI supports PyQt then change this to 'Color', (unless
-    # that needs to toolkit to be selected too soon, in which case it may need
-    # to stay as Any - or Str?)
+    # FIXME v3: When TraitsUI supports PyQt then change this to 'Color',
+    # (unless that needs the toolkit to be selected too soon, in which case it
+    # may need to stay as Any - or Str?)
     #text_color = WxColor('black')
     text_color = Any
 
     # The text font.
-    # ZZZ: When TraitsUI supports PyQt then change this back to 'Font(None)'
-    # with the actual default being toolkit specific.
+    # FIXME v3: When TraitsUI supports PyQt then change this back to
+    # 'Font(None)' with the actual default being toolkit specific.
     #text_font = Font(None)
     text_font = Any
 
     # The x, y location where the text will be drawn.
+    # FIXME v3: Remove this.
     text_location  = Tuple(5, 5)
-    
+
+
+class MSplashScreen(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the ISplashScreen interface.
+
+    Reimplements: open(), close()
+    """
+
     ###########################################################################
-    # 'Window' interface.
+    # 'IWindow' interface.
     ###########################################################################
 
     def open(self):
         """ Creates the toolkit-specific control for the widget. """
 
-        super(SplashScreen, self).open()
+        super(MSplashScreen, self).open()
 
         if self.show_log_messages:
             self._log_handler = SplashScreenLogHandler(self)
@@ -78,53 +85,12 @@ class SplashScreen(Window):
             
             logger.addHandler(self._log_handler)
 
-        return
-
     def close(self):
         """ Close the window. """
 
         if self.show_log_messages:
             logger.removeHandler(self._log_handler)
 
-        super(SplashScreen, self).close()
-        
-        return
-
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
-
-    def _create_contents(self, parent):
-        """ Creates the window contents. """
-
-        # The toolkit is expected to create the whole thing when it creates the
-        # control.
-        return None
-        
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    #### Trait event handlers #################################################
-
-    def _text_changed(self):
-        """ Called when the splash screen text has been changed. """
-
-        if self.control is not None:
-            self._tk_splashscreen_update_text()
-
-        return
-
-    ###########################################################################
-    # 'SplashScreen' toolkit interface.
-    ###########################################################################
-
-    def _tk_splashscreen_update_text(self):
-        """ Update the splash screen text.
-
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
+        super(MSplashScreen, self).close()
 
 #### EOF ######################################################################
