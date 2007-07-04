@@ -35,6 +35,7 @@ from file_dialog import IFileDialog, MFileDialog
 from message_dialog import IMessageDialog, MMessageDialog
 from python_shell import IPythonShell, MPythonShell
 from splash_screen import ISplashScreen, MSplashScreen
+from system_metrics import ISystemMetrics, MSystemMetrics
 from widget import IWidget, MWidget
 from window import IWindow, MWindow
 
@@ -110,7 +111,6 @@ try:
     from split_application_window import SplitApplicationWindow
     from split_dialog import SplitDialog
     from split_panel import SplitPanel
-    from system_metrics import SystemMetrics
 
     # Fix for broken Pycrust introspect module.
     import util.fix_introspect_bug
@@ -121,7 +121,6 @@ except ImportError:
 
     from gui import GUI
     from image_resource import ImageResource
-    from system_metrics import SystemMetrics
 
 ###############################################################################
 

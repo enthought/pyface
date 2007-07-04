@@ -25,7 +25,6 @@ from enthought.traits.api import HasTraits, Bool, Str
 from enthought.util.api import deprecated
 
 # Local imports.
-from system_metrics import SystemMetrics
 from toolkit import patch_toolkit
 
 
@@ -76,9 +75,6 @@ class GUI(HasTraits):
 
         if self._splash_screen is not None:
             self._splash_screen.open()
-
-        # The system metrics.
-        self.system_metrics = SystemMetrics()
 
         return
 
