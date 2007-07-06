@@ -35,12 +35,13 @@ from enthought.util.wx.do_later \
 
 from idockable \
     import IDockable
-    
+
 from ifeature_tool \
     import IFeatureTool
-    
-# Define version dependent values:  
-wx_26 = (wx.__version__[:3] == '2.6') 
+
+# Define version dependent values:
+wx_26 = (wx.__version__[:3] == '2.6')
+
 
 #-------------------------------------------------------------------------------
 #  Constants:
@@ -153,14 +154,14 @@ FEATURE_DISABLED      = 3   # Has feature icon, but is currently disabled
 FEATURE_VISIBLE       = 4   # Has visible features (mouseover mode)
 FEATURE_DROP_VISIBLE  = 5   # Has visible drop features (mouseover mode)
 FEATURE_PRE_NORMAL    = 6   # Has normal features (but has not been drawn yet)
-FEATURE_EXTERNAL_DRAG = 256 # A drag started in another DockWindow is active 
+FEATURE_EXTERNAL_DRAG = 256 # A drag started in another DockWindow is active
 
 # Feature sets:
 NO_FEATURE_ICON  = ( FEATURE_NONE, FEATURE_DISABLED, FEATURE_VISIBLE,
                      FEATURE_DROP_VISIBLE )
 FEATURES_VISIBLE = ( FEATURE_VISIBLE, FEATURE_DROP_VISIBLE )
 FEATURE_END_DROP = ( FEATURE_DROP, FEATURE_VISIBLE, FEATURE_DROP_VISIBLE )
-NORMAL_FEATURES  = ( FEATURE_NORMAL, FEATURE_DISABLED ) 
+NORMAL_FEATURES  = ( FEATURE_NORMAL, FEATURE_DISABLED )
 
 #-------------------------------------------------------------------------------
 #  Global data:
@@ -308,12 +309,12 @@ class DockImages ( HasPrivateTraits ):
 
         self._feature_images = [
             ImageResource( name ).create_image().ConvertToBitmap()
-            for name in [ 'tab_feature_normal',  'tab_feature_changed', 
+            for name in [ 'tab_feature_normal',  'tab_feature_changed',
                           'tab_feature_drop',    'tab_feature_disabled',
                           'bar_feature_normal',  'bar_feature_changed',
                           'bar_feature_drop',    'bar_feature_disabled' ]
         ]
-        
+
         self._tab_feature_width  = self._feature_images[0].GetWidth()
         self._tab_feature_height = self._feature_images[0].GetHeight()
         self._bar_feature_width  = self._feature_images[3].GetWidth()
@@ -329,7 +330,7 @@ class DockImages ( HasPrivateTraits ):
         self._lazy_init()
 
         return self._splitter_images[ state ]
-        
+
     #---------------------------------------------------------------------------
     #  Returns the feature image to use for a specified feature state:
     #---------------------------------------------------------------------------
@@ -376,21 +377,21 @@ class DockItem ( HasPrivateTraits ):
 
     # Width of the item's tab:
     tab_width = Property
-    
+
     # The current feature mode:
     feature_mode = Enum( FEATURE_NONE, FEATURE_NORMAL, FEATURE_CHANGED,
                          FEATURE_DROP, FEATURE_VISIBLE, FEATURE_DROP_VISIBLE,
                          FEATURE_DISABLED, FEATURE_PRE_NORMAL )
-    
+
     # The position where the feature popup should appear:
     feature_popup_position = Property
 
     # The list of features for this item:
     features = List
-    
+
     # The list of drag data compatible drop features for this item:
     drop_features = List
-    
+
     # Current active set of features:
     active_features = Property
 
@@ -424,11 +425,11 @@ class DockItem ( HasPrivateTraits ):
 
             self._is_tab = True
             tw = fw = 0
-            
+
             # Add feature marker width:
             if self.feature_mode != FEATURE_NONE:
                 tw = DockImages._tab_feature_width + 3
-                
+
             # Add text and margin width:
             dc  = set_standard_font( wx.ClientDC( self.control ) )
             tw += (dc.GetTextExtent( self.tab_name )[0] + (2 * TabMargin))
@@ -455,11 +456,11 @@ class DockItem ( HasPrivateTraits ):
         if len( self.drop_features ) > 0:
             return self.drop_features
         return self.features
-        
+
     #---------------------------------------------------------------------------
     #  Implementation of the 'feature_popup_position' property:
     #---------------------------------------------------------------------------
-    
+
     def _get_feature_popup_position ( self ):
         x, y, dx, dy = self.drag_bounds
         return wx.Point( x + 5, y + 3 )
@@ -705,7 +706,7 @@ class DockItem ( HasPrivateTraits ):
             window.owner.release_mouse()
             try:
                 window._dragging = True
-                if (PythonDropSource( window, self ).result in 
+                if (PythonDropSource( window, self ).result in
                     ( wx.DragNone, wx.DragCancel )):
                     window.owner.handler.open_view_for( self )
             finally:
@@ -795,7 +796,7 @@ class DockItem ( HasPrivateTraits ):
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
             mode = self.set_feature_mode( False )
-            
+
         xr = x + tw + 1
 
         # Fill the bottom:
@@ -824,7 +825,7 @@ class DockItem ( HasPrivateTraits ):
         # Draw the feature 'trigger' icon (if necessary):
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode ), ix, y + 3, 
+                dc.DrawBitmap( DockImages.get_feature_image( mode ), ix, y + 3,
                                True )
             ix += (DockImages._tab_feature_width + 3)
 
@@ -867,7 +868,7 @@ class DockItem ( HasPrivateTraits ):
             mode = self.set_feature_mode( False )
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode, False ), 
+                dc.DrawBitmap( DockImages.get_feature_image( mode, False ),
                                x, y + 4, True )
             x += (DockImages._bar_feature_width + 6)
 
@@ -893,18 +894,18 @@ class DockItem ( HasPrivateTraits ):
             mode = self.set_feature_mode( False )
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode, False ), 
+                dc.DrawBitmap( DockImages.get_feature_image( mode, False ),
                                x + 4, y, True )
             y += (DockImages._bar_feature_height + 6)
 
         # Draw the close button (if necessary):
         if self.closeable:
             dc.DrawBitmap( DockImages._close_drag, x + 4, y )
-                    
+
     #---------------------------------------------------------------------------
     #  Redraws the control's tab:
     #---------------------------------------------------------------------------
-    
+
     def _redraw_tab ( self, state = None ):
         if state is None:
             state = self._state
@@ -917,19 +918,19 @@ class DockItem ( HasPrivateTraits ):
                 dc.DestroyClippingRegion()
             else:
                 self.draw_tab( dc, state )
-                
+
     #---------------------------------------------------------------------------
-    #  Redraws the control's drag bar:  
+    #  Redraws the control's drag bar:
     #---------------------------------------------------------------------------
-    
+
     def _redraw_bar ( self ):
         dc = wx.ClientDC( self.control )
         getattr( self, 'draw_' + self.style )( dc )
-        
+
     #---------------------------------------------------------------------------
     #  Redraws the control's tab or bar:
     #---------------------------------------------------------------------------
-    
+
     def _redraw_control ( self ):
         if self._is_tab:
             self._redraw_tab()
@@ -995,7 +996,7 @@ class DockItem ( HasPrivateTraits ):
     #  Sets/Returns the 'normal' feature mode for the control based on the
     #  number of currently active features:
     #---------------------------------------------------------------------------
-    
+
     def set_feature_mode ( self, changed = True ):
         if (not changed) or (self.feature_mode != FEATURE_PRE_NORMAL):
             mode     = FEATURE_DROP
@@ -1012,66 +1013,66 @@ class DockItem ( HasPrivateTraits ):
                     break
             else:
                 self.feature_mode = FEATURE_DISABLED
-            
+
         return self.feature_mode
-    
+
     #---------------------------------------------------------------------------
     #  Returns whether or not a specified window position is over the feature
     #  'trigger' icon, and if so, triggers display of the feature icons:
     #---------------------------------------------------------------------------
-    
+
     def feature_activate ( self, event, drag_object = Undefined ):
         if self.feature_mode in NO_FEATURE_ICON:
             return False
-       
+
         # In 'drag' mode, we may get the same coordinate over and over again.
         # We don't want to restart the timer, so exit now:
         exy = ( event.GetX(), event.GetY() )
         if self._feature_popup_xy == exy:
             return True
-            
+
         x, y, dx, dy = self.drag_bounds
-          
+
         if self._is_tab:
             # Handle the case of a notebook tab:
             x += 7
             if self._state == TabActive:
                 x += 2
-            result = self.is_in( event, x, y + 6, DockImages._tab_feature_width, 
+            result = self.is_in( event, x, y + 6, DockImages._tab_feature_width,
                                  DockImages._tab_feature_height )
         else:
             # Handle the case of a horzontal/vertical drag bar:
             ox, oy = 10, 4
             if self.style == 'vertical':
                 ox, oy = 4, 10
-            result = self.is_in( event, x + ox, y + oy, 
+            result = self.is_in( event, x + ox, y + oy,
                                  DockImages._bar_feature_width,
                                  DockImages._bar_feature_height )
-        
+
         # If the pointer is over the feature 'trigger' icon, save the event for
         # the popup processing:
         if result:
             # If this is part of a drag operation, prepare for drag mode:
             if drag_object is not Undefined:
                 self.pre_drag( drag_object, FEATURE_EXTERNAL_DRAG )
-            
+
             # Schedule the popup for later:
             self._feature_popup_xy = exy
             do_after( 100, self._feature_popup )
-        
+
         return result
-                           
+
     #---------------------------------------------------------------------------
-    #  Resets any pending feature popup:  
+    #  Resets any pending feature popup:
     #---------------------------------------------------------------------------
-                                        
+
     def reset_feature_popup ( self ):
         self._feature_popup_xy = None
-    
+
     #---------------------------------------------------------------------------
     #  Pops up the current features if a feature popup is still pending:
     #---------------------------------------------------------------------------
-    
+
     def _feature_popup ( self ):
         if self._feature_popup_xy is not None:
             # Set the new feature mode:
@@ -1079,65 +1080,65 @@ class DockItem ( HasPrivateTraits ):
                 self.feature_mode = FEATURE_DROP_VISIBLE
             else:
                 self.feature_mode = FEATURE_VISIBLE
-           
+
             self.control.GetParent().owner.feature_bar_popup( self )
             self._feature_popup_xy = None
         else:
             self.post_drag( FEATURE_EXTERNAL_DRAG )
-        
+
     #---------------------------------------------------------------------------
     #  Finishes the processing of a feature popup:
     #---------------------------------------------------------------------------
-        
+
     def feature_bar_closed ( self ):
         if self.feature_mode == FEATURE_DROP_VISIBLE:
             self.feature_mode = FEATURE_DROP
         else:
             self.feature_mode = FEATURE_NORMAL
-            
+
         self._redraw_control()
-        
+
     #---------------------------------------------------------------------------
     #  Handles all pre-processing before a feature is dragged:
     #---------------------------------------------------------------------------
-    
+
     def pre_drag_all ( self, object ):
-        """ Prepare all DockControls in the associated DockWindow for being 
+        """ Prepare all DockControls in the associated DockWindow for being
             dragged over.
         """
         for control in self.dock_controls:
             control.pre_drag( object )
         self.pre_drag( object )
-                
+
     def pre_drag ( self, object, tag = 0 ):
         """ Prepare this DockControl for being dragged over.
         """
-        if (self.visible and 
+        if (self.visible and
             (self.feature_mode != FEATURE_NONE) and
             (self._feature_mode is None)):
             if isinstance( object, IFeatureTool ):
                 if (object.feature_can_drop_on( self.object ) or
                     object.feature_can_drop_on_dock_control( self )):
                     from feature_tool import FeatureTool
-                    
-                    self.drop_features = [ 
+
+                    self.drop_features = [
                         FeatureTool( dock_control = self ) ]
             else:
                 self.drop_features = [ f for f in self.features
-                                         if f.can_drop( object ) and 
+                                         if f.can_drop( object ) and
                                             (f.bitmap is not None) ]
-                                            
+
             self._feature_mode = self.feature_mode + tag
             if len( self.drop_features ) > 0:
                 self.feature_mode = FEATURE_DROP
             else:
                 self.feature_mode = FEATURE_DISABLED
             self._redraw_control()
-        
+
     #---------------------------------------------------------------------------
     #  Handles all post-processing after a feature has been dragged:
     #---------------------------------------------------------------------------
-    
+
     def post_drag_all ( self ):
         """ Restore all DockControls in the associated DockWindow after a drag
             operation is completed.
@@ -1145,11 +1146,11 @@ class DockItem ( HasPrivateTraits ):
         for control in self.dock_controls:
             control.post_drag()
         self.post_drag()
-            
+
     def post_drag ( self, tag = 0 ):
         """ Restore this DockControl after a drag operation is completed.
         """
-        if ((self._feature_mode is None) or (tag == 0) or 
+        if ((self._feature_mode is None) or (tag == 0) or
             ((self._feature_mode & tag) != 0)):
             self.drop_features = []
             if self.feature_mode != FEATURE_NONE:
@@ -1425,7 +1426,7 @@ class DockControl ( DockItem ):
     # The number of global DockWindowFeature's that were available the last
     # the time the feature set was checked:
     num_features = Int
-    
+
     # A feature associated with the DockControl has been changed:
     feature_changed = Event
 
@@ -1488,10 +1489,10 @@ class DockControl ( DockItem ):
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
-            if wx_26:  
-                size = self.control.GetBestFittingSize()  
-            else:  
-                size = self.control.GetEffectiveMinSize()  
+            if wx_26:
+                size = self.control.GetBestFittingSize()
+            else:
+                size = self.control.GetEffectiveMinSize()
             dx = size.GetWidth()
             dy = size.GetHeight()
             if self.width < 0:
@@ -1767,12 +1768,12 @@ class DockControl ( DockItem ):
     #---------------------------------------------------------------------------
     #  Handles the 'feature_changed' trait being changed:
     #---------------------------------------------------------------------------
-    
+
     def _feature_changed ( self ):
         """ Handles the 'feature_changed' trait being changed.
         """
         self.set_feature_mode()
-        
+
     #---------------------------------------------------------------------------
     #  Handles the 'control' trait being changed:
     #---------------------------------------------------------------------------
@@ -1952,7 +1953,7 @@ class DockGroup ( DockItem ):
         if len( self.contents ) > 0:
             # Return the first item's style:
             return self.contents[0].style
-        
+
         # Otherwise, return a default style for an empty group:
         return 'horizontal'
 
@@ -2160,6 +2161,9 @@ class DockRegion ( DockGroup ):
             # Do we need to enable tab scrolling?
             xr = tx0 + cdx
             if (tx + 2) >= xr:
+                # FIXME: We shouldn't have to force DockImages to lazy init
+                DockImages._lazy_init()
+
                 # Scrolling needed, calculate maximum tab index for scrolling:
                 self.max_tab = 1
                 n            = len( contents ) - 1
@@ -2299,7 +2303,7 @@ class DockRegion ( DockGroup ):
                 # question is why 'recalc_sizes' is not being called first.
                 if self._tab_clip_bounds is None:
                     return
-                    
+
                 self._draw_notebook( dc )
                 active = self.active
 
@@ -2555,9 +2559,9 @@ class DockRegion ( DockGroup ):
                     do_later( window.owner.update_layout )
                 else:
                     window.RefreshRect( wx.Rect( *self.bounds ) )
-                    
+
     #---------------------------------------------------------------------------
-    #  Makes sure the active control's tab is completely visible (if possible):  
+    #  Makes sure the active control's tab is completely visible (if possible):
     #---------------------------------------------------------------------------
 
     def make_active_tab_visible ( self ):
