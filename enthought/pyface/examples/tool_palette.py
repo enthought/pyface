@@ -71,4 +71,4 @@ if __name__ == '__main__':
     window.open()
 
     # Start the GUI event loop!
-    gui.event_loop()
+    gui.start_event_loop()

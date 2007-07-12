@@ -35,12 +35,11 @@ def _init_toolkit():
         toolkits = known_toolkits
 
     for tk in toolkits:
-        # Try and import the toolkit's pyface backend just to see if it is
-        # there.
-        be = 'enthought.pyface.ui.' + tk
+        # Try and import the toolkit's pyface backend init module.
+        be = 'enthought.pyface.ui.%s.' % tk
 
         try:
-            __import__(be)
+            __import__(be + 'init')
             break
         except ImportError:
             pass
@@ -55,8 +54,7 @@ def _init_toolkit():
 
     # Save the imported toolkit module.
     global _toolkit_backend
-
-    _toolkit_backend = be + '.'
+    _toolkit_backend = be
 
 
 # Do this once then disappear.
@@ -162,10 +160,6 @@ def select_toolkit(*args, **kw):
 
 class Toolkit(object):
     """ Abstract base class for toolkits. """
-
-    # These must be overridden by the toolkit implementation.
-    GUI = None
-    #Widget = None
 
     def init_toolkit(self, *args, **kw):
         """ Initialises the toolkit.

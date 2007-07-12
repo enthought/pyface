@@ -20,12 +20,12 @@ from constant import OK, CANCEL, YES, NO
 from dialog import Dialog
 from directory_dialog import DirectoryDialog
 from file_dialog import FileDialog
+from gui import GUI
 from key_pressed_event import KeyPressedEvent
 from message_dialog import error, information, warning, MessageDialog
 from python_shell import PythonShell
 from splash_screen import SplashScreen
 from system_metrics import SystemMetrics
-from toolkit import toolkit_object
 from window import Window
 from widget import Widget
 
@@ -47,7 +47,6 @@ try:
     from background_progress_dialog import BackgroundProgressDialog
     from expandable_panel import ExpandablePanel
     from filter import Filter
-    from gui import GUI
     from heading_text import HeadingText
     from image_resource import ImageResource
     from image_widget import ImageWidget
@@ -69,5 +68,4 @@ except ImportError:
     # Application window needs these (for the toolbar manager).
     from image_cache import ImageCache
 
-    from gui import GUI
     from image_resource import ImageResource

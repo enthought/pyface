@@ -65,6 +65,6 @@ if __name__ == '__main__':
         window.create_child_window()
 
     # Start the GUI event loop!
-    gui.event_loop()
+    gui.start_event_loop()
 
 ##### EOF #####################################################################

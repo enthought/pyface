@@ -6,17 +6,10 @@
 # license.
 #------------------------------------------------------------------------------
 
-# Standard library imports.
-import sys
-
-# Major package imports.
-from PyQt4 import QtCore, QtGui
-
 # Internal Enthought library imports.
 from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
-from gui import GUI_qt4
 from image_cache import ImageCache_qt4
 from image_resource import ImageResource_qt4
 from resource_manager import PyfaceResourceFactory_qt4
@@ -37,7 +30,6 @@ class Toolkit_qt4(Toolkit):
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
     Editor = Editor_qt4
-    GUI = GUI_qt4
     ImageCache = ImageCache_qt4
     ImageResource = ImageResource_qt4
     MenuBarManager = MenuBarManager_qt4
@@ -48,13 +40,4 @@ class Toolkit_qt4(Toolkit):
     WorkbenchWindowLayout = WorkbenchWindowLayout_qt4
 
     def init_toolkit(self, *args, **kw):
-        """ Initialises the toolkit. """
-        if QtCore.QT_VERSION < 0x040200:
-            raise RuntimeError, "Need Qt v4.2 or higher, but got v%s" \
-                    % QtCore.QT_VERSION_STR
-
-        # It's possible that it has already been initialised.
-        self._app = QtGui.QApplication.instance()
-
-        if self._app is None:
-            self._app = QtGui.QApplication(sys.argv)
+        pass
