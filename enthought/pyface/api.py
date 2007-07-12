@@ -12,72 +12,22 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-# Standard library imports.
-import sys
 
-# Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
-
-
-# Get the toolkit agnostic parts of the API.
-from confirmation_dialog import confirm
+from about_dialog import AboutDialog
+from application_window import ApplicationWindow
+from confirmation_dialog import confirm, ConfirmationDialog
 from constant import OK, CANCEL, YES, NO
+from dialog import Dialog
+from directory_dialog import DirectoryDialog
+from file_dialog import FileDialog
 from key_pressed_event import KeyPressedEvent
-from message_dialog import error, information, warning
-
-# Get the interfaces and mixins needed by backends.
-from about_dialog import IAboutDialog, MAboutDialog
-from application_window import IApplicationWindow, MApplicationWindow
-from confirmation_dialog import IConfirmationDialog, MConfirmationDialog
-from dialog import IDialog, MDialog
-from directory_dialog import IDirectoryDialog, MDirectoryDialog
-from file_dialog import IFileDialog, MFileDialog
-from message_dialog import IMessageDialog, MMessageDialog
-from python_shell import IPythonShell, MPythonShell
-from splash_screen import ISplashScreen, MSplashScreen
-from system_metrics import ISystemMetrics, MSystemMetrics
-from widget import IWidget, MWidget
-from window import IWindow, MWindow
-
-
-def _init_toolkit():
-    """ Initialise the current toolkit. """
-
-    # Toolkits to check for if none is explicitly specified.
-    known_toolkits = ('wx', 'qt4')
-
-    # Get the toolkit.
-    toolkit = ETSConfig.toolkit
-
-    if toolkit:
-        toolkits = (toolkit, )
-    else:
-        toolkits = known_toolkits
-
-    for tk in toolkits:
-        # Import the toolkit's pyface backend's API.
-        api = 'enthought.pyface.ui.%s.api' % tk
-
-        try:
-            __import__(api)
-            break
-        except ImportError:
-            pass
-    else:
-        if toolkit:
-            raise ImportError, "unable to import a pyface backend for the %s toolkit" % toolkit
-        else:
-            raise ImportError, "unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits)
-
-    # In case we have just decided on a toolkit, tell everybody else.
-    ETSConfig.toolkit = tk
-
-    # Update this module with the backend's API.
-    mdict = sys.modules[__name__].__dict__
-
-    for k, v in sys.modules[api].__dict__.iteritems():
-        if not k.startswith('_'):
-            mdict[k] = v
+from message_dialog import error, information, warning, MessageDialog
+from python_shell import PythonShell
+from splash_screen import SplashScreen
+from system_metrics import SystemMetrics
+from toolkit import toolkit_object
+from window import Window
+from widget import Widget
 
 
 ###############################################################################
@@ -121,10 +71,3 @@ except ImportError:
 
     from gui import GUI
     from image_resource import ImageResource
-
-###############################################################################
-
-
-# Get the toolkit specific parts of the API then disappear.
-_init_toolkit()
-del _init_toolkit

@@ -18,9 +18,11 @@
 import wx
 
 # Enthought library imports
-from enthought.pyface.api import ApplicationWindow
 from enthought.pyface.action.api import ToolBarManager
 from enthought.traits.api import Any, Trait, TraitDict, TraitEnum, TraitList
+
+# Local imports
+from application_window import ApplicationWindow
 
 
 class MultiToolbarWindow(ApplicationWindow):

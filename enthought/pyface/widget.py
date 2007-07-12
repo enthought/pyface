@@ -11,63 +11,11 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The base interface for all pyface widgets. """
+""" The base implementation of all pyface widgets. """
 
 
-# Enthought library imports.
-from enthought.traits.api import Any, Interface
-
-
-class IWidget(Interface):
-    """ The base interface for all pyface widgets.
-
-    Pyface widgets delegate to a toolkit specific control.  Note that a widget
-    is not necessarily a GUI object.
-    """
-
-    #### 'IWidget' interface ###################################################
-
-    # The toolkit specific control that represents the widget.
-    control = Any
-
-    # The control's optional parent control.
-    parent = Any
-
-    ###########################################################################
-    # 'IWidget' interface.
-    ###########################################################################
-
-    def destroy(self):
-        """ Destroy the control if it exists. """
-
-    ###########################################################################
-    # Protected 'IWidget' interface.
-    ###########################################################################
-
-    def _create(self):
-        """ Creates the toolkit specific control. """
-
-    def _create_control(self, parent):
-        """ Create and return the toolkit specific control that represents the
-        widget.
-        """
-
-
-class MWidget(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IWidget interface.
-
-    Implements: _create()
-    """
-
-    ###########################################################################
-    # Protected 'IWidget' interface.
-    ###########################################################################
-
-    def _create(self):
-        self.control = self._create_control(self.parent)
-
-    def _create_control(self, parent):
-        raise NotImplementedError
+# Import the toolkit specific version.
+from toolkit import toolkit_object
+Widget = toolkit_object('widget:Widget')
 
 #### EOF ######################################################################

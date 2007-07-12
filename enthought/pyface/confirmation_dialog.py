@@ -11,23 +11,16 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The interface for a dialog that prompts the user for confirmation. """
+""" The implementation of a dialog that prompts the user for confirmation. """
 
-
-# Enthought library imports.
-from enthought.traits.api import Bool, Enum, Instance, Unicode
 
 # Local imports.
-from constant import CANCEL, NO, YES
-from dialog import IDialog
-from image_resource import ImageResource
+from constant import NO
 
 
 def confirm(parent, message, title=None, cancel=False, default=NO):
     """ Convenience function to show a confirmation dialog. """
     
-    from enthought.pyface.api import ConfirmationDialog
-
     if title is None:
         title = "Confirmation"
 
@@ -42,34 +35,8 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
     return dialog.open()
 
 
-class IConfirmationDialog(IDialog):
-    """ The interface for a dialog that prompts the user for confirmation. """
-
-    #### 'IConfirmationDialog' interface ######################################
-
-    # Should the cancel button be displayed?
-    cancel = Bool(False)
-    
-    # The default button.
-    default = Enum(NO, YES, CANCEL)
-    
-    # The image displayed with the message.  The default is toolkit specific.
-    image = Instance(ImageResource)
-
-    # The message displayed in the body of the dialog (use the inherited
-    # 'title' trait to set the title of the dialog itself).
-    message = Unicode
-
-    # The label for the 'no' button.  The default is toolkit specific.
-    no_label = Unicode
-
-    # The label for the 'yes' button.  The default is toolkit specific.
-    yes_label = Unicode
-
-
-class MConfirmationDialog(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IConfirmationDialog interface.
-    """
+# Import the toolkit specific version.
+from toolkit import toolkit_object
+ConfirmationDialog = toolkit_object('confirmation_dialog:ConfirmationDialog')
 
 #### EOF ######################################################################

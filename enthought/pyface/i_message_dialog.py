@@ -11,13 +11,31 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The implementation of a dialog that allows the user to browse for a
-directory.
-"""
+""" The interface for a dialog that displays a message. """
 
 
-# Import the toolkit specific version.
-from toolkit import toolkit_object
-DirectoryDialog = toolkit_object('directory_dialog:DirectoryDialog')
+# Enthought library imports.
+from enthought.traits.api import Enum, Unicode
+
+# Local imports.
+from i_dialog import IDialog
+
+
+class IMessageDialog(IDialog):
+    """ The interface for a dialog that displays a message. """
+
+    #### 'IMessageDialog' interface ###########################################
+    
+    # The message to display in the dialog.
+    message = Unicode
+    
+    # The severity of the message.
+    severity = Enum('information', 'warning', 'error')
+
+
+class MMessageDialog(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IMessageDialog interface.
+    """
 
 #### EOF ######################################################################

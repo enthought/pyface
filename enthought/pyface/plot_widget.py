@@ -18,10 +18,14 @@
 from enthought.chaco.plottable import Plottable
 from enthought.chaco.plot_component import PlotComponent
 from enthought.enable.wx import Window
-from enthought.pyface.api import Widget
 
 from enthought.traits.api import Instance, Tuple
 
+# Application specific imports.
+
+# Local imports.
+
+from widget import Widget
 
 ##############################################################################
 # class 'PlotWidget'

@@ -18,12 +18,14 @@
 import wx
 
 # Enthought library imports.
-from enthought.pyface.api import Widget
 from enthought.traits.api import Instance, Int, Str
 
 # Local imports.
 from image_resource import ImageResource
 from util.font_helper import new_font_like
+
+# Local imports.
+from widget import Widget
 
 
 class HeadingText(Widget):

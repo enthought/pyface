@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from enthought.pyface.window import Window
 from enthought.traits.api import Instance
 
 # Local imports.
@@ -27,6 +28,6 @@ class WindowAction(Action):
     #### 'WindowAction' interface #############################################
     
     # The window that the action is in.
-    window = Instance('enthought.pyface.api.Window')
+    window = Instance(Window)
     
 #### EOF ######################################################################

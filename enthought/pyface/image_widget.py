@@ -18,8 +18,10 @@
 import wx
 
 # Enthought library imports.
-from enthought.pyface.api import Widget
 from enthought.traits.api import Any, Bool, Event
+
+# Locak imports.
+from widget import Widget
 
 
 class ImageWidget(Widget):

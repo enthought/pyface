@@ -11,21 +11,12 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The interface for a dialog that displays a message. """
-
-
-# Enthought library imports.
-from enthought.traits.api import Enum, Unicode
-
-# Local imports.
-from dialog import IDialog
+""" The implementation of a dialog that displays a message. """
 
 
 # Convenience functions.
 def information(parent, message, title='Information'):
     """ Convenience function to show an information message dialog. """
-
-    from enthought.pyface.api import MessageDialog
 
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='information'
@@ -37,8 +28,6 @@ def information(parent, message, title='Information'):
 def warning(parent, message, title='Warning'):
     """ Convenience function to show a warning message dialog. """
 
-    from enthought.pyface.api import MessageDialog
-
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='warning'
     )
@@ -49,8 +38,6 @@ def warning(parent, message, title='Warning'):
 def error(parent, message, title='Error'):
     """ Convenience function to show an error message dialog. """
 
-    from enthought.pyface.api import MessageDialog
-
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='error'
     )
@@ -59,21 +46,8 @@ def error(parent, message, title='Error'):
     return
 
 
-class IMessageDialog(IDialog):
-    """ The interface for a dialog that displays a message. """
-
-    #### 'IMessageDialog' interface ###########################################
-    
-    # The message to display in the dialog.
-    message = Unicode
-    
-    # The severity of the message.
-    severity = Enum('information', 'warning', 'error')
-
-
-class MMessageDialog(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IMessageDialog interface.
-    """
+# Import the toolkit specific version.
+from toolkit import toolkit_object
+MessageDialog = toolkit_object('message_dialog:MessageDialog')
 
 #### EOF ######################################################################

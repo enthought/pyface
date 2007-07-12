@@ -18,9 +18,15 @@ import wx
 import wx.xrc
 
 # Enthought library imports
-from enthought.pyface.api import Dialog
 from enthought.traits.api import Instance, Str
 import enthought.util.resource
+
+
+# Application specific imports.
+
+# Local imports.
+
+from dialog import Dialog
 
 
 ##############################################################################
