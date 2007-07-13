@@ -10,7 +10,6 @@
 
 from enthought.pyface.toolkit import Toolkit
 
-from image_cache import ImageCache_wx
 from image_resource import ImageResource_wx
 from resource_manager import PyfaceResourceFactory_wx
 
@@ -30,7 +29,6 @@ class Toolkit_wx(Toolkit):
     _MenuItem = _MenuItem_wx
     _Tool = _Tool_wx
     Editor = Editor_wx
-    ImageCache = ImageCache_wx
     ImageResource = ImageResource_wx
     MenuBarManager = MenuBarManager_wx
     MenuManager = MenuManager_wx

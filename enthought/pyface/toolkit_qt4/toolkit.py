@@ -10,7 +10,6 @@
 from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
-from image_cache import ImageCache_qt4
 from image_resource import ImageResource_qt4
 from resource_manager import PyfaceResourceFactory_qt4
 
@@ -30,7 +29,6 @@ class Toolkit_qt4(Toolkit):
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
     Editor = Editor_qt4
-    ImageCache = ImageCache_qt4
     ImageResource = ImageResource_qt4
     MenuBarManager = MenuBarManager_qt4
     MenuManager = MenuManager_qt4

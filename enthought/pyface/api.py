@@ -21,6 +21,7 @@ from dialog import Dialog
 from directory_dialog import DirectoryDialog
 from file_dialog import FileDialog
 from gui import GUI
+from image_cache import ImageCache
 from key_pressed_event import KeyPressedEvent
 from message_dialog import error, information, warning, MessageDialog
 from python_shell import PythonShell
@@ -41,9 +42,6 @@ from widget import Widget
 try:
     import wx
     
-    # Application window needs these (for the toolbar manager).
-    from image_cache import ImageCache
-
     from background_progress_dialog import BackgroundProgressDialog
     from expandable_panel import ExpandablePanel
     from filter import Filter
@@ -65,7 +63,4 @@ try:
     import util.fix_introspect_bug
 
 except ImportError:
-    # Application window needs these (for the toolbar manager).
-    from image_cache import ImageCache
-
     from image_resource import ImageResource

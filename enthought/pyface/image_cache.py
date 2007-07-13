@@ -11,71 +11,11 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" An image cache. """
+""" The implementation of an image cache. """
 
 
-# Local imports.
-from toolkit import patch_toolkit
-
-
-class ImageCache:
-    """ An image cache. """
-
-    __tko__ = 'ImageCache'
-
-    ###########################################################################
-    # 'object' interface.
-    ###########################################################################
-
-    def __init__(self, width, height):
-        """ Creates a new image cache. """
-
-        patch_toolkit(self)
-
-        self._width = width
-        self._height = height
-
-        self._tk_imagecache_init_cache()
-
-        return
-
-    ###########################################################################
-    # 'ImageCache' interface.
-    ###########################################################################
-
-    def get_image(self, filename):
-        """ Returns the specified image. """
-
-        return self._tk_imagecache_get_image(filename)
-
-    def get_bitmap(self, filename):
-        """ Returns the specified image as a bitmap. """
-
-        return self._tk_imagecache_get_bitmap(filename)
-
-    ###########################################################################
-    # 'ImageCache' toolkit interface.
-    ###########################################################################
-
-    def _tk_imagecache_init_cache(self):
-        """ Initialise the cache. """
-
-        pass
-
-    def _tk_imagecache_get_image(self, filename):
-        """ Returns the specified image.
-        
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
-
-    def _tk_imagecache_get_bitmap(self, filename):
-        """ Returns the specified image as a bitmap.
-        
-        This must be reimplemented.
-        """
-
-        raise NotImplementedError
+# Import the toolkit specific version.
+from toolkit import toolkit_object
+ImageCache = toolkit_object('image_cache:ImageCache')
 
 #### EOF ######################################################################
