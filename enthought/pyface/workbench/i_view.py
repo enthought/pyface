@@ -1,13 +1,26 @@
-""" The view interface. """
+#------------------------------------------------------------------------------
+# Copyright (c) 2005, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
+""" The interface of a workbench view. """
 
 
 # Enthought library imports.
 from enthought.traits.api import Any, Bool, Enum, Float, Instance, Interface
-from enthought.traits.api import List, Str  
+from enthought.traits.api import List, Str, Unicode
 
 
 class IView(Interface):
-    """ The view interface. """
+    """ The interface of a workbench view. """
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
@@ -25,7 +38,7 @@ class IView(Interface):
     id = Str
 
     # The view's name (displayed to the user).
-    name = Str
+    name = Unicode
 
     # The current selection within the view.
     selection = List
@@ -114,4 +127,22 @@ class IView(Interface):
         
         """
 
+
+class MView(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IView interface.
+
+    Implements: _id_default()
+    """
+
+    ###########################################################################
+    # 'View' interface.
+    ###########################################################################
+
+    def _id_default(self):
+        """ Trait initializer. """
+
+        # If no Id is specified then use the name.
+        return self.name
+    
 #### EOF ######################################################################
