@@ -1,12 +1,26 @@
-""" The editor interface. """
+#------------------------------------------------------------------------------
+# Copyright (c) 2005, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
+""" The interface of a workbench editor. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Instance, Interface, List, Str
+from enthought.traits.api import Any, Bool, implements, Instance, Interface
+from enthought.traits.api import List, Str, Unicode
 
 
 class IEditor(Interface):
-    """ The editor interface. """
+    """ The interface of a workbench editor. """
 
     # The optional command stack.
     command_stack = Instance('enthought.undo.api.ICommandStack')
@@ -27,7 +41,7 @@ class IEditor(Interface):
     id = Str
 
     # The editor's name (displayed to the user).
-    name = Str
+    name = Unicode
 
     # The object that the editor is editing.
     #
@@ -76,5 +90,35 @@ class IEditor(Interface):
         Returns None.
 
         """
+
+
+class MEditor(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IEditor interface.
+
+    Implements: close(), _command_stack_default()
+    """
+
+    ###########################################################################
+    # 'IEditor' interface.
+    ###########################################################################
+
+    def close(self):
+        """ Close the editor. """
+
+        if self.control is not None:
+            self.window.close_editor(self)
+
+        return
+
+    #### Initializers #########################################################
+
+    def _command_stack_default(self):
+        """ Trait initializer. """
+
+        # We make sure the undo package is entirely optional.
+        from enthought.undo.api import CommandStack
+
+        return CommandStack(undo_manager=self.window.workbench.undo_manager)
 
 #### EOF ######################################################################

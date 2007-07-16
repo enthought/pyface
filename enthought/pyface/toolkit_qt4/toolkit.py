@@ -15,7 +15,6 @@ from action.menu_bar_manager import MenuBarManager_qt4
 from action.menu_manager import MenuManager_qt4
 from action.tool_bar_manager import ToolBarManager_qt4
 
-from workbench.editor import Editor_qt4
 from workbench.view import View_qt4
 from workbench.workbench_window_layout import WorkbenchWindowLayout_qt4
 
@@ -25,7 +24,6 @@ class Toolkit_qt4(Toolkit):
 
     _MenuItem = _MenuItem_qt4
     _Tool = _Tool_qt4
-    Editor = Editor_qt4
     MenuBarManager = MenuBarManager_qt4
     MenuManager = MenuManager_qt4
     ToolBarManager = ToolBarManager_qt4
