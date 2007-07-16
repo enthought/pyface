@@ -30,8 +30,7 @@ from dock_window \
     import DockWindow
     
 from dock_sizer \
-    import DockSizer, DockSection, DockRegion, DockControl, DOCK_RIGHT, \
-           TabHeight, NBMarginLeft, NBMarginRight, NBMarginTop, NBMarginBottom 
+    import DockSizer, DockSection, DockRegion, DockControl, DOCK_RIGHT
     
 #-------------------------------------------------------------------------------
 #  Constants:  
@@ -63,7 +62,8 @@ class DockWindowShell ( HasPrivateTraits ):
     def __init__ ( self, dock_control, use_mouse = False, **traits ):
         super( DockWindowShell, self ).__init__( **traits )
         
-        parent = wx.GetTopLevelParent( dock_control.control )
+        old_control = dock_control.control
+        parent      = wx.GetTopLevelParent( old_control )
         while True:
             next_parent = parent.GetParent()
             if next_parent is None:
@@ -78,13 +78,13 @@ class DockWindowShell ( HasPrivateTraits ):
         shell.SetBackgroundColour( WindowColor )
         wx.EVT_CLOSE( shell, self._on_close )
         
-        self._dock_window = dw = DockWindow( shell, auto_close = True ).set(    
+        theme = dock_control.theme
+        self._dock_window = dw = DockWindow( shell, auto_close = True,
+                                                    theme      = theme).set(    
                                                     style      = 'tab' )
         sizer = wx.BoxSizer( wx.VERTICAL )
         sizer.Add( dw.control, 1, wx.EXPAND )
         shell.SetSizer( sizer )
-        
-        old_control = dock_control.control
         
         if use_mouse:
             x, y = wx.GetMousePosition()
@@ -93,8 +93,11 @@ class DockWindowShell ( HasPrivateTraits ):
             x, y = old_control.GetParent().ClientToScreenXY( x, y )
             
         dx, dy = old_control.GetSize()
-        dx    += (NBMarginLeft + NBMarginRight)
-        dy    += (TabHeight + NBMarginTop + NBMarginBottom)
+        tis    = theme.tab.image_slice
+        tm     = theme.tab.margins
+        tdy    = theme.tab_active.image_slice.dy
+        dx    += (tis.xleft + tm.left + tis.xright  + tm.right)
+        dy    += (tis.xtop  + tm.top  + tis.xbottom + tm.bottom + tdy)
         
         self.add_control( dock_control )
             
@@ -104,8 +107,8 @@ class DockWindowShell ( HasPrivateTraits ):
         cdx, cdy = shell.GetClientSizeTuple()
         ex_dx    = dx - cdx
         ex_dy    = dy - cdy
-        shell.SetDimensions( x - (ex_dx / 2) - NBMarginLeft, 
-                             y - ex_dy + (ex_dx / 2) - TabHeight - NBMarginTop, 
+        shell.SetDimensions( x - (ex_dx / 2) - tis.xleft - tm.left, 
+                             y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tm.top, 
                              dx + ex_dx, dy + ex_dy )
         shell.Show()
         

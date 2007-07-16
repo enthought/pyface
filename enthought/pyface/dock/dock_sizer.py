@@ -22,7 +22,11 @@ import wx
 
 from enthought.traits.api \
     import HasPrivateTraits, Instance, Str, Int, List, Enum, Tuple, Any, \
-           Range, Property, Callable, Constant, Event, Undefined, true, false
+           Range, Property, Callable, Constant, Event, Undefined, true, false, \
+           cached_property
+
+from enthought.traits.ui.dock_window_theme \
+    import default_dock_window_theme
 
 from enthought.pyface.image_resource \
     import ImageResource
@@ -32,7 +36,7 @@ from enthought.util.wx.drag_and_drop \
 
 from enthought.util.wx.do_later \
     import do_later, do_after
-
+    
 from idockable \
     import IDockable
 
@@ -47,6 +51,9 @@ wx_26 = (wx.__version__[:3] == '2.6')
 #  Constants:
 #-------------------------------------------------------------------------------
 
+# Standard font text height:
+text_dy = 13
+
 # Maximum allowed length of a tab label:
 MaxTabLength = 30
 
@@ -57,30 +64,13 @@ DragBarSize = 14
 CloseTabSize  = 10
 CloseDragSize = 7
 
-# Height of a notebook tab (in pixels):
-TabHeight = 26
-
-# Width of a notebook tab's margin (in pixels):
-TabMargin = 8
-
 # Tab drawing states:
 TabInactive = 0
 TabActive   = 1
 TabHover    = 2
 
-# Notebook margin and padding sizes:
-NBMarginLeft   = 7
-NBMarginRight  = 9
-NBMarginTop    = 3
-NBMarginBottom = 9
-NBPadding      = 4
-
-# Size of a splitter bar:
-SplitterSizeH = 9
-SplitterSizeV = 12
-
-# Size of a docking marker bar:
-DockBarSize = 6
+NormalStates    = ( TabInactive, TabActive )
+NotActiveStates = ( TabInactive, TabHover )
 
 # Normal background color:
 BGColor = None # ( 236, 233, 216 )    # wx.SYS_COLOUR_BTNFACE
@@ -89,30 +79,11 @@ BGColor = None # ( 236, 233, 216 )    # wx.SYS_COLOUR_BTNFACE
 FeatureBrushColor = ( 255, 255, 255 )
 FeaturePenColor   = (  92,  92,  92 )
 
-# Colors used to draw a grab bar:
-DragLightColor = ( 255, 255, 255 )    # wx.SYS_COLOUR_WINDOW
-DragDarkColor  = ( 172, 168, 153 )    # wx.SYS_COLOUR_BTNSHADOW
-
-# Colors used to draw a notebook:
-NBBGColor       = ( 252, 252, 254 )   # wx.SYS_COLOUR_MENU
-NBBGTabAColor   = ( 252, 252, 254 )   # wx.SYS_COLOUR_MENU
-NBBGTabXColor   = ( 255, 199,  60 )
-NBBGTabIColor   = ( 246, 246, 243 )   # wx.SYS_COLOUR_MENU
-NBEdgeTabAColor = ( 145, 155, 156 )
-NBEdgeTabXColor = ( 230, 139,  44 )
-NBEdgeTabIColor = ( 145, 155, 156 )
-NBEdgeColor     = ( 145, 155, 156 )   # wx.SYS_COLOUR_BTNSHADOW
-NBShadow1Color  = ( 208, 206, 191 )   # wx.SYS_COLOUR_3DDKSHADOW
-NBShadow2Color  = ( 227, 224, 208 )   # wx.SYS_COLOUR_3DDKSHADOW
-
 # Color used to update the screen while dragging a splitter bar:
 DragColor = ( 96, 96, 96 )
 
 # Color used to update the screen while showing a docking operation in progress:
-DockColor = ( 32, 255, 255 )
-
-# Color used to mark the DockWindow boundary while dragging:
-MarkColor = ( 255, 255, 0 )
+DockColorBrush = ( 255, 0, 0, 96 )
 
 # Drop Info kinds:
 DOCK_TOP      = 0
@@ -182,28 +153,6 @@ Bounds = Tuple( Int, Int, Int, Int )
 
 # Docking drag bar style:
 DockStyle = Enum( 'horizontal', 'vertical', 'tab', 'fixed' )
-
-#-------------------------------------------------------------------------------
-#  Returns an (R, G, B) tuple for a specified wxPython system colour:
-#-------------------------------------------------------------------------------
-
-def color_tuple_for ( id ):
-    """ Returns an (R, G, B) tuple for a specified wxPython system colour.
-    """
-    color = wx.SystemSettings_GetColour( id )
-    return ( color.Red(), color.Green(), color.Blue() )
-
-def init_dock_sizer():
-    # Initialize the various colors (after the toolkit has been intialised):
-    global BGColor;        BGColor        = color_tuple_for( wx.SYS_COLOUR_BTNFACE )
-    global DragLightColor; DragLightColor = color_tuple_for( wx.SYS_COLOUR_WINDOW )
-    global DragDarkColor;  DragDarkColor  = color_tuple_for( wx.SYS_COLOUR_BTNSHADOW )
-    global NBEdgeColor;    NBEdgeColor    = color_tuple_for( wx.SYS_COLOUR_BTNSHADOW )
-    global NBBGColor;      NBBGColor      = color_tuple_for( wx.SYS_COLOUR_MENU )
-    global NBBGTabAColor;  NBBGTabAColor  = color_tuple_for( wx.SYS_COLOUR_MENU )
-    global NBBGTabIColor;  NBBGTabIColor  = color_tuple_for( wx.SYS_COLOUR_MENU )
-    global NBShadow1Color; NBShadow1Color = color_tuple_for( wx.SYS_COLOUR_BTNSHADOW )
-    global NBShadow2Color; NBShadow2Color = color_tuple_for( wx.SYS_COLOUR_3DLIGHT )
 
 #-------------------------------------------------------------------------------
 #  Adds a new DockWindowFeature class to the list of available features:
@@ -359,6 +308,9 @@ class DockItem ( HasPrivateTraits ):
 
     # The parent of this item:
     parent = Any
+    
+    # The DockWindow that owns this item:
+    owner = Property( depends_on = 'parent' )
 
     # Bounds of the item:
     bounds = Bounds
@@ -371,13 +323,22 @@ class DockItem ( HasPrivateTraits ):
 
     # Bounds of the item's drag bar or tab:
     drag_bounds = Bounds
+    
+    # The current tab state:
+    tab_state = Any
 
     # The tab displayable version of the control's UI name:
     tab_name = Property
 
     # Width of the item's tab:
-    tab_width = Property
+    tab_width = Property( depends_on = 'tab_state' )
 
+    # The DockWindowTheme for this item's DockWindow:
+    theme = Property
+    
+    # The theme for the current tab state:
+    tab_theme = Property
+    
     # The current feature mode:
     feature_mode = Enum( FEATURE_NONE, FEATURE_NORMAL, FEATURE_CHANGED,
                          FEATURE_DROP, FEATURE_VISIBLE, FEATURE_DROP_VISIBLE,
@@ -402,52 +363,87 @@ class DockItem ( HasPrivateTraits ):
     # control = Instance( wx.Control )
 
     #---------------------------------------------------------------------------
+    #  Implementation of the 'owner' property:
+    #---------------------------------------------------------------------------
+
+    @cached_property
+    def _get_owner ( self ):
+        if self.parent is None:
+            return None
+            
+        return self.parent.owner
+
+    #---------------------------------------------------------------------------
     #  Implementation of the 'tab_name' property:
     #---------------------------------------------------------------------------
 
+    @cached_property
     def _get_tab_name ( self ):
-        if self._tab_name is None:
-            name = self.name
-            if len( name ) > MaxTabLength:
-                name = '%s...%s' % ( name[ : MaxTabLength - 23 ], name[ -20: ] )
-            self._tab_name = name
-
-        return self._tab_name
+        name = self.name
+        if len( name ) > MaxTabLength:
+            name = '%s...%s' % ( name[ : MaxTabLength - 23 ], name[ -20: ] )
+            
+        return name
 
     #---------------------------------------------------------------------------
     #  Implementation of the 'tab_width' property:
     #---------------------------------------------------------------------------
 
+    @cached_property
     def _get_tab_width ( self ):
-        if self._tab_width is None:
-            if self.control is None:
-                return 0
+        if self.control is None:
+            return 0
+        
+        self._is_tab = True
+        
+        # Calculate the size needed by the theme and margins:
+        theme = self.tab_theme
+        tw    = (theme.image_slice.xleft + theme.image_slice.xright +
+                 theme.margins.left      + theme.margins.right)
+        
+        # Add feature marker width:
+        if self.feature_mode != FEATURE_NONE:
+            tw += DockImages._tab_feature_width + 3
+        
+        # Add text width:
+        dc  = set_standard_font( wx.ClientDC( self.control ) )
+        tw += dc.GetTextExtent( self.tab_name )[0]
+        
+        # Add custom image width:
+        image = self.get_image()
+        if image is not None:
+            tw += (image.GetWidth() + 3)
+        
+        # Add close button width:
+        if self.closeable:
+            tw += (CloseTabSize + 6)
+        
+        # Return the computed width:
+        return tw
+        
+    #---------------------------------------------------------------------------
+    #  Implementation of the 'theme' property:
+    #---------------------------------------------------------------------------
+    
+    def _get_theme ( self ):
+        if self.control is None:
+            return default_dock_window_theme
+            
+        return self.control.GetParent().owner.theme
 
-            self._is_tab = True
-            tw = fw = 0
-
-            # Add feature marker width:
-            if self.feature_mode != FEATURE_NONE:
-                tw = DockImages._tab_feature_width + 3
-
-            # Add text and margin width:
-            dc  = set_standard_font( wx.ClientDC( self.control ) )
-            tw += (dc.GetTextExtent( self.tab_name )[0] + (2 * TabMargin))
-
-            # Add custom image width:
-            image = self.get_image()
-            if image is not None:
-                tw += (image.GetWidth() + 3)
-
-            # Add close button width:
-            if self.closeable:
-                tw += (CloseTabSize + 6)
-
-            # Save the width:
-            self._tab_width = tw
-
-        return self._tab_width
-
+    #---------------------------------------------------------------------------
+    #  Implementation of the 'tab_theme' property:
+    #---------------------------------------------------------------------------
+    
+    def _get_tab_theme ( self ):
+        if self.tab_state == TabInactive:
+            return self.theme.tab_inactive
+            
+        if self.tab_state == TabActive:
+            return self.theme.tab_active
+        
+        return self.theme.tab_hover
+        
     #---------------------------------------------------------------------------
     #  Implementation of the 'active_features' property:
     #---------------------------------------------------------------------------
@@ -495,8 +491,7 @@ class DockItem ( HasPrivateTraits ):
         """ Sets the control's drag bounds.
         """
         bx, by, bdx, bdy = self.bounds
-        self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x,
-                                   min( y + dy, by + bdy ) - y )
+        self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x, dy )
 
     #---------------------------------------------------------------------------
     #  Gets the cursor to use when the mouse is over the item:
@@ -513,41 +508,29 @@ class DockItem ( HasPrivateTraits ):
     #  Gets the DockInfo object for a specified window position:
     #---------------------------------------------------------------------------
 
-    def dock_info_at ( self, x, y, size, is_control ):
+    def dock_info_at ( self, x, y, tdx, is_control ):
         """ Gets the DockInfo object for a specified window position.
         """
         if self.is_at( x, y, self.drag_bounds ):
-            x, y, dx, dy     = self.drag_bounds
-            cx, cy, cdx, cdy = self.bounds
-            mdx, mdy, tdx    = size
-            control          = self
+            x, y, dx, dy = self.drag_bounds
+            control      = self
             if self._is_tab:
                 if is_control:
-                    kind   = DOCK_TABADD
-                    bounds = ( cx - NBPadding, cy - NBPadding,
-                               cdx + 2 * NBPadding,
-                               min( mdy, cdy + 2 * NBPadding ) )
-                    tab_bounds = ( x, y + 5, dx, dy - 5 )
+                    kind       = DOCK_TABADD
+                    tab_bounds = ( x, y, dx, dy )
                 else:
-                    kind   = DOCK_TAB
-                    bounds = ( cx - NBPadding, cy - NBPadding,
-                               cdx + 2 * NBPadding, cdy + 2 * NBPadding )
-                    tab_bounds = ( x - (tdx / 2), y + 5, tdx, TabHeight - 5 )
+                    kind       = DOCK_TAB
+                    tab_bounds = ( x - (tdx / 2), y, tdx, dy )
             else:
                 if is_control:
-                    kind   = DOCK_TABADD
-                    bounds = ( cx, y + TabHeight, cdx,
-                               min( mdy, cdy + DragBarSize - TabHeight + 5 ) )
-                    tab_bounds = ( x, y, self.tab_width, TabHeight - 5 )
+                    kind       = DOCK_TABADD
+                    tab_bounds = ( x, y, self.tab_width, dy )
                 else:
-                    kind    = DOCK_TAB
-                    control = None
-                    bounds  = ( cx, y + TabHeight, cdx,
-                                cdy + DragBarSize - TabHeight + 5 )
-                    tab_bounds = ( x + self.tab_width, y, tdx, TabHeight - 5 )
+                    kind       = DOCK_TAB
+                    control    = None
+                    tab_bounds = ( x + self.tab_width, y, tdx, dy )
 
             return DockInfo( kind       = kind,
-                             bounds     = bounds,
                              tab_bounds = tab_bounds,
                              region     = self.parent,
                              control    = control )
@@ -602,11 +585,9 @@ class DockItem ( HasPrivateTraits ):
 
         # Handle the completion of a dragging operation:
         elif self._dragging:
-            window    = event.GetEventObject()
-            dock_info = self._dock_info
-            dock_info.draw( window )
-            self.mark_bounds()
-            self._dock_info = None
+            window = event.GetEventObject()
+            dock_info, self._dock_info = self._dock_info, None
+            self.mark_bounds( False )
             control = self
 
             # Check to see if the user is attempting to drag an entire notebook
@@ -662,8 +643,8 @@ class DockItem ( HasPrivateTraits ):
 
             self._dragging  = True
             self._dock_info = no_dock_info
-            self._dock_size = self.calc_min() + ( self.tab_width, )
-            self.mark_bounds()
+            self._dock_size = self.tab_width
+            self.mark_bounds( True )
 
         # Get the window and DockInfo object associated with the event:
         cur_dock_info   = self._dock_info
@@ -678,9 +659,6 @@ class DockItem ( HasPrivateTraits ):
             (cur_dock_info.tab_bounds == dock_info.tab_bounds)):
             return
 
-        # Erase the old region:
-        cur_dock_info.draw( window )
-
         # Make sure the new DockInfo is legal:
         region = self.parent
         if ((not event.ControlDown())    and
@@ -693,7 +671,7 @@ class DockItem ( HasPrivateTraits ):
             return
 
         # Draw the new region:
-        dock_info.draw( window )
+        dock_info.draw( window, self._drag_bitmap )
 
         # If this is the start of an export (i.e. drag and drop) request:
         if ((dock_info.kind == DOCK_EXPORT) and
@@ -701,7 +679,7 @@ class DockItem ( HasPrivateTraits ):
             (self.dockable is not None)):
 
             # Begin the drag and drop operation:
-            self.mark_bounds()
+            self.mark_bounds( False )
             window.owner.set_cursor( wx.CURSOR_ARROW )
             window.owner.release_mouse()
             try:
@@ -725,7 +703,7 @@ class DockItem ( HasPrivateTraits ):
     def hover_enter ( self, event ):
         """ Handles the mouse hovering over the item.
         """
-        if self._is_tab and (self._state != TabActive):
+        if self._is_tab and (self.tab_state != TabActive):
             self._redraw_tab( TabHover )
 
     #---------------------------------------------------------------------------
@@ -735,111 +713,99 @@ class DockItem ( HasPrivateTraits ):
     def hover_exit ( self, event ):
         """ Handles the mouse exiting from hovering over the item.
         """
-        if self._is_tab and (self._state != TabActive):
+        if self._is_tab and (self.tab_state != TabActive):
             self._redraw_tab( TabInactive )
 
     #---------------------------------------------------------------------------
     #  Marks/Unmarks the bounds of the bounding DockWindow:
     #---------------------------------------------------------------------------
 
-    def mark_bounds ( self ):
+    def mark_bounds ( self, begin ):
         """ Marks/Unmarks the bounds of the bounding DockWindow.
         """
-        dc = wx.ScreenDC()
-        dc.SetLogicalFunction( wx.XOR )
-        dc.SetBrush( wx.TRANSPARENT_BRUSH )
-        dc.SetPen( wx.Pen( wx.Colour( *MarkColor ), 3, wx.SOLID ) )
         window = self.control.GetParent()
-        dx, dy = window.GetSize()
-        x, y   = window.ClientToScreenXY( 0, 0 )
-        dc.DrawRectangle( x - 3, y - 3, dx + 6, dy + 6 )
+        if begin:
+            dx, dy = window.GetSize()
+            x, y   = window.ClientToScreenXY( 0, 0 )
+            dc     = wx.ScreenDC()
+            dc2    = wx.MemoryDC()
+            self._drag_bitmap = wx.EmptyBitmap( dx, dy )
+            dc2.SelectObject( self._drag_bitmap )
+            dc2.Blit( 0, 0, dx, dy, dc, x, y )
+            dc3 = wx.GCDC( dc2 )
+            dc3.SetBrush( wx.Brush( wx.Colour( 158, 166, 255, 64 ) ) )
+            dc3.SetPen( wx.TRANSPARENT_PEN )
+            dc3.DrawRectangle( 0, 0, dx, dy )
+            dc.Blit( x, y, dx, dy, dc2, 0, 0 )
+        else:
+            self._drag_bitmap = None
+            window.Refresh()
+            
+    #---------------------------------------------------------------------------
+    #  Fills a specified region with the control's background color:  
+    #---------------------------------------------------------------------------
+                        
+    def fill_bg_color ( self, dc, x, y, dx, dy ):
+        """ Fills a specified region with the control's background color.
+        """
+        dc.SetPen( wx.TRANSPARENT_PEN )
+        owner = self.owner
+        if owner is None:
+            color = wx.Colour( 255, 0, 0 )
+        else:
+            color = owner.control.GetBackgroundColour()
+        dc.SetBrush( wx.Brush( color ) )
+        dc.DrawRectangle( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
     #  Draws a notebook tab:
     #---------------------------------------------------------------------------
 
-    def draw_tab ( self, dc, state, ox = 0, oy = 0 ):
+    def draw_tab ( self, dc, state ):
+        global text_dy
+        
         """ Draws a notebook tab.
         """
-        self._is_tab   = True
-        self._state    = state
         x, y, dx, dy   = self.drag_bounds
-        x             += ox
-        y             += oy
-        yb = yb1       = y + TabHeight
-        y             += 3
-        dy            -= 3
-        tx             = 8
-        tw             = self.tab_width
-        name           = self.tab_name
-        image          = self.get_image()
-        tdx            = dc.GetTextExtent( name )[0]
-        fill_color     = NBBGTabAColor
-        edge_color     = NBEdgeTabAColor
-        top_fill_color = NBBGTabXColor
-        top_edge_color = NBEdgeTabXColor
-
-        if state != TabActive:
-            tx   = 6
-            x   += 2
-            dx  -= 4
-            y   += 2
-            dy  -= 3
-            yb1 -= 1
-            tw  -= 4
-            fill_color = NBBGTabIColor
-            edge_color = NBEdgeTabIColor
-            if state == TabInactive:
-                top_fill_color = fill_color
-                top_edge_color = edge_color
+        self._is_tab   = True
+        self.tab_state = state
+        theme          = self.tab_theme
+        slice          = theme.image_slice
+        self.fill_bg_color( dc, x, y, dx, dy )
+        slice.fill( dc, x, y, dx, dy, True )
+        
+        # Compute the initial drawing position:
+        name         = self.tab_name
+        tdx, text_dy = dc.GetTextExtent( name )
+        tm           = theme.margins
+        ox, oy       = theme.offset
+        y += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
+                     text_dy) / 2))
+        x += ox + slice.xleft + tm.left
 
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
             mode = self.set_feature_mode( False )
 
-        xr = x + tw + 1
-
-        # Fill the bottom:
-        dc.SetPen( wx.TRANSPARENT_PEN )
-        dc.SetBrush( wx.Brush( wx.Colour( *fill_color ), wx.SOLID ) )
-        dc.DrawRectangle( x + 1, y + 3, xr - x - 1, yb1 - y - 3 )
-
-        # Fill the top:
-        dc.SetBrush( wx.Brush( wx.Colour( *top_fill_color ), wx.SOLID ) )
-        dc.DrawRectangle( x + 1, y + 1, xr - x - 1, 2 )
-
-        # Draw the side edges:
-        dc.SetPen( wx.Pen( wx.Colour( *edge_color ), 1, wx.SOLID ) )
-        dc.DrawLine( x, y + 3, x, yb )
-        dc.DrawLine( xr, y + 3, xr, yb )
-
-        # Draw the top edges:
-        dc.SetPen( wx.Pen( wx.Colour( *top_edge_color ), 1, wx.SOLID ) )
-        dc.DrawLine( x, y + 2, x + 2, y )
-        dc.DrawLine( xr, y + 2, xr - 2, y )
-        dc.DrawLine( x + 2, y, xr - 1, y )
-
-        # Initialize the starting point:
-        ix = fx = x + tx + 1
-
         # Draw the feature 'trigger' icon (if necessary):
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode ), ix, y + 3,
+                dc.DrawBitmap( DockImages.get_feature_image( mode ), x, y, 
                                True )
-            ix += (DockImages._tab_feature_width + 3)
+            x += (DockImages._tab_feature_width + 3)
 
         # Draw the image (if necessary):
+        image = self.get_image()
         if image is not None:
-            dc.DrawBitmap( image, ix, y + 3, True )
-            ix += (image.GetWidth() + 3)
+            dc.DrawBitmap( image, x, y, True )
+            x += (image.GetWidth() + 3)
 
         # Draw the text label:
-        dc.DrawText( name, ix, y + 4 )
+        dc.DrawText( name, x, y + 1 )
 
         # Draw the close button (if necessary):
         if self.closeable:
-            dc.DrawBitmap( DockImages._close_tab, ix + tdx + 6, y + 6 )
+            dc.DrawBitmap( DockImages._close_tab, x + tdx + 5, y + 3, True )
 
     #---------------------------------------------------------------------------
     #  Draws a fixed drag bar:
@@ -857,24 +823,33 @@ class DockItem ( HasPrivateTraits ):
     def draw_horizontal ( self, dc ):
         """ Draws a horizontal drag bar.
         """
+        self._is_tab = False
         x, y, dx, dy = self.drag_bounds
-        self._draw_bar( dc, x + 4, y + 4, dx - 8, 3, 0, 4 )
-        x += 10
-        fx = x
-
+        self.fill_bg_color( dc, x, y, dx, dy )
+        theme = self.theme.horizontal_drag
+        tis   = theme.image_slice
+        tis.fill( dc, x, y, dx, dy, True )
+        
+        ox, oy = theme.offset
+        tm     = theme.margins
+        x     += (ox + tis.xleft + tm.left) 
+        py     = ((2 * (y + oy)) +
+                  (dy + tis.xtop + tm.top - tis.xbottom - tm.bottom))
+        
         # Draw the feature 'trigger' icon (if necessary):
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
             mode = self.set_feature_mode( False )
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode, False ),
-                               x, y + 4, True )
+                image = DockImages.get_feature_image( mode, False )
+                dc.DrawBitmap( image, x, (py - image.GetHeight()) / 2, True )
             x += (DockImages._bar_feature_width + 6)
-
+        
         # Draw the close button (if necessary):
         if self.closeable:
-            dc.DrawBitmap( DockImages._close_drag, x, y + 4 )
+            dc.DrawBitmap( DockImages._close_drag, x,
+                           (py - DockImages._close_drag.GetHeight()) / 2, True )
 
     #---------------------------------------------------------------------------
     #  Draws a vertical drag bar:
@@ -883,24 +858,33 @@ class DockItem ( HasPrivateTraits ):
     def draw_vertical ( self, dc ):
         """ Draws a vertical drag bar.
         """
+        self._is_tab = False
         x, y, dx, dy = self.drag_bounds
-        self._draw_bar( dc, x + 4, y + 4, 3, dy - 8, 4, 0 )
-        y += 10
-        fy = y
-
+        self.fill_bg_color( dc, x, y, dx, dy )
+        theme = self.theme.vertical_drag
+        tis   = theme.image_slice
+        tis.fill( dc, x, y, dx, dy, True )
+         
+        ox, oy = theme.offset
+        tm     = theme.margins
+        y     += (oy + tis.xtop + tm.top) 
+        px     = ((2 * (x + ox)) +
+                  (dx + tis.xleft + tm.left - tis.xright - tm.right))
+        
         # Draw the feature 'trigger' icon (if necessary):
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
             mode = self.set_feature_mode( False )
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode, False ),
-                               x + 4, y, True )
+                image = DockImages.get_feature_image( mode, False )
+                dc.DrawBitmap( image, (px - image.GetWidth()) / 2, y, True )
             y += (DockImages._bar_feature_height + 6)
-
+        
         # Draw the close button (if necessary):
         if self.closeable:
-            dc.DrawBitmap( DockImages._close_drag, x + 4, y )
+            dc.DrawBitmap( DockImages._close_drag, 
+                   (px - DockImages._close_drag.GetWidth()) / 2, y, True )
 
     #---------------------------------------------------------------------------
     #  Redraws the control's tab:
@@ -908,7 +892,7 @@ class DockItem ( HasPrivateTraits ):
 
     def _redraw_tab ( self, state = None ):
         if state is None:
-            state = self._state
+            state = self.tab_state
         region = self.parent
         if region is not None:
             dc = set_standard_font( wx.ClientDC( self.control.GetParent() ) )
@@ -938,50 +922,50 @@ class DockItem ( HasPrivateTraits ):
             self._redraw_bar()
 
     #---------------------------------------------------------------------------
-    #  Draws a horizontal/vertical drag bar:
-    #---------------------------------------------------------------------------
-
-    def _draw_bar ( self, dc, x, y, dx, dy, ndx, ndy ):
-        """ Draws a horizontal/vertical drag bar.
-        """
-        self._is_tab = False
-        x2           = x + ndx
-        y2           = y + ndy
-
-        # Fill the background of the drag bar:
-        dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
-        dc.SetPen( wx.TRANSPARENT_PEN )
-        dc.DrawRectangle( *self.drag_bounds )
-
-        # Draw the light portions of both bars:
-        dc.SetPen( wx.Pen( wx.Colour( *DragLightColor ), 1, wx.SOLID ) )
-        dc.DrawLine( x, y, x + dx - 1, y )
-        dc.DrawLine( x, y + 1, x, y + dy - 1 )
-        dc.DrawLine( x2, y2, x2 + dx - 1, y2 )
-        dc.DrawLine( x2, y2 + 1, x2, y2 + dy - 1 )
-
-        # Draw the dark portions of both bars:
-        dc.SetPen( wx.Pen( wx.Colour( *DragDarkColor ), 1, wx.SOLID ) )
-        dc.DrawLine( x, y + dy - 1, x + dx, y + dy - 1 )
-        dc.DrawLine( x + dx - 1, y, x + dx - 1, y + dy - 1 )
-        dc.DrawLine( x2, y2 + dy - 1, x2 + dx, y2 + dy - 1 )
-        dc.DrawLine( x2 + dx - 1, y2, x2 + dx - 1, y2 + dy - 1 )
-
-    #---------------------------------------------------------------------------
     #  Returns the bounds of the close button (if any):
     #---------------------------------------------------------------------------
 
     def _close_bounds ( self ):
+        global text_dy
+        
         if self.closeable:
             x, y, dx, dy = self.drag_bounds
             if self._is_tab:
-                return ( x + dx - 7 - CloseTabSize, y + 6,
+                theme  = self.tab_theme
+                slice  = theme.image_slice
+                tm     = theme.margins
+                ox, oy = theme.offset
+                
+                # fixme: x calculation seems to be off by -1...
+                return ( x + dx + ox - slice.xright - tm.right - CloseTabSize,
+                         y + oy + ((dy + slice.xtop + tm.top - slice.xbottom -
+                                    tm.bottom - text_dy) / 2) + 3,
                          CloseTabSize, CloseTabSize )
+                         
             elif self.style == 'horizontal':
-                return ( x + DockImages._bar_feature_width + 10, y + 4,
-                         CloseDragSize, CloseDragSize )
-            return ( x + 4, y + DockImages._bar_feature_height + 10,
-                     CloseDragSize, CloseDragSize )
+                theme  = self.theme.horizontal_drag
+                tis    = theme.image_slice
+                tm     = theme.margins
+                ox, oy = theme.offset
+                x     += (ox + tis.xleft + tm.left)
+                if self.feature_mode != FEATURE_NONE:
+                    x += (DockImages._bar_feature_width + 6)
+                    
+                return ( x, y + oy + ((dy + tis.xtop + tm.top - tis.xbottom - 
+                                      tm.bottom - CloseDragSize) / 2),
+                                      CloseDragSize, CloseDragSize )
+                                      
+            theme  = self.theme.vertical_drag
+            tis    = theme.image_slice
+            tm     = theme.margins
+            ox, oy = theme.offset
+            y     += (oy + tis.xtop + tm.top)
+            if self.feature_mode != FEATURE_NONE:
+                y += (DockImages._bar_feature_height + 6)
+                
+            return ( x + ox + ((dx + tis.xleft + tm.left - tis.xright - 
+                                tm.right - CloseDragSize) / 2),
+                     y, CloseDragSize, CloseDragSize )
 
         return ( 0, 0, 0, 0 )
 
@@ -1022,6 +1006,8 @@ class DockItem ( HasPrivateTraits ):
     #---------------------------------------------------------------------------
 
     def feature_activate ( self, event, drag_object = Undefined ):
+        global text_dy
+        
         if self.feature_mode in NO_FEATURE_ICON:
             return False
 
@@ -1035,19 +1021,33 @@ class DockItem ( HasPrivateTraits ):
 
         if self._is_tab:
             # Handle the case of a notebook tab:
-            x += 7
-            if self._state == TabActive:
-                x += 2
-            result = self.is_in( event, x, y + 6, DockImages._tab_feature_width,
-                                 DockImages._tab_feature_height )
+            idx      = DockImages._tab_feature_width
+            idy      = DockImages._tab_feature_height
+            theme    = self.tab_theme
+            tdy      = text_dy
+            vertical = False
         else:
-            # Handle the case of a horzontal/vertical drag bar:
-            ox, oy = 10, 4
-            if self.style == 'vertical':
-                ox, oy = 4, 10
-            result = self.is_in( event, x + ox, y + oy,
-                                 DockImages._bar_feature_width,
-                                 DockImages._bar_feature_height )
+            idx       = DockImages._bar_feature_width
+            idy = tdy = DockImages._bar_feature_height
+            vertical  = (self.style == 'vertical')
+            if vertical:
+                theme = self.theme.vertical_drag
+            else:
+                theme = self.theme.horizontal_drag
+                
+        slice  = theme.image_slice
+        tm     = theme.margins
+        ox, oy = theme.offset
+        if vertical:
+            x += (ox + ((dx + slice.xleft + tm.left - slice.xright - tm.right - 
+                         idx) / 2))
+            y += oy + slice.xtop + tm.top
+        else:
+            y += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
+                         tdy) / 2))
+            x += ox + slice.xleft + tm.left
+            
+        result = self.is_in( event, x, y, idx, idy )
 
         # If the pointer is over the feature 'trigger' icon, save the event for
         # the popup processing:
@@ -1081,7 +1081,7 @@ class DockItem ( HasPrivateTraits ):
             else:
                 self.feature_mode = FEATURE_VISIBLE
 
-            self.control.GetParent().owner.feature_bar_popup( self )
+            self.owner.feature_bar_popup( self )
             self._feature_popup_xy = None
         else:
             self.post_drag( FEATURE_EXTERNAL_DRAG )
@@ -1096,7 +1096,7 @@ class DockItem ( HasPrivateTraits ):
         else:
             self.feature_mode = FEATURE_NORMAL
 
-        self._redraw_control()
+        do_later( self._redraw_control )
 
     #---------------------------------------------------------------------------
     #  Handles all pre-processing before a feature is dragged:
@@ -1180,6 +1180,13 @@ class DockSplitter ( DockItem ):
     # Current state of the splitter (i.e. its position relative to the things
     # it splits):
     state = Property
+    
+    #-------------------------------------------------------------------------------
+    #  Override the definition of the inherited 'theme' property:
+    #-------------------------------------------------------------------------------
+    
+    def _get_theme ( self ):
+        return self.parent.control.GetParent().owner.theme
 
     #---------------------------------------------------------------------------
     #  Draws the contents of the splitter:
@@ -1189,36 +1196,47 @@ class DockSplitter ( DockItem ):
         """ Draws the contents of the splitter.
         """
         x, y, dx, dy = self.bounds
-        dc.SetBrush( wx.Brush( wx.Colour( *DragLightColor ), wx.SOLID ) )
         dc.SetPen( wx.TRANSPARENT_PEN )
-        image = DockImages.get_splitter_image( self.state )
+        dc.SetBrush( wx.Brush( 
+                     self.parent.control.GetParent().GetBackgroundColour() ) )
+        dc.DrawRectangle( x, y, dx, dy )
+        
         if self.style == 'horizontal':
-            idx = image.GetWidth()
-            dc.DrawRectangle( x + idx, y + 3, dx - idx - 1, 1 )
-            dc.DrawRectangle( x + idx, y + 4, 1, 4 )
-            dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
-            dc.DrawRectangle( x, y, idx, 9 )
-            dc.DrawRectangle( x + idx, y, dx - idx, 3 )
-            dc.DrawRectangle( x + idx + 1, y + 4, dx - idx - 2, 4 )
-            dc.SetBrush( wx.Brush( wx.Colour( *DragDarkColor ), wx.SOLID ) )
-            dc.DrawRectangle( x + idx, y + 8, dx - idx, 1 )
-            dc.DrawRectangle( x + dx - 1, y + 3, 1, 5 )
-            dc.DrawBitmap( image, x, y + 3, True )
-            self._hot_spot = ( x, y, idx, dy )
+            theme = self.theme.horizontal_splitter
         else:
-            idy = image.GetHeight()
-            dc.DrawRectangle( x + 3, y + idy, 1, dy - idy - 1 )
-            dc.DrawRectangle( x + 4, y + idy, 4, 1 )
-            dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
-            dc.DrawRectangle( x, y, 12, idy )
-            dc.DrawRectangle( x, y + idy, 3, dy - idy )
-            dc.DrawRectangle( x + 4, y + idy + 1, 4, dy - idy - 2 )
-            dc.DrawRectangle( x + 9, y + idy, 3, dy - idy )
-            dc.SetBrush( wx.Brush( wx.Colour( *DragDarkColor ), wx.SOLID ) )
-            dc.DrawRectangle( x + 8, y + idy, 1, dy - idy )
-            dc.DrawRectangle( x + 3, y + dy - 1, 5, 1 )
-            dc.DrawBitmap( image, x + 3, y, True )
-            self._hot_spot = ( x, y, dx, idy )
+            theme = self.theme.vertical_splitter
+        theme.image_slice.fill( dc, x, y, dx, dy, True )
+        
+        image    = DockImages.get_splitter_image( self.state )
+        idx, idy = image.GetWidth(), image.GetHeight()
+        ox, oy   = theme.offset
+        tis      = theme.image_slice
+        tm       = theme.margins
+        if self.style == 'horizontal':
+            iy = y + oy + ((dy + tis.xtop + tm.top - tis.xbottom - tm.bottom -
+                            idy) / 2)
+            if theme.alignment == 'center':
+                ix = x = x + ox + ((dx + tis.xleft + tm.left - tis.xright -
+                                    tm.right - idx) / 2)
+            elif theme.alignment == 'right':
+                ix = x = x + ox + dx - tis.xright - tm.right - idx
+            else:                
+                ix = x = x + ox + tis.xleft + tm.left
+            dx = idx
+        else:
+            ix = x + ox + ((dx + tis.xleft + tm.left - tis.xright - tm.right - 
+                            idx) / 2)
+            if theme.alignment == 'center':
+                iy = y = y + oy + ((dy + tis.xtop + tm.top - tis.xbottom -
+                                    tm.bottom - idy) / 2)
+            elif theme.alignment == 'right':
+                iy = y = y + oy + dy - tis.xbottom - tm.bottom - idy
+            else:
+                iy = y = y + oy + tis.xtop + tm.top
+            dy = idy
+            
+        dc.DrawBitmap( image, ix, iy, True )
+        self._hot_spot = ( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
     #  Gets the cursor to use when the mouse is over the splitter bar:
@@ -1255,8 +1273,8 @@ class DockSplitter ( DockItem ):
         self._click_pending = ((self._hot_spot is not None) and
                                 self.is_in( event, *self._hot_spot ))
         if not self._click_pending:
-            self._xy            = ( event.GetX(), event.GetY() )
-            self._max_bounds    = self.parent.get_splitter_bounds( self )
+            self._xy         = ( event.GetX(), event.GetY() )
+            self._max_bounds = self.parent.get_splitter_bounds( self )
             self._draw_bounds( event, self.bounds )
 
     #---------------------------------------------------------------------------
@@ -1781,6 +1799,8 @@ class DockControl ( DockItem ):
     def _control_changed ( self, old, new ):
         """ Handles the 'control' trait being changed.
         """
+        self._tab_width = None
+        
         if old is not None:
             old._dock_control = None
 
@@ -2104,24 +2124,28 @@ class DockRegion ( DockGroup ):
         """
         tab_dx   = tdx = tdy = 0
         contents = self.visible_contents
+        theme    = self.theme
         if self.is_notebook:
             for item in contents:
                 dx, dy  = item.calc_min( use_size )
                 tdx     = max( tdx, dx )
                 tdy     = max( tdy, dy )
-                tab_dx += item.tab_width - 1 # Overlap by 1 pixel
+                tab_dx += item.tab_width
 
-            nbm  = NBMarginLeft + NBMarginRight
-            tdx  = nbm + max( tdx, tab_dx + 1 - (2 * NBPadding) )
-            tdy += TabHeight + NBMarginTop + NBMarginBottom
+            tis  = theme.tab.image_slice
+            tm   = theme.tab.margins
+            tdx  = max( tdx, tab_dx ) + (tis.xleft + tis.xright + 
+                                         tm.left   + tm.right)
+            tdy += (theme.tab_active.image_slice.dy + 
+                    tis.xtop + tis.xbottom + tm.top + tm.bottom)
         elif len( contents ) > 0:
             item     = contents[0]
             tdx, tdy = item.calc_min( use_size )
             if not item.locked:
                 if item.style == 'horizontal':
-                    tdy += DragBarSize
+                    tdy += theme.horizontal_drag.image_slice.dy
                 elif item.style == 'vertical':
-                    tdx += DragBarSize
+                    tdx += theme.vertical_drag.image_slice.dx
 
         if self.width < 0:
             self.width  = tdx
@@ -2140,28 +2164,37 @@ class DockRegion ( DockGroup ):
         self.height = dy = max( 0, dy )
         self.bounds = ( x, y, dx, dy )
 
+        theme    = self.theme
         contents = self.visible_contents
         if self.is_notebook:
+            tis = theme.tab.image_slice
+            tm  = theme.tab.margins
+            th  = theme.tab_active.image_slice.dy
             # Layout the region out as a notebook:
-            x  += NBMarginLeft
-            tx0 = tx = x - NBPadding
-            dx -= (NBMarginLeft + NBMarginRight)
-            iy  = y + TabHeight + NBMarginTop
-            dy -= (TabHeight + NBMarginTop + NBMarginBottom)
+            x  += tis.xleft + tm.left
+            tx0 = tx = x + theme.tab.offset[0]
+            dx -= (tis.xleft + tis.xright + tm.left + tm.right)
+            ady = dy - th
+            dy  = ady - tis.xtop - tis.xbottom - tm.top - tm.bottom
+            iy  = y + tis.xtop + tm.top
+            if theme.tabs_at_top:
+                iy += th
+            else:
+                y += ady
             for item in contents:
                 item.recalc_sizes( x, iy, dx, dy )
                 tdx = item.tab_width
-                item.set_drag_bounds( tx, y, tdx, TabHeight )
-                tx += (tdx - 1)  # Overlap by 1 pixel
+                item.set_drag_bounds( tx, y, tdx, th )
+                tx += tdx
 
             # Calculate the default tab clipping bounds:
-            cdx = dx + 2 * NBPadding + 1
-            self._tab_clip_bounds = ( tx0, y, cdx, TabHeight )
+            cdx = dx + tm.left + tm.right
+            self._tab_clip_bounds = ( tx0, y, cdx, th )
 
             # Do we need to enable tab scrolling?
             xr = tx0 + cdx
-            if (tx + 2) >= xr:
-                # FIXME: We shouldn't have to force DockImages to lazy init
+            if tx > xr:
+                # fixme: We shouldn't have to force DockImages to lazy init...
                 DockImages._lazy_init()
 
                 # Scrolling needed, calculate maximum tab index for scrolling:
@@ -2169,7 +2202,7 @@ class DockRegion ( DockGroup ):
                 n            = len( contents ) - 1
                 xr          -= DockImages._tab_scroller_dx
                 for i in range( n, -1, -1 ):
-                    xr -= (contents[i].tab_width - 1)
+                    xr -= contents[i].tab_width
                     if xr < tx0:
                         self.max_tab = min( i + 1, n )
                         break
@@ -2191,7 +2224,7 @@ class DockRegion ( DockGroup ):
 
                 # Exclude the scroll buttons from the tab clipping region:
                 self._tab_clip_bounds = ( tx0, y, cdx -
-                                        DockImages._tab_scroller_dx, TabHeight )
+                                          DockImages._tab_scroller_dx, th )
             else:
                 self.tab_scroll_index = -1
                 self.left_tab = 0
@@ -2201,13 +2234,15 @@ class DockRegion ( DockGroup ):
             drag_bounds = ( 0, 0, 0, 0 )
             if not item.locked:
                 if item.style == 'horizontal':
-                    drag_bounds = ( x, y, dx, DragBarSize )
-                    y  += DragBarSize
-                    dy -= DragBarSize
+                    db_dy = theme.horizontal_drag.image_slice.dy
+                    drag_bounds = ( x, y, dx, db_dy )
+                    y  += db_dy
+                    dy -= db_dy
                 elif item.style == 'vertical':
-                    drag_bounds = ( x, y, DragBarSize, dy )
-                    x  += DragBarSize
-                    dx -= DragBarSize
+                    db_dx = theme.vertical_drag.image_slice.dx
+                    drag_bounds = ( x, y, db_dx, dy )
+                    x  += db_dx
+                    dx -= db_dx
 
             item.recalc_sizes( x, y, dx, dy )
             item.set_drag_bounds( *drag_bounds )
@@ -2318,7 +2353,10 @@ class DockRegion ( DockGroup ):
                 dc.SetClippingRegion( x, y, dx, dy )
                 for i, item in enumerate( self.contents ):
                     if (i != active) and item.visible:
-                        item.draw_tab( dc, TabInactive )
+                        state = item.tab_state
+                        if state not in NotActiveStates:
+                            state = TabInactive
+                        item.draw_tab( dc, state )
 
                 # Draw the active tab last:
                 self.contents[ active ].draw_tab( dc, TabActive )
@@ -2363,11 +2401,11 @@ class DockRegion ( DockGroup ):
     #  Gets the DockInfo object for a specified window position:
     #---------------------------------------------------------------------------
 
-    def dock_info_at ( self, x, y, size, is_control ):
+    def dock_info_at ( self, x, y, tdx, is_control ):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super( DockRegion, self ).dock_info_at( x, y, size, is_control )
+        info = super( DockRegion, self ).dock_info_at( x, y, tdx, is_control )
         if info is not None:
             return info
 
@@ -2378,26 +2416,20 @@ class DockRegion ( DockGroup ):
         # Check to see if the point is in the drag bars of any controls:
         contents = self.visible_contents
         for item in contents:
-            object = item.dock_info_at( x, y, size, is_control )
+            object = item.dock_info_at( x, y, tdx, is_control )
             if object is not None:
                 return object
 
         # If we are in 'notebook mode' check to see if the point is in the
         # empty region outside of any tabs:
         lx, ty, dx, dy = self.bounds
-        mdx, mdy, tdx  = size
         if self.is_notebook:
             item             = contents[-1]
             ix, iy, idx, idy = item.drag_bounds
-            if (x >= (ix + idx)) and (ty <= y < (ty + TabHeight)):
-                if item._state == TabActive:
-                    ix += 2
-                return DockInfo(
-                           kind       = DOCK_TAB,
-                           bounds     = ( lx + 3, iy + idy - 1, dx - 8,
-                                          ty + dy - iy - idy - 4 ),
-                           tab_bounds = ( ix + idx, iy + 5, tdx, idy - 5 ),
-                           region     = self )
+            if (x > (ix + idx)) and (iy <= y < (iy + idy)):
+                return DockInfo( kind       = DOCK_TAB,
+                                 tab_bounds = ( ix + idx, iy, tdx, idy ),
+                                 region     = self )
 
         # Otherwise, figure out which edge the point is closest to, and
         # return a DockInfo object describing that edge:
@@ -2406,8 +2438,8 @@ class DockRegion ( DockGroup ):
         top    = y  - ty
         bottom = ty + dy - 1 - y
         choice = min( left, right, top, bottom )
-        mdx    = min( mdx, (2 * dx) / 3 )
-        mdy    = min( mdy, (2 * dy) / 3 )
+        mdx    = dx / 3
+        mdy    = dy / 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -2440,6 +2472,9 @@ class DockRegion ( DockGroup ):
         if i != self.active:
             self.active = i
 
+            # Recalculate the tab layout:
+            self.recalc_sizes( *self.bounds )
+            
             # Force the notebook to be redrawn:
             control.control.GetParent().RefreshRect( wx.Rect( *self.bounds ) )
 
@@ -2644,6 +2679,10 @@ class DockRegion ( DockGroup ):
 
     def _active_changed ( self, old, new ):
         self._set_visibility()
+            
+        # Set the correct tab state for each tab:
+        for i, item in enumerate( self.contents ):
+            item.tab_state = NormalStates[ i == new ]
 
         n = len( self.contents )
         if 0 <= old < n:
@@ -2724,44 +2763,20 @@ class DockRegion ( DockGroup ):
     def _draw_notebook ( self, dc ):
         """ Draws the notebook body.
         """
+        theme        = self.theme
+        tab_height   = theme.tab_active.image_slice.dy
         x, y, dx, dy = self.bounds
-        yth    = y + TabHeight
-        xdx    = max( x + 16,  x + dx )
-        ydy    = max( yth + 12, y + dy )
-        dx8    = max( 0, dx - 8 )
-        dyth4  = max( 0, ydy - yth - 4 )
-        dyth12 = max( 0, ydy - yth - 12 )
-
-        # Fill the outside areas:
-        dc.SetPen( wx.TRANSPARENT_PEN )
-        dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
-        dc.DrawRectangle( x, y, dx, TabHeight - 1 )
-        dc.DrawRectangle( x, ydy - 5, dx, 5 )
-        dc.DrawRectangle( x, yth - 1, 3, dyth4 )
-        dc.DrawRectangle( xdx - 5, yth - 1, 5, dyth4 )
-
-        # Fill the inside areas:
-        dc.SetBrush( wx.Brush( wx.Colour( *NBBGColor ), wx.SOLID ) )
-        dc.DrawRectangle( x + 4, yth + 3, 3, dyth12 )
-        dc.DrawRectangle( xdx - 9, yth + 3, 3, dyth12 )
-        dc.DrawRectangle( x + 4, yth, dx8, 3 )
-        dc.DrawRectangle( x + 4, ydy - 9, dx8, 3 )
-
-        # Draw the shadows:
-        dc.SetPen( wx.Pen( wx.Colour( *NBShadow1Color ), 1, wx.SOLID ) )
-        dc.DrawLine( x + 4, ydy - 5, xdx - 4, ydy - 5 )
-        dc.DrawLine( xdx - 5, yth, xdx - 5, ydy - 5 )
-
-        dc.SetPen( wx.Pen( wx.Colour( *NBShadow2Color ), 1, wx.SOLID ) )
-        dc.DrawLine( x + 5, ydy - 4, xdx - 3, ydy - 4 )
-        dc.DrawLine( xdx - 4, yth + 1, xdx - 4, ydy - 4 )
-
-        # Draw the outline:
-        dc.SetPen( wx.Pen( wx.Colour( *NBEdgeColor ), 1, wx.SOLID ) )
-        dc.DrawLine( x + 3, yth - 1, xdx - 5, yth - 1 )
-        dc.DrawLine( x + 3, ydy - 6, xdx - 5, ydy - 6 )
-        dc.DrawLine( x + 3, yth, x + 3, ydy - 6 )
-        dc.DrawLine( xdx - 6, yth, xdx - 6, ydy - 6 )
+        self.fill_bg_color( dc, x, y, dx, dy )
+        if theme.tabs_at_top:
+            theme.tab_background.image_slice.fill( dc, x, y, dx, 
+                                                   min( tab_height, dy ), True ) 
+            theme.tab.image_slice.fill( dc, x, y + tab_height, dx, 
+                                        max( 0, dy - tab_height ), True )
+        else:                                        
+            theme.tab_background.image_slice.fill( dc, x, y + dy - tab_height, 
+                                               dx, min( tab_height, dy ), True ) 
+            theme.tab.image_slice.fill( dc, x, y, dx, max( 0, dy - tab_height ),
+                                        True )
 
 #-------------------------------------------------------------------------------
 #  'DockSection' class:
@@ -2786,6 +2801,20 @@ class DockSection ( DockGroup ):
     modified = Property
 
     #---------------------------------------------------------------------------
+    #  Re-implementation of the 'owner' property:
+    #---------------------------------------------------------------------------
+
+    @cached_property
+    def _get_owner ( self ):
+        if self.dock_window is not None:
+            return self.dock_window
+            
+        if self.parent is None:
+            return None
+            
+        return self.parent.owner
+
+    #---------------------------------------------------------------------------
     #  Calculates the minimum size of the section:
     #---------------------------------------------------------------------------
 
@@ -2796,22 +2825,24 @@ class DockSection ( DockGroup ):
         contents = self.visible_contents
         n        = len( contents )
         if self.is_row:
+            sdx = self.theme.vertical_splitter.image_slice.dx
             for item in contents:
                 dx, dy = item.calc_min( use_size )
                 tdx   += dx
                 tdy    = max( tdy, dy )
             if self.resizable:
-                tdx += ((n - 1) * SplitterSizeV)
+                tdx += ((n - 1) * sdx)
             else:
                 tdx += ((n + 1) * 3)
                 tdy += 6
         else:
+            sdy = self.theme.horizontal_splitter.image_slice.dy
             for item in contents:
                 dx, dy = item.calc_min( use_size )
                 tdx    = max( tdx, dx )
                 tdy   += dy
             if self.resizable:
-                tdy += ((n - 1) * SplitterSizeH)
+                tdy += ((n - 1) * sdy)
             else:
                 tdx += 6
                 tdy += ((n + 1) * 3)
@@ -2844,7 +2875,8 @@ class DockSection ( DockGroup ):
 
         # Perform a horizontal layout:
         if self.is_row:
-            dx -= (n * SplitterSizeV)
+            sdx = self.theme.vertical_splitter.image_slice.dx
+            dx -= (n * sdx)
             cdx = 0
 
             # Calculate the current and minimum width:
@@ -2870,15 +2902,16 @@ class DockSection ( DockGroup ):
                 # Define the splitter bar between adjacent items:
                 if i < n:
                     splitters.append(
-                        DockSplitter( bounds = ( x, y, SplitterSizeV, dy ),
+                        DockSplitter( bounds = ( x, y, sdx, dy ),
                                       style  = 'vertical',
                                       parent = self,
                                       index  = i ) )
-                x += SplitterSizeV
+                x += sdx
 
         # Perform a vertical layout:
         else:
-            dy -= (n * SplitterSizeH)
+            sdy = self.theme.horizontal_splitter.image_slice.dy
+            dy -= (n * sdy)
             cdy = 0
 
             # Calculate the current and minimum height:
@@ -2904,10 +2937,11 @@ class DockSection ( DockGroup ):
                 # Define the splitter bar between adjacent items:
                 if i < n:
                     splitters.append(
-                        DockSplitter( bounds = ( x, y, dx, SplitterSizeH ),
+                        DockSplitter( bounds = ( x, y, dx, sdy ),
                                       style  = 'horizontal',
+                                      parent = self,
                                       index  = i ) )
-                y += SplitterSizeH
+                y += sdy
 
         # Preserve the current internal '_last_bounds' for all splitters if
         # possible:
@@ -2974,9 +3008,8 @@ class DockSection ( DockGroup ):
         if self._visible is not False:
             contents = self.visible_contents
             if (len( contents ) == 0) or (not self.resizable):
-                dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
-                dc.SetPen( wx.TRANSPARENT_PEN )
-                dc.DrawRectangle( *self.bounds )
+                x, y, dx, dy = self.bounds
+                self.fill_bg_color( dc, x, y, dx, dy )
 
             for item in contents:
                 item.draw( dc )
@@ -3012,11 +3045,11 @@ class DockSection ( DockGroup ):
     #  Gets the DockInfo object for a specified window position:
     #---------------------------------------------------------------------------
 
-    def dock_info_at ( self, x, y, size, is_control, force = False ):
+    def dock_info_at ( self, x, y, tdx, is_control, force = False ):
         """ Gets the DockInfo object for a specified window position.
         """
         # Check to see if the point is in our drag bar:
-        info = super( DockSection, self ).dock_info_at( x, y, size, is_control )
+        info = super( DockSection, self ).dock_info_at( x, y, tdx, is_control )
         if info is not None:
             return info
 
@@ -3028,7 +3061,7 @@ class DockSection ( DockGroup ):
                 return DockInfo( kind = DOCK_SPLITTER )
 
         for item in self.visible_contents:
-            object = item.dock_info_at( x, y, size, is_control )
+            object = item.dock_info_at( x, y, tdx, is_control )
             if object is not None:
                 return object
 
@@ -3049,14 +3082,13 @@ class DockSection ( DockGroup ):
         if max( left, right, top, bottom ) > 20:
             return DockInfo( kind = DOCK_EXPORT )
 
-        left          = abs( left )
-        right         = abs( right )
-        top           = abs( top )
-        bottom        = abs( bottom )
-        choice        = min( left, right, top, bottom )
-        mdx, mdy, tdx = size
-        mdx           = min( mdx, (2 * dx) / 3 )
-        mdy           = min( mdy, (2 * dy) / 3 )
+        left   = abs( left )
+        right  = abs( right )
+        top    = abs( top )
+        bottom = abs( bottom )
+        choice = min( left, right, top, bottom )
+        mdx    = dx / 3
+        mdy    = dy / 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -3307,33 +3339,38 @@ class DockInfo ( HasPrivateTraits ):
     #  Draws the DockInfo on the display:
     #---------------------------------------------------------------------------
 
-    def draw ( self, window ):
+    def draw ( self, window, bitmap = None ):
         """ Draws the DockInfo on the display.
         """
         if DOCK_TOP <= self.kind <= DOCK_TABADD:
-            dc = wx.ScreenDC()
-            dc.SetLogicalFunction( wx.XOR )
-            dc.SetBrush( wx.TRANSPARENT_BRUSH )
-            pen = wx.Pen( wx.Colour( *DockColor ), 3, wx.SOLID )
-            pen.SetJoin( wx.JOIN_MITER )
-            dc.SetPen( pen )
+            if bitmap is None:
+                bitmap = self._bitmap
+                if bitmap is None:
+                    return
+            else:
+                self._bitmap = bitmap
+            bdx, bdy = bitmap.GetWidth(), bitmap.GetHeight()
+            sdc      = wx.ScreenDC()
+            bdc      = wx.MemoryDC()
+            bdc2     = wx.MemoryDC()
+            bitmap2  = wx.EmptyBitmap( bdx, bdy )
+            bdc.SelectObject(  bitmap )
+            bdc2.SelectObject( bitmap2 )
+            bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
+            bdc3 = wx.GCDC( bdc2 )
+            bdc3.SetPen( wx.TRANSPARENT_PEN )
+            bdc3.SetBrush( wx.Brush( wx.Colour( *DockColorBrush ) ) )
             x, y, dx, dy = self.bounds
-            x, y         = window.ClientToScreenXY( x, y )
+            
             if DOCK_TAB <= self.kind <= DOCK_TABADD:
                 tx, ty, tdx, tdy = self.tab_bounds
-                tx, ty           = window.ClientToScreenXY( tx, ty )
-                dc.DrawLines( [ wx.Point( x, y ),
-                                wx.Point( tx, y ),
-                                wx.Point( tx, ty ),
-                                wx.Point( tx + tdx - 1, ty ),
-                                wx.Point( tx + tdx - 1, y ),
-                                wx.Point( x + dx - 1, y ),
-                                wx.Point( x + dx - 1, y + dy - 1 ),
-                                wx.Point( x, y + dy - 1 ),
-                                wx.Point( x, y ) ] )
+                bdc3.DrawRoundedRectangle( tx, ty, tdx, tdy, 4 )
             else:
-                dc.DrawRectangle( x, y, dx, dy )
+                bdc3.DrawRoundedRectangle( x, y, dx, dy, 8 )
 
+            bx, by = window.ClientToScreenXY( 0, 0 )
+            sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
+                
     #---------------------------------------------------------------------------
     #  Docks the specified control:
     #---------------------------------------------------------------------------

@@ -42,6 +42,9 @@ from enthought.traits.ui.menu \
     
 from enthought.traits.ui.dockable_view_element \
     import DockableViewElement
+    
+from enthought.traits.ui.dock_window_theme \
+    import DockWindowTheme, default_dock_window_theme
 
 from enthought.util.wx.drag_and_drop \
     import PythonDropTarget, clipboard
@@ -103,7 +106,7 @@ enable_features_action  = Action( name   = 'Show All',
                          
 disable_features_action = Action( name   = 'Hide All',
                                   action = 'on_disable_all_features' )
-
+            
 #-------------------------------------------------------------------------------
 #  'DockWindowHandler' class/interface:
 #-------------------------------------------------------------------------------
@@ -268,6 +271,9 @@ class DockWindow ( HasPrivateTraits ):
     # Close the parent window if the DockWindow becomes empty:
     auto_close = false
     
+    # The DockWindow graphical theme style information:
+    theme = Instance( DockWindowTheme, allow_none = False )
+    
     # Default style for external objects dragged into the window:
     style = DockStyle
     
@@ -307,6 +313,28 @@ class DockWindow ( HasPrivateTraits ):
         wx.EVT_LEAVE_WINDOW( control, self._mouse_leave )
         
         control.SetDropTarget( PythonDropTarget( self ) )
+        
+        # Initialize the window background color:
+        if self.theme.use_theme_color:
+            self.control.SetBackgroundColour( 
+                 self.theme.tab.image_slice.bg_color )
+        
+    #-- Default Trait Values ---------------------------------------------------
+    
+    def _theme_default ( self ):
+        return default_dock_window_theme
+        
+    #-- Trait Event Handlers ---------------------------------------------------
+    
+    def _theme_changed ( self, theme ):
+        if self.control is not None:
+            if theme.use_theme_color:
+                color = theme.tab.image_slice.bg_color
+            else:
+                color = wx.NullColour 
+            self.control.SetBackgroundColour( color )
+                     
+            self.update_layout()                  
         
     #---------------------------------------------------------------------------
     #  Notifies the DockWindow that its contents are empty:    
@@ -1030,9 +1058,9 @@ class DockWindow ( HasPrivateTraits ):
             if cur_dock_info is None:
                 cur_dock_info = no_dock_info
                 if isinstance( data, DockControl ):
-                    self._dock_size = data.calc_min() + ( data.tab_width, )
+                    self._dock_size = data.tab_width
                 else:
-                    self._dock_size = ( 200, 200, 80 )
+                    self._dock_size = 80
                 
             # Get the window and DockInfo object associated with the event:
             window          = self.control
