@@ -37,7 +37,7 @@ class IImageCache(Interface):
 
     # FIXME v3: The need to distinguish between bitmaps and images is toolkit
     # specific so, strictly speaking, the conversion to a bitmap should be done
-    # wherever the toolkit actuallt needs it.
+    # wherever the toolkit actually needs it.
     def get_bitmap(self, filename):
         """ Returns the specified image as a bitmap. """
 

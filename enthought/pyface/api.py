@@ -22,6 +22,7 @@ from directory_dialog import DirectoryDialog
 from file_dialog import FileDialog
 from gui import GUI
 from image_cache import ImageCache
+from image_resource import ImageResource
 from key_pressed_event import KeyPressedEvent
 from message_dialog import error, information, warning, MessageDialog
 from python_shell import PythonShell
@@ -46,7 +47,6 @@ try:
     from expandable_panel import ExpandablePanel
     from filter import Filter
     from heading_text import HeadingText
-    from image_resource import ImageResource
     from image_widget import ImageWidget
     from layered_panel import LayeredPanel
     from mdi_application_window import MDIApplicationWindow
@@ -63,4 +63,4 @@ try:
     import util.fix_introspect_bug
 
 except ImportError:
-    from image_resource import ImageResource
+    pass
