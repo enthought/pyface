@@ -1,3 +1,16 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2005, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
 """ The workbench window layout interface. """
 
 
@@ -18,6 +31,7 @@ class IWorkbenchWindowLayout(Interface):
     """
 
     # The Id of the editor area.
+    # FIXME v3: This is toolkit specific.
     editor_area_id = Str
 
     # The workbench window that this is the layout for.
@@ -37,6 +51,7 @@ class IWorkbenchWindowLayout(Interface):
     # Fired when an editor has been closed.
     editor_closed = Event(IEditor)
 
+    # FIXME v3: The "just for convenience" returns are a really bad idea.
     def activate_editor(self, editor):
         """ Activate an editor.
 
@@ -75,6 +90,14 @@ class IWorkbenchWindowLayout(Interface):
     def close_view(self, view):
         """ Close a view.
 
+        FIXME v3: Currently views are never 'closed' in the same sense as an
+        editor is closed. When we close an editor, we destroy its control.
+        When we close a view, we merely hide its control. I'm not sure if this
+        is a good idea or not. It came about after discussion with Dave P. and
+        he mentioned that some views might find it hard to persist enough state
+        that they can be re-created exactly as they were when they are shown
+        again.
+
         Returns the view (just for convenience).
 
         """
@@ -82,9 +105,7 @@ class IWorkbenchWindowLayout(Interface):
     def close(self):
         """ Close the entire window layout.
 
-        fixme: Should this be called 'destroy'?
-
-        Returns None.
+        FIXME v3: Should this be called 'destroy'?
 
         """
 
@@ -105,8 +126,6 @@ class IWorkbenchWindowLayout(Interface):
     def hide_editor_area(self):
         """ Hide the editor area.
 
-        Returns None.
-
         """
 
     def hide_view(self, view):
@@ -117,39 +136,19 @@ class IWorkbenchWindowLayout(Interface):
         """
 
     def refresh(self):
-        """ Refreshes the window layout to reflect any changes.
-
-        Returns None.
-
-        """
+        """ Refreshes the window layout to reflect any changes. """
 
     def reset_editors(self):
-        """ Activate the first editor in every group.
-
-        Returns None.
-
-        """
+        """ Activate the first editor in every group. """
 
     def reset_views(self):
-        """ Activate the first view in every region.
-
-        Returns None.
-
-        """
+        """ Activate the first view in every region. """
 
     def show_editor_area(self):
-        """ Show the editor area.
-
-        Returns None.
-
-        """
+        """ Show the editor area. """
 
     def show_view(self, view):
-        """ Show a view.
-
-        Returns None.
-
-        """
+        """ Show a view. """
 
     #### Methods for saving and restoring the layout ##########################
 
@@ -164,5 +163,11 @@ class IWorkbenchWindowLayout(Interface):
 
     def set_editor_memento(self, memento):
         """ Restores the state of the editors. """
+
+
+class MWorkbenchWindowLayout(object):
+    """ The mixin class that contains common code for toolkit specific
+    implementations of the IWorkbenchWindowLayout interface.
+    """
 
 #### EOF ######################################################################

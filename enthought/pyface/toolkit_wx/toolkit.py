@@ -15,8 +15,6 @@ from action.menu_bar_manager import MenuBarManager_wx
 from action.menu_manager import MenuManager_wx
 from action.tool_bar_manager import ToolBarManager_wx
 
-from workbench.workbench_window_layout import WorkbenchWindowLayout_wx
-
 
 class Toolkit_wx(Toolkit):
     """ Implementation of the wx toolkit. """
@@ -26,7 +24,6 @@ class Toolkit_wx(Toolkit):
     MenuBarManager = MenuBarManager_wx
     MenuManager = MenuManager_wx
     ToolBarManager = ToolBarManager_wx
-    WorkbenchWindowLayout = WorkbenchWindowLayout_wx
 
     def init_toolkit(self, *args, **kw):
         pass
