@@ -10,7 +10,6 @@
 from enthought.pyface.toolkit import Toolkit
 
 # Local imports.
-from action.menu_bar_manager import MenuBarManager_qt4
 from action.menu_manager import MenuManager_qt4
 from action.tool_bar_manager import ToolBarManager_qt4
 
@@ -18,7 +17,6 @@ from action.tool_bar_manager import ToolBarManager_qt4
 class Toolkit_qt4(Toolkit):
     """ Implementation of the PyQt v4 toolkit. """
 
-    MenuBarManager = MenuBarManager_qt4
     MenuManager = MenuManager_qt4
     ToolBarManager = ToolBarManager_qt4
 
