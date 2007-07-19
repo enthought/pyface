@@ -10,14 +10,12 @@
 
 from enthought.pyface.toolkit import Toolkit
 
-from action.menu_manager import MenuManager_wx
 from action.tool_bar_manager import ToolBarManager_wx
 
 
 class Toolkit_wx(Toolkit):
     """ Implementation of the wx toolkit. """
 
-    MenuManager = MenuManager_wx
     ToolBarManager = ToolBarManager_wx
 
     def init_toolkit(self, *args, **kw):
