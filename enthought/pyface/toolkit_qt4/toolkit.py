@@ -9,14 +9,9 @@
 # Internal Enthought library imports.
 from enthought.pyface.toolkit import Toolkit
 
-# Local imports.
-from action.tool_bar_manager import ToolBarManager_qt4
-
 
 class Toolkit_qt4(Toolkit):
     """ Implementation of the PyQt v4 toolkit. """
-
-    ToolBarManager = ToolBarManager_qt4
 
     def init_toolkit(self, *args, **kw):
         pass
