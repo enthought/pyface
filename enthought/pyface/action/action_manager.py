@@ -29,8 +29,11 @@ class ActionManager(HasPrivateTraits):
     An action manager contains a list of groups, with each group containing a
     list of items.
 
-    There are currently three concrete sub-classes, 'MenuBarManager',
-    'MenuManager' and 'ToolBarManager'.
+    There are currently three concrete sub-classes:-
+
+    1) 'MenuBarManager'
+    2) 'MenuManager'
+    3) 'ToolBarManager'
 
     """
 
@@ -68,7 +71,7 @@ class ActionManager(HasPrivateTraits):
         # Base class constructor.
         super(ActionManager, self).__init__(**traits)
 
-        # The last group in every manager is the group with Id 'additions').
+        # The last group in every manager is the group with Id 'additions'.
         #
         # fixme: The side-effect of this is to ensure that the 'additions'
         # group has been created.  Is the 'additions' group even a good idea?
@@ -90,7 +93,8 @@ class ActionManager(HasPrivateTraits):
                 self.insert(-1, arg)
                 group = arg
 
-            # Otherwise, the item is an action so add it to the current group.
+            # Otherwise, the item is an action manager item so add it to the
+            # current group.
             else:
                 # If no group has been created then add one.  This is only
                 # relevant when using the 'shorthand' way to define menus.
@@ -116,7 +120,7 @@ class ActionManager(HasPrivateTraits):
     #### Methods ##############################################################
 
     def append(self, item):
-        """ Appends an item to the manager.
+        """ Append an item to the manager.
 
         See the documentation for 'insert'.
 
@@ -138,7 +142,7 @@ class ActionManager(HasPrivateTraits):
         return
 
     def insert(self, index, item):
-        """ Inserts an item into the manager at the specified index.
+        """ Insert an item into the manager at the specified index.
 
         The item can be:-
 
@@ -187,9 +191,9 @@ class ActionManager(HasPrivateTraits):
         return group
 
     def find_group(self, id):
-        """ Returns the group with the specified Id.
+        """ Return the group with the specified Id.
 
-        Returns None if no such group exists.
+        Return None if no such group exists.
 
         """
 
@@ -203,7 +207,7 @@ class ActionManager(HasPrivateTraits):
         return group
 
     def find_item(self, path):
-        """ Returns the item found at the specified path.
+        """ Return the item found at the specified path.
 
         'path' is a '/' separated list of contribution Ids.
 
