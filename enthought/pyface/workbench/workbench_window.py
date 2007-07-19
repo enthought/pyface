@@ -621,7 +621,7 @@ class WorkbenchWindow(ApplicationWindow):
                     logger.warn(
                         'Last used perspective [%s] is no longer available', id
                     )
-                    
+
             except:
                 if f:
                     f.close()

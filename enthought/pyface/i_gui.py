@@ -16,11 +16,10 @@
 
 # Standard library imports.
 import logging
-import os.path
+import os
 
 # Enthought library imports.
 from enthought.etsconfig.api import ETSConfig
-from enthought.io.api import File
 from enthought.traits.api import Bool, Interface, Unicode
 
 
@@ -101,12 +100,8 @@ class MGUI(object):
 
         state_location = os.path.join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
 
-        try:
-            File(state_location).create_folders()
-
-        except ValueError:
-            # The folders already exist.
-            pass
+        if not os.path.exists(state_location):
+            os.makedirs(state_location)
 
         logger.debug('GUI state location is [%s]', state_location)
 
