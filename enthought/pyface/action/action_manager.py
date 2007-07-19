@@ -18,9 +18,6 @@
 from enthought.traits.api import Constant, Event, HasPrivateTraits, Instance
 from enthought.traits.api import List, Property, Str
 
-# Private Enthought library imports.
-from enthought.pyface.toolkit import patch_toolkit
-
 # Local imports.
 from action_controller import ActionController
 from group import Group
