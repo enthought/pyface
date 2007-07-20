@@ -3,10 +3,13 @@
 
 # Standard library imports.
 import logging
+import os
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Callable, Event, HasTraits, Instance
-from enthought.traits.api import List, Str, Vetoable, VetoableEvent, implements
+from enthought.etsconfig.api import ETSConfig
+from enthought.traits.api import Bool, Callable, Event, HasTraits, implements
+from enthought.traits.api import Instance, List, Unicode, Vetoable
+from enthought.traits.api import VetoableEvent
 
 # Local imports.
 from i_editor_manager import IEditorManager
@@ -40,7 +43,7 @@ class Workbench(HasTraits):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Str
+    state_location = Unicode
 
     # The optional undo manager.
     undo_manager = Instance('enthought.undo.api.IUndoManager')
@@ -199,6 +202,20 @@ class Workbench(HasTraits):
     ###########################################################################
 
     #### Initializers #########################################################
+
+    def _state_location_default(self):
+        """ Trait initializer. """
+
+        # It would be preferable to base this on GUI.state_location.
+        loc = os.path.join(ETSConfig.application_home, 'pyface', 'workbench',
+                ETSConfig.toolkit)
+
+        if not os.path.exists(loc):
+            os.makedirs(loc)
+
+        logger.debug('Workbench state location is [%s]', loc)
+
+        return loc
 
     def _undo_manager_default(self):
         """ Trait initializer. """

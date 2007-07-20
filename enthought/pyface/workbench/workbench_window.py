@@ -9,7 +9,7 @@ from os.path import exists, join
 # Enthought library imports.
 from enthought.pyface.api import ApplicationWindow
 from enthought.traits.api import Callable, Constant, Event, Instance, List, Str
-from enthought.traits.api import Tuple, Vetoable, implements
+from enthought.traits.api import Tuple, Unicode, Vetoable, implements
 
 # Local imports.
 from i_editor import IEditor
@@ -37,14 +37,14 @@ class WorkbenchWindow(ApplicationWindow):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist layout information etc.
-    state_location = Str
+    state_location = Unicode
 
     # A suffix to be applied to the window title.
     #
     # fixme: This is horrible! In a plugin world you can't have people adding
     # suffixes to the window title - it just don't scale, errr, at all! This
     # needs to be removed - if you want it in your app then put it in there!
-    title_suffix = Str
+    title_suffix = Unicode
 
     # The workbench that the window belongs to.
     workbench = Instance('enthought.pyface.workbench.api.IWorkbench')
