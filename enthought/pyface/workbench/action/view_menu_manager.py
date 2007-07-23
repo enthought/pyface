@@ -3,12 +3,13 @@
 
 # Enthought library imports.
 from enthought.pyface.action.api import Group, MenuManager
-from enthought.traits.api import Any, Bool, Instance, List
+from enthought.traits.api import Any, Bool, Instance, List, Str, Unicode
 from enthought.traits.api import on_trait_change
 
 # Local imports.
 from perspective_menu_manager import PerspectiveMenuManager
 from toggle_view_visibility_action import ToggleViewVisibilityAction
+
 
 # Logging.
 import logging; logger = logging.getLogger()
@@ -26,6 +27,15 @@ class ViewMenuManager(MenuManager):
 
     # All of the groups in the manager.
     groups = List(Group)
+
+    # The manager's unique identifier (if it has one).
+    id = Str('View')
+
+    #### 'MenuManager' interface ##############################################
+
+    # The menu manager's name (if the manager is a sub-menu, this is what its
+    # label will be).
+    name = Unicode('&View')
 
     #### 'ViewMenuManager' interface ##########################################
 

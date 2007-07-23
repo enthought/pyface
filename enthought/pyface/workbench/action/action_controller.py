@@ -11,9 +11,9 @@ class ActionController(ActionController):
     """ The action controller for workbench menu and tool bars.
 
     The controller is used to 'hook' the invocation of every action on the menu
-    and tool bars. This is done so that additional (and Envisage specific)
+    and tool bars. This is done so that additional (and workbench specific)
     information can be added to action events. Currently, we attach a reference
-    to the application and the workbench window.
+    to the workbench window.
 
     """
 
@@ -30,7 +30,7 @@ class ActionController(ActionController):
         """ Control an action invocation. """
 
         # Add a reference to the window and the application to the event.
-        event.window      = self.window
+        event.window = self.window
 
         return action.perform(event)
     

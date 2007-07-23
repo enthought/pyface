@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Constant, Event, HasPrivateTraits, Instance
+from enthought.traits.api import Constant, Event, HasTraits, Instance
 from enthought.traits.api import List, Property, Str
 
 # Local imports.
@@ -23,7 +23,7 @@ from action_controller import ActionController
 from group import Group
 
 
-class ActionManager(HasPrivateTraits):
+class ActionManager(HasTraits):
     """ Abstract base class for all action managers.
 
     An action manager contains a list of groups, with each group containing a
@@ -75,10 +75,9 @@ class ActionManager(HasPrivateTraits):
         #
         # fixme: The side-effect of this is to ensure that the 'additions'
         # group has been created.  Is the 'additions' group even a good idea?
-        self._get_default_group()
+        group = self._get_default_group()
 
         # Add all items to the manager.
-        group = None
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
@@ -96,11 +95,11 @@ class ActionManager(HasPrivateTraits):
             # Otherwise, the item is an action manager item so add it to the
             # current group.
             else:
-                # If no group has been created then add one.  This is only
-                # relevant when using the 'shorthand' way to define menus.
-                if group is None:
-                    group = Group(id='__first__')
-                    self.insert(-1, group)
+##                 # If no group has been created then add one.  This is only
+##                 # relevant when using the 'shorthand' way to define menus.
+##                 if group is None:
+##                     group = Group(id='__first__')
+##                     self.insert(-1, group)
 
                 group.append(arg)
 
