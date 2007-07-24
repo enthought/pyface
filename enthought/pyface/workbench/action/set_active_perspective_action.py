@@ -40,8 +40,8 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
         super(SetActivePerspectiveAction, self).__init__(**traits)
 
-        # Make sure that the action is checked its perspective is already the
-        # active perspective.
+        # Make sure that the action is checked if its perspective is already
+        # the active perspective.
         self._refresh_checked()
 
         return
