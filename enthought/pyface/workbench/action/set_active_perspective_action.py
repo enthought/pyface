@@ -32,6 +32,21 @@ class SetActivePerspectiveAction(WorkbenchAction):
     perspective = Instance(IPerspective)
 
     ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __init__(self, **traits):
+        """ Constructor. """
+
+        super(SetActivePerspectiveAction, self).__init__(**traits)
+
+        # Make sure that the action is checked its perspective is already the
+        # active perspective.
+        self._refresh_checked()
+
+        return
+    
+    ###########################################################################
     # 'Action' interface.
     ###########################################################################
 
@@ -46,14 +61,12 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    #### Trait change handlers ################################################
-
     @on_trait_change('window.active_perspective')
-    def _when_active_perspective_changed_for_window(self, new):
-        """ Dynamic trait change handler. """
+    def _refresh_checked(self):
+        """ Refresh the checked state of the action. """
 
-        self.checked = self.perspective.id is new.id
+        self.checked = self.perspective.id is self.window.active_perspective.id
 
         return
-    
+
 #### EOF ######################################################################
