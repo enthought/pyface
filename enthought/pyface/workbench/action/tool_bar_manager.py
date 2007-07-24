@@ -15,7 +15,7 @@ class ToolBarManager(ToolBarManager):
     #### 'ToolBarManager' interface ###########################################
 
     # The workbench window that we are the tool bar manager for.
-    window = Instance('enthought.envisage.workbench.Window')
+    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
     ###########################################################################
     # 'ToolBarManager' interface.
