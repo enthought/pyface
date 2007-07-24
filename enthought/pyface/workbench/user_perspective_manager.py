@@ -3,12 +3,12 @@
 
 # Standard library imports.
 import logging
-from os import remove
-from os.path import join
+import os
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import Perspective
-from enthought.traits.api import Any, Dict, HasTraits, Int, List, Property, Str
+from enthought.traits.api import Any, Dict, HasTraits, Int, List, Property
+from enthought.traits.api import Unicode
 
 
 # Logging.
@@ -22,7 +22,7 @@ class UserPerspectiveManager(HasTraits):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Str
+    state_location = Unicode
     
     # Next available user perspective id.
     next_id = Property(Int)
@@ -34,7 +34,7 @@ class UserPerspectiveManager(HasTraits):
     perspectives = Property(List)
     
     # The name of the user defined perspectives definition file.
-    file_name = Property(Str)
+    file_name = Property(Unicode)
 
     #### Private interface ####################################################
 
@@ -93,7 +93,7 @@ class UserPerspectiveManager(HasTraits):
     def _get_file_name ( self ):
         """ Property getter. """
 
-        return join( self.state_location, '__user_perspective__' )
+        return os.path.join(self.state_location, '__user_perspective__')
 
     #### Methods ##############################################################
 
@@ -164,12 +164,12 @@ class UserPerspectiveManager(HasTraits):
     def new_perspective(self, name):
         """ Return a new user-defined perspective with the specified name. """
 
-        return self.add( Perspective( show_editor_area = False ), name )
+        return self.add(Perspective(show_editor_area=False), name)
         
     def rename(self, id, name):
         """ Renames the user perspective with the specified id. """
 
-        self.id_to_perspective[ id ].name = name
+        self.id_to_perspective[id].name = name
         
         # Update the persistent file information:
         self._update_persistent_data()
@@ -184,14 +184,14 @@ class UserPerspectiveManager(HasTraits):
         """
 
         if id in self.id_to_perspective: 
-            del self.id_to_perspective[ id ]
+            del self.id_to_perspective[id]
             
             # Update the persistent file information:
             self._update_persistent_data()
         
             # Try to delete the associated perspective layout file:
             try:
-                remove( join( self.state_location, id ) )
+                os.remove(os.path.join(self.state_location, id))
             except:
                 pass
 
