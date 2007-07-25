@@ -29,6 +29,20 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     view = Instance(IView)
 
     ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __init__(self, **traits):
+        """ Constructor. """
+
+        super(ToggleViewVisibilityAction, self).__init__(**traits)
+
+        # Make sure that the action is checked if its view is already visible.
+        self._refresh_checked()
+
+        return
+
+    ###########################################################################
     # 'Action' interface.
     ###########################################################################
 
@@ -58,13 +72,15 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
         return
 
-    #### Trait change handlers ################################################
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
 
     @on_trait_change('view.visible')
-    def _when_visible_changed_for_view(self, new):
-        """ Dynamic trait change handler. """
+    def _refresh_checked(self):
+        """ Refresh the checked state of the action. """
 
-        self.checked = new
+        self.checked = self.view.visible
 
         return
     
