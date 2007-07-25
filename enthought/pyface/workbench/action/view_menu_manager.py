@@ -1,6 +1,9 @@
 """ A simple(istic!) menu manager for all of the views in a window. """
 
 
+# Standard library imports.
+import logging
+
 # Enthought library imports.
 from enthought.pyface.action.api import Group, MenuManager
 from enthought.traits.api import Any, Bool, Instance, List, Str, Unicode
@@ -12,7 +15,7 @@ from toggle_view_visibility_action import ToggleViewVisibilityAction
 
 
 # Logging.
-import logging; logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class ViewMenuManager(MenuManager):
@@ -73,6 +76,7 @@ class ViewMenuManager(MenuManager):
     # 'ViewMenuManager' interface.
     ###########################################################################
 
+    @on_trait_change('window.active_perspective')
     def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
@@ -97,15 +101,5 @@ class ViewMenuManager(MenuManager):
             group.append(ToggleViewVisibilityAction(view=view, window=window))
 
         return group
-
-    #### Trait change handlers ################################################
-
-    @on_trait_change('window.active_perspective')
-    def when_window_active_perspective_changed(self, new):
-        """ Static trait change handler. """
-
-        self.refresh()
-
-        return
 
 #### EOF ######################################################################
