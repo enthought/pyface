@@ -23,8 +23,6 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-import wx
-
 from weakref \
     import ref
     
@@ -34,7 +32,7 @@ from enthought.traits.api \
 from enthought.traits.ui.menu \
     import Menu, Action
     
-from enthought.util.wx.do_later \
+from enthought.pyface.timer.api \
     import do_later
     
 from enthought.pyface.image_resource \

@@ -34,7 +34,7 @@ from enthought.pyface.image_resource \
 from enthought.util.wx.drag_and_drop \
     import PythonDropSource
 
-from enthought.util.wx.do_later \
+from enthought.pyface.timer.api \
     import do_later, do_after
     
 from idockable \
