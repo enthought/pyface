@@ -52,7 +52,7 @@ class Action(HasTraits):
     id = Str
 
     # The action's image (displayed on tool bar tools etc).
-    image = Instance(ImageResource, ImageResource('action'))
+    image = Instance(ImageResource)
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = Str
