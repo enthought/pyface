@@ -2,12 +2,17 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Float, HasTraits, Str
+from enthought.traits.api import Enum, Float, HasTraits, Str, implements
+
+# Local imports.
+from i_perspective_item import IPerspectiveItem
 
 
 class PerspectiveItem(HasTraits):
     """ An item in a Perspective contents list. """
 
+    implements(IPerspectiveItem)
+    
     # The Id of the view to display in the perspective.
     id = Str
 

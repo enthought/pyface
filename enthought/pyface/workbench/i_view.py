@@ -18,10 +18,11 @@
 from enthought.traits.api import Bool, Enum, Float, List, Str
 
 # Local imports.
+from i_perspective_item import IPerspectiveItem
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
 
-class IView(IWorkbenchPart):
+class IView(IWorkbenchPart, IPerspectiveItem):
     """ The interface for workbench views. """
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
@@ -30,54 +31,6 @@ class IView(IWorkbenchPart):
 
     # Whether the view is visible or not.
     visible = Bool(False)
-
-    # The following traits specify the *default* position of the view. This
-    # information is only used if the view is added to a perspective that
-    # it is not explicitly part of (i.e. it does not appear in the
-    # perspective's 'contents'.
-    #
-    # This often happens because:-
-    #
-    # a) The application doesn't define any perspectives
-    # b) The user can add/remove any view to/from any perspective
-    #
-    # fixme: These traits are idential to those in 'PerspectiveItem'. How can
-    # we unify them?
-    
-    # The default position of the view relative to the item specified in the
-    # 'relative_to' trait.
-    #
-    # 'top'    puts the view above the 'relative_to' item.
-    # 'bottom' puts the view below the 'relative_to' item.
-    # 'left'   puts the view to the left of  the 'relative_to' item.
-    # 'right'  puts the view to the right of the 'relative_to' item.
-    # 'with'   puts the view in the same region as the 'relative_to' item.
-    #
-    # If the position is specified as 'with' you must specify a 'relative_to'
-    # item other than the editor area (i.e., you cannot position a view 'with'
-    # the editor area).
-    position = Enum('left', 'top', 'bottom', 'right', 'with')
-
-    # The Id of the view to position this view relative to. If this is not
-    # specified (or if no view exists with this Id) then the view will be
-    # placed relative to the editor area.
-    relative_to = Str
-
-    # The default width of the view (as a fraction of the window width).
-    #
-    # e.g. 0.5 == half the window width.
-    #
-    # Note that this is treated as a suggestion, and it may not be possible for
-    # the workbench to allocate space requested.
-    width = Float(-1)
-
-    # The default height of the view (as a fraction of the window height).
-    #
-    # e.g. 0.5 == half the window height.
-    #
-    # Note that this is treated as a suggestion, and it may not be possible for
-    # the workbench to allocate space requested.
-    height = Float(-1)
 
 
 class MView(MWorkbenchPart):
