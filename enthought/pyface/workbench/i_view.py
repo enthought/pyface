@@ -31,8 +31,8 @@ class IView(Interface):
     # The framework sets this to the value returned by 'create_control'.
     control = Any
 
-    # Does the view currently have the focus?
-    has_focus = Bool(False)
+##     # Does the view currently have the focus?
+##     has_focus = Bool(False)
     
     # The view's globally unique identifier.
     id = Str
@@ -134,6 +134,15 @@ class MView(object):
 
     Implements: _id_default()
     """
+
+    ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __str__(self):
+        """ Return an informal string representation of the object. """
+
+        return 'View(%s)' % self.id
 
     ###########################################################################
     # 'View' interface.

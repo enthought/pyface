@@ -91,6 +91,27 @@ class IWindow(IWidget):
         default is the default button.
         """
 
+    def information(self, message, title='Information'):
+        """ Convenience method to show an information message dialog.
+        
+        message is the text of the message to display.
+        title is the text of the window title.
+        """
+
+    def warning(self, message, title='Warning'):
+        """ Convenience method to show a warning message dialog.
+        
+        message is the text of the message to display.
+        title is the text of the window title.
+        """
+
+    def error(self, message, title='Error'):
+        """ Convenience method to show an error message dialog.
+        
+        message is the text of the message to display.
+        title is the text of the window title.
+        """
+
     ###########################################################################
     # Protected 'IWindow' interface.
     ###########################################################################
@@ -148,6 +169,27 @@ class MWindow(object):
         from confirmation_dialog import confirm
 
         return confirm(self.control, message, title, cancel, default)
+
+    def information(self, message, title='Information'):
+        """ Convenience method to show an information message dialog. """
+
+        from confirmation_dialog import information
+
+        return information(self.control, message, title)
+
+    def warning(self, message, title='Warning'):
+        """ Convenience method to show a warning message dialog. """
+
+        from confirmation_dialog import warning
+
+        return warning(self.control, message, title)
+
+    def error(self, message, title='Error'):
+        """ Convenience method to show an error message dialog. """
+
+        from confirmation_dialog import error
+
+        return error(self.control, message, title)
     
     ###########################################################################
     # Protected 'IWidget' interface.

@@ -292,6 +292,8 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.layout.activate_editor(editor)
 
+        self.active_editor = editor
+        
         return
 
     def activate_view(self, view):
@@ -299,6 +301,11 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.layout.activate_view(view)
 
+        # Make sure that the window selection reflects the change of view.
+        self.selection = view.selection
+
+        self.active_view = view
+        
         return
 
     def add_editor(self, editor, title=None):
@@ -814,6 +821,20 @@ class WorkbenchWindow(ApplicationWindow):
         # ... and show the new one.
         if new is not None:
             self._show_perspective(old, new)
+
+        return
+
+    def _active_editor_changed(self, old, new):
+        """ Static trait change handler. """
+
+        logger.debug('active editor changed from "%s" to "%s"', old, new)
+
+        return
+
+    def _active_view_changed(self, old, new):
+        """ Static trait change handler. """
+
+        logger.debug('active view changed from "%s" to "%s"', old, new)
 
         return
 

@@ -30,8 +30,8 @@ class IEditor(Interface):
     # The framework sets this to the value returned by 'create_control'.
     control = Any
 
-    # Does the editor currently have the focus?
-    has_focus = Bool(False)
+##     # Does the editor currently have the focus?
+##     has_focus = Bool(False)
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -100,9 +100,24 @@ class MEditor(object):
     """
 
     ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __str__(self):
+        """ Return an informal string representation of the object. """
+
+        return 'Editor(%s)' % self.id
+    
+    ###########################################################################
     # 'IEditor' interface.
     ###########################################################################
 
+    def _id_default(self):
+        """ Trait initializer. """
+
+        # If no Id is specified then use the name.
+        return self.name
+    
     def close(self):
         """ Close the editor. """
 
