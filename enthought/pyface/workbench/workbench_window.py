@@ -292,19 +292,12 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.layout.activate_editor(editor)
 
-        self.active_editor = editor
-        
         return
 
     def activate_view(self, view):
         """ Activates a view. """
 
         self.layout.activate_view(view)
-
-        # Make sure that the window selection reflects the change of view.
-        self.selection = view.selection
-
-        self.active_view = view
         
         return
 
@@ -814,6 +807,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Static trait change handler. """
 
         logger.debug('perspective changed from [%s] to [%s]', old, new)
+
         # Hide the old perspective...
         if old is not None:
             self._hide_perspective(old)
@@ -883,13 +877,6 @@ class WorkbenchWindow(ApplicationWindow):
         return
 
     #### Dynamic ####
-
-    def _on_editor_activated(self, editor):
-        """ Dynamic trait change handler. """
-
-        self.active_editor = editor
-
-        return
 
     def _on_view_selection_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """

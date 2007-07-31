@@ -5,7 +5,6 @@
 import logging
 
 # Enthought library imports.
-from enthought.logger.api import logger
 from enthought.traits.api import Instance, Str
 from enthought.traits.ui.api import UI
 

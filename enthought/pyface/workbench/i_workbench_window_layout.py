@@ -52,6 +52,8 @@ class IWorkbenchWindowLayout(Interface):
     editor_closed = Event(IEditor)
 
     # FIXME v3: The "just for convenience" returns are a really bad idea.
+    #
+    # Why? They allow the call to be used on the LHS of an expression...
     def activate_editor(self, editor):
         """ Activate an editor.
 
