@@ -11,42 +11,22 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The interface of a workbench view. """
+""" The interface for workbench views. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Enum, Float, Instance, Interface
-from enthought.traits.api import List, Str, Unicode
+from enthought.traits.api import Bool, Enum, Float, List, Str
+
+# Local imports.
+from i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
 
-class IView(Interface):
-    """ The interface of a workbench view. """
+class IView(IWorkbenchPart):
+    """ The interface for workbench views. """
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
     busy = Bool(False)
-
-    # The toolkit-specific control that represents the view.
-    #
-    # The framework sets this to the value returned by 'create_control'.
-    control = Any
-
-##     # Does the view currently have the focus?
-##     has_focus = Bool(False)
-    
-    # The view's globally unique identifier.
-    id = Str
-
-    # The view's name (displayed to the user).
-    name = Unicode
-
-    # The current selection within the view.
-    selection = List
-
-    # The workbench window that the view is in.
-    #
-    # The framework sets this when the view is added to a window.
-    window = Instance('WorkbenchWindow')
 
     # Whether the view is visible or not.
     visible = Bool(False)
@@ -99,41 +79,9 @@ class IView(Interface):
     # the workbench to allocate space requested.
     height = Float(-1)
 
-    #### Methods ##############################################################
-    
-    def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the view.
 
-        'parent' is the toolkit-specific control that is the view's parent.
-
-        Returns the toolkit-specific control.
-
-        """
-
-    def destroy_control(self):
-        """ Destroys the toolkit-specific control that represents the view.
-
-        Returns None.
-        
-        """
-
-    def set_focus(self):
-        """ Sets the focus to the appropriate control in the view.
-
-        By default we set the focus to be the view's top-level control. If
-        you need to give focus to some child control then override.
-
-        Returns None.
-        
-        """
-
-
-class MView(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IView interface.
-
-    Implements: _id_default()
-    """
+class MView(MWorkbenchPart):
+    """ Mixin containing common code for toolkit-specific implementations. """
 
     ###########################################################################
     # 'object' interface.
@@ -145,7 +93,7 @@ class MView(object):
         return 'View(%s)' % self.id
 
     ###########################################################################
-    # 'View' interface.
+    # 'IWorkbenchPart' interface.
     ###########################################################################
 
     def _id_default(self):

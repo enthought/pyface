@@ -18,43 +18,24 @@
 from enthought.traits.api import Any, Bool, implements, Instance, Interface
 from enthought.traits.api import List, Str, Unicode
 
+# Local imports.
+from i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
-class IEditor(Interface):
+
+class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
 
     # The optional command stack.
     command_stack = Instance('enthought.undo.api.ICommandStack')
 
-    # The toolkit-specific control that represents the editor.
-    #
-    # The framework sets this to the value returned by 'create_control'.
-    control = Any
-
-    # Does the editor currently have the focus?
-    has_focus = Bool(False)
-
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
     dirty = Bool(False)
-
-    # The editor's globally unique identifier.
-    id = Str
-
-    # The editor's name (displayed to the user).
-    name = Unicode
 
     # The object that the editor is editing.
     #
     # The framework sets this when the editor is created.
     obj = Any
-
-    # The current selection within the editor.
-    selection = List
-
-    # The workbench window that the editor is in.
-    #
-    # The framework sets this when the editor is created.
-    window = Instance('IWorkbenchWindow')
 
     #### Methods ##############################################################
     
@@ -67,37 +48,9 @@ class IEditor(Interface):
 
         """
 
-    def create_control(self, parent):
-        """ Create the toolkit-specific control that represents the editor.
-
-        The parameter *parent* is the toolkit-specific control that is the 
-        editor's parent.
-
-        Returns the toolkit-specific control.
-        
-        """
-
-    def destroy_control(self):
-        """ Destroy the toolkit-specific control that represents the editor.
-
-        Returns None.
-        
-        """
-
-    def set_focus(self):
-        """ Set the focus to the appropriate control in the editor.
-
-        Returns None.
-
-        """
-
 
 class MEditor(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IEditor interface.
-
-    Implements: close(), _command_stack_default()
-    """
+    """ Mixin containing common code for toolkit-specific implementations. """
 
     ###########################################################################
     # 'object' interface.
@@ -107,9 +60,9 @@ class MEditor(object):
         """ Return an informal string representation of the object. """
 
         return 'Editor(%s)' % self.id
-    
+
     ###########################################################################
-    # 'IEditor' interface.
+    # 'IWorkbenchPart' interface.
     ###########################################################################
 
     def _id_default(self):
@@ -117,6 +70,10 @@ class MEditor(object):
 
         # If no Id is specified then use the name.
         return self.name
+
+    ###########################################################################
+    # 'IEditor' interface.
+    ###########################################################################
     
     def close(self):
         """ Close the editor. """

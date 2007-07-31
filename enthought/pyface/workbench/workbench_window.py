@@ -8,8 +8,8 @@ from os.path import exists, join
 
 # Enthought library imports.
 from enthought.pyface.api import ApplicationWindow
-from enthought.traits.api import Any, Callable, Constant, Event, Instance, List
-from enthought.traits.api import Str, Tuple, Unicode, Vetoable, implements
+from enthought.traits.api import Callable, Constant, Event, Instance, List, Str
+from enthought.traits.api import Tuple, Unicode, Vetoable, implements
 from enthought.traits.api import on_trait_change
 
 # Local imports.
@@ -17,6 +17,7 @@ from i_editor import IEditor
 from i_editor_manager import IEditorManager
 from i_perspective import IPerspective
 from i_view import IView
+from i_workbench_part import IWorkbenchPart
 from perspective import Perspective
 from workbench_window_layout import WorkbenchWindowLayout
 
@@ -31,7 +32,7 @@ class WorkbenchWindow(ApplicationWindow):
     #### 'IWorkbenchWindow' interface #########################################
 
     # The view or editor that currently has the focus.
-    active_part = Any
+    active_part = Instance(IWorkbenchPart)
     
     # The editor manager is used to create/restore editors.
     editor_manager = Instance(IEditorManager)
