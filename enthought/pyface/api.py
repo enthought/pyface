@@ -25,6 +25,7 @@ from image_cache import ImageCache
 from image_resource import ImageResource
 from key_pressed_event import KeyPressedEvent
 from message_dialog import error, information, warning, MessageDialog
+from progress_dialog import ProgressDialog
 from python_shell import PythonShell
 from splash_screen import SplashScreen
 from system_metrics import SystemMetrics
