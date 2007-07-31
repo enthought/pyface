@@ -26,6 +26,7 @@ from wx import TheClipboard
 
 # Enthought library imports
 from enthought.pyface.api import Sorter, Widget
+from enthought.pyface.timer.api import do_later
 from enthought.traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
      List, Trait
 from enthought.util.wx.drag_and_drop import PythonDropSource, \
@@ -1732,6 +1733,11 @@ class _GridTableBase(PyGridTableBase):
     ###########################################################################
     def _clear_cache(self):
         """ Clean out the editor/renderer cache. """
+        
+        # Dispose of the editors in the cache after a brief delay, so as
+        # to allow completion of the current event.
+        for editor in self._editor_cache.values():
+            do_later(editor.dispose)
 
         self._editor_cache = {}
         self._renderer_cache = {}
