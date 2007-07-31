@@ -8,8 +8,9 @@ from os.path import exists, join
 
 # Enthought library imports.
 from enthought.pyface.api import ApplicationWindow
-from enthought.traits.api import Callable, Constant, Event, Instance, List, Str
-from enthought.traits.api import Tuple, Unicode, Vetoable, implements
+from enthought.traits.api import Any, Callable, Constant, Event, Instance, List
+from enthought.traits.api import Str, Tuple, Unicode, Vetoable, implements
+from enthought.traits.api import on_trait_change
 
 # Local imports.
 from i_editor import IEditor
@@ -29,6 +30,9 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### 'IWorkbenchWindow' interface #########################################
 
+    # The view or editor that currently has the focus.
+    active_part = Any
+    
     # The editor manager is used to create/restore editors.
     editor_manager = Instance(IEditorManager)
 
@@ -825,6 +829,15 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
+    def _active_part_changed(self, old, new):
+        """ Static trait change handler. """
+
+        self.selection = new.selection
+
+        logger.debug('active part changed from "%s" to "%s"', old, new)
+
+        return
+
     def _active_view_changed(self, old, new):
         """ Static trait change handler. """
 
@@ -886,4 +899,24 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
+    @on_trait_change('editors.has_focus')
+    def _has_focus_changed_for_editor(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+
+        if trait_name == 'has_focus' and new:
+            self.active_editor = obj
+            self.active_part = obj
+
+        return
+
+    @on_trait_change('views.has_focus')
+    def _has_focus_changed_for_view(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+        
+        if trait_name == 'has_focus' and new:
+            self.active_view = obj
+            self.active_part = obj
+
+        return
+    
 #### EOF ######################################################################

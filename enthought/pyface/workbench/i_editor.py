@@ -30,8 +30,8 @@ class IEditor(Interface):
     # The framework sets this to the value returned by 'create_control'.
     control = Any
 
-##     # Does the editor currently have the focus?
-##     has_focus = Bool(False)
+    # Does the editor currently have the focus?
+    has_focus = Bool(False)
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
