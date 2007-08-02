@@ -44,7 +44,7 @@ from enthought.traits.ui.dockable_view_element \
     import DockableViewElement
     
 from enthought.traits.ui.dock_window_theme \
-    import DockWindowTheme, default_dock_window_theme
+    import DockWindowTheme
 
 from enthought.util.wx.drag_and_drop \
     import PythonDropTarget, clipboard
@@ -64,7 +64,9 @@ from idockable \
     
 from idock_ui_provider \
     import IDockUIProvider
-    
+ 
+import enthought.traits.ui.dock_window_theme as dock_window_theme
+
 #-------------------------------------------------------------------------------
 #  Global data:  
 #-------------------------------------------------------------------------------
@@ -322,7 +324,7 @@ class DockWindow ( HasPrivateTraits ):
     #-- Default Trait Values ---------------------------------------------------
     
     def _theme_default ( self ):
-        return default_dock_window_theme
+        return dock_window_theme.default_dock_window_theme
         
     #-- Trait Event Handlers ---------------------------------------------------
     

@@ -500,8 +500,9 @@ class DockItem ( HasPrivateTraits ):
     def get_cursor ( self, event ):
         """ Gets the cursor to use when the mouse is over the item.
         """
-        if self._is_tab or self._is_in_close( event ):
+        if self._is_tab and (not self._is_in_close( event )):
             return wx.CURSOR_ARROW
+            
         return wx.CURSOR_HAND
 
     #---------------------------------------------------------------------------
@@ -753,7 +754,7 @@ class DockItem ( HasPrivateTraits ):
         if owner is None:
             color = wx.Colour( 255, 0, 0 )
         else:
-            color = owner.control.GetBackgroundColour()
+            color = owner.control.GetParent().GetBackgroundColour()
         dc.SetBrush( wx.Brush( color ) )
         dc.DrawRectangle( x, y, dx, dy )
 
@@ -826,30 +827,7 @@ class DockItem ( HasPrivateTraits ):
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
         self.fill_bg_color( dc, x, y, dx, dy )
-        theme = self.theme.horizontal_drag
-        tis   = theme.image_slice
-        tis.fill( dc, x, y, dx, dy, True )
-        
-        ox, oy = theme.offset
-        tm     = theme.margins
-        x     += (ox + tis.xleft + tm.left) 
-        py     = ((2 * (y + oy)) +
-                  (dy + tis.xtop + tm.top - tis.xbottom - tm.bottom))
-        
-        # Draw the feature 'trigger' icon (if necessary):
-        mode = self.feature_mode
-        if mode == FEATURE_PRE_NORMAL:
-            mode = self.set_feature_mode( False )
-        if mode != FEATURE_NONE:
-            if mode not in FEATURES_VISIBLE:
-                image = DockImages.get_feature_image( mode, False )
-                dc.DrawBitmap( image, x, (py - image.GetHeight()) / 2, True )
-            x += (DockImages._bar_feature_width + 6)
-        
-        # Draw the close button (if necessary):
-        if self.closeable:
-            dc.DrawBitmap( DockImages._close_drag, x,
-                           (py - DockImages._close_drag.GetHeight()) / 2, True )
+        self.theme.horizontal_drag.image_slice.fill( dc, x, y, dx, dy, True )
 
     #---------------------------------------------------------------------------
     #  Draws a vertical drag bar:
@@ -861,30 +839,7 @@ class DockItem ( HasPrivateTraits ):
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
         self.fill_bg_color( dc, x, y, dx, dy )
-        theme = self.theme.vertical_drag
-        tis   = theme.image_slice
-        tis.fill( dc, x, y, dx, dy, True )
-         
-        ox, oy = theme.offset
-        tm     = theme.margins
-        y     += (oy + tis.xtop + tm.top) 
-        px     = ((2 * (x + ox)) +
-                  (dx + tis.xleft + tm.left - tis.xright - tm.right))
-        
-        # Draw the feature 'trigger' icon (if necessary):
-        mode = self.feature_mode
-        if mode == FEATURE_PRE_NORMAL:
-            mode = self.set_feature_mode( False )
-        if mode != FEATURE_NONE:
-            if mode not in FEATURES_VISIBLE:
-                image = DockImages.get_feature_image( mode, False )
-                dc.DrawBitmap( image, (px - image.GetWidth()) / 2, y, True )
-            y += (DockImages._bar_feature_height + 6)
-        
-        # Draw the close button (if necessary):
-        if self.closeable:
-            dc.DrawBitmap( DockImages._close_drag, 
-                   (px - DockImages._close_drag.GetWidth()) / 2, y, True )
+        self.theme.vertical_drag.image_slice.fill( dc, x, y, dx, dy, True )
 
     #---------------------------------------------------------------------------
     #  Redraws the control's tab:
@@ -928,44 +883,18 @@ class DockItem ( HasPrivateTraits ):
     def _close_bounds ( self ):
         global text_dy
         
-        if self.closeable:
+        if self.closeable and self._is_tab:
             x, y, dx, dy = self.drag_bounds
-            if self._is_tab:
-                theme  = self.tab_theme
-                slice  = theme.image_slice
-                tm     = theme.margins
-                ox, oy = theme.offset
-                
-                # fixme: x calculation seems to be off by -1...
-                return ( x + dx + ox - slice.xright - tm.right - CloseTabSize,
-                         y + oy + ((dy + slice.xtop + tm.top - slice.xbottom -
-                                    tm.bottom - text_dy) / 2) + 3,
-                         CloseTabSize, CloseTabSize )
-                         
-            elif self.style == 'horizontal':
-                theme  = self.theme.horizontal_drag
-                tis    = theme.image_slice
-                tm     = theme.margins
-                ox, oy = theme.offset
-                x     += (ox + tis.xleft + tm.left)
-                if self.feature_mode != FEATURE_NONE:
-                    x += (DockImages._bar_feature_width + 6)
-                    
-                return ( x, y + oy + ((dy + tis.xtop + tm.top - tis.xbottom - 
-                                      tm.bottom - CloseDragSize) / 2),
-                                      CloseDragSize, CloseDragSize )
-                                      
-            theme  = self.theme.vertical_drag
-            tis    = theme.image_slice
+            theme  = self.tab_theme
+            slice  = theme.image_slice
             tm     = theme.margins
             ox, oy = theme.offset
-            y     += (oy + tis.xtop + tm.top)
-            if self.feature_mode != FEATURE_NONE:
-                y += (DockImages._bar_feature_height + 6)
-                
-            return ( x + ox + ((dx + tis.xleft + tm.left - tis.xright - 
-                                tm.right - CloseDragSize) / 2),
-                     y, CloseDragSize, CloseDragSize )
+            
+            # fixme: x calculation seems to be off by -1...
+            return ( x + dx + ox - slice.xright - tm.right - CloseTabSize,
+                     y + oy + ((dy + slice.xtop + tm.top - slice.xbottom -
+                                tm.bottom - text_dy) / 2) + 3,
+                     CloseTabSize, CloseTabSize )
 
         return ( 0, 0, 0, 0 )
 
@@ -1008,7 +937,7 @@ class DockItem ( HasPrivateTraits ):
     def feature_activate ( self, event, drag_object = Undefined ):
         global text_dy
         
-        if self.feature_mode in NO_FEATURE_ICON:
+        if (self.feature_mode in NO_FEATURE_ICON) or (not self._is_tab):
             return False
 
         # In 'drag' mode, we may get the same coordinate over and over again.
@@ -1018,35 +947,15 @@ class DockItem ( HasPrivateTraits ):
             return True
 
         x, y, dx, dy = self.drag_bounds
-
-        if self._is_tab:
-            # Handle the case of a notebook tab:
-            idx      = DockImages._tab_feature_width
-            idy      = DockImages._tab_feature_height
-            theme    = self.tab_theme
-            tdy      = text_dy
-            vertical = False
-        else:
-            idx       = DockImages._bar_feature_width
-            idy = tdy = DockImages._bar_feature_height
-            vertical  = (self.style == 'vertical')
-            if vertical:
-                theme = self.theme.vertical_drag
-            else:
-                theme = self.theme.horizontal_drag
-                
+        idx    = DockImages._tab_feature_width
+        idy    = DockImages._tab_feature_height
+        theme  = self.tab_theme
         slice  = theme.image_slice
         tm     = theme.margins
         ox, oy = theme.offset
-        if vertical:
-            x += (ox + ((dx + slice.xleft + tm.left - slice.xright - tm.right - 
-                         idx) / 2))
-            y += oy + slice.xtop + tm.top
-        else:
-            y += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
-                         tdy) / 2))
-            x += ox + slice.xleft + tm.left
-            
+        y     += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
+                         text_dy) / 2))
+        x     += ox + slice.xleft + tm.left
         result = self.is_in( event, x, y, idx, idy )
 
         # If the pointer is over the feature 'trigger' icon, save the event for
@@ -1198,7 +1107,7 @@ class DockSplitter ( DockItem ):
         x, y, dx, dy = self.bounds
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( 
-                     self.parent.control.GetParent().GetBackgroundColour() ) )
+                  self.parent.control.GetGrandParent().GetBackgroundColour() ) )
         dc.DrawRectangle( x, y, dx, dy )
         
         if self.style == 'horizontal':
@@ -2351,15 +2260,30 @@ class DockRegion ( DockGroup ):
 
                 # Draw all the inactive tabs first:
                 dc.SetClippingRegion( x, y, dx, dy )
+                last_inactive = -1
                 for i, item in enumerate( self.contents ):
                     if (i != active) and item.visible:
-                        state = item.tab_state
+                        last_inactive = i
+                        state         = item.tab_state
                         if state not in NotActiveStates:
                             state = TabInactive
                         item.draw_tab( dc, state )
 
                 # Draw the active tab last:
                 self.contents[ active ].draw_tab( dc, TabActive )
+                
+                # If the last inactive tab drawn is also the rightmost tab and
+                # the theme has a 'tab right edge' image, draw the image just
+                # to the right of the last tab:
+                if last_inactive > active:
+                    if item.tab_state == TabInactive:
+                        bitmap = self.theme.tab_inactive_edge_bitmap
+                    else:
+                        bitmap = self.theme.tab_hover_edge_bitmap
+                    if bitmap is not None:
+                       x, y, dx, dy = item.drag_bounds
+                       dc.DrawBitmap( bitmap, x + dx, y, True )
+                    
             else:
                 item = self.visible_contents[0]
                 if not item.locked:
