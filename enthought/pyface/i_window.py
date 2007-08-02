@@ -173,21 +173,21 @@ class MWindow(object):
     def information(self, message, title='Information'):
         """ Convenience method to show an information message dialog. """
 
-        from confirmation_dialog import information
+        from message_dialog import information
 
         return information(self.control, message, title)
 
     def warning(self, message, title='Warning'):
         """ Convenience method to show a warning message dialog. """
 
-        from confirmation_dialog import warning
+        from message_dialog import warning
 
         return warning(self.control, message, title)
 
     def error(self, message, title='Error'):
         """ Convenience method to show an error message dialog. """
 
-        from confirmation_dialog import error
+        from message_dialog import error
 
         return error(self.control, message, title)
     
