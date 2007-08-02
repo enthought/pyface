@@ -41,6 +41,15 @@ class Perspective(HasTraits):
 
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool(True)
+
+    ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __str__(self):
+        """ Return an informal string representation of the object. """
+
+        return 'Perspective(%s)' % self.id
     
     ###########################################################################
     # 'Perspective' interface.

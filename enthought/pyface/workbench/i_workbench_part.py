@@ -46,7 +46,7 @@ class IWorkbenchPart(Interface):
 
     # The workbench window that the part is in.
     #
-    # The framework sets this when the editor is created.
+    # The framework sets this when the part is created.
     window = Instance('IWorkbenchWindow')
 
     #### Methods ##############################################################

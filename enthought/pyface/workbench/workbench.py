@@ -213,7 +213,7 @@ class Workbench(HasTraits):
         if not os.path.exists(loc):
             os.makedirs(loc)
 
-        logger.debug('Workbench state location is [%s]', loc)
+        logger.debug('workbench state location is %s', loc)
 
         return loc
 
@@ -286,7 +286,7 @@ class Workbench(HasTraits):
     def _on_window_activated(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
-        logger.debug('window [%s] activated', window)
+        logger.debug('window %s activated', window)
 
         self.active_window = window
 
@@ -294,8 +294,6 @@ class Workbench(HasTraits):
 
     def _on_window_opening(self, window, trait_name, event):
         """ Dynamic trait change handler. """
-
-        logger.debug('window [%s] opening', window)
 
         # Event notification.
         self.window_opening = window_event = VetoableWindowEvent(window=window)
@@ -306,8 +304,6 @@ class Workbench(HasTraits):
 
     def _on_window_opened(self, window, trait_name, event):
         """ Dynamic trait change handler. """
-
-        logger.debug('window [%s] opened', window)
 
         # We maintain a list of all open windows so that (amongst other things)
         # we can detect when the user is attempting to close the last one.
@@ -325,8 +321,6 @@ class Workbench(HasTraits):
 
     def _on_window_closing(self, window, trait_name, event):
         """ Dynamic trait change handler. """
-
-        logger.debug('window [%s] closing', window)
 
         # Event notification.
         self.window_closing = window_event = VetoableWindowEvent(window=window)
@@ -353,8 +347,6 @@ class Workbench(HasTraits):
 
     def _on_window_closed(self, window, trait_name, event):
         """ Dynamic trait change handler. """
-
-        logger.debug('window [%s] closed', window)
 
         self.windows.remove(window)
 

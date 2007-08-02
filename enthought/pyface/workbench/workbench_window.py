@@ -44,13 +44,6 @@ class WorkbenchWindow(ApplicationWindow):
     # will. This is used to persist layout information etc.
     state_location = Unicode
 
-    # A suffix to be applied to the window title.
-    #
-    # fixme: This is horrible! In a plugin world you can't have people adding
-    # suffixes to the window title - it just don't scale, errr, at all! This
-    # needs to be removed - if you want it in your app then put it in there!
-    title_suffix = Unicode
-
     # The workbench that the window belongs to.
     workbench = Instance('enthought.pyface.workbench.api.IWorkbench')
     
@@ -145,12 +138,10 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('workbench window [%s] opening', self)
+        logger.debug('window %s opening', self)
 
         # Trait notification.
         self.opening = event = Vetoable()
-
-        # fixme: Hack to mimic vetoable events!
         if not event.veto:
             if self.control is None:
                 self._create()
@@ -160,10 +151,10 @@ class WorkbenchWindow(ApplicationWindow):
             # Trait notification.
             self.opened = self
 
-            logger.debug('workbench window [%s] opened', self)
+            logger.debug('window %s opened', self)
 
         else:
-            logger.debug('workbench window [%s] open was etoed', self)
+            logger.debug('window %s open was vetoed', self)
 
         # fixme: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
@@ -180,7 +171,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('workbench window [%s] closing', self)
+        logger.debug('window %s closing', self)
 
         if self.control is not None:
             # Trait notification.
@@ -205,13 +196,13 @@ class WorkbenchWindow(ApplicationWindow):
                 # Trait notification.
                 self.closed = self
 
-                logger.debug('workbench window [%s] closed', self)
+                logger.debug('window %s closed', self)
 
             else:
-                logger.debug('workbench window [%s] close was vetoed', self)
+                logger.debug('window %s close was vetoed', self)
 
         else:
-            logger.debug('workbench window [%s] is not open', self)
+            logger.debug('window %s is not open', self)
 
         # fixme: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
@@ -246,7 +237,8 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Otherwise, we have no saved layout so let's create one.
         else:
-            self._create_layout()
+            self.active_perspective = self._get_initial_perspective()
+##             self._create_layout()
 
         return contents
 
@@ -404,7 +396,7 @@ class WorkbenchWindow(ApplicationWindow):
         editor = self.create_editor(obj, kind)
 
         if editor is None:
-            logger.warn('no editor for object [%s]', obj)
+            logger.warn('no editor for object %s', obj)
 
         self.add_editor(editor)
         self.activate_editor(editor)
@@ -602,49 +594,9 @@ class WorkbenchWindow(ApplicationWindow):
     def restore_layout(self):
         """ Restores the window layout. """
 
-        # We prefer the default perspective, if one is configured, over any
-        # other perspective as our initial layout.
-        perspective = None
-        if len(self.default_perspective_id) > 0:
-            id = self.default_perspective_id
-            perspective = self.get_perspective_by_id(id)
-            if perspective is None:
-                logger.warn(
-                    'Default perspective [%s] is no longer available', id
-                )
-
-        # If there was no default perspective, then we prefer to use the
-        # last used perspective as our initial layout.
-        if perspective is None:
-            f = None
-            try:
-                f = file(join(self.state_location, 'active_perspective_id'),
-                    'r')
-                id = f.read()
-                perspective = self.get_perspective_by_id(id)
-                if perspective is None:
-                    logger.warn(
-                        'Last used perspective [%s] is no longer available', id
-                    )
-
-            except:
-                if f:
-                    f.close()
-
-        # If there was no last used perspective, then try the first perspective
-        # we know about as our initial layout.
-        if perspective is None:
-            if len(self.perspectives) > 0:
-                perspective = self.perspectives[0]
-
-        # If we have no known perspectives, make a new blank one up.
-        if perspective is None:
-            logger.warn('No known perspectives.  Creating a new one.')
-            perspective = Perspective()
-
         # The layout of the view area is restored in the 'active_perspective'
         # trait change handler!
-        self.active_perspective = perspective
+        self.active_perspective = self._get_initial_perspective()
 
         # Restore the layout of the editor area.
         filename = join(self.state_location, 'editors')
@@ -681,53 +633,141 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    def _create_layout(self):
-        """ Creates the initial window layout. """
+##     def _create_layout(self):
+##         """ Creates the initial window layout. """
 
-        if len(self.perspectives) > 0:
-            if len(self.default_perspective_id) > 0:
-                perspective = self.get_perspective_by_id(
-                    self.default_perspective_id
-                )
+##         perspective = self._get_initial_perspective()
 
-            else:
-                perspective = self.perspectives[0]
+##         if len(self.perspectives) > 0:
+##             if len(self.default_perspective_id) > 0:
+##                 perspective = self.get_perspective_by_id(
+##                     self.default_perspective_id
+##                 )
 
+##             else:
+##                 perspective = self.perspectives[0]
+
+##         else:
+##             perspective = Perspective()
+
+##         # All the work is done in the 'active_perspective' trait change
+##         # handler!
+##         self.active_perspective = perspective
+
+##         return
+
+##     def _add_view_listeners(self, view):
+##         """ Adds any required listeners to a view. """
+
+##         view.window = self
+
+##         # Update our selection when the selection of any contained view
+##         # changes.
+##         #
+##         # fixme: Not sure this is really what we want to do but it is what
+##         # we did in the old UI plugin and the selection listener still does
+##         # only listen to the window's selection.
+##         view.on_trait_change(self._on_view_selection_changed, 'selection')
+
+##         return
+    
+##     def _remove_view_listeners(self, view):
+##         """ Removes any required listeners from a view. """
+
+##         view.window = None
+
+##         # Remove the selection listener.
+##         view.on_trait_change(
+##             self._on_view_selection_changed, 'selection', remove=True
+##         )
+        
+##         return
+
+    def _get_initial_perspective(self, *methods):
+        """ Return the initial perspective. """
+
+        methods = [
+            # If a default perspective was specified then we prefer that over
+            # any other perspective.
+            self._get_default_perspective,
+            
+            # If there was no default perspective then try the perspective that
+            # was active the last time the application was run.
+            self._get_previous_perspective,
+
+            # If there was no previous perspective, then try the first one that
+            # we know about.
+            self._get_first_perspective
+        ]
+
+        for method in methods:
+            perspective = method()
+            if perspective is not None:
+                break
+
+        # If we have no known perspectives, make a new blank one up.
         else:
+            logger.warn('no known perspectives - creating a new one')
             perspective = Perspective()
 
-        # All the work is done in the 'active_perspective' trait change
-        # handler!
-        self.active_perspective = perspective
-
-        return
-
-    def _add_view_listeners(self, view):
-        """ Adds any required listeners to a view. """
-
-        view.window = self
-
-        # Update our selection when the selection of any contained view
-        # changes.
-        #
-        # fixme: Not sure this is really what we want to do but it is what
-        # we did in the old UI plugin and the selection listener still does
-        # only listen to the window's selection.
-        view.on_trait_change(self._on_view_selection_changed, 'selection')
-
-        return
+        return perspective
     
-    def _remove_view_listeners(self, view):
-        """ Removes any required listeners from a view. """
+    def _get_default_perspective(self):
+        """ Return the default perspective.
 
-        view.window = None
+        Return None if no default perspective was specified or it no longer
+        exists.
 
-        # Remove the selection listener.
-        view.on_trait_change(
-            self._on_view_selection_changed, 'selection', remove=True
-        )
-        
-        return
+        """
+
+        id = self.default_perspective_id
+
+        if len(id) > 0:
+            perspective = self.get_perspective_by_id(id)
+            if perspective is None:
+                logger.warn('default perspective %s no longer available', id)
+
+        else:
+            perspective = None
+            
+        return perspective
+
+    def _get_previous_perspective(self):
+        """ Return the previous perspective.
+
+        Return None if there has been no previous perspective or it no longer
+        exists.
+
+        """
+
+        try:
+            f = file(join(self.state_location, 'active_perspective_id'), 'r')
+            id = f.read()
+            f.close()
+
+            perspective = self.get_perspective_by_id(id)
+            if perspective is None:
+                logger.warn('previous perspective %s no longer available', id)
+
+        except:
+            perspective = None
+
+        return perspective
+
+    def _get_first_perspective(self):
+        """ Return the first perspective in our list of perspectives.
+
+        Return None if no perspectives have been defined.
+
+        """
+
+        if len(self.perspectives) > 0:
+            perspective = self.perspectives[0]
+
+        else:
+            perspective = None
+
+        return perspective
 
     def _get_perspective_item(self, perspective, view):
         """ Returns the perspective item for a view.
@@ -749,8 +789,8 @@ class WorkbenchWindow(ApplicationWindow):
     def _hide_perspective(self, perspective):
         """ Hide a perspective. """
 
-        # fixme: This is a bit ugly but... when we restore the layout we
-        # ignore the default view visibility.
+        # fixme: This is a bit ugly but... when we restore the layout we ignore
+        # the default view visibility.
         for view in self.views:
             view.visible = False
 
@@ -811,7 +851,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_perspective_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('perspective changed from [%s] to [%s]', old, new)
+        logger.debug('active perspective changed from %s to %s', old, new)
 
         # Hide the old perspective...
         if old is not None:
@@ -826,7 +866,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_editor_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active editor changed from "%s" to "%s"', old, new)
+        logger.debug('active editor changed from %s to %s', old, new)
 
         return
 
@@ -835,32 +875,14 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.selection = new.selection
 
-        logger.debug('active part changed from "%s" to "%s"', old, new)
+        logger.debug('active part changed from %s to %s', old, new)
 
         return
 
     def _active_view_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active view changed from "%s" to "%s"', old, new)
-
-        return
-
-    # fixme: This is horrible! In a plugin world you can't have people adding
-    # suffixes to the window title - it just don't scale, errr, at all! This
-    # needs to be removed - if you want it in your app then put it in there!
-    def _title_suffix_changed(self, old, new):
-        """ Static trait change handler. """
-
-        logger.debug('title suffix changed from [%s] to [%s]' % (old, new))
-
-        title = self.title
-        if old and len(old) > 0:
-            from string import rfind
-            index = rfind(self.title, ' ' + old)
-            if index > -1:
-                title = self.title[0:index]
-        self.title = title + ' ' + new
+        logger.debug('active view changed from %s to %s', old, new)
 
         return
 
@@ -869,11 +891,11 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Cleanup any old views.
         for view in old:
-            self._remove_view_listeners(view)
+            view.window = None
             
         # Initialize any new views.
         for view in new:
-            self._add_view_listeners(view)
+            view.window = self
 
         return
 
@@ -882,23 +904,15 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Cleanup any old views.
         for view in event.removed:
-            self._remove_view_listeners(view)
+            view.window = None
 
         # Initialize any new views.
         for view in event.added:
-            self._add_view_listeners(view)
+            view.window = self
 
         return
 
     #### Dynamic ####
-
-    def _on_view_selection_changed(self, obj, trait_name, old, new):
-        """ Dynamic trait change handler. """
-
-        logger.debug('new workbench window selection [%s]', new)
-        self.selection = new
-
-        return
 
     @on_trait_change('editors.has_focus')
     def _has_focus_changed_for_editor(self, obj, trait_name, old, new):
