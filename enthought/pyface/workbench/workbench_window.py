@@ -183,12 +183,12 @@ class WorkbenchWindow(ApplicationWindow):
                 self.destroy_views(self.views)
                 self.destroy_editors(self.editors)
 
-                # Cleanup the toolkit-specific control.
-                self.destroy()
-
                 # Cleanup the window layout (event handlers, etc.)
                 self.layout.close()
                 
+                # Cleanup the toolkit-specific control.
+                self.destroy()
+
                 # Cleanup our reference to the control so that we can (at least
                 # in theory!) be opened again.
                 self.control = None
@@ -204,9 +204,10 @@ class WorkbenchWindow(ApplicationWindow):
         else:
             logger.debug('window %s is not open', self)
 
-        # fixme: This is not actually part of the Pyface 'Window' API (but
+        # FIXME v3: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
-        # actually closed.
+        # actually closed.  With the current implementation this will always
+        # return True.
         return self.control is None
         
     ###########################################################################
@@ -873,7 +874,10 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_part_changed(self, old, new):
         """ Static trait change handler. """
 
-        self.selection = new.selection
+        if new is None:
+            self.selection = []
+        else:
+            self.selection = new.selection
 
         logger.debug('active part changed from %s to %s', old, new)
 

@@ -17,6 +17,7 @@
 # Enthought library imports.
 from enthought.pyface.image_resource import ImageResource
 from enthought.traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
+from enthought.traits.api import Unicode
 
 
 class Action(HasTraits):
@@ -34,7 +35,7 @@ class Action(HasTraits):
     #### 'Action' interface ###################################################
     
     # Keyboard accelerator (by default the action has NO accelerator).
-    accelerator = Str
+    accelerator = Unicode
 
     # Is the action checked?  This is only relevant if the action style is
     # 'radio' or 'toggle'.
@@ -55,7 +56,7 @@ class Action(HasTraits):
     image = Instance(ImageResource)
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = Str
+    name = Unicode
 
     # An (optional) callable that will be invoked when the action is performed.
     on_perform = Callable
@@ -64,7 +65,7 @@ class Action(HasTraits):
     style = Enum('push', 'radio', 'toggle')
 
     # A short description of the action used for tooltip text etc.
-    tooltip = Str
+    tooltip = Unicode
     
     ###########################################################################
     # 'Action' interface.

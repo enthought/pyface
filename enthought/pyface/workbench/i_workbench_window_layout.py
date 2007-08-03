@@ -54,6 +54,10 @@ class IWorkbenchWindowLayout(Interface):
     # FIXME v3: The "just for convenience" returns are a really bad idea.
     #
     # Why? They allow the call to be used on the LHS of an expression...
+    # Because they have nothing to do with what the call is supposed to be
+    # doing, they are unlikely to be used (because they are so unexpected and
+    # inconsistently implemented), and only serve to replace two shorter lines
+    # of code with one long one, arguably making code more difficult to read.
     def activate_editor(self, editor):
         """ Activate an editor.
 
