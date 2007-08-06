@@ -882,10 +882,6 @@ class WorkbenchWindow(ApplicationWindow):
             self.refresh()
 
         perspective = new
-        print 'Show perspective', perspective.id
-        print 'Active part', self.active_part
-        print 'Active view', self.active_view
-        print 'Active editor', self.active_editor
 
         return
     
