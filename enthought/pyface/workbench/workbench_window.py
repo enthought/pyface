@@ -527,31 +527,32 @@ class WorkbenchWindow(ApplicationWindow):
     def get_memento(self):
         """ Return the state of the window suitable for pickling etc. """
 
-        perspective = self.active_perspective
-
-        self._memento.active_perspective_id = perspective.id
-
-        active_view_id = self.active_view and self.active_view.id or None
-        memento = (self.layout.get_view_memento(), active_view_id)
-
-        self._memento.perspective_mementos[perspective.id] = memento
-
-        # Editor area.
-        self._memento.editor_area_memento = self.layout.get_editor_memento()
-
-        # Size and position.
+        # The size and position of the window.
         self._memento.size = self.size
         self._memento.position = self.position
+
+        # The Id of the active perspective.
+        self._memento.active_perspective_id = self.active_perspective.id
+
+        # The layout of the active perspective.
+        self._memento.perspective_mementos[self.active_perspective.id] = (
+            self.layout.get_view_memento(),
+            self.active_view and self.active_view.id or None
+        )
+
+        # The layout of the editor area.
+        self._memento.editor_area_memento = self.layout.get_editor_memento()
         
         return self._memento
 
     def set_memento(self, memento):
         """ Restore the state of the window from a memento. """
 
-        # We don't do antyhing other than save the memento here - we just
-        # use the information when the window is openend. One consequence of
-        # this is that you can't set the memento of an open window, but I can't
-        # see a use case for that anyway!
+        # All we do here is save a reference to the memento - we don't actually
+        # do anything with it until the window is opened.
+        #
+        # This obviously means that you can't set the memento of a window
+        # that is already open, but I can't see a use case for that anyway!
         self._memento = memento
 
         return

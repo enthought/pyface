@@ -282,10 +282,15 @@ class Workbench(HasTraits):
         filename = os.path.join(self.state_location, 'window_memento')
         if os.path.exists(filename):
             try:
+                # If the memento class itself has been modified then there
+                # is a chance that the unpickle will fail. If so then we just
+                # carry on as if there was no memento!
                 f = file(filename, 'r')
                 memento = cPickle.load(f)
                 f.close()
 
+                # The memento doesn't actually get used until the window is
+                # opened, so there is nothing to go wrong in this step!
                 window.set_memento(memento)
 
             # If *anything* goes wrong then simply log the error and carry on
