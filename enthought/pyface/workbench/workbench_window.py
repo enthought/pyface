@@ -206,8 +206,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # FIXME v3: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
-        # actually closed.  With the current implementation this will always
-        # return True.
+        # actually closed.
         return self.control is None
         
     ###########################################################################

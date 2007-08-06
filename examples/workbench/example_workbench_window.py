@@ -8,6 +8,7 @@ from enthought.pyface.workbench.api import PerspectiveItem
 from enthought.pyface.workbench.action.api import MenuBarManager
 from enthought.pyface.workbench.action.api import ToolBarManager
 from enthought.pyface.workbench.action.api import ViewMenuManager
+from enthought.traits.api import Instance
 
 # Local imports.
 from black_view import BlackView
@@ -15,6 +16,7 @@ from blue_view import BlueView
 from green_view import GreenView
 from red_view import RedView
 from yellow_view import YellowView
+from person import Person
 
 
 # Until TraitsUI supports PyQt we provide an alternative editor manager that
@@ -34,7 +36,7 @@ class _TkEditorManager(EditorManager):
         #######################################################################
 
         #### Initializers #####################################################
-        
+
         def _name_default(self):
             """ Trait initializer. """
             
@@ -79,6 +81,22 @@ class _TkEditorManager(EditorManager):
 
         return editor
 
+    def get_editor_memento(self, editor):
+        """ Return the state of the editor contents. """
+
+        # Return the data attributes as a tuple.
+        return (editor.obj.name, editor.obj.age)
+
+    def set_editor_memento(self, memento):
+        """ Restore an editor from a memento and return it. """
+
+        # Create a new data object.
+        name, age = memento
+        person = Person(name=name, age=age)
+
+        # Create an editor for the data.
+        return self.create_editor(self.window, person, None)
+
 
 class ExampleWorkbenchWindow(WorkbenchWindow):
     """ A simple example of using the workbench window. """
@@ -105,6 +123,11 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         )
     ]
 
+    #### Private interface ####################################################
+
+    # The Exit action.
+    _exit_action = Instance(Action)
+
     ###########################################################################
     # 'ApplicationWindow' interface.
     ###########################################################################
@@ -116,7 +139,6 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
 
         Here we return the replacement editor manager (until TraitsUI supports
         PyQt).
-
         """
         
         return _TkEditorManager()
@@ -124,11 +146,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _menu_bar_manager_default(self):
         """ Trait initializer. """
 
-        # Actions.
-        exit_action = Action(name='E&xit', on_perform=self.workbench.exit)
-
-        # Menus.
-        file_menu = MenuManager(exit_action, name='&File', id='FileMenu')
+        file_menu = MenuManager(self._exit_action, name='&File', id='FileMenu')
         view_menu = ViewMenuManager(name='&View', id='ViewMenu', window=self)
         
         return MenuBarManager(file_menu, view_menu, window=self)
@@ -136,14 +154,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _tool_bar_manager_default(self):
         """ Trait initializer. """
 
-        exit_action = Action(name='E&xit', on_perform=self.workbench.exit)
-
-        tool_bar_manager = ToolBarManager(
-            exit_action,
-            show_tool_names = False
-        )
-
-        return tool_bar_manager
+        return ToolBarManager(self._exit_action, show_tool_names=False)
     
     ###########################################################################
     # 'WorkbenchWindow' interface.
@@ -158,5 +169,14 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         # own view instances (which is necessary since each view has a
         # reference to its toolkit-specific control etc.).
         return [BlackView(), BlueView(), GreenView(), RedView(), YellowView()]
+
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    def __exit_action_default(self):
+        """ Trait initializer. """
+
+        return Action(name='E&xit', on_perform=self.workbench.exit)
 
 #### EOF ######################################################################

@@ -176,4 +176,23 @@ class MWorkbenchWindowLayout(object):
     implementations of the IWorkbenchWindowLayout interface.
     """
 
+    def _get_editor_references(self):
+        """ Returns a reference to every editor. """
+
+        editor_manager = self.window.editor_manager
+
+        editor_references = {}
+        for editor in self.window.editors:
+            # Create the editor reference.
+            #
+            # If the editor manager returns 'None' instead of a resource
+            # reference then this editor will not appear the next time the
+            # workbench starts up. This is useful for things like text files
+            # that have an editor but have NEVER been saved.
+            editor_reference = editor_manager.get_editor_memento(editor)
+            if editor_reference is not None:
+                editor_references[editor.id] = editor_reference
+
+        return editor_references
+
 #### EOF ######################################################################

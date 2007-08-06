@@ -37,6 +37,6 @@ class IEditorManager(Interface):
         """
         
     def set_editor_memento(self, memento):
-        """ Restore an editor from a memento. """
+        """ Restore an editor from a memento and return it. """
 
 #### EOF ######################################################################

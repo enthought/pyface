@@ -65,9 +65,12 @@ def main(argv):
         window = workbench.create_window(position=(x, y), size=(800, 600))
         window.open()
 
-        # Edit some objects!
-        window.edit(fred)
-        window.edit(wilma)
+        # Edit the objects if they weren't restored from a previous session.
+        if window.get_editor_by_id('fred') is None:
+            window.edit(fred)
+
+        if window.get_editor_by_id('wilma') is None:
+            window.edit(wilma)
 
         # Cascade the windows!
         x += 100; y += 100
