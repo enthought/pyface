@@ -2,6 +2,7 @@
 
 
 # Standard library imports.
+import cPickle
 import logging
 import os
 
@@ -106,10 +107,13 @@ class Workbench(HasTraits):
         """ Factory method that creates a new workbench window. """
 
         window = self.window_factory(workbench=self, **kw)
-
+        
         # Add on any user-defined perspectives.
         window.perspectives.extend(self.user_perspective_manager.perspectives)
-        
+
+        # Restore the saved window memento (if there is one).
+        self._restore_window_layout(window)
+
         # Listen for the window being activated/opened/closed etc. Activated in
         # this context means 'gets the focus'.
         #
@@ -207,15 +211,19 @@ class Workbench(HasTraits):
         """ Trait initializer. """
 
         # It would be preferable to base this on GUI.state_location.
-        loc = os.path.join(ETSConfig.application_home, 'pyface', 'workbench',
-                ETSConfig.toolkit)
+        state_location = os.path.join(
+            ETSConfig.application_home,
+            'pyface',
+            'workbench',
+            ETSConfig.toolkit
+        )
 
-        if not os.path.exists(loc):
-            os.makedirs(loc)
+        if not os.path.exists(state_location):
+            os.makedirs(state_location)
 
-        logger.debug('workbench state location is %s', loc)
+        logger.debug('workbench state location is %s', state_location)
 
-        return loc
+        return state_location
 
     def _undo_manager_default(self):
         """ Trait initializer. """
@@ -267,18 +275,34 @@ class Workbench(HasTraits):
             all_closed = True
             
         return all_closed
-    
+
+    def _restore_window_layout(self, window):
+        """ Restore the window layout. """
+
+        filename = os.path.join(self.state_location, 'window_memento')
+        if os.path.exists(filename):
+            try:
+                f = file(filename, 'r')
+                memento = cPickle.load(f)
+                f.close()
+
+                window.set_memento(memento)
+
+            # If *anything* goes wrong then simply log the error and carry on
+            # with no memento!
+            except:
+                logger.exception('restoring window layout from %s', filename)
+
+        return
+
     def _save_window_layout(self, window):
-        """ Saves the window size, position and layout. """
-
-        # Note the size and the position of the window (these values get
-        # saved as user preferences).
-        self.window_size = window.size
-        self.window_position = window.position
-
+        """ Save the window layout. """
+        
         # Save the window layout.
-        window.save_layout()
-
+        f = file(os.path.join(self.state_location, 'window_memento'), 'w')
+        cPickle.dump(window.get_memento(), f)
+        f.close()
+    
         return
 
     #### Trait change handlers ################################################

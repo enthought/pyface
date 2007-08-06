@@ -2,15 +2,13 @@
 
 
 # Standard library imports.
-import cPickle
 import logging
-from os.path import exists, join
 
 # Enthought library imports.
 from enthought.pyface.api import ApplicationWindow
-from enthought.traits.api import Callable, Constant, Event, Instance, List, Str
-from enthought.traits.api import Tuple, Unicode, Vetoable, implements
-from enthought.traits.api import on_trait_change
+from enthought.traits.api import Callable, Constant, Delegate, Event, Instance
+from enthought.traits.api import List, Str, Tuple, Unicode, Vetoable
+from enthought.traits.api import implements, on_trait_change
 
 # Local imports.
 from i_editor import IEditor
@@ -20,11 +18,12 @@ from i_view import IView
 from i_workbench_part import IWorkbenchPart
 from perspective import Perspective
 from workbench_window_layout import WorkbenchWindowLayout
+from workbench_window_memento import WorkbenchWindowMemento
 
 
 # Logging.
 logger = logging.getLogger(__name__)
-
+    
 
 class WorkbenchWindow(ApplicationWindow):
     """ A workbench window. """
@@ -39,10 +38,6 @@ class WorkbenchWindow(ApplicationWindow):
 
     # The current selection within the window.
     selection = List
-
-    # A directory on the local file system that we can read and write to at
-    # will. This is used to persist layout information etc.
-    state_location = Unicode
 
     # The workbench that the window belongs to.
     workbench = Instance('enthought.pyface.workbench.api.IWorkbench')
@@ -63,16 +58,16 @@ class WorkbenchWindow(ApplicationWindow):
     editor_area_size = Tuple((100, 100))
 
     # Fired when an editor is about to be opened (or restored).
-    editor_opening = Event(IEditor)
+    editor_opening = Delegate('layout') # Event(IEditor)
     
     # Fired when an editor has been opened (or restored).
-    editor_opened = Event(IEditor)
+    editor_opened = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor is about to be closed.
-    editor_closing = Event(IEditor)
+    editor_closing = Delegate('layout') # Event(IEditor)
 
     # Fired when an editor has been closed.
-    editor_closed = Event(IEditor)
+    editor_closed = Delegate('layout')  # Event(IEditor)
 
     #### Views #########################
 
@@ -123,6 +118,11 @@ class WorkbenchWindow(ApplicationWindow):
     # structure of the window (i.e., it knows how to add and remove views and
     # editors etc).
     layout = Instance(WorkbenchWindowLayout)
+
+    #### 'Private' interface ##################################################
+
+    # The state of the window suitable for pickling etc.
+    _memento = Instance(WorkbenchWindowMemento)
 
     ###########################################################################
     # 'Window' interface.
@@ -223,23 +223,17 @@ class WorkbenchWindow(ApplicationWindow):
         # to a perspective that has not been seen yet.
         self._initial_layout = self.layout.get_view_memento()
 
-        # When the application starts up we try to make it look just like it
-        # did the last time it was closed down (i.e., the layout of views and
-        # editors etc).
-        #
-        # If we have a saved layout then try to restore it (it may not be
-        # totally possible, e.g. an editor may have been open for an object
-        # that has been deleted outside of the application, but we try to do
-        # the best we can!).
-        filename = join(self.state_location, 'active_perspective_id')
-        if exists(filename):
-            self.restore_layout()
+        # Are we creating the window from scratch or restoring it from a
+        # memento?
+        if self._memento is None:
+            self._memento = WorkbenchWindowMemento()
 
-        # Otherwise, we have no saved layout so let's create one.
         else:
-            self.active_perspective = self._get_initial_perspective()
-##             self._create_layout()
-
+            self._restore_contents()
+            
+        # Set the initial perspective.
+        self.active_perspective = self._get_initial_perspective()
+        
         return contents
 
     ###########################################################################
@@ -258,29 +252,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _layout_default(self):
         """ Trait initializer. """
 
-        layout = WorkbenchWindowLayout(window=self)
-
-        # fixme: Is there a more 'traitsy' way to do this?
-        def propogate(obj, trait_name):
-            def handler(event):
-                setattr(self, trait_name, event)
-                return
-
-            obj.on_trait_change(handler, trait_name)
-
-            return
-        
-        propogate(layout, 'editor_opening')
-        propogate(layout, 'editor_opened')
-        propogate(layout, 'editor_closing')
-        propogate(layout, 'editor_closed')
-
-        return layout
-
-    def _state_location_default(self):
-        """ Trait initializer. """
-
-        return self.workbench.state_location
+        return WorkbenchWindowLayout(window=self)
     
     #### Methods ##############################################################
 
@@ -552,69 +524,35 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### Methods for saving and restoring the layout ##########################
 
-    # fixme: This is called from workbench on exit to persist the window
-    # layout.
-    #
-    # fixme: Can we replace these with memento methods and let the workbench
-    # decide how to persist the memento?!?
-##     def get_memento(self):
-##         """ Return the state of the window suitable for pickling etc. """
+    def get_memento(self):
+        """ Return the state of the window suitable for pickling etc. """
 
-##         memento = (
-##             self.active_perspective.id,
-##             self.layout.get_view_memento(),
-##             self.layout.get_editor_memento()
-##         )
+        perspective = self.active_perspective
 
-##         return memento
+        self._memento.active_perspective_id = perspective.id
 
-##     def set_memento(self, memento):
-##         """ Restore the state of the window from a memento. """
+        active_view_id = self.active_view and self.active_view.id or None
+        memento = (self.layout.get_view_memento(), active_view_id)
 
-##         active_perspective_id, view_memento, editor_memento = memento
+        self._memento.perspective_mementos[perspective.id] = memento
 
-##         return
-            
-    def save_layout(self):
-        """ Saves the window layout. """
+        # Editor area.
+        self._memento.editor_area_memento = self.layout.get_editor_memento()
 
-        # Save the Id of the active perspective.
-        f = file(join(self.state_location, 'active_perspective_id'), 'w')
-        f.write(self.active_perspective.id)
-        f.close()
+        # Size and position.
+        self._memento.size = self.size
+        self._memento.position = self.position
+        
+        return self._memento
 
-        # Save the layout of the view area.
-        memento = self.layout.get_view_memento()
+    def set_memento(self, memento):
+        """ Restore the state of the window from a memento. """
 
-        f = file(join(self.state_location, self.active_perspective.id), 'w')
-        cPickle.dump(memento, f)
-        f.close()
-
-        # Save the layout of the editor area.
-        memento = self.layout.get_editor_memento()
-
-        f = file(join(self.state_location, 'editors'), 'w')
-        cPickle.dump(memento, f)
-        f.close()
-
-        return
-
-    # fixme: This is only ever called internally!
-    def restore_layout(self):
-        """ Restores the window layout. """
-
-        # The layout of the view area is restored in the 'active_perspective'
-        # trait change handler!
-        self.active_perspective = self._get_initial_perspective()
-
-        # Restore the layout of the editor area.
-        filename = join(self.state_location, 'editors')
-        if exists(filename):
-            f = file(filename)
-            memento = cPickle.load(f)
-            f.close()
-
-            self.layout.set_editor_memento(memento)
+        # We don't do antyhing other than save the memento here - we just
+        # use the information when the window is openend. One consequence of
+        # this is that you can't set the memento of an open window, but I can't
+        # see a use case for that anyway!
+        self._memento = memento
 
         return
 
@@ -641,57 +579,7 @@ class WorkbenchWindow(ApplicationWindow):
         self.add_view(view, item.position, relative_to, size)
 
         return
-
-##     def _create_layout(self):
-##         """ Creates the initial window layout. """
-
-##         perspective = self._get_initial_perspective()
-
-##         if len(self.perspectives) > 0:
-##             if len(self.default_perspective_id) > 0:
-##                 perspective = self.get_perspective_by_id(
-##                     self.default_perspective_id
-##                 )
-
-##             else:
-##                 perspective = self.perspectives[0]
-
-##         else:
-##             perspective = Perspective()
-
-##         # All the work is done in the 'active_perspective' trait change
-##         # handler!
-##         self.active_perspective = perspective
-
-##         return
-
-##     def _add_view_listeners(self, view):
-##         """ Adds any required listeners to a view. """
-
-##         view.window = self
-
-##         # Update our selection when the selection of any contained view
-##         # changes.
-##         #
-##         # fixme: Not sure this is really what we want to do but it is what
-##         # we did in the old UI plugin and the selection listener still does
-##         # only listen to the window's selection.
-##         view.on_trait_change(self._on_view_selection_changed, 'selection')
-
-##         return
-    
-##     def _remove_view_listeners(self, view):
-##         """ Removes any required listeners from a view. """
-
-##         view.window = None
-
-##         # Remove the selection listener.
-##         view.on_trait_change(
-##             self._on_view_selection_changed, 'selection', remove=True
-##         )
-        
-##         return
-
+            
     def _get_initial_perspective(self, *methods):
         """ Return the initial perspective. """
 
@@ -749,16 +637,14 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        try:
-            f = file(join(self.state_location, 'active_perspective_id'), 'r')
-            id = f.read()
-            f.close()
-
+        id = self._memento.active_perspective_id
+            
+        if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
                 logger.warn('previous perspective %s no longer available', id)
 
-        except:
+        else:
             perspective = None
 
         return perspective
@@ -804,42 +690,20 @@ class WorkbenchWindow(ApplicationWindow):
             view.visible = False
 
         # Save the current layout of the perspective.
-        active_view_id = self.active_view and self.active_view.id or None
-        
-        memento = (
-            self.layout.get_view_memento(), active_view_id
+        self._memento.perspective_mementos[perspective.id] = (
+            self.layout.get_view_memento(),
+            self.active_view and self.active_view.id or None
         )
-
-        f = file(join(self.state_location, perspective.id), 'w')
-        cPickle.dump(memento, f)
-        f.close()
 
         return
 
     def _show_perspective(self, old, new):
         """ Show a perspective. """
 
-        # Save the Id of the active perspective.
-        f = file(join(self.state_location, 'active_perspective_id'), 'w')
-        f.write(new.id)
-        f.close()
-
         # If the perspective has been seen before then restore it.
-        filename = join(self.state_location, new.id)
-        if exists(filename):
-            # Load the window layout from the specified file.
-            f = file(filename)
-            memento = cPickle.load(f)
-            f.close()
-
-            # fixme: Backwards compatability!
-            if type(memento) is tuple:
-                view_memento, active_view_id = memento
-
-            else:
-                view_memento = memento
-                active_view_id = None
-                
+        memento = self._memento.perspective_mementos.get(new.id)
+        if memento is not None:
+            view_memento, active_view_id = memento
             self.layout.set_view_memento(view_memento)
 
             # Make sure the active part, view and editor reflect the new
@@ -865,9 +729,6 @@ class WorkbenchWindow(ApplicationWindow):
             # perspective.
             self.active_view = None
 
-            if not self.show_editor_area:
-                self.active_editor = None
-
             # Show the editor area?
             if new.show_editor_area:
                 self.show_editor_area()
@@ -880,7 +741,15 @@ class WorkbenchWindow(ApplicationWindow):
         if old is not None:
             self.refresh()
 
-        perspective = new
+        return
+
+    def _restore_contents(self):
+        """ Restore the contents of the window. """
+
+        self.layout.set_editor_memento(self._memento.editor_area_memento)
+
+        self.size = self._memento.size
+        self.position = self._memento.position
 
         return
     
