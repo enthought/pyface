@@ -133,7 +133,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         Overridden to make the 'opening' event vetoable.
 
-        Returns True if the window opened successfully; False if the open event
+        Return True if the window opened successfully; False if the open event
         was vetoed.
 
         """
@@ -166,8 +166,8 @@ class WorkbenchWindow(ApplicationWindow):
 
         Overridden to make the 'closing' event vetoable.
 
-        Returns True if the window closed successfully (or was not even
-        open!); False if the close event was vetoed.
+        Return True if the window closed successfully (or was not even open!),
+        False if the close event was vetoed.
 
         """
 
@@ -343,7 +343,7 @@ class WorkbenchWindow(ApplicationWindow):
     def create_editor(self, obj, kind=None):
         """ Create an editor for an object.
 
-        Returns None if no editor can be created for the object.
+        Return None if no editor can be created for the object.
 
         """
 
@@ -405,18 +405,18 @@ class WorkbenchWindow(ApplicationWindow):
         return editor
 
     def get_editor(self, obj, kind=None):
-        """ Returns the editor that is editing an object.
+        """ Return the editor that is editing an object.
 
-        Returns None if no such editor exists.
+        Return None if no such editor exists.
 
         """
 
         return self.editor_manager.get_editor(self, obj, kind)
 
     def get_editor_by_id(self, id):
-        """ Returns the editor with the specified Id.
+        """ Return the editor with the specified Id.
 
-        Returns None if no such editor exists.
+        Return None if no such editor exists.
 
         """
 
@@ -429,10 +429,19 @@ class WorkbenchWindow(ApplicationWindow):
 
         return editor
 
+    def get_part_by_id(self, id):
+        """ Return the workbench part with the specified Id.
+
+        Return None if no such part exists.
+
+        """
+
+        return self.get_view_by_id(id) or self.get_editor_by_id(id)
+    
     def get_perspective_by_id(self, id):
         """ Return the perspective with the specified Id.
 
-        Returns None if no such perspective exists.
+        Return None if no such perspective exists.
 
         """
 
@@ -452,7 +461,7 @@ class WorkbenchWindow(ApplicationWindow):
     def get_perspective_by_name(self, name):
         """ Return the perspective with the specified name.
 
-        Returns None if no such perspective exists.
+        Return None if no such perspective exists.
 
         """
 
@@ -468,7 +477,7 @@ class WorkbenchWindow(ApplicationWindow):
     def get_view_by_id(self, id):
         """ Return the view with the specified Id.
 
-        Returns None if no such view exists.
+        Return None if no such view exists.
 
         """
 
@@ -771,9 +780,9 @@ class WorkbenchWindow(ApplicationWindow):
         return perspective
 
     def _get_perspective_item(self, perspective, view):
-        """ Returns the perspective item for a view.
+        """ Return the perspective item for a view.
 
-        Returns None if the view is not mentioned in the perspectives contents.
+        Return None if the view is not mentioned in the perspectives contents.
 
         """
 
@@ -796,8 +805,12 @@ class WorkbenchWindow(ApplicationWindow):
             view.visible = False
 
         # Save the current layout of the perspective.
-        memento = self.layout.get_view_memento()
+        active_view_id = self.active_view and self.active_view.id or None
         
+        memento = (
+            self.layout.get_view_memento(), active_view_id
+        )
+
         f = file(join(self.state_location, perspective.id), 'w')
         cPickle.dump(memento, f)
         f.close()
@@ -820,8 +833,25 @@ class WorkbenchWindow(ApplicationWindow):
             memento = cPickle.load(f)
             f.close()
 
-            self.layout.set_view_memento(memento)
+            # fixme: Backwards compatability!
+            if type(memento) is tuple:
+                view_memento, active_view_id = memento
 
+            else:
+                view_memento = memento
+                active_view_id = None
+                
+            self.layout.set_view_memento(view_memento)
+
+            # Make sure the active part, view and editor reflect the new
+            # perspective.
+            view = self.get_view_by_id(active_view_id)
+            if view is not None:
+                self.active_view = view
+                
+            if not self.show_editor_area:
+                self.active_editor = None
+        
         # Otherwise, this is the first time the perspective has been seen
         # so create it.
         else:
@@ -832,16 +862,30 @@ class WorkbenchWindow(ApplicationWindow):
             # Create the perspective in the window.
             new.create(self)
 
+            # Make sure the active part, view and editor reflect the new
+            # perspective.
+            self.active_view = None
+
+            if not self.show_editor_area:
+                self.active_editor = None
+
             # Show the editor area?
             if new.show_editor_area:
                 self.show_editor_area()
 
             else:
                 self.hide_editor_area()
-
+                self.active_editor = None
+            
         # This forces the dock window to update its layout.
         if old is not None:
             self.refresh()
+
+        perspective = new
+        print 'Show perspective', perspective.id
+        print 'Active part', self.active_part
+        print 'Active view', self.active_view
+        print 'Active editor', self.active_editor
 
         return
     
@@ -868,7 +912,8 @@ class WorkbenchWindow(ApplicationWindow):
         """ Static trait change handler. """
 
         logger.debug('active editor changed from %s to %s', old, new)
-
+        self.active_part = new
+        
         return
 
     def _active_part_changed(self, old, new):
@@ -876,6 +921,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         if new is None:
             self.selection = []
+
         else:
             self.selection = new.selection
 
@@ -887,6 +933,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Static trait change handler. """
 
         logger.debug('active view changed from %s to %s', old, new)
+        self.active_part = new
 
         return
 
@@ -924,7 +971,6 @@ class WorkbenchWindow(ApplicationWindow):
 
         if trait_name == 'has_focus' and new:
             self.active_editor = obj
-            self.active_part = obj
 
         return
 
@@ -934,7 +980,6 @@ class WorkbenchWindow(ApplicationWindow):
         
         if trait_name == 'has_focus' and new:
             self.active_view = obj
-            self.active_part = obj
 
         return
     
