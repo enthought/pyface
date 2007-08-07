@@ -834,8 +834,11 @@ class WorkbenchWindow(ApplicationWindow):
     def _has_focus_changed_for_editor(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        if trait_name == 'has_focus' and new:
-            self.active_editor = obj
+        if trait_name == 'has_focus':
+            if new:
+                self.active_editor = obj
+            elif self.active_editor is obj:
+                self.active_editor = None
 
         return
 
@@ -843,8 +846,11 @@ class WorkbenchWindow(ApplicationWindow):
     def _has_focus_changed_for_view(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
         
-        if trait_name == 'has_focus' and new:
-            self.active_view = obj
+        if trait_name == 'has_focus':
+            if new:
+                self.active_view = obj
+            elif self.active_view is obj:
+                self.active_view = None
 
         return
     
