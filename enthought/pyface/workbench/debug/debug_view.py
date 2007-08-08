@@ -21,9 +21,6 @@ class DebugViewModel(HasTraits):
 
     window = Instance(WorkbenchWindow)
 
-    #### The default view #####################################################
-
-    
     ###########################################################################
     # 'Model' interface.
     ###########################################################################
@@ -87,8 +84,6 @@ class DebugView(View):
 
         """
 
-        print '***************** CREATE CONTROL FOR THE DEBUG VIEW ****'
-        
         self.model = DebugViewModel(window=self.window)
 
         method = getattr(self, '_create_control_%s' % ETSConfig.toolkit)
@@ -106,7 +101,6 @@ class DebugView(View):
     def _create_control_wx(self, parent):
         """ Creates the wx control that represents the view. """
 
-        print 'Creating wx control.................'
         from enthought.traits.ui.api import View
 
         ui = self.model.edit_traits(
@@ -122,7 +116,6 @@ class DebugView(View):
     def _create_control_qt4(self, parent):
         """ Creates the qt4 control that represents the view. """
 
-        print 'Creating qy4 control.................'
         from PyQt4 import QtGui
 
         layout = QtGui.QGridLayout()
@@ -148,14 +141,13 @@ class DebugView(View):
         self._refresh()
 
         # Listen for changes to the model.
-        #self.model.on_trait_change(self._on_model_anytrait_changed)
+        self.model.on_trait_change(self._on_model_anytrait_changed)
         
         return ui
 
     def _on_model_anytrait_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        print 'trait name', obj, trait_name, old, new
         if self.control is not None:
             self._refresh()
 
