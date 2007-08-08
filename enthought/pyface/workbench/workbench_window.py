@@ -854,6 +854,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         if trait_name == 'has_focus' and new:
             self.active_editor = obj
+            self.active_part   = obj
 
         return
 
@@ -869,6 +870,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         if trait_name == 'has_focus' and new:
             self.active_view = obj
+            self.active_part = obj
 
         return
     
