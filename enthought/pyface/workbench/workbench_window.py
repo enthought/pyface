@@ -472,7 +472,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Hide a view. """
 
         self.layout.hide_view(view)
-
+            
         return
 
     def refresh(self):
@@ -830,15 +830,30 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### Dynamic ####
 
+    @on_trait_change('layout.editor_closed')
+    def _editor_slosed(self, editor):
+        """ Static trait change handler. """
+
+        self.editors.remove(editor)
+
+        if editor is self.active_editor:
+            self.active_editor = None
+
+        return
+
     @on_trait_change('editors.has_focus')
     def _has_focus_changed_for_editor(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        if trait_name == 'has_focus':
-            if new:
-                self.active_editor = obj
-            elif self.active_editor is obj:
-                self.active_editor = None
+##         if trait_name == 'has_focus':
+##             if new:
+##                 self.active_editor = obj
+##             elif self.active_editor is obj:
+##                 self.active_editor = None
+
+
+        if trait_name == 'has_focus' and new:
+            self.active_editor = obj
 
         return
 
@@ -846,11 +861,14 @@ class WorkbenchWindow(ApplicationWindow):
     def _has_focus_changed_for_view(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
         
-        if trait_name == 'has_focus':
-            if new:
-                self.active_view = obj
-            elif self.active_view is obj:
-                self.active_view = None
+##         if trait_name == 'has_focus':
+##             if new:
+##                 self.active_view = obj
+##             elif self.active_view is obj:
+##                 self.active_view = None
+
+        if trait_name == 'has_focus' and new:
+            self.active_view = obj
 
         return
     
