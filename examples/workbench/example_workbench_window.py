@@ -109,7 +109,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
             name     = 'Foo',
             contents = [
                 PerspectiveItem(id='Black', position='bottom'),
-                #PerspectiveItem(id='Debug', position='left')
+##                 PerspectiveItem(id='Debug', position='left')
             ]
         ),
         
@@ -120,7 +120,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
                 PerspectiveItem(id='Blue', position='bottom'),
                 PerspectiveItem(id='Green', position='left'),
                 PerspectiveItem(id='Red', position='right'),
-                #PerspectiveItem(id='Debug', position='left')
+##                 PerspectiveItem(id='Debug', position='left')
             ]
         )
     ]
@@ -174,7 +174,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _view_factories_default(self):
         """ Trait initializer. """
 
-        from enthought.pyface.workbench.debug_view import DebugView
+        from enthought.pyface.workbench.debug.api import DebugView
         
 ##         return [DebugView, BlackView, BlueView, GreenView, RedView, YellowView]
         return [BlackView, BlueView, GreenView, RedView, YellowView]

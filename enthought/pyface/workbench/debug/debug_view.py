@@ -3,11 +3,8 @@
 
 # Enthought library imports.
 from enthought.etsconfig.api import ETSConfig
+from enthought.pyface.workbench.api import View, WorkbenchWindow
 from enthought.traits.api import HasTraits, Instance, Str, on_trait_change
-
-# Local imports.
-from view import View
-from workbench_window import WorkbenchWindow
 
 
 class DebugViewModel(HasTraits):
