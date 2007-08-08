@@ -8,7 +8,7 @@ from enthought.pyface.workbench.api import PerspectiveItem
 from enthought.pyface.workbench.action.api import MenuBarManager
 from enthought.pyface.workbench.action.api import ToolBarManager
 from enthought.pyface.workbench.action.api import ViewMenuManager
-from enthought.traits.api import Instance
+from enthought.traits.api import Callable, List, Instance
 
 # Local imports.
 from black_view import BlackView
@@ -108,7 +108,8 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         Perspective(
             name     = 'Foo',
             contents = [
-                PerspectiveItem(id='Black', position='bottom')
+                PerspectiveItem(id='Black', position='bottom'),
+                #PerspectiveItem(id='Debug', position='left')
             ]
         ),
         
@@ -118,10 +119,18 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
                 PerspectiveItem(id='Black', position='top'),
                 PerspectiveItem(id='Blue', position='bottom'),
                 PerspectiveItem(id='Green', position='left'),
-                PerspectiveItem(id='Red', position='right')
+                PerspectiveItem(id='Red', position='right'),
+                #PerspectiveItem(id='Debug', position='left')
             ]
         )
     ]
+
+    #### 'ExampleWorkbenchWindow' interface ###################################
+
+    # The view factories.
+    #
+    # fixme: This should be part of the standadr 'WorkbenchWindow'!
+    view_factories = List(Callable)
 
     #### Private interface ####################################################
 
@@ -162,13 +171,21 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
 
     #### Trait initializers ###################################################
 
+    def _view_factories_default(self):
+        """ Trait initializer. """
+
+        from enthought.pyface.workbench.debug_view import DebugView
+        
+##         return [DebugView, BlackView, BlueView, GreenView, RedView, YellowView]
+        return [BlackView, BlueView, GreenView, RedView, YellowView]
+    
     def _views_default(self):
         """ Trait initializer. """
 
         # Using an initializer makes sure that every window instance gets its
         # own view instances (which is necessary since each view has a
         # reference to its toolkit-specific control etc.).
-        return [BlackView(), BlueView(), GreenView(), RedView(), YellowView()]
+        return [factory() for factory in self.view_factories]
 
     ###########################################################################
     # Private interface.

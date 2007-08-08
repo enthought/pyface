@@ -8,14 +8,18 @@ import logging
 from enthought.pyface.api import GUI, YES
 from enthought.pyface.workbench.api import Workbench
 
+# fixme: Required for bug in traits.
+import enthought.traits.ui.wx
+
 # Local imports.
 from example_workbench_window import ExampleWorkbenchWindow
 from person import Person
 
 
 # Log to stderr.
-logging.getLogger().addHandler(logging.StreamHandler())
-logging.getLogger().setLevel(logging.DEBUG)
+logger = logging.getLogger()
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)
 
 
 class ExampleWorkbench(Workbench):
