@@ -8,9 +8,6 @@ import logging
 from enthought.pyface.api import GUI, YES
 from enthought.pyface.workbench.api import Workbench
 
-# fixme: Required for bug in traits.
-import enthought.traits.ui.wx
-
 # Local imports.
 from example_workbench_window import ExampleWorkbenchWindow
 from person import Person
