@@ -761,7 +761,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_perspective_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active perspective changed from %s to %s', old, new)
+        logger.debug('active perspective changed from <%s> to <%s>', old, new)
 
         # Hide the old perspective...
         if old is not None:
@@ -776,7 +776,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_editor_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active editor changed from %s to %s', old, new)
+        logger.debug('active editor changed from <%s> to <%s>', old, new)
         self.active_part = new
         
         return
@@ -790,14 +790,14 @@ class WorkbenchWindow(ApplicationWindow):
         else:
             self.selection = new.selection
 
-        logger.debug('active part changed from %s to %s', old, new)
+        logger.debug('active part changed from <%s> to <%s>', old, new)
 
         return
 
     def _active_view_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active view changed from %s to %s', old, new)
+        logger.debug('active view changed from <%s> to <%s>', old, new)
         self.active_part = new
 
         return
@@ -831,14 +831,14 @@ class WorkbenchWindow(ApplicationWindow):
     #### Dynamic ####
 
     @on_trait_change('layout.editor_closed')
-    def _editor_slosed(self, editor):
+    def _editor_closed(self, editor):
         """ Static trait change handler. """
 
         self.editors.remove(editor)
 
         if editor is self.active_editor:
             self.active_editor = None
-
+        
         return
 
     @on_trait_change('editors.has_focus')
@@ -848,16 +848,27 @@ class WorkbenchWindow(ApplicationWindow):
         if trait_name == 'has_focus' and new:
             self.active_editor = obj
             self.active_part   = obj
-
+                
         return
 
     @on_trait_change('views.has_focus')
     def _has_focus_changed_for_view(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
-        
+
         if trait_name == 'has_focus' and new:
-            self.active_view = obj
-            self.active_part = obj
+                self.active_view = obj
+                self.active_part = obj
+
+        return
+
+    @on_trait_change('views.visible')
+    def _visible_changed_for_view(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+
+        if trait_name == 'visible':
+            if not new:
+                if obj is self.active_view:
+                    self.active_view = None
 
         return
     

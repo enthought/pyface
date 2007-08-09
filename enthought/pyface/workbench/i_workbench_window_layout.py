@@ -19,6 +19,7 @@ from enthought.traits.api import Event, Instance, Interface, Str
 
 # Local imports.
 from i_editor import IEditor
+from i_view import IView
 
 
 class IWorkbenchWindowLayout(Interface):
@@ -50,6 +51,18 @@ class IWorkbenchWindowLayout(Interface):
 
     # Fired when an editor has been closed.
     editor_closed = Event(IEditor)
+
+    # Fired when a view is about to be opened (or restored).
+    view_opening = Event(IView)
+
+    # Fired when a view has been opened (or restored).
+    view_opened = Event(IView)
+
+    # Fired when a view is about to be closed (*not* hidden!).
+    view_closing = Event(IView)
+
+    # Fired when a view has been closed (*not* hidden!).
+    view_closed = Event(IView)
 
     # FIXME v3: The "just for convenience" returns are a really bad idea.
     #
@@ -116,14 +129,14 @@ class IWorkbenchWindowLayout(Interface):
         """
 
     def create_initial_layout(self):
-        """ Creates the initial window layout.
+        """ Create the initial window layout.
 
         Returns the layout.
 
         """
 
     def contains_view(self, view):
-        """ Returns True if the view exists in the window layout.
+        """ Return True if the view exists in the window layout.
 
         Note that this returns True even if the view is hidden.
 
@@ -142,7 +155,7 @@ class IWorkbenchWindowLayout(Interface):
         """
 
     def refresh(self):
-        """ Refreshes the window layout to reflect any changes. """
+        """ Refresh the window layout to reflect any changes. """
 
     def reset_editors(self):
         """ Activate the first editor in every group. """

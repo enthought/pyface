@@ -103,7 +103,7 @@ class MGUI(object):
         if not os.path.exists(state_location):
             os.makedirs(state_location)
 
-        logger.debug('GUI state location is [%s]', state_location)
+        logger.debug('GUI state location is <%s>', state_location)
 
         return state_location
 
