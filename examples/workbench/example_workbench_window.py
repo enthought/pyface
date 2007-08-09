@@ -184,7 +184,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         # Using an initializer makes sure that every window instance gets its
         # own view instances (which is necessary since each view has a
         # reference to its toolkit-specific control etc.).
-        return [factory() for factory in self.view_factories]
+        return [factory(window=self) for factory in self.view_factories]
 
     ###########################################################################
     # Private interface.
