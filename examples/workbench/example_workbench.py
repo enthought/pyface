@@ -4,6 +4,9 @@
 # Standard library imports.
 import logging
 
+# fixme: Required for theme import bug.
+import enthought.traits.ui.wx
+
 # Enthought library imports.
 from enthought.pyface.api import GUI, YES
 from enthought.pyface.workbench.api import Workbench
@@ -42,12 +45,12 @@ class ExampleWorkbench(Workbench):
 
 
 def main(argv):
-    """ A simple example of using the workbench window. """
+    """ A simple example of using the workbench. """
     
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
     
-    # Create some objects to edit!
+    # Create some objects to edit.
     fred = Person(name='fred', age=42)
     wilma = Person(name='wilma', age=35)
 
@@ -73,10 +76,10 @@ def main(argv):
         if window.get_editor_by_id('wilma') is None:
             window.edit(wilma)
 
-        # Cascade the windows!
+        # Cascade the windows.
         x += 100; y += 100
     
-    # Start the GUI event loop!
+    # Start the GUI event loop.
     gui.start_event_loop()
     
     return
