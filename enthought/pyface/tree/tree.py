@@ -32,7 +32,7 @@ from enthought.util.wx.drag_and_drop import PythonDropSource, PythonDropTarget
 from tree_model import TreeModel
 
 
-# Logging.
+# Create a logger for this module.
 logger = logging.getLogger(__name__)
 
 

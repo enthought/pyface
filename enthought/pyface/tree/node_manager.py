@@ -13,13 +13,18 @@
 #------------------------------------------------------------------------------
 """ The node manager looks after a collection of node types. """
 
+# Standard library imports.
+import logging
 
 # Enthought library imports.
-from enthought.logger import logger
 from enthought.traits.api import HasPrivateTraits, List
 
 # Local imports
 from node_type import NodeType
+
+
+# Create a logger for this module.
+logger = logging.getLogger(__name__)
 
 
 class NodeManager(HasPrivateTraits):

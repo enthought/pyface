@@ -17,6 +17,8 @@
 from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
+wx_28 = (float( wx.__version__[:3] ) >= 2.8)
+
 # Enthought library imports
 from enthought.traits.api import false
 from enthought.traits.ui.api import default_handler
@@ -89,7 +91,10 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """
         #print 'TraitGridCellAdapter.Show'
         if self.IsCreated():
-            self.base_Show(show, attr)
+            if wx_28:
+                super(TraitGridCellAdapter, self).Show(show, attr)
+            else:
+                self.base_Show(show, attr)
 
         return
 

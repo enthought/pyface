@@ -1,0 +1,7 @@
+* Remove the dependency on enthought.developer AND enthought.io by refactoring
+    dock features modules.
+
+* Determine if we should relocate or refactor the new_dialog module which adds
+    dependencies on enthought.naming.  There is also a enthought.naming
+    dependency in dock/dock_window.py due to handling drag'n'drop.
+

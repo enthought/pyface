@@ -1,0 +1,7 @@
+[dock]
+enthought.pyface.dock = *
+
+
+[tvtk]
+enthought.pyface.tvtk = *
+

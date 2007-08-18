@@ -22,7 +22,7 @@ probe for the data at that point.
 # License: BSD Style.
 
 from enthought.traits.api import HasTraits, Trait, Int, Array, Any, Float, \
-                                 Instance, Range
+                                 Instance, Range, true
 from enthought.traits.ui.api import View, Group, Item, Handler
 from enthought.tvtk.api import tvtk
 from enthought.tvtk.tvtk_base import TraitRevPrefixMap, false_bool_trait
@@ -209,10 +209,19 @@ class Picker(HasTraits):
     # Picking tolerance.
     tolerance = Range(0.0, 0.25, 0.025)
 
+    # show the GUI on pick ?
+    show_gui = true(desc = "whether to show the picker GUI on pick")
+
+    # Raise the GUI on pick ?
+    auto_raise = true(desc = "whether to raise the picker GUI on pick")
+
     default_view = View(Group(Group(Item(name='pick_type'),
                                     Item(name='tolerance'), show_border=True),
                               Group(Item(name='pick_handler', style='custom'),
-                                    show_border=True, show_labels=False)),
+                                    show_border=True, show_labels=False),
+                              Group(Item(name='show_gui'),
+                                    Item(name='auto_raise'), show_border=True),
+                              ),
                         handler=CloseHandler())
 
     #################################################################
@@ -292,7 +301,8 @@ class Picker(HasTraits):
             data = self._pick_world(x, y)
 
         self.pick_handler.handle_pick(data)
-        self.setup_gui()
+        if self.show_gui:
+            self.setup_gui()
 
     def setup_gui(self):
         """Pops up the GUI control widget."""
@@ -303,7 +313,7 @@ class Picker(HasTraits):
             # renwin to prevent event notifications on actor
             # additions.
             self.renwin.renderer.add_actor(self.p_actor)
-        else:
+        elif self.auto_raise:
             try:
                 self.ui.control.Raise()
             except AttributeError:

@@ -1,7 +1,5 @@
 import unittest
 
-from enthought.logger import logger
-
 from enthought.pyface.grid.api \
      import GridRow, GridColumn, SimpleGridModel
 
