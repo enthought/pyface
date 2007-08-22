@@ -14,6 +14,7 @@
 """ Adapter class to make trait editor controls work inside of a grid. """
 
 # Major package imports
+import wx
 from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
