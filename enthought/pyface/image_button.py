@@ -97,6 +97,8 @@ class ImageButton ( Widget ):
     def __init__ ( self, parent, **traits ):
         """ Creates a new image control. 
         """
+        self._image = None
+
         super( ImageButton, self ).__init__( **traits )
 
         # Calculate the size of the button:
