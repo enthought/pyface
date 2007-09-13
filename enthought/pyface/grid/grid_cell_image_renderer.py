@@ -134,7 +134,6 @@ class GridCellImageRenderer(PyGridCellRenderer):
     #########################################################################
     def _get_image(self, grid, row, col):
         """ Returns the correct bmp for the data at row, col. """
-
         bmp = None
         if self._provider is not None and \
            hasattr(self._provider, 'get_image_for_cell'):
