@@ -26,7 +26,15 @@ class EditImageRenderer(GridCellImageRenderer):
     
     def get_image_for_cell(self, grid, row, col): 
         """ returns the image resource for the table_edit bitmap """
-        return self.image
+
+        # show the icon if the obj does not have an editable trait
+        # or if the editable trait is True
+        
+        obj = grid.GetTable().model.get_rows_drag_value([row])[0]
+        
+        if (not hasattr(obj, 'editable')) or obj.editable:
+            return self.image
+        return None
         
     def _get_text(self, grid, row, col):
         return None

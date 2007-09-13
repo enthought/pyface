@@ -31,5 +31,10 @@ class EditRenderer(GridCellRenderer):
     def on_left_click(self, grid, row, col):
         """ Calls edit_traits on the object represented by the row. """
 
-        obj = grid.model.get_rows_drag_value([row])[0]        
-        obj.edit_traits(kind='livemodal')
+        obj = grid.model.get_rows_drag_value([row])[0]
+        
+        # allow editting if the obj does not have an editable trait
+        # or if the editable trait is True
+        
+        if (not hasattr(obj, 'editable')) or obj.editable:
+            obj.edit_traits(kind='livemodal')
