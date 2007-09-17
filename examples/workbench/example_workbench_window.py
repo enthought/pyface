@@ -82,6 +82,9 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # The Exit action.
     _exit_action = Instance(Action)
 
+    # The New Person action.
+    _new_person_action = Instance(Action)
+
     ###########################################################################
     # 'ApplicationWindow' interface.
     ###########################################################################
@@ -100,7 +103,10 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _menu_bar_manager_default(self):
         """ Trait initializer. """
 
-        file_menu = MenuManager(self._exit_action, name='&File', id='FileMenu')
+        file_menu = MenuManager(
+            self._new_person_action, self._exit_action,
+            name='&File', id='FileMenu'
+        )
         view_menu = ViewMenuManager(name='&View', id='ViewMenu', window=self)
         
         return MenuBarManager(file_menu, view_menu, window=self)
@@ -139,5 +145,19 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         """ Trait initializer. """
 
         return Action(name='E&xit', on_perform=self.workbench.exit)
+
+    def __new_person_action_default(self):
+        """ Trait initializer. """
+        
+        return Action(name='New Person', on_perform=self._new_person)
+
+    def _new_person(self):
+        """ Create a new person. """
+
+        from person import Person
+
+        self.workbench.edit(Person(name='New', age=100))
+
+        return
 
 #### EOF ######################################################################
