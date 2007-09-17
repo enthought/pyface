@@ -5,7 +5,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow
+from enthought.pyface.api import ApplicationWindow, GUI
 from enthought.traits.api import Callable, Constant, Delegate, Event, Instance
 from enthought.traits.api import List, Str, Tuple, Unicode, Vetoable
 from enthought.traits.api import implements, on_trait_change
@@ -838,11 +838,16 @@ class WorkbenchWindow(ApplicationWindow):
 
         if editor is self.active_editor:
             if len(self.editors) > 0:
-                self.active_editor = self.editors[0]
+                # If the user closed the editor manually then this method is
+                # being called from a toolkit-specific event handler. Because
+                # of that we have to make sure that we don't change the focus
+                # from within this method directly hence we activate the editor
+                # later in the GUI thread.
+                GUI.invoke_later(self.activate_editor, self.editors[0])
 
             else:
                 self.active_editor = None
-        
+
         return
 
     @on_trait_change('editors.has_focus')
