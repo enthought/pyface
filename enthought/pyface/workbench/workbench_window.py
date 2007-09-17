@@ -837,7 +837,11 @@ class WorkbenchWindow(ApplicationWindow):
         self.editors.remove(editor)
 
         if editor is self.active_editor:
-            self.active_editor = None
+            if len(self.editors) > 0:
+                self.active_editor = self.editors[0]
+
+            else:
+                self.active_editor = None
         
         return
 
