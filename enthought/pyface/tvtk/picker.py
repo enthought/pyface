@@ -137,13 +137,13 @@ class DefaultPickHandler(PickHandler):
             self.coordinate = data.coordinate
 
             if data.data:
-                array_data = {'scalars':data.data.scalars,
-                              'vectors': data.data.vectors,
-                              'tensors': data.data.tensors}
+                array_data = {'scalar': data.data.scalars,
+                              'vector': data.data.vectors,
+                              'tensor': data.data.tensors}
             else:
-                array_data = {'scalars': None,
-                              'vectors': None,
-                              'tensors': None}
+                array_data = {'scalar': None,
+                              'vector': None,
+                              'tensor': None}
             for name in array_data.keys():
                 if array_data[name]:
                     setattr(self, name, array_data[name][self.ID])

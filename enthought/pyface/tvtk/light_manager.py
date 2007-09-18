@@ -317,9 +317,14 @@ class LightManager(HasTraits):
     number_of_lights = Range(3, 8, 4, desc='specifies the number of lights')
 
     # The list of added lights.
-    lights = List(CameraLight,
-                  editor=(ListEditor, {'use_notebook': True,
-                                       'page_name': 'Light'}))
+    lights = List(CameraLight, editor=ListEditor(use_notebook=True,
+                                                 page_name='Light') )
+
+    view = View( Group( 'light_mode', 
+                        'number_of_lights', ),
+                Item('lights', style='custom', show_label=False),
+                resizable=True)
+
     
     #################################################################
     # `object` interface.
