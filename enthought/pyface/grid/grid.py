@@ -790,7 +790,7 @@ class Grid(Widget):
         return
 
     def _on_select_cell(self, evt):
-        """ Called when the user has moved to another cell. """        
+        """ Called when the user has moved to another cell. """ 
         row = evt.GetRow()
         col = evt.GetCol()
 
@@ -800,7 +800,7 @@ class Grid(Widget):
         if evt.Selecting():
             self._grid.ClearSelection()
 
-        if self.selection_mode != '':
+        if self.selection_mode != '' or not self.edit_on_first_click:
             self._grid.SelectBlock(row, col, row, col, False)
         self._edit = True
         evt.Skip()
@@ -809,7 +809,6 @@ class Grid(Widget):
     
     def _on_range_select(self, evt):
         """ Called when a range of cells has been selected. """
-
         # find the range of selection
         top_row = evt.GetTopRow()
         left_col = evt.GetLeftCol()
@@ -819,6 +818,7 @@ class Grid(Widget):
         if not evt.Selecting():
             self.__fire_selection_changed(())
             return
+
 
         # find the size of the grid
         row_size = self.model.get_row_count()
@@ -869,7 +869,6 @@ class Grid(Widget):
 
     def _on_cell_left_click(self, evt):
         """ Called when the left mouse button was clicked. """
-
         row = evt.GetRow()
         col = evt.GetCol()
 
