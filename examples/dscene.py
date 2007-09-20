@@ -15,15 +15,12 @@
 
 
 # Standard library imports.
-import os
-import os.path
 import random
-import sys
-
-import wx
 
 # Enthought library imports.
+from enthought.pyface.api import FileDialog
 from enthought.pyface.api import GUI
+from enthought.pyface.api import OK
 from enthought.pyface.api import PythonShell
 from enthought.pyface.api import SplitApplicationWindow
 from enthought.pyface.tvtk.decorated_scene import DecoratedScene
@@ -57,14 +54,10 @@ class SaveImageAction(Action):
         extns = ['*.png', '*.jpg', '*.jpeg', '*.tiff', '*.bmp', '*.ps', '*.eps',
                  '*.tex', '*.rib', '*.wrl', '*.oogl', '*.pdf', '*.vrml', '*.obj',
                  '*.iv']
-        dlg = wx.FileDialog(self._window.control, style=wx.SAVE,
-                            wildcard='|'.join(extns),
-                            message="Save scene to image")
-        rc = (dlg.ShowModal() == wx.ID_OK)
-        filename = os.path.abspath(dlg.GetPath())
-        dlg.Destroy()
-        if rc:
-            self._window.scene.save(filename)
+        dlg = FileDialog(parent=self._window.control, action='save as',
+                wildcard='|'.join(extns), title="Save scene to image")
+        if dlg.open() == OK:
+            self._window.scene.save(dlg.path)
 
 
 class SaveToClipboardAction(Action):
