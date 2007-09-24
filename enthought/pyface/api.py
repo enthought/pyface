@@ -28,6 +28,9 @@ from message_dialog import error, information, warning, MessageDialog
 from progress_dialog import ProgressDialog
 from python_shell import PythonShell
 from splash_screen import SplashScreen
+from split_application_window import SplitApplicationWindow
+from split_dialog import SplitDialog
+from split_panel import SplitPanel
 from system_metrics import SystemMetrics
 from window import Window
 from widget import Widget
@@ -56,9 +59,6 @@ try:
     from python_editor import PythonEditor
     from single_choice_dialog import SingleChoiceDialog
     from sorter import Sorter
-    from split_application_window import SplitApplicationWindow
-    from split_dialog import SplitDialog
-    from split_panel import SplitPanel
 
     # Fix for broken Pycrust introspect module.
     import util.fix_introspect_bug
