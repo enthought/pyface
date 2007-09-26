@@ -341,11 +341,7 @@ class Scene(TVTKScene, Widget):
         """Saves a bitmap of the scene to the clipboard."""
         handler, name = tempfile.mkstemp()
         self.save_bmp(name)
-        bmp = wx.Bitmap(name, wx.BITMAP_TYPE_BMP)
-        bmpdo = wx.BitmapDataObject(bmp)
-        wx.TheClipboard.Open()
-        wx.TheClipboard.SetData(bmpdo)
-        wx.TheClipboard.Close()
+        QtGui.QApplication.clipboard().setImage(QtGui.QImage(name))
         os.close(handler)
         os.unlink(name)
 
