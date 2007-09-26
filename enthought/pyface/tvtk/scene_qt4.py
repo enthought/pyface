@@ -11,10 +11,11 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-"""A VTK interactor scene widget for the PyFace wxPython backend.  See
-the class docs for more details.
 
+"""A VTK interactor scene widget for the PyFace PyQt backend.  See the class
+docs for more details.
 """
+
 # Author: Prabhu Ramachandran <prabhu_r@users.sf.net>
 # Copyright (c) 2004-2007, Enthought, Inc.
 # License: BSD Style.
@@ -24,7 +25,7 @@ import sys
 import os
 import tempfile
 
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 
 from enthought.tvtk.api import tvtk
 from enthought.traits.api import Instance, Button, Any
@@ -33,10 +34,9 @@ from enthought.traits.ui.api import View, Group, Item, InstanceEditor
 from enthought.pyface.api import Widget
 from enthought.pyface.tvtk import picker
 from enthought.pyface.tvtk import light_manager
-from enthought.pyface.tvtk.tvtk_scene import TVTKScene, VTK_VER
+from enthought.pyface.tvtk.tvtk_scene import TVTKScene
 
 from vtk.qt4.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
-
 
 
 ######################################################################
@@ -64,9 +64,88 @@ class _VTKRenderWindowInteractor(QVTKRenderWindowInteractor):
         VTK render window created and only then are the default lights all
         setup correctly.
         """
-        if self._scene.light_manager is None:
-            self._scene.light_manager = light_manager.LightManager(self._scene)
-            self._scene._renwin.update_traits()
+        scene = self._scene
+
+        if scene.light_manager is None:
+            scene.light_manager = light_manager.LightManager(scene)
+            scene._renwin.update_traits()
+
+    def keyPressEvent(self, e):
+        """ This method is overridden to prevent the 's'/'w'/'e'/'q' keys from
+        doing the default thing which is generally useless.  It also handles
+        the 'p' and 'l' keys so the picker and light manager are called.
+        """
+        key = e.key()
+        modifiers = e.modifiers()
+
+        scene = self._scene
+        camera = scene.camera
+
+        if key in [QtCore.Qt.Key_S, QtCore.Qt.Key_W, QtCore.Qt.Key_E, QtCore.Qt.Key_Q]:
+            return
+
+        if key in [QtCore.Qt.Key_Minus]:
+            camera.zoom(0.8)
+            scene.render()
+            return
+
+        if key in [QtCore.Qt.Key_Equal, QtCore.Qt.Key_Plus]:
+            camera.zoom(1.25)
+            scene.render()
+            return
+
+        if key in [QtCore.Qt.Key_P] and modifiers == QtCore.Qt.NoModifier:
+            pos = self.mapFromGlobal(QtGui.QCursor.pos())
+            x = pos.x()
+            y = self.height() - pos.y()
+            scene.picker.pick(x, y)
+            return
+
+        if key in [QtCore.Qt.Key_L] and modifiers == QtCore.Qt.NoModifier:
+            scene.light_manager.configure()
+            return
+
+        shift = ((modifiers & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier)
+
+        if key == QtCore.Qt.Key_Left:
+            if shift:
+                camera.yaw(-5)
+            else:
+                camera.azimuth(5)
+
+            scene.render()
+            return
+
+        if key == QtCore.Qt.Key_Right:
+            if shift:
+                camera.yaw(5)
+            else:
+                camera.azimuth(-5)
+
+            scene.render()
+            return
+
+        if key == QtCore.Qt.Key_Up:
+            if shift:
+                camera.pitch(-5)
+            else:
+                camera.elevation(-5)
+
+            camera.orthogonalize_view_up()
+            scene.render()
+            return
+
+        if key == QtCore.Qt.Key_Down:
+            if shift:
+                camera.pitch(5)
+            else:
+                camera.elevation(5)
+
+            camera.orthogonalize_view_up()
+            scene.render()
+            return
+
+        QVTKRenderWindowInteractor.keyPressEvent(self, e)
 
 
 ######################################################################
@@ -129,66 +208,10 @@ class FullScreen(object):
 
 
 ######################################################################
-# `PopupScene` class.
-######################################################################
-class PopupScene(object):
-    """Pops up a Scene instance with an independent `wx.Frame` in
-    order to produce either a standalone window or usually a full
-    screen view with *complete* interactivity (including widget
-    interaction).
-    """
-    def __init__(self, scene):
-        self.orig_parent = None
-        self.orig_geometry = None
-        self.frame = None
-        self.scene = scene
-        self.vtk_control = self.scene._vtk_control
-
-    def _setup_frame(self):
-        vtk_control = self.vtk_control
-        self.orig_parent = vtk_control.parent()
-        self.orig_geometry = vtk_control.geometry()
-        f = self.frame = QtGui.QWidget()
-        return f
-
-    def popup(self, size=None):
-        """Create a popup window of scene and set its default size.
-        """
-        vc = self.vtk_control
-        f = self._setup_frame()
-        if size is None:
-            f.resize(vc.size())
-        else:
-            f.resize(size)
-        f.show()
-        vc.setParent(f)
-
-    def fullscreen(self):
-        """Create a popup window of scene.
-        """
-        f = self._setup_frame()
-        self.vtk_control.setParent(f)
-        f.showFullScreen()
-
-    def close(self):
-        """Close the window and reparent the TVTK scene.
-        """
-        f = self.frame
-        if f is None:
-            return
-
-        vc = self.vtk_control
-        vc.setParent(self.orig_parent)
-        vc.setGeometry(self.orig_geometry)
-        f.hide()
-        self.frame = None
-
-
-######################################################################
 # `Scene` class.
 ######################################################################
 class Scene(TVTKScene, Widget):
-    """A VTK interactor scene widget for pyface and wxPython.
+    """A VTK interactor scene widget for pyface and PyQt.
 
     This widget uses a RenderWindowInteractor and therefore supports
     interaction with VTK widgets.  The widget uses TVTK.  In addition
@@ -303,11 +326,13 @@ class Scene(TVTKScene, Widget):
 
     def get_size(self):
         """Return size of the render window."""
-        return self._vtk_control.GetSize()
+        sz = self._vtk_control.size()
+
+        return (sz.width(), sz.height())
 
     def set_size(self, size):
         """Set the size of the window."""
-        self._vtk_control.SetSize(size)
+        self._vtk_control.resize(*size)
 
     ###########################################################################
     # 'TVTKScene' interface.
@@ -325,120 +350,6 @@ class Scene(TVTKScene, Widget):
         os.unlink(name)
 
     ###########################################################################
-    # `QVTKRenderWindowInteractor` interface.
-    ###########################################################################
-    def OnKeyDown(self, event):
-        """This method is overridden to prevent the 's'/'w'/'e'/'q'
-        keys from doing the default thing which is generally useless.
-        It also handles the 'p' and 'l' keys so the picker and light
-        manager are called.
-        """
-        keycode = event.GetKeyCode()
-        modifiers = event.HasModifiers()
-        camera = self.camera
-        if keycode < 256:
-            key = chr(keycode)
-            if key == '-':
-                camera.zoom(0.8)
-                self.render()
-                return
-            if key in ['=', '+']:
-                camera.zoom(1.25)
-                self.render()
-                return
-            if key.lower() in ['q', 'e']:
-                self._disable_fullscreen()
-            if key.lower() in ['s', 'w']:
-                event.Skip()
-                return
-            # Handle picking.
-            if key.lower() in ['p']:
-                # In wxPython-2.6, there appears to be a bug in
-                # EVT_CHAR so that event.GetX() and event.GetY() are
-                # not correct.  Therefore the picker is called on
-                # KeyUp.
-                event.Skip()
-                return
-            # Light configuration.
-            if key.lower() in ['l'] and not modifiers:
-                self.light_manager.configure()
-                return
-            
-        shift = event.ShiftDown()
-        if keycode == wx.WXK_LEFT:
-            if shift:
-                camera.yaw(-5)
-            else:
-                camera.azimuth(5)
-            self.render()
-            return
-        elif keycode == wx.WXK_RIGHT:
-            if shift:
-                camera.yaw(5)
-            else:
-                camera.azimuth(-5)
-            self.render()
-            return
-        elif keycode == wx.WXK_UP:
-            if shift:
-                camera.pitch(-5)
-            else:
-                camera.elevation(-5)
-            camera.orthogonalize_view_up()
-            self.render()
-            return
-        elif keycode == wx.WXK_DOWN:
-            if shift:
-                camera.pitch(5)
-            else:
-                camera.elevation(5)
-            camera.orthogonalize_view_up()
-            self.render()
-            return
-
-        self._vtk_control.OnKeyDown(event)
-
-        # Skipping the event is not ideal but necessary because we
-        # have no way of knowing of the event was really handled or
-        # not and not skipping will break any keyboard accelerators.
-        # In practice this does not seem to pose serious problems.
-        event.Skip()
-
-    def OnKeyUp(self, event):
-        """This method is overridden to prevent the 's'/'w'/'e'/'q'
-        keys from doing the default thing which is generally useless.
-        It also handles the 'p' and 'l' keys so the picker and light
-        manager are called.
-        """
-        keycode = event.GetKeyCode()
-        modifiers = event.HasModifiers()
-        if keycode < 256:
-            key = chr(keycode)
-            if key.lower() in ['s', 'w', 'e', 'q']:
-                event.Skip()
-                return
-            # Handle picking.
-            if key.lower() in ['p']:
-                if not modifiers:
-                    x = event.GetX()
-                    y = self._vtk_control.GetSize()[1] - event.GetY()
-                    self.picker.pick(x, y)
-                    return
-                else:
-                    # This is here to disable VTK's own pick handler
-                    # which can get called when you press Alt/Ctrl +
-                    # 'p'.
-                    event.Skip()
-                    return
-            # Light configuration.
-            if key.lower() in ['l']:
-                event.Skip()
-                return
-
-        self._vtk_control.OnKeyUp(event)
-        event.Skip()
-
-    ###########################################################################
     # Non-public interface.
     ###########################################################################
     def _create_control(self, parent):
@@ -447,12 +358,6 @@ class Scene(TVTKScene, Widget):
         # Create the VTK widget.
         self._vtk_control = window = _VTKRenderWindowInteractor(self, parent,
                                                                  stereo=self.stereo)
-
-        # Override these handlers.
-        #wx.EVT_CHAR(window, None) # Remove the default handler.
-        #wx.EVT_CHAR(window, self.OnKeyDown)
-        #wx.EVT_KEY_UP(window, None) # Remove the default handler.
-        #wx.EVT_KEY_UP(window, self.OnKeyUp)
 
         # Switch the default interaction style to the trackball one.
         window.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
@@ -486,36 +391,12 @@ class Scene(TVTKScene, Widget):
             # Do nothing if off screen rendering is being used.
             return
 
-        w = self._vtk_control
-        while w and not w.IsTopLevel():
-            w = w.GetParent()
-        if w:
-            w.Raise()
-            wx.Yield()
-            self.render()
+        self._vtk_control.window().raise_()
+        QtCore.QCoreApplication.processEvents()
 
     def _full_screen_fired(self):
         fs = self._fullscreen
-        if isinstance(fs, PopupScene):
-            fs.close()
-            self._fullscreen = None
-        elif fs is None:
-            ver = tvtk.Version()
-            if (ver.vtk_major_version >= 5) and \
-               (ver.vtk_minor_version >= 1):
-                # There is a bug with earlier versions of VTK that
-                # breaks reparenting a window which is why we test for
-                # the version above.
-                f = PopupScene(self)
-                self._fullscreen = f
-                f.fullscreen()
-            else:
-                f = FullScreen(self)
-                f.run() # This will block.
-                self._fullscreen = None
-
-    def _disable_fullscreen(self):
-        fs = self._fullscreen
-        if isinstance(fs, PopupScene):
-            fs.close()
+        if fs is None:
+            f = FullScreen(self)
+            f.run() # This will block.
             self._fullscreen = None
