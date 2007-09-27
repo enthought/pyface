@@ -23,7 +23,7 @@ from enthought.pyface.api import GUI
 from enthought.pyface.api import OK
 from enthought.pyface.api import PythonShell
 from enthought.pyface.api import SplitApplicationWindow
-from enthought.pyface.tvtk.decorated_scene import DecoratedScene
+from enthought.pyface.tvtk.api import DecoratedScene
 from enthought.pyface.tvtk.actors import *
 from enthought.pyface.action.api import Action, Group, MenuBarManager, MenuManager,\
                                     Separator
