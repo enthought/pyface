@@ -77,6 +77,14 @@ class IGUI(Interface):
 
     set_trait_later = classmethod(set_trait_later)
 
+    def process_events(allow_user_events=True):
+        """ Process any pending GUI events. If allow_user_events is False then
+        user generated events are not processed.
+
+        """
+
+    process_events = staticmethod(process_events)
+
     ###########################################################################
     # 'GUI' interface.
     ###########################################################################
