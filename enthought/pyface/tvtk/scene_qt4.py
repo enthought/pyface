@@ -305,7 +305,6 @@ class Scene(TVTKScene, Widget):
         # The light manager needs creating.
         self.light_manager = None
 
-
     def __get_pure_state__(self):
         """Allows us to pickle the scene."""
         # The control attribute is not picklable since it is a VTK

@@ -9,7 +9,8 @@ etc.
 
 # System imports.
 from os.path import dirname
-import wx
+
+from PyQt4 import QtGui
 
 # Enthought library imports.
 from enthought.pyface.api import ImageResource, FileDialog, OK
@@ -18,8 +19,7 @@ from enthought.tvtk.api import tvtk
 from enthought.traits.api import Instance, false
 
 # Local imports.
-import enthought.pyface.tvtk.scene
-from enthought.pyface.tvtk.scene import Scene
+from enthought.pyface.tvtk.scene_qt4 import Scene
 
 
 ###########################################################################
@@ -75,22 +75,26 @@ class DecoratedScene(Scene):
         """
         # Create a panel as a wrapper of the scene toolkit control.  This
         # allows us to also add additional controls.
-        self._panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
-        self._sizer = wx.BoxSizer(wx.VERTICAL)
-        self._panel.SetSizer(self._sizer)
+        self._panel = QtGui.QWidget(parent)
+        self._sizer = QtGui.QVBoxLayout(self._panel)
+        self._sizer.setMargin(0)
 
         # Add our toolbar to the panel.
         tbm = self._get_tool_bar_manager()
         self._tool_bar = tbm.create_tool_bar(self._panel)
-        self._sizer.Add(self._tool_bar, 0, wx.EXPAND)
+        self._sizer.addWidget(self._tool_bar)
 
         # Create the actual scene content
-        self._content = super(DecoratedScene, self)._create_control(
-            self._panel)
-        self._sizer.Add(self._content, 1, wx.EXPAND)
-
-        # Ensure the child controls are laid-out.
-        self._sizer.Layout()
+        hack = True
+        if hack:
+            # This almighty hack is to avoid a crash (at least on Linux).  I
+            # suspect it's only down to luck that it works at all.
+            sp = QtGui.QSplitter(parent)
+            self._sizer.addWidget(sp)
+            self._content = super(DecoratedScene, self)._create_control(sp)
+        else:
+            self._content = super(DecoratedScene, self)._create_control(self._panel)
+            self._sizer.addWidget(self._content)
 
         return self._panel
         
@@ -215,7 +219,7 @@ class DecoratedScene(Scene):
     def _get_image_path(self):
         """Returns the directory which contains the images used by the
         toolbar."""
-        return dirname(enthought.pyface.tvtk.scene.__file__)
+        return dirname(__file__)
 
     def _toggle_projection(self):
         """ Toggle between perspective and parallel projection, this
@@ -224,7 +228,7 @@ class DecoratedScene(Scene):
         if self._panel is not None:
             self.parallel_projection = not self.parallel_projection
 
-    def _toggle_axes(self):
+    def _toggle_axes(self, *args):
         """Used by the toolbar to turn on/off the axes indicator.
         """
         if self._panel is not None:
