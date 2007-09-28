@@ -28,10 +28,12 @@
 #  Imports:  
 #-------------------------------------------------------------------------------
 
-import wx
+# Import the toolkit specific version.
+from enthought.pyface.toolkit import toolkit_object
+DoLaterTimer = toolkit_object('timer.do_later:DoLaterTimer')
 
 #-------------------------------------------------------------------------------
-#  Does something 100 milliseconds from now:  
+#  Does something 50 milliseconds from now:  
 #-------------------------------------------------------------------------------
 
 def do_later ( callable, *args, **kw_args ):
@@ -47,42 +49,3 @@ def do_after ( interval, callable, *args, **kw_args ):
     """ Does something after some specified time interval.
     """
     DoLaterTimer( interval, callable, args, kw_args )
-                
-#-------------------------------------------------------------------------------
-#  'DoLaterTimer' class:  
-#-------------------------------------------------------------------------------
-
-class DoLaterTimer ( wx.Timer ):
-
-    # List of currently active timers:
-    active_timers = []
-    
-    #---------------------------------------------------------------------------
-    #  Initializes the object: 
-    #---------------------------------------------------------------------------
-        
-    def __init__ ( self, interval, callable, args, kw_args ):
-        global active_timers
-        wx.Timer.__init__( self )
-        for timer in self.active_timers:
-            if ((timer.callable == callable) and
-                (timer.args     == args)     and
-                (timer.kw_args  == kw_args)):
-                timer.Start( interval, True )
-                return
-        self.active_timers.append( self )
-        self.callable = callable
-        self.args     = args
-        self.kw_args  = kw_args
-        self.Start( interval, True )
-        
-    #---------------------------------------------------------------------------
-    #  Handles the timer pop event:  
-    #---------------------------------------------------------------------------
-        
-    def Notify ( self ):
-        global active_timers
-        
-        self.active_timers.remove( self )
-        self.callable( *self.args, **self.kw_args )
-        
