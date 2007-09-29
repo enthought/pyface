@@ -7,7 +7,7 @@ Find wxPython info at http://wxPython.org
 Created by Prabhu Ramachandran, April 2002
 Based on wxVTKRenderWindow.py
 
-Fixes and updates by Charl P. Botha 2003-2005
+Fixes and updates by Charl P. Botha 2003-2007
 
 Updated to new wx namespace and some cleaning up by Andrea Gavana,
 December 2006
@@ -299,13 +299,16 @@ class wxVTKRenderWindowInteractor(baseClass):
         """Handles the wx.EVT_PAINT event for
         wxVTKRenderWindowInteractor.
         """
+
+        # wx should continue event processing after this handler.
+        # We call this BEFORE Render(), so that if Render() raises
+        # an exception, wx doesn't re-call OnPaint repeatedly.
+        event.Skip()
+        
         dc = wx.PaintDC(self)
 
         # make sure the RenderWindow is sized correctly
-        try:
-            self._Iren.GetRenderWindow().SetSize(self.GetSizeTuple())
-        except TypeError:
-            self._Iren.GetRenderWindow().SetSize(*self.GetSizeTuple())
+        self._Iren.GetRenderWindow().SetSize(self.GetSizeTuple())
         
         # Tell the RenderWindow to render inside the wx.Window.
         if not self.__handle:
@@ -323,13 +326,18 @@ class wxVTKRenderWindowInteractor(baseClass):
             # now that we've painted once, the Render() reparenting logic
             # is safe
             self.__has_painted = True
-            
+
         self.Render()
 
     def OnSize(self,event):
         """Handles the wx.EVT_SIZE event for
         wxVTKRenderWindowInteractor.
         """
+
+        # event processing should continue (we call this before the
+        # Render(), in case it raises an exception)
+        event.Skip()
+
         try:
             width, height = event.GetSize()
         except:
@@ -337,55 +345,70 @@ class wxVTKRenderWindowInteractor(baseClass):
             height = event.GetSize().height
         self._Iren.SetSize(width, height)
         self._Iren.ConfigureEvent()
+
         # this will check for __handle
         self.Render()
-
-        # event processing should continue
-        event.Skip()
 
     def OnMotion(self, event):
         """Handles the wx.EVT_MOTION event for
         wxVTKRenderWindowInteractor.
         """
+        
+        # event processing should continue
+        # we call this early in case any of the VTK code raises an
+        # exception.
+        event.Skip()
+        
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             event.ControlDown(),
                                             event.ShiftDown(),
                                             chr(0), 0, None)
         self._Iren.MouseMoveEvent()
 
-        # event processing should continue
-        event.Skip()
 
     def OnEnter(self,event):
         """Handles the wx.EVT_ENTER_WINDOW event for
         wxVTKRenderWindowInteractor.
         """
+        
+        # event processing should continue
+        event.Skip()
+        
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             event.ControlDown(), 
 					    event.ShiftDown(), 
 					    chr(0), 0, None)
         self._Iren.EnterEvent()
 
-        # event processing should continue
-        event.Skip()
         
     def OnLeave(self,event):
         """Handles the wx.EVT_LEAVE_WINDOW event for
         wxVTKRenderWindowInteractor.
         """
+        
+        # event processing should continue
+        event.Skip()
+
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             event.ControlDown(), 
 					    event.ShiftDown(), 
 					    chr(0), 0, None)
         self._Iren.LeaveEvent()
 
-        # event processing should continue
-        event.Skip()
         
     def OnButtonDown(self,event):
         """Handles the wx.EVT_LEFT/RIGHT/MIDDLE_DOWN events for
         wxVTKRenderWindowInteractor.
         """
+        
+        # allow wx event processing to continue
+        # on wxPython 2.6.0.1, omitting this will cause problems with
+        # the initial focus, resulting in the wxVTKRWI ignoring keypresses
+        # until we focus elsewhere and then refocus the wxVTKRWI frame
+        # we do it this early in case any of the following VTK code
+        # raises an exception.
+        event.Skip()
+        
         ctrl, shift = event.ControlDown(), event.ShiftDown()
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             ctrl, shift, chr(0), 0, None)
@@ -406,16 +429,23 @@ class wxVTKRenderWindowInteractor(baseClass):
             self._own_mouse = True
             self.CaptureMouse()
 
-        # allow wx event processing to continue
-        # on wxPython 2.6.0.1, omitting this will cause problems with
-        # the initial focus, resulting in the wxVTKRWI ignoring keypresses
-        # until we focus elsewhere and then refocus the wxVTKRWI frame
-        event.Skip()
 
     def OnButtonUp(self,event):
         """Handles the wx.EVT_LEFT/RIGHT/MIDDLE_UP events for
         wxVTKRenderWindowInteractor.
         """
+
+        # event processing should continue
+        event.Skip()
+
+        # if the ActiveButton is released, then release mouse capture
+        # (we need to get rid of this as soon as possible; if we don't
+        #  and one of the event handlers raises an exception, mouse
+        #  is never released.)
+        if self._own_mouse and self._ActiveButton and _useCapture:
+            self.ReleaseMouse()
+            self._own_mouse = False
+        
         ctrl, shift = event.ControlDown(), event.ShiftDown()
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             ctrl, shift, chr(0), 0, None)
@@ -427,37 +457,32 @@ class wxVTKRenderWindowInteractor(baseClass):
         elif self._ActiveButton == 'Middle':
             self._Iren.MiddleButtonReleaseEvent()
 
-        # if the ActiveButton is realeased, then release mouse capture
-        if self._own_mouse and self._ActiveButton and _useCapture:
-            self.ReleaseMouse()
-            self._own_mouse = False
-
-        # event processing should continue
-        event.Skip()
             
     def OnMouseWheel(self,event):
         """Handles the wx.EVT_MOUSEWHEEL event for
         wxVTKRenderWindowInteractor.
         """
+        
+        # event processing should continue
+        event.Skip()
+        
         ctrl, shift = event.ControlDown(), event.ShiftDown()
         self._Iren.SetEventInformationFlipY(event.GetX(), event.GetY(),
                                             ctrl, shift, chr(0), 0, None)
-        try:
-            # MouseWheel support exists only in recent VTK versions.
-            if event.GetWheelRotation() > 0:
-                self._Iren.MouseWheelForwardEvent()
-            else:
-                self._Iren.MouseWheelBackwardEvent()
-        except AttributeError:
-            pass
+        if event.GetWheelRotation() > 0:
+            self._Iren.MouseWheelForwardEvent()
+        else:
+            self._Iren.MouseWheelBackwardEvent()
 
-        # event processing should continue
-        event.Skip()
         
     def OnKeyDown(self,event):
         """Handles the wx.EVT_KEY_DOWN event for
         wxVTKRenderWindowInteractor.
         """
+
+        # event processing should continue
+        event.Skip()
+
         ctrl, shift = event.ControlDown(), event.ShiftDown()
         keycode, keysym = event.GetKeyCode(), None
         key = chr(0)
@@ -474,13 +499,15 @@ class wxVTKRenderWindowInteractor(baseClass):
         self._Iren.KeyPressEvent()
         self._Iren.CharEvent()
 
-        # event processing should continue
-        event.Skip()
         
     def OnKeyUp(self,event):
         """Handles the wx.EVT_KEY_UP event for
         wxVTKRenderWindowInteractor.
         """
+        
+        # event processing should continue
+        event.Skip()
+        
         ctrl, shift = event.ControlDown(), event.ShiftDown()
         keycode, keysym = event.GetKeyCode(), None
         key = chr(0)
@@ -492,8 +519,6 @@ class wxVTKRenderWindowInteractor(baseClass):
                                             keysym)
         self._Iren.KeyReleaseEvent()
 
-        # event processing should continue
-        event.Skip()
 
     def GetRenderWindow(self):
         """Returns the render window (vtkRenderWindow).
