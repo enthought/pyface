@@ -350,6 +350,12 @@ class Scene(TVTKScene, Widget):
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
 
+        # This almighty hack is to avoid a crash (at least on Linux).  I
+        # suspect it's only down to luck that it works at all.
+        hack = True
+        if hack:
+            parent = sp = QtGui.QSplitter(parent)
+
         # Create the VTK widget.
         self._vtk_control = window = _VTKRenderWindowInteractor(self, parent,
                                                                  stereo=self.stereo)
@@ -377,6 +383,8 @@ class Scene(TVTKScene, Widget):
         self.camera.on_trait_change(self.render, 'parallel_projection')
 
         self._interactor = tvtk.to_tvtk(window._Iren)
+        if hack:
+            return sp
         return window
 
     def _lift(self):

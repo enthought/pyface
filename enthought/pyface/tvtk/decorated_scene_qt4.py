@@ -85,16 +85,8 @@ class DecoratedScene(Scene):
         self._sizer.addWidget(self._tool_bar)
 
         # Create the actual scene content
-        hack = True
-        if hack:
-            # This almighty hack is to avoid a crash (at least on Linux).  I
-            # suspect it's only down to luck that it works at all.
-            sp = QtGui.QSplitter(parent)
-            self._sizer.addWidget(sp)
-            self._content = super(DecoratedScene, self)._create_control(sp)
-        else:
-            self._content = super(DecoratedScene, self)._create_control(self._panel)
-            self._sizer.addWidget(self._content)
+        self._content = super(DecoratedScene, self)._create_control(self._panel)
+        self._sizer.addWidget(self._content)
 
         return self._panel
         
