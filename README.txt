@@ -1,2 +1,2 @@
-The pyface package, a part othe Enthought Tool Suite.
+The pyface package, a part of the Enthought Tool Suite.
 
