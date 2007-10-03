@@ -65,7 +65,7 @@ class PreferenceDialog(SplitDialog):
         # 'Done' button.
         done = wx.Button(parent, wx.ID_OK, "Done")
         done.SetDefault()
-        wx.EVT_BUTTON(parent, wx.ID_OK, self._on_ok)
+        wx.EVT_BUTTON(parent, wx.ID_OK, self._wx_on_ok)
         sizer.Add(done)
 
         return sizer
