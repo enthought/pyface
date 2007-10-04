@@ -94,10 +94,9 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _editor_manager_default(self):
         """ Trait initializer.
 
-        Here we return the replacement editor manager (until TraitsUI supports
-        PyQt).
+        Here we return the replacement editor manager.
         """
-        
+
         return ExampleEditorManager()
     
     def _menu_bar_manager_default(self):
