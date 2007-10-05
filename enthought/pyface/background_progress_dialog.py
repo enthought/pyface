@@ -24,7 +24,7 @@ from enthought.traits.api import *
 # Application specific imports.
 
 # Local imports.
-from window import Window
+from dialog import Dialog
 from constant import OK, CANCEL
 
 
@@ -32,7 +32,7 @@ from constant import OK, CANCEL
 # class 'BackgroundProgressDialog'
 ##############################################################################
 
-class BackgroundProgressDialog(Window):
+class BackgroundProgressDialog(Dialog):
     """A progress dialog for processing in a background thread
     """
 
