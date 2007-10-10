@@ -26,6 +26,7 @@ from image_resource import ImageResource
 from key_pressed_event import KeyPressedEvent
 from message_dialog import error, information, warning, MessageDialog
 from progress_dialog import ProgressDialog
+from python_editor import PythonEditor
 from python_shell import PythonShell
 from splash_screen import SplashScreen
 from split_application_window import SplitApplicationWindow
@@ -56,7 +57,6 @@ try:
     from mdi_application_window import MDIApplicationWindow
     from mdi_window_menu import MDIWindowMenu
     from multi_toolbar_window import MultiToolbarWindow
-    from python_editor import PythonEditor
     from single_choice_dialog import SingleChoiceDialog
     from sorter import Sorter
 

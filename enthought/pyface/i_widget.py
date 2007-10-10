@@ -25,7 +25,7 @@ class IWidget(Interface):
     is not necessarily a GUI object.
     """
 
-    #### 'IWidget' interface ###################################################
+    #### 'IWidget' interface ##################################################
 
     # The toolkit specific control that represents the widget.
     control = Any
