@@ -31,7 +31,10 @@ class IPythonEditor(Interface):
 
     # The pathname of the file being edited.
     path = Unicode
-    
+
+    # Should line numbers be shown in the margin?
+    show_line_numbers = Bool(True)
+
     #### Events ####
 
     # The contents of the editor has changed.

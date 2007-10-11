@@ -59,6 +59,7 @@ class MainWindow(ApplicationWindow):
 
     def _open_file(self):
         """ Open a new file. """
+
         if self.control:
             dlg = FileDialog(parent=self.control ,wildcard="*.py")
 
