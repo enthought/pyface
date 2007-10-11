@@ -37,4 +37,4 @@ class EditRenderer(GridCellRenderer):
         # or if the editable trait is True
         
         if (not hasattr(obj, 'editable')) or obj.editable:
-            obj.edit_traits(kind='livemodal')
+            obj.edit_traits(kind='live')
