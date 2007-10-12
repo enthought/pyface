@@ -21,6 +21,7 @@ from dialog import Dialog
 from directory_dialog import DirectoryDialog
 from file_dialog import FileDialog
 from gui import GUI
+from heading_text import HeadingText
 from image_cache import ImageCache
 from image_resource import ImageResource
 from key_pressed_event import KeyPressedEvent
@@ -51,7 +52,6 @@ try:
     from background_progress_dialog import BackgroundProgressDialog
     from expandable_panel import ExpandablePanel
     from filter import Filter
-    from heading_text import HeadingText
     from image_widget import ImageWidget
     from layered_panel import LayeredPanel
     from mdi_application_window import MDIApplicationWindow
