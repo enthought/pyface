@@ -294,30 +294,103 @@ class Picker(HasTraits):
 
         data = None
         if self.pick_type_ == 1:
-            data = self._pick_point(x, y)
+            data = self.pick_point(x, y)
         elif self.pick_type_ == 2:
-            data = self._pick_cell(x, y)
+            data = self.pick_cell(x, y)
         elif self.pick_type_ == 3:
-            data = self._pick_world(x, y)
+            data = self.pick_world(x, y)
 
         self.pick_handler.handle_pick(data)
         if self.show_gui:
-            self.setup_gui()
+            self._setup_gui()
 
-    def setup_gui(self):
-        """Pops up the GUI control widget."""
-        # Popup the GUI control.
-        if self.ui is None:
-            self.ui = self.edit_traits()
-            # Note that we add actors to the renderer rather than to
-            # renwin to prevent event notifications on actor
-            # additions.
-            self.renwin.renderer.add_actor(self.p_actor)
-        elif self.auto_raise:
-            try:
-                self.ui.control.Raise()
-            except AttributeError:
-                pass            
+    def pick_point(self, x, y):
+        """ Picks the nearest point. Returns a `PickedData` instance."""
+        self.pointpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
+        
+        pp = self.pointpicker
+        id = pp.point_id
+        picked_data = PickedData()
+        coord = pp.pick_position
+        picked_data.coordinate = coord
+        
+        if id > -1:
+            data = pp.mapper.input.point_data
+            bounds = pp.mapper.input.bounds
+            
+            picked_data.valid = 1
+            picked_data.point_id = id
+            picked_data.data = data
+            
+            self._update_actor(coord, bounds)
+        else:
+            self.p_actor.visibility = 0
+
+        self.renwin.render()
+        return picked_data
+
+    def pick_cell (self, x, y):
+        """ Picks the nearest cell. Returns a `PickedData` instance."""
+        self.cellpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
+
+        cp = self.cellpicker
+        id = cp.cell_id
+        picked_data = PickedData()
+        coord = cp.pick_position
+        picked_data.coordinate = coord
+        
+        if id > -1:
+            data = cp.mapper.input.cell_data
+            bounds = cp.mapper.input.bounds
+            
+            picked_data.valid = 1
+            picked_data.cell_id = id
+            picked_data.data = data
+            
+            self._update_actor(coord, bounds)
+        else:
+            self.p_actor.visibility = 0
+
+        self.renwin.render()
+        return picked_data
+
+    def pick_world(self, x, y):
+        """ Picks a world point and probes for data there. Returns a
+        `PickedData` instance."""
+        self.worldpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
+
+        # Use the cell picker to get the data that needs to be probed.
+        self.cellpicker.pick( (float(x), float(y), 0.0), self.renwin.renderer)
+
+        wp = self.worldpicker
+        cp = self.cellpicker
+        coord = wp.pick_position        
+        self.probe_data.points = [list(coord)]
+        picked_data = PickedData()
+        picked_data.coordinate = coord
+
+        if cp.mapper:
+            data = get_last_input(cp.mapper.input)
+            # Need to create the probe each time because otherwise it
+            # does not seem to work properly.
+            probe = tvtk.ProbeFilter()
+            probe.source = data
+            probe.input = self.probe_data
+            probe.update()
+            data = probe.output.point_data
+            bounds = cp.mapper.input.bounds
+
+            picked_data.valid = 1
+            picked_data.world_pick = 1
+            picked_data.point_id = 0
+            picked_data.data = data
+            
+            self._update_actor(coord, bounds)
+        else:
+            self.p_actor.visibility = 0
+
+        self.renwin.render()
+        return picked_data
 
     def on_ui_close(self):
         """This method makes the picker actor invisible when the GUI
@@ -344,89 +417,18 @@ class Picker(HasTraits):
         self.p_source.scale_factor = scale
         self.p_actor.visibility = 1
         
-    def _pick_point(self, x, y):
-        """ Picks the nearest point."""
-        self.pointpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
-        
-        pp = self.pointpicker
-        id = pp.point_id
-        picked_data = PickedData()
-        
-        if id > -1:
-            coord = pp.pick_position
-            data = pp.mapper.input.point_data
-            bounds = pp.mapper.input.bounds
-            
-            picked_data.valid = 1
-            picked_data.point_id = id
-            picked_data.coordinate = coord
-            picked_data.data = data
-            
-            self._update_actor(coord, bounds)
-        else:
-            self.p_actor.visibility = 0
-
-        self.renwin.render()
-        return picked_data
-
-    def _pick_cell (self, x, y):
-        """ Picks the nearest cell."""
-        self.cellpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
-
-        cp = self.cellpicker
-        id = cp.cell_id
-        picked_data = PickedData()
-        if id > -1:
-            coord = cp.pick_position
-            data = cp.mapper.input.cell_data
-            bounds = cp.mapper.input.bounds
-            
-            picked_data.valid = 1
-            picked_data.cell_id = id
-            picked_data.coordinate = coord
-            picked_data.data = data
-            
-            self._update_actor(coord, bounds)
-        else:
-            self.p_actor.visibility = 0
-
-        self.renwin.render()
-        return picked_data
-
-    def _pick_world(self, x, y):
-        """ Picks a world point and probes for data there."""
-        self.worldpicker.pick((float(x), float(y), 0.0), self.renwin.renderer)
-
-        # Use the cell picker to get the data that needs to be probed.
-        self.cellpicker.pick( (float(x), float(y), 0.0), self.renwin.renderer)
-
-        wp = self.worldpicker
-        cp = self.cellpicker
-        coord = wp.pick_position        
-        self.probe_data.points = [list(coord)]
-        picked_data = PickedData()
-
-        if cp.mapper:
-            data = get_last_input(cp.mapper.input)
-            # Need to create the probe each time because otherwise it
-            # does not seem to work properly.
-            probe = tvtk.ProbeFilter()
-            probe.source = data
-            probe.input = self.probe_data
-            probe.update()
-            data = probe.output.point_data
-            bounds = cp.mapper.input.bounds
-
-            picked_data.valid = 1
-            picked_data.world_pick = 1
-            picked_data.point_id = 0
-            picked_data.coordinate = coord
-            picked_data.data = data
-            
-            self._update_actor(coord, bounds)
-        else:
-            self.p_actor.visibility = 0
-
-        self.renwin.render()
-        return picked_data
+    def _setup_gui(self):
+        """Pops up the GUI control widget."""
+        # Popup the GUI control.
+        if self.ui is None:
+            self.ui = self.edit_traits()
+            # Note that we add actors to the renderer rather than to
+            # renwin to prevent event notifications on actor
+            # additions.
+            self.renwin.renderer.add_actor(self.p_actor)
+        elif self.auto_raise:
+            try:
+                self.ui.control.Raise()
+            except AttributeError:
+                pass            
 
