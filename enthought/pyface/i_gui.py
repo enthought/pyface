@@ -85,6 +85,14 @@ class IGUI(Interface):
 
     process_events = staticmethod(process_events)
 
+    def set_busy(busy=True):
+        """Specify if the GUI is busy.  If `True` is passed, the
+        cursor is set to a 'busy' cursor.  Passing `False` will reset
+        the cursor to the default.
+        """
+
+    set_busy = staticmethod(set_busy)
+
     ###########################################################################
     # 'GUI' interface.
     ###########################################################################
