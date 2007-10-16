@@ -919,6 +919,9 @@ class Tree(Widget):
         for old_child, new_child in zip(event.old_children, event.children):
             cid = self._get_wxid(old_child)
             if cid is not None:
+                # Remove listeners from the old node.
+                self.model.remove_listener(old_child)
+                
                 # Delete all of the node's children.
                 self.control.DeleteChildren(cid)
 
@@ -940,10 +943,16 @@ class Tree(Widget):
                 # Add the new node to the node to Id map.
                 self._set_wxid(new_child, cid)
 
+                # Add listeners to the new node.
+                self.model.add_listener(new_child)
+
                 # Does the new node have any children?
                 has_children = self._has_children(new_child)
                 self.control.SetItemHasChildren(cid, has_children)
-
+                    
+        # Update the tree's selection (in case the old node that was replaced
+        # was selected, the selection should now include the new node). 
+        self.selection = self._get_selection()
         return
 
     def _on_structure_changed(self, event):
