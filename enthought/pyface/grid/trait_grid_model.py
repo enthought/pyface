@@ -314,10 +314,10 @@ class TraitGridModel(GridModel):
 
         # print 'TraitGridModel.get_cell_editor row: ', row, ' col: ', col
 
-        obj = self.data[row]
+        obj        = self.data[row]
         trait_name = self.__get_column_name(col)
-        trait = obj.base_trait(trait_name)
-        if trait == None:
+        trait      = obj.base_trait(trait_name)
+        if trait is None:
             return None
 
         factory = trait.get_editor()

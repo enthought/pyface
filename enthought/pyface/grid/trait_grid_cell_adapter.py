@@ -106,7 +106,10 @@ class TraitGridCellAdapter(PyGridCellEditor):
             don't do anything at all in order to reduce flicker.
         """
         #print 'TraitGridCellAdapter.PaintBackground'
-        return self.base_PaintBackground(rect, attr)
+        if wx_28:
+            super(TraitGridCellAdapter, self).PaintBackground(rect, attr)
+        else:
+            return self.base_PaintBackground(rect, attr)
 
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
