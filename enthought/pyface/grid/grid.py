@@ -1437,10 +1437,7 @@ class _GridTableBase(PyGridTableBase):
     def GetAttr(self, row, col, kind):
         """ Retrieve the cell attribute object for the specified cell. """
 
-        #result = PyGridTableBase.base_GetAttr(self, row, col, kind)
-        result = None
-        if result is None:
-            result = GridCellAttr()
+        result = GridCellAttr()
         # we only handle cell requests, for other delegate to the supa
         if kind != GridCellAttr.Cell and kind != GridCellAttr.Any:
             return result
@@ -1485,10 +1482,7 @@ class _GridTableBase(PyGridTableBase):
                         self.model.is_row_read_only(row) or \
                         self.model.is_column_read_only(col)
 
-        if read_only:
-            result.SetReadOnly(True)
-        else:
-            result.SetReadOnly(False)
+        result.SetReadOnly(read_only)
         read_only_color = self._grid.default_cell_read_only_color
         if read_only and read_only_color is not None:
             result.SetBackgroundColour(read_only_color)
