@@ -251,13 +251,17 @@ class Grid(Widget):
         wx.EVT_SIZE(grid, self._on_size)
 
         # Handle drags:
-        self._grid_window = grid.GetGridWindow()
-        self._row_window = grid.GetGridRowLabelWindow()
-        self._col_window = grid.GetGridColLabelWindow()
         self._corner_window = grid.GetGridCornerLabelWindow()
-        wx.EVT_MOTION(self._grid_window, self._on_grid_motion)
-        wx.EVT_MOTION(self._row_window, self._on_row_label_motion)
-        wx.EVT_MOTION(self._col_window, self._on_col_label_motion)
+        self._grid_window   = gw = grid.GetGridWindow()
+        self._row_window    = rw = grid.GetGridRowLabelWindow()
+        self._col_window    = cw = grid.GetGridColLabelWindow()
+        
+        # Handle mouse button state changes:
+        self._ignore = False
+        for window in ( gw, rw, cw ):
+            wx.EVT_MOTION(    window, self._on_grid_motion )
+            wx.EVT_LEFT_DOWN( window, self._on_left_down )
+            wx.EVT_LEFT_UP(   window, self._on_left_up )
 
         wx.EVT_PAINT(self._grid_window, self._on_grid_window_paint)
 
@@ -644,6 +648,20 @@ class Grid(Widget):
         self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
 
         evt.Skip()
+        
+    def _on_left_down ( self, evt ):
+        """ Called when the left mouse button is pressed.
+        """
+        grid         = self._grid
+        self._ignore = ((grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) or
+                        (grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND))
+        evt.Skip()
+                        
+    def _on_left_up ( self, evt ):
+        """ Called when the left mouse button is released.
+        """
+        self._ignore = False
+        evt.Skip()
 
     def _on_motion(self, evt):
         """ Called when the mouse moves. """
@@ -664,34 +682,11 @@ class Grid(Widget):
         if (row >= 0) and (col >= 0):
             self.model.mouse_cell = (row, col)
 
-        # If the mouse is roughly centered over the cell, call _on_motion.
-        if ((self._grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) and
-            (self._grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND)):
+        # If we are not ignoring mouse events, call _on_motion.
+        if not self._ignore:
             self._on_motion(evt)
         
         evt.Skip()
-
-    def _on_col_label_motion(self, evt):
-        """ Called when the mouse moves on the column label window. """
-
-        # this is a total hack to determine if we are currently resizing.
-        # if we are then we don't start a data drag, but just skip on the
-        # event. i wish there were some better way to tell this, but there
-        # doesn't seem to be any underlying state in the wxPython bindings
-        # specifying that a resize is happening.
-        self._on_grid_motion(evt)
-
-    def _on_row_label_motion(self, evt):
-        """ Called when the mouse moves on the row label window. """
-
-        # note that this code is basically the same as _on_col_label_motion
-
-        # this is a total hack to determine if we are currently resizing.
-        # if we are then we don't start a data drag, but just skip on the
-        # event. i wish there were some better way to tell this, but there
-        # doesn't seem to be any underlying state in the wxPython bindings
-        # specifying that a resize is happening.
-        self._on_grid_motion(evt)
 
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """ 
