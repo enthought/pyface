@@ -134,6 +134,9 @@ class TVTKScene(HasPrivateTraits):
     # Event fired when any actor is removed from the scene.
     actor_removed = Event
 
+    # Is the scene busy or not.
+    busy = Property(Bool)
+
     ########################################
     # Properties.
 
@@ -159,6 +162,7 @@ class TVTKScene(HasPrivateTraits):
     _renderer = Instance(tvtk.Renderer)
     _renwin = Instance(tvtk.RenderWindow)
     _interactor = Instance(tvtk.RenderWindowInteractor)
+    _busy_count = Int(0)
 
     ###########################################################################
     # 'object' interface.
@@ -180,8 +184,8 @@ class TVTKScene(HasPrivateTraits):
         # The control attribute is not picklable since it is a VTK
         # object so we remove it.
         d = self.__dict__.copy()
-        for x in ['control', '_renwin', '_interactor',
-                  '__sync_trait__']:
+        for x in ['control', '_renwin', '_interactor', 
+                  '_busy_count', '__sync_trait__']:
             d.pop(x, None)
         # Additionally pickle these.
         d['camera'] = self.camera
@@ -594,6 +598,32 @@ class TVTKScene(HasPrivateTraits):
     def _get_camera(self):
         """ Returns the active camera. """
         return self._renderer.active_camera
+
+    def _get_busy(self):
+        return self._busy_count > 0
+
+    def _set_busy(self, value):
+        """The `busy` trait is either `True` or `False`.  However,
+        this could be problematic since we could have two methods
+        `foo` and `bar that both set `scene.busy = True`.  As soon as
+        `bar` is done it sets `busy` back to `False`.  This is wrong
+        since the UI is still busy as `foo` is not done yet.  We
+        therefore store the number of busy calls and either increment
+        it or decrement it and change the state back to `False` only
+        when the count is zero.
+        """
+        bc = self._busy_count
+        if value:
+            bc += 1
+        else:
+            bc -= 1
+            bc = max(0, bc)
+
+        self._busy_count = bc
+        if bc == 1:
+            self.trait_property_changed('busy', False, True)
+        if bc == 0:
+            self.trait_property_changed('busy', True, False)
 
     ###########################################################################
     # Non-public interface.
