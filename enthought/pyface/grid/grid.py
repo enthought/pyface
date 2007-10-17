@@ -191,53 +191,35 @@ class Grid(Widget):
         self._grid_table_base = _GridTableBase(self.model, self)
 
         grid.SetTable(self._grid_table_base, True)
-        self.model.on_trait_change(self._on_model_content_changed,
-                                   'content_changed')
-        self.model.on_trait_change(self._on_model_structure_changed,
-                                   'structure_changed')
-        self.model.on_trait_change(self._on_row_sort,
-                                   'row_sorted')
-        self.model.on_trait_change(self._on_column_sort,
-                                   'column_sorted')
-        self.on_trait_change(self._on_new_model,
-                             'model')
+        smotc = self.model.on_trait_change
+        otc   = self.on_trait_change
+        smotc(self._on_model_content_changed, 'content_changed')
+        smotc(self._on_model_structure_changed, 'structure_changed')
+        smotc(self._on_row_sort, 'row_sorted')
+        smotc(self._on_column_sort, 'column_sorted')
+        otc(self._on_new_model, 'model')
 
         # hook up style trait handlers - note that we have to use
         # dynamic notification hook-ups because these handlers should
         # not be called until after the control object is initialized.
         # static trait notifiers get called when the object inits.
-        self.on_trait_change(self._on_enable_lines_changed,
-                             'enable_lines')
-        self.on_trait_change(self._on_grid_line_color_changed,
-                             'grid_line_color')
-        self.on_trait_change(self._on_default_label_font_changed,
-                             'default_label_font')
-        self.on_trait_change(self._on_default_label_bg_color_changed,
-                             'default_label_bg_color')
-        self.on_trait_change(self._on_default_label_text_color_changed,
-                             'default_label_text_color')
-        self.on_trait_change(self._on_selection_bg_color_changed,
-                             'selection_bg_color')
-        self.on_trait_change(self._on_selection_text_color_changed,
-                             'selection_text_color')
-        self.on_trait_change(self._on_default_cell_font_changed,
-                             'default_cell_font')
-        self.on_trait_change(self._on_default_cell_text_color_changed,
-                             'default_cell_text_color')
-        self.on_trait_change(self._on_default_cell_bg_color_changed,
-                             'default_cell_bg_color')
-        self.on_trait_change(self._on_read_only_changed,
-                             'read_only_changed')
-        self.on_trait_change(self._on_selection_mode_changed,
-                             'selection_mode')
-        self.on_trait_change(self._on_column_label_height_changed,
-                             'column_label_height')
-        self.on_trait_change(self._on_row_label_width_changed,
-                             'row_label_width')
-        self.on_trait_change(self._on_show_column_headers_changed,
-                             'show_column_headers')
-        self.on_trait_change(self._on_show_row_headers_changed,
-                             'show_row_headers')
+        otc(self._on_enable_lines_changed, 'enable_lines')
+        otc(self._on_grid_line_color_changed, 'grid_line_color')
+        otc(self._on_default_label_font_changed, 'default_label_font')
+        otc(self._on_default_label_bg_color_changed, 'default_label_bg_color')
+        otc(self._on_default_label_text_color_changed,
+            'default_label_text_color')
+        otc(self._on_selection_bg_color_changed, 'selection_bg_color')
+        otc(self._on_selection_text_color_changed, 'selection_text_color')
+        otc(self._on_default_cell_font_changed, 'default_cell_font')
+        otc(self._on_default_cell_text_color_changed, 'default_cell_text_color')
+        otc(self._on_default_cell_bg_color_changed, 'default_cell_bg_color')
+        otc(self._on_read_only_changed, 'read_only_changed')
+        otc(self._on_selection_mode_changed, 'selection_mode')
+        otc(self._on_column_label_height_changed, 'column_label_height')
+        otc(self._on_row_label_width_changed, 'row_label_width')
+        otc(self._on_show_column_headers_changed, 'show_column_headers')
+        otc(self._on_show_row_headers_changed, 'show_row_headers')
 
         # Initialize wx handlers:
         wx.grid.EVT_GRID_SELECT_CELL(grid, self._on_select_cell)
@@ -683,8 +665,8 @@ class Grid(Widget):
             self.model.mouse_cell = (row, col)
 
         # If the mouse is roughly centered over the cell, call _on_motion.
-        if ((self._grid.XToEdgeOfCol(evt.GetX()) == wx.NOT_FOUND) and
-            (self._grid.YToEdgeOfRow(evt.GetY()) == wx.NOT_FOUND)):
+        if ((self._grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) and
+            (self._grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND)):
             self._on_motion(evt)
         
         evt.Skip()
