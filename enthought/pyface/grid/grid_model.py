@@ -414,5 +414,16 @@ class GridModel(HasPrivateTraits):
         
         pass
 
+    def _move_column(self, frm, to):
+        """ Moves a specified **frm** column to before the specified **to**
+        column. Returns **True** if successful; **False** otherwise.
+        """
+        return False
+
+    def _move_row(self, frm, to):
+        """ Moves a specified **frm** row to before the specified **to** row.
+        Returns **True** if successful; **False** otherwise.
+        """
+        return False
 
 #### EOF ####################################################################

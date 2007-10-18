@@ -16,6 +16,7 @@
 # Major package imports
 import sys
 import wx
+import wx.lib.gridmovers as grid_movers
 from wx.grid import Grid as wxGrid
 from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
 from wx.grid import GridTableMessage, \
@@ -191,6 +192,13 @@ class Grid(Widget):
         self._grid_table_base = _GridTableBase(self.model, self)
 
         grid.SetTable(self._grid_table_base, True)
+        
+        # Enable column and row moving:
+        grid_movers.GridColMover(grid)
+        grid_movers.GridRowMover(grid)
+        grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move, grid)
+        grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move, grid)
+        
         smotc = self.model.on_trait_change
         otc   = self.on_trait_change
         smotc(self._on_model_content_changed, 'content_changed')
@@ -257,7 +265,8 @@ class Grid(Widget):
         self._col_window    = cw = grid.GetGridColLabelWindow()
         
         # Handle mouse button state changes:
-        self._ignore = False
+        self._sort_row = self._sort_col = None
+        self._ignore   = False
         for window in ( gw, rw, cw ):
             wx.EVT_MOTION(    window, self._on_grid_motion )
             wx.EVT_LEFT_DOWN( window, self._on_left_down )
@@ -660,6 +669,15 @@ class Grid(Widget):
     def _on_left_up ( self, evt ):
         """ Called when the left mouse button is released.
         """
+        if not self._ignore:
+            if self._sort_row is not None:
+                self._row_sort(self._sort_row)
+                self._sort_row = None
+                
+            if self._sort_col is not None:
+                self._column_sort(self._sort_col)
+                self._sort_col = None
+                
         self._ignore = False
         evt.Skip()
 
@@ -848,53 +866,55 @@ class Grid(Widget):
         # A row value of -1 means this click happened on a column.
         # vice versa, a col value of -1 means a row click.
         if (row == -1) and self.allow_column_sort:
-            self._grid.Freeze()
-            
-            if col == self._current_sorted_col and \
-               not self._col_sort_reversed:
-                # If this column is currently sorted on then reverse it:
-                self.model.sort_by_column(col, True)
-            elif col == self._current_sorted_col and self._col_sort_reversed:
-                # If this column is currently reverse-sorted then unsort it:
-                try:
-                    self.model.no_column_sort()
-                except NotImplementedError:
-                    # If an unsort function is not implemented then just
-                    # reverse the sort:
-                    self.model.sort_by_column(col, False)
-            else:
-                # Sort the data:
-                self.model.sort_by_column(col, False)
+            self._sort_col = col
                 
-            self._grid.Thaw()
-            
-            return
-                
-        if (col == -1) and self.allow_row_sort:
-            self._grid.Freeze()
-            
-            if row == self._current_sorted_row and \
-               not self._row_sort_reversed:
-                # If this row is currently sorted on then reverse it:
-                self.model.sort_by_row(row, True)
-            elif row == self._current_sorted_row and self._row_sort_reversed:
-                # If this row is currently reverse-sorted then unsort it:
-                try:
-                    self.model.no_row_sort()
-                except NotImplementedError:
-                    # If an unsort function is not implemented then just
-                    # reverse the sort:
-                    self.model.sort_by_row(row, False)
-            else:
-                # Sort the data:
-                self.model.sort_by_row(row, False)
-                
-            self._grid.Thaw()
-            
-            return
+        elif (col == -1) and self.allow_row_sort:
+            self._sort_row = row
             
         evt.Skip()
 
+    def _column_sort(self, col):
+        """ Sorts the data on the specified column **col**.
+        """
+        self._grid.Freeze()
+        
+        if (col == self._current_sorted_col) and (not self._col_sort_reversed):
+            # If this column is currently sorted on then reverse it:
+            self.model.sort_by_column(col, True)
+        elif (col == self._current_sorted_col) and self._col_sort_reversed:
+            # If this column is currently reverse-sorted then unsort it:
+            try:
+                self.model.no_column_sort()
+            except NotImplementedError:
+                # If an unsort function is not implemented then just
+                # reverse the sort:
+                self.model.sort_by_column(col, False)
+        else:
+            # Sort the data:
+            self.model.sort_by_column(col, False)
+            
+        self._grid.Thaw()
+
+    def _row_sort(self, row):
+        self._grid.Freeze()
+        
+        if (row == self._current_sorted_row) and (not self._row_sort_reversed):
+            # If this row is currently sorted on then reverse it:
+            self.model.sort_by_row(row, True)
+        elif row == self._current_sorted_row and self._row_sort_reversed:
+            # If this row is currently reverse-sorted then unsort it:
+            try:
+                self.model.no_row_sort()
+            except NotImplementedError:
+                # If an unsort function is not implemented then just
+                # reverse the sort:
+                self.model.sort_by_row(row, False)
+        else:
+            # Sort the data:
+            self.model.sort_by_row(row, False)
+            
+        self._grid.Thaw()
+        
     def _on_key_down(self, evt):
         """ Called when a key is pressed. """
         # This changes the behaviour of the <Enter> and <Tab> keys to make
@@ -977,6 +997,58 @@ class Grid(Widget):
     def _refresh(self):
         self._grid.GetParent().Layout()
 
+    def _on_col_move(self, evt):
+        """ Called when a column move is taking place.
+        """
+        self._ignore = True
+        
+        # Get the column being moved:
+        frm = evt.GetMoveColumn()
+        
+        # Get the column to insert it before:
+        to = evt.GetBeforeColumn()     
+        
+        # Tell the model to update its columns:
+        if self.model._move_column(frm, to):
+            
+            # Notify the grid:
+            grid = self._grid
+            grid.BeginBatch()
+            
+            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
+                GRIDTABLE_NOTIFY_COLS_DELETED, frm, 1 ) )
+                
+            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
+                GRIDTABLE_NOTIFY_COLS_INSERTED, to, 1 ) )
+
+            grid.EndBatch()
+        
+    def _on_row_move(self, evt):
+        """ Called when a row move is taking place.
+        """
+        self._ignore = True
+        
+        # Get the column being moved:
+        frm = evt.GetMoveRow()
+        
+        # Get the column to insert it before:
+        to = evt.GetBeforeRow()     
+        
+        # Tell the model to update its rows:
+        if self.model._move_row(frm, to):
+            
+            # Notify the grid:
+            grid = self._grid
+            grid.BeginBatch()
+            
+            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
+                GRIDTABLE_NOTIFY_ROWS_DELETED, frm, 1 ) )
+                
+            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
+                GRIDTABLE_NOTIFY_ROWS_INSERTED, to, 1 ) )
+
+            grid.EndBatch()
+        
     ###########################################################################
     # PythonDropTarget interface.
     ###########################################################################
