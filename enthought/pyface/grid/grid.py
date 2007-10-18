@@ -20,8 +20,9 @@ import wx.lib.gridmovers as grid_movers
 from wx.grid import Grid as wxGrid
 from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
 from wx.grid import GridTableMessage, \
-     GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED, \
-     GRIDTABLE_NOTIFY_COLS_APPENDED, GRIDTABLE_NOTIFY_COLS_DELETED, \
+     GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED,  \
+     GRIDTABLE_NOTIFY_ROWS_INSERTED, GRIDTABLE_NOTIFY_COLS_APPENDED, \
+     GRIDTABLE_NOTIFY_COLS_DELETED,  GRIDTABLE_NOTIFY_COLS_INSERTED, \
      GRIDTABLE_REQUEST_VIEW_GET_VALUES, GRID_VALUE_STRING
 from wx import TheClipboard
 
@@ -265,8 +266,7 @@ class Grid(Widget):
         self._col_window    = cw = grid.GetGridColLabelWindow()
         
         # Handle mouse button state changes:
-        self._sort_row = self._sort_col = None
-        self._ignore   = False
+        self._ignore = False
         for window in ( gw, rw, cw ):
             wx.EVT_MOTION(    window, self._on_grid_motion )
             wx.EVT_LEFT_DOWN( window, self._on_left_down )
@@ -669,15 +669,6 @@ class Grid(Widget):
     def _on_left_up ( self, evt ):
         """ Called when the left mouse button is released.
         """
-        if not self._ignore:
-            if self._sort_row is not None:
-                self._row_sort(self._sort_row)
-                self._sort_row = None
-                
-            if self._sort_col is not None:
-                self._column_sort(self._sort_col)
-                self._sort_col = None
-                
         self._ignore = False
         evt.Skip()
 
@@ -865,11 +856,11 @@ class Grid(Widget):
 
         # A row value of -1 means this click happened on a column.
         # vice versa, a col value of -1 means a row click.
-        if (row == -1) and self.allow_column_sort:
-            self._sort_col = col
+        if (row == -1) and self.allow_column_sort and evt.ControlDown():
+            self._column_sort( col )
                 
-        elif (col == -1) and self.allow_row_sort:
-            self._sort_row = row
+        elif (col == -1) and self.allow_row_sort and evt.ControlDown():
+            self._row_sort( row )
             
         evt.Skip()
 
@@ -1006,21 +997,30 @@ class Grid(Widget):
         frm = evt.GetMoveColumn()
         
         # Get the column to insert it before:
-        to = evt.GetBeforeColumn()     
+        to = evt.GetBeforeColumn()
         
         # Tell the model to update its columns:
         if self.model._move_column(frm, to):
             
-            # Notify the grid:
-            grid = self._grid
+            # Modify the grid:
+            grid   = self._grid
+            cols   = grid.GetNumberCols()
+            widths = [ grid.GetColSize(i) for i in range( cols ) ]
+            width  = widths[frm]
+            del widths[frm]
+            to -= (frm < to)
+            widths.insert( to, width )
+            
             grid.BeginBatch()
             
             grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
                 GRIDTABLE_NOTIFY_COLS_DELETED, frm, 1 ) )
                 
-            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
+            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
                 GRIDTABLE_NOTIFY_COLS_INSERTED, to, 1 ) )
 
+            [ grid.SetColSize(i, widths[i]) for i in range(min(frm, to), cols) ]
+            
             grid.EndBatch()
         
     def _on_row_move(self, evt):
@@ -1038,7 +1038,14 @@ class Grid(Widget):
         if self.model._move_row(frm, to):
             
             # Notify the grid:
-            grid = self._grid
+            grid    = self._grid
+            rows    = grid.GetNumberRows()
+            heights = [ grid.GetRowSize(i) for i in range( rows ) ]
+            height  = heights[frm]
+            del heights[frm]
+            to -= (frm < to)
+            heights.insert( to, height )
+            
             grid.BeginBatch()
             
             grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
@@ -1047,6 +1054,8 @@ class Grid(Widget):
             grid.ProcessTableMessage( GridTableMessage( self._grid_table_base, 
                 GRIDTABLE_NOTIFY_ROWS_INSERTED, to, 1 ) )
 
+            [ grid.SetRowSize(i, heights[i]) for i in range(min(frm, to), rows)]
+            
             grid.EndBatch()
         
     ###########################################################################
