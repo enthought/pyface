@@ -25,7 +25,7 @@ from os.path \
     import join
     
 from enthought.traits.api \
-    import HasTraits, List, Str
+    import HasTraits, List, Str, on_trait_change
 
 from enthought.traits.trait_base \
     import traits_home
@@ -61,20 +61,12 @@ class SaveStateFeature ( DockWindowFeature ):
 
     # List of traits to save/restore:
     names = List( Str )
-        
-    #---------------------------------------------------------------------------
-    #  Performs any clean-up needed when the feature is being removed:  
-    #---------------------------------------------------------------------------
-    
-    def dispose ( self ):
-        """ Performs any clean-up needed when the feature is being removed.
-        """
-        self.set_listeners( True )
     
     #---------------------------------------------------------------------------
     #  Saves the current state of the plugin:  
     #---------------------------------------------------------------------------
 
+    @on_trait_change( 'dock_control:object:+save_state' )
     def save_state ( self ):
         """ Saves the current state of the plugin.
         """
@@ -83,29 +75,6 @@ class SaveStateFeature ( DockWindowFeature ):
             db[ self.id ] = self.dock_control.object.get( *self.names )
             db.close()
                 
-    #---------------------------------------------------------------------------
-    #  Handles the 'names' trait being changed:  
-    #---------------------------------------------------------------------------
-
-    def _names_changed ( self, names ):
-        """ Handles the 'names' trait being changed.
-        """
-        self.set_listeners( False )
-        
-    #---------------------------------------------------------------------------
-    #  Sets/Resets all listeners:  
-    #---------------------------------------------------------------------------
-
-    def set_listeners ( self, remove ):
-        object = self.dock_control.object
-        for name in self.names:
-            object.on_trait_change( self.save_state, name, remove = remove )
-            trait = object.base_trait( name )
-            if ((trait.handler is not None) and 
-                hasattr( trait.handler, 'items_event' )):
-                object.on_trait_change( self.save_state, name + '_items', 
-                                        remove = remove )
-
 #-- Overidable Class Methods ---------------------------------------------------
 
     #---------------------------------------------------------------------------
