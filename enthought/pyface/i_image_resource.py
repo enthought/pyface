@@ -127,9 +127,7 @@ class MImageResource(object):
             image = not_found.create_image()
 
         else:
-            # If we can't find the 'image not found' image then the installer
-            # must be broken!
-            raise ValueError("Rick's installer is broken")
+            raise ValueError("cannot locate the file for 'image_not_found'")
 
         return image
 
