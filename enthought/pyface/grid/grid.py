@@ -231,6 +231,7 @@ class Grid(Widget):
         otc(self._on_show_row_headers_changed, 'show_row_headers')
 
         # Initialize wx handlers:
+        self._notify_select = True
         wx.grid.EVT_GRID_SELECT_CELL(grid, self._on_select_cell)
         wx.grid.EVT_GRID_RANGE_SELECT(grid, self._on_range_select)
         wx.grid.EVT_GRID_COL_SIZE(grid, self._on_col_size)
@@ -380,58 +381,54 @@ class Grid(Widget):
         changed. Responsible for making sure the view object updates
         correctly. """
 
-        # disable any editors that are hap'nin to fix crash bug
+        # Disable any active editors in order to prevent a wx crash bug:
         self._edit = False
         grid       = self._grid
 
-        # more wacky fun with wx. we have to manufacture the appropriate
+        # More wacky fun with wx. We have to manufacture the appropriate
         # grid messages and send them off to make sure the grid updates
-        # correctly
+        # correctly:
         should_autosize = False
         
-        # first check to see if rows have been added or deleted.
+        # First check to see if rows have been added or deleted:
         row_count       = self.model.get_row_count()
         delta           = row_count - self._row_count
         self._row_count = row_count
         
         if delta > 0:
-            # rows were added
+            # Rows were added:
             msg = GridTableMessage(self._grid_table_base,
                                    GRIDTABLE_NOTIFY_ROWS_APPENDED, delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
-            # rows were deleted
-
-            # why the arglist for the "rows deleted" message is different
-            # from that of the "rows added" message is beyond me.
+            # Rows were deleted:
             msg = GridTableMessage(self._grid_table_base,
                                    GRIDTABLE_NOTIFY_ROWS_DELETED,
                                    row_count, -delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
-        # now check for column changes
+        # Now check for column changes:
         col_count       = self.model.get_column_count()
         delta           = col_count - self._col_count
         self._col_count = col_count
         
         if delta > 0:
-            # columns were added
+            # Columns were added:
             msg = GridTableMessage(self._grid_table_base,
                                    GRIDTABLE_NOTIFY_COLS_APPENDED, delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
-            # columns were deleted
+            # Columns were deleted:
             msg = GridTableMessage(self._grid_table_base,
                                    GRIDTABLE_NOTIFY_COLS_DELETED,
                                    col_count, -delta)
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
-
-        # finally make sure we update for any new values in the table
+        # Finally make sure we update for any new values in the table:
         msg = GridTableMessage(self._grid_table_base,
                                GRIDTABLE_REQUEST_VIEW_GET_VALUES)
         grid.ProcessTableMessage(msg)
@@ -439,8 +436,8 @@ class Grid(Widget):
         if should_autosize:
             self.__autosize()
 
-        # we have to make sure the editor/renderer cache in the GridTableBase
-        # object is cleaned out.
+        # We have to make sure the editor/renderer cache in the GridTableBase
+        # object is cleaned out:
         self._grid_table_base._clear_cache()
 
         grid.AdjustScrollbars()
@@ -449,7 +446,7 @@ class Grid(Widget):
     def _on_row_sort(self, evt):
         """ Handles a row_sorted event from the underlying model. """
 
-        # first grab the new data out of the event
+        # First grab the new data out of the event:
         if evt.index < 0:
             self._current_sorted_row = None
         else:
@@ -457,12 +454,12 @@ class Grid(Widget):
 
         self._row_sort_reversed = evt.reversed
 
-        # since the label may have changed we may need to autosize again
+        # Since the label may have changed we may need to autosize again:
         # fixme: when we change how we represent the sorted column
         #        this should go away.
         self.__autosize()
 
-        # make sure everything updates to reflect the changes
+        # Make sure everything updates to reflect the changes:
         self._on_model_structure_changed()
 
     def _on_column_sort(self, evt):
@@ -609,26 +606,41 @@ class Grid(Widget):
 
         return self.__get_selection()
 
-    def set_selection(self, selection_list):
+    def set_selection(self, selection_list, notify=True):
         """ Set the current selection to the objects listed in selection_list.
         Note that these objects are model-specific, as the grid depends on the
         underlying model to translate these objects into grid coordinates.
         A ValueError will be raised if the objects are not in the proper format
         for the underlying model. """
 
+        # Set the 'should we notify the model of the selection change' flag:
+        self._notify_select = notify
+        
         # First use the model to resolve the object list into a set of
         # grid coordinates
         cells = self.model.resolve_selection(selection_list)
 
-        # Now make sure all those grid coordinates get set properly
-        self._grid.ClearSelection()
-        if self.selection_mode != '':
+        # Now make sure all those grid coordinates get set properly:
+        grid = self._grid
+        grid.BeginBatch()
+        
+        grid.ClearSelection()
+        
+        mode = self.selection_mode
+        if mode == 'rows':
+            self._select_rows(cells)
+        elif mode != '':
             for selection in cells:
                 row, col = max( 0, selection[0] ), max( 0, selection[1] )
-                self._grid.SelectBlock(row, col, row, col, True)
-                                             
-        # Indicate that the selection has been changed:                                             
-        self.__fire_selection_changed()                                             
+                grid.SelectBlock(row, col, row, col, True)
+                
+        grid.EndBatch()
+                    
+        # Indicate that the selection has been changed:
+        if notify:
+            self.__fire_selection_changed()
+            
+        self._notify_select = True
 
     ###########################################################################
     # wx event handlers.
@@ -721,8 +733,9 @@ class Grid(Widget):
             if (self.selection_mode == 'cell') and evt.ControlDown():
                 self._grid.SelectBlock(evt.GetTopRow(), evt.GetLeftCol(), 
                                     evt.GetBottomRow(), evt.GetRightCol(), True)
-                                    
-        self.__fire_selection_changed()
+        
+        if self._notify_select:
+            self.__fire_selection_changed()
         
     def _on_col_size(self, evt):
         """ Called when the user changes a column's width. """
@@ -1344,6 +1357,33 @@ class Grid(Widget):
 
         return ( self._grid.XToCol(x), self._grid.YToRow(y) )
 
+    def _select_rows(self, cells):
+        """ Selects all of the rows specified by a list of (row,column) pairs.
+        """
+        # For a large set of rows, simply calling 'SelectBlock' on the Grid
+        # object for each row is very inefficient, so we first make a pass over
+        # all of the cells to merge them into contiguous ranges as much as 
+        # possible:
+        sb = self._grid.SelectBlock
+        
+        # Extract the rows and sort them:
+        rows = [ row for row, column in cells ]
+        rows.sort()
+        
+        # Now find contiguous ranges of rows, and select the current range
+        # whenever a break in the sequence is found:
+        first = last = -999
+        for row in rows:
+            if row == (last + 1):
+                last = row
+            else:
+                if first >= 0:
+                    sb(first, 0, last, 0, True)
+                first = last = row
+              
+        # Handle the last pending range of lines to be selected:
+        if first >= 0:
+            sb(first, 0, last, 0, True)
 
 class _GridTableBase(PyGridTableBase):
     """ A private adapter for the underlying wx grid implementation. """
@@ -1626,13 +1666,16 @@ class _GridTableBase(PyGridTableBase):
         
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event.
-        for editor in self._editor_cache.values():
-            do_later(editor.dispose)
+        do_later( self._editor_dispose, self._editor_cache.values() )
 
-        self._editor_cache = {}
+        self._editor_cache   = {}
         self._renderer_cache = {}
         return
 
+    def _editor_dispose(self, editors):
+        for editor in editors:
+            editor.dispose()
+        
 from wx.grid import PyGridCellEditor
 class DummyGridCellEditor(PyGridCellEditor):
 
