@@ -1413,14 +1413,14 @@ class _GridTableBase(PyGridTableBase):
 
     def dispose(self):
 
-        # make sure dispose gets called on all traits editors
+        # Make sure dispose gets called on all traits editors:
         for editor in self._editor_cache.values():
             editor.dispose()
+        self._editor_cache = {}
 
         for renderer in self._renderer_cache.values():
             renderer.dispose()
-
-        self._clear_cache()
+        self._renderer_cache = {}
         
     ###########################################################################
     # 'wxPyGridTableBase' interface.
@@ -1566,17 +1566,16 @@ class _GridTableBase(PyGridTableBase):
         rows = self.model.get_row_count()
         cols = self.model.get_column_count()
         
-        # first look in the cache for the editor
-        editor = None
-        if self._editor_cache.has_key((row, col)):
-            editor = self._editor_cache[(row, col)]
-        elif row >= rows or col >= cols:
-            editor = DummyGridCellEditor()
-        else:
-            # ask the underlying model for an editor for this cell
-            editor = self.model.get_cell_editor(row, col)
-            if editor is not None:
-                self._editor_cache[(row, col)] = editor
+        # First look in the cache for the editor:
+        editor = self._editor_cache.get((row, col))
+        if editor is None:
+            if (row >= rows) or (col >= cols):
+                editor = DummyGridCellEditor()
+            else:
+                # Ask the underlying model for an editor for this cell:
+                editor = self.model.get_cell_editor(row, col)
+                if editor is not None:
+                    self._editor_cache[(row, col)] = editor
 
         # try to find a renderer for this cell
         renderer = None
@@ -1584,11 +1583,8 @@ class _GridTableBase(PyGridTableBase):
             renderer = self.model.get_cell_renderer(row, col)
 
         if editor is not None:
-            # Note: we have to increment the reference to keep the
+            # Note: We have to increment the reference to keep the
             #       underlying code from destroying our object.
-            # fixme: where should this be decremented? as is, i think the
-            #        object hangs around forever? or perhaps the garbage
-            #        collection will get it anyway?
             editor.IncRef()
             result.SetEditor(editor)
 
@@ -1665,7 +1661,7 @@ class _GridTableBase(PyGridTableBase):
         """ Clean out the editor/renderer cache. """
         
         # Dispose of the editors in the cache after a brief delay, so as
-        # to allow completion of the current event.
+        # to allow completion of the current event:
         do_later( self._editor_dispose, self._editor_cache.values() )
 
         self._editor_cache   = {}
