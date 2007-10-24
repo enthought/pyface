@@ -1577,16 +1577,16 @@ class _GridTableBase(PyGridTableBase):
                 if editor is not None:
                     self._editor_cache[(row, col)] = editor
 
-        # try to find a renderer for this cell
-        renderer = None
-        if row < rows and col < cols:
-            renderer = self.model.get_cell_renderer(row, col)
-
         if editor is not None:
             # Note: We have to increment the reference to keep the
             #       underlying code from destroying our object.
             editor.IncRef()
             result.SetEditor(editor)
+
+        # try to find a renderer for this cell
+        renderer = None
+        if row < rows and col < cols:
+            renderer = self.model.get_cell_renderer(row, col)
 
         if renderer is not None and renderer.renderer is not None:
             renderer.renderer.IncRef()
