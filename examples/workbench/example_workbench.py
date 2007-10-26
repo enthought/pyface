@@ -4,9 +4,6 @@
 # Standard library imports.
 import logging
 
-# fixme: Required for theme import bug.
-import enthought.traits.ui.wx
-
 # Enthought library imports.
 from enthought.pyface.api import GUI, YES
 from enthought.pyface.workbench.api import Workbench
