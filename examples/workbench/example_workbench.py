@@ -1,5 +1,4 @@
 """ A simple example of using the workbench. """
-import enthought.traits.ui.wx
 
 
 # Standard library imports.
