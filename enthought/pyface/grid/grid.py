@@ -148,6 +148,9 @@ class Grid(Widget):
         # Base class constructors.
         super(Grid, self).__init__(**traits)
 
+        # Flag set when columns are resizing:
+        self._user_col_size = False
+
         # Create the toolkit-specific control.
         self.control = panel = wx.Panel(parent, -1)
         
@@ -285,9 +288,6 @@ class Grid(Widget):
 
         # Enable the grid as a drag and drop target:
         self._grid.SetDropTarget(PythonDropTarget(self))
-
-        # Flag set when columns are resizing:
-        self._user_col_size = False
 
         self.__autosize()
 
