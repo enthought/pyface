@@ -74,6 +74,12 @@ class GridModel(HasPrivateTraits):
 
     # A row sort took place
     row_sorted = Event
+    
+    # Event fired when a cell is clicked on:
+    click = Event # = (row, column) that was clicked on
+    
+    # Event fired when a cell is double-clicked on:
+    dclick = Event # = (row, column) that was double-clicked on
 
     #########################################################################
     # 'object' interface.

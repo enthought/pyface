@@ -712,7 +712,7 @@ class Grid(Widget):
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """ 
         row, col = evt.GetRow(), evt.GetCol()
-        self.cell_left_clicked = (row, col)
+        self.cell_left_clicked = self.model.click = (row, col)
         
         # Try to find a renderer for this cell:
         renderer = self.model.get_cell_renderer(row, col)
@@ -775,11 +775,14 @@ class Grid(Widget):
         row, col = evt.GetRow(), evt.GetCol()
         data     = self.model.get_value(row, col)
         self.cell_activated = data
+        
+        # Tell the model that a cell was double-clicked on:
+        self.model.dclick = (row, col)
 
-        # try to find a renderer for this cell
+        # Try to find a renderer for this cell
         renderer = self.model.get_cell_renderer(row, col)
 
-        # if the renderer has defined a handler then call it
+        # If the renderer has defined a handler then call it
         if renderer is not None:
             renderer.on_left_dclick(self, row, col)
 
