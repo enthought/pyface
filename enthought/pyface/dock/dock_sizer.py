@@ -755,7 +755,8 @@ class DockItem ( HasPrivateTraits ):
         dc.SetPen( wx.TRANSPARENT_PEN )
         owner = self.owner
         if owner is None:
-            color = wx.Colour( 255, 0, 0 )
+            #color = wx.Colour( 255, 0, 0 )
+            color = wx.Colour( 236, 233, 216 )
         else:
             color = owner.control.GetParent().GetBackgroundColour()
         dc.SetBrush( wx.Brush( color ) )
