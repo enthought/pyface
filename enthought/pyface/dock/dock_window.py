@@ -55,9 +55,6 @@ from enthought.util.wx.drag_and_drop \
 from enthought.pyface.message_dialog \
     import error as warning
     
-from enthought.naming.api \
-    import Binding
-    
 from dock_sizer \
     import DockSizer, DockControl, DockRegion, DockStyle, DockSplitter, \
            no_dock_info, clear_window, features
@@ -69,6 +66,14 @@ from idock_ui_provider \
     import IDockUIProvider
  
 import enthought.traits.ui.dock_window_theme as dock_window_theme
+
+# Optional feature to allow dragging and dropping Binding objects into 
+# DockWindows:
+try:    
+    from enthought.naming.api \
+        import Binding
+except:
+    class Binding ( object ): pass
 
 #-------------------------------------------------------------------------------
 #  Global data:  
