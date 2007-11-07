@@ -295,8 +295,28 @@ class Grid(Widget):
         wx.EVT_IDLE(grid, self._on_idle)
 
     def dispose(self):
-        self._grid_table_base.dispose()
-
+        # Remove all wx handlers:
+        grid = self._grid
+        wx.grid.EVT_GRID_SELECT_CELL(       grid, None )
+        wx.grid.EVT_GRID_RANGE_SELECT(      grid, None )
+        wx.grid.EVT_GRID_COL_SIZE(          grid, None )
+        wx.grid.EVT_GRID_ROW_SIZE(          grid, None )
+        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(  grid, None )
+        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(  grid, None )
+        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK( grid, None )
+        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK( grid, None )
+        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(  grid, None )
+        wx.grid.EVT_GRID_EDITOR_CREATED(    grid, None )
+        wx.EVT_KEY_DOWN(                    grid, None )
+        wx.EVT_SIZE(                        grid, None )
+        wx.EVT_PAINT( self._grid_window, None )
+        
+        for window in ( self._grid_window , self._row_window , 
+                        self._col_window ):
+            wx.EVT_MOTION(    window, None )
+            wx.EVT_LEFT_DOWN( window, None )
+            wx.EVT_LEFT_UP(   window, None )
+        
         otc = self.on_trait_change
         otc(self._on_enable_lines_changed, 'enable_lines', 
             remove = True)
@@ -331,8 +351,9 @@ class Grid(Widget):
             remove = True)
         otc(self._on_show_row_headers_changed, 'show_row_headers',
             remove = True)
+            
+        self._grid_table_base.dispose()
         
-
     ###########################################################################
     # Trait event handlers.
     ###########################################################################
