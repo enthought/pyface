@@ -24,7 +24,7 @@ def _init_toolkit():
     """ Initialise the current toolkit. """
 
     # Toolkits to check for if none is explicitly specified.
-    known_toolkits = ('wx', 'qt4')
+    known_toolkits = ('wx', 'qt4', 'null')
 
     # Get the toolkit.
     toolkit = ETSConfig.toolkit
