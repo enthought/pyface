@@ -67,6 +67,7 @@ setup(
     namespace_packages = [
         "enthought",
         "enthought.pyface",
+        "enthought.pyface.ui",
         ],
     packages = find_packages(),
     tests_require = [
