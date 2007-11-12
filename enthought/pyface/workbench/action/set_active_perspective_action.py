@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IPerspective
-from enthought.traits.api import Delegate, Instance, on_trait_change
+from enthought.traits.api import Delegate, Instance
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -61,7 +61,25 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    @on_trait_change('window.active_perspective')
+    #### Trait change handlers ################################################
+
+    def _window_changed(self, old, new):
+        """ Static trait change handler. """
+
+        if old is not None:
+            old.on_trait_change(
+                self._refresh_checked, 'active_perspective', remove=True
+            )
+
+        if new is not None:
+            new.on_trait_change(
+                self._refresh_checked, 'active_perspective'
+            )
+
+        return
+
+    #### Methods ##############################################################
+
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
