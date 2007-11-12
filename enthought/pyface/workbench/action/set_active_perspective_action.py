@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IPerspective
-from enthought.traits.api import Delegate, Instance
+from enthought.traits.api import Delegate, Instance, on_trait_change
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -30,21 +30,6 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
     # The perspective that we set the active perspective to.
     perspective = Instance(IPerspective)
-
-    ###########################################################################
-    # 'object' interface.
-    ###########################################################################
-
-    def __init__(self, **traits):
-        """ Constructor. """
-
-        super(SetActivePerspectiveAction, self).__init__(**traits)
-
-        # Make sure that the action is checked if its perspective is already
-        # the active perspective.
-        self._refresh_checked()
-
-        return
     
     ###########################################################################
     # 'Action' interface.
@@ -61,29 +46,14 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    #### Trait change handlers ################################################
-
-    def _window_changed(self, old, new):
-        """ Static trait change handler. """
-
-        if old is not None:
-            old.on_trait_change(
-                self._refresh_checked, 'active_perspective', remove=True
-            )
-
-        if new is not None:
-            new.on_trait_change(
-                self._refresh_checked, 'active_perspective'
-            )
-
-        return
-
-    #### Methods ##############################################################
-
+    @on_trait_change('perspective,window.active_perspective')
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
-        self.checked = self.perspective.id is self.window.active_perspective.id
+        self.checked = self.perspective is not None \
+          and self.window is not None \
+          and self.window.active_perspective is not None \
+          and self.perspective.id is self.window.active_perspective.id
 
         return
 

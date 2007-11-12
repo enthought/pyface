@@ -9,6 +9,9 @@
 """ The base class for user perspective actions. """
 
 
+# Enthought library imports.
+from enthought.traits.api import on_trait_change
+
 # Local imports.
 from workbench_action import WorkbenchAction
 
@@ -20,21 +23,6 @@ class UserPerspectiveAction(WorkbenchAction):
     active perspective is a user perspective.
 
     """
-
-    ###########################################################################
-    # 'object' interface.
-    ###########################################################################
-
-    def __init__(self, **traits):
-        """ Constructor. """
-
-        super(UserPerspectiveAction, self).__init__(**traits)
-
-        # Make sure that the action is enabled if the active perspective is a
-        # user perspective.
-        self._refresh_enabled()
-
-        return
     
     ###########################################################################
     # 'Action' interface.
@@ -54,19 +42,14 @@ class UserPerspectiveAction(WorkbenchAction):
 
     #### Trait change handlers ################################################
 
-    def _window_changed(self, old, new):
-        """ Static trait change handler. """
+    @on_trait_change('window.active_perspective')
+    def _refresh_enabled(self):
+        """ Dynamic trait change handler. """
 
-        if old is not None:
-            old.on_trait_change(
-                self._refresh_enabled, 'active_perspective', remove=True
-            )
-
-        if new is not None:
-            new.on_trait_change(
-                self._refresh_enabled, 'active_perspective'
-            )
-
+        self.enabled = self.window is not None \
+          and self.window.active_perspective is not None \
+          and self._is_user_perspective(self.window.active_perspective)
+        
         return
 
     #### Methods ##############################################################
@@ -78,14 +61,5 @@ class UserPerspectiveAction(WorkbenchAction):
         id = perspective.id
 
         return ((id[:19] == '__user_perspective_') and (id[-2:] == '__'))
-
-    def _refresh_enabled(self):
-        """ Refresh the enabled state of the action. """
-
-        self.enabled = self.window is not None \
-         and self._is_user_perspective(self.window.active_perspective)
-        
-        return
-    
 
 #### EOF #####################################################################
