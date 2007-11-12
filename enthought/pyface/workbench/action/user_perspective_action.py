@@ -40,20 +40,6 @@ class UserPerspectiveAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    #### Trait change handlers ################################################
-
-    @on_trait_change('window.active_perspective')
-    def _refresh_enabled(self):
-        """ Dynamic trait change handler. """
-
-        self.enabled = self.window is not None \
-          and self.window.active_perspective is not None \
-          and self._is_user_perspective(self.window.active_perspective)
-        
-        return
-
-    #### Methods ##############################################################
-    
     def _is_user_perspective(self, perspective):
         """ Is the specified perspective a user perspective? """
 
@@ -61,5 +47,15 @@ class UserPerspectiveAction(WorkbenchAction):
         id = perspective.id
 
         return ((id[:19] == '__user_perspective_') and (id[-2:] == '__'))
+
+    @on_trait_change('window.active_perspective')
+    def _refresh_enabled(self):
+        """ Refresh the enabled state of the action. """
+
+        self.enabled = self.window is not None \
+          and self.window.active_perspective is not None \
+          and self._is_user_perspective(self.window.active_perspective)
+        
+        return
 
 #### EOF #####################################################################
