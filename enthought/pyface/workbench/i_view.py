@@ -15,11 +15,12 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Float, List, Str
+from enthought.traits.api import Bool, Enum, Float, List, Str, implements
 
 # Local imports.
 from i_perspective_item import IPerspectiveItem
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
+from perspective_item import PerspectiveItem
 
 
 class IView(IWorkbenchPart, IPerspectiveItem):
@@ -32,10 +33,35 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # Whether the view is visible or not.
     visible = Bool(False)
 
+    ###########################################################################
+    # 'IView' interface.
+    ###########################################################################
 
-class MView(MWorkbenchPart):
+    def hide(self):
+        """ Hide the view.
+
+        """
+
+    def show(self):
+        """ Show the view.
+
+        """
+
+
+class MView(MWorkbenchPart, PerspectiveItem):
     """ Mixin containing common code for toolkit-specific implementations. """
 
+    implements(IView)
+
+    #### 'IView' interface ####################################################
+    
+    # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
+    # displayed?).
+    busy = Bool(False)
+
+    # Whether the view is visible or not.
+    visible = Bool(False)
+    
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -54,5 +80,23 @@ class MView(MWorkbenchPart):
 
         # If no Id is specified then use the name.
         return self.name
+
+    ###########################################################################
+    # 'IView' interface.
+    ###########################################################################
+
+    def hide(self):
+        """ Hide the view. """
+
+        self.window.hide_view(self)
+
+        return
+
+    def show(self):
+        """ Show the view. """
+
+        self.window.show_view(self)
+
+        return
     
 #### EOF ######################################################################

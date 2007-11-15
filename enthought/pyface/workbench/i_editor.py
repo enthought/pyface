@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, implements, Instance, Interface
-from enthought.traits.api import List, Str, Unicode
+from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
+from enthought.traits.api import implements
 
 # Local imports.
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
@@ -49,8 +49,22 @@ class IEditor(IWorkbenchPart):
         """
 
 
-class MEditor(object):
+class MEditor(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
+
+    #### 'IEditor' interface ##################################################
+    
+    # The optional command stack.
+    command_stack = Instance('enthought.undo.api.ICommandStack')
+
+    # Is the object that the editor is editing 'dirty' i.e., has it been
+    # modified but not saved?
+    dirty = Bool(False)
+
+    # The object that the editor is editing.
+    #
+    # The framework sets this when the editor is created.
+    obj = Any
 
     ###########################################################################
     # 'object' interface.

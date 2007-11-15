@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Instance, Interface, List, Str
-from enthought.traits.api import Unicode
+from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
+from enthought.traits.api import List, Str, Unicode, implements
 
 
 class IWorkbenchPart(Interface):
@@ -47,7 +47,7 @@ class IWorkbenchPart(Interface):
     # The workbench window that the part is in.
     #
     # The framework sets this when the part is created.
-    window = Instance('IWorkbenchWindow')
+    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
     #### Methods ##############################################################
     
@@ -76,10 +76,50 @@ class IWorkbenchPart(Interface):
         """
 
 
-class MWorkbenchPart(object):
+class MWorkbenchPart(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    # Nothing yet!
-    pass
+    implements(IWorkbenchPart)
+
+    #### 'IWorkbenchPart' interface ###########################################
+    
+    # The toolkit-specific control that represents the part.
+    #
+    # The framework sets this to the value returned by 'create_control'.
+    control = Any
+
+    # Does the part currently have the focus?
+    has_focus = Bool(False)
+
+    # The part's globally unique identifier.
+    id = Str
+
+    # The part's name (displayed to the user).
+    name = Unicode
+
+    # The current selection within the part.
+    selection = List
+
+    # The workbench window that the part is in.
+    #
+    # The framework sets this when the part is created.
+    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+
+    #### Methods ##############################################################
+    
+    def create_control(self, parent):
+        """ Create the toolkit-specific control that represents the part. """
+
+        raise NotImplementedError
+        
+    def destroy_control(self):
+        """ Destroy the toolkit-specific control that represents the part. """
+
+        raise NotImplementedError
+
+    def set_focus(self):
+        """ Set the focus to the appropriate control in the part. """
+
+        raise NotImplementedError
 
 #### EOF ######################################################################

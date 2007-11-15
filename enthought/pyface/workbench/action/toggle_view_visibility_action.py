@@ -35,11 +35,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     def perform(self, event):
         """ Perform the action. """
 
-        # fixme: In a world of commands this could be:-
-        #
-        # command = ToggleViewVisibilityCommand(window=window, view=view)
-        # command.execute()
-        self._toggle_view_visibility(self.window, self.view)
+        self._toggle_view_visibility(self.view)
 
         return
     
@@ -47,29 +43,25 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    def _toggle_view_visibility(self, window, view):
-        """ Toggle the visibility of a view. """
-        
-        if view.visible:
-            window.hide_view(view)
-
-        else:
-            window.show_view(view)
-
-        return
-
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    @on_trait_change('window,view.visible')
+    @on_trait_change('view.visible,view.window')
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
-        self.checked = self.window is not None \
-          and self.view is not None \
+        self.checked = self.view is not None \
+          and self.view.window is not None \
           and self.view.visible
 
         return
     
+    def _toggle_view_visibility(self, view):
+        """ Toggle the visibility of a view. """
+        
+        if view.visible:
+            view.hide()
+            
+        else:
+            view.show()
+            
+        return
+
 #### EOF ######################################################################
