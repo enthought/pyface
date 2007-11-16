@@ -49,9 +49,11 @@ class IEditor(IWorkbenchPart):
         """
 
 
-class MEditor(HasTraits):
+class MEditor(MWorkbenchPart):
     """ Mixin containing common code for toolkit-specific implementations. """
 
+    implements(IEditor)
+    
     #### 'IEditor' interface ##################################################
     
     # The optional command stack.
