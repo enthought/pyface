@@ -18,7 +18,7 @@
 import sys
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Unicode
+from enthought.traits.api import Enum, Unicode, Int
 
 # Local imports.
 from i_dialog import IDialog
@@ -56,6 +56,9 @@ class IFileDialog(IDialog):
     # The wildcard used to restrict the set of files.
     wildcard = Unicode
 
+    # The index of the selected wildcard.
+    wildcard_index = Int(0)
+    
     ###########################################################################
     # 'IFileDialog' interface.
     ###########################################################################
