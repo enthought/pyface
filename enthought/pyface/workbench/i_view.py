@@ -30,6 +30,10 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # displayed?).
     busy = Bool(False)
 
+    # The category that the view belongs to (this can used to group views when
+    # they are displayed to the user).
+    category = Str('General')
+
     # Whether the view is visible or not.
     visible = Bool(False)
 
@@ -58,6 +62,10 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
     busy = Bool(False)
+
+    # The category that the view belongs to (this can be used to group views
+    # when they are displayed to the user).
+    category = Str('General')
 
     # Whether the view is visible or not.
     visible = Bool(False)

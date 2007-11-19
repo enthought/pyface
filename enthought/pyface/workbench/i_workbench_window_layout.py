@@ -15,7 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Event, Instance, Interface, Str
+from enthought.traits.api import Event, HasTraits, Instance, Interface, Str
+from enthought.traits.api import implements
 
 # Local imports.
 from i_editor import IEditor
@@ -155,39 +156,96 @@ class IWorkbenchWindowLayout(Interface):
         """
 
     def refresh(self):
-        """ Refresh the window layout to reflect any changes. """
+        """ Refresh the window layout to reflect any changes.
+
+        """
 
     def reset_editors(self):
-        """ Activate the first editor in every group. """
+        """ Activate the first editor in every group.
+
+        """
 
     def reset_views(self):
-        """ Activate the first view in every region. """
+        """ Activate the first view in every region.
+
+        """
 
     def show_editor_area(self):
-        """ Show the editor area. """
+        """ Show the editor area.
+
+        """
 
     def show_view(self, view):
-        """ Show a view. """
+        """ Show a view.
+
+        """
 
     #### Methods for saving and restoring the layout ##########################
 
     def get_view_memento(self):
-        """ Returns the state of the views. """
+        """ Returns the state of the views.
+
+        """
 
     def set_view_memento(self, memento):
-        """ Restores the state of the views. """
+        """ Restores the state of the views.
+
+        """
 
     def get_editor_memento(self):
-        """ Returns the state of the editors. """
+        """ Returns the state of the editors.
+
+        """
 
     def set_editor_memento(self, memento):
-        """ Restores the state of the editors. """
+        """ Restores the state of the editors.
+
+        """
 
 
-class MWorkbenchWindowLayout(object):
-    """ The mixin class that contains common code for toolkit specific
-    implementations of the IWorkbenchWindowLayout interface.
-    """
+class MWorkbenchWindowLayout(HasTraits):
+    """ Mixin containing common code for toolkit-specific implementations. """
+
+    implements(IWorkbenchWindowLayout)
+
+    #### 'IWorkbenchWindowLayout' interface ###################################
+    
+    # The Id of the editor area.
+    # FIXME v3: This is toolkit specific.
+    editor_area_id = Str
+
+    # The workbench window that this is the layout for.
+    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+
+    #### Events ####
+
+    # Fired when an editor is about to be opened (or restored).
+    editor_opening = Event(IEditor)
+
+    # Fired when an editor has been opened (or restored).
+    editor_opened = Event(IEditor)
+
+    # Fired when an editor is about to be closed.
+    editor_closing = Event(IEditor)
+
+    # Fired when an editor has been closed.
+    editor_closed = Event(IEditor)
+
+    # Fired when a view is about to be opened (or restored).
+    view_opening = Event(IView)
+
+    # Fired when a view has been opened (or restored).
+    view_opened = Event(IView)
+
+    # Fired when a view is about to be closed (*not* hidden!).
+    view_closing = Event(IView)
+
+    # Fired when a view has been closed (*not* hidden!).
+    view_closed = Event(IView)
+
+    ###########################################################################
+    # Protected 'MWorkbenchWindowLayout' interface.
+    ###########################################################################
 
     def _get_editor_references(self):
         """ Returns a reference to every editor. """
