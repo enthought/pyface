@@ -20,7 +20,7 @@
 
 import wx
 
-# Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
+# fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import enthought.traits.ui.wx
 
 from enthought.traits.api \
@@ -48,7 +48,6 @@ from ifeature_tool \
 
 # Define version dependent values:
 wx_26 = (wx.__version__[:3] == '2.6')
-
 
 #-------------------------------------------------------------------------------
 #  Constants:
@@ -232,7 +231,7 @@ class DockImages ( HasPrivateTraits ):
 
         self._lazy_init_done = False
 
-    def _lazy_init ( self ):
+    def init ( self ):
         """ Initializes the parts of the object that depend on the toolkit
         selection.
         """
@@ -279,8 +278,6 @@ class DockImages ( HasPrivateTraits ):
     def get_splitter_image ( self, state ):
         """ Returns the splitter image to use for a specified splitter state.
         """
-        self._lazy_init()
-
         return self._splitter_images[ state ]
 
     #---------------------------------------------------------------------------
@@ -290,10 +287,9 @@ class DockImages ( HasPrivateTraits ):
     def get_feature_image ( self, state, is_tab = True ):
         """ Returns the feature image to use for a specified feature state.
         """
-        self._lazy_init()
-
         if is_tab:
             return self._feature_images[ state ]
+            
         return self._feature_images[ state + 3 ]
 
 # Creates a singleton instance of the class:
@@ -2108,8 +2104,6 @@ class DockRegion ( DockGroup ):
             # Do we need to enable tab scrolling?
             xr = tx0 + cdx
             if tx > xr:
-                # fixme: We shouldn't have to force DockImages to lazy init...
-                DockImages._lazy_init()
 
                 # Scrolling needed, calculate maximum tab index for scrolling:
                 self.max_tab = 1
@@ -3407,6 +3401,11 @@ class DockSizer ( wx.PySizer ):
 
     def __init__ ( self, contents = None ):
         super( DockSizer, self ).__init__()
+        
+        # Make sure the DockImages singleton has been initialized:
+        DockImages.init()
+        
+        # Finish initializing the sizer itself:
         self._contents = self._structure = self._max_structure = None
         if contents is not None:
             self.SetContents( contents )
