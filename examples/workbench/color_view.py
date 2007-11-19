@@ -9,6 +9,11 @@ from enthought.pyface.workbench.api import View
 class ColorView(View):
     """ A view containing a colored panel! """
 
+    #### 'IView' interface ####################################################
+
+    # The category that the view belongs to.
+    category = 'Color'
+
     ###########################################################################
     # 'IView' interface.
     ###########################################################################

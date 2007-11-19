@@ -15,7 +15,7 @@ from person import Person
 
 # Log to stderr.
 logger = logging.getLogger()
-logger.addHandler(logging.StreamHandler())
+logger.addHandler(logging.StreamHandler(file('example_workbench.log', 'w')))
 logger.setLevel(logging.DEBUG)
 
 
