@@ -809,7 +809,8 @@ class DockItem ( HasPrivateTraits ):
         dc.DrawText( name, x, y + 1 )
 
         # Draw the close button (if necessary):
-        if self.closeable:
+        if (self.closeable and
+            DockImages._close_tab is not None):
             dc.DrawBitmap( DockImages._close_tab, x + tdx + 5, y + 3, True )
 
     #---------------------------------------------------------------------------
