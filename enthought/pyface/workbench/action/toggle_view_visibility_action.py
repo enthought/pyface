@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView
-from enthought.traits.api import Delegate, Instance, on_trait_change
+from enthought.traits.api import Delegate, Instance
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -15,10 +15,10 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = Delegate('view')
+    id = Delegate('view', modify=True)
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = Delegate('view')
+    name = Delegate('view', modify=True)
     
     # The action's style.
     style = 'toggle'
@@ -32,6 +32,14 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # 'Action' interface.
     ###########################################################################
 
+    def destroy(self):
+        """ Called when the action is no longer required. """
+
+        if self.view is not None:
+            self._remove_view_listeners(self.view)
+
+        return
+
     def perform(self, event):
         """ Perform the action. """
 
@@ -43,7 +51,39 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    @on_trait_change('view.visible,view.window')
+    #### Trait change handlers ################################################
+
+    def _view_changed(self, old, new):
+        """ Static trait change handler. """
+
+        if old is not None:
+            self._remove_view_listeners(old)
+
+        if new is not None:
+            self._add_view_listeners(new)
+
+        self._refresh_checked()
+        
+        return
+
+    #### Methods ##############################################################
+
+    def _add_view_listeners(self, view):
+        """ Add listeners for trait events on a view. """
+
+        view.on_trait_change(self._refresh_checked, 'visible')
+        view.on_trait_change(self._refresh_checked, 'window')
+
+        return
+
+    def _remove_view_listeners(self, view):
+        """ Add listeners for trait events on a view. """
+
+        view.on_trait_change(self._refresh_checked, 'visible', remove=True)
+        view.on_trait_change(self._refresh_checked, 'window', remove=True)
+
+        return
+    
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
