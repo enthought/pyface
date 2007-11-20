@@ -41,6 +41,11 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # 'IView' interface.
     ###########################################################################
 
+    def activate(self):
+        """ Activate the view.
+
+        """
+        
     def hide(self):
         """ Hide the view.
 
@@ -93,6 +98,15 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # 'IView' interface.
     ###########################################################################
 
+    def activate(self):
+        """ Activate the view.
+
+        """
+
+        self.window.activate_view(self)
+
+        return
+    
     def hide(self):
         """ Hide the view. """
 

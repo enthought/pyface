@@ -3,9 +3,9 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView
-from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
-from enthought.traits.api import List, Property, Str, TraitError, Undefined
-from enthought.traits.ui.api import Handler, Item, TreeEditor, TreeNode, View
+from enthought.traits.api import Any, HasTraits, Instance, List, Str
+from enthought.traits.api import TraitError, Undefined
+from enthought.traits.ui.api import Item, TreeEditor, TreeNode, View
 
 # fixme: Why does this import not come from an api file like everything else?
 from enthought.traits.ui.menu import Action
@@ -29,7 +29,7 @@ class ViewManager(HasTraits):
 
     # The window that we manage the views of.
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
-    
+
     ###########################################################################
     # 'ViewManager' interface.
     ###########################################################################
@@ -52,16 +52,11 @@ class ViewManager(HasTraits):
             
         return categories
 
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-
 
 class IViewTreeNode(TreeNode):
     """ A tree node for objects that implement the 'IView' interface.
 
-    This node does not recognise objects that can be *adapted* to the 'IView'
+    This node does *not* recognise objects that can be *adapted* to the 'IView'
     interface, only those that actually implement it. If we wanted to allow
     for adaptation we would have to work out a way for the rest of the
     'TreeNode' code to access the adapter, not the original object. We could,
@@ -121,58 +116,10 @@ tree_editor = TreeEditor(
 
     editable   = False,
     hide_root  = True,
-    selected   = 'info.handler.selected',
+    selected   = 'selected',
     show_icons = False
 )
 
-
-class ShowViewHandler(Handler):
-    """ The traits UI handler for the view manager. """
-
-    # The currently selected tree item.
-    selected = Any
-    
-    ###########################################################################
-    # 'Handler' interface.
-    ###########################################################################
-
-    def apply(self, info):
-        """ Handle the **Apply** button being clicked. """
-
-        info.object.apply()
-        
-        return
-
-    def init(self, info):
-        """ Initialize the controls of a user interface. """
-
-        return super(ShowViewHandler, self).init(info)
-
-    def close(self, info, is_ok):
-        """ Close a dialog-based user interface. """
-
-        if is_ok:
-            info.object.apply()
-            
-        return super(ShowViewHandler, self).close(info, is_ok)
- 
-    #### Trait change handlers ################################################
-    
-    def _selected_changed(self, old, new):
-        """ Static trait change handler. """
-
-        print 'Allo!!!!!!!!!!!'
-        print dir(self)
-        
-##         # If the assigment fails then the selected object does *not* implement
-##         # the 'IView' interface.
-##         try:
-##             self.info.object.view = new
-
-##         except TraitError:
-##             self.info.object.view = None
-        
-        return
 
 class ViewChooser(HasTraits):
     """ Allow the user to choose a view.
@@ -210,7 +157,6 @@ class ViewChooser(HasTraits):
             Action(name='OK', enabled_when='view is not None'), 'Cancel'
         ],
 
-        handler   = ShowViewHandler(),
         resizable = True,
         style     = 'custom',
         title     = 'Show View',
@@ -229,7 +175,7 @@ class ViewChooser(HasTraits):
         """ Trait initializer. """
 
         return ViewManager(window=self.window)
-
+    
     #### Trait change handlers ################################################
     
     def _selected_changed(self, old, new):

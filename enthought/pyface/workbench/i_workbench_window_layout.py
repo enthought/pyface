@@ -244,6 +244,112 @@ class MWorkbenchWindowLayout(HasTraits):
     view_closed = Event(IView)
 
     ###########################################################################
+    # 'IWorkbenchWindowLayout' interface.
+    ###########################################################################
+
+    def activate_editor(self, editor):
+        """ Activate an editor. """
+
+        raise NotImplementedError
+
+    def activate_view(self, view):
+        """ Activate a view. """
+
+        raise NotImplementedError
+
+    def add_editor(self, editor, title):
+        """ Add an editor. """
+
+        raise NotImplementedError
+
+    def add_view(self, view, position, relative_to=None, size=(-1, -1)):
+        """ Add a view. """
+
+        raise NotImplementedError
+
+    def close_editor(self, editor):
+        """ Close an editor. """
+
+        raise NotImplementedError
+        
+    def close_view(self, view):
+        """ Close a view. """
+
+        raise NotImplementedError
+
+    def close(self):
+        """ Close the entire window layout. """
+
+        raise NotImplementedError
+
+    def create_initial_layout(self):
+        """ Create the initial window layout. """
+
+        raise NotImplementedError
+
+    def contains_view(self, view):
+        """ Return True if the view exists in the window layout. """
+
+        raise NotImplementedError
+        
+    def hide_editor_area(self):
+        """ Hide the editor area. """
+
+        raise NotImplementedError
+
+    def hide_view(self, view):
+        """ Hide a view. """
+
+        raise NotImplementedError
+
+    def refresh(self):
+        """ Refresh the window layout to reflect any changes. """
+
+        raise NotImplementedError
+
+    def reset_editors(self):
+        """ Activate the first editor in every group. """
+
+        raise NotImplementedError
+
+    def reset_views(self):
+        """ Activate the first view in every region. """
+
+        raise NotImplementedError
+
+    def show_editor_area(self):
+        """ Show the editor area. """
+
+        raise NotImplementedError
+
+    def show_view(self, view):
+        """ Show a view. """
+
+        raise NotImplementedError
+
+    #### Methods for saving and restoring the layout ##########################
+
+    def get_view_memento(self):
+        """ Returns the state of the views. """
+
+        raise NotImplementedError
+
+    def set_view_memento(self, memento):
+        """ Restores the state of the views. """
+
+        raise NotImplementedError
+
+    def get_editor_memento(self):
+        """ Returns the state of the editors. """
+
+        raise NotImplementedError
+
+    def set_editor_memento(self, memento):
+        """ Restores the state of the editors. """
+
+        raise NotImplementedError
+
+    ###########################################################################
     # Protected 'MWorkbenchWindowLayout' interface.
     ###########################################################################
 

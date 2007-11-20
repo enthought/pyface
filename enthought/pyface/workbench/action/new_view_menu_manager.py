@@ -72,7 +72,7 @@ class ViewMenuManager(MenuManager):
         groups.append(self._view_group)
 
         # Add a group containing an 'Other...' item that will launch a dialog
-        # to allow the user to choose a view.
+        # to allow the user to choose a view to show.
         groups.append(self._create_other_group(self.window))
 
         return groups
@@ -82,7 +82,7 @@ class ViewMenuManager(MenuManager):
     ###########################################################################
 
     @on_trait_change('window.active_perspective,window.active_part')
-    def refresh(self):
+    def when_active_perspective_changed(self):
         """ Refreshes the checked state of the actions in the menu. """
 
         logger.debug('refreshing view menu')
@@ -111,7 +111,7 @@ class ViewMenuManager(MenuManager):
         """ Creates a group containing the 'Other...' action. """
 
         group = Group()
-        group.append(ShowViewAction(window=window))
+        group.append(ShowViewAction(name='Other...', window=window))
 
         return group
 
@@ -127,7 +127,10 @@ class ViewMenuManager(MenuManager):
         """ Initializes a group containing the view 'togglers'. """
 
         for view in window.views:
-            if view.visible:
+            # fixme: It seems a little smelly to be reaching in to the window
+            # layout here. Should the 'contains_view' method be part of the
+            # window interface?
+            if window.layout.contains_view(view):
                 group.append(
                     ToggleViewVisibilityAction(view=view, window=window)
                 )

@@ -12,10 +12,10 @@ class ShowViewAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'enthought.pyface.workbench.action.show_other_view'
+    id = 'enthought.pyface.workbench.action.show_view'
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = 'Other...'
+    name = 'Show View'
     
     ###########################################################################
     # 'Action' interface.
@@ -24,12 +24,12 @@ class ShowViewAction(WorkbenchAction):
     def perform(self, event):
         """ Perform the action. """
 
-        chooser = ViewChooser(window=event.window)
-        
-        ui = chooser.edit_traits(parent=event.window.control, kind='livemodal')
+        chooser = ViewChooser(window=self.window)
+
+        ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
         if ui.result:
             chooser.view.show()
-            chooser.view.set_focus()
+            chooser.view.activate()
             
         return
 
