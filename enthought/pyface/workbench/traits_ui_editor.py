@@ -67,6 +67,7 @@ class TraitsUIEditor(Editor):
         if self.ui is not None:
             logger.debug('disposing traits UI for editor [%s]', self)
             self.ui.dispose()
+            self.ui = None
             
         return
 
