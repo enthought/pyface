@@ -115,7 +115,6 @@ class ViewChooser(HasTraits):
                 nodes  = [
                     WorkbenchWindowTreeNode(
                         auto_open = False,
-                        children  = 'categories',
                         label     = '=Views',
                         rename    = False,
                         copy      = False,
