@@ -24,14 +24,12 @@ class ShowViewAction(WorkbenchAction):
     def perform(self, event):
         """ Perform the action. """
 
-        view_chooser = ViewChooser(window=self.window)
+        chooser = ViewChooser(window=self.window)
 
-        ui = view_chooser.edit_traits(
-            parent=self.window.control, kind='livemodal'
-        )
+        ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
         if ui.result:
-            view_chooser.view.show()
-            view_chooser.view.activate()
+            chooser.view.show()
+            chooser.view.activate()
             
         return
 
