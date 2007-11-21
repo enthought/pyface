@@ -2,7 +2,7 @@
 
 
 # Local imports.
-from show_view import ViewChooser
+from view_chooser import ViewChooser
 from workbench_action import WorkbenchAction
 
 
@@ -24,12 +24,14 @@ class ShowViewAction(WorkbenchAction):
     def perform(self, event):
         """ Perform the action. """
 
-        chooser = ViewChooser(window=self.window)
+        view_chooser = ViewChooser(window=self.window)
 
-        ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
+        ui = view_chooser.edit_traits(
+            parent=self.window.control, kind='livemodal'
+        )
         if ui.result:
-            chooser.view.show()
-            chooser.view.activate()
+            view_chooser.view.show()
+            view_chooser.view.activate()
             
         return
 

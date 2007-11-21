@@ -1,14 +1,12 @@
-""" A UI that allows the user to select a view. """
+""" A UI that allows the user to choose a view. """
 
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView
 from enthought.traits.api import Any, HasTraits, Instance, List, Str
 from enthought.traits.api import TraitError, Undefined
-from enthought.traits.ui.api import Item, TreeEditor, TreeNode, View
-
-# fixme: Why does this import not come from an api file like everything else?
-from enthought.traits.ui.menu import Action
+from enthought.traits.ui.api import Item, View
+from enthought.traits.ui.menu import Action # fixme: Non-api import!
 
 
 class Category(HasTraits):
@@ -53,72 +51,8 @@ class ViewManager(HasTraits):
         return categories
 
 
-class IViewTreeNode(TreeNode):
-    """ A tree node for objects that implement the 'IView' interface.
-
-    This node does *not* recognise objects that can be *adapted* to the 'IView'
-    interface, only those that actually implement it. If we wanted to allow
-    for adaptation we would have to work out a way for the rest of the
-    'TreeNode' code to access the adapter, not the original object. We could,
-    of course override every method, but that seems a little, errr, tedious.
-    We could probably do with something like in the PyFace tree where there
-    is a method that returns the actual object that we want to manipulate.
-
-    """
-    
-    def is_node_for(self, obj):
-        """ Returns whether this is the node that handles a specified object.
-        
-        """
-
-        # By checking for 'is obj' here, we are *not* allowing adaptation. See
-        # the class doc string for details.
-        return IView(obj, Undefined) is obj
-
-
-# A tree editor that shows views in their categories.
-tree_editor = TreeEditor(
-    nodes = [
-        TreeNode(
-            node_for  = [ViewManager],
-            auto_open = False,
-            children  = 'categories',
-            label     = '=Views',
-            rename    = False,
-            copy      = False,
-            delete    = False,
-            insert    = False,
-            menu      = None,
-        ),
-
-        TreeNode(
-            node_for  = [Category],
-            auto_open = False,
-            children  = 'views',
-            label     = 'name',
-            rename    = False,
-            copy      = False,
-            delete    = False,
-            insert    = False,
-            menu      = None,
-        ),
-
-        IViewTreeNode(
-            auto_open = False,
-            label     = 'name',
-            rename    = False,
-            copy      = False,
-            delete    = False,
-            insert    = False,
-            menu      = None,
-        ),
-    ],
-
-    editable   = False,
-    hide_root  = True,
-    selected   = 'selected',
-    show_icons = False
-)
+# Local imports.
+from view_tree_editor import view_tree_editor
 
 
 class ViewChooser(HasTraits):
@@ -148,12 +82,11 @@ class ViewChooser(HasTraits):
     traits_ui_view = View(
         Item(
             name       = 'view_manager',
-            editor     = tree_editor,
+            editor     = view_tree_editor,
             show_label = False,
-            width      = 0.1,
         ),
 
-        buttons  = [
+        buttons   = [
             Action(name='OK', enabled_when='view is not None'), 'Cancel'
         ],
 
@@ -166,7 +99,7 @@ class ViewChooser(HasTraits):
     )
 
     ###########################################################################
-    # 'ShowView' interface.
+    # 'ViewChooser' interface.
     ###########################################################################
 
     #### Trait initializers ###################################################
@@ -181,7 +114,7 @@ class ViewChooser(HasTraits):
     def _selected_changed(self, old, new):
         """ Static trait change handler. """
 
-        # If the assigment fails then the selected object does *not* implement
+        # If the assignment fails then the selected object does *not* implement
         # the 'IView' interface.
         try:
             self.view = new
