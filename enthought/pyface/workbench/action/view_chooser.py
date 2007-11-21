@@ -4,11 +4,12 @@
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView
 from enthought.traits.api import Any, HasTraits, Instance, TraitError
-from enthought.traits.ui.api import Item, View
+from enthought.traits.ui.api import Item, TreeEditor, TreeNode, View
 from enthought.traits.ui.menu import Action # fixme: Non-api import!
 
 # Local imports.
-from view_tree_editor import view_tree_editor
+from i_view_tree_node import IViewTreeNode
+from workbench_window_tree_node import Category, WorkbenchWindowTreeNode
 
 
 class ViewChooser(HasTraits):
@@ -25,7 +26,7 @@ class ViewChooser(HasTraits):
     # either None, a view category, or a view).
     selected = Any
 
-    # The chosen view (None if no view has been chosen).
+    # The selected view (None if the selected item is not a view).
     view = Instance(IView)
     
     #### Traits UI views ######################################################
@@ -33,8 +34,48 @@ class ViewChooser(HasTraits):
     traits_ui_view = View(
         Item(
             name       = 'window',
-            editor     = view_tree_editor,
-            show_label = False,
+            editor     = TreeEditor(
+                nodes  = [
+                    WorkbenchWindowTreeNode(
+                        auto_open = False,
+                        children  = 'categories',
+                        label     = '=Views',
+                        rename    = False,
+                        copy      = False,
+                        delete    = False,
+                        insert    = False,
+                        menu      = None,
+                    ),
+
+                    TreeNode(
+                        node_for  = [Category],
+                        auto_open = False,
+                        children  = 'views',
+                        label     = 'name',
+                        rename    = False,
+                        copy      = False,
+                        delete    = False,
+                        insert    = False,
+                        menu      = None,
+                    ),
+                    
+                    IViewTreeNode(
+                        auto_open = False,
+                        label     = 'name',
+                        rename    = False,
+                        copy      = False,
+                        delete    = False,
+                        insert    = False,
+                        menu      = None,
+                    )
+                ],
+
+                editable   = False,
+                hide_root  = True,
+                selected   = 'selected',
+                show_icons = False
+            ),
+            show_label = False
         ),
 
         buttons   = [
@@ -45,8 +86,8 @@ class ViewChooser(HasTraits):
         style     = 'custom',
         title     = 'Show View',
 
-        width     = .3,
-        height    = .3
+        width     = .2,
+        height    = .4
     )
 
     ###########################################################################
