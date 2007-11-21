@@ -2,12 +2,43 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import IView
-from enthought.traits.api import Undefined
+from enthought.pyface.workbench.api import IView, WorkbenchWindow
+from enthought.traits.api import HasTraits, List, Str, Undefined
 from enthought.traits.ui.api import TreeEditor, TreeNode
 
-# Local imports.
-from view_chooser import Category, ViewManager
+
+class Category(HasTraits):
+    """ A view category. """
+
+    # The name of the category.
+    name = Str
+
+    # The views in the category.
+    views = List
+
+
+class WorkbenchWindowTreeNode(TreeNode):
+    """ A tree node for workbench windows. """
+
+    node_for = [WorkbenchWindow]
+
+    def get_children ( self, object ):
+        """ Gets the object's children. """
+
+        # Collate the window's views into categories.
+        categories_by_name = {}
+        for view in object.views:
+            category = categories_by_name.get(view.category)
+            if category is None:
+                category = Category(name=view.category)
+                categories_by_name[view.category] = category
+
+            category.views.append(view)
+
+        categories = categories_by_name.values()
+        categories.sort(key=lambda x: x.name)
+            
+        return categories
 
 
 class IViewTreeNode(TreeNode):
@@ -35,8 +66,7 @@ class IViewTreeNode(TreeNode):
 
 
 view_tree_nodes = [
-    TreeNode(
-        node_for  = [ViewManager],
+    WorkbenchWindowTreeNode(
         auto_open = False,
         children  = 'categories',
         label     = '=Views',
