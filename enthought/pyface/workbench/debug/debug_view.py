@@ -2,9 +2,9 @@
 
 
 # Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
 from enthought.pyface.workbench.api import View, WorkbenchWindow
 from enthought.traits.api import HasTraits, Instance, Str, on_trait_change
+from enthought.traits.ui.api import View as TraitsView
 
 
 class DebugViewModel(HasTraits):
@@ -83,80 +83,12 @@ class DebugView(View):
 
         self.model = DebugViewModel(window=self.window)
 
-        method = getattr(self, '_create_control_%s' % ETSConfig.toolkit)
-        if method is None:
-            raise SystemError('Unknown toolkit %s' % ETSConfig.toolkit)
-
-        return method(parent)
-
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    #### wx ###################################################################
-
-    def _create_control_wx(self, parent):
-        """ Creates the wx control that represents the view. """
-
-        from enthought.traits.ui.api import View
-
         ui = self.model.edit_traits(
             parent = parent,
             kind   = 'subpanel',
-            view   =  View('active_part', 'active_editor', 'active_view')
+            view   =  TraitsView('active_part', 'active_editor', 'active_view')
         )
 
         return ui.control
 
-    #### qt4 ##################################################################
-
-    def _create_control_qt4(self, parent):
-        """ Creates the qt4 control that represents the view. """
-
-        from PyQt4 import QtGui
-
-        layout = QtGui.QGridLayout()
-
-        layout.addWidget(QtGui.QLabel("Active Part"), 0, 0)
-        self._active_part_widget = QtGui.QLineEdit()
-        layout.addWidget(self._active_part_widget, 0, 1)
-        
-        layout.addWidget(QtGui.QLabel("Active Editor"), 1, 0)
-        self._active_editor_widget = QtGui.QLineEdit()
-        layout.addWidget(self._active_editor_widget, 1, 1)
-
-        layout.addWidget(QtGui.QLabel("Active View"), 2, 0)
-        self._active_view_widget = QtGui.QLineEdit()
-        layout.addWidget(self._active_view_widget, 2, 1)
-        
-        layout.setRowStretch(3, 1)
-
-        ui = QtGui.QWidget(parent)
-        ui.setLayout(layout)
-
-        # Make sure the widgets reflect the state of the model.
-        self._refresh()
-
-        # Listen for changes to the model.
-        self.model.on_trait_change(self._on_model_anytrait_changed)
-        
-        return ui
-
-    def _on_model_anytrait_changed(self, obj, trait_name, old, new):
-        """ Dynamic trait change handler. """
-
-        if self.control is not None:
-            self._refresh()
-
-        return
-    
-    def _refresh(self):
-        """  Make sure the widgets reflect the state of the model. """
-
-        self._active_part_widget.setText(str(self.model.active_part))
-        self._active_editor_widget.setText(str(self.model.active_editor))
-        self._active_view_widget.setText(str(self.model.active_view))
-            
-        return
-    
 #### EOF ######################################################################
