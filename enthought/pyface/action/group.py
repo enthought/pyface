@@ -15,12 +15,12 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import Action
 from enthought.traits.api import Any,Bool, HasTraits, Instance, List, Property
 from enthought.traits.api import Str
 from enthought.traits.trait_base import user_name_for
 
 # Local imports.
+from action import Action
 from action_item import ActionItem
 from action_manager_item import ActionManagerItem
 
