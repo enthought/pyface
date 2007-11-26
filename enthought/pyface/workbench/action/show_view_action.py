@@ -28,7 +28,11 @@ class ShowViewAction(WorkbenchAction):
 
         ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
         if ui.result:
+            # This shows the view...
             chooser.view.show()
+
+            # ... and this makes it active (brings it to the front, gives it
+            # focus etc).
             chooser.view.activate()
             
         return

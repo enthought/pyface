@@ -3,7 +3,7 @@
 
 # Enthought library imports.
 from enthought.pyface.workbench.api import IView, WorkbenchWindow
-from enthought.traits.api import Any, HasTraits, Instance, List, Str
+from enthought.traits.api import Any, Bool, HasTraits, Instance, List, Str
 from enthought.traits.api import TraitError, Undefined
 from enthought.traits.ui.api import Item, TreeEditor, TreeNode, View
 from enthought.traits.ui.menu import Action # fixme: Non-api import!
@@ -89,6 +89,36 @@ class IViewTreeNode(TreeNode):
         return IView(obj, Undefined) is obj
 
 
+from enthought.traits.ui.api import Handler
+class ViewChooserHandler(Handler):
+    """ The traits UI handler for the view chooser. """
+    
+    ###########################################################################
+    # 'Handler' interface.
+    ###########################################################################
+
+    def close(self, info, is_ok):
+        """ Close a dialog-based user interface. """
+
+        info.object._closing = True
+        
+        return super(ViewChooserHandler, self).close(info, is_ok)
+    
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    def _select_first_node(self, info):
+        """ Select the first node in the tree (if there is one). """
+
+        root = info.object.root
+        
+        if len(root.children) > 0:
+            node = root.children[0]
+            info.object.selected_page = node.page
+
+        return
+
 class ViewChooser(HasTraits):
     """ Allow the user to choose a view.
 
@@ -105,6 +135,12 @@ class ViewChooser(HasTraits):
 
     # The selected view (None if the selected item is not a view).
     view = Instance(IView)
+
+    #### Private interface ####################################################
+
+    # Hack to get around the bug in the Qt tree editor where selection events
+    # get fired *after* the 'OK' button is pressed.
+    _closing = Bool
     
     #### Traits UI views ######################################################
     
@@ -158,6 +194,7 @@ class ViewChooser(HasTraits):
             Action(name='OK', enabled_when='view is not None'), 'Cancel'
         ],
 
+        handler   = ViewChooserHandler(),
         resizable = True,
         style     = 'custom',
         title     = 'Show View',
@@ -173,6 +210,11 @@ class ViewChooser(HasTraits):
     def _selected_changed(self, old, new):
         """ Static trait change handler. """
 
+        # Hack to get around the bug in the Qt tree editor where selection
+        # events get fired *after* the 'OK' button is pressed.
+        if self._closing:
+            return
+        
         # If the assignment fails then the selected object does *not* implement
         # the 'IView' interface.
         try:
