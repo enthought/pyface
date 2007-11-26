@@ -97,10 +97,10 @@ class DockWindowShell ( HasPrivateTraits ):
             
         dx, dy = old_control.GetSize()
         tis    = theme.tab.image_slice
-        tm     = theme.tab.margins
+        tc     = theme.tab.content
         tdy    = theme.tab_active.image_slice.dy
-        dx    += (tis.xleft + tm.left + tis.xright  + tm.right)
-        dy    += (tis.xtop  + tm.top  + tis.xbottom + tm.bottom + tdy)
+        dx    += (tis.xleft + tc.left + tis.xright  + tc.right)
+        dy    += (tis.xtop  + tc.top  + tis.xbottom + tc.bottom + tdy)
         
         self.add_control( dock_control )
             
@@ -110,8 +110,8 @@ class DockWindowShell ( HasPrivateTraits ):
         cdx, cdy = shell.GetClientSizeTuple()
         ex_dx    = dx - cdx
         ex_dy    = dy - cdy
-        shell.SetDimensions( x - (ex_dx / 2) - tis.xleft - tm.left, 
-                             y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tm.top, 
+        shell.SetDimensions( x - (ex_dx / 2) - tis.xleft - tc.left, 
+                             y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tc.top, 
                              dx + ex_dx, dy + ex_dy )
         shell.Show()
         

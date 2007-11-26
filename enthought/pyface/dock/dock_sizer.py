@@ -398,7 +398,7 @@ class DockItem ( HasPrivateTraits ):
         # Calculate the size needed by the theme and margins:
         theme = self.tab_theme
         tw    = (theme.image_slice.xleft + theme.image_slice.xright +
-                 theme.margins.left      + theme.margins.right)
+                 theme.content.left      + theme.content.right)
         
         # Add feature marker width:
         if self.feature_mode != FEATURE_NONE:
@@ -778,11 +778,11 @@ class DockItem ( HasPrivateTraits ):
         # Compute the initial drawing position:
         name         = self.tab_name
         tdx, text_dy = dc.GetTextExtent( name )
-        tm           = theme.margins
-        ox, oy       = theme.offset
-        y += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
+        tc           = theme.content
+        ox, oy       = theme.label.left, theme.label.top
+        y += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom - 
                      text_dy) / 2))
-        x += ox + slice.xleft + tm.left
+        x += ox + slice.xleft + tc.left
 
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
@@ -887,13 +887,13 @@ class DockItem ( HasPrivateTraits ):
             x, y, dx, dy = self.drag_bounds
             theme  = self.tab_theme
             slice  = theme.image_slice
-            tm     = theme.margins
-            ox, oy = theme.offset
+            tc     = theme.content
+            ox, oy = theme.label.left, theme.label.top
             
             # fixme: x calculation seems to be off by -1...
-            return ( x + dx + ox - slice.xright - tm.right - CloseTabSize,
-                     y + oy + ((dy + slice.xtop + tm.top - slice.xbottom -
-                                tm.bottom - text_dy) / 2) + 3,
+            return ( x + dx + ox - slice.xright - tc.right - CloseTabSize,
+                     y + oy + ((dy + slice.xtop + tc.top - slice.xbottom -
+                                tc.bottom - text_dy) / 2) + 3,
                      CloseTabSize, CloseTabSize )
 
         return ( 0, 0, 0, 0 )
@@ -951,11 +951,11 @@ class DockItem ( HasPrivateTraits ):
         idy    = DockImages._tab_feature_height
         theme  = self.tab_theme
         slice  = theme.image_slice
-        tm     = theme.margins
-        ox, oy = theme.offset
-        y     += (oy + ((dy + slice.xtop + tm.top - slice.xbottom - tm.bottom - 
+        tc     = theme.content
+        ox, oy = theme.label.left, theme.label.top
+        y     += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom - 
                          text_dy) / 2))
-        x     += ox + slice.xleft + tm.left
+        x     += ox + slice.xleft + tc.left
         result = self.is_in( event, x, y, idx, idy )
 
         # If the pointer is over the feature 'trigger' icon, save the event for
@@ -1118,30 +1118,30 @@ class DockSplitter ( DockItem ):
         
         image    = DockImages.get_splitter_image( self.state )
         idx, idy = image.GetWidth(), image.GetHeight()
-        ox, oy   = theme.offset
+        ox, oy   = theme.label.left, theme.label.top
         tis      = theme.image_slice
-        tm       = theme.margins
+        tc       = theme.content
         if self.style == 'horizontal':
-            iy = y + oy + ((dy + tis.xtop + tm.top - tis.xbottom - tm.bottom -
+            iy = y + oy + ((dy + tis.xtop + tc.top - tis.xbottom - tc.bottom -
                             idy) / 2)
             if theme.alignment == 'center':
-                ix = x = x + ox + ((dx + tis.xleft + tm.left - tis.xright -
-                                    tm.right - idx) / 2)
+                ix = x = x + ox + ((dx + tis.xleft + tc.left - tis.xright -
+                                    tc.right - idx) / 2)
             elif theme.alignment == 'right':
-                ix = x = x + ox + dx - tis.xright - tm.right - idx
+                ix = x = x + ox + dx - tis.xright - tc.right - idx
             else:                
-                ix = x = x + ox + tis.xleft + tm.left
+                ix = x = x + ox + tis.xleft + tc.left
             dx = idx
         else:
-            ix = x + ox + ((dx + tis.xleft + tm.left - tis.xright - tm.right - 
+            ix = x + ox + ((dx + tis.xleft + tc.left - tis.xright - tc.right - 
                             idx) / 2)
             if theme.alignment == 'center':
-                iy = y = y + oy + ((dy + tis.xtop + tm.top - tis.xbottom -
-                                    tm.bottom - idy) / 2)
+                iy = y = y + oy + ((dy + tis.xtop + tc.top - tis.xbottom -
+                                    tc.bottom - idy) / 2)
             elif theme.alignment == 'right':
-                iy = y = y + oy + dy - tis.xbottom - tm.bottom - idy
+                iy = y = y + oy + dy - tis.xbottom - tc.bottom - idy
             else:
-                iy = y = y + oy + tis.xtop + tm.top
+                iy = y = y + oy + tis.xtop + tc.top
             dy = idy
             
         dc.DrawBitmap( image, ix, iy, True )
@@ -1294,22 +1294,30 @@ class DockSplitter ( DockItem ):
         dc.SetBrush( wx.Brush( wx.Colour( *DragColor ), wx.SOLID ) )
 
         ax = ay = adx = ady = 0
-        if self.style == 'horizontal':
-            ay = ady =3
-        else:
-            ax  = 3
-            adx = 6
+        is_horizontal = (self.style == 'horizontal')
 
         # Erase the old bounds (if any):
         if self._bounds is not None:
             x, y, dx, dy = self._bounds
             x, y         = window.ClientToScreenXY( x, y )
+            if is_horizontal:
+                ady = (dy - 6)
+                ay  = ady / 2
+            else:
+                adx = (dx - 6)
+                ax  = adx / 2
             dc.DrawRectangle( x + ax, y + ay, dx - adx, dy - ady )
 
         # Draw the new bounds (if any):
         if bounds is not None:
             x, y, dx, dy = bounds
             x, y         = window.ClientToScreenXY( x, y )
+            if is_horizontal:
+                ady = (dy - 6)
+                ay  = ady / 2
+            else:
+                adx = (dx - 6)
+                ax  = adx / 2
             dc.DrawRectangle( x + ax, y + ay, dx - adx, dy - ady )
 
         # Save the new bounds for the next call:
@@ -2042,11 +2050,11 @@ class DockRegion ( DockGroup ):
                 tab_dx += item.tab_width
 
             tis  = theme.tab.image_slice
-            tm   = theme.tab.margins
+            tc   = theme.tab.content
             tdx  = max( tdx, tab_dx ) + (tis.xleft + tis.xright + 
-                                         tm.left   + tm.right)
+                                         tc.left   + tc.right)
             tdy += (theme.tab_active.image_slice.dy + 
-                    tis.xtop + tis.xbottom + tm.top + tm.bottom)
+                    tis.xtop + tis.xbottom + tc.top + tc.bottom)
         elif len( contents ) > 0:
             item     = contents[0]
             tdx, tdy = item.calc_min( use_size )
@@ -2077,15 +2085,15 @@ class DockRegion ( DockGroup ):
         contents = self.visible_contents
         if self.is_notebook:
             tis = theme.tab.image_slice
-            tm  = theme.tab.margins
+            tc  = theme.tab.content
             th  = theme.tab_active.image_slice.dy
             # Layout the region out as a notebook:
-            x  += tis.xleft + tm.left
-            tx0 = tx = x + theme.tab.offset[0]
-            dx -= (tis.xleft + tis.xright + tm.left + tm.right)
+            x  += tis.xleft + tc.left
+            tx0 = tx = x + theme.tab.label.left
+            dx -= (tis.xleft + tis.xright + tc.left + tc.right)
             ady = dy - th
-            dy  = ady - tis.xtop - tis.xbottom - tm.top - tm.bottom
-            iy  = y + tis.xtop + tm.top
+            dy  = ady - tis.xtop - tis.xbottom - tc.top - tc.bottom
+            iy  = y + tis.xtop + tc.top
             if theme.tabs_at_top:
                 iy += th
             else:
@@ -2097,7 +2105,7 @@ class DockRegion ( DockGroup ):
                 tx += tdx
 
             # Calculate the default tab clipping bounds:
-            cdx = dx + tm.left + tm.right
+            cdx = dx + tc.left + tc.right
             self._tab_clip_bounds = ( tx0, y, cdx, th )
 
             # Do we need to enable tab scrolling?
