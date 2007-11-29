@@ -9,6 +9,8 @@ from enthought.traits.api import Instance, List, on_trait_change
 from delete_user_perspective_action import DeleteUserPerspectiveAction
 from new_user_perspective_action import NewUserPerspectiveAction
 from rename_user_perspective_action import RenameUserPerspectiveAction
+from reset_all_perspectives_action import ResetAllPerspectivesAction
+from reset_active_perspective_action import ResetActivePerspectiveAction
 from save_as_user_perspective_action import SaveAsUserPerspectiveAction
 from set_active_perspective_action import SetActivePerspectiveAction
 
@@ -48,7 +50,11 @@ class PerspectiveMenuManager(MenuManager):
 
             # Create a group containing the user perspective create/save/rename
             # /delete actions.
-            self._create_user_perspective_group(self.window)
+            self._create_user_perspective_group(self.window),
+
+            # Create a group containing the reset actions.
+            self._create_reset_perspective_group(self.window)
+            
         ]
 
         return groups
@@ -116,43 +122,14 @@ class PerspectiveMenuManager(MenuManager):
 
         return group
 
-##     def _rebuild(self):
-##         """ Rebuild the menu.
+    def _create_reset_perspective_group(self, window):
+        """ Create the reset perspective actions. """
 
-##         This is called when user perspectives have been added or removed.
+        group = Group(
+            ResetActivePerspectiveAction(window=window),
+            ResetAllPerspectivesAction(window=window)
+        )
 
-##         """
+        return group
 
-##         # Clear out the old menu. This gives any actions that have trait
-##         # listeners (i.e. the rename and delete actions!) a chance to unhook
-##         # them.
-##         self.destroy()
-
-##         # Resetting the trait allows the initializer to run again (which will
-##         # happen just as soon as we fire the 'changed' event).
-##         self.reset_traits(['groups'])
-
-##         # Let the associated menu know that we have changed.
-##         self.changed = True
-
-##         return
-        
-##     #### Trait change handlers ################################################
-
-##     @on_trait_change('window.perspectives')
-##     def _when_perspectives_changed_for_window(self, new):
-##         """ Dynamic trait change handler. """
-
-##         self._rebuild()
-        
-##         return
-
-##     @on_trait_change('window.perspectives_items')
-##     def _when_perspectives_items_changed_for_window(self, event):
-##         """ Dynamic trait change handler. """
-
-##         self._rebuild()
-        
-##         return
-    
 #### EOF ######################################################################
