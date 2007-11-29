@@ -41,6 +41,7 @@ setup(
         'dock': [
             DEVELOPER,
             IO,
+            NAMING,
             ],
         'tvtk': [
             PERSISTENCE,
@@ -56,7 +57,6 @@ setup(
     include_package_data = True,
     install_requires = [
         ETSCONFIG,
-        NAMING,
         RESOURCE,
         TRAITS_UI,
         TRAITSUIWX,
