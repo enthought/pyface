@@ -482,6 +482,21 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
+    def reset_active_perspective(self):
+        """ Reset the active perspective back to its original contents. """
+
+        perspective = self.active_perspective
+        
+        # If the perspective has been seen before then restore it.
+        if perspective.id in self._memento.perspective_mementos:
+            # Remove the perspective's memento.
+            del self._memento.perspective_mementos[perspective.id]
+
+        # Re-display the perspective.
+        self._show_perspective(perspective, perspective)
+
+        return
+
     def reset_all_perspectives(self):
         """ Reset all perspectives back to their original contents. """
 
@@ -497,19 +512,6 @@ class WorkbenchWindow(ApplicationWindow):
         """ Activate the first editor in every tab. """
 
         self.layout.reset_editors()
-
-        return
-
-    def reset_perspective(self, perspective):
-        """ Reset a perspective back to its original contents. """
-
-        # If the perspective has been seen before then restore it.
-        if perspective.id in self._memento.perspective_mementos:
-            # Remove the perspective's memento.
-            del self._memento.perspective_mementos[perspective.id]
-
-        # Re-display the perspective.
-        self._show_perspective(perspective, perspective)
 
         return
 
