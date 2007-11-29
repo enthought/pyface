@@ -508,8 +508,8 @@ class WorkbenchWindow(ApplicationWindow):
             # Remove the perspective's memento.
             del self._memento.perspective_mementos[perspective.id]
 
-            # Re-display the perspective.
-            self._show_perspective(self.active_perspective, perspective)
+        # Re-display the perspective.
+        self._show_perspective(perspective, perspective)
 
         return
 

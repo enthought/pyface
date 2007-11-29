@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.pyface.api import OK
+from enthought.pyface.api import YES
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -32,7 +32,7 @@ class ResetActivePerspectiveAction(WorkbenchAction):
 
         window = self.window
         
-        if window.confirm(MESSAGE % window.active_perspective.name) == OK:
+        if window.confirm(MESSAGE % window.active_perspective.name) == YES:
             window.reset_perspective(window.active_perspective)
 
         return
