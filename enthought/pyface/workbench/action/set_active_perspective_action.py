@@ -41,6 +41,13 @@ class SetActivePerspectiveAction(WorkbenchAction):
         self.window.active_perspective = self.perspective
 
         return
+
+    def destroy(self):
+        """ Destroy the action. """
+
+        self.window = None
+
+        return
     
     ###########################################################################
     # Private interface.
