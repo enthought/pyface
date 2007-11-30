@@ -37,7 +37,7 @@ class TableViewer(ContentViewer):
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Trait(TableLabelProvider(), Instance(TableLabelProvider))
+    label_provider = Instance(TableLabelProvider, factory = TableLabelProvider)
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
