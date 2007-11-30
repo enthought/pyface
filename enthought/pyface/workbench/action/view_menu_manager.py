@@ -126,7 +126,10 @@ class ViewMenuManager(MenuManager):
     def _initialize_view_group(self, window, group):
         """ Initializes a group containing the view 'togglers'. """
 
-        for view in window.views:
+        views = window.views[:]
+        views.sort(None, lambda view: view.name)
+
+        for view in views:
             # fixme: It seems a little smelly to be reaching in to the window
             # layout here. Should the 'contains_view' method be part of the
             # window interface?
