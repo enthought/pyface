@@ -35,17 +35,17 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # 'Action' interface.
     ###########################################################################
 
-    def perform(self, event):
-        """ Perform the action. """
-
-        self.window.active_perspective = self.perspective
-
-        return
-
     def destroy(self):
         """ Destroy the action. """
 
         self.window = None
+
+        return
+
+    def perform(self, event):
+        """ Perform the action. """
+
+        self.window.active_perspective = self.perspective
 
         return
     
