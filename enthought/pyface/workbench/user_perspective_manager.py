@@ -104,7 +104,7 @@ class UserPerspectiveManager(HasTraits):
             id               = '__user_perspective_%09d__' % self.next_id,
             name             = name,
             # fixme: What if the use wants to show the editor area?!?
-            show_editor_area = False
+            show_editor_area = True
         )
         
         # Add the perspective to the map.
