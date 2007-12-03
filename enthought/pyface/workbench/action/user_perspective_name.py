@@ -10,7 +10,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasStrictTraits, Trait, TraitError, Constant
+from enthought.traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from enthought.traits.ui.api import View, Item, VGroup
 
 
@@ -28,7 +28,7 @@ def not_empty_string(object, name, value):
 NotEmptyString = Trait('', not_empty_string)
 
 
-class UserPerspectiveName(HasStrictTraits):
+class UserPerspectiveName(HasTraits):
     """ Object with views for naming or renaming a user perspective. """
 
     ###########################################################################
@@ -37,6 +37,9 @@ class UserPerspectiveName(HasStrictTraits):
 
     # The name of the new user perspective.
     name = NotEmptyString
+
+    # Should the editor area be shown in this perpsective?
+    show_editor_area = Bool(True)
     
     # Help notes when creating a new view.
     new_help = Constant("""Note:
@@ -50,7 +53,7 @@ class UserPerspectiveName(HasStrictTraits):
 
     new_view = View( 
         VGroup(
-            VGroup( 'name' ),
+            VGroup( 'name', 'show_editor_area' ),
             VGroup( '_',
                 Item( 'new_help', 
                       style = 'readonly' ),

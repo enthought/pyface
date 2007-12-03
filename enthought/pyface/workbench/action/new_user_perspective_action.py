@@ -35,12 +35,13 @@ class NewUserPerspectiveAction(WorkbenchAction):
         window  = event.window
         manager = window.workbench.user_perspective_manager
 
-        # Get the name of the new perspective.
+        # Get the details of the new perspective.
         upn = UserPerspectiveName(name='User Perspective %d' % manager.next_id)
-
         if upn.edit_traits(view='new_view').result:
             # Create a new (and empty) user perspective.
-            perspective = manager.create_perspective(upn.name.strip())
+            perspective = manager.create_perspective(
+                upn.name.strip(), upn.show_editor_area
+            )
             
             # Add it to the window...
             window.perspectives.append(perspective)
