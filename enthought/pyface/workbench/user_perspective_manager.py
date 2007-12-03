@@ -97,14 +97,13 @@ class UserPerspectiveManager(HasTraits):
 
     #### Methods ##############################################################
 
-    def create_perspective(self, name):
+    def create_perspective(self, name, show_editor_area=True):
         """ Creates a new (and empty) user-defined perspective. """
 
         perspective = Perspective(
             id               = '__user_perspective_%09d__' % self.next_id,
             name             = name,
-            # fixme: What if the use wants to show the editor area?!?
-            show_editor_area = True
+            show_editor_area = show_editor_area
         )
         
         # Add the perspective to the map.
