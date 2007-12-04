@@ -88,6 +88,19 @@ class IViewTreeNode(TreeNode):
         # doc string for details.
         return IView(obj, Undefined) is obj
 
+    def get_icon(self, obj, is_expanded):
+        """ Returns the icon for a specified object. """
+
+        if obj.image is not None:
+            icon = obj.image
+
+        else:
+            # fixme: A bit of magic here! Is there a better way to say 'use
+            # the default leaf icon'?
+            icon = '<item>'
+
+        return icon
+
 
 class ViewChooser(HasTraits):
     """ Allow the user to choose a view.
@@ -149,7 +162,7 @@ class ViewChooser(HasTraits):
                 editable   = False,
                 hide_root  = True,
                 selected   = 'selected',
-                show_icons = False
+                show_icons = True
             ),
             show_label = False
         ),

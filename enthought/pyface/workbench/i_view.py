@@ -15,7 +15,9 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Float, List, Str, implements
+from enthought.pyface.api import ImageResource
+from enthought.traits.api import Bool, Enum, Float, Instance, List, Str
+from enthought.traits.api import implements
 
 # Local imports.
 from i_perspective_item import IPerspectiveItem
@@ -34,6 +36,10 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # they are displayed to the user).
     category = Str('General')
 
+    # An image used to represent the view to the user (shown in the view tab
+    # and in the view chooser etc).
+    image = Instance(ImageResource)
+    
     # Whether the view is visible or not.
     visible = Bool(False)
 
@@ -71,6 +77,10 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # The category that the view belongs to (this can be used to group views
     # when they are displayed to the user).
     category = Str('General')
+
+    # An image used to represent the view to the user (shown in the view tab
+    # and in the view chooser etc).
+    image = Instance(ImageResource)
 
     # Whether the view is visible or not.
     visible = Bool(False)
