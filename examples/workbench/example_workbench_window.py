@@ -53,8 +53,8 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         Perspective(
             name     = 'Foo',
             contents = [
-                PerspectiveItem(id='Black', position='bottom'),
-                PerspectiveItem(id='Debug', position='left')
+                PerspectiveItem(id='Black', position='bottom', height=0.1),
+                PerspectiveItem(id='Debug', position='left', width=0.25)
             ]
         ),
         
