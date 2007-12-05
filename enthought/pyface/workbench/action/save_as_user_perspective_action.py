@@ -40,7 +40,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
         if upn.edit_traits(view='save_as_view').result:
             # Make a clone of the active perspective, but give it the new name.
             perspective = manager.clone_perspective(
-                 window.active_perspective, name=upn.name.strip()
+                 window, window.active_perspective, name=upn.name.strip()
             )
 
             # Add it to the window...

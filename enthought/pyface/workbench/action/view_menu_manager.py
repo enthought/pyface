@@ -1,4 +1,4 @@
-""" A simple(istic!) menu manager for all of the views in a window. """
+""" The 'View' menu """
 
 
 # Standard library imports.
@@ -20,10 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViewMenuManager(MenuManager):
-    """ A simple(istic!) menu manager for all of the views in a window.
+    """ The 'View' menu.
 
-    Every possible view in the window gets its own menu entry. Obviously this
-    does not scale!
+    By default, this menu is displayed on the main menu bar.
 
     """
 

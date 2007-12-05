@@ -98,7 +98,7 @@ class UserPerspectiveManager(HasTraits):
     #### Methods ##############################################################
 
     def create_perspective(self, name, show_editor_area=True):
-        """ Creates a new (and empty) user-defined perspective. """
+        """ Create a new (and empty) user-defined perspective. """
 
         perspective = Perspective(
             id               = '__user_perspective_%09d__' % self.next_id,
@@ -114,8 +114,8 @@ class UserPerspectiveManager(HasTraits):
 
         return perspective
 
-    def clone_perspective(self, perspective, **traits):
-        """ Clones a perspective as a user perspective. """
+    def clone_perspective(self, window, perspective, **traits):
+        """ Clone a perspective as a user perspective. """
 
         clone = perspective.clone_traits()
 
@@ -128,20 +128,25 @@ class UserPerspectiveManager(HasTraits):
         # Add the perspective to the map.
         self.id_to_perspective[clone.id] = clone
 
+        # fixme: This needs to be pushed into the window API!!!!!!!
+        window._memento.perspective_mementos[clone.id] = (
+            window.layout.get_view_memento(),
+            window.active_view and window.active_view.id or None
+        )
+
         # Update the persistent file information.
         self._update_persistent_data()
 
         return clone
 
-
     def save(self):
-        """ Persists the current state of the user perspectives. """
+        """ Persist the current state of the user perspectives. """
 
         self._update_persistent_data()
 
         return
     
-    def add (self, perspective, name=None):
+    def add(self, perspective, name=None):
         """ Add a perspective with an optional name. """
 
         # Define the id for the new perspective: 
@@ -166,7 +171,7 @@ class UserPerspectiveManager(HasTraits):
         return self.add(Perspective(show_editor_area=False), name)
         
     def rename(self, id, name):
-        """ Renames the user perspective with the specified id. """
+        """ Rename the user perspective with the specified id. """
 
         self.id_to_perspective[id].name = name
         
