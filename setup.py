@@ -20,7 +20,6 @@ def etsdep(p, min, max=None, literal=False):
 DEVELOPER = etsdep('enthought.developer', '2.0b1')
 ETSCONFIG = etsdep('enthought.etsconfig', '2.0b1')
 IO = etsdep('enthought.io', '2.0b1')
-NAMING = etsdep('enthought.naming', '2.0b1')
 PERSISTENCE = etsdep('enthought.persistence', '2.0b1')
 RESOURCE = etsdep('enthought.resource', '2.0b1')
 TRAITS_UI = etsdep('enthought.traits[ui]', '2.0b1')
@@ -41,7 +40,6 @@ setup(
         'dock': [
             DEVELOPER,
             IO,
-            NAMING,
             ],
         'tvtk': [
             PERSISTENCE,

@@ -28,8 +28,7 @@ import wx
 import enthought.traits.ui.wx
 
 from enthought.traits.api \
-    import HasTraits, HasPrivateTraits, Instance, Tuple, Property, Any, Str, \
-           List, false
+    import HasPrivateTraits, Instance, Tuple, Property, Any, Str, List, false
     
 from enthought.traits.trait_base \
     import traits_home                             
@@ -67,13 +66,6 @@ from idock_ui_provider \
  
 import enthought.traits.ui.dock_window_theme as dock_window_theme
 
-# Optional feature to allow dragging and dropping Binding objects into 
-# DockWindows:
-try:    
-    from enthought.naming.api \
-        import Binding
-except:
-    class Binding ( object ): pass
 
 #-------------------------------------------------------------------------------
 #  Global data:  
@@ -1032,14 +1024,11 @@ class DockWindow ( HasPrivateTraits ):
             try:
                 control = self.handler.dock_control_for(
                                        *(self.handler_args + ( window, data )) )
+                # Safely check to see if the object quacks like a Binding
                 binding = getattr( clipboard, 'node', None )
-                if isinstance( binding, Binding ) and (binding.obj is data):
-                    try:
-                        control.id = '@@%s' % binding.namespace_name
-                    except:
-                        # Not all Binding contexts support the ability to get 
-                        # the namespace_name:
-                        pass
+                if (hasattr(binding, "obj") and (binding.obj is data) and 
+                        hasattr(binding, "namespace_name")):
+                    control.id = '@@%s' % binding.namespace_name
                 dock_info.dock( control, window )
                 return drag_result
             except:
