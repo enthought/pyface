@@ -165,22 +165,19 @@ class UserPerspectiveManager(HasTraits):
         # Return the new perspective created:
         return perspective
     
-    def new_perspective(self, name):
-        """ Return a new user-defined perspective with the specified name. """
-
-        return self.add(Perspective(show_editor_area=False), name)
-        
-    def rename(self, id, name):
+    def rename(self, perspective, name):
         """ Rename the user perspective with the specified id. """
 
-        self.id_to_perspective[id].name = name
+        perspective.name = name
+        
+        self.id_to_perspective[perspective.id].name = name
         
         # Update the persistent file information:
         self._update_persistent_data()
 
         return
     
-    def remove(self, id ):
+    def remove(self, id):
         """ Remove the user perspective with the specified id.
 
         This method also updates the persistent data.

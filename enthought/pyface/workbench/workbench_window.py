@@ -487,12 +487,13 @@ class WorkbenchWindow(ApplicationWindow):
 
         perspective = self.active_perspective
         
-        # If the perspective has been seen before then restore it.
+        # If the perspective has been seen before then delete its memento.
         if perspective.id in self._memento.perspective_mementos:
             # Remove the perspective's memento.
             del self._memento.perspective_mementos[perspective.id]
 
-        # Re-display the perspective.
+        # Re-display the perspective (because a memento no longer exists for
+        # the perspective, its 'create_contents' method will be called again).
         self._show_perspective(perspective, perspective)
 
         return

@@ -42,7 +42,7 @@ class ViewMenuManager(MenuManager):
 
     #### 'ViewMenuManager' interface ##########################################
 
-    # Should the (also non-scaleable!) perspective menu be shown?
+    # Should the perspective menu be shown?
     show_perspective_menu = Bool(True)
     
     # The workbench window that the menu is part of.
@@ -81,7 +81,7 @@ class ViewMenuManager(MenuManager):
     ###########################################################################
 
     @on_trait_change('window.active_perspective,window.active_part')
-    def when_active_perspective_changed(self):
+    def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
         logger.debug('refreshing view menu')

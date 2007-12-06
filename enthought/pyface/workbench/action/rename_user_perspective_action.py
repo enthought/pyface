@@ -38,10 +38,7 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
         # Get the new name.
         upn = UserPerspectiveName(name=window.active_perspective.name)
         if upn.edit_traits(view='rename_view').result:
-            window.active_perspective.name = upn.name.strip()
-            manager.rename(
-                window.active_perspective.id, window.active_perspective.name
-            )
+            manager.rename(window.active_perspective, upn.name.strip())
 
         return
 
