@@ -33,6 +33,9 @@ class _MenuItem(HasTraits):
     # Is the item enabled?
     enabled = Bool(True)
 
+    # Is the item visible?
+    visible = Bool(True)
+
     # The radio group we are part of (None if the menu item is not part of such
     # a group).
     group = Any
@@ -69,6 +72,9 @@ class _Tool(HasTraits):
 
     # Is the item enabled?
     enabled = Bool(True)
+
+    # Is the item visible?
+    visible = Bool(True)
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
