@@ -39,11 +39,9 @@ from widget import Widget
 
 
 ###############################################################################
-# This part of the module handles widgets that are wx specific or those that
-# use the ETS v2.x method of doing toolkit selection (which was never properly
-# used because we decided to break backwards compatibility and do it better in
-# ETS v3.x).  This will all be removed when everything has been ported to v3.x
-# and pyface becomes toolkit agnostic.
+# This part of the module handles widgets that are still wx specific.  This
+# will all be removed when everything has been ported to PyQt and pyface
+# becomes toolkit agnostic.
 ###############################################################################
 
 try:

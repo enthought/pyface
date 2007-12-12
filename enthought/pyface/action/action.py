@@ -44,10 +44,13 @@ class Action(HasTraits):
     # A longer description of the action (used for context sensitive help etc).
     # If no description is specified, the tooltip is used instead (and if there
     # is no tooltip, then well, maybe you just hate your users ;^).
-    description = Str
+    description = Unicode
 
     # Is the action enabled?
     enabled = Bool(True)
+
+    # Is the action visible?
+    visible = Bool(True)
 
     # The action's unique identifier (may be None).
     id = Str

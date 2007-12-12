@@ -21,8 +21,7 @@ from enthought.traits.api import Any, Interface
 class IWidget(Interface):
     """ The base interface for all pyface widgets.
 
-    Pyface widgets delegate to a toolkit specific control.  Note that a widget
-    is not necessarily a GUI object.
+    Pyface widgets delegate to a toolkit specific control.
     """
 
     #### 'IWidget' interface ##################################################
