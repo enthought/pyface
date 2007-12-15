@@ -243,6 +243,29 @@ class TVTKScene(HasPrivateTraits):
     add_actor = add_actors
     remove_actor = remove_actors
 
+    def add_widgets(self, widgets, enabled=True):
+        """Adds a single 3D widget or a sequence of widgets to the renderer.
+        If `enabled` is True the widget is also enabled once it is added."""
+        if not hasattr(widgets, '__iter__'):
+            widgets = [widgets]
+        iren = self._interactor
+        for widget in widgets:
+            widget.interactor = iren
+            widget.enabled = enabled
+        self.render()
+
+    def remove_widgets(self, widgets):
+        """Removes a single 3D widget or a sequence of widgets from the 
+        renderer."""
+        if not hasattr(widgets, '__iter__'):
+            widgets = [widgets]
+        iren = self._interactor
+        for widget in widgets:
+            if widget.interactor is not None:
+                widget.enabled = False
+                widget.interactor = None
+        self.render()
+
     def x_plus_view(self):
         """View scene down the +X axis. """
         self._update_view(self._def_pos, 0, 0, 0, 0, 1)
