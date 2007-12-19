@@ -16,6 +16,7 @@ Caveats:
 # Enthought library imports.
 from enthought.traits.api import Dict, Event, HasTraits, \
                                  Instance, List, Property
+from enthought.traits.ui.api import View, Group, Item, InstanceEditor
 from enthought.pyface.tvtk.tvtk_scene import TVTKScene
 
 
@@ -59,6 +60,41 @@ class SceneModel(TVTKScene):
 
     # This exists just to mirror the TVTKWindow api.
     scene = Property
+
+    ###################################
+    # View related traits.
+
+    # Render_window's view.
+    _stereo_view = Group(Item(name='stereo_render'),
+                         Item(name='stereo_type'),
+                         show_border=True,
+                         label='Stereo rendering',
+                         )
+
+    # The default view of this object.
+    default_view = View(Group(
+                            Group(Item(name='background'),
+                                  Item(name='foreground'),
+                                  Item(name='parallel_projection'),
+                                  Item(name='disable_render'),
+                                  Item(name='off_screen_rendering'),
+                                  Item(name='jpeg_quality'),
+                                  Item(name='jpeg_progressive'),
+                                  Item(name='magnification'),
+                                  Item(name='anti_aliasing_frames'),
+                                  ),
+                            Group(Item(name='render_window',
+                                       style='custom',
+                                       visible_when='object.stereo',
+                                       editor=InstanceEditor(view=View(_stereo_view)),                                       show_label=False),
+                                  ),
+                            label='Scene'),
+                        Group(Item(name='light_manager',
+                                   style='custom',
+                                   editor=InstanceEditor(),
+                                   show_label=False),
+                                   label='Lights')
+                        )
 
     ###################################
     # Private traits.
