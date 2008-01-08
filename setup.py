@@ -17,13 +17,13 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0a1')
-DEVTOOLS = etsdep('DevTools', '3.0.0a1')
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0a1')
+APPTOOLS = etsdep('AppTools', '3.0.0b1')
+DEVTOOLS = etsdep('DevTools', '3.0.0b1')
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
 MAYAVI = etsdep('Mayavi', '2.0.3a1')
-TRAITS_UI = etsdep('Traits[ui]', '3.0.0a1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0a1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0a1')
+TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
 
 
 setup(
@@ -74,7 +74,7 @@ setup(
         ],
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/ets',
-    version = '3.0.0a1',
+    version = '3.0.0b1',
     zip_safe = False,
     )
 
