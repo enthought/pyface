@@ -44,10 +44,17 @@ def _init_toolkit():
         except ImportError:
             pass
     else:
-        if toolkit:
-            raise ImportError, "unable to import a pyface backend for the %s toolkit" % toolkit
-        else:
-            raise ImportError, "unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits)
+        # Try to import the null toolkit but don't set the ETSConfig toolkit
+        try:
+            be = 'enthought.pyface.ui.null.'
+            __import__(be + 'init')
+            import warnings
+            warnings.warn("Unable to import the %s backend for pyface; using the 'null' toolkit instead.")
+        except:
+            if toolkit:
+                raise ImportError("unable to import a pyface backend for the %s toolkit" % toolkit)
+            else:
+                raise ImportError("unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits))
 
     # In case we have just decided on a toolkit, tell everybody else.
     ETSConfig.toolkit = tk
