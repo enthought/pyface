@@ -17,15 +17,13 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-DEVELOPER = etsdep('enthought.developer', '2.0b1')
-ETSCONFIG = etsdep('enthought.etsconfig', '2.0b1')
-IO = etsdep('enthought.io', '2.0b1')
-PERSISTENCE = etsdep('enthought.persistence', '2.0b1')
-RESOURCE = etsdep('enthought.resource', '2.0b1')
-TRAITS_UI = etsdep('enthought.traits[ui]', '2.0b1')
-TRAITSUIWX = etsdep('enthought.traits.ui.wx', '2.0b1')
-TVTK = etsdep('enthought.tvtk', '2.0b1')
-UTIL = etsdep('enthought.util', '2.0b1')
+APPTOOLS = etsdep('AppTools', '3.0.0a1')
+DEVTOOLS = etsdep('DevTools', '3.0.0a1')
+ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0a1')
+MAYAVI = etsdep('Mayavi', '2.0.3a1')
+TRAITS_UI = etsdep('Traits[ui]', '3.0.0a1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0a1')
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0a1')
 
 
 setup(
@@ -33,17 +31,22 @@ setup(
     author_email = 'info@enthought.com',
     dependency_links = [
         'http://code.enthought.com/enstaller/eggs/source',
-        'http://code.enthought.com/enstaller/eggs/source/unstable',
         ],
     description = 'Traits capable windowing framework',
     extras_require = {
         'dock': [
-            DEVELOPER,
-            IO,
+            APPTOOLS,
+            DEVTOOLS,
+            ],
+        'qt': [
+            TRAITSBACKENDQT,
             ],
         'tvtk': [
-            PERSISTENCE,
-            TVTK,
+            APPTOOLS,
+            MAYAVI,
+            ],
+        'wx': [
+            TRAITSBACKENDWX,
             ],
 
         # All non-ets dependencies should be in this extra to ensure users can
@@ -54,14 +57,12 @@ setup(
         },
     include_package_data = True,
     install_requires = [
-        ETSCONFIG,
-        RESOURCE,
-        TRAITS_UI,
-        TRAITSUIWX,
-        UTIL,
+        APPTOOLS,
+        ENTHOUGHTBASE,
+        TRAITS_UI
         ],
     license = 'BSD',
-    name = 'enthought.pyface',
+    name = 'TraitsGUI',
     namespace_packages = [
         "enthought",
         "enthought.pyface",
