@@ -19,7 +19,7 @@ def etsdep(p, min, max=None, literal=False):
 # Declare our ETS project dependencies.
 APPTOOLS = etsdep('AppTools', '3.0.0b1')  # used in pyface/resource_manager, pyface/i_image_resource -- others are optional
 DEVTOOLS_DEVELOPER = etsdep('DevTools[developer]', '3.0.0b1')  # all in pyface/dock
-ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
+ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')
 MAYAVI = etsdep('Mayavi', '2.0.3a1')  # all in pyface/tvtk
 TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
@@ -59,7 +59,7 @@ setup(
     include_package_data = True,
     install_requires = [
         APPTOOLS,    # This should be removed -- see the TODO.txt file.
-        ENTHOUGHTBASE,
+        ENTHOUGHTBASE_UI,
         TRAITS_UI
         ],
     license = 'BSD',
