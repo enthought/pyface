@@ -1,3 +1,6 @@
+* Remove the import of enthought.resource for core functionality in
+    resource_manager.py and i_image_resource.py.
+
 * Remove the dependency on enthought.developer AND enthought.io by refactoring
     dock features modules.
 
