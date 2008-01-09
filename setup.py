@@ -17,10 +17,10 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0b1')
-DEVTOOLS = etsdep('DevTools', '3.0.0b1')
+APPTOOLS = etsdep('AppTools', '3.0.0b1')  # used in pyface/dock, pyface/tvtk, pyface/resource_manager, pyface/i_image_resource, pyface/workbench
+DEVTOOLS_DEVELOPER = etsdep('DevTools[developer]', '3.0.0b1')
 ENTHOUGHTBASE = etsdep('EnthoughtBase', '3.0.0b1')
-MAYAVI = etsdep('Mayavi', '2.0.3a1')
+MAYAVI = etsdep('Mayavi', '2.0.3a1')  # all in pyface/tvtk
 TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
 TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
@@ -35,14 +35,13 @@ setup(
     description = 'Traits capable windowing framework',
     extras_require = {
         'dock': [
-            APPTOOLS,
-            DEVTOOLS,
+            DEVTOOLS_DEVELOPER,
+            TRAITSBACKENDWX,
             ],
         'qt': [
             TRAITSBACKENDQT,
             ],
         'tvtk': [
-            APPTOOLS,
             MAYAVI,
             ],
         'wx': [

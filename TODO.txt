@@ -1,3 +1,7 @@
 * Remove the dependency on enthought.developer AND enthought.io by refactoring
     dock features modules.
 
+* Remove the dock dependence on TraitsBackendWX by removing the direct imports
+  of enthought.traits.ui.wx.
+
+
