@@ -149,8 +149,13 @@ class BackgroundProgressDialog(Dialog):
         """
         if self.control is None:
             return
-        #print "Updating with value=%s" % value
-        if not self.control.Update(value, newmsg):
+	cont = self.control.Update(value, newmsg)
+
+	# wx 2.7 API changed to return (continue, skip)
+	if isinstance(cont, tuple):
+	   cont, skip = cont
+	    
+        if not cont:
             # Abort has been pressed, set the flag.
             self._cancel = True
             self.return_code = CANCEL
