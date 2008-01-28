@@ -13,7 +13,7 @@ from editor import Editor
 
 
 # Logging.
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class TraitsUIEditor(Editor):
@@ -21,7 +21,7 @@ class TraitsUIEditor(Editor):
 
     #### 'TraitsUIEditor' interface ###########################################
 
-    # The traits ui that represents the editor.
+    # The traits UI that represents the editor.
     #
     # The framework sets this to the value returned by 'create_ui'.
     ui = Instance(UI)
@@ -31,10 +31,10 @@ class TraitsUIEditor(Editor):
     view = Str
     
     ###########################################################################
-    # 'Editor' interface.
+    # 'IWorkbenchPart' interface.
     ###########################################################################
 
-    #### Initializers #########################################################
+    #### Trait initializers ###################################################
 
     def _name_default(self):
         """ Trait initializer. """
@@ -84,7 +84,7 @@ class TraitsUIEditor(Editor):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel',
+            parent=parent, view=self.view, kind='subpanel'
         )
         
         return ui

@@ -15,3 +15,6 @@ from i_workbench import IWorkbench
 from workbench import Workbench
 
 from workbench_window import WorkbenchWindow
+
+from traits_ui_editor import TraitsUIEditor
+from traits_ui_view import TraitsUIView

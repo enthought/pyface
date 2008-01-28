@@ -65,6 +65,6 @@ class EditorManager(HasTraits):
     def _is_editing(self, editor, obj, kind):
         """ Return True if the editor is editing the object. """
 
-        return editor.obj is obj
+        return editor.obj == obj
 
 #### EOF ######################################################################
