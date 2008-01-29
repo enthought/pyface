@@ -1,12 +1,19 @@
 """ The default perspective. """
 
 
+# Standard library imports.
+import logging
+
 # Enthought library imports.
 from enthought.traits.api import Bool, HasTraits, List, Str, Tuple, implements
 
 # Local imports.
 from i_perspective import IPerspective
 from perspective_item import PerspectiveItem
+
+
+# Logging.
+logger = logging.getLogger(__name__)
 
 
 class Perspective(HasTraits):
@@ -126,11 +133,21 @@ class Perspective(HasTraits):
         # fixme: This seems a bit ugly, having to reach back up to the
         # window to get the view. Maybe its not that bad?
         view = window.get_view_by_id(item.id)
+        if view is not None:
+            # Add the view to the window.
+            window.add_view(
+                view, item.position, relative_to, (item.width, item.height)
+            )
 
-        # Add the view to the window.
-        window.add_view(
-            view, item.position, relative_to, (item.width, item.height)
-        )
+        else:
+            # The reason that we don't just barf here is that a perspective
+            # might use views from multiple plugins, and we probably want to
+            # continue even if one or two of them aren't present.
+            #
+            # fixme: This is worth keeping an eye on though. If we end up with
+            # a strict mode that throws exceptions early and often for
+            # developers, then this might be a good place to throw one ;^)
+            logger.error('missing view for perspective item <%s>' % item.id)
 
         return
     
