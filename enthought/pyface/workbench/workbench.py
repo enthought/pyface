@@ -8,6 +8,7 @@ import os
 
 # Enthought library imports.
 from enthought.etsconfig.api import ETSConfig
+from enthought.pyface.api import NO
 from enthought.traits.api import Bool, Callable, Event, HasTraits, implements
 from enthought.traits.api import Instance, List, Unicode, Vetoable
 from enthought.traits.api import VetoableEvent
@@ -177,7 +178,7 @@ class Workbench(HasTraits):
         return exited
 
     #### Convenience methods on the active window #############################
-    
+
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
 
@@ -200,6 +201,28 @@ class Workbench(HasTraits):
         """
 
         return self.active_window.get_editor_by_id(id)
+
+    #### Message dialogs ####
+    
+    def confirm(self, message, title=None, cancel=False, default=NO):
+        """ Convenience method to show a confirmation dialog. """
+
+        return self.active_window.confirm(message, title, cancel, default)
+    
+    def information(self, message, title='Information'):
+        """ Convenience method to show an information message dialog. """
+
+        return self.active_window.information(message, title)
+
+    def warning(self, message, title='Warning'):
+        """ Convenience method to show a warning message dialog. """
+
+        return self.active_window.warning(message, title)
+
+    def error(self, message, title='Error'):
+        """ Convenience method to show an error message dialog. """
+
+        return self.active_window.error(message, title)
 
     ###########################################################################
     # 'Workbench' interface.
