@@ -108,11 +108,11 @@ class MGUI(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IGUI interface.
 
-    Implements: _state_location_default()
+    Implements: _default_state_location()
     """
 
-    def _state_location_default(self):
-        """ Trait initializer. """
+    def _default_state_location(self):
+        """ Return the default state location. """
 
         state_location = os.path.join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
 

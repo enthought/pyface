@@ -66,18 +66,16 @@ class IPythonEditor(Interface):
 class MPythonEditor(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonEditor interface.
+
+    Implements: _changed_path()
     """
 
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    def _path_changed(self):
+    def _changed_path(self):
         """ Called when the path to the file is changed. """
 
         if self.control is not None:
             self.load()
-            
+
         return
-            
+
 #### EOF ######################################################################

@@ -121,13 +121,4 @@ class MFileDialog(object):
 
     create_wildcard = classmethod(create_wildcard)
 
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    def _wildcard_default(self):
-        """ Return the default wildcard. """
-
-        return self.WILDCARD_ALL
-
 #### EOF ######################################################################
