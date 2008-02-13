@@ -1,6 +1,1 @@
-These icons are from Tango (refer to the COPYING document for license). The filenames were changed to reduce the impact on existing code, the names have been changed as follows
-
-
-folder.png -> closed_folder.png 
-folder-open.png -> open_folder.png
-text-x-generic.png -> document.png
+These icons are from enthought.envisage.single_project.images
