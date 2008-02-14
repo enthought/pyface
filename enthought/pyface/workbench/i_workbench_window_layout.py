@@ -129,7 +129,7 @@ class IWorkbenchWindowLayout(Interface):
 
         """
 
-    def create_initial_layout(self):
+    def create_initial_layout(self, parent):
         """ Create the initial window layout.
 
         Returns the layout.
@@ -282,7 +282,7 @@ class MWorkbenchWindowLayout(HasTraits):
 
         raise NotImplementedError
 
-    def create_initial_layout(self):
+    def create_initial_layout(self, parent):
         """ Create the initial window layout. """
 
         raise NotImplementedError
