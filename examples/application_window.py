@@ -41,10 +41,20 @@ class MainWindow(ApplicationWindow):
             MenuManager(exit_action, name='&File')
         )
 
-        # Add a tool bar.
-        self.tool_bar_manager = ToolBarManager(
-            exit_action, name='Default', show_tool_names=False
-        )
+        # Add some tool bars.
+        self.tool_bar_managers = [
+            ToolBarManager(
+                exit_action, name='Tool Bar 1', show_tool_names=False
+            ),
+
+            ToolBarManager(
+                exit_action, name='Tool Bar 2', show_tool_names=False
+            ),
+
+            ToolBarManager(
+                exit_action, name='Tool Bar 3', show_tool_names=False
+            ),
+        ]
 
         # Add a status bar.
         self.status_bar_manager = StatusBarManager()

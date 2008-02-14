@@ -110,10 +110,20 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         
         return MenuBarManager(file_menu, view_menu, window=self)
 
-    def _tool_bar_manager_default(self):
+    def _tool_bar_managers_default(self):
         """ Trait initializer. """
 
-        return ToolBarManager(self._exit_action, show_tool_names=False)
+        # Add multiple (albeit identical!) tool bars just to show that it is
+        # allowed!
+        tool_bar_managers = [
+            ToolBarManager(
+                self._exit_action, show_tool_names = False, name=str(i)
+            )
+
+            for i in range(5)
+        ]
+
+        return tool_bar_managers
     
     ###########################################################################
     # 'WorkbenchWindow' interface.
