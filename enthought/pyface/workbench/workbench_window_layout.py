@@ -16,6 +16,9 @@
 
 # Import the toolkit specific version.
 from enthought.pyface.toolkit import toolkit_object
-WorkbenchWindowLayout = toolkit_object('workbench.workbench_window_layout:WorkbenchWindowLayout')
+
+WorkbenchWindowLayout = toolkit_object(
+    'workbench.workbench_window_layout:WorkbenchWindowLayout'
+)
 
 ### EOF #######################################################################

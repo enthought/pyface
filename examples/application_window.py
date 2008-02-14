@@ -14,15 +14,10 @@
 """ Application window example. """
 
 
-# Standard library imports.
-import os, sys
-
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
-
 # Enthought library imports.
 from enthought.pyface.api import ApplicationWindow, GUI
 from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from enthought.pyface.action.api import StatusBarManager, ToolBarManager
 
 
 class MainWindow(ApplicationWindow):
@@ -38,14 +33,23 @@ class MainWindow(ApplicationWindow):
         # Base class constructor.
         super(MainWindow, self).__init__(**traits)
 
+        # Create an action that exits the application.
+        exit_action = Action(name='E&xit', on_perform=self.close)
+
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
-            MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
-            )  
+            MenuManager(exit_action, name='&File')
         )
 
+        # Add a tool bar.
+        self.tool_bar_manager = ToolBarManager(
+            exit_action, name='Default', show_tool_names=False
+        )
+
+        # Add a status bar.
+        self.status_bar_manager = StatusBarManager()
+        self.status_bar_manager.message = 'Example application window'
+        
         return
 
 

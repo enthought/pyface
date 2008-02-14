@@ -217,7 +217,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Create and return the window contents. """
 
         # Create the initial window layout.
-        contents = self.layout.create_initial_layout()
+        contents = self.layout.create_initial_layout(parent)
 
         # Save the initial window layout so that we can reset it when changing
         # to a perspective that has not been seen yet.
