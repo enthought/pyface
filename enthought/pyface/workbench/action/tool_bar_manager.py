@@ -2,14 +2,14 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import ToolBarManager
+import enthought.pyface.action.api as pyface
 from enthought.traits.api import Instance
 
 # Local imports.
 from action_controller import ActionController
 
 
-class ToolBarManager(ToolBarManager):
+class ToolBarManager(pyface.ToolBarManager):
     """ The tool bar manager for the Envisage workbench window. """
 
     #### 'ToolBarManager' interface ###########################################
@@ -21,11 +21,12 @@ class ToolBarManager(ToolBarManager):
     # 'ToolBarManager' interface.
     ###########################################################################
 
-    def create_tool_bar(self, parent):
+    def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar representation of the manager. """
 
         # The controller handles the invocation of every action.
-        controller = ActionController(window=self.window)
+        if controller is None:
+            controller = ActionController(window=self.window)
 
         tool_bar = super(ToolBarManager, self).create_tool_bar(
             parent, controller=controller
