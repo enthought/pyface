@@ -52,7 +52,7 @@ class ActionItem(ActionManagerItem):
     # required to manipulate the state of a tool via the tool bar 8^(
     # FIXME v3: Why is this part of the public interface?
     control_id = Any
-    
+
     #### Private interface ####################################################
 
     # All of the internal instances that wrap this item.
@@ -62,10 +62,28 @@ class ActionItem(ActionManagerItem):
     # 'ActionManagerItem' interface.
     ###########################################################################
 
+    #### Trait properties #####################################################
+
     def _get_id(self):
         """ Return's the item's Id. """
 
         return self.action.id
+
+    #### Trait change handlers ################################################
+
+    def _enabled_changed(self, trait_name, old, new):
+        """ Static trait change handler. """
+
+        self.action.enabled = new
+
+        return
+
+    def _visible_changed(self, trait_name, old, new):
+        """ Static trait change handler. """
+
+        self.action.visible = True
+
+        return
     
     ###########################################################################
     # 'ActionItem' interface.

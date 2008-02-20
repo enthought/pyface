@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Constant, Event, HasTraits, Instance
+from enthought.traits.api import Bool, Constant, Event, HasTraits, Instance
 from enthought.traits.api import List, Property, Str
 
 # Local imports.
@@ -45,12 +45,18 @@ class ActionManager(HasTraits):
     # The action controller (if any) used to control how actions are performed.
     controller = Instance(ActionController)
 
+    # Is the action manager enabled?
+    enabled = Bool(True)
+    
     # All of the contribution groups in the manager.
     groups = Property(List(Group))
 
     # The manager's unique identifier (if it has one).
     id = Str
 
+    # Is the action manager visible?
+    visible = Bool(True)
+    
     #### Events ####
 
     # fixme: We probably need more granular events than this!
@@ -109,13 +115,31 @@ class ActionManager(HasTraits):
     # 'ActionManager' interface.
     ###########################################################################
 
-    #### Properties ###########################################################
+    #### Trait properties #####################################################
 
     def _get_groups(self):
         """ Returns the groups in the manager. """
 
         return self._groups[:]
 
+    #### Trait change handlers ################################################
+
+    def _enabled_changed(self, trait_name, old, new):
+        """ Static trait change handler. """
+
+        for group in self._groups:
+            group.enabled = new
+
+        return
+
+    def _visible_changed(self, trait_name, old, new):
+        """ Static trait change handler. """
+
+        for group in self._groups:
+            group.visible = new
+
+        return
+    
     #### Methods ##############################################################
 
     def append(self, item):
@@ -229,6 +253,41 @@ class ActionManager(HasTraits):
 
         return item
 
+    def walk(self, fn):
+        """ Walk the manager applying a function at every item. """
+
+        fn(self)
+        
+        for group in self._groups:
+            self.walk_group(group, fn)
+
+        return
+
+    def walk_group(self, group, fn):
+        """ Walk a group applying a function at every item. """
+
+        fn(group)
+
+        for item in group.items:
+            if isinstance(item, Group):
+                self.walk_group(item, fn)
+
+            else:
+                self.walk_item(item, fn)
+
+        return
+
+    def walk_item(self, item, fn):
+        """ Walk an item (may be a sub-menu manager remember!). """
+
+        if hasattr(item, 'groups'):
+            item.walk(fn)
+
+        else:
+            fn(item)
+
+        return
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -283,6 +342,7 @@ class ActionManager(HasTraits):
 
         for item in group.items:
             if isinstance(item, Group):
+                print 'Surely, a group cannot contain another group!!!!'
                 self.render_group(item, indent)
 
             else:

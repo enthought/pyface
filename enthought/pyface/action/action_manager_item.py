@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Instance, Str
+from enthought.traits.api import Bool, HasTraits, Instance, Str
 
 
 class ActionManagerItem(HasTraits):
@@ -37,6 +37,12 @@ class ActionManagerItem(HasTraits):
 
     # The group the item belongs to.
     parent = Instance('enthought.pyface.action.api.Group')
+
+    # Is the item enabled?
+    enabled = Bool(True)
+
+    # Is the item visible?
+    visible = Bool(True)
 
     ###########################################################################
     # 'ActionManagerItem' interface.

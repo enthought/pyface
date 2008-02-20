@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any,Bool, HasTraits, Instance, List, Property
+from enthought.traits.api import Any, Bool, HasTraits, Instance, List, Property
 from enthought.traits.api import Str
 from enthought.traits.trait_base import user_name_for
 
@@ -35,6 +35,12 @@ class Group(HasTraits):
     """
 
     #### 'Group' interface ####
+
+    # Is the group enabled?
+    enabled = Bool(True)
+
+    # Is the group visible?
+    visible = Bool(True)
     
     # The group's unique identifier (only needs to be unique within the action
     # manager that the group belongs to).
@@ -74,14 +80,23 @@ class Group(HasTraits):
     # 'Group' interface.
     ###########################################################################
 
-    #### Properties ###########################################################
+    #### Trait Properties #####################################################
     
-    # items
     def _get_items(self):
         """ Returns the items in the group. """
 
         return self._items[:]
 
+    #### Trait change handlers ################################################
+
+    def _enabled_changed(self, trait_name, old, new):
+        """ Static trait change handler. """
+
+        for item in self.items:
+            item.enabled = new
+
+        return
+    
     #### Methods ##############################################################
 
     def append(self, item):
