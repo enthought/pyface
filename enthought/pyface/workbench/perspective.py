@@ -76,7 +76,7 @@ class Perspective(HasTraits):
         """ Create the perspective in a workbench window.
 
         For most cases you should just be able to set the 'contents' trait to
-        lay out view as required. However, you can override this method if
+        lay out views as required. However, you can override this method if
         you want to have complete control over how the perspective is created.
         
         """
