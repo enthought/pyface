@@ -66,11 +66,13 @@ class IFileDialog(IDialog):
     def create_wildcard(cls, description, extension):
         """ Creates a wildcard for a given extension.
 
-        e.g. FileDialog.create_wildcard('Python files', '*.py')
+        e.g.::
+            
+            FileDialog.create_wildcard('Python files', '*.py')
 
-             or
+        or::
 
-             FileDialog.create_wildcard('HTML Files', ['*.htm', '*.html'])
+            FileDialog.create_wildcard('HTML Files', ['*.htm', '*.html'])
         """
 
 

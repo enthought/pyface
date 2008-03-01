@@ -90,25 +90,20 @@ class WorkbenchWindow(ApplicationWindow):
     # a single instance of the 'Perspective' class is created.
     perspectives = List(IPerspective)
 
-    # The Id of the default perspective.
+    # The ID of the default perspective.
     #
     # There are two situations in which this is used:
     #
     # 1. When the window is being created from scratch (i.e., not restored).
+    #    If this is the empty string, then the first perspective in the list of
+    #    perspectives is shown (if there are no perspectives then an instance of
+    #    the default 'Perspective' class is used). If this is not the empty 
+    #    string then the perspective with this ID is shown.
+    # 2. When the window is being restored. If this is the empty string, then 
+    #    the last perspective that was visible when the window last closed is 
+    #    shown.
     #
-    # If this is the empty string, then the first perspective in the list of
-    # perspectives is shown (if there are no perspectives then an instance of
-    # the default 'Perspective' class is used).
-    #
-    # If this is not the empty string then the perspective with this Id is
-    # shown.
-    #
-    # 2. When the window is being restored.
-    #
-    # If this is the empty string then the last perspective that was visible
-    # when the window last closed is shown.
-    #
-    # If this is not the empty string then the perspective with this Id is
+    # If this is not the empty string then the perspective with this ID is
     # shown.
     default_perspective_id = Str
 

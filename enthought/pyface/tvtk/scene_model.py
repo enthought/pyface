@@ -34,12 +34,14 @@ class SceneModel(TVTKScene):
 
     ########################################
     # TVTKScene traits.
+
     light_manager = Property
 
     picker = Property
 
     ########################################
     # SceneModel traits.
+
     # A convenient dictionary based interface to add/remove actors and widgets.
     # This is similar to the interface provided for the ActorEditor.
     actor_map = Dict()
@@ -98,6 +100,7 @@ class SceneModel(TVTKScene):
 
     ###################################
     # Private traits.
+
     # Used by the editor to determine if the widget was enabled or not.  
     enabled_info = Dict()
 
