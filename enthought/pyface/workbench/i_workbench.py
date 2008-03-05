@@ -19,6 +19,9 @@ class IWorkbench(Interface):
     # The active workbench window (the last one to get focus).
     active_window = Instance(WorkbenchWindow)
 
+    # The optional application scripting manager.
+    script_manager = Instance('enthought.appscripting.api.IScriptManager')
+
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
     state_location = Str
