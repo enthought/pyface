@@ -111,7 +111,7 @@ Applicable Images:
 
 # Template for creating an ImageVolume object:
 ImageVolumeTemplate = \
-"""from enthought.traits.ui.image import ImageVolume, ImageVolumeInfo
+"""from enthought.traits.ui.image.image import ImageVolume, ImageVolumeInfo
     
 volume = ImageVolume(
     category    = %(category)s,
@@ -125,8 +125,8 @@ volume = ImageVolume(
 
 # Template for creating an ImageVolume 'images' list:
 ImageVolumeImagesTemplate = \
-"""from enthought.traits.ui.image     import ImageInfo
-from enthought.traits.ui.ui_traits import Margin, Border 
+"""from enthought.traits.ui.image.image import ImageInfo
+from enthought.traits.ui.ui_traits   import Margin, Border 
     
 images = [
 %s
@@ -1278,9 +1278,9 @@ class ImageLibrary ( HasPrivateTraits ):
             names = zf.namelist()
             
             # Check to see if there is a manifest file:
-            if 'image_volume.py' in names: 
+            if 'image_volume.py' in names:
                 # Load the manifest code and extract the volume object:
-                volume = get_python_value( zf.read( 'image_volume.py' ), 
+                volume = get_python_value( zf.read( 'image_volume.py' ),
                                            'volume' )
                     
                 # Set the volume name:
