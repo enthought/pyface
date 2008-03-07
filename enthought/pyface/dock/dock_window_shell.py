@@ -83,7 +83,7 @@ class DockWindowShell ( HasPrivateTraits ):
         
         theme = dock_control.theme
         self._dock_window = dw = DockWindow( shell, auto_close = True,
-                                                    theme      = theme).set(    
+                                                    theme      = theme ).set(    
                                                     style      = 'tab' )
         sizer = wx.BoxSizer( wx.VERTICAL )
         sizer.Add( dw.control, 1, wx.EXPAND )
