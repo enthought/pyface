@@ -252,6 +252,8 @@ class Grid(Widget):
         wx.grid.EVT_GRID_LABEL_LEFT_CLICK(grid, self._on_label_left_click)
 
         wx.grid.EVT_GRID_EDITOR_CREATED(grid, self._on_editor_created)
+        if is_win32:
+            wx.grid.EVT_GRID_EDITOR_HIDDEN(grid, self._on_editor_hidden)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
@@ -307,6 +309,8 @@ class Grid(Widget):
         wx.grid.EVT_GRID_LABEL_RIGHT_CLICK( grid, None )
         wx.grid.EVT_GRID_LABEL_LEFT_CLICK(  grid, None )
         wx.grid.EVT_GRID_EDITOR_CREATED(    grid, None )
+        if is_win32:
+            wx.grid.EVT_GRID_EDITOR_HIDDEN( grid, None )
         wx.EVT_KEY_DOWN(                    grid, None )
         wx.EVT_SIZE(                        grid, None )
         wx.EVT_PAINT( self._grid_window, None )
@@ -678,6 +682,24 @@ class Grid(Widget):
         editor.PushEventHandler(ComboboxFocusHandler())
 
         evt.Skip()
+        
+    def _on_editor_hidden(self, evt):
+        # This is a hack to make clicking on a window button while a grid
+        # editor is active work correctly under Windows. Normally, when the
+        # user clicks on the button to exit grid cell editing and perform the
+        # button function, only the grid cell editing is terminated under
+        # Windows. A second click on the button is required to actually 
+        # trigger the button functionality. We circumvent this problem by
+        # generating a 'fake' button click event. Technically this solution
+        # is not correct since the button click should be generated on mouse
+        # up, but I'm not sure if we will get the mouse up event, so we do it
+        # here instead. Note that this handler is only set-up when the OS is 
+        # Windows.
+        control = wx.FindWindowAtPointer()
+        if isinstance(control, wx.Button):
+            do_later(wx.PostEvent, control, 
+                     wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED,
+                                     control.GetId()))
 
     def _on_grid_window_paint(self, evt):
 

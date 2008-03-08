@@ -1,23 +1,31 @@
 #-------------------------------------------------------------------------------
-#  
-#  Implements the DockWindowFeature base class.
-#  
-#  A DockWindowFeature is an optional feature of a DockControl that can be
-#  dynamically contributed to the package. Whenever a DockControl is added to
-#  a DockWindow, each feature will be given the opportunity to add itself to
-#  the DockControl.
-#  
-#  Each feature is manifested as an image that appears on the DockControl tab
-#  (or drag bar). The user interacts wth the feature using mouse clicks and
-#  drag and drop operations (depending upon how the feature is implemented).
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/03/2006
-#  
-#  (c) Copyright 2006 by Enthought, Inc.
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/03/2006
+#
 #-------------------------------------------------------------------------------
+
+""" Implements the DockWindowFeature base class.
+    
+    A DockWindowFeature is an optional feature of a DockControl that can be
+    dynamically contributed to the package. Whenever a DockControl is added to
+    a DockWindow, each feature will be given the opportunity to add itself to
+    the DockControl.
+    
+    Each feature is manifested as an image that appears on the DockControl tab
+    (or drag bar). The user interacts wth the feature using mouse clicks and
+    drag and drop operations (depending upon how the feature is implemented).
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

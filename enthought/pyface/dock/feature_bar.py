@@ -1,17 +1,25 @@
 #-------------------------------------------------------------------------------
-#  
-#  Pyface 'FeatureBar' support.  
-#  
-#  Defines the 'FeatureBar' class which displays and allows the user to 
-#  interact with a set of DockWindowFeatures for a specified DockControl.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 02/05/2007
-#  
-#  (c) Copyright 2007 by Enthought, Inc.
-#  
+#
+#  Copyright (c) 2007, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   02/05/2007
+#
 #-------------------------------------------------------------------------------
+
+""" Pyface 'FeatureBar' support.  
+  
+    Defines the 'FeatureBar' class which displays and allows the user to 
+    interact with a set of DockWindowFeatures for a specified DockControl.
+"""   
 
 #-------------------------------------------------------------------------------
 #  Imports:  

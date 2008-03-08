@@ -1,18 +1,26 @@
 #-------------------------------------------------------------------------------
 #
-#  Pyface 'DockSizer' support.
+#  Copyright (c) 2005, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This package implements the sizer associated with a Pyface DockWindow
-#  component. The sizer manages the layout of the DockWindow child controls and
-#  the notebook tabs and dragbars associated with the DockWindow.
-#
-#  Written by: David C. Morrill
-#
-#  Date: 10/18/2005
-#
-#  (c) Copyright 2005 by Enthought, Inc.
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   10/18/2005
 #
 #-------------------------------------------------------------------------------
+
+""" Pyface 'DockSizer' support.
+  
+    This package implements the sizer associated with a Pyface DockWindow
+    component. The sizer manages the layout of the DockWindow child controls 
+    and the notebook tabs and dragbars associated with the DockWindow.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:
