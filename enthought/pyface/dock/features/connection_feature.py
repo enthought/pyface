@@ -1,20 +1,28 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds a 'connection' feature to DockWindow which allows users to dynamically
-#  connect (i.e. synchronize) traits on one object with another either
-#  permanently (via a connection) or temporarilly (via drag and drop). To make
-#  an object 'connectable' the developer must specify the 'connection' metadata
-#  on any trait that can be connected to another object's trait. The value of 
-#  the 'connection' metadata should be a Connection object, which contains
-#  information about how connections can be made to the object trait.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 02/09/2007
-#  
-#  (c) Copyright 2007 by Enthought, Inc.
-#  
+#
+#  Copyright (c) 2007, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   02/09/2007
+#
 #-------------------------------------------------------------------------------
+
+""" Adds a 'connection' feature to DockWindow which allows users to dynamically
+    connect (i.e. synchronize) traits on one object with another either
+    permanently (via a connection) or temporarilly (via drag and drop). To make
+    an object 'connectable' the developer must specify the 'connection' 
+    metadata on any trait that can be connected to another object's trait. The 
+    value of the 'connection' metadata should be a Connection object, which 
+    contains information about how connections can be made to the object trait.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

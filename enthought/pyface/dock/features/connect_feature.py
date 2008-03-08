@@ -1,25 +1,33 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds a 'connect' feature to DockWindow which allows users to dynamically
-#  connect (i.e. synchronize) traits on one object with another. To make an
-#  object 'connectable' the developer must specify the 'connect' metadata on 
-#  any trait that can be connected to another object's trait. The value of the
-#  'connect' metadata should be:  'to|from|both[:[:]description]', indicating 
-#  the direction of synchronization supported (i.e. to, from or both), as
-#  well as an optional description to display in the feature's tooltip. If
-#  a double colon (i.e. ::) precedes the description, then the description is
-#  also used as a type, meaning that both ends of the connection must specify
-#  the same type information. This is useful when using simple trait types
-#  list Str or File, and you want to add an additional level of type checking
-#  to the connection.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/04/2006
-#  
-#  (c) Copyright 2006 by David C. Morrill
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/04/2006
+#
 #-------------------------------------------------------------------------------
+  
+""" Adds a 'connect' feature to DockWindow which allows users to dynamically
+    connect (i.e. synchronize) traits on one object with another. To make an
+    object 'connectable' the developer must specify the 'connect' metadata on 
+    any trait that can be connected to another object's trait. The value of the
+    'connect' metadata should be:  'to|from|both[:[:]description]', indicating 
+    the direction of synchronization supported (i.e. to, from or both), as
+    well as an optional description to display in the feature's tooltip. If
+    a double colon (i.e. ::) precedes the description, then the description is
+    also used as a type, meaning that both ends of the connection must specify
+    the same type information. This is useful when using simple trait types
+    list Str or File, and you want to add an additional level of type checking
+    to the connection.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

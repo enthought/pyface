@@ -1,15 +1,23 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds a 'tool' feature to DockWindow which allows views to contribute
-#  tools based on the IFeatureTool interface to their feature tab.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 02/08/2007
-#  
-#  (c) Copyright 2007 by David C. Morrill
-#  
+#
+#  Copyright (c) 2007, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   02/08/2007
+#
 #-------------------------------------------------------------------------------
+  
+""" Adds a 'tool' feature to DockWindow which allows views to contribute
+    tools based on the IFeatureTool interface to their feature tab.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

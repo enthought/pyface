@@ -1,19 +1,27 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds a 'drag and drop' feature to DockWindow which exposes traits on the 
-#  object associated with a DockControl as draggable or droppable items. If the
-#  object contains one or more traits with 'draggable' metadata, then the value
-#  of those traits will be draggable. If the object contains one or more traits
-#  with 'droppable' metadata, then each trait that will accept a specified item
-#  will receive that item when it is dropped on the feature.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/04/2006
-#  
-#  (c) Copyright 2006 by David C. Morrill
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/04/2006
+#
 #-------------------------------------------------------------------------------
+  
+""" Adds a 'drag and drop' feature to DockWindow which exposes traits on the 
+    object associated with a DockControl as draggable or droppable items. If 
+    the object contains one or more traits with 'draggable' metadata, then the
+    value of those traits will be draggable. If the object contains one or more
+    traits with 'droppable' metadata, then each trait that will accept a 
+    specified item will receive that item when it is dropped on the feature.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

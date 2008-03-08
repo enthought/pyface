@@ -1,18 +1,24 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds an 'save' feature to DockWindow which displays a 'save' image whenever
-#  the associated object sets its 'needs_save' trait True. Then when the user
-#  clicks the 'save' image, the feature calls the object's 'save' method.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/08/2006
-#  
-#  (c) Copyright 2006 by David C. Morrill
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/08/2006
+#
 #-------------------------------------------------------------------------------
-
-""" Copyright 2006 by David C. Morrill """
+  
+""" Adds an 'save' feature to DockWindow which displays a 'save' image whenever
+    the associated object sets its 'needs_save' trait True. Then when the user
+    clicks the 'save' image, the feature calls the object's 'save' method.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

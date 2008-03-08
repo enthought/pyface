@@ -1,26 +1,33 @@
 #-------------------------------------------------------------------------------
-#  
-#  Adds a 'drop_file' feature to DockWindow which allows the object associated
-#  with a DockControl to expose a trait which can accept files dropped onto it.
-#  The trait can either accept strings (i.e. file names), FilePosition objects,
-#  or lists of the above. The trait which accepts files should have 'drop_file'
-#  metadata, which can either be True, a file suffix (e.g. '.py'), a list 
-#  of file extensions, or a DropFile object. If file extensions are specified,
-#  then only files with corresponding extensions can be dropped on the view.
-#  
-#  Specifying a DropFile object as the 'drop_file' metadata also provides the
-#  option of making the trait draggable, as well as specifying a custom
-#  tooltip.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/19/2006
-#  
-#  (c) Copyright 2006 by David C. Morrill
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/19/2006
+#
 #-------------------------------------------------------------------------------
-
-""" Copyright 2006 by David C. Morrill """
+  
+""" Adds a 'drop_file' feature to DockWindow which allows the object associated
+    with a DockControl to expose a trait which can accept files dropped onto 
+    it. The trait can either accept strings (i.e. file names), FilePosition
+    objects, or lists of the above. The trait which accepts files should have
+    'drop_file' metadata, which can either be True, a file suffix (e.g. '.py'),
+    a list  of file extensions, or a DropFile object. If file extensions are 
+    specified, then only files with corresponding extensions can be dropped on 
+    the view.
+    
+    Specifying a DropFile object as the 'drop_file' metadata also provides the
+    option of making the trait draggable, as well as specifying a custom
+    tooltip.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:

@@ -1,19 +1,27 @@
 #-------------------------------------------------------------------------------
-#  
-#  Manages saving/restoring the state of an object. Any traits with metadata
-#  'save_state = True' are automatically restored when the feature is applied
-#  and saved when they are changed. The traits are saved under the id 
-#  specified by a trait with metadata 'save_state_id = True'. If no such trait
-#  exists, an id of the form: 'unknown.plugins.?.state', where ? = the name of
-#  the object's associated DockControl.
-#  
-#  Written by: David C. Morrill
-#  
-#  Date: 07/04/2006
-#  
-#  (c) Copyright 2006 by David C. Morrill
-#  
+#
+#  Copyright (c) 2006, Enthought, Inc.
+#  All rights reserved.
+# 
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+# 
+#  Author: David C. Morrill
+#  Date:   07/04/2006
+#
 #-------------------------------------------------------------------------------
+
+""" Manages saving/restoring the state of an object. Any traits with metadata
+    'save_state = True' are automatically restored when the feature is applied
+    and saved when they are changed. The traits are saved under the id 
+    specified by a trait with metadata 'save_state_id = True'. If no such trait
+    exists, an id of the form: 'unknown.plugins.?.state', where ? = the name of
+    the object's associated DockControl.
+"""    
 
 #-------------------------------------------------------------------------------
 #  Imports:
