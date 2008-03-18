@@ -31,7 +31,7 @@ from enthought.traits.ui.dockable_view_element \
 from enthought.pyface.image_resource \
     import ImageResource
 
-from enthought.pyface.dock.core \
+from enthought.pyface.dock.api \
     import *
 
 #-------------------------------------------------------------------------------

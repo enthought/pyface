@@ -26,7 +26,7 @@ from enthought.traits.ui.api \
 from enthought.traits.ui.menu \
     import *
     
-from enthought.pyface.dock.core \
+from enthought.pyface.dock.api \
     import *
            
 from enthought.pyface.image_resource \
