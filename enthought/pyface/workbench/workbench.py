@@ -43,6 +43,9 @@ class Workbench(HasTraits):
     # The editor manager is used to create/restore editors.
     editor_manager = Instance(IEditorManager)
 
+    # The optional application scripting manager.
+    script_manager = Instance('enthought.appscripting.api.IScriptManager')
+
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
     state_location = Unicode

@@ -58,22 +58,6 @@ class IFileDialog(IDialog):
 
     # The index of the selected wildcard.
     wildcard_index = Int(0)
-    
-    ###########################################################################
-    # 'IFileDialog' interface.
-    ###########################################################################
-
-    def create_wildcard(cls, description, extension):
-        """ Creates a wildcard for a given extension.
-
-        e.g.::
-            
-            FileDialog.create_wildcard('Python files', '*.py')
-
-        or::
-
-            FileDialog.create_wildcard('HTML Files', ['*.htm', '*.html'])
-        """
 
 
 class MFileDialog(object):
@@ -107,7 +91,7 @@ class MFileDialog(object):
     WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
     ###########################################################################
-    # 'IFileDialog' interface.
+    # 'MFileDialog' *CLASS* interface.
     ###########################################################################
 
     def create_wildcard(cls, description, extension):
