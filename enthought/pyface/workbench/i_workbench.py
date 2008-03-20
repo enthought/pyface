@@ -74,7 +74,7 @@ class IWorkbench(Interface):
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
     
-    def edit(self, obj, use_existing=True):
+    def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
 
     def exit(self):
@@ -88,7 +88,7 @@ class IWorkbench(Interface):
 
         """
     
-    def get_editor(self, obj):
+    def get_editor(self, obj, kind=None):
         """ Return the editor that is editing an object.
 
         Returns None if no such editor exists.
