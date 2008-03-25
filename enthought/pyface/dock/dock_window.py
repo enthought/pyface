@@ -567,8 +567,9 @@ class DockWindow ( HasPrivateTraits ):
             object = sizer.ObjectAt( event.GetX(), event.GetY(), True )
             if isinstance( object, DockControl ):
                 dockable = object.dockable
-                if ((dockable is None) or 
-                    (dockable.dockable_dclick( object, event ) is False)):
+                if (((dockable is None) or 
+                     (dockable.dockable_dclick( object, event ) is False)) and
+                    (object.style != 'fixed')):
                     self.min_max( object )
             elif isinstance( object, DockRegion ):
                 self._owner = object
