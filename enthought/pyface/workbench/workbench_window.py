@@ -249,7 +249,10 @@ class WorkbenchWindow(ApplicationWindow):
     def _layout_default(self):
         """ Trait initializer. """
 
-        return WorkbenchWindowLayout(window=self)
+        layout = WorkbenchWindowLayout(window=self)
+        layout.on_trait_change(self._editor_closed, 'editor_closed')
+
+        return layout
     
     #### Methods ##############################################################
 
@@ -861,7 +864,6 @@ class WorkbenchWindow(ApplicationWindow):
         """ Static trait change handler. """
 
         self.editors.remove(editor)
-
         if editor is self.active_editor:
             if len(self.editors) > 0:
                 # If the user closed the editor manually then this method is
