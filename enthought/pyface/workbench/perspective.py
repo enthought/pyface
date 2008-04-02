@@ -155,9 +155,10 @@ class Perspective(HasTraits):
         """ Adds *all* of the window's views defined in the window. """
 
         for view in window.views:
-            if view.visible:
-                self._add_view(window, view)
-
+            # Since this is the default perspective, we assume we want all of
+            # the views visible.
+            self._add_view(window, view)
+                
         return
 
     def _add_view(self, window, view):
