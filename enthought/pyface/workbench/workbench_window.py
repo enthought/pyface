@@ -250,7 +250,13 @@ class WorkbenchWindow(ApplicationWindow):
         """ Trait initializer. """
 
         layout = WorkbenchWindowLayout(window=self)
-        layout.on_trait_change(self._editor_closed, 'editor_closed')
+
+        # Wire up event handlers.
+        #
+        # fixme: I *hate* calling event handlers manually, but this is such a
+        # common pattern... Maybe a '@on_trait_initialized' decorator is in
+        # order?
+        self._layout_changed(None, layout)
 
         return layout
     
@@ -831,6 +837,21 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
+    def _layout_changed(self, old, new):
+        """ Static trait change handler. """
+
+        if old is not None:
+            old.on_trait_change(
+                self._on_editor_closed, 'editor_closed', remove=True
+            )
+
+        if new is not None:
+            new.on_trait_change(
+                self._on_editor_closed, 'editor_closed'
+            )
+
+        return
+        
     def _views_changed(self, old, new):
         """ Static trait change handler. """
 
@@ -859,9 +880,8 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### Dynamic ####
 
-    @on_trait_change('layout.editor_closed')
-    def _editor_closed(self, editor):
-        """ Static trait change handler. """
+    def _on_editor_closed(self, editor):
+        """ Dynamic trait change handler. """
 
         self.editors.remove(editor)
         if editor is self.active_editor:
@@ -893,8 +913,8 @@ class WorkbenchWindow(ApplicationWindow):
         """ Dynamic trait change handler. """
 
         if trait_name == 'has_focus' and new:
-                self.active_view = obj
-                self.active_part = obj
+            self.active_view = obj
+            self.active_part = obj
 
         return
 
