@@ -291,11 +291,16 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    def add_view(self, view, position, relative_to=None, size=(-1, -1)):
+    def add_view(self, view, position=None, relative_to=None, size=(-1, -1)):
         """ Adds a view. """
 
         self.layout.add_view(view, position, relative_to, size)
 
+        # This case allows for views that are created and added dynamically
+        # (i.e. they were not even known about when the window was created).
+        if not view in self.views:
+            self.views.append(view)
+        
         return
 
     def close_editor(self, editor):

@@ -93,7 +93,7 @@ class IWorkbenchWindowLayout(Interface):
 
         """
 
-    def add_view(self, view, position, relative_to=None, size=(-1, -1)):
+    def add_view(self, view, position=None, relative_to=None, size=(-1, -1)):
         """ Add a view.
 
         Returns the view (just for convenience).
@@ -262,7 +262,7 @@ class MWorkbenchWindowLayout(HasTraits):
 
         raise NotImplementedError
 
-    def add_view(self, view, position, relative_to=None, size=(-1, -1)):
+    def add_view(self, view, position=None, relative_to=None, size=(-1, -1)):
         """ Add a view. """
 
         raise NotImplementedError
