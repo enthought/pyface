@@ -80,7 +80,10 @@ class ViewMenuManager(MenuManager):
     # 'ViewMenuManager' interface.
     ###########################################################################
 
-    @on_trait_change('window.active_perspective,window.active_part')
+    @on_trait_change(
+        'window.active_perspective,window.active_part,'
+        'window.views,window.views_items'
+    )
     def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
