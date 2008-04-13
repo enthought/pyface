@@ -51,71 +51,39 @@ class ImageList(wx.ImageList):
 
         """
 
-        # Were we passed an image resource?
-        if type(filename) is ImageResource:
-            # Try the cache first.
-            index = self._cache.get(filename)
-            if index is None:
+        # Try the cache first.
+        index = self._cache.get(filename)
+        if index is None:
+            # Were we passed an image resource?
+            if isinstance(filename, ImageResource):
                 # Create an image.
                 image = filename.create_image(size=(self._width, self._height))
 
-                # We force all images in the cache to be the same size.
-                self._scale(image)
-
-                # We also force them to be bitmaps!
-                bmp = image.ConvertToBitmap()
-
-                # Add the bitmap to the actual list...
-                index = self.Add(bmp)
-
-                # ... and update the cache.
-                self._cache[filename] = index
-
-        # If the icon is a string then it is the filename of some kind of
-        # image (e.g 'foo.gif', 'image/foo.png' etc).
-        elif isinstance(filename, basestring):
-            # Try the cache first.
-            index = self._cache.get(filename)
-            if index is None:
-                # Load the image from the file and add it to the list.
-                #
-                # N.B 'wx.BITMAP_TYPE_ANY' tells wxPython to attempt to
-                # ---- autodetect the image format.
+            # If the filename is a string then it is the filename of some kind
+            # of image (e.g 'foo.gif', 'image/foo.png' etc).
+            elif isinstance(filename, basestring):
+                # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
-                # We force all images in the cache to be the same size.
-                self._scale(image)
+            # Otherwise the filename is *actually* an icon (in our case,
+            # probably related to a MIME type).
+            else:
+                # Create a bitmap from the icon.
+                bmp = wx.EmptyBitmap(self._width, self._height)
+                bmp.CopyFromIcon(filename)
 
-                # We also force them to be bitmaps!
-                bmp = image.ConvertToBitmap()
-
-                # Add the bitmap to the actual list...
-                index = self.Add(bmp)
-
-                # ... and update the cache.
-                self._cache[filename] = index
-
-        # Otherwise the icon is *actually* an icon (in our case, probably
-        # related to a MIME type).
-        else:
-            icon = filename
-
-            # Create a bitmap from the icon.
-            bmp = wx.EmptyBitmap(self._width, self._height)
-            bmp.CopyFromIcon(icon)
-
-            # Turn it into an image so that we can scale it.
-            image = wx.ImageFromBitmap(bmp)
+                # Turn it into an image so that we can scale it.
+                image = wx.ImageFromBitmap(bmp)
 
             # We force all images in the cache to be the same size.
             self._scale(image)
-
-            # Turn it back into a bitmap!
+            
+            # We also force them to be bitmaps!
             bmp = image.ConvertToBitmap()
-
+            
             # Add the bitmap to the actual list...
             index = self.Add(bmp)
-
+            
             # ... and update the cache.
             self._cache[filename] = index
 
