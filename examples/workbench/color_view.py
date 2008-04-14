@@ -15,6 +15,19 @@ class ColorView(View):
     category = 'Color'
 
     ###########################################################################
+    # 'IWorkbenchPart' interface.
+    ###########################################################################
+
+    def _id_default(self):
+        """ Trait initializer. """
+
+        # By making the Id the same as the name, we make it easy to specify
+        # the views in the example perspectives. Note for larger applications
+        # the Id should be globally unique, and by default we use the module
+        # name and class name.
+        return self.name
+    
+    ###########################################################################
     # 'IView' interface.
     ###########################################################################
 
