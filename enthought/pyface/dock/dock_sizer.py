@@ -1465,12 +1465,7 @@ class DockControl ( DockItem ):
         # necessary so that DockWindow itself will correctly draw the 'drag'
         # box when performing a docking maneuver...
         control  = self.control
-        try:
-         min_size = control.GetMinSize()
-        except:
-            from enthought.developer.helper.fbi import bp
-            bp()
-            raise
+        min_size = control.GetMinSize()
         control.SetMinSize( wx.Size( 0, 0 ) )
         control.SetDimensions( x, y, dx, dy )
         control.SetMinSize( min_size )
