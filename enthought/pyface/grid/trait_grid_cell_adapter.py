@@ -58,13 +58,19 @@ class TraitGridCellAdapter(PyGridCellEditor):
             context['object'] = self._obj
             ui = UI(handler = handler, context = context)
             
+        # Link the editor's undo history in to the main ui undo history if the
+        # UI object is available:
+        factory = self._factory
+        if factory._ui is not None:
+            ui.history = factory._ui.history
+            
         # make sure the factory knows this is a grid_cell editor
-        self._factory.is_grid_cell = True
-        self._editor = self._factory.simple_editor(ui,
-                                                   self._obj,
-                                                   self._name,
-                                                   self._description,
-                                                   parent)
+        factory.is_grid_cell = True
+        self._editor = factory.simple_editor(ui,
+                                             self._obj,
+                                             self._name,
+                                             self._description,
+                                             parent)
                                  
         # Tell the editor to actually build the editing widget:
         self._editor.prepare(parent)
