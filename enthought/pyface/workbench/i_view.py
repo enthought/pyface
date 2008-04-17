@@ -14,6 +14,9 @@
 """ The interface for workbench views. """
 
 
+# Standard library imports.
+import logging
+
 # Enthought library imports.
 from enthought.pyface.api import ImageResource
 from enthought.traits.api import Bool, Enum, Float, Instance, List, Str
@@ -23,6 +26,10 @@ from enthought.traits.api import implements
 from i_perspective_item import IPerspectiveItem
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
 from perspective_item import PerspectiveItem
+
+
+# Logging.
+logger = logging.getLogger(__name__)
 
 
 class IView(IWorkbenchPart, IPerspectiveItem):
@@ -84,15 +91,6 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
     # Whether the view is visible or not.
     visible = Bool(False)
-    
-    ###########################################################################
-    # 'object' interface.
-    ###########################################################################
-
-    def __str__(self):
-        """ Return an informal string representation of the object. """
-
-        return 'View(%s)' % self.id
 
     ###########################################################################
     # 'IWorkbenchPart' interface.
@@ -101,8 +99,19 @@ class MView(MWorkbenchPart, PerspectiveItem):
     def _id_default(self):
         """ Trait initializer. """
 
+        id = '%s.%s' % (type(self).__module__, type(self).__name__)
+        logger.warn('view %s has no Id - using <%s>' % (self, id))
+
         # If no Id is specified then use the name.
-        return self.name
+        return id
+
+    def _name_default(self):
+        """ Trait initializer. """
+
+        name = camel_case_to_words(type(self).__name__)
+        logger.warn('view %s has no name - using <%s>' % (self, name))
+
+        return name
 
     ###########################################################################
     # 'IView' interface.
@@ -130,5 +139,23 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.show_view(self)
 
         return
+
+# fixme: This is duplicated in 'plugin.py' where should it go?!?
+def camel_case_to_words(s):
+    """ Turn a string from CamelCase into words separated by spaces.
+
+    e.g. 'CamelCase' -> 'Camel Case'
+
+    """
+    
+    def add_space_between_words(s, c):
+        # We detect a word boundary if the character we are looking at is
+        # upper case, but the character preceding it is lower case.
+        if len(s) > 0 and s[-1].islower() and c.isupper():
+            return s + ' ' + c
+
+        return s + c
+
+    return reduce(add_space_between_words, s, '')
     
 #### EOF ######################################################################
