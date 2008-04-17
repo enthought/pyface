@@ -16,64 +16,75 @@ def etsdep(p, min, max=None, literal=False):
     return require
 
 
-# Declare our ETS project dependencies.
-APPTOOLS = etsdep('AppTools', '3.0.0b1')  # used in pyface/resource_manager, pyface/i_image_resource -- others are optional
-ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')
-MAYAVI = etsdep('Mayavi', '3.0.0a1')  # all in pyface/tvtk
-TRAITS_UI = etsdep('Traits[ui]', '3.0.0b1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
+# Declare our ETS project dependencies:
+APPTOOLS         = etsdep( 'AppTools',          '3.0.0b1' )  
+ENTHOUGHTBASE_UI = etsdep( 'EnthoughtBase[ui]', '3.0.0b1' )
+MAYAVI           = etsdep( 'Mayavi',            '3.0.0a1' ) # all in pyface/tvtk
+TRAITS           = etsdep( 'Traits',            '3.0.0b1' )
+TRAITSBACKENDWX  = etsdep( 'TraitsBackendWX',   '3.0.0b1' )
+TRAITSBACKENDQT  = etsdep( 'TraitsBackendQt',   '3.0.0b1' )
 
 
 setup(
-    author = 'Enthought, Inc',
-    author_email = 'info@enthought.com',
-    dependency_links = [
-        'http://code.enthought.com/enstaller/eggs/source',
-        ],
-    description = 'Traits capable windowing framework',
+    author           = 'Enthought, Inc',
+    author_email     = 'info@enthought.com',
+    dependency_links = [ 'http://code.enthought.com/enstaller/eggs/source', ],
+    description      = 'Traits capable windowing framework',
+    
     extras_require = {
+    
+        # Extra denoting that the Traits UI DockWindow support should be
+        # installed. DockWindow support allows Traits user interfaces with tabs
+        # and splitters to be created when using the wxPython back-end:
         'dock': [
-            APPTOOLS,
             TRAITSBACKENDWX,
-            ],
+        ],
+            
+        # Extra denoting that Traits user interface Qt toolkit support should
+        # be installed:
         'qt': [
             TRAITSBACKENDQT,
-            ],
+        ],
+            
+        # Extra denoting that TVTK (Traits VTK) support should be installed:
         'tvtk': [
             APPTOOLS,
             MAYAVI,
-            ],
+        ],
+            
+        # Extra denoting that Traits user interface wxPython toolkit support
+        # should be installed:
         'wx': [
             TRAITSBACKENDWX,
-            ],
+        ],
 
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
-            #wx
-            ],
-        },
-    include_package_data = True,
-    install_requires = [
-        APPTOOLS,    # This should be removed -- see the TODO.txt file.
-        ENTHOUGHTBASE_UI,
-        TRAITS_UI
+            #'wx',  # fixme: not available as an egg on all platforms.
         ],
-    license = 'BSD',
-    name = 'TraitsGUI',
-    namespace_packages = [
+    },
+    
+    install_requires = [
+        ENTHOUGHTBASE_UI,
+        TRAITS
+    ],
+    
+    include_package_data = True,
+    license              = 'BSD',
+    name                 = 'TraitsGUI',
+    namespace_packages   = [
         "enthought",
         "enthought.pyface",
         "enthought.pyface.ui",
-        ],
-    packages = find_packages(),
+    ],
+    packages      = find_packages(),
     tests_require = [
         'nose >= 0.9',
-        ],
+    ],
     test_suite = 'nose.collector',
-    url = 'http://code.enthought.com/ets',
-    version = '3.0.0b1',
-    zip_safe = False,
-    )
+    url        = 'http://code.enthought.com/ets',
+    version    = '3.0.0b1',
+    zip_safe   = False,
+)
 

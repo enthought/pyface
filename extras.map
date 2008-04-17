@@ -3,7 +3,7 @@ enthought.pyface.dock = *
 
 
 [qt]
-# completely optional extra
+# Completely optional extra
 
 
 [tvtk]
@@ -11,5 +11,5 @@ enthought.pyface.tvtk = *
 
 
 [wx]
-# completely optional extra
+# Completely optional extra
 

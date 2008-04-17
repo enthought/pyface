@@ -105,8 +105,11 @@ class MEditor(MWorkbenchPart):
         """ Trait initializer. """
 
         # We make sure the undo package is entirely optional.
-        from enthought.undo.api import CommandStack
-
+        try:
+            from enthought.undo.api import CommandStack
+        except ImportError:
+            return None
+            
         return CommandStack(undo_manager=self.window.workbench.undo_manager)
 
 #### EOF ######################################################################

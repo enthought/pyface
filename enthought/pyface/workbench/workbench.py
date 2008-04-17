@@ -255,7 +255,10 @@ class Workbench(HasTraits):
         """ Trait initializer. """
 
         # We make sure the undo package is entirely optional.
-        from enthought.undo.api import UndoManager
+        try:
+            from enthought.undo.api import UndoManager
+        except ImportError:
+            return None
 
         return UndoManager()
     
