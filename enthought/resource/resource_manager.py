@@ -20,7 +20,7 @@ sounds etc.
 
 
 # Standard library imports.
-import glob, inspect, operator, os
+import glob, inspect, operator, os, sys
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
@@ -150,13 +150,15 @@ class ResourceManager(HasTraits):
             filepath = dirname
             zippath = ''
             while not is_zipfile(filepath) and \
-                  os.path.splitdrive(filepath)[1] != '\\' \
-                  and os.path.splitdrive(filepath)[1] != '/':
+                  os.path.splitdrive(filepath)[1].startswith('\\') and \
+                  os.path.splitdrive(filepath)[1].startswith('/'):
                 filepath, tail = os.path.split(filepath)
                 if zippath != '':
                     zippath = tail + '/' + zippath
                 else:
                     zippath = tail
+
+                    
 
             # if we found a zipfile, then look inside it for the image!
             if is_zipfile(filepath):
