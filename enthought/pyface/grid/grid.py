@@ -132,8 +132,17 @@ class Grid(Widget):
     # A left-click occurred on a cell.
     cell_left_clicked = Event
 
+    # A left-click occurred on a cell at specific location
+    # Useful if the cell contains multiple controls though the hit test
+    # is left to the consumer of the event
+    cell_left_clicked_location = Event
+
     # A right-click occurred on a cell.
     cell_right_clicked = Event
+    
+    # protected variables to store the location of the clicked event
+    _x_clicked = Int
+    _y_clicked = Int
 
     ###########################################################################
     # 'object' interface.
@@ -717,6 +726,8 @@ class Grid(Widget):
         """ Called when the left mouse button is pressed.
         """
         grid         = self._grid
+        self._x_clicked = evt.GetX()
+        self._y_clicked = evt.GetY()
         self._ignore = ((grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) or
                         (grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND))
         evt.Skip()
