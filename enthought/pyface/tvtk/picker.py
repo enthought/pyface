@@ -257,7 +257,7 @@ class Picker(HasTraits):
 
     def __get_pure_state__(self):
         d = self.__dict__.copy()
-        for x in ['renwin', 'ui', 'pick_handler', '__sync_trait__']:
+        for x in ['renwin', 'ui', 'pick_handler', '__sync_trait__', '__traits_listener__']:
             d.pop(x, None)
         return d
 

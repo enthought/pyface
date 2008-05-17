@@ -71,7 +71,7 @@ class LightGlyph(HasTraits):
 
     def __get_pure_state__(self):
         d = self.__dict__.copy()
-        for name in ['__sync_trait__']:
+        for name in ['__sync_trait__',  '__traits_listener__']:
             d.pop(name, None)
         return d                
 
@@ -177,7 +177,7 @@ class CameraLight(HasTraits):
 
     def __get_pure_state__(self):
         d = self.__dict__.copy()
-        for name in ['__sync_trait__']:
+        for name in ['__sync_trait__', '__traits_listener__']:
             d.pop(name, None)
         return d                
 
@@ -355,7 +355,8 @@ class LightManager(HasTraits):
 
     def __get_pure_state__(self):
         d = self.__dict__.copy()
-        for name in ['__sync_trait__', 'renwin', 'ui']:
+        for name in ['__sync_trait__', 'renwin', 'ui',
+                     '__traits_listener__']:
             d.pop(name, None)
         return d
 
