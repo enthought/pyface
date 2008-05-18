@@ -268,6 +268,30 @@ class TVTKScene(HasPrivateTraits):
                 widget.interactor = None
         self.render()
 
+    def close(self):
+        """Close the scene cleanly.  This ensures that the scene is
+        shutdown cleanly.  This should be called if you are getting
+        async errors when closing a scene from a UI.  This is based on
+        the observations of Charl Botha here:
+
+          http://public.kitware.com/pipermail/vtkusers/2008-May/095291.html
+
+        """
+        # Return if we are already closed.
+        if self._renwin is None:
+            return
+        # Disable any renders through traits listner callbacks.
+        self.disable_render = True
+        # Remove all the renderer's props.
+        self._renderer.remove_all_view_props()
+        # Set the renderwindow to release all resources and the OpenGL
+        # context. 
+        self._renwin.finalize()
+        # Disconnect the interactor from the renderwindow.
+        self._interactor.render_window = None
+        # Remove the reference to the render window.
+        del self._renwin
+
     def x_plus_view(self):
         """View scene down the +X axis. """
         self._update_view(self._def_pos, 0, 0, 0, 0, 1)
