@@ -737,7 +737,7 @@ class TVTKScene(HasPrivateTraits):
         self.render()
 
     def _disable_render_changed(self, val):
-        if not val:
+        if not val and self._renwin is not None:
             self.render()
 
 
