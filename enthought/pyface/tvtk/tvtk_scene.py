@@ -282,6 +282,11 @@ class TVTKScene(HasPrivateTraits):
             return
         # Disable any renders through traits listner callbacks.
         self.disable_render = True
+        # Remove sync trait listeners.
+        self.sync_trait('background', self._renderer, remove=True)
+        self.sync_trait('parallel_projection', self.camera, remove=True)
+        self.sync_trait('off_screen_rendering', self._renwin, remove=True) 
+
         # Remove all the renderer's props.
         self._renderer.remove_all_view_props()
         # Set the renderwindow to release all resources and the OpenGL
