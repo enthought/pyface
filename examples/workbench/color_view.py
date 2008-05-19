@@ -18,19 +18,19 @@ class ColorView(View):
     # 'IWorkbenchPart' interface.
     ###########################################################################
 
+    #### Trait initializers ###################################################
+    
     def _id_default(self):
         """ Trait initializer. """
 
         # By making the Id the same as the name, we make it easy to specify
         # the views in the example perspectives. Note for larger applications
         # the Id should be globally unique, and by default we use the module
-        # name and class name.
+        # name and class name. 
         return self.name
-    
-    ###########################################################################
-    # 'IView' interface.
-    ###########################################################################
 
+    #### Methods ##############################################################
+   
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the view.
 
@@ -38,28 +38,40 @@ class ColorView(View):
 
         """
 
+        method = getattr(self, '_%s_create_control' % ETSConfig.toolkit, None)
+        if method is None:
+            raise SystemError('Unknown toolkit %s', ETSConfig.toolkit)
+
         color = self.name.lower()
-        tk = ETSConfig.toolkit
 
-        if tk == 'wx':
-            import wx
+        return method(parent, color)
+
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    def _wx_create_control(self, parent, color):
+        """ Create a wx version of the control. """
+
+        import wx
         
-            panel = wx.Panel(parent, -1)
-            panel.SetBackgroundColour(color)
-
-        elif tk == 'qt4':
-            from PyQt4 import QtGui
-        
-            panel = QtGui.QWidget(parent)
-
-            palette = QtGui.QPalette(panel.palette())
-            palette.setColor(QtGui.QPalette.Window, QtGui.QColor(color))
-            panel.setPalette(palette)
-            panel.setAutoFillBackground(True)
-
-        else:
-            panel = None
+        panel = wx.Panel(parent, -1)
+        panel.SetBackgroundColour(color)
 
         return panel
+
+    def _qt4_create_control(self, parent, color):
+        """ Create a Qt4 version of the control. """
+
+        from PyQt4 import QtGui
+        
+        widget = QtGui.QWidget(parent)
+
+        palette = widget.palette()
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor(color))
+        widget.setPalette(palette)
+        widget.setAutoFillBackground(True)
+
+        return widget
 
 #### EOF ######################################################################
