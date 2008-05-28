@@ -776,11 +776,13 @@ class Grid(Widget):
         if renderer is not None:
             result = renderer.on_left_click(self, row, col)
 
-        if (self.selection_mode != '') or (not self.edit_on_first_click):
-            self._grid.SelectBlock(row, col, row, col, evt.ControlDown())
-            
-        self._edit = True
-        evt.Skip()
+        # if the handler didn't tell us to stop further handling then skip
+        if not result:    
+            if (self.selection_mode != '') or (not self.edit_on_first_click):
+                self._grid.SelectBlock(row, col, row, col, evt.ControlDown())
+                
+            self._edit = True
+            evt.Skip()
     
     def _on_range_select(self, evt):
         if evt.Selecting():
