@@ -130,13 +130,25 @@ class TVTKScene(HasPrivateTraits):
     # The light manager.
     light_manager = Instance(light_manager.LightManager)
 
+    # Is the scene busy or not.
+    busy = Property(Bool)
+
+    ########################################
+    # Events
+
+    # Lifecycle events: there are no opening/opened events since the
+    # control is actually created in __init__.
+
+    # The control is going to be closed.
+    closing = Event
+
+    # The control has been closed.
+    closed = Event
+
     # Event fired when an actor is added to the scene.
     actor_added = Event
     # Event fired when any actor is removed from the scene.
     actor_removed = Event
-
-    # Is the scene busy or not.
-    busy = Property(Bool)
 
     ########################################
     # Properties.
@@ -280,6 +292,9 @@ class TVTKScene(HasPrivateTraits):
         # Return if we are already closed.
         if self._renwin is None:
             return
+
+        # Fire the "closing" event.
+        self.closing = True
         # Disable any renders through traits listner callbacks.
         self.disable_render = True
         # Remove sync trait listeners.
@@ -296,6 +311,8 @@ class TVTKScene(HasPrivateTraits):
         self._interactor.render_window = None
         # Remove the reference to the render window.
         del self._renwin
+        # Fire the "closed" event.
+        self.closed = True
 
     def x_plus_view(self):
         """View scene down the +X axis. """
