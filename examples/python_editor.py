@@ -61,7 +61,7 @@ class MainWindow(ApplicationWindow):
         """ Open a new file. """
 
         if self.control:
-            dlg = FileDialog(parent=self.control ,wildcard="*.py")
+            dlg = FileDialog(parent=self.control, wildcard="*.py")
 
             if dlg.open() == OK:
                 self._editor.path = dlg.path
@@ -70,8 +70,14 @@ class MainWindow(ApplicationWindow):
         """ Save the file. """
 
         if self.control:
-            self._editor.save()
-
+            try:
+                self._editor.save()
+            except IOError, e:
+                # If you are trying to save to a file that doesn't exist,
+                # open up a FileDialog with a 'save as' action.
+                dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
+                if dlg.open() == OK:
+                    self._editor.save(dlg.path)
 
 # Application entry point.
 if __name__ == '__main__':
