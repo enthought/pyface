@@ -24,7 +24,7 @@ sys.path.append(os.path.abspath(r'..\..\..'))
 from enthought.pyface.api import GUI
 from enthought.pyface.api import PythonShell
 from enthought.pyface.api import SplitApplicationWindow
-from enthought.pyface.tvtk.api import SimpleScene
+from enthought.pyface.tvtk.simple_scene import SimpleScene
 from enthought.pyface.tvtk.actors import *
 from enthought.traits.api import Float, Str, Instance
 
