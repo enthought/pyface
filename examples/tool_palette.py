@@ -18,7 +18,7 @@
 
 import wx
 
-from enthought.pyface.api import ApplicationWindow, GUI
+from enthought.pyface.api import ApplicationWindow, GUI, ImageResource
 from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
 
 from enthought.pyface.action.api import ToolPaletteManager
@@ -52,7 +52,7 @@ class MainWindow(ApplicationWindow):
 
         actions = []
         for i in range(25):
-            actions.append(Action(name='Foo', style='radio'))
+            actions.append(Action(name='Foo', style='radio', image=ImageResource('document')))
             
         tool_palette = ToolPaletteManager( *actions )
         
