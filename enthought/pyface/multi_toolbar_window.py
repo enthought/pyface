@@ -49,7 +49,7 @@ class MultiToolbarWindow(ApplicationWindow):
     def _create_trim_widgets(self, parent):
 
         # The frame's icon.
-        self._set_window_icon(parent)
+        self._set_window_icon()
         
         # Add the (optional) menu bar.
         self._create_menu_bar(parent)
