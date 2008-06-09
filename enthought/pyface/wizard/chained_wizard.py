@@ -52,6 +52,7 @@ class ChainedWizard(SimpleWizard):
         if new is not None:
             self.controller.next_controller = new.controller
 
+        self._create_buttons(self.control)
         self._update()
 
         return
