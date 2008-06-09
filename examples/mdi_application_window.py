@@ -62,7 +62,8 @@ if __name__ == '__main__':
 
     # Add some child windows
     for i in range(2):
-        window.create_child_window()
+        child = window.create_child_window()
+        child.Show()
 
     # Start the GUI event loop!
     gui.start_event_loop()

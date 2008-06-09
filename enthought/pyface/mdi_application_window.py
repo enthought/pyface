@@ -23,6 +23,14 @@ from enthought.traits.api import Bool, Instance, Int, Tuple
 # Local imports.
 from application_window import ApplicationWindow
 from image_resource import ImageResource
+from window import Window
+
+try:
+    import wx.aui
+    AUI = True
+    
+except:
+    AUI = False
 
 
 class MDIApplicationWindow(ApplicationWindow):
@@ -74,9 +82,9 @@ class MDIApplicationWindow(ApplicationWindow):
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the window. """
-
+        
         control = wx.MDIParentFrame(
-            parent, -1, self.title, style=self.STYLE, size=self.size,
+            parent, -1, self.title, style=wx.DEFAULT_FRAME_STYLE, size=self.size,
             pos=self.position
         )
         wxid = control.GetId()
@@ -98,23 +106,18 @@ class MDIApplicationWindow(ApplicationWindow):
         wx.EVT_ERASE_BACKGROUND(client_window, self._on_erase_background)
 
         self._wx_offset = client_window.GetPositionTuple()
+        
+        if AUI:
+            # Let the AUI manager look after the frame.
+            self._aui_manager.SetManagedWindow(control)
+        
 
         return control
 
-    def _create_contents(self, parent):
-        """ Creates the window contents.
-
-        This method is intended to be overridden if necessary.  By default we
-        just create an empty (and blue!) panel.
-
-        """
-
-        # An MDI window has no content.
-        return None
-    
     ###########################################################################
     # Private interface.
     ###########################################################################
+
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
