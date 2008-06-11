@@ -26,7 +26,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-import wx
+import wx, sys, traceback
 
 # fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import enthought.traits.ui.wx
@@ -163,6 +163,21 @@ Bounds = Tuple( Int, Int, Int, Int )
 
 # Docking drag bar style:
 DockStyle = Enum( 'horizontal', 'vertical', 'tab', 'fixed' )
+
+#-------------------------------------------------------------------------------
+#  Check for wxGCDC availability:
+#-------------------------------------------------------------------------------
+
+try:
+    dc = wx.MemoryDC()
+    dc2 = wx.GCDC(dc)
+except:
+    print 'wxGCDC is not available on this platform'
+    print 'Warning: You may need an update version of Cairo and GTK for'
+    print 'this widget to work correctly.'
+    print '-'*60
+    traceback.print_exc(file=sys.stdout)
+    print '-'*60
 
 #-------------------------------------------------------------------------------
 #  Adds a new DockWindowFeature class to the list of available features:
@@ -740,10 +755,14 @@ class DockItem ( HasPrivateTraits ):
             self._drag_bitmap = wx.EmptyBitmap( dx, dy )
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
-            dc3 = wx.GCDC( dc2 )
-            dc3.SetBrush( wx.Brush( wx.Colour( 158, 166, 255, 64 ) ) )
-            dc3.SetPen( wx.TRANSPARENT_PEN )
-            dc3.DrawRectangle( 0, 0, dx, dy )
+            try:
+                dc3 = wx.GCDC( dc2 )
+                dc3.SetBrush( wx.Brush( wx.Colour( 158, 166, 255, 64 ) ) )
+                dc3.SetPen( wx.TRANSPARENT_PEN )
+                dc3.DrawRectangle( 0, 0, dx, dy )
+            except NotImplementedError:
+                pass
+            
             dc.Blit( x, y, dx, dy, dc2, 0, 0 )
         else:
             self._drag_bitmap = None
@@ -3290,17 +3309,20 @@ class DockInfo ( HasPrivateTraits ):
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
             bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
-            bdc3 = wx.GCDC( bdc2 )
-            bdc3.SetPen( wx.TRANSPARENT_PEN )
-            bdc3.SetBrush( wx.Brush( wx.Colour( *DockColorBrush ) ) )
-            x, y, dx, dy = self.bounds
+            try:
+                bdc3 = wx.GCDC( bdc2 )
+                bdc3.SetPen( wx.TRANSPARENT_PEN )
+                bdc3.SetBrush( wx.Brush( wx.Colour( *DockColorBrush ) ) )
+                x, y, dx, dy = self.bounds
             
-            if DOCK_TAB <= self.kind <= DOCK_TABADD:
-                tx, ty, tdx, tdy = self.tab_bounds
-                bdc3.DrawRoundedRectangle( tx, ty, tdx, tdy, 4 )
-            else:
-                bdc3.DrawRoundedRectangle( x, y, dx, dy, 8 )
-
+                if DOCK_TAB <= self.kind <= DOCK_TABADD:
+                    tx, ty, tdx, tdy = self.tab_bounds
+                    bdc3.DrawRoundedRectangle( tx, ty, tdx, tdy, 4 )
+                else:
+                    bdc3.DrawRoundedRectangle( x, y, dx, dy, 8 )
+            except:
+                pass
+        
             bx, by = window.ClientToScreenXY( 0, 0 )
             sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
                 
