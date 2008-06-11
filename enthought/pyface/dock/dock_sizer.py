@@ -165,21 +165,6 @@ Bounds = Tuple( Int, Int, Int, Int )
 DockStyle = Enum( 'horizontal', 'vertical', 'tab', 'fixed' )
 
 #-------------------------------------------------------------------------------
-#  Check for wxGCDC availability:
-#-------------------------------------------------------------------------------
-
-try:
-    dc = wx.MemoryDC()
-    dc2 = wx.GCDC(dc)
-except:
-    print 'wxGCDC is not available on this platform'
-    print 'Warning: You may need an update version of Cairo and GTK for'
-    print 'this widget to work correctly.'
-    print '-'*60
-    traceback.print_exc(file=sys.stdout)
-    print '-'*60
-
-#-------------------------------------------------------------------------------
 #  Adds a new DockWindowFeature class to the list of available features:
 #-------------------------------------------------------------------------------
 
@@ -383,6 +368,21 @@ class DockItem ( HasPrivateTraits ):
 
     # The control associated with this item (implemented in subclasses):
     # control = Instance( wx.Control )
+
+    #---------------------------------------------------------------------------
+    #  Check wxGCDC compatability
+    #---------------------------------------------------------------------------
+
+    try:
+        dc = wx.MemoryDC()
+        dc2 = wx.GCDC(dc)
+    except:
+        print 'wxGCDC is not available on this platform'
+        print 'Warning: You may need an update version of Cairo and GTK for'
+        print 'this widget to work correctly.'
+        print '-'*60
+        traceback.print_exc(file=sys.stdout)
+        print '-'*60
 
     #---------------------------------------------------------------------------
     #  Implementation of the 'owner' property:
@@ -3286,6 +3286,21 @@ class DockInfo ( HasPrivateTraits ):
 
     # Dock Control:
     control = Instance( DockItem )
+
+    #---------------------------------------------------------------------------
+    #  Check wxGCDC compatability
+    #---------------------------------------------------------------------------
+
+    try:
+        dc = wx.MemoryDC()
+        dc2 = wx.GCDC(dc)
+    except:
+        print 'wxGCDC is not available on this platform'
+        print 'Warning: You may need an update version of Cairo and GTK for'
+        print 'this widget to work correctly.'
+        print '-'*60
+        traceback.print_exc(file=sys.stdout)
+        print '-'*60
 
     #---------------------------------------------------------------------------
     #  Draws the DockInfo on the display:
