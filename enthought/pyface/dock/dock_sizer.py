@@ -378,8 +378,8 @@ class DockItem ( HasPrivateTraits ):
         dc2 = wx.GCDC(dc)
     except:
         print 'wxGCDC is not available on this platform'
-        print 'Warning: You may need an update version of Cairo and GTK for'
-        print 'this widget to work correctly.'
+        print 'Warning: You may need an updated version of Cairo and GTK'
+        print 'for this widget to work correctly.'
         print '-'*60
         traceback.print_exc(file=sys.stdout)
         print '-'*60
@@ -3296,8 +3296,8 @@ class DockInfo ( HasPrivateTraits ):
         dc2 = wx.GCDC(dc)
     except:
         print 'wxGCDC is not available on this platform'
-        print 'Warning: You may need an update version of Cairo and GTK for'
-        print 'this widget to work correctly.'
+        print 'Warning: You may need an updated version of Cairo and GTK'
+        print 'for this widget to work correctly.'
         print '-'*60
         traceback.print_exc(file=sys.stdout)
         print '-'*60
