@@ -171,7 +171,10 @@ DockStyle = Enum( 'horizontal', 'vertical', 'tab', 'fixed' )
 def _check_gcdc():
     try:
         dc = wx.MemoryDC()
-        dc2 = wx.GCDC(dc)
+        if dc.IsOk():
+            dc2 = wx.GCDC(dc)
+        else:
+            raise
     except:
         print 'wxGCDC is not available on this platform'
         print 'Warning: You may need an updated version of Cairo and GTK'
@@ -385,12 +388,15 @@ class DockItem ( HasPrivateTraits ):
     # The control associated with this item (implemented in subclasses):
     # control = Instance( wx.Control )
 
-    # Check for wxGCDC compatability
-    _check_gcdc()
-
     #---------------------------------------------------------------------------
     #  Implementation of the 'owner' property:
     #---------------------------------------------------------------------------
+    
+    def __init__(self, **kw):
+        super(DockItem, self).__init__(kw)
+
+        # Check for wxGCDC compatability
+        _check_gcdc()
 
     @cached_property
     def _get_owner ( self ):
@@ -3291,8 +3297,11 @@ class DockInfo ( HasPrivateTraits ):
     # Dock Control:
     control = Instance( DockItem )
 
-    # Check for GCDC compatability
-    _check_gcdc()
+    def __init__(self, **kw):
+        super(DockInfo, self).__init__(**kw)
+        
+        # Check for GCDC compatability
+        _check_gcdc()
 
     #---------------------------------------------------------------------------
     #  Draws the DockInfo on the display:
