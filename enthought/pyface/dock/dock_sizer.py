@@ -393,7 +393,7 @@ class DockItem ( HasPrivateTraits ):
     #---------------------------------------------------------------------------
     
     def __init__(self, **kw):
-        super(DockItem, self).__init__(kw)
+        super(DockItem, self).__init__(**kw)
 
         # Check for wxGCDC compatability
         _check_gcdc()
