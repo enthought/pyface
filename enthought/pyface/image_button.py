@@ -25,8 +25,7 @@
 
 import wx
 
-from enthought.util.numerix \
-    import array, fromstring, reshape, UnsignedInt8, ravel
+from numpy import array, fromstring, reshape, ravel, dtype
 
 from enthought.traits.api \
     import Str, Range, Enum, Instance, Event, false
@@ -40,7 +39,9 @@ from image_resource \
 #-------------------------------------------------------------------------------
 #  Constants:  
 #-------------------------------------------------------------------------------
-        
+
+UnsignedInt8 = dtype('uint8')
+
 # Text color used when a button is disabled:
 DisabledTextColor = wx.Colour( 128, 128, 128 )
 
