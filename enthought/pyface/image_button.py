@@ -40,8 +40,6 @@ from image_resource \
 #  Constants:  
 #-------------------------------------------------------------------------------
 
-UnsignedInt8 = dtype('uint8')
-
 # Text color used when a button is disabled:
 DisabledTextColor = wx.Colour( 128, 128, 128 )
 
@@ -229,12 +227,12 @@ class ImageButton ( Widget ):
             if disabled:
                 if self._mono_image is None:
                     img  = self._img
-                    data = reshape( fromstring( img.GetData(), UnsignedInt8 ), 
-                              ( -1, 3 ) ) * array( [ [ 0.297, 0.589, 0.114 ] ] )
+                    data = reshape(fromstring(img.GetData(), dtype('uint8')),
+                                   (-1, 3)) * array([[ 0.297, 0.589, 0.114 ]])
                     g = data[ :, 0 ] + data[ :, 1 ] + data[ :, 2 ]
                     data[ :, 0 ] = data[ :, 1 ] = data[ :, 2 ] = g
-                    img.SetData( ravel( data.astype( UnsignedInt8 ) ).tostring() )
-                    img.SetMaskColour( 0, 0, 0 )
+                    img.SetData(ravel(data.astype(dtype('uint8'))).tostring())
+                    img.SetMaskColour(0, 0, 0)
                     self._mono_image = img.ConvertToBitmap()
                     self._img        = None
                 image = self._mono_image
