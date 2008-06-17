@@ -335,10 +335,10 @@ class DockItem ( HasPrivateTraits ):
     tab_state = Any
 
     # The tab displayable version of the control's UI name:
-    tab_name = Property
+    tab_name = Property( depends_on = 'name' )
 
     # Width of the item's tab:
-    tab_width = Property( depends_on = 'tab_state' )
+    tab_width = Property( depends_on = 'tab_state, tab_name' )
 
     # The DockWindowTheme for this item's DockWindow:
     theme = Property
