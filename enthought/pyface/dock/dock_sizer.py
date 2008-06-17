@@ -164,25 +164,6 @@ Bounds = Tuple( Int, Int, Int, Int )
 # Docking drag bar style:
 DockStyle = Enum( 'horizontal', 'vertical', 'tab', 'fixed' )
 
-#---------------------------------------------------------------------------
-#  Checks if the current system is GCDC compatable
-#---------------------------------------------------------------------------
-
-def _check_gcdc():
-    try:
-        dc = wx.MemoryDC()
-        if dc.IsOk():
-            dc2 = wx.GCDC(dc)
-        else:
-            raise
-    except:
-        print 'wxGCDC is not available on this platform'
-        print 'Warning: You may need an updated version of Cairo and GTK'
-        print 'for this widget to work correctly.'
-        print '-'*60
-        traceback.print_exc(file=sys.stdout)
-        print '-'*60
-
 #-------------------------------------------------------------------------------
 #  Adds a new DockWindowFeature class to the list of available features:
 #-------------------------------------------------------------------------------
@@ -394,9 +375,6 @@ class DockItem ( HasPrivateTraits ):
     
     def __init__(self, **kw):
         super(DockItem, self).__init__(**kw)
-
-        # Check for wxGCDC compatability
-        _check_gcdc()
 
     @cached_property
     def _get_owner ( self ):
@@ -3299,9 +3277,6 @@ class DockInfo ( HasPrivateTraits ):
 
     def __init__(self, **kw):
         super(DockInfo, self).__init__(**kw)
-        
-        # Check for GCDC compatability
-        _check_gcdc()
 
     #---------------------------------------------------------------------------
     #  Draws the DockInfo on the display:
