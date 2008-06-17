@@ -70,13 +70,6 @@ class MainWindow(MultiToolbarWindow):
         return
 
 
-    def _create_contents(self, parent):
-        panel = super(MainWindow, self)._create_contents(parent)
-        self._create_trim_widgets(parent)
-        
-        return panel
-
-
 # Application entry point.
 if __name__ == '__main__':
     # Create the GUI (this does NOT start the GUI event loop).
