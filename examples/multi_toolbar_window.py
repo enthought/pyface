@@ -66,8 +66,15 @@ class MainWindow(MultiToolbarWindow):
             ToolBarManager(Action(name='Buz'), orientation='vertical'),
             location = 'right'
         )
-
+        
         return
+
+
+    def _create_contents(self, parent):
+        panel = super(MainWindow, self)._create_contents(parent)
+        self._create_trim_widgets(parent)
+        
+        return panel
 
 
 # Application entry point.
