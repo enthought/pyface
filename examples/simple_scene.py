@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 """ TVTK simple scene example. """
 
+print "This example will not work with wxPython versions 2.8 or higher."
 
 # Standard library imports.
 import os, random, sys
