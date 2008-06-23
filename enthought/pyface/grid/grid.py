@@ -688,7 +688,8 @@ class Grid(Widget):
     def _on_editor_created(self, evt):
 
         editor = evt.GetControl()
-        editor.PushEventHandler(ComboboxFocusHandler())
+        if editor is not None:
+            editor.PushEventHandler(ComboboxFocusHandler())
 
         evt.Skip()
         

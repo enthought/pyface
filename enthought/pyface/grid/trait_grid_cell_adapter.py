@@ -45,9 +45,8 @@ class TraitGridCellAdapter(PyGridCellEditor):
     def Create(self, parent, id, evtHandler):
         """ Called to create the control, which must derive from wxControl. """
 
-        if self._handler is not None:
-            handler = self._handler
-        else:
+        handler = self._handler
+        if handler is None:
             handler = default_handler()
 
         if self._context is None:
@@ -74,10 +73,18 @@ class TraitGridCellAdapter(PyGridCellEditor):
                                  
         # Tell the editor to actually build the editing widget:
         self._editor.prepare(parent)
-        self.SetControl(self._editor.control)
+        
+        # Find the control to use as the editor:
+        self._control = control = self._editor.control
+        if not isinstance(control, wx.Control):
+            for control in control.GetChildren():
+                if isinstance(control, wx.Control):
+                    break
+                    
+        self.SetControl(control)
 
         if evtHandler:
-            self._editor.control.PushEventHandler(evtHandler)
+            control.PushEventHandler(evtHandler)
 
         return
     
@@ -86,7 +93,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             If you don't fill the cell (the rect) then be sure to override
             PaintBackground and do something meaningful there.
         """
-        #print 'TraitGridCellAdapter.SetSize'
         self._editor.control.SetDimensions(rect.x, rect.y,
                                            rect.width+2, rect.height+2,
                                            SIZE_ALLOW_MINUS_ONE)
@@ -96,7 +102,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Show or hide the edit control.  You can use the attr (if not None)
             to set colours or fonts for the control.
         """
-        #print 'TraitGridCellAdapter.Show'
         if self.IsCreated():
             if wx_28:
                 super(TraitGridCellAdapter, self).Show(show, attr)
@@ -111,7 +116,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             attribute.  In this class the edit control fills the whole cell so
             don't do anything at all in order to reduce flicker.
         """
-        #print 'TraitGridCellAdapter.PaintBackground'
         if wx_28:
             super(TraitGridCellAdapter, self).PaintBackground(rect, attr)
         else:
@@ -119,24 +123,14 @@ class TraitGridCellAdapter(PyGridCellEditor):
 
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
-
-        # print 'TraitGridCellAdapter.BeginEdit'
-
-        # we have to manually set the focus to the control
-        #print 'TraitGridCellAdapter.BeginEdit'
+        # We have to manually set the focus to the control
         self._editor.update_editor()
-        self._editor.control.SetFocus()
-        return 
+        self._control.Show( True )
+        self._control.SetFocus()
 
     def EndEdit(self, row, col, grid):
         """ Do anything necessary to complete the editing. """
-
-        #print 'TraitGridCellAdapter.EndEdit'
-
-        # Note that we shouldn't have to do anything here, since the underlying
-        # trait editor should take care of setting the value correctly
-        #print 'TraitGridCellAdapter.EndEdit'
-        return True
+        self._control.Show( False )
 
     def Reset(self):
         """ Reset the value in the control back to its starting value. """
@@ -156,7 +150,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             called to let the editor do something about that first key
             if desired.
         """
-        #print 'TraitGridCellAdapter.StartingKey'
         return
 
     def StartingClick(self):
@@ -168,14 +161,11 @@ class TraitGridCellAdapter(PyGridCellEditor):
 
     def Destroy(self):
         """ Final cleanup. """
-        print 'TraitGridCellAdapter.Destroy'
         self._editor.dispose()
         return
 
     def Clone(self):
         """ Create a new object which is the copy of this one. """
-        #print 'TraitGridCellAdapter.Clone'
-
         return TraitGridCellAdapter(self._factory, self._obj, self._name,
                                     self._description)
 
