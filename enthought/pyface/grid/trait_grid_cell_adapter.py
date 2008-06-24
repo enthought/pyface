@@ -23,6 +23,8 @@ from enthought.traits.api import false
 from enthought.traits.ui.api import default_handler
 from enthought.traits.ui.ui import UI
 
+wx_28 = (float( wx.__version__[:3] ) >= 2.8)
+
 class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
     
@@ -106,6 +108,18 @@ class TraitGridCellAdapter(PyGridCellEditor):
         self._editor.control.SetDimensions(rect.x + 1, rect.y + 1,
                                            rect.width - 1, edit_height,
                                            SIZE_ALLOW_MINUS_ONE)
+        
+    def Show(self, show, attr):
+        """ Show or hide the edit control.  You can use the attr (if not None) 
+            to set colours or fonts for the control. 
+        """ 
+        if self.IsCreated():
+            if wx_28: 
+                super(TraitGridCellAdapter, self).Show(show, attr) 
+            else: 
+                self.base_Show(show, attr) 
+  
+        return 
 
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
