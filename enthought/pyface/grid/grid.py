@@ -1636,6 +1636,7 @@ class _GridTableBase(PyGridTableBase):
                 editor = self.model.get_cell_editor(row, col)
                 if editor is not None:
                     self._editor_cache[(row, col)] = editor
+                    editor._grid_info = (self._grid._grid, row)
 
         if editor is not None:
             # Note: We have to increment the reference to keep the

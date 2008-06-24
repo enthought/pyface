@@ -29,11 +29,12 @@ class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
     
     def __init__(self, trait_editor_factory, obj, name, description,
-                 handler = None, context = None):
+                 handler = None, context = None, style = 'simple'):
         """ Build a new TraitGridCellAdapter object. """
 
         PyGridCellEditor.__init__(self)
         self._factory = trait_editor_factory
+        self._style = style 
         self._editor = None
         self._obj = obj
         self._name = name
@@ -44,6 +45,9 @@ class TraitGridCellAdapter(PyGridCellEditor):
         
     def Create(self, parent, id, evtHandler):
         """ Called to create the control, which must derive from wxControl. """
+        # If the editor has already been created, ignore the request:
+        if hasattr( self, '_control' ):
+            return
 
         handler = self._handler
         if handler is None:
@@ -65,38 +69,39 @@ class TraitGridCellAdapter(PyGridCellEditor):
             
         # make sure the factory knows this is a grid_cell editor
         factory.is_grid_cell = True
-        self._editor = factory.simple_editor(ui,
-                                             self._obj,
-                                             self._name,
-                                             self._description,
-                                             parent)
+        factory_method = getattr(factory, self._style + '_editor')
+        self._editor = factory_method(ui,
+                                      self._obj,
+                                      self._name,
+                                      self._description,
+                                      parent)
                                  
         # Tell the editor to actually build the editing widget:
         self._editor.prepare(parent)
         
         # Find the control to use as the editor:
         self._control = control = self._editor.control
-        if not isinstance(control, wx.Control):
-            for control in control.GetChildren():
-                if isinstance(control, wx.Control):
-                    break
-                    
-        self.SetControl(control)
-
-        if evtHandler:
-            control.PushEventHandler(evtHandler)
-
-        return
+            
+        # Save the required editor size:
+        self._edit_height = self._control.GetBestSize()[1]
     
     def SetSize(self, rect):
         """ Called to position/size the edit control within the cell rectangle.
             If you don't fill the cell (the rect) then be sure to override
             PaintBackground and do something meaningful there.
         """
-        self._editor.control.SetDimensions(rect.x, rect.y,
-                                           rect.width+2, rect.height+2,
+        edit_height = rect.height
+        grid, row = getattr(self, '_grid_info', (None, None))
+        if grid is not None:
+            edit_height, cur_height = self._edit_height, grid.GetRowSize(row)
+            if edit_height > cur_height:
+                self._restore_height = cur_height
+                grid.SetRowSize(row, edit_height + 1 + (row == 0))
+                grid.ForceRefresh()
+                
+        self._editor.control.SetDimensions(rect.x + 1, rect.y + 1,
+                                           rect.width - 1, edit_height,
                                            SIZE_ALLOW_MINUS_ONE)
-        return
 
     def Show(self, show, attr):
         """ Show or hide the edit control.  You can use the attr (if not None)
@@ -107,8 +112,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
                 super(TraitGridCellAdapter, self).Show(show, attr)
             else:
                 self.base_Show(show, attr)
-
-        return
 
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
@@ -125,12 +128,19 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Make sure the control is ready to edit. """
         # We have to manually set the focus to the control
         self._editor.update_editor()
-        self._control.Show( True )
+        self._control.Show(True)
         self._control.SetFocus()
 
     def EndEdit(self, row, col, grid):
         """ Do anything necessary to complete the editing. """
-        self._control.Show( False )
+        self._control.Show(False)
+        
+        height = getattr(self, '_restore_height', None)
+        if height is not None:
+            grid, row = self._grid_info
+            grid.SetRowSize(row, height)
+            del self._restore_height
+            grid.ForceRefresh()
 
     def Reset(self):
         """ Reset the value in the control back to its starting value. """
@@ -167,13 +177,13 @@ class TraitGridCellAdapter(PyGridCellEditor):
     def Clone(self):
         """ Create a new object which is the copy of this one. """
         return TraitGridCellAdapter(self._factory, self._obj, self._name,
-                                    self._description)
+                                    self._description, style=self._style)
 
     def dispose(self):
         if self._editor is not None:
             self._editor.dispose()
             
         self.DecRef()
-
+        
 #### EOF ######################################################################
     
