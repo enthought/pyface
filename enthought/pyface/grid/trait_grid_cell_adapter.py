@@ -18,8 +18,6 @@ import wx
 from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
-wx_28 = (float( wx.__version__[:3] ) >= 2.8)
-
 # Enthought library imports
 from enthought.traits.api import false
 from enthought.traits.ui.api import default_handler
@@ -33,15 +31,14 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Build a new TraitGridCellAdapter object. """
 
         PyGridCellEditor.__init__(self)
-        self._factory = trait_editor_factory
-        self._style = style 
-        self._editor = None
-        self._obj = obj
-        self._name = name
+        self._factory     = trait_editor_factory
+        self._style       = style 
+        self._editor      = None
+        self._obj         = obj
+        self._name        = name
         self._description = description
-        self._handler = handler
-        self._context = context
-        return
+        self._handler     = handler
+        self._context     = context
         
     def Create(self, parent, id, evtHandler):
         """ Called to create the control, which must derive from wxControl. """
@@ -83,7 +80,14 @@ class TraitGridCellAdapter(PyGridCellEditor):
         self._control = control = self._editor.control
             
         # Save the required editor size:
-        self._edit_height = self._control.GetBestSize()[1]
+        self._edit_height = control.GetBestSize()[1]
+        
+        # Handle the case of a simple control:
+        if isinstance(control, wx.Control):
+            self.SetControl(control)
+           
+        if evtHandler: 
+            control.PushEventHandler(evtHandler) 
     
     def SetSize(self, rect):
         """ Called to position/size the edit control within the cell rectangle.
@@ -103,26 +107,13 @@ class TraitGridCellAdapter(PyGridCellEditor):
                                            rect.width - 1, edit_height,
                                            SIZE_ALLOW_MINUS_ONE)
 
-    def Show(self, show, attr):
-        """ Show or hide the edit control.  You can use the attr (if not None)
-            to set colours or fonts for the control.
-        """
-        if self.IsCreated():
-            if wx_28:
-                super(TraitGridCellAdapter, self).Show(show, attr)
-            else:
-                self.base_Show(show, attr)
-
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
             base  class version just fills it with background colour from the
             attribute.  In this class the edit control fills the whole cell so
             don't do anything at all in order to reduce flicker.
         """
-        if wx_28:
-            super(TraitGridCellAdapter, self).PaintBackground(rect, attr)
-        else:
-            return self.base_PaintBackground(rect, attr)
+        return
 
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
@@ -147,13 +138,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
 
         # fixme: should we be using the undo history here?
         return
-
-    def IsAcceptedKey(self, evt):
-        """ Return True to allow the given key to start editing: the base class
-            version only checks that the event has no modifiers.  F2 is special
-            and will always start the editor.
-        """
-        return PyGridCellEditor.base_IsAcceptedKey(self, evt)
 
     def StartingKey(self, evt):
         """ If the editor is enabled by pressing keys on the grid, this will be
