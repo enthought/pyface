@@ -27,12 +27,13 @@ class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
     
     def __init__(self, trait_editor_factory, obj, name, description,
-                 handler = None, context = None, style = 'simple'):
+                 handler = None, context = None, style = 'simple', height=-1.0):
         """ Build a new TraitGridCellAdapter object. """
 
         PyGridCellEditor.__init__(self)
         self._factory     = trait_editor_factory
         self._style       = style 
+        self._height      = height 
         self._editor      = None
         self._obj         = obj
         self._name        = name
@@ -79,8 +80,17 @@ class TraitGridCellAdapter(PyGridCellEditor):
         # Find the control to use as the editor:
         self._control = control = self._editor.control
             
-        # Save the required editor size:
-        self._edit_height = control.GetBestSize()[1]
+        # Calculate and save the required editor height:
+        height      = control.GetBestSize()[1]
+        self_height = self._height
+        if self_height > 1.0:
+            height = int( self_height )
+        elif self_height >= 0.0:
+            grid, row = getattr(self, '_grid_info', (None, None))
+            if grid is not None:
+                height = int( self_height * grid.GetSize()[1] )
+            
+        self._edit_height = height
         
         # Handle the case of a simple control:
         if isinstance(control, wx.Control):
