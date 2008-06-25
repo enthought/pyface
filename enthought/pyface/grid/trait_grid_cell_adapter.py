@@ -19,9 +19,7 @@ from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Enthought library imports
-from enthought.traits.api import false
-from enthought.traits.ui.api import default_handler
-from enthought.traits.ui.ui import UI
+from enthought.traits.ui.api import UI, default_handler
 
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
 
@@ -69,11 +67,11 @@ class TraitGridCellAdapter(PyGridCellEditor):
         # make sure the factory knows this is a grid_cell editor
         factory.is_grid_cell = True
         factory_method = getattr(factory, self._style + '_editor')
-        self._editor = factory_method(ui,
-                                      self._obj,
-                                      self._name,
-                                      self._description,
-                                      parent)
+        self._editor   = factory_method(ui,
+                                        self._obj,
+                                        self._name,
+                                        self._description,
+                                        parent)
                                  
         # Tell the editor to actually build the editing widget:
         self._editor.prepare(parent)
@@ -88,8 +86,8 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if isinstance(control, wx.Control):
             self.SetControl(control)
            
-        if evtHandler: 
-            control.PushEventHandler(evtHandler) 
+        #if evtHandler: 
+        #    control.PushEventHandler(evtHandler) 
     
     def SetSize(self, rect):
         """ Called to position/size the edit control within the cell rectangle.
@@ -105,9 +103,9 @@ class TraitGridCellAdapter(PyGridCellEditor):
                 grid.SetRowSize(row, edit_height + 1 + (row == 0))
                 grid.ForceRefresh()
                 
-        self._editor.control.SetDimensions(rect.x + 1, rect.y + 1,
-                                           rect.width - 1, edit_height,
-                                           SIZE_ALLOW_MINUS_ONE)
+        self._control.SetDimensions(rect.x + 1, rect.y + 1,
+                                    rect.width - 1, edit_height,
+                                    SIZE_ALLOW_MINUS_ONE)
         
     def Show(self, show, attr):
         """ Show or hide the edit control.  You can use the attr (if not None) 

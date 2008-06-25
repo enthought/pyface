@@ -404,9 +404,9 @@ class Grid(Widget):
         #       we may need a more general solution at some point.
 
         # make sure we update for any new values in the table
-        msg = GridTableMessage(self._grid_table_base,
-                               GRIDTABLE_REQUEST_VIEW_GET_VALUES)
-        self._grid.ProcessTableMessage(msg)
+        #msg = GridTableMessage(self._grid_table_base,
+        #                       GRIDTABLE_REQUEST_VIEW_GET_VALUES)
+        #self._grid.ProcessTableMessage(msg)
         
         self._grid.ForceRefresh()
 
