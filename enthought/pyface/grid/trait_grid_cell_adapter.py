@@ -46,12 +46,14 @@ class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
     
     def __init__(self, trait_editor_factory, obj, name, description,
-                 handler = None, context = None, style = 'simple', height=-1.0):
+                 handler = None, context = None, style = 'simple', 
+                 width = -1.0, height = -1.0):
         """ Build a new TraitGridCellAdapter object. """
 
         PyGridCellEditor.__init__(self)
         self._factory     = trait_editor_factory
         self._style       = style 
+        self._width       = width
         self._height      = height 
         self._editor      = None
         self._obj         = obj
@@ -102,13 +104,19 @@ class TraitGridCellAdapter(PyGridCellEditor):
         # Calculate and save the required editor height:
         grid, row, col = getattr(self, '_grid_info', (None, None, None))
         width, height  = control.GetBestSize()
-        #width = 400
+        
         self_height    = self._height
         if self_height > 1.0:
             height = int( self_height )
         elif (self_height >= 0.0) and (grid is not None):
             height = int( self_height * grid.GetSize()[1] )
-            
+
+        self_width = self._width
+        if self_width > 1.0:
+            width = int( self_width )
+        elif (self_width >= 0.0) and (grid is not None):
+            width = int( self_width * grid.GetSize()[0] )
+
         self._edit_width, self._edit_height = width, height
         
         # Set up the event handler for each window in the cell editor:
@@ -130,18 +138,32 @@ class TraitGridCellAdapter(PyGridCellEditor):
         grid, row, col = getattr(self, '_grid_info', (None, None, None))
         if grid is not None:
             edit_width, cur_width = self._edit_width, grid.GetColSize(col)
-            if edit_width > cur_width:
-                self._restore_width = cur_width
+            
+            restore_width = getattr( grid, '_restore_width', None )
+            if restore_width is not None:
+                cur_width = restore_width
+                
+            if (edit_width > cur_width) or (restore_width is not None):
+                edit_width = max( edit_width, cur_width )
+                grid._restore_width = cur_width
                 grid.SetColSize(col, edit_width + 1 + (col == 0))
                 changed = True
             else:
                 edit_width = cur_width
                 
             edit_height, cur_height = self._edit_height, grid.GetRowSize(row)
-            if edit_height > cur_height:
-                self._restore_height = cur_height
+            
+            restore_height = getattr( grid, '_restore_height', None )
+            if restore_height is not None:
+                cur_height = restore_height
+                
+            if (edit_height > cur_height) or (restore_height is not None):
+                edit_height = max( edit_height, cur_height )
+                grid._restore_height = cur_height
                 grid.SetRowSize(row, edit_height + 1 + (row == 0))
                 changed = True
+            else:
+                edit_height = cur_height
                 
             if changed:
                 grid.ForceRefresh()
@@ -183,18 +205,24 @@ class TraitGridCellAdapter(PyGridCellEditor):
         
         changed        = False
         grid, row, col = self._grid_info
-            
-        width = getattr(self, '_restore_width', None)
-        if width is not None:
-            grid.SetColSize(col, width)
-            del self._restore_width
-            changed = True
         
-        height = getattr(self, '_restore_height', None)
-        if height is not None:
-            grid.SetRowSize(row, height)
-            del self._restore_height
-            changed = True
+        if grid._no_reset_col:
+            grid._no_reset_col = False
+        else:
+            width = getattr(grid, '_restore_width', None)
+            if width is not None:
+                del grid._restore_width
+                grid.SetColSize(col, width)
+                changed = True
+            
+        if grid._no_reset_row:
+            grid._no_reset_row = False
+        else:
+            height = getattr(grid, '_restore_height', None)
+            if height is not None:
+                del grid._restore_height
+                grid.SetRowSize(row, height)
+                changed = True
             
         if changed:
             grid.ForceRefresh()

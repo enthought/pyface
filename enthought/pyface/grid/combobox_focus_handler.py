@@ -54,11 +54,13 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._grid.DisableCellEditControl()
         
     def _left_key ( self, evt ):
-        if not evt.ControlDown():
+        if not (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
         grid, row, col, rows, cols = self._grid_info()
+        
+        grid._no_reset_row = True
         
         col -= 1
         if col < 0:
@@ -70,11 +72,13 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._edit_cell( row, col )
         
     def _right_key ( self, evt ):
-        if not evt.ControlDown():
+        if not (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
         grid, row, col, rows, cols = self._grid_info()
+        
+        grid._no_reset_row = True
         
         col += 1
         if col >= cols:
@@ -86,11 +90,13 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._edit_cell( row, col )
         
     def _up_key ( self, evt ):
-        if not evt.ControlDown():
+        if (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
         grid, row, col, rows, cols = self._grid_info()
+        
+        grid._no_reset_col = True
         
         row -= 1
         if row < 0:
@@ -99,11 +105,13 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._edit_cell( row, col )
         
     def _down_key ( self, evt ):
-        if not evt.ControlDown():
+        if (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
         grid, row, col, rows, cols = self._grid_info()
+        
+        grid._no_reset_col = True
         
         row += 1
         if row >= rows:

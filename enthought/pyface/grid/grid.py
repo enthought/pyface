@@ -166,6 +166,10 @@ class Grid(Widget):
         self._grid = grid = wxGrid(panel, -1)
         grid.grid  = self
         
+        # Set when moving edit cursor:
+        grid._no_reset_col = False
+        grid._no_reset_row = False
+        
         sizer = wx.BoxSizer( wx.VERTICAL )
         sizer.Add( grid, 1, wx.EXPAND )
         panel.SetSizer( sizer )
