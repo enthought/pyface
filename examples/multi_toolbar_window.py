@@ -22,9 +22,11 @@ sys.path.append(os.path.abspath(r'..\..\..'))
 
 # FIXME: This is a hack to disable the AUI module which causes the example to  
 # not layout correctly.
-import wx
-import sys
-sys.modules['wx.aui'] = None
+try:
+    import wx
+    sys.modules['wx.aui'] = None
+except:
+    pass
 
 # Enthought library imports.
 from enthought.pyface.api import MultiToolbarWindow, GUI
