@@ -20,6 +20,12 @@ import os, sys
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
 
+# FIXME: This is a hack to disable the AUI module which causes the example to  
+# not layout correctly.
+import wx
+import sys
+sys.modules['wx.aui'] = None
+
 # Enthought library imports.
 from enthought.pyface.api import MultiToolbarWindow, GUI
 from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
