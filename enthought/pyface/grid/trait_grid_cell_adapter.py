@@ -100,15 +100,16 @@ class TraitGridCellAdapter(PyGridCellEditor):
         self._control = control = self._editor.control
             
         # Calculate and save the required editor height:
-        grid, row   = getattr(self, '_grid_info', (None, None))
-        height      = control.GetBestSize()[1]
-        self_height = self._height
+        grid, row, col = getattr(self, '_grid_info', (None, None, None))
+        width, height  = control.GetBestSize()
+        #width = 400
+        self_height    = self._height
         if self_height > 1.0:
             height = int( self_height )
         elif (self_height >= 0.0) and (grid is not None):
             height = int( self_height * grid.GetSize()[1] )
             
-        self._edit_height = height
+        self._edit_width, self._edit_height = width, height
         
         # Set up the event handler for each window in the cell editor:
         push_control(control, grid)
@@ -124,17 +125,29 @@ class TraitGridCellAdapter(PyGridCellEditor):
             If you don't fill the cell (the rect) then be sure to override
             PaintBackground and do something meaningful there.
         """
-        edit_height = rect.height
-        grid, row   = getattr(self, '_grid_info', (None, None))
+        changed = False
+        edit_width, edit_height = rect.width, rect.height
+        grid, row, col = getattr(self, '_grid_info', (None, None, None))
         if grid is not None:
+            edit_width, cur_width = self._edit_width, grid.GetColSize(col)
+            if edit_width > cur_width:
+                self._restore_width = cur_width
+                grid.SetColSize(col, edit_width + 1 + (col == 0))
+                changed = True
+            else:
+                edit_width = cur_width
+                
             edit_height, cur_height = self._edit_height, grid.GetRowSize(row)
             if edit_height > cur_height:
                 self._restore_height = cur_height
                 grid.SetRowSize(row, edit_height + 1 + (row == 0))
+                changed = True
+                
+            if changed:
                 grid.ForceRefresh()
                 
         self._control.SetDimensions(rect.x + 1, rect.y + 1,
-                                    rect.width - 1, edit_height,
+                                    edit_width, edit_height,
                                     SIZE_ALLOW_MINUS_ONE)
         
     def Show(self, show, attr):
@@ -168,11 +181,22 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Do anything necessary to complete the editing. """
         self._control.Show(False)
         
+        changed        = False
+        grid, row, col = self._grid_info
+            
+        width = getattr(self, '_restore_width', None)
+        if width is not None:
+            grid.SetColSize(col, width)
+            del self._restore_width
+            changed = True
+        
         height = getattr(self, '_restore_height', None)
         if height is not None:
-            grid, row = self._grid_info
             grid.SetRowSize(row, height)
             del self._restore_height
+            changed = True
+            
+        if changed:
             grid.ForceRefresh()
 
     def Reset(self):
