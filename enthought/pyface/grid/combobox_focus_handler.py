@@ -43,11 +43,6 @@ class ComboboxFocusHandler(wx.EvtHandler):
     
     def _on_key(self, evt):
         """ Called when a key is pressed. """
-        # This changes the behaviour of the <Enter> and <Tab> keys to make
-        # manual data entry smoother!
-        #
-        # Don't change the behavior if the <Control> key is pressed as this
-        # has meaning to the edit control.
         getattr( self, Handlers.get( evt.GetKeyCode(), '_ignore_key' ))( evt )
             
 #-- Key Event Handlers --------------------------------------------------------

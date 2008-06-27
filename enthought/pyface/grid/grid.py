@@ -415,6 +415,9 @@ class Grid(Widget):
         # Disable any active editors in order to prevent a wx crash bug:
         self._edit = False
         grid       = self._grid
+        
+        # Make sure any current active editor has been disabled:
+        grid.DisableCellEditControl()
 
         # More wacky fun with wx. We have to manufacture the appropriate
         # grid messages and send them off to make sure the grid updates
@@ -1634,7 +1637,7 @@ class _GridTableBase(PyGridTableBase):
                 editor = self.model.get_cell_editor(row, col)
                 if editor is not None:
                     self._editor_cache[(row, col)] = editor
-                    editor._grid_info = (self._grid._grid, row)
+                    editor._grid_info = (self._grid._grid, row, col)
 
         if editor is not None:
             # Note: We have to increment the reference to keep the
