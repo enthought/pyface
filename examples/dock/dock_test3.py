@@ -27,6 +27,8 @@ from enthought.traits.ui.menu \
            
 from enthought.pyface.image_resource \
     import ImageResource
+    
+from enthought.developer.tools.ui_debugger import UIDebugger
 
 #-------------------------------------------------------------------------------
 #  Constants:  
@@ -59,7 +61,7 @@ class TestDock ( HasPrivateTraits ):
     button12 = Button
     code1    = Code
     code2    = Code
-    debug    = UIDebugger
+    debug    = Instance(UIDebugger)
     
     #---------------------------------------------------------------------------
     #  Traits view definitions:  
