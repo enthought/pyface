@@ -21,7 +21,26 @@ from wx import SIZE_ALLOW_MINUS_ONE
 # Enthought library imports
 from enthought.traits.ui.api import UI, default_handler
 
+# Local imports:
+from combobox_focus_handler import ComboboxFocusHandler
+
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
+
+def get_control(control):
+    if isinstance(control, wx.Control):
+        return control
+        
+    for control in control.GetChildren():
+        result = get_control(control)
+        if result is not None:
+            return result
+            
+    return None
+    
+def push_control(control, grid):
+    control.PushEventHandler(ComboboxFocusHandler(grid))
+    for child_control in control.GetChildren():
+        push_control(child_control, grid)
 
 class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
@@ -81,23 +100,24 @@ class TraitGridCellAdapter(PyGridCellEditor):
         self._control = control = self._editor.control
             
         # Calculate and save the required editor height:
+        grid, row   = getattr(self, '_grid_info', (None, None))
         height      = control.GetBestSize()[1]
         self_height = self._height
         if self_height > 1.0:
             height = int( self_height )
-        elif self_height >= 0.0:
-            grid, row = getattr(self, '_grid_info', (None, None))
-            if grid is not None:
-                height = int( self_height * grid.GetSize()[1] )
+        elif (self_height >= 0.0) and (grid is not None):
+            height = int( self_height * grid.GetSize()[1] )
             
         self._edit_height = height
         
-        # Handle the case of a simple control:
-        if isinstance(control, wx.Control):
+        # Set up the event handler for each window in the cell editor:
+        push_control(control, grid)
+        
+        # Set up the first control found within the cell editor as the cell
+        # editor control:
+        control = get_control(control)
+        if control is not None:
             self.SetControl(control)
-           
-        #if evtHandler: 
-        #    control.PushEventHandler(evtHandler) 
     
     def SetSize(self, rect):
         """ Called to position/size the edit control within the cell rectangle.
@@ -105,7 +125,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
             PaintBackground and do something meaningful there.
         """
         edit_height = rect.height
-        grid, row = getattr(self, '_grid_info', (None, None))
+        grid, row   = getattr(self, '_grid_info', (None, None))
         if grid is not None:
             edit_height, cur_height = self._edit_height, grid.GetRowSize(row)
             if edit_height > cur_height:

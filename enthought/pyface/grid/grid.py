@@ -260,16 +260,13 @@ class Grid(Widget):
         wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(grid, self._on_label_right_click)
         wx.grid.EVT_GRID_LABEL_LEFT_CLICK(grid, self._on_label_left_click)
 
-        wx.grid.EVT_GRID_EDITOR_CREATED(grid, self._on_editor_created)
+        #wx.grid.EVT_GRID_EDITOR_CREATED(grid, self._on_editor_created)
         if is_win32:
             wx.grid.EVT_GRID_EDITOR_HIDDEN(grid, self._on_editor_hidden)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
         wx.EVT_KEY_DOWN(grid, self._on_key_down)
-
-        # We handle key up events to handle ctrl+c copy
-        #wx.EVT_KEY_UP(grid, self._on_key_up)
         
         # We handle control resize events to adjust column widths
         wx.EVT_SIZE(grid, self._on_size)
@@ -987,10 +984,11 @@ class Grid(Widget):
         # Don't change the behavior if the <Control> key is pressed as this
         # has meaning to the edit control.
         key_code = evt.GetKeyCode()
-        if key_code == wx.WXK_RETURN and not evt.ControlDown():
+            
+        if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
             self._move_to_next_cell(evt.ShiftDown())
 
-        elif key_code == wx.WXK_TAB and not evt.ControlDown():
+        elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
             if evt.ShiftDown():
                 # fixme: in a split window the shift tab is being eaten
                 # by tabbing between the splits
