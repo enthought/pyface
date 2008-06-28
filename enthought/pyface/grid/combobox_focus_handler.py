@@ -90,7 +90,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._edit_cell( row, col )
         
     def _up_key ( self, evt ):
-        if (evt.ControlDown() or evt.AltDown()):
+        if not (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
@@ -105,7 +105,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
         self._edit_cell( row, col )
         
     def _down_key ( self, evt ):
-        if (evt.ControlDown() or evt.AltDown()):
+        if not (evt.ControlDown() or evt.AltDown()):
             evt.Skip()
             return
             
