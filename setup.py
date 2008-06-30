@@ -19,7 +19,6 @@ def etsdep(p, min, max=None, literal=False):
 # Declare our ETS project dependencies:
 APPTOOLS         = etsdep( 'AppTools',          '3.0.0b1' )  
 ENTHOUGHTBASE_UI = etsdep( 'EnthoughtBase[ui]', '3.0.0b1' )
-MAYAVI           = etsdep( 'Mayavi',            '3.0.0a1' ) # all in pyface/tvtk
 TRAITS           = etsdep( 'Traits',            '3.0.0b1' )
 TRAITSBACKENDWX  = etsdep( 'TraitsBackendWX',   '3.0.0b1' )
 TRAITSBACKENDQT  = etsdep( 'TraitsBackendQt',   '3.0.0b1' )
@@ -44,12 +43,6 @@ setup(
         # be installed:
         'qt': [
             TRAITSBACKENDQT,
-        ],
-            
-        # Extra denoting that TVTK (Traits VTK) support should be installed:
-        'tvtk': [
-            APPTOOLS,
-            MAYAVI,
         ],
             
         # Extra denoting that Traits user interface wxPython toolkit support

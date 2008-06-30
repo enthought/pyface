@@ -6,10 +6,6 @@ enthought.pyface.dock = *
 # Completely optional extra
 
 
-[tvtk]
-enthought.pyface.tvtk = *
-
-
 [wx]
 # Completely optional extra
 
