@@ -39,31 +39,31 @@ class WizardController(HasTraits):
     def get_first_page(self):
         """ Returns the first page in the model. """
 
-        return NotImplementedError()
+        raise NotImplementedError
 
     def get_next_page(self, page):
         """ Returns the next page. """
 
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_previous_page(self, page):
         """ Returns the previous page. """
 
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def is_first_page(self, page):
         """ Is the page the first page? """
 
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def is_last_page(self, page):
         """ Is the page the last page? """
 
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def dispose_pages(self):
         """ Dispose all the pages. """
 
-        raise NotImplementedError()
+        raise NotImplementedError
     
 #### EOF ######################################################################

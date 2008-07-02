@@ -11,9 +11,12 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
+from i_wizard_page import IWizardPage
+from wizard_page import WizardPage
+
+from i_wizard import IWizard
 from wizard import Wizard
 from wizard_controller import WizardController
-from wizard_page import WizardPage
 
 from simple_wizard import SimpleWizard
 from simple_wizard_controller import SimpleWizardController
