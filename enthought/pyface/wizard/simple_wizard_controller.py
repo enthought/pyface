@@ -47,16 +47,22 @@ class SimpleWizardController(WizardController):
     def get_next_page(self, page):
         """ Returns the next page. """
 
-        index = self._pages.index(page)
+        index = self._pages.index(page) + 1
 
-        return self._pages[index + 1]
+        if index < len(self._pages):
+            return self._pages[index]
+
+        return None
 
     def get_previous_page(self, page):
         """ Returns the previous page. """
 
-        index = self._pages.index(page)
+        index = self._pages.index(page) - 1
 
-        return self._pages[index - 1]
+        if index >= 0:
+            return self._pages[index]
+
+        return None
 
     def is_first_page(self, page):
         """ Is the page the first page? """
@@ -97,7 +103,7 @@ class SimpleWizardController(WizardController):
     ###########################################################################
 
     def _update(self):
-        """ Checks the complettion status of the controller. """
+        """ Checks the completion status of the controller. """
         
         # The entire wizard is complete when ALL pages are complete.
         for page in self._pages:

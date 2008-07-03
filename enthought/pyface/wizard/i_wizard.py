@@ -102,14 +102,19 @@ class MWizard(object):
     ###########################################################################
 
     def _show_page(self, page):
-        """ Show the page at the specified index. """
+        """ Show the specified page. """
 
-        raise NotImplementedError
+        # Set the current page in the controller.
+        #
+        # fixme: Shouldn't this interface be reversed?  Maybe calling
+        # 'next_page' on the controller should cause it to set its own current
+        # page?
+        self.controller.current_page = page
 
     def _update(self):
         """ Enables/disables buttons depending on the state of the wizard. """
 
-        raise NotImplementedError
+        pass
 
     ###########################################################################
     # Private interface.

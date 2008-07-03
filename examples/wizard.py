@@ -43,10 +43,10 @@ class SimpleWizardPage(WizardPage):
     color = Color
 
     ###########################################################################
-    # 'WizardPage' interface.
+    # 'IWizardPage' interface.
     ###########################################################################
 
-    def create_page(self, parent):
+    def _create_page_content(self, parent):
         """ Create the wizard page. """
 
         details = Details(color=self.color)
@@ -77,9 +77,15 @@ if __name__ == '__main__':
         parent = None,
         title  = 'Create something magical',
         pages  = [
-            SimpleWizardPage(id='foo', color='red'),
-            SimpleWizardPage(id='bar', color='yellow'),
-            SimpleWizardPage(id='baz', color='green')
+            SimpleWizardPage(id='foo', heading="The Red Page",
+                    subheading="The default color on this page is red.",
+                    color='red'),
+            SimpleWizardPage(id='bar', heading="The Yellow Page",
+                    subheading="The default color on this page is yellow.",
+                    color='yellow'),
+            SimpleWizardPage(id='baz', heading="The Green Page",
+                    subheading="The default color on this page is green.",
+                    color='green')
         ]
     )
 

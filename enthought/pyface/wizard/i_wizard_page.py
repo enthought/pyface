@@ -32,6 +32,9 @@ class IWizardPage(Interface):
     # The page heading.
     heading = Unicode
     
+    # The page sub-heading.
+    subheading = Unicode
+    
     ###########################################################################
     # 'IWizardPage' interface.
     ###########################################################################
