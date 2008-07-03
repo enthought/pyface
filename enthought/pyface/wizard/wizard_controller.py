@@ -11,59 +11,144 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" Abstract base class for all wizard controllers. """
+""" A wizard controller that has a static list of pages. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, Instance
+from enthought.traits.api import Bool, HasTraits, implements, Instance, List, \
+        Property
 
 # Local imports.
-from wizard_page import WizardPage
+from i_wizard_controller import IWizardController
+from i_wizard_page import IWizardPage
 
 
 class WizardController(HasTraits):
-    """ Abstract base class for all wizard controllers. """
+    """ A wizard controller that has a static list of pages. """
 
-    #### 'WizardController' interface #########################################
+    implements(IWizardController)
+
+    #### 'IWizardController' interface ########################################
+
+    # The pages under the control of this controller.
+    pages = Property(List(IWizardPage))
 
     # The current page.
-    current_page = Instance(WizardPage)
+    current_page = Instance(IWizardPage)
 
-    # Is the wizard complete (i.e. should the 'Finish' button be enabled)?
+    # Set if the wizard complete.
     complete = Bool(False)
 
+    #### Protected 'IWizardController' interface ##############################
+
+    # Shadow trait for the 'pages' property.
+    _pages = List(IWizardPage)
+    
     ###########################################################################
-    # 'WizardModel' interface.
+    # 'IWizardController' interface.
     ###########################################################################
 
     def get_first_page(self):
-        """ Returns the first page in the model. """
+        """ Returns the first page. """
 
-        raise NotImplementedError
+        return self._pages[0]
 
     def get_next_page(self, page):
         """ Returns the next page. """
 
-        raise NotImplementedError
+        index = self._pages.index(page) + 1
+
+        if index < len(self._pages):
+            return self._pages[index]
+
+        return None
 
     def get_previous_page(self, page):
         """ Returns the previous page. """
 
-        raise NotImplementedError
+        index = self._pages.index(page) - 1
+
+        if index >= 0:
+            return self._pages[index]
+
+        return None
 
     def is_first_page(self, page):
         """ Is the page the first page? """
 
-        raise NotImplementedError
+        return page is self._pages[0]
 
     def is_last_page(self, page):
         """ Is the page the last page? """
 
-        raise NotImplementedError
+        return page is self._pages[-1]
 
     def dispose_pages(self):
-        """ Dispose all the pages. """
+        """ Dispose the wizard pages. """
 
-        raise NotImplementedError
+        for page in self._pages:
+            page.dispose_page()
+
+        return
+    
+    ###########################################################################
+    # 'WizardController' interface.
+    ###########################################################################
+
+    def _get_pages(self):
+        """ Returns the pages in the wizard. """
+
+        return self._pages[:]
+
+    def _set_pages(self, pages):
+        """ Sets the pages in the wizard. """
+
+        self._pages = pages
+
+        return
+    
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    def _update(self):
+        """ Checks the completion status of the controller. """
+        
+        # The entire wizard is complete when ALL pages are complete.
+        for page in self._pages:
+            if not page.complete:
+                self.complete = False
+                break
+            
+        else:
+            self.complete = True
+
+        return
+    
+    #### Trait event handlers #################################################
+
+    #### Static ####
+
+    def _current_page_changed(self, old, new):
+        """ Called when the current page is changed. """
+
+        if old is not None:
+            old.on_trait_change(self._on_page_complete, 'complete',remove=True)
+
+        if new is not None:
+            new.on_trait_change(self._on_page_complete, 'complete')
+
+        self._update()
+        
+        return
+
+    #### Dynamic ####
+    
+    def _on_page_complete(self, obj, trait_name, old, new):
+        """ Called when the current page is complete. """
+
+        self._update()
+        
+        return
     
 #### EOF ######################################################################

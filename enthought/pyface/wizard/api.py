@@ -16,10 +16,13 @@ from wizard_page import WizardPage
 
 from i_wizard import IWizard
 from wizard import Wizard
-from wizard_controller import WizardController
 
-from simple_wizard import SimpleWizard
-from simple_wizard_controller import SimpleWizardController
+from i_wizard_controller import IWizardController
+from wizard_controller import WizardController
 
 from chained_wizard import ChainedWizard
 from chained_wizard_controller import ChainedWizardController
+
+# These are deprecated.  Use Wizard and WizardController instead.
+from simple_wizard import SimpleWizard
+from simple_wizard_controller import SimpleWizardController

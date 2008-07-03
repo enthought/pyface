@@ -11,25 +11,29 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The abstract interface for all pyface wizards. """
+""" The interface for all pyface wizards. """
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Instance, Unicode
+from enthought.traits.api import Bool, Instance, List, Unicode
 from enthought.pyface.i_dialog import IDialog
 
 # Local imports.
-from wizard_controller import WizardController
+from i_wizard_controller import IWizardController
+from i_wizard_page import IWizardPage
 
 
 class IWizard(IDialog):
-    """ The abstract interface for all pyface wizards. """
+    """ The interface for all pyface wizards. """
 
     #### 'IWizard' interface ##################################################
 
+    # The pages in the wizard.
+    pages = List(IWizardPage)
+
     # The wizard controller provides the pages displayed in the wizard, and
     # determines when the wizard is complete etc.
-    controller = Instance(WizardController)
+    controller = Instance(IWizardController)
 
     # Should the 'Cancel' button be displayed?
     show_cancel = Bool(True)

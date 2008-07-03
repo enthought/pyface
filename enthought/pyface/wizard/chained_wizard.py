@@ -15,32 +15,33 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Delegate, Instance, List, Property
+from enthought.traits.api import Instance
 
 # Local imports.
-from chained_wizard_controller import ChainedWizardController
-from simple_wizard import SimpleWizard
+from i_wizard import IWizard
 from wizard import Wizard
-from wizard_page import WizardPage
 
 
-class ChainedWizard(SimpleWizard):
+class ChainedWizard(Wizard):
     """ A wizard model that can be chained with other wizards. """
-
-    #### 'Wizard' interface ###################################################
-
-    # The wizard controller provides the pages displayed in the wizard, and
-    # determines when the wizard is complete etc.
-    controller = Instance(ChainedWizardController, ())
 
     #### 'ChainedWizard' interface ############################################
 
     # The wizard following this wizard in the chain.
-    next_wizard = Instance(Wizard)
+    next_wizard = Instance(IWizard)
 
     ###########################################################################
     # 'ChainedWizard' interface.
     ###########################################################################
+
+    #### Trait handlers. ######################################################
+
+    def _controller_default(self):
+        """ Provide a default controller. """
+
+        from chained_wizard_controller import ChainedWizardController
+
+        return ChainedWizardController()
 
     #### Trait event handlers. ################################################
 

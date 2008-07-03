@@ -77,15 +77,15 @@ if __name__ == '__main__':
         parent = None,
         title  = 'Create something magical',
         pages  = [
-            SimpleWizardPage(id='foo', heading="The Red Page",
-                    subheading="The default color on this page is red.",
-                    color='red'),
-            SimpleWizardPage(id='bar', heading="The Yellow Page",
-                    subheading="The default color on this page is yellow.",
-                    color='yellow'),
-            SimpleWizardPage(id='baz', heading="The Green Page",
-                    subheading="The default color on this page is green.",
-                    color='green')
+            SimpleWizardPage(id='foo', color='red',
+                    heading="The Red Page",
+                    subheading="The default color on this page is red."),
+            SimpleWizardPage(id='bar', color='yellow',
+                    heading="The Yellow Page",
+                    subheading="The default color on this page is yellow."),
+            SimpleWizardPage(id='baz', color='green',
+                    heading="The Green Page",
+                    subheading="The default color on this page is green.")
         ]
     )
 

@@ -15,16 +15,16 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
 from enthought.pyface.api import GUI, OK
-from enthought.pyface.wizard.api import ChainedWizard, SimpleWizard, WizardPage
+from enthought.pyface.wizard.api import ChainedWizard, Wizard, WizardPage
 from enthought.traits.api import Color, HasTraits, Int, Str
-
 
 
 class Details(HasTraits):
@@ -43,10 +43,10 @@ class SimpleWizardPage(WizardPage):
     color = Color
 
     ###########################################################################
-    # 'WizardPage' interface.
+    # 'IWizardPage' interface.
     ###########################################################################
 
-    def create_page(self, parent):
+    def _create_page_content(self, parent):
         """ Create the wizard page. """
 
         details = Details(color=self.color)
@@ -75,16 +75,24 @@ if __name__ == '__main__':
 
     wizard = ChainedWizard(
         parent = None,
-        title  = 'Chained wizard root.',
-        pages  = [ SimpleWizardPage(id='foo', color='red') ]
+        title  = 'Chained wizard root',
+        pages  = [
+            SimpleWizardPage(id='foo', color='red',
+                    heading="The Red Page",
+                    subheading="The default color on this page is red.")
+        ]
     )
 
-    next_wizard = SimpleWizard(
+    next_wizard = Wizard(
         parent = None,
         title  = 'Chained wizard child.',
         pages  = [
-            SimpleWizardPage(id='bar', color='yellow'),
-            SimpleWizardPage(id='baz', color='green')
+            SimpleWizardPage(id='bar', color='yellow',
+                    heading="The Yellow Page",
+                    subheading="The default color on this page is yellow."),
+            SimpleWizardPage(id='baz', color='green',
+                    heading="The Green Page",
+                    subheading="The default color on this page is green.")
         ]
     )
 
@@ -93,11 +101,7 @@ if __name__ == '__main__':
     # Open the wizard.
     if wizard.open() == OK:
         print 'Wizard completed successfully'
-
     else:
         print 'Wizard cancelled'
-
-    # Start the GUI event loop!
-    gui.start_event_loop()
 
 #### EOF ######################################################################

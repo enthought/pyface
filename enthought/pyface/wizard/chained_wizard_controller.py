@@ -15,32 +15,23 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, List, Property
+from enthought.traits.api import Instance
 
 # Local imports.
-from simple_wizard_controller import SimpleWizardController
+from i_wizard_controller import IWizardController
 from wizard_controller import WizardController
-from wizard_page import WizardPage
 
 
-class ChainedWizardController(SimpleWizardController):
+class ChainedWizardController(WizardController):
     """ A wizard controller that can be chained with others. """
 
     #### 'ChainedWizardController' interface ##################################
 
-    # The pages under the control of this controller.
-    pages = Property(List(WizardPage))
-        
     # The next chained wizard controller.
-    next_controller = Instance(WizardController)
+    next_controller = Instance(IWizardController)
 
-    #### Private interface ####################################################
-
-    # Shadow trait for the 'pages' property.
-    _pages = List(WizardPage)
-    
     ###########################################################################
-    # 'WizardController' interface.
+    # 'IWizardController' interface.
     ###########################################################################
 
     def get_first_page(self):
@@ -81,7 +72,7 @@ class ChainedWizardController(SimpleWizardController):
                     previous_page = self._pages[-1]
             
                 else:
-                    previous_page =self.next_controller.get_previous_page(page)
+                    previous_page = self.next_controller.get_previous_page(page)
 
             else:
                 raise ValueError('Unknown page: %s' % previous_page.id)
@@ -135,7 +126,7 @@ class ChainedWizardController(SimpleWizardController):
         return
     
     ###########################################################################
-    # 'SimpleWizardController' interface.
+    # 'ChainedWizardController' interface.
     ###########################################################################
 
     def _get_pages(self):
