@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
@@ -24,7 +25,6 @@ sys.path.append(os.path.abspath(r'..\..\..'))
 from enthought.pyface.api import GUI, OK
 from enthought.pyface.wizard.api import SimpleWizard, WizardPage
 from enthought.traits.api import Color, HasTraits, Int, Str
-
 
 
 class Details(HasTraits):
@@ -92,11 +92,7 @@ if __name__ == '__main__':
     # Create and open the wizard.
     if wizard.open() == OK:
         print 'Wizard completed successfully'
-
     else:
         print 'Wizard cancelled'
-
-    # Start the GUI event loop!
-    gui.start_event_loop()
 
 ##### EOF #####################################################################
