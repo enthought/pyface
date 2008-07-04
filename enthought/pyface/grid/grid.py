@@ -17,6 +17,7 @@
 import sys
 import wx
 import wx.lib.gridmovers as grid_movers
+from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
 from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
 from wx.grid import GridTableMessage, \
@@ -34,6 +35,7 @@ from enthought.traits.api import Bool, Color, Enum, Event, Font, Instance, Int, 
 from enthought.util.wx.drag_and_drop import PythonDropSource, \
      PythonDropTarget, PythonObject
 from enthought.util.wx.drag_and_drop import clipboard as enClipboard
+from enthought.traits.ui.wx.dnd_editor import FileDropSource
 
 # local imports
 from grid_model import GridModel
@@ -746,11 +748,16 @@ class Grid(Widget):
     def _on_motion(self, evt):
         """ Called when the mouse moves. """
 
+        evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
+            if isinstance(data, basestring):
+                file = abspath(data)
+                if exists(file):
+                    FileDropSource(self._grid, file)
+                    return
+                    
             PythonDropSource(self._grid, data)
-
-        evt.Skip()
 
     def _on_grid_motion(self, evt):
         x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition())
@@ -1259,26 +1266,33 @@ class Grid(Widget):
 
     def __get_drag_value(self):
         """ Calculates the drag value based on the current selection. """
-
-        rows, cols = self.__get_selected_rows_and_cols()
-
-        if len(rows) > 0:
-            rows.sort()
-            value = self.model.get_rows_drag_value(rows)
-            if len(rows) == 1 and len(value) == 1:
-                value = value[0]
-        elif len(cols) > 0:
-            cols.sort()
-            value = self.model.get_cols_drag_value(cols)
-            if len(cols) == 1 and len(value) == 1:
-                value = value[0]
-        else:
-            # our final option -- grab the cell that the cursor is currently in
-            row = self._grid.GetGridCursorRow()
-            col = self._grid.GetGridCursorCol()
-            value = self.model.get_cell_drag_value(row, col)
-
-        return value
+        # fixme: The following line seems like a more useful implementation than
+        # the previous commented out version below, but I am leaving the old
+        # version in the code for now just in case. If anyone sees this comment
+        # after 1/1/2009, it should be safe to delete this comment and the
+        # commented out code below...
+        return self.model.get_cell_drag_value(self._grid.GetGridCursorRow(),
+                                              self._grid.GetGridCursorCol())
+        
+        ###rows, cols = self.__get_selected_rows_and_cols()
+        ###
+        ###if len(rows) > 0:
+        ###    rows.sort()
+        ###    value = self.model.get_rows_drag_value(rows)
+        ###    if len(rows) == 1 and len(value) == 1:
+        ###        value = value[0]
+        ###elif len(cols) > 0:
+        ###    cols.sort()
+        ###    value = self.model.get_cols_drag_value(cols)
+        ###    if len(cols) == 1 and len(value) == 1:
+        ###        value = value[0]
+        ###else:
+        ###    # our final option -- grab the cell that the cursor is currently in
+        ###    row = self._grid.GetGridCursorRow()
+        ###    col = self._grid.GetGridCursorCol()
+        ###    value = self.model.get_cell_drag_value(row, col)
+        ###
+        ###return value
 
     def __get_selection(self):
         """ Returns a list of values for the current selection. """
