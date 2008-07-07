@@ -26,9 +26,6 @@ from splash_screen_log_handler import SplashScreenLogHandler
 from i_window import IWindow
 
 
-logger = logging.getLogger(__name__)
-
-
 class ISplashScreen(IWindow):
     """ The interface for a splash screen. """
 
@@ -85,12 +82,16 @@ class MSplashScreen(object):
             self._log_handler = SplashScreenLogHandler(self)
             self._log_handler.setLevel(self.log_level)
             
+            # Get the root logger.
+            logger = logging.getLogger()
             logger.addHandler(self._log_handler)
 
     def close(self):
         """ Close the window. """
 
         if self.show_log_messages:
+            # Get the root logger.
+            logger = logging.getLogger()
             logger.removeHandler(self._log_handler)
 
         super(MSplashScreen, self).close()
