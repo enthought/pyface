@@ -15,16 +15,18 @@
 
 
 # Standard library imports.
-from logging import DEBUG
+import logging
 
 # Enthought library imports.
-from enthought.logger import logger
-from enthought.traits.api import Any, Bool, Font, Instance, Int, Tuple, Unicode
+from enthought.traits.api import Any, Bool, Instance, Int, Tuple, Unicode
 
 # Local imports.
 from image_resource import ImageResource
 from splash_screen_log_handler import SplashScreenLogHandler
 from i_window import IWindow
+
+
+logger = logging.getLogger(__name__)
 
 
 class ISplashScreen(IWindow):
@@ -37,7 +39,7 @@ class ISplashScreen(IWindow):
 
     # If log messages are to be displayed then this is the logging level. See
     # the Python documentation for the 'logging' module for more details.
-    log_level = Int(DEBUG)
+    log_level = Int(logging.DEBUG)
 
     # Should the splash screen display log messages in the splash text?
     show_log_messages = Bool(True)

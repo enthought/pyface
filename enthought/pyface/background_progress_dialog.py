@@ -11,6 +11,7 @@
 """
 
 # Standard library imports.
+import logging
 import threading
 import time
 
@@ -18,15 +19,14 @@ import time
 import wx
 
 # Enthought library imports
-from enthought.logger import logger
-from enthought.traits.api import *
-
-# Application specific imports.
+from enthought.traits.api import Bool, Instance, String
 
 # Local imports.
 from dialog import Dialog
-from constant import OK, CANCEL
+from constant import CANCEL
 
+
+logger = logging.getLogger(__name__)
 
 ##############################################################################
 # class 'BackgroundProgressDialog'
@@ -44,17 +44,17 @@ class BackgroundProgressDialog(Dialog):
 
     initial_message = String            # The initial message in the dialog
 
-    show_elapsed_time = false           # Whether to show the times
-    show_estimated_time = false
-    show_remaining_time = false
+    show_elapsed_time = Bool(False)           # Whether to show the times
+    show_estimated_time = Bool(False)
+    show_remaining_time = Bool(False)
 
     exception = Instance(Exception)     # Exception raised in background thread
 
     ### Private traits #######################################################
 
-    _cancel = false                     # Whether to cancel processing
-    _thread = Instance(threading.Thread)# The background processing thread
-    _finished = false                   # Flag set when the thread finishes
+    _cancel = Bool(False)                # Whether to cancel processing
+    _thread = Instance(threading.Thread) # The background processing thread
+    _finished = Bool(False)              # Flag set when the thread finishes
 
     ##########################################################################
     # 'object' interface
@@ -166,8 +166,6 @@ class BackgroundProgressDialog(Dialog):
 ## Test codel ################################################################
             
 def _main():
-    import sys
-
     dlg = BackgroundProgressDialog(title="Progress",
                                    show_elapsed_time=True,
                                    show_estimated_time=True,
@@ -176,8 +174,6 @@ def _main():
     print "Result = ", res
 
 if __name__ == '__main__':
-
-    import wx
 
     from enthought.pyface.api import GUI, ApplicationWindow
     from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
