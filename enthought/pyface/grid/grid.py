@@ -760,18 +760,19 @@ class Grid(Widget):
             PythonDropSource(self._grid, data)
 
     def _on_grid_motion(self, evt):
-        x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition())
-        row  = self._grid.YToRow(y)
-        col  = self._grid.XToCol(x)
-
-        # Notify the model that the mouse has moved into the cell at row,col,
-        # only if the row and col are valid.
-        if (row >= 0) and (col >= 0):
-            self.model.mouse_cell = (row, col)
-
-        # If we are not ignoring mouse events, call _on_motion.
-        if not self._ignore:
-            self._on_motion(evt)
+        if evt.GetEventObject() is self._grid_window:
+            x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition())
+            row  = self._grid.YToRow(y)
+            col  = self._grid.XToCol(x)
+        
+            # Notify the model that the mouse has moved into the cell at row,col,
+            # only if the row and col are valid.
+            if (row >= 0) and (col >= 0):
+                self.model.mouse_cell = (row, col)
+        
+            # If we are not ignoring mouse events, call _on_motion.
+            if not self._ignore:
+                self._on_motion(evt)
         
         evt.Skip()
 
