@@ -1006,7 +1006,7 @@ class ImageLibrary ( HasPrivateTraits ):
             libraries located in the *images* directory contained in the same 
             directory as the caller are added.
         """
-        # If no file name was specfied, derive a path from the caller's
+        # If no file name was specified, derive a path from the caller's
         # source code location:
         if file_name is None:
             file_name = join( get_resource_path( 2 ), 'images' )
