@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -28,14 +28,14 @@ from window import Window
 try:
     import wx.aui
     AUI = True
-    
+
 except:
     AUI = False
 
 
 class MDIApplicationWindow(ApplicationWindow):
     """ An MDI top-level application window.
-    
+
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
 
@@ -45,10 +45,10 @@ class MDIApplicationWindow(ApplicationWindow):
     """
 
     #### 'MDIApplicationWindow' interface #####################################
-    
+
     # The workarea background image.
     background_image = Instance(ImageResource, ImageResource('background'))
-    
+
     # Should we tile the workarea  background image?  The alternative is to
     # scale it.  Be warned that scaling the image allows for 'pretty' images,
     # but is MUCH slower than tiling.
@@ -57,7 +57,7 @@ class MDIApplicationWindow(ApplicationWindow):
     # WX HACK FIXME
     # UPDATE: wx 2.6.1 does NOT fix this issue.
     _wx_offset = Tuple(Int, Int)
-    
+
     ###########################################################################
     # 'MDIApplicationWindow' interface.
     ###########################################################################
@@ -75,42 +75,47 @@ class MDIApplicationWindow(ApplicationWindow):
             else:
                 style = wx.DEFAULT_FRAME_STYLE
             return wx.Frame(self.control, -1, title, style=style)
-        
+
     ###########################################################################
     # Protected 'Window' interface.
     ###########################################################################
 
-    def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the window. """
-        
-        control = wx.MDIParentFrame(
-            parent, -1, self.title, style=wx.DEFAULT_FRAME_STYLE, size=self.size,
-            pos=self.position
-        )
-        wxid = control.GetId()
-        
-        # Create the 'trim' widgets (menu, tool and status bars etc).
-        self._create_trim_widgets(control)
+    def _create_contents(self, parent):
+        """ Create the contents of the MDI window. """
 
-        # The workarea background image (it can be tiled or scaled).
+        # Create the 'trim' widgets (menu, tool and status bars etc).
+        self._create_trim_widgets(self.control)
+
+        # The work-area background image (it can be tiled or scaled).
         self._image = self.background_image.create_image()
         self._bmp = self._image.ConvertToBitmap()
 
         # Frame events.
         #
         # We respond to size events to layout windows around the MDI frame.
-        wx.EVT_SIZE(control, self._on_size)
+        wx.EVT_SIZE(self.control, self._on_size)
 
         # Client window events.
-        client_window = control.GetClientWindow()
+        client_window = self.control.GetClientWindow()
         wx.EVT_ERASE_BACKGROUND(client_window, self._on_erase_background)
 
         self._wx_offset = client_window.GetPositionTuple()
-        
+
         if AUI:
             # Let the AUI manager look after the frame.
-            self._aui_manager.SetManagedWindow(control)
-        
+            self._aui_manager.SetManagedWindow(self.control)
+
+        contents = super(MDIApplicationWindow, self)._create_contents(parent)
+
+        return contents
+
+    def _create_control(self, parent):
+        """ Create the toolkit-specific control that represents the window. """
+
+        control = wx.MDIParentFrame(
+            parent, -1, self.title, style=wx.DEFAULT_FRAME_STYLE,
+            size=self.size, pos=self.position
+        )
 
         return control
 
@@ -121,7 +126,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
-        
+
         w = self._bmp.GetWidth()
         h = self._bmp.GetHeight()
 
@@ -131,11 +136,11 @@ class MDIApplicationWindow(ApplicationWindow):
             while y < height:
                 dc.DrawBitmap(self._bmp, x, y)
                 y = y + h
-                
+
             x = x + w
 
         return
-    
+
     def _scale_background_image(self, dc, width, height):
         """ Scales the background image. """
 
@@ -154,20 +159,20 @@ class MDIApplicationWindow(ApplicationWindow):
 
     def _on_size(self, event):
         """ Called when the frame is resized. """
-        
+
         wx.LayoutAlgorithm().LayoutMDIFrame(self.control)
 
         return
-    
+
     def _on_erase_background(self, event):
         """ Called when the background of the MDI client window is erased. """
 
         # fixme: Close order...
         if self.control is None:
             return
-        
+
         frame = self.control
-        
+
         dc = event.GetDC()
         if not dc:
             dc = wx.ClientDC(frame.GetClientWindow())
@@ -183,5 +188,5 @@ class MDIApplicationWindow(ApplicationWindow):
             self._scale_background_image(dc, size.width, size.height)
 
         return
-    
+
 #### EOF ######################################################################
