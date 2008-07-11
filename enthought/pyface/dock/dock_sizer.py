@@ -2419,7 +2419,8 @@ class DockRegion ( DockGroup ):
             control.control.GetParent().RefreshRect( wx.Rect( *self.bounds ) )
 
         # Fire the 'activated' event on the control:
-        control.activated = True
+        if isinstance( control, DockControl ):
+            control.activated = True
 
     #---------------------------------------------------------------------------
     #  Handles the user clicking an active scroll button:
@@ -2476,6 +2477,8 @@ class DockRegion ( DockGroup ):
         if ((self._scroll is not None) and
             (self._scroll == self._get_scroll_button( event ))):
             self.scroll( self._scroll )
+        else:
+            super( DockRegion, self ).mouse_up( event )
 
     #---------------------------------------------------------------------------
     #  Handles the mouse moving while the left mouse button is pressed:
@@ -2483,24 +2486,6 @@ class DockRegion ( DockGroup ):
 
     def mouse_move ( self, event ):
         """ Handles the mouse moving while the left mouse button is pressed.
-        """
-        pass
-
-    #---------------------------------------------------------------------------
-    #  Handles the mouse hovering over the item:
-    #---------------------------------------------------------------------------
-
-    def hover_enter ( self, event ):
-        """ Handles the mouse hovering over the item.
-        """
-        pass
-
-    #---------------------------------------------------------------------------
-    #  Handles the mouse exiting from hovering over the item:
-    #---------------------------------------------------------------------------
-
-    def hover_exit ( self, event ):
-        """ Handles the mouse exiting from hovering over the item.
         """
         pass
 

@@ -672,14 +672,17 @@ class DockWindow ( HasPrivateTraits ):
         else:
             sizer = self.sizer
             if sizer is not None:
-                object = (self._object or 
+                object = (self._object or
                           sizer.ObjectAt( event.GetX(), event.GetY() ))
                 self._set_cursor( event, object )
+                
                 if object is not self._hover:
                     if self._hover is not None:
                         self._hover.hover_exit( event )
+                        
                     if object is not None:
                         object.hover_enter( event )
+                        
                     self._hover = object
                         
                 # Handle feature related processing:

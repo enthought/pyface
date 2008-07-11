@@ -67,25 +67,30 @@ class TestDock ( HasPrivateTraits ):
     #  Traits view definitions:  
     #---------------------------------------------------------------------------
         
-    view = View( HSplit( 
-                     VSplit(
-                         Tabbed( 'button1', 'button2', image = image1 ),
-                         Tabbed( 'button3', 'button4', image = image2 ) ),
-                     Tabbed( VSplit( 'button5',  'button6' ), 
-                             Tabbed( 'button7',  'button8' ),
-                             HSplit( 'button9',  'button10' ),
-                             Group( 'code1@', '|<>', image = image1 ),
-                             Group( 'code2@', '|<>', image = image2 ),
-                             Group( 'debug', '|<>' ),
-                             Group(  'button11', 'button12' ) ),
-                     id = 'dock_window' ),
-                 title     = 'DockWindow Test',
-                 id        = 'enthought.pyface.dock.dock_test3',
-                 dock      = 'horizontal',
-                 resizable = True,
-                 width     = 0.5,
-                 height    = 0.5,
-                 buttons   = NoButtons )
+    view = View( 
+        HSplit( 
+            VSplit(
+                Tabbed( 'button1', 'button2', image = image1 ),
+                Tabbed( 'button3', 'button4', image = image2 )
+            ),
+            Tabbed( VSplit( 'button5',  'button6' ), 
+                    Tabbed( 'button7',  'button8' ),
+                    HSplit( 'button9',  'button10' ),
+                    Group( 'code1@', '|<>', image = image1 ),
+                    Group( 'code2@', '|<>', image = image2 ),
+                    Group( 'debug', '|<>' ),
+                    Group(  'button11', 'button12' )
+            ),
+            id = 'dock_window'
+        ),
+        title     = 'DockWindow Test',
+        id        = 'enthought.pyface.dock.dock_test3',
+        dock      = 'horizontal',
+        resizable = True,
+        width     = 0.5,
+        height    = 0.5,
+        buttons   = NoButtons
+    )
                  
 #-------------------------------------------------------------------------------
 #  Run the test program:  
