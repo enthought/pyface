@@ -22,11 +22,13 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
+import sys
+
 from os \
     import environ, listdir, remove, stat, makedirs, rename
     
 from os.path \
-    import join, isdir, isfile, splitext, abspath, basename, exists
+    import join, isdir, isfile, splitext, abspath, dirname, basename, exists
     
 from stat \
     import ST_MTIME
@@ -1191,8 +1193,16 @@ class ImageLibrary ( HasPrivateTraits ):
     #-- Default Value Implementations ------------------------------------------
     
     def _volumes_default ( self ):
+        result = []
+        
+        # Check for and add the 'application' image library:
+        app_library = join( dirname( abspath( sys.argv[0] ) ), 'library' )
+        if isdir( app_library ):
+            result.extend( self._add_path( app_library ) )
+        
         # Get all volumes in the standard Traits UI image library directory:
-        result = self._add_path( join( get_resource_path( 1 ), 'library' ) )
+        result.extend(
+            self._add_path( join( get_resource_path( 1 ), 'library' ) ) )
         
         # Check to see if there is an environment variable specifying a list
         # of paths containing image libraries:
