@@ -108,6 +108,8 @@ class ExpandableHeader(Widget):
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
+        
+        # needed on GTK systems for EVT_ERASE_BACKGROUND to work
         panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         # create the remove button
