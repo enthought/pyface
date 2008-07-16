@@ -108,6 +108,7 @@ class ExpandableHeader(Widget):
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
+        panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
         # create the remove button
         remove = wx.BitmapButton(panel, -1, self._remove_bmp, style=0,
