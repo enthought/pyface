@@ -89,7 +89,7 @@ class GridCellImageRenderer(PyGridCellRenderer):
 
         if bmp is not None:                        
             # now draw our image into it
-            dc.DrawBitmap(bmp, x, y, 0)
+            dc.DrawBitmap(bmp, x, y, 1)
             x += bmp.GetWidth()
 
         if text is not None and text != '':
