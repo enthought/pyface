@@ -85,7 +85,9 @@ class GridCellImageRenderer(PyGridCellRenderer):
         if valign == wx.ALIGN_CENTRE and hdelta > 0:
             y += hdelta / 2
 
-        if bmp is not None:
+        dc.SetClippingRegion(*rect)
+
+        if bmp is not None:                        
             # now draw our image into it
             dc.DrawBitmap(bmp, x, y, 0)
             x += bmp.GetWidth()
@@ -97,6 +99,8 @@ class GridCellImageRenderer(PyGridCellRenderer):
             new_rect = Rect(x, y, width, height)
             self._string_renderer.Draw(grid, attr, dc, new_rect,
                                        row, col, isSelected)
+            
+        dc.DestroyClippingRegion()
 
         return
 
