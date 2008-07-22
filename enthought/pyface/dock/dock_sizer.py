@@ -55,7 +55,8 @@ from ifeature_tool \
     import IFeatureTool
 
 # Define version dependent values:
-wx_26 = (wx.__version__[:3] == '2.6')
+wx_26  = (wx.__version__[:3] == '2.6')
+is_mac = (sys.platform == 'darwin')
 
 #-------------------------------------------------------------------------------
 #  Constants:
@@ -737,9 +738,13 @@ class DockItem ( HasPrivateTraits ):
         window = self.control.GetParent()
         if begin:
             dx, dy = window.GetSize()
-            x, y   = window.ClientToScreenXY( 0, 0 )
-            dc     = wx.ScreenDC()
-            dc2    = wx.MemoryDC()
+            if is_mac:
+                x  = y = 0
+                dc = wx.ClientDC( window )
+            else:
+                x, y = window.ClientToScreenXY( 0, 0 )
+                dc   = wx.ScreenDC()
+            dc2 = wx.MemoryDC()
             self._drag_bitmap = wx.EmptyBitmap( dx, dy )
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
@@ -754,7 +759,10 @@ class DockItem ( HasPrivateTraits ):
             dc.Blit( x, y, dx, dy, dc2, 0, 0 )
         else:
             self._drag_bitmap = None
-            window.Refresh()
+            if is_mac:
+                top_level_window_for( window ).Refresh()
+            else:
+                window.Refresh()
             
     #---------------------------------------------------------------------------
     #  Fills a specified region with the control's background color:  
@@ -1303,7 +1311,10 @@ class DockSplitter ( DockItem ):
         """
         # Set up the drawing environment:
         window = event.GetEventObject()
-        dc     = wx.ScreenDC()
+        if is_mac:
+            dc = wx.ClientDC( window )
+        else:
+            dc = wx.ScreenDC()
         dc.SetLogicalFunction( wx.XOR )
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( wx.Colour( *DragColor ), wx.SOLID ) )
@@ -1311,29 +1322,54 @@ class DockSplitter ( DockItem ):
         ax = ay = adx = ady = 0
         is_horizontal = (self.style == 'horizontal')
 
-        # Erase the old bounds (if any):
-        if self._bounds is not None:
-            x, y, dx, dy = self._bounds
-            x, y         = window.ClientToScreenXY( x, y )
-            if is_horizontal:
-                ady = (dy - 6)
-                ay  = ady / 2
-            else:
-                adx = (dx - 6)
-                ax  = adx / 2
-            dc.DrawRectangle( x + ax, y + ay, dx - adx, dy - ady )
-
         # Draw the new bounds (if any):
         if bounds is not None:
             x, y, dx, dy = bounds
-            x, y         = window.ClientToScreenXY( x, y )
+            x0 = y0 = 0
+            if not is_mac:
+                x0, y0 = window.ClientToScreenXY( 0, 0 )                
             if is_horizontal:
                 ady = (dy - 6)
                 ay  = ady / 2
             else:
                 adx = (dx - 6)
                 ax  = adx / 2
-            dc.DrawRectangle( x + ax, y + ay, dx - adx, dy - ady )
+            x  += ax
+            y  += ay
+            dx -= adx
+            dy -= ady
+            dc.DrawRectangle( x + x0, y + y0, dx, dy )
+
+        # Erase the old bounds (if any):
+        if self._bounds is not None:
+            ox, oy, odx, ody = self._bounds
+            if is_horizontal:
+                ady = (ody - 6)
+                ay  = ady / 2
+            else:
+                adx = (odx - 6)
+                ax  = adx / 2
+            ox  += ax
+            oy  += ay
+            odx -= adx
+            ody -= ady
+            if bounds is not None:
+                if is_horizontal:
+                    yoy = y - oy
+                    if 0 <= yoy < ody:
+                        ody = yoy
+                    elif -dy < yoy <= 0:
+                        oy  = y + dy
+                        ody = ody - dy - yoy
+                else:
+                    xox = x - ox
+                    if 0 <= xox < odx:
+                        odx = xox
+                    elif -dx < xox <= 0:
+                        ox  = x + dx
+                        odx = odx - dx - xox
+                        
+            window.RefreshRect( wx.Rect( ox, oy, odx, ody ) )
 
         # Save the new bounds for the next call:
         self._bounds = bounds
@@ -3277,10 +3313,15 @@ class DockInfo ( HasPrivateTraits ):
                     return
             else:
                 self._bitmap = bitmap
-            bdx, bdy = bitmap.GetWidth(), bitmap.GetHeight()
-            sdc      = wx.ScreenDC()
+                
+            if is_mac:
+                sdc = wx.ClientDC( window )
+            else:
+                sdc = wx.ScreenDC()
+                
             bdc      = wx.MemoryDC()
             bdc2     = wx.MemoryDC()
+            bdx, bdy = bitmap.GetWidth(), bitmap.GetHeight()
             bitmap2  = wx.EmptyBitmap( bdx, bdy )
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
@@ -3299,8 +3340,11 @@ class DockInfo ( HasPrivateTraits ):
             except:
                 pass
         
-            bx, by = window.ClientToScreenXY( 0, 0 )
-            sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
+            if is_mac:
+                sdc.Blit( 0, 0, bdx, bdy, bdc2, 0, 0 )
+            else:
+                bx, by = window.ClientToScreenXY( 0, 0 )
+                sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
                 
     #---------------------------------------------------------------------------
     #  Docks the specified control:
@@ -3674,4 +3718,14 @@ class DockSizer ( wx.PySizer ):
         """ Returns whether the sizer can be maximized now.
         """
         return (self._max_structure is None)
+
+def top_level_window_for ( control ):
+    """ Returns the top-level window for a specified control.
+    """
+    parent = control.GetParent()
+    while parent is not None:
+        control = parent
+        parent  = control.GetParent()
+        
+    return control
 
