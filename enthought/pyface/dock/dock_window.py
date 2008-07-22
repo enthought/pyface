@@ -326,8 +326,11 @@ class DockWindow ( HasPrivateTraits ):
         
         # Initialize the window background color:
         if self.theme.use_theme_color:
-            self.control.SetBackgroundColour( 
-                 self.theme.tab.image_slice.bg_color )
+            color = self.theme.tab.image_slice.bg_color
+        else:
+            color = parent.GetBackgroundColour()
+            
+        self.control.SetBackgroundColour( color )
         
     #-- Default Trait Values ---------------------------------------------------
     
