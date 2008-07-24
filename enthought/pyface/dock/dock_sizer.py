@@ -214,6 +214,19 @@ def clear_window ( window ):
     dc.DrawRectangle( 0, 0, dx, dy )
 
 #-------------------------------------------------------------------------------
+#  Gets a temporary device context for a specified window to draw in:
+#-------------------------------------------------------------------------------
+
+def get_dc ( window ):
+    """ Gets a temporary device context for a specified window to draw in.
+    """
+    if is_mac:
+        return ( wx.ClientDC( window ), 0, 0 )
+        
+    x, y = window.ClientToScreenXY( 0, 0 )
+    return ( wx.ScreenDC(), x, y )
+
+#-------------------------------------------------------------------------------
 #  'DockImages' class:
 #-------------------------------------------------------------------------------
 
@@ -737,14 +750,9 @@ class DockItem ( HasPrivateTraits ):
         """
         window = self.control.GetParent()
         if begin:
-            dx, dy = window.GetSize()
-            if is_mac:
-                x  = y = 0
-                dc = wx.ClientDC( window )
-            else:
-                x, y = window.ClientToScreenXY( 0, 0 )
-                dc   = wx.ScreenDC()
-            dc2 = wx.MemoryDC()
+            dc, x, y = get_dc( window )
+            dx, dy   = window.GetSize()
+            dc2      = wx.MemoryDC()
             self._drag_bitmap = wx.EmptyBitmap( dx, dy )
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
@@ -1310,11 +1318,8 @@ class DockSplitter ( DockItem ):
         """ Draws the splitter bar in a new position while it is being dragged.
         """
         # Set up the drawing environment:
-        window = event.GetEventObject()
-        if is_mac:
-            dc = wx.ClientDC( window )
-        else:
-            dc = wx.ScreenDC()
+        window     = event.GetEventObject()
+        dc, x0, y0 = get_dc( window )
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( wx.Colour( *DragColor ), wx.SOLID ) )
 
@@ -1324,9 +1329,6 @@ class DockSplitter ( DockItem ):
         # Draw the new bounds (if any):
         if bounds is not None:
             x, y, dx, dy = bounds
-            x0 = y0 = 0
-            if not is_mac:
-                x0, y0 = window.ClientToScreenXY( 0, 0 )                
             if is_horizontal:
                 ady = (dy - 6)
                 ay  = ady / 2
@@ -3332,15 +3334,11 @@ class DockInfo ( HasPrivateTraits ):
             else:
                 self._bitmap = bitmap
                 
-            if is_mac:
-                sdc = wx.ClientDC( window )
-            else:
-                sdc = wx.ScreenDC()
-                
-            bdc      = wx.MemoryDC()
-            bdc2     = wx.MemoryDC()
-            bdx, bdy = bitmap.GetWidth(), bitmap.GetHeight()
-            bitmap2  = wx.EmptyBitmap( bdx, bdy )
+            sdc, bx, by = get_dc( window )
+            bdc         = wx.MemoryDC()
+            bdc2        = wx.MemoryDC()
+            bdx, bdy    = bitmap.GetWidth(), bitmap.GetHeight()
+            bitmap2     = wx.EmptyBitmap( bdx, bdy )
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
             bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
@@ -3358,11 +3356,7 @@ class DockInfo ( HasPrivateTraits ):
             except:
                 pass
         
-            if is_mac:
-                sdc.Blit( 0, 0, bdx, bdy, bdc2, 0, 0 )
-            else:
-                bx, by = window.ClientToScreenXY( 0, 0 )
-                sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
+            sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
                 
     #---------------------------------------------------------------------------
     #  Docks the specified control:
