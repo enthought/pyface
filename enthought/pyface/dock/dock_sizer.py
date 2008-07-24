@@ -1315,7 +1315,6 @@ class DockSplitter ( DockItem ):
             dc = wx.ClientDC( window )
         else:
             dc = wx.ScreenDC()
-        dc.SetLogicalFunction( wx.XOR )
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( wx.Colour( *DragColor ), wx.SOLID ) )
 
