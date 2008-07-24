@@ -33,7 +33,7 @@ import enthought.traits.ui.wx
 
 from enthought.traits.api \
     import HasPrivateTraits, Instance, Str, Int, List, Enum, Tuple, Any, \
-           Range, Property, Callable, Constant, Event, Undefined, true, false, \
+           Range, Property, Callable, Constant, Event, Undefined, Bool, \
            cached_property
 
 from enthought.traits.ui.dock_window_theme \
@@ -1423,7 +1423,7 @@ class DockControl ( DockItem ):
     name = Str
 
     # Has the user set the name of the control?
-    user_name = false
+    user_name = Bool( False )
 
     # The object (if any) associated with this control:
     object = Property
@@ -1435,22 +1435,22 @@ class DockControl ( DockItem ):
     style = DockStyle
 
     # Has the user set the style for this control:
-    user_style = false
+    user_style = Bool( False )
 
     # Category of control when it is dragged out of the DockWindow:
     export = Str
 
     # Is the control visible?
-    visible = true
+    visible = Bool( True )
 
     # Is the control's drag bar locked?
-    locked = false
+    locked = Bool( False )
 
     # Can the control be resized?
-    resizable = true
+    resizable = Bool( True )
 
     # Can the control be closed?
-    closeable = false
+    closeable = Bool( False )
 
     # Function to call when a DockControl is requesting to be closed:
     on_close = Callable
@@ -1985,7 +1985,26 @@ class DockGroup ( DockItem ):
             window = self.control.GetParent()
             window.Layout()
             window.Refresh()
+            
+    #---------------------------------------------------------------------------
+    #  Replaces a specified DockControl by another:
+    #---------------------------------------------------------------------------
 
+    def replace_control ( self, old, new ):
+        """ Replaces a specified DockControl by another.
+        """
+        for i, item in enumerate( self.contents ):
+            if isinstance( item, DockControl ):
+                if item is old:
+                    self.contents[i] = new
+                    new.parent = self
+                    return True
+                    
+            elif item.replace_control( old, new ):
+                return True
+                
+        return False
+        
     #---------------------------------------------------------------------------
     #  Returns all DockControl objects contained in the group:
     #---------------------------------------------------------------------------
@@ -2750,7 +2769,7 @@ class DockSection ( DockGroup ):
     #---------------------------------------------------------------------------
 
     # Is this a row (or a column)?
-    is_row = true
+    is_row = Bool( True )
 
     # Bounds of any splitter bars associated with the region:
     splitters = List( DockSplitter )
@@ -3604,12 +3623,13 @@ class DockSizer ( wx.PySizer ):
         for control in section.get_controls( False ):
             mapped_control = map.get( control.id )
             if mapped_control is not None:
-                mapped_control.set( **control.get( 'control', 'image', 'export',
-                                'dockable', 'data', 'closeable', 'resizable' ) )
-                if not mapped_control.user_name:
-                    mapped_control.name = control.name
-                if not mapped_control.user_style:
-                    mapped_control.style = control.style
+                control.set( **mapped_control.get( 'visible', 'locked', 
+                    'closeable', 'resizable', 'width', 'height' ) ) 
+                if mapped_control.user_name:
+                    control.name = mapped_control.name
+                if mapped_control.user_style:
+                    control.style = mapped_control.style
+                structure.replace_control( mapped_control, control )
                 del map[ control.id ]
             else:
                 extras.append( control )
@@ -3707,9 +3727,19 @@ class DockSizer ( wx.PySizer ):
             for control in self.GetContents().get_controls():
                 control.visible = (control is dock_control)
         else:
+            self.Reset( window )
+            
+    #---------------------------------------------------------------------------
+    #  Resets the DockSizer to a known state:
+    #---------------------------------------------------------------------------            
+
+    def Reset ( self, window ):
+        """ Resets the DockSizer to a known state.
+        """
+        if self._max_structure is not None:
             self.SetStructure( window, self._max_structure )
             self._max_structure = None
-
+        
     #---------------------------------------------------------------------------
     #  Returns whether the sizer can be maximized now:
     #---------------------------------------------------------------------------
