@@ -221,7 +221,22 @@ def get_dc ( window ):
     """ Gets a temporary device context for a specified window to draw in.
     """
     if is_mac:
-        return ( wx.ClientDC( window ), 0, 0 )
+        dc     = wx.ClientDC( window )
+        x, y   = window.GetPositionTuple()
+        dx, dy = window.GetSizeTuple()
+        while True:
+            window = window.GetParent()
+            if window is None:
+                break
+            xw, yw   = window.GetPositionTuple()
+            dxw, dyw = window.GetSizeTuple()
+            dx, dy   = min( dx, dxw - x ), min( dy, dyw - y )
+            x += xw
+            y += yw
+            
+        dc.SetClippingRegion( 0, 0, dx, dy )
+            
+        return ( dc, 0, 0 )
         
     x, y = window.ClientToScreenXY( 0, 0 )
     return ( wx.ScreenDC(), x, y )
