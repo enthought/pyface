@@ -15,9 +15,9 @@
 
 
 # Enthought library imports.
-from enthought.pyface.image_resource import ImageResource
 from enthought.traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
 from enthought.traits.api import Unicode
+from enthought.traits.ui.api import Image
 
 
 class Action(HasTraits):
@@ -56,7 +56,7 @@ class Action(HasTraits):
     id = Str
 
     # The action's image (displayed on tool bar tools etc).
-    image = Instance(ImageResource)
+    image = Image
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = Unicode
