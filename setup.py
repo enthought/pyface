@@ -5,9 +5,19 @@
 #
 
 """
-Traits capable windowing framework.
+Traits-capable windowing framework.
 
-<description text needed>
+The TraitsGUI project contains a toolkit-independent GUI abstraction layer
+(known as Pyface), which is used to support the "visualization" features of 
+the Traits package. Thus, you can write code in terms of the Traits API 
+(views, items, editors, etc.), and let TraitsGUI and your selected toolkit 
+and back-end take care of the details of displaying them.
+
+To display Traits-based user interfaces, in addition to the TraitsGUI project,
+you must install one of the following combinations of packages:
+
+- Traits, TraitsBackendWX, and wxPython
+- Traits, TraitsBackendQt, and PyQt
 """
 
 
