@@ -189,14 +189,14 @@ setup(
             #'wx',  # fixme: not available as an egg on all platforms.
             ],
         },
+    include_package_data = True,
     install_requires = [
         ENTHOUGHTBASE_UI,
         TRAITS
         ],
-    include_package_data = True,
     license = 'BSD',
     long_description = '\n'.join(DOCLINES[2:]),
-    maintainer = 'Traits Developers',
+    maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
     name = 'TraitsGUI',
     namespace_packages = [
