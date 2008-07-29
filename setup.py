@@ -1,14 +1,31 @@
+#!/usr/bin/env python
+#
+# Copyright (c) 2008 by Enthought, Inc.
+# All rights reserved.
+#
+
+"""
+Traits capable windowing framework.
+
+<description text needed>
+"""
 
 
-import os, zipfile
+from distutils import log
+from distutils.command.build import build as distbuild
+from make_docs import HtmlBuild
+from pkg_resources import DistributionNotFound, parse_version, require, VersionConflict
+from setup_data import INFO
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
-from distutils.command.build import build as distbuild
-from distutils import log
-from pkg_resources import DistributionNotFound, parse_version, require, VersionConflict 
+import os
+import zipfile
 
-from setup_data import INFO
-from make_docs import HtmlBuild
+
+
+# Pull the description values for the setup keywords from our file docstring.
+DOCLINES = __doc__.split("\n")
+
 
 # Function to convert simple ETS project names and versions to a requirements
 # spec that works for both development builds and stable builds.  Allows
@@ -26,20 +43,23 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies:
-APPTOOLS         = etsdep( 'AppTools',          '3.0.0b1' )  
-ENTHOUGHTBASE_UI = etsdep( 'EnthoughtBase[ui]', '3.0.0b1' )
-TRAITS           = etsdep( 'Traits',            '3.0.0b1' )
-TRAITSBACKENDWX  = etsdep( 'TraitsBackendWX',   '3.0.0b1' )
-TRAITSBACKENDQT  = etsdep( 'TraitsBackendQt',   '3.0.0b1' )
+APPTOOLS = etsdep('AppTools', '3.0.0b1')
+ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')
+TRAITS = etsdep('Traits', '3.0.0b1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
 
+
+# Functions to allow runtime building of docs from source.
 def generate_docs():
-    """If sphinx is installed, generate docs.
+    """ If sphinx is installed, generate docs.
     """
+
     doc_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'docs')
     source_dir = os.path.join(doc_dir, 'source')
     html_zip = os.path.join(doc_dir,  'html.zip')
     dest_dir = doc_dir
-    
+
     required_sphinx_version = "0.4.1"
     sphinx_installed = False
     try:
@@ -50,18 +70,20 @@ def generate_docs():
                     ' Trying simple import...' % required_sphinx_version)
         try:
             import sphinx
-            if parse_version(sphinx.__version__) < parse_version(required_sphinx_version):
-                log.error("Sphinx version must be >=%s." % required_sphinx_version)
+            if parse_version(sphinx.__version__) < parse_version(
+                required_sphinx_version):
+                log.error("Sphinx version must be >=" +\
+                    "%s." % required_sphinx_version)
             else:
                 sphinx_installed = True
         except ImportError:
             log.error("Sphnix install not found.")
-    
-    if sphinx_installed:             
+
+    if sphinx_installed:
         log.info("Generating %s documentation..." % INFO['name'])
         docsrc = source_dir
         target = dest_dir
-        
+
         try:
             build = HtmlBuild()
             build.start({
@@ -74,11 +96,11 @@ def generate_docs():
                 'versioned': False
                 }, [])
             del build
-            
+
         except:
             log.error("The documentation generation failed.  Falling back to "
-                      "the zip file.")
-            
+                "the zip file.")
+
             # Unzip the docs into the 'html' folder.
             unzip_html_docs(html_zip, doc_dir)
     else:
@@ -87,8 +109,7 @@ def generate_docs():
         unzip_html_docs(html_zip, doc_dir)
 
 def unzip_html_docs(src_path, dest_dir):
-    """Given a path to a zipfile, extract
-    its contents to a given 'dest_dir'.
+    """ Given a path to a zipfile, extract its contents to a given 'dest_dir'.
     """
     file = zipfile.ZipFile(src_path)
     for name in file.namelist():
@@ -106,73 +127,91 @@ def unzip_html_docs(src_path, dest_dir):
 class my_develop(develop):
     def run(self):
         develop.run(self)
-        # Generate the documentation.
         generate_docs()
 
 class my_build(distbuild):
     def run(self):
         distbuild.run(self)
-        # Generate the documentation.
         generate_docs()
 
+
+# The actual setup call.
 setup(
-    author           = 'Enthought, Inc',
-    author_email     = 'info@enthought.com',
+    author = 'David C. Morrill, et al.',
+    author_email = 'dmorrill@enthought.com',
+    classifiers = """\
+        Development Status :: 4 - Production/Stable
+        Intended Audience :: Developers
+        Intended Audience :: Science/Research
+        License :: OSI Approved :: BSD License
+        Operating System :: MacOS
+        Operating System :: Microsoft :: Windows
+        Operating System :: OS Independent
+        Operating System :: POSIX
+        Operating System :: Unix
+        Programming Language :: Python
+        Topic :: Scientific/Engineering
+        Topic :: Software Development
+        Topic :: Software Development :: Libraries
+        """.splitlines(),
     cmdclass = {
         'develop': my_develop,
         'build': my_build
-    },
-    dependency_links = [ 'http://code.enthought.com/enstaller/eggs/source', ],
-    description      = 'Traits capable windowing framework',
-    
+        },
+    dependency_links = [
+        'http://code.enthought.com/enstaller/eggs/source',
+        ],
+    description = DOCLINES[0],
     extras_require = {
-    
+
         # Extra denoting that the Traits UI DockWindow support should be
         # installed. DockWindow support allows Traits user interfaces with tabs
         # and splitters to be created when using the wxPython back-end:
         'dock': [
             TRAITSBACKENDWX,
-        ],
-            
+            ],
+
         # Extra denoting that Traits user interface Qt toolkit support should
         # be installed:
         'qt': [
             TRAITSBACKENDQT,
-        ],
-            
+            ],
+
         # Extra denoting that Traits user interface wxPython toolkit support
         # should be installed:
         'wx': [
             TRAITSBACKENDWX,
-        ],
+            ],
 
         # All non-ets dependencies should be in this extra to ensure users can
         # decide whether to require them or not.
         'nonets': [
             #'wx',  # fixme: not available as an egg on all platforms.
-        ],
-    },
-    
+            ],
+        },
     install_requires = [
         ENTHOUGHTBASE_UI,
         TRAITS
-    ],
-    
+        ],
     include_package_data = True,
-    license              = 'BSD',
-    name                 = 'TraitsGUI',
-    namespace_packages   = [
+    license = 'BSD',
+    long_description = '\n'.join(DOCLINES[2:]),
+    maintainer = 'Traits Developers',
+    maintainer_email = 'enthought-dev@enthought.com',
+    name = 'TraitsGUI',
+    namespace_packages = [
         "enthought",
         "enthought.pyface",
         "enthought.pyface.ui",
-    ],
-    packages      = find_packages(),
+        ],
+    packages = find_packages(),
+    platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
     tests_require = [
         'nose >= 0.10.3',
-    ],
+        ],
     test_suite = 'nose.collector',
-    url        = 'http://code.enthought.com/ets',
-    version    = INFO['version'],
+    url = 'http://code.enthought.com/ets',
+    version = INFO['version'],
     zip_safe   = False,
-)
+    )
 
