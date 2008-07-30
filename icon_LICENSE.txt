@@ -1,0 +1,75 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------
+Eclipse                 Eclipse Public License    icon_Eclipse_LICENSE.txt
+Enthought               BSD 3-Clause              LICENSE.txt
+GV (Gael Varoquaux)     Public Domain             N/A
+Nuvola                  LGPL                      icon_Nuvola_LICENSE.txt
+OOo                     LGPL                      icon_OOo_LICENSE.txt
+
+Unless stated in this file, icons are the work of Enthought, and are
+released under a 3 clause BSD license.
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+enthought/pyface/action/images:
+                         action.png | Eclipse
+enthought/pyface/images:
+                          about.jpg | Enthought
+                     background.jpg | Enthought
+                    caret_close.png | Enthought
+                     caret_open.png | Enthought
+                          close.png | GV
+                image_not_found.png | Nuvola
+                 panel_gradient.png | Enthought
+            panel_gradient_over.png | Enthought
+                       question.png | GV
+                         splash.png | Enthought
+enthought/pyface/dock/images:
+            bar_feature_changed.png | Enthought
+           bar_feature_disabled.png | Enthought
+               bar_feature_drop.png | Enthought
+            bar_feature_no_drop.png | Enthought
+             bar_feature_normal.png | Enthought
+                     close_drag.png | GV
+                      close_tab.png | GV
+                   feature_tool.png | GV
+                      sh_bottom.png | Enthought
+                      sh_middle.png | Enthought
+                         sh_top.png | Enthought
+                          shell.ico | Enthought
+                        sv_left.png | Enthought
+                      sv_middle.png | Enthought
+                       sv_right.png | Enthought
+            tab_feature_changed.png | Enthought
+           tab_feature_disabled.png | Enthought
+               tab_feature_drop.png | Enthought
+            tab_feature_no_drop.png | OOo
+             tab_feature_normal.png | OOo
+                   tab_scroll_l.png | Enthought
+                  tab_scroll_lr.png | Enthought
+                   tab_scroll_r.png | Enthought
+                         window.png | Eclipse
+enthought/pyface/grid/images:
+                        checked.png | GV
+                image_not_found.png | Nuvola
+                     table_edit.png | OOo
+                      unchecked.png | GV
+enthought/pyface/tree/images:
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola
+enthought/traits/ui/image/library:
+                            std.zip | Enthought
+examples/images:
+            closed_folder_24x24.png | Nuvola
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola
+examples/dock/images:
+                         folder.png | Nuvola
+                           gear.png | Nuvola
+examples/workbench/images:
+                        example.ico | Enthought
