@@ -8,9 +8,9 @@
 Traits-capable windowing framework.
 
 The TraitsGUI project contains a toolkit-independent GUI abstraction layer
-(known as Pyface), which is used to support the "visualization" features of 
-the Traits package. Thus, you can write code in terms of the Traits API 
-(views, items, editors, etc.), and let TraitsGUI and your selected toolkit 
+(known as Pyface), which is used to support the "visualization" features of
+the Traits package. Thus, you can write code in terms of the Traits API
+(views, items, editors, etc.), and let TraitsGUI and your selected toolkit
 and back-end take care of the details of displaying them.
 
 To display Traits-based user interfaces, in addition to the TraitsGUI project,
@@ -35,29 +35,6 @@ import zipfile
 
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
-
-
-# Function to convert simple ETS project names and versions to a requirements
-# spec that works for both development builds and stable builds.  Allows
-# a caller to specify a max version, which is intended to work along with
-# Enthought's standard versioning scheme -- see the following write up:
-#    https://svn.enthought.com/enthought/wiki/EnthoughtVersionNumbers
-def etsdep(p, min, max=None, literal=False):
-    require = '%s >=%s.dev' % (p, min)
-    if max is not None:
-        if literal is False:
-            require = '%s, <%s.a' % (require, max)
-        else:
-            require = '%s, <%s' % (require, max)
-    return require
-
-
-# Declare our ETS project dependencies:
-APPTOOLS = etsdep('AppTools', '3.0.0b1')
-ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')
-TRAITS = etsdep('Traits', '3.0.0b1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
 
 
 # Functions to allow runtime building of docs from source.
@@ -172,38 +149,9 @@ setup(
         'http://code.enthought.com/enstaller/eggs/source',
         ],
     description = DOCLINES[1],
-    extras_require = {
-
-        # Extra denoting that the Traits UI DockWindow support should be
-        # installed. DockWindow support allows Traits user interfaces with tabs
-        # and splitters to be created when using the wxPython back-end:
-        'dock': [
-            TRAITSBACKENDWX,
-            ],
-
-        # Extra denoting that Traits user interface Qt toolkit support should
-        # be installed:
-        'qt': [
-            TRAITSBACKENDQT,
-            ],
-
-        # Extra denoting that Traits user interface wxPython toolkit support
-        # should be installed:
-        'wx': [
-            TRAITSBACKENDWX,
-            ],
-
-        # All non-ets dependencies should be in this extra to ensure users can
-        # decide whether to require them or not.
-        'nonets': [
-            #'wx',  # fixme: not available as an egg on all platforms.
-            ],
-        },
+    extras_require = INFO['extras_require'],
     include_package_data = True,
-    install_requires = [
-        ENTHOUGHTBASE_UI,
-        TRAITS
-        ],
+    install_requires = INFO['install_requires'],
     license = 'BSD',
     long_description = '\n'.join(DOCLINES[3:]),
     maintainer = 'ETS Developers',
