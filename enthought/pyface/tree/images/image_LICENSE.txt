@@ -1,0 +1,17 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------
+GV (Gael Varoquaux)     Public Domain             N/A
+Nuvola                  LGPL                      image_LICENSE_Nuvola.txt
+
+Unless stated in this file, icons are the work of Enthought, and are
+released under a 3 clause BSD license.
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+enthought/pyface/tree/images:
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola

@@ -1,0 +1,40 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------
+Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
+Enthought               BSD 3-Clause              LICENSE.txt
+GV (Gael Varoquaux)     Public Domain             N/A
+OOo                     LGPL                      image_LICENSE_OOo.txt
+
+Unless stated in this file, icons are the work of Enthought, and are
+released under a 3 clause BSD license.
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+enthought/pyface/dock/images:
+            bar_feature_changed.png | Enthought
+           bar_feature_disabled.png | Enthought
+               bar_feature_drop.png | Enthought
+            bar_feature_no_drop.png | Enthought
+             bar_feature_normal.png | Enthought
+                     close_drag.png | GV
+                      close_tab.png | GV
+                   feature_tool.png | GV
+                      sh_bottom.png | Enthought
+                      sh_middle.png | Enthought
+                         sh_top.png | Enthought
+                          shell.ico | Enthought
+                        sv_left.png | Enthought
+                      sv_middle.png | Enthought
+                       sv_right.png | Enthought
+            tab_feature_changed.png | Enthought
+           tab_feature_disabled.png | Enthought
+               tab_feature_drop.png | Enthought
+            tab_feature_no_drop.png | OOo
+             tab_feature_normal.png | OOo
+                   tab_scroll_l.png | Enthought
+                  tab_scroll_lr.png | Enthought
+                   tab_scroll_r.png | Enthought
+                         window.png | Eclipse
