@@ -140,7 +140,7 @@ setup(
         Topic :: Scientific/Engineering
         Topic :: Software Development
         Topic :: Software Development :: Libraries
-        """.splitlines()],
+        """.splitlines() if len(c.split()) > 0],
     cmdclass = {
         'develop': my_develop,
         'build': my_build
