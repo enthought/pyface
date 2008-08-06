@@ -413,8 +413,9 @@ class DockWindowFeature ( HasPrivateTraits ):
         icon, with the pointer directly over the top menu option.
         """
         window = self.dock_control.control.GetParent()
+        wx, wy = window.GetScreenPosition()
         window.PopupMenuXY( menu.create_menu( window, self ), 
-                            self.x - 10, self.y - 10 )
+                            self.x - wx - 10, self.y - wy - 10 )
                             
     #---------------------------------------------------------------------------
     #  Refreshes the display of the feature image:  
@@ -653,7 +654,7 @@ class DockWindowFeature ( HasPrivateTraits ):
     def _set_event ( self, event ):
         """ Sets the feature's 'event' traits for a specified mouse 'event'.
         """
-        x, y = event.GetEventObject().GetPositionTuple()
+        x, y = event.GetEventObject().GetScreenPosition()
         self.set( x            = event.GetX() + x, 
                   y            = event.GetY() + y,
                   shift_down   = event.ShiftDown(),

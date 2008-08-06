@@ -95,8 +95,8 @@ class FeatureBar ( HasPrivateTraits ):
         # Create the actual control (if needed):
         control = self.control
         if control is None:
-            self.control = control = wx.Window( parent, -1, wx.DefaultPosition,
-                                     wx.DefaultSize, wx.FULL_REPAINT_ON_RESIZE )
+            self.control = control = wx.Frame( None, -1, '', 
+                                               style = wx.BORDER_NONE )
 
             # Set up the 'erase background' event handler:
             wx.EVT_ERASE_BACKGROUND( control, self._erase_background )
@@ -135,7 +135,9 @@ class FeatureBar ( HasPrivateTraits ):
                 size = wx.Size( width + 8, height + 5 )
                 
         control.SetSize( size )
-        control.SetPosition( dock_control.feature_popup_position )
+        px, py = parent.GetScreenPosition()
+        fx, fy = dock_control.feature_popup_position 
+        control.SetPosition( wx.Point( px + fx, py + fy ) )
         control.Show()
 
     #-- Window Event Handlers --------------------------------------------------
@@ -290,6 +292,7 @@ class FeatureBar ( HasPrivateTraits ):
             feature = self._feature
             if feature is not None:
                 feature._set_event( event )
+                
                 prefix = button = ''
                 if event.RightIsDown():
                     button = 'right_'
@@ -299,8 +302,8 @@ class FeatureBar ( HasPrivateTraits ):
                     prefix = 'alt_'
                 elif event.ShiftDown():
                     prefix = 'shift_'
-                object = getattr( feature, '%s%sdrag' % ( prefix, button ) )()
                     
+                object = getattr( feature, '%s%sdrag' % ( prefix, button ) )()
                 if object is not None:
                     self.control.ReleaseMouse()
                     self._feature  = None
@@ -346,7 +349,8 @@ class FeatureBar ( HasPrivateTraits ):
                 data.feature_dropped_on( dock_control.object )
             else:
                 # Handle a normal object being dropped:
-                feature.set( x = x, y = y )
+                wx, wy = self.control.GetScreenPosition()
+                feature.set( x = wx + x, y = wy + y )
                 feature.drop( data )
                 
             return drag_result
@@ -412,6 +416,7 @@ class FeatureBar ( HasPrivateTraits ):
                     bdx = bitmap.GetWidth()
                     if self._is_in( event, x, 4, bdx, bitmap.GetHeight() ):
                         return feature
+                        
                     x += (bdx + 3)
         else:
             y = 4
@@ -421,6 +426,7 @@ class FeatureBar ( HasPrivateTraits ):
                     bdy = bitmap.GetHeight()
                     if self._is_in( event, 4, y, bitmap.GetWidth(), bdy ):
                         return feature
+                        
                     y += (bdy + 3)
                 
         return None

@@ -795,12 +795,13 @@ class DockItem ( HasPrivateTraits ):
         """ Fills a specified region with the control's background color.
         """
         dc.SetPen( wx.TRANSPARENT_PEN )
+        
         owner = self.owner
         if owner is None:
-            #color = wx.Colour( 255, 0, 0 )
             color = wx.Colour( 236, 233, 216 )
         else:
             color = owner.control.GetParent().GetBackgroundColour()
+            
         dc.SetBrush( wx.Brush( color ) )
         dc.DrawRectangle( x, y, dx, dy )
 
@@ -894,6 +895,7 @@ class DockItem ( HasPrivateTraits ):
     def _redraw_tab ( self, state = None ):
         if state is None:
             state = self.tab_state
+            
         region = self.parent
         if region is not None:
             dc = set_standard_font( wx.ClientDC( self.control.GetParent() ) )
@@ -958,11 +960,13 @@ class DockItem ( HasPrivateTraits ):
 
     def set_feature_mode ( self, changed = True ):
         if (not changed) or (self.feature_mode != FEATURE_PRE_NORMAL):
-            mode     = FEATURE_DROP
+            mode = FEATURE_DROP
+            
             features = self.drop_features
             if len( features ) == 0:
                 mode     = FEATURE_NORMAL
                 features = self.features
+                
             for feature in features:
                 if feature.bitmap is not None:
                     if changed:
@@ -1063,6 +1067,7 @@ class DockItem ( HasPrivateTraits ):
         """
         for control in self.dock_controls:
             control.pre_drag( object )
+            
         self.pre_drag( object )
 
     def pre_drag ( self, object, tag = 0 ):
@@ -1071,6 +1076,7 @@ class DockItem ( HasPrivateTraits ):
         if (self.visible and
             (self.feature_mode != FEATURE_NONE) and
             (self._feature_mode is None)):
+        
             if isinstance( object, IFeatureTool ):
                 if (object.feature_can_drop_on( self.object ) or
                     object.feature_can_drop_on_dock_control( self )):
@@ -1084,10 +1090,12 @@ class DockItem ( HasPrivateTraits ):
                                             (f.bitmap is not None) ]
 
             self._feature_mode = self.feature_mode + tag
+            
             if len( self.drop_features ) > 0:
                 self.feature_mode = FEATURE_DROP
             else:
                 self.feature_mode = FEATURE_DISABLED
+                
             self._redraw_control()
 
     #---------------------------------------------------------------------------
