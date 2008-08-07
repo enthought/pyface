@@ -14,11 +14,11 @@ def etsdep(p, min, max=None, literal=False):
 
 
 # Declare our ETS project dependencies:
-APPTOOLS = etsdep('AppTools', '3.0.0b1')
-ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b1')
-TRAITS = etsdep('Traits', '3.0.0b1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.0b1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.0b1')
+APPTOOLS = etsdep('AppTools', '3.0.0b2')
+ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.0b2')
+TRAITS = etsdep('Traits', '3.0.1b1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.0.1b1')
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.0.1b1')
 
 
 # A dictionary of the setup data information.
