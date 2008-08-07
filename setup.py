@@ -18,6 +18,12 @@ you must install one of the following combinations of packages:
 
 - Traits, TraitsBackendWX, and wxPython
 - Traits, TraitsBackendQt, and PyQt
+
+Prerequisites
+-------------
+If you want to build TraitsGUI from source, you must first install 
+`setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_.
+
 """
 
 
