@@ -11,5 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-
+""" Reusable MVC-based components for Traits-based applications.
+    Part of the TraitsGUI project of the Enthought Tool Suite.
+"""
 __import__('pkg_resources').declare_namespace(__name__)
