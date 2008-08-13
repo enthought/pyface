@@ -37,7 +37,7 @@ from enthought.traits.api \
            cached_property
 
 from enthought.traits.ui.dock_window_theme \
-    import default_dock_window_theme
+    import dock_window_theme
 
 from enthought.pyface.image_resource \
     import ImageResource
@@ -466,7 +466,7 @@ class DockItem ( HasPrivateTraits ):
     
     def _get_theme ( self ):
         if self.control is None:
-            return default_dock_window_theme
+            return dock_window_theme()
             
         return self.control.GetParent().owner.theme
 

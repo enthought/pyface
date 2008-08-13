@@ -898,6 +898,11 @@ class ZipFileReference ( ResourceReference ):
     # The name of the cached image file:
     cache_file = File
     
+    #-- The 'ResourceReference' API --------------------------------------------
+    
+    # The file name of the image (in this case, the cache file name):
+    filename = Property
+    
     #-- ResourceReference Interface Implementation -----------------------------
 
     def load ( self ):
@@ -930,6 +935,14 @@ class ZipFileReference ( ResourceReference ):
             
         # Return the image data from the image cache file:
         return self.resource_factory.image_from_file( cache_file )
+        
+    #-- Property Implementations -----------------------------------------------
+    
+    def _get_filename ( self ):
+        if self.cache_file == '':
+            self.load()
+            
+        return self.cache_file
     
 #-------------------------------------------------------------------------------
 #  'ImageLibrary' class:
