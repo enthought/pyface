@@ -367,7 +367,7 @@ class DockItem ( HasPrivateTraits ):
     tab_name = Property( depends_on = 'name' )
 
     # Width of the item's tab:
-    tab_width = Property( depends_on = 'tab_state, tab_name' )
+    tab_width = Property( depends_on = 'control, tab_state, tab_name' )
 
     # The DockWindowTheme for this item's DockWindow:
     theme = Property
