@@ -54,7 +54,12 @@ class ChainedWizard(Wizard):
             self.controller.next_controller = new.controller
 
         if self.control is not None:
-            self._create_buttons(self.control)
+            # FIXME: Do we need to call _create_buttons? Buttons would have 
+            # added when the main dialog area was created (for the first 
+            # wizard), and calling update should update the state of these
+            # buttons. Do we need to check if buttons are already present in 
+            # the dialog area? What is use case for calling _create_buttons? 
+            # self._create_buttons(self.control)
             self._update()
 
         return
@@ -65,7 +70,8 @@ class ChainedWizard(Wizard):
         if new is not None and self.next_wizard is not None:
             self.controller.next_controller = self.next_wizard.controller
 
-        self._update()
+        if self.control is not None:
+            self._update()
 
         return
 
