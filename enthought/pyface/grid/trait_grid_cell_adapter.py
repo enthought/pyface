@@ -136,7 +136,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
         changed = False
         edit_width, edit_height = rect.width, rect.height
         grid, row, col = getattr(self, '_grid_info', (None, None, None))
-        if grid is not None:
+        if (grid is not None) and self._editor.scrollable:
             edit_width, cur_width = self._edit_width, grid.GetColSize(col)
             
             restore_width = getattr( grid, '_restore_width', None )
@@ -172,6 +172,10 @@ class TraitGridCellAdapter(PyGridCellEditor):
                                     edit_width, edit_height,
                                     SIZE_ALLOW_MINUS_ONE)
         
+        if changed:
+            grid.MakeCellVisible(grid.GetGridCursorRow(), 
+                                 grid.GetGridCursorCol())
+        
     def Show(self, show, attr):
         """ Show or hide the edit control.  You can use the attr (if not None) 
             to set colours or fonts for the control. 
@@ -196,8 +200,11 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Make sure the control is ready to edit. """
         # We have to manually set the focus to the control
         self._editor.update_editor()
-        self._control.Show(True)
-        self._control.SetFocus()
+        control = self._control
+        control.Show(True)
+        control.SetFocus()
+        if isinstance(control, wx.TextCtrl):
+            control.SetSelection(-1, -1)
 
     def EndEdit(self, row, col, grid):
         """ Do anything necessary to complete the editing. """

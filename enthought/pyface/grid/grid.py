@@ -695,7 +695,7 @@ class Grid(Widget):
 
         editor = evt.GetControl()
         if editor is not None:
-            editor.PushEventHandler(ComboboxFocusHandler())
+            editor.PushEventHandler(ComboboxFocusHandler(self._grid))
 
         evt.Skip()
         
@@ -732,7 +732,7 @@ class Grid(Widget):
     def _on_left_down ( self, evt ):
         """ Called when the left mouse button is pressed.
         """
-        grid         = self._grid
+        grid            = self._grid
         self._x_clicked = evt.GetX()
         self._y_clicked = evt.GetY()
         self._ignore = ((grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) or

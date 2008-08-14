@@ -62,14 +62,19 @@ class ComboboxFocusHandler(wx.EvtHandler):
         
         grid._no_reset_row = True
         
-        col -= 1
-        if col < 0:
-            col  = cols - 1
-            row -= 1
-            if row < 0:
-                row = rows - 1
-                
-        self._edit_cell( row, col )
+        first = True
+        while first or (not self._edit_cell( row, col )):
+            col -= 1
+            if col < 0:
+                col  = cols - 1
+                row -= 1
+                if row < 0:
+                    if not first:
+                        break
+                        
+                    row = rows - 1
+                    
+            first = False
         
     def _right_key ( self, evt ):
         if not (evt.ControlDown() or evt.AltDown()):
@@ -80,14 +85,19 @@ class ComboboxFocusHandler(wx.EvtHandler):
         
         grid._no_reset_row = True
         
-        col += 1
-        if col >= cols:
-            col  = 0
-            row += 1
-            if row >= rows:
-                row = 0
-                
-        self._edit_cell( row, col )
+        first = True
+        while first or (not self._edit_cell( row, col )):
+            col += 1
+            if col >= cols:
+                col  = 0
+                row += 1
+                if row >= rows:
+                    if not first:
+                        break
+                        
+                    row = 0
+                    
+            first = False
         
     def _up_key ( self, evt ):
         if not (evt.ControlDown() or evt.AltDown()):
@@ -127,8 +137,15 @@ class ComboboxFocusHandler(wx.EvtHandler):
                     g.GetNumberRows(),    g.GetNumberCols() )
 
     def _edit_cell ( self, row, col ):
-        self._grid.SetGridCursor( row, col )
-        self._grid.EnableCellEditControl()
-        self._grid.MakeCellVisible( row, col )
+        grid = self._grid
+        grid.DisableCellEditControl()
+        grid.SetGridCursor( row, col )
+        if not grid.CanEnableCellControl():
+            return False
+            
+        grid.EnableCellEditControl()
+        grid.MakeCellVisible( row, col )
+        
+        return True
         
 #### EOF ####################################################################
