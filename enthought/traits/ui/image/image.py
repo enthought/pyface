@@ -25,7 +25,7 @@
 import sys
 
 from os \
-    import environ, listdir, remove, stat, makedirs, rename
+    import environ, listdir, remove, stat, makedirs, rename, access, W_OK
     
 from os.path \
     import join, isdir, isfile, splitext, abspath, dirname, basename, exists
@@ -600,7 +600,15 @@ class ImageVolume ( HasPrivateTraits ):
         """ Saves the contents of the image volume using the current contents 
             of the **ImageVolume**. 
         """
-        path = self.path
+        dir = path = self.path
+        
+        # Get the directory associated with the image volume:
+        if not self.is_zip_file:
+            dir = dirname( dir )
+            
+        # Make sure the directory is writable:
+        if not access( dir, W_OK ):
+            return False
             
         # Pre-compute the images code, because it can require a long time
         # to load all of the images so that we can determine their size, and we
@@ -625,7 +633,11 @@ class ImageVolume ( HasPrivateTraits ):
             # Write a separate license file for human consumption:
             write_file( join( path, 'license.txt' ), self.license_text )
             
-            return
+            return True
+         
+        # Make sure the current zip file can be replaced:
+        if exists( path ) and (not access( path, W_OK )):
+            return False
             
         # Create a temporary name for the new .zip file:
         file_name = path + '.###'
@@ -690,6 +702,8 @@ class ImageVolume ( HasPrivateTraits ):
                 new_zf.close()
                 
             remove( file_name )
+            
+        return True
     
     def image_resource ( self, image_name ):
         """ Returns the ImageResource object for the specified **image_name**.
@@ -1093,6 +1107,10 @@ class ImageLibrary ( HasPrivateTraits ):
                     
         # Try to bring the volume information up to date if necessary:
         if volume.time_stamp < time_stamp_for( stat( path )[ ST_MTIME ] ):
+            # Note that the save could fail if the volume is read-only, but
+            # that's OK, because we're only trying to do the save in case
+            # a developer had added or deleted some image files, which would
+            # require write access to the volume:
             volume.save()
                     
         # Add the new volume to the library:
@@ -1327,6 +1345,10 @@ class ImageLibrary ( HasPrivateTraits ):
                  
             # If this volume is not up to date, update it:
             if volume.time_stamp < time_stamp_for( stat( path )[ ST_MTIME ] ):
+                # Note that the save could fail if the volume is read-only, but
+                # that's OK, because we're only trying to do the save in case
+                # a developer had added or deleted some image files, which would
+                # require write access to the volume:
                 volume.save()
                 
             # Return the volume:
