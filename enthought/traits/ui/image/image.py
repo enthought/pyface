@@ -25,7 +25,8 @@
 import sys
 
 from os \
-    import environ, listdir, remove, stat, makedirs, rename, access, W_OK
+    import environ, listdir, remove, stat, makedirs, rename, access, R_OK, \
+           W_OK, X_OK
     
 from os.path \
     import join, isdir, isfile, splitext, abspath, dirname, basename, exists
@@ -600,14 +601,16 @@ class ImageVolume ( HasPrivateTraits ):
         """ Saves the contents of the image volume using the current contents 
             of the **ImageVolume**. 
         """
-        dir = path = self.path
+        path = self.path
         
-        # Get the directory associated with the image volume:
         if not self.is_zip_file:
-            dir = dirname( dir )
-            
-        # Make sure the directory is writable:
-        if not access( dir, W_OK ):
+            # Make sure the directory is writable:
+            if not access( path, R_OK | W_OK | X_OK ):
+                return False
+                
+        # Make sure the directory and zip file are writable:
+        elif ((not access( dirname( path ), R_OK | W_OK | X_OK )) or
+              (exists( path ) and (not access( path, W_OK )))):
             return False
             
         # Pre-compute the images code, because it can require a long time
@@ -634,10 +637,6 @@ class ImageVolume ( HasPrivateTraits ):
             write_file( join( path, 'license.txt' ), self.license_text )
             
             return True
-         
-        # Make sure the current zip file can be replaced:
-        if exists( path ) and (not access( path, W_OK )):
-            return False
             
         # Create a temporary name for the new .zip file:
         file_name = path + '.###'
