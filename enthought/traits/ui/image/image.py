@@ -24,6 +24,9 @@
 
 import sys
 
+from cStringIO \
+    import StringIO
+
 from os \
     import environ, listdir, remove, stat, makedirs, rename, access, R_OK, \
            W_OK, X_OK
@@ -926,7 +929,19 @@ class ZipFileReference ( ResourceReference ):
         if cache_file == '':
             # Extract the data from the zip file:
             data = self.zip_file.read( self.file_name )
-                
+            
+            try:
+                # Although we are using a back-end specific toolkit here
+                # (i.e. wx), we are only using it to load an image file. If it
+                # is not available, we will use a fall-back:
+                import wx
+
+                return wx.ImageFromStream( StringIO( data ) )
+            except:
+                # wx may not be available or it might be an earlier version of
+                # wx that does not support ImageFromStream:
+                pass
+
             # Make sure the correct image cache directory exists:
             cache_dir = join( image_cache_path, self.volume_name )
             if not exists( cache_dir ):
