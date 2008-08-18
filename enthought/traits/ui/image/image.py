@@ -54,7 +54,8 @@ from threading \
     
 from enthought.traits.api \
     import HasPrivateTraits, Property, Str, Int, List, Dict, File, Instance, \
-           Bool, Tuple, TraitError, Float, Any, cached_property, on_trait_change
+           Bool, Tuple, Undefined, TraitError, Float, Any, cached_property, \
+           on_trait_change
            
 from enthought.traits.trait_base \
     import get_resource_path, traits_home
@@ -930,17 +931,11 @@ class ZipFileReference ( ResourceReference ):
             # Extract the data from the zip file:
             data = self.zip_file.read( self.file_name )
             
-            try:
-                # Although we are using a back-end specific toolkit here
-                # (i.e. wx), we are only using it to load an image file. If it
-                # is not available, we will use a fall-back:
-                import wx
-
-                return wx.ImageFromStream( StringIO( data ) )
-            except:
-                # wx may not be available or it might be an earlier version of
-                # wx that does not support ImageFromStream:
-                pass
+            # Try to create an image from the data, without writing it to a
+            # file first:
+            image = self.resource_factory.image_from_data( data, Undefined )
+            if image is not None:
+                return image
 
             # Make sure the correct image cache directory exists:
             cache_dir = join( image_cache_path, self.volume_name )
