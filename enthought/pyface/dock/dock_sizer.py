@@ -38,6 +38,9 @@ from enthought.traits.api \
 
 from enthought.traits.ui.dock_window_theme \
     import dock_window_theme
+    
+from enthought.traits.ui.wx.helper \
+    import BufferDC
 
 from enthought.pyface.image_resource \
     import ImageResource
@@ -814,22 +817,23 @@ class DockItem ( HasPrivateTraits ):
         
         """ Draws a notebook tab.
         """
-        x, y, dx, dy   = self.drag_bounds
+        x0, y0, dx, dy = self.drag_bounds
         self._is_tab   = True
         self.tab_state = state
         theme          = self.tab_theme
         slice          = theme.image_slice
-        self.fill_bg_color( dc, x, y, dx, dy )
-        slice.fill( dc, x, y, dx, dy, True )
+        bdc            = BufferDC( dc, dx, dy )
+        self.fill_bg_color( bdc, 0, 0, dx, dy )
+        slice.fill( bdc, 0, 0, dx, dy, True )
         
         # Compute the initial drawing position:
         name         = self.tab_name
         tdx, text_dy = dc.GetTextExtent( name )
         tc           = theme.content
         ox, oy       = theme.label.left, theme.label.top
-        y += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom - 
-                     text_dy) / 2))
-        x += ox + slice.xleft + tc.left
+        y = (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom - 
+                    text_dy) / 2))
+        x = ox + slice.xleft + tc.left
 
         mode = self.feature_mode
         if mode == FEATURE_PRE_NORMAL:
@@ -838,22 +842,25 @@ class DockItem ( HasPrivateTraits ):
         # Draw the feature 'trigger' icon (if necessary):
         if mode != FEATURE_NONE:
             if mode not in FEATURES_VISIBLE:
-                dc.DrawBitmap( DockImages.get_feature_image( mode ), x, y, 
-                               True )
+                bdc.DrawBitmap( DockImages.get_feature_image( mode ), x, y, 
+                                True )
             x += (DockImages._tab_feature_width + 3)
 
         # Draw the image (if necessary):
         image = self.get_image()
         if image is not None:
-            dc.DrawBitmap( image, x, y, True )
+            bdc.DrawBitmap( image, x, y, True )
             x += (image.GetWidth() + 3)
 
         # Draw the text label:
-        dc.DrawText( name, x, y + 1 )
+        bdc.DrawText( name, x, y + 1 )
 
         # Draw the close button (if necessary):
         if self.closeable:
-            dc.DrawBitmap( DockImages._close_tab, x + tdx + 5, y + 3, True )
+            bdc.DrawBitmap( DockImages._close_tab, x + tdx + 5, y + 2, True )
+            
+        # Copy the buffer to the display:
+        bdc.copy( x0, y0 )
 
     #---------------------------------------------------------------------------
     #  Draws a fixed drag bar:
