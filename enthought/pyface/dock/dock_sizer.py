@@ -1165,7 +1165,7 @@ class DockSplitter ( DockItem ):
     def draw ( self, dc ):
         """ Draws the contents of the splitter.
         """
-        if self._first_bounds is not None:
+        if (self._live_drag is False) and (self._first_bounds is not None):
             x, y, dx, dy = self._first_bounds
         else:
             x, y, dx, dy = self.bounds
