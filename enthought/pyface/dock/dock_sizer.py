@@ -1165,7 +1165,11 @@ class DockSplitter ( DockItem ):
     def draw ( self, dc ):
         """ Draws the contents of the splitter.
         """
-        x, y, dx, dy = self.bounds
+        if self._first_bounds is not None:
+            x, y, dx, dy = self._first_bounds
+        else:
+            x, y, dx, dy = self.bounds
+            
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( 
                   self.parent.control.GetGrandParent().GetBackgroundColour() ) )
@@ -1240,12 +1244,15 @@ class DockSplitter ( DockItem ):
     def mouse_down ( self, event ):
         """ Handles the left mouse button being pressed.
         """
+        self._live_drag     = event.ControlDown()
         self._click_pending = ((self._hot_spot is not None) and
                                 self.is_in( event, *self._hot_spot ))
         if not self._click_pending:
-            self._xy         = ( event.GetX(), event.GetY() )
-            self._max_bounds = self.parent.get_splitter_bounds( self )
-            self._draw_bounds( event, self.bounds )
+            self._xy           = ( event.GetX(), event.GetY() )
+            self._max_bounds   = self.parent.get_splitter_bounds( self )
+            self._first_bounds = self.bounds
+            if not self._live_drag:
+                self._draw_bounds( event, self.bounds )
 
     #---------------------------------------------------------------------------
     #  Handles the left mouse button being released:
@@ -1295,10 +1302,11 @@ class DockSplitter ( DockItem ):
                     x = ix1
             self.bounds = ( x, y, dx, dy )
         else:
-            self.bounds, self._last_bounds = self._bounds, self.bounds
-            self._draw_bounds( event )
+            self._last_bounds, self._first_bounds = self._first_bounds, None
+            if not self._live_drag:
+                self._draw_bounds( event )
 
-        self.parent.update_splitter( self, event )
+        self.parent.update_splitter( self, event.GetEventObject() )
 
     #---------------------------------------------------------------------------
     #  Handles the mouse moving while the left mouse button is pressed:
@@ -1308,7 +1316,7 @@ class DockSplitter ( DockItem ):
         """ Handles the mouse moving while the left mouse button is pressed.
         """
         if not self._click_pending:
-            x, y, dx, dy     = self.bounds
+            x, y, dx, dy     = self._first_bounds
             mx, my, mdx, mdy = self._max_bounds
 
             if self.style == 'horizontal':
@@ -1319,8 +1327,12 @@ class DockSplitter ( DockItem ):
                 x = min( max( x, mx ), mx + mdx - dx )
 
             bounds = ( x, y, dx, dy )
-            if bounds != self._bounds:
-                self._draw_bounds( event, bounds )
+            if bounds != self.bounds:
+                self.bounds = bounds
+                if self._live_drag:
+                    self.parent.update_splitter( self, event.GetEventObject() )
+                else:
+                    self._draw_bounds( event, bounds )
 
     #---------------------------------------------------------------------------
     #  Handles the mouse hovering over the item:
@@ -3227,7 +3239,7 @@ class DockSection ( DockGroup ):
     #  Updates the affected regions when a splitter bar is released:
     #---------------------------------------------------------------------------
 
-    def update_splitter ( self, splitter, event ):
+    def update_splitter ( self, splitter, window ):
         """ Updates the affected regions when a splitter bar is released.
         """
         x, y, dx, dy         = splitter.bounds
@@ -3238,21 +3250,24 @@ class DockSection ( DockGroup ):
         ix1, iy1, idx1, idy1 = item1.bounds
         ix2, iy2, idx2, idy2 = item2.bounds
 
+        window.Freeze()
+        
         if self.is_row:
             item1.recalc_sizes( ix1, iy1, x - ix1, idy1 )
             item2.recalc_sizes( x + dx, iy2, ix2 + idx2 - x - dx, idy2 )
         else:
             item1.recalc_sizes( ix1, iy1, idx1, y - iy1 )
             item2.recalc_sizes( ix2, y + dy, idx2, iy2 + idy2 - y - dy )
+            
+        window.Thaw()
 
         if splitter.style == 'horizontal':
             dx = 0
         else:
             dy = 0
 
-        event.GetEventObject().RefreshRect(
-                       wx.Rect( ix1 - dx, iy1 - dy, ix2 + idx2 - ix1 + 2 * dx,
-                                iy2 + idy2 - iy1 + 2 * dy ) )
+        window.RefreshRect( wx.Rect( ix1 - dx, iy1 - dy, 
+                        ix2 + idx2 - ix1 + 2 * dx, iy2 + idy2 - iy1 + 2 * dy ) )
 
     #---------------------------------------------------------------------------
     #  Prints the contents of the section:
