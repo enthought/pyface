@@ -114,8 +114,7 @@ class Grid(Widget):
     row_label_width = Int(82)
 
     # auto-size columns and rows?
-    # Probably the only time to set this to False is for very large data sets.
-    autosize = Bool(True)
+    autosize = Bool(False)
 
     # Allow single-click access to cell-editors?
     edit_on_first_click = Bool(True)
@@ -163,21 +162,13 @@ class Grid(Widget):
         self._user_col_size = False
 
         # Create the toolkit-specific control.
-        self.control = panel = wx.Panel(parent, -1)
-        
-        self._grid = grid = wxGrid(panel, -1)
-        grid.grid  = self
+        self.control = self._grid = grid = wxGrid(parent, -1)
+        grid.grid    = self
         
         # Set when moving edit cursor:
         grid._no_reset_col = False
         grid._no_reset_row = False
         
-        sizer = wx.BoxSizer( wx.VERTICAL )
-        sizer.Add( grid, 1, wx.EXPAND )
-        panel.SetSizer( sizer )
-
-        #self.control = self._grid = grid = wxGrid(parent, -1)
-
         # initialize the current selection
         self.__current_selection = ()
 
@@ -688,7 +679,7 @@ class Grid(Widget):
 
     def _on_size(self, evt):
         """ Called when the grid is resized. """
-        self.__autosize(True)
+        self.__autosize()
         
     # needed to handle problem in wx 2.6 with combobox cell editors
     def _on_editor_created(self, evt):
@@ -808,8 +799,7 @@ class Grid(Widget):
         
     def _on_col_size(self, evt):
         """ Called when the user changes a column's width. """
-        self._user_col_size = True
-        self._grid.AdjustScrollbars()
+        self.__autosize()
         
         evt.Skip()
         
@@ -931,6 +921,11 @@ class Grid(Widget):
                 # Popup the menu (if an action is selected it will be performed
                 # before before 'PopupMenu' returns).
                 self._grid.PopupMenu(menu, evt.GetPosition())
+        elif col >= 0:
+            cws = getattr( self, '_cached_widths', None )
+            if (cws is not None) and (0 <= col < len( cws )):
+                cws[ col ] = None
+                self.__autosize()
         
         evt.Skip()
         
@@ -1386,33 +1381,68 @@ class Grid(Widget):
     def __fire_selection_changed(self):
         self.selection_changed = True
 
-    def __autosize(self, on_resize=False):
+    def __autosize(self):
         """ Autosize the grid with appropriate flags. """
 
         model = self.model
         grid  = self._grid
-        if grid is not None and self.autosize and (not on_resize):
+        if grid is not None and self.autosize:
             grid.AutoSizeColumns(False)
             grid.AutoSizeRows(False)
 
-        # whenever we size the grid we need to take in to account any
-        # explicitly set row/column sizes
+        # Whenever we size the grid we need to take in to account any
+        # explicitly set column sizes:
+        
         grid.BeginBatch()
         
-        if not self._user_col_size:
-            dx = (grid.GetSizeTuple()[0] - 
-                  wx.SystemSettings_GetMetric(wx.SYS_VSCROLL_X))
-            for index in range(0, model.get_column_count()):
-                size = model.get_column_size(index)
-                if (size is not None) and (size != -1):
-                    if 0.0 <= size <= 1.0:
-                        size *= dx
-                    grid.SetColSize(index, int(size))
+        dx, dy  = grid.GetClientSize()
+        n       = model.get_column_count()
+        pdx     = 0
+        wdx     = 0.0
+        widths  = []
+        cached  = getattr( self, '_cached_widths', None )
+        current = [ grid.GetColSize( i ) for i in xrange( n ) ]
+        if (cached is None) or (len( cached ) != n):
+            self._cached_widths = cached = [ None ] * n
+            
+        for i in xrange( n ):
+            cw = cached[i]
+            if ((cw is None) or (-cw == current[i]) or
+                # hack: For some reason wx always seems to adjust column 0 by
+                # 1 pixel from what we set it to (at least on Windows), so we
+                # need to add a little fudge factor just for this column:
+                ((i == 0) and (abs( current[i] + cw ) <= 1))):
+                width = model.get_column_size( i )
+                if width <= 0.0:
+                    width = 0.1
+                if width <= 1.0:
+                    wdx += width
+                    cached[i] = -1
+                else:
+                    width = int( width )
+                    pdx  += width
+                    if cw is None:
+                        cached[i] = width 
+            else:
+                cached[i] = width = current[i]
+                pdx += width
+                
+            widths.append( width )
+            
+        adx = max( 0, dx - pdx )
 
-        for index in range(0, model.get_row_count()):
-            size = model.get_row_size(index)
-            if size is not None and size != -1:
-                grid.SetRowSize(index, size)
+        for i in range( n ):
+            width = cached[i]
+            if width < 0:
+                width = widths[i]
+                if width <= 1.0:
+                    w         = max( 30, int( round( (adx * width) / wdx ) ) )
+                    wdx      -= width
+                    width     = w
+                    adx      -= width
+                    cached[i] = -w
+                
+            grid.SetColSize( i, width )
 
         grid.AdjustScrollbars()
         grid.EndBatch()
