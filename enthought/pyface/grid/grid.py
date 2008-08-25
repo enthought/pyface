@@ -1428,8 +1428,10 @@ class Grid(Widget):
                 pdx += width
                 
             widths.append( width )
-            
-        adx = max( 0, dx - pdx )
+        
+        # The '-1' below adjusts for an off by 1 error in the way the wx.Grid
+        # control determines whether or not it needs a horizontal scroll bar:
+        adx = max( 0, dx - pdx - 1 )
 
         for i in range( n ):
             width = cached[i]
