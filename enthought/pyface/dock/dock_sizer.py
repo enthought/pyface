@@ -2847,23 +2847,29 @@ class DockSection ( DockGroup ):
         tdx      = tdy = 0
         contents = self.visible_contents
         n        = len( contents )
+        
         if self.is_row:
             sdx = self.theme.vertical_splitter.image_slice.dx
+            
             for item in contents:
                 dx, dy = item.calc_min( use_size )
                 tdx   += dx
                 tdy    = max( tdy, dy )
+                
             if self.resizable:
                 tdx += ((n - 1) * sdx)
             else:
                 tdx += ((n + 1) * 3)
                 tdy += 6
+                
         else:
             sdy = self.theme.horizontal_splitter.image_slice.dy
+            
             for item in contents:
                 dx, dy = item.calc_min( use_size )
                 tdx    = max( tdx, dx )
                 tdy   += dy
+                
             if self.resizable:
                 tdy += ((n - 1) * sdy)
             else:

@@ -26,7 +26,6 @@ from enthought.pyface.api import GUI, OK
 from enthought.pyface.wizard.api import ChainedWizard, Wizard, WizardPage
 from enthought.traits.api import Color, HasTraits, Int, Str
 
-
 class Details(HasTraits):
     """ Some test data. """
 
