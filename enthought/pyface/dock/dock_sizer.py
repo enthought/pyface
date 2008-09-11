@@ -1362,29 +1362,30 @@ class DockSplitter ( DockItem ):
         # Set up the drawing environment:
         window     = event.GetEventObject()
         dc, x0, y0 = get_dc( window )
+        dc.SetLogicalFunction( wx.XOR )
         dc.SetPen( wx.TRANSPARENT_PEN )
         dc.SetBrush( wx.Brush( wx.Colour( *DragColor ), wx.SOLID ) )
 
-        ax = ay = adx = ady = 0
         is_horizontal = (self.style == 'horizontal')
-
+        nx = ox = None
+        
         # Draw the new bounds (if any):
         if bounds is not None:
-            x, y, dx, dy = bounds
+            ax = ay = adx = ady = 0
+            nx, ny, ndx, ndy = bounds
             if is_horizontal:
-                ady = (dy - 6)
+                ady = (ndy - 6)
                 ay  = ady / 2
             else:
-                adx = (dx - 6)
+                adx = (ndx - 6)
                 ax  = adx / 2
-            x  += ax
-            y  += ay
-            dx -= adx
-            dy -= ady
-            dc.DrawRectangle( x + x0, y + y0, dx, dy )
-
-        # Erase the old bounds (if any):
+            nx  += ax
+            ny  += ay
+            ndx -= adx
+            ndy -= ady
+            
         if self._bounds is not None:
+            ax = ay = adx = ady = 0
             ox, oy, odx, ody = self._bounds
             if is_horizontal:
                 ady = (ody - 6)
@@ -1396,23 +1397,46 @@ class DockSplitter ( DockItem ):
             oy  += ay
             odx -= adx
             ody -= ady
-            if bounds is not None:
+            
+        if nx is not None:
+            tx, ty, tdx, tdy = nx, ny, ndx, ndy
+            if ox is not None:
                 if is_horizontal:
-                    yoy = y - oy
+                    yoy = oy - ty
+                    if 0 <= yoy < tdy:
+                        tdy = yoy
+                    elif -ody < yoy <= 0:
+                        ty  = oy + ody
+                        tdy = tdy - ody - yoy
+                else:
+                    xox = ox - tx
+                    if 0 <= xox < tdx:
+                        tdx = xox
+                    elif -odx < xox <= 0:
+                        tx  = ox + odx
+                        tdx = tdx - odx - xox
+            
+            dc.DrawRectangle( tx + x0, ty + y0, tdx, tdy )
+
+        # Erase the old bounds (if any):
+        if ox is not None:
+            if nx is not None:
+                if is_horizontal:
+                    yoy = ny - oy
                     if 0 <= yoy < ody:
                         ody = yoy
-                    elif -dy < yoy <= 0:
-                        oy  = y + dy
-                        ody = ody - dy - yoy
+                    elif -ndy < yoy <= 0:
+                        oy  = ny + ndy
+                        ody = ody - ndy - yoy
                 else:
-                    xox = x - ox
+                    xox = nx - ox
                     if 0 <= xox < odx:
                         odx = xox
-                    elif -dx < xox <= 0:
-                        ox  = x + dx
-                        odx = odx - dx - xox
+                    elif -ndx < xox <= 0:
+                        ox  = nx + ndx
+                        odx = odx - ndx - xox
                         
-            window.RefreshRect( wx.Rect( ox, oy, odx, ody ) )
+            dc.DrawRectangle( ox + x0, oy + y0, odx, ody )
 
         # Save the new bounds for the next call:
         self._bounds = bounds
