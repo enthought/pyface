@@ -34,13 +34,10 @@ class ChainedWizardController(WizardController):
     # 'IWizardController' interface.
     ###########################################################################
 
-    def get_first_page(self):
-        """ Returns the first page. """
-        
-        return self._pages[0]
-
     def get_next_page(self, page):
         """ Returns the next page. """
+
+        next_page = None
 
         if page in self._pages:
             if page is not self._pages[-1]:
@@ -52,7 +49,6 @@ class ChainedWizardController(WizardController):
                     next_page = self.next_controller.get_first_page()
                 
         else:
-
             if self.next_controller is not None:
                 next_page = self.next_controller.get_next_page(page)
 
@@ -66,7 +62,6 @@ class ChainedWizardController(WizardController):
             previous_page = self._pages[index - 1]
 
         else:
-            
             if self.next_controller is not None:
                 if self.next_controller.is_first_page(page):
                     previous_page = self._pages[-1]
@@ -75,7 +70,7 @@ class ChainedWizardController(WizardController):
                     previous_page = self.next_controller.get_previous_page(page)
 
             else:
-                raise ValueError('Unknown page: %s' % previous_page.id)
+                previous_page = None
                 
         return previous_page
 
@@ -151,7 +146,7 @@ class ChainedWizardController(WizardController):
     ###########################################################################
 
     def _update(self):
-        """ Checks the complettion status of the controller. """
+        """ Checks the completion status of the controller. """
 
         # The entire wizard is complete when ALL pages are complete.
         for page in self._pages:

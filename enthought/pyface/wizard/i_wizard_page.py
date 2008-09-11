@@ -26,6 +26,13 @@ class IWizardPage(Interface):
     # The unique Id of the page within the wizard.
     id = Str
     
+    # The Id of the next page.
+    next_id = Str
+
+    # Set if this is the last page of the wizard.  It can be ignored for
+    # simple linear wizards.
+    last_page = Bool(False)
+    
     # Is the page complete (i.e. should the 'Next' button be enabled)?
     complete = Bool(False)
 

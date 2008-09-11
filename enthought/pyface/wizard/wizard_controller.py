@@ -36,7 +36,7 @@ class WizardController(HasTraits):
     # The current page.
     current_page = Instance(IWizardPage)
 
-    # Set if the wizard complete.
+    # Set if the wizard is complete.
     complete = Bool(False)
 
     #### Protected 'IWizardController' interface ##############################
@@ -51,25 +51,38 @@ class WizardController(HasTraits):
     def get_first_page(self):
         """ Returns the first page. """
 
-        return self._pages[0]
+        if self._pages:
+            return self._pages[0]
+
+        return None
 
     def get_next_page(self, page):
         """ Returns the next page. """
 
-        index = self._pages.index(page) + 1
+        if page.last_page:
+            pass
 
-        if index < len(self._pages):
-            return self._pages[index]
+        elif page.next_id:
+            for p in self._pages:
+                if p.id == page.next_id:
+                    return p
+
+        else:
+            index = self._pages.index(page) + 1
+
+            if index < len(self._pages):
+                return self._pages[index]
 
         return None
 
     def get_previous_page(self, page):
         """ Returns the previous page. """
 
-        index = self._pages.index(page) - 1
+        for p in self._pages:
+            next = self.get_next_page(p)
 
-        if index >= 0:
-            return self._pages[index]
+            if next is page:
+                return p
 
         return None
 
@@ -80,6 +93,12 @@ class WizardController(HasTraits):
 
     def is_last_page(self, page):
         """ Is the page the last page? """
+
+        if page.last_page:
+            return True
+
+        if page.next_id:
+            return False
 
         return page is self._pages[-1]
 
@@ -105,6 +124,12 @@ class WizardController(HasTraits):
 
         self._pages = pages
 
+        # Make sure the current page is valid.
+        if self.current_page not in self._pages:
+            self.current_page = self._pages[0]
+        else:
+            self._update()
+
         return
     
     ###########################################################################
@@ -114,14 +139,13 @@ class WizardController(HasTraits):
     def _update(self):
         """ Checks the completion status of the controller. """
         
-        # The entire wizard is complete when ALL pages are complete.
-        for page in self._pages:
-            if not page.complete:
-                self.complete = False
-                break
-            
+        # The entire wizard is complete when the last page is complete.
+        if self.current_page is None:
+            self.complete = False
+        elif self.is_last_page(self.current_page):
+            self.complete = self.current_page.complete
         else:
-            self.complete = True
+            self.complete = False
 
         return
     
