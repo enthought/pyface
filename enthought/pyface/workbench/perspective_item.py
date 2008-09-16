@@ -51,4 +51,7 @@ class PerspectiveItem(HasTraits):
     # for the workbench to allocate the space requested.
     height = Float(-1)
 
+    # The style of the dock control created.
+    style_hint = Enum('tab', 'vertical', 'horizontal', 'fixed')
+
 #### EOF ######################################################################

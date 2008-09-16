@@ -46,4 +46,7 @@ class IPerspectiveItem(Interface):
     # for the workbench to allocate the space requested.
     height = Float(-1)
 
+    # The style of the dock window.
+    style_hint = Enum('tab', 'horizontal', 'vertical', 'fixed')
+
 #### EOF ######################################################################

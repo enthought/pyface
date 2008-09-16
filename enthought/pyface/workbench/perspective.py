@@ -134,6 +134,9 @@ class Perspective(HasTraits):
         # window to get the view. Maybe its not that bad?
         view = window.get_view_by_id(item.id)
         if view is not None:
+            # fixme: This is probably not the ideal way to sync view traits
+            # and perspective_item traits.
+            view.style_hint = item.style_hint
             # Add the view to the window.
             window.add_view(
                 view, item.position, relative_to, (item.width, item.height)
