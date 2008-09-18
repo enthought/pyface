@@ -77,8 +77,8 @@ setup(
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.split()) > 0],
     cmdclass = {
-        'develop': my_develop,
-        'build': my_build
+        'develop': MyDevelop,
+        'build': MyBuild
         },
     dependency_links = [
         'http://code.enthought.com/enstaller/eggs/source',
