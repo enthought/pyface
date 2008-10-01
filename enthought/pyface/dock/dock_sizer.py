@@ -1814,6 +1814,17 @@ class DockControl ( DockItem ):
             do_later( self.control.GetParent().owner.update_layout )
 
     #---------------------------------------------------------------------------
+    #  Handles the 'activated' event being fired:
+    #---------------------------------------------------------------------------
+
+    def _activated_fired(self):
+        """ Notifies the active dockable that the control's tab is being 
+            activated.
+        """
+        if self.dockable is not None:
+            self.dockable.dockable_tab_activated(self, True)
+
+    #---------------------------------------------------------------------------
     #  Handles the 'feature_changed' trait being changed:
     #---------------------------------------------------------------------------
 
@@ -2338,7 +2349,14 @@ class DockRegion ( DockGroup ):
             del contents[ i ]
             if (self.active > i) or (self.active >= len( contents )):
                 self.active -= 1
-
+            # If the active item was removed, then 'active' stays unchanged, 
+            # but it reflects the index of the next page in the dock region.
+            # Since _active_changed won't be fired now, we fire the 
+            # 'activated' event on the next page.
+            elif (i == self.active):
+                control = self.contents[ i ]
+                if isinstance( control, DockControl ):
+                    control.activated = True
         if self.parent is not None:
             if len( contents ) == 0:
                 self.parent.remove( self )
@@ -2433,6 +2451,9 @@ class DockRegion ( DockGroup ):
             for item in self.contents:
                 if item.visible:
                     item.draw( dc )
+            
+            # Activate the 'active' item.
+            self.activate(self.contents[self.active], layout=False)
 
     #---------------------------------------------------------------------------
     #  Returns the object at a specified window position:
@@ -2641,7 +2662,11 @@ class DockRegion ( DockGroup ):
                     do_later( window.owner.update_layout )
                 else:
                     window.RefreshRect( wx.Rect( *self.bounds ) )
-
+            else:
+                # Fire the activated event for the control.
+                if isinstance( control, DockControl ):
+                    control.activated = True
+ 
     #---------------------------------------------------------------------------
     #  Makes sure the active control's tab is completely visible (if possible):
     #---------------------------------------------------------------------------
@@ -2744,9 +2769,8 @@ class DockRegion ( DockGroup ):
             # Notify the new dockable that the control's tab is being
             # activated:
             control = self.contents[ new ]
-            if (isinstance( control, DockControl ) and
-                (control.dockable is not None)):
-                control.dockable.dockable_tab_activated( control, True )
+            if isinstance( control, DockControl ):
+                control.activated = True
 
     #---------------------------------------------------------------------------
     #  Handles the 'contents' trait being changed:
