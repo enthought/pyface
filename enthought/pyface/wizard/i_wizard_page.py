@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Interface, Str, Unicode
+from enthought.traits.api import Bool, Interface, Str, Tuple, Unicode
 
 
 class IWizardPage(Interface):
@@ -41,6 +41,9 @@ class IWizardPage(Interface):
     
     # The page sub-heading.
     subheading = Unicode
+
+    # The size of the page.
+    size = Tuple
     
     ###########################################################################
     # 'IWizardPage' interface.
