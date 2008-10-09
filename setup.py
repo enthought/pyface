@@ -25,6 +25,8 @@ If you want to build TraitsGUI from source, you must first install
 `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_.
 
 """
+
+
 from distutils import log
 from distutils.command.build import build as distbuild
 from setuptools import setup, find_packages
@@ -53,28 +55,6 @@ class MyBuild(distbuild):
     def run(self):
         distbuild.run(self)
         self.run_command('build_docs')
-
-# Configure our extensions to Python
-def configuration(parent_package='', top_path=None):
-    from numpy.distutils.misc_util import Configuration
-    config = Configuration(None, parent_package, top_path)
-    config.set_options(
-        ignore_setup_xxx_py=True,
-        assume_default_configuration=True,
-        delegate_options_to_subpackages=True,
-        quiet=True,
-    )
-    config.add_subpackage('enthought')
-    config.add_data_dir('enthought/pyface/images')
-    config.add_data_dir('enthought/traits/ui/image')
-
-    return config
-
-
-# Build the full set of packages by appending any found by setuptools'
-# find_packages to those discovered by numpy.distutils.
-config = configuration().todict()
-config['packages'] += find_packages(exclude=config['packages'])
 
 # The actual setup call.
 setup(
@@ -116,6 +96,7 @@ setup(
         "enthought.pyface",
         "enthought.pyface.ui",
         ],
+    packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
     setup_requires = 'setupdocs',
     tests_require = [
@@ -124,6 +105,4 @@ setup(
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/projects/traits_gui',
     version = INFO['version'],
-    zip_safe   = False,
-    **config )
-
+    zip_safe   = False )
