@@ -661,7 +661,7 @@ class DockItem ( HasPrivateTraits ):
             dock_info.dock( control, window )
 
         # Handle the user clicking on a notebook tab to select it:
-        elif (self._is_tab and
+        elif (self._is_tab and 
               self.is_at( event.GetX(), event.GetY(), self.drag_bounds )):
             self.parent.tab_clicked( self )
 
@@ -1829,7 +1829,7 @@ class DockControl ( DockItem ):
     #---------------------------------------------------------------------------
 
     def _feature_changed ( self ):
-        """ Handles the 'feature_changed' trait being changed.
+        """ Handles the 'feature_changed' trait being changed
         """
         self.set_feature_mode()
 
@@ -2451,9 +2451,6 @@ class DockRegion ( DockGroup ):
             for item in self.contents:
                 if item.visible:
                     item.draw( dc )
-            
-            # Activate the 'active' item.
-            self.activate(self.contents[self.active], layout=False)
 
     #---------------------------------------------------------------------------
     #  Returns the object at a specified window position:
@@ -3487,7 +3484,7 @@ class DockInfo ( HasPrivateTraits ):
                        item.contents.extend( control.contents )
                     else:
                         if isinstance( control, DockControl ):
-                            control = DockRegion( contents = [ control ] )
+                           control = DockRegion( contents = [ control ] )
                         item.contents.append( control )
                 else:
                     item.contents.append( control )
