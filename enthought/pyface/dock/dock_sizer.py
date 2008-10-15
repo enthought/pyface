@@ -779,7 +779,7 @@ class DockItem ( HasPrivateTraits ):
                 dc3.SetBrush( wx.Brush( wx.Colour( 158, 166, 255, 64 ) ) )
                 dc3.SetPen( wx.TRANSPARENT_PEN )
                 dc3.DrawRectangle( 0, 0, dx, dy )
-            except NotImplementedError:
+            except AttributeError:
                 pass
             
             dc.Blit( x, y, dx, dy, dc2, 0, 0 )
