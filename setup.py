@@ -56,6 +56,7 @@ class MyBuild(distbuild):
         distbuild.run(self)
         self.run_command('build_docs')
 
+
 # The actual setup call.
 setup(
     author = 'David C. Morrill, et al.',
@@ -105,4 +106,6 @@ setup(
     test_suite = 'nose.collector',
     url = 'http://code.enthought.com/projects/traits_gui',
     version = INFO['version'],
-    zip_safe   = False )
+    zip_safe   = False,
+    )
+
