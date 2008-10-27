@@ -98,7 +98,7 @@ setup(
         "enthought.pyface.ui",
         ],
     package_data = {
-        '': ['image/*', 'image/library/*', 'images/*'],
+        '': ['library/*', 'images/*'],
         },
     packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
