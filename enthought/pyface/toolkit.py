@@ -41,7 +41,7 @@ def _init_toolkit():
         try:
             __import__(be + 'init')
             break
-        except ImportError:
+        except (SystemExit, ImportError):
             pass
     else:
         # Try to import the null toolkit but don't set the ETSConfig toolkit
