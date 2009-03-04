@@ -72,6 +72,9 @@ class TraitsUIView(View):
             logger.debug('disposing traits UI for view [%s]', self)
             self.ui.dispose()
             self.ui = None
+            # Break reference to the control, so the view is created afresh
+            # next time.
+            self.control = None
             
         return
 
