@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #
-# Copyright (c) 2008 by Enthought, Inc.
+# Copyright (c) 2008-2009 by Enthought, Inc.
 # All rights reserved.
-#
+
 
 """
 Traits-capable windowing framework.
@@ -27,12 +27,14 @@ If you want to build TraitsGUI from source, you must first install
 """
 
 
+import os
+import zipfile
+
 from distutils import log
 from distutils.command.build import build as distbuild
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
-import os
-import zipfile
+
 
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
 # from incorrect packages. Ticket #1592
@@ -40,6 +42,7 @@ import zipfile
 setup_data = dict(__name__='', __file__='setup_data.py')
 execfile('setup_data.py', setup_data)
 INFO = setup_data['INFO']
+
 
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
@@ -57,7 +60,6 @@ class MyBuild(distbuild):
         self.run_command('build_docs')
 
 
-# The actual setup call.
 setup(
     author = 'David C. Morrill, et al.',
     author_email = 'dmorrill@enthought.com',
@@ -80,9 +82,6 @@ setup(
         'develop': MyDevelop,
         'build': MyBuild
         },
-    dependency_links = [
-        'http://code.enthought.com/enstaller/eggs/source',
-        ],
     description = DOCLINES[1],
     extras_require = INFO['extras_require'],
     include_package_data = True,
