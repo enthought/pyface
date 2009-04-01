@@ -1437,7 +1437,10 @@ class DockSplitter ( DockItem ):
                         odx = odx - ndx - xox
                         
             dc.DrawRectangle( ox + x0, oy + y0, odx, ody )
-
+            
+            if is_mac:
+                window.Refresh(rect=wx.Rect(ox + x0, oy + y0, odx, ody))
+               
         # Save the new bounds for the next call:
         self._bounds = bounds
 
