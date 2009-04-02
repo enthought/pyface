@@ -1179,10 +1179,14 @@ class DockSplitter ( DockItem ):
             theme = self.theme.horizontal_splitter
         else:
             theme = self.theme.vertical_splitter
-        theme.image_slice.fill( dc, x, y, dx, dy, True )
-        
+
         image    = DockImages.get_splitter_image( self.state )
         idx, idy = image.GetWidth(), image.GetHeight()
+
+        clip = idx - 20
+        # Cut left edge so that the orange triangles don't overlap splitter.
+        theme.image_slice.fill( dc, x+clip, y, dx-clip, dy, True )
+        
         ox, oy   = theme.label.left, theme.label.top
         tis      = theme.image_slice
         tc       = theme.content
