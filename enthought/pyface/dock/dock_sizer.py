@@ -1182,15 +1182,15 @@ class DockSplitter ( DockItem ):
 
         image    = DockImages.get_splitter_image( self.state )
         idx, idy = image.GetWidth(), image.GetHeight()
-
-        clip = idx - 20
-        # Cut left edge so that the orange triangles don't overlap splitter.
-        theme.image_slice.fill( dc, x+clip, y, dx-clip, dy, True )
-        
         ox, oy   = theme.label.left, theme.label.top
         tis      = theme.image_slice
         tc       = theme.content
         if self.style == 'horizontal':
+            clip = idx - 20
+            # Cut left edge so that the orange triangles don't overlap splitter.
+            # TODO: Verify that it's okay for other alignments.
+            theme.image_slice.fill( dc, x+clip, y, dx-clip, dy, True )
+        
             iy = y + oy + ((dy + tis.xtop + tc.top - tis.xbottom - tc.bottom -
                             idy) / 2)
             if theme.alignment == 'center':
@@ -1202,6 +1202,11 @@ class DockSplitter ( DockItem ):
                 ix = x = x + ox + tis.xleft + tc.left
             dx = idx
         else:
+            clip = idy - 20
+            # Cut top edge so that the orange triangles don't overlap splitter.
+            # TODO: Verify that it's okay for other alignments.
+            theme.image_slice.fill( dc, x, y+clip, dx, dy-clip, True )
+            
             ix = x + ox + ((dx + tis.xleft + tc.left - tis.xright - tc.right - 
                             idx) / 2)
             if theme.alignment == 'center':
