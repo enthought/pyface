@@ -31,6 +31,7 @@
 import shelve
 import os
 import wx
+import sys
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import enthought.traits.ui.wx
@@ -72,6 +73,7 @@ from idockable \
 from idock_ui_provider \
     import IDockUIProvider
 
+is_mac = (sys.platform == 'darwin')
 
 #-------------------------------------------------------------------------------
 #  Global data:  
@@ -478,12 +480,33 @@ class DockWindow ( HasPrivateTraits ):
     def _paint ( self, event ):
         """ Handles repainting the window.
         """
+        # There is a problem on macs where we get paints when the update
+        # is entirely within children. 
+        if is_mac and self._is_child_paint():
+            return
+
         sizer = self.sizer
         if isinstance( sizer, DockSizer ):
             sizer.Draw( self.control )
         else:
             clear_window( self.control )
         
+    #---------------------------------------------------------------------------
+    #  Uses wx calls to determine if we really need to paint or the children will
+    #  do it.
+    #---------------------------------------------------------------------------
+
+    def _is_child_paint ( self ):
+        """ Returns whether or not the current update region is entirely within a child.
+        """
+        if self.control.Children:
+            update_rect = self.control.UpdateRegion.Box
+            for child in self.control.Children:
+                if not child.HasTransparentBackground() and \
+                        child.Rect.ContainsRect(update_rect):
+                    return True
+        return False
+
     #---------------------------------------------------------------------------
     #  Handles erasing the window background:  
     #---------------------------------------------------------------------------
