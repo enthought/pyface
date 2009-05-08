@@ -525,7 +525,8 @@ class Grid(Widget):
 
         font = self.default_label_font
         if font is None:
-            font = wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD)
+            font = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            font.SetWeight(wx.BOLD)
 
         self._grid.SetLabelFont(font)
 
