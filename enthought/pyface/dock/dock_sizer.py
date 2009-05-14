@@ -2359,16 +2359,21 @@ class DockRegion ( DockGroup ):
                 contents[ i ] = item
         else:
             del contents[ i ]
-            if (self.active > i) or (self.active >= len( contents )):
-                self.active -= 1
-            # If the active item was removed, then 'active' stays unchanged, 
-            # but it reflects the index of the next page in the dock region.
-            # Since _active_changed won't be fired now, we fire the 
-            # 'activated' event on the next page.
-            elif (i == self.active):
-                control = self.contents[ i ]
-                if isinstance( control, DockControl ):
-                    control.activated = True
+            # Change the active selection only if 'item' is in closing mode.
+            # If this entire dock region is being closed, then all contained
+            # dock items will be removed and we do not want to change 'active'
+            # selection.
+            if item._closing:
+                if (self.active > i) or (self.active >= len( contents )):
+                    self.active -= 1
+                # If the active item was removed, then 'active' stays 
+                # unchanged, but it reflects the index of the next page in 
+                # the dock region. Since _active_changed won't be fired now, 
+                # we fire the 'activated' event on the next page.
+                elif (i == self.active):
+                    control = self.contents[ i ]
+                    if isinstance( control, DockControl ):
+                        control.activated = True
         if self.parent is not None:
             if len( contents ) == 0:
                 self.parent.remove( self )
