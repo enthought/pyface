@@ -899,6 +899,8 @@ class DockItem ( HasPrivateTraits ):
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
 
+        self.fill_bg_color( dc, x, y, dx, dy )
+
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x, y, x+dx, y)
@@ -913,6 +915,8 @@ class DockItem ( HasPrivateTraits ):
         """
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
+
+        self.fill_bg_color( dc, x, y, dx, dy )
 
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
@@ -1196,6 +1200,8 @@ class DockSplitter ( DockItem ):
 
         image    = DockImages.get_splitter_image( self.state )
         idx, idy = image.GetWidth(), image.GetHeight()
+
+        self.fill_bg_color( dc, x, y, dx, dy )
 
         if self.style == 'horizontal':
             # Draw a line the same color as the system button shadow, which
