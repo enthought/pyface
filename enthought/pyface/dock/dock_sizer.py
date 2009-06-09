@@ -2884,8 +2884,8 @@ class DockRegion ( DockGroup ):
         dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
 
         # Erases the line under the active tab
-        x0 = x + 4
-        x1 = x0 + self.tab_width
+        x0 = x + 3
+        x1 = x0 + self.contents[0].tab_width
         for i in range(self.active):
             x0 = x1 + 1
             x1 += self.contents[self.active].tab_width
