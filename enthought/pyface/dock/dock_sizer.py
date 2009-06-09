@@ -790,6 +790,16 @@ class DockItem ( HasPrivateTraits ):
             else:
                 window.Refresh()
 
+    def get_bg_color(self):
+        """ Gets the background color
+        """
+        owner = self.owner
+        if owner is None:
+            return wx.Colour( 236, 233, 216 )
+        else:
+            return owner.control.GetParent().GetBackgroundColour()
+
+
     #---------------------------------------------------------------------------
     #  Fills a specified region with the control's background color:
     #---------------------------------------------------------------------------
@@ -799,13 +809,7 @@ class DockItem ( HasPrivateTraits ):
         """
         dc.SetPen( wx.TRANSPARENT_PEN )
 
-        owner = self.owner
-        if owner is None:
-            color = wx.Colour( 236, 233, 216 )
-        else:
-            color = owner.control.GetParent().GetBackgroundColour()
-
-        dc.SetBrush( wx.Brush( color ) )
+        dc.SetBrush( wx.Brush( self.get_bg_color() ) )
         dc.DrawRectangle( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
@@ -819,14 +823,13 @@ class DockItem ( HasPrivateTraits ):
         """
         x0, y0, dx, dy = self.drag_bounds
 
-        if state == TabInactive:
-            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
+        tab_color = self.get_bg_color()
+        if state == TabActive:
+            pass
+        elif state == TabInactive:
             r,g,b = tab_color.Get()
             tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
-        elif state == TabActive:
-            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
         else:
-            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
             r,g,b = tab_color.Get()
             tab_color.Set(min(255, r+20), min(255, g+20), min(255, b+20))
 
@@ -836,13 +839,19 @@ class DockItem ( HasPrivateTraits ):
         slice          = theme.image_slice
         bdc            = BufferDC( dc, dx, dy )
 
+        # fill the tab bg with the desired color
+        brush = wx.Brush(tab_color)
+        bdc.SetBrush(brush)
+        bdc.SetPen(wx.TRANSPARENT_PEN)
+        bdc.DrawRectangle(0, 0, dx, dy)
+
+        # Draw the left, top, and right side of a rectange around the tab
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
         bdc.SetPen(pen)
 
-        brush = wx.Brush(tab_color)
-        bdc.SetBrush(brush)
-
-        bdc.DrawRectangle(0, 0, dx, dy)
+        bdc.DrawLine(0,dy,0,0)
+        bdc.DrawLine(0,0,dx-1,0)
+        bdc.DrawLine(dx-1,0,dx-1,dy)
 
         # Compute the initial drawing position:
         name         = self.tab_name
@@ -2867,11 +2876,25 @@ class DockRegion ( DockGroup ):
 
         self.fill_bg_color( dc, x, y, dx, dy )
 
+
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
         dc.SetPen(pen)
         dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
+
+        # Erases the line under the active tab
+        x0 = x + 4
+        x1 = x0 + self.tab_width
+        for i in range(self.active):
+            x0 = x1 + 1
+            x1 += self.contents[self.active].tab_width
+
+        dc.SetPen(wx.Pen(self.get_bg_color()))
+        dc.DrawLine(x0, y+tab_height, x1, y+tab_height)
+
+
+
 
 #-------------------------------------------------------------------------------
 #  'DockSection' class:
