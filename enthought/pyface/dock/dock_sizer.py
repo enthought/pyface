@@ -818,13 +818,31 @@ class DockItem ( HasPrivateTraits ):
         """ Draws a notebook tab.
         """
         x0, y0, dx, dy = self.drag_bounds
+
+        if state == TabInactive:
+            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
+            r,g,b = tab_color.Get()
+            tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
+        elif state == TabActive:
+            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
+        else:
+            tab_color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNFACE)
+            r,g,b = tab_color.Get()
+            tab_color.Set(min(255, r+20), min(255, g+20), min(255, b+20))
+
         self._is_tab   = True
         self.tab_state = state
         theme          = self.tab_theme
         slice          = theme.image_slice
         bdc            = BufferDC( dc, dx, dy )
-        self.fill_bg_color( bdc, 0, 0, dx, dy )
-        slice.fill( bdc, 0, 0, dx, dy, True )
+
+        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+        bdc.SetPen(pen)
+
+        brush = wx.Brush(tab_color)
+        bdc.SetBrush(brush)
+
+        bdc.DrawRectangle(0, 0, dx, dy)
 
         # Compute the initial drawing position:
         name         = self.tab_name
@@ -880,8 +898,11 @@ class DockItem ( HasPrivateTraits ):
         """
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
-        self.fill_bg_color( dc, x, y, dx, dy )
-        self.theme.horizontal_drag.image_slice.fill( dc, x, y, dx, dy, True )
+
+        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        dc.SetPen(pen)
+        dc.DrawLine(x, y, x+dx, y)
+        dc.DrawLine(x, y+2, x+dx, y+2)
 
     #---------------------------------------------------------------------------
     #  Draws a vertical drag bar:
@@ -892,8 +913,11 @@ class DockItem ( HasPrivateTraits ):
         """
         self._is_tab = False
         x, y, dx, dy = self.drag_bounds
-        self.fill_bg_color( dc, x, y, dx, dy )
-        self.theme.vertical_drag.image_slice.fill( dc, x, y, dx, dy, True )
+
+        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        dc.SetPen(pen)
+        dc.DrawLine(x, y, x, y+dy)
+        dc.DrawLine(x+2, y, x+2, y+dy)
 
     #---------------------------------------------------------------------------
     #  Redraws the control's tab:
@@ -2833,17 +2857,14 @@ class DockRegion ( DockGroup ):
         theme        = self.theme
         tab_height   = theme.tab_active.image_slice.dy
         x, y, dx, dy = self.bounds
+
         self.fill_bg_color( dc, x, y, dx, dy )
-        if theme.tabs_at_top:
-            theme.tab_background.image_slice.fill( dc, x, y, dx,
-                                                   min( tab_height, dy ), True )
-            theme.tab.image_slice.fill( dc, x, y + tab_height, dx,
-                                        max( 0, dy - tab_height ), True )
-        else:
-            theme.tab_background.image_slice.fill( dc, x, y + dy - tab_height,
-                                               dx, min( tab_height, dy ), True )
-            theme.tab.image_slice.fill( dc, x, y, dx, max( 0, dy - tab_height ),
-                                        True )
+
+        # Draws a box around the frame containing the tab contents, starting
+        # below the tab
+        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+        dc.SetPen(pen)
+        dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
 
 #-------------------------------------------------------------------------------
 #  'DockSection' class:
