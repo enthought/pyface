@@ -2365,11 +2365,12 @@ class DockRegion ( DockGroup ):
                 contents[ i ] = item
         else:
             del contents[ i ]
-            # Change the active selection only if 'item' is in closing mode.
+            # Change the active selection only if 'item' is in closing mode,
+            # or was dragged to a new location.
             # If this entire dock region is being closed, then all contained
             # dock items will be removed and we do not want to change 'active'
             # selection.
-            if item._closing:
+            if item._closing or item._dragging:
                 if (self.active > i) or (self.active >= len( contents )):
                     self.active -= 1
                 # If the active item was removed, then 'active' stays
