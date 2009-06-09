@@ -689,6 +689,7 @@ class DockItem ( HasPrivateTraits ):
             self._dock_size = self.tab_width
             self.mark_bounds( True )
 
+
         # Get the window and DockInfo object associated with the event:
         cur_dock_info   = self._dock_info
         self._dock_info = dock_info = \
@@ -2443,6 +2444,8 @@ class DockRegion ( DockGroup ):
                 if self._tab_clip_bounds is None:
                     return
 
+                self.fill_bg_color( dc, *self.bounds )
+
                 self._draw_notebook( dc )
                 active = self.active
 
@@ -2875,7 +2878,6 @@ class DockRegion ( DockGroup ):
         x, y, dx, dy = self.bounds
 
         self.fill_bg_color( dc, x, y, dx, dy )
-
 
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
@@ -3499,7 +3501,7 @@ class DockInfo ( HasPrivateTraits ):
                     bdc3.DrawRoundedRectangle( tx, ty, tdx, tdy, 4 )
                 else:
                     bdc3.DrawRoundedRectangle( x, y, dx, dy, 8 )
-            except:
+            except Exception, ex:
                 pass
 
             sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
