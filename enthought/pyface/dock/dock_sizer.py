@@ -840,19 +840,42 @@ class DockItem ( HasPrivateTraits ):
         slice          = theme.image_slice
         bdc            = BufferDC( dc, dx, dy )
 
-        # fill the tab bg with the desired color
-        brush = wx.Brush(tab_color)
-        bdc.SetBrush(brush)
-        bdc.SetPen(wx.TRANSPARENT_PEN)
-        bdc.DrawRectangle(0, 0, dx, dy)
+        self.fill_bg_color(bdc, 0, 0, dx, dy)
 
-        # Draw the left, top, and right side of a rectange around the tab
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
-        bdc.SetPen(pen)
+        if state == TabActive:
+            # fill the tab bg with the desired color
+            brush = wx.Brush(tab_color)
+            bdc.SetBrush(brush)
+            bdc.SetPen(wx.TRANSPARENT_PEN)
+            bdc.DrawRectangle(0, 0, dx, dy)
 
-        bdc.DrawLine(0,dy,0,0)
-        bdc.DrawLine(0,0,dx-1,0)
-        bdc.DrawLine(dx-1,0,dx-1,dy)
+            # Draw the left, top, and right side of a rectange around the tab
+            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            bdc.SetPen(pen)
+            bdc.DrawLine(0,dy,0,0) #up
+            bdc.DrawLine(0,0,dx,0) #right
+            bdc.DrawLine(dx-1,0,dx-1,dy) #down
+
+            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+            bdc.SetPen(pen)
+            bdc.DrawLine(1,dy,1,1)
+            bdc.DrawLine(1,1,dx-2,1)
+            bdc.DrawLine(dx-2,1,dx-2,dy)
+
+        else:
+            # fill the tab bg with the desired color
+            brush = wx.Brush(tab_color)
+            bdc.SetBrush(brush)
+            bdc.SetPen(wx.TRANSPARENT_PEN)
+            bdc.DrawRectangle(0, 2, dx, dy)
+
+            # Draw the left, top, and right side of a rectange around the tab
+            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            bdc.SetPen(pen)
+            bdc.DrawLine(0,dy,0,2)
+            bdc.DrawLine(0,2,dx-1,2)
+            bdc.DrawLine(dx-1,2,dx-1,dy)
+
 
         # Compute the initial drawing position:
         name         = self.tab_name
@@ -2885,15 +2908,22 @@ class DockRegion ( DockGroup ):
         dc.SetPen(pen)
         dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
 
+        # draw highlight
+        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+        dc.SetPen(pen)
+        dc.DrawLine(x+1, y+tab_height+1, x+dx-1, y+tab_height+1)
+
+
         # Erases the line under the active tab
         x0 = x + 3
-        x1 = x0 + self.contents[0].tab_width
-        for i in range(self.active):
+        x1 = x0
+        for i in range(self.active+1):
             x0 = x1 + 1
-            x1 += self.contents[self.active].tab_width
+            x1 += self.contents[i].tab_width
 
         dc.SetPen(wx.Pen(self.get_bg_color()))
         dc.DrawLine(x0, y+tab_height, x1, y+tab_height)
+        dc.DrawLine(x0, y+tab_height+1, x1, y+tab_height+1)
 
 
 
