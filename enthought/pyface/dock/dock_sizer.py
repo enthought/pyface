@@ -1212,9 +1212,9 @@ class DockSplitter ( DockItem ):
     # it splits):
     state = Property
 
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     #  Override the definition of the inherited 'theme' property:
-    #-------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
 
     def _get_theme ( self ):
         return self.parent.control.GetParent().owner.theme
@@ -1319,47 +1319,21 @@ class DockSplitter ( DockItem ):
             hx, hy, hdx, hdy = self._hot_spot
             if not self.is_in( event, hx, hy, hdx, hdy ):
                 return
-
-            is_horizontal = (self.style == 'horizontal')
-            x, y, dx, dy  = self.bounds
-            if self._last_bounds is not None:
-                if is_horizontal:
-                    y = self._last_bounds[1]
+            if self.style == 'horizontal':
+                if event.GetX() < (hx + (hdx / 2)):
+                    self.collapse(True)
                 else:
-                    x = self._last_bounds[0]
-            state                = self.state
-            contents             = self.parent.visible_contents
-            ix1, iy1, idx1, idy1 = contents[ self.index ].bounds
-            ix2, iy2, idx2, idy2 = contents[ self.index + 1 ].bounds
-            if is_horizontal:
-                if state != SPLIT_HMIDDLE:
-                    if ((y == self.bounds[1]) or
-                        (y < iy1)             or
-                        ((y + dy) > (iy2 + idy2))):
-                        y = (iy1 + iy2 + idy2 - dy) / 2
-                else:
-                    self._last_bounds = self.bounds
-                    if event.GetX() < (hx + (hdx / 2)):
-                        y = iy1
-                    else:
-                        y = iy2 + idy2 - dy
-            elif state != SPLIT_VMIDDLE:
-                if ((x == self.bounds[0]) or
-                    (x < ix1)             or
-                    ((x + dx) > (ix2 + idx2))):
-                    x = (ix1 + ix2 + idx2 - dx) / 2
+                    self.collapse(False)
             else:
-                self._last_bounds = self.bounds
                 if event.GetY() < (hy + (hdy / 2)):
-                    x = ix2 + idx2 - dx
+                    self.collapse(True)
                 else:
-                    x = ix1
-            self.bounds = ( x, y, dx, dy )
+                    self.collapse(False)
         else:
             self._last_bounds, self._first_bounds = self._first_bounds, None
             if not self._live_drag:
                 self._draw_bounds( event )
-
+        
         self.parent.update_splitter( self, event.GetEventObject() )
 
     #---------------------------------------------------------------------------
@@ -1387,6 +1361,54 @@ class DockSplitter ( DockItem ):
                     self.parent.update_splitter( self, event.GetEventObject() )
                 else:
                     self._draw_bounds( event, bounds )
+
+    #---------------------------------------------------------------------------
+    #  Collapse/expands a splitter
+    #---------------------------------------------------------------------------
+
+    def collapse ( self, forward ):
+        """ Move the splitter has far as possible in one direction. 'forward'
+            is a boolean: True=right/down, False=left/up.
+
+            If the splitter is already collapsed, restores it to its previous
+            position.
+        """
+        
+        is_horizontal = (self.style == 'horizontal')
+        x, y, dx, dy  = self.bounds
+        if self._last_bounds is not None:
+            if is_horizontal:
+                y = self._last_bounds[1]
+            else:
+                x = self._last_bounds[0]
+        state                = self.state
+        contents             = self.parent.visible_contents
+        ix1, iy1, idx1, idy1 = contents[ self.index ].bounds
+        ix2, iy2, idx2, idy2 = contents[ self.index + 1 ].bounds
+        if is_horizontal:
+            if state != SPLIT_HMIDDLE:
+                if ((y == self.bounds[1]) or
+                    (y < iy1)             or
+                    ((y + dy) > (iy2 + idy2))):
+                    y = (iy1 + iy2 + idy2 - dy) / 2
+            else:
+                self._last_bounds = self.bounds
+                if forward:
+                    y = iy1
+                else:
+                    y = iy2 + idy2 - dy
+        elif state != SPLIT_VMIDDLE:
+            if ((x == self.bounds[0]) or
+                (x < ix1)             or
+                ((x + dx) > (ix2 + idx2))):
+                x = (ix1 + ix2 + idx2 - dx) / 2
+        else:
+            self._last_bounds = self.bounds
+            if forward:
+                x = ix2 + idx2 - dx
+            else:
+                x = ix1
+        self.bounds = ( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
     #  Handles the mouse hovering over the item:
