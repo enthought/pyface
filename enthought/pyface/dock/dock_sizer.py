@@ -1333,7 +1333,7 @@ class DockSplitter ( DockItem ):
             self._last_bounds, self._first_bounds = self._first_bounds, None
             if not self._live_drag:
                 self._draw_bounds( event )
-        
+
         self.parent.update_splitter( self, event.GetEventObject() )
 
     #---------------------------------------------------------------------------
@@ -1373,7 +1373,7 @@ class DockSplitter ( DockItem ):
             If the splitter is already collapsed, restores it to its previous
             position.
         """
-        
+
         is_horizontal = (self.style == 'horizontal')
         x, y, dx, dy  = self.bounds
         if self._last_bounds is not None:
@@ -2998,7 +2998,8 @@ class DockSection ( DockGroup ):
         n        = len( contents )
 
         if self.is_row:
-            sdx = self.theme.vertical_splitter.image_slice.dx
+            # allow 10 pixels for the splitter
+            sdx = 10
 
             for item in contents:
                 dx, dy = item.calc_min( use_size )
@@ -3012,7 +3013,8 @@ class DockSection ( DockGroup ):
                 tdy += 6
 
         else:
-            sdy = self.theme.horizontal_splitter.image_slice.dy
+            # allow 10 pixels for the splitter
+            sdy = 10
 
             for item in contents:
                 dx, dy = item.calc_min( use_size )
@@ -3053,7 +3055,9 @@ class DockSection ( DockGroup ):
 
         # Perform a horizontal layout:
         if self.is_row:
-            sdx = self.theme.vertical_splitter.image_slice.dx
+            # allow 10 pixels for the splitter
+            sdx = 10
+
             dx -= (n * sdx)
             cdx = 0
 
@@ -3088,7 +3092,9 @@ class DockSection ( DockGroup ):
 
         # Perform a vertical layout:
         else:
-            sdy = self.theme.horizontal_splitter.image_slice.dy
+            # allow 10 pixels for the splitter
+            sdy = 10
+
             dy -= (n * sdy)
             cdy = 0
 
