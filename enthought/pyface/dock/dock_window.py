@@ -306,9 +306,6 @@ class DockWindow ( HasPrivateTraits ):
         self.control  = control = wx.Window( parent, wid, pos, size, style )
         control.owner = self
 
-        # Set up the 'erase background' event handler:
-        wx.EVT_ERASE_BACKGROUND( control, self._erase_background )
- 
         # Set up the 'paint' event handler:
         wx.EVT_PAINT( control, self._paint )
         wx.EVT_SIZE(  control, self._size )
@@ -462,7 +459,6 @@ class DockWindow ( HasPrivateTraits ):
         """
         control = self.control
         if control is not None:
-            wx.EVT_ERASE_BACKGROUND( control, None )
             wx.EVT_PAINT(            control, None )
             wx.EVT_SIZE(             control, None )
             wx.EVT_LEFT_DOWN(        control, None )
@@ -484,7 +480,7 @@ class DockWindow ( HasPrivateTraits ):
         # is entirely within children. 
         if is_mac and self._is_child_paint():
             return
-
+        
         sizer = self.sizer
         if isinstance( sizer, DockSizer ):
             sizer.Draw( self.control )
@@ -507,15 +503,6 @@ class DockWindow ( HasPrivateTraits ):
                     return True
         return False
 
-    #---------------------------------------------------------------------------
-    #  Handles erasing the window background:  
-    #---------------------------------------------------------------------------
-                
-    def _erase_background ( self, event ):
-        """ Handles erasing the window background.
-        """
-        pass
-        
     #---------------------------------------------------------------------------
     #  Handles the window being resized:  
     #---------------------------------------------------------------------------

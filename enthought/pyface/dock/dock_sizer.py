@@ -86,9 +86,6 @@ TabHover    = 2
 NormalStates    = ( TabInactive, TabActive )
 NotActiveStates = ( TabInactive, TabHover )
 
-# Normal background color:
-BGColor = None # ( 236, 233, 216 )    # wx.SYS_COLOUR_BTNFACE
-
 # Feature overlay colors:
 FeatureBrushColor = ( 255, 255, 255 )
 FeaturePenColor   = (  92,  92,  92 )
@@ -212,7 +209,7 @@ def clear_window ( window ):
     """
     dx, dy = window.GetSizeTuple()
     dc     = wx.PaintDC( window )
-    dc.SetBrush( wx.Brush( wx.Colour( *BGColor ), wx.SOLID ) )
+    dc.SetBrush( wx.Brush( window.GetBackgroundColour(), wx.SOLID ) )
     dc.SetPen( wx.TRANSPARENT_PEN )
     dc.DrawRectangle( 0, 0, dx, dy )
 
