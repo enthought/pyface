@@ -864,14 +864,14 @@ class DockItem ( HasPrivateTraits ):
             brush = wx.Brush(tab_color)
             bdc.SetBrush(brush)
             bdc.SetPen(wx.TRANSPARENT_PEN)
-            bdc.DrawRectangle(0, 2, dx, dy)
+            bdc.DrawRectangle(0, 3, dx, dy)
 
             # Draw the left, top, and right side of a rectange around the tab
             pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
             bdc.SetPen(pen)
-            bdc.DrawLine(0,dy,0,2)
-            bdc.DrawLine(0,2,dx-1,2)
-            bdc.DrawLine(dx-1,2,dx-1,dy)
+            bdc.DrawLine(0,dy,0,3)
+            bdc.DrawLine(0,3,dx-1,3)
+            bdc.DrawLine(dx-1,3,dx-1,dy)
 
 
         # Compute the initial drawing position:
@@ -2934,7 +2934,7 @@ class DockRegion ( DockGroup ):
 
 
         # Erases the line under the active tab
-        x0 = x + 3
+        x0 = x + self.tab_theme.label.left
         x1 = x0
         for i in range(self.active+1):
             x0 = x1 + 1
