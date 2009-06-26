@@ -25,7 +25,8 @@ sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
 from enthought.pyface.api import GUI, PythonShell, SplitApplicationWindow
-from enthought.pyface.grid.api import Grid, TraitGridModel, SimpleGridModel, GridRow, GridColumn, TraitGridColumn
+from enthought.pyface.ui.wx.grid.api import Grid, TraitGridModel, \
+    SimpleGridModel, GridRow, GridColumn, TraitGridColumn
 from enthought.traits.api import Float, Str
 
 
