@@ -15,6 +15,7 @@
 
 from about_dialog import AboutDialog
 from application_window import ApplicationWindow
+from clipboard import clipboard, Clipboard
 from confirmation_dialog import confirm, ConfirmationDialog
 from constant import OK, CANCEL, YES, NO
 from dialog import Dialog
