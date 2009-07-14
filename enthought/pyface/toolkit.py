@@ -28,33 +28,37 @@ def _init_toolkit():
 
     # Get the toolkit.
     toolkit = ETSConfig.toolkit
-
     if toolkit:
         toolkits = (toolkit, )
     else:
         toolkits = known_toolkits
-
     for tk in toolkits:
+
         # Try and import the toolkit's pyface backend init module.
         be = 'enthought.pyface.ui.%s.' % tk
-
         try:
             __import__(be + 'init')
             break
         except (SystemExit, ImportError):
-            pass
+            import traceback
+            print >>sys.stderr, ('Warning: Unable to import the %s backend '
+                'for pyface due to traceback: %s\n') % (tk, 
+                traceback.format_exc().strip().replace('\n', '\n\t'))
+
     else:
         # Try to import the null toolkit but don't set the ETSConfig toolkit
         try:
             be = 'enthought.pyface.ui.null.'
             __import__(be + 'init')
-            import warnings
-            warnings.warn("Unable to import the %s backend for pyface; using the 'null' toolkit instead.")
+            print >>sys.stderr, ("Info: Unable to import any backend (%s) "
+                "for pyface; using the 'null' toolkit instead.\n") % toolkits
         except:
             if toolkit:
-                raise ImportError("unable to import a pyface backend for the %s toolkit" % toolkit)
+                raise ImportError("Unable to import a pyface backend for the "
+                    "%s toolkit" % toolkit)
             else:
-                raise ImportError("unable to import a pyface backend for any of the %s toolkits" % ", ".join(known_toolkits))
+                raise ImportError("Unable to import a pyface backend for any "
+                    "of the %s toolkits" % ", ".join(known_toolkits))
 
     # In case we have just decided on a toolkit, tell everybody else.
     ETSConfig.toolkit = tk
