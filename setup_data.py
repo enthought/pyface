@@ -16,7 +16,7 @@ def etsdep(p, min, max=None, literal=False):
 # Declare our ETS project dependencies:
 APPTOOLS = etsdep('AppTools', '3.3.0')
 ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.3')
-TRAITS = etsdep('Traits', '3.1.1')
+TRAITS = etsdep('Traits', '3.2.0')
 TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.2.0')
 TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.2.0')
 
