@@ -42,6 +42,8 @@ from enthought.traits.ui.dock_window_theme \
 from enthought.traits.ui.wx.helper \
     import BufferDC
 
+from enthought.pyface.api import SystemMetrics
+
 from enthought.pyface.image_resource \
     import ImageResource
 
@@ -793,7 +795,8 @@ class DockItem ( HasPrivateTraits ):
         """
         owner = self.owner
         if owner is None:
-            return wx.Colour( 236, 233, 216 )
+            color = SystemMetrics().dialog_background_color
+            return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
         else:
             return owner.control.GetParent().GetBackgroundColour()
 
@@ -3196,9 +3199,8 @@ class DockSection ( DockGroup ):
         """
         if self._visible is not False:
             contents = self.visible_contents
-            if (len( contents ) == 0) or (not self.resizable):
-                x, y, dx, dy = self.bounds
-                self.fill_bg_color( dc, x, y, dx, dy )
+            x, y, dx, dy = self.bounds
+            self.fill_bg_color( dc, x, y, dx, dy )
 
             for item in contents:
                 item.draw( dc )
