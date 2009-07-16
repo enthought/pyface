@@ -1370,7 +1370,6 @@ class DockSplitter ( DockItem ):
             If the splitter is already collapsed, restores it to its previous
             position.
         """
-
         is_horizontal = (self.style == 'horizontal')
         x, y, dx, dy  = self.bounds
         if self._last_bounds is not None:
@@ -1382,6 +1381,7 @@ class DockSplitter ( DockItem ):
         contents             = self.parent.visible_contents
         ix1, iy1, idx1, idy1 = contents[ self.index ].bounds
         ix2, iy2, idx2, idy2 = contents[ self.index + 1 ].bounds
+
         if is_horizontal:
             if state != SPLIT_HMIDDLE:
                 if ((y == self.bounds[1]) or
@@ -1394,17 +1394,20 @@ class DockSplitter ( DockItem ):
                     y = iy1
                 else:
                     y = iy2 + idy2 - dy
+
         elif state != SPLIT_VMIDDLE:
             if ((x == self.bounds[0]) or
                 (x < ix1)             or
                 ((x + dx) > (ix2 + idx2))):
                 x = (ix1 + ix2 + idx2 - dx) / 2
+
         else:
             self._last_bounds = self.bounds
             if forward:
                 x = ix2 + idx2 - dx
             else:
                 x = ix1
+
         self.bounds = ( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
@@ -1616,8 +1619,9 @@ class DockControl ( DockItem ):
         """ Calculates the minimum size of the control.
         """
         self.check_features()
-        dx, dy = self.width, self.height
-        if self.control is not None:
+        if self.control is None:
+            dx, dy = self.width, self.height
+        else:
             if wx_26:
                 size = self.control.GetBestFittingSize()
             else:
@@ -1625,7 +1629,8 @@ class DockControl ( DockItem ):
             dx = size.GetWidth()
             dy = size.GetHeight()
             if self.width < 0:
-                self.width, self.height = dx, dy
+                self.width  = dx
+                self.height = dy
 
         if use_size and (self.width >= 0):
             return ( self.width, self.height )
@@ -3041,7 +3046,7 @@ class DockSection ( DockGroup ):
         self.height = dy = max( 0, dy )
         self.bounds = ( x, y, dx, dy )
 
-        # If none of the contents are resizable, use the fixed layout method:
+        # If none of the contents are resizable, use the fixed layout method
         if not self.resizable:
             self.recalc_sizes_fixed( x, y, dx, dy )
             return
@@ -3050,79 +3055,82 @@ class DockSection ( DockGroup ):
         n         = len( contents ) - 1
         splitters = []
 
-        # Perform a horizontal layout:
+        # Find out how much space is available.
+        splitter_size = 10
+        sizes = []
         if self.is_row:
-            # allow 10 pixels for the splitter
-            sdx = 10
+            total = dx - (n * splitter_size)
+        else:
+            total = dy - (n * splitter_size)
 
-            dx -= (n * sdx)
-            cdx = 0
+        # Get requested sizes from the items.
+        for item in contents:
+            size = -1.0
+            for dock_control in item.get_controls():
+                view_element = dock_control.dockable.element
+                if view_element is not None:
+                    if self.is_row:
+                        size = max( size, view_element.width )
+                    else:
+                        size = max( size, view_element.height )
+            sizes.append( size )
 
-            # Calculate the current and minimum width:
-            for item in contents:
-                cdx += item.width
-            cdx = max( 1, cdx )
+        # Allocate requested space.
+        avail = total
+        remain = 0
+        for i, sz in enumerate( sizes ):
+            if avail <= 0:
+                break
 
-            # Calculate the delta between the current and new width:
-            delta = remaining = dx - cdx
-
-            # Allocate the change (plus or minus) proportionally based on each
-            # item's current size:
-            for i, item in enumerate( contents ):
-                if i < n:
-                    idx = int( round( float( item.width * delta ) / cdx ) )
+            if sz >= 0:
+                if sz >= 1:
+                    sz = min( sz, avail )
                 else:
-                    idx = remaining
-                remaining -= idx
-                idx       += item.width
+                    sz *= total
+
+                sz = int( sz )
+                sizes[i] = sz
+                avail -= sz
+            else:
+                remain += 1
+
+        # Allocate the remainder to those parts that didn't request a width.
+        if remain > 0:
+            remain = int( avail / remain )
+            
+            for i, sz in enumerate( sizes ):
+                if sz < 0:
+                    sizes[i] = remain
+
+        # If all requested a width, allocate the remainder to the last item.
+        else:
+            sizes[-1] += avail
+
+        # Resize contents and add splitters
+        if self.is_row:
+            for i, item in enumerate( contents ):
+                idx = int( sizes[i] )
                 item.recalc_sizes( x, y, idx, dy )
                 x += idx
-
-                # Define the splitter bar between adjacent items:
                 if i < n:
                     splitters.append(
-                        DockSplitter( bounds = ( x, y, sdx, dy ),
+                        DockSplitter( bounds = ( x, y, splitter_size, dy ),
                                       style  = 'vertical',
                                       parent = self,
                                       index  = i ) )
-                x += sdx
-
-        # Perform a vertical layout:
+                x += splitter_size
         else:
-            # allow 10 pixels for the splitter
-            sdy = 10
-
-            dy -= (n * sdy)
-            cdy = 0
-
-            # Calculate the current and minimum height:
-            for item in contents:
-                cdy += item.height
-            cdy = max( 1, cdy )
-
-            # Calculate the delta between the current and new height:
-            delta = remaining  = dy - cdy
-
-            # Allocate the change (plus or minus) proportionally based on each
-            # item's current size:
             for i, item in enumerate( contents ):
-                if i < n:
-                    idy = int( round( float( item.height * delta ) / cdy ) )
-                else:
-                    idy = remaining
-                remaining -= idy
-                idy       += item.height
+                idy = int( sizes[i] )
                 item.recalc_sizes( x, y, dx, idy )
                 y += idy
-
-                # Define the splitter bar between adjacent items:
                 if i < n:
                     splitters.append(
-                        DockSplitter( bounds = ( x, y, dx, sdy ),
+                        DockSplitter( bounds = ( x, y, dx, splitter_size ),
                                       style  = 'horizontal',
                                       parent = self,
                                       index  = i ) )
-                y += sdy
+                y += splitter_size
 
         # Preserve the current internal '_last_bounds' for all splitters if
         # possible:
