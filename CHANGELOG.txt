@@ -1,6 +1,0 @@
- * Removed Theming support from DockWindows. Borders and tabs are now drawn using lines instead of stretching images.
- * Changed default font to use the system font
- * Moved enthought.util.wx.clipboard to Pyface
- * Moved the grid package out of pyface and into pyface.ui.wx, left deprecated warnings
- * Improved info shown to the user if toolkits don't work as expected
-
