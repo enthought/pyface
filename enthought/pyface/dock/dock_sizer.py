@@ -3067,12 +3067,12 @@ class DockSection ( DockGroup ):
         for item in contents:
             size = -1.0
             for dock_control in item.get_controls():
-                view_element = dock_control.dockable.element
-                if view_element is not None:
+                dockable = dock_control.dockable
+                if dockable is not None and dockable.element is not None:
                     if self.is_row:
-                        size = max( size, view_element.width )
+                        size = max( size, dockable.element.width )
                     else:
-                        size = max( size, view_element.height )
+                        size = max( size, dockable.element.height )
             sizes.append( size )
 
         # Allocate requested space.
