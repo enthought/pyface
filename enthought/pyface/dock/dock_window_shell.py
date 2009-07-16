@@ -33,7 +33,9 @@ from enthought.traits.api \
     
 from enthought.traits.ui.api \
     import View, Group
-           
+
+from enthought.pyface.api import SystemMetrics
+
 from enthought.pyface.image_resource \
     import ImageResource
     
@@ -47,9 +49,6 @@ from dock_sizer \
 #  Constants:  
 #-------------------------------------------------------------------------------
         
-# Color used for background of windows (like dialog background color):
-WindowColor = wx.Colour( 236, 233, 216 )
-
 # DockWindowShell frame icon:
 FrameIcon = ImageResource( 'shell.ico' )
     
@@ -86,7 +85,7 @@ class DockWindowShell ( HasPrivateTraits ):
                                                  wx.FRAME_FLOAT_ON_PARENT | 
                                                  wx.FRAME_NO_TASKBAR ) 
         shell.SetIcon( FrameIcon.create_icon() )
-        shell.SetBackgroundColour( WindowColor )
+        shell.SetBackgroundColour( SystemMetrics().dialog_background_color )
         wx.EVT_CLOSE( shell, self._on_close )
         
         theme = dock_control.theme
