@@ -1373,6 +1373,7 @@ class DockSplitter ( DockItem ):
             If the splitter is already collapsed, restores it to its previous
             position.
         """
+
         is_horizontal = (self.style == 'horizontal')
         x, y, dx, dy  = self.bounds
         if self._last_bounds is not None:
@@ -1384,7 +1385,6 @@ class DockSplitter ( DockItem ):
         contents             = self.parent.visible_contents
         ix1, iy1, idx1, idy1 = contents[ self.index ].bounds
         ix2, iy2, idx2, idy2 = contents[ self.index + 1 ].bounds
-
         if is_horizontal:
             if state != SPLIT_HMIDDLE:
                 if ((y == self.bounds[1]) or
@@ -1397,20 +1397,17 @@ class DockSplitter ( DockItem ):
                     y = iy1
                 else:
                     y = iy2 + idy2 - dy
-
         elif state != SPLIT_VMIDDLE:
             if ((x == self.bounds[0]) or
                 (x < ix1)             or
                 ((x + dx) > (ix2 + idx2))):
                 x = (ix1 + ix2 + idx2 - dx) / 2
-
         else:
             self._last_bounds = self.bounds
             if forward:
                 x = ix2 + idx2 - dx
             else:
                 x = ix1
-
         self.bounds = ( x, y, dx, dy )
 
     #---------------------------------------------------------------------------
@@ -1622,9 +1619,8 @@ class DockControl ( DockItem ):
         """ Calculates the minimum size of the control.
         """
         self.check_features()
-        if self.control is None:
-            dx, dy = self.width, self.height
-        else:
+        dx, dy = self.width, self.height
+        if self.control is not None:
             if wx_26:
                 size = self.control.GetBestFittingSize()
             else:
@@ -1632,8 +1628,7 @@ class DockControl ( DockItem ):
             dx = size.GetWidth()
             dy = size.GetHeight()
             if self.width < 0:
-                self.width  = dx
-                self.height = dy
+                self.width, self.height = dx, dy
 
         if use_size and (self.width >= 0):
             return ( self.width, self.height )
@@ -2977,6 +2972,9 @@ class DockSection ( DockGroup ):
     # Contents of the section have been modified property:
     modified = Property
 
+    # Has the initial layout been performed?
+    initialized = Bool( False )
+
     #---------------------------------------------------------------------------
     #  Re-implementation of the 'owner' property:
     #---------------------------------------------------------------------------
@@ -3039,10 +3037,10 @@ class DockSection ( DockGroup ):
         return ( tdx, tdy )
 
     #---------------------------------------------------------------------------
-    #  Layout the contents of the section based on the specified bounds:
+    #  Perform initial layout of the section based on the specified bounds:
     #---------------------------------------------------------------------------
 
-    def recalc_sizes ( self, x, y, dx, dy ):
+    def initial_recalc_sizes ( self, x, y, dx, dy ):
         """ Layout the contents of the section based on the specified bounds.
         """
         self.width  = dx = max( 0, dx )
@@ -3134,6 +3132,117 @@ class DockSection ( DockGroup ):
                                       parent = self,
                                       index  = i ) )
                 y += splitter_size
+
+        # Preserve the current internal '_last_bounds' for all splitters if
+        # possible:
+        cur_splitters = self.splitters
+        for i in range( min( len( splitters ), len( cur_splitters ) ) ):
+            splitters[i]._last_bounds = cur_splitters[i]._last_bounds
+
+        # Save the new set of splitter bars:
+        self.splitters = splitters
+
+        # Set the visibility for all contained items:
+        self._set_visibility()
+
+    #---------------------------------------------------------------------------
+    #  Layout the contents of the section based on the specified bounds:
+    #---------------------------------------------------------------------------
+
+    def recalc_sizes ( self, x, y, dx, dy ):
+        """ Layout the contents of the section based on the specified bounds.
+        """
+        # Check if we need to perform initial layout
+        if not self.initialized:
+            self.initial_recalc_sizes( x, y, dx, dy )
+            self.initialized = True
+
+        self.width  = dx = max( 0, dx )
+        self.height = dy = max( 0, dy )
+        self.bounds = ( x, y, dx, dy )
+
+        # If none of the contents are resizable, use the fixed layout method:
+        if not self.resizable:
+            self.recalc_sizes_fixed( x, y, dx, dy )
+            return
+
+        contents  = self.visible_contents
+        n         = len( contents ) - 1
+        splitters = []
+
+        # Perform a horizontal layout:
+        if self.is_row:
+            # allow 10 pixels for the splitter
+            sdx = 10
+
+            dx -= (n * sdx)
+            cdx = 0
+
+            # Calculate the current and minimum width:
+            for item in contents:
+                cdx += item.width
+            cdx = max( 1, cdx )
+
+            # Calculate the delta between the current and new width:
+            delta = remaining = dx - cdx
+
+            # Allocate the change (plus or minus) proportionally based on each
+            # item's current size:
+            for i, item in enumerate( contents ):
+                if i < n:
+                    idx = int( round( float( item.width * delta ) / cdx ) )
+                else:
+                    idx = remaining
+                remaining -= idx
+                idx       += item.width
+                item.recalc_sizes( x, y, idx, dy )
+                x += idx
+
+                # Define the splitter bar between adjacent items:
+                if i < n:
+                    splitters.append(
+                        DockSplitter( bounds = ( x, y, sdx, dy ),
+                                      style  = 'vertical',
+                                      parent = self,
+                                      index  = i ) )
+                x += sdx
+
+        # Perform a vertical layout:
+        else:
+            # allow 10 pixels for the splitter
+            sdy = 10
+
+            dy -= (n * sdy)
+            cdy = 0
+
+            # Calculate the current and minimum height:
+            for item in contents:
+                cdy += item.height
+            cdy = max( 1, cdy )
+
+            # Calculate the delta between the current and new height:
+            delta = remaining  = dy - cdy
+
+            # Allocate the change (plus or minus) proportionally based on each
+            # item's current size:
+            for i, item in enumerate( contents ):
+                if i < n:
+                    idy = int( round( float( item.height * delta ) / cdy ) )
+                else:
+                    idy = remaining
+                remaining -= idy
+                idy       += item.height
+                item.recalc_sizes( x, y, dx, idy )
+                y += idy
+
+                # Define the splitter bar between adjacent items:
+                if i < n:
+                    splitters.append(
+                        DockSplitter( bounds = ( x, y, dx, sdy ),
+                                      style  = 'horizontal',
+                                      parent = self,
+                                      index  = i ) )
+                y += sdy
 
         # Preserve the current internal '_last_bounds' for all splitters if
         # possible:
@@ -3809,6 +3918,11 @@ class DockSizer ( wx.PySizer ):
         section = self._contents
         if (section is None) or (not isinstance( structure, DockGroup )):
             return
+
+        # Make sure that DockSections, which have a separate layout algorithm
+        # for the first layout, are set as initialized.
+        if isinstance( structure, DockSection ):
+            structure.initialized = True
 
         # Save the current structure in case a 'ResetStructure' call is made
         # later:
