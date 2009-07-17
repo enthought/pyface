@@ -2040,6 +2040,9 @@ class DockGroup ( DockItem ):
     # Is the group locked?
     locked = Property
 
+    # Has the initial layout been performed?
+    initialized = Bool( False )
+
     #---------------------------------------------------------------------------
     #  Implementation of the 'name' property:
     #---------------------------------------------------------------------------
@@ -2127,6 +2130,17 @@ class DockGroup ( DockItem ):
 
     def _get_locked ( self ):
         return self.contents[0].locked
+
+    #---------------------------------------------------------------------------
+    #  Handles 'initialized' being changed:
+    #---------------------------------------------------------------------------
+
+    def _initialized_changed( self ):
+        """ Handles 'initialized' being changed.
+        """
+        for item in self.contents:
+            if isinstance( item, DockGroup ):
+                item.initialized = self.initialized
 
     #---------------------------------------------------------------------------
     #  Hides or shows the contents of the group:
@@ -2948,8 +2962,6 @@ class DockRegion ( DockGroup ):
         dc.DrawLine(x0, y+tab_height+1, x1, y+tab_height+1)
 
 
-
-
 #-------------------------------------------------------------------------------
 #  'DockSection' class:
 #-------------------------------------------------------------------------------
@@ -2971,9 +2983,6 @@ class DockSection ( DockGroup ):
 
     # Contents of the section have been modified property:
     modified = Property
-
-    # Has the initial layout been performed?
-    initialized = Bool( False )
 
     #---------------------------------------------------------------------------
     #  Re-implementation of the 'owner' property:
@@ -3156,6 +3165,7 @@ class DockSection ( DockGroup ):
         if not self.initialized:
             self.initial_recalc_sizes( x, y, dx, dy )
             self.initialized = True
+            return
 
         self.width  = dx = max( 0, dx )
         self.height = dy = max( 0, dy )
@@ -3921,8 +3931,7 @@ class DockSizer ( wx.PySizer ):
 
         # Make sure that DockSections, which have a separate layout algorithm
         # for the first layout, are set as initialized.
-        if isinstance( structure, DockSection ):
-            structure.initialized = True
+        structure.initialized = True
 
         # Save the current structure in case a 'ResetStructure' call is made
         # later:
