@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2009, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,9 +7,6 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#
-# Author: Enthought, Inc.
-# Description: <Enthought resource package component>
 #------------------------------------------------------------------------------
 """ The default resource manager.
 
@@ -20,7 +17,7 @@ sounds etc.
 
 
 # Standard library imports.
-import glob, inspect, operator, os, sys
+import glob, inspect, operator, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
@@ -63,7 +60,8 @@ class ResourceManager(HasTraits):
         for item in path:
             if isinstance(item, basestring):
                 resource_path.append(item)
-
+            elif isinstance(item, types.ModuleType):
+                resource_path.append(item)
             else:
                 resource_path.extend(self._get_resource_path(item))
 
@@ -105,18 +103,34 @@ class ResourceManager(HasTraits):
             extensions = self.IMAGE_EXTENSIONS
             pattern = image_name + '.*'
 
+        # Try the 'images' sub-directory first (since that is commonly
+        # where we put them!).  If the image is not found there then look
+        # in the directory itself.
+        if size is None:
+            subdirs = ['images', '']
+        else:
+            subdirs = ['images/%dx%d' % (size[0], size[1]), 'images', '']
+
         for dirname in resource_path:
-            # Try the 'images' sub-directory first (since that is commonly
-            # where we put them!).  If the image is not found there then look
-            # in the directory itself.
-            if size is None:
-                subdirs = ['images', '']
 
-            else:
-                subdirs = ['images/%dx%d' % (size[0], size[1]), 'images', '']
+            # If we come across a reference to a module, use pkg_resources
+            # to try and find the image inside of an .egg, .zip, etc.
+            if isinstance(dirname, types.ModuleType):
+                from pkg_resources import resource_string
+                for path in subdirs:
+                    for extension in extensions:
+                        searchpath = '%s/%s%s' % (path, basename, extension)
+                        try:
+                            data = resource_string(dirname.__name__, searchpath)
+                            return ImageReference(self.resource_factory,
+                                data = data)
+                        except IOError:
+                            pass
+                else:
+                    continue
 
+            # Is there anything resembling the image name in the directory?
             for path in subdirs:
-                # Is there anything resembling the image name in the directory?
                 filenames = glob.glob(join(dirname, path, pattern))
                 for filename in filenames:
                     not_used, extension = os.path.splitext(filename)

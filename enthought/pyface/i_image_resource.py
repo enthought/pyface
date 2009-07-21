@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2009 by Enthought, Inc.
 # All rights reserved.
 # 
 # This software is provided without warranty under the terms of the BSD
@@ -7,19 +7,15 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ The interface for an image resource. """
 
 
-# Enthought library imports.
-from enthought.resource.resource_path import resource_path
-from enthought.traits.api import Interface, List, Unicode
+import operator
 
-# Local imports.
-from resource_manager import resource_manager
+from enthought.pyface.resource_manager import resource_manager
+from enthought.resource.resource_path import resource_module, resource_path
+from enthought.traits.api import Interface, List, Unicode
 
 
 class IImageResource(Interface):
@@ -84,10 +80,13 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        if search_path is not None:
-            self.search_path = search_path
+        self.search_path = [resource_module()]
+        if search_path is not None and operator.isSequence(search_path):
+            self.search_path.extend(search_path)
+        elif search_path is not None:
+            self.search_path.append(search_path)
         else:
-            self.search_path = [resource_path()]
+            self.search_path.append(resource_path())
 
     ###########################################################################
     # 'ImageResource' interface.

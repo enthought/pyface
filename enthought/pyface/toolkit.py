@@ -10,6 +10,7 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports.
+import os
 import sys
 
 # Enthought library imports.
@@ -99,7 +100,18 @@ def toolkit_object(name):
             be_obj = getattr(sys.modules[be_mname], oname)
         except AttributeError:
             pass
-    except ImportError:
-        pass
+    except ImportError, e:
+
+        # Ignore *ANY* errors unless a debug ENV variable is set.
+        if 'ETS_DEBUG' in os.environ:
+
+            # Attempt to only skip errors in importing the backend modules.
+            # The idea here is that this only happens when the last entry in
+            # the traceback's stack frame mentions the toolkit in question.
+            import traceback
+            frames = traceback.extract_tb(sys.exc_traceback)
+            filename, lineno, function, text = frames[-1]
+            if not _toolkit_backend in filename:
+                raise
 
     return be_obj
