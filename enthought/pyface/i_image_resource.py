@@ -80,13 +80,13 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        self.search_path = [resource_module()]
-        if search_path is not None and operator.isSequence(search_path):
-            self.search_path.extend(search_path)
+        if search_path is not None and operator.isSequenceType(search_path):
+            _path = search_path
         elif search_path is not None:
-            self.search_path.append(search_path)
+            _path = [search_path]
         else:
-            self.search_path.append(resource_path())
+            _path = [resource_path()]
+        self.search_path = _path + [resource_module()]
 
     ###########################################################################
     # 'ImageResource' interface.
