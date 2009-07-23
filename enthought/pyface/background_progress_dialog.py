@@ -76,7 +76,7 @@ class BackgroundProgressDialog(Dialog):
         self.control.Show(True)
         # Wait for it to finish
         while not self._finished:
-            wx.Yield()
+            wx.GetApp().Yield(True)
 
         # Close it
         self.close()
