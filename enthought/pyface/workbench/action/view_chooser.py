@@ -127,7 +127,7 @@ class ViewChooser(HasTraits):
             editor     = TreeEditor(
                 nodes  = [
                     WorkbenchWindowTreeNode(
-                        auto_open = False,
+                        auto_open = True,
                         label     = '=Views',
                         rename    = False,
                         copy      = False,
@@ -138,7 +138,7 @@ class ViewChooser(HasTraits):
 
                     TreeNode(
                         node_for  = [Category],
-                        auto_open = False,
+                        auto_open = True,
                         children  = 'views',
                         label     = 'name',
                         rename    = False,
