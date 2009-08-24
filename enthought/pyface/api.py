@@ -45,9 +45,8 @@ from widget import Widget
 # becomes toolkit agnostic.
 ###############################################################################
 
-try:
-    import wx
-    
+from enthought.etsconfig.api import ETSConfig
+if ETSConfig.toolkit == 'wx':
     from background_progress_dialog import BackgroundProgressDialog
     from expandable_panel import ExpandablePanel
     from filter import Filter
@@ -62,5 +61,4 @@ try:
     # Fix for broken Pycrust introspect module.
     import util.fix_introspect_bug
 
-except ImportError:
-    pass
+del ETSConfig
