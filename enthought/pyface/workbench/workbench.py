@@ -344,6 +344,8 @@ class Workbench(HasTraits):
     def _on_window_activated(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
+        logger.debug('window %s activated', window)
+
         self.active_window = window
 
         return
