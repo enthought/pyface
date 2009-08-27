@@ -793,12 +793,8 @@ class DockItem ( HasPrivateTraits ):
     def get_bg_color(self):
         """ Gets the background color
         """
-        owner = self.owner
-        if owner is None:
-            color = SystemMetrics().dialog_background_color
-            return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
-        else:
-            return owner.control.GetParent().GetBackgroundColour()
+        color = SystemMetrics().dialog_background_color
+        return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
 
 
     #---------------------------------------------------------------------------
@@ -2937,7 +2933,7 @@ class DockRegion ( DockGroup ):
         x, y, dx, dy = self.bounds
 
         self.fill_bg_color( dc, x, y, dx, dy )
-
+        
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
