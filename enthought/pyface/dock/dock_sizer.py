@@ -209,9 +209,12 @@ def set_standard_font ( dc ):
 def clear_window ( window ):
     """ Clears a window to the standard background color.
     """
+    bg_color = SystemMetrics().dialog_background_color
+    bg_color = wx.Colour(bg_color[0]*255, bg_color[1]*255, bg_color[2]*255)
+    
     dx, dy = window.GetSizeTuple()
     dc     = wx.PaintDC( window )
-    dc.SetBrush( wx.Brush( window.GetBackgroundColour(), wx.SOLID ) )
+    dc.SetBrush( wx.Brush( bg_color, wx.SOLID ) )
     dc.SetPen( wx.TRANSPARENT_PEN )
     dc.DrawRectangle( 0, 0, dx, dy )
 
@@ -805,7 +808,7 @@ class DockItem ( HasPrivateTraits ):
         """ Fills a specified region with the control's background color.
         """
         dc.SetPen( wx.TRANSPARENT_PEN )
-
+        
         dc.SetBrush( wx.Brush( self.get_bg_color() ) )
         dc.DrawRectangle( x, y, dx, dy )
 
@@ -2497,6 +2500,7 @@ class DockRegion ( DockGroup ):
                 # ( 0, 0, 0, 0 ), so there is nothing to draw anyways. The
                 # question is why 'recalc_sizes' is not being called first.
                 if self._tab_clip_bounds is None:
+                    self.end_draw( dc )
                     return
 
                 self.fill_bg_color( dc, *self.bounds )

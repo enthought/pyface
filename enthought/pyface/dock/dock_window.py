@@ -36,6 +36,8 @@ import sys
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import enthought.traits.ui.wx
 
+from enthought.pyface.api import SystemMetrics
+
 from enthought.traits.api \
     import HasPrivateTraits, Instance, Tuple, Property, Any, Str, List, false
     
@@ -66,7 +68,7 @@ from enthought.pyface.message_dialog \
 from dock_sizer \
     import DockSizer, DockControl, DockRegion, DockStyle, DockSplitter, \
            no_dock_info, clear_window, features
-           
+                      
 from idockable \
     import IDockable
     
@@ -325,7 +327,8 @@ class DockWindow ( HasPrivateTraits ):
         if self.theme.use_theme_color:
             color = self.theme.tab.image_slice.bg_color
         else:
-            color = parent.GetBackgroundColour()
+            color = SystemMetrics().dialog_background_color
+            color = wx.Colour(color[0]*255, color[1]*255, color[2]*255)
             
         self.control.SetBackgroundColour( color )
         
