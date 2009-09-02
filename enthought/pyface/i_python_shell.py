@@ -13,11 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for an interactive Python shell. """
 
-# Standard library imports.
-import os
-import types
-import sys
-
 # Enthought library imports.
 from enthought.traits.api import Event
 
@@ -78,70 +73,6 @@ class MPythonShell(object):
 
         self.interpreter().locals[name] = value
 
-    def execute_file(self, path, hidden=True):
-        """ Execute a file in the interpeter.
-
-        If 'hidden' is True then nothing is shown in the shell - not even
-        a blank line.
-        """
-        # Note: The code in this function is largely ripped from IPython's
-        #       Magic.py, FakeModule.py, and iplib.py.
-
-        filename = os.path.basename(path)
-
-        # Run in a fresh, empty namespace
-        main_mod = types.ModuleType('__main__')
-        prog_ns = main_mod.__dict__
-        prog_ns['__file__'] = filename
-        prog_ns['__nonzero__'] = lambda: True
-
-        # Make sure that the running script gets a proper sys.argv as if it
-        # were run from a system shell.
-        save_argv = sys.argv
-        sys.argv = [ filename ]
-
-        # Make sure that the running script thinks it is the main module
-        save_main = sys.modules['__main__']
-        sys.modules['__main__'] = main_mod
-
-        # Redirect sys.std* to control or null
-        old_stdin = sys.stdin
-        old_stdout = sys.stdout
-        old_stderr = sys.stderr
-        if hidden:
-            sys.stdin = sys.stdout = sys.stderr = _NullIO()
-        else:
-            sys.stdin = sys.stdout = sys.stderr = self.control
-
-        # Execute the file
-        try:
-            if not hidden:
-                self._set_input_buffer('# Executing "%s"' % path)
-                self.control.write('\n')
-
-            if sys.platform == 'win32' and sys.version_info < (2,5,1):
-                # Work around a bug in Python for Windows. For details, see:
-                # http://projects.scipy.org/ipython/ipython/ticket/123
-                exec file(path) in prog_ns, prog_ns
-            else:
-                execfile(path, prog_ns, prog_ns)
-
-            if not hidden:
-                self._new_prompt()
-        finally:
-            # Ensure key global stuctures are restored
-            sys.argv = save_argv
-            sys.modules['__main__'] = save_main
-            sys.stdin = old_stdin
-            sys.stdout = old_stderr
-            sys.stderr = old_stdout
-
-        # Update the interpreter with the new namespace
-        del prog_ns['__name__']
-        del prog_ns['__file__']
-        del prog_ns['__nonzero__']
-        self.interpreter().locals.update(prog_ns)
-
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -150,32 +81,5 @@ class MPythonShell(object):
         """ Called when a command has been executed in the shell. """
 
         self.command_executed = self
-
-    def _new_prompt(self):
-        """ Make a new prompt. Must be implemented if using the default
-        implementation of execute_file. """
-
-        raise NotImplementedError
-
-    def _set_input_buffer(self, command):
-        """ Set the input area text to 'command'. Must be implemented if using
-        the default implementation of execute_file. """
-
-        raise NotImplementedError
-
-
-class _NullIO:
-    """ A portable /dev/null for use with MPythonShell.execute_file.
-    """
-    def tell(self): return 0
-    def read(self, n = -1): return ""
-    def readline(self, length = None): return ""
-    def readlines(self): return []
-    def write(self, s): pass
-    def writelines(self, list): pass
-    def isatty(self): return 0
-    def flush(self): pass
-    def close(self): pass
-    def seek(self, pos, mode = 0): pass
 
 #### EOF ######################################################################
