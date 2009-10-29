@@ -12,7 +12,8 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ The interface of a workbench editor. """
-
+# standard library imports
+import uuid
 
 # Enthought library imports.
 from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
@@ -84,8 +85,10 @@ class MEditor(MWorkbenchPart):
     def _id_default(self):
         """ Trait initializer. """
 
-        # If no Id is specified then use the name.
-        return self.name
+        # If no Id is specified then use a random uuid
+        # this gaurantees (barring *really* unusual cases) that there are no
+        # collisions between the ids of editors.
+        return uuid.uuid4().bytes
 
     ###########################################################################
     # 'IEditor' interface.
