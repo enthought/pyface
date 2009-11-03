@@ -194,6 +194,9 @@ class Workbench(HasTraits):
 
         """
 
+        if self.active_window is None:
+            return None
+
         return self.active_window.get_editor(obj, kind)
 
     def get_editor_by_id(self, id):
