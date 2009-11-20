@@ -88,7 +88,7 @@ class MEditor(MWorkbenchPart):
         # If no Id is specified then use a random uuid
         # this gaurantees (barring *really* unusual cases) that there are no
         # collisions between the ids of editors.
-        return uuid.uuid4().bytes
+        return uuid.uuid4().hex
 
     ###########################################################################
     # 'IEditor' interface.
