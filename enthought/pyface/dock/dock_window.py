@@ -635,8 +635,8 @@ class DockWindow ( HasPrivateTraits ):
                     else:
                         min_max_action.name = 'Restore'
                     min_max_action.enabled  = is_dock_control
-                    undock_action.enabled   = (is_dock_control and
-                                               (object.export != ''))
+                    undock_action.enabled   = is_dock_control#(is_dock_control and
+                                              # (object.export != ''))
                     #hide_action.enabled     = (is_splitter or object.visible)
                     #show_action.enabled     = (self._hidden_group_for( group ) 
                     #                           is not None)
