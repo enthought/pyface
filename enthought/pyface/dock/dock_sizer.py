@@ -2504,6 +2504,12 @@ class DockRegion ( DockGroup ):
                     return
 
                 self.fill_bg_color( dc, *self.bounds )
+                
+                if self.active >= len(self.contents):
+                    # on some platforms, if the active tab was destroyed
+                    # the new active tab may not have been set yet
+                    self.active = len(self.contents) - 1
+
 
                 self._draw_notebook( dc )
                 active = self.active
@@ -2948,7 +2954,6 @@ class DockRegion ( DockGroup ):
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x+1, y+tab_height+1, x+dx-1, y+tab_height+1)
-
 
         # Erases the line under the active tab
         x0 = x + self.tab_theme.label.left
