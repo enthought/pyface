@@ -41,6 +41,12 @@ class IConfirmationDialog(IDialog):
     # 'title' trait to set the title of the dialog itself).
     message = Unicode
 
+    # Some informative text to display below the main message    
+    informative = Unicode
+    
+    # Some additional details that can be exposed by the user
+    detail = Unicode
+
     # The label for the 'no' button.  The default is toolkit specific.
     no_label = Unicode
 
