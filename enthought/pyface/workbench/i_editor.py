@@ -16,12 +16,13 @@
 import uuid
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
+from enthought.traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
+    HasTraits, Instance, Interface
 from enthought.traits.api import implements
 
 # Local imports.
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
-
+    
 
 class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
@@ -37,6 +38,14 @@ class IEditor(IWorkbenchPart):
     #
     # The framework sets this when the editor is created.
     obj = Any
+
+    #### Editor Lifecycle Events ##############################################
+    
+    # Fired when the editor is closing.
+    closing = VetoableEvent
+    
+    # Fired when the editor is closed.
+    closed = Event
 
     #### Methods ##############################################################
     
@@ -69,6 +78,20 @@ class MEditor(MWorkbenchPart):
     # The framework sets this when the editor is created.
     obj = Any
 
+    #### Editor Lifecycle Events ##############################################
+
+    # Fired when the editor is opening.
+    opening = VetoableEvent
+    
+    # Fired when the editor has been opened.
+    open = Event
+    
+    # Fired when the editor is closing.
+    closing = Event(VetoableEvent)
+    
+    # Fired when the editor is closed.
+    closed = Event
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -98,7 +121,11 @@ class MEditor(MWorkbenchPart):
         """ Close the editor. """
 
         if self.control is not None:
-            self.window.close_editor(self)
+            self.closing = event = Vetoable()
+            if not event.veto:
+                self.window.close_editor(self)
+                
+                self.closed = True
 
         return
 
@@ -114,5 +141,6 @@ class MEditor(MWorkbenchPart):
             return None
             
         return CommandStack(undo_manager=self.window.workbench.undo_manager)
+
 
 #### EOF ######################################################################
