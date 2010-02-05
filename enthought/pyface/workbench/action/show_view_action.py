@@ -27,7 +27,11 @@ class ShowViewAction(WorkbenchAction):
         chooser = ViewChooser(window=self.window)
 
         ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
-        if ui.result:
+        
+        # If the user closes the dialog by using the window manager's close button
+        # (e.g. the little [x] in the top corner), ui.result is True, but chooser.view
+        # might be None, so we need an explicit check for that.
+        if ui.result and chooser.view is not None:
             # This shows the view...
             chooser.view.show()
 
