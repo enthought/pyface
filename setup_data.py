@@ -17,8 +17,8 @@ def etsdep(p, min, max=None, literal=False):
 APPTOOLS = etsdep('AppTools', '3.3.1')
 ENTHOUGHTBASE_UI = etsdep('EnthoughtBase[ui]', '3.0.4')
 TRAITS = etsdep('Traits', '3.2.1')
-TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.2.1')
-TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.2.1')
+TRAITSBACKENDWX = etsdep('TraitsBackendWX', '3.3.0')
+TRAITSBACKENDQT = etsdep('TraitsBackendQt', '3.3.0')
 
 
 # A dictionary of the setup data information.
@@ -55,6 +55,6 @@ INFO = {
         TRAITS
         ],
     'name': 'TraitsGUI',
-    'version': '3.1.1',
+    'version': '3.3.0',
     }
 
