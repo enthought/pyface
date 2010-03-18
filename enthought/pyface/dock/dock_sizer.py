@@ -28,9 +28,6 @@
 
 import wx, sys
 
-# fixme: Hack to force 'image_slice' to be added via Category to Theme class:
-import enthought.traits.ui.wx
-
 from enthought.traits.api \
     import HasPrivateTraits, Instance, Str, Int, List, Enum, Tuple, Any, \
            Range, Property, Callable, Constant, Event, Undefined, Bool, \

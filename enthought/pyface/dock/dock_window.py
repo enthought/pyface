@@ -33,9 +33,6 @@ import os
 import wx
 import sys
 
-# Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
-import enthought.traits.ui.wx
-
 from enthought.pyface.api import SystemMetrics
 
 from enthought.traits.api \
