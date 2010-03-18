@@ -24,9 +24,6 @@
 
 import sys
 
-from cStringIO \
-    import StringIO
-
 from os \
     import environ, listdir, remove, stat, makedirs, rename, access, R_OK, \
            W_OK, X_OK
@@ -54,8 +51,7 @@ from threading \
     
 from enthought.traits.api \
     import HasPrivateTraits, Property, Str, Int, List, Dict, File, Instance, \
-           Bool, Tuple, Undefined, TraitError, Float, Any, cached_property, \
-           on_trait_change
+           Bool, Undefined, TraitError, Float, Any, cached_property
            
 from enthought.traits.trait_base \
     import get_resource_path, traits_home
