@@ -1253,7 +1253,7 @@ class DockSplitter ( DockItem ):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x+dx/2,y+idy+1,x+dx/2,dy-2)
+            dc.DrawLine(x+dx/2,y+idy+1,x+dx/2,y+dy-2)
 
             iy = y
             ix = x + 2
@@ -3690,7 +3690,7 @@ class DockInfo ( HasPrivateTraits ):
                     bdc3.DrawRoundedRectangle( tx, ty, tdx, tdy, 4 )
                 else:
                     bdc3.DrawRoundedRectangle( x, y, dx, dy, 8 )
-            except Exception, ex:
+            except Exception:
                 pass
 
             sdc.Blit( bx, by, bdx, bdy, bdc2, 0, 0 )
