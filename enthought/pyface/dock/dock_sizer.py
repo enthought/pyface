@@ -26,7 +26,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-import wx, sys, traceback
+import wx, sys
 
 # fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import enthought.traits.ui.wx
@@ -2544,8 +2544,8 @@ class DockRegion ( DockGroup ):
                     else:
                         bitmap = self.theme.tab_hover_edge_bitmap
                     if bitmap is not None:
-                       x, y, dx, dy = item.drag_bounds
-                       dc.DrawBitmap( bitmap, x + dx, y, True )
+                        x, y, dx, dy = item.drag_bounds
+                        dc.DrawBitmap( bitmap, x + dx, y, True )
 
             else:
                 item = self.visible_contents[0]
@@ -2575,11 +2575,11 @@ class DockRegion ( DockGroup ):
                     return self
 
             for item in self.visible_contents:
-                 if item.is_at( x, y, item.drag_bounds ):
+                if item.is_at( x, y, item.drag_bounds ):
                     return item
 
-                 object = item.object_at( x, y )
-                 if object is not None:
+                object = item.object_at( x, y )
+                if object is not None:
                     return object
 
         return None
@@ -3291,7 +3291,7 @@ class DockSection ( DockGroup ):
         if self.is_row:
             # Allocate the space for each item based on its minimum size until
             # the space runs out:
-            for i, item in enumerate( self.visible_contents ):
+            for item in self.visible_contents:
                 idx, idy = item.calc_min()
                 idx      = min( dx, idx )
                 idy      = min( dy, idy )
@@ -3303,7 +3303,7 @@ class DockSection ( DockGroup ):
         else:
             # Allocate the space for each item based on its minimum size until
             # the space runs out:
-            for i, item in enumerate( self.visible_contents ):
+            for item in self.visible_contents:
                 idx, idy = item.calc_min()
                 idx      = min( dx, idx )
                 idy      = min( dy, idy )
@@ -3721,11 +3721,11 @@ class DockInfo ( HasPrivateTraits ):
                         is_row   = True )
                 elif isinstance( item, DockSection ):
                     if (isinstance( control, DockSection ) and
-                       (item.is_row == control.is_row)):
-                       item.contents.extend( control.contents )
+                            (item.is_row == control.is_row)):
+                        item.contents.extend( control.contents )
                     else:
                         if isinstance( control, DockControl ):
-                           control = DockRegion( contents = [ control ] )
+                            control = DockRegion( contents = [ control ] )
                         item.contents.append( control )
                 else:
                     item.contents.append( control )
@@ -3876,7 +3876,7 @@ class DockSizer ( wx.PySizer ):
 
     def _set_region ( self, contents ):
         items = []
-        for i, item in enumerate( contents ):
+        for item in contents:
             if isinstance( item, tuple ):
                 items.append( self._set_region( item ) )
             elif isinstance( item, list ):

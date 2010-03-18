@@ -45,7 +45,7 @@ from enthought.traits.trait_base \
     import traits_home                             
     
 from enthought.traits.ui.api \
-    import View, Group, HGroup, VGroup, Item, Handler, error
+    import View, HGroup, VGroup, Item, Handler, error
     
 from enthought.traits.ui.helper \
     import user_name_for
@@ -558,8 +558,6 @@ class DockWindow ( HasPrivateTraits ):
                 if event.AltDown():
                     contents = self.sizer.GetContents()
                     if contents is not None:
-                        import sys
-                        
                         contents.dump()
                         sys.stdout.flush()
                 else:
@@ -635,11 +633,7 @@ class DockWindow ( HasPrivateTraits ):
                     else:
                         min_max_action.name = 'Restore'
                     min_max_action.enabled  = is_dock_control
-                    undock_action.enabled   = is_dock_control#(is_dock_control and
-                                              # (object.export != ''))
-                    #hide_action.enabled     = (is_splitter or object.visible)
-                    #show_action.enabled     = (self._hidden_group_for( group ) 
-                    #                           is not None)
+                    undock_action.enabled   = is_dock_control
                     edit_action.enabled     = (not is_splitter)                                         
                     controls                = section.get_controls( False )
                     lock_action.checked     = ((len( controls ) > 0) and
