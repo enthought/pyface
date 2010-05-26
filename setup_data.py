@@ -55,5 +55,5 @@ INFO = {
         TRAITS
         ],
     'name': 'TraitsGUI',
-    'version': '3.4.0',
+    'version': '3.4.1',
     }
