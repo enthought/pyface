@@ -88,6 +88,8 @@ setup(
         'build': MyBuild
         },
     description = DOCLINES[1],
+    download_url = ('http://www.enthought.com/repo/ETS/TraitsGUI-%s.tar.gz' %
+                    INFO['version']),
     extras_require = INFO['extras_require'],
     include_package_data = True,
     install_requires = INFO['install_requires'],
