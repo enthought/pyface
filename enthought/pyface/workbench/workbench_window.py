@@ -903,15 +903,17 @@ class WorkbenchWindow(ApplicationWindow):
     def _on_editor_closed(self, editor):
         """ Dynamic trait change handler. """
 
-        self.editors.remove(editor)
+        index = self.editors.index(editor)
+        del self.editors[index]
         if editor is self.active_editor:
             if len(self.editors) > 0:
+                index = min(index, len(self.editors) - 1)
                 # If the user closed the editor manually then this method is
                 # being called from a toolkit-specific event handler. Because
                 # of that we have to make sure that we don't change the focus
                 # from within this method directly hence we activate the editor
                 # later in the GUI thread.
-                GUI.invoke_later(self.activate_editor, self.editors[0])
+                GUI.invoke_later(self.activate_editor, self.editors[index])
 
             else:
                 self.active_editor = None
