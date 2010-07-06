@@ -249,16 +249,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _layout_default(self):
         """ Trait initializer. """
 
-        layout = WorkbenchWindowLayout(window=self)
-
-        # Wire up event handlers.
-        #
-        # fixme: I *hate* calling event handlers manually, but this is such a
-        # common pattern... Maybe a '@on_trait_initialized' decorator is in
-        # order?
-        self._layout_changed(None, layout)
-
-        return layout
+        return WorkbenchWindowLayout(window=self)
     
     #### Methods ##############################################################
 
@@ -856,21 +847,6 @@ class WorkbenchWindow(ApplicationWindow):
             )
 
         return
-    
-    def _layout_changed(self, old, new):
-        """ Static trait change handler. """
-
-        if old is not None:
-            old.on_trait_change(
-                self._on_editor_closed, 'editor_closed', remove=True
-            )
-
-        if new is not None:
-            new.on_trait_change(
-                self._on_editor_closed, 'editor_closed'
-            )
-
-        return
         
     def _views_changed(self, old, new):
         """ Static trait change handler. """
@@ -900,6 +876,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### Dynamic ####
 
+    @on_trait_change('layout.editor_closed')
     def _on_editor_closed(self, editor):
         """ Dynamic trait change handler. """
 
