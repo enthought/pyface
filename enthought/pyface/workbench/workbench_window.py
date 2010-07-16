@@ -832,21 +832,6 @@ class WorkbenchWindow(ApplicationWindow):
         self.active_part = new
 
         return
-
-    def _editors_items_changed(self, event):
-        """ Static trait change handler. """
-
-        for editor in event.removed:
-            editor.on_trait_change(
-                self._on_editor_has_focus_changed, 'has_focus', remove=True
-            )
-
-        for editor in event.added:
-            editor.on_trait_change(
-                self._on_editor_has_focus_changed, 'has_focus'
-            )
-
-        return
         
     def _views_changed(self, old, new):
         """ Static trait change handler. """
@@ -897,13 +882,12 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    #@on_trait_change('editors.has_focus')
+    @on_trait_change('editors.has_focus')
     def _on_editor_has_focus_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         if trait_name == 'has_focus' and new:
             self.active_editor = obj
-            self.active_part   = obj
                 
         return
 
@@ -913,7 +897,6 @@ class WorkbenchWindow(ApplicationWindow):
 
         if trait_name == 'has_focus' and new:
             self.active_view = obj
-            self.active_part = obj
 
         return
 
