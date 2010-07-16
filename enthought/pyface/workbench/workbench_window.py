@@ -743,9 +743,6 @@ class WorkbenchWindow(ApplicationWindow):
             view = self.get_view_by_id(active_view_id)
             if view is not None:
                 self.active_view = view
-                
-            if not self.show_editor_area:
-                self.active_editor = None
         
         # Otherwise, this is the first time the perspective has been seen
         # so create it.
@@ -761,13 +758,15 @@ class WorkbenchWindow(ApplicationWindow):
             # perspective.
             self.active_view = None
 
-            # Show the editor area?
-            if new.show_editor_area:
-                self.show_editor_area()
+        # Show the editor area?
+        if new.show_editor_area:
+            self.show_editor_area()
+        else:
+            self.hide_editor_area()
+            self.active_editor = None
 
-            else:
-                self.hide_editor_area()
-                self.active_editor = None
+        # Inform the perspective that it has been shown.
+        new.show(self)
             
         # This forces the dock window to update its layout.
         if old is not None:

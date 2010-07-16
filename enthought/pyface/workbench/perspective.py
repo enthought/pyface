@@ -98,6 +98,17 @@ class Perspective(HasTraits):
         window.reset_views()
         
         return
+
+    def show(self, window):
+        """ Called when the perspective is shown in a workbench window. 
+
+        The default implementation does nothing, but you can override this
+        method if you want to do something whenever the perspective is
+        activated.
+
+        """
+
+        return
     
     ###########################################################################
     # Private interface.

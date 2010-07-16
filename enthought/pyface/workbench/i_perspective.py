@@ -36,4 +36,7 @@ class IPerspective(Interface):
     def create(self, window):
         """ Create the perspective in a workbench window. """
 
+    def show(self, window):
+        """ Called when the perspective is shown in a workbench window. """
+
 #### EOF ######################################################################
