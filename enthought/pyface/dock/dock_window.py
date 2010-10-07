@@ -359,9 +359,13 @@ class DockWindow ( HasPrivateTraits ):
     #  Sets the cursor to a specified cursor shape:
     #---------------------------------------------------------------------------
                         
-    def set_cursor ( self, cursor = wx.CURSOR_ARROW ):
+    def set_cursor ( self, cursor = None ):
         """ Sets the cursor to a specified cursor shape.
         """
+        if cursor is None:
+            self.control.SetCursor( wx.NullCursor )
+            return
+        
         global cursor_map
         
         if cursor not in cursor_map:
@@ -694,6 +698,7 @@ class DockWindow ( HasPrivateTraits ):
                 if (isinstance( object, DockControl ) and
                     object.feature_activate( event )):
                     self._last_dock_control = object
+                    
             
     #---------------------------------------------------------------------------
     #  Handles the mouse leaving the window:  
