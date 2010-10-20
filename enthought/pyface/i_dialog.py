@@ -114,13 +114,15 @@ class MDialog(object):
     def open(self):
         """ Opens the dialog. """
 
-        super(MDialog, self).open()
+        if self.control is None:
+            self._create()
 
         if self.style == 'modal':
             self.return_code = self._show_modal()
             self.close()
 
         else:
+            self.show(True)
             self.return_code = OK
 
         return self.return_code
