@@ -45,26 +45,6 @@ INFO = setup_data['INFO']
 # Pull the description values for the setup keywords from our file docstring.
 DOCLINES = __doc__.split("\n")
 
-class MyDevelop(develop):
-    def run(self):
-        develop.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
-class MyBuild(distbuild):
-    def run(self):
-        distbuild.run(self)
-        try:
-            self.run_command('build_docs')
-        except:
-            log.warn("Couldn't build documentation:\n%s" %
-                     traceback.format_exception(*sys.exc_info()))
-
-
 setup(
     author = 'David C. Morrill, et al.',
     author_email = 'dmorrill@enthought.com',
@@ -83,10 +63,6 @@ setup(
         Topic :: Software Development
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.split()) > 0],
-    cmdclass = {
-        'develop': MyDevelop,
-        'build': MyBuild
-        },
     description = DOCLINES[1],
     download_url = ('http://www.enthought.com/repo/ETS/TraitsGUI-%s.tar.gz' %
                     INFO['version']),
@@ -108,7 +84,6 @@ setup(
         },
     packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
-    setup_requires = 'setupdocs>=1.0',
     tests_require = [
         'nose >= 0.10.3',
         ],
