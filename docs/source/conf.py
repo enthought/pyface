@@ -37,15 +37,15 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'TraitsGUI'
-copyright = '2008, Enthought'
+copyright = '2010, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '3.0.0b1'
+version = '3.5.1'
 # The full version, including alpha/beta/rc tags.
-release = '3.0.0b1'
+release = '3.5.1'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
