@@ -24,45 +24,45 @@ _toolkit_backend = None
 def _init_toolkit():
     """ Initialise the current toolkit. """
 
-    # Toolkits to check for if none is explicitly specified.
-    known_toolkits = ('wx', 'qt4', 'null')
+    def import_toolkit(tk):
+        try:
+            # Try and import the toolkit's pyface backend init module.
+            be = 'enthought.pyface.ui.%s.' % tk
+            __import__(be + 'init')
+        except:
+            raise
+        return be
 
     # Get the toolkit.
-    toolkit = ETSConfig.toolkit
-    if toolkit:
-        toolkits = (toolkit, )
+    if ETSConfig.toolkit:
+        be = import_toolkit(ETSConfig.toolkit)
     else:
-        toolkits = known_toolkits
-    for tk in toolkits:
+        # Toolkits to check for if none is explicitly specified.
+        known_toolkits = ('wx', 'qt4', 'null')
 
-        # Try and import the toolkit's pyface backend init module.
-        be = 'enthought.pyface.ui.%s.' % tk
-        try:
-            __import__(be + 'init')
-            break
-        except (SystemExit, ImportError):
-            import traceback
-            print >>sys.stderr, ('Warning: Unable to import the %s backend '
-                'for pyface due to traceback: %s\n') % (tk, 
-                traceback.format_exc().strip().replace('\n', '\n\t'))
-
-    else:
-        # Try to import the null toolkit but don't set the ETSConfig toolkit
-        try:
-            be = 'enthought.pyface.ui.null.'
-            __import__(be + 'init')
-            print >>sys.stderr, ("Info: Unable to import any backend (%s) "
-                "for pyface; using the 'null' toolkit instead.\n") % toolkits
-        except:
-            if toolkit:
-                raise ImportError("Unable to import a pyface backend for the "
-                    "%s toolkit" % toolkit)
-            else:
+        for tk in known_toolkits:
+            try:
+                be = import_toolkit(tk)
+        
+                # In case we have just decided on a toolkit, tell everybody else.
+                ETSConfig.toolkit = tk
+                break
+            except (SystemExit, ImportError):
+                import traceback
+                print >>sys.stderr, ('Warning: Unable to import the %s backend '
+                    'for pyface due to traceback: %s\n') % (tk, 
+                    traceback.format_exc().strip().replace('\n', '\n\t'))
+    
+        else:
+            # Try to import the null toolkit but don't set the ETSConfig toolkit
+            try:
+                be = import_toolkit('null')
+                print >>sys.stderr, ("Info: Unable to import any backend (%s) "
+                    "for pyface; using the 'null' toolkit instead.\n") % ", ".join(known_toolkits)
+            except:
                 raise ImportError("Unable to import a pyface backend for any "
                     "of the %s toolkits" % ", ".join(known_toolkits))
-
-    # In case we have just decided on a toolkit, tell everybody else.
-    ETSConfig.toolkit = tk
+    
 
     # Save the imported toolkit module.
     global _toolkit_backend
