@@ -20,18 +20,11 @@ you must install one of the following combinations of packages:
 
 Prerequisites
 -------------
-If you want to build TraitsGUI from source, you must first install 
+If you want to build TraitsGUI from source, you must first install
 `setuptools <http://pypi.python.org/pypi/setuptools/0.6c8>`_.
 
 """
-
-import traceback
-import sys
-
-from distutils import log
-from distutils.command.build import build as distbuild
 from setuptools import setup, find_packages
-from setuptools.command.develop import develop
 
 
 # FIXME: This works around a setuptools bug which gets setup_data.py metadata
@@ -91,4 +84,4 @@ setup(
     url = 'http://code.enthought.com/projects/traits_gui',
     version = INFO['version'],
     zip_safe   = False,
-    )
+)
