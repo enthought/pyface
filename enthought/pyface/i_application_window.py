@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance
+from enthought.traits.api import Instance, List
 
 # Local imports.
 from action.api import MenuBarManager, StatusBarManager, ToolBarManager
@@ -46,6 +46,10 @@ class IApplicationWindow(IWindow):
 
     # The tool bar manager (None iff there is no tool bar).
     tool_bar_manager = Instance(ToolBarManager)
+
+    # If the underlying toolkit supports multiple toolbars, you can use this
+    # list instead of the single ToolBarManager instance above.
+    tool_bar_managers = List(ToolBarManager)
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
