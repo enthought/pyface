@@ -47,7 +47,6 @@ from widget import Widget
 
 from enthought.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':
-    from background_progress_dialog import BackgroundProgressDialog
     from expandable_panel import ExpandablePanel
     from filter import Filter
     from image_widget import ImageWidget
