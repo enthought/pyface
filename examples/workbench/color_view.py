@@ -63,7 +63,7 @@ class ColorView(View):
     def _qt4_create_control(self, parent, color):
         """ Create a Qt4 version of the control. """
 
-        from enthought.qt.api import QtGui
+        from enthought.qt import QtGui
         
         widget = QtGui.QWidget(parent)
 
