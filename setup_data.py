@@ -1,6 +1,6 @@
 INFO = {
     'name': 'TraitsGUI',
-    'version': '3.6.0',
+    'version': '3.6.1',
     'install_requires': [
         'Traits >= 3.6.0.dev',
     ],
