@@ -1,5 +1,9 @@
 # File types to ignore
 *.pyc
+*~
+.DS_Store
 
-# Ignore the built documentation.
+# ignore the build directories
+*.egg-info/
+dist/
 docs/build/
