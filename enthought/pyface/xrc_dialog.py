@@ -51,7 +51,7 @@ class XrcDialog(Dialog):
 
     # The resource object
     resource = Instance(wx.xrc.XmlResource)
-    
+
     ##########################################################################
     # 'Dialog' interface
     ##########################################################################

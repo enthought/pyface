@@ -70,10 +70,10 @@ class IWorkbench(Interface):
     ###########################################################################
     # 'IWorkbench' interface.
     ###########################################################################
-    
+
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
-    
+
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
 
@@ -87,7 +87,7 @@ class IWorkbench(Interface):
         menu File->Exit item is selected.
 
         """
-    
+
     def get_editor(self, obj, kind=None):
         """ Return the editor that is editing an object.
 

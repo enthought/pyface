@@ -26,5 +26,5 @@ class WorkbenchWindowMemento(HasTraits):
     # The size of the window.
     size = Tuple
 
-    
+
 #### EOF ######################################################################

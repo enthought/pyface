@@ -7,7 +7,7 @@ from enthought.traits.api import Event, HasTraits
 # Classes for event traits.
 class ListModelEvent(object):
     """ Information about list model changes. """
-    
+
     def __init__(self):
         """ Creates a new list model event. """
 
@@ -30,12 +30,12 @@ class ListBoxModel(HasTraits):
         """ Returns the item at the specified index. """
 
         raise NotImplementedError
-        
+
     def fire_list_changed(self):
         """ Invoke this method when the list has changed. """
 
         self.list_changed = ListModelEvent()
 
         return
-        
+
 #### EOF ######################################################################

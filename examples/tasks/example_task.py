@@ -19,7 +19,7 @@ class ExampleTask(Task):
 
     #default_layout = TaskLayout(
     #    left_panes=['example.python_script_browser_pane'])
-    
+
     menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
                                          accelerator='Ctrl+O'),
                               TaskAction(name='Save', method='save',
@@ -110,7 +110,7 @@ class ExampleTask(Task):
                 if not self.save():
                     return self._prompt_for_save()
         return True
-            
+
     @on_trait_change('window:closing')
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.

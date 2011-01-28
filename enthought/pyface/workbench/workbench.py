@@ -102,7 +102,7 @@ class Workbench(HasTraits):
     # An 'explicit' exit is when the the 'exit' method is called.
     # An 'implicit' exit is when the user closes the last open window.
     _explicit_exit = Bool(False)
-    
+
     ###########################################################################
     # 'IWorkbench' interface.
     ###########################################################################
@@ -111,7 +111,7 @@ class Workbench(HasTraits):
         """ Factory method that creates a new workbench window. """
 
         window = self.window_factory(workbench=self, **kw)
-        
+
         # Add on any user-defined perspectives.
         window.perspectives.extend(self.user_perspective_manager.perspectives)
 
@@ -167,7 +167,7 @@ class Workbench(HasTraits):
                 self.exited = self
 
                 exited = True
-                
+
             # Whether the exit succeeded or not, we are no longer in the
             # process of exiting!
             self._explicit_exit = False
@@ -177,7 +177,7 @@ class Workbench(HasTraits):
 
         if not exited:
             logger.debug('**** exit of the workbench vetoed ****')
-            
+
         return exited
 
     #### Convenience methods on the active window #############################
@@ -209,12 +209,12 @@ class Workbench(HasTraits):
         return self.active_window.get_editor_by_id(id)
 
     #### Message dialogs ####
-    
+
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog. """
 
         return self.active_window.confirm(message, title, cancel, default)
-    
+
     def information(self, message, title='Information'):
         """ Convenience method to show an information message dialog. """
 
@@ -264,12 +264,12 @@ class Workbench(HasTraits):
             return None
 
         return UndoManager()
-    
+
     def _user_perspective_manager_default(self):
         """ Trait initializer. """
 
         return UserPerspectiveManager(state_location=self.state_location)
-    
+
     ###########################################################################
     # Protected 'Workbench' interface.
     ###########################################################################
@@ -305,7 +305,7 @@ class Workbench(HasTraits):
 
         else:
             all_closed = True
-            
+
         return all_closed
 
     def _restore_window_layout(self, window):
@@ -334,16 +334,16 @@ class Workbench(HasTraits):
 
     def _save_window_layout(self, window):
         """ Save the window layout. """
-        
+
         # Save the window layout.
         f = file(os.path.join(self.state_location, 'window_memento'), 'w')
         cPickle.dump(window.get_memento(), f)
         f.close()
-    
+
         return
 
     #### Trait change handlers ################################################
-    
+
     def _on_window_activated(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
@@ -418,7 +418,7 @@ class Workbench(HasTraits):
         if len(self.windows) == 0:
             # Event notification.
             self.exited = self
-            
+
         return
 
 #### EOF ######################################################################

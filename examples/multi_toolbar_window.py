@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ import os, sys
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
 
-# FIXME: This is a hack to disable the AUI module which causes the example to  
+# FIXME: This is a hack to disable the AUI module which causes the example to
 # not layout correctly.
 try:
     import wx
@@ -52,7 +52,7 @@ class MainWindow(MultiToolbarWindow):
             MenuManager(
                 Action(name='E&xit', on_perform=self.close),
                 name = '&File',
-            )  
+            )
         )
 
         # Add a menu bar at each location.
@@ -74,7 +74,7 @@ class MainWindow(MultiToolbarWindow):
             ToolBarManager(Action(name='Buz'), orientation='vertical'),
             location = 'right'
         )
-        
+
         return
 
 

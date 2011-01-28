@@ -142,7 +142,7 @@ class IWorkbenchWindowLayout(Interface):
         Note that this returns True even if the view is hidden.
 
         """
-        
+
     def hide_editor_area(self):
         """ Hide the editor area.
 
@@ -209,7 +209,7 @@ class MWorkbenchWindowLayout(HasTraits):
     implements(IWorkbenchWindowLayout)
 
     #### 'IWorkbenchWindowLayout' interface ###################################
-    
+
     # The Id of the editor area.
     # FIXME v3: This is toolkit specific.
     editor_area_id = Str
@@ -271,7 +271,7 @@ class MWorkbenchWindowLayout(HasTraits):
         """ Close an editor. """
 
         raise NotImplementedError
-        
+
     def close_view(self, view):
         """ Close a view. """
 
@@ -291,7 +291,7 @@ class MWorkbenchWindowLayout(HasTraits):
         """ Return True if the view exists in the window layout. """
 
         raise NotImplementedError
-        
+
     def hide_editor_area(self):
         """ Hide the editor area. """
 

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -25,26 +25,26 @@ class IWizardPage(Interface):
 
     # The unique Id of the page within the wizard.
     id = Str
-    
+
     # The Id of the next page.
     next_id = Str
 
     # Set if this is the last page of the wizard.  It can be ignored for
     # simple linear wizards.
     last_page = Bool(False)
-    
+
     # Is the page complete (i.e. should the 'Next' button be enabled)?
     complete = Bool(False)
 
     # The page heading.
     heading = Unicode
-    
+
     # The page sub-heading.
     subheading = Unicode
 
     # The size of the page.
     size = Tuple
-    
+
     ###########################################################################
     # 'IWizardPage' interface.
     ###########################################################################

@@ -1,33 +1,33 @@
 #-------------------------------------------------------------------------------
-#  
-#  Test the DockWindow.  
-#  
+#
+#  Test the DockWindow.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 10/20/2005
-#  
+#
 #  (c) Copyright 2005 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import wx
 
 from enthought.traits.api \
     import *
-    
+
 from enthought.traits.ui.api \
     import *
-    
+
 from enthought.traits.ui.menu \
     import *
-    
+
 from enthought.traits.ui.dockable_view_element \
     import DockableViewElement
-           
+
 from enthought.pyface.image_resource \
     import ImageResource
 
@@ -35,7 +35,7 @@ from enthought.pyface.dock.api \
     import *
 
 #-------------------------------------------------------------------------------
-#  Global data:  
+#  Global data:
 #-------------------------------------------------------------------------------
 
 # DockControl style to use:
@@ -45,55 +45,55 @@ image1 = ImageResource( 'folder' )
 image2 = ImageResource( 'gear' )
 
 #-------------------------------------------------------------------------------
-#  'AnEditor' class:  
+#  'AnEditor' class:
 #-------------------------------------------------------------------------------
 
 class AnEditor ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     code1   = Code
     code2   = Code
     name    = Str( 'Mike Noggins' )
     address = Str( '1313 Drury Lane' )
     shell   = PythonValue
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    traits_view = View( VSplit( VGroup( 'code1@', '|<>' ), 
-                                VGroup( 'code2@', '|<>' ), 
-                                VGroup( 'name', 'address' ),  
-                                VGroup( 'shell', '|{Python Shell}<>' ), 
+
+    traits_view = View( VSplit( VGroup( 'code1@', '|<>' ),
+                                VGroup( 'code2@', '|<>' ),
+                                VGroup( 'name', 'address' ),
+                                VGroup( 'shell', '|{Python Shell}<>' ),
                                 export      = 'editor',
                                 show_labels = False ),
                         kind      = 'subpanel',
                         resizable = True,
                         buttons   = NoButtons,
                         dock      = 'horizontal' )
-        
+
 #-------------------------------------------------------------------------------
-#  'AView' class:  
+#  'AView' class:
 #-------------------------------------------------------------------------------
 
 class AView ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     code1 = Code
     code2 = Code
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-    
-    traits_view = View( VSplit( 'code1@', 'code2@', 
-                                show_labels = False ), 
+
+    traits_view = View( VSplit( 'code1@', 'code2@',
+                                show_labels = False ),
                         imports = [ 'editor' ],
                         dock    = 'horizontal',
                         kind    = 'subpanel' )
@@ -101,8 +101,8 @@ class AView ( HasPrivateTraits ):
 #-------------------------------------------------------------------------------
 #  Creates a DockWindow as a Traits UI widget:
 #-------------------------------------------------------------------------------
-    
-def create_dock_window ( parent, editor ):    
+
+def create_dock_window ( parent, editor ):
     """ Creates a window for editing a workflow canvas.
     """
     try:
@@ -114,7 +114,7 @@ def create_dock_window ( parent, editor ):
      controls = []
      for i in range( 6 ):
          dockable = DockableViewElement( ui = editors[i] )
-         controls.append( DockControl( 
+         controls.append( DockControl(
                               name      = 'Editor %d' % (i + 1),
                               image     = image1,
                               closeable = True,
@@ -122,19 +122,19 @@ def create_dock_window ( parent, editor ):
                               control   = editors[i].control,
                               export    = 'editor',
                               dockable  = dockable,
-                              style     = style ) ) 
+                              style     = style ) )
      edit_sizer = DockSizer( contents = [ tuple( controls ) ] )
      dve0 = DockableViewElement( ui = view_uis[0] )
      dve1 = DockableViewElement( ui = view_uis[1] )
-     main_sizer = DockSizer( contents = 
+     main_sizer = DockSizer( contents =
                    [ [ DockControl( name      = 'View 1',
                                     image     = image1,
                                     closeable = True,
                                     on_close  = dve0.close_dock_control,
                                     dockable  = dve0,
-                                    control   = views[0], 
+                                    control   = views[0],
                                     style     = style ),
-                       DockControl( name      = 'View 2', 
+                       DockControl( name      = 'View 2',
                                     image     = image1,
                                     closeable = True,
                                     on_close  = dve1.close_dock_control,
@@ -144,7 +144,7 @@ def create_dock_window ( parent, editor ):
                                     style     = style ) ],
                      [ DockControl( name      = 'Editors',
                                     image     = image1,
-                                    control   = edit, 
+                                    control   = edit,
                                     style     = 'fixed' ),
                        [ DockControl( name    = 'View 3',
                                       image   = image2,
@@ -152,17 +152,17 @@ def create_dock_window ( parent, editor ):
                                       style   = style ),
                          DockControl( name    = 'View 4',
                                       image   = image2,
-                                      control = views[3], 
+                                      control = views[3],
                                       style   = style ) ] ],
                      [ DockControl( name      = 'View 5',
-                                    control   = views[4], 
+                                    control   = views[4],
                                     style     = style ),
                        DockControl( name      = 'View 6',
-                                    control   = views[5], 
+                                    control   = views[5],
                                     style     = style ) ] ] )
      edit.SetSizer( edit_sizer )
      main.SetSizer( main_sizer )
-     
+
      return main
     except:
         import traceback
@@ -170,21 +170,21 @@ def create_dock_window ( parent, editor ):
         raise
 
 #-------------------------------------------------------------------------------
-#  'EnvisageDock' class:  
+#  'EnvisageDock' class:
 #-------------------------------------------------------------------------------
 
 class EnvisageDock ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     dummy = Int
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View( [ Item( 'dummy',
                          resizable = True,
                          editor    = CustomEditor( create_dock_window ) ),
@@ -194,10 +194,10 @@ class EnvisageDock ( HasPrivateTraits ):
                  width     = 1.00,
                  height    = 1.00,
                  buttons   = NoButtons )
-                 
+
 #-------------------------------------------------------------------------------
-#  Run the test program:  
+#  Run the test program:
 #-------------------------------------------------------------------------------
-                        
+
 if __name__ == '__main__':
     EnvisageDock().configure_traits()

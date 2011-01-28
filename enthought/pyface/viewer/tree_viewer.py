@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -33,9 +33,9 @@ class TreeViewer(ContentViewer):
 
     # The default tree style.
     STYLE = wx.TR_EDIT_LABELS | wx.TR_HAS_BUTTONS | wx.CLIP_CHILDREN
-    
+
     #### 'TreeViewer' interface ###############################################
-    
+
     # The content provider provides the actual tree data.
     content_provider = Instance(TreeContentProvider)
 
@@ -45,18 +45,18 @@ class TreeViewer(ContentViewer):
 
     # Selection mode (must be either of 'single' or 'extended').
     selection_mode = Enum('single', 'extended')
-    
+
     # The currently selected elements.
     selection = List
 
     # Should an image be shown for each element?
     show_images = Bool(True)
-    
+
     # Should the root of the tree be shown?
     show_root = Bool(True)
 
     #### Events ####
-    
+
     # An element has been activated (ie. double-clicked).
     element_activated = Event
 
@@ -65,7 +65,7 @@ class TreeViewer(ContentViewer):
 
     # An element that has children has been collapsed.
     element_collapsed = Event
-        
+
     # An element that has children has been expanded.
     element_expanded = Event
 
@@ -85,7 +85,7 @@ class TreeViewer(ContentViewer):
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new tree viewer.
 
-	'parent' is the toolkit-specific control that is the tree's parent.
+        'parent' is the toolkit-specific control that is the tree's parent.
 
         'image_size' is a tuple in the form (int width, int height) that
         specifies the size of the label images (if any) displayed in the tree.
@@ -97,10 +97,10 @@ class TreeViewer(ContentViewer):
 
         # Create the toolkit-specific control.
         self.control = tree = wx.TreeCtrl(parent, -1, style=self._get_style())
-        
+
         # Get our actual Id.
         wxid = tree.GetId()
-        
+
         # Wire up the wx tree events.
         wx.EVT_CHAR(tree, self._on_char)
         wx.EVT_LEFT_DOWN(tree, self._on_left_down)
@@ -127,18 +127,18 @@ class TreeViewer(ContentViewer):
         # Add the root item.
         if self.input is not None:
             self._add_element(None, self.input)
-        
+
         return
 
     ###########################################################################
-    # 'TreeViewer' interface. 
+    # 'TreeViewer' interface.
     ###########################################################################
 
     def is_expanded(self, element):
         """ Returns True if the element is expanded, otherwise False. """
 
         key = self._get_key(element)
-        
+
         if key in self._element_to_id_map:
             is_expanded = self.control.IsExpanded(self._element_to_id_map[key])
 
@@ -157,9 +157,9 @@ class TreeViewer(ContentViewer):
 
         else:
             is_selected = False
-        
+
         return is_selected
-    
+
     def refresh(self, element):
         """ Refresh the tree starting from the specified element.
 
@@ -198,7 +198,7 @@ class TreeViewer(ContentViewer):
         Call this when the APPEARANCE of the content has changed.
 
         """
-        
+
         pid = self._element_to_id_map.get(self._get_key(element), None)
         if pid is not None:
             self._refresh_element(pid, element)
@@ -209,9 +209,9 @@ class TreeViewer(ContentViewer):
                     self._refresh_element(cid, child)
 
         return
-    
+
     ###########################################################################
-    # Private interface. 
+    # Private interface.
     ###########################################################################
 
     def _get_style(self):
@@ -227,7 +227,7 @@ class TreeViewer(ContentViewer):
             style = style | wx.TR_MULTIPLE | wx.TR_EXTENDED
 
         return style
-    
+
     def _add_element(self, pid, element):
         """ Adds 'element' as a child of the element identified by 'pid'.
 
@@ -266,14 +266,14 @@ class TreeViewer(ContentViewer):
 
         else:
             self.control.SetPyData(wxid,  (False, element))
-            
+
         # Make sure that we can find the element's Id later.
         self._element_to_id_map[self._get_key(element)] = wxid
-        
+
         # If we are adding the root item then automatically expand it.
         if pid is None and self.show_root:
             self.control.Expand(wxid)
-        
+
         return
 
     def _get_image_index(self, element):
@@ -297,9 +297,9 @@ class TreeViewer(ContentViewer):
 
         except:
             key = id(element)
-        
+
         return key
-    
+
     def _get_text(self, element):
         """ Returns the tree item text for an element. """
 
@@ -329,7 +329,7 @@ class TreeViewer(ContentViewer):
 
     def _unpack_event(self, event):
         """ Unpacks the event to see whether a tree element was involved. """
-        
+
         try:
             point = event.GetPosition()
 
@@ -337,18 +337,18 @@ class TreeViewer(ContentViewer):
             point = event.GetPoint()
 
         wxid, flags = self.control.HitTest(point)
-        
+
         # Warning: On GTK we have to check the flags before we call 'GetPyData'
         # because if we call it when the hit test returns 'nowhere' it will
         # barf (on Windows it simply returns 'None' 8^()
         if flags & wx.TREE_HITTEST_NOWHERE:
             data = None
-            
+
         else:
             data = self.control.GetPyData(wxid)
-            
+
         return data, wxid, flags, point
-  
+
     def _get_selection(self):
         """ Returns a list of the selected elements. """
 
@@ -365,14 +365,14 @@ class TreeViewer(ContentViewer):
             # fixme: Can we stop this happening?!?!?
             else:
                 pass
-                
+
         return elements
 
     def _delete_children(self, pid):
         """ Recursively deletes the children of the specified element. """
 
         cookie = 0
-        
+
         (cid, cookie) = self.control.GetFirstChild(pid, cookie)
         while cid.IsOk():
             # Recursively delete the child's children.
@@ -387,9 +387,9 @@ class TreeViewer(ContentViewer):
             (cid, cookie) = self.control.GetNextChild(pid, cookie)
 
         self.control.DeleteChildren(pid)
-        
+
         return
-        
+
     #### Trait event handlers #################################################
 
     def _input_changed(self):
@@ -412,7 +412,7 @@ class TreeViewer(ContentViewer):
 
         # We ask the label provider for the actual value to drag.
         drag_value = self.label_provider.get_drag_value(self, element)
-        
+
         # Start the drag.
         PythonDropSource(self.control, drag_value)
 
@@ -424,7 +424,7 @@ class TreeViewer(ContentViewer):
         """ Called when the right mouse button is clicked on the tree. """
 
         data, id, flags, point = self._unpack_event(event)
-        
+
         # Did the right click occur on a tree item?
         if data is not None:
             populated, element = data
@@ -494,7 +494,7 @@ class TreeViewer(ContentViewer):
 
         else:
             event.Veto()
-            
+
         return
 
     def _on_tree_item_expanded(self, event):
@@ -507,13 +507,13 @@ class TreeViewer(ContentViewer):
         # we have already populated the item with its children.  The second
         # element is the actual item data.
         populated, element = self.control.GetPyData(wxid)
-        
+
         # Make sure that the element's 'open' icon is displayed etc.
         self._refresh_element(wxid, element)
 
         # Trait notification.
         self.element_expanded = element
-        
+
         return
 
     def _on_tree_item_collapsing(self, event):
@@ -530,7 +530,7 @@ class TreeViewer(ContentViewer):
         # Give the label provider a chance to veto the collapse.
         if not self.label_provider.is_collapsible(self, element):
             event.Veto()
-        
+
         return
 
     def _on_tree_item_collapsed(self, event):
@@ -549,7 +549,7 @@ class TreeViewer(ContentViewer):
 
         # Trait notification.
         self.element_collapsed = element
-        
+
         return
 
     def _on_tree_item_activated(self, event):
@@ -575,7 +575,7 @@ class TreeViewer(ContentViewer):
         self.selection = self._get_selection()
 
         return
-        
+
     def _on_tree_begin_drag(self, event):
         """ Called when a drag operation is starting on a tree item. """
 
@@ -593,14 +593,14 @@ class TreeViewer(ContentViewer):
 
             # Trait notification.
             self.element_begin_drag = element
-            
+
         return
 
     def _on_tree_begin_label_edit(self, event):
         """ Called when the user has started editing an item's label. """
 
         wxid = event.GetItem()
-        
+
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
@@ -609,14 +609,14 @@ class TreeViewer(ContentViewer):
         # Give the label provider a chance to veto the edit.
         if not self.label_provider.is_editable(self, element):
             event.Veto()
-            
+
         return
 
     def _on_tree_end_label_edit(self, event):
         """ Called when the user has finished editing an item's label. """
 
         wxid = event.GetItem()
-        
+
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children. The second
         # element is the actual item data.

@@ -14,7 +14,7 @@ from reset_active_perspective_action import ResetActivePerspectiveAction
 from save_as_user_perspective_action import SaveAsUserPerspectiveAction
 from set_active_perspective_action import SetActivePerspectiveAction
 
-    
+
 class PerspectiveMenuManager(MenuManager):
     """ The default perspective menu for a workbench window. """
 
@@ -54,7 +54,7 @@ class PerspectiveMenuManager(MenuManager):
 
             # Create a group containing the reset actions.
             self._create_reset_perspective_group(self.window)
-            
+
         ]
 
         return groups
@@ -85,7 +85,7 @@ class PerspectiveMenuManager(MenuManager):
         self.changed = True
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -109,7 +109,7 @@ class PerspectiveMenuManager(MenuManager):
             )
 
         return group
-    
+
     def _create_user_perspective_group(self, window):
         """ Create the user perspective create/save/rename/delete actions. """
 

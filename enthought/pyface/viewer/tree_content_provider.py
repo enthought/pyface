@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 # Local imports.
 from content_provider import ContentProvider
 
-    
+
 class TreeContentProvider(ContentProvider):
     """ Abstract base class for tree content providers.
 
@@ -36,7 +36,7 @@ class TreeContentProvider(ContentProvider):
         viewer's) input is set to the given element.
 
         The returned list should not be modified by the viewer.
-        
+
         """
 
         return get_children(element)
@@ -52,17 +52,17 @@ class TreeContentProvider(ContentProvider):
         the tree), or if the parent cannot be computed.
 
         """
-        
+
         return None
 
     def get_children(self, element):
         """ Returns the children of an element. """
-        
+
         raise NotImplementedError
-    
+
     def has_children(self, element):
         """ Returns True iff the element has children, otherwise False. """
 
         raise NotImplementedError
-    
+
 #### EOF ####################################################################

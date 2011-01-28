@@ -34,7 +34,7 @@ class EditorManager(HasTraits):
         self._editor_to_kind_map = weakref.WeakKeyDictionary()
 
         return
-    
+
     ###########################################################################
     # 'IEditorManager' interface.
     ###########################################################################
@@ -43,7 +43,7 @@ class EditorManager(HasTraits):
         """ Registers an existing editor. """
 
         self._editor_to_kind_map[editor] = kind
-    
+
     def create_editor(self, window, obj, kind):
         """ Create an editor for an object. """
 
@@ -84,7 +84,7 @@ class EditorManager(HasTraits):
         """
 
         return None
-    
+
     ###########################################################################
     # 'Protected' 'EditorManager'  interface.
     ###########################################################################

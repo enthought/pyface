@@ -81,7 +81,7 @@ class TaskActionManagerBuilder(HasTraits):
             else:
                 index = len(children)
             if index == -1:
-                raise RuntimeError('Could not place addition %r at path %r.' % 
+                raise RuntimeError('Could not place addition %r at path %r.' %
                                    (addition, addition.path))
             children.insert(index, addition.item)
 

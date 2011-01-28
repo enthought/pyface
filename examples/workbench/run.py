@@ -20,10 +20,10 @@ logger.setLevel(logging.DEBUG)
 
 def main(argv):
     """ A simple example of using the workbench. """
-    
+
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
-    
+
     # Create some objects to edit.
     fred = Person(name='fred', age=42)
     wilma = Person(name='wilma', age=35)
@@ -52,14 +52,14 @@ def main(argv):
 
         # Cascade the windows.
         x += 100; y += 100
-    
+
     # Start the GUI event loop.
     gui.start_event_loop()
-    
+
     return
 
 
 if __name__ == '__main__':
     import sys; main(sys.argv)
-    
+
 #### EOF ######################################################################

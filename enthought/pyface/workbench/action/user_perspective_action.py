@@ -23,7 +23,7 @@ class UserPerspectiveAction(WorkbenchAction):
     active perspective is a user perspective.
 
     """
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -55,7 +55,7 @@ class UserPerspectiveAction(WorkbenchAction):
         self.enabled = self.window is not None \
           and self.window.active_perspective is not None \
           and self._is_user_perspective(self.window.active_perspective)
-        
+
         return
 
 #### EOF #####################################################################

@@ -21,10 +21,10 @@ def not_empty_string(object, name, value):
 
     if isinstance(value, basestring) and (value.strip() != ''):
         return value
-        
+
     raise TraitError
 
-# Define a trait which can not be the empty string:    
+# Define a trait which can not be the empty string:
 NotEmptyString = Trait('', not_empty_string)
 
 
@@ -40,22 +40,22 @@ class UserPerspectiveName(HasTraits):
 
     # Should the editor area be shown in this perpsective?
     show_editor_area = Bool(True)
-    
+
     # Help notes when creating a new view.
     new_help = Constant("""Note:
  - The new perspective will initially be empty.
- - Add new views to the perspective by selecting 
+ - Add new views to the perspective by selecting
    them from the 'View' menu.
- - Drag the notebook tabs and splitter bars to 
-   arrange the views within the perspective.""") 
+ - Drag the notebook tabs and splitter bars to
+   arrange the views within the perspective.""")
 
     #### Traits views #########################################################
 
-    new_view = View( 
+    new_view = View(
         VGroup(
             VGroup( 'name', 'show_editor_area' ),
             VGroup( '_',
-                Item( 'new_help', 
+                Item( 'new_help',
                       style = 'readonly' ),
                 show_labels = False
             )

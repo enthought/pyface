@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -58,14 +58,14 @@ class TreeModel(HasTraits):
         actually get the children themselves.
 
         """
-        
+
         raise NotImplementedError
 
     def get_children(self, node):
         """ Returns the children of a node. """
-        
+
         raise NotImplementedError
-    
+
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
 
@@ -84,7 +84,7 @@ class TreeModel(HasTraits):
         """ Drops an object onto a node. """
 
         raise NotImplementedError
-    
+
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node.
 
@@ -102,7 +102,7 @@ class TreeModel(HasTraits):
 
         except:
             key = id(node)
-        
+
         return key
 
     def get_selection_value(self, node):
@@ -137,7 +137,7 @@ class TreeModel(HasTraits):
         """ Returns True if the node is collapsible, otherwise False. """
 
         return True
-    
+
     def is_draggable(self, node):
         """ Returns True if the node is draggable, otherwise False. """
 
@@ -151,7 +151,7 @@ class TreeModel(HasTraits):
         """
 
         return False
-    
+
     def is_expandable(self, node):
         """ Returns True if the node is expandanble, otherwise False. """
 
@@ -159,7 +159,7 @@ class TreeModel(HasTraits):
 
     def add_listener(self, node):
         """ Adds a listener for changes to a node. """
-        
+
         pass
 
     def remove_listener(self, node):
@@ -171,21 +171,21 @@ class TreeModel(HasTraits):
         """ Fires the nodes changed event. """
 
         self.nodes_changed = NodeEvent(node=node, children=children)
-        
+
         return
 
     def fire_nodes_inserted(self, node, children):
         """ Fires the nodes inserted event. """
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
-        
+
         return
 
     def fire_nodes_removed(self, parent, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)
-        
+
         return
 
     def fire_nodes_replaced(self, node, old_children, new_children):
@@ -194,14 +194,14 @@ class TreeModel(HasTraits):
         self.nodes_replaced = NodeEvent(
             node=node, old_children=old_children, children=new_children
         )
-        
+
         return
 
     def fire_structure_changed(self, node):
         """ Fires the structure changed event. """
 
         self.structure_changed = NodeEvent(node=node)
-        
+
         return
 
 #### EOF ####################################################################

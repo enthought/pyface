@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class Grid(wxGrid):
 
         # The model that provides the data and row/column information.
         self.model = None
-        
+
         # Automatically size columns and rows to fit their content.
         #
         # fixme: wx seems sensitive to the location of these two lines. Put
@@ -60,7 +60,7 @@ class Grid(wxGrid):
         # fixme: We should create a default model if one is not supplied.
         self.SetTable(model._grid_table_base, True)
         model.on_trait_change(self._on_model_changed, 'model_changed')
-        
+
         wx.grid.EVT_GRID_CELL_CHANGE(self, self._on_cell_change)
         wx.grid.EVT_GRID_SELECT_CELL(self, self._on_select_cell)
 
@@ -84,14 +84,14 @@ class Grid(wxGrid):
 
     def _initialize_fonts(self):
         """ Initialize the label fonts. """
-        
+
         self.SetLabelFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
         return
-    
+
     def _initialize_rows(self, model):
         """ Initialize the row headers. """
 
@@ -106,7 +106,7 @@ class Grid(wxGrid):
                     attr.SetRenderer(None)
                     attr.SetBackgroundColour('linen')
                     self.SetRowAttr(index, attr)
-                
+
         return
 
     def _initialize_columns(self, model):
@@ -135,15 +135,15 @@ class Grid(wxGrid):
 
         row = evt.GetRow()
         col = evt.GetCol()
-         
+
         ##print 'Cell changed at', row, col
         value = self.GetTable().GetValue(row, col)
-         
+
         ##print 'New value', value
         ##print 'Type', type(value)
 
         evt.Skip()
-        
+
         return
 
     def _on_select_cell(self, evt):
@@ -151,25 +151,25 @@ class Grid(wxGrid):
 
         ##row = evt.GetRow()
         ##col = evt.GetCol()
-         
+
         ##print 'Cell selected at', row, col
 
         evt.Skip()
-        
+
         return
-    
+
     def _on_cell_left_dclick(self, evt):
         """ Called when the left mouse button was double-clicked.
 
         From the wxPython demo code:-
-    
+
         'I do this because I don't like the default behaviour of not starting
         the cell editor on double clicks, but only a second click.'
 
         Fair enuff!
 
         """
-        
+
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
 
@@ -196,9 +196,9 @@ class Grid(wxGrid):
             wx.EVT_MENU(self, 101, self._on_delete_row)
 
             self.PopupMenu(menu, evt.GetPosition())
-        
+
         return
-        
+
     def _on_key_down(self, evt):
         """ Called when a key is pressed. """
 
@@ -217,7 +217,7 @@ class Grid(wxGrid):
 
             else:
                 self._move_to_next_cell()
-                
+
         else:
             evt.Skip()
 
@@ -245,7 +245,7 @@ class Grid(wxGrid):
         self.EndBatch()
 
         return
-    
+
     ###########################################################################
     # 'Grid' interface.
     ###########################################################################
@@ -255,12 +255,12 @@ class Grid(wxGrid):
         #attr = grid.GridCellAttr()
         #renderer = MyRenderer()
         #attr.SetRenderer(renderer)
-        
+
         #self.SetColSize(0, 50)
         #self.SetColAttr(0, attr)
 
         self.ForceRefresh()
-        
+
         return
 
 
@@ -272,7 +272,7 @@ class Grid(wxGrid):
         print '*************************VirtualModel.reset_view'
 
         grid = self
-        
+
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
             (self._rows, self.GetNumberRows(), GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED),
@@ -289,7 +289,7 @@ class Grid(wxGrid):
 
         self._rows = self.GetNumberRows()
         self._cols = self.GetNumberCols()
-        
+
         # update the renderers
         # self._updateColAttrs(grid)
         # self._updateRowAttrs(grid) too expensive to use on a large grid
@@ -299,9 +299,9 @@ class Grid(wxGrid):
         grid.ForceRefresh()
 
         return
-    
 
-    
+
+
     ###########################################################################
     # Protected interface.
     ###########################################################################
@@ -327,7 +327,7 @@ class Grid(wxGrid):
                 # This would be a good place to add a new row if your app
                 # needs to do that.
                 pass
-            
+
         return success
 
     def _move_to_previous_cell(self, expandSelection=False):
@@ -349,5 +349,5 @@ class Grid(wxGrid):
                 self.MakeCellVisible(newRow, self.GetNumberCols() - 1)
 
         return
-    
+
 #### EOF ######################################################################

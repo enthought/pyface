@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005-2009 by Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
@@ -72,7 +72,7 @@ class MImageResource(object):
 
     # The image-not-found image.  Note that it is not a trait.
     _image_not_found = None
-    
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -101,7 +101,7 @@ class MImageResource(object):
 
         else:
             image = self._get_image_not_found_image()
-            
+
         return image
 
     ###########################################################################

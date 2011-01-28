@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -30,10 +30,10 @@ class IConfirmationDialog(IDialog):
 
     # Should the cancel button be displayed?
     cancel = Bool(False)
-    
+
     # The default button.
     default = Enum(NO, YES, CANCEL)
-    
+
     # The image displayed with the message.  The default is toolkit specific.
     image = Instance(ImageResource)
 
@@ -41,9 +41,9 @@ class IConfirmationDialog(IDialog):
     # 'title' trait to set the title of the dialog itself).
     message = Unicode
 
-    # Some informative text to display below the main message    
+    # Some informative text to display below the main message
     informative = Unicode
-    
+
     # Some additional details that can be exposed by the user
     detail = Unicode
 

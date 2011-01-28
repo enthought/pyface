@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ from enthought.traits.api import HasTraits
 
 class Sorter(HasTraits):
     """ Abstract base class for all sorters. """
-    
+
     ###########################################################################
     # 'ViewerSorter' interface.
     ###########################################################################
@@ -33,7 +33,7 @@ class Sorter(HasTraits):
         'nodes'  is the list of nodes to sort.
 
         Returns the list that was sorted IN PLACE (for convenience).
-        
+
         """
 
         # This creates a comparison function with the names 'widget' and
@@ -42,7 +42,7 @@ class Sorter(HasTraits):
             """ Comparator. """
 
             return self.compare(widget, parent, node_a, node_b)
-        
+
         nodes.sort(comparator)
 
         return nodes
@@ -60,7 +60,7 @@ class Sorter(HasTraits):
         # Get the category for each node.
         category_a = self.category(widget, parent, node_a)
         category_b = self.category(widget, parent, node_b)
-        
+
         # If they are not in the same category then return the result of
         # comparing the categories.
         if category_a != category_b:
@@ -86,7 +86,7 @@ class Sorter(HasTraits):
         dictated by the sorter's 'compare' method.
 
         By default all nodes are given the same category (0).
-        
+
         """
 
         return 0
@@ -101,9 +101,9 @@ class Sorter(HasTraits):
         named 'trait_name' on the specified node.
 
         By default we return False.
-        
+
         """
 
         return False
-    
+
 #### EOF ######################################################################

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -33,10 +33,10 @@ class PreferenceNode(TreeItem):
     """
 
     #### 'PreferenceNode' interface ###########################################
-    
+
     # The node's unique Id.
     id = Str
-    
+
     # The node's image.
     image = Str
 
@@ -45,7 +45,7 @@ class PreferenceNode(TreeItem):
 
     # The Id of the help topic for the node.
     help_id = Str
-    
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -54,7 +54,7 @@ class PreferenceNode(TreeItem):
         """ Returns the string representation of the item. """
 
         return self.name
-    
+
     ###########################################################################
     # 'PreferenceNode' interface.
     ###########################################################################
@@ -79,5 +79,5 @@ class PreferenceNode(TreeItem):
             node = None
 
         return node
-    
+
 #### EOF ######################################################################

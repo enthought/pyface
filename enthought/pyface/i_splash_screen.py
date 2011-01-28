@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ class ISplashScreen(IWindow):
     """ The interface for a splash screen. """
 
     #### 'ISplashScreen' interface ############################################
-    
+
     # The image to display on the splash screen.
     image = Instance(ImageResource, ImageResource('splash'))
 
@@ -81,7 +81,7 @@ class MSplashScreen(object):
         if self.show_log_messages:
             self._log_handler = SplashScreenLogHandler(self)
             self._log_handler.setLevel(self.log_level)
-            
+
             # Get the root logger.
             logger = logging.getLogger()
             logger.addHandler(self._log_handler)

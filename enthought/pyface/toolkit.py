@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
@@ -43,16 +43,16 @@ def _init_toolkit():
         for tk in known_toolkits:
             try:
                 be = import_toolkit(tk)
-        
+
                 # In case we have just decided on a toolkit, tell everybody else.
                 ETSConfig.toolkit = tk
                 break
             except (SystemExit, ImportError):
                 import traceback
                 print >>sys.stderr, ('Warning: Unable to import the %s backend '
-                    'for pyface due to traceback: %s\n') % (tk, 
+                    'for pyface due to traceback: %s\n') % (tk,
                     traceback.format_exc().strip().replace('\n', '\n\t'))
-    
+
         else:
             # Try to import the null toolkit but don't set the ETSConfig toolkit
             try:
@@ -62,7 +62,7 @@ def _init_toolkit():
             except:
                 raise ImportError("Unable to import a pyface backend for any "
                     "of the %s toolkits" % ", ".join(known_toolkits))
-    
+
 
     # Save the imported toolkit module.
     global _toolkit_backend

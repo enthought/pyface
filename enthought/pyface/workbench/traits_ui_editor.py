@@ -29,7 +29,7 @@ class TraitsUIEditor(Editor):
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
     view = Str
-    
+
     ###########################################################################
     # 'IWorkbenchPart' interface.
     ###########################################################################
@@ -40,7 +40,7 @@ class TraitsUIEditor(Editor):
         """ Trait initializer. """
 
         return str(self.obj)
-    
+
     #### Methods ##############################################################
 
     def create_control(self, parent):
@@ -51,9 +51,9 @@ class TraitsUIEditor(Editor):
         Overridden to call 'create_ui' to get the traits UI.
 
         """
-        
+
         self.ui = self.create_ui(parent)
-        
+
         return self.ui.control
 
     def destroy_control(self):
@@ -68,7 +68,7 @@ class TraitsUIEditor(Editor):
             logger.debug('disposing traits UI for editor [%s]', self)
             self.ui.dispose()
             self.ui = None
-            
+
         return
 
     ###########################################################################
@@ -86,7 +86,7 @@ class TraitsUIEditor(Editor):
         ui = self.obj.edit_traits(
             parent=parent, view=self.view, kind='subpanel'
         )
-        
+
         return ui
 
 #### EOF ######################################################################

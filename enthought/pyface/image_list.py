@@ -77,13 +77,13 @@ class ImageList(wx.ImageList):
 
             # We force all images in the cache to be the same size.
             self._scale(image)
-            
+
             # We also force them to be bitmaps!
             bmp = image.ConvertToBitmap()
-            
+
             # Add the bitmap to the actual list...
             index = self.Add(bmp)
-            
+
             # ... and update the cache.
             self._cache[filename] = index
 

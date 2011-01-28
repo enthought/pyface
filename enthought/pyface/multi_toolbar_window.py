@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ class MultiToolbarWindow(ApplicationWindow):
                                 TraitDict(Trait(ToolBarManager),
                                           TraitEnum('top', 'bottom',
                                                     'left', 'right')))
-    
+
     ###########################################################################
     # Protected 'Window' interface.
     ###########################################################################
@@ -50,21 +50,21 @@ class MultiToolbarWindow(ApplicationWindow):
         self._create_trim_widgets(parent)
 
         return panel
-    
+
     def _create_trim_widgets(self, parent):
 
         # The frame's icon.
         self._set_window_icon()
-        
+
         # Add the (optional) menu bar.
         self._create_menu_bar(parent)
-        
+
         # Add the (optional) status bar.
         self._create_status_bar(parent)
 
         # Add the (optional) tool bars.
         self.sizer = self._create_tool_bars(parent)
-        
+
         return
 
     def _create_tool_bars(self, parent):
@@ -81,7 +81,7 @@ class MultiToolbarWindow(ApplicationWindow):
                 location = self._tool_bar_locations[tool_bar_manager]
                 sizer = self._create_tool_bar(parent, sizer, tool_bar_manager,
                                               location)
-                                      
+
             return sizer
 
         return None
@@ -98,7 +98,7 @@ class MultiToolbarWindow(ApplicationWindow):
         """
 
         tool_bar = tool_bar_manager.create_tool_bar(parent)
-        
+
         if location == 'top':
             child_sizer = wx.BoxSizer(wx.VERTICAL)
             child_sizer.Add(tool_bar, 0, wx.ALL | wx.ALIGN_LEFT | wx.EXPAND)
@@ -128,15 +128,15 @@ class MultiToolbarWindow(ApplicationWindow):
             # Add the tool bar.
             toolbar_sizer.Add(tool_bar, 0, wx.ALL | wx.ALIGN_TOP | wx.EXPAND)
             sizer.Add(toolbar_sizer, 1, wx.ALL | wx.EXPAND)
-            
+
         return child_sizer
-        
+
     def _create_content_spacer(self, sizer):
         spacer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(spacer, 1, wx.ALL | wx.EXPAND)
 
         return spacer
-    
+
     ###########################################################################
     # Public MultiToolbarWindow interface
     ###########################################################################

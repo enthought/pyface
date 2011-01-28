@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ class IPythonEditor(Interface):
     """ A widget for editing Python code. """
 
     #### 'IPythonEditor' interface ############################################
-    
+
     # Has the file in the editor been modified?
     dirty = Bool(False)
 
@@ -42,11 +42,11 @@ class IPythonEditor(Interface):
 
     # A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
-    
+
     ###########################################################################
     # 'IPythonEditor' interface.
     ###########################################################################
-    
+
     def load(self, path=None):
         """ Loads the contents of the editor. """
 

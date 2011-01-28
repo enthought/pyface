@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought resource package component>
 #------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ class ResourceReference(HasTraits):
 
     # The resource factory that will be used to load the resource.
     resource_factory = Instance(ResourceFactory) # ReadOnly
-    
+
     ###########################################################################
     # 'ResourceReference' interface.
     ###########################################################################
@@ -52,14 +52,14 @@ class ImageReference(ResourceReference):
     # was read from the zip file.
     data = Any # ReadOnly
 
-    
+
     def __init__(self, resource_factory, filename=None, data=None):
         """ Creates a new image reference. """
 
         self.resource_factory = resource_factory
         self.filename = filename
         self.data = data
-        
+
         return
 
     ###########################################################################
@@ -79,5 +79,5 @@ class ImageReference(ResourceReference):
             raise ValueError("Image reference has no filename OR data")
 
         return image
-    
+
 #### EOF ######################################################################

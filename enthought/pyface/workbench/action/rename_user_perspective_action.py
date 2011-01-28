@@ -34,7 +34,7 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
 
         window  = event.window
         manager = window.workbench.user_perspective_manager
-        
+
         # Get the new name.
         upn = UserPerspectiveName(name=window.active_perspective.name)
         if upn.edit_traits(view='rename_view').result:

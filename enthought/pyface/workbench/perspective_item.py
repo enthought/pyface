@@ -12,7 +12,7 @@ class PerspectiveItem(HasTraits):
     """ An item in a Perspective contents list. """
 
     implements(IPerspectiveItem)
-    
+
     # The Id of the view to display in the perspective.
     id = Str
 
@@ -29,12 +29,12 @@ class PerspectiveItem(HasTraits):
     # item other than the editor area (i.e., you cannot position a view 'with'
     # the editor area).
     position = Enum('left', 'top', 'bottom', 'right', 'with')
-    
+
     # The Id of the view to position relative to. If this is not specified
     # (or if no view exists with this Id) then the view will be placed relative
     # to the editor area.
     relative_to = Str
-    
+
     # The width of the item (as a fraction of the window width).
     #
     # e.g. 0.5 == half the window width.
@@ -42,7 +42,7 @@ class PerspectiveItem(HasTraits):
     # Note that this is treated as a suggestion, and it may not be possible
     # for the workbench to allocate the space requested.
     width = Float(-1)
-    
+
     # The height of the item (as a fraction of the window height).
     #
     # e.g. 0.5 == half the window height.

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Prabhu Ramachandran <prabhu_r@users.sf.net>
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
             attributes += [attr for attr in attrlist \
                            if attr not in object_dir and \
                            hasattr(object, attr)]
-            
+
     # Remove duplicates from the attribute list.
     for item in attributes:
         dict[item] = None
@@ -93,7 +93,7 @@ introspect.getAttributeNames = getAttributeNames
 # str(object).
 def getAllAttributeNames(object):
     """Return dict of all attributes, including inherited, for an object.
-    
+
     Recursively walk through a class and all base classes.
     """
     attrdict = {}  # (object, technique, count): [list of attributes]

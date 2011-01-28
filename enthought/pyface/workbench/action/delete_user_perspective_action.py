@@ -36,7 +36,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
 
         window  = event.window
         manager = window.workbench.user_perspective_manager
-        
+
         # The perspective to delete.
         perspective = window.active_perspective
 
@@ -52,7 +52,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
             # perspectives are explicitly defined) so we should never(!) not
             # be able to find one!
             window.active_perspective = self._get_next_perspective(window)
-                
+
             # Remove the perspective from the window.
             window.perspectives.remove(perspective)
 
@@ -73,8 +73,8 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
 
         else:
             index = 0
-                
+
         return window.perspectives[index]
-    
+
 #### EOF #####################################################################
 

@@ -13,13 +13,13 @@ class IEditorManager(Interface):
 
     def add_editor(self, editor, kind):
         """ Registers an existing editor. """
-    
+
     def create_editor(self, window, obj, kind):
         """ Create an editor for an object.
 
         'kind' optionally contains any data required by the specific editor
         manager implementation to decide what type of editor to create.
-        
+
         Returns None if no editor can be created for the resource.
         """
 
@@ -38,7 +38,7 @@ class IEditorManager(Interface):
     def get_editor_memento(self, editor):
         """ Return the state of an editor suitable for pickling etc.
         """
-        
+
     def set_editor_memento(self, memento):
         """ Restore an editor from a memento and return it. """
 

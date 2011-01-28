@@ -32,7 +32,7 @@ class Schema(HasTraits):
             child items.
         """
         raise NotImplementedError
-        
+
     def find(self, id):
         """ Returns the index of the item with the specified ID in the schema's
             list of items, or -1 if no such item exists.
@@ -86,7 +86,7 @@ class MenuBarSchema(Schema):
     def create(self, children):
         traits = dict(id=self.id)
         return self.menu_bar_manager_factory(*children, **traits)
-    
+
 
 class ToolBarSchema(Schema):
     """ A schema for a Pyface ToolBarManager.
@@ -101,7 +101,7 @@ class ToolBarSchema(Schema):
     def create(self, children):
         traits = dict(id=self.id)
         return self.tool_bar_manager_factory(*children, **traits)
-    
+
 
 # Convenience abbreviations.
 SGroup = GroupSchema

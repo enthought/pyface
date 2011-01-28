@@ -20,7 +20,7 @@ from enthought.pyface.i_clipboard import IClipboard, BaseClipboard
 class Clipboard(BaseClipboard):
     """ A dummy clipboard implementationf for the null backend.
     """
-    
+
     implements(IClipboard)
 
     #---------------------------------------------------------------------------
@@ -62,7 +62,7 @@ class Clipboard(BaseClipboard):
     #---------------------------------------------------------------------------
     #  'file_data' property methods:
     #---------------------------------------------------------------------------
-    
+
     def _get_file_data(self):
         pass
 

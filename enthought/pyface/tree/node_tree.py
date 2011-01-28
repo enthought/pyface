@@ -105,7 +105,7 @@ class NodeTree(Tree):
         menu_manager = self.model.get_context_menu(obj)
         if menu_manager is not None:
             self._popup_menu(menu_manager, obj, point)
-            
+
         return
 
     ###########################################################################
@@ -176,7 +176,7 @@ class NodeTree(Tree):
             # This gives the actions in the menu manager a chance to cleanup
             # any event listeners etc.
             menu_manager.destroy()
-            
+
         return
 
 #### EOF ######################################################################

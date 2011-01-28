@@ -208,7 +208,7 @@ def clear_window ( window ):
     """
     bg_color = SystemMetrics().dialog_background_color
     bg_color = wx.Colour(bg_color[0]*255, bg_color[1]*255, bg_color[2]*255)
-    
+
     dx, dy = window.GetSizeTuple()
     dc     = wx.PaintDC( window )
     dc.SetBrush( wx.Brush( bg_color, wx.SOLID ) )
@@ -805,7 +805,7 @@ class DockItem ( HasPrivateTraits ):
         """ Fills a specified region with the control's background color.
         """
         dc.SetPen( wx.TRANSPARENT_PEN )
-        
+
         dc.SetBrush( wx.Brush( self.get_bg_color() ) )
         dc.DrawRectangle( x, y, dx, dy )
 
@@ -2501,7 +2501,7 @@ class DockRegion ( DockGroup ):
                     return
 
                 self.fill_bg_color( dc, *self.bounds )
-                
+
                 if self.active >= len(self.contents):
                     # on some platforms, if the active tab was destroyed
                     # the new active tab may not have been set yet
@@ -2940,7 +2940,7 @@ class DockRegion ( DockGroup ):
         x, y, dx, dy = self.bounds
 
         self.fill_bg_color( dc, x, y, dx, dy )
-        
+
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
         pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
@@ -3109,7 +3109,7 @@ class DockSection ( DockGroup ):
         # Allocate the remainder to those parts that didn't request a width.
         if remain > 0:
             remain = int( avail / remain )
-            
+
             for i, sz in enumerate( sizes ):
                 if sz < 0:
                     sizes[i] = remain

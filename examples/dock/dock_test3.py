@@ -1,52 +1,52 @@
 #-------------------------------------------------------------------------------
-#  
-#  Test the DockWindow.  
-#  
+#
+#  Test the DockWindow.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 10/20/2005
-#  
+#
 #  (c) Copyright 2005 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import sys
 
 from enthought.traits.api \
     import *
-    
+
 from enthought.traits.ui.api \
     import *
-    
+
 from enthought.traits.ui.menu \
     import *
-           
+
 from enthought.pyface.image_resource \
     import ImageResource
-    
+
 from enthought.developer.tools.ui_debugger import UIDebugger
 
 #-------------------------------------------------------------------------------
-#  Constants:  
+#  Constants:
 #-------------------------------------------------------------------------------
-        
+
 image1 = ImageResource( 'folder' )
 image2 = ImageResource( 'gear' )
 
 #-------------------------------------------------------------------------------
-#  'TestDock' class:  
+#  'TestDock' class:
 #-------------------------------------------------------------------------------
 
 class TestDock ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     button1  = Button
     button2  = Button
     button3  = Button
@@ -62,18 +62,18 @@ class TestDock ( HasPrivateTraits ):
     code1    = Code
     code2    = Code
     debug    = Instance(UIDebugger)
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
-    view = View( 
-        HSplit( 
+
+    view = View(
+        HSplit(
             VSplit(
                 Tabbed( 'button1', 'button2', image = image1 ),
                 Tabbed( 'button3', 'button4', image = image2 )
             ),
-            Tabbed( VSplit( 'button5',  'button6' ), 
+            Tabbed( VSplit( 'button5',  'button6' ),
                     Tabbed( 'button7',  'button8' ),
                     HSplit( 'button9',  'button10' ),
                     Group( 'code1@', '|<>', image = image1 ),
@@ -91,10 +91,10 @@ class TestDock ( HasPrivateTraits ):
         height    = 0.5,
         buttons   = NoButtons
     )
-                 
+
 #-------------------------------------------------------------------------------
-#  Run the test program:  
+#  Run the test program:
 #-------------------------------------------------------------------------------
-                        
+
 if __name__ == '__main__':
     TestDock().configure_traits()

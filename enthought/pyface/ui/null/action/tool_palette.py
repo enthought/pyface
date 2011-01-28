@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ from enthought.traits.api import Bool, Dict, Int, List, Tuple
 class ToolPalette(Widget):
 
     tools = List
-    
+
     id_tool_map = Dict
 
     tool_id_to_button_map = Dict
@@ -34,9 +34,9 @@ class ToolPalette(Widget):
 
     # Maps a button id to its tool id.
     button_tool_map = Dict
-    
+
     ###########################################################################
-    # 'object' interface. 
+    # 'object' interface.
     ###########################################################################
 
     def __init__(self, parent, **traits):
@@ -88,14 +88,14 @@ class ToolPalette(Widget):
         state = 0
 
         return state
-            
-    
+
+
     ###########################################################################
     # Private interface.
     ###########################################################################
-    
+
     def _create_control(self, parent):
         return None
 
-        
+
 #### EOF ######################################################################

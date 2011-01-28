@@ -42,13 +42,13 @@ class NewUserPerspectiveAction(WorkbenchAction):
             perspective = manager.create_perspective(
                 upn.name.strip(), upn.show_editor_area
             )
-            
+
             # Add it to the window...
             window.perspectives.append(perspective)
-            
+
             # ... and make it the active perspective.
             window.active_perspective = perspective
-            
+
         return
 
 #### EOF #####################################################################

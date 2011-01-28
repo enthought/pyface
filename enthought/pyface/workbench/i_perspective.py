@@ -7,7 +7,7 @@ from enthought.traits.api import Bool, Interface, List, Str, Tuple
 # Local imports.
 from perspective_item import PerspectiveItem
 
-    
+
 class IPerspective(Interface):
     """ The perspective interface. """
 
@@ -30,7 +30,7 @@ class IPerspective(Interface):
 
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool
-    
+
     #### Methods ##############################################################
 
     def create(self, window):

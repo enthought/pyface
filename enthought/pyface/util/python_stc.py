@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ class PythonSTC(stc.StyledTextCtrl):
 
         # Setup a margin to hold fold markers
         ###  WHAT IS THIS VALUE?  WHAT ARE THE OTHER FLAGS?  DOES IT MATTER?
-        self.SetFoldFlags(16)  
+        self.SetFoldFlags(16)
         #mic
         #self.SetMarginType(2, stc.STC_MARGIN_SYMBOL)
         #self.SetMarginMask(2, stc.STC_MASK_FOLDERS)
@@ -82,35 +82,35 @@ class PythonSTC(stc.StyledTextCtrl):
         self.SetMarginWidth(1, 25)
 
         if 0: # simple folder marks, like the old version
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDER, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDER,
                               stc.STC_MARK_ARROW, "navy", "navy")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,
                               stc.STC_MARK_ARROWDOWN, "navy", "navy")
             # Set these to an invisible mark
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID,
                               stc.STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL,
                               stc.STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB,
                               stc.STC_MARK_BACKGROUND, "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,
                               stc.STC_MARK_BACKGROUND, "white", "black")
 
         elif 0: # more involved "outlining" folder marks
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDEREND,     
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEREND,
                               stc.STC_MARK_BOXPLUSCONNECTED, "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID, 
-                              stc.STC_MARK_BOXMINUSCONNECTED, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID,
+                              stc.STC_MARK_BOXMINUSCONNECTED,
                               "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL, 
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL,
                               stc.STC_MARK_TCORNER,  "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,    
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,
                               stc.STC_MARK_LCORNER,  "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB,     
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB,
                               stc.STC_MARK_VLINE,    "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDER,        
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDER,
                               stc.STC_MARK_BOXPLUS,  "white", "black")
-            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,    
+            self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,
                               stc.STC_MARK_BOXMINUS, "white", "black")
 
 
@@ -119,65 +119,65 @@ class PythonSTC(stc.StyledTextCtrl):
 
 
         # Make some styles,  The lexer defines what each style is used for, we
-        # just have to define what each style looks like.  This set is adapted 
+        # just have to define what each style looks like.  This set is adapted
         # from Scintilla sample property files.
 
         self.StyleClearAll()
 
         # Global default styles for all languages
-        self.StyleSetSpec(stc.STC_STYLE_DEFAULT,     
+        self.StyleSetSpec(stc.STC_STYLE_DEFAULT,
                           "face:%(helv)s,size:%(size)d" % faces)
-        self.StyleSetSpec(stc.STC_STYLE_LINENUMBER,  
+        self.StyleSetSpec(stc.STC_STYLE_LINENUMBER,
                           "back:#C0C0C0,face:%(helv)s,size:%(size2)d" % faces)
-        self.StyleSetSpec(stc.STC_STYLE_CONTROLCHAR, 
+        self.StyleSetSpec(stc.STC_STYLE_CONTROLCHAR,
                           "face:%(other)s" % faces)
-        self.StyleSetSpec(stc.STC_STYLE_BRACELIGHT,  
+        self.StyleSetSpec(stc.STC_STYLE_BRACELIGHT,
                           "fore:#FFFFFF,back:#0000FF,bold")
-        self.StyleSetSpec(stc.STC_STYLE_BRACEBAD,    
+        self.StyleSetSpec(stc.STC_STYLE_BRACEBAD,
                           "fore:#000000,back:#FF0000,bold")
 
         # Python styles
         # White space
-        self.StyleSetSpec(stc.STC_P_DEFAULT, 
+        self.StyleSetSpec(stc.STC_P_DEFAULT,
                           "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
         # Comment
-        self.StyleSetSpec(stc.STC_P_COMMENTLINE, 
+        self.StyleSetSpec(stc.STC_P_COMMENTLINE,
                           "fore:#007F00,face:%(other)s,size:%(size)d" % faces)
         # Number
-        self.StyleSetSpec(stc.STC_P_NUMBER, 
+        self.StyleSetSpec(stc.STC_P_NUMBER,
                           "fore:#007F7F,size:%(size)d" % faces)
         # String
-        self.StyleSetSpec(stc.STC_P_STRING, 
+        self.StyleSetSpec(stc.STC_P_STRING,
                   "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
         # Single quoted string
-        self.StyleSetSpec(stc.STC_P_CHARACTER, 
+        self.StyleSetSpec(stc.STC_P_CHARACTER,
                   "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
         # Keyword
-        self.StyleSetSpec(stc.STC_P_WORD, 
+        self.StyleSetSpec(stc.STC_P_WORD,
                           "fore:#00007F,bold,size:%(size)d" % faces)
         # Triple quotes
-        self.StyleSetSpec(stc.STC_P_TRIPLE, 
+        self.StyleSetSpec(stc.STC_P_TRIPLE,
                           "fore:#7F0000,size:%(size)d" % faces)
         # Triple double quotes
-        self.StyleSetSpec(stc.STC_P_TRIPLEDOUBLE, 
+        self.StyleSetSpec(stc.STC_P_TRIPLEDOUBLE,
                           "fore:#7F0000,size:%(size)d" % faces)
         # Class name definition
-        self.StyleSetSpec(stc.STC_P_CLASSNAME, 
+        self.StyleSetSpec(stc.STC_P_CLASSNAME,
                           "fore:#0000FF,bold,underline,size:%(size)d" % faces)
         # Function or method name definition
-        self.StyleSetSpec(stc.STC_P_DEFNAME, 
+        self.StyleSetSpec(stc.STC_P_DEFNAME,
                           "fore:#007F7F,bold,size:%(size)d" % faces)
         # Operators
-        self.StyleSetSpec(stc.STC_P_OPERATOR, 
+        self.StyleSetSpec(stc.STC_P_OPERATOR,
                           "bold,size:%(size)d" % faces)
         # Identifiers
-        self.StyleSetSpec(stc.STC_P_IDENTIFIER, 
+        self.StyleSetSpec(stc.STC_P_IDENTIFIER,
                           "fore:#808080,face:%(helv)s,size:%(size)d" % faces)
         # Comment-blocks
-        self.StyleSetSpec(stc.STC_P_COMMENTBLOCK, 
+        self.StyleSetSpec(stc.STC_P_COMMENTBLOCK,
                           "fore:#7F7F7F,size:%(size)d" % faces)
         # End of line where string is not closed
-        self.StyleSetSpec(stc.STC_P_STRINGEOL, 
+        self.StyleSetSpec(stc.STC_P_STRINGEOL,
           "fore:#000000,face:%(mono)s,back:#E0C0E0,eol,size:%(size)d" % faces)
 
 
@@ -194,11 +194,11 @@ class PythonSTC(stc.StyledTextCtrl):
         # Handle either case.
         if type(event.KeyCode) is int:
             # wx2.8+
-            key = event.KeyCode    
+            key = event.KeyCode
         else:
             # wx2.6
             key = event.KeyCode()
-            
+
         if key == 32 and event.ControlDown():
             pos = self.GetCurrentPos()
             # Tips
@@ -208,7 +208,7 @@ class PythonSTC(stc.StyledTextCtrl):
             # Code completion
             else:
                 # fixme: What is this mess!!!
-                
+
                 #lst = []
                 #for x in range(50000):
                 #    lst.append('%05d' % x)
@@ -254,7 +254,7 @@ class PythonSTC(stc.StyledTextCtrl):
         if braceAtCaret < 0:
             charAfter = self.GetCharAt(caretPos)
             styleAfter = self.GetStyleAt(caretPos)
-            if (charAfter and 
+            if (charAfter and
                 chr(charAfter) in "[]{}()" and
                 styleAfter == stc.STC_P_OPERATOR):
                 braceAtCaret = caretPos

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ from enthought.traits.api import HasTraits
 
 class ViewerFilter(HasTraits):
     """ Abstract base class for all viewer filters. """
-    
+
     ###########################################################################
     # 'ViewerFilter' interface.
     ###########################################################################
@@ -34,11 +34,11 @@ class ViewerFilter(HasTraits):
 
         Returns a list containing only those elements for which 'select'
         returns True.
-        
+
         """
 
         return [e for e in elements if self.select(viewer, parent, e)]
-    
+
     def select(self, viewer, parent, element):
         """ Returns True if the element is 'allowed' (ie. NOT filtered).
 
@@ -62,9 +62,9 @@ class ViewerFilter(HasTraits):
         named 'trait_name' on the specified element.
 
         By default we return False.
-        
+
         """
 
         return False
-    
+
 #### EOF ######################################################################

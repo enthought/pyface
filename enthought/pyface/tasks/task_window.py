@@ -26,7 +26,7 @@ class TaskState(HasStrictTraits):
     """ An object used internally by TaskWindow to maintain the state associated
         with an attached Task.
     """
-    
+
     task = Instance(Task)
     layout = Instance(TaskLayout)
     initialized = Bool(False)

@@ -21,7 +21,7 @@ from person import Person
 
 class ExampleEditorManager(EditorManager):
     """ An editor manager that supports the editor memento protocol. """
-    
+
     #######################################################################
     # 'IEditorManager' interface.
     #######################################################################
@@ -57,7 +57,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
                 PerspectiveItem(id='Debug', position='left', width=0.25)
             ]
         ),
-        
+
         Perspective(
             name     = 'Bar',
             contents = [
@@ -98,7 +98,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         """
 
         return ExampleEditorManager()
-    
+
     def _menu_bar_manager_default(self):
         """ Trait initializer. """
 
@@ -107,7 +107,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
             name='&File', id='FileMenu'
         )
         view_menu = ViewMenuManager(name='&View', id='ViewMenu', window=self)
-        
+
         return MenuBarManager(file_menu, view_menu, window=self)
 
     def _tool_bar_managers_default(self):
@@ -124,7 +124,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         ]
 
         return tool_bar_managers
-    
+
     ###########################################################################
     # 'WorkbenchWindow' interface.
     ###########################################################################
@@ -135,9 +135,9 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         """ Trait initializer. """
 
         from enthought.pyface.workbench.debug.api import DebugView
-        
+
         return [DebugView, BlackView, BlueView, GreenView, RedView, YellowView]
-    
+
     def _views_default(self):
         """ Trait initializer. """
 
@@ -157,7 +157,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
 
     def __new_person_action_default(self):
         """ Trait initializer. """
-        
+
         return Action(name='New Person', on_perform=self._new_person)
 
     def _new_person(self):

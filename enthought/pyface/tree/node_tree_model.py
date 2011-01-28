@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class NodeTreeModel(TreeModel):
     """ The model for a tree control with extensible node types. """
 
     #### 'NodeTreeModel' interface ############################################
-    
+
     # The node manager looks after all node types.
     node_manager = Instance(NodeManager, ())
 
@@ -34,7 +34,7 @@ class NodeTreeModel(TreeModel):
 
     # Node monitors.
     _monitors = Dict
-    
+
     ###########################################################################
     # 'TreeModel' interface.
     ###########################################################################
@@ -53,7 +53,7 @@ class NodeTreeModel(TreeModel):
 
         if node_type.allows_children(node):
             has_children = node_type.has_children(node)
-            
+
         else:
             has_children = False
 
@@ -70,7 +70,7 @@ class NodeTreeModel(TreeModel):
         if node_type.allows_children(node):
             # Get the node's children.
             children = node_type.get_children(node)
-                
+
         else:
             children = []
 
@@ -83,7 +83,7 @@ class NodeTreeModel(TreeModel):
         node_type = self.node_manager.get_node_type(node)
 
         return node_type.get_default_action(node)
-        
+
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
 
@@ -178,7 +178,7 @@ class NodeTreeModel(TreeModel):
         node_type = self.node_manager.get_node_type(node)
 
         return node_type.is_collapsible(node)
-    
+
     def is_draggable(self, node):
         """ Returns True if the node is draggable, otherwise False. """
 
@@ -220,7 +220,7 @@ class NodeTreeModel(TreeModel):
             self._monitors[self.node_manager.get_key(node)] = monitor
 
         return
-    
+
     def remove_listener(self, node):
         """ Removes a listener for changes to a node. """
 
@@ -230,7 +230,7 @@ class NodeTreeModel(TreeModel):
         if monitor is not None:
             self._stop_monitor(monitor)
             del self._monitors[key]
-        
+
         return
 
     #########################################################################
@@ -242,7 +242,7 @@ class NodeTreeModel(TreeModel):
 
         # Determine the node type for this node.
         node_type = self.node_manager.get_node_type(node)
-        
+
         return node_type.get_context_menu(node)
 
     ###########################################################################
@@ -259,7 +259,7 @@ class NodeTreeModel(TreeModel):
         monitor.on_trait_change(
             self._on_nodes_inserted, 'nodes_inserted'
         )
-            
+
         monitor.on_trait_change(
             self._on_nodes_removed, 'nodes_removed'
         )
@@ -286,7 +286,7 @@ class NodeTreeModel(TreeModel):
         monitor.on_trait_change(
             self._on_nodes_inserted, 'nodes_inserted', remove=True
         )
-            
+
         monitor.on_trait_change(
             self._on_nodes_removed, 'nodes_removed', remove=True
         )
@@ -316,7 +316,7 @@ class NodeTreeModel(TreeModel):
 ##         if old is not None:
 ##             # Remove a listener for structure/appearance changes
 ##             self.remove_listener(old)
-        
+
 ##         if new is not None:
 ##             # Wire up a listener for structure/appearance changes
 ##             self.add_listener(new)
@@ -329,35 +329,35 @@ class NodeTreeModel(TreeModel):
         """ Called when nodes have changed. """
 
         self.nodes_changed = event
-        
+
         return
 
     def _on_nodes_inserted(self, monitor, trait_name, event):
         """ Called when nodes have been inserted. """
 
         self.nodes_inserted = event
-        
+
         return
 
     def _on_nodes_removed(self, monitor, trait_name, event):
         """ Called when nodes have been removed. """
 
         self.nodes_removed = event
-        
+
         return
 
     def _on_nodes_replaced(self, monitor, trait_name, event):
         """ Called when nodes have been replaced. """
 
         self.nodes_replaced = event
-        
+
         return
 
     def _on_structure_changed(self, monitor, trait_name, event):
         """ Called when the structure of a node has changed drastically. """
 
         self.structure_changed = event
-        
+
         return
 
 #### EOF ######################################################################

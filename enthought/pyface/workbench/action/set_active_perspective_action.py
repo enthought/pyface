@@ -22,7 +22,7 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = Delegate('perspective')
-    
+
     # The action's style.
     style = 'radio'
 
@@ -30,7 +30,7 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
     # The perspective that we set the active perspective to.
     perspective = Instance(IPerspective)
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -48,7 +48,7 @@ class SetActivePerspectiveAction(WorkbenchAction):
         self.window.active_perspective = self.perspective
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################

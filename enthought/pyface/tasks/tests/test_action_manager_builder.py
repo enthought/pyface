@@ -21,7 +21,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
 
         if isinstance(first, ActionItem):
             self.assertEquals(first.action.name, second.action.name)
-        
+
         elif isinstance(first, ActionManager):
             if not isinstance(first, MenuBarManager):
                 self.assertEquals(first.name, second.name)
@@ -76,7 +76,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                              id='File'),
                                  id='MenuBar')
         self.assertActionElementsEqual(actual, desired)
-        
-            
+
+
 if __name__ == '__main__':
     unittest.main()

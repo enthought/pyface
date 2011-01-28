@@ -12,7 +12,7 @@ class ActionEvent(HasTraits):
     """ The event passed to an action's 'perform' method. """
 
     #### 'ActionEvent' interface ##############################################
-    
+
     # When the action was performed (time.time()).
     when = Float
 
@@ -36,7 +36,7 @@ class ActionEvent(HasTraits):
 
         # When the action was performed.
         self.when = time.time()
-        
+
         return
 
 #### EOF ######################################################################

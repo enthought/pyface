@@ -44,7 +44,7 @@ class ViewMenuManager(MenuManager):
 
     # Should the perspective menu be shown?
     show_perspective_menu = Bool(True)
-    
+
     # The workbench window that the menu is part of.
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
@@ -52,7 +52,7 @@ class ViewMenuManager(MenuManager):
 
     # The group containing the view hide/show actions.
     _view_group = Any
-    
+
     ###########################################################################
     # 'ActionManager' interface.
     ###########################################################################
@@ -61,11 +61,11 @@ class ViewMenuManager(MenuManager):
         """ Trait initializer. """
 
         groups = []
-        
+
         # Add a group containing the perspective menu (if requested).
         if self.show_perspective_menu and len(self.window.perspectives) > 0:
             groups.append(Group(PerspectiveMenuManager(window=self.window)))
-            
+
         # Add a group containing a 'toggler' for all visible views.
         self._view_group = self._create_view_group(self.window)
         groups.append(self._view_group)
@@ -75,7 +75,7 @@ class ViewMenuManager(MenuManager):
         groups.append(self._create_other_group(self.window))
 
         return groups
-    
+
     ###########################################################################
     # 'ViewMenuManager' interface.
     ###########################################################################
@@ -93,7 +93,7 @@ class ViewMenuManager(MenuManager):
             self._clear_group(self._view_group)
             self._initialize_view_group(self.window, self._view_group)
             self.changed = True
-            
+
         return
 
     ###########################################################################
@@ -108,7 +108,7 @@ class ViewMenuManager(MenuManager):
         group.clear()
 
         return
-            
+
     def _create_other_group(self, window):
         """ Creates a group containing the 'Other...' action. """
 

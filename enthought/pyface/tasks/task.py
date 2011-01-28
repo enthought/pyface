@@ -27,8 +27,8 @@ class TaskLayout(HasStrictTraits):
     # A toolkit-specific state object which encodes the exact sizes and
     # positions of the dock panes. This attribute is set by the framework.
     toolkit_state = Any
-    
-    
+
+
 class Task(HasTraits):
     """ A collection of pane, menu, tool bar, and status bar factories.
 

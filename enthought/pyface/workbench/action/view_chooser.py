@@ -27,7 +27,7 @@ class WorkbenchWindowTreeNode(TreeNode):
     """
 
     #### 'TreeNode' interface #################################################
-    
+
     # List of object classes that the node applies to.
     node_for = [WorkbenchWindow]
 
@@ -43,7 +43,7 @@ class WorkbenchWindowTreeNode(TreeNode):
 
         categories = categories_by_name.values()
         categories.sort(key=lambda category: category.name)
-            
+
         return categories
 
     ###########################################################################
@@ -77,10 +77,10 @@ class IViewTreeNode(TreeNode):
     is a method that returns the actual object that we want to manipulate.
 
     """
-    
+
     def is_node_for(self, obj):
         """ Returns whether this is the node that handles a specified object.
-        
+
         """
 
         # By checking for 'is obj' here, we are *not* allowing adaptation (if
@@ -108,7 +108,7 @@ class ViewChooser(HasTraits):
     This implementation shows views in a tree grouped by category.
 
     """
-    
+
     # The window that contains the views to choose from.
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
@@ -120,7 +120,7 @@ class ViewChooser(HasTraits):
     view = Instance(IView)
 
     #### Traits UI views ######################################################
-    
+
     traits_ui_view = View(
         Item(
             name       = 'window',
@@ -147,7 +147,7 @@ class ViewChooser(HasTraits):
                         insert    = False,
                         menu      = None,
                     ),
-                    
+
                     IViewTreeNode(
                         auto_open = False,
                         label     = 'name',
@@ -182,7 +182,7 @@ class ViewChooser(HasTraits):
     ###########################################################################
     # 'ViewChooser' interface.
     ###########################################################################
-    
+
     def _selected_changed(self, old, new):
         """ Static trait change handler. """
 
@@ -193,7 +193,7 @@ class ViewChooser(HasTraits):
 
         except TraitError:
             self.view = None
-        
+
         return
 
 #### EOF ######################################################################

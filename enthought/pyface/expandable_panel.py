@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class ExpandablePanel(Widget):
     ###########################################################################
     # 'object' interface.
     ###########################################################################
-    
+
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
 
@@ -53,13 +53,13 @@ class ExpandablePanel(Widget):
         # { str name : wx.Window layer }
         self._layers = {}
         self._headers = {}
-        
+
         return
 
     ###########################################################################
     # 'Expandale' interface.
     ###########################################################################
-    
+
     def add_panel(self, name, layer):
         """ Adds a layer with the specified name.
 
@@ -74,14 +74,14 @@ class ExpandablePanel(Widget):
         # Add the heading text.
         header = self._create_header(parent, text=name)
         sizer.Add(header, 0, wx.EXPAND)
-        
+
         # Add the layer to our sizer.
         sizer.Add(layer, 1, wx.EXPAND)
-        
+
         # All layers are hidden when they are added.  Use 'show_layer' to make
         # a layer visible.
         sizer.Show(layer, False)
-        
+
         # fixme: Should we warn if a layer is being overridden?
         self._layers[name] = layer
 
@@ -104,7 +104,7 @@ class ExpandablePanel(Widget):
         sizer.Layout()
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -139,7 +139,7 @@ class ExpandablePanel(Widget):
 
         # hang onto it for when we destroy
         self._headers[text] = panel
-        
+
         return panel
 
     #### wx event handlers ####################################################
@@ -160,5 +160,5 @@ class ExpandablePanel(Widget):
         self.control.SetSize((w+1, h+1))
         self.control.SetSize((w, h))
         return
-    
+
 #### EOF ######################################################################

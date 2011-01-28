@@ -172,7 +172,7 @@ class ResourceManager(HasTraits):
                 else:
                     zippath = tail
 
-                    
+
 
             # if we found a zipfile, then look inside it for the image!
             if is_zipfile(filepath):

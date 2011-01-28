@@ -34,7 +34,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
 
         window  = event.window
         manager = window.workbench.user_perspective_manager
-        
+
         # Get the name of the new perspective.
         upn = UserPerspectiveName(name=window.active_perspective.name)
         if upn.edit_traits(view='save_as_view').result:

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -55,18 +55,18 @@ class MainWindow(SplitApplicationWindow):
         for i in range(10):
             panel = self._create_content(expandable.control)
             expandable.add_panel('Panel %d' % i, panel)
-        
+
         return expandable.control
 
     def _create_rhs(self, parent):
         """ Creates the right hand side or bottom depending on the split. """
 
         widget = self._expandable
-        
+
         self._python_shell = PythonShell(parent)
         self._python_shell.bind('widget', widget)
         self._python_shell.bind('w', widget)
-        
+
         return self._python_shell.control
 
     ###########################################################################
@@ -77,7 +77,7 @@ class MainWindow(SplitApplicationWindow):
         """ Create some context for an expandable panel. """
 
         tree = FileTree(parent, root=os.path.abspath(os.curdir))
-        
+
         return tree.control
 
 

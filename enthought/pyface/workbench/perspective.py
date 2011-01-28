@@ -20,13 +20,13 @@ class Perspective(HasTraits):
     """ The default perspective. """
 
     implements(IPerspective)
-    
+
     # The ID of the default perspective.
     DEFAULT_ID = 'enthought.pyface.workbench.default'
 
     # The name of the default perspective.
     DEFAULT_NAME = 'Default'
-    
+
     #### 'IPerspective' interface #############################################
 
     # The perspective's unique identifier (unique within a workbench window).
@@ -57,7 +57,7 @@ class Perspective(HasTraits):
         """ Return an informal string representation of the object. """
 
         return 'Perspective(%s)' % self.id
-    
+
     ###########################################################################
     # 'Perspective' interface.
     ###########################################################################
@@ -71,14 +71,14 @@ class Perspective(HasTraits):
         return self.name
 
     #### Methods ##############################################################
-    
+
     def create(self, window):
         """ Create the perspective in a workbench window.
 
         For most cases you should just be able to set the 'contents' trait to
         lay out views as required. However, you can override this method if
         you want to have complete control over how the perspective is created.
-        
+
         """
 
         # Set the size of the editor area.
@@ -96,11 +96,11 @@ class Perspective(HasTraits):
 
         # Activate the first view in every region.
         window.reset_views()
-        
+
         return
 
     def show(self, window):
-        """ Called when the perspective is shown in a workbench window. 
+        """ Called when the perspective is shown in a workbench window.
 
         The default implementation does nothing, but you can override this
         method if you want to do something whenever the perspective is
@@ -109,7 +109,7 @@ class Perspective(HasTraits):
         """
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -124,10 +124,10 @@ class Perspective(HasTraits):
         # 'window.add_view'?
         for view in window.views:
             view.visible = False
-        
+
         for item in contents:
             self._add_perspective_item(window, item)
-            
+
         return
 
     def _add_perspective_item(self, window, item):
@@ -137,7 +137,7 @@ class Perspective(HasTraits):
         # relative to the editor area.
         if len(item.relative_to) > 0:
             relative_to = window.get_view_by_id(item.relative_to)
-            
+
         else:
             relative_to = None
 
@@ -164,7 +164,7 @@ class Perspective(HasTraits):
             logger.error('missing view for perspective item <%s>' % item.id)
 
         return
-    
+
     def _add_all(self, window):
         """ Adds *all* of the window's views defined in the window. """
 
@@ -181,7 +181,7 @@ class Perspective(HasTraits):
         # relative to the editor area.
         if len(view.relative_to) > 0:
             relative_to = window.get_view_by_id(view.relative_to)
-            
+
         else:
             relative_to = None
 

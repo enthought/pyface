@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class MainWindow(ApplicationWindow):
             MenuManager(
                 Action(name='E&xit', on_perform=self.close),
                 name = '&File',
-            )  
+            )
         )
 
         return
@@ -82,10 +82,10 @@ class MainWindow(ApplicationWindow):
         sizer = wx.BoxSizer(wx.VERTICAL)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
-        
+
         N = 100
         wxid = wx.NewId()
-        
+
         # Create the HTML.
         parts = []
         for i in range(N):
@@ -100,12 +100,12 @@ class MainWindow(ApplicationWindow):
         # Initialize all embedded wx controls.
         for i in range(N):
             self._initialize_window(html_window, wxid+i)
-        
+
         sizer.Add(html_window, 1, wx.EXPAND)
-        
+
         # Resize the panel to fit the sizer's minimum size.
         sizer.Fit(panel)
-        
+
         return panel
 
     ###########################################################################
@@ -119,17 +119,17 @@ class MainWindow(ApplicationWindow):
         sizer = wx.BoxSizer(wx.VERTICAL)
         window.SetSizer(sizer)
         window.SetAutoLayout(True)
-        
+
         window.SetBackgroundColour('white')
         window.SetWindowStyleFlag(wx.CLIP_CHILDREN)
         window.Refresh()
         image = ImageResource('closed_folder_24x24')
         bitmap = image.create_image().ConvertToBitmap()
-        
+
         image_widget = ImageWidget(window, bitmap=bitmap)
         image_widget.control.SetBackgroundColour('white')
         sizer.Add(image_widget.control, 0, wx.EXPAND)
-        
+
         text = wx.StaticText(window, -1, "Blah", style=wx.ALIGN_CENTRE)
         sizer.Add(text, 0, wx.EXPAND)
 

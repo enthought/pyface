@@ -50,22 +50,22 @@ class IWorkbenchPart(Interface):
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
     #### Methods ##############################################################
-    
+
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part.
 
-        The parameter *parent* is the toolkit-specific control that is the 
+        The parameter *parent* is the toolkit-specific control that is the
         parts's parent.
 
         Return the toolkit-specific control.
-        
+
         """
 
     def destroy_control(self):
         """ Destroy the toolkit-specific control that represents the part.
 
         Return None.
-        
+
         """
 
     def set_focus(self):
@@ -82,7 +82,7 @@ class MWorkbenchPart(HasTraits):
     implements(IWorkbenchPart)
 
     #### 'IWorkbenchPart' interface ###########################################
-    
+
     # The toolkit-specific control that represents the part.
     #
     # The framework sets this to the value returned by 'create_control'.
@@ -106,12 +106,12 @@ class MWorkbenchPart(HasTraits):
     window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
 
     #### Methods ##############################################################
-    
+
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
         raise NotImplementedError
-        
+
     def destroy_control(self):
         """ Destroy the toolkit-specific control that represents the part. """
 

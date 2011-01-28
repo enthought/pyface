@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class MainWindow(SplitApplicationWindow):
     ###########################################################################
     # 'object' interface.
     ###########################################################################
-    
+
     def __init__(self, **traits):
         """ Creates a new window. """
 
@@ -70,7 +70,7 @@ class MainWindow(SplitApplicationWindow):
 
         # Create the window's menu, tool and status bars.
         self._create_action_bars()
-        
+
         return
 
     ###########################################################################
@@ -108,7 +108,7 @@ class MainWindow(SplitApplicationWindow):
         lowest  = Action(name='Lowest',  style='radio')
 
         self._actions = [highest, higher, lower, lowest]
-        
+
         # Menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
@@ -143,7 +143,7 @@ class MainWindow(SplitApplicationWindow):
         self.status_bar_manager = StatusBarManager()
 
         return
-    
+
     def _create_file_tree(self, parent, dirname):
         """ Creates the file tree. """
 
@@ -154,7 +154,7 @@ class MainWindow(SplitApplicationWindow):
         )
 
         tree_viewer.on_trait_change(self._on_selection_changed, 'selection')
-        
+
         return tree_viewer.control
 
     def _create_file_table(self, parent):
@@ -176,17 +176,17 @@ class MainWindow(SplitApplicationWindow):
         python_shell.bind('w', self._tree_viewer)
         python_shell.bind('window', self)
         python_shell.bind('actions', self._actions)
-        
+
         return python_shell.control
 
     #### Trait event handlers #################################################
-    
+
     def _on_selection_changed(self, selection):
         """ Called when the selection in the tree is changed. """
 
         if len(selection) > 0:
             self._table_viewer.input = selection[0]
-            
+
         return
 
 

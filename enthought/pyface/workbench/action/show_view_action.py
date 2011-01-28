@@ -16,7 +16,7 @@ class ShowViewAction(WorkbenchAction):
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Show View'
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -27,7 +27,7 @@ class ShowViewAction(WorkbenchAction):
         chooser = ViewChooser(window=self.window)
 
         ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
-        
+
         # If the user closes the dialog by using the window manager's close button
         # (e.g. the little [x] in the top corner), ui.result is True, but chooser.view
         # might be None, so we need an explicit check for that.
@@ -38,7 +38,7 @@ class ShowViewAction(WorkbenchAction):
             # ... and this makes it active (brings it to the front, gives it
             # focus etc).
             chooser.view.activate()
-            
+
         return
 
 #### EOF ######################################################################

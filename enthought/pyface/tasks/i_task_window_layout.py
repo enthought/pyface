@@ -43,11 +43,11 @@ class ITaskWindowLayout(Interface):
             to the window.
         """
 
-    
+
 class MTaskWindowLayout(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
-    
+
     implements(ITaskWindowLayout)
 
     #### 'ITaskWindowLayout' interface ########################################

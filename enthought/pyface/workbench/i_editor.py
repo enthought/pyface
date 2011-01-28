@@ -22,7 +22,7 @@ from enthought.traits.api import implements
 
 # Local imports.
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
-    
+
 
 class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
@@ -40,15 +40,15 @@ class IEditor(IWorkbenchPart):
     obj = Any
 
     #### Editor Lifecycle Events ##############################################
-    
+
     # Fired when the editor is closing.
     closing = VetoableEvent
-    
+
     # Fired when the editor is closed.
     closed = Event
 
     #### Methods ##############################################################
-    
+
     def close(self):
         """ Close the editor.
 
@@ -63,9 +63,9 @@ class MEditor(MWorkbenchPart):
     """ Mixin containing common code for toolkit-specific implementations. """
 
     implements(IEditor)
-    
+
     #### 'IEditor' interface ##################################################
-    
+
     # The optional command stack.
     command_stack = Instance('enthought.undo.api.ICommandStack')
 
@@ -82,13 +82,13 @@ class MEditor(MWorkbenchPart):
 
     # Fired when the editor is opening.
     opening = VetoableEvent
-    
+
     # Fired when the editor has been opened.
     open = Event
-    
+
     # Fired when the editor is closing.
     closing = Event(VetoableEvent)
-    
+
     # Fired when the editor is closed.
     closed = Event
 
@@ -116,7 +116,7 @@ class MEditor(MWorkbenchPart):
     ###########################################################################
     # 'IEditor' interface.
     ###########################################################################
-    
+
     def close(self):
         """ Close the editor. """
 
@@ -124,7 +124,7 @@ class MEditor(MWorkbenchPart):
             self.closing = event = Vetoable()
             if not event.veto:
                 self.window.close_editor(self)
-                
+
                 self.closed = True
 
         return
@@ -139,7 +139,7 @@ class MEditor(MWorkbenchPart):
             from enthought.undo.api import CommandStack
         except ImportError:
             return None
-            
+
         return CommandStack(undo_manager=self.window.workbench.undo_manager)
 
 

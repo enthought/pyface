@@ -19,7 +19,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = Delegate('view', modify=True)
-    
+
     # The action's style.
     style = 'toggle'
 
@@ -46,7 +46,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         self._toggle_view_visibility(self.view)
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -63,7 +63,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
             self._add_view_listeners(new)
 
         self._refresh_checked()
-        
+
         return
 
     #### Methods ##############################################################
@@ -83,7 +83,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         view.on_trait_change(self._refresh_checked, 'window', remove=True)
 
         return
-    
+
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
@@ -92,16 +92,16 @@ class ToggleViewVisibilityAction(WorkbenchAction):
           and self.view.visible
 
         return
-    
+
     def _toggle_view_visibility(self, view):
         """ Toggle the visibility of a view. """
-        
+
         if view.visible:
             view.hide()
-            
+
         else:
             view.show()
-            
+
         return
 
 #### EOF ######################################################################

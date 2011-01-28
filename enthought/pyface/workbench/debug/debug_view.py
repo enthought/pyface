@@ -40,7 +40,7 @@ class DebugViewModel(HasTraits):
         self.refresh()
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -53,7 +53,7 @@ class DebugViewModel(HasTraits):
 
         else:
             id = obj.id
-            
+
         return id
 
 
@@ -69,7 +69,7 @@ class DebugView(View):
 
     # The model for the debug view!
     model = Instance(DebugViewModel)
-    
+
     ###########################################################################
     # 'IWorkbenchPart' interface.
     ###########################################################################

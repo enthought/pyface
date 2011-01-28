@@ -13,7 +13,7 @@ class FileBrowserPane(TraitsDockPane):
     """
 
     #### TaskPane interface ###################################################
-    
+
     id = 'example.file_browser_pane'
     name = 'File Browser'
 
@@ -35,7 +35,7 @@ class FileBrowserPane(TraitsDockPane):
                      style='custom',
                      show_label=False),
                 resizable=True)
-    
+
 
 class PythonScriptBrowserPane(FileBrowserPane):
     """ A file browser pane restricted to Python scripts.
@@ -50,7 +50,7 @@ class PythonEditorPane(TaskPane):
     """
 
     #### TaskPane interface ###################################################
-    
+
     id = 'example.python_editor_pane'
     name = 'Python Editor'
 
@@ -61,7 +61,7 @@ class PythonEditorPane(TaskPane):
     ###########################################################################
     # 'ITaskPane' interface.
     ###########################################################################
-    
+
     def create(self, parent):
         self.editor = PythonEditor(parent)
         self.control = self.editor.control

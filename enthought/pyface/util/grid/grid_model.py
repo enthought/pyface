@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -29,16 +29,16 @@ from grid_row import GridRow
 class GridModel(HasTraits):
     """ A model that provides data for a grid. """
 
-    # fixme : factor this default model into "SimpleGridModel" or similar 
+    # fixme : factor this default model into "SimpleGridModel" or similar
     # An optional 2-dimensional list/array containing the grid data.
     data = Any
-        
+
     # The rows in the model.
     rows = List(GridRow)
 
     # The columns in the model.
     columns = List(GridColumn)
-        
+
     # Show row headers?
     show_row_headers = Bool(True)
 
@@ -48,7 +48,7 @@ class GridModel(HasTraits):
     # Fired when the data in the model has changed.
     model_changed = Event
 
-    
+
     def __init__(self, **traits):
         """ Create a new grid model. """
 
@@ -57,15 +57,15 @@ class GridModel(HasTraits):
 
         # The wx virtual table hook.
         self._grid_table_base = _GridTableBase(self)
-        
-	if len(self.columns) == 0 and self.data is not None:
-	    print "Building default table column model"
-	    columns = []
-	    # Assume data is rectangular and use the length of the first row.
-	    for i in range(len(self.data[0])):
-		columns.append(GridColumn(label=str(i)))
-	    self.columns = columns
-	    
+
+        if len(self.columns) == 0 and self.data is not None:
+            print "Building default table column model"
+            columns = []
+            # Assume data is rectangular and use the length of the first row.
+            for i in range(len(self.data[0])):
+                columns.append(GridColumn(label=str(i)))
+            self.columns = columns
+
         return
 
     ###########################################################################
@@ -74,7 +74,7 @@ class GridModel(HasTraits):
 
     def GetNumberRows(self):
         """ Return the number of rows in the model. """
-        
+
         return len(self.data)
 
     def GetNumberCols(self):
@@ -84,10 +84,10 @@ class GridModel(HasTraits):
 
     def IsEmptyCell(self, row, col):
         """ Is the specified cell empty? """
-        
+
         try:
             return not self.data[row][col]
-            
+
         except IndexError:
             return True
 
@@ -96,18 +96,18 @@ class GridModel(HasTraits):
     # type too,) not just strings as in the C++ version.
     def GetValue(self, row, col):
         """ Get the value at the specified row and column. """
-        
+
         try:
             return self.data[row][col]
-        
+
         except IndexError:
             pass
 
         return ''
-    
+
     def SetValue(self, row, col, value):
         """ Set the value at the specified row and column. """
-        
+
         label = self.GetColLabelValue(col)
 
         try:
@@ -156,7 +156,7 @@ class GridModel(HasTraits):
         This allows you to enforce some type-safety in the grid.
 
         """
-        
+
         column_typename = self.GetTypeName(row, col)
 
         return type_name == column_typename
@@ -167,7 +167,7 @@ class GridModel(HasTraits):
         This allows you to enforce some type-safety in the grid.
 
         """
-        
+
         return self.CanGetValueAs(row, col, type_name)
 
     def DeleteRows(self, pos, num_rows):
@@ -186,7 +186,7 @@ class GridModel(HasTraits):
 
         # Trait event notification.
         self.model_changed = message
-        
+
         return True
 
 
@@ -199,7 +199,7 @@ class _GridTableBase(PyGridTableBase):
 
     def __init__(self, model):
         """ Creates a new table base. """
-        
+
         # Base class constructor.
         PyGridTableBase.__init__(self)
 
@@ -207,14 +207,14 @@ class _GridTableBase(PyGridTableBase):
         self.model = model
 
         return
-    
+
     ###########################################################################
     # 'wxPyGridTableBase' interface.
     ###########################################################################
 
     def GetNumberRows(self):
         """ Return the number of rows in the model. """
-        
+
         return self.model.GetNumberRows()
 
     def GetNumberCols(self):
@@ -226,12 +226,12 @@ class _GridTableBase(PyGridTableBase):
         """ Is the specified cell empty? """
 
         return self.model.IsEmptyCell(row, col)
-    
+
     def GetValue(self, row, col):
         """ Get the value at the specified row and column. """
 
         return self.model.GetValue(row, col)
-    
+
     def SetValue(self, row, col, value):
         """ Set the value at the specified row and column. """
 
@@ -263,7 +263,7 @@ class _GridTableBase(PyGridTableBase):
         This allows you to enforce some type-safety in the grid.
 
         """
-        
+
         return self.model.CanGetValueAs(row, col, type_name)
 
     def CanSetValueAs(self, row, col, type_name):
@@ -272,7 +272,7 @@ class _GridTableBase(PyGridTableBase):
         This allows you to enforce some type-safety in the grid.
 
         """
-        
+
         return self.model.CanSetValueAs(row, col, type_name)
 
     def DeleteRows(self, pos, num_rows):

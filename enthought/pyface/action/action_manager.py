@@ -47,7 +47,7 @@ class ActionManager(HasTraits):
 
     # Is the action manager enabled?
     enabled = Bool(True)
-    
+
     # All of the contribution groups in the manager.
     groups = Property(List(Group))
 
@@ -56,7 +56,7 @@ class ActionManager(HasTraits):
 
     # Is the action manager visible?
     visible = Bool(True)
-    
+
     #### Events ####
 
     # fixme: We probably need more granular events than this!
@@ -139,7 +139,7 @@ class ActionManager(HasTraits):
             group.visible = new
 
         return
-    
+
     #### Methods ##############################################################
 
     def append(self, item):
@@ -161,7 +161,7 @@ class ActionManager(HasTraits):
 
         for group in self.groups:
             group.destroy()
-        
+
         return
 
     def insert(self, index, item):
@@ -257,7 +257,7 @@ class ActionManager(HasTraits):
         """ Walk the manager applying a function at every item. """
 
         fn(self)
-        
+
         for group in self._groups:
             self.walk_group(group, fn)
 

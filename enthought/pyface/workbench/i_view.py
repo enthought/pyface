@@ -46,7 +46,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # An image used to represent the view to the user (shown in the view tab
     # and in the view chooser etc).
     image = Instance(ImageResource)
-    
+
     # Whether the view is visible or not.
     visible = Bool(False)
 
@@ -58,7 +58,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
         """ Activate the view.
 
         """
-        
+
     def hide(self):
         """ Hide the view.
 
@@ -76,7 +76,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
     implements(IView)
 
     #### 'IView' interface ####################################################
-    
+
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
     busy = Bool(False)
@@ -125,7 +125,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.activate_view(self)
 
         return
-    
+
     def hide(self):
         """ Hide the view. """
 
@@ -147,7 +147,7 @@ def camel_case_to_words(s):
     e.g. 'CamelCase' -> 'Camel Case'
 
     """
-    
+
     def add_space_between_words(s, c):
         # We detect a word boundary if the character we are looking at is
         # upper case, but the character preceding it is lower case.
@@ -157,5 +157,5 @@ def camel_case_to_words(s):
         return s + c
 
     return reduce(add_space_between_words, s, '')
-    
+
 #### EOF ######################################################################

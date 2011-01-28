@@ -17,7 +17,7 @@
 
 # ETS imports
 from enthought.traits.api import HasStrictTraits, Interface, Property
-from enthought.traits.ui.ui_traits import SequenceTypes 
+from enthought.traits.ui.ui_traits import SequenceTypes
 
 
 class IClipboard(Interface):
@@ -38,7 +38,7 @@ class IClipboard(Interface):
     file_data       = Property  # File name data
     has_file_data   = Property  # File name data is available
 
-    
+
 class BaseClipboard(HasStrictTraits):
     """ An abstract base class that contains common code for toolkit specific
         implementations of IClipboard.

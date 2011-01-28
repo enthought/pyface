@@ -29,5 +29,5 @@ class ExampleWorkbench(Workbench):
             event.veto = True
 
         return
-    
+
 #### EOF ######################################################################

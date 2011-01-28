@@ -31,7 +31,7 @@ class ResetActivePerspectiveAction(WorkbenchAction):
         """ Perform the action. """
 
         window = self.window
-        
+
         if window.confirm(MESSAGE % window.active_perspective.name) == YES:
             window.reset_active_perspective()
 

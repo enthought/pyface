@@ -29,16 +29,16 @@ class ListBox(Widget):
     # Default style.
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB
 
-    
+
     def __init__(self, parent, **traits):
         """ Creates a new list box. """
 
         # Base-class constructors.
         super(ListBox, self).__init__(**traits)
-        
+
         # Create the widget!
         self._create_control(parent)
-        
+
         # Listen for changes to the model.
         self.model.on_trait_change(self._on_model_changed, "list_changed")
 
@@ -49,7 +49,7 @@ class ListBox(Widget):
                                    remove = True)
         self.model.dispose()
         return
-    
+
     ###########################################################################
     # 'ListBox' interface.
     ###########################################################################
@@ -64,7 +64,7 @@ class ListBox(Widget):
         self._populate()
 
         return
-    
+
     ###########################################################################
     # wx event handlers.
     ###########################################################################
@@ -73,7 +73,7 @@ class ListBox(Widget):
         """ Called when an item in the list is selected. """
 
         listbox = event.GetEventObject()
-        
+
         self.selection = listbox.GetSelection()
 
         return
@@ -90,17 +90,17 @@ class ListBox(Widget):
         return
 
     ###########################################################################
-    # Trait handlers. 
+    # Trait handlers.
     ###########################################################################
 
     #### Static ###############################################################
-    
+
     def _selection_changed(self, index):
         """ Called when the selected item is changed. """
-        
+
         if index != -1:
             self.control.SetSelection(index)
-            
+
         return
 
     #### Dynamic ##############################################################
@@ -112,7 +112,7 @@ class ListBox(Widget):
         self.refresh()
 
         return
-        
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -127,19 +127,19 @@ class ListBox(Widget):
                        self._on_item_selected)
         wx.EVT_LISTBOX_DCLICK(self.control, self.control.GetId(),
                               self._on_item_activated)
-        
+
         # Populate the list.
         self._populate()
-        
+
         return
 
     def _populate(self):
         """ Populates the list box. """
-        
+
         for index in range(self.model.get_item_count()):
             label, item = self.model.get_item_at(index)
             self.control.Append(label, item)
-        
+
         return
-    
+
 #### EOF ######################################################################

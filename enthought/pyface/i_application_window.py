@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ from i_window import IWindow
 
 class IApplicationWindow(IWindow):
     """ The interface for a top-level application window.
-    
+
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
 
@@ -66,7 +66,7 @@ class IApplicationWindow(IWindow):
 
         parent is the parent control.
         """
-    
+
     def _create_status_bar(self, parent):
         """ Creates the status bar (if required).
 
@@ -78,7 +78,7 @@ class IApplicationWindow(IWindow):
 
         parent is the parent control.
         """
-    
+
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window).
 
@@ -87,7 +87,7 @@ class IApplicationWindow(IWindow):
 
     def _set_window_icon(self):
         """ Sets the window icon (if required). """
-    
+
 
 class MApplicationWindow(object):
     """ The mixin class that contains common code for toolkit specific
@@ -108,7 +108,7 @@ class MApplicationWindow(object):
         self._create_menu_bar(parent)
         self._create_tool_bar(parent)
         self._create_status_bar(parent)
-        
+
         return
 
 #### EOF ######################################################################

@@ -54,12 +54,12 @@ class MainWindow(SplitApplicationWindow):
             GridColumn(name='Index', read_only=True),
             GridColumn(name='Veracity'),
             GridColumn(name='Object')]
-            
+
     # The data used to create the TraitGridModel
     trait_data = [GridRow(name='Bob', index=1, veracity=True, object=Float),
                   GridRow(name='Sarah', index=45, veracity=True, object=Str),
                   GridRow(name='Jonas', index=-3, veracity=False, object=direction)]
-                  
+
     trait_col = [TraitGridColumn(name='name', label='Name'),
                  TraitGridColumn(name='index', label='Index', read_only=True),
                  TraitGridColumn(name='veracity', label='Veracity'),

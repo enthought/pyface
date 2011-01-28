@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ from enthought.traits.api import HasTraits
 
 class ViewerSorter(HasTraits):
     """ Abstract base class for all viewer sorters. """
-    
+
     ###########################################################################
     # 'ViewerSorter' interface.
     ###########################################################################
@@ -33,7 +33,7 @@ class ViewerSorter(HasTraits):
         'elements' is the list of elements to sort.
 
         Returns the list that was sorted IN PLACE (for convenience).
-        
+
         """
 
         # This creates a comparison function with the names 'viewer' and
@@ -42,7 +42,7 @@ class ViewerSorter(HasTraits):
             """ Comparator. """
 
             return self.compare(viewer, parent, element_a, element_b)
-        
+
         elements.sort(comparator)
 
         return elements
@@ -60,7 +60,7 @@ class ViewerSorter(HasTraits):
         # Get the category for each element.
         category_a = self.category(viewer, parent, element_a)
         category_b = self.category(viewer, parent, element_b)
-        
+
         # If they are not in the same category then return the result of
         # comparing the categories.
         if category_a != category_b:
@@ -95,7 +95,7 @@ class ViewerSorter(HasTraits):
         are arranged as dictated by the sorter's 'compare' method.
 
         By default all elements are given the same category (0).
-        
+
         """
 
         return 0
@@ -110,9 +110,9 @@ class ViewerSorter(HasTraits):
         named 'trait_name' on the specified element.
 
         By default we return False.
-        
+
         """
 
         return False
-    
+
 #### EOF ######################################################################

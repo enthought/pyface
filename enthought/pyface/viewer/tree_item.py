@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -16,19 +16,19 @@
 An example:-
 
 root = TreeItem(data='Root')
-    
+
 fruit = TreeItem(data='Fruit')
 fruit.append(TreeItem(data='Apple', allows_children=False))
 fruit.append(TreeItem(data='Orange', allows_children=False))
 fruit.append(TreeItem(data='Pear', allows_children=False))
 root.append(fruit)
-    
+
 veg = TreeItem(data='Veg')
 veg.append(TreeItem(data='Carrot', allows_children=False))
 veg.append(TreeItem(data='Cauliflower', allows_children=False))
 veg.append(TreeItem(data='Sprout', allows_children=False))
 root.append(veg)
-    
+
 """
 
 
@@ -40,10 +40,10 @@ class TreeItem(HasTraits):
     """ A generic base-class for items in a tree data structure. """
 
     #### 'TreeItem' interface #################################################
-    
+
     # Does this item allow children?
     allows_children = Bool(True)
-    
+
     # The item's children.
     children = List(Instance('TreeItem'))
 
@@ -70,7 +70,7 @@ class TreeItem(HasTraits):
             s = str(self.data)
 
         return s
-    
+
     ###########################################################################
     # 'TreeItem' interface.
     ###########################################################################
@@ -82,7 +82,7 @@ class TreeItem(HasTraits):
         """ True iff the item has children. """
 
         return len(self.children) != 0
-    
+
     #### Methods ##############################################################
 
     def append(self, child):
@@ -125,7 +125,7 @@ class TreeItem(HasTraits):
         """
 
         index = self.children.index(before)
-        
+
         self.insert(index, child)
 
         return (index, child)
@@ -138,7 +138,7 @@ class TreeItem(HasTraits):
         """
 
         index = self.children.index(after)
-        
+
         self.insert(index + 1, child)
 
         return (index, child)

@@ -12,7 +12,7 @@ class KeyPressedEvent(HasTraits):
 
     # Is the alt key down?
     alt_down = Bool
-    
+
     # Is the control key down?
     control_down = Bool
 
@@ -21,7 +21,7 @@ class KeyPressedEvent(HasTraits):
 
     # The keycode.
     key_code = Int
-    
+
     # The original toolkit specific event.
     event = Any
 

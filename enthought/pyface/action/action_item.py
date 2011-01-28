@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enth373ought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ class ActionItem(ActionManagerItem):
         self.action.visible = True
 
         return
-    
+
     ###########################################################################
     # 'ActionItem' interface.
     ###########################################################################
@@ -92,7 +92,7 @@ class ActionItem(ActionManagerItem):
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
 
-        if (controller is None) or controller.can_add_to_menu(self.action): 
+        if (controller is None) or controller.can_add_to_menu(self.action):
             wrapper = _MenuItem(parent, menu, self, controller)
 
             # fixme: Martin, who uses this information?
@@ -108,11 +108,11 @@ class ActionItem(ActionManagerItem):
                        show_labels=True):
         """ Adds the item to a tool bar. """
 
-        if (controller is None) or controller.can_add_to_toolbar(self.action): 
+        if (controller is None) or controller.can_add_to_toolbar(self.action):
             wrapper = _Tool(
                 parent, tool_bar, image_cache, self, controller, show_labels
             )
-            
+
             # fixme: Martin, who uses this information?
             if controller is None:
                 self.control = wrapper.control
@@ -124,7 +124,7 @@ class ActionItem(ActionManagerItem):
 
     def add_to_palette(self, tool_palette, image_cache, show_labels=True):
         """ Adds the item to a tool palette. """
-        
+
         wrapper = _PaletteTool(tool_palette, image_cache, self, show_labels)
 
         self._wrappers.append(wrapper)
@@ -138,7 +138,7 @@ class ActionItem(ActionManagerItem):
         """
 
         self.action.destroy()
-        
+
         return
 
 #### EOF ######################################################################

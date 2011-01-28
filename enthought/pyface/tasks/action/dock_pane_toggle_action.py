@@ -9,9 +9,9 @@ from enthought.pyface.tasks.i_dock_pane import IDockPane
 class DockPaneToggleAction(Action):
     """ An Action for toggling the visibily of a dock pane.
     """
-    
+
     #### 'ToggleAction' interface #############################################
-    
+
     dock_pane = Instance(IDockPane)
 
     #### 'Action' interface ###################################################

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ class ContentViewer(Viewer):
 
     # The domain object that is the root of the viewer's data.
     input = Any
-    
+
     # The content provider provides the data elements for the viewer.
     #
     # Derived classes specialize this trait with the specific type of the
@@ -52,11 +52,11 @@ class ContentViewer(Viewer):
     # provider that they require (e.g. the table viewer MUST have a
     # 'TableLabelProvider').
     label_provider = Any
-    
+
     # The viewer's sorter (None if no sorting is required).
     sorter = Instance(ViewerSorter)
 
     # The viewer's filters.
     filters = List(ViewerFilter)
-    
+
 #### EOF ######################################################################

@@ -11,7 +11,7 @@ class IDockPane(ITaskPane):
     Dock panes are arranged around the central pane in dock areas, and can, in
     general, be moved, resized, and hidden by the user.
     """
-    
+
     # If enabled, the pane will have a button to close it, and a visibility
     # toggle button will be added to the View menu. Otherwise, the pane's
     # visibility will only be adjustable programmatically, though the 'visible'
@@ -52,10 +52,10 @@ class IDockPane(ITaskPane):
         """ Convenience method to show the dock pane.
         """
 
-        
+
 class MDockPane(MTaskPane):
     """ Mixin containing common code for toolkit-specific implementations.
-    """ 
+    """
 
     implements(IDockPane)
 

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -29,16 +29,16 @@ logger = logging.getLogger(__name__)
 
 class NodeManager(HasPrivateTraits):
     """ The node manager looks after a collection of node types. """
-    
+
     #### 'NodeManager' interface ##########################################
-    
+
     # All registered node types.
     node_types = List(NodeType)
 
     # fixme: Where should the system actions go?  The node tree, the node
     # tree model, here?!?
     system_actions = List
-    
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -69,7 +69,7 @@ class NodeManager(HasPrivateTraits):
 
         node_type.node_manager = self
         self.node_types.append(node_type)
-        
+
         return
 
     def get_node_type(self, node):
@@ -102,7 +102,7 @@ class NodeManager(HasPrivateTraits):
 
         if node_type is None:
             logger.warn('no node type for %s' % str(node))
-            
+
         return node_type
 
     def get_key(self, node):
@@ -120,7 +120,7 @@ class NodeManager(HasPrivateTraits):
 
         except:
             key = id(node)
-        
+
         return key
 
     ###########################################################################
@@ -129,10 +129,10 @@ class NodeManager(HasPrivateTraits):
 
     def _node_types_changed(self, new):
         """ Called when the entire list of node types has been changed. """
-        
+
         for node_type in new:
             node_type.node_manager = self
-        
+
         return
-        
+
 #### EOF ######################################################################

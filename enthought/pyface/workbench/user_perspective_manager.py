@@ -17,22 +17,22 @@ logger = logging.getLogger(__name__)
 
 class UserPerspectiveManager(HasTraits):
     """ Manages a set of user perspectives. """
-    
+
     #### 'UserPerspective' interface ##########################################
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
     state_location = Unicode
-    
+
     # Next available user perspective id.
     next_id = Property(Int)
-    
+
     # Dictionary mapping perspective id to user defined perspective definition.
     id_to_perspective = Property(Dict)
-    
+
     # The list of user defined perspective definitions.
     perspectives = Property(List)
-    
+
     # The name of the user defined perspectives definition file.
     file_name = Property(Unicode)
 
@@ -40,24 +40,24 @@ class UserPerspectiveManager(HasTraits):
 
     # Shadow trait for the 'id_to_perspective' property.
     _id_to_perspective = Any
-    
+
     ###########################################################################
     # 'UserPerspective' interface.
     ###########################################################################
 
     #### Properties ###########################################################
-    
+
     def _get_next_id ( self ):
         """ Property getter. """
 
         # Get all of the current perspective ids:
         ids = self.id_to_perspective.keys()
-        
+
         # If there are none:
         if len( ids ) == 0:
             # Return the starting id:
             return 1
-            
+
         # Else return the current highest id + 1 as the next id:
         ids.sort()
 
@@ -82,14 +82,14 @@ class UserPerspectiveManager(HasTraits):
                 fh.close()
             except:
                 pass
-            
+
         return self._id_to_perspective
-        
+
     def _get_perspectives ( self ):
         """ Property getter. """
-        
+
         return self.id_to_perspective.values()
-        
+
     def _get_file_name ( self ):
         """ Property getter. """
 
@@ -105,7 +105,7 @@ class UserPerspectiveManager(HasTraits):
             name             = name,
             show_editor_area = show_editor_area
         )
-        
+
         # Add the perspective to the map.
         self.id_to_perspective[perspective.id] = perspective
 
@@ -121,10 +121,10 @@ class UserPerspectiveManager(HasTraits):
 
         # Give the clone a special user perspective Id!
         clone.id = '__user_perspective_%09d__' % self.next_id
-        
+
         # Set any traits specified as keyword arguments.
         clone.set(**traits)
-        
+
         # Add the perspective to the map.
         self.id_to_perspective[clone.id] = clone
 
@@ -145,51 +145,51 @@ class UserPerspectiveManager(HasTraits):
         self._update_persistent_data()
 
         return
-    
+
     def add(self, perspective, name=None):
         """ Add a perspective with an optional name. """
 
-        # Define the id for the new perspective: 
+        # Define the id for the new perspective:
         perspective.id = id = '__user_perspective_%09d__' % self.next_id
-        
+
         # Save the new name (if specified):
         if name is not None:
             perspective.name = name
-        
+
         # Create the perspective:
         self.id_to_perspective[id] = perspective
-        
+
         # Update the persistent file information:
         self._update_persistent_data()
-        
+
         # Return the new perspective created:
         return perspective
-    
+
     def rename(self, perspective, name):
         """ Rename the user perspective with the specified id. """
 
         perspective.name = name
-        
+
         self.id_to_perspective[perspective.id].name = name
-        
+
         # Update the persistent file information:
         self._update_persistent_data()
 
         return
-    
+
     def remove(self, id):
         """ Remove the user perspective with the specified id.
 
         This method also updates the persistent data.
-        
+
         """
 
-        if id in self.id_to_perspective: 
+        if id in self.id_to_perspective:
             del self.id_to_perspective[id]
-            
+
             # Update the persistent file information:
             self._update_persistent_data()
-        
+
             # Try to delete the associated perspective layout file:
             try:
                 os.remove(os.path.join(self.state_location, id))
@@ -202,7 +202,7 @@ class UserPerspectiveManager(HasTraits):
     # Private interface.
     ###########################################################################
 
-    def _update_persistent_data(self):        
+    def _update_persistent_data(self):
         """ Update the persistent file information. """
 
         try:
@@ -212,7 +212,7 @@ class UserPerspectiveManager(HasTraits):
             fh.close()
 
         except:
-            logger.error( "Could not write the user defined perspective " 
+            logger.error( "Could not write the user defined perspective "
                           "definition file: " + self.file_name )
 
         return

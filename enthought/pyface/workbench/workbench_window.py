@@ -23,7 +23,7 @@ from workbench_window_memento import WorkbenchWindowMemento
 
 # Logging.
 logger = logging.getLogger(__name__)
-    
+
 
 class WorkbenchWindow(ApplicationWindow):
     """ A workbench window. """
@@ -32,7 +32,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     # The view or editor that currently has the focus.
     active_part = Instance(IWorkbenchPart)
-    
+
     # The editor manager is used to create/restore editors.
     editor_manager = Instance(IEditorManager)
 
@@ -41,7 +41,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     # The workbench that the window belongs to.
     workbench = Instance('enthought.pyface.workbench.api.IWorkbench')
-    
+
     #### Editors #######################
 
     # The active editor.
@@ -59,7 +59,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     # Fired when an editor is about to be opened (or restored).
     editor_opening = Delegate('layout') # Event(IEditor)
-    
+
     # Fired when an editor has been opened (or restored).
     editor_opened = Delegate('layout')  # Event(IEditor)
 
@@ -182,7 +182,7 @@ class WorkbenchWindow(ApplicationWindow):
 
                 # Cleanup the window layout (event handlers, etc.)
                 self.layout.close()
-                
+
                 # Cleanup the toolkit-specific control.
                 self.destroy()
 
@@ -205,7 +205,7 @@ class WorkbenchWindow(ApplicationWindow):
         # maybe it should be). We return this to indicate whether the window
         # actually closed.
         return self.control is None
-        
+
     ###########################################################################
     # Protected 'Window' interface.
     ###########################################################################
@@ -227,10 +227,10 @@ class WorkbenchWindow(ApplicationWindow):
 
         else:
             self._restore_contents()
-            
+
         # Set the initial perspective.
         self.active_perspective = self._get_initial_perspective()
-        
+
         return contents
 
     ###########################################################################
@@ -243,14 +243,14 @@ class WorkbenchWindow(ApplicationWindow):
         """ Trait initializer. """
 
         from editor_manager import EditorManager
-        
+
         return EditorManager(window=self)
 
     def _layout_default(self):
         """ Trait initializer. """
 
         return WorkbenchWindowLayout(window=self)
-    
+
     #### Methods ##############################################################
 
     def activate_editor(self, editor):
@@ -264,7 +264,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Activates a view. """
 
         self.layout.activate_view(view)
-        
+
         return
 
     def add_editor(self, editor, title=None):
@@ -291,7 +291,7 @@ class WorkbenchWindow(ApplicationWindow):
         # (i.e. they were not even known about when the window was created).
         if not view in self.views:
             self.views.append(view)
-        
+
         return
 
     def close_editor(self, editor):
@@ -330,7 +330,7 @@ class WorkbenchWindow(ApplicationWindow):
                 editor.destroy_control()
 
         return
-    
+
     def destroy_views(self, views):
         """ Destroy a list of views. """
 
@@ -339,14 +339,14 @@ class WorkbenchWindow(ApplicationWindow):
                 view.destroy_control()
 
         return
-    
+
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object.
 
         'kind' is simply passed through to the window's editor manager to
         allow it to create a particular kind of editor depending on context
         etc.
-        
+
         If 'use_existing' is True and the object is already being edited in
         the window then the existing editor will be activated (i.e., given
         focus, brought to the front, etc.).
@@ -410,7 +410,7 @@ class WorkbenchWindow(ApplicationWindow):
         """
 
         return self.get_view_by_id(id) or self.get_editor_by_id(id)
-    
+
     def get_perspective_by_id(self, id):
         """ Return the perspective with the specified Id.
 
@@ -465,16 +465,16 @@ class WorkbenchWindow(ApplicationWindow):
 
     def hide_editor_area(self):
         """ Hide the editor area. """
-        
+
         self.layout.hide_editor_area()
-        
+
         return
 
     def hide_view(self, view):
         """ Hide a view. """
 
         self.layout.hide_view(view)
-            
+
         return
 
     def refresh(self):
@@ -488,7 +488,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Reset the active perspective back to its original contents. """
 
         perspective = self.active_perspective
-        
+
         # If the perspective has been seen before then delete its memento.
         if perspective.id in self._memento.perspective_mementos:
             # Remove the perspective's memento.
@@ -526,12 +526,12 @@ class WorkbenchWindow(ApplicationWindow):
         self.layout.reset_views()
 
         return
-    
+
     def show_editor_area(self):
         """ Show the editor area. """
-        
+
         self.layout.show_editor_area()
-        
+
         return
 
     def show_view(self, view):
@@ -545,7 +545,7 @@ class WorkbenchWindow(ApplicationWindow):
         # view exists but is hidden.
         if self.layout.contains_view(view):
             self.layout.show_view(view)
-            
+
         # Otherwise, we have to add the view to the layout.
         else:
             self._add_view_in_default_position(view)
@@ -573,7 +573,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # The layout of the editor area.
         self._memento.editor_area_memento = self.layout.get_editor_memento()
-        
+
         return self._memento
 
     def set_memento(self, memento):
@@ -611,7 +611,7 @@ class WorkbenchWindow(ApplicationWindow):
         self.add_view(view, item.position, relative_to, size)
 
         return
-            
+
     def _get_initial_perspective(self, *methods):
         """ Return the initial perspective. """
 
@@ -619,7 +619,7 @@ class WorkbenchWindow(ApplicationWindow):
             # If a default perspective was specified then we prefer that over
             # any other perspective.
             self._get_default_perspective,
-            
+
             # If there was no default perspective then try the perspective that
             # was active the last time the application was run.
             self._get_previous_perspective,
@@ -640,7 +640,7 @@ class WorkbenchWindow(ApplicationWindow):
             perspective = Perspective()
 
         return perspective
-    
+
     def _get_default_perspective(self):
         """ Return the default perspective.
 
@@ -658,7 +658,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         else:
             perspective = None
-            
+
         return perspective
 
     def _get_previous_perspective(self):
@@ -670,7 +670,7 @@ class WorkbenchWindow(ApplicationWindow):
         """
 
         id = self._memento.active_perspective_id
-            
+
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
@@ -743,7 +743,7 @@ class WorkbenchWindow(ApplicationWindow):
             view = self.get_view_by_id(active_view_id)
             if view is not None:
                 self.active_view = view
-        
+
         # Otherwise, this is the first time the perspective has been seen
         # so create it.
         else:
@@ -767,7 +767,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Inform the perspective that it has been shown.
         new.show(self)
-            
+
         # This forces the dock window to update its layout.
         if old is not None:
             self.refresh()
@@ -783,7 +783,7 @@ class WorkbenchWindow(ApplicationWindow):
         self.position = self._memento.position
 
         return
-    
+
     #### Trait change handlers ################################################
 
     #### Static ####
@@ -796,7 +796,7 @@ class WorkbenchWindow(ApplicationWindow):
         # Hide the old perspective...
         if old is not None:
             self._hide_perspective(old)
-                
+
         # ... and show the new one.
         if new is not None:
             self._show_perspective(old, new)
@@ -808,7 +808,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         logger.debug('active editor changed from <%s> to <%s>', old, new)
         self.active_part = new
-        
+
         return
 
     def _active_part_changed(self, old, new):
@@ -831,14 +831,14 @@ class WorkbenchWindow(ApplicationWindow):
         self.active_part = new
 
         return
-        
+
     def _views_changed(self, old, new):
         """ Static trait change handler. """
 
         # Cleanup any old views.
         for view in old:
             view.window = None
-            
+
         # Initialize any new views.
         for view in new:
             view.window = self
@@ -887,7 +887,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         if trait_name == 'has_focus' and new:
             self.active_editor = obj
-                
+
         return
 
     @on_trait_change('views.has_focus')
@@ -909,5 +909,5 @@ class WorkbenchWindow(ApplicationWindow):
                     self.active_view = None
 
         return
-    
+
 #### EOF ######################################################################

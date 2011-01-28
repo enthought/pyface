@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ class TableViewer(ContentViewer):
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
 
-	'parent' is the toolkit-specific control that is the table's parent.
+        'parent' is the toolkit-specific control that is the table's parent.
 
         'image_size' is a tuple in the form (int width, int height) that
         specifies the size of the images (if any) displayed in the table.
@@ -75,7 +75,7 @@ class TableViewer(ContentViewer):
 
         # Get our actual id.
         wxid = table.GetId()
-        
+
         # Table events.
         wx.EVT_LIST_ITEM_SELECTED(table, wxid, self._on_item_selected)
         wx.EVT_LIST_ITEM_ACTIVATED(table, wxid, self._on_item_activated)
@@ -94,14 +94,14 @@ class TableViewer(ContentViewer):
         # in a virtual list control (it *does* get fired in a regular list
         # control 8^().
         wx.EVT_LIST_ITEM_DESELECTED(table, wxid, self._on_item_deselected)
-        
+
         # Create the widget!
         self._create_widget(parent)
 
         # We use a dynamic handler instead of a static handler here, as we
         # don't want to react if the input is set in the constructor.
         self.on_trait_change(self._on_input_changed, 'input')
-        
+
         return
 
     ###########################################################################
@@ -125,7 +125,7 @@ class TableViewer(ContentViewer):
 
         # Trait event notification.
         self.row_selected = row
-        
+
         return
 
     ###########################################################################
@@ -142,7 +142,7 @@ class TableViewer(ContentViewer):
             self._update_column_widths()
 
         return
-    
+
     ###########################################################################
     # wx event handlers.
     ###########################################################################
@@ -152,10 +152,10 @@ class TableViewer(ContentViewer):
 
         # Get the index of the row that was selected (nice wx interface huh?!).
         row = event.m_itemIndex
-        
+
         # Trait event notification.
         self.row_selected = row
-        
+
         return
 
     # fixme: Bug[732104] indicates that this event does not get fired in a
@@ -165,7 +165,7 @@ class TableViewer(ContentViewer):
 
         # Trait event notification.
         self.row_selected = -1
-        
+
         return
 
     def _on_item_activated(self, event):
@@ -173,7 +173,7 @@ class TableViewer(ContentViewer):
 
         # Get the index of the row that was activated (nice wx interface!).
         row = event.m_itemIndex
-        
+
         # Trait event notification.
         self.row_activated = row
 
@@ -184,7 +184,7 @@ class TableViewer(ContentViewer):
 
         # Trait notification.
         self.row_begin_drag = event.GetIndex()
-            
+
         return
 
     def _on_list_begin_rdrag(self, event=None):
@@ -205,7 +205,7 @@ class TableViewer(ContentViewer):
         """ Called when a label edit is completed. """
 
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -216,10 +216,10 @@ class TableViewer(ContentViewer):
         'center' : wx.LIST_FORMAT_CENTRE,
         'centre' : wx.LIST_FORMAT_CENTRE
     }
-        
+
     def _create_widget(self, parent):
         """ Creates the widget. """
-        
+
         # Set up a default list item descriptor.
         info = wx.ListItem()
         info.m_mask = wx.LIST_MASK_TEXT | wx.LIST_MASK_FORMAT
@@ -232,13 +232,13 @@ class TableViewer(ContentViewer):
             # Alignment of header text AND ALL cells in the column.
             alignment = self.column_provider.get_alignment(self, index)
             info.m_format = self.FORMAT_MAP.get(alignment, wx.LIST_FORMAT_LEFT)
-            
+
             self.control.InsertColumnInfo(index, info)
 
         # Update the table contents and the column widths.
         self._update_contents()
         self._update_column_widths()
-                
+
         return
 
     def _update_contents(self):
@@ -277,13 +277,13 @@ class TableViewer(ContentViewer):
             self.control.SetColumnWidth(column, width)
 
         return
-    
+
     def _get_column_width(self, column):
         """ Return an appropriate width for the specified column. """
 
         self.control.SetColumnWidth(column, wx.LIST_AUTOSIZE_USEHEADER)
         header_width = self.control.GetColumnWidth(column)
-        
+
         if self.control.GetItemCount() == 0:
             width = header_width
 
@@ -292,7 +292,7 @@ class TableViewer(ContentViewer):
             data_width = self.control.GetColumnWidth(column)
 
             width = max(header_width, data_width)
-            
+
         return width
 
 
@@ -307,7 +307,7 @@ class _Table(wx.ListCtrl):
     def __init__(self, parent, image_size, viewer):
         """ Creates a new table viewer.
 
-	'parent' is the toolkit-specific control that is the table's parent.
+        'parent' is the toolkit-specific control that is the table's parent.
 
         'image_size' is a tuple in the form (int width, int height) that
         specifies the size of the icons (if any) displayed in the table.
@@ -316,7 +316,7 @@ class _Table(wx.ListCtrl):
 
         # The vierer that we are providing the control for.
         self._viewer = viewer
-        
+
         # Base-class constructor.
         wx.ListCtrl.__init__(self, parent, -1, style=self.STYLE)
 
@@ -349,7 +349,7 @@ class _Table(wx.ListCtrl):
         element = viewer._elements[row]
 
         return viewer.label_provider.get_text(viewer, element, column_index)
-    
+
     def OnGetItemImage(self, row):
         """ Returns the image for the specified ROW. """
 
@@ -363,9 +363,9 @@ class _Table(wx.ListCtrl):
 
         else:
             image_index = -1
-            
+
         return image_index
-        
+
     def OnGetItemAttr(self, row):
         """ Returns the attribute for the specified row. """
 
@@ -376,5 +376,5 @@ class _Table(wx.ListCtrl):
             attribute = self._odd_row_attribute
 
         return attribute
-    
+
 #### EOF ######################################################################

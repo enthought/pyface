@@ -1,30 +1,30 @@
 #-------------------------------------------------------------------------------
-#  
-#  Test the DockWindow.  
-#  
+#
+#  Test the DockWindow.
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 10/20/2005
-#  
+#
 #  (c) Copyright 2005 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import wx
 
 from enthought.traits.api \
     import *
-    
+
 from enthought.traits.ui.api \
     import *
-    
+
 from enthought.traits.ui.menu \
     import *
-           
+
 from enthought.pyface.image_resource \
     import ImageResource
 
@@ -32,7 +32,7 @@ from enthought.pyface.dock.api \
     import *
 
 #-------------------------------------------------------------------------------
-#  Global data:  
+#  Global data:
 #-------------------------------------------------------------------------------
 
 # DockControl style to use:
@@ -44,31 +44,31 @@ image2 = ImageResource( 'gear' )
 #-------------------------------------------------------------------------------
 #  Creates a DockWindow as a Traits UI widget:
 #-------------------------------------------------------------------------------
-    
-def create_dock_window ( parent, editor ):    
+
+def create_dock_window ( parent, editor ):
     """ Creates a window for editing a workflow canvas.
     """
     main     = DockWindow( parent ).control
-    views    = [ wx.Button( main, -1, 'View %d' % (i + 1) ) 
+    views    = [ wx.Button( main, -1, 'View %d' % (i + 1) )
                  for i in range( 6 ) ]
     edit     = DockWindow( main ).control
-    editors  = [ wx.Button( edit, -1, 'Editor %d' % (i + 1) ) 
+    editors  = [ wx.Button( edit, -1, 'Editor %d' % (i + 1) )
                  for i in range( 6 ) ]
     controls = [ DockControl( name      = 'Editor %d' % (i + 1),
                               image     = image1,
                               closeable = True,
-                              control   = editors[i], 
-                              style     = style ) 
+                              control   = editors[i],
+                              style     = style )
                  for i in range( 6 ) ]
     controls[0].export = 'any'
     edit_sizer = DockSizer( contents = [ tuple( controls ) ] )
-    main_sizer = DockSizer( contents = 
+    main_sizer = DockSizer( contents =
                   [ [ DockControl( name      = 'View 1',
                                    image     = image1,
                                    closeable = True,
-                                   control   = views[0], 
+                                   control   = views[0],
                                    style     = style ),
-                      DockControl( name      = 'View 2', 
+                      DockControl( name      = 'View 2',
                                    image     = image1,
                                    closeable = True,
                                    height    = 400,
@@ -76,7 +76,7 @@ def create_dock_window ( parent, editor ):
                                    style     = style ) ],
                     [ DockControl( name      = 'Editors',
                                    image     = image1,
-                                   control   = edit, 
+                                   control   = edit,
                                    style     = 'fixed' ),
                       [ DockControl( name    = 'View 3',
                                      image   = image2,
@@ -84,35 +84,35 @@ def create_dock_window ( parent, editor ):
                                      style   = style ),
                         DockControl( name    = 'View 4',
                                      image   = image2,
-                                     control = views[3], 
+                                     control = views[3],
                                      style   = style ) ] ],
                     [ DockControl( name      = 'View 5',
-                                   control   = views[4], 
+                                   control   = views[4],
                                    style     = style ),
                       DockControl( name      = 'View 6',
-                                   control   = views[5], 
+                                   control   = views[5],
                                    style     = style ) ] ] )
     edit.SetSizer( edit_sizer )
     main.SetSizer( main_sizer )
-    
+
     return main
 
 #-------------------------------------------------------------------------------
-#  'EnvisageDock' class:  
+#  'EnvisageDock' class:
 #-------------------------------------------------------------------------------
 
 class EnvisageDock ( HasPrivateTraits ):
-    
+
     #---------------------------------------------------------------------------
-    #  Trait definitions:  
+    #  Trait definitions:
     #---------------------------------------------------------------------------
-        
+
     dummy = Int
-    
+
     #---------------------------------------------------------------------------
-    #  Traits view definitions:  
+    #  Traits view definitions:
     #---------------------------------------------------------------------------
-        
+
     view = View( [ Item( 'dummy',
                          resizable = True,
                          editor    = CustomEditor( create_dock_window ) ),
@@ -122,10 +122,10 @@ class EnvisageDock ( HasPrivateTraits ):
                  width     = 1.00,
                  height    = 1.00,
                  buttons   = NoButtons )
-                 
+
 #-------------------------------------------------------------------------------
-#  Run the test program:  
+#  Run the test program:
 #-------------------------------------------------------------------------------
-                        
+
 if __name__ == '__main__':
     EnvisageDock().configure_traits()

@@ -10,7 +10,7 @@ class Person(HasTraits):
 
     # Age in years.
     age = Int
-    
+
     # Name.
     name = Str
 

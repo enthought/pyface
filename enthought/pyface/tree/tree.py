@@ -152,7 +152,7 @@ class Tree(Widget):
     # useful because the callback will be invoked even if the node label was
     # not actually changed.
     _label_edit_callback = Trait(None, Callable, None)
-    
+
     # Flag for allowing selection events to be ignored
     _ignore_selection_events = Bool(False)
 
@@ -921,7 +921,7 @@ class Tree(Widget):
             if cid is not None:
                 # Remove listeners from the old node.
                 self.model.remove_listener(old_child)
-                
+
                 # Delete all of the node's children.
                 self.control.DeleteChildren(cid)
 
@@ -949,9 +949,9 @@ class Tree(Widget):
                 # Does the new node have any children?
                 has_children = self._has_children(new_child)
                 self.control.SetItemHasChildren(cid, has_children)
-                    
+
         # Update the tree's selection (in case the old node that was replaced
-        # was selected, the selection should now include the new node). 
+        # was selected, the selection should now include the new node).
         self.selection = self._get_selection()
         return
 

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class ExpandableHeader(Widget):
     _CARAT_Y = 2
     _TEXT_Y = 0
     _TEXT_X_OFFSET = 10
-    
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -77,7 +77,7 @@ class ExpandableHeader(Widget):
 
         self._container = container
         return
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -108,7 +108,7 @@ class ExpandableHeader(Widget):
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
-        
+
         # needed on GTK systems for EVT_ERASE_BACKGROUND to work
         panel.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
 
@@ -120,7 +120,7 @@ class ExpandableHeader(Widget):
         # Create a suitable font.
         self._font = new_font_like(wx.NORMAL_FONT,
                                    point_size=wx.NORMAL_FONT.GetPointSize()- 1)
-        
+
         height = self._get_preferred_height(parent, self.title, self._font)
         panel.SetSize((-1, height))
 
@@ -136,7 +136,7 @@ class ExpandableHeader(Widget):
 
     def _get_preferred_height(self, parent, text, font):
         """ Calculates the preferred height of the widget. """
-        
+
         dc = wx.MemoryDC()
 
         dc.SetFont(font)
@@ -155,7 +155,7 @@ class ExpandableHeader(Widget):
             bmp = self._expanded_bmp
         else:
             bmp = self._collapsed_bmp
-            
+
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
         return
@@ -173,7 +173,7 @@ class ExpandableHeader(Widget):
                 dc.DrawBitmap(self._background_bmp, x, y)
 
                 y = y + h
-                
+
             x = x + w
 
         return
@@ -195,7 +195,7 @@ class ExpandableHeader(Widget):
         self._tile_background_image(dc, size.width, size.height)
 
         self._draw_title(dc)
-        
+
         # Draw the carat button
         self._draw_carat_button(dc)
 
@@ -207,7 +207,7 @@ class ExpandableHeader(Widget):
 
     def _on_erase_background(self, event):
         """ Called when the background of the panel is erased. """
-        
+
         #print 'ImageButton._on_erase_background'
         dc = event.GetDC()
         self._draw(dc)
@@ -235,7 +235,7 @@ class ExpandableHeader(Widget):
         # fire an event so any listeners can pick up the change
         self.panel_expanded = self
         event.Skip()
-        
+
         return
 
     def _on_remove(self, event):

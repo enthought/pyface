@@ -19,18 +19,18 @@ class ColorView(View):
     ###########################################################################
 
     #### Trait initializers ###################################################
-    
+
     def _id_default(self):
         """ Trait initializer. """
 
         # By making the Id the same as the name, we make it easy to specify
         # the views in the example perspectives. Note for larger applications
         # the Id should be globally unique, and by default we use the module
-        # name and class name. 
+        # name and class name.
         return self.name
 
     #### Methods ##############################################################
-   
+
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the view.
 
@@ -54,7 +54,7 @@ class ColorView(View):
         """ Create a wx version of the control. """
 
         import wx
-        
+
         panel = wx.Panel(parent, -1)
         panel.SetBackgroundColour(color)
 
@@ -64,7 +64,7 @@ class ColorView(View):
         """ Create a Qt4 version of the control. """
 
         from enthought.qt import QtGui
-        
+
         widget = QtGui.QWidget(parent)
 
         palette = widget.palette()

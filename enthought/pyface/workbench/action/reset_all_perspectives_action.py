@@ -31,7 +31,7 @@ class ResetAllPerspectivesAction(WorkbenchAction):
         """ Perform the action. """
 
         window = self.window
-        
+
         if window.confirm(MESSAGE) == YES:
             window.reset_all_perspectives()
 

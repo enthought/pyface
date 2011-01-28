@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -41,10 +41,10 @@ class LayeredPanel(Widget):
     STYLE = wx.CLIP_CHILDREN
 
     #### "Layered Panel' interface ############################################
-    
+
     # The toolkit-specific control of the currently displayed layer.
     current_layer = Any
-    
+
     # The name of the currently displayed layer.
     current_layer_name = Str
 
@@ -52,11 +52,11 @@ class LayeredPanel(Widget):
     # sizes of the layers
     min_width = Int(0)
     min_height = Int(0)
-    
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
-    
+
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
 
@@ -70,13 +70,13 @@ class LayeredPanel(Widget):
         #
         # { str name : wx.Window layer }
         self._layers = {}
-        
+
         return
 
     ###########################################################################
     # 'LayeredPanel' interface.
     ###########################################################################
-    
+
     def add_layer(self, name, layer):
         """ Adds a layer with the specified name.
 
@@ -92,7 +92,7 @@ class LayeredPanel(Widget):
         # All layers are hidden when they are added.  Use 'show_layer' to make
         # a layer visible.
         sizer.Show(layer, False)
-        
+
         # fixme: Should we warn if a layer is being overridden?
         self._layers[name] = layer
 
@@ -103,7 +103,7 @@ class LayeredPanel(Widget):
         if self.min_width != -1 or self.min_height != -1:
             if layer.GetSizer() is None:
                 return layer
-            
+
             min_size = layer.GetSizer().CalcMin()
             needs_layout = False
             if min_size.GetWidth() > self.min_width:
@@ -135,14 +135,14 @@ class LayeredPanel(Widget):
 
         # Show the specified layer.
         layer = self._show_layer(name, self._layers[name])
-        
+
         return layer
 
     def has_layer(self, name):
         """ Does the panel contain a layer with the specified name? """
 
         return self._layers.has_key(name)
-    
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -155,7 +155,7 @@ class LayeredPanel(Widget):
         panel.SetSizer(sizer)
         panel.SetAutoLayout(True)
         panel.SetupScrolling()
-        
+
         return panel
 
     def _hide_layer(self, layer):
@@ -173,10 +173,10 @@ class LayeredPanel(Widget):
         sizer = self.control.GetSizer()
         sizer.Show(layer, True)
         sizer.Layout()
-        
+
         self.current_layer = layer
         self.current_layer_name = name
-        
+
         return layer
-    
+
 #### EOF ######################################################################

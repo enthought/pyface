@@ -15,7 +15,7 @@ class ITaskPane(Interface):
 
     # The pane's user-visible name.
     name = Unicode
-    
+
     # The toolkit-specific control that represents the pane.
     control = Any
 
@@ -45,10 +45,10 @@ class ITaskPane(Interface):
 
 class MTaskPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
-    """ 
+    """
 
     implements(ITaskPane)
-    
+
     #### 'ITaskPane' interface ################################################
 
     id = Str

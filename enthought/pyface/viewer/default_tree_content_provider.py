@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -17,7 +17,7 @@
 # Local imports.
 from tree_content_provider import TreeContentProvider
 
-    
+
 class DefaultTreeContentProvider(TreeContentProvider):
     """ The default tree content provider. """
 
@@ -27,14 +27,14 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
     def get_parent(self, item):
         """ Returns the parent of an item. """
-        
+
         return item.parent
-    
+
     def get_children(self, item):
         """ Returns the children of an item. """
-        
+
         return item.children
-    
+
     def has_children(self, item):
         """ True iff the item has children. """
 
@@ -46,7 +46,7 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
     def append(self, parent, child):
         """ Appends 'child' to the 'parent' item. """
-        
+
         return self.insert(parent, len(parent.children), child)
 
     def insert_before(self, parent, before, child):
@@ -77,7 +77,7 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         # Trait notification.
         #self.items_removed(parent, [index], [child])
-        
+
         return child
 
     #########################################################################
@@ -88,5 +88,5 @@ class DefaultTreeContentProvider(TreeContentProvider):
         """ Creates a new item. """
 
         return TreeItem(**kw)
-    
+
 #### EOF ####################################################################

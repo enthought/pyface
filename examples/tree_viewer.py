@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -27,13 +27,13 @@ from enthought.traits.api import Float, Str
 # Local imports.
 from file_tree_viewer import FileTreeViewer
 from file_sorters import FileSorter
-    
+
 
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
     #### 'SplitApplicationWindow' interface ###################################
-    
+
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
 
@@ -52,7 +52,7 @@ class MainWindow(SplitApplicationWindow):
         )
 
         self._tree_viewer.on_trait_change(self._on_tree_anytrait_changed)
-        
+
         return self._tree_viewer.control
 
     def _create_rhs(self, parent):
@@ -61,7 +61,7 @@ class MainWindow(SplitApplicationWindow):
         self._python_shell = PythonShell(parent)
         self._python_shell.bind('widget', self._tree_viewer)
         self._python_shell.bind('w', self._tree_viewer)
-        
+
         return self._python_shell.control
 
     ###########################################################################
@@ -74,7 +74,7 @@ class MainWindow(SplitApplicationWindow):
         """ Called when any trait on the tree has changed. """
 
         print 'trait', trait_name, 'value', new
-            
+
         return
 
 

@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -33,14 +33,14 @@ class Action(HasTraits):
     """
 
     #### 'Action' interface ###################################################
-    
+
     # Keyboard accelerator (by default the action has NO accelerator).
     accelerator = Unicode
 
     # Is the action checked?  This is only relevant if the action style is
     # 'radio' or 'toggle'.
     checked = Bool(False)
-    
+
     # A longer description of the action (used for context sensitive help etc).
     # If no description is specified, the tooltip is used instead (and if there
     # is no tooltip, then well, maybe you just hate your users ;^).
@@ -69,7 +69,7 @@ class Action(HasTraits):
 
     # A short description of the action used for tooltip text etc.
     tooltip = Unicode
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -98,7 +98,7 @@ class Action(HasTraits):
 
         if self.on_perform is not None:
             self.on_perform()
-            
+
         return
-    
+
 #### EOF ######################################################################

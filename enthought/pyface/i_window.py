@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -31,10 +31,10 @@ class IWindow(IWidget):
     """
 
     #### 'IWindow' interface ##################################################
-    
+
     # The position of the window.
     position = Tuple
-    
+
     # The size of the window.
     size = Tuple
 
@@ -51,7 +51,7 @@ class IWindow(IWidget):
 
     # The window is about to be closed.
     closing =  Event
-    
+
     # The window has been deactivated.
     deactivated = Event
 
@@ -65,7 +65,7 @@ class IWindow(IWidget):
 
     # The window is about to open.
     opening = Event
-    
+
     ###########################################################################
     # 'IWindow' interface.
     ###########################################################################
@@ -78,13 +78,13 @@ class IWindow(IWidget):
 
     def show(self, visible):
         """ Show or hide the window.
-        
+
         visible is set if the window should be shown.
         """
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
-        
+
         message is the text of the message to display.
         title is the text of the window title.
         cancel is set if the dialog should contain a Cancel button.
@@ -93,21 +93,21 @@ class IWindow(IWidget):
 
     def information(self, message, title='Information'):
         """ Convenience method to show an information message dialog.
-        
+
         message is the text of the message to display.
         title is the text of the window title.
         """
 
     def warning(self, message, title='Warning'):
         """ Convenience method to show a warning message dialog.
-        
+
         message is the text of the message to display.
         title is the text of the window title.
         """
 
     def error(self, message, title='Error'):
         """ Convenience method to show an error message dialog.
-        
+
         message is the text of the message to display.
         title is the text of the window title.
         """
@@ -145,7 +145,7 @@ class MWindow(object):
 
         # Trait notification.
         self.opened = self
-        
+
         return
 
     def close(self):
@@ -190,7 +190,7 @@ class MWindow(object):
         from message_dialog import error
 
         return error(self.control, message, title)
-    
+
     ###########################################################################
     # Protected 'IWidget' interface.
     ###########################################################################
@@ -203,7 +203,7 @@ class MWindow(object):
 
         # Wire up event any event listeners required by the window.
         self._add_event_listeners()
-        
+
         return
 
 #### EOF ######################################################################

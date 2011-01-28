@@ -1,13 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
-# 
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-# 
+#
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
@@ -41,17 +41,17 @@ class Group(HasTraits):
 
     # Is the group visible?
     visible = Bool(True)
-    
+
     # The group's unique identifier (only needs to be unique within the action
     # manager that the group belongs to).
     id = Str
 
     # All of the items in the group.
     items = Property
-    
+
     # The action manager that the group belongs to.
     parent = Any#Instance('enthought.pyface.action.ActionManager')
-    
+
     # Does this group require a separator when it is visualized?
     separator = Bool(True)
 
@@ -73,15 +73,15 @@ class Group(HasTraits):
         # Add any specified items.
         for item in items:
             self.append(item)
-            
+
         return
-    
+
     ###########################################################################
     # 'Group' interface.
     ###########################################################################
 
     #### Trait Properties #####################################################
-    
+
     def _get_items(self):
         """ Returns the items in the group. """
 
@@ -96,7 +96,7 @@ class Group(HasTraits):
             item.enabled = new
 
         return
-    
+
     #### Methods ##############################################################
 
     def append(self, item):
@@ -136,7 +136,7 @@ class Group(HasTraits):
             In which case the item is simply inserted into the group.
 
         2) An 'Action' instance.
-        
+
             In which case an 'ActionItem' instance is created with the action
             and then inserted into the group.
 
@@ -144,7 +144,7 @@ class Group(HasTraits):
 
             In which case an 'Action' is created that calls the callable when
             it is performed, and the action is then wrapped as in 2).
-        
+
         """
 
         if isinstance(item, Action):
@@ -153,7 +153,7 @@ class Group(HasTraits):
         elif callable(item):
             text = user_name_for(item.func_name)
             item = ActionItem(action=Action(text=text, on_perform=item))
-            
+
         item.parent = self
         self._items.insert(index, item)
 
@@ -175,7 +175,7 @@ class Group(HasTraits):
         """
 
         index = self._items.index(before)
-        
+
         self.insert(index, item)
 
         return (index, item)
@@ -188,7 +188,7 @@ class Group(HasTraits):
         """
 
         index = self._items.index(after)
-        
+
         self.insert(index + 1, item)
 
         return (index, item)
@@ -206,7 +206,7 @@ class Group(HasTraits):
 
         else:
             item = None
-            
+
         return item
 
 
@@ -225,7 +225,7 @@ class Separator(Group):
     Hopefully, 'Separator' is more readable than 'Group'...
 
     """
-    
+
     pass
 
 #### EOF ######################################################################

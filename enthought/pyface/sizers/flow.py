@@ -1,17 +1,17 @@
 #-------------------------------------------------------------------------------
-#  
-#  Defines a horizontal or vertical flow layout sizer for wxPython  
-#  
+#
+#  Defines a horizontal or vertical flow layout sizer for wxPython
+#
 #  Written by: David C. Morrill
-#  
+#
 #  Date: 01/12/2006
-#  
+#
 #  (c) Copyright 2006 by Enthought, Inc.
-#  
+#
 #-------------------------------------------------------------------------------
-                
+
 #-------------------------------------------------------------------------------
-#  Imports:  
+#  Imports:
 #-------------------------------------------------------------------------------
 
 import wx
@@ -20,34 +20,34 @@ from enthought.pyface.timer.api \
     import do_later
 
 #-------------------------------------------------------------------------------
-#  'FlowSizer' class:  
+#  'FlowSizer' class:
 #-------------------------------------------------------------------------------
 
 class FlowSizer ( wx.PySizer ):
-    
+
     #---------------------------------------------------------------------------
-    #  Initializes the object:  
+    #  Initializes the object:
     #---------------------------------------------------------------------------
-        
+
     def __init__ ( self, orient = wx.HORIZONTAL ):
         super( FlowSizer, self ).__init__()
         self._orient       = orient
         self._frozen       = False
         self._needed_size  = None
-            
+
     #---------------------------------------------------------------------------
-    #  Calculates the minimum size needed by the sizer:  
+    #  Calculates the minimum size needed by the sizer:
     #---------------------------------------------------------------------------
-                        
+
     def CalcMin ( self ):
         """ Calculates the minimum size needed by the sizer.
         """
         if self._needed_size is not None:
             return self._needed_size
-            
+
         horizontal  = (self._orient == wx.HORIZONTAL)
         dx = dy = i = 0
-        
+
         while True:
             try:
                 item = self.GetItem( i )
@@ -56,22 +56,22 @@ class FlowSizer ( wx.PySizer ):
                 i += 1
             except:
                 break
-                
+
             idx, idy = item.CalcMin()
             if horizontal:
                 dy = max( dy, idy )
             else:
                 dx = max( dx, idx )
-                
+
         return wx.Size( dx, dy )
-        
+
     #---------------------------------------------------------------------------
     #  Layout the contents of the sizer based on the sizer's current size and
     #  position:
     #---------------------------------------------------------------------------
-    
+
     def RecalcSizes ( self ):
-        """ Layout the contents of the sizer based on the sizer's current size 
+        """ Layout the contents of the sizer based on the sizer's current size
             and position.
         """
         horizontal = (self._orient == wx.HORIZONTAL)
@@ -81,7 +81,7 @@ class FlowSizer ( wx.PySizer ):
         ex         = x + dx
         ey         = y + dy
         mdx = mdy  = sdx = sdy = i = 0
-        
+
         visible = True
         cur_max = 0
         while True:
@@ -92,7 +92,7 @@ class FlowSizer ( wx.PySizer ):
                 i += 1
             except:
                 break
-               
+
             idx, idy  = item.CalcMin()
             expand    = item.GetFlag() & wx.EXPAND
             if horizontal:
@@ -102,11 +102,11 @@ class FlowSizer ( wx.PySizer ):
                     mdy = sdy = 0
                     if y >= ey:
                         visible = False
-                        
+
                 cur_max = max( idy, cur_max )
                 if expand:
                     idy = cur_max
-                
+
                 if item.IsSpacer():
                     sdy = max( sdy, idy )
                     if x == x0:
@@ -114,7 +114,7 @@ class FlowSizer ( wx.PySizer ):
                 item.SetDimension( wx.Point( x, y ), wx.Size( idx, idy ) )
                 item.Show( visible )
                 x  += idx
-                mdy = max( mdy, idy ) 
+                mdy = max( mdy, idy )
             else:
                 if (y > y0) and ((y + idy) > ey):
                     y   = y0
@@ -122,21 +122,21 @@ class FlowSizer ( wx.PySizer ):
                     mdx = sdx = 0
                     if x >= ex:
                         visible = False
-                        
+
                 cur_max = max( idx, cur_max )
                 if expand:
                     idx = cur_max
-                        
+
                 if item.IsSpacer():
                     sdx = max( sdx, idx )
                     if y == y0:
                         idy = 0
-                    
+
                 item.SetDimension( wx.Point( x, y ), wx.Size( idx, idy ) )
                 item.Show( visible )
                 y  += idy
                 mdx = max( mdx, idx )
-                
+
         if (not visible) and (self._needed_size is None):
             max_dx = max_dy = 0
             if horizontal:
@@ -149,21 +149,21 @@ class FlowSizer ( wx.PySizer ):
             do_later( self._do_parent, '_thaw' )
         else:
             self._needed_size = None
-            
+
     #---------------------------------------------------------------------------
-    #  Prevents the specified window from doing any further screen updates:    
+    #  Prevents the specified window from doing any further screen updates:
     #---------------------------------------------------------------------------
-                        
+
     def _freeze ( self, window ):
         """ Prevents the specified window from doing any further screen updates.
         """
         window.Freeze()
         self._frozen = True
-        
+
     #---------------------------------------------------------------------------
-    #  Lays out a specified window and then allows it to be updated again:    
+    #  Lays out a specified window and then allows it to be updated again:
     #---------------------------------------------------------------------------
-                
+
     def _thaw ( self, window ):
         """ Lays out a specified window and then allows it to be updated again.
         """
@@ -176,7 +176,7 @@ class FlowSizer ( wx.PySizer ):
     #---------------------------------------------------------------------------
     #  Does a specified operation on the sizer's parent window:
     #---------------------------------------------------------------------------
-                
+
     def _do_parent ( self, method ):
         """ Does a specified operation on the sizer's parent window.
         """
@@ -188,9 +188,9 @@ class FlowSizer ( wx.PySizer ):
                     break
                 i += 1
             except:
-                return 
-                
+                return
+
             if item.IsWindow():
                 getattr( self, method )( item.GetWindow().GetParent() )
                 return
-        
+
