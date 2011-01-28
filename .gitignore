@@ -2,7 +2,6 @@
 *.pyc
 *.so
 *~
-*~
 .DS_Store
 
 # ignore the build directories
