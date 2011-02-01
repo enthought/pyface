@@ -1,6 +1,7 @@
 # Local imports.
 from dock_pane import DockPane
-from task import Task, TaskLayout
+from task import Task
+from task_layout import TaskLayout
 from task_pane import TaskPane
 from task_window import TaskWindow
 from traits_dock_pane import TraitsDockPane

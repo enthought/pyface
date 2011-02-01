@@ -40,8 +40,14 @@ class FileBrowserPane(TraitsDockPane):
 class PythonScriptBrowserPane(FileBrowserPane):
     """ A file browser pane restricted to Python scripts.
     """
+    
+    #### TaskPane interface ###################################################
+    
     id = 'example.python_script_browser_pane'
     name = 'Script Browser'
+
+    #### FileBrowserPane interface ############################################ 
+
     filters = [ '*.py' ]
 
 
