@@ -64,7 +64,7 @@ class Task(HasTraits):
     def create_center_pane(self):
         """ Create and return the central pane, which must implement ITaskPane.
         """
-        return None
+        raise NotImplementedError
 
     def create_dock_panes(self):
         """ Create and return the task's dock panes (IDockPane instances).

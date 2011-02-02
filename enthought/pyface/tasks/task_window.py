@@ -16,7 +16,9 @@ from action.task_action_manager_builder import TaskActionManagerBuilder
 from i_dock_pane import IDockPane
 from i_task_pane import ITaskPane
 from task import Task, TaskLayout
+from task_window_backend import TaskWindowBackend
 from task_window_layout import TaskWindowLayout
+
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -89,7 +91,7 @@ class TaskWindow(ApplicationWindow):
     _active_state = Instance(TaskState)
     _states = List(Instance(TaskState))
     _title = Unicode
-    _window_layout = Instance(TaskWindowLayout)
+    _window_backend = Instance(TaskWindowBackend)
 
     ###########################################################################
     # 'Widget' interface.
@@ -142,7 +144,7 @@ class TaskWindow(ApplicationWindow):
     def _create_contents(self, parent):
         """ Delegate to the TaskWindowLayout.
         """
-        return self._window_layout.create_contents(parent)
+        return self._window_backend.create_contents(parent)
 
     ###########################################################################
     # 'TaskWindow' interface.
@@ -155,10 +157,10 @@ class TaskWindow(ApplicationWindow):
         if state:
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
-                self._window_layout.hide_task(self._active_state)
+                self._window_backend.hide_task(self._active_state)
 
             # Display the panes of the new task.
-            self._window_layout.show_task(state)
+            self._window_backend.show_task(state)
 
             # Activate the new task. The menus, toolbars, and status bar will be
             # replaced at this time, assuming the toolkit-specific
@@ -234,7 +236,7 @@ class TaskWindow(ApplicationWindow):
             # If the task is active, make sure it is de-activated before
             # deleting its controls.
             if self._active_state == state:
-                self._window_layout.hide_task(state)
+                self._window_backend.hide_task(state)
                 self._active_state = None
 
             # Destroy all controls associated with the task.
@@ -249,31 +251,79 @@ class TaskWindow(ApplicationWindow):
                         "window." % task)
 
     def get_dock_pane(self, id):
-        """ Returns the dock pane in the active task with the specified id, or
+        """ Returns the dock pane in the active task with the specified ID, or
             None if no such dock pane exists.
         """
         if self._active_state:
             return self._active_state.get_dock_pane(id)
         return None
 
+    def get_task(self, id):
+        """ Returns the task with the specified ID, or None if no such task
+            exists.
+        """
+        for state in self._states:
+            if state.task.id == id:
+                return state.task
+        return None
+
     #### Methods for saving and restoring the layout ##########################
 
     def get_layout(self):
-        """ Returns a TaskLayout for the current state of the window.
+        """ Returns a TaskLayout (for the active task) that reflects the state
+            of the window.
         """
-        return self._window_layout.get_layout()
+        if self._active_state:
+            return self._window_backend.get_layout()
+        return None
 
     def set_layout(self, layout):
         """ Applies a TaskLayout (which should be suitable for the active task)
             to the window.
         """
-        self._window_layout.set_layout(layout)
+        if self._active_state:
+            self._window_backend.set_layout(layout)
 
     def reset_layout(self):
         """ Restores the active task's default TaskLayout.
         """
         if self.active_task:
             self.set_layout(self.active_task.default_layout)
+
+    def get_window_layout(self):
+        """ Returns a TaskWindowLayout for the current state of the window.
+        """
+        result = TaskWindowLayout(position=self.position, size=self.size)
+        for state in self._states:
+            id = state.task.id
+            result.task_ids.append(id)
+            if state == self._active_state:
+                result.active_task_id = id
+                result.layout_state[id] = self._window_backend.get_layout()
+            else:
+                result.layout_state[id] = state.layout
+        return result
+
+    def set_window_layout(self, window_layout):
+        """ Applies an old memento to the window.
+        """
+        # Set window size before laying it out.
+        self.position = window_layout.position
+        self.size = window_layout.size
+
+        # Attempt to activate the requested task.
+        task = self.get_task(window_layout.active_task_id)
+        if task:
+            self.activate_task(task)
+
+        # Set layouts for the tasks, including the active task.
+        for state in self._states:
+            layout = window_layout.layout_state.get(state.task.id)
+            if layout:
+                if state == self._active_state:
+                    self._window_backend.set_layout(layout)
+                else:
+                    state.layout = layout
 
     ###########################################################################
     # Protected 'TaskWindow' interface.
@@ -290,8 +340,8 @@ class TaskWindow(ApplicationWindow):
 
     #### Trait initializers ###################################################
 
-    def __window_layout_default(self):
-        return TaskWindowLayout(window=self)
+    def __window_backend_default(self):
+        return TaskWindowBackend(window=self)
 
     #### Trait property getters/setters #######################################
 

@@ -2,10 +2,11 @@
 from enthought.traits.api import Any, DelegatesTo, HasTraits, Instance, \
      Interface, implements
 
-class ITaskWindowLayout(Interface):
+
+class ITaskWindowBackend(Interface):
     """ The TaskWindow layout interface.
 
-    TaskWindow delegates to an ITaskWindowLayout object for toolkit-specific
+    TaskWindow delegates to an ITaskWindowBackend object for toolkit-specific
     layout functionality.
     """
 
@@ -16,7 +17,7 @@ class ITaskWindowLayout(Interface):
     window = Instance('enthought.pyface.tasks.task_window.TaskWindow')
 
     ###########################################################################
-    # 'ITaskWindowLayout' interface.
+    # 'ITaskWindowBackend' interface.
     ###########################################################################
 
     def create_contents(self, parent):
@@ -44,13 +45,13 @@ class ITaskWindowLayout(Interface):
         """
 
 
-class MTaskWindowLayout(HasTraits):
+class MTaskWindowBackend(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
 
-    implements(ITaskWindowLayout)
+    implements(ITaskWindowBackend)
 
-    #### 'ITaskWindowLayout' interface ########################################
+    #### 'ITaskWindowBackend' interface #######################################
 
     control = DelegatesTo('window')
 

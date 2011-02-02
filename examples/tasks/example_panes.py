@@ -5,7 +5,7 @@ import os.path
 from enthought.pyface.api import PythonEditor
 from enthought.pyface.tasks.api import TaskPane, TraitsDockPane
 from enthought.traits.api import Event, File, Instance, List, Str
-from enthought.traits.ui.api import UI, View, Item, FileEditor
+from enthought.traits.ui.api import View, Item, FileEditor
 
 
 class FileBrowserPane(TraitsDockPane):

@@ -9,7 +9,7 @@ class TaskLayout(HasStrictTraits):
     """ A picklable object that describes the layout of a Task's dock panes.
     """
 
-    # Lists of (possibly singly-nested) DockPane ids. For the left and right
+    # Lists of (possibly singly-nested) DockPane IDs. For the left and right
     # areas, dock panes are added from top to bottom; for the top and bottom
     # areas, dock panes are added from left to right. A nested list indicates a
     # tabbed pane group.
