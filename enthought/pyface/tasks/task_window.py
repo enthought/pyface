@@ -305,7 +305,7 @@ class TaskWindow(ApplicationWindow):
         return result
 
     def set_window_layout(self, window_layout):
-        """ Applies an old memento to the window.
+        """ Applies a TaskWindowLayout to the window.
         """
         # Set window size before laying it out.
         self.position = window_layout.position

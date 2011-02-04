@@ -10,7 +10,7 @@ class TaskWindowLayout(HasStrictTraits):
     """ A picklable object that describes the layout and state of a TaskWindow.
     """
 
-    # The ID of the active task (or the empty string if no task is active).
+    # The ID of the active task. If unspecified, the first task will be active.
     active_task_id = Str
 
     # The IDs of all the tasks attached to the window.
