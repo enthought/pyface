@@ -61,7 +61,7 @@ class Task(HasTraits):
         """
         pass
 
-    def create_center_pane(self):
+    def create_central_pane(self):
         """ Create and return the central pane, which must implement ITaskPane.
         """
         raise NotImplementedError

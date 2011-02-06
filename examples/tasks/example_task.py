@@ -40,7 +40,7 @@ class ExampleTask(Task):
         filename = self.window.central_pane.editor.path
         self.window.title = filename if filename else 'Untitled'
 
-    def create_center_pane(self):
+    def create_central_pane(self):
         """ Create the central pane: the script editor.
         """
         return PythonEditorPane()

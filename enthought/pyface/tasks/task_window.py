@@ -195,7 +195,7 @@ class TaskWindow(ApplicationWindow):
             self._create()
 
         # Create the central pane.
-        state.central_pane = task.create_center_pane()
+        state.central_pane = task.create_central_pane()
         state.central_pane.create(self.control)
 
         # Create the dock panes.
