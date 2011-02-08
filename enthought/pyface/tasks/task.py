@@ -69,7 +69,7 @@ class Task(HasTraits):
     def create_dock_panes(self):
         """ Create and return the task's dock panes (IDockPane instances).
 
-        This method is called *after* create_center_pane() when the task is
+        This method is called *after* create_central_pane() when the task is
         added to a TaskWindow.
         """
         return []
