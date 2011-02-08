@@ -30,8 +30,8 @@ class IDockPane(ITaskPane):
     # Whether the pane can be moved from one dock area to another.
     movable = Bool(True)
 
-    # An optional initial size hint for the dock pane.
-    size = Tuple(-1, -1)
+    # The size of the dock pane. Note that this value is read-only.
+    size = Tuple
 
     # Whether the pane is currently visible.
     visible = Bool(True)
@@ -66,7 +66,7 @@ class MDockPane(MTaskPane):
     floatable = Bool(True)
     floating = Bool(False)
     movable = Bool(True)
-    size = Tuple(-1, -1)
+    size = Tuple
     visible = Bool(True)
 
     ###########################################################################
