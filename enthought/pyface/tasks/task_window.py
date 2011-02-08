@@ -296,9 +296,9 @@ class TaskWindow(ApplicationWindow):
         result = TaskWindowLayout(position=self.position, size=self.size)
         for state in self._states:
             id = state.task.id
-            result.task_ids.append(id)
+            result.tasks.append(id)
             if state == self._active_state:
-                result.active_task_id = id
+                result.active_task = id
                 result.layout_state[id] = self._window_backend.get_layout()
             else:
                 result.layout_state[id] = state.layout
@@ -312,7 +312,7 @@ class TaskWindow(ApplicationWindow):
         self.size = window_layout.size
 
         # Attempt to activate the requested task.
-        task = self.get_task(window_layout.active_task_id)
+        task = self.get_task(window_layout.active_task)
         if task:
             self.activate_task(task)
 

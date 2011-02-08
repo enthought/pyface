@@ -11,10 +11,10 @@ class TaskWindowLayout(HasStrictTraits):
     """
 
     # The ID of the active task. If unspecified, the first task will be active.
-    active_task_id = Str
+    active_task = Str
 
     # The IDs of all the tasks attached to the window.
-    task_ids = List(Str)
+    tasks = List(Str)
 
     # The position of the window.
     position = Tuple(-1, -1)
