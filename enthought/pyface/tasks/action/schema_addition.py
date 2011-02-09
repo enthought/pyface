@@ -1,17 +1,14 @@
 # Enthought library imports.
-from enthought.pyface.action.api import Action, ActionItem, Group, MenuManager
-from enthought.traits.api import HasTraits, Str, Trait
-
-# Trait definitions.
-ActionElement = Trait(None, Action, ActionItem, Group, MenuManager)
+from enthought.traits.api import Callable, HasTraits, Str, Trait
 
 
 class SchemaAddition(HasTraits):
     """ An addition to an existing menu bar or tool bar schema.
     """
 
-    # The Pyface action/group/menu to insert.
-    item = ActionElement
+    # A callable with signature:
+    #    callable() -> Action OR ActionItem OR Group OR MenuManager
+    factory = Callable
 
     # A forward-slash-separated path through the action hierarchy to the menu
     # to add the action, group or menu to. For example:

@@ -8,6 +8,7 @@ from enthought.pyface.tasks.action.api import GroupSchema, MenuSchema, \
      MenuBarSchema, SchemaAddition
 from enthought.pyface.tasks.action.task_action_manager_builder import \
      TaskActionManagerBuilder
+from enthought.pyface.tasks.api import Task
 
 
 class ActionManagerBuilderTestCase(unittest.TestCase):
@@ -38,7 +39,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     def setUp(self):
         """ Create some dummy actions to use while testing.
         """
-        for i in xrange(5):
+        for i in xrange(1, 6):
             action_id = 'action%i' % i
             setattr(self, action_id, Action(id=action_id, name='Action %i' % i))
 
@@ -48,7 +49,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         schema = MenuBarSchema(
             MenuSchema(self.action1, self.action2, id='File', name='&File'),
             MenuSchema(self.action3, self.action4, id='Edit', name='&Edit'))
-        builder = TaskActionManagerBuilder(menu_bar_schema=schema)
+        builder = TaskActionManagerBuilder(task=Task(menu_bar=schema))
         actual = builder.create_menu_bar_manager()
         desired = MenuBarManager(MenuManager(self.action1, self.action2,
                                              id='File', name='&File'),
@@ -63,15 +64,20 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         schema = MenuBarSchema(
             MenuSchema(GroupSchema(self.action1, self.action2, id='FileGroup'),
                        id='File'))
-        additions = [ SchemaAddition(item=self.action3, before='action1',
-                                     path='MenuBar/File/FileGroup'),
-                      SchemaAddition(item=self.action4, before='action1',
-                                     path='MenuBar/File/FileGroup') ]
-        builder = TaskActionManagerBuilder(menu_bar_schema=schema,
-                                           additions=additions)
+        extras = [ SchemaAddition(factory=lambda: self.action3, 
+                                  before='action1',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action4, 
+                                  before='action1',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action5,
+                                  path='MenuBar/File/FileGroup')]
+        builder = TaskActionManagerBuilder(task=Task(menu_bar=schema,
+                                                     extra_actions=extras))
         actual = builder.create_menu_bar_manager()
         desired = MenuBarManager(MenuManager(Group(self.action3, self.action4,
                                                    self.action1, self.action2,
+                                                   self.action5,
                                                    id='FileGroup'),
                                              id='File'),
                                  id='MenuBar')

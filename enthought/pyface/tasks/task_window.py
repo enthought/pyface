@@ -159,8 +159,7 @@ class TaskWindow(ApplicationWindow):
             self._window_backend.show_task(state)
 
             # Activate the new task. The menus, toolbars, and status bar will be
-            # replaced at this time, assuming the toolkit-specific
-            # implementations delegate their ActionManagers to the active task.
+            # replaced at this time.
             self._active_state = state
 
             # Notify the task that it has been activated.
@@ -192,6 +191,7 @@ class TaskWindow(ApplicationWindow):
 
         # Create the central pane.
         state.central_pane = task.create_central_pane()
+        state.central_pane.task = task
         state.central_pane.create(self.control)
 
         # Create the dock panes.
@@ -199,6 +199,7 @@ class TaskWindow(ApplicationWindow):
         for dock_pane_factory in task.extra_dock_pane_factories:
             state.dock_panes.append(dock_pane_factory(task=task))
         for dock_pane in state.dock_panes:
+            dock_pane.task = task
             dock_pane.create(self.control)
 
         # Build the menu and tool bars.

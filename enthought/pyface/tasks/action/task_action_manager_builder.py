@@ -50,9 +50,12 @@ class TaskActionManagerBuilder(HasTraits):
         additions_map = defaultdict(list)
         for addition in self.task.extra_actions:
             additions_map[addition.path].append(addition)
-        return self._create_manager_recurse(schema, additions_map, '')
 
-    def _create_manager_recurse(self, schema, additions, path):
+        manager = self._create_manager_recurse(schema, additions_map)
+        manager.controller = self.controller
+        return manager
+
+    def _create_manager_recurse(self, schema, additions, path=''):
         """ Recursively builds the manager for with the specified additions map.
         """
         # Compute the new action path.
@@ -90,7 +93,7 @@ class TaskActionManagerBuilder(HasTraits):
                                    (addition, addition.path))
             
             # Insert the child item.
-            item = addition.item
+            item = addition.factory()
             if isinstance(item, ActionManager):
                 # See comment above.
                 item.controller = self.controller
