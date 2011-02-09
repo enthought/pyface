@@ -10,7 +10,7 @@ class DockPaneToggleAction(Action):
     """ An Action for toggling the visibily of a dock pane.
     """
 
-    #### 'ToggleAction' interface #############################################
+    #### 'DockPaneToggleAction' interface #####################################
 
     dock_pane = Instance(IDockPane)
 

@@ -36,10 +36,7 @@ class Task(HasTraits):
 
     #### Actions ##############################################################
 
-    # The menu bar for the task. Note that the Tasks framework will make
-    # additions to the menu bar under certain conditions:
-    # - If there is a there is a top-level menu with the ID 'View', entries
-    #   will be inserted for toggling the visibility of closable dock panes.
+    # The menu bar for the task.
     menu_bar = Instance(MenuBarSchema)
 
     # The (optional) status bar for the task.

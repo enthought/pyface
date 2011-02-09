@@ -3,22 +3,18 @@ import logging
 
 # Enthought library imports.
 from enthought.pyface.action.api import Group, MenuManager, MenuBarManager, \
-     StatusBarManager, ToolBarManager
+    StatusBarManager, ToolBarManager
 from enthought.pyface.api import ApplicationWindow
 from enthought.traits.api import Bool, HasTraits, HasStrictTraits, Instance, \
-     List, Property, Unicode, Vetoable
+    List, Property, Unicode, Vetoable
 
 # Local imports.
-from action.dock_pane_toggle_action import DockPaneToggleAction
-from action.schema_addition import SchemaAddition
-from action.task_action_controller import TaskActionController
 from action.task_action_manager_builder import TaskActionManagerBuilder
 from i_dock_pane import IDockPane
 from i_task_pane import ITaskPane
 from task import Task, TaskLayout
 from task_window_backend import TaskWindowBackend
 from task_window_layout import TaskWindowLayout
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -153,7 +149,7 @@ class TaskWindow(ApplicationWindow):
     def activate_task(self, task):
         """ Activates a task that has already been added to the window.
         """
-        state = self._get_state(task)
+        state = self._fetch_state(task)
         if state:
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
@@ -205,33 +201,17 @@ class TaskWindow(ApplicationWindow):
         for dock_pane in state.dock_panes:
             dock_pane.create(self.control)
 
-        # Determine the set of action additions.
-        additions = task.extra_actions
-        if task.menu_bar:
-            group = Group(id='DockPaneToggleGroup')
-            for dock_pane in state.dock_panes:
-                group.append(DockPaneToggleAction(dock_pane=dock_pane))
-            additions += [ SchemaAddition(path=task.menu_bar.id + '/View',
-                                          item=group) ]
-
-        # Build the menu and tool bars, if necessary.
-        builder = TaskActionManagerBuilder(menu_bar_schema=task.menu_bar,
-                                           tool_bar_schemas=task.tool_bars,
-                                           additions=additions)
-        controller = TaskActionController(task=task)
-        if task.menu_bar:
-            state.menu_bar_manager = builder.create_menu_bar_manager()
-            state.menu_bar_manager.controller = controller
+        # Build the menu and tool bars.
+        builder = TaskActionManagerBuilder(task=task)
+        state.menu_bar_manager = builder.create_menu_bar_manager()
         state.status_bar_manager = task.status_bar
         state.tool_bar_managers = builder.create_tool_bar_managers()
-        for tool_bar_manager in state.tool_bar_managers:
-            tool_bar_manager.controller = controller
 
     def remove_task(self, task):
         """ Removes a task that has already been added to the window. All the
             task's panes are destroyed.
         """
-        state = self._get_state(task)
+        state = self._fetch_state(task)
         if state:
             # If the task is active, make sure it is de-activated before
             # deleting its controls.
@@ -250,13 +230,28 @@ class TaskWindow(ApplicationWindow):
             logger.warn("Cannot remove task %r: task does not belong to the "
                         "window." % task)
 
-    def get_dock_pane(self, id):
-        """ Returns the dock pane in the active task with the specified ID, or
-            None if no such dock pane exists.
+    def get_central_pane(self, task):
+        """ Returns the central pane for the specified task.
         """
-        if self._active_state:
-            return self._active_state.get_dock_pane(id)
-        return None
+        state = self._fetch_state(task)
+        return state.central_pane if state else None
+
+    def get_dock_pane(self, id, task=None):
+        """ Returns the dock pane in the task with the specified ID, or
+            None if no such dock pane exists. If a task is not specified, the
+            active task is used.
+        """
+        if task is None:
+            state = self._active_state
+        else:
+            state = self._fetch_state(task)
+        return state.get_dock_pane(id) if state else None
+
+    def get_dock_panes(self, task):
+        """ Returns the dock panes for the specified task.
+        """
+        state = self._fetch_state(task)
+        return state.dock_panes[:] if state else []
 
     def get_task(self, id):
         """ Returns the task with the specified ID, or None if no such task
@@ -329,7 +324,7 @@ class TaskWindow(ApplicationWindow):
     # Protected 'TaskWindow' interface.
     ###########################################################################
 
-    def _get_state(self, task):
+    def _fetch_state(self, task):
         """ Returns the TaskState that contains the specified Task, or None if
             no such state exists.
         """

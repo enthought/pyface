@@ -2,11 +2,12 @@
 from collections import defaultdict
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Instance, List
+from enthought.pyface.action.api import ActionController, ActionManager
+from enthought.traits.api import HasTraits, Instance
 
 # Local imports.
-from schema import Schema, MenuBarSchema, ToolBarSchema
-from schema_addition import SchemaAddition
+from enthought.pyface.tasks.task import Task
+from schema import Schema
 
 
 class TaskActionManagerBuilder(HasTraits):
@@ -14,15 +15,11 @@ class TaskActionManagerBuilder(HasTraits):
         with
     """
 
-    # The menu bar schema to be used by the builder.
-    menu_bar_schema = Instance(MenuBarSchema)
+    # The controller to assign to the menubar and toolbars.
+    controller = Instance(ActionController)
 
-    # The list of tool bar schemas to be used by the builder.
-    tool_bar_schemas = List(ToolBarSchema)
-
-    # The list of extra actions/groups/menus to be inserted into the action
-    # managers constructed by the builder.
-    additions = List(SchemaAddition)
+    # The Task to build menubars and toolbars for.
+    task = Instance(Task)
 
     ###########################################################################
     # 'TaskActionManagerBuilder' interface.
@@ -32,13 +29,15 @@ class TaskActionManagerBuilder(HasTraits):
         """ Create a menu bar manager from the builder's menu bar schema and
             additions.
         """
-        return self._create_manager(self.menu_bar_schema)
+        if self.task.menu_bar:
+            return self._create_manager(self.task.menu_bar)
+        return None
 
     def create_tool_bar_managers(self):
         """ Create tool bar managers from the builder's tool bar schemas and
             additions.
         """
-        return [ self._create_manager(tbs) for tbs in self.tool_bar_schemas ]
+        return [ self._create_manager(tbs) for tbs in self.task.tool_bars ]
 
     ###########################################################################
     # Protected interface.
@@ -49,7 +48,7 @@ class TaskActionManagerBuilder(HasTraits):
             additions.
         """
         additions_map = defaultdict(list)
-        for addition in self.additions:
+        for addition in self.task.extra_actions:
             additions_map[addition.path].append(addition)
         return self._create_manager_recurse(schema, additions_map, '')
 
@@ -66,6 +65,11 @@ class TaskActionManagerBuilder(HasTraits):
         for item in schema.items:
             if isinstance(item, Schema):
                 item = self._create_manager_recurse(item, additions, path)
+            if isinstance(item, ActionManager):
+                # Give even non-root action managers a reference to the
+                # controller so that custom Groups, MenuManagers, etc. can get
+                # access to their Tasks.
+                item.controller = self.controller
             children.append(item)
 
         # Add children from the additions dictionary. In the first line, we
@@ -73,6 +77,7 @@ class TaskActionManagerBuilder(HasTraits):
         # additions list given to build() is preserved (when it is not
         # completely determined by 'before' and 'after').
         for addition in reversed(additions[path]):
+            # Determine the child item's index.
             if addition.before:
                 index = schema.find(addition.before)
             elif addition.after:
@@ -83,7 +88,19 @@ class TaskActionManagerBuilder(HasTraits):
             if index == -1:
                 raise RuntimeError('Could not place addition %r at path %r.' %
                                    (addition, addition.path))
-            children.insert(index, addition.item)
+            
+            # Insert the child item.
+            item = addition.item
+            if isinstance(item, ActionManager):
+                # See comment above.
+                item.controller = self.controller
+            children.insert(index, item)
 
         # Finally, create the pyface.action instance for this schema.
         return schema.create(children)
+
+    #### Trait initializers ###################################################
+
+    def _controller_default(self):
+        from task_action_controller import TaskActionController
+        return TaskActionController(task=self.task)
