@@ -44,5 +44,5 @@ class TraitsDockPane(DockPane):
         """
         obj = self.obj if self.obj else self
         view = self.obj_view if self.obj and self.obj_view else None
-        self.ui = obj.edit_traits(view=view)
+        self.ui = obj.edit_traits(view=view, kind='panel')
         return self.ui.control
