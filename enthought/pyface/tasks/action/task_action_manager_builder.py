@@ -7,7 +7,9 @@ from enthought.traits.api import HasTraits, Instance
 
 # Local imports.
 from enthought.pyface.tasks.task import Task
+from enthought.pyface.tasks.topological_sort import before_after_sort
 from schema import Schema
+from schema_addition import SchemaAddition
 
 
 class TaskActionManagerBuilder(HasTraits):
@@ -62,43 +64,27 @@ class TaskActionManagerBuilder(HasTraits):
         if path: path += '/'
         path += schema.id
 
-        # Add children that are explicitly specified, either as Schema or as
-        # concrete pyface.action instances.
+        # Determine the order of the items at this path.
+        items = schema.items
+        if additions[path]:
+            items = before_after_sort(items + additions[path])
+
+        # Create the actual children by calling factory items.
         children = []
-        for item in schema.items:
+        for item in items:
             if isinstance(item, Schema):
                 item = self._create_manager_recurse(item, additions, path)
+            elif isinstance(item, SchemaAddition):
+                item = item.factory()
+
             if isinstance(item, ActionManager):
                 # Give even non-root action managers a reference to the
                 # controller so that custom Groups, MenuManagers, etc. can get
                 # access to their Tasks.
                 item.controller = self.controller
-            children.append(item)
-
-        # Add children from the additions dictionary. In the first line, we
-        # reverse the list of additions to ensure that the order of the
-        # additions list given to build() is preserved (when it is not
-        # completely determined by 'before' and 'after').
-        for addition in reversed(additions[path]):
-            # Determine the child item's index.
-            if addition.before:
-                index = schema.find(addition.before)
-            elif addition.after:
-                index = schema.find(addition.after)
-                if index != -1: index += 1
-            else:
-                index = len(children)
-            if index == -1:
-                raise RuntimeError('Could not place addition %r at path %r.' %
-                                   (addition, addition.path))
             
-            # Insert the child item.
-            item = addition.factory()
-            if isinstance(item, ActionManager):
-                # See comment above.
-                item.controller = self.controller
-            children.insert(index, item)
-
+            children.append(item)
+            
         # Finally, create the pyface.action instance for this schema.
         return schema.create(children)
 

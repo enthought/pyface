@@ -14,30 +14,36 @@ def before_after_sort(items):
 
     Any inconsistencies that are found (including cycles) are logged.
     """
+    # Handle a degenerate case for which the logic below will fail (because
+    # prev_item will not be set).
+    if len(items) < 2:
+        return items
+
     # Build a set of pairs representing the graph.
-    item_map = dict((item.id, item) for item in items)
+    item_map = dict((item.id, item) for item in items if item.id)
     pairs = []
     prev_item = None
     for item in items:
         # Attempt to use 'before' or 'after' to make a pair.
-        if item.before:
+        if hasattr(item, 'before') and item.before:
             parent, child = item, item_map.get(item.before)
             if not child:
                 logger.warning('No item with ID %r', item.before)
-        elif item.after:
+        elif hasattr(item, 'after') and item.after:
             parent, child = item_map.get(item.after), item
             if not parent:
                 logger.warning('No item with ID %r', item.after)
         else:
             parent = child = None
 
-        # If we have a pair, use it. Otherwise, use the previous item as a
-        # parent, if possible
+        # If we have a pair, use it. Otherwise, use the previous unmatched item
+        # as a parent, if possible.
         if parent and child:
             pairs.append((parent, child))
-        elif prev_item:
-            pairs.append((prev_item, item))
-        prev_item = item
+        else:
+            if prev_item:
+                pairs.append((prev_item, item))
+            prev_item = item
 
     # Now perform the actual sort.
     result, has_cycle = topological_sort(pairs)

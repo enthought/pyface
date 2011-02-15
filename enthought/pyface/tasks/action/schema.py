@@ -33,15 +33,6 @@ class Schema(HasTraits):
         """
         raise NotImplementedError
 
-    def find(self, id):
-        """ Returns the index of the item with the specified ID in the schema's
-            list of items, or -1 if no such item exists.
-        """
-        for i, item in enumerate(self.items):
-            if item.id == id:
-                return i
-        return -1
-
 
 class GroupSchema(Schema):
     """ A schema for a Pyface Group.
