@@ -86,11 +86,15 @@ class ToolBarSchema(Schema):
     # Assign a default ID for tool bar schemas.
     id = 'ToolBar'
 
+    # The tool bar's user visible name. Note that this name may not be used on
+    # all platforms.
+    name = Unicode('Tool Bar')
+
     # A factory for instantiating a pyfce ToolBarManager
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):
-        traits = dict(id=self.id)
+        traits = dict(id=self.id, name=self.name)
         return self.tool_bar_manager_factory(*children, **traits)
 
 
