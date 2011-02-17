@@ -2,8 +2,8 @@
 from enthought.pyface.tasks.api import Task, TaskLayout
 from enthought.pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
-from enthought.pyface.api import ConfirmationDialog, FileDialog, ImageResource, \
-     YES, OK, CANCEL
+from enthought.pyface.api import ConfirmationDialog, FileDialog, \
+    ImageResource, YES, OK, CANCEL
 from enthought.traits.api import on_trait_change
 
 # Local imports.
