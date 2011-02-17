@@ -1,8 +1,9 @@
 # Enthought library imports.
 from enthought.pyface.tasks.api import Task, TaskLayout
 from enthought.pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
-    SMenu, TaskAction
-from enthought.pyface.api import ConfirmationDialog, FileDialog, YES, OK, CANCEL
+    SMenu, SToolBar, TaskAction
+from enthought.pyface.api import ConfirmationDialog, FileDialog, ImageResource, \
+     YES, OK, CANCEL
 from enthought.traits.api import on_trait_change
 
 # Local imports.
@@ -28,6 +29,13 @@ class ExampleTask(Task):
                               id='File', name='&File'),
                         SMenu(DockPaneToggleGroup(),
                               id='View', name='&View'))
+
+    tool_bars = [ SToolBar(TaskAction(method='open',
+                                      tooltip='Open a file',
+                                      image=ImageResource('document_open')),
+                           TaskAction(method='save',
+                                      tooltip='Save the current file',
+                                      image=ImageResource('document_save'))) ]
 
     ###########################################################################
     # 'Task' interface.
