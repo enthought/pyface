@@ -96,8 +96,8 @@ class TaskWindow(ApplicationWindow):
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
         """
-        for task in self.tasks:
-            self.remove_task(task)
+        for state in self._states:
+            self._destroy_state(state)
         super(TaskWindow, self).destroy()
 
     ###########################################################################
@@ -221,12 +221,9 @@ class TaskWindow(ApplicationWindow):
                 self._active_state = None
 
             # Destroy all controls associated with the task.
-            for dock_pane in state.dock_panes:
-                dock_pane.destroy()
-            state.central_pane.destroy()
+            self._destroy_state(state)
 
             self._states.remove(state)
-            task.window = None
         else:
             logger.warn("Cannot remove task %r: task does not belong to the "
                         "window." % task)
@@ -325,6 +322,14 @@ class TaskWindow(ApplicationWindow):
     # Protected 'TaskWindow' interface.
     ###########################################################################
 
+    def _destroy_state(self, state):
+        """ Destroys all the controls associated with the specified TaskState.
+        """
+        for dock_pane in state.dock_panes:
+            dock_pane.destroy()
+        state.central_pane.destroy()
+        state.task.window = None
+
     def _fetch_state(self, task):
         """ Returns the TaskState that contains the specified Task, or None if
             no such state exists.
@@ -361,7 +366,7 @@ class TaskWindow(ApplicationWindow):
 
     def _get_tool_bar_managers(self):
         if self._active_state is not None:
-            return self._active_state.tool_bar_managers
+            return self._active_state.tool_bar_managers[:]
         return []
 
     def _get_active_task(self):
