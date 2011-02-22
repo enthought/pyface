@@ -24,22 +24,25 @@ def before_after_sort(items):
     pairs = []
     prev_item = None
     for item in items:
-        # Attempt to use 'before' or 'after' to make a pair.
+        # Attempt to use 'before' and 'after' to make pairs.
+        new_pairs = []
         if hasattr(item, 'before') and item.before:
             parent, child = item, item_map.get(item.before)
-            if not child:
+            if child:
+                new_pairs.append((parent, child))
+            else:
                 logger.warning('No item with ID %r', item.before)
-        elif hasattr(item, 'after') and item.after:
+        if hasattr(item, 'after') and item.after:
             parent, child = item_map.get(item.after), item
-            if not parent:
+            if parent:
+                new_pairs.append((parent, child))
+            else:
                 logger.warning('No item with ID %r', item.after)
-        else:
-            parent = child = None
 
-        # If we have a pair, use it. Otherwise, use the previous unmatched item
-        # as a parent, if possible.
-        if parent and child:
-            pairs.append((parent, child))
+        # If we have any pairs, use them. Otherwise, use the previous unmatched
+        # item as a parent, if possible.
+        if new_pairs:
+            pairs.extend(new_pairs)
         else:
             if prev_item:
                 pairs.append((prev_item, item))
