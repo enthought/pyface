@@ -1,5 +1,7 @@
 # Local imports.
 from dock_pane import DockPane
+from editor import Editor
+from editor_area_pane import EditorAreaPane
 from task import Task
 from task_layout import TaskLayout
 from task_pane import TaskPane
