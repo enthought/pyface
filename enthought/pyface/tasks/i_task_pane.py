@@ -1,6 +1,6 @@
 # Enthought library imports.
 from enthought.traits.api import Any, Bool, HasTraits, Interface, Instance, \
-     Str, Unicode, implements
+     Str, Unicode
 
 # Local imports.
 from task import Task
@@ -47,21 +47,10 @@ class MTaskPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
 
-    implements(ITaskPane)
-
     #### 'ITaskPane' interface ################################################
 
     id = Str
-    name = Str
+    name = Unicode
     control = Any
     has_focus = Bool
     task = Instance(Task)
-
-    def create(self, parent):
-        raise NotImplementedError
-
-    def destroy(self):
-        raise NotImplementedError
-
-    def set_focus(self):
-        raise NotImplementedError

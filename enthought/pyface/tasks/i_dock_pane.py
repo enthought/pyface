@@ -1,8 +1,8 @@
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Str, Tuple, implements
+from enthought.traits.api import Bool, Enum, HasTraits, Str, Tuple
 
 # Local imports.
-from i_task_pane import ITaskPane, MTaskPane
+from i_task_pane import ITaskPane
 
 
 class IDockPane(ITaskPane):
@@ -53,11 +53,9 @@ class IDockPane(ITaskPane):
         """
 
 
-class MDockPane(MTaskPane):
+class MDockPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
-
-    implements(IDockPane)
 
     #### 'IDockPane' interface ################################################
 
@@ -72,11 +70,6 @@ class MDockPane(MTaskPane):
     ###########################################################################
     # 'IDockPane' interface.
     ###########################################################################
-
-    def create_contents(self):
-        """ Create and return the toolkit-specific contents of the dock pane.
-        """
-        raise NotImplementedError
 
     def hide(self):
         """ Convenience method to hide the dock pane.
