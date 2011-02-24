@@ -4,6 +4,7 @@ from enthought.traits.api import Instance
 
 # Local imports.
 from enthought.pyface.tasks.task import Task
+from task_action import TaskAction
 
 
 class TaskActionController(ActionController):
@@ -28,3 +29,17 @@ class TaskActionController(ActionController):
         """
         event.task = self.task
         return action.perform(event)
+
+    def add_to_menu(self, item):
+        """ Called when an action item is added to a menu/menubar.
+        """
+        action = item.item.action
+        if isinstance(action, TaskAction):
+            action.task = self.task
+
+    def add_to_toolbar(self, item):
+        """ Called when an action item is added to a toolbar.
+        """
+        action = item.item.action
+        if isinstance(action, TaskAction):
+            action.task = self.task

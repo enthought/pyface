@@ -67,14 +67,14 @@ class ExampleTask(Task):
     # 'ExampleTask' interface.
     ###########################################################################
 
-    def open(self, event=None):
+    def open(self):
         """ Shows a dialog to open a file.
         """
         dialog = FileDialog(parent=self.window.control, wildcard='*.py')
         if dialog.open() == OK:
             self._open_file(dialog.path)
 
-    def save(self, event=None):
+    def save(self):
         """ Attempts to save the current file, prompting for a path if
             necessary. Returns whether the file was saved.
         """
