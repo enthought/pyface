@@ -2,7 +2,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import Callable, Dict, HasTraits, Instance, List
+from enthought.traits.api import Bool, Callable, Dict, HasTraits, Instance, List
 
 # Local imports.
 from i_editor import IEditor
@@ -23,6 +23,9 @@ class IEditorAreaPane(ITaskPane):
 
     # The list of all the visible editors in the pane.
     editors = List(IEditor)
+
+    # Whether to hide the tab bar when there is only a single editor.
+    hide_tab_bar = Bool(False)
 
     ###########################################################################
     # 'IEditorAreaPane' interface.
@@ -101,6 +104,7 @@ class MEditorAreaPane(HasTraits):
 
     active_editor = Instance(IEditor)
     editors = List(IEditor)
+    hide_tab_bar = Bool(False)
 
     #### Protected traits #####################################################
 
