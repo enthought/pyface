@@ -108,7 +108,8 @@ class TaskWindow(ApplicationWindow):
         """ Opens the window.
 
         Overridden to make the 'opening' event vetoable and to activate a task
-        if one has not already been activated.
+        if one has not already been activated. Returns whether the window was
+        opened.
         """
         # From the base class implementation.
         self.opening = event = Vetoable()
@@ -121,17 +122,22 @@ class TaskWindow(ApplicationWindow):
             # Activate a task, if necessary.
             if self._active_state is None and self._states:
                 self.activate_task(self._states[0].task)
+                
+        return self.control is not None
 
     def close(self):
         """ Closes the window.
 
-        Overriden to make the 'closing' event vetoable.
+        Overriden to make the 'closing' event vetoable. Returns whether the
+        window was closed.
         """
         if self.control is not None:
             self.closing = event = Vetoable()
             if not event.veto:
                 self.destroy()
                 self.closed = self
+        
+        return self.control is None
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
