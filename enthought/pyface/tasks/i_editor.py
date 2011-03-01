@@ -1,6 +1,6 @@
 # Enthought library imports.
 from enthought.traits.api import Any, Bool, Event, HasTraits, Interface, \
-    Instance, Unicode, Vetoable, VetoableEvent
+    Instance, Property, Unicode, Vetoable, VetoableEvent, cached_property
 
 
 class IEditor(Interface):
@@ -22,6 +22,9 @@ class IEditor(Interface):
     # The editor area to which the editor belongs.
     editor_area = Instance(
         'enthought.pyface.tasks.i_editor_area_pane.IEditorAreaPane')
+
+    # Is the editor active in the editor area?
+    is_active = Bool
 
     # Fired when the editor has been requested to close.
     closing = VetoableEvent
@@ -57,8 +60,10 @@ class MEditor(HasTraits):
     control = Any
     obj = Any
     dirty = Bool(False)
+
     editor_area = Instance(
         'enthought.pyface.tasks.i_editor_area_pane.IEditorAreaPane')
+    is_active = Property(Bool, depends_on='editor_area.active_editor')
 
     closing = VetoableEvent
     closed = Event
@@ -75,3 +80,13 @@ class MEditor(HasTraits):
             if not event.veto:
                 self.editor_area.remove_editor(self)
                 self.closed = True
+
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    @cached_property
+    def _get_is_active(self):
+        if self.editor_area is not None:
+            return self.editor_area.active_editor == self
+        return False
