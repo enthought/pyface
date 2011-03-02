@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.pyface.tasks.api import Task, TaskPane
+from enthought.pyface.tasks.api import Editor, Task, TaskPane
 from enthought.traits.api import Bool, Instance, Property, cached_property
 
 # Local imports.
@@ -63,13 +63,23 @@ class EditorAction(CentralPaneAction):
     
     #### ListeningAction interface ############################################
 
-    object = Property(depends_on='central_pane.active_editor')
+    object = Property(depends_on='active_editor')
+
+    #### EditorAction interface ###############################################
+
+    # The active editor in the central pane with which the action is associated.
+    active_editor = Property(Instance(Editor), 
+                             depends_on='central_pane.active_editor')
 
     ###########################################################################
     # Protected interface.
     ###########################################################################
 
-    def _get_object(self):
+    @cached_property
+    def _get_active_editor(self):
         if self.central_pane is not None:
             return self.central_pane.active_editor
         return None
+
+    def _get_object(self):
+        return self.active_editor
