@@ -26,6 +26,9 @@ class IEditor(Interface):
     # Is the editor active in the editor area?
     is_active = Bool
 
+    # Does the editor currently have the focus?
+    has_focus = Bool
+
     # Fired when the editor has been requested to close.
     closing = VetoableEvent
 
@@ -64,6 +67,7 @@ class MEditor(HasTraits):
     editor_area = Instance(
         'enthought.pyface.tasks.i_editor_area_pane.IEditorAreaPane')
     is_active = Property(Bool, depends_on='editor_area.active_editor')
+    has_focus = Bool(False)
 
     closing = VetoableEvent
     closed = Event
