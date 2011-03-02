@@ -331,6 +331,9 @@ class TaskWindow(ApplicationWindow):
     def _destroy_state(self, state):
         """ Destroys all the controls associated with the specified TaskState.
         """
+        # Notify the task that it is about to be destroyed.
+        state.task.prepare_destroy()
+
         for dock_pane in state.dock_panes:
             dock_pane.destroy()
         state.central_pane.destroy()

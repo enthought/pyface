@@ -72,11 +72,19 @@ class Task(HasTraits):
         return []
 
     def initialized(self):
-        """ Called after the task has been activated in a TaskWindow for the
-        first time.
+        """ Called when the task is about to be activated in a TaskWindow for
+        the first time.
 
         Override this method to perform any initialization that requires the
         Task's panes to be instantiated. Note that this method, when called, is
         called before activated().
+        """
+        pass
+
+    def prepare_destroy(self):
+        """ Called when the task is about to be removed from its TaskWindow.
+
+        Override this method to perform any cleanup before the task's controls
+        are destroyed.
         """
         pass
