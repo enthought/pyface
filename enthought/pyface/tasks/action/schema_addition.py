@@ -6,12 +6,15 @@ class SchemaAddition(HasTraits):
     """ An addition to an existing menu bar or tool bar schema.
     """
 
-    # The schema addition's identifier. This optional, but if it is left
-    # unspecified, other schema additions will not be able to refer to this one.
+    # The schema addition's identifier. This optional, but if left unspecified,
+    # other schema additions will be unable to refer to this one.
     id = Str
 
     # A callable to create the item. Should have the following signature:
-    #    callable() -> Action | ActionItem | Group | MenuManager
+    #    callable() -> Action | ActionItem | Group | MenuManager | 
+    #                  GroupSchema | MenuSchema
+    # If the result is a schema, it will itself admit of extension by other
+    # additions. If not, the result will be fixed.
     factory = Callable
 
     # A forward-slash-separated path through the action hierarchy to the menu
