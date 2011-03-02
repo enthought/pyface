@@ -45,12 +45,18 @@ class ListeningAction(Action):
     ###########################################################################
 
     def _get_attr(self, obj, name, default=None):
-        for attr in name.split('.'):
-            try:
-                obj = getattr(obj, attr)
-            except AttributeError:
-                logger.error("Did not find name %r on %r" % (attr, obj))
-                return default
+        try:
+            for attr in name.split('.'):
+                # Perform the access in the Trait name style: if the object is
+                # None, assume it simply hasn't been initialized and don't show
+                # the warning.
+                if obj is None:
+                    return default
+                else:
+                    obj = getattr(obj, attr)
+        except AttributeError:
+            logger.error("Did not find name %r on %r" % (attr, obj))
+            return default
         return obj
 
     #### Trait change handlers ################################################
@@ -76,8 +82,8 @@ class ListeningAction(Action):
     def _enabled_update(self):
         if self.enabled_name:
             if self.object:
-                self.enabled = self._get_attr(self.object, 
-                                              self.enabled_name, False)
+                self.enabled = bool(self._get_attr(self.object, 
+                                                   self.enabled_name, False))
             else:
                 self.enabled = False
         else:
