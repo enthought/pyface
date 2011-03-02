@@ -24,3 +24,21 @@ class TaskWindowLayout(HasStrictTraits):
 
     # A map from task IDs to their respective layouts. Set by the framework.
     layout_state = Dict(Str, Instance(TaskLayout))
+
+    def get_active_task(self):
+        """ Returns the ID of the active task in the layout, or None if there is
+            no active task.
+        """
+        if self.active_task:
+            return self.active_task
+        elif self.tasks:
+            return self.tasks[0]
+        return None
+
+    def is_equivalent_to(self, layout):
+        """ Returns whether two layouts are equivalent, i.e. whether they
+            contain the same tasks.
+        """
+        return isinstance(layout, TaskWindowLayout) and \
+            self.get_active_task() == layout.get_active_task() and \
+            self.tasks == layout.tasks
