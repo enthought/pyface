@@ -72,10 +72,12 @@ class TaskActionManagerBuilder(HasTraits):
         # Create the actual children by calling factory items.
         children = []
         for item in items:
+            # Unpack additions first, since they may themselves be schemas.
+            if isinstance(item, SchemaAddition):
+                item = item.factory()
+
             if isinstance(item, Schema):
                 item = self._create_manager_recurse(item, additions, path)
-            elif isinstance(item, SchemaAddition):
-                item = item.factory()
 
             if isinstance(item, ActionManager):
                 # Give even non-root action managers a reference to the
