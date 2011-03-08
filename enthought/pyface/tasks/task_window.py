@@ -161,17 +161,17 @@ class TaskWindow(ApplicationWindow):
             if self._active_state is not None:
                 self._window_backend.hide_task(self._active_state)
 
+            # Initialize the new task, if necessary.
+            if not state.initialized:
+                task.initialized()
+                state.initialized = True
+
             # Display the panes of the new task.
             self._window_backend.show_task(state)
 
             # Activate the new task. The menus, toolbars, and status bar will be
             # replaced at this time.
             self._active_state = state
-
-            # Notify the task that it has been activated.
-            if not state.initialized:
-                task.initialized()
-                state.initialized = True
             task.activated()
         else:
             logger.warn("Cannot activate task %r: task does not belong to the "
