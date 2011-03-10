@@ -13,20 +13,19 @@
 #------------------------------------------------------------------------------
 """ The interface for workbench views. """
 
-
 # Standard library imports.
 import logging
 
 # Enthought library imports.
 from enthought.pyface.api import ImageResource
-from enthought.traits.api import Bool, Enum, Float, Instance, List, Str
-from enthought.traits.api import implements
+from enthought.traits.api import Bool, Enum, Float, Instance, List, Str, \
+     implements
+from enthought.util.camel_case import camel_case_to_words
 
 # Local imports.
 from i_perspective_item import IPerspectiveItem
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
 from perspective_item import PerspectiveItem
-
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -139,23 +138,5 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.show_view(self)
 
         return
-
-# fixme: This is duplicated in 'plugin.py' where should it go?!?
-def camel_case_to_words(s):
-    """ Turn a string from CamelCase into words separated by spaces.
-
-    e.g. 'CamelCase' -> 'Camel Case'
-
-    """
-
-    def add_space_between_words(s, c):
-        # We detect a word boundary if the character we are looking at is
-        # upper case, but the character preceding it is lower case.
-        if len(s) > 0 and s[-1].islower() and c.isupper():
-            return s + ' ' + c
-
-        return s + c
-
-    return reduce(add_space_between_words, s, '')
 
 #### EOF ######################################################################
