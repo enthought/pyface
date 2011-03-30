@@ -1,6 +1,6 @@
 # Enthought library imports.
 from enthought.pyface.tasks.api import Editor, Task, TaskPane
-from enthought.traits.api import Bool, Instance, Property, cached_property
+from enthought.traits.api import Bool, Instance, Property, Str, cached_property
 
 # Local imports.
 from listening_action import ListeningAction
@@ -28,6 +28,24 @@ class TaskAction(ListeningAction):
 
     def _get_object(self):
         return self.task
+
+
+class TaskWindowAction(TaskAction):
+    """ An Action that makes a callback to a Task's window.
+    """
+    
+    #### ListeningAction interface ############################################
+
+    object = Property(depends_on='task.window')
+
+    ###########################################################################
+    # Protected interface.
+    ###########################################################################
+
+    def _get_object(self):
+        if self.task:
+            return self.task.window
+        return None
     
 
 class CentralPaneAction(TaskAction):
@@ -55,6 +73,36 @@ class CentralPaneAction(TaskAction):
 
     def _get_object(self):
         return self.central_pane
+
+
+class DockPaneAction(TaskAction):
+    """ An Action the makes a callback to one of a Task's dock panes.
+    """
+
+    #### ListeningAction interface ############################################
+
+    object = Property(depends_on='dock_pane')
+
+    #### DockPaneAction interface #############################################
+
+    # The dock pane with which the action is associated. Set by the framework.
+    dock_pane = Property(Instance(TaskPane), depends_on='task')
+
+    # The ID of the dock pane with which the action is associated.
+    dock_pane_id = Str
+
+    ###########################################################################
+    # Protected interface.
+    ###########################################################################
+
+    @cached_property
+    def _get_dock_pane(self):
+        if self.task:
+            return self.task.window.get_dock_pane(dock_pane_id, self.task)
+        return None
+
+    def _get_object(self):
+        return self.dock_pane
 
 
 class EditorAction(CentralPaneAction):
