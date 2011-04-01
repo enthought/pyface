@@ -1,8 +1,8 @@
 # Enthought library imports.
 from enthought.pyface.action.api import Action, ActionItem, Group, \
      MenuManager, MenuBarManager, ToolBarManager
-from enthought.traits.api import Bool, Callable, HasTraits, Instance, List, \
-     Str, Trait, Unicode
+from enthought.traits.api import Bool, Callable, Enum, HasTraits, Instance, \
+     List, Str, Trait, Tuple, Unicode
 
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
@@ -53,11 +53,11 @@ class MenuSchema(Schema):
     """ A schema for a Pyface MenuManager.
     """
 
-    # A factory for instantiating a pyface MenuManager.
-    menu_manager_factory = Callable(MenuManager)
-
     # The menu's user visible name.
     name = Unicode
+
+    # A factory for instantiating a pyface MenuManager.
+    menu_manager_factory = Callable(MenuManager)
 
     def create(self, children):
         traits = dict(id=self.id, name=self.name)
@@ -90,11 +90,26 @@ class ToolBarSchema(Schema):
     # all platforms.
     name = Unicode('Tool Bar')
 
+    # The size of tool images (width, height).
+    image_size = Tuple((16, 16))
+
+    # The orientation of the toolbar.
+    orientation = Enum('horizontal', 'vertical')
+
+    # Should we display the horizontal divider?
+    show_divider = Bool(True)
+
+    # Should we display the name of each tool bar tool under its image?
+    show_tool_names = Bool(True)
+
     # A factory for instantiating a pyfce ToolBarManager
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):
-        traits = dict(id=self.id, name=self.name)
+        traits = dict(id=self.id, name=self.name, image_size=self.image_size,
+                      orientation=self.orientation, 
+                      show_divider=self.show_divider,
+                      show_tool_names=self.show_tool_names)
         return self.tool_bar_manager_factory(*children, **traits)
 
 
