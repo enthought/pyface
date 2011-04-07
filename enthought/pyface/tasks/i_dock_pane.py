@@ -40,7 +40,7 @@ class IDockPane(ITaskPane):
     # 'IDockPane' interface.
     ###########################################################################
 
-    def create_contents(self):
+    def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
 

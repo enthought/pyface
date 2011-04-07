@@ -39,10 +39,10 @@ class TraitsDockPane(DockPane):
     # 'IDockPane' interface.
     ###########################################################################
 
-    def create_contents(self):
+    def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         obj = self.obj if self.obj else self
         view = self.obj_view if self.obj and self.obj_view else None
-        self.ui = obj.edit_traits(view=view, kind='panel')
+        self.ui = obj.edit_traits(view=view, kind='subpanel', parent=parent)
         return self.ui.control

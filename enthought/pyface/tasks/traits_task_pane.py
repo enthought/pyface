@@ -31,7 +31,7 @@ class TraitsTaskPane(TaskPane):
         """
         obj = self.obj if self.obj else self
         view = self.obj_view if self.obj and self.obj_view else None
-        self.ui = obj.edit_traits(view=view, kind='panel', parent=parent)
+        self.ui = obj.edit_traits(view=view, kind='subpanel', parent=parent)
         self.control = self.ui.control
 
     def destroy(self):
