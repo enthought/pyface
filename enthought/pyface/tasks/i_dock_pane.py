@@ -34,7 +34,7 @@ class IDockPane(ITaskPane):
     size = Tuple
 
     # Whether the pane is currently visible.
-    visible = Bool(True)
+    visible = Bool(False)
 
     ###########################################################################
     # 'IDockPane' interface.
@@ -65,7 +65,7 @@ class MDockPane(HasTraits):
     floating = Bool(False)
     movable = Bool(True)
     size = Tuple
-    visible = Bool(True)
+    visible = Bool(False)
 
     ###########################################################################
     # 'IDockPane' interface.
