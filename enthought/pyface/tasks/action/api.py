@@ -1,6 +1,5 @@
 # Local imports.
-from dock_pane_toggle_action import DockPaneToggleAction
-from dock_pane_toggle_group import DockPaneToggleGroup
+from dock_pane_toggle_group import DockPaneToggleAction, DockPaneToggleGroup
 from schema import GroupSchema, MenuSchema, MenuBarSchema, ToolBarSchema, \
      SGroup, SMenu, SMenuBar, SToolBar
 from schema_addition import SchemaAddition
