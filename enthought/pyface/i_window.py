@@ -76,6 +76,9 @@ class IWindow(IWidget):
     def close(self):
         """ Closes the window. """
 
+    def activate(self):
+        """ Activates the window. """
+
     def show(self, visible):
         """ Show or hide the window.
 
