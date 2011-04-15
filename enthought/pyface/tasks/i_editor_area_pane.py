@@ -14,6 +14,11 @@ logger = logging.getLogger(__name__)
 
 class IEditorAreaPane(ITaskPane):
     """ A central pane that contains tabbed editors.
+
+    There are currently two implementations of this interface in Tasks.
+    EditorAreaPane provides a simple, tabbed editor area. AdvancedEditorAreaPane
+    additionally permits arbitrary splitting of the editor area so that editors
+    can be displayed side-by-side.
     """
 
     #### 'IEditorAreaPane' interface ##########################################
