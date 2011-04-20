@@ -61,7 +61,7 @@ enthought/pyface/tree/images:
                   closed_folder.png | Nuvola
                        document.png | GV
                     open_folder.png | Nuvola
-enthought/traits/ui/image/library:
+traitsui/image/library:
                             std.zip | Enthought
 examples/images:
             closed_folder_24x24.png | Nuvola

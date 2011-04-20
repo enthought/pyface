@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Dict, HasTraits, Str, Tuple
+from traits.api import Any, Dict, HasTraits, Str, Tuple
 
 
 class WorkbenchWindowMemento(HasTraits):

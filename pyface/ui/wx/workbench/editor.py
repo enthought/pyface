@@ -18,7 +18,7 @@
 """
 
 # Local imports.
-from enthought.pyface.workbench.i_editor import MEditor
+from pyface.workbench.i_editor import MEditor
 
 
 class Editor(MEditor):

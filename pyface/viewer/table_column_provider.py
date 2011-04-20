@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Int
+from traits.api import Int
 
 # Local imports.
 from column_provider import ColumnProvider

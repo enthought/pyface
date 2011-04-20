@@ -2,8 +2,8 @@
 import unittest
 
 # Local imports.
-from enthought.traits.api import HasTraits, Int
-from enthought.pyface.tasks.topological_sort import before_after_sort, \
+from traits.api import HasTraits, Int
+from pyface.tasks.topological_sort import before_after_sort, \
     topological_sort
 
 

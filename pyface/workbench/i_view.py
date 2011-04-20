@@ -17,10 +17,10 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.api import ImageResource
-from enthought.traits.api import Bool, Enum, Float, Instance, List, Str, \
+from pyface.api import ImageResource
+from traits.api import Bool, Enum, Float, Instance, List, Str, \
      implements
-from enthought.util.camel_case import camel_case_to_words
+from traits.util.camel_case import camel_case_to_words
 
 # Local imports.
 from i_perspective_item import IPerspectiveItem

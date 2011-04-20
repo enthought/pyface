@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits
-from enthought.traits.standard import false_trait, true_trait
+from traits.api import HasTraits
+from traits.standard import false_trait, true_trait
 
 
 class GridRow(HasTraits):

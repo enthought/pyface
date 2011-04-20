@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Any, DelegatesTo, HasTraits, Instance, \
+from traits.api import Any, DelegatesTo, HasTraits, Instance, \
      Interface, implements
 
 
@@ -14,7 +14,7 @@ class ITaskWindowBackend(Interface):
     control = Any
 
     # The TaskWindow to which the layout belongs.
-    window = Instance('enthought.pyface.tasks.task_window.TaskWindow')
+    window = Instance('pyface.tasks.task_window.TaskWindow')
 
     ###########################################################################
     # 'ITaskWindowBackend' interface.
@@ -55,7 +55,7 @@ class MTaskWindowBackend(HasTraits):
 
     control = DelegatesTo('window')
 
-    window = Instance('enthought.pyface.tasks.task_window.TaskWindow')
+    window = Instance('pyface.tasks.task_window.TaskWindow')
 
     def create_contents(self, parent):
         raise NotImplementedError

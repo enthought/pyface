@@ -2,8 +2,8 @@
 # simple example of its use
 #
 import time
-from enthought.pyface.api import GUI, ApplicationWindow, ProgressDialog
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.api import GUI, ApplicationWindow, ProgressDialog
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
 def task_func(t):
     progress = ProgressDialog(title="progress", message="counting to %d"%t, max=t, show_time=True, can_cancel=True)

@@ -16,8 +16,8 @@
 """
 
 # ETS imports
-from enthought.traits.api import HasStrictTraits, Interface, Property
-from enthought.traits.ui.ui_traits import SequenceTypes
+from traits.api import HasStrictTraits, Interface, Property
+from traitsui.ui_traits import SequenceTypes
 
 
 class IClipboard(Interface):

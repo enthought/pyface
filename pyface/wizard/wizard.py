@@ -14,7 +14,7 @@
 """ The implementation of a wizard. """
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 Wizard = toolkit_object('wizard.wizard:Wizard')
 
 #### EOF ######################################################################

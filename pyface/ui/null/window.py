@@ -14,12 +14,12 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Event, implements, Property, Unicode
-from enthought.traits.api import Tuple
+from traits.api import Any, Event, implements, Property, Unicode
+from traits.api import Tuple
 
 # Local imports.
-from enthought.pyface.i_window import IWindow, MWindow
-from enthought.pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_window import IWindow, MWindow
+from pyface.key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 

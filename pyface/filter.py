@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasPrivateTraits
+from traits.api import HasPrivateTraits
 
 
 class Filter(HasPrivateTraits):

@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Interface, Instance, \
+from traits.api import Any, Bool, HasTraits, Interface, Instance, \
      Str, Unicode
 
 # Local imports.

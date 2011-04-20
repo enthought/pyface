@@ -2,10 +2,10 @@
 import os.path
 
 # Enthought library imports.
-from enthought.pyface.api import PythonEditor
-from enthought.pyface.tasks.api import TaskPane, TraitsDockPane
-from enthought.traits.api import Event, File, Instance, List, Str
-from enthought.traits.ui.api import View, Item, FileEditor
+from pyface.api import PythonEditor
+from pyface.tasks.api import TaskPane, TraitsDockPane
+from traits.api import Event, File, Instance, List, Str
+from traitsui.api import View, Item, FileEditor
 
 
 class FileBrowserPane(TraitsDockPane):

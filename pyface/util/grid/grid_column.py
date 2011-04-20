@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, Str
+from traits.api import Bool, HasTraits, Str
 
 
 class GridColumn(HasTraits):

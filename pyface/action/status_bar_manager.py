@@ -15,7 +15,7 @@
 
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 StatusBarManager = toolkit_object('action.status_bar_manager:StatusBarManager')
 
 ### EOF #######################################################################

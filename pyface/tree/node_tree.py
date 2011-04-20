@@ -18,8 +18,8 @@
 import inspect
 
 # Enthought library imports.
-from enthought.pyface.action.api import ActionEvent
-from enthought.traits.api import Instance, List, Property
+from pyface.action.api import ActionEvent
+from traits.api import Instance, List, Property
 
 # Local imports.
 from node_manager import NodeManager

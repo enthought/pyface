@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Float, Interface, Str
+from traits.api import Enum, Float, Interface, Str
 
 
 class IPerspectiveItem(Interface):

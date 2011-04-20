@@ -18,8 +18,8 @@
 import wx
 
 # Enthought library imports.
-from enthought.pyface.image_list import ImageList
-from enthought.traits.api import Color, Event, Instance, Trait
+from pyface.image_list import ImageList
+from traits.api import Color, Event, Instance, Trait
 
 # Local imports.
 from content_viewer import ContentViewer

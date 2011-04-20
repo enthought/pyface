@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Str
+from traits.api import Any, Str
 
 # Local imports.
 from node_type import NodeType

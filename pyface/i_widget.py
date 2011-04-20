@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Interface
+from traits.api import Any, Interface
 
 
 class IWidget(Interface):

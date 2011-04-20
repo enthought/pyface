@@ -16,7 +16,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits
+from traits.api import Any, Bool, HasTraits
 
 
 class _MenuItem(HasTraits):
@@ -102,7 +102,7 @@ class _Tool(HasTraits):
             bmp  = image_cache.get_bitmap(path)
 
         else:
-            from enthought.pyface.api import ImageResource
+            from pyface.api import ImageResource
             image = ImageResource('foo')
             bmp  = image.create_bitmap()
 

@@ -2,9 +2,9 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import View, WorkbenchWindow
-from enthought.traits.api import HasTraits, Instance, Str, on_trait_change
-from enthought.traits.ui.api import View as TraitsView
+from pyface.workbench.api import View, WorkbenchWindow
+from traits.api import HasTraits, Instance, Str, on_trait_change
+from traitsui.api import View as TraitsView
 
 
 class DebugViewModel(HasTraits):

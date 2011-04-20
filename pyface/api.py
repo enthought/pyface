@@ -45,7 +45,7 @@ from widget import Widget
 # becomes toolkit agnostic.
 ###############################################################################
 
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':
     from expandable_panel import ExpandablePanel
     from filter import Filter

@@ -21,8 +21,8 @@ import os, sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from enthought.pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 class MainWindow(MDIApplicationWindow):

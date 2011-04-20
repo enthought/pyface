@@ -27,10 +27,10 @@
 
 import wx
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Bool, Event, Color
 
-from enthought.util.wx.drag_and_drop \
+from traits.util.wx.drag_and_drop \
     import PythonDropTarget, PythonDropSource
 
 from dock_sizer \

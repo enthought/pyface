@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.resource.api import ResourceManager
+from pyface.resource.api import ResourceManager
 
 
 # Import the toolkit specific version.

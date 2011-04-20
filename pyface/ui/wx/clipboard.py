@@ -17,8 +17,8 @@ from cPickle import dumps, load, loads
 import wx
 
 # ETS imports
-from enthought.traits.api import implements
-from enthought.pyface.i_clipboard import IClipboard, BaseClipboard
+from traits.api import implements
+from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
 PythonObjectFormat = wx.CustomDataFormat('PythonObject')

@@ -13,15 +13,15 @@
 
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Unicode
+from traits.api import Unicode
 
 # Local imports.
-from enthought.pyface.action.action_manager import ActionManager
-from enthought.pyface.action.action_manager_item import ActionManagerItem
-from enthought.pyface.action.group import Group
+from pyface.action.action_manager import ActionManager
+from pyface.action.action_manager_item import ActionManagerItem
+from pyface.action.group import Group
 
 
 class MenuManager(ActionManager, ActionManagerItem):

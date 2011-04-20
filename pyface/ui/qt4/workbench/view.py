@@ -12,7 +12,7 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.i_view import MView
+from pyface.workbench.i_view import MView
 
 
 class View(MView):
@@ -29,7 +29,7 @@ class View(MView):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from enthought.qt import QtGui
+        from traits.qt import QtGui
 
         control = QtGui.QWidget(parent)
 

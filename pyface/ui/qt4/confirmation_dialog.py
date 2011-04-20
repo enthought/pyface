@@ -12,15 +12,15 @@
 
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Dict, Enum, implements, Instance, Unicode
+from traits.api import Bool, Dict, Enum, implements, Instance, Unicode
 
 # Local imports.
-from enthought.pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
-from enthought.pyface.constant import CANCEL, YES, NO
-from enthought.pyface.image_resource import ImageResource
+from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from pyface.constant import CANCEL, YES, NO
+from pyface.image_resource import ImageResource
 from dialog import Dialog
 
 

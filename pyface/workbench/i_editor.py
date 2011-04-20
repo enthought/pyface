@@ -16,9 +16,9 @@
 import uuid
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
+from traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
     HasTraits, Instance, Interface
-from enthought.traits.api import implements
+from traits.api import implements
 
 # Local imports.
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart

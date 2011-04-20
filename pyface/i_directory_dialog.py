@@ -16,7 +16,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Unicode
+from traits.api import Bool, Unicode
 
 # Local imports.
 from i_dialog import IDialog

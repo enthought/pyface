@@ -22,8 +22,8 @@ from os.path import join
 from zipfile import is_zipfile, ZipFile
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Instance
-from enthought.util.resource import get_path
+from traits.api import HasTraits, Instance
+from traits.util.resource import get_path
 
 # Local imports.
 from resource_factory import ResourceFactory

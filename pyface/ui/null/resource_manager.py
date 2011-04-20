@@ -14,7 +14,7 @@
 
 
 # Enthought library imports.
-from enthought.resource.api import ResourceFactory
+from pyface.resource.api import ResourceFactory
 
 
 class PyfaceResourceFactory(ResourceFactory):

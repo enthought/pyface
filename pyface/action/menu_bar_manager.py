@@ -15,7 +15,7 @@
 
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 MenuBarManager = toolkit_object('action.menu_bar_manager:MenuBarManager')
 
 #### EOF ######################################################################

@@ -26,17 +26,17 @@
 import wx
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
-import enthought.traits.ui.wx
+import traitsui.wx
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, Group
 
-from enthought.pyface.api import SystemMetrics
+from pyface.api import SystemMetrics
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from dock_window \

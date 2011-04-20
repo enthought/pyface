@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, Int, Interface, Unicode
+from traits.api import Instance, Int, Interface, Unicode
 
 # Local imports.
 from image_resource import ImageResource

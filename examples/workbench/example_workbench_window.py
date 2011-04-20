@@ -2,13 +2,13 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import Action, MenuManager
-from enthought.pyface.workbench.api import EditorManager, WorkbenchWindow
-from enthought.pyface.workbench.api import Perspective, PerspectiveItem
-from enthought.pyface.workbench.action.api import MenuBarManager
-from enthought.pyface.workbench.action.api import ToolBarManager
-from enthought.pyface.workbench.action.api import ViewMenuManager
-from enthought.traits.api import Callable, List, Instance
+from pyface.action.api import Action, MenuManager
+from pyface.workbench.api import EditorManager, WorkbenchWindow
+from pyface.workbench.api import Perspective, PerspectiveItem
+from pyface.workbench.action.api import MenuBarManager
+from pyface.workbench.action.api import ToolBarManager
+from pyface.workbench.action.api import ViewMenuManager
+from traits.api import Callable, List, Instance
 
 # Local imports.
 from black_view import BlackView
@@ -134,7 +134,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     def _view_factories_default(self):
         """ Trait initializer. """
 
-        from enthought.pyface.workbench.debug.api import DebugView
+        from pyface.workbench.debug.api import DebugView
 
         return [DebugView, BlackView, BlueView, GreenView, RedView, YellowView]
 

@@ -24,10 +24,10 @@ from inspect import getargspec
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits
+from traits.api import Any, Bool, HasTraits
 
 # Local imports.
-from enthought.pyface.action.action_event import ActionEvent
+from pyface.action.action_event import ActionEvent
 
 
 _STYLE_TO_KIND_MAP = {
@@ -331,7 +331,7 @@ class _Tool(HasTraits):
             bmp  = image_cache.get_bitmap(path)
 
         else:
-            from enthought.pyface.api import ImageResource
+            from pyface.api import ImageResource
             image = ImageResource('foo')
             bmp  = image.create_bitmap()
 

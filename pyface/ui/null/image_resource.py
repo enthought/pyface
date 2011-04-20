@@ -17,11 +17,11 @@
 import os
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, implements, List, Property
-from enthought.traits.api import Unicode
+from traits.api import Any, HasTraits, implements, List, Property
+from traits.api import Unicode
 
 # Local imports.
-from enthought.pyface.i_image_resource import IImageResource, MImageResource
+from pyface.i_image_resource import IImageResource, MImageResource
 
 
 class ImageResource(MImageResource, HasTraits):

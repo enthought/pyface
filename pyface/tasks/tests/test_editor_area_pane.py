@@ -2,7 +2,7 @@
 import unittest
 
 # Enthought library imports.
-from enthought.pyface.tasks.api import Editor, EditorAreaPane
+from pyface.tasks.api import Editor, EditorAreaPane
 
 
 class EditorAreaPaneTestCase(unittest.TestCase):

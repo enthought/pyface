@@ -10,8 +10,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, Trait, TraitError, Constant
-from enthought.traits.ui.api import View, Item, VGroup
+from traits.api import Bool, HasTraits, Trait, TraitError, Constant
+from traitsui.api import View, Item, VGroup
 
 
 #### Trait definitions ########################################################

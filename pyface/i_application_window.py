@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, List
+from traits.api import Instance, List
 
 # Local imports.
 from action.api import MenuBarManager, StatusBarManager, ToolBarManager

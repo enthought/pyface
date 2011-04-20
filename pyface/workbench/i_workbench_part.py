@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Instance, Interface
-from enthought.traits.api import List, Str, Unicode, implements
+from traits.api import Any, Bool, HasTraits, Instance, Interface
+from traits.api import List, Str, Unicode, implements
 
 
 class IWorkbenchPart(Interface):
@@ -47,7 +47,7 @@ class IWorkbenchPart(Interface):
     # The workbench window that the part is in.
     #
     # The framework sets this when the part is created.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     #### Methods ##############################################################
 
@@ -103,7 +103,7 @@ class MWorkbenchPart(HasTraits):
     # The workbench window that the part is in.
     #
     # The framework sets this when the part is created.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     #### Methods ##############################################################
 

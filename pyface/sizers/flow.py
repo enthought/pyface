@@ -16,7 +16,7 @@
 
 import wx
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
 #-------------------------------------------------------------------------------

@@ -18,7 +18,7 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import List, Str, Any
+from traits.api import List, Str, Any
 
 # Local imports.
 from dialog import Dialog

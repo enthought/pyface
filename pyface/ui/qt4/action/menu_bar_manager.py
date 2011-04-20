@@ -13,10 +13,10 @@
 
 
 # Major package imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Local imports.
-from enthought.pyface.action.action_manager import ActionManager
+from pyface.action.action_manager import ActionManager
 
 
 class MenuBarManager(ActionManager):

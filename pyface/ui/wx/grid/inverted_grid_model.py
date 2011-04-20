@@ -4,7 +4,7 @@ orientations match, or use it to visually flip the data without modifying
 the underlying model's sense of row and column. """
 
 # Enthought library imports
-from enthought.traits.api import Instance
+from traits.api import Instance
 
 # local imports
 from grid_model import GridModel

@@ -1,9 +1,9 @@
 # Enthought library imports.
-from enthought.pyface.action.api import Action, ActionItem, Group
-from enthought.traits.api import Bool, Instance, List, Property, Unicode
+from pyface.action.api import Action, ActionItem, Group
+from traits.api import Bool, Instance, List, Property, Unicode
 
 # Local imports.
-from enthought.pyface.tasks.i_dock_pane import IDockPane
+from pyface.tasks.i_dock_pane import IDockPane
 
 
 class DockPaneToggleAction(Action):

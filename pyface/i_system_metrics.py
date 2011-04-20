@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Int, Interface, Tuple
+from traits.api import Int, Interface, Tuple
 
 
 class ISystemMetrics(Interface):

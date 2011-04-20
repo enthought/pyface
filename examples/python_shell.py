@@ -14,8 +14,8 @@
 """ Python shell example. """
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, GUI, PythonShell
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.api import ApplicationWindow, GUI, PythonShell
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 class MainWindow(ApplicationWindow):

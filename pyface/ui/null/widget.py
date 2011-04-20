@@ -14,10 +14,10 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, implements
+from traits.api import Any, HasTraits, implements
 
 # Local imports.
-from enthought.pyface.i_widget import IWidget, MWidget
+from pyface.i_widget import IWidget, MWidget
 
 
 class Widget(MWidget, HasTraits):

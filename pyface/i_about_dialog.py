@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, List, Unicode
+from traits.api import Instance, List, Unicode
 
 # Local imports.
 from i_dialog import IDialog

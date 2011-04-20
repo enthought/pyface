@@ -15,10 +15,10 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasPrivateTraits, Instance, List
-from enthought.pyface.api import ImageResource
-from enthought.pyface.action.api import Action, ActionManagerItem, Group
-from enthought.pyface.action.api import MenuManager
+from traits.api import Any, HasPrivateTraits, Instance, List
+from pyface.api import ImageResource
+from pyface.action.api import Action, ActionManagerItem, Group
+from pyface.action.api import MenuManager
 
 
 class NodeType(HasPrivateTraits):
@@ -38,7 +38,7 @@ class NodeType(HasPrivateTraits):
     #### 'NodeType' interface #################################################
 
     # The node manager that the type belongs to.
-    node_manager = Instance('enthought.pyface.tree.node_manager.NodeManager')
+    node_manager = Instance('pyface.tree.node_manager.NodeManager')
 
     # The image used to represent nodes that DO NOT allow children.
     image = Instance(ImageResource)

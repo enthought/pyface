@@ -1,6 +1,6 @@
 # Enthought library imports.
-from enthought.pyface.action.api import StatusBarManager
-from enthought.traits.api import Callable, HasTraits, Instance, List, Str, \
+from pyface.action.api import StatusBarManager
+from traits.api import Callable, HasTraits, Instance, List, Str, \
      Unicode
 
 # Local imports.
@@ -32,7 +32,7 @@ class Task(HasTraits):
     extra_dock_pane_factories = List(Callable)
 
     # The window to which the task is attached. Set by the framework.
-    window = Instance('enthought.pyface.tasks.task_window.TaskWindow')
+    window = Instance('pyface.tasks.task_window.TaskWindow')
 
     #### Actions ##############################################################
 

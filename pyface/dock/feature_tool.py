@@ -27,7 +27,7 @@
 from dock_window_feature \
     import DockWindowFeature
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 #-------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.pyface.api import YES
+from pyface.api import YES
 
 # Local imports.
 from workbench_action import WorkbenchAction
@@ -18,7 +18,7 @@ class ResetAllPerspectivesAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'enthought.pyface.workbench.action.reset_all_perspectives'
+    id = 'pyface.workbench.action.reset_all_perspectives'
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Reset All Perspectives'

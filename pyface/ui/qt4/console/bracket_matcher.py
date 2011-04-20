@@ -2,7 +2,7 @@
 """
 
 # System library imports
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 
 class BracketMatcher(QtCore.QObject):

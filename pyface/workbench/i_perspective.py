@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Interface, List, Str, Tuple
+from traits.api import Bool, Interface, List, Str, Tuple
 
 # Local imports.
 from perspective_item import PerspectiveItem

@@ -14,7 +14,7 @@
 """ The interface for an interactive Python shell. """
 
 # Enthought library imports.
-from enthought.traits.api import Event
+from traits.api import Event
 
 # Local imports.
 from key_pressed_event import KeyPressedEvent

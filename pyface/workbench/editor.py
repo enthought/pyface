@@ -15,7 +15,7 @@
 
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 Editor = toolkit_object('workbench.editor:Editor')
 
 ### EOF #######################################################################

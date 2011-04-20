@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import MenuBarManager as BaseMenuBarManager
-from enthought.traits.api import Instance
+from pyface.action.api import MenuBarManager as BaseMenuBarManager
+from traits.api import Instance
 
 # Local imports.
 from action_controller import ActionController
@@ -15,7 +15,7 @@ class MenuBarManager(BaseMenuBarManager):
     #### 'MenuBarManager' interface ###########################################
 
     # The workbench window that we are the menu bar manager for.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     ###########################################################################
     # 'MenuBarManager' interface.

@@ -12,18 +12,18 @@
 
 
 # Major package imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Enthought library imports.
-from enthought.pyface.action.api import MenuBarManager, StatusBarManager
-from enthought.pyface.action.api import ToolBarManager
-from enthought.traits.api import Instance, List, Unicode, implements, \
+from pyface.action.api import MenuBarManager, StatusBarManager
+from pyface.action.api import ToolBarManager
+from traits.api import Instance, List, Unicode, implements, \
      on_trait_change
 
 # Local imports.
-from enthought.pyface.i_application_window import IApplicationWindow, \
+from pyface.i_application_window import IApplicationWindow, \
      MApplicationWindow
-from enthought.pyface.image_resource import ImageResource
+from pyface.image_resource import ImageResource
 from window import Window
 
 

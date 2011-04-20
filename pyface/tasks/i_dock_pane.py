@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, HasTraits, Str, Tuple
+from traits.api import Bool, Enum, HasTraits, Str, Tuple
 
 # Local imports.
 from i_task_pane import ITaskPane

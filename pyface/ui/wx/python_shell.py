@@ -28,15 +28,15 @@ from wx.py.shell import Shell as PyShellBase
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Event, implements
+from traits.api import Event, implements
 
 # Private Enthought library imports.
-from enthought.util.clean_strings import python_name
-from enthought.util.wx.drag_and_drop import PythonDropTarget
+from traits.util.clean_strings import python_name
+from traits.util.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
-from enthought.pyface.i_python_shell import IPythonShell, MPythonShell
-from enthought.pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_python_shell import IPythonShell, MPythonShell
+from pyface.key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 
@@ -254,7 +254,7 @@ class PyShell(PyShellBase):
                     handler()
         finally:
             # This needs to be out here to make this works with
-            # enthought.util.refresh.refresh()
+            # traits.util.refresh.refresh()
             wx.EndBusyCursor()
 
     def push(self, command):

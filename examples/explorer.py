@@ -21,11 +21,11 @@ import os, sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, GUI, PythonShell, SplashScreen
-from enthought.pyface.api import SplitApplicationWindow, SplitPanel
-from enthought.pyface.action.api import Action, Group, MenuBarManager, MenuManager
-from enthought.pyface.action.api import Separator, StatusBarManager, ToolBarManager
-from enthought.traits.api import Float, Str
+from pyface.api import ApplicationWindow, GUI, PythonShell, SplashScreen
+from pyface.api import SplitApplicationWindow, SplitPanel
+from pyface.action.api import Action, Group, MenuBarManager, MenuManager
+from pyface.action.api import Separator, StatusBarManager, ToolBarManager
+from traits.api import Float, Str
 
 # Local imports.
 from file_filters import AllowOnlyFolders

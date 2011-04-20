@@ -19,7 +19,7 @@ from os import listdir
 from os.path import basename, isdir, isfile, join
 
 # Enthought library imports.
-from enthought.pyface.tree.api import NodeManager, NodeType
+from pyface.tree.api import NodeManager, NodeType
 
 
 class FileNode(NodeType):

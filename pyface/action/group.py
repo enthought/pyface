@@ -15,9 +15,9 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Instance, List, Property
-from enthought.traits.api import Str
-from enthought.traits.trait_base import user_name_for
+from traits.api import Any, Bool, HasTraits, Instance, List, Property
+from traits.api import Str
+from traits.trait_base import user_name_for
 
 # Local imports.
 from action import Action
@@ -50,7 +50,7 @@ class Group(HasTraits):
     items = Property
 
     # The action manager that the group belongs to.
-    parent = Any#Instance('enthought.pyface.action.ActionManager')
+    parent = Any#Instance('pyface.action.ActionManager')
 
     # Does this group require a separator when it is visualized?
     separator = Bool(True)

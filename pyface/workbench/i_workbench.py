@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Event, Instance, Interface, List, Str
-from enthought.traits.api import VetoableEvent, implements
+from traits.api import Event, Instance, Interface, List, Str
+from traits.api import VetoableEvent, implements
 
 # Local imports.
 from user_perspective_manager import UserPerspectiveManager

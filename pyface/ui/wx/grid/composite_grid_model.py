@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 
 # Enthought library imports.
-from enthought.traits.api import Dict, List, Trait
+from traits.api import Dict, List, Trait
 
 # local imports
 from grid_model import GridModel, GridRow

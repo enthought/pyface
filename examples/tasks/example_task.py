@@ -1,10 +1,10 @@
 # Enthought library imports.
-from enthought.pyface.tasks.api import Task, TaskLayout
-from enthought.pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
+from pyface.tasks.api import Task, TaskLayout
+from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
-from enthought.pyface.api import ConfirmationDialog, FileDialog, \
+from pyface.api import ConfirmationDialog, FileDialog, \
     ImageResource, YES, OK, CANCEL
-from enthought.traits.api import on_trait_change
+from traits.api import on_trait_change
 
 # Local imports.
 from example_panes import PythonEditorPane, PythonScriptBrowserPane

@@ -25,16 +25,16 @@ from logging import DEBUG
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Font, implements, Instance, Int
-from enthought.traits.api import Tuple, Unicode
+from traits.api import Any, Bool, Font, implements, Instance, Int
+from traits.api import Tuple, Unicode
 
 # Private Enthought library imports.
 # FIXME v3: This should be moved out of pyface.
-from enthought.pyface.util.font_helper import new_font_like
+from pyface.util.font_helper import new_font_like
 
 # Local imports.
-from enthought.pyface.i_splash_screen import ISplashScreen, MSplashScreen
-from enthought.pyface.image_resource import ImageResource
+from pyface.i_splash_screen import ISplashScreen, MSplashScreen
+from pyface.image_resource import ImageResource
 from window import Window
 
 

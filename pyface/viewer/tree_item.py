@@ -33,7 +33,7 @@ root.append(veg)
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Instance, List, Property
+from traits.api import Any, Bool, HasTraits, Instance, List, Property
 
 
 class TreeItem(HasTraits):

@@ -18,8 +18,8 @@
 """
 
 # Enthought library imports.
-from enthought.traits.api import Bool
-from enthought.pyface.workbench.i_view import MView
+from traits.api import Bool
+from pyface.workbench.i_view import MView
 
 
 class View(MView):

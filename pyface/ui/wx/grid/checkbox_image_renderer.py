@@ -15,7 +15,7 @@
     box for a false value. """
 
 # Enthought-library imports
-from enthought.pyface.image_resource import ImageResource
+from pyface.image_resource import ImageResource
 
 # local imports
 from mapped_grid_cell_image_renderer import MappedGridCellImageRenderer

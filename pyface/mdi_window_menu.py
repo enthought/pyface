@@ -19,7 +19,7 @@ This is the menu that has the tile/cascade actions etc.
 
 
 # Enthought library imports.
-from enthought.traits.api import Str
+from traits.api import Str
 
 # Local imports.
 from action.api import MenuManager, Separator, WindowAction

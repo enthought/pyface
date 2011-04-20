@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Event, HasTraits, Instance, Interface, Str
-from enthought.traits.api import implements
+from traits.api import Event, HasTraits, Instance, Interface, Str
+from traits.api import implements
 
 # Local imports.
 from i_editor import IEditor
@@ -37,7 +37,7 @@ class IWorkbenchWindowLayout(Interface):
     editor_area_id = Str
 
     # The workbench window that this is the layout for.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     #### Events ####
 
@@ -215,7 +215,7 @@ class MWorkbenchWindowLayout(HasTraits):
     editor_area_id = Str
 
     # The workbench window that this is the layout for.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     #### Events ####
 

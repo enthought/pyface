@@ -18,7 +18,7 @@
 from os.path import isdir
 
 # Enthought library imports.
-from enthought.pyface.viewer.api import ViewerSorter
+from pyface.viewer.api import ViewerSorter
 
 
 class FileSorter(ViewerSorter):

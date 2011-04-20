@@ -2,14 +2,14 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Instance, Interface
+from traits.api import Instance, Interface
 
 
 class IEditorManager(Interface):
     """ The editor manager interface. """
 
     # The workbench window that the editor manager manages editors for ;^)
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     def add_editor(self, editor, kind):
         """ Registers an existing editor. """

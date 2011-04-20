@@ -1,5 +1,5 @@
 import logging
-logging.warn('DEPRECATED: enthought.pyface.grid, '
-             'use enthought.pyface.ui.wx.grid instead.')
+logging.warn('DEPRECATED: pyface.grid, '
+             'use pyface.ui.wx.grid instead.')
 
-from enthought.pyface.ui.wx.grid.checkbox_image_renderer import *
+from pyface.ui.wx.grid.checkbox_image_renderer import *

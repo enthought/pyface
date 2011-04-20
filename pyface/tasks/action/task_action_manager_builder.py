@@ -2,12 +2,12 @@
 from collections import defaultdict
 
 # Enthought library imports.
-from enthought.pyface.action.api import ActionController, ActionManager
-from enthought.traits.api import HasTraits, Instance
+from pyface.action.api import ActionController, ActionManager
+from traits.api import HasTraits, Instance
 
 # Local imports.
-from enthought.pyface.tasks.task import Task
-from enthought.pyface.tasks.topological_sort import before_after_sort
+from pyface.tasks.task import Task
+from pyface.tasks.topological_sort import before_after_sort
 from schema import Schema
 from schema_addition import SchemaAddition
 

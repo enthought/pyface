@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Float, HasTraits, Str, implements
+from traits.api import Enum, Float, HasTraits, Str, implements
 
 # Local imports.
 from i_perspective_item import IPerspectiveItem

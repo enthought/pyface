@@ -2,12 +2,12 @@
 import logging
 
 # System library imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Local imports.
 from dock_pane import area_map
-from enthought.pyface.tasks.i_task_window_backend import MTaskWindowBackend
-from enthought.pyface.tasks.task import TaskLayout
+from pyface.tasks.i_task_window_backend import MTaskWindowBackend
+from pyface.tasks.task import TaskLayout
 
 # Logging.
 logger = logging.getLogger(__name__)

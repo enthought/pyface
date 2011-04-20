@@ -18,9 +18,9 @@
 """
 
 import wx
-from enthought.pyface.widget import Widget
+from pyface.widget import Widget
 
-from enthought.traits.api import Bool, Dict, Int, List, Tuple
+from traits.api import Bool, Dict, Int, List, Tuple
 # HTML templates.
 # FIXME : Not quite the right color.
 HTML = """

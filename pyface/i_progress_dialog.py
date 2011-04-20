@@ -18,7 +18,7 @@
 import sys
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Int, Str
+from traits.api import Any, Bool, Int, Str
 
 # Local imports.
 from i_dialog import IDialog

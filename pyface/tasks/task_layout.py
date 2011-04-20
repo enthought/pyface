@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Any, HasStrictTraits, List, Trait, Str
+from traits.api import Any, HasStrictTraits, List, Trait, Str
 
 # Trait definitions.
 NestedListStr = List(Trait(None, Str, List(Str)))

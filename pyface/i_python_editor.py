@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Event, Interface, Unicode
+from traits.api import Bool, Event, Interface, Unicode
 
 # Local imports.
 from key_pressed_event import KeyPressedEvent

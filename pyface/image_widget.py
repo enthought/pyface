@@ -18,7 +18,7 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Event
+from traits.api import Any, Bool, Event
 
 # Locak imports.
 from widget import Widget

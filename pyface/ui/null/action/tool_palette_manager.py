@@ -15,11 +15,11 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Enum, Instance, Tuple
+from traits.api import Any, Bool, Enum, Instance, Tuple
 
 # Local imports.
-from enthought.pyface.image_cache import ImageCache
-from enthought.pyface.action.action_manager import ActionManager
+from pyface.image_cache import ImageCache
+from pyface.action.action_manager import ActionManager
 from tool_palette import ToolPalette
 
 

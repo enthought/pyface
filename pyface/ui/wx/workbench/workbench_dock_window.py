@@ -21,7 +21,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.dock.api import DockGroup, DockRegion, DockWindow
+from pyface.dock.api import DockGroup, DockRegion, DockWindow
 
 
 logger = logging.getLogger(__name__)

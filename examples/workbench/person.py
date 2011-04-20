@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Int, Str
+from traits.api import HasTraits, Int, Str
 
 
 class Person(HasTraits):

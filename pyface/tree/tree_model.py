@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, Event
+from traits.api import Any, HasTraits, Event
 
 # Local imports.
 from node_event import NodeEvent

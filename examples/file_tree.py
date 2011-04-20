@@ -19,9 +19,9 @@ from os import listdir
 from os.path import basename, isdir, join
 
 # Enthought library imports.
-from enthought.pyface.api import ImageResource
-from enthought.pyface.tree.api import Tree, TreeModel
-from enthought.traits.api import Instance
+from pyface.api import ImageResource
+from pyface.tree.api import Tree, TreeModel
+from traits.api import Instance
 
 
 class FileTreeModel(TreeModel):

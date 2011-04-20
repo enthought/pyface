@@ -29,9 +29,9 @@ except:
     pass
 
 # Enthought library imports.
-from enthought.pyface.api import MultiToolbarWindow, GUI
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
-from enthought.pyface.action.api import ToolBarManager
+from pyface.api import MultiToolbarWindow, GUI
+from pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.action.api import ToolBarManager
 
 
 class MainWindow(MultiToolbarWindow):

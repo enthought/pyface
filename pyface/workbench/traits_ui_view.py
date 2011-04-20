@@ -5,8 +5,8 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import Any, Instance, Str
-from enthought.traits.ui.api import UI
+from traits.api import Any, Instance, Str
+from traitsui.api import UI
 
 # Local imports.
 from view import View

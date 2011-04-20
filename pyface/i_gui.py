@@ -19,8 +19,8 @@ import logging
 import os
 
 # Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
-from enthought.traits.api import Bool, Interface, Unicode
+from traits.etsconfig.api import ETSConfig
+from traits.api import Bool, Interface, Unicode
 
 
 # Logging.

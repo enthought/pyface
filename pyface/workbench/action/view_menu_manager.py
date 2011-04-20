@@ -5,9 +5,9 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.action.api import Group, MenuManager
-from enthought.traits.api import Any, Bool, Instance, List, Str, Unicode
-from enthought.traits.api import on_trait_change
+from pyface.action.api import Group, MenuManager
+from traits.api import Any, Bool, Instance, List, Str, Unicode
+from traits.api import on_trait_change
 
 # Local imports.
 from perspective_menu_manager import PerspectiveMenuManager
@@ -46,7 +46,7 @@ class ViewMenuManager(MenuManager):
     show_perspective_menu = Bool(True)
 
     # The workbench window that the menu is part of.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     #### 'Private' interface ##################################################
 

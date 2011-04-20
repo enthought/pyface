@@ -1,9 +1,9 @@
 # Enthought library imports.
-from enthought.pyface.action.api import ActionController
-from enthought.traits.api import Instance
+from pyface.action.api import ActionController
+from traits.api import Instance
 
 # Local imports.
-from enthought.pyface.tasks.task import Task
+from pyface.tasks.task import Task
 from task_action import TaskAction
 
 

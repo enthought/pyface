@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Dict, Instance
+from traits.api import Dict, Instance
 
 # Local imports.
 from node_manager import NodeManager

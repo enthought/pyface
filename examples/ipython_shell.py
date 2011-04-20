@@ -14,8 +14,8 @@
 """ IPython widget example. """
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, GUI
-from enthought.pyface.ipython_widget import IPythonWidget
+from pyface.api import ApplicationWindow, GUI
+from pyface.ipython_widget import IPythonWidget
 
 
 class MainWindow(ApplicationWindow):

@@ -5,7 +5,7 @@
 import time
 
 # Enthought library imports.
-from enthought.traits.api import Float, HasTraits, Int
+from traits.api import Float, HasTraits, Int
 
 
 class ActionEvent(HasTraits):

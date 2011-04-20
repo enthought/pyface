@@ -15,14 +15,14 @@
 import sys
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Event, implements, Unicode
+from traits.api import Bool, Event, implements, Unicode
 
 # Local imports.
-from enthought.pyface.i_python_editor import IPythonEditor, MPythonEditor
-from enthought.pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_python_editor import IPythonEditor, MPythonEditor
+from pyface.key_pressed_event import KeyPressedEvent
 from code_editor.code_widget import AdvancedCodeWidget
 from widget import Widget
 

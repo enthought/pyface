@@ -34,16 +34,16 @@
 from weakref \
     import ref
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Int, Str, Bool, Property
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import Menu, Action
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from dock_window \
@@ -63,7 +63,7 @@ class DockWindowFeature ( HasPrivateTraits ):
     """ Implements "features" on DockWindows.
 
     See "The DockWindowFeature Feature of DockWindows" document (.doc or .pdf)
-    in enthought.pyface.doc for details on using this class.
+    in pyface.doc for details on using this class.
 
     Traits are defined on each feature instance. One or more feature instances
     are created for each application component that a feature class applies to.
@@ -396,7 +396,7 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         Parameters
         ----------
-        menu : enthought.traits.ui.menu.Menu object
+        menu : traitsui.menu.Menu object
             The menu to be displayed
 
         Returns
@@ -546,7 +546,7 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         Parameters
         ----------
-        dock_control : enthought.pyface.dock.api.DockControl
+        dock_control : pyface.dock.api.DockControl
             The DockControl object that corresponds to the application
             component being added, or for which the feature is being enabled.
 
@@ -588,7 +588,7 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         Parameters
         ----------
-        dock_control : enthought.pyface.dock.api.DockControl
+        dock_control : pyface.dock.api.DockControl
             The DockControl object that corresponds to the application
             component being added, or for which the feature is being enabled.
 
@@ -624,7 +624,7 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         Parameters
         ----------
-        dock_control : enthought.pyface.dock.api.DockControl
+        dock_control : pyface.dock.api.DockControl
             The DockControl object that corresponds to the application
             component being added, or for which the feature is being enabled.
 

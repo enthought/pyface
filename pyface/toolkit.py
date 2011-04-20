@@ -14,7 +14,7 @@ import os
 import sys
 
 # Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
+from traits.etsconfig.api import ETSConfig
 
 
 # This is set to the root part of the module path for the selected backend.
@@ -27,7 +27,7 @@ def _init_toolkit():
     def import_toolkit(tk):
         try:
             # Try and import the toolkit's pyface backend init module.
-            be = 'enthought.pyface.ui.%s.' % tk
+            be = 'pyface.ui.%s.' % tk
             __import__(be + 'init')
         except:
             raise

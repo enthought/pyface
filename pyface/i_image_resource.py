@@ -13,9 +13,9 @@
 
 import operator
 
-from enthought.pyface.resource_manager import resource_manager
-from enthought.resource.resource_path import resource_module, resource_path
-from enthought.traits.api import Interface, List, Unicode
+from pyface.resource_manager import resource_manager
+from pyface.resource.resource_path import resource_module, resource_path
+from traits.api import Interface, List, Unicode
 
 
 class IImageResource(Interface):
@@ -134,7 +134,7 @@ class MImageResource(object):
         """ Returns the 'image not found' image resource. """
 
         if cls._image_not_found is None:
-            from enthought.pyface.image_resource import ImageResource
+            from pyface.image_resource import ImageResource
 
             cls._image_not_found = ImageResource('image_not_found')
 

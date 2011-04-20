@@ -18,7 +18,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Instance, Int, Tuple, Unicode
+from traits.api import Any, Bool, Instance, Int, Tuple, Unicode
 
 # Local imports.
 from image_resource import ImageResource

@@ -13,12 +13,12 @@
 
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, implements, HasTraits, Str, Tuple, \
+from traits.api import Bool, implements, HasTraits, Str, Tuple, \
         Unicode
-from enthought.pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
+from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 
 class WizardPage(MWizardPage, HasTraits):

@@ -16,13 +16,13 @@
 
 import sys
 
-from enthought.traits.api \
+from traits.api \
     import *
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import *
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import *
 
 #-------------------------------------------------------------------------------

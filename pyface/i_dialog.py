@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Int, Str, Unicode
+from traits.api import Bool, Enum, Int, Str, Unicode
 
 # Local imports.
 from constant import OK

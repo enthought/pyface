@@ -27,9 +27,9 @@ from cStringIO import StringIO
 import wx
 
 # Enthought library imports.
-from enthought.resource.api import ResourceFactory
+from pyface.resource.api import ResourceFactory
 
-from enthought.traits.api import Undefined
+from traits.api import Undefined
 
 
 class PyfaceResourceFactory(ResourceFactory):

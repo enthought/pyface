@@ -7,11 +7,11 @@ import logging
 import os
 
 # Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
-from enthought.pyface.api import NO
-from enthought.traits.api import Bool, Callable, Event, HasTraits, implements
-from enthought.traits.api import Instance, List, Unicode, Vetoable
-from enthought.traits.api import VetoableEvent
+from traits.etsconfig.api import ETSConfig
+from pyface.api import NO
+from traits.api import Bool, Callable, Event, HasTraits, implements
+from traits.api import Instance, List, Unicode, Vetoable
+from traits.api import VetoableEvent
 
 # Local imports.
 from i_editor_manager import IEditorManager

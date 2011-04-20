@@ -27,7 +27,7 @@ import wx
 
 from numpy import array, fromstring, reshape, ravel, dtype
 
-from enthought.traits.api \
+from traits.api \
     import Str, Range, Enum, Instance, Event, false
 
 from widget \

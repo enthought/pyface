@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits
+from traits.api import HasTraits
 
 
 # fixme: in JFace this extends from 'DialogPage' which we don't have yet!

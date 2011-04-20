@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.pyface.api import YES
-from enthought.pyface.workbench.api import Workbench
+from pyface.api import YES
+from pyface.workbench.api import Workbench
 
 # Local imports.
 from example_workbench_window import ExampleWorkbenchWindow

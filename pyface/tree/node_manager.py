@@ -17,7 +17,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import HasPrivateTraits, List
+from traits.api import HasPrivateTraits, List
 
 # Local imports
 from node_type import NodeType

@@ -26,11 +26,11 @@ import wx.html
 import wx.lib.wxpTag
 
 # Enthought library imports.
-from enthought.traits.api import implements, Instance, List, Unicode
+from traits.api import implements, Instance, List, Unicode
 
 # Local imports.
-from enthought.pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from enthought.pyface.image_resource import ImageResource
+from pyface.i_about_dialog import IAboutDialog, MAboutDialog
+from pyface.image_resource import ImageResource
 from dialog import Dialog
 
 

@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Callable, HasTraits, Str, Trait
+from traits.api import Callable, HasTraits, Str, Trait
 
 
 class SchemaAddition(HasTraits):

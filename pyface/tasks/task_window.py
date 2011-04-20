@@ -2,10 +2,10 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.action.api import Group, MenuManager, MenuBarManager, \
+from pyface.action.api import Group, MenuManager, MenuBarManager, \
     StatusBarManager, ToolBarManager
-from enthought.pyface.api import ApplicationWindow
-from enthought.traits.api import Bool, HasTraits, HasStrictTraits, Instance, \
+from pyface.api import ApplicationWindow
+from traits.api import Bool, HasTraits, HasStrictTraits, Instance, \
     List, Property, Unicode, Vetoable
 
 # Local imports.

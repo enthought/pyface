@@ -33,33 +33,33 @@ import os
 import wx
 import sys
 
-from enthought.pyface.api import SystemMetrics
+from pyface.api import SystemMetrics
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Tuple, Property, Any, Str, List, false
 
-from enthought.traits.trait_base \
+from traits.trait_base \
     import traits_home
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import View, HGroup, VGroup, Item, Handler, error
 
-from enthought.traits.ui.helper \
+from traitsui.helper \
     import user_name_for
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import Menu, Action, Separator
 
-from enthought.traits.ui.dockable_view_element \
+from traitsui.dockable_view_element \
     import DockableViewElement
 
-from enthought.traits.ui.dock_window_theme \
+from traitsui.dock_window_theme \
     import dock_window_theme, DockWindowTheme
 
-from enthought.util.wx.drag_and_drop \
+from traits.util.wx.drag_and_drop \
     import PythonDropTarget, clipboard
 
-from enthought.pyface.message_dialog \
+from pyface.message_dialog \
     import error as warning
 
 from dock_sizer \

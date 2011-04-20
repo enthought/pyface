@@ -24,10 +24,10 @@ import os
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Enum, implements, Unicode, Int, List
+from traits.api import Enum, implements, Unicode, Int, List
 
 # Local imports.
-from enthought.pyface.i_file_dialog import IFileDialog, MFileDialog
+from pyface.i_file_dialog import IFileDialog, MFileDialog
 from dialog import Dialog
 
 

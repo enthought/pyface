@@ -21,10 +21,10 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, implements
+from traits.api import HasTraits, implements
 
 # Local imports.
-from enthought.pyface.i_image_cache import IImageCache, MImageCache
+from pyface.i_image_cache import IImageCache, MImageCache
 
 
 class ImageCache(MImageCache, HasTraits):

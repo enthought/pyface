@@ -21,11 +21,11 @@ import wx
 import time
 
 # Enthought library imports
-from enthought.traits.api import Instance, Enum, Int, Bool, Str, implements, Property
+from traits.api import Instance, Enum, Int, Bool, Str, implements, Property
 
 # Local imports
 from widget import Widget
-from enthought.pyface.i_progress_dialog import IProgressDialog, MProgressDialog
+from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from window import Window
 
 class ProgressBar(Widget):

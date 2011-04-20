@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import IPerspective
-from enthought.traits.api import Delegate, Instance, on_trait_change
+from pyface.workbench.api import IPerspective
+from traits.api import Delegate, Instance, on_trait_change
 
 # Local imports.
 from workbench_action import WorkbenchAction

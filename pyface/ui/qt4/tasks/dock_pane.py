@@ -2,12 +2,12 @@
 from contextlib import contextmanager
 
 # Enthought library imports.
-from enthought.pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from enthought.traits.api import Bool, Property, Tuple, implements, \
+from pyface.tasks.i_dock_pane import IDockPane, MDockPane
+from traits.api import Bool, Property, Tuple, implements, \
     on_trait_change
 
 # System library imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane

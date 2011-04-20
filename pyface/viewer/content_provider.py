@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits
+from traits.api import HasTraits
 
 
 class ContentProvider(HasTraits):

@@ -4,7 +4,7 @@
 import weakref
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Instance, implements
+from traits.api import HasTraits, Instance, implements
 
 # Local imports.
 from i_editor_manager import IEditorManager
@@ -19,7 +19,7 @@ class EditorManager(HasTraits):
     #### 'IEditorManager' interface ###########################################
 
     # The workbench window that the editor manager manages editors for ;^)
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     ###########################################################################
     # 'object' interface.

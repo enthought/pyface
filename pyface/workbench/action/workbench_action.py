@@ -2,9 +2,9 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import WorkbenchWindow
-from enthought.pyface.action.api import Action
-from enthought.traits.api import Instance
+from pyface.workbench.api import WorkbenchWindow
+from pyface.action.api import Action
+from traits.api import Instance
 
 
 class WorkbenchAction(Action):

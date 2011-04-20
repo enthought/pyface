@@ -2,11 +2,11 @@
 
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import IView, WorkbenchWindow
-from enthought.traits.api import Any, HasTraits, Instance, List, Str
-from enthought.traits.api import TraitError, Undefined
-from enthought.traits.ui.api import Item, TreeEditor, TreeNode, View
-from enthought.traits.ui.menu import Action # fixme: Non-api import!
+from pyface.workbench.api import IView, WorkbenchWindow
+from traits.api import Any, HasTraits, Instance, List, Str
+from traits.api import TraitError, Undefined
+from traitsui.api import Item, TreeEditor, TreeNode, View
+from traitsui.menu import Action # fixme: Non-api import!
 
 
 class Category(HasTraits):
@@ -110,7 +110,7 @@ class ViewChooser(HasTraits):
     """
 
     # The window that contains the views to choose from.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     # The currently selected tree item (at any point in time this might be
     # either None, a view category, or a view).

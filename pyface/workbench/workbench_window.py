@@ -5,10 +5,10 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, GUI
-from enthought.traits.api import Callable, Constant, Delegate, Event, Instance
-from enthought.traits.api import List, Str, Tuple, Unicode, Vetoable
-from enthought.traits.api import implements, on_trait_change
+from pyface.api import ApplicationWindow, GUI
+from traits.api import Callable, Constant, Delegate, Event, Instance
+from traits.api import List, Str, Tuple, Unicode, Vetoable
+from traits.api import implements, on_trait_change
 
 # Local imports.
 from i_editor import IEditor
@@ -40,7 +40,7 @@ class WorkbenchWindow(ApplicationWindow):
     selection = List
 
     # The workbench that the window belongs to.
-    workbench = Instance('enthought.pyface.workbench.api.IWorkbench')
+    workbench = Instance('pyface.workbench.api.IWorkbench')
 
     #### Editors #######################
 
@@ -51,7 +51,7 @@ class WorkbenchWindow(ApplicationWindow):
     editors = List(IEditor)
 
     # The Id of the editor area.
-    editor_area_id = Constant('enthought.pyface.workbench.editors')
+    editor_area_id = Constant('pyface.workbench.editors')
 
     # The (initial) size of the editor area (the user is free to resize it of
     # course).

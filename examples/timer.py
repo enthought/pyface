@@ -1,10 +1,10 @@
 """Example of using a pyface Timer."""
 
 
-from enthought.pyface.timer.api import Timer
-from enthought.pyface.api import GUI, ApplicationWindow
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
-from enthought.traits.api import Any, Int
+from pyface.timer.api import Timer
+from pyface.api import GUI, ApplicationWindow
+from pyface.action.api import Action, MenuManager, MenuBarManager
+from traits.api import Any, Int
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """

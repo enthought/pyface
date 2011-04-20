@@ -18,9 +18,9 @@
 import wx
 
 # Enthought library imports.
-from enthought.pyface.image_list import ImageList
-from enthought.traits.api import Any, Bool, Enum, Event, Instance, List
-from enthought.util.wx.drag_and_drop import PythonDropSource
+from pyface.image_list import ImageList
+from traits.api import Any, Bool, Enum, Event, Instance, List
+from traits.util.wx.drag_and_drop import PythonDropSource
 
 # Local imports.
 from content_viewer import ContentViewer

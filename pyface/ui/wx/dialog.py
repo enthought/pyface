@@ -22,11 +22,11 @@ import sys
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, implements, Int, Str, Unicode
+from traits.api import Bool, Enum, implements, Int, Str, Unicode
 
 # Local imports.
-from enthought.pyface.i_dialog import IDialog, MDialog
-from enthought.pyface.constant import OK, CANCEL, YES, NO
+from pyface.i_dialog import IDialog, MDialog
+from pyface.constant import OK, CANCEL, YES, NO
 from window import Window
 
 

@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Instance, List, Unicode
-from enthought.pyface.i_dialog import IDialog
+from traits.api import Bool, Instance, List, Unicode
+from pyface.i_dialog import IDialog
 
 # Local imports.
 from i_wizard_controller import IWizardController

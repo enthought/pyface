@@ -17,7 +17,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import Any, Event, HasTraits
+from traits.api import Any, Event, HasTraits
 
 # Local imports.
 from node_event import NodeEvent

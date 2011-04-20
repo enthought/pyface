@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Dict, HasStrictTraits, Instance, List, Str, \
+from traits.api import Dict, HasStrictTraits, Instance, List, Str, \
      Tuple
 
 # Local imports.

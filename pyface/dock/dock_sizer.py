@@ -28,26 +28,26 @@
 
 import wx, sys
 
-from enthought.traits.api \
+from traits.api \
     import HasPrivateTraits, Instance, Str, Int, List, Enum, Tuple, Any, \
            Range, Property, Callable, Constant, Event, Undefined, Bool, \
            cached_property
 
-from enthought.traits.ui.dock_window_theme \
+from traitsui.dock_window_theme \
     import dock_window_theme
 
-from enthought.traits.ui.wx.helper \
+from traitsui.wx.helper \
     import BufferDC
 
-from enthought.pyface.api import SystemMetrics
+from pyface.api import SystemMetrics
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
-from enthought.util.wx.drag_and_drop \
+from traits.util.wx.drag_and_drop \
     import PythonDropSource
 
-from enthought.pyface.timer.api \
+from pyface.timer.api \
     import do_later, do_after
 
 from idockable \
@@ -2981,7 +2981,7 @@ class DockSection ( DockGroup ):
     splitters = List( DockSplitter )
 
     # The DockWindow that owns this section (set on top level section only):
-    dock_window = Instance( 'enthought.pyface.dock.dock_window.DockWindow' )
+    dock_window = Instance( 'pyface.dock.dock_window.DockWindow' )
 
     # Contents of the section have been modified property:
     modified = Property

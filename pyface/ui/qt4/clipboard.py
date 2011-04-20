@@ -17,11 +17,11 @@ from cStringIO import StringIO
 from cPickle import dumps, load, loads
 
 # System library imports
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # ETS imports
-from enthought.traits.api import implements
-from enthought.pyface.i_clipboard import IClipboard, BaseClipboard
+from traits.api import implements
+from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Shortcuts
 cb = QtGui.QApplication.clipboard()

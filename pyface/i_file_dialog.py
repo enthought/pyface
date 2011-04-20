@@ -18,7 +18,7 @@
 import sys
 
 # Enthought library imports.
-from enthought.traits.api import Enum, Unicode, Int
+from traits.api import Enum, Unicode, Int
 
 # Local imports.
 from i_dialog import IDialog

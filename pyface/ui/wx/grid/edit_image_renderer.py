@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 
 # ETS imports
-from enthought.pyface.image_resource import ImageResource
+from pyface.image_resource import ImageResource
 
 # Local import
 from grid_cell_image_renderer import GridCellImageRenderer

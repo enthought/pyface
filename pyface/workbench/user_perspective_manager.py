@@ -6,9 +6,9 @@ import logging
 import os
 
 # Enthought library imports.
-from enthought.pyface.workbench.api import Perspective
-from enthought.traits.api import Any, Dict, HasTraits, Int, List, Property
-from enthought.traits.api import Unicode
+from pyface.workbench.api import Perspective
+from traits.api import Any, Dict, HasTraits, Int, List, Property
+from traits.api import Unicode
 
 
 # Logging.

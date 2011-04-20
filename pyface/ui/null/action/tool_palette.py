@@ -13,9 +13,9 @@
 #------------------------------------------------------------------------------
 """ View of an ActionManager drawn as a rectangle of buttons. """
 
-from enthought.pyface.widget import Widget
+from pyface.widget import Widget
 
-from enthought.traits.api import Bool, Dict, Int, List, Tuple
+from traits.api import Bool, Dict, Int, List, Tuple
 
 
 class ToolPalette(Widget):

@@ -1,9 +1,9 @@
 # Enthought library imports.
-from enthought.pyface.tasks.i_editor import IEditor, MEditor
-from enthought.traits.api import Bool, Property, implements
+from pyface.tasks.i_editor import IEditor, MEditor
+from traits.api import Bool, Property, implements
 
 # System library imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 
 class Editor(MEditor):

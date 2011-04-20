@@ -15,9 +15,9 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
-from enthought.traits.api import Unicode
-from enthought.traits.ui.ui_traits import Image
+from traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
+from traits.api import Unicode
+from traitsui.ui_traits import Image
 
 
 class Action(HasTraits):

@@ -15,7 +15,7 @@
 
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 ToolBarManager = toolkit_object('action.tool_bar_manager:ToolBarManager')
 
 ### EOF #######################################################################

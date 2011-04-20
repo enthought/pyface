@@ -17,7 +17,7 @@ from textwrap import dedent
 from unicodedata import category
 
 # System library imports
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 #-----------------------------------------------------------------------------
 # Functions

@@ -1,5 +1,5 @@
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Event, HasTraits, Interface, \
+from traits.api import Any, Bool, Event, HasTraits, Interface, \
     Instance, Property, Unicode, Vetoable, VetoableEvent, cached_property
 
 
@@ -21,7 +21,7 @@ class IEditor(Interface):
 
     # The editor area to which the editor belongs.
     editor_area = Instance(
-        'enthought.pyface.tasks.i_editor_area_pane.IEditorAreaPane')
+        'pyface.tasks.i_editor_area_pane.IEditorAreaPane')
 
     # Is the editor active in the editor area?
     is_active = Bool
@@ -65,7 +65,7 @@ class MEditor(HasTraits):
     dirty = Bool(False)
 
     editor_area = Instance(
-        'enthought.pyface.tasks.i_editor_area_pane.IEditorAreaPane')
+        'pyface.tasks.i_editor_area_pane.IEditorAreaPane')
     is_active = Property(Bool, depends_on='editor_area.active_editor')
     has_focus = Bool(False)
 

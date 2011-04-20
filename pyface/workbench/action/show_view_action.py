@@ -12,7 +12,7 @@ class ShowViewAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'enthought.pyface.workbench.action.show_view'
+    id = 'pyface.workbench.action.show_view'
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Show View'

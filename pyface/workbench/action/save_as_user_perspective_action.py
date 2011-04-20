@@ -20,7 +20,7 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier.
-    id = 'enthought.pyface.workbench.action.save_as_user_perspective_action'
+    id = 'pyface.workbench.action.save_as_user_perspective_action'
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Save Perspective As...'

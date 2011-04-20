@@ -2,10 +2,10 @@
 
 import time
 
-from enthought.pyface.timer.api import Timer
-from enthought.pyface.api import GUI, ApplicationWindow, ImageResource, SplashScreen
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
-from enthought.traits.api import Any, Int
+from pyface.timer.api import Timer
+from pyface.api import GUI, ApplicationWindow, ImageResource, SplashScreen
+from pyface.action.api import Action, MenuManager, MenuBarManager
+from traits.api import Any, Int
 
 
 splash_screen = SplashScreen(image=ImageResource('images/splash'))

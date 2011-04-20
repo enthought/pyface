@@ -5,7 +5,7 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Event, Instance, Int
+from traits.api import Event, Instance, Int
 
 # Local imports.
 from list_box_model import ListBoxModel

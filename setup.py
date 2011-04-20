@@ -66,8 +66,8 @@ setup(
     name = 'TraitsGUI',
     namespace_packages = [
         "enthought",
-        "enthought.pyface",
-        "enthought.pyface.ui",
+        "pyface",
+        "pyface.ui",
         ],
     package_data = {
         '': ['library/*', 'images/*'],

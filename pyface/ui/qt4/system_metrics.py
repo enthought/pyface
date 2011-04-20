@@ -12,13 +12,13 @@
 
 
 # Major package imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Enthought library imports.
-from enthought.traits.api import HasTraits, implements, Int, Property, Tuple
+from traits.api import HasTraits, implements, Int, Property, Tuple
 
 # Local imports.
-from enthought.pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
+from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
 
 class SystemMetrics(MSystemMetrics, HasTraits):

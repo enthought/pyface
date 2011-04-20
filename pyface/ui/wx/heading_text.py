@@ -21,12 +21,12 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import implements, Instance, Int, Unicode
+from traits.api import implements, Instance, Int, Unicode
 
 # Local imports.
-from enthought.pyface.i_heading_text import IHeadingText, MHeadingText
-from enthought.pyface.image_resource import ImageResource
-from enthought.pyface.util.font_helper import new_font_like
+from pyface.i_heading_text import IHeadingText, MHeadingText
+from pyface.image_resource import ImageResource
+from pyface.util.font_helper import new_font_like
 from widget import Widget
 
 

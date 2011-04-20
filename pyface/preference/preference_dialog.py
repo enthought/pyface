@@ -18,10 +18,10 @@
 import wx
 
 # Enthought library imports.
-from enthought.pyface.api import HeadingText, LayeredPanel, SplitDialog
-from enthought.pyface.util.font_helper import new_font_like
-from enthought.pyface.viewer.api import TreeViewer, DefaultTreeContentProvider
-from enthought.traits.api import Any, Dict, Float, Instance, Str
+from pyface.api import HeadingText, LayeredPanel, SplitDialog
+from pyface.util.font_helper import new_font_like
+from pyface.viewer.api import TreeViewer, DefaultTreeContentProvider
+from traits.api import Any, Dict, Float, Instance, Str
 
 # Local imports.
 from preference_node import PreferenceNode

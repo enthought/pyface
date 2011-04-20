@@ -2,13 +2,13 @@
 import unittest
 
 # Enthought library imports.
-from enthought.pyface.action.api import Action, ActionItem, ActionManager, \
+from pyface.action.api import Action, ActionItem, ActionManager, \
      Group, MenuManager, MenuBarManager
-from enthought.pyface.tasks.action.api import GroupSchema, MenuSchema, \
+from pyface.tasks.action.api import GroupSchema, MenuSchema, \
      MenuBarSchema, SchemaAddition
-from enthought.pyface.tasks.action.task_action_manager_builder import \
+from pyface.tasks.action.task_action_manager_builder import \
      TaskActionManagerBuilder
-from enthought.pyface.tasks.api import Task
+from pyface.tasks.api import Task
 
 
 class ActionManagerBuilderTestCase(unittest.TestCase):

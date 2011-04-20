@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Callable, Enum, Float, Interface
+from traits.api import Callable, Enum, Float, Interface
 
 
 class ISplitWidget(Interface):

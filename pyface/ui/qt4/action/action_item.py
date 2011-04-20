@@ -16,13 +16,13 @@
 from inspect import getargspec
 
 # Major package imports.
-from enthought.qt import QtGui, QtCore
+from traits.qt import QtGui, QtCore
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits
+from traits.api import Any, Bool, HasTraits
 
 # Local imports.
-from enthought.pyface.action.action_event import ActionEvent
+from pyface.action.action_event import ActionEvent
 
 
 class _MenuItem(HasTraits):

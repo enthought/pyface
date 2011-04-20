@@ -12,7 +12,7 @@
 
 
 # Local imports.
-from enthought.pyface.workbench.i_editor import MEditor
+from pyface.workbench.i_editor import MEditor
 
 
 class Editor(MEditor):
@@ -29,7 +29,7 @@ class Editor(MEditor):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from enthought.qt import QtGui
+        from traits.qt import QtGui
 
         # By default we create a yellow panel!
         control = QtGui.QWidget(parent)

@@ -31,11 +31,11 @@ import wx
 
 # Enthought library imports.
 from enthought.io.file import File as EnthoughtFile
-from enthought.pyface.i_python_shell import IPythonShell
-from enthought.pyface.key_pressed_event import KeyPressedEvent
-from enthought.traits.api import Event, implements, Instance, Str
-from enthought.util.clean_strings import python_name
-from enthought.util.wx.drag_and_drop import PythonDropTarget
+from pyface.i_python_shell import IPythonShell
+from pyface.key_pressed_event import KeyPressedEvent
+from traits.api import Event, implements, Instance, Str
+from traits.util.clean_strings import python_name
+from traits.util.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
 from widget import Widget

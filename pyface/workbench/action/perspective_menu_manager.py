@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import Group, MenuManager
-from enthought.traits.api import Instance, List, on_trait_change
+from pyface.action.api import Group, MenuManager
+from traits.api import Instance, List, on_trait_change
 
 # Local imports.
 from delete_user_perspective_action import DeleteUserPerspectiveAction
@@ -34,7 +34,7 @@ class PerspectiveMenuManager(MenuManager):
     #### 'PerspectiveMenuManager' interface ###################################
 
     # The workbench window that the manager is part of.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     ###########################################################################
     # 'ActionManager' interface.

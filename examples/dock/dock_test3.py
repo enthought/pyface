@@ -16,16 +16,16 @@
 
 import sys
 
-from enthought.traits.api \
+from traits.api \
     import *
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import *
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import *
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
 from enthought.developer.tools.ui_debugger import UIDebugger
@@ -84,7 +84,7 @@ class TestDock ( HasPrivateTraits ):
             id = 'dock_window'
         ),
         title     = 'DockWindow Test',
-        id        = 'enthought.pyface.dock.dock_test3',
+        id        = 'pyface.dock.dock_test3',
         dock      = 'horizontal',
         resizable = True,
         width     = 0.5,

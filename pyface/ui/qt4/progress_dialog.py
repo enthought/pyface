@@ -15,15 +15,15 @@
 
 import time
 
-from enthought.qt import QtGui, QtCore
+from traits.qt import QtGui, QtCore
 
 
 # Enthought library imports
-from enthought.traits.api import Instance, Enum, Int, Bool, Unicode, implements
+from traits.api import Instance, Enum, Int, Bool, Unicode, implements
 
 # Local imports
 from widget import Widget
-from enthought.pyface.i_progress_dialog import IProgressDialog, MProgressDialog
+from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from window import Window
 
 class ProgressDialog(MProgressDialog, Window):

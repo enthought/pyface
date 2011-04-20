@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.pyface.window import Window
-from enthought.traits.api import Instance
+from pyface.window import Window
+from traits.api import Instance
 
 # Local imports.
 from action import Action

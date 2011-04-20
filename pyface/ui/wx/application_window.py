@@ -31,12 +31,12 @@ except ImportError:
     AUI = False
 
 # Enthought library imports.
-from enthought.pyface.action.api import MenuBarManager, StatusBarManager
-from enthought.pyface.action.api import ToolBarManager
-from enthought.traits.api import implements, Instance, List, Unicode
-from enthought.pyface.i_application_window import IApplicationWindow
-from enthought.pyface.i_application_window import MApplicationWindow
-from enthought.pyface.image_resource import ImageResource
+from pyface.action.api import MenuBarManager, StatusBarManager
+from pyface.action.api import ToolBarManager
+from traits.api import implements, Instance, List, Unicode
+from pyface.i_application_window import IApplicationWindow
+from pyface.i_application_window import MApplicationWindow
+from pyface.image_resource import ImageResource
 
 # Local imports.
 from window import Window

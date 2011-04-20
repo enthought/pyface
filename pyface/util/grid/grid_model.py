@@ -18,8 +18,8 @@ import wx
 from wx.grid import PyGridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, Trait, Event, List
-from enthought.traits.standard import false_trait, true_trait
+from traits.api import Any, Bool, HasTraits, Trait, Event, List
+from traits.standard import false_trait, true_trait
 
 # Local imports.
 from grid_column import GridColumn

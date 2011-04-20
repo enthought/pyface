@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Event, Int, Tuple, Unicode
+from traits.api import Any, Event, Int, Tuple, Unicode
 
 # Local imports.
 from constant import NO

@@ -5,7 +5,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.api import GUI
+from pyface.api import GUI
 
 # Local imports.
 from example_workbench import ExampleWorkbench

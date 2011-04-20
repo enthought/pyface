@@ -12,13 +12,13 @@
 
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import implements, Int, Unicode
+from traits.api import implements, Int, Unicode
 
 # Local imports.
-from enthought.pyface.i_heading_text import IHeadingText, MHeadingText
+from pyface.i_heading_text import IHeadingText, MHeadingText
 from widget import Widget
 
 

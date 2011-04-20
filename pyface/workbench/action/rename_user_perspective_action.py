@@ -20,7 +20,7 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'enthought.pyface.workbench.action.rename_user_perspective_action'
+    id = 'pyface.workbench.action.rename_user_perspective_action'
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Rename Perspective...'

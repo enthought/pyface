@@ -18,10 +18,10 @@
 
 import wx
 
-from enthought.pyface.api import ApplicationWindow, GUI, ImageResource
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.api import ApplicationWindow, GUI, ImageResource
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
-from enthought.pyface.action.api import ToolPaletteManager
+from pyface.action.api import ToolPaletteManager
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """

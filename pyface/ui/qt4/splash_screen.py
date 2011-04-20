@@ -15,15 +15,15 @@
 from logging import DEBUG
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Font, implements, Instance, Int
-from enthought.traits.api import Tuple, Unicode
+from traits.api import Any, Bool, Font, implements, Instance, Int
+from traits.api import Tuple, Unicode
 
 # Local imports.
-from enthought.pyface.i_splash_screen import ISplashScreen, MSplashScreen
-from enthought.pyface.image_resource import ImageResource
+from pyface.i_splash_screen import ISplashScreen, MSplashScreen
+from pyface.image_resource import ImageResource
 from window import Window
 
 

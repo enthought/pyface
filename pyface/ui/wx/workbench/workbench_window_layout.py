@@ -25,15 +25,15 @@ import logging
 import wx
 
 # Enthought library imports.
-from enthought.pyface.dock.api import DOCK_BOTTOM, DOCK_LEFT, DOCK_RIGHT
-from enthought.pyface.dock.api import DOCK_TOP
-from enthought.pyface.dock.api import DockControl, DockRegion, DockSection
-from enthought.pyface.dock.api import DockSizer
-from enthought.traits.api import Delegate
-from enthought.traits.ui.dockable_view_element import DockableViewElement
+from pyface.dock.api import DOCK_BOTTOM, DOCK_LEFT, DOCK_RIGHT
+from pyface.dock.api import DOCK_TOP
+from pyface.dock.api import DockControl, DockRegion, DockSection
+from pyface.dock.api import DockSizer
+from traits.api import Delegate
+from traitsui.dockable_view_element import DockableViewElement
 
 # Mixin class imports.
-from enthought.pyface.workbench.i_workbench_window_layout import \
+from pyface.workbench.i_workbench_window_layout import \
      MWorkbenchWindowLayout
 
 # Local imports.
@@ -646,7 +646,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # fixme: Should we roll the traits UI stuff into the default editor.
         if hasattr(editor, 'ui') and editor.ui is not None:
             # This makes the control draggable outside of the main window.
-            #editor_dock_control.export = 'enthought.pyface.workbench.editor'
+            #editor_dock_control.export = 'pyface.workbench.editor'
             editor_dock_control.dockable = DockableViewElement(
                 should_close=True, ui=editor.ui
             )
@@ -696,7 +696,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # fixme: Should we roll the traits UI stuff into the default editor.
         if hasattr(view, 'ui') and view.ui is not None:
             # This makes the control draggable outside of the main window.
-            #view_dock_control.export = 'enthought.pyface.workbench.view'
+            #view_dock_control.export = 'pyface.workbench.view'
 
             # If the ui's 'view' trait has an 'export' field set, pass that on
             # to the dock control. This makes the control detachable from the

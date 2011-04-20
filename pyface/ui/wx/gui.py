@@ -25,11 +25,11 @@ import sys
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, implements, Unicode
-from enthought.util.guisupport import start_event_loop_wx
+from traits.api import Bool, HasTraits, implements, Unicode
+from traits.util.guisupport import start_event_loop_wx
 
 # Local imports.
-from enthought.pyface.i_gui import IGUI, MGUI
+from pyface.i_gui import IGUI, MGUI
 
 
 # Logging.

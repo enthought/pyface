@@ -16,7 +16,7 @@
 
 
 # Local imports.
-from enthought.pyface.action.action_manager import ActionManager
+from pyface.action.action_manager import ActionManager
 
 
 class MenuBarManager(ActionManager):

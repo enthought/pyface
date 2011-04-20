@@ -16,7 +16,7 @@
 # Major package imports
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
+from traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
      Instance, Int, Str, Tuple
 
 # The classes below are part of the table specification.

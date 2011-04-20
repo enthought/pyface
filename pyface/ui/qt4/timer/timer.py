@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from enthought.qt import QtCore
+from traits.qt import QtCore
 
 
 class Timer(QtCore.QTimer):

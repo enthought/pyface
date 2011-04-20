@@ -8,10 +8,10 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Any, Bool, HasTraits, List, Property, Str, \
+from traits.api import Any, Bool, HasTraits, List, Property, Str, \
     Unicode
 
 

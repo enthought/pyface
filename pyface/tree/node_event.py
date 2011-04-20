@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, Int, List
+from traits.api import Any, HasTraits, Int, List
 
 
 # Classes for event traits.

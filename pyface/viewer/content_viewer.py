@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Instance, List
+from traits.api import Any, Instance, List
 
 # Local imports.
 from viewer import Viewer

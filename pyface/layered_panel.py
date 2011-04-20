@@ -22,7 +22,7 @@ import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
 # Enthought library imports.
-from enthought.traits.api import Any, Str, Int
+from traits.api import Any, Str, Int
 
 # Local imports.
 from widget import Widget

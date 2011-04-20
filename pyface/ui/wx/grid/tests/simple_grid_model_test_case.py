@@ -1,6 +1,6 @@
 import unittest
 
-from enthought.pyface.ui.wx.grid.api \
+from pyface.ui.wx.grid.api \
      import GridRow, GridColumn, SimpleGridModel
 
 

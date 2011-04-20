@@ -1,10 +1,10 @@
 # Enthought library imports.
-from enthought.pyface.action.api import Action, ActionItem, Group
-from enthought.traits.api import Any, Bool, List, Instance, Property, Unicode
+from pyface.action.api import Action, ActionItem, Group
+from traits.api import Any, Bool, List, Instance, Property, Unicode
 
 # Local imports.
-from enthought.pyface.tasks.task import Task
-from enthought.pyface.tasks.task_window import TaskWindow
+from pyface.tasks.task import Task
+from pyface.tasks.task_window import TaskWindow
 
 
 class TaskToggleAction(Action):

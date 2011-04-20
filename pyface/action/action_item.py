@@ -15,14 +15,14 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, Instance, List, Property, Str
+from traits.api import Any, Instance, List, Property, Str
 
 # Local imports.
 from action import Action
 from action_manager_item import ActionManagerItem
 
 # Import the toolkit specific versions of the internal classes.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 _MenuItem = toolkit_object('action.action_item:_MenuItem')
 _Tool = toolkit_object('action.action_item:_Tool')
 _PaletteTool = toolkit_object('action.action_item:_PaletteTool')

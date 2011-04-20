@@ -11,7 +11,7 @@
 
 import weakref
 
-from enthought.qt import QtGui, QtCore
+from traits.qt import QtGui, QtCore
 
 
 class FindWidget(QtGui.QWidget):

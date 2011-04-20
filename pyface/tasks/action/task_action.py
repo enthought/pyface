@@ -1,6 +1,6 @@
 # Enthought library imports.
-from enthought.pyface.tasks.api import Editor, Task, TaskPane
-from enthought.traits.api import Bool, Instance, Property, Str, cached_property
+from pyface.tasks.api import Editor, Task, TaskPane
+from traits.api import Bool, Instance, Property, Str, cached_property
 
 # Local imports.
 from listening_action import ListeningAction

@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-import enthought.pyface.action.api as pyface
-from enthought.traits.api import Instance
+import pyface.action.api as pyface
+from traits.api import Instance
 
 # Local imports.
 from action_controller import ActionController
@@ -15,7 +15,7 @@ class ToolBarManager(pyface.ToolBarManager):
     #### 'ToolBarManager' interface ###########################################
 
     # The workbench window that we are the tool bar manager for.
-    window = Instance('enthought.pyface.workbench.api.WorkbenchWindow')
+    window = Instance('pyface.workbench.api.WorkbenchWindow')
 
     ###########################################################################
     # 'ToolBarManager' interface.

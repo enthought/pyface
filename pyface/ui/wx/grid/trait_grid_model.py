@@ -19,7 +19,7 @@ list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
 # Enthought library imports
-from enthought.traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
+from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
      Int, List, Str, Trait, TraitError, Type
 
 # local imports

@@ -21,10 +21,10 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Callable, Enum, Float, HasTraits, implements
+from traits.api import Callable, Enum, Float, HasTraits, implements
 
 # Local imports.
-from enthought.pyface.i_split_widget import ISplitWidget, MSplitWidget
+from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
 class SplitWidget(MSplitWidget, HasTraits):

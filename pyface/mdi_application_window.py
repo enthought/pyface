@@ -18,7 +18,7 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Instance, Int, Tuple
+from traits.api import Bool, Instance, Int, Tuple
 
 # Local imports.
 from application_window import ApplicationWindow

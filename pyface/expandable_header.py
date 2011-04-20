@@ -19,7 +19,7 @@ provides a visual indicator of the current state, a text label, and a
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Instance, Event, Str, Int, Bool
+from traits.api import Instance, Event, Str, Int, Bool
 
 # local imports
 from image_resource import ImageResource

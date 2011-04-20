@@ -15,8 +15,8 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Constant, Event, HasTraits, Instance
-from enthought.traits.api import List, Property, Str
+from traits.api import Bool, Constant, Event, HasTraits, Instance
+from traits.api import List, Property, Str
 
 # Local imports.
 from action_controller import ActionController

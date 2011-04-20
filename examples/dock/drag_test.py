@@ -16,22 +16,22 @@
 
 import wx
 
-from enthought.traits.api \
+from traits.api \
     import *
 
-from enthought.traits.ui.api \
+from traitsui.api \
     import *
 
-from enthought.traits.ui.menu \
+from traitsui.menu \
     import *
 
-from enthought.traits.ui.dockable_view_element \
+from traitsui.dockable_view_element \
     import DockableViewElement
 
-from enthought.pyface.image_resource \
+from pyface.image_resource \
     import ImageResource
 
-from enthought.pyface.dock.api \
+from pyface.dock.api \
     import *
 
 #-------------------------------------------------------------------------------

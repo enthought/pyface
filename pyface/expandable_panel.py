@@ -17,7 +17,7 @@
 # Major package imports.
 import wx
 
-from enthought.traits.api import Instance
+from traits.api import Instance
 
 # Local imports.
 from expandable_header import ExpandableHeader

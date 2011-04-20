@@ -19,7 +19,7 @@ from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Enthought library imports
-from enthought.traits.ui.api import UI, default_handler
+from traitsui.api import UI, default_handler
 
 # Local imports:
 from combobox_focus_handler import ComboboxFocusHandler

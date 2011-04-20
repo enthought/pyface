@@ -12,13 +12,13 @@
 
 
 # Major package imports.
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, implements, Unicode
+from traits.api import Bool, implements, Unicode
 
 # Local imports.
-from enthought.pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
+from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from dialog import Dialog
 
 

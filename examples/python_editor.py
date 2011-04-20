@@ -15,9 +15,9 @@
 
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
+from pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
         PythonEditor
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 class MainWindow(ApplicationWindow):

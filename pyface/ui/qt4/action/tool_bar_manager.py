@@ -8,14 +8,14 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Enum, Instance, Str, Tuple
+from traits.api import Bool, Enum, Instance, Str, Tuple
 
 # Local imports.
-from enthought.pyface.image_cache import ImageCache
-from enthought.pyface.action.action_manager import ActionManager
+from pyface.image_cache import ImageCache
+from pyface.action.action_manager import ActionManager
 
 
 class ToolBarManager(ActionManager):

@@ -18,8 +18,8 @@ import wx
 import wx.xrc
 
 # Enthought library imports
-from enthought.traits.api import Instance, Str
-import enthought.util.resource
+from traits.api import Instance, Str
+import traits.util.resource
 
 
 # Application specific imports.
@@ -60,7 +60,7 @@ class XrcDialog(Dialog):
         """
         Creates the dialog and loads it in from the resource file.
         """
-        classpath = enthought.util.resource.get_path( self )
+        classpath = traits.util.resource.get_path( self )
         path = os.path.join( classpath, self.xrc_file )
 
         self.resource = wx.xrc.XmlResource( path )

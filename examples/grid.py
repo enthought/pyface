@@ -24,10 +24,10 @@ import wx
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from enthought.pyface.api import GUI, PythonShell, SplitApplicationWindow
-from enthought.pyface.ui.wx.grid.api import Grid, TraitGridModel, \
+from pyface.api import GUI, PythonShell, SplitApplicationWindow
+from pyface.ui.wx.grid.api import Grid, TraitGridModel, \
     SimpleGridModel, GridRow, GridColumn, TraitGridColumn
-from enthought.traits.api import Float, Str
+from traits.api import Float, Str
 
 
 class MainWindow(SplitApplicationWindow):

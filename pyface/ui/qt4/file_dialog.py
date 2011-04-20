@@ -15,13 +15,13 @@
 import os
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Enum, implements, Int, Unicode, List
+from traits.api import Enum, implements, Int, Unicode, List
 
 # Local imports.
-from enthought.pyface.i_file_dialog import IFileDialog, MFileDialog
+from pyface.i_file_dialog import IFileDialog, MFileDialog
 from dialog import Dialog
 
 

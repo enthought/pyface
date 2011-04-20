@@ -2,12 +2,12 @@
 import sys
 
 # Enthought library imports.
-from enthought.pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from enthought.traits.api import implements, on_trait_change
+from traits.api import implements, on_trait_change
 
 # System library imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane

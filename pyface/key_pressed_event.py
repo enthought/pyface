@@ -2,7 +2,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, Int, Any
+from traits.api import Bool, HasTraits, Int, Any
 
 
 class KeyPressedEvent(HasTraits):

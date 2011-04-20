@@ -1,5 +1,5 @@
 # System library imports
-from enthought.qt import QtGui
+from traits.qt import QtGui
 
 # Local imports
 from console_widget import ConsoleWidget

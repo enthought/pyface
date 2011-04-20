@@ -18,8 +18,8 @@ import os, sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Local imports.
-from enthought.pyface.action.api import Action
-from enthought.pyface.action.api import Group, MenuManager, Separator
+from pyface.action.api import Action
+from pyface.action.api import Group, MenuManager, Separator
 
 
 file_menu = MenuManager(

@@ -15,15 +15,15 @@
 import logging
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Instance, on_trait_change
+from traits.api import Instance, on_trait_change
 
 # Local imports.
 from split_tab_widget import SplitTabWidget
-from enthought.pyface.message_dialog import error
-from enthought.pyface.workbench.i_workbench_window_layout import \
+from pyface.message_dialog import error
+from pyface.workbench.i_workbench_window_layout import \
         MWorkbenchWindowLayout
 
 

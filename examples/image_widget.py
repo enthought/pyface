@@ -26,8 +26,8 @@ import wx.html
 import wx.lib.wxpTag
 
 # Enthought library imports.
-from enthought.pyface.api import ApplicationWindow, GUI, ImageResource, ImageWidget
-from enthought.pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.api import ApplicationWindow, GUI, ImageResource, ImageWidget
+from pyface.action.api import Action, MenuManager, MenuBarManager
 
 
 # HTML templates.

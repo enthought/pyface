@@ -1,6 +1,6 @@
 # Enthought library imports.
-from enthought.pyface.api import GUI
-from enthought.pyface.tasks.api import TaskWindow
+from pyface.api import GUI
+from pyface.tasks.api import TaskWindow
 
 # Local imports.
 from example_task import ExampleTask

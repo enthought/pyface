@@ -18,10 +18,10 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Bool, implements, HasTraits, Str, Tuple, \
+from traits.api import Bool, implements, HasTraits, Str, Tuple, \
         Unicode
-from enthought.pyface.api import HeadingText
-from enthought.pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
+from pyface.api import HeadingText
+from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 
 class WizardPage(MWizardPage, HasTraits):

@@ -10,7 +10,7 @@
 
 
 # Enthought library imports.
-from enthought.pyface.api import YES
+from pyface.api import YES
 
 # Local imports.
 from user_perspective_action import UserPerspectiveAction
@@ -22,7 +22,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'enthought.pyface.workbench.action.delete_user_perspective_action'
+    id = 'pyface.workbench.action.delete_user_perspective_action'
 
     # The action's name (displayed on menus/tool bar tools etc).
     name = 'Delete Perspective'

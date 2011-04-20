@@ -2,8 +2,8 @@
 
 
 # Enthought library imports.
-from enthought.etsconfig.api import ETSConfig
-from enthought.pyface.workbench.api import View
+from traits.etsconfig.api import ETSConfig
+from pyface.workbench.api import View
 
 
 class ColorView(View):
@@ -63,7 +63,7 @@ class ColorView(View):
     def _qt4_create_control(self, parent, color):
         """ Create a Qt4 version of the control. """
 
-        from enthought.qt import QtGui
+        from traits.qt import QtGui
 
         widget = QtGui.QWidget(parent)
 

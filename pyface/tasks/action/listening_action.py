@@ -2,8 +2,8 @@
 import logging
 
 # Enthought library imports.
-from enthought.pyface.action.api import Action
-from enthought.traits.api import Any, Str
+from pyface.action.api import Action
+from traits.api import Any, Str
 
 # Logging.
 logger = logging.getLogger(__name__)

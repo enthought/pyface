@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Interface, Str, Tuple, Unicode
+from traits.api import Bool, Interface, Str, Tuple, Unicode
 
 
 class IWizardPage(Interface):

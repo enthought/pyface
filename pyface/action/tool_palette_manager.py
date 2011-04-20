@@ -15,7 +15,7 @@
 
 
 # Import the toolkit specific version.
-from enthought.pyface.toolkit import toolkit_object
+from pyface.toolkit import toolkit_object
 ToolPaletteManager = toolkit_object('action.tool_palette_manager:ToolPaletteManager')
 
 ### EOF #######################################################################

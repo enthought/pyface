@@ -15,14 +15,14 @@
 import logging
 
 # Major package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from enthought.traits.api import Bool, HasTraits, implements, Unicode
-from enthought.util.guisupport import start_event_loop_qt4
+from traits.api import Bool, HasTraits, implements, Unicode
+from traits.util.guisupport import start_event_loop_qt4
 
 # Local imports.
-from enthought.pyface.i_gui import IGUI, MGUI
+from pyface.i_gui import IGUI, MGUI
 
 
 # Logging.

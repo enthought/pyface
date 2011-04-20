@@ -17,9 +17,9 @@ for rows and columns. By default these are built off the data itself,
 with row/column labels as the index + 1."""
 
 # Enthought library imports
-from enthought.pyface.action.api import Action, Group, MenuManager, Separator
-from enthought.traits.api import HasTraits, Any, List, Str, Bool, Trait
-from enthought.util.wx.drag_and_drop import clipboard as enClipboard
+from pyface.action.api import Action, Group, MenuManager, Separator
+from traits.api import HasTraits, Any, List, Str, Bool, Trait
+from traits.util.wx.drag_and_drop import clipboard as enClipboard
 
 # local imports
 from grid_model import GridColumn, GridModel, GridRow

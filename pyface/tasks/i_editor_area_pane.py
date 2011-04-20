@@ -2,7 +2,7 @@
 import logging
 
 # Enthought library imports.
-from enthought.traits.api import Bool, Callable, Dict, HasTraits, Instance, List
+from traits.api import Bool, Callable, Dict, HasTraits, Instance, List
 
 # Local imports.
 from i_editor import IEditor

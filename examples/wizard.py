@@ -22,9 +22,9 @@ import sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from enthought.pyface.api import GUI, OK
-from enthought.pyface.wizard.api import SimpleWizard, WizardPage
-from enthought.traits.api import Color, HasTraits, Int, Str
+from pyface.api import GUI, OK
+from pyface.wizard.api import SimpleWizard, WizardPage
+from traits.api import Color, HasTraits, Int, Str
 
 
 class Details(HasTraits):

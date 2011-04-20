@@ -20,10 +20,10 @@ from os.path import basename, isdir, join
 from time import localtime, strftime
 
 # Enthought library imports.
-from enthought.pyface.api import ImageResource
-from enthought.pyface.viewer.api import TableColumnProvider, TableContentProvider
-from enthought.pyface.viewer.api import TableLabelProvider, TableViewer
-from enthought.traits.api import Instance, Str
+from pyface.api import ImageResource
+from pyface.viewer.api import TableColumnProvider, TableContentProvider
+from pyface.viewer.api import TableLabelProvider, TableViewer
+from traits.api import Instance, Str
 
 
 

@@ -19,18 +19,18 @@ import sys
 from time import time
 
 # System package imports.
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 from pygments.lexers import PythonLexer
 
 # Enthought library imports.
-from enthought.traits.api import Event, implements
+from traits.api import Event, implements
 
 # Local imports.
 from code_editor.pygments_highlighter import PygmentsHighlighter
 from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
-from enthought.pyface.i_python_shell import IPythonShell, MPythonShell
-from enthought.pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_python_shell import IPythonShell, MPythonShell
+from pyface.key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 #-------------------------------------------------------------------------------

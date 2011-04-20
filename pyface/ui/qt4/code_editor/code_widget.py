@@ -14,7 +14,7 @@ import math
 import sys
 
 # System library imports
-from enthought.qt import QtCore, QtGui
+from traits.qt import QtCore, QtGui
 
 # Local imports
 from find_widget import FindWidget

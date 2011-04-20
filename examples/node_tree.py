@@ -21,12 +21,12 @@ import os, sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from enthought.pyface.api import GUI, PythonShell, SplitApplicationWindow
-from enthought.traits.api import Float, Str
+from pyface.api import GUI, PythonShell, SplitApplicationWindow
+from traits.api import Float, Str
 
 # Local imports.
 from file_node_tree import node_manager
-from enthought.pyface.tree.api import NodeTree, NodeTreeModel
+from pyface.tree.api import NodeTree, NodeTreeModel
 
 
 class MainWindow(SplitApplicationWindow):

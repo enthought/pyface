@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, Instance
+from traits.api import Any, HasTraits, Instance
 
 # Local imports.
 from resource_factory import ResourceFactory

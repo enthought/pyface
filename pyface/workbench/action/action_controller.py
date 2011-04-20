@@ -2,9 +2,9 @@
 
 
 # Enthought library imports.
-from enthought.pyface.action.api import ActionController
-from enthought.pyface.workbench.api import WorkbenchWindow
-from enthought.traits.api import HasTraits, Instance
+from pyface.action.api import ActionController
+from pyface.workbench.api import WorkbenchWindow
+from traits.api import HasTraits, Instance
 
 
 class ActionController(ActionController):

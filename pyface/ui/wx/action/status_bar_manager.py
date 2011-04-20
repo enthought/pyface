@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from enthought.traits.api import Any, HasTraits, List, Property, Str, Unicode
+from traits.api import Any, HasTraits, List, Property, Str, Unicode
 
 
 class StatusBarManager(HasTraits):

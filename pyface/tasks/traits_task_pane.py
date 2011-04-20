@@ -1,6 +1,6 @@
 # Enthought library imports.
-from enthought.traits.api import HasTraits, Instance
-from enthought.traits.ui.api import UI, ViewElement
+from traits.api import HasTraits, Instance
+from traitsui.api import UI, ViewElement
 
 # Local imports.
 from task_pane import TaskPane

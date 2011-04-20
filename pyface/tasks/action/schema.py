@@ -1,13 +1,13 @@
 # Enthought library imports.
-from enthought.pyface.action.api import Action, ActionItem, Group, \
+from pyface.action.api import Action, ActionItem, Group, \
      MenuManager, MenuBarManager, ToolBarManager
-from enthought.traits.api import Bool, Callable, Enum, HasTraits, Instance, \
+from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
      List, Str, Trait, Tuple, Unicode
 
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
-                  Instance('enthought.pyface.tasks.action.schema.GroupSchema'),
-                  Instance('enthought.pyface.tasks.action.schema.MenuSchema'))
+                  Instance('pyface.tasks.action.schema.GroupSchema'),
+                  Instance('pyface.tasks.action.schema.MenuSchema'))
 
 
 class Schema(HasTraits):
