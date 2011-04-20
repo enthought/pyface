@@ -63,12 +63,7 @@ setup(
     long_description = '\n'.join(DOCLINES[3:]),
     maintainer = 'ETS Developers',
     maintainer_email = 'enthought-dev@enthought.com',
-    name = 'TraitsGUI',
-    namespace_packages = [
-        "enthought",
-        "pyface",
-        "pyface.ui",
-        ],
+    name = 'pyface',
     package_data = {
         '': ['library/*', 'images/*'],
         },
