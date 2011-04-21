@@ -67,7 +67,7 @@ class FindWidget(QtGui.QWidget):
         layout.addWidget(self.prev_button)
         layout.addWidget(self.options_button)
         layout.addStretch(2)
-        layout.setMargin(0)
+        layout.setContentsMargins(0, 0, 0, 0)
 
         control.setLayout(layout)
         return control

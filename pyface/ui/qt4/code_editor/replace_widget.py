@@ -50,7 +50,7 @@ class ReplaceWidget(FindWidget):
         layout.addWidget(self.replace_button)
         layout.addWidget(self.replace_all_button)
         layout.addStretch(2)
-        layout.setMargin(0)
+        layout.setContentsMargins(0, 0, 0, 0)
 
         control.setLayout(layout)
         return control
