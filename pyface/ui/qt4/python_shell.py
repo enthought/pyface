@@ -112,6 +112,7 @@ class PythonWidget(HistoryConsoleWidget):
         self._bracket_matcher = BracketMatcher(self._control)
         self._call_tip_widget = CallTipWidget(self._control)
         self._completion_lexer = CompletionLexer(PythonLexer())
+        self._hidden = False
         self._highlighter = PythonWidgetHighlighter(self)
         self._last_refresh_time = 0
 
