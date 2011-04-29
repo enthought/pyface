@@ -347,9 +347,9 @@ class PythonWidget(HistoryConsoleWidget):
                     names = dir(symbol)
                 completions = [ n for n in names if n.startswith(leftover) ]
                 if completions:
-                    text = '.'.join(context)
                     cursor = self._get_cursor()
-                    cursor.movePosition(QtGui.QTextCursor.Left, n=len(text))
+                    cursor.movePosition(QtGui.QTextCursor.Left,
+                                        n=len(context[-1]))
                     self._complete_with_items(cursor, completions)
     
     def _get_banner(self):
@@ -371,8 +371,8 @@ class PythonWidget(HistoryConsoleWidget):
         return self._completion_lexer.get_context(text)
 
     def _get_symbol_from_context(self, context):
-        """ Find a python object in the interpeter namespace from a QStringList
-            context object (see QsciAbstractAPIs interface above).
+        """ Find a python object in the interpeter namespace from a context (a
+            list of names).
         """
         context = map(str, context)
         if len(context) == 0:
