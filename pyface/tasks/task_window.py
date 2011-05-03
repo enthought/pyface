@@ -111,17 +111,18 @@ class TaskWindow(ApplicationWindow):
         if one has not already been activated. Returns whether the window was
         opened.
         """
-        # From the base class implementation.
         self.opening = event = Vetoable()
         if not event.veto:
+            # Create the control, if necessary.
             if self.control is None:
                 self._create()
-            self.show(True)
-            self.opened = self
 
             # Activate a task, if necessary.
             if self._active_state is None and self._states:
                 self.activate_task(self._states[0].task)
+
+            self.show(True)
+            self.opened = self
                 
         return self.control is not None
 
