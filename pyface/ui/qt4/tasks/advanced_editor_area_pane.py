@@ -328,6 +328,10 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 widget.set_title_bar(True)
                 self._tear_handled = True
 
+        elif self._drag_widget == widget and \
+                 event.type() == QtCore.QEvent.MouseButtonRelease:
+            self.reset_drag()
+
         return False
 
     def _tab_filter(self, tab_bar, event):
@@ -460,7 +464,6 @@ class EditorTitleBarWidget(QtGui.QTabBar):
         self.setTabText(0, self.parent().windowTitle())
 
     def mousePressEvent(self, event):
-        self.parent().parent().reset_drag()
         self.parent().parent()._drag_widget = self.parent()
         event.ignore()
 
