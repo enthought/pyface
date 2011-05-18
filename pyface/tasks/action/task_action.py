@@ -98,7 +98,7 @@ class DockPaneAction(TaskAction):
     @cached_property
     def _get_dock_pane(self):
         if self.task:
-            return self.task.window.get_dock_pane(dock_pane_id, self.task)
+            return self.task.window.get_dock_pane(self.dock_pane_id, self.task)
         return None
 
     def _get_object(self):
