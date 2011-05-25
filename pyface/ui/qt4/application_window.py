@@ -3,13 +3,14 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# However, when used with the GPL version of PyQt the additional terms described
+# in the PyQt GPL exception also apply.
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-
+# Standard library imports.
+import sys
 
 # Major package imports.
 from traits.qt import QtGui
@@ -165,6 +166,11 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _menu_bar_manager_changed(self):
         if self.control is not None:
+            # XXX: Without this, the menu bar simply disappears after a change
+            # on OS X. Why? I don't know.
+            if sys.platform == 'darwin':
+                self.control.menuBar().setParent(None)
+                
             self._create_menu_bar(self.control)
 
     def _status_bar_manager_changed(self):
