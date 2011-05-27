@@ -9,6 +9,12 @@ from dock_pane import area_map
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task import TaskLayout
 
+# Constants.
+corner_map = { 'top_left'     : QtCore.Qt.TopLeftCorner,
+               'top_right'    : QtCore.Qt.TopRightCorner,
+               'bottom_left'  : QtCore.Qt.BottomLeftCorner,
+               'bottom_right' : QtCore.Qt.BottomRightCorner }
+
 # Logging.
 logger = logging.getLogger(__name__)
 
@@ -126,8 +132,7 @@ class TaskWindowBackend(MTaskWindowBackend):
             TaskLayout.
         """
         # If a Qt-specific state string is attached to the layout, prefer it.
-        # If at any point the state restore fails, fall back to the
-        # toolkit-independent layout.
+        # If state restore fails, fall back to the toolkit-independent layout.
         layout = state.layout
         restored = False
         if layout.toolkit_state is not None:
@@ -135,6 +140,12 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Layout the panes according to toolkit-indepedent TaskLayout API.
         if not restored:
+            # Assign the window's corners to the appropriate dock areas.
+            for name, corner in corner_map.iteritems():
+                area = getattr(state.layout, name + '_corner')
+                self.control.setCorner(corner, area_map[area])
+
+            # Add all panes in the TaskLayout.
             processed_panes = []
             for area in ('left', 'right', 'top', 'bottom'):
                 processed_panes.extend(self._layout_area(area, state))
