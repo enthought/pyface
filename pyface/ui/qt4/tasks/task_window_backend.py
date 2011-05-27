@@ -143,3 +143,8 @@ class TaskWindowBackend(MTaskWindowBackend):
             for dock_pane in state.dock_panes:
                 if dock_pane not in processed_panes:
                     self._add_dock_pane(dock_pane)
+                    # By default, these dock panes are not visible. But if the
+                    # developer explicitly requests them to be visible, ensure
+                    # that they are.
+                    if dock_pane.visible:
+                        dock_pane.control.show()
