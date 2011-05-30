@@ -57,6 +57,17 @@ class IGUI(Interface):
     # 'GUI' class interface.
     ###########################################################################
 
+    def allow_interrupt():
+        """ Override the SIGINT handler to ensure the process can be
+        interrupted. This prevents GUI toolkits from swallowing
+        KeyboardInterrupt exceptions.
+
+        Warning: do not call this method if you intend your application to be
+        run interactively.
+        """
+
+    allow_interrupt = staticmethod(allow_interrupt)
+
     def invoke_after(cls, millisecs, callable, *args, **kw):
         """ Call a callable after a specific delay in the main GUI thread. """
 
@@ -80,7 +91,6 @@ class IGUI(Interface):
     def process_events(allow_user_events=True):
         """ Process any pending GUI events. If allow_user_events is False then
         user generated events are not processed.
-
         """
 
     process_events = staticmethod(process_events)
@@ -111,6 +121,16 @@ class MGUI(object):
     Implements: _default_state_location()
     """
 
+    def allow_interrupt():
+        """ Override the SIGINT handler to ensure the process can be
+        interrupted. This prevents GUI toolkits from swallowing
+        KeyboardInterrupt exceptions.
+        """
+        import signal
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+    allow_interrupt = staticmethod(allow_interrupt)
+
     def _default_state_location(self):
         """ Return the default state location. """
 
@@ -122,5 +142,3 @@ class MGUI(object):
         logger.debug('GUI state location is <%s>', state_location)
 
         return state_location
-
-#### EOF ######################################################################
