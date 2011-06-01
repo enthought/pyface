@@ -33,7 +33,7 @@ class TaskPane(MTaskPane):
         """
         if self.control is not None:
             self.control.hide()
-            self.control.deleteLater()
+            self.control.setParent(None)
             self.control = None
 
     def set_focus(self):

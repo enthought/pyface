@@ -96,8 +96,8 @@ class TaskWindow(ApplicationWindow):
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
         """
-        for state in self._states:
-            self._destroy_state(state)
+        for task in self.tasks:
+            self.remove_task(task)
         super(TaskWindow, self).destroy()
 
     ###########################################################################
@@ -227,8 +227,14 @@ class TaskWindow(ApplicationWindow):
                 self._window_backend.hide_task(state)
                 self._active_state = None
 
+            # Notify the task that it is about to be destroyed.
+            state.task.prepare_destroy()
+
             # Destroy all controls associated with the task.
-            self._destroy_state(state)
+            for dock_pane in state.dock_panes:
+                dock_pane.destroy()
+            state.central_pane.destroy()
+            state.task.window = None
 
             self._states.remove(state)
         else:
@@ -328,17 +334,6 @@ class TaskWindow(ApplicationWindow):
     ###########################################################################
     # Protected 'TaskWindow' interface.
     ###########################################################################
-
-    def _destroy_state(self, state):
-        """ Destroys all the controls associated with the specified TaskState.
-        """
-        # Notify the task that it is about to be destroyed.
-        state.task.prepare_destroy()
-
-        for dock_pane in state.dock_panes:
-            dock_pane.destroy()
-        state.central_pane.destroy()
-        state.task.window = None
 
     def _fetch_state(self, task):
         """ Returns the TaskState that contains the specified Task, or None if
