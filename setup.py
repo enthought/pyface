@@ -57,7 +57,6 @@ setup(
     description = DOCLINES[1],
     download_url = ('http://www.enthought.com/repo/ETS/TraitsGUI-%s.tar.gz' %
                     INFO['version']),
-    include_package_data = True,
     install_requires = INFO['install_requires'],
     license = 'BSD',
     long_description = '\n'.join(DOCLINES[3:]),
@@ -65,7 +64,7 @@ setup(
     maintainer_email = 'enthought-dev@enthought.com',
     name = 'pyface',
     package_data = {
-        '': ['library/*', 'images/*'],
+        '': ['images/*'],
         },
     packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
