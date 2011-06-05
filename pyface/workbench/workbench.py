@@ -44,14 +44,14 @@ class Workbench(HasTraits):
     editor_manager = Instance(IEditorManager)
 
     # The optional application scripting manager.
-    script_manager = Instance('enthought.appscripting.api.IScriptManager')
+    script_manager = Instance('apptools.appscripting.api.IScriptManager')
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
     state_location = Unicode
 
     # The optional undo manager.
-    undo_manager = Instance('enthought.undo.api.IUndoManager')
+    undo_manager = Instance('apptools.undo.api.IUndoManager')
 
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
@@ -259,7 +259,7 @@ class Workbench(HasTraits):
 
         # We make sure the undo package is entirely optional.
         try:
-            from enthought.undo.api import UndoManager
+            from apptools.undo.api import UndoManager
         except ImportError:
             return None
 

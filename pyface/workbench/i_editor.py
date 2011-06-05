@@ -28,7 +28,7 @@ class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
 
     # The optional command stack.
-    command_stack = Instance('enthought.undo.api.ICommandStack')
+    command_stack = Instance('apptools.undo.api.ICommandStack')
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -67,7 +67,7 @@ class MEditor(MWorkbenchPart):
     #### 'IEditor' interface ##################################################
 
     # The optional command stack.
-    command_stack = Instance('enthought.undo.api.ICommandStack')
+    command_stack = Instance('apptools.undo.api.ICommandStack')
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -136,7 +136,7 @@ class MEditor(MWorkbenchPart):
 
         # We make sure the undo package is entirely optional.
         try:
-            from enthought.undo.api import CommandStack
+            from apptools.undo.api import CommandStack
         except ImportError:
             return None
 

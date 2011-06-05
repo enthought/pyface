@@ -28,7 +28,7 @@ from traitsui.menu \
 from pyface.image_resource \
     import ImageResource
 
-from enthought.developer.tools.ui_debugger import UIDebugger
+from etsdevtools.developer.tools.ui_debugger import UIDebugger
 
 #-------------------------------------------------------------------------------
 #  Constants:

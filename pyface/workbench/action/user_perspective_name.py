@@ -61,7 +61,7 @@ class UserPerspectiveName(HasTraits):
             )
         ),
         title   = 'New User Perspective',
-        id      = 'enthought.envisage.workbench.action.'
+        id      = 'envisage.workbench.action.'
                   'new_user_perspective_action.UserPerspectiveName',
         buttons = [ 'OK', 'Cancel' ],
         kind    = 'livemodal',
@@ -70,7 +70,7 @@ class UserPerspectiveName(HasTraits):
 
     save_as_view = View( 'name',
         title   = 'Save User Perspective As',
-        id      = 'enthought.envisage.workbench.action.'
+        id      = 'envisage.workbench.action.'
                   'save_as_user_perspective_action.UserPerspectiveName',
         buttons = [ 'OK', 'Cancel' ],
         kind    = 'livemodal',
@@ -79,7 +79,7 @@ class UserPerspectiveName(HasTraits):
 
     rename_view = View( 'name',
         title   = 'Rename User Perspective',
-        id      = 'enthought.envisage.workbench.action.'
+        id      = 'envisage.workbench.action.'
                   'rename_user_perspective_action.UserPerspectiveName',
         buttons = [ 'OK', 'Cancel' ],
         kind    = 'livemodal',

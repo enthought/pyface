@@ -30,7 +30,7 @@ from IPython.kernel.core.interpreter import Interpreter
 import wx
 
 # Enthought library imports.
-from enthought.io.file import File as EnthoughtFile
+from apptools.io.file import File as EnthoughtFile
 from pyface.i_python_shell import IPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from traits.api import Event, implements, Instance, Str

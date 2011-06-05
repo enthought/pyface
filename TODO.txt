@@ -1,7 +1,7 @@
 * Remove the import of pyface.resource for core functionality in
     resource_manager.py and i_image_resource.py.
 
-* Remove the dependency on enthought.developer AND enthought.io by refactoring
+* Remove the dependency on etsdevtools.developer AND apptools.io by refactoring
     dock features modules.
 
 * Remove the dock dependence on TraitsBackendWX by removing the direct imports
