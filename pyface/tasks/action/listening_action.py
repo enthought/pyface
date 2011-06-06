@@ -38,7 +38,7 @@ class ListeningAction(Action):
             if method:
                 method()
         else:
-            super(TaskAction, self).perform(event)
+            super(ListeningAction, self).perform(event)
 
     ###########################################################################
     # Protected interface.
