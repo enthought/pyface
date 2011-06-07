@@ -14,9 +14,10 @@ released under a 3 clause BSD license.
 
 Files and orginal authors:
 ----------------------------------------------------------------------------
-enthought/pyface/action/images:
+pyface/action/images:
                          action.png | Eclipse
-enthought/pyface/images:
+
+pyface/images:
                           about.jpg | Enthought
                      background.jpg | Enthought
                     caret_close.png | Enthought
@@ -27,7 +28,8 @@ enthought/pyface/images:
             panel_gradient_over.png | Enthought
                        question.png | GV
                          splash.png | Enthought
-enthought/pyface/dock/images:
+
+pyface/dock/images:
             bar_feature_changed.png | Enthought
            bar_feature_disabled.png | Enthought
                bar_feature_drop.png | Enthought
@@ -52,24 +54,30 @@ enthought/pyface/dock/images:
                   tab_scroll_lr.png | Enthought
                    tab_scroll_r.png | Enthought
                          window.png | Eclipse
-enthought/pyface/grid/images:
+
+pyface/ui/wx/grid/images:
                         checked.png | GV
                 image_not_found.png | Nuvola
                      table_edit.png | OOo
                       unchecked.png | GV
-enthought/pyface/tree/images:
+
+pyface/tree/images:
                   closed_folder.png | Nuvola
                        document.png | GV
                     open_folder.png | Nuvola
-traitsui/image/library:
-                            std.zip | Enthought
+
+# traitsui/image/library:
+#                            std.zip | Enthought
+
 examples/images:
             closed_folder_24x24.png | Nuvola
                   closed_folder.png | Nuvola
                        document.png | GV
                     open_folder.png | Nuvola
+
 examples/dock/images:
                          folder.png | Nuvola
                            gear.png | Nuvola
+
 examples/workbench/images:
                         example.ico | Enthought
