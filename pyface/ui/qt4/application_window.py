@@ -9,8 +9,6 @@
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-# Standard library imports.
-import sys
 
 # Major package imports.
 from traits.qt import QtGui
@@ -166,11 +164,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _menu_bar_manager_changed(self):
         if self.control is not None:
-            # XXX: Without this, the menu bar simply disappears after a change
-            # on OS X. Why? I don't know.
-            if sys.platform == 'darwin':
-                self.control.menuBar().setParent(None)
-                
             self._create_menu_bar(self.control)
 
     def _status_bar_manager_changed(self):

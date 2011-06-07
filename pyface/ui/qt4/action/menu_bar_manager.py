@@ -11,6 +11,8 @@
 #------------------------------------------------------------------------------
 """ The PyQt specific implementation of a menu bar manager. """
 
+# Standard library imports.
+import sys
 
 # Major package imports.
 from traits.qt import QtGui
@@ -36,7 +38,13 @@ class MenuBarManager(ActionManager):
         if controller is None:
             controller = self.controller
 
-        menu_bar = QtGui.QMenuBar(parent)
+        # Create the menu bar. Work around disappearing menu bars on OS X
+        # (particulary on PySide but also under certain circumstances on PyQt4).
+        if isinstance(parent, QtGui.QMainWindow) and sys.platform == 'darwin':
+            parent.menuBar().setParent(None)
+            menu_bar = parent.menuBar()
+        else:
+            menu_bar = QtGui.QMenuBar(parent)
 
         # Every item in every group must be a menu manager.
         for group in self.groups:
