@@ -3,8 +3,7 @@ from cStringIO import StringIO
 import sys
 
 # Enthought library imports.
-from enthought.traits.api import Either, Enum, HasStrictTraits, Int, List, \
-     Str, This
+from traits.api import Either, Enum, HasStrictTraits, Int, List, Str, This
 
 
 class LayoutItem(HasStrictTraits):

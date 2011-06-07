@@ -263,7 +263,8 @@ class TaskWindow(ApplicationWindow):
         """ Returns the task with the specified ID, or None if no such task
             exists.
         """
-        return self._get_state(id).task
+        state = self._get_state(id)
+        return state.task if state else None
 
     #### Methods for saving and restoring the layout ##########################
 
