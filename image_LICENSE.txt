@@ -66,9 +66,6 @@ pyface/tree/images:
                        document.png | GV
                     open_folder.png | Nuvola
 
-# traitsui/image/library:
-#                            std.zip | Enthought
-
 examples/images:
             closed_folder_24x24.png | Nuvola
                   closed_folder.png | Nuvola
