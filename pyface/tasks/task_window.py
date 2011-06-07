@@ -159,7 +159,7 @@ class TaskWindow(ApplicationWindow):
     def activate_task(self, task):
         """ Activates a task that has already been added to the window.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         if state:
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
@@ -222,7 +222,7 @@ class TaskWindow(ApplicationWindow):
         """ Removes a task that has already been added to the window. All the
             task's panes are destroyed.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         if state:
             # If the task is active, make sure it is de-activated before
             # deleting its controls.
@@ -239,7 +239,7 @@ class TaskWindow(ApplicationWindow):
     def get_central_pane(self, task):
         """ Returns the central pane for the specified task.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         return state.central_pane if state else None
 
     def get_dock_pane(self, id, task=None):
@@ -250,23 +250,20 @@ class TaskWindow(ApplicationWindow):
         if task is None:
             state = self._active_state
         else:
-            state = self._fetch_state(task)
+            state = self._get_state(task)
         return state.get_dock_pane(id) if state else None
 
     def get_dock_panes(self, task):
         """ Returns the dock panes for the specified task.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         return state.dock_panes[:] if state else []
 
     def get_task(self, id):
         """ Returns the task with the specified ID, or None if no such task
             exists.
         """
-        for state in self._states:
-            if state.task.id == id:
-                return state.task
-        return None
+        return self._get_state(id).task
 
     #### Methods for saving and restoring the layout ##########################
 
@@ -296,13 +293,12 @@ class TaskWindow(ApplicationWindow):
         """
         result = TaskWindowLayout(position=self.position, size=self.size)
         for state in self._states:
-            id = state.task.id
-            result.tasks.append(id)
             if state == self._active_state:
-                result.active_task = id
-                result.layout_state[id] = self._window_backend.get_layout()
+                result.active_task = state.task.id
+                layout = self._window_backend.get_layout()
             else:
-                result.layout_state[id] = state.layout
+                layout = state.layout
+            result.items.append(layout)
         return result
 
     def set_window_layout(self, window_layout):
@@ -318,13 +314,12 @@ class TaskWindow(ApplicationWindow):
             self.activate_task(task)
 
         # Set layouts for the tasks, including the active task.
-        for state in self._states:
-            layout = window_layout.layout_state.get(state.task.id)
-            if layout:
-                if state == self._active_state:
-                    self._window_backend.set_layout(layout)
-                else:
-                    state.layout = layout
+        for layout in window_layout.items:
+            state = self._get_state(layout.id)
+            if state == self._active_state:
+                self._window_backend.set_layout(layout)
+            elif state:
+                state.layout = layout
 
     ###########################################################################
     # Protected 'TaskWindow' interface.
@@ -342,12 +337,12 @@ class TaskWindow(ApplicationWindow):
         state.central_pane.destroy()
         state.task.window = None
 
-    def _fetch_state(self, task):
+    def _get_state(self, id_or_task):
         """ Returns the TaskState that contains the specified Task, or None if
             no such state exists.
         """
         for state in self._states:
-            if state.task == task:
+            if state.task == id_or_task or state.task.id == id_or_task:
                 return state
         return None
 
