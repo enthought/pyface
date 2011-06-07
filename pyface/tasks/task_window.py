@@ -96,8 +96,11 @@ class TaskWindow(ApplicationWindow):
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
         """
-        for task in self.tasks:
-            self.remove_task(task)
+        # Don't use 'remove_task' here to avoid changing the active state and
+        # thereby removing the window's menus and toolbars. This can lead to
+        # undesirable animations when the window is being closed.
+        for state in self._states:
+            self._destroy_state(state)
         super(TaskWindow, self).destroy()
 
     ###########################################################################
@@ -227,15 +230,7 @@ class TaskWindow(ApplicationWindow):
                 self._window_backend.hide_task(state)
                 self._active_state = None
 
-            # Notify the task that it is about to be destroyed.
-            state.task.prepare_destroy()
-
-            # Destroy all controls associated with the task.
-            for dock_pane in state.dock_panes:
-                dock_pane.destroy()
-            state.central_pane.destroy()
-            state.task.window = None
-
+            self._destroy_state(state)
             self._states.remove(state)
         else:
             logger.warn("Cannot remove task %r: task does not belong to the "
@@ -334,6 +329,18 @@ class TaskWindow(ApplicationWindow):
     ###########################################################################
     # Protected 'TaskWindow' interface.
     ###########################################################################
+
+    def _destroy_state(self, state):
+        """ Destroy all controls associated with a Task state.
+        """
+        # Notify the task that it is about to be destroyed.
+        state.task.prepare_destroy()
+
+        # Destroy all controls associated with the task.
+        for dock_pane in state.dock_panes:
+            dock_pane.destroy()
+        state.central_pane.destroy()
+        state.task.window = None
 
     def _fetch_state(self, task):
         """ Returns the TaskState that contains the specified Task, or None if
