@@ -1,5 +1,5 @@
 # Enthought library imports.
-from pyface.tasks.api import Task, TaskLayout
+from pyface.tasks.api import Task, TaskLayout, DockArea, PaneItem
 from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
 from pyface.api import ConfirmationDialog, FileDialog, \
@@ -20,7 +20,8 @@ class ExampleTask(Task):
     name = 'Python Script Editor'
 
     #default_layout = TaskLayout(
-    #    left_panes=['example.python_script_browser_pane'])
+    #    DockArea(PaneItem('example.python_script_browser_pane'),
+    #             area='left'))
 
     menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
                                          accelerator='Ctrl+O'),
@@ -42,7 +43,9 @@ class ExampleTask(Task):
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(left_panes=['example.python_script_browser_pane'])
+        return TaskLayout(
+            DockArea(PaneItem('example.python_script_browser_pane'),
+                     area='left'))
 
     def activated(self):
         """ Overriden to set the window's title.

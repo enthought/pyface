@@ -89,7 +89,7 @@ class PaneItem(LayoutItem):
     height = Int(-1)
 
     def __init__(self, id, **traits):
-        super(Pane, self).__init__(**traits)
+        super(PaneItem, self).__init__(**traits)
         self.id = id
 
     def pargs(self):

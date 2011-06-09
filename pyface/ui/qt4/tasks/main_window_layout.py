@@ -5,7 +5,7 @@ from itertools import combinations
 from traits.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Any
+from traits.api import Any, HasTraits
 
 # Local imports.
 from dock_pane import AREA_MAP
@@ -15,14 +15,15 @@ from pyface.tasks.task_layout import LayoutContainer, DockArea, PaneItem, \
 # Contants.
 ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,
                     'vertical': QtCore.Qt.Vertical }
-QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
 
 
 class MainWindowLayout(HasTraits):
     """ A class for applying declarative layouts to a QMainWindow.
     """
 
-    # The QMainWindow on which to operate.
+    #### 'MainWindowLayout' interface #########################################
+
+    # The QMainWindow control to lay out.
     control = Any
 
     ###########################################################################
@@ -43,7 +44,7 @@ class MainWindowLayout(HasTraits):
         # Build the initial set of leaf-level items.
         items = set()
         rects = {}
-        for child in self.children():
+        for child in self.control.children():
             # Iterate through *visibile* dock widgets. (Inactive tabbed dock
             # widgets are "visible" but have invalid positions.)
             if isinstance(child, QtGui.QDockWidget) and child.isVisible() and \
@@ -59,10 +60,11 @@ class MainWindowLayout(HasTraits):
 
                 # Create the leaf-level item for the child.
                 if tabs:
-                    panes = [ self.get_pane(w, include_sizes) for w in tabs ]
+                    panes = [ self._prepare_pane(dock_widget, include_sizes)
+                              for dock_widget in tabs ]
                     item = Tabbed(*panes, active_tab=child.windowTitle())
                 else:
-                    item = self.get_pane(child, include_sizes)
+                    item = self._prepare_pane(child, include_sizes)
                 items.add(item)
                 rects[item] = geometry
 
@@ -101,15 +103,96 @@ class MainWindowLayout(HasTraits):
             return items.pop()
         return None
 
+    def set_layout(self, layout):
+        """ Applies a LayoutContainer consisting of DockAreas.
+        """
+        # Remove all existing dock widgets.
+        for child in self.control.children():
+            if isinstance(child, QtGui.QDockWidget):
+                child.hide()
+                self.control.removeDockWidget(child)
+
+        # Perform the layout. This will assign fixed sizes to the dock widgets
+        # to enforce size constraints specified in the PaneItems.
+        for item in layout.items:
+            if isinstance(item, DockArea):
+                for subitem in item.items:
+                    self.set_layout_for_area(subitem, AREA_MAP[item.area])
+            else:
+                raise MainWindowLayoutError(
+                    "Only DockArea can be at the top level of a layout")
+
+        # Remove the fixed sizes once Qt activates the layout.
+        QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
+
+    def set_layout_for_area(self, layout, q_dock_area, toplevel_added=False):
+        """ Applies a LayoutItem to the specified dock area.
+        """
+        # If we try to do the layout bottom-up, Qt will become confused. In
+        # order to do it top-down, we have know which dock widget is
+        # "effectively" top level, requiring us to reach down to the leaves of
+        # the layout. (This is really only an issue for Splitter layouts, since
+        # Tabbed layouts are, for our purposes, leaves.)
+        
+        if isinstance(layout, PaneItem):
+            if not toplevel_added:
+                widget = self._prepare_toplevel_for_item(layout)
+                self.control.addDockWidget(q_dock_area, widget)
+                widget.show()
+        
+        elif isinstance(layout, Tabbed):
+            active_widget = first_widget = None
+            for item in layout.items:
+                widget = self._prepare_toplevel_for_item(item)
+                if widget.windowTitle() == layout.active_tab:
+                    active_widget = widget
+                if first_widget:
+                    self.control.tabifyDockWidget(first_widget, widget)
+                else:
+                    if not toplevel_added:
+                        self.control.addDockWidget(q_dock_area, widget)
+                    first_widget = widget
+                    widget.show()
+
+            # By default, Qt will activate the last widget.
+            if active_widget:
+                active_widget.raise_()
+            else:
+                first_widget.raise_()
+
+        elif isinstance(layout, Splitter):
+            # Perform top-level splitting as per above comment.
+            orient = orientation_map[layout.orientation]
+            prev_widget = None
+            for item in layout.items:
+                widget = self._prepare_toplevel_for_item(item)
+                if prev_widget:
+                    self.control.splitDockWidget(prev_widget, widget, orient)
+                elif not toplevel_added:
+                    self.control.addDockWidget(q_dock_area, widget)
+                prev_widget = widget
+                widget.show()
+
+            # Now we can recurse.
+            for i, item in enumerate(layout.items):
+                self.set_layout_for_area(item, q_dock_area, toplevel_added=True)
+                
+        else:
+            raise MainWindowLayoutError("Unknown layout item %r" % layout)
+
     ###########################################################################
     # 'MainWindowLayout' abstract interface.
     ###########################################################################
 
-    def _get_pane_for_widget(self, dock_widget):
-        pass
+    def _get_dock_widget(self, pane):
+        """ Returns the QDockWidget associated with a PaneItem.
+        """
+        raise NotImplementedError
 
-    def _get_widget_for_pane(self, pane):
-        pass
+    def _get_pane(self, dock_widget):
+        """ Returns a PaneItem for a QDockWidget.
+        """
+        raise NotImplementedError
 
     ###########################################################################
     # Private interface.
@@ -123,7 +206,7 @@ class MainWindowLayout(HasTraits):
         """
         united = one.united(two)
         if splitter:
-            sep = self.style().pixelMetric(
+            sep = self.control.style().pixelMetric(
                 QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self)
             united.adjust(0, 0, -sep, -sep)
             
@@ -142,18 +225,27 @@ class MainWindowLayout(HasTraits):
         if there is no tab bar.
         """
         dock_geometry = dock_widget.geometry()
-        for child in self.children():
+        for child in self.control.children():
             if isinstance(child, QtGui.QTabBar) and child.isVisible():
                 geometry = child.geometry()
                 if self._get_division_orientation(dock_geometry, geometry):
                     return child
         return None
 
+    def _prepare_pane(self, dock_widget, include_sizes=True):
+        """ Returns a sized PaneItem for a QDockWidget.
+        """
+        pane = self._get_pane(dock_widget)
+        if include_sizes:
+            pane.width = dock_widget.widget().width()
+            pane.height = dock_widget.widget().height()
+        return pane
+
     def _prepare_toplevel_for_item(self, layout):
+        """ Returns a sized toplevel QDockWidget for a LayoutItem.
         """
-        """
-        if isinstance(layout, Pane):
-            dock_widget = self._get_widget_for_pane(pane)
+        if isinstance(layout, PaneItem):
+            dock_widget = self._get_dock_widget(layout)
             if layout.width > 0:
                 dock_widget.widget().setFixedWidth(layout.width)
             if layout.height > 0:
@@ -161,14 +253,22 @@ class MainWindowLayout(HasTraits):
             return dock_widget
         
         elif isinstance(layout, LayoutContainer):
-            return self.get_toplevel_for_item(layout.items[0])
+            return self._prepare_toplevel_for_item(layout.items[0])
         
         else:
-            raise LayoutError("Leaves of layout must be Panes.")
+            raise MainWindowLayoutError("Leaves of layout must be PaneItems")
 
     def _reset_fixed_sizes(self):
+        """ Clears any fixed sizes assined to QDockWidgets.
         """
-        """
-        for child in self.children():
+        QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
+        for child in self.control.children():
             if isinstance(child, QtGui.QDockWidget):
                 child.widget().setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
+
+
+class MainWindowLayoutError(ValueError):
+    """ Exception raised when a malformed LayoutItem is passed to the
+    MainWindowLayout.
+    """
+    pass
