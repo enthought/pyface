@@ -1,5 +1,5 @@
 # Enthought library imports.
-from traits.api import List, Str, Tuple
+from traits.api import Either, List, Str, Tuple
 
 # Local imports.
 from task_layout import LayoutContainer, TaskLayout
@@ -12,8 +12,9 @@ class TaskWindowLayout(LayoutContainer):
     # The ID of the active task. If unspecified, the first task will be active.
     active_task = Str
 
-    # The layouts of the tasks contained in the window.
-    items = List(TaskLayout)
+    # The tasks contained in the window. If an ID is specified, the task will
+    # use its default layout. Otherwise, it will use the specified TaskLayout.
+    items = List(Either(Str, TaskLayout), pretty_skip=True)
 
     # The position of the window.
     position = Tuple(-1, -1)
@@ -27,6 +28,20 @@ class TaskWindowLayout(LayoutContainer):
         """
         if self.active_task:
             return self.active_task
-        elif self.tasks:
-            return self.tasks[0]
+        elif self.items:
+            first = self.items[0]
+            return first if isinstance(first, basestring) else first.id
         return None
+
+    def get_tasks(self):
+        """ Returns the IDs of the tasks in the layout.
+        """
+        return [ (item if isinstance(item, basestring) else item.id)
+                 for item in self.items ]
+
+    def is_equivalent_to(self, layout):
+        """ Returns whether two layouts are equivalent, i.e. whether they
+            contain the same tasks.
+        """
+        return isinstance(layout, TaskWindowLayout) and \
+            set(self.get_tasks()) == set(layout.get_tasks())

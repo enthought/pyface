@@ -46,10 +46,12 @@ class LayoutItem(HasStrictTraits):
         args.extend(traits)
 
         for i, (name, value) in enumerate(args):
+            arg_indent = indent
             if name:
+                arg_indent += len(name) + 1
                 stream.write(name + '=')
             if isinstance(value, LayoutItem):
-                value.pstream(stream, indent)
+                value.pstream(stream, arg_indent)
             else:
                 stream.write(repr(value))
             if i < len(args) - 1:
@@ -131,27 +133,15 @@ class VSplitter(Splitter):
     orientation = Str('vertical')
 
 
-class DockArea(LayoutContainer):
-    """ A dock area in a Task layout.
+class DockLayout(LayoutItem):
+    """ The layout for a main window's dock area.
     """
 
-    # The location of the dock area. Must be specified.
-    area = Enum(None, ('left', 'right', 'top', 'bottom'))
-
-    # The layout items in the dock area, which are PaneItems, Tabbed layouts,
-    # and Splitters.
-    items = List(Either(PaneItem, Tabbed, Splitter), pretty_skip=True)
-
-
-class TaskLayout(LayoutContainer):
-    """ The layout of a Task.
-    """
-
-    # The ID of the task for which this is a layout.
-    id = Str
-
-    # The dock area layouts for the task.
-    items = List(DockArea, pretty_skip=True)
+    # The layouts for the task's dock panes.
+    left = Either(PaneItem, Tabbed, Splitter)
+    right = Either(PaneItem, Tabbed, Splitter)
+    top = Either(PaneItem, Tabbed, Splitter)
+    bottom = Either(PaneItem, Tabbed, Splitter)
 
     # Assignments of dock areas to the window's corners. By default, the top and
     # bottom dock areas extend into both of the top and both of the bottom
@@ -160,3 +150,11 @@ class TaskLayout(LayoutContainer):
     top_right_corner = Enum('top', 'right')
     bottom_left_corner = Enum('bottom', 'left')
     bottom_right_corner = Enum('bottom', 'right')
+    
+
+class TaskLayout(DockLayout):
+    """ The layout for a Task.
+    """
+
+    # The ID of the task for which this is a layout.
+    id = Str

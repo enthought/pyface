@@ -40,7 +40,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         """ Assuming the specified TaskState is active, hide its controls.
         """
         # Save the task's layout in case it is shown again later.
-        self._active_state.layout = self.get_layout()
+        self.window._active_state.layout = self.get_layout()
 
         # Now hide its controls.
         self.control.centralWidget().removeWidget(state.central_pane.control)
@@ -71,8 +71,10 @@ class TaskWindowBackend(MTaskWindowBackend):
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
         """
+        layout = TaskLayout(id=self.window._active_state.task.id)
         self._main_window_layout.state = self.window._active_state
-        return self._main_window_layout.get_layout()
+        self._main_window_layout.get_layout(layout)
+        return layout
 
     def set_layout(self, layout):
         """ Applies a TaskLayout (which should be suitable for the active task)
@@ -98,16 +100,12 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._main_window_layout.state = state
         self._main_window_layout.set_layout(state.layout)
 
-        # Add all panes not assigned an area by the TaskLayout.
+        # Add all panes not assigned an area by the TaskLayout. By default,
+        # these panes are not visible.
         for dock_pane in state.dock_panes:
             if dock_pane.control not in self._main_window_layout.consumed:
                 self.control.addDockWidget(AREA_MAP[dock_pane.dock_area],
                                            dock_pane.control)
-                # By default, these dock panes are not visible. But if the
-                # developer explicitly requests them to be visible, ensure
-                # that they are.
-                if dock_pane.visible:
-                    dock_pane.control.show()
 
     #### Trait initializers ###################################################
 
@@ -129,7 +127,7 @@ class TaskWindowLayout(MainWindowLayout):
     ###########################################################################
 
     def set_layout(self, layout):
-        """ Applies a LayoutContainer consisting of DockAreas.
+        """ Applies a DockLayout to the window.
         """
         self.consumed = []
         super(TaskWindowLayout, self).set_layout(layout)

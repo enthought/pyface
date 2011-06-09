@@ -190,8 +190,7 @@ class TaskWindow(ApplicationWindow):
             return
 
         task.window = self
-        state = TaskState(task=task,
-                          layout=task.default_layout.clone_traits())
+        state = TaskState(task=task, layout=task.default_layout)
         self._states.append(state)
 
         # Make sure the underlying control has been created, even if it is not
@@ -298,7 +297,8 @@ class TaskWindow(ApplicationWindow):
                 result.active_task = state.task.id
                 layout = self._window_backend.get_layout()
             else:
-                layout = state.layout
+                layout = state.layout.clone_traits()
+            layout.id = state.task.id
             result.items.append(layout)
         return result
 
@@ -309,18 +309,21 @@ class TaskWindow(ApplicationWindow):
         self.position = window_layout.position
         self.size = window_layout.size
 
-        # Attempt to activate the requested task.
-        task = self.get_task(window_layout.active_task)
-        if task:
-            self.activate_task(task)
-
         # Set layouts for the tasks, including the active task.
         for layout in window_layout.items:
+            if isinstance(layout, basestring):
+                continue
             state = self._get_state(layout.id)
-            if state == self._active_state:
-                self._window_backend.set_layout(layout)
-            elif state:
+            if state:
                 state.layout = layout
+            else:
+                logger.warn("Cannot apply layout for task %r: task does not "
+                            "belong to the window." % task)
+
+        # Attempt to activate the requested task.
+        task = self.get_task(window_layout.get_active_task())
+        if task:
+            self.activate_task(task)
 
     ###########################################################################
     # Protected 'TaskWindow' interface.

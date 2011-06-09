@@ -9,8 +9,8 @@ from traits.api import Any, HasTraits
 
 # Local imports.
 from dock_pane import AREA_MAP
-from pyface.tasks.task_layout import LayoutContainer, DockArea, PaneItem, \
-     Tabbed, Splitter, HSplitter, VSplitter
+from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
+     Splitter, HSplitter, VSplitter
 
 # Contants.
 ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,
@@ -31,12 +31,11 @@ class MainWindowLayout(HasTraits):
     ###########################################################################
 
     def get_layout(self, layout, include_sizes=True):
-        """ Get the layout by adding DockAreas to the specified LayoutContainer.
+        """ Get the layout by adding sublayouts to the specified DockLayout.
         """
         for name, q_dock_area in AREA_MAP.iteritems():
             sublayout = self.get_layout_for_area(q_dock_area, include_sizes)
-            if sublayout:
-                layout.items.append(DockArea(sublayout, area=name))
+            setattr(layout, name, sublayout)
 
     def get_layout_for_area(self, q_dock_area, include_sizes=True):
         """ Gets a LayoutItem for the specified dock area.
@@ -52,17 +51,19 @@ class MainWindowLayout(HasTraits):
                    child.x() >= 0 and child.y() >= 0:
                 # Get the list of dock widgets in this tab group in order.
                 geometry = child.geometry()
-                tabs = self.control.tabifiedDockWidgets(child)
+                tabs = [ tab for tab in self.control.tabifiedDockWidgets(child)
+                         if tab.isVisible() ]
                 if tabs:
                     tab_bar = self._get_tab_bar(child)
-                    tabs.insert(tab_bar.currentIndex(), child)
+                    tab_index = tab_bar.currentIndex()
+                    tabs.insert(tab_index, child)
                     geometry = tab_bar.geometry().united(geometry)
 
                 # Create the leaf-level item for the child.
                 if tabs:
                     panes = [ self._prepare_pane(dock_widget, include_sizes)
                               for dock_widget in tabs ]
-                    item = Tabbed(*panes, active_tab=child.windowTitle())
+                    item = Tabbed(*panes, active_tab=panes[tab_index].id)
                 else:
                     item = self._prepare_pane(child, include_sizes)
                 items.add(item)
@@ -104,7 +105,7 @@ class MainWindowLayout(HasTraits):
         return None
 
     def set_layout(self, layout):
-        """ Applies a LayoutContainer consisting of DockAreas.
+        """ Applies a DockLayout to the window.
         """
         # Remove all existing dock widgets.
         for child in self.control.children():
@@ -114,13 +115,10 @@ class MainWindowLayout(HasTraits):
 
         # Perform the layout. This will assign fixed sizes to the dock widgets
         # to enforce size constraints specified in the PaneItems.
-        for item in layout.items:
-            if isinstance(item, DockArea):
-                for subitem in item.items:
-                    self.set_layout_for_area(subitem, AREA_MAP[item.area])
-            else:
-                raise MainWindowLayoutError(
-                    "Only DockArea can be at the top level of a layout")
+        for name, q_dock_area in AREA_MAP.iteritems():
+            sublayout = getattr(layout, name)
+            if sublayout:
+                self.set_layout_for_area(sublayout, q_dock_area)
 
         # Remove the fixed sizes once Qt activates the layout.
         QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
@@ -133,7 +131,7 @@ class MainWindowLayout(HasTraits):
         # "effectively" top level, requiring us to reach down to the leaves of
         # the layout. (This is really only an issue for Splitter layouts, since
         # Tabbed layouts are, for our purposes, leaves.)
-        
+
         if isinstance(layout, PaneItem):
             if not toplevel_added:
                 widget = self._prepare_toplevel_for_item(layout)
@@ -144,7 +142,7 @@ class MainWindowLayout(HasTraits):
             active_widget = first_widget = None
             for item in layout.items:
                 widget = self._prepare_toplevel_for_item(item)
-                if widget.windowTitle() == layout.active_tab:
+                if item.id == layout.active_tab:
                     active_widget = widget
                 if first_widget:
                     self.control.tabifyDockWidget(first_widget, widget)
@@ -152,13 +150,15 @@ class MainWindowLayout(HasTraits):
                     if not toplevel_added:
                         self.control.addDockWidget(q_dock_area, widget)
                     first_widget = widget
-                    widget.show()
+                widget.show()
 
-            # By default, Qt will activate the last widget.
-            if active_widget:
-                active_widget.raise_()
-            else:
-                first_widget.raise_()
+            # Activate the appropriate tab.
+            if not active_widget:
+                # By default, Qt will activate the last widget.
+                active_widget = first_widget
+            # It seems that the 'raise_' call only has an effect after the
+            # QMainWindow has performed its internal layout.
+            QtCore.QTimer.singleShot(0, active_widget.raise_)
 
         elif isinstance(layout, Splitter):
             # Perform top-level splitting as per above comment.
