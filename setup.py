@@ -55,7 +55,7 @@ setup(
         Topic :: Software Development :: Libraries
         """.splitlines() if len(c.split()) > 0],
     description = DOCLINES[1],
-    download_url = ('http://www.enthought.com/repo/ETS/TraitsGUI-%s.tar.gz' %
+    download_url = ('http://www.enthought.com/repo/ets/pyface-%s.tar.gz' %
                     INFO['version']),
     install_requires = INFO['install_requires'],
     license = 'BSD',
