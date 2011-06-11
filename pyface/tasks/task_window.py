@@ -160,7 +160,7 @@ class TaskWindow(ApplicationWindow):
         """ Activates a task that has already been added to the window.
         """
         state = self._get_state(task)
-        if state:
+        if state and state != self._active_state:
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
                 self._window_backend.hide_task(self._active_state)
@@ -177,7 +177,8 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-        else:
+            
+        elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)
 
