@@ -1,20 +1,20 @@
 # Enthought library imports.
-from traits.api import Dict, HasStrictTraits, Instance, List, Str, \
-     Tuple
+from traits.api import Either, List, Str, Tuple
 
 # Local imports.
-from task_layout import TaskLayout
+from task_layout import LayoutContainer, TaskLayout
 
 
-class TaskWindowLayout(HasStrictTraits):
-    """ A picklable object that describes the layout and state of a TaskWindow.
+class TaskWindowLayout(LayoutContainer):
+    """ The layout of a TaskWindow.
     """
 
     # The ID of the active task. If unspecified, the first task will be active.
     active_task = Str
 
-    # The IDs of all the tasks attached to the window.
-    tasks = List(Str)
+    # The tasks contained in the window. If an ID is specified, the task will
+    # use its default layout. Otherwise, it will use the specified TaskLayout.
+    items = List(Either(Str, TaskLayout), pretty_skip=True)
 
     # The position of the window.
     position = Tuple(-1, -1)
@@ -22,23 +22,26 @@ class TaskWindowLayout(HasStrictTraits):
     # The size of the window.
     size = Tuple(800, 600)
 
-    # A map from task IDs to their respective layouts. Set by the framework.
-    layout_state = Dict(Str, Instance(TaskLayout))
-
     def get_active_task(self):
         """ Returns the ID of the active task in the layout, or None if there is
             no active task.
         """
         if self.active_task:
             return self.active_task
-        elif self.tasks:
-            return self.tasks[0]
+        elif self.items:
+            first = self.items[0]
+            return first if isinstance(first, basestring) else first.id
         return None
+
+    def get_tasks(self):
+        """ Returns the IDs of the tasks in the layout.
+        """
+        return [ (item if isinstance(item, basestring) else item.id)
+                 for item in self.items ]
 
     def is_equivalent_to(self, layout):
         """ Returns whether two layouts are equivalent, i.e. whether they
             contain the same tasks.
         """
         return isinstance(layout, TaskWindowLayout) and \
-            self.get_active_task() == layout.get_active_task() and \
-            self.tasks == layout.tasks
+            set(self.get_tasks()) == set(layout.get_tasks())

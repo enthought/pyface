@@ -1,22 +1,20 @@
-# Standard library imports.
-import logging
-
 # System library imports.
 from traits.qt import QtCore, QtGui
 
+# Enthought library imports.
+from traits.api import Instance, List
+
 # Local imports.
-from dock_pane import area_map
+from dock_pane import AREA_MAP
+from main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
-from pyface.tasks.task import TaskLayout
+from pyface.tasks.task_layout import PaneItem, TaskLayout
 
 # Constants.
-corner_map = { 'top_left'     : QtCore.Qt.TopLeftCorner,
+CORNER_MAP = { 'top_left'     : QtCore.Qt.TopLeftCorner,
                'top_right'    : QtCore.Qt.TopRightCorner,
                'bottom_left'  : QtCore.Qt.BottomLeftCorner,
                'bottom_right' : QtCore.Qt.BottomRightCorner }
-
-# Logging.
-logger = logging.getLogger(__name__)
 
 
 class TaskWindowBackend(MTaskWindowBackend):
@@ -24,6 +22,10 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     See the ITaskWindowBackend interface for API documentation.
     """
+
+    #### Private interface ####################################################
+
+    _main_window_layout = Instance(MainWindowLayout)
 
     ###########################################################################
     # 'ITaskWindowBackend' interface.
@@ -37,9 +39,8 @@ class TaskWindowBackend(MTaskWindowBackend):
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
         """
-        # Save the task's layout in case it is shown later.
-        layout = self.window._active_state.layout
-        layout.toolkit_state = self.control.saveState()
+        # Save the task's layout in case it is shown again later.
+        self.window._active_state.layout = self.get_layout()
 
         # Now hide its controls.
         self.control.centralWidget().removeWidget(state.central_pane.control)
@@ -70,92 +71,84 @@ class TaskWindowBackend(MTaskWindowBackend):
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
         """
-        layout = self.window._active_state.layout.clone_traits()
-        layout.toolkit_state = self.control.saveState()
+        layout = TaskLayout(id=self.window._active_state.task.id)
+        self._main_window_layout.state = self.window._active_state
+        self._main_window_layout.get_layout(layout)
         return layout
 
     def set_layout(self, layout):
         """ Applies a TaskLayout (which should be suitable for the active task)
             to the window.
         """
-        self.window._active_state.layout = layout.clone_traits()
+        self.window._active_state.layout = layout
         self._layout_state(self.window._active_state)
 
     ###########################################################################
     # Private interface.
     ###########################################################################
 
-    def _add_dock_pane(self, dock_pane, area=None):
-        """ Adds a DockPane's QDockWidget to the main window.
-        """
-        if area is None:
-            area = dock_pane.dock_area
-        self.control.addDockWidget(area_map[area], dock_pane.control)
-
-    def _layout_area(self, area, state):
-        """ Layout the dock panes in the specified area of the given TaskState.
-            Returns the list of dock panes processed for the area.
-        """
-        panes = []
-        pane_ids = getattr(state.layout, area + '_panes')
-        for group_ids in pane_ids:
-            # Transform the degenerate case into the general case.
-            if isinstance(group_ids, basestring):
-                group_ids = [ group_ids ]
-
-            # Add the first dock pane in the group normally and tabify the
-            # others.
-            first_pane = None
-            for pane_id in group_ids:
-                dock_pane = state.get_dock_pane(pane_id)
-                if dock_pane:
-                    self._add_dock_pane(dock_pane, area)
-                    if first_pane:
-                        self.control.tabifyDockWidget(first_pane.control,
-                                                      dock_pane.control)
-                    else:
-                        first_pane = dock_pane
-                    dock_pane.control.show()
-                    panes.append(dock_pane)
-                else:
-                    logger.warn("Pane layout: task %r does not contain pane "
-                                "with id %r." % (state.task, pane_id))
-                    
-            # Activate the first (left-most) pane in the tab group by default.
-            if first_pane:
-                first_pane.control.raise_()
-
-        return panes
-
     def _layout_state(self, state):
         """ Layout the dock panes in the specified TaskState using its
             TaskLayout.
         """
-        # If a Qt-specific state string is attached to the layout, prefer it.
-        # If state restore fails, fall back to the toolkit-independent layout.
-        layout = state.layout
-        restored = False
-        if layout.toolkit_state is not None:
-            restored = self.control.restoreState(layout.toolkit_state)
+        # Assign the window's corners to the appropriate dock areas.
+        for name, corner in CORNER_MAP.iteritems():
+            area = getattr(state.layout, name + '_corner')
+            self.control.setCorner(corner, AREA_MAP[area])
 
-        # Layout the panes according to toolkit-indepedent TaskLayout API.
-        if not restored:
-            # Assign the window's corners to the appropriate dock areas.
-            for name, corner in corner_map.iteritems():
-                area = getattr(state.layout, name + '_corner')
-                self.control.setCorner(corner, area_map[area])
+        # Add all panes in the TaskLayout.
+        self._main_window_layout.state = state
+        self._main_window_layout.set_layout(state.layout)
 
-            # Add all panes in the TaskLayout.
-            processed_panes = []
-            for area in ('left', 'right', 'top', 'bottom'):
-                processed_panes.extend(self._layout_area(area, state))
+        # Add all panes not assigned an area by the TaskLayout. By default,
+        # these panes are not visible.
+        for dock_pane in state.dock_panes:
+            if dock_pane.control not in self._main_window_layout.consumed:
+                self.control.addDockWidget(AREA_MAP[dock_pane.dock_area],
+                                           dock_pane.control)
 
-            # Add all panes not assigned an area by the TaskLayout.
-            for dock_pane in state.dock_panes:
-                if dock_pane not in processed_panes:
-                    self._add_dock_pane(dock_pane)
-                    # By default, these dock panes are not visible. But if the
-                    # developer explicitly requests them to be visible, ensure
-                    # that they are.
-                    if dock_pane.visible:
-                        dock_pane.control.show()
+    #### Trait initializers ###################################################
+
+    def __main_window_layout_default(self):
+        return TaskWindowLayout(control=self.control)
+
+
+class TaskWindowLayout(MainWindowLayout):
+    """ A MainWindowLayout for a TaskWindow.
+    """
+
+    #### 'TaskWindowLayout' interface #########################################
+
+    consumed = List
+    state = Instance('pyface.tasks.task_window.TaskState')
+
+    ###########################################################################
+    # 'MainWindowLayout' interface.
+    ###########################################################################
+
+    def set_layout(self, layout):
+        """ Applies a DockLayout to the window.
+        """
+        self.consumed = []
+        super(TaskWindowLayout, self).set_layout(layout)
+
+    ###########################################################################
+    # 'MainWindowLayout' abstract interface.
+    ###########################################################################
+
+    def _get_dock_widget(self, pane):
+        """ Returns the QDockWidget associated with a PaneItem.
+        """
+        for dock_pane in self.state.dock_panes:
+            if dock_pane.id == pane.id:
+                self.consumed.append(dock_pane.control)
+                return dock_pane.control
+        return None
+
+    def _get_pane(self, dock_widget):
+        """ Returns a PaneItem for a QDockWidget.
+        """
+        for dock_pane in self.state.dock_panes:
+            if dock_pane.control == dock_widget:
+                return PaneItem(id=dock_pane.id)
+        return None

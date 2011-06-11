@@ -159,8 +159,8 @@ class TaskWindow(ApplicationWindow):
     def activate_task(self, task):
         """ Activates a task that has already been added to the window.
         """
-        state = self._fetch_state(task)
-        if state:
+        state = self._get_state(task)
+        if state and state != self._active_state:
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
                 self._window_backend.hide_task(self._active_state)
@@ -177,7 +177,8 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-        else:
+            
+        elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)
 
@@ -190,8 +191,7 @@ class TaskWindow(ApplicationWindow):
             return
 
         task.window = self
-        state = TaskState(task=task,
-                          layout=task.default_layout.clone_traits())
+        state = TaskState(task=task, layout=task.default_layout)
         self._states.append(state)
 
         # Make sure the underlying control has been created, even if it is not
@@ -222,7 +222,7 @@ class TaskWindow(ApplicationWindow):
         """ Removes a task that has already been added to the window. All the
             task's panes are destroyed.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         if state:
             # If the task is active, make sure it is de-activated before
             # deleting its controls.
@@ -239,7 +239,7 @@ class TaskWindow(ApplicationWindow):
     def get_central_pane(self, task):
         """ Returns the central pane for the specified task.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         return state.central_pane if state else None
 
     def get_dock_pane(self, id, task=None):
@@ -250,23 +250,21 @@ class TaskWindow(ApplicationWindow):
         if task is None:
             state = self._active_state
         else:
-            state = self._fetch_state(task)
+            state = self._get_state(task)
         return state.get_dock_pane(id) if state else None
 
     def get_dock_panes(self, task):
         """ Returns the dock panes for the specified task.
         """
-        state = self._fetch_state(task)
+        state = self._get_state(task)
         return state.dock_panes[:] if state else []
 
     def get_task(self, id):
         """ Returns the task with the specified ID, or None if no such task
             exists.
         """
-        for state in self._states:
-            if state.task.id == id:
-                return state.task
-        return None
+        state = self._get_state(id)
+        return state.task if state else None
 
     #### Methods for saving and restoring the layout ##########################
 
@@ -296,13 +294,13 @@ class TaskWindow(ApplicationWindow):
         """
         result = TaskWindowLayout(position=self.position, size=self.size)
         for state in self._states:
-            id = state.task.id
-            result.tasks.append(id)
             if state == self._active_state:
-                result.active_task = id
-                result.layout_state[id] = self._window_backend.get_layout()
+                result.active_task = state.task.id
+                layout = self._window_backend.get_layout()
             else:
-                result.layout_state[id] = state.layout
+                layout = state.layout.clone_traits()
+            layout.id = state.task.id
+            result.items.append(layout)
         return result
 
     def set_window_layout(self, window_layout):
@@ -312,19 +310,21 @@ class TaskWindow(ApplicationWindow):
         self.position = window_layout.position
         self.size = window_layout.size
 
+        # Set layouts for the tasks, including the active task.
+        for layout in window_layout.items:
+            if isinstance(layout, basestring):
+                continue
+            state = self._get_state(layout.id)
+            if state:
+                state.layout = layout
+            else:
+                logger.warn("Cannot apply layout for task %r: task does not "
+                            "belong to the window." % task)
+
         # Attempt to activate the requested task.
-        task = self.get_task(window_layout.active_task)
+        task = self.get_task(window_layout.get_active_task())
         if task:
             self.activate_task(task)
-
-        # Set layouts for the tasks, including the active task.
-        for state in self._states:
-            layout = window_layout.layout_state.get(state.task.id)
-            if layout:
-                if state == self._active_state:
-                    self._window_backend.set_layout(layout)
-                else:
-                    state.layout = layout
 
     ###########################################################################
     # Protected 'TaskWindow' interface.
@@ -342,12 +342,12 @@ class TaskWindow(ApplicationWindow):
         state.central_pane.destroy()
         state.task.window = None
 
-    def _fetch_state(self, task):
+    def _get_state(self, id_or_task):
         """ Returns the TaskState that contains the specified Task, or None if
             no such state exists.
         """
         for state in self._states:
-            if state.task == task:
+            if state.task == id_or_task or state.task.id == id_or_task:
                 return state
         return None
 

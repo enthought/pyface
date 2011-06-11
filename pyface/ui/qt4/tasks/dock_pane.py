@@ -13,11 +13,11 @@ from traits.qt import QtCore, QtGui
 from task_pane import TaskPane
 
 # Constants.
-area_map = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
+AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
              'right'  : QtCore.Qt.RightDockWidgetArea,
              'top'    : QtCore.Qt.TopDockWidgetArea,
              'bottom' : QtCore.Qt.BottomDockWidgetArea }
-reverse_area_map = dict((v, k) for k, v in area_map.iteritems())
+INVERSE_AREA_MAP = dict((v, k) for k, v in AREA_MAP.iteritems())
 
 
 class DockPane(TaskPane, MDockPane):
@@ -109,7 +109,7 @@ class DockPane(TaskPane, MDockPane):
             if main_window and self.task == self.task.window.active_task:
                 # Qt will automatically remove the dock widget from its previous
                 # area, if it had one.
-                main_window.addDockWidget(area_map[self.dock_area], 
+                main_window.addDockWidget(AREA_MAP[self.dock_area], 
                                           self.control)
 
     @on_trait_change('closable', 'floatable', 'movable')
@@ -143,7 +143,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _receive_dock_area(self, area):
         with self._signal_context():
-            self.dock_area = reverse_area_map[area]
+            self.dock_area = INVERSE_AREA_MAP[area]
 
     def _receive_floating(self, floating):
         with self._signal_context():

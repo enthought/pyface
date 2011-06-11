@@ -54,8 +54,11 @@ class MTaskWindowBackend(HasTraits):
     #### 'ITaskWindowBackend' interface #######################################
 
     control = DelegatesTo('window')
-
     window = Instance('pyface.tasks.task_window.TaskWindow')
+
+    ###########################################################################
+    # 'ITaskWindowBackend' interface.
+    ###########################################################################
 
     def create_contents(self, parent):
         raise NotImplementedError
