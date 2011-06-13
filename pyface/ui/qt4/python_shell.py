@@ -19,7 +19,7 @@ import sys
 from time import time
 
 # System package imports.
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 from pygments.lexers import PythonLexer
 
 # Enthought library imports.

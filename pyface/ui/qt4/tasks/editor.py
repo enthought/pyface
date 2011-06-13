@@ -3,7 +3,7 @@ from pyface.tasks.i_editor import IEditor, MEditor
 from traits.api import Bool, Property, implements
 
 # System library imports.
-from traits.qt import QtGui
+from pyface.qt import QtGui
 
 
 class Editor(MEditor):

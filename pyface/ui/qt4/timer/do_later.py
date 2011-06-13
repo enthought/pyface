@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from traits.qt import QtCore
+from pyface.qt import QtCore
 
 
 class DoLaterTimer(QtCore.QTimer):

@@ -3,7 +3,7 @@ from pyface.tasks.i_task_pane import ITaskPane, MTaskPane
 from traits.api import Bool, Property, implements
 
 # System library imports.
-from traits.qt import QtGui
+from pyface.qt import QtGui
 
 
 class TaskPane(MTaskPane):

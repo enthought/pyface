@@ -11,7 +11,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from traits.qt import QtGui
+from pyface.qt import QtGui
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager

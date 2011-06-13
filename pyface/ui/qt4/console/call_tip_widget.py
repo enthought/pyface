@@ -4,7 +4,7 @@ from textwrap import dedent
 from unicodedata import category
 
 # System library imports
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 
 class CallTipWidget(QtGui.QLabel):

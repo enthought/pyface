@@ -14,7 +14,7 @@ import math
 import sys
 
 # System library imports
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 # Local imports
 from find_widget import FindWidget

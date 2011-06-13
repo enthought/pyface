@@ -12,7 +12,7 @@ import sys
 
 # Major library imports.
 import sip
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 
 class SplitTabWidget(QtGui.QSplitter):

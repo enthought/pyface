@@ -7,7 +7,7 @@ from traits.api import Bool, Property, Tuple, implements, \
     on_trait_change
 
 # System library imports.
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane

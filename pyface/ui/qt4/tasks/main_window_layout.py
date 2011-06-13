@@ -2,7 +2,7 @@
 from itertools import combinations
 
 # System library imports.
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
 from traits.api import Any, HasTraits

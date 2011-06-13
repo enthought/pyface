@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from traits.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtGui, qt_api
 
 if qt_api == 'pyqt':
     # Check the version numbers are late enough.

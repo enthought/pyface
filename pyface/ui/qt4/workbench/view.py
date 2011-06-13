@@ -29,7 +29,7 @@ class View(MView):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from traits.qt import QtGui
+        from pyface.qt import QtGui
 
         control = QtGui.QWidget(parent)
 

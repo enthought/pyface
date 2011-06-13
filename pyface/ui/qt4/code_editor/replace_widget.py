@@ -11,7 +11,7 @@
 
 import weakref
 
-from traits.qt import QtGui, QtCore
+from pyface.qt import QtGui, QtCore
 
 from find_widget import FindWidget
 

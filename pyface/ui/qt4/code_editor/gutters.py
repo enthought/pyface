@@ -11,7 +11,7 @@
 
 import math
 
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 
 class GutterWidget(QtGui.QWidget):

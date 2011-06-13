@@ -15,7 +15,7 @@
 import os
 
 # Major package imports.
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
 from traits.api import Enum, implements, Int, Unicode, List

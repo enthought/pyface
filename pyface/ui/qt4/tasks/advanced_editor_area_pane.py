@@ -7,7 +7,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
 from traits.api import implements, on_trait_change
 
 # System library imports.
-from traits.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane
