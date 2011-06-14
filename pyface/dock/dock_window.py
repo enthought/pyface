@@ -56,7 +56,7 @@ from traitsui.dockable_view_element \
 from traitsui.dock_window_theme \
     import dock_window_theme, DockWindowTheme
 
-from traits.util.wx.drag_and_drop \
+from pyface.wx.drag_and_drop \
     import PythonDropTarget, clipboard
 
 from pyface.message_dialog \

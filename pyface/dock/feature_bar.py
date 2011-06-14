@@ -30,7 +30,7 @@ import wx
 from traits.api \
     import HasPrivateTraits, Instance, Bool, Event, Color
 
-from traits.util.wx.drag_and_drop \
+from pyface.wx.drag_and_drop \
     import PythonDropTarget, PythonDropSource
 
 from dock_sizer \

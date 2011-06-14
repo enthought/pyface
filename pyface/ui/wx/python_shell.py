@@ -32,7 +32,7 @@ from traits.api import Event, implements
 
 # Private Enthought library imports.
 from traits.util.clean_strings import python_name
-from traits.util.wx.drag_and_drop import PythonDropTarget
+from pyface.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
 from pyface.i_python_shell import IPythonShell, MPythonShell

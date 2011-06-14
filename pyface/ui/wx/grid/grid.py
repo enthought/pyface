@@ -32,9 +32,9 @@ from pyface.api import Sorter, Widget
 from pyface.timer.api import do_later
 from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
      List, Trait
-from traits.util.wx.drag_and_drop import PythonDropSource, \
+from pyface.wx.drag_and_drop import PythonDropSource, \
      PythonDropTarget, PythonObject
-from traits.util.wx.drag_and_drop import clipboard as enClipboard
+from pyface.wx.drag_and_drop import clipboard as enClipboard
 from traitsui.wx.dnd_editor import FileDropSource
 
 # local imports

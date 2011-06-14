@@ -44,7 +44,7 @@ from pyface.api import SystemMetrics
 from pyface.image_resource \
     import ImageResource
 
-from traits.util.wx.drag_and_drop \
+from pyface.wx.drag_and_drop \
     import PythonDropSource
 
 from pyface.timer.api \

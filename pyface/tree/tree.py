@@ -26,7 +26,7 @@ from pyface.api import Filter, GUI, KeyPressedEvent, Sorter, Widget
 from pyface.image_list import ImageList
 from traits.api import Any, Bool, Callable, Enum, Event, Instance
 from traits.api import List, Property, Callable, Str, Trait, Tuple
-from traits.util.wx.drag_and_drop import PythonDropSource, PythonDropTarget
+from pyface.wx.drag_and_drop import PythonDropSource, PythonDropTarget
 
 # Local imports.
 from tree_model import TreeModel
@@ -1213,7 +1213,7 @@ class Tree(Widget):
                 # during a drag operation.  Bindings should probably *always*
                 # be dragged and our drag and drop mechanism should allow
                 # extendable ways to extract the actual data.
-                from traits.util.wx.drag_and_drop import clipboard
+                from pyface.wx.drag_and_drop import clipboard
                 clipboard.node = [node]
 
                 # Make sure that the tree selection is updated before we start
@@ -1237,7 +1237,7 @@ class Tree(Widget):
     def on_dropped(self):
         """ Callback invoked when a drag/drop operation has completed. """
 
-        from traits.util.wx.drag_and_drop import clipboard
+        from pyface.wx.drag_and_drop import clipboard
         clipboard.node = None
 
         return

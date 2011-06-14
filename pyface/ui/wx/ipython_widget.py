@@ -35,7 +35,7 @@ from pyface.i_python_shell import IPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from traits.api import Event, implements, Instance, Str
 from traits.util.clean_strings import python_name
-from traits.util.wx.drag_and_drop import PythonDropTarget
+from pyface.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
 from widget import Widget
