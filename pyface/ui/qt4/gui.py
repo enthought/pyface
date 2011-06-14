@@ -19,7 +19,7 @@ from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
 from traits.api import Bool, HasTraits, implements, Unicode
-from traits.util.guisupport import start_event_loop_qt4
+from pyface.util.guisupport import start_event_loop_qt4
 
 # Local imports.
 from pyface.i_gui import IGUI, MGUI
