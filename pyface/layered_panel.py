@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 """ A Layered panel. """
 
+from __future__ import absolute_import
 
 # Standard library imports.
 import sys
@@ -25,7 +26,7 @@ from wx.lib.scrolledpanel import ScrolledPanel
 from traits.api import Any, Str, Int
 
 # Local imports.
-from widget import Widget
+from .widget import Widget
 
 
 class LayeredPanel(Widget):

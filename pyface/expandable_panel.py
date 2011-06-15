@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 """ A Layered panel. """
 
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -20,10 +21,10 @@ import wx
 from traits.api import Instance
 
 # Local imports.
-from expandable_header import ExpandableHeader
-from heading_text import HeadingText
-from image_resource import ImageResource
-from widget import Widget
+from .expandable_header import ExpandableHeader
+from .heading_text import HeadingText
+from .image_resource import ImageResource
+from .widget import Widget
 
 
 class ExpandablePanel(Widget):
