@@ -1,5 +1,5 @@
 """ A simple list box widget with a model-view architecture. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -8,8 +8,8 @@ import wx
 from traits.api import Event, Instance, Int
 
 # Local imports.
-from list_box_model import ListBoxModel
-from widget import Widget
+from .list_box_model import ListBoxModel
+from .widget import Widget
 
 
 class ListBox(Widget):

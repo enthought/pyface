@@ -12,7 +12,6 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A Layered panel. """
-
 from __future__ import absolute_import
 
 # Major package imports.

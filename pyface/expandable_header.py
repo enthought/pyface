@@ -14,6 +14,7 @@
 """ A header for an entry in a collection of expandables. The header
 provides a visual indicator of the current state, a text label, and a
 'remove' button. """
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -22,9 +23,10 @@ import wx
 from traits.api import Instance, Event, Str, Int, Bool
 
 # local imports
-from image_resource import ImageResource
-from widget import Widget
-from util.font_helper import new_font_like
+from .image_resource import ImageResource
+from .widget import Widget
+from .util.font_helper import new_font_like
+
 
 class ExpandableHeader(Widget):
     """ A header for an entry in a collection of expandables. The header

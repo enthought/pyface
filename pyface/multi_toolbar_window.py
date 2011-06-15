@@ -12,7 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A top-level application window that supports multiple toolbars. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -22,7 +22,7 @@ from pyface.action.api import ToolBarManager
 from traits.api import Any, Trait, TraitDict, TraitEnum, TraitList
 
 # Local imports
-from application_window import ApplicationWindow
+from .application_window import ApplicationWindow
 
 
 class MultiToolbarWindow(ApplicationWindow):

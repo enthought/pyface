@@ -14,27 +14,18 @@
 #  Description: Image and text-based pyface button/toolbar/radio button control.
 #
 #------------------------------------------------------------------------------
-
 """ An image and text-based control that can be used as a normal, radio or
     toolbar button.
 """
-
-#-------------------------------------------------------------------------------
-#  Imports:
-#-------------------------------------------------------------------------------
+from __future__ import absolute_import
 
 import wx
-
 from numpy import array, fromstring, reshape, ravel, dtype
 
-from traits.api \
-    import Str, Range, Enum, Instance, Event, false
+from traits.api import Str, Range, Enum, Instance, Event, false
 
-from widget \
-    import Widget
-
-from image_resource \
-    import ImageResource
+from .widget import Widget
+from .image_resource import ImageResource
 
 #-------------------------------------------------------------------------------
 #  Constants:

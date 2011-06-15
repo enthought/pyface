@@ -12,7 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ An MDI top-level application window. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -21,14 +21,13 @@ import wx
 from traits.api import Bool, Instance, Int, Tuple
 
 # Local imports.
-from application_window import ApplicationWindow
-from image_resource import ImageResource
-from window import Window
+from .application_window import ApplicationWindow
+from .image_resource import ImageResource
+from .window import Window
 
 try:
     import wx.aui
     AUI = True
-
 except:
     AUI = False
 

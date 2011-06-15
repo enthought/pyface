@@ -12,7 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A clickable/draggable widget containing an image. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -21,7 +21,7 @@ import wx
 from traits.api import Any, Bool, Event
 
 # Locak imports.
-from widget import Widget
+from .widget import Widget
 
 
 class ImageWidget(Widget):

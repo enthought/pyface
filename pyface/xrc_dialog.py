@@ -9,6 +9,7 @@
 
 """A dialog that is loaded from an XRC resource file.
 """
+from __future__ import absolute_import
 
 # Standard library imports.
 import os.path
@@ -21,12 +22,8 @@ import wx.xrc
 from traits.api import Instance, Str
 import traits.util.resource
 
-
-# Application specific imports.
-
 # Local imports.
-
-from dialog import Dialog
+from .dialog import Dialog
 
 
 ##############################################################################

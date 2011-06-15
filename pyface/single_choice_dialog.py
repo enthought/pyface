@@ -12,7 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A dialog that allows the user to chose a single item from a list. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
@@ -21,7 +21,7 @@ import wx
 from traits.api import List, Str, Any
 
 # Local imports.
-from dialog import Dialog
+from .dialog import Dialog
 
 
 class SingleChoiceDialog(Dialog):

@@ -12,13 +12,13 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A cached image list. """
-
+from __future__ import absolute_import
 
 # Major package imports.
 import wx
 
 # Local imports
-from image_resource import ImageResource
+from .image_resource import ImageResource
 
 
 # fixme: rename to 'CachedImageList'?!?
