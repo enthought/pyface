@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from traits.api import Any, Event, Int, Tuple, Unicode
+from traits.api import Event, Tuple, Unicode
 
 # Local imports.
 from constant import NO
@@ -206,7 +206,3 @@ class MWindow(object):
 
         # Wire up event any event listeners required by the window.
         self._add_event_listeners()
-
-        return
-
-#### EOF ######################################################################

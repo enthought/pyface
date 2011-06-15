@@ -23,7 +23,6 @@ from traits.api import Bool, Instance, Int, Tuple
 # Local imports.
 from .application_window import ApplicationWindow
 from .image_resource import ImageResource
-from .window import Window
 
 try:
     import wx.aui
@@ -185,7 +184,3 @@ class MDIApplicationWindow(ApplicationWindow):
 
         else:
             self._scale_background_image(dc, size.width, size.height)
-
-        return
-
-#### EOF ######################################################################

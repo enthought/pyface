@@ -13,10 +13,6 @@
 #------------------------------------------------------------------------------
 """ The interface for a dialog that allows the user to open/save files etc. """
 
-
-# Standard library imports.
-import sys
-
 # Enthought library imports.
 from traits.api import Any, Bool, Int, Str
 
@@ -28,8 +24,7 @@ class IProgressDialog(IDialog):
     """ A simple progress dialog window which allows itself to be updated
     """
 
-    #### 'IProgressDialog' interface ##############################################
-
+    #### 'IProgressDialog' interface ##################################
     title = Str
     message = Str
     min = Int
@@ -82,5 +77,3 @@ class MProgressDialog(object):
 
         if value >= self.max:
             self.close()
-
-#### EOF ######################################################################

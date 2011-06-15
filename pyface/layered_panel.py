@@ -14,9 +14,6 @@
 """ A Layered panel. """
 from __future__ import absolute_import
 
-# Standard library imports.
-import sys
-
 # Major package imports.
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel

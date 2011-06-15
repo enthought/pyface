@@ -21,7 +21,6 @@ from traits.api import Instance
 
 # Local imports.
 from .expandable_header import ExpandableHeader
-from .heading_text import HeadingText
 from .image_resource import ImageResource
 from .widget import Widget
 
@@ -159,6 +158,3 @@ class ExpandablePanel(Widget):
         w, h = self.control.GetSize()
         self.control.SetSize((w+1, h+1))
         self.control.SetSize((w, h))
-        return
-
-#### EOF ######################################################################

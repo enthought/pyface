@@ -19,7 +19,7 @@ import wx
 
 # Enthought library imports
 from pyface.action.api import ToolBarManager
-from traits.api import Any, Trait, TraitDict, TraitEnum, TraitList
+from traits.api import Trait, TraitDict, TraitEnum, TraitList
 
 # Local imports
 from .application_window import ApplicationWindow

@@ -20,7 +20,7 @@ from __future__ import absolute_import
 import wx
 
 # Enthought library imports.
-from traits.api import Instance, Event, Str, Int, Bool
+from traits.api import Instance, Event, Str, Bool
 
 # local imports
 from .image_resource import ImageResource
@@ -238,12 +238,7 @@ class ExpandableHeader(Widget):
         self.panel_expanded = self
         event.Skip()
 
-        return
-
     def _on_remove(self, event):
         """ Called when remove button is pressed. """
 
         self._container.remove_panel(self.title)
-        return
-
-#### EOF ######################################################################
