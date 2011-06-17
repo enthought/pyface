@@ -14,7 +14,7 @@
 import wx
 
 try:
-    from enthought.units.unit_parser import unit_parser
+    from scimath.units.unit_parser import unit_parser
 except ImportError:
     unit_parser = None
 

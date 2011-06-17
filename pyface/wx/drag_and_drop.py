@@ -174,8 +174,8 @@ class PythonDropTarget(wx.PyDropTarget):
             # packages can't be imported, then just pass through.
             if self.GetData():
                 try:
-                    from enthought.io import File
-                    from enthought.naming.api import Binding
+                    from apptools.io import File
+                    from apptools.naming.api import Binding
 
                     names = self.file_data.GetFilenames()
                     files = []
