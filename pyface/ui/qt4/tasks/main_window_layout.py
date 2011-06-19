@@ -118,12 +118,14 @@ class MainWindowLayout(HasTraits):
         for name, q_dock_area in AREA_MAP.iteritems():
             sublayout = getattr(layout, name)
             if sublayout:
-                self.set_layout_for_area(sublayout, q_dock_area)
+                self.set_layout_for_area(sublayout, q_dock_area,
+                                         _toplevel_call=False)
 
         # Remove the fixed sizes once Qt activates the layout.
         QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
-    def set_layout_for_area(self, layout, q_dock_area, toplevel_added=False):
+    def set_layout_for_area(self, layout, q_dock_area,
+                            _toplevel_added=False, _toplevel_call=True):
         """ Applies a LayoutItem to the specified dock area.
         """
         # If we try to do the layout bottom-up, Qt will become confused. In
@@ -133,7 +135,7 @@ class MainWindowLayout(HasTraits):
         # Tabbed layouts are, for our purposes, leaves.)
 
         if isinstance(layout, PaneItem):
-            if not toplevel_added:
+            if not _toplevel_added:
                 widget = self._prepare_toplevel_for_item(layout)
                 self.control.addDockWidget(q_dock_area, widget)
                 widget.show()
@@ -147,7 +149,7 @@ class MainWindowLayout(HasTraits):
                 if first_widget:
                     self.control.tabifyDockWidget(first_widget, widget)
                 else:
-                    if not toplevel_added:
+                    if not _toplevel_added:
                         self.control.addDockWidget(q_dock_area, widget)
                     first_widget = widget
                 widget.show()
@@ -162,23 +164,28 @@ class MainWindowLayout(HasTraits):
 
         elif isinstance(layout, Splitter):
             # Perform top-level splitting as per above comment.
-            orient = orientation_map[layout.orientation]
+            orient = ORIENTATION_MAP[layout.orientation]
             prev_widget = None
             for item in layout.items:
                 widget = self._prepare_toplevel_for_item(item)
                 if prev_widget:
                     self.control.splitDockWidget(prev_widget, widget, orient)
-                elif not toplevel_added:
+                elif not _toplevel_added:
                     self.control.addDockWidget(q_dock_area, widget)
                 prev_widget = widget
                 widget.show()
 
             # Now we can recurse.
             for i, item in enumerate(layout.items):
-                self.set_layout_for_area(item, q_dock_area, toplevel_added=True)
+                self.set_layout_for_area(item, q_dock_area,
+                    _toplevel_added=True, _toplevel_call=False)
                 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
+
+        # Remove the fixed sizes once Qt activates the layout.
+        if _toplevel_call:
+            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
     ###########################################################################
     # 'MainWindowLayout' abstract interface.
@@ -207,7 +214,7 @@ class MainWindowLayout(HasTraits):
         united = one.united(two)
         if splitter:
             sep = self.control.style().pixelMetric(
-                QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self)
+                QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self.control)
             united.adjust(0, 0, -sep, -sep)
             
         if one.x() == two.x() and one.width() == two.width() and \

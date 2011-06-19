@@ -16,19 +16,19 @@ class LayoutItem(HasStrictTraits):
     def pargs(self):
         return []
 
-    def pformat(self):
+    def pformat(self, indent=0, multiline=False):
         """ Pretty-format the layout item. Returns a string.
         """
         stream = StringIO()
-        self.pstream(stream)
+        self.pstream(stream, indent, multiline)
         return stream.getvalue()
 
-    def pprint(self):
+    def pprint(self, indent=0, multiline=False):
         """ Pretty-prints the layout item.
         """
-        self.pstream(sys.stdout)
+        self.pstream(sys.stdout, indent, multiline)
 
-    def pstream(self, stream, indent=0):
+    def pstream(self, stream, indent=0, multiline=False):
         """ Pretty-formats the layout item to a stream.
         """
         call = self.__class__.__name__ + '('
@@ -51,12 +51,15 @@ class LayoutItem(HasStrictTraits):
                 arg_indent += len(name) + 1
                 stream.write(name + '=')
             if isinstance(value, LayoutItem):
-                value.pstream(stream, arg_indent)
+                value.pstream(stream, arg_indent, multiline)
             else:
                 stream.write(repr(value))
             if i < len(args) - 1:
-                stream.write(',\n')
-                stream.write(indent * ' ')
+                stream.write(',')
+                if multiline:
+                    stream.write('\n' + indent * ' ')
+                else:
+                    stream.write(' ')
             
         stream.write(')')
     
@@ -79,8 +82,9 @@ class PaneItem(LayoutItem):
     """ A pane in a Task layout.
     """
 
-    # The ID of the TaskPane to which the item refers.
-    id = Str(pretty_skip=True)
+    # The ID of the item. If the item refers to a TaskPane, this is the ID of
+    # that TaskPane.
+    id = Either(Str, Int, pretty_skip=True)
 
     # The width of the pane in pixels. If not specified, the pane will be sized
     # according to its size hint.
@@ -90,7 +94,7 @@ class PaneItem(LayoutItem):
     # according to its size hint.
     height = Int(-1)
 
-    def __init__(self, id, **traits):
+    def __init__(self, id='', **traits):
         super(PaneItem, self).__init__(**traits)
         self.id = id
 
@@ -108,7 +112,7 @@ class Tabbed(LayoutContainer):
 
     # The ID of the TaskPane which is active in layout. If not specified, the
     # first pane is active.
-    active_tab = Str
+    active_tab = Either(Str, Int)
     
 
 class Splitter(LayoutContainer):

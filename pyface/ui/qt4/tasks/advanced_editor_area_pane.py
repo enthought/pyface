@@ -1,15 +1,16 @@
 # Standard library imports.
 import sys
 
-# Enthought library imports.
-from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
-    MEditorAreaPane
-from traits.api import implements, on_trait_change
-
 # System library imports.
 from pyface.qt import QtCore, QtGui
 
+# Enthought library imports.
+from traits.api import DelegatesTo, Instance, implements, on_trait_change
+
 # Local imports.
+from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane
+from pyface.tasks.i_editor_area_pane import MEditorAreaPane
+from main_window_layout import MainWindowLayout, PaneItem
 from task_pane import TaskPane
 
 ###############################################################################
@@ -19,10 +20,14 @@ from task_pane import TaskPane
 class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
-    See the IEditorAreaPane interface for API documentation.
+    See the IAdvancedEditorAreaPane interface for API documentation.
     """
 
-    implements(IEditorAreaPane)
+    implements(IAdvancedEditorAreaPane)
+
+    #### Private interface ####################################################
+
+    _main_window_layout = Instance(MainWindowLayout)
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -80,7 +85,23 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         editor.editor_area = None
 
     ###########################################################################
-    # Protected interface.
+    # 'IAdvancedEditorAreaPane' interface.
+    ###########################################################################
+
+    def get_layout(self):
+        """ Returns a LayoutItem that reflects the current state of the editors.
+        """
+        return self._main_window_layout.get_layout_for_area(
+            QtCore.Qt.LeftDockWidgetArea)
+
+    def set_layout(self, layout):
+        """ Applies a LayoutItem to the editors in the pane.
+        """
+        self._main_window_layout.set_layout_for_area(
+            layout, QtCore.Qt.LeftDockWidgetArea)
+
+    ###########################################################################
+    # Private interface.
     ###########################################################################
 
     def _activate_tab(self, index):
@@ -116,15 +137,57 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             label = '*' + label
         return label
 
+    #### Trait initializers ###################################################
+
+    def __main_window_layout_default(self):
+        return EditorAreaMainWindowLayout(editor_area=self)
+
     #### Trait change handlers ################################################
 
     @on_trait_change('editors:[dirty, name]')
     def _update_label(self, editor, name, new):
         editor.control.parent().update_title()
+        
 
 ###############################################################################
 # Auxillary classes.
 ###############################################################################
+
+class EditorAreaMainWindowLayout(MainWindowLayout):
+    """ A MainWindowLayout for implementing AdvancedEditorAreaPane.
+
+    Used for getting and setting layouts for the pane.
+    """
+
+    #### 'MainWindowLayout' interface #########################################
+
+    control = DelegatesTo('editor_area')
+    
+    #### 'TaskWindowLayout' interface #########################################
+
+    editor_area = Instance(AdvancedEditorAreaPane)
+
+    ###########################################################################
+    # 'MainWindowLayout' abstract interface.
+    ###########################################################################
+
+    def _get_dock_widget(self, pane):
+        """ Returns the QDockWidget associated with a PaneItem.
+        """
+        try:
+            editor = self.editor_area.editors[pane.id]
+            return editor.control.parent()
+        except IndexError:
+            return None
+
+    def _get_pane(self, dock_widget):
+        """ Returns a PaneItem for a QDockWidget.
+        """
+        for i, editor in enumerate(self.editor_area.editors):
+            if editor.control == dock_widget.widget():
+                return PaneItem(id=i)
+        return None
+        
 
 class EditorAreaWidget(QtGui.QMainWindow):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
@@ -411,6 +474,7 @@ class EditorWidget(QtGui.QDockWidget):
         super(EditorWidget, self).__init__(parent)
         self.editor = editor
         self.editor.create(self)
+        self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
         self.setFeatures(QtGui.QDockWidget.DockWidgetClosable |
                          QtGui.QDockWidget.DockWidgetMovable)
         self.setWidget(editor.control)
