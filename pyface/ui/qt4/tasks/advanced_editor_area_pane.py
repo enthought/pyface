@@ -480,7 +480,6 @@ class EditorWidget(QtGui.QDockWidget):
         self.setWidget(editor.control)
         self.update_title()
 
-        self._updating = False
         self.dockLocationChanged.connect(self.update_title_bar)
         self.visibilityChanged.connect(self.update_title_bar)
 
@@ -493,21 +492,18 @@ class EditorWidget(QtGui.QDockWidget):
             title_bar.update_title()
 
     def update_title_bar(self):
-        # Prevent infinite recursion.
-        if not self._updating and self not in self.parent()._tear_widgets:
-            self._updating = True
-            try:
-                tabbed = self.parent().tabifiedDockWidgets(self)
-                self.set_title_bar(not tabbed)
-            finally:
-                self._updating = False
+        if self not in self.parent()._tear_widgets:
+            tabbed = self.parent().tabifiedDockWidgets(self)
+            self.set_title_bar(not tabbed)
 
     def set_title_bar(self, title_bar):
+        current = self.titleBarWidget()
         editor_area = self.editor.editor_area
         if title_bar and editor_area and (not editor_area.hide_tab_bar or
                                           len(editor_area.editors) > 1):
-            self.setTitleBarWidget(EditorTitleBarWidget(self))
-        else:
+            if not isinstance(current, EditorTitleBarWidget):
+                self.setTitleBarWidget(EditorTitleBarWidget(self))
+        elif current is None or isinstance(current, EditorTitleBarWidget):
             self.setTitleBarWidget(QtGui.QWidget())
                 
 
