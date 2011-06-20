@@ -368,17 +368,17 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """ Reimplemented to dispatch to sub-handlers.
         """
         if isinstance(obj, QtGui.QDockWidget):
-            return self._dock_widget_filter(obj, event)
+            return self._filter_dock_widget(obj, event)
 
         elif isinstance(obj, QtGui.QRubberBand):
-            return self._rubber_band_filter(obj, event)
+            return self._filter_rubber_band(obj, event)
         
         elif isinstance(obj, QtGui.QTabBar):
-            return self._tab_filter(obj, event)
+            return self._filter_tab_bar(obj, event)
         
         return False
 
-    def _dock_widget_filter(self, widget, event):
+    def _filter_dock_widget(self, widget, event):
         """ Support hover widget state tracking.
         """
         if self._drag_widget and event.type() == QtCore.QEvent.Resize:
@@ -397,7 +397,16 @@ class EditorAreaWidget(QtGui.QMainWindow):
 
         return False
 
-    def _tab_filter(self, tab_bar, event):
+    def _filter_rubber_band(self, rubber_band, event):
+        """ Support hover widget state tracking.
+        """
+        if self._drag_widget and event.type() in (QtCore.QEvent.Resize,
+                                                  QtCore.QEvent.Move):
+            self.set_hover_widget(None)
+
+        return False
+
+    def _filter_tab_bar(self, tab_bar, event):
         """ Support 'tearing off' a tab.
         """
         if event.type() == QtCore.QEvent.MouseMove:
@@ -422,15 +431,6 @@ class EditorAreaWidget(QtGui.QMainWindow):
                         event.button(), event.buttons(), event.modifiers())
                 QtCore.QCoreApplication.sendEvent(self._drag_widget, event)
                 return True
-
-        return False
-
-    def _rubber_band_filter(self, rubber_band, event):
-        """ Support hover widget state tracking.
-        """
-        if self._drag_widget and event.type() in (QtCore.QEvent.Resize,
-                                                  QtCore.QEvent.Move):
-            self.set_hover_widget(None)
 
         return False
 
@@ -497,7 +497,7 @@ class EditorWidget(QtGui.QDockWidget):
         if not self._updating and self not in self.parent()._tear_widgets:
             self._updating = True
             try:
-                tabbed = [ w for w in self.parent().tabifiedDockWidgets(self) ]
+                tabbed = self.parent().tabifiedDockWidgets(self)
                 self.set_title_bar(not tabbed)
             finally:
                 self._updating = False
