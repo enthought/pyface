@@ -55,6 +55,15 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             shortcut.activated.connect(mapper.map)
             mapper.setMapping(shortcut, i - 1)
 
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the pane.
+        """
+        for editor in self.editors:
+            editor_widget = editor.control.parent()
+            self.control.destroy_editor_widget(editor_widget)
+            editor.editor_area = None
+        super(AdvancedEditorAreaPane, self).destroy()
+
     ###########################################################################
     # 'IEditorAreaPane' interface.
     ###########################################################################
@@ -240,6 +249,14 @@ class EditorAreaWidget(QtGui.QMainWindow):
         # Qt will not give the dock widget focus by default.
         self.editor_area.activate_editor(editor_widget.editor)
 
+    def destroy_editor_widget(self, editor_widget):
+        """ Destroys a dock widget in the editor area.
+        """
+        editor_widget.hide()
+        editor_widget.removeEventFilter(self)
+        editor_widget.editor.destroy()
+        self.removeDockWidget(editor_widget)
+
     def get_dock_widgets(self):
         """ Gets all visible dock widgets.
         """
@@ -295,11 +312,8 @@ class EditorAreaWidget(QtGui.QMainWindow):
         visible = self.get_dock_widgets_ordered(visible_only=True)
 
         # Destroy and remove the editor.
-        editor_widget.hide()
-        editor_widget.removeEventFilter(self)
-        editor_widget.editor.destroy()
-        self.removeDockWidget(editor_widget)
-
+        self.destroy_editor_widget(editor_widget)
+        
         # Ensure that the appropriate editor is activated.
         editor_area = self.editor_area
         choices = tabified if len(tabified) >= 2 else visible

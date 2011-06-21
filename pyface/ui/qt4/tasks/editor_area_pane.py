@@ -56,6 +56,13 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             shortcut.activated.connect(mapper.map)
             mapper.setMapping(shortcut, i - 1)
 
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the pane.
+        """
+        for editor in self.editors:
+            self.remove_editor(editor)
+        super(EditorAreaPane, self).destroy()
+
     ###########################################################################
     # 'IEditorAreaPane' interface.
     ###########################################################################
