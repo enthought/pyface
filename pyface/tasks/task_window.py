@@ -20,31 +20,6 @@ from task_window_layout import TaskWindowLayout
 logger = logging.getLogger(__name__)
 
 
-class TaskState(HasStrictTraits):
-    """ An object used internally by TaskWindow to maintain the state associated
-        with an attached Task.
-    """
-
-    task = Instance(Task)
-    layout = Instance(TaskLayout)
-    initialized = Bool(False)
-
-    central_pane = Instance(ITaskPane)
-    dock_panes = List(IDockPane)
-    menu_bar_manager = Instance(MenuBarManager)
-    status_bar_manager = Instance(StatusBarManager)
-    tool_bar_managers = List(ToolBarManager)
-
-    def get_dock_pane(self, id):
-        """ Returns the dock pane with the specified id, or None if no such dock
-            pane exists.
-        """
-        for pane in self.dock_panes:
-            if pane.id == id:
-                return pane
-        return None
-
-
 class TaskWindow(ApplicationWindow):
     """ The the top-level window to which tasks can be assigned.
 
@@ -84,8 +59,8 @@ class TaskWindow(ApplicationWindow):
 
     #### Protected traits #####################################################
 
-    _active_state = Instance(TaskState)
-    _states = List(Instance(TaskState))
+    _active_state = Instance('pyface.tasks.task_window.TaskState')
+    _states = List(Instance('pyface.tasks.task_window.TaskState'))
     _title = Unicode
     _window_backend = Instance(TaskWindowBackend)
 
@@ -336,6 +311,14 @@ class TaskWindow(ApplicationWindow):
         # Notify the task that it is about to be destroyed.
         state.task.prepare_destroy()
 
+        # Destroy action managers associated with the task, unless the task is
+        # active, in which case this will be handled by our superclass.
+        if state != self._active_state:
+            if state.menu_bar_manager:
+                state.menu_bar_manager.destroy()
+            for tool_bar_manager in state.tool_bar_managers:
+                tool_bar_manager.destroy()
+
         # Destroy all controls associated with the task.
         for dock_pane in state.dock_panes:
             dock_pane.destroy()
@@ -398,3 +381,28 @@ class TaskWindow(ApplicationWindow):
 
     def _get_tasks(self):
         return [ state.task for state in self._states ]
+    
+
+class TaskState(HasStrictTraits):
+    """ An object used internally by TaskWindow to maintain the state associated
+        with an attached Task.
+    """
+
+    task = Instance(Task)
+    layout = Instance(TaskLayout)
+    initialized = Bool(False)
+
+    central_pane = Instance(ITaskPane)
+    dock_panes = List(IDockPane)
+    menu_bar_manager = Instance(MenuBarManager)
+    status_bar_manager = Instance(StatusBarManager)
+    tool_bar_managers = List(ToolBarManager)
+
+    def get_dock_pane(self, id):
+        """ Returns the dock pane with the specified id, or None if no such dock
+            pane exists.
+        """
+        for pane in self.dock_panes:
+            if pane.id == id:
+                return pane
+        return None

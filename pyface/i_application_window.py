@@ -93,8 +93,25 @@ class MApplicationWindow(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IApplicationWindow interface.
 
-    Implements: _create_trim_widgets()
+    Implements: destroy(), _create_trim_widgets()
     """
+
+    ###########################################################################
+    # 'IWidget' interface.
+    ###########################################################################
+
+    def destroy(self):
+        """ Destroy the control if it exists. """
+        
+        if self.menu_bar_manager is not None:
+            self.menu_bar_manager.destroy()
+            
+        if self.tool_bar_manager is not None:
+            self.tool_bar_manager.destroy()
+        for tool_bar_manager in self.tool_bar_managers:
+            tool_bar_manager.destroy()
+
+        super(MApplicationWindow, self).destroy()
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
