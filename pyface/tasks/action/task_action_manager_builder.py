@@ -14,7 +14,7 @@ from schema_addition import SchemaAddition
 
 class TaskActionManagerBuilder(HasTraits):
     """ Builds menu bars and tool bars from menu bar and tool bar schema, along
-        with
+    with any additions provided by the task.
     """
 
     # The controller to assign to the menubar and toolbars.
@@ -27,38 +27,47 @@ class TaskActionManagerBuilder(HasTraits):
     # 'TaskActionManagerBuilder' interface.
     ###########################################################################
 
-    def create_menu_bar_manager(self):
-        """ Create a menu bar manager from the builder's menu bar schema and
-            additions.
-        """
-        if self.task.menu_bar:
-            return self._create_manager(self.task.menu_bar)
-        return None
-
-    def create_tool_bar_managers(self):
-        """ Create tool bar managers from the builder's tool bar schemas and
-            additions.
-        """
-        return [ self._create_manager(tbs) for tbs in self.task.tool_bars ]
-
-    ###########################################################################
-    # Protected interface.
-    ###########################################################################
-
-    def _create_manager(self, schema):
-        """ Creates a manager for the specified schema using the builder's
-            additions.
+    def create_action_manager(self, schema):
+        """ Create a manager for the given schema using the task's additions.
         """
         additions_map = defaultdict(list)
         for addition in self.task.extra_actions:
             additions_map[addition.path].append(addition)
 
-        manager = self._create_manager_recurse(schema, additions_map)
+        manager = self._create_action_manager_recurse(schema, additions_map)
         manager.controller = self.controller
         return manager
 
-    def _create_manager_recurse(self, schema, additions, path=''):
-        """ Recursively builds the manager for with the specified additions map.
+    def create_menu_bar_manager(self):
+        """ Create a menu bar manager from the task's menu bar schema and
+            additions.
+        """
+        if self.task.menu_bar:
+            return self.create_action_manager(self.task.menu_bar)
+        return None
+
+    def create_tool_bar_managers(self):
+        """ Create tool bar managers from the tasks's tool bar schemas and
+            additions.
+        """
+        return [ seelf.create_action_manager(tb) for tb in self.task.tool_bars ]
+
+    def prepare_item(self, item, path):
+        """ Called immediately after a concrete Pyface item has been created
+        (or, in the case of items that are not produced from schemas,
+        immediately before they are processed).
+
+        This hook can be used to perform last-minute transformations or
+        configuration. Returns a concrete Pyface item.
+        """
+        return item
+
+    ###########################################################################
+    # Private interface.
+    ###########################################################################
+
+    def _create_action_manager_recurse(self, schema, additions, path=''):
+        """ Recursively create a manager for the given schema and additions map.
         """
         # Compute the new action path.
         if path: path += '/'
@@ -77,7 +86,9 @@ class TaskActionManagerBuilder(HasTraits):
                 item = item.factory()
 
             if isinstance(item, Schema):
-                item = self._create_manager_recurse(item, additions, path)
+                item = self._create_action_manager_recurse(item,additions,path)
+            else:
+                item = self.prepare_item(item, path+'/'+item.id)
 
             if isinstance(item, ActionManager):
                 # Give even non-root action managers a reference to the
@@ -88,7 +99,7 @@ class TaskActionManagerBuilder(HasTraits):
             children.append(item)
             
         # Finally, create the pyface.action instance for this schema.
-        return schema.create(children)
+        return self.prepare_item(schema.create(children), path)
 
     #### Trait initializers ###################################################
 

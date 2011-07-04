@@ -5,7 +5,7 @@ import logging
 from pyface.action.api import Group, MenuManager, MenuBarManager, \
     StatusBarManager, ToolBarManager
 from pyface.api import ApplicationWindow
-from traits.api import Bool, HasTraits, HasStrictTraits, Instance, \
+from traits.api import Bool, Callable, HasTraits, HasStrictTraits, Instance, \
     List, Property, Unicode, Vetoable
 
 # Local imports.
@@ -56,6 +56,12 @@ class TaskWindow(ApplicationWindow):
     # The list of all dock panes in the active task, which may or may not be
     # visible.
     dock_panes = Property(List(IDockPane), depends_on='_activate_state')
+
+    # The factory for the window's TaskActionManagerBuilder, which is
+    # instantiated to translate menu and tool bar schemas into Pyface action
+    # managers. This attribute can overridden to introduce custom logic into
+    # the translation process, although this is not usually necessary.
+    action_manager_builder_factory = Callable(TaskActionManagerBuilder)
 
     #### Protected traits #####################################################
 
@@ -188,7 +194,7 @@ class TaskWindow(ApplicationWindow):
             dock_pane.create(self.control)
 
         # Build the menu and tool bars.
-        builder = TaskActionManagerBuilder(task=task)
+        builder = self.action_manager_builder_factory(task=task)
         state.menu_bar_manager = builder.create_menu_bar_manager()
         state.status_bar_manager = task.status_bar
         state.tool_bar_managers = builder.create_tool_bar_managers()

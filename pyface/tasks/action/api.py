@@ -5,4 +5,6 @@ from schema import GroupSchema, MenuSchema, MenuBarSchema, ToolBarSchema, \
 from schema_addition import SchemaAddition
 from task_action import CentralPaneAction, DockPaneAction, EditorAction, \
      TaskAction, TaskWindowAction
+from task_action_controller import TaskActionController
+from task_action_manager_builder import TaskActionManagerBuilder
 from task_toggle_group import TaskToggleGroup
