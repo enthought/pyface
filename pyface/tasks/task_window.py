@@ -2,11 +2,10 @@
 import logging
 
 # Enthought library imports.
-from pyface.action.api import Group, MenuManager, MenuBarManager, \
-    StatusBarManager, ToolBarManager
+from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.api import ApplicationWindow
 from traits.api import Bool, Callable, HasTraits, HasStrictTraits, Instance, \
-    List, Property, Unicode, Vetoable
+    List, Property, Unicode, Vetoable, on_trait_change
 
 # Local imports.
 from action.task_action_manager_builder import TaskActionManagerBuilder
@@ -32,30 +31,21 @@ class TaskWindow(ApplicationWindow):
     # Unless a title is specifically assigned, delegate to the active task.
     title = Property(Unicode, depends_on='active_task, _title')
 
-    #### IApplicationWindow interface #########################################
-
-    menu_bar_manager = Property(Instance(MenuBarManager),
-                                depends_on='_active_state')
-    status_bar_manager = Property(Instance(StatusBarManager),
-                                  depends_on='_active_state')
-    tool_bar_managers = Property(List(ToolBarManager),
-                                 depends_on='_active_state')
-
     #### TaskWindow interface ################################################
 
     # The active task for this window.
-    active_task = Property(Instance(Task), depends_on='_active_state')
+    active_task = Instance(Task)
 
     # The list of all tasks currently attached to this window. All panes of the
     # inactive tasks are hidden.
-    tasks = Property(List, depends_on='_states')
+    tasks = List(Task)
 
     # The central pane of the active task, which is always visible.
-    central_pane = Property(Instance(ITaskPane), depends_on='_active_state')
+    central_pane = Instance(ITaskPane)
 
     # The list of all dock panes in the active task, which may or may not be
     # visible.
-    dock_panes = Property(List(IDockPane), depends_on='_activate_state')
+    dock_panes = List(IDockPane)
 
     # The factory for the window's TaskActionManagerBuilder, which is
     # instantiated to translate menu and tool bar schemas into Pyface action
@@ -355,39 +345,26 @@ class TaskWindow(ApplicationWindow):
     def _set_title(self, title):
         self._title = title
 
-    def _get_menu_bar_manager(self):
-        if self._active_state is not None:
-            return self._active_state.menu_bar_manager
-        return None
+    #### Trait change handlers ################################################
 
-    def _get_status_bar_manager(self):
-        if self._active_state is not None:
-            return self._active_state.status_bar_manager
-        return None
+    def __active_state_changed(self, state):
+        if state is None:
+            self.active_task = self.central_pane = None
+            self.dock_panes = []
+            self.menu_bar_manager = self.status_bar_manager = None
+            self.tool_bar_managers = []
+        else:
+            self.active_task = state.task
+            self.central_pane = state.central_pane
+            self.dock_panes = state.dock_panes
+            self.menu_bar_manager = state.menu_bar_manager
+            self.status_bar_manager = state.status_bar_manager
+            self.tool_bar_managers = state.tool_bar_managers
 
-    def _get_tool_bar_managers(self):
-        if self._active_state is not None:
-            return self._active_state.tool_bar_managers[:]
-        return []
+    @on_trait_change('_states[]')
+    def _states_updated(self):
+        self.tasks = [ state.task for state in self._states ]
 
-    def _get_active_task(self):
-        if self._active_state is not None:
-            return self._active_state.task
-        return None
-
-    def _get_central_pane(self):
-        if self._active_state is not None:
-            return self._active_state.central_pane
-        return None
-
-    def _get_dock_panes(self):
-        if self._active_state is not None:
-            return self._active_state.dock_panes[:]
-        return []
-
-    def _get_tasks(self):
-        return [ state.task for state in self._states ]
-    
 
 class TaskState(HasStrictTraits):
     """ An object used internally by TaskWindow to maintain the state associated
