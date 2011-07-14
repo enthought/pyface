@@ -50,7 +50,7 @@ class TaskActionManagerBuilder(HasTraits):
         """ Create tool bar managers from the tasks's tool bar schemas and
             additions.
         """
-        return [ seelf.create_action_manager(tb) for tb in self.task.tool_bars ]
+        return [ self.create_action_manager(tb) for tb in self.task.tool_bars ]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
