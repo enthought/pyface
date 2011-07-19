@@ -73,4 +73,5 @@ class DockPaneToggleGroup(Group):
         for dock_pane in task.window.get_dock_panes(task):
             action = DockPaneToggleAction(dock_pane=dock_pane)
             items.append(ActionItem(action=action))
+        items.sort(key=lambda item: item.action.name)
         return items
