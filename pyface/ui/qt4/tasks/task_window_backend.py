@@ -5,7 +5,7 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Instance, List
 
 # Local imports.
-from dock_pane import AREA_MAP
+from dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
@@ -71,9 +71,16 @@ class TaskWindowBackend(MTaskWindowBackend):
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
         """
+        # Extract the layout from the main window.
         layout = TaskLayout(id=self.window._active_state.task.id)
         self._main_window_layout.state = self.window._active_state
         self._main_window_layout.get_layout(layout)
+
+        # Extract the window's corner configuration.
+        for name, corner in CORNER_MAP.iteritems():
+            area = INVERSE_AREA_MAP[self.control.corner(corner)]
+            setattr(layout, name+'_corner', area)
+            
         return layout
 
     def set_layout(self, layout):
