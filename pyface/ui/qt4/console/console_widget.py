@@ -210,7 +210,7 @@ class ConsoleWidget(QtGui.QWidget):
                 new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
                                             self._ctrl_down_remap[key],
                                             QtCore.Qt.NoModifier)
-                QtGui.qApp.sendEvent(obj, new_event)
+                QtGui.QApplication.sendEvent(obj, new_event)
                 return True
 
             elif obj == self._control:
@@ -231,7 +231,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Manually adjust the scrollbars *after* a resize event is dispatched.
         elif etype == QtCore.QEvent.Resize and not self._filter_resize:
             self._filter_resize = True
-            QtGui.qApp.sendEvent(obj, event)
+            QtGui.QApplication.sendEvent(obj, event)
             self._adjust_scrollbars()
             self._filter_resize = False
             return True
@@ -273,7 +273,7 @@ class ConsoleWidget(QtGui.QWidget):
 
             # Qt is expecting to get something here--drag and drop occurs in its
             # own event loop. Send a DragLeave event to end it.
-            QtGui.qApp.sendEvent(obj, QtGui.QDragLeaveEvent())
+            QtGui.QApplication.sendEvent(obj, QtGui.QDragLeaveEvent())
             return True
 
         return super(ConsoleWidget, self).eventFilter(obj, event)
@@ -768,7 +768,7 @@ class ConsoleWidget(QtGui.QWidget):
         if fallback is not None and font_info.family() != family:
             font = QtGui.QFont(fallback)
 
-        font.setPointSize(QtGui.qApp.font().pointSize())
+        font.setPointSize(QtGui.QApplication.font().pointSize())
         font.setStyleHint(QtGui.QFont.TypeWriter)
         self._set_font(font)
 
@@ -1345,14 +1345,14 @@ class ConsoleWidget(QtGui.QWidget):
             new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
                                         QtCore.Qt.Key_PageDown, 
                                         QtCore.Qt.NoModifier)
-            QtGui.qApp.sendEvent(self._page_control, new_event)
+            QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
 
         elif key == QtCore.Qt.Key_Backspace:
             new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress,
                                         QtCore.Qt.Key_PageUp, 
                                         QtCore.Qt.NoModifier)
-            QtGui.qApp.sendEvent(self._page_control, new_event)
+            QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
 
         return False
