@@ -1,5 +1,6 @@
 # Standard library imports.
 from itertools import combinations
+import logging
 
 # System library imports.
 from pyface.qt import QtCore, QtGui
@@ -15,6 +16,9 @@ from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
 # Contants.
 ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,
                     'vertical': QtCore.Qt.Vertical }
+
+# Logging.
+logger = logging.getLogger(__name__)
 
 
 class MainWindowLayout(HasTraits):
@@ -137,13 +141,16 @@ class MainWindowLayout(HasTraits):
         if isinstance(layout, PaneItem):
             if not _toplevel_added:
                 widget = self._prepare_toplevel_for_item(layout)
-                self.control.addDockWidget(q_dock_area, widget)
-                widget.show()
+                if widget:
+                    self.control.addDockWidget(q_dock_area, widget)
+                    widget.show()
         
         elif isinstance(layout, Tabbed):
             active_widget = first_widget = None
             for item in layout.items:
                 widget = self._prepare_toplevel_for_item(item)
+                if not widget:
+                    continue
                 if item.id == layout.active_tab:
                     active_widget = widget
                 if first_widget:
@@ -154,13 +161,14 @@ class MainWindowLayout(HasTraits):
                     first_widget = widget
                 widget.show()
 
-            # Activate the appropriate tab.
+            # Activate the appropriate tab, if possible.
             if not active_widget:
                 # By default, Qt will activate the last widget.
                 active_widget = first_widget
-            # It seems that the 'raise_' call only has an effect after the
-            # QMainWindow has performed its internal layout.
-            QtCore.QTimer.singleShot(0, active_widget.raise_)
+            if active_widget:
+                # It seems that the 'raise_' call only has an effect after the
+                # QMainWindow has performed its internal layout.
+                QtCore.QTimer.singleShot(0, active_widget.raise_)
 
         elif isinstance(layout, Splitter):
             # Perform top-level splitting as per above comment.
@@ -168,6 +176,8 @@ class MainWindowLayout(HasTraits):
             prev_widget = None
             for item in layout.items:
                 widget = self._prepare_toplevel_for_item(item)
+                if not widget:
+                    continue
                 if prev_widget:
                     self.control.splitDockWidget(prev_widget, widget, orient)
                 elif not _toplevel_added:
@@ -253,10 +263,14 @@ class MainWindowLayout(HasTraits):
         """
         if isinstance(layout, PaneItem):
             dock_widget = self._get_dock_widget(layout)
-            if layout.width > 0:
-                dock_widget.widget().setFixedWidth(layout.width)
-            if layout.height > 0:
-                dock_widget.widget().setFixedHeight(layout.height)
+            if dock_widget is None:
+                logger.warning('Cannot retrieve dock widget for pane %r'
+                               % layout.id)
+            else:
+                if layout.width > 0:
+                    dock_widget.widget().setFixedWidth(layout.width)
+                if layout.height > 0:
+                    dock_widget.widget().setFixedHeight(layout.height)
             return dock_widget
         
         elif isinstance(layout, LayoutContainer):
