@@ -79,7 +79,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Extract the window's corner configuration.
         for name, corner in CORNER_MAP.iteritems():
             area = INVERSE_AREA_MAP[self.control.corner(corner)]
-            setattr(layout, name+'_corner', area)
+            setattr(layout, name + '_corner', area)
             
         return layout
 

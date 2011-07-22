@@ -281,7 +281,7 @@ class TaskWindow(ApplicationWindow):
         self.position = window_layout.position
         self.size = window_layout.size
 
-        # Set layouts for the tasks, including the active task.
+        # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
             if isinstance(layout, basestring):
                 continue
@@ -293,9 +293,14 @@ class TaskWindow(ApplicationWindow):
                             "belong to the window." % task)
 
         # Attempt to activate the requested task.
-        task = self.get_task(window_layout.get_active_task())
-        if task:
-            self.activate_task(task)
+        state = self._get_state(window_layout.get_active_task())
+        if state:
+            # If the requested active task is already active, calling
+            # ``activate`` is a no-op, so we must force a re-layout.
+            if state == self._active_state:
+                self._window_backend.set_layout(state.layout)
+            else:
+                self.activate_task(state.task)
 
     ###########################################################################
     # Protected 'TaskWindow' interface.
