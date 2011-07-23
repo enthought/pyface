@@ -106,8 +106,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def set_layout(self, layout):
         """ Applies a LayoutItem to the editors in the pane.
         """
-        self._main_window_layout.set_layout_for_area(
-            layout, QtCore.Qt.LeftDockWidgetArea)
+        if layout is not None:
+            self._main_window_layout.set_layout_for_area(
+                layout, QtCore.Qt.LeftDockWidgetArea)
 
     ###########################################################################
     # Private interface.

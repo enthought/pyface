@@ -19,6 +19,8 @@ class IAdvancedEditorAreaPane(IEditorAreaPane):
         Because editors do not have IDs, they are identified by their index in
         the list of editors. For example, PaneItem(0) refers to the first
         editor.
+
+        If there are no open editors, returns None.
         """
 
     def set_layout(self, layout):
@@ -35,4 +37,7 @@ class IAdvancedEditorAreaPane(IEditorAreaPane):
 
         Editors that are not included in the layout will be tabbified with other
         editors in an undefined manner.
+
+        If the layout is None, this method is a no-op. Hence it is always safe
+        to call this method with the results of ``get_layout()``.
         """
