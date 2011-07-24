@@ -12,7 +12,8 @@ def before_after_sort(items):
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
 
-    Any inconsistencies that are found (including cycles) are logged.
+    If a cycle is found in the dependecies, a warning is logged and the order of
+    the items is undefined.
     """
     # Handle a degenerate case for which the logic below will fail (because
     # prev_item will not be set).
@@ -30,14 +31,10 @@ def before_after_sort(items):
             parent, child = item, item_map.get(item.before)
             if child:
                 new_pairs.append((parent, child))
-            else:
-                logger.warning('No item with ID %r', item.before)
         if hasattr(item, 'after') and item.after:
             parent, child = item_map.get(item.after), item
             if parent:
                 new_pairs.append((parent, child))
-            else:
-                logger.warning('No item with ID %r', item.after)
 
         # If we have any pairs, use them. Otherwise, use the previous unmatched
         # item as a parent, if possible.
@@ -51,7 +48,7 @@ def before_after_sort(items):
     # Now perform the actual sort.
     result, has_cycle = topological_sort(pairs)
     if has_cycle:
-        logger.warning('Cycle in sequence %r', items)
+        logger.warning('Cycle in before/after sort for items %r', items)
     return result
 
 
