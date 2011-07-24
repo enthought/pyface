@@ -1,6 +1,6 @@
 # Enthought library imports.
 from traits.api import HasTraits, Instance
-from traitsui.api import UI, ViewElement
+from traitsui.api import UI
 
 # Local imports.
 from dock_pane import DockPane
@@ -13,13 +13,21 @@ class TraitsDockPane(DockPane):
     #### TraitsDockPane interface #############################################
 
     # The model object to view. If not specified, the pane is used instead.
-    obj = Instance(HasTraits)
-
-    # An (optional) view for use if a model object is specfied.
-    obj_view = Instance(ViewElement)
+    model = Instance(HasTraits)
 
     # The UI object associated with the Traits view, if it has been constructed.
     ui = Instance(UI)
+
+    ###########################################################################
+    # 'HasTraits' interface.
+    ###########################################################################
+
+    def trait_context(self):
+        """ Use the model object for the Traits UI context, if appropriate.
+        """
+        if self.model:
+            return { 'object': self.model, 'pane': self }
+        return super(TraitsDockPane, self).trait_context()
 
     ###########################################################################
     # 'ITaskPane' interface.
@@ -42,7 +50,5 @@ class TraitsDockPane(DockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        obj = self.obj if self.obj else self
-        view = self.obj_view if self.obj and self.obj_view else None
-        self.ui = obj.edit_traits(view=view, kind='subpanel', parent=parent)
+        self.ui = self.edit_traits(kind='subpanel', parent=parent)
         return self.ui.control
