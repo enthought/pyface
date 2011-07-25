@@ -12,9 +12,7 @@
 
 A resource manager locates and loads application resources such as images and
 sounds etc.
-
 """
-
 
 # Standard library imports.
 import glob, inspect, operator, os, sys, types
@@ -22,7 +20,7 @@ from os.path import join
 from zipfile import is_zipfile, ZipFile
 
 # Enthought library imports.
-from traits.api import HasTraits, Instance
+from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
 
 # Local imports.
@@ -35,11 +33,14 @@ class ResourceManager(HasTraits):
 
     A resource manager locates and loads application resources such as images
     and sounds etc.
-
     """
 
     # Allowed extensions for image resources.
     IMAGE_EXTENSIONS = ['.png', '.jpg', '.bmp', '.gif', '.ico']
+
+    # A list of additional search paths. These paths are fallbacks, and hence
+    # have lower priority than the paths provided by resource objects.
+    extra_paths = List
 
     # The resource factory is responsible for actually creating resources.
     # This is used so that (for example) different GUI toolkits can create
@@ -57,7 +58,7 @@ class ResourceManager(HasTraits):
             path = [path]
 
         resource_path = []
-        for item in path:
+        for item in list(path) + self.extra_paths:
             if isinstance(item, basestring):
                 resource_path.append(item)
             elif isinstance(item, types.ModuleType):
