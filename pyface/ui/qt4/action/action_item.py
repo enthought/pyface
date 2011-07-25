@@ -244,8 +244,9 @@ class _Tool(HasTraits):
         if action.image is None:
             self.control = tool_bar.addAction(action.name)
         else:
-            self.control = tool_bar.addAction(action.image.create_icon(),
-                    action.name)
+            size = tool_bar.iconSize()
+            image = action.image.create_icon((size.width(), size.height()))
+            self.control = tool_bar.addAction(image, action.name)
 
         QtCore.QObject.connect(self.control, QtCore.SIGNAL('triggered()'),
                                self._qt4_on_triggered)
