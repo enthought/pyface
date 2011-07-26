@@ -161,7 +161,7 @@ class CallTipWidget(QtGui.QLabel):
         # the current line.
         padding = 3 # Distance in pixels between cursor bounds and tip box.
         cursor_rect = text_edit.cursorRect(cursor)
-        screen_rect = QtGui.qApp.desktop().screenGeometry(text_edit)
+        screen_rect = QtGui.QApplication.desktop().screenGeometry(text_edit)
         point = text_edit.mapToGlobal(cursor_rect.bottomRight())
         point.setY(point.y() + padding)
         tip_height = self.size().height()
@@ -213,7 +213,7 @@ class CallTipWidget(QtGui.QLabel):
             # If Enter events always came after Leave events, we wouldn't need
             # this check. But on Mac OS, it sometimes happens the other way
             # around when the tooltip is created.
-            QtGui.qApp.topLevelAt(QtGui.QCursor.pos()) != self):
+            QtGui.QApplication.topLevelAt(QtGui.QCursor.pos()) != self):
             self._hide_timer.start(300, self)
 
     #------ Signal handlers ----------------------------------------------------
