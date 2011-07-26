@@ -9,10 +9,10 @@ confused with a more full-featured shell, such as those provided by IPython.
 import logging
 
 # Enthought library imports.
-from traits.api import Str, List, Dict, Instance, Property
+from traits.api import Str, List, Dict, Instance
 from pyface.api import PythonShell
 from pyface.tasks.task import Task
-from pyface.task_pane import TaskPane
+from pyface.tasks.task_pane import TaskPane
 
 # set up logging
 logger = logging.getLogger()
