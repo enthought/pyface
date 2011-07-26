@@ -21,7 +21,7 @@ logger = logging.getLogger()
 class PythonShellPane(TaskPane):
     """ A Tasks Pane containing a Pyface PythonShell
     """
-    id = 'pyface.tasks.python_shell_pane'
+    id = 'pyface.tasks.contrib.python_shell.pane'
     name = 'Python Shell'
     
     editor = Instance(PythonShell)
@@ -61,8 +61,8 @@ class PythonShellTask(Task):
     
     # Task Interface
     
-    id = 'pyface.tasks.python_shell_task'
-    name = "Python Shell"
+    id = 'pyface.tasks.contrib.python_shell'
+    name = 'Python Shell'
     
     # The list of bindings for the shell
     bindings = List(Dict)
