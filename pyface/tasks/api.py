@@ -16,3 +16,5 @@ from task_window_layout import TaskWindowLayout
 from traits_dock_pane import TraitsDockPane
 from traits_editor import TraitsEditor
 from traits_task_pane import TraitsTaskPane
+
+from python_shell_task import PythonShellPane, PythonShellTask
