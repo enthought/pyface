@@ -2,10 +2,10 @@
 import unittest
 
 # Enthought library imports.
-from pyface.action.api import Action, ActionItem, ActionManager, \
-     Group, MenuManager, MenuBarManager
-from pyface.tasks.action.api import GroupSchema, MenuSchema, \
-     MenuBarSchema, SchemaAddition
+from pyface.action.api import Action, ActionItem, ActionManager, Group, \
+     MenuManager, MenuBarManager
+from pyface.tasks.action.api import GroupSchema, MenuSchema, MenuBarSchema, \
+     SchemaAddition
 from pyface.tasks.action.task_action_manager_builder import \
      TaskActionManagerBuilder
 from pyface.tasks.api import Task

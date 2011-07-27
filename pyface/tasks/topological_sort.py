@@ -1,5 +1,5 @@
 # Standard library imports.
-from collections import defaultdict
+from collections import OrderedDict, defaultdict
 import logging
 
 # Logging.
@@ -61,16 +61,21 @@ def topological_sort(pairs):
 
     A simple algorithm due to Kahn, in which vertices are chosen from the graph
     in the same order as the eventual topological sort, is used.
+
+    Note that this implementation is stable in the following sense: if we have
+    the input list [..., (parent, child1), ..., (parent, child2), ...], then
+    child1 will be before child2 in the output list (if there there is no
+    additional dependency forcing another ordering).
     """
     # Represent the graph in dictionary form.
-    graph = defaultdict(list)
+    graph = OrderedDict()
     num_parents = defaultdict(int)
     for parent, child in pairs:
-        graph[parent].append(child)
+        graph.setdefault(parent, []).append(child)
         num_parents[child] += 1
 
     # Begin with the parent-less items.
-    result = [ item for item in graph.keys() if num_parents[item] == 0 ]
+    result = [ item for item in graph if num_parents[item] == 0 ]
     
     # Descend through graph, removing parents as we go.
     for parent in result:
