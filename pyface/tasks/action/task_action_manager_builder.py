@@ -1,5 +1,6 @@
 # Standard library imports.
 from collections import defaultdict
+import logging
 
 # Enthought library imports.
 from pyface.action.api import ActionController, ActionManager
@@ -8,8 +9,11 @@ from traits.api import HasTraits, Instance
 # Local imports.
 from pyface.tasks.task import Task
 from pyface.tasks.topological_sort import before_after_sort
-from schema import Schema
+from schema import Schema, ToolBarSchema
 from schema_addition import SchemaAddition
+
+# Logging.
+logger = logging.getLogger(__name__)
 
 
 class TaskActionManagerBuilder(HasTraits):
@@ -32,7 +36,8 @@ class TaskActionManagerBuilder(HasTraits):
         """
         additions_map = defaultdict(list)
         for addition in self.task.extra_actions:
-            additions_map[addition.path].append(addition)
+            if addition.path:
+                additions_map[addition.path].append(addition)
 
         manager = self._create_action_manager_recurse(schema, additions_map)
         manager.controller = self.controller
@@ -50,7 +55,17 @@ class TaskActionManagerBuilder(HasTraits):
         """ Create tool bar managers from the tasks's tool bar schemas and
             additions.
         """
-        return [ self.create_action_manager(tb) for tb in self.task.tool_bars ]
+        schemas = self.task.tool_bars[:]
+        for addition in self.task.extra_actions:
+            if not addition.path:
+                schema = addition.factory()
+                if isinstance(schema, ToolBarSchema):
+                    schemas.append(schema)
+                else:
+                    logger.error('Invalid top-level schema addition: %r. Only '
+                                 'ToolBar schemas can be path-less.', schema)
+        return [ self.create_action_manager(schema)
+                 for schema in before_after_sort(schemas) ]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
