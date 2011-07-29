@@ -189,8 +189,9 @@ class _EventFilter(QtCore.QObject):
 
         elif e.type() == QtCore.QEvent.Move:
             # Get the real position and set the trait without performing
-            # notification.
-            pos = e.pos()
+            # notification. Don't use event.pos(), as this excludes the window
+            # frame geometry.
+            pos = window.control.pos()
             window._position = (pos.x(), pos.y())
 
         elif e.type() == QtCore.QEvent.KeyPress:
