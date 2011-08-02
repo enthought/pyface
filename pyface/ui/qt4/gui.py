@@ -149,7 +149,7 @@ class _FutureCall(QtCore.QObject):
     _pyface_event = QtCore.QEvent.Type(QtCore.QEvent.registerEventType())
 
     def __init__(self, ms, callable, *args, **kw):
-        QtCore.QObject.__init__(self)
+        super(_FutureCall, self).__init__()
 
         # Save the arguments.
         self._ms = ms
@@ -181,26 +181,28 @@ class _FutureCall(QtCore.QObject):
                 QtCore.QTimer.singleShot(self._ms, self._dispatch)
             else:
                 self._callable(*self._args, **self._kw)
-
                 # We cannot remove from self._calls here. QObjects don't like
                 # being garbage collected during event handlers.
                 QtCore.QTimer.singleShot(0, self._finished)
-
             return True
-        else:
-            return QtCore.QObject.event(self, event)
+
+        return super(_FutureCall, self).event(event)
 
     def _dispatch(self):
         """ Invoke the callable.
         """
-        self._callable(*self._args, **self._kw)
-        self._finished()
+        try:
+            self._callable(*self._args, **self._kw)
+        finally:
+            self._finished()
 
     def _finished(self):
         """ Remove the call from the list, so it can be garbage collected.
         """
         self._calls_mutex.lock()
-        del self._calls[self._calls.index(self)]
-        self._calls_mutex.unlock()
+        try:
+            self._calls.remove(self)
+        finally:
+            self._calls_mutex.unlock()
 
 #### EOF ######################################################################
