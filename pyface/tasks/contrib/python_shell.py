@@ -10,9 +10,9 @@ import logging
 
 # Enthought library imports.
 from traits.api import Str, List, Dict, Instance
-from pyface.api import PythonShell
-from pyface.tasks.task import Task
-from pyface.tasks.task_pane import TaskPane
+from pyface.api import PythonShell, FileDialog, OK
+from pyface.tasks.api import Task, TaskPane
+from pyface.tasks.action.api import SMenuBar, SMenu, TaskAction
 
 # set up logging
 logger = logging.getLogger()
@@ -30,6 +30,10 @@ class PythonShellPane(TaskPane):
     commands = List(Str)
     
     def create(self, parent):
+        """ Create the python shell task pane
+        
+        This wraps the standard pyface PythonShell
+        """
         logger.debug('PythonShellPane: creating python shell pane')
         self.editor = PythonShell(parent)
         self.control = self.editor.control
@@ -48,6 +52,8 @@ class PythonShellPane(TaskPane):
         logger.debug('PythonShellPane: created')
     
     def destroy(self):
+        """ Destroy the python shell task pane
+        """
         logger.debug('PythonShellPane: destroying python shell pane')
         self.editor.destroy()
         self.control = self.editor = None
@@ -70,11 +76,37 @@ class PythonShellTask(Task):
     # The list of commands to run on shell startup
     commands = List(Str)
     
+    # the IPythonShell instance that we are interacting with
+    pane = Instance(PythonShellPane)
+    
     # Task Interface
+
+    menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
+                                         accelerator='Ctrl+O'),
+                              id='File', name='&File'),
+                        SMenu(id='View', name='&View'))
     
     def create_central_pane(self):
         """ Create a view pane with a Python shell
         """
         logger.debug("Creating Python shell pane in central pane")
-        pane = PythonShellPane(bindings=self.bindings, commands=self.commands)
-        return pane
+        self.pane = PythonShellPane(bindings=self.bindings, commands=self.commands)
+        return self.pane
+
+    # PythonShellTask API
+
+    def open(self):
+        """ Shows a dialog to open a file.
+        """
+        logger.debug('PythonShellTask: opening file')
+        dialog = FileDialog(parent=self.window.control, wildcard='*.py')
+        if dialog.open() == OK:
+            self._open_file(dialog.path)
+
+    # Private API
+    
+    def _open_file(self, path):
+        """ Execute the selected file in the editor's interpreter
+        """
+        logger.debug('PythonShellTask: executing file "%s"' % path)
+        self.pane.editor.execute_file(path)
