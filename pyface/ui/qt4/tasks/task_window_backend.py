@@ -107,12 +107,15 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._main_window_layout.state = state
         self._main_window_layout.set_layout(state.layout)
 
-        # Add all panes not assigned an area by the TaskLayout. By default,
-        # these panes are not visible.
+        # Add all panes not assigned an area by the TaskLayout.
         for dock_pane in state.dock_panes:
             if dock_pane.control not in self._main_window_layout.consumed:
                 self.control.addDockWidget(AREA_MAP[dock_pane.dock_area],
                                            dock_pane.control)
+                # By default, these panes are not visible. However, if a pane
+                # has been explicitly set as visible, honor that setting.
+                if dock_pane.visible:
+                    dock_pane.control.show()
 
     #### Trait initializers ###################################################
 
