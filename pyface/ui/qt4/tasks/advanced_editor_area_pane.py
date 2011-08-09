@@ -40,13 +40,15 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         self.control = control = EditorAreaWidget(self, parent)
 
         # Add shortcuts for scrolling through tabs.
-        mod = 'Meta+' if sys.platform == 'darwin' else 'Alt+'
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(mod+'n'), self.control)
+        next_seq = 'Ctrl+}' if sys.platform == 'darwin' else 'Alt+n'
+        prev_seq = 'Ctrl+{' if sys.platform == 'darwin' else 'Alt+p' 
+        shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(mod+'p'), self.control)
+        shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
 
         # Add shortcuts for switching to a specific tab.
+        mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
         for i in xrange(1, 10):
