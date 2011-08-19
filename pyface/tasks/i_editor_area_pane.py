@@ -2,7 +2,8 @@
 import logging
 
 # Enthought library imports.
-from traits.api import Bool, Callable, Dict, HasTraits, Instance, List
+from traits.api import Bool, Callable, Dict, Event, File, HasTraits, Instance, \
+    List, Str
 
 # Local imports.
 from i_editor import IEditor
@@ -28,6 +29,15 @@ class IEditorAreaPane(ITaskPane):
 
     # The list of all the visible editors in the pane.
     editors = List(IEditor)
+
+    # A list of extensions for file types to accept via drag and drop.
+    # Note: This functionality is provided because it is very common, but drag
+    # and drop support is in general highly toolkit-specific. If more
+    # sophisticated support is required, subclass an editor area implementation.
+    file_drop_extensions = List(Str)
+
+    # A file with a supported extension was dropped into the editor area.
+    file_dropped = Event(File)
 
     # Whether to hide the tab bar when there is only a single editor.
     hide_tab_bar = Bool(False)
@@ -109,6 +119,8 @@ class MEditorAreaPane(HasTraits):
 
     active_editor = Instance(IEditor)
     editors = List(IEditor)
+    file_drop_extensions = List(Str)
+    file_dropped = Event(File)
     hide_tab_bar = Bool(False)
 
     #### Protected traits #####################################################

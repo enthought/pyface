@@ -12,6 +12,9 @@ from pyface.qt import QtCore, QtGui
 # Local imports.
 from task_pane import TaskPane
 
+###############################################################################
+# 'EditorAreaPane' class.
+###############################################################################
 
 class EditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of a EditorAreaPane.
@@ -31,7 +34,10 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         # Create and configure the tab widget.
         self.control = control = QtGui.QTabWidget(parent)
+        self._filter = EditorAreaDropFilter(self)
+        control.installEventFilter(self._filter)
         control.tabBar().setVisible(not self.hide_tab_bar)
+        control.setAcceptDrops(True)
         control.setDocumentMode(True)
         control.setMovable(True)
         control.setTabsClosable(True)
@@ -61,8 +67,12 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
+        self.control.removeEventFilter(self._filter)
+        self._filter = None
+        
         for editor in self.editors:
             self.remove_editor(editor)
+
         super(EditorAreaPane, self).destroy()
 
     ###########################################################################
@@ -153,3 +163,41 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         if self.control is not None:
             visible = self.control.count() > 1 if self.hide_tab_bar else True
             self.control.tabBar().setVisible(visible)
+
+###############################################################################
+# Auxillary classes.
+###############################################################################
+
+class EditorAreaDropFilter(QtCore.QObject):
+    """ Implements drag and drop support.
+    """
+
+    def __init__(self, editor_area):
+        super(EditorAreaDropFilter, self).__init__()
+        self.editor_area = editor_area
+
+    def eventFilter(self, object, event):
+        """ Handle 'text/uri-list' drag and drop events.
+        """
+        if event.type() in (QtCore.QEvent.DragEnter, QtCore.QEvent.Drop):
+            # Build list of accepted files.
+            extensions = tuple(self.editor_area.file_drop_extensions)
+            file_paths = []
+            for url in event.mimeData().urls():
+                file_path = url.toLocalFile()
+                if file_path.endswith(extensions):
+                    file_paths.append(file_path)
+
+            # Accept the event if we have at least one accepted file.
+            if event.type() == QtCore.QEvent.DragEnter:
+                if file_paths:
+                    event.acceptProposedAction()
+
+            # Dispatch the events.
+            elif event.type() == QtCore.QEvent.Drop:
+                for file_path in file_paths:
+                    self.editor_area.file_dropped = file_path
+
+            return True
+
+        return super(EditorAreaDropFilter, self).eventFilter(object, event)

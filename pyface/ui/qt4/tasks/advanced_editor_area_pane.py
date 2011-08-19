@@ -10,6 +10,7 @@ from traits.api import DelegatesTo, Instance, implements, on_trait_change
 # Local imports.
 from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane
 from pyface.tasks.i_editor_area_pane import MEditorAreaPane
+from editor_area_pane import EditorAreaDropFilter
 from main_window_layout import MainWindowLayout, PaneItem
 from task_pane import TaskPane
 
@@ -38,6 +39,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             pane.
         """
         self.control = control = EditorAreaWidget(self, parent)
+        self._filter = EditorAreaDropFilter(self)
+        self.control.installEventFilter(self._filter)
 
         # Add shortcuts for scrolling through tabs.
         next_seq = 'Ctrl+}' if sys.platform == 'darwin' else 'Alt+n'
@@ -60,10 +63,14 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
+        self.control.removeEventFilter(self._filter)
+        self._filter = None
+        
         for editor in self.editors:
             editor_widget = editor.control.parent()
             self.control.destroy_editor_widget(editor_widget)
             editor.editor_area = None
+
         super(AdvancedEditorAreaPane, self).destroy()
 
     ###########################################################################
@@ -227,6 +234,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
 
         # Configure the QMainWindow.
         # FIXME: Currently animation is not supported.
+        self.setAcceptDrops(True)
         self.setAnimated(False)
         self.setDockNestingEnabled(True)
         self.setDocumentMode(True)
