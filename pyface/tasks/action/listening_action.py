@@ -23,6 +23,10 @@ class ListeningAction(Action):
     # enabled. By default, the action is always enabled when an object is set.
     enabled_name = Str
 
+    # The (extended) name of the attribute that determines whether the action is
+    # visible. By default, the action is always visible.
+    visible_name = Str
+
     # The object to which the names above apply.
     object = Any
     
@@ -70,14 +74,25 @@ class ListeningAction(Action):
                 obj.on_trait_change(self._enabled_update, new)
         self._enabled_update()
 
-    def _object_changed(self, old, new):
-        name = self.enabled_name
-        if name:
+    def _visible_name_changed(self, old, new):
+        obj = self.object
+        if obj is not None:
             if old:
-                old.on_trait_change(self._enabled_update, name, remove=True)
+                obj.on_trait_change(self._visible_update, old, remove=True)
             if new:
-                new.on_trait_change(self._enabled_update, name)
-        self._enabled_update()
+                obj.on_trait_change(self._visible_update, new)
+        self._visible_update()
+
+    def _object_changed(self, old, new):
+        for kind in ('enabled', 'visible'):
+            method = getattr(self, '_%s_update' % kind)
+            name = getattr(self, '%s_name' % kind)
+            if name:
+                if old:
+                    old.on_trait_change(method, name, remove=True)
+                if new:
+                    new.on_trait_change(method, name)
+            method()
 
     def _enabled_update(self):
         if self.enabled_name:
@@ -88,3 +103,13 @@ class ListeningAction(Action):
                 self.enabled = False
         else:
             self.enabled = bool(self.object)
+
+    def _visible_update(self):
+        if self.visible_name:
+            if self.object:
+                self.visible = bool(self._get_attr(self.object,
+                                                    self.visible_name, False))
+            else:
+                self.visible = False
+        else:
+            self.visible = True
