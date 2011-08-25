@@ -151,7 +151,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         editor = self._get_editor_with_control(control)
         editor.close()
         
-    def _update_active_editor(self, index):
+    def _update_active_editor(self):
+        index = self.control.currentIndex()
         if index == -1:
             self.active_editor = None
         else:
