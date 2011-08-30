@@ -33,6 +33,9 @@ class TaskWindow(ApplicationWindow):
 
     #### TaskWindow interface ################################################
 
+    # The pane (central or dock) in the active task that currently has focus.
+    active_pane = Instance(ITaskPane)
+
     # The active task for this window.
     active_task = Instance(Task)
 
@@ -67,6 +70,9 @@ class TaskWindow(ApplicationWindow):
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
         """
+        # Allow the TaskWindowBackend to clean up first.
+        self._window_backend.destroy()
+        
         # Don't use 'remove_task' here to avoid changing the active state and
         # thereby removing the window's menus and toolbars. This can lead to
         # undesirable animations when the window is being closed.
@@ -119,7 +125,7 @@ class TaskWindow(ApplicationWindow):
     ###########################################################################
 
     def _create_contents(self, parent):
-        """ Delegate to the TaskWindowLayout.
+        """ Delegate to the TaskWindowBackend.
         """
         return self._window_backend.create_contents(parent)
 
@@ -365,6 +371,11 @@ class TaskWindow(ApplicationWindow):
             self.menu_bar_manager = state.menu_bar_manager
             self.status_bar_manager = state.status_bar_manager
             self.tool_bar_managers = state.tool_bar_managers
+
+    @on_trait_change('central_pane.has_focus, dock_panes.has_focus')
+    def _focus_updated(self, obj, name, old, new):
+        if name == 'has_focus' and new:
+            self.active_pane = obj
 
     @on_trait_change('_states[]')
     def _states_updated(self):

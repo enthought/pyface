@@ -1,6 +1,6 @@
 # Enthought library imports.
-from traits.api import Any, DelegatesTo, HasTraits, Instance, \
-     Interface, implements
+from traits.api import Any, DelegatesTo, HasTraits, Instance, Interface, \
+    implements
 
 
 class ITaskWindowBackend(Interface):
@@ -22,6 +22,13 @@ class ITaskWindowBackend(Interface):
 
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents. (See IWindow.)
+        """
+
+    def destroy(self):
+        """ Destroy the backend.
+
+        Note that TaskWindow will destroy the widget created in create_contents,
+        but this method may be used to perform additional cleanup.
         """
 
     def hide_task(self, state):
@@ -62,6 +69,9 @@ class MTaskWindowBackend(HasTraits):
 
     def create_contents(self, parent):
         raise NotImplementedError
+
+    def destroy(self):
+        pass
 
     def hide_task(self, state):
         raise NotImplementedError

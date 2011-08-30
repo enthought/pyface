@@ -34,7 +34,15 @@ class TaskWindowBackend(MTaskWindowBackend):
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
+        QtGui.QApplication.instance().focusChanged.connect(
+            self._focus_changed_signal)
         return QtGui.QStackedWidget(parent)
+
+    def destroy(self):
+        """ Destroy the backend.
+        """
+        QtGui.QApplication.instance().focusChanged.disconnect(
+            self._focus_changed_signal)
 
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
@@ -121,6 +129,17 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def __main_window_layout_default(self):
         return TaskWindowLayout(control=self.control)
+
+    #### Signal handlers ######################################################
+
+    def _focus_changed_signal(self, old, new):
+        if self.window.active_task:
+            panes = [ self.window.central_pane ] + self.window.dock_panes
+            for pane in panes:
+                if new and pane.control.isAncestorOf(new):
+                    pane.has_focus = True
+                elif old and pane.control.isAncestorOf(old):
+                    pane.has_focus = False
 
 
 class TaskWindowLayout(MainWindowLayout):

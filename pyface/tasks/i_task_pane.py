@@ -52,5 +52,5 @@ class MTaskPane(HasTraits):
     id = Str
     name = Unicode
     control = Any
-    has_focus = Bool
+    has_focus = Bool(False)
     task = Instance(Task)

@@ -14,10 +14,6 @@ class TaskPane(MTaskPane):
 
     implements(ITaskPane)
 
-    #### 'ITaskPane' interface ################################################
-
-    has_focus = Property(Bool)
-
     ###########################################################################
     # 'ITaskPane' interface.
     ###########################################################################
@@ -41,12 +37,3 @@ class TaskPane(MTaskPane):
         """
         if self.control is not None:
             self.control.setFocus()
-
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    def _get_has_focus(self):
-        if self.control is not None:
-            return self.control.hasFocus()
-        return False
