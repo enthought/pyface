@@ -35,4 +35,4 @@ def set_focus(control):
             try:
                 control.focusNextChild()
             finally:
-                    control.setWindowFlags(flags)
+                control.setWindowFlags(flags)
