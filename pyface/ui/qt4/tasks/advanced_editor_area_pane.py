@@ -13,6 +13,7 @@ from pyface.tasks.i_editor_area_pane import MEditorAreaPane
 from editor_area_pane import EditorAreaDropFilter
 from main_window_layout import MainWindowLayout, PaneItem
 from task_pane import TaskPane
+from util import set_focus
 
 ###############################################################################
 # 'AdvancedEditorAreaPane' class.
@@ -238,6 +239,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         self.setAnimated(False)
         self.setDockNestingEnabled(True)
         self.setDocumentMode(True)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setTabPosition(QtCore.Qt.AllDockWidgetAreas,
                             QtGui.QTabWidget.North)
 
@@ -458,6 +460,13 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 return True
 
         return False
+
+    def focusInEvent(self, event):
+        """ Assign focus to the active editor, if possible.
+        """
+        active_editor = self.editor_area.active_editor
+        if active_editor:
+            set_focus(active_editor.control)
 
     ###########################################################################
     # Signal handlers.

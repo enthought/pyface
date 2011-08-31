@@ -11,6 +11,7 @@ from pyface.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane
+from util import set_focus
 
 # Constants.
 AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
@@ -68,6 +69,12 @@ class DockPane(TaskPane, MDockPane):
         # Hide the control by default. Otherwise, the widget will visible in its
         # parent immediately!
         control.hide()
+
+    def set_focus(self):
+        """ Gives focus to the control that represents the pane.
+        """
+        if self.control is not None:
+            set_focus(self.control.widget())
 
     ###########################################################################
     # 'IDockPane' interface.

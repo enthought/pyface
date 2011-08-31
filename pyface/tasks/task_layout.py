@@ -13,6 +13,9 @@ class LayoutItem(HasStrictTraits):
     def __repr__(self):
         return self.pformat()
 
+    def iterleaves(self):
+        yield self
+
     def pargs(self):
         return []
 
@@ -73,6 +76,11 @@ class LayoutContainer(LayoutItem):
     def __init__(self, *items, **traits):
         super(LayoutContainer, self).__init__(**traits)
         self.items = list(items)
+
+    def iterleaves(self):
+        for item in self.items:
+            for leaf in item.iterleaves():
+                yield leaf
 
     def pargs(self):
         return self.items

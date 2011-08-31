@@ -5,6 +5,9 @@ from traits.api import Bool, Property, implements
 # System library imports.
 from pyface.qt import QtGui
 
+# Local imports.
+from util import set_focus
+
 
 class TaskPane(MTaskPane):
     """ The toolkit-specific implementation of a TaskPane.
@@ -36,4 +39,4 @@ class TaskPane(MTaskPane):
         """ Gives focus to the control that represents the pane.
         """
         if self.control is not None:
-            self.control.setFocus()
+            set_focus(self.control)

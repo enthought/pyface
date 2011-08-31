@@ -11,6 +11,7 @@ from pyface.qt import QtCore, QtGui
 
 # Local imports.
 from task_pane import TaskPane
+from util import set_focus
 
 ###############################################################################
 # 'EditorAreaPane' class.
@@ -33,14 +34,10 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             pane.
         """
         # Create and configure the tab widget.
-        self.control = control = QtGui.QTabWidget(parent)
+        self.control = control = EditorAreaWidget(self, parent)
         self._filter = EditorAreaDropFilter(self)
         control.installEventFilter(self._filter)
         control.tabBar().setVisible(not self.hide_tab_bar)
-        control.setAcceptDrops(True)
-        control.setDocumentMode(True)
-        control.setMovable(True)
-        control.setTabsClosable(True)
 
         # Connect to the widget's signals.
         control.currentChanged.connect(self._update_active_editor)
@@ -169,6 +166,29 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxillary classes.
 ###############################################################################
 
+class EditorAreaWidget(QtGui.QTabWidget):
+    """ An auxillary widget for implementing AdvancedEditorAreaPane.
+    """
+
+    def __init__(self, editor_area, parent=None):
+        super(EditorAreaWidget, self).__init__(parent)
+        self.editor_area = editor_area
+
+        # Configure the QTabWidget.
+        self.setAcceptDrops(True)
+        self.setDocumentMode(True)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusProxy(None)
+        self.setMovable(True)
+        self.setTabsClosable(True)
+
+    def focusInEvent(self, event):
+        """ Assign focus to the active editor, if possible.
+        """
+        active_editor = self.editor_area.active_editor
+        if active_editor:
+            set_focus(active_editor.control)
+
 class EditorAreaDropFilter(QtCore.QObject):
     """ Implements drag and drop support.
     """
@@ -178,7 +198,7 @@ class EditorAreaDropFilter(QtCore.QObject):
         self.editor_area = editor_area
 
     def eventFilter(self, object, event):
-        """ Handle 'text/uri-list' drag and drop events.
+        """ Handle drag and drop events with MIME type 'text/uri-list'.
         """
         if event.type() in (QtCore.QEvent.DragEnter, QtCore.QEvent.Drop):
             # Build list of accepted files.

@@ -213,6 +213,28 @@ class TaskWindow(ApplicationWindow):
             logger.warn("Cannot remove task %r: task does not belong to the "
                         "window." % task)
 
+    def focus_next_pane(self):
+        """ Shifts focus to the "next" pane, taking into account the active pane
+            and the pane geometry.
+        """
+        if self._active_state:
+            panes = self._get_pane_ring()
+            index = 0
+            if self.active_pane:
+                index = (panes.index(self.active_pane) + 1) % len(panes)
+            panes[index].set_focus()
+
+    def focus_previous_pane(self):
+        """ Shifts focus to the "previous" pane, taking into account the active
+            pane and the pane geometry.
+        """
+        if self._active_state:
+            panes = self._get_pane_ring()
+            index = -1
+            if self.active_pane:
+                index = panes.index(self.active_pane) - 1
+            panes[index].set_focus()
+
     def get_central_pane(self, task):
         """ Returns the central pane for the specified task.
         """
@@ -331,6 +353,23 @@ class TaskWindow(ApplicationWindow):
             dock_pane.destroy()
         state.central_pane.destroy()
         state.task.window = None
+
+    def _get_pane_ring(self):
+        """ Returns a list of visible panes ordered for focus switching.
+        """
+        layout = self.get_layout()
+        if not layout:
+            return []
+
+        # Proceed clockwise through the dock areas.
+        # TODO: Also take into account ordering within dock areas.
+        panes = [ self.central_pane ]
+        for area in ('top', 'right', 'bottom', 'left'):
+            item = getattr(layout, area)
+            if item:
+                panes.extend([ self.get_dock_pane(pane_item.id)
+                               for pane_item in item.iterleaves() ])
+        return panes
 
     def _get_state(self, id_or_task):
         """ Returns the TaskState that contains the specified Task, or None if
