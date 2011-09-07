@@ -131,10 +131,11 @@ class _Menu(QtGui.QMenu):
         parent  = self._parent
 
         previous_non_empty_group = None
-
         for group in manager.groups:
             previous_non_empty_group = self._add_group(parent, group,
                     previous_non_empty_group)
+
+        self.setEnabled(manager.enabled)
 
     def show(self, x=None, y=None):
         """ Show the menu at the specified location. """
@@ -153,8 +154,6 @@ class _Menu(QtGui.QMenu):
         """ Dynamic trait change handler. """
 
         self.setEnabled(new)
-
-        return
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
