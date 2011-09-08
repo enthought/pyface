@@ -134,12 +134,7 @@ class _MenuItem(HasTraits):
         # Perform the action!
         if self.controller is not None:
             if is_checkable:
-                # fixme: There is a difference here between having a controller
-                # and not in that in this case we do not set the checked state
-                # of the action! This is confusing if you start off without a
-                # controller and then set one as the action now behaves
-                # differently!
-                self.checked = self.control.isChecked()
+                self.checked = action.checked = self.control.isChecked()
 
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
@@ -157,7 +152,7 @@ class _MenuItem(HasTraits):
 
         else:
             if is_checkable:
-                action.checked = self.control.isChecked()
+                self.checked = action.checked = self.control.isChecked()
 
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
@@ -307,12 +302,7 @@ class _Tool(HasTraits):
 
         # Perform the action!
         if self.controller is not None:
-            # fixme: There is a difference here between having a controller
-            # and not in that in this case we do not set the checked state
-            # of the action! This is confusing if you start off without a
-            # controller and then set one as the action now behaves
-            # differently!
-            self.checked = self.control.isChecked()
+            self.checked = action.checked = self.control.isChecked()
 
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
@@ -329,7 +319,7 @@ class _Tool(HasTraits):
                 self.controller.perform(action, action_event)
 
         else:
-            action.checked = self.control.isChecked()
+            self.checked = action.checked = self.control.isChecked()
 
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
