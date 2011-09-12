@@ -1,6 +1,7 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, Bool, List, Instance, Property, Unicode
+from traits.api import Any, Bool, List, Instance, Property, Unicode, \
+    on_trait_change
 
 # Local imports.
 from pyface.tasks.task import Task
@@ -13,7 +14,6 @@ class TaskToggleAction(Action):
 
     #### 'Action' interface ###################################################
 
-    checked = Property(Bool, depends_on='task.window.active_task')
     name = Property(Unicode, depends_on='task.name')
     style = 'toggle'
     tooltip = Property(Unicode, depends_on='name')
@@ -34,15 +34,16 @@ class TaskToggleAction(Action):
     # Private interface.
     ###########################################################################
 
-    def _get_checked(self):
-        window = self.task.window
-        return window is not None and window.active_task == self.task
-
     def _get_name(self):
         return self.task.name
 
     def _get_tooltip(self):
         return u'Switch to the %s task.' % self.name
+
+    @on_trait_change('task.window.active_task')
+    def _update_checked(self):
+        window = self.task.window
+        self.checked = window is not None and window.active_task == self.task
 
 
 class TaskToggleGroup(Group):

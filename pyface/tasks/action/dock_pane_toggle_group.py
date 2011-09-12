@@ -1,6 +1,6 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Bool, Instance, List, Property, Unicode
+from traits.api import Bool, Instance, List, Property, Unicode, on_trait_change
 
 # Local imports.
 from pyface.tasks.i_dock_pane import IDockPane
@@ -17,10 +17,8 @@ class DockPaneToggleAction(Action):
     #### 'Action' interface ###################################################
 
     name = Property(Unicode, depends_on='dock_pane.name')
-    checked = Property(Bool, depends_on='dock_pane.visible')
     style = 'toggle'
     tooltip = Property(Unicode, depends_on='name')
-    visible = Property(Bool, depends_on='dock_pane.closable')
 
     ###########################################################################
     # 'Action' interface.
@@ -37,14 +35,16 @@ class DockPaneToggleAction(Action):
     def _get_name(self):
         return self.dock_pane.name
 
-    def _get_checked(self):
-        return self.dock_pane.visible
-
     def _get_tooltip(self):
         return u'Toggles the visibilty of the %s pane.' % self.name
 
-    def _get_visible(self):
-        return self.dock_pane.closable
+    @on_trait_change('dock_pane.visible')
+    def _update_checked(self):
+        self.checked = self.dock_pane.visible
+
+    @on_trait_change('dock_pane.closable')
+    def _update_visible(self):
+        self.visible = self.dock_pane.closable
 
 
 class DockPaneToggleGroup(Group):
