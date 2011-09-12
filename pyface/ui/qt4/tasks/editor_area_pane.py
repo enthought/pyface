@@ -181,6 +181,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
         self.setFocusProxy(None)
         self.setMovable(True)
         self.setTabsClosable(True)
+        self.setUsesScrollButtons(True)
 
     def focusInEvent(self, event):
         """ Assign focus to the active editor, if possible.

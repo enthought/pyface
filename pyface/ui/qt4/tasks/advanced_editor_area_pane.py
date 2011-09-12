@@ -385,6 +385,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 child.currentChanged.connect(self._tab_index_changed,
                                              QtCore.Qt.UniqueConnection)
                 child.setTabsClosable(True)
+                child.setUsesScrollButtons(True)
                 child.tabCloseRequested.connect(self._tab_close_requested,
                                                 QtCore.Qt.UniqueConnection)
                 # FIXME: We would like to have the tabs movable, but this
