@@ -324,13 +324,16 @@ class EditorAreaWidget(QtGui.QMainWindow):
             tabified = [tabified[0]] + self.tabifiedDockWidgets(tabified[0])
         visible = self.get_dock_widgets_ordered(visible_only=True)
 
+        next_widget = self.editor_area.active_editor.control.parent()
+
         # Destroy and remove the editor.
         self.destroy_editor_widget(editor_widget)
-        
+
         # Ensure that the appropriate editor is activated.
         editor_area = self.editor_area
         choices = tabified if len(tabified) >= 2 else visible
-        if len(choices) >= 2:
+
+        if len(choices) >= 2 and editor_widget == next_widget:
              i = choices.index(editor_widget)
              next_widget = choices[i+1] if i+1 < len(choices) else choices[i-1]
              editor_area.activate_editor(next_widget.editor)
