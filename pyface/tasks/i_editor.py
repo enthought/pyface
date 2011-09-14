@@ -10,6 +10,9 @@ class IEditor(Interface):
     # The editor's user-visible name.
     name = Unicode
 
+    # The tooltip to show for the editor's tab, if any.
+    tooltip = Unicode
+
     # The toolkit-specific control that represents the editor.
     control = Any
 
@@ -60,6 +63,7 @@ class MEditor(HasTraits):
     #### 'IEditor' interface ##################################################
 
     name = Unicode
+    tooltip = Unicode
     control = Any
     obj = Any
     dirty = Bool(False)

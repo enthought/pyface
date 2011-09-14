@@ -86,7 +86,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         editor.editor_area = self
         editor.create(self.control)
-        self.control.addTab(editor.control, self._get_label(editor))
+        index = self.control.addTab(editor.control, self._get_label(editor))
+        self.control.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
         self._update_tab_bar()
 
@@ -140,6 +141,11 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def _update_label(self, editor, name, new):
         index = self.control.indexOf(editor.control)
         self.control.setTabText(index, self._get_label(editor))
+
+    @on_trait_change('editors:tooltip')
+    def _update_tooltip(self, editor, name, new):
+        index = self.control.indexOf(editor.control)
+        self.control.setTabToolTip(index, editor.tooltip)
 
     #### Signal handlers ######################################################
 

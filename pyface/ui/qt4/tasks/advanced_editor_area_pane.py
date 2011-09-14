@@ -167,7 +167,11 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     @on_trait_change('editors:[dirty, name]')
     def _update_label(self, editor, name, new):
         editor.control.parent().update_title()
-        
+
+    @on_trait_change('editors:tooltip')
+    def _update_tooltip(self, editor, name, new):
+        editor.control.parent().update_tooltip()
+
 
 ###############################################################################
 # Auxillary classes.
@@ -463,6 +467,16 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 QtCore.QCoreApplication.sendEvent(self._drag_widget, event)
                 return True
 
+        elif event.type() == QtCore.QEvent.ToolTip:
+            # QDockAreaLayout forces the tooltips to be QDockWidget.windowTitle,
+            # so we provide the tooltips manually.
+            widgets = self.get_dock_widgets_for_bar(tab_bar)
+            index = tab_bar.tabAt(event.pos())
+            tooltip = widgets[index].editor.tooltip if index >= 0 else ''
+            if tooltip:
+                QtGui.QToolTip.showText(event.globalPos(), tooltip, tab_bar)
+            return True
+
         return False
 
     def focusInEvent(self, event):
@@ -527,7 +541,12 @@ class EditorWidget(QtGui.QDockWidget):
         
         title_bar = self.titleBarWidget()
         if isinstance(title_bar, EditorTitleBarWidget):
-            title_bar.update_title()
+            title_bar.setTabText(0, title)
+
+    def update_tooltip(self):
+        title_bar = self.titleBarWidget()
+        if isinstance(title_bar, EditorTitleBarWidget):
+            title_bar.setTabToolTip(0, self.editor.tooltip)
 
     def update_title_bar(self):
         if self not in self.parent()._tear_widgets:
@@ -552,14 +571,12 @@ class EditorTitleBarWidget(QtGui.QTabBar):
     def __init__(self, editor_widget):
         super(EditorTitleBarWidget, self).__init__(editor_widget)
         self.addTab(editor_widget.windowTitle())
+        self.setTabToolTip(0, editor_widget.editor.tooltip)
         self.setDocumentMode(True)
         self.setExpanding(False)
         self.setTabsClosable(True)
 
         self.tabCloseRequested.connect(editor_widget.editor.close)
-
-    def update_title(self):
-        self.setTabText(0, self.parent().windowTitle())
 
     def mousePressEvent(self, event):
         self.parent().parent()._drag_widget = self.parent()
