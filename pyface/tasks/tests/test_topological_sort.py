@@ -2,16 +2,16 @@
 import unittest
 
 # Local imports.
-from traits.api import HasTraits, Int
+from traits.api import HasTraits, Any
 from pyface.tasks.topological_sort import before_after_sort, \
-    topological_sort
+    topological_sort, before_after_sort_ends
 
 
 class TestItem(HasTraits):
 
-    id = Int
-    before = Int
-    after = Int
+    id = Any
+    before = Any
+    after = Any
 
     def __init__(self, id, **traits):
         super(TestItem, self).__init__(id=id, **traits)
@@ -50,6 +50,17 @@ class TopologicalSortTestCase(unittest.TestCase):
         """
         actual = before_after_sort([ TestItem(1) ])
         desired = [ TestItem(1) ]
+        self.assertEquals(actual, desired)
+
+    def test_before_after_sort_ends_1(self):
+        """ Does before_after_sort_ends work?
+        """
+        items = [ TestItem(1), TestItem(2, after=4),
+                  TestItem(3, before='__begin__'),
+                  TestItem(4, after='__end__'), TestItem(5) ]
+        actual = before_after_sort_ends(items)
+        desired = [ TestItem(3), TestItem(1), TestItem(5), TestItem(4),
+                    TestItem(2) ]
         self.assertEquals(actual, desired)
 
     def test_topological_sort_1(self):

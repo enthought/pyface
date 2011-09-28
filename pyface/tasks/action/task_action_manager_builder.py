@@ -8,7 +8,7 @@ from traits.api import HasTraits, Instance
 
 # Local imports.
 from pyface.tasks.task import Task
-from pyface.tasks.topological_sort import before_after_sort
+from pyface.tasks.topological_sort import before_after_sort_ends
 from schema import Schema, ToolBarSchema
 from schema_addition import SchemaAddition
 
@@ -65,7 +65,7 @@ class TaskActionManagerBuilder(HasTraits):
                     logger.error('Invalid top-level schema addition: %r. Only '
                                  'ToolBar schemas can be path-less.', schema)
         return [ self.create_action_manager(schema)
-                 for schema in before_after_sort(schemas) ]
+                 for schema in before_after_sort_ends(schemas) ]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
@@ -91,7 +91,7 @@ class TaskActionManagerBuilder(HasTraits):
         # Determine the order of the items at this path.
         items = schema.items
         if additions[path]:
-            items = before_after_sort(items + additions[path])
+            items = before_after_sort_ends(items + additions[path])
 
         # Create the actual children by calling factory items.
         children = []

@@ -5,6 +5,22 @@ import logging
 # Logging.
 logger = logging.getLogger(__name__)
 
+class BeginItem(object):
+    id = '__begin__'
+
+class EndItem(object):
+    id = '__end__'
+
+def before_after_sort_ends(items):
+    """ Same as before_after_sort, but adds begin and end items.
+
+    If any item specifies before(after) as __begin__(__end__), then it will
+    get a position at the beginning(end) of the returned list.
+    """
+    ret = before_after_sort([BeginItem]+items+[EndItem])
+    ret.remove(BeginItem)
+    ret.remove(EndItem)
+    return ret
 
 def before_after_sort(items):
     """ Sort a sequence of items with 'before', 'after', and 'id' attributes.
@@ -14,14 +30,25 @@ def before_after_sort(items):
 
     If a cycle is found in the dependecies, a warning is logged and the order of
     the items is undefined.
+    The id attribute is expected to be a simple type such as str,int etc
+    or one which can be constructed from an int.
     """
     # Handle a degenerate case for which the logic below will fail (because
     # prev_item will not be set).
     if len(items) < 2:
         return items
 
+    # make the ids unique, otherwise schemas with empty ids are lost
+    orig_id_map = {}
+    item_map = {}
+    for item in items:
+        if item.id in item_map and item != item_map[item.id]:
+            orig_id_map[item] = item.id
+            # tries to maintain type, works for simple types int,str etc only.
+            item.id = type(item.id)(id(item))
+        item_map[item.id] = item
+
     # Build a set of pairs representing the graph.
-    item_map = dict((item.id, item) for item in items if item.id)
     pairs = []
     prev_item = None
     for item in items:
@@ -49,6 +76,11 @@ def before_after_sort(items):
     result, has_cycle = topological_sort(pairs)
     if has_cycle:
         logger.warning('Cycle in before/after sort for items %r', items)
+
+    # Now restore the original item ids
+    for item in orig_id_map:
+        item.id = orig_id_map[item]
+
     return result
 
 
@@ -89,5 +121,5 @@ def topological_sort(pairs):
     # If there's a cycle, just throw in whatever is left over.
     has_cycle = bool(graph)
     if has_cycle:
-        result.append(graph.keys())
+        result.extend(graph.keys())
     return result, has_cycle
