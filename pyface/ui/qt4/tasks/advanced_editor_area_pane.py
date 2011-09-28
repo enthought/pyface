@@ -332,7 +332,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
         # Get the tabs in this editor's dock area before removing it.
         tabified = self.tabifiedDockWidgets(editor_widget)
         if tabified:
-            tabified = [tabified[0]] + self.tabifiedDockWidgets(tabified[0])
+            widgets = self.get_dock_widgets_ordered()
+            tabified = [widget for widget in widgets \
+                        if widget in tabified or widget == editor_widget]
         visible = self.get_dock_widgets_ordered(visible_only=True)
 
         # Destroy and remove the editor. Get the active widget first, since it
