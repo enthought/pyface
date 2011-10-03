@@ -89,5 +89,5 @@ def topological_sort(pairs):
     # If there's a cycle, just throw in whatever is left over.
     has_cycle = bool(graph)
     if has_cycle:
-        result.append(graph.keys())
+        result.extend(graph.keys())
     return result, has_cycle

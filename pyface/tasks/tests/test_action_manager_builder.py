@@ -83,6 +83,31 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                  id='MenuBar')
         self.assertActionElementsEqual(actual, desired)
 
+    def test_absolute_ordering(self):
+        """ Does specifying absolute_position work?
+        """
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, self.action2, id='FileGroup'),
+                       id='File'))
+        extras = [ SchemaAddition(factory=lambda: self.action3,
+                                  absolute_position='last',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action4,
+                                  absolute_position='first',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action5,
+                                  absolute_position='first',
+                                  path='MenuBar/File/FileGroup')]
+        builder = TaskActionManagerBuilder(task=Task(menu_bar=schema,
+                                                     extra_actions=extras))
+        actual = builder.create_menu_bar_manager()
+        desired = MenuBarManager(MenuManager(Group(self.action4, self.action5,
+                                                   self.action1, self.action2,
+                                                   self.action3,
+                                                   id='FileGroup'),
+                                             id='File'),
+                                 id='MenuBar')
+        self.assertActionElementsEqual(actual, desired)
 
 if __name__ == '__main__':
     unittest.main()
