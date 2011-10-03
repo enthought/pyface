@@ -65,7 +65,7 @@ class TaskActionManagerBuilder(HasTraits):
                     logger.error('Invalid top-level schema addition: %r. Only '
                                  'ToolBar schemas can be path-less.', schema)
         return [ self.create_action_manager(schema)
-                 for schema in before_after_sort(schemas) ]
+                 for schema in self._get_ordered_schemas(schemas) ]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
@@ -91,7 +91,7 @@ class TaskActionManagerBuilder(HasTraits):
         # Determine the order of the items at this path.
         items = schema.items
         if additions[path]:
-            items = before_after_sort(items + additions[path])
+            items = self._get_ordered_schemas(items + additions[path])
 
         # Create the actual children by calling factory items.
         children = []
@@ -115,6 +115,20 @@ class TaskActionManagerBuilder(HasTraits):
             
         # Finally, create the pyface.action instance for this schema.
         return self.prepare_item(schema.create(children), path)
+
+    def _get_ordered_schemas(self, schemas):
+        begin = []
+        middle = []
+        end = []
+        for schema in schemas:
+            absolute_position = getattr(schema, 'absolute_position', None)
+            if absolute_position is None:
+                middle.append(schema)
+            elif absolute_position == 'last':
+                end.append(schema)
+            else:
+                begin.append(schema)
+        return before_after_sort(begin + middle + end)
 
     #### Trait initializers ###################################################
 
