@@ -95,7 +95,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
         self.control.setVisible(visible)
 
-    @on_trait_change('icon')
     def _set_window_icon(self):
         if self.icon is None:
             icon = ImageResource('application.png')
@@ -182,3 +181,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
             # Add the new toolbars.
             self._create_tool_bar(self.control)
+
+    def _icon_changed(self):
+        self._set_window_icon()
+

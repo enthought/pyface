@@ -33,7 +33,7 @@ except ImportError:
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import implements, Instance, List, Unicode, on_trait_change
+from traits.api import implements, Instance, List, Unicode
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -112,7 +112,6 @@ class ApplicationWindow(MApplicationWindow, Window):
                 tool_bar = tool_bar_managers[0].create_tool_bar(parent)
                 self.control.SetToolBar(tool_bar)
 
-    @on_trait_change('icon')
     def _set_window_icon(self):
         if self.icon is None:
             icon = ImageResource('application.ico')
@@ -263,5 +262,9 @@ class ApplicationWindow(MApplicationWindow, Window):
             tool_bar.Show(visible)
 
         return
+
+    #### Trait change handlers ################################################
+    def _icon_changed(self):
+        self._set_window_icon()
 
 #### EOF ######################################################################
