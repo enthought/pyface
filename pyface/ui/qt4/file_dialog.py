@@ -68,7 +68,7 @@ class FileDialog(MFileDialog, Dialog):
         else:
             pattern = ' '.join(extension)
 
-        return "%s (%s)|%s|" % (description, pattern, pattern)
+        return "%s (%s)" % (description, pattern)
 
     ###########################################################################
     # Protected 'IDialog' interface.
