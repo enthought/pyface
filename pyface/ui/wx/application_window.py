@@ -33,7 +33,7 @@ except ImportError:
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import implements, Instance, List, Unicode
+from traits.api import implements, Instance, List, Unicode, on_trait_change
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
