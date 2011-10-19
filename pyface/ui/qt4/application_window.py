@@ -95,13 +95,14 @@ class ApplicationWindow(MApplicationWindow, Window):
         # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
         self.control.setVisible(visible)
 
+    @on_trait_change('icon')
     def _set_window_icon(self):
         if self.icon is None:
             icon = ImageResource('application.png')
         else:
             icon = self.icon
-
-        self.control.setWindowIcon(icon.create_icon())
+        if self.control is not None:
+            self.control.setWindowIcon(icon.create_icon())
 
     ###########################################################################
     # 'Window' interface.

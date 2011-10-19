@@ -112,13 +112,15 @@ class ApplicationWindow(MApplicationWindow, Window):
                 tool_bar = tool_bar_managers[0].create_tool_bar(parent)
                 self.control.SetToolBar(tool_bar)
 
+    @on_trait_change('icon')
     def _set_window_icon(self):
         if self.icon is None:
             icon = ImageResource('application.ico')
         else:
             icon = self.icon
 
-        self.control.SetIcon(icon.create_icon())
+        if self.control is not None:
+            self.control.SetIcon(icon.create_icon())
 
         return
 
