@@ -531,7 +531,7 @@ class TraitGridModel(GridModel):
                     # convert the value to a boolean
                 #    value = bool(value)
                 setattr(row, column.name, value)
-                sucess = True
+                success = True
 
             # do nothing in the method case as we don't allow rows
             # defined to return a method value to set the value
