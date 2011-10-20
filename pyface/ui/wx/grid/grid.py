@@ -1514,15 +1514,21 @@ class _GridTableBase(PyGridTableBase):
         self._renderer_cache = {}
 
     def dispose(self):
-
         # Make sure dispose gets called on all traits editors:
-        for editor in self._editor_cache.values():
-            editor.dispose()
-        self._editor_cache = {}
 
+        # The wx grid machinery can end up calling GetAttr one more time after
+        # this call, so delay emptying of the editor cache.  See:
+        # https://github.com/enthought/traitsui/issues/2
+
+        do_later(self._empty_editor_cache)
         for renderer in self._renderer_cache.values():
             renderer.dispose()
         self._renderer_cache = {}
+
+    def _empty_editor_cache(self):
+        for editor in self._editor_cache.values():
+            editor.dispose()
+        self._editor_cache = {}
 
     ###########################################################################
     # 'wxPyGridTableBase' interface.
