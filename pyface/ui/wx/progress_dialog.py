@@ -143,12 +143,15 @@ class ProgressDialog(MProgressDialog, Window):
 
         self.progress_bar.update(value)
 
-        # a bit hackish, but on Windows if another window sets focus, the
+        # A bit hackish, but on Windows if another window sets focus, the
         # other window will come to the top, obscuring the progress dialog.
         # Only do this if the control is a top level window, so windows which
         # embed a progress dialog won't keep popping to the top
+        # When we do embed the dialog, self.control may be None since the
+        # embedding might just be grabbing the guts of the control. This happens
+        # in the Traits UI ProgressEditor.
 
-        if self.control.IsTopLevel():
+        if self.control is not None and self.control.IsTopLevel():
             self.control.Raise()
 
         if self.max > 0:
