@@ -268,7 +268,5 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if self._editor is not None:
             self._editor.dispose()
 
-        self.DecRef()
-
 #### EOF ######################################################################
 
