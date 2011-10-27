@@ -18,7 +18,7 @@ AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
              'right'  : QtCore.Qt.RightDockWidgetArea,
              'top'    : QtCore.Qt.TopDockWidgetArea,
              'bottom' : QtCore.Qt.BottomDockWidgetArea }
-INVERSE_AREA_MAP = dict((v, k) for k, v in AREA_MAP.iteritems())
+INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
 
 
 class DockPane(TaskPane, MDockPane):
@@ -150,7 +150,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _receive_dock_area(self, area):
         with self._signal_context():
-            self.dock_area = INVERSE_AREA_MAP[area]
+            self.dock_area = INVERSE_AREA_MAP[int(area)]
 
     def _receive_floating(self, floating):
         with self._signal_context():
