@@ -58,6 +58,9 @@ class FileDialog(MFileDialog, Dialog):
     # 'MFileDialog' *CLASS* interface.
     ###########################################################################
 
+    # In Windows, Qt needs only a * while wx needs a *.*
+    WILDCARD_ALL = "All files (*)|*"
+
     @classmethod
     def create_wildcard(cls, description, extension):
         """ Creates a wildcard for a given extension. """
