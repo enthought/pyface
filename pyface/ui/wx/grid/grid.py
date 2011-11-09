@@ -31,7 +31,7 @@ from wx import TheClipboard
 from pyface.api import Sorter, Widget
 from pyface.timer.api import do_later
 from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
-     List, Trait
+     List, Trait, Undefined
 from pyface.wx.drag_and_drop import PythonDropSource, \
      PythonDropTarget, PythonObject
 from pyface.wx.drag_and_drop import clipboard as enClipboard
@@ -1708,9 +1708,10 @@ class _GridTableBase(PyGridTableBase):
                         self.model.is_column_read_only(col)
 
         result.SetReadOnly(read_only)
-        read_only_color = self._grid.default_cell_read_only_color
-        if read_only and read_only_color is not None:
-            result.SetBackgroundColour(read_only_color)
+        if read_only :
+            read_only_color = self._grid.default_cell_read_only_color
+            if read_only_color is not None and read_only_color is not Undefined:
+                result.SetBackgroundColour(read_only_color)
 
         # check to see if colors or fonts are specified for this cell
         bgcolor = None
