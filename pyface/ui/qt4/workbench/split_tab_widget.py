@@ -848,17 +848,6 @@ class _TabWidget(QtGui.QTabWidget):
         self._root._close_tab_request(self.widget(index))
 
 class _IndependentLineEdit(QtGui.QLineEdit):
-    def __init__(self, *args):
-        QtGui.QLineEdit.__init__(self, *args)
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        self.connect(self, QtCore.SIGNAL('editingFinished()'), self.hide)
-
-    def setText(self, text):
-        QtGui.QLineEdit.setText(self, text)
-        self.setFocus()
-        self.selectAll()
-        self.show()
-
     def keyPressEvent(self, e):
         QtGui.QLineEdit.keyPressEvent(self, e)
         if (e.key() == QtCore.Qt.Key_Escape):
@@ -878,14 +867,18 @@ class _DragableTabBar(QtGui.QTabBar):
 
         self._root = root
         self._drag_state = None
-        self._title_edit = _IndependentLineEdit("")
-        self.connect(self._title_edit, QtCore.SIGNAL('returnPressed()'), self._setCurrentTabText)
+        # LineEdit to change tab bar title
+        te = _IndependentLineEdit("", self)
+        te.hide()
+        te.connect(te, QtCore.SIGNAL('editingFinished()'), te, QtCore.SLOT('hide()'))
+        self.connect(te, QtCore.SIGNAL('returnPressed()'), self._setCurrentTabText)
+        self._title_edit = te
 
-    def _setCurrentTabText(self):
-        idx = self.currentIndex()
-        text = self._title_edit.text()
-        self.setTabText(idx, text)
-        self._root.emit(QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'), self.parent().widget(idx), text)
+    def resizeEvent(self, e):
+        # resize edit tab
+        if self._title_edit.isVisible():
+            self._resize_title_edit_to_current_tab()
+        QtGui.QTabBar.resizeEvent(self, e)
 
     def keyPressEvent(self, e):
         """ Reimplemented to handle traversal across different tab widgets. """
@@ -898,13 +891,12 @@ class _DragableTabBar(QtGui.QTabBar):
             e.ignore()
 
     def mouseDoubleClickEvent(self, e):
-        idx = self.currentIndex()
-        rect = self.tabRect(idx)
-        rect.adjust(10, 3, -self.tabButton(idx, QtGui.QTabBar.RightSide).width(), -3)
-        self._title_edit.setFixedSize(rect.size())
-        self._title_edit.setGeometry(rect)
-        self._title_edit.move(self.mapToGlobal(rect.center()))
-        self._title_edit.setText(self.tabText(idx)[1:])
+        self._resize_title_edit_to_current_tab()
+        te = self._title_edit
+        te.setText(self.tabText(self.currentIndex())[1:])
+        te.setFocus()
+        te.selectAll()
+        te.show()
 
     def mousePressEvent(self, e):
         """ Reimplemented to handle mouse press events. """
@@ -978,6 +970,19 @@ class _DragableTabBar(QtGui.QTabBar):
                 return i
 
         return -1
+
+    def _setCurrentTabText(self):
+        idx = self.currentIndex()
+        text = self._title_edit.text()
+        self.setTabText(idx, u'\u25b6'+text)
+        self._root.emit(QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'), self.parent().widget(idx), text)
+
+    def _resize_title_edit_to_current_tab(self):
+        idx = self.currentIndex()
+        tab = QtGui.QStyleOptionTabV3()
+        self.initStyleOption(tab, idx)
+        rect = self.style().subElementRect(QtGui.QStyle.SE_TabBarTabText, tab)
+        self._title_edit.setGeometry(rect.adjusted(0,8,0,-8))
 
 
 class _DragState(object):
