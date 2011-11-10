@@ -420,7 +420,7 @@ class SplitTabWidget(QtGui.QSplitter):
         if dhs == self._HS_OUTSIDE:
             # Disable tab tear-out for now. It works, but this is something that
             # should be turned on manually. We need an interface for this.
-            #ticon, ttext, ttextcolor, twidg = self._remove_tab(stab_w, stab)
+            #ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
             #self.new_window_request.emit(pos, twidg)
             return
 
@@ -436,7 +436,7 @@ class SplitTabWidget(QtGui.QSplitter):
 
             QtGui.qApp.blockSignals(True)
 
-            ticon, ttext, ttextcolor, twidg = self._remove_tab(stab_w, stab)
+            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
 
             if dhs == self._HS_AFTER_LAST_TAB:
                 idx = dtab_w.addTab(twidg, ticon, ttext)
@@ -455,6 +455,8 @@ class SplitTabWidget(QtGui.QSplitter):
                 idx = dtab_w.insertTab(dhs, twidg, ticon, ttext)
                 dtab_w.tabBar().setTabTextColor(idx, ttextcolor)
 
+            if (tbuttn):
+                dtab_w.show_button(idx)
             dsplit_w._set_current_tab(dtab_w, idx)
 
         else:
@@ -466,10 +468,12 @@ class SplitTabWidget(QtGui.QSplitter):
 
             # Remove the tab from its current tab widget and create a new one
             # for it.
-            ticon, ttext, ttextcolor, twidg = self._remove_tab(stab_w, stab)
+            ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
             new_tw = _TabWidget(dsplit_w)
-            new_tw.addTab(twidg, ticon, ttext)
+            idx = new_tw.addTab(twidg, ticon, ttext)
             new_tw.tabBar().setTabTextColor(0, ttextcolor)
+            if tbuttn:
+                new_tw.show_button(idx)
 
             # Get the splitter containing the destination tab widget.
             dspl = dtab_w.parent()
@@ -559,10 +563,11 @@ class SplitTabWidget(QtGui.QSplitter):
         icon = tab_w.tabIcon(tab)
         text = tab_w.tabText(tab)
         text_color = tab_w.tabBar().tabTextColor(tab)
+        button = tab_w.tabBar().tabButton(tab, QtGui.QTabBar.LeftSide)
         w = tab_w.widget(tab)
         tab_w.removeTab(tab)
 
-        return (icon, text, text_color, w)
+        return (icon, text, text_color, button, w)
 
     def _hotspot(self, pos):
         """ Return a tuple of the tab widget, hotspot and hostspot geometry (as
@@ -752,10 +757,9 @@ class _TabWidget(QtGui.QTabWidget):
         self.tabCloseRequested.connect(self._close_tab)
 
         if not (_TabWidget._spinner_data):
-            #reference = resource_manager.locate_image( 'spinner.gif', '.')
             _TabWidget._spinner_data = ImageResource('spinner.gif')
 
-    def show_spinner(self, index):
+    def show_button(self, index):
         lbl = QtGui.QLabel(self)
         movie = QtGui.QMovie(_TabWidget._spinner_data.absolute_path, parent=lbl)
         movie.setCacheMode(QtGui.QMovie.CacheAll)
@@ -764,7 +768,7 @@ class _TabWidget(QtGui.QTabWidget):
         movie.start()
         self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, lbl)
 
-    def hide_spinner(self, index):
+    def hide_button(self, index):
         curr = self.tabBar().tabButton(index, QtGui.QTabBar.LeftSide)
         if curr:
             curr.close()
