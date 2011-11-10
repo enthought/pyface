@@ -735,6 +735,13 @@ class WorkbenchWindow(ApplicationWindow):
         # If the perspective has been seen before then restore it.
         memento = self._memento.perspective_mementos.get(new.id)
         if memento is not None:
+            # Show the editor area?
+            if new.show_editor_area:
+                self.show_editor_area()
+            else:
+                self.hide_editor_area()
+                self.active_editor = None
+
             view_memento, active_view_id = memento
             self.layout.set_view_memento(view_memento)
 
