@@ -153,6 +153,10 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor_area, QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
             self._qt4_view_focus_changed)
 
+        QtCore.QObject.connect(self._qt4_editor_area,
+                QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
+                self._qt4_editor_title_changed)
+
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
         editor_area.tab_window_changed.connect(self._qt4_tab_window_changed)
@@ -312,6 +316,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             control = editor.control
             editor.has_focus = control is new or \
                 (control is not None and new in control.children())
+
+    def _qt4_editor_title_changed(self, control, title):
+        """ Handle the title being changed """
+        for editor in self.window.editors:
+            if editor.control == control: editor.name = unicode(title)
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?

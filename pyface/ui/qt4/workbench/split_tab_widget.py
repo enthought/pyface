@@ -30,6 +30,8 @@ class SplitTabWidget(QtGui.QSplitter):
 
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
+
+    tabTextChanged = QtCore.Signal(QtGui.QWidget, unicode)
     _HS_NONE = -1
     _HS_AFTER_LAST_TAB = -2
     _HS_NORTH = -3
@@ -845,6 +847,22 @@ class _TabWidget(QtGui.QTabWidget):
 
         self._root._close_tab_request(self.widget(index))
 
+class _IndependentLineEdit(QtGui.QLineEdit):
+    def __init__(self, *args):
+        QtGui.QLineEdit.__init__(self, *args)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.connect(self, QtCore.SIGNAL('editingFinished()'), self.hide)
+
+    def setText(self, text):
+        QtGui.QLineEdit.setText(self, text)
+        self.setFocus()
+        self.selectAll()
+        self.show()
+
+    def keyPressEvent(self, e):
+        QtGui.QLineEdit.keyPressEvent(self, e)
+        if (e.key() == QtCore.Qt.Key_Escape):
+            self.hide()
 
 class _DragableTabBar(QtGui.QTabBar):
     """ The _DragableTabBar class is a QTabBar that can be dragged around. """
@@ -860,6 +878,14 @@ class _DragableTabBar(QtGui.QTabBar):
 
         self._root = root
         self._drag_state = None
+        self._title_edit = _IndependentLineEdit("")
+        self.connect(self._title_edit, QtCore.SIGNAL('returnPressed()'), self._setCurrentTabText)
+
+    def _setCurrentTabText(self):
+        idx = self.currentIndex()
+        text = self._title_edit.text()
+        self.setTabText(idx, text)
+        self._root.emit(QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'), self.parent().widget(idx), text)
 
     def keyPressEvent(self, e):
         """ Reimplemented to handle traversal across different tab widgets. """
@@ -870,6 +896,15 @@ class _DragableTabBar(QtGui.QTabBar):
             self._root._move_right(self.parent(), self.currentIndex())
         else:
             e.ignore()
+
+    def mouseDoubleClickEvent(self, e):
+        idx = self.currentIndex()
+        rect = self.tabRect(idx)
+        rect.adjust(10, 3, -self.tabButton(idx, QtGui.QTabBar.RightSide).width(), -3)
+        self._title_edit.setFixedSize(rect.size())
+        self._title_edit.setGeometry(rect)
+        self._title_edit.move(self.mapToGlobal(rect.center()))
+        self._title_edit.setText(self.tabText(idx)[1:])
 
     def mousePressEvent(self, e):
         """ Reimplemented to handle mouse press events. """
