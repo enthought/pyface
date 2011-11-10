@@ -87,6 +87,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         try:
             self._qt4_editor_area.addTab(self._qt4_get_editor_control(editor), title)
+
+            if editor._loading_on_open:
+                self._qt4_editor_tab_spinner(editor, '', True)
         except Exception:
             logger.exception('error creating editor control [%s]', editor.id)
 
@@ -310,6 +313,16 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor.has_focus = control is new or \
                 (control is not None and new in control.children())
 
+    def _qt4_editor_tab_spinner(self, editor, name, new):
+        # Do we need to do this verification?
+        tw, tidx = self._qt4_editor_area._tab_widget(editor.control)
+
+        if new: tw.show_button(tidx)
+        else: tw.hide_button(tidx)
+
+        if not new and not editor == self.window.active_editor:
+            self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
+
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
 
@@ -398,6 +411,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # QSplitter).
             editor.control = editor.create_control(self.window.control)
             editor.control.setObjectName(editor.id)
+
+            editor.on_trait_change(self._qt4_editor_tab_spinner, '_loading')
 
             self.editor_opened = editor
 
