@@ -459,6 +459,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             dw.setObjectName(view.id)
             dw.connect(dw.toggleViewAction(), QtCore.SIGNAL('toggled(bool)'),
                     self._qt4_handle_dock_visibility)
+            dw.connect(dw, QtCore.SIGNAL('visibilityChanged(bool)'),
+                    self._qt4_handle_dock_visibility)
 
             # Save the dock window.
             view._qt4_dock = dw
@@ -512,7 +514,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             except AttributeError:
                 continue
 
-            if dw.toggleViewAction() is dw.sender():
+            sender = dw.sender()
+            if (sender is dw.toggleViewAction() or
+                sender in dw.children()):
+                # Toggling the action or pressing the close button on
+                # the view
                 v.visible = checked
 
     def _qt4_monitor(self, control):
