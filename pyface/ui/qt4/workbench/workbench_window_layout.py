@@ -284,6 +284,20 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
+    def get_toolkit_memento(self):
+        return (0, dict(geometry=str(self.window.control.saveGeometry())))
+
+    def set_toolkit_memento(self, memento):
+        if hasattr(memento, 'toolkit_data'):
+            data = memento.toolkit_data
+            if isinstance(data, tuple) and len(data) == 2:
+                version, datadict = data
+                if version == 0:
+                    geometry = datadict.pop('geometry', None)
+                    if geometry is not None:
+                        self.window.control.restoreGeometry(geometry)
+
+
     ###########################################################################
     # Private interface.
     ###########################################################################
