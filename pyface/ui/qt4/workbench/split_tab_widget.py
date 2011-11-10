@@ -296,7 +296,9 @@ class SplitTabWidget(QtGui.QSplitter):
             self.emit(QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
                       old, new)
 
-        if isinstance(new, _DragableTabBar):
+        if new is None:
+            return
+        elif isinstance(new, _DragableTabBar):
             ntw = new.parent()
             ntidx = ntw.currentIndex()
         else:
