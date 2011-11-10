@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from traits.api import Any, Instance, List, Property, Str
+from traits.api import Any, Instance, List, Property, Str, on_trait_change
 
 # Local imports.
 from action import Action
@@ -84,6 +84,13 @@ class ActionItem(ActionManagerItem):
         self.action.visible = True
 
         return
+
+    @on_trait_change('_wrappers.control')
+    def _on_destroy(self, object, name, old, new):
+        """ Handle the destruction of the wrapper.
+        """
+        if name == 'control' and new is None:
+            self._wrappers.remove(object)
 
     ###########################################################################
     # 'ActionItem' interface.

@@ -46,6 +46,9 @@ class _MenuItem(HasTraits):
     # a group).
     group = Any
 
+    # The toolkit control.
+    control = Any()
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -102,6 +105,9 @@ class _MenuItem(HasTraits):
         action.on_trait_change(self._on_action_accelerator_changed,
                                'accelerator')
 
+        # Detect if the control is destroyed.
+        self.control.destroyed.connect(self._qt4_on_destroyed)
+
         if controller is not None:
             self.controller = controller
             controller.add_to_menu(self)
@@ -122,6 +128,12 @@ class _MenuItem(HasTraits):
     ###########################################################################
     # Private interface.
     ###########################################################################
+
+    def _qt4_on_destroyed(self, control):
+        """ Delete the reference to the control to avoid attempting to talk to
+        it again.
+        """
+        self.control = None
 
     def _qt4_on_triggered(self):
         """ Called when the menu item has been clicked. """
@@ -170,43 +182,43 @@ class _MenuItem(HasTraits):
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
-
-        self.control.setEnabled(self.enabled)
+        if self.control is not None:
+            self.control.setEnabled(self.enabled)
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
-
-        self.control.setVisible(self.visible)
+        if self.control is not None:
+            self.control.setVisible(self.visible)
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
-
-        self.control.setChecked(self.checked)
+        if self.control is not None:
+            self.control.setChecked(self.checked)
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
-
-        self.control.setEnabled(action.enabled)
+        if self.control is not None:
+            self.control.setEnabled(action.enabled)
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
-
-        self.control.setVisible(action.visible)
+        if self.control is not None:
+            self.control.setVisible(action.visible)
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
-
-        self.control.setChecked(action.checked)
+        if self.control is not None:
+            self.control.setChecked(action.checked)
 
     def _on_action_name_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
-
-        self.control.setText(action.name)
+        if self.control is not None:
+            self.control.setText(action.name)
 
     def _on_action_accelerator_changed(self, action, trait_name, old, new):
         """ Called when the accelerator trait is changed on an action. """
-
-        self.control.setShortcut(action.accelerator)
+        if self.control is not None:
+            self.control.setShortcut(action.accelerator)
 
 
 class _Tool(HasTraits):
@@ -229,6 +241,9 @@ class _Tool(HasTraits):
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
+
+    # The toolkit control.
+    control = Any()
 
     ###########################################################################
     # 'object' interface.
@@ -286,6 +301,9 @@ class _Tool(HasTraits):
         action.on_trait_change(self._on_action_visible_changed, 'visible')
         action.on_trait_change(self._on_action_checked_changed, 'checked')
 
+        # Detect if the control is destroyed.
+        self.control.destroyed.connect(self._qt4_on_destroyed)
+
         if controller is not None:
             self.controller = controller
             controller.add_to_toolbar(self)
@@ -293,6 +311,12 @@ class _Tool(HasTraits):
     ###########################################################################
     # Private interface.
     ###########################################################################
+
+    def _qt4_on_destroyed(self, control):
+        """ Delete the reference to the control to avoid attempting to talk to
+        it again.
+        """
+        self.control = None
 
     def _qt4_on_triggered(self):
         """ Called when the tool bar tool is clicked. """
@@ -337,33 +361,33 @@ class _Tool(HasTraits):
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
-
-        self.control.setEnabled(self.enabled)
+        if self.control is not None:
+            self.control.setEnabled(self.enabled)
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
-
-        self.control.setVisible(self.visible)
+        if self.control is not None:
+            self.control.setVisible(self.visible)
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
-
-        self.control.setChecked(self.checked)
+        if self.control is not None:
+            self.control.setChecked(self.checked)
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
-
-        self.control.setEnabled(action.enabled)
+        if self.control is not None:
+            self.control.setEnabled(action.enabled)
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
-
-        self.control.setVisible(action.visible)
+        if self.control is not None:
+            self.control.setVisible(action.visible)
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
-
-        self.control.setChecked(action.checked)
+        if self.control is not None:
+            self.control.setChecked(action.checked)
 
 
 class _PaletteTool(HasTraits):
