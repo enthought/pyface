@@ -14,6 +14,8 @@ import sys
 import sip
 from pyface.qt import QtCore, QtGui
 
+from pyface.image_resource import ImageResource
+
 
 class SplitTabWidget(QtGui.QSplitter):
     """ The SplitTabWidget class is a hierarchy of QSplitters the leaves of
@@ -174,7 +176,7 @@ class SplitTabWidget(QtGui.QSplitter):
             ch = _TabWidget(self)
             self.addWidget(ch)
 
-        idx = ch.addTab(w, text)
+        idx = ch.insertTab(self._current_tab_idx+1, w, text)
 
         # If the tab has been added to the current tab widget then make it the
         # current tab.
@@ -728,6 +730,8 @@ class _TabWidget(QtGui.QTabWidget):
     # The active icon.  It is created when it is first needed.
     _active_icon = None
 
+    _spinner_data = None
+
     def __init__(self, root, *args):
         """ Initialise the instance. """
 
@@ -746,6 +750,25 @@ class _TabWidget(QtGui.QTabWidget):
 
         self.setTabsClosable(True)
         self.tabCloseRequested.connect(self._close_tab)
+
+        if not (_TabWidget._spinner_data):
+            #reference = resource_manager.locate_image( 'spinner.gif', '.')
+            _TabWidget._spinner_data = ImageResource('spinner.gif')
+
+    def show_spinner(self, index):
+        lbl = QtGui.QLabel(self)
+        movie = QtGui.QMovie(_TabWidget._spinner_data.absolute_path, parent=lbl)
+        movie.setCacheMode(QtGui.QMovie.CacheAll)
+        movie.setScaledSize(QtCore.QSize(16, 16))
+        lbl.setMovie(movie)
+        movie.start()
+        self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, lbl)
+
+    def hide_spinner(self, index):
+        curr = self.tabBar().tabButton(index, QtGui.QTabBar.LeftSide)
+        if curr:
+            curr.close()
+            self.tabBar().setTabButton(index, QtGui.QTabBar.LeftSide, None)
 
     def active_icon(self):
         """ Return the QIcon to be used to indicate an active tab page. """
@@ -898,6 +921,8 @@ class _DragableTabBar(QtGui.QTabBar):
         QtGui.QTabBar.mouseReleaseEvent(self, e)
 
         if e.button() != QtCore.Qt.LeftButton:
+            if e.button() == QtCore.Qt.MidButton:
+                self.tabCloseRequested.emit(self.tabAt(e.pos()))
             return
 
         if self._drag_state is not None and self._drag_state.dragging:
