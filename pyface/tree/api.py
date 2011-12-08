@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2011, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,9 +22,9 @@ from trait_dict_node_type import TraitDictNodeType
 from trait_list_node_type import TraitListNodeType
 from tree_model import TreeModel
 
-try:
-    import wx
+from traits.etsconfig.api import ETSConfig
+if ETSConfig.toolkit == 'wx':
     # Tree has not yet been ported to qt
     from tree import Tree
-except ImportError:
-    pass
+
+del ETSConfig
