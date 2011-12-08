@@ -20,6 +20,11 @@ from node_tree_model import NodeTreeModel
 from node_type import NodeType
 from trait_dict_node_type import TraitDictNodeType
 from trait_list_node_type import TraitListNodeType
-from tree import Tree
 from tree_model import TreeModel
 
+try:
+    import wx
+    # Tree has not yet been ported to qt
+    from tree import Tree
+except ImportError:
+    pass
