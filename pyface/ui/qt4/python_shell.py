@@ -116,6 +116,9 @@ class PythonWidget(HistoryConsoleWidget):
         self._highlighter = PythonWidgetHighlighter(self)
         self._last_refresh_time = 0
 
+        # file-like object attributes.
+        self.encoding = sys.stdin.encoding
+
         # Configure the ConsoleWidget.
         self.tab_width = 4
         self._set_continuation_prompt('... ')
