@@ -319,7 +319,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
     def line_uncomment(self, cursor, position=0):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
-        new_text = cursor.block().text().remove(position, 1)
+        text = cursor.block().text()
+        new_text = text[:position] + text[position+1:]
         cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
                             QtGui.QTextCursor.KeepAnchor)
         cursor.removeSelectedText()

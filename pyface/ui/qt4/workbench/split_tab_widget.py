@@ -11,8 +11,7 @@
 import sys
 
 # Major library imports.
-import sip
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 
 from pyface.image_resource import ImageResource
 
@@ -47,7 +46,7 @@ class SplitTabWidget(QtGui.QSplitter):
 
         self.clear()
 
-        QtCore.QObject.connect(QtGui.qApp,
+        QtCore.QObject.connect(QtGui.QApplication.instance(),
                 QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
                 self._focus_changed)
 
@@ -293,8 +292,10 @@ class SplitTabWidget(QtGui.QSplitter):
         # It is possible for the C++ layer of this object to be deleted between
         # the time when the focus change signal is emitted and time when the
         # slots are dispatched by the Qt event loop. This may be a bug in PyQt4.
-        if sip.isdeleted(self):
-            return
+        if qt_api == 'pyqt':
+            import sip
+            if sip.isdeleted(self):
+                return
 
         if self._repeat_focus_changes:
             self.emit(QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
@@ -436,7 +437,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 if dhs == self._HS_AFTER_LAST_TAB and stab == stab_w.count()-1:
                     return
 
-            QtGui.qApp.blockSignals(True)
+            QtGui.QApplication.instance().blockSignals(True)
 
             ticon, ttext, ttextcolor, tbuttn, twidg = self._remove_tab(stab_w, stab)
 
@@ -466,7 +467,7 @@ class SplitTabWidget(QtGui.QSplitter):
             if stab_w is dtab_w and stab_w.count() == 1:
                 return
 
-            QtGui.qApp.blockSignals(True)
+            QtGui.QApplication.instance().blockSignals(True)
 
             # Remove the tab from its current tab widget and create a new one
             # for it.
@@ -497,7 +498,7 @@ class SplitTabWidget(QtGui.QSplitter):
         if dsplit_w != self:
             self.tab_window_changed.emit(twidg)
 
-        QtGui.qApp.blockSignals(False)
+        QtGui.QApplication.instance().blockSignals(False)
 
     def _horizontal_split(self, spl, idx, hs):
         """ Returns a tuple of the splitter and index where the new tab widget
@@ -579,7 +580,7 @@ class SplitTabWidget(QtGui.QSplitter):
         miss = (None, self._HS_NONE, None)
 
         # Get the bounding rect of the cloned QTbarBar.
-        top_widget = QtGui.qApp.topLevelAt(global_pos)
+        top_widget = QtGui.QApplication.instance().topLevelAt(global_pos)
         if isinstance(top_widget, QtGui.QTabBar):
             cloned_rect = top_widget.frameGeometry()
         else:
@@ -588,7 +589,7 @@ class SplitTabWidget(QtGui.QSplitter):
         # Determine which visible SplitTabWidget, if any, is under the cursor
         # (compensating for the cloned QTabBar that may be rendered over it).
         split_widget = None
-        for top_widget in QtGui.qApp.topLevelWidgets():
+        for top_widget in QtGui.QApplication.instance().topLevelWidgets():
             for split_widget in top_widget.findChildren(SplitTabWidget, None):
                 visible_region = split_widget.visibleRegion()
                 widget_pos = split_widget.mapFromGlobal(global_pos)
