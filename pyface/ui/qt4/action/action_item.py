@@ -129,7 +129,7 @@ class _MenuItem(HasTraits):
     # Private interface.
     ###########################################################################
 
-    def _qt4_on_destroyed(self, control):
+    def _qt4_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
         it again.
         """
@@ -312,7 +312,7 @@ class _Tool(HasTraits):
     # Private interface.
     ###########################################################################
 
-    def _qt4_on_destroyed(self, control):
+    def _qt4_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
         it again.
         """
