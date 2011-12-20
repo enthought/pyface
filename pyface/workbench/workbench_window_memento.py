@@ -26,5 +26,8 @@ class WorkbenchWindowMemento(HasTraits):
     # The size of the window.
     size = Tuple
 
+    # Any extra data the toolkit implementation may want to keep.
+    toolkit_data = Any()
+
 
 #### EOF ######################################################################

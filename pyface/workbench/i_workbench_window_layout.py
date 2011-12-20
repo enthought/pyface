@@ -202,6 +202,14 @@ class IWorkbenchWindowLayout(Interface):
 
         """
 
+    def get_toolkit_memento(self):
+        """ Return any toolkit-specific data that should be part of the memento.
+        """
+
+    def set_toolkit_memento(self, memento):
+        """ Restores any toolkit-specific data.
+        """
+
 
 class MWorkbenchWindowLayout(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
@@ -348,6 +356,16 @@ class MWorkbenchWindowLayout(HasTraits):
         """ Restores the state of the editors. """
 
         raise NotImplementedError
+
+    def get_toolkit_memento(self):
+        """ Return any toolkit-specific data that should be part of the memento.
+        """
+        return None
+
+    def set_toolkit_memento(self, memento):
+        """ Restores any toolkit-specific data.
+        """
+        return
 
     ###########################################################################
     # Protected 'MWorkbenchWindowLayout' interface.
