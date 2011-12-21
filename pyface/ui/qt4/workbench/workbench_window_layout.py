@@ -87,6 +87,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         try:
             self._qt4_editor_area.addTab(self._qt4_get_editor_control(editor), title)
+
+            if editor._loading_on_open:
+                self._qt4_editor_tab_spinner(editor, '', True)
         except Exception:
             logger.exception('error creating editor control [%s]', editor.id)
 
@@ -149,6 +152,10 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         QtCore.QObject.connect(
             editor_area, QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
             self._qt4_view_focus_changed)
+
+        QtCore.QObject.connect(self._qt4_editor_area,
+                QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
+                self._qt4_editor_title_changed)
 
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
@@ -284,6 +291,20 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
+    def get_toolkit_memento(self):
+        return (0, dict(geometry=str(self.window.control.saveGeometry())))
+
+    def set_toolkit_memento(self, memento):
+        if hasattr(memento, 'toolkit_data'):
+            data = memento.toolkit_data
+            if isinstance(data, tuple) and len(data) == 2:
+                version, datadict = data
+                if version == 0:
+                    geometry = datadict.pop('geometry', None)
+                    if geometry is not None:
+                        self.window.control.restoreGeometry(geometry)
+
+
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -295,6 +316,21 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             control = editor.control
             editor.has_focus = control is new or \
                 (control is not None and new in control.children())
+
+    def _qt4_editor_title_changed(self, control, title):
+        """ Handle the title being changed """
+        for editor in self.window.editors:
+            if editor.control == control: editor.name = unicode(title)
+
+    def _qt4_editor_tab_spinner(self, editor, name, new):
+        # Do we need to do this verification?
+        tw, tidx = self._qt4_editor_area._tab_widget(editor.control)
+
+        if new: tw.show_button(tidx)
+        else: tw.hide_button(tidx)
+
+        if not new and not editor == self.window.active_editor:
+            self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
 
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
@@ -384,6 +420,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # QSplitter).
             editor.control = editor.create_control(self.window.control)
             editor.control.setObjectName(editor.id)
+
+            editor.on_trait_change(self._qt4_editor_tab_spinner, '_loading')
 
             self.editor_opened = editor
 

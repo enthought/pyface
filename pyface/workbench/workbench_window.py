@@ -574,6 +574,9 @@ class WorkbenchWindow(ApplicationWindow):
         # The layout of the editor area.
         self._memento.editor_area_memento = self.layout.get_editor_memento()
 
+        # Any extra toolkit-specific data.
+        self._memento.toolkit_data = self.layout.get_toolkit_memento()
+
         return self._memento
 
     def set_memento(self, memento):
@@ -735,6 +738,13 @@ class WorkbenchWindow(ApplicationWindow):
         # If the perspective has been seen before then restore it.
         memento = self._memento.perspective_mementos.get(new.id)
         if memento is not None:
+            # Show the editor area?
+            if new.show_editor_area:
+                self.show_editor_area()
+            else:
+                self.hide_editor_area()
+                self.active_editor = None
+
             view_memento, active_view_id = memento
             self.layout.set_view_memento(view_memento)
 
@@ -781,6 +791,13 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.size = self._memento.size
         self.position = self._memento.position
+
+        # Set the toolkit-specific data last because it may override the generic
+        # implementation.
+        # FIXME: The primary use case is to let Qt restore the window's geometry
+        # wholesale, including maximization state. If we ever go Qt-only, this
+        # is a good area to refactor.
+        self.layout.set_toolkit_memento(self._memento)
 
         return
 

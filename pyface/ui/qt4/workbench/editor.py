@@ -12,6 +12,7 @@
 
 
 # Local imports.
+from traits.api import Event, Bool
 from pyface.workbench.i_editor import MEditor
 
 
@@ -22,6 +23,10 @@ class Editor(MEditor):
 
     """
 
+    # Traits for showing spinner
+    _loading = Event(Bool)
+    _loading_on_open = Bool(False)
+
     ###########################################################################
     # 'IWorkbenchPart' interface.
     ###########################################################################
@@ -29,7 +34,7 @@ class Editor(MEditor):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from pyface.qt import QtGui
+        from pyface.qt import QtCore, QtGui
 
         # By default we create a yellow panel!
         control = QtGui.QWidget(parent)
