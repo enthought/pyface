@@ -332,6 +332,12 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if not new and not editor == self.window.active_editor:
             self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
 
+    @on_trait_change('window:active_editor')
+    def _qt4_active_editor_changed(self, old, new):
+        """ Handle change of active editor """
+        # Reset tab title to foreground color
+        self._qt4_editor_area.setTabTextColor(new.control)
+
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
 
