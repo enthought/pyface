@@ -54,6 +54,8 @@ class Editor(MEditor):
         if self.control is not None:
             self.control.hide()
             self.control.close()
+        # I don't understand how control becomes None, but it may happen
+        if self.control is not None:
             self.control.deleteLater()
             self.control = None
 

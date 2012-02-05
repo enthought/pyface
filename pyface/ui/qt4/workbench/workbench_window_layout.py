@@ -336,7 +336,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_active_editor_changed(self, old, new):
         """ Handle change of active editor """
         # Reset tab title to foreground color
-        self._qt4_editor_area.setTabTextColor(new.control)
+        if new is not None:
+            self._qt4_editor_area.setTabTextColor(new.control)
 
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
@@ -612,24 +613,27 @@ class _ViewContainer(QtGui.QMainWindow):
         """ Reimplemented to return the initial size or the view's current
         size.
         """
+        central_widget = self.centralWidget()
+        if central_widget is not None:
+            sh = central_widget.sizeHint()
 
-        sh = self.centralWidget().sizeHint()
+            if self._width > 0:
+                if self._width > 1:
+                    w = self._width
+                else:
+                    w = self._main_window.width() * self._width
 
-        if self._width > 0:
-            if self._width > 1:
-                w = self._width
-            else:
-                w = self._main_window.width() * self._width
+                sh.setWidth(int(w))
 
-            sh.setWidth(int(w))
+            if self._height > 0:
+                if self._height > 1:
+                    h = self._height
+                else:
+                    h = self._main_window.height() * self._height
 
-        if self._height > 0:
-            if self._height > 1:
-                h = self._height
-            else:
-                h = self._main_window.height() * self._height
-
-            sh.setHeight(int(h))
+                sh.setHeight(int(h))
+        else:
+            sh = QtCore.QSize()
 
         return sh
 
