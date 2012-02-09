@@ -24,5 +24,15 @@ from menu_manager import MenuManager
 from menu_bar_manager import MenuBarManager
 from status_bar_manager import StatusBarManager
 from tool_bar_manager import ToolBarManager
-from tool_palette_manager import ToolPaletteManager
 from window_action import WindowAction
+
+
+###############################################################################
+# This part of the module handles widgets that are still wx specific.  This
+# will all be removed when everything has been ported to PyQt and pyface
+# becomes toolkit agnostic.
+###############################################################################
+
+from traits.etsconfig.api import ETSConfig
+if ETSConfig.toolkit == 'wx':
+    from tool_palette_manager import ToolPaletteManager

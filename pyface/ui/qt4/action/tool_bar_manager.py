@@ -56,7 +56,7 @@ class ToolBarManager(ActionManager):
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
 
-        # Base class contructor.
+        # Base class constructor.
         super(ToolBarManager, self).__init__(*args, **traits)
 
         # An image cache to make sure that we only load each image used in the
