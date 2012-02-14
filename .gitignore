@@ -3,6 +3,7 @@
 *.so
 *~
 .DS_Store
+*.enamlc
 
 # ignore the build directories
 *.egg-info/

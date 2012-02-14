@@ -1,0 +1,93 @@
+#------------------------------------------------------------------------------
+#  Copyright (c) 2011, Enthought, Inc.
+#  All rights reserved.
+#------------------------------------------------------------------------------
+from phone_converter import PhoneNumberConverter
+
+
+enamldef EmployeeForm(Form):
+    attr employee
+    attr show_employer: bool = False
+    Label:
+        text = "First name:"
+    Field:
+        value := employee.first_name
+    Label:
+        text = "Last name:"
+    Field:
+        value := employee.last_name
+    Label:
+        text = "Home phone:"
+    Field:
+        value := employee.phone
+        converter = PhoneNumberConverter()
+        bg_color << 'error' if error else 'none'
+    Label:
+        text = 'Date of Birth:'
+    DateEdit:
+        date := employee.dob
+    Label:
+        text = 'Age:'
+    Label:
+        text << str(employee.age)
+    Label:
+        text = 'Password'
+    Field:
+        password_mode << 'password' if not pw_cb.checked else 'normal'
+        value :: print 'Password:', value
+    Label:
+        text = 'Show Password:'
+    CheckBox:
+        id: pw_cb
+        checked = False
+    Label:
+        text = 'Show Employer Details:'
+    CheckBox:
+        checked := show_employer
+
+
+enamldef EmployerForm(Form):
+    attr employer
+    Label:
+        text = "Company:"
+    Field:
+        value << employer.company_name
+        enabled << en_cb.checked
+    Label:
+        text = "Reporting Manager:"
+    Field:
+        value << "%s %s" % (employer.first_name, employer.last_name)
+        enabled << en_cb.checked
+    Label:
+        text = "Allow Editing:"
+    CheckBox:
+        id: en_cb
+        checked = True
+
+
+enamldef EmployeeView(Container):
+    id: main
+    attr employee
+    
+    constraints = [
+        vbox(top_box, bottom_box),
+        align('midline', top_form, bottom_form),
+    ]
+    GroupBox:
+        id: top_box
+        title = "Personal Details"
+        EmployeeForm:
+            id: top_form
+            # We access the employee object through the identifier
+            # 'main' here, because the EmployeeForm also has an 
+            # 'employee' attribute declared, and that would be 
+            # found first.
+            employee = main.employee
+    GroupBox:
+        id: bottom_box
+        title = "Employer Details"
+        visible << top_form.show_employer
+        EmployerForm:
+            id: bottom_form
+            employer << employee.boss
+
