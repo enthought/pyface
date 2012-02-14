@@ -21,7 +21,7 @@ enamldef EmployeeForm(Form):
     Field:
         value := employee.phone
         converter = PhoneNumberConverter()
-        bg_color << 'error' if error else 'none'
+        bgcolor << 'error' if error else 'none'
     Label:
         text = 'Date of Birth:'
     DateEdit:

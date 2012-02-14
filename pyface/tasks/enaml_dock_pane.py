@@ -1,6 +1,6 @@
 # Enthought library imports.
 from traits.api import Instance, on_trait_change
-from enaml.widgets.layout_component import LayoutComponent
+from enaml.components.constraints_widget import ConstraintsWidget
 
 # local imports
 from pyface.tasks.dock_pane import DockPane
@@ -12,7 +12,7 @@ class EnamlDockPane(DockPane):
 
     #### EnamlDockPane interface ##############################################
 
-    component = Instance(LayoutComponent)
+    component = Instance(ConstraintsWidget)
 
     def create_component(self):
         raise NotImplementedError
