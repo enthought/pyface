@@ -4,15 +4,14 @@ Welcome to the Pyface documentation!
 If you want to display Traits-based user interfaces, you need, in addition to
 the Traits project:
 
-    -The TraitsUI project or Enaml
+    -The TraitsUI project
     -A Python GUI toolkit, either wxPython or PyQt
     -A "backend" connector, either TraitsBackendWX or TraitsBackendQt
 
-TraitsUI and Enaml contains a toolkit-independent GUI abstraction layers, used
-to support the "visualization" features of the Traits package. Thus, you can
-write code in terms of the Traits API (view, items, editors, etc.), and let
-Pyface and your selected toolkit and backend take care of the details of
-displaying them.
+TraitsUI contains a toolkit-independent GUI abstraction layers, used to support
+the "visualization" features of the Traits package. Thus, you can write code in
+terms of the Traits API (view, items, editors, etc.), and let Pyface and your
+selected toolkit and backend take care of the details of displaying them.
 
 Pyface
 ------
