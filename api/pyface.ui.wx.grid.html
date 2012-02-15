@@ -1,0 +1,1415 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>grid Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="wx Package" href="pyface.ui.wx.html" />
+    <link rel="next" title="timer Package" href="pyface.ui.wx.timer.html" />
+    <link rel="prev" title="action Package" href="pyface.ui.wx.action.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.wx.timer.html" title="timer Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.wx.action.html" title="action Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.wx.html" accesskey="U">wx Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="grid-package">
+<h1>grid Package<a class="headerlink" href="#grid-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">grid</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.ui.wx.grid"></span></div>
+<div class="section" id="module-pyface.ui.wx.grid.api">
+<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.checkbox_image_renderer">
+<span id="checkbox-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">checkbox_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.checkbox_image_renderer" title="Permalink to this headline">¶</a></h2>
+<p>A renderer which displays a checked-box for a True value and an unchecked
+box for a false value.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.checkbox_image_renderer.CheckboxImageRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.checkbox_image_renderer.</tt><tt class="descname">CheckboxImageRenderer</tt><big>(</big><em>display_text=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.checkbox_image_renderer.CheckboxImageRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer" title="pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.checkbox_renderer">
+<span id="checkbox-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">checkbox_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.checkbox_renderer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.checkbox_renderer.CheckboxRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.checkbox_renderer.</tt><tt class="descname">CheckboxRenderer</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.checkbox_renderer.CheckboxRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer" title="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer</span></tt></a></p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.checkbox_renderer.CheckboxRenderer.on_left_click">
+<tt class="descname">on_left_click</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.checkbox_renderer.CheckboxRenderer.on_left_click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggles the value.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.combobox_focus_handler">
+<span id="combobox-focus-handler-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">combobox_focus_handler</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.combobox_focus_handler" title="Permalink to this headline">¶</a></h2>
+<p>Workaround for combobox focus problem in wx 2.6.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.combobox_focus_handler.ComboboxFocusHandler">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.combobox_focus_handler.</tt><tt class="descname">ComboboxFocusHandler</tt><big>(</big><em>grid</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.combobox_focus_handler.ComboboxFocusHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._core.EvtHandler</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.composite_grid_model">
+<span id="composite-grid-model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">composite_grid_model</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.composite_grid_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.composite_grid_model.</tt><tt class="descname">CompositeGridModel</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridModel" title="pyface.ui.wx.grid.grid_model.GridModel"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_model.GridModel</span></tt></a></p>
+<p>A CompositeGridModel is a model whose underlying data is
+a collection of other grid models.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_bg_color">
+<tt class="descname">get_cell_bg_color</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_bg_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxColour object specifying what the background color
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_context_menu">
+<tt class="descname">get_cell_context_menu</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_font">
+<tt class="descname">get_cell_font</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxFont object specifying what the font
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_halignment">
+<tt class="descname">get_cell_halignment</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_halignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string specifying what the horizontal alignment
+of the specified cell should be.</p>
+<p>Return &#8216;left&#8217; for left alignment, &#8216;right&#8217; for right alignment,
+or &#8216;center&#8217; for center alignment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_selection_value">
+<tt class="descname">get_cell_selection_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_text_color">
+<tt class="descname">get_cell_text_color</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxColour object specifying what the text color
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_valignment">
+<tt class="descname">get_cell_valignment</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cell_valignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string specifying what the vertical alignment
+of the specified cell should be.</p>
+<p>Return &#8216;top&#8217; for top alignment, &#8216;bottom&#8217; for bottom alignment,
+or &#8216;center&#8217; for center alignment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cols_drag_value">
+<tt class="descname">get_cols_drag_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cols_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified columns are dragged or
+copied and pasted. cols is a list of column indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cols_selection_value">
+<tt class="descname">get_cols_selection_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_cols_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified cols are selected.
+This value should be enough to specify to other listeners what is
+going on in the grid. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_context_menu">
+<tt class="descname">get_column_context_menu</tt><big>(</big><em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this column.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_count">
+<tt class="descname">get_column_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_name">
+<tt class="descname">get_column_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the column specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_size">
+<tt class="descname">get_column_size</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_column_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size in pixels of the column indexed by col.
+A value of -1 or None means use the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_row_count">
+<tt class="descname">get_row_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_row_name">
+<tt class="descname">get_row_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_row_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the row specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_rows_drag_value">
+<tt class="descname">get_rows_drag_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_rows_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified rows are dragged or
+copied and pasted. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_type">
+<tt class="descname">get_type</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the type of the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_editable">
+<tt class="descname">is_cell_editable</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_editable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) is editable,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_empty">
+<tt class="descname">is_cell_empty</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) has a None value,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_read_only">
+<tt class="descname">is_cell_read_only</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_cell_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) is not editable,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_column_read_only">
+<tt class="descname">is_column_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_column_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the column specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_row_read_only">
+<tt class="descname">is_row_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.is_row_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the row specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.resolve_selection">
+<tt class="descname">resolve_selection</tt><big>(</big><em>selection_list</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.resolve_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of (row, col) grid-cell coordinates that
+correspond to the objects in selection_list. For each coordinate, if
+the row is -1 it indicates that the entire column is selected. Likewise
+coordinates with a column of -1 indicate an entire row that is
+selected. Note that the objects in selection_list are
+model-specific.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.sort_by_column">
+<tt class="descname">sort_by_column</tt><big>(</big><em>col</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.composite_grid_model.CompositeGridModel.sort_by_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort model data by the column indexed by col. The reverse flag
+indicates that the sort should be done in reverse.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.edit_image_renderer">
+<span id="edit-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">edit_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.edit_image_renderer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.edit_image_renderer.</tt><tt class="descname">EditImageRenderer</tt><big>(</big><em>**kw</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer" title="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer</span></tt></a></p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.get_image_for_cell">
+<tt class="descname">get_image_for_cell</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.get_image_for_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the image resource for the table_edit bitmap</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.image">
+<tt class="descname">image</tt><em class="property"> = &lt;pyface.ui.wx.image_resource.ImageResource object at 0x12b1bc00&gt;</em><a class="headerlink" href="#pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.edit_renderer">
+<span id="edit-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">edit_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.edit_renderer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.edit_renderer.EditRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.edit_renderer.</tt><tt class="descname">EditRenderer</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.edit_renderer.EditRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer" title="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer</span></tt></a></p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.edit_renderer.EditRenderer.on_left_click">
+<tt class="descname">on_left_click</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.edit_renderer.EditRenderer.on_left_click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls edit_traits on the object represented by the row.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.grid">
+<span id="grid-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid" title="Permalink to this headline">¶</a></h2>
+<p>A grid control with a model/ui architecture.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid.DummyGridCellEditor">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid.</tt><tt class="descname">DummyGridCellEditor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.DummyGridCellEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.grid.PyGridCellEditor</span></tt></p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.DummyGridCellEditor.Show">
+<tt class="descname">Show</tt><big>(</big><em>show</em>, <em>attr</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.DummyGridCellEditor.Show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid.Grid">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid.</tt><tt class="descname">Grid</tt><big>(</big><em>parent</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.html#pyface.ui.wx.widget.Widget" title="pyface.ui.wx.widget.Widget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.widget.Widget</span></tt></a></p>
+<p>A grid control with a model/ui architecture.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.dispose">
+<tt class="descname">dispose</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.dispose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.get_selection">
+<tt class="descname">get_selection</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.get_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the currently selected objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.set_selection">
+<tt class="descname">set_selection</tt><big>(</big><em>selection_list</em>, <em>notify=True</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.set_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current selection to the objects listed in selection_list.
+Note that these objects are model-specific, as the grid depends on the
+underlying model to translate these objects into grid coordinates.
+A ValueError will be raised if the objects are not in the proper format
+for the underlying model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.stop_editing_indices">
+<tt class="descname">stop_editing_indices</tt><big>(</big><em>indices</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.stop_editing_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>If editing is occuring in a row in &#8216;indices&#8217;, stop editing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.wx_drag_over">
+<tt class="descname">wx_drag_over</tt><big>(</big><em>x</em>, <em>y</em>, <em>drag_object</em>, <em>drag_result</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.wx_drag_over" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid.Grid.wx_dropped_on">
+<tt class="descname">wx_dropped_on</tt><big>(</big><em>x</em>, <em>y</em>, <em>drag_object</em>, <em>drag_result</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.wx_dropped_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.grid_cell_image_renderer">
+<span id="grid-cell-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid_cell_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid_cell_image_renderer" title="Permalink to this headline">¶</a></h2>
+<p>A renderer which will display a cell-specific image in addition to some
+text displayed in the same way the standard string renderer normally
+would.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid_cell_image_renderer.</tt><tt class="descname">GridCellImageRenderer</tt><big>(</big><em>provider=None</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.grid.PyGridCellRenderer</span></tt></p>
+<p>A renderer which will display a cell-specific image in addition to some
+text displayed in the same way the standard string renderer normally
+would.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.Clone">
+<tt class="descname">Clone</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.Clone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.Draw">
+<tt class="descname">Draw</tt><big>(</big><em>grid</em>, <em>attr</em>, <em>dc</em>, <em>rect</em>, <em>row</em>, <em>col</em>, <em>isSelected</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.Draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the appropriate icon into the specified grid cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.GetBestSize">
+<tt class="descname">GetBestSize</tt><big>(</big><em>grid</em>, <em>attr</em>, <em>dc</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer.GetBestSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine best size for the cell.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.grid_cell_renderer">
+<span id="grid-cell-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid_cell_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid_cell_renderer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid_cell_renderer.</tt><tt class="descname">GridCellRenderer</tt><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.dispose">
+<tt class="descname">dispose</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.dispose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_key">
+<tt class="descname">on_key</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em>, <em>key_event</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_left_click">
+<tt class="descname">on_left_click</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_left_click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_left_dclick">
+<tt class="descname">on_left_dclick</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_left_dclick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_right_click">
+<tt class="descname">on_right_click</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_right_click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_right_dclick">
+<tt class="descname">on_right_dclick</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_cell_renderer.GridCellRenderer.on_right_dclick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.grid_model">
+<span id="grid-model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid_model</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid_model" title="Permalink to this headline">¶</a></h2>
+<p>Model for grid views.</p>
+<dl class="attribute">
+<dt id="pyface.ui.wx.grid.grid_model.GridColumn">
+<tt class="descclassname">pyface.ui.wx.grid.grid_model.</tt><tt class="descname">GridColumn</tt><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridRow" title="pyface.ui.wx.grid.grid_model.GridRow"><tt class="xref py py-class docutils literal"><span class="pre">GridRow</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid_model.</tt><tt class="descname">GridModel</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></tt></p>
+<p>Model for grid views.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.delete_columns">
+<tt class="descname">delete_columns</tt><big>(</big><em>pos</em>, <em>num_cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.delete_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes columns pos through pos + num_cols from the model.
+Subclasses should not override this method, but should override
+_delete_columns instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.delete_rows">
+<tt class="descname">delete_rows</tt><big>(</big><em>pos</em>, <em>num_rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.delete_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes rows pos through pos + num_rows from the model.
+Subclasses should not override this method, but should override
+_delete_rows instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.fire_content_changed">
+<tt class="descname">fire_content_changed</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.fire_content_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the appearance changed event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.fire_structure_changed">
+<tt class="descname">fire_structure_changed</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.fire_structure_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fires the appearance changed event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_bg_color">
+<tt class="descname">get_cell_bg_color</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_bg_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxColour object specifying what the background color
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_context_menu">
+<tt class="descname">get_cell_context_menu</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_drag_value">
+<tt class="descname">get_cell_drag_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified cell is dragged or
+copied and pasted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_editor">
+<tt class="descname">get_cell_editor</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the editor for the specified cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_font">
+<tt class="descname">get_cell_font</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxFont object specifying what the font
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_halignment">
+<tt class="descname">get_cell_halignment</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_halignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string specifying what the horizontal alignment
+of the specified cell should be.</p>
+<p>Return &#8216;left&#8217; for left alignment, &#8216;right&#8217; for right alignment,
+or &#8216;center&#8217; for center alignment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_renderer">
+<tt class="descname">get_cell_renderer</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_renderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the renderer for the specified cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_selection_value">
+<tt class="descname">get_cell_selection_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_text_color">
+<tt class="descname">get_cell_text_color</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wxColour object specifying what the text color
+of the specified cell should be.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cell_valignment">
+<tt class="descname">get_cell_valignment</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cell_valignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string specifying what the vertical alignment
+of the specified cell should be.</p>
+<p>Return &#8216;top&#8217; for top alignment, &#8216;bottom&#8217; for bottom alignment,
+or &#8216;center&#8217; for center alignment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cols_drag_value">
+<tt class="descname">get_cols_drag_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cols_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified columns are dragged or
+copied and pasted. cols is a list of column indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_cols_selection_value">
+<tt class="descname">get_cols_selection_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_cols_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified cols are selected.
+This value should be enough to specify to other listeners what is
+going on in the grid. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_column_context_menu">
+<tt class="descname">get_column_context_menu</tt><big>(</big><em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_column_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this column.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_column_count">
+<tt class="descname">get_column_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_column_name">
+<tt class="descname">get_column_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_column_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the column specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_column_size">
+<tt class="descname">get_column_size</tt><big>(</big><em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_column_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size in pixels of the column indexed by col.
+A value of -1 or None means use the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_row_context_menu">
+<tt class="descname">get_row_context_menu</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_row_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this row.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_row_count">
+<tt class="descname">get_row_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_row_name">
+<tt class="descname">get_row_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_row_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the row specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_row_size">
+<tt class="descname">get_row_size</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_row_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size in pixels of the row indexed by &#8216;row&#8217;.
+A value of -1 or None means use the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_rows_drag_value">
+<tt class="descname">get_rows_drag_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_rows_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified rows are dragged or
+copied and pasted. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_rows_selection_value">
+<tt class="descname">get_rows_selection_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_rows_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified rows are selected.
+This value should be enough to specify to other listeners what is
+going on in the grid. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_type">
+<tt class="descname">get_type</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.insert_columns">
+<tt class="descname">insert_columns</tt><big>(</big><em>pos</em>, <em>num_cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.insert_columns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts columns at pos through pos + num_cols into the model.
+Subclasses should not override this method, but should override
+_insert_columns instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.insert_rows">
+<tt class="descname">insert_rows</tt><big>(</big><em>pos</em>, <em>num_rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.insert_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts rows at pos through pos + num_rows into the model.
+Subclasses should not override this method, but should override
+_insert_rows instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.is_cell_empty">
+<tt class="descname">is_cell_empty</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.is_cell_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) has a None value,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.is_cell_read_only">
+<tt class="descname">is_cell_read_only</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.is_cell_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) is not editable,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.is_column_read_only">
+<tt class="descname">is_column_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.is_column_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the column specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.is_row_read_only">
+<tt class="descname">is_row_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.is_row_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the row specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.is_valid_cell_value">
+<tt class="descname">is_valid_cell_value</tt><big>(</big><em>row</em>, <em>col</em>, <em>value</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.is_valid_cell_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests whether value is valid for the cell at row, col. Returns
+True if value is acceptable, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.no_column_sort">
+<tt class="descname">no_column_sort</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.no_column_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off any column sorting of the model data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.no_row_sort">
+<tt class="descname">no_row_sort</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.no_row_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off any row sorting of the model data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.resolve_selection">
+<tt class="descname">resolve_selection</tt><big>(</big><em>selection_list</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.resolve_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of (row, col) grid-cell coordinates that
+correspond to the objects in selection_list. For each coordinate, if
+the row is -1 it indicates that the entire column is selected. Likewise
+coordinates with a column of -1 indicate an entire row that is
+selected. Note that the objects in selection_list are
+model-specific.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.set_value">
+<tt class="descname">set_value</tt><big>(</big><em>row</em>, <em>col</em>, <em>value</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the value of the cell at (row, col) to value.</p>
+<p>Raises a ValueError if the value is vetoed.</p>
+<p>Note that subclasses should not override this method, but should
+override the _set_value method instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.sort_by_column">
+<tt class="descname">sort_by_column</tt><big>(</big><em>col</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.sort_by_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort model data by the column indexed by col. The reverse flag
+indicates that the sort should be done in reverse.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.grid_model.GridModel.sort_by_row">
+<tt class="descname">sort_by_row</tt><big>(</big><em>row</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridModel.sort_by_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort model data by the data row indexed by row. The reverse flag
+indicates that the sort should be done in reverse.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid_model.GridRow">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid_model.</tt><tt class="descname">GridRow</tt><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Structure for holding row/column specifications.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.grid_model.GridSortData">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid_model.</tt><tt class="descname">GridSortData</tt><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridSortData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>An event that signals a sorting has taken place.</p>
+<p>The index attribute should be set to the row or column
+on which the data was sorted. An index of -1 indicates that
+no sort has been applied (or a previous sort has been unapplied).
+The reversed flag indicates that the sort has been done in reverse
+order.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.wx.grid.grid_model.GridSortEvent">
+<tt class="descclassname">pyface.ui.wx.grid.grid_model.</tt><tt class="descname">GridSortEvent</tt><a class="headerlink" href="#pyface.ui.wx.grid.grid_model.GridSortEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridSortData" title="pyface.ui.wx.grid.grid_model.GridSortData"><tt class="xref py py-class docutils literal"><span class="pre">GridSortData</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.inverted_grid_model">
+<span id="inverted-grid-model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">inverted_grid_model</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.inverted_grid_model" title="Permalink to this headline">¶</a></h2>
+<p>An adapter model that inverts all of its row/column targets. Use
+this class with the CompositeGridModel to make models with different
+orientations match, or use it to visually flip the data without modifying
+the underlying model&#8217;s sense of row and column.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.inverted_grid_model.</tt><tt class="descname">InvertedGridModel</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridModel" title="pyface.ui.wx.grid.grid_model.GridModel"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_model.GridModel</span></tt></a></p>
+<p>An adapter model that inverts all of its row/column targets. Use
+this class with the CompositeGridModel to make models with different
+orientations match, or use it to visually flip the data without modifying
+the underlying model&#8217;s sense of row and column.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.delete_rows">
+<tt class="descname">delete_rows</tt><big>(</big><em>pos</em>, <em>num_rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.delete_rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_context_menu">
+<tt class="descname">get_cell_context_menu</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_drag_value">
+<tt class="descname">get_cell_drag_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_selection_value">
+<tt class="descname">get_cell_selection_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cell_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cols_drag_value">
+<tt class="descname">get_cols_drag_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cols_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cols_selection_value">
+<tt class="descname">get_cols_selection_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_cols_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_context_menu">
+<tt class="descname">get_column_context_menu</tt><big>(</big><em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_count">
+<tt class="descname">get_column_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_name">
+<tt class="descname">get_column_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_column_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_context_menu">
+<tt class="descname">get_row_context_menu</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_count">
+<tt class="descname">get_row_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_name">
+<tt class="descname">get_row_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_row_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_rows_drag_value">
+<tt class="descname">get_rows_drag_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_rows_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_rows_selection_value">
+<tt class="descname">get_rows_selection_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_rows_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.insert_cols">
+<tt class="descname">insert_cols</tt><big>(</big><em>pos</em>, <em>num_rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.insert_cols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_cell_editable">
+<tt class="descname">is_cell_editable</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_cell_editable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_cell_empty">
+<tt class="descname">is_cell_empty</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_cell_empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_column_read_only">
+<tt class="descname">is_column_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_column_read_only" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_row_read_only">
+<tt class="descname">is_row_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.is_row_read_only" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.resolve_selection">
+<tt class="descname">resolve_selection</tt><big>(</big><em>selection_list</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.resolve_selection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.set_value">
+<tt class="descname">set_value</tt><big>(</big><em>row</em>, <em>col</em>, <em>value</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.set_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.sort_by_column">
+<tt class="descname">sort_by_column</tt><big>(</big><em>col</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.sort_by_column" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.sort_by_row">
+<tt class="descname">sort_by_row</tt><big>(</big><em>row</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.inverted_grid_model.InvertedGridModel.sort_by_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.mapped_grid_cell_image_renderer">
+<span id="mapped-grid-cell-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">mapped_grid_cell_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.mapped_grid_cell_image_renderer" title="Permalink to this headline">¶</a></h2>
+<p>A renderer which will display a cell-specific image in addition to some
+text displayed in the same way the standard string renderer normally
+would, all data retrieved from specified value maps.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.mapped_grid_cell_image_renderer.</tt><tt class="descname">MappedGridCellImageRenderer</tt><big>(</big><em>image_map=None</em>, <em>text_map=None</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer" title="pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_cell_image_renderer.GridCellImageRenderer</span></tt></a></p>
+<p>Maps data values to image and text.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer.get_image_for_cell">
+<tt class="descname">get_image_for_cell</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer.get_image_for_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer.get_text_for_cell">
+<tt class="descname">get_text_for_cell</tt><big>(</big><em>grid</em>, <em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.mapped_grid_cell_image_renderer.MappedGridCellImageRenderer.get_text_for_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.simple_grid_model">
+<span id="simple-grid-model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">simple_grid_model</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.simple_grid_model" title="Permalink to this headline">¶</a></h2>
+<p>A SimpleGridModel simply builds a table from a 2-dimensional
+list/array containing the data. Optionally users can pass in specifications
+for rows and columns. By default these are built off the data itself,
+with row/column labels as the index + 1.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.simple_grid_model.</tt><tt class="descname">SimpleGridModel</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridModel" title="pyface.ui.wx.grid.grid_model.GridModel"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_model.GridModel</span></tt></a></p>
+<p>A SimpleGridModel simply builds a table from a 2-dimensional
+list/array containing the data. Optionally users can pass in specifications
+for rows and columns. By default these are built off the data itself,
+with row/column labels as the index + 1.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_cell_context_menu">
+<tt class="descname">get_cell_context_menu</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_cell_context_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a MenuManager object that will generate the appropriate
+context menu for this cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_cols_drag_value">
+<tt class="descname">get_cols_drag_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_cols_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified columns are dragged or
+copied and pasted. cols is a list of column indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_column_count">
+<tt class="descname">get_column_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_column_name">
+<tt class="descname">get_column_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_column_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the column specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_row_count">
+<tt class="descname">get_row_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_row_name">
+<tt class="descname">get_row_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_row_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the row specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_rows_drag_value">
+<tt class="descname">get_rows_drag_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_rows_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified rows are dragged or
+copied and pasted. rows is a list of row indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_cell_editable">
+<tt class="descname">is_cell_editable</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_cell_editable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) is editable,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_cell_empty">
+<tt class="descname">is_cell_empty</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_cell_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) has a None value,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_column_read_only">
+<tt class="descname">is_column_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_column_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the column specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_row_read_only">
+<tt class="descname">is_row_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.simple_grid_model.SimpleGridModel.is_row_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the row specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.trait_grid_cell_adapter">
+<span id="trait-grid-cell-adapter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">trait_grid_cell_adapter</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.trait_grid_cell_adapter" title="Permalink to this headline">¶</a></h2>
+<p>Adapter class to make trait editor controls work inside of a grid.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.trait_grid_cell_adapter.</tt><tt class="descname">TraitGridCellAdapter</tt><big>(</big><em>trait_editor_factory</em>, <em>obj</em>, <em>name</em>, <em>description</em>, <em>handler=None</em>, <em>context=None</em>, <em>style='simple'</em>, <em>width=-1.0</em>, <em>height=-1.0</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.grid.PyGridCellEditor</span></tt></p>
+<p>Wrap a trait editor as a GridCellEditor object.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.BeginEdit">
+<tt class="descname">BeginEdit</tt><big>(</big><em>row</em>, <em>col</em>, <em>grid</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.BeginEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure the control is ready to edit.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Clone">
+<tt class="descname">Clone</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new object which is the copy of this one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Create">
+<tt class="descname">Create</tt><big>(</big><em>parent</em>, <em>id</em>, <em>evtHandler</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to create the control, which must derive from wxControl.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Destroy">
+<tt class="descname">Destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Final cleanup.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.EndEdit">
+<tt class="descname">EndEdit</tt><big>(</big><em>row</em>, <em>col</em>, <em>grid</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.EndEdit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do anything necessary to complete the editing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.PaintBackground">
+<tt class="descname">PaintBackground</tt><big>(</big><em>rect</em>, <em>attr</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.PaintBackground" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the part of the cell not occupied by the edit control.  The
+base  class version just fills it with background colour from the
+attribute.  In this class the edit control fills the whole cell so
+don&#8217;t do anything at all in order to reduce flicker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Reset">
+<tt class="descname">Reset</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the value in the control back to its starting value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.SetSize">
+<tt class="descname">SetSize</tt><big>(</big><em>rect</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.SetSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to position/size the edit control within the cell rectangle.
+If you don&#8217;t fill the cell (the rect) then be sure to override
+PaintBackground and do something meaningful there.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Show">
+<tt class="descname">Show</tt><big>(</big><em>show</em>, <em>attr</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.Show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show or hide the edit control.  You can use the attr (if not None)
+to set colours or fonts for the control.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.StartingClick">
+<tt class="descname">StartingClick</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.StartingClick" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the editor is enabled by clicking on the cell, this method
+will be called to allow the editor to simulate the click on the
+control if needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.StartingKey">
+<tt class="descname">StartingKey</tt><big>(</big><em>evt</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.StartingKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the editor is enabled by pressing keys on the grid, this will be
+called to let the editor do something about that first key
+if desired.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.dispose">
+<tt class="descname">dispose</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.TraitGridCellAdapter.dispose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.get_control">
+<tt class="descclassname">pyface.ui.wx.grid.trait_grid_cell_adapter.</tt><tt class="descname">get_control</tt><big>(</big><em>control</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.get_control" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pyface.ui.wx.grid.trait_grid_cell_adapter.push_control">
+<tt class="descclassname">pyface.ui.wx.grid.trait_grid_cell_adapter.</tt><tt class="descname">push_control</tt><big>(</big><em>control</em>, <em>grid</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_cell_adapter.push_control" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.grid.trait_grid_model">
+<span id="trait-grid-model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">trait_grid_model</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.trait_grid_model" title="Permalink to this headline">¶</a></h2>
+<p>A TraitGridModel builds a grid from a list of traits objects. Each row
+represents on object, each column one trait from those objects. All the objects
+must be of the same type. Optionally a user may pass in a list of trait names
+defining which traits will be shown in the columns and in which order. If this
+list is not passed in, then the first object is inspected and every trait
+from that object gets a column.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridColumn">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.trait_grid_model.</tt><tt class="descname">TraitGridColumn</tt><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridColumn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridRow" title="pyface.ui.wx.grid.grid_model.GridRow"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_model.GridRow</span></tt></a></p>
+<p>Structure for holding column specifications in a TraitGridModel.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.trait_grid_model.</tt><tt class="descname">TraitGridModel</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.wx.grid.grid_model.GridModel" title="pyface.ui.wx.grid.grid_model.GridModel"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.grid.grid_model.GridModel</span></tt></a></p>
+<p>A TraitGridModel builds a grid from a list of traits objects. Each row
+represents on object, each column one trait from those objects. All the
+objects must be of the same type. Optionally a user may pass in a list of
+trait names defining which traits will be shown in the columns and in
+which order. If this list is not passed in, then the first object is
+inspected and every trait from that object gets a column.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_drag_value">
+<tt class="descname">get_cell_drag_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified cell is dragged or
+copied and pasted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_editor">
+<tt class="descname">get_cell_editor</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the editor for the specified cell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_selection_value">
+<tt class="descname">get_cell_selection_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cell_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a TraitGridSelection object specifying the data stored
+in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cols_drag_value">
+<tt class="descname">get_cols_drag_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cols_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified columns are dragged or
+copied and pasted. cols is a list of column indexes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cols_selection_value">
+<tt class="descname">get_cols_selection_value</tt><big>(</big><em>cols</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_cols_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of TraitGridSelection objects containing the
+object corresponding to the grid rows and the traits corresponding
+to the specified columns.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_count">
+<tt class="descname">get_column_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_name">
+<tt class="descname">get_column_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the label of the column specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_size">
+<tt class="descname">get_column_size</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_column_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the size in pixels of the column indexed by col.
+A value of -1 or None means use the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_row_count">
+<tt class="descname">get_row_count</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_row_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows for this table.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_row_name">
+<tt class="descname">get_row_name</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_row_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the row specified by the
+(zero-based) index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_rows_drag_value">
+<tt class="descname">get_rows_drag_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_rows_drag_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value to use when the specified rows are dragged or
+copied and pasted. rows is a list of row indexes. If there is only
+one row listed, return the corresponding trait object. If more than
+one row is listed then return a list of objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_rows_selection_value">
+<tt class="descname">get_rows_selection_value</tt><big>(</big><em>rows</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_rows_selection_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of TraitGridSelection objects containing the
+object corresponding to the selected rows.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_type">
+<tt class="descname">get_type</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_value">
+<tt class="descname">get_value</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value stored in the table at (row, col).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_cell_editable">
+<tt class="descname">is_cell_editable</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_cell_editable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) is editable,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_cell_empty">
+<tt class="descname">is_cell_empty</tt><big>(</big><em>row</em>, <em>col</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_cell_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the cell at (row, col) has a None value,
+False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_column_read_only">
+<tt class="descname">is_column_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_column_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the column specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_row_read_only">
+<tt class="descname">is_row_read_only</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.is_row_read_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the row specified by the zero-based index
+is read-only.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.resolve_selection">
+<tt class="descname">resolve_selection</tt><big>(</big><em>selection_list</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.resolve_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of (row, col) grid-cell coordinates that
+correspond to the objects in objlist. For each coordinate, if the
+row is -1 it indicates that the entire column is selected. Likewise
+coordinates with a column of -1 indicate an entire row that is
+selected. For the TraitGridModel, the objects in objlist must
+be TraitGridSelection objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridModel.sort_by_column">
+<tt class="descname">sort_by_column</tt><big>(</big><em>col</em>, <em>reverse=False</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridModel.sort_by_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort model data by the column indexed by col.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.wx.grid.trait_grid_model.TraitGridSelection">
+<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.trait_grid_model.</tt><tt class="descname">TraitGridSelection</tt><a class="headerlink" href="#pyface.ui.wx.grid.trait_grid_model.TraitGridSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Structure for holding specification information.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">grid Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">grid</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.checkbox_image_renderer"><tt class="docutils literal"><span class="pre">checkbox_image_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.checkbox_renderer"><tt class="docutils literal"><span class="pre">checkbox_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.combobox_focus_handler"><tt class="docutils literal"><span class="pre">combobox_focus_handler</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.composite_grid_model"><tt class="docutils literal"><span class="pre">composite_grid_model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.edit_image_renderer"><tt class="docutils literal"><span class="pre">edit_image_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.edit_renderer"><tt class="docutils literal"><span class="pre">edit_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid"><tt class="docutils literal"><span class="pre">grid</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_cell_image_renderer"><tt class="docutils literal"><span class="pre">grid_cell_image_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_cell_renderer"><tt class="docutils literal"><span class="pre">grid_cell_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_model"><tt class="docutils literal"><span class="pre">grid_model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.inverted_grid_model"><tt class="docutils literal"><span class="pre">inverted_grid_model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.mapped_grid_cell_image_renderer"><tt class="docutils literal"><span class="pre">mapped_grid_cell_image_renderer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.simple_grid_model"><tt class="docutils literal"><span class="pre">simple_grid_model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.trait_grid_cell_adapter"><tt class="docutils literal"><span class="pre">trait_grid_cell_adapter</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.grid.trait_grid_model"><tt class="docutils literal"><span class="pre">trait_grid_model</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.wx.action.html"
+                        title="previous chapter">action Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.wx.timer.html"
+                        title="next chapter">timer Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.ui.wx.grid.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.wx.timer.html" title="timer Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.wx.action.html" title="action Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.wx.html" >wx Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

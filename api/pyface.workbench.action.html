@@ -1,0 +1,531 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>action Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="workbench Package" href="pyface.workbench.html" />
+    <link rel="next" title="debug Package" href="pyface.workbench.debug.html" />
+    <link rel="prev" title="workbench Package" href="pyface.workbench.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.workbench.debug.html" title="debug Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.workbench.html" title="workbench Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.workbench.html" accesskey="U">workbench Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="action-package">
+<h1>action Package<a class="headerlink" href="#action-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.workbench.action.action_controller">
+<span id="action-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_controller</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.action_controller" title="Permalink to this headline">¶</a></h2>
+<p>The action controller for workbench menu and tool bars.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.action_controller.ActionController">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.action_controller.</tt><tt class="descname">ActionController</tt><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action_controller.ActionController" title="pyface.action.action_controller.ActionController"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action_controller.ActionController</span></tt></a></p>
+<p>The action controller for workbench menu and tool bars.</p>
+<p>The controller is used to &#8216;hook&#8217; the invocation of every action on the menu
+and tool bars. This is done so that additional (and workbench specific)
+information can be added to action events. Currently, we attach a reference
+to the workbench window.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.action_controller.ActionController.perform">
+<tt class="descname">perform</tt><big>(</big><em>action</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control an action invocation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.api">
+<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.workbench.action.delete_user_perspective_action">
+<span id="delete-user-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">delete_user_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.delete_user_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that deletes a user perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.delete_user_perspective_action.</tt><tt class="descname">DeleteUserPerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.user_perspective_action.UserPerspectiveAction" title="pyface.workbench.action.user_perspective_action.UserPerspectiveAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.user_perspective_action.UserPerspectiveAction</span></tt></a></p>
+<p>An action that deletes a user perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.delete_user_perspective_action.DeleteUserPerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.menu_bar_manager">
+<span id="menu-bar-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">menu_bar_manager</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.menu_bar_manager" title="Permalink to this headline">¶</a></h2>
+<p>The menu bar manager for Envisage workbench windows.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.menu_bar_manager.MenuBarManager">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.menu_bar_manager.</tt><tt class="descname">MenuBarManager</tt><big>(</big><em>*args</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.menu_bar_manager.MenuBarManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.action.html#pyface.ui.wx.action.menu_bar_manager.MenuBarManager" title="pyface.ui.wx.action.menu_bar_manager.MenuBarManager"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.action.menu_bar_manager.MenuBarManager</span></tt></a></p>
+<p>The menu bar manager for Envisage workbench windows.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.menu_bar_manager.MenuBarManager.create_menu_bar">
+<tt class="descname">create_menu_bar</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.menu_bar_manager.MenuBarManager.create_menu_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a menu bar representation of the manager.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.new_user_perspective_action">
+<span id="new-user-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">new_user_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.new_user_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that creates a new (and empty) user perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.new_user_perspective_action.NewUserPerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.new_user_perspective_action.</tt><tt class="descname">NewUserPerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.new_user_perspective_action.NewUserPerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that creates a new (and empty) user perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.new_user_perspective_action.NewUserPerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.new_user_perspective_action.NewUserPerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Peform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.perspective_menu_manager">
+<span id="perspective-menu-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">perspective_menu_manager</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.perspective_menu_manager" title="Permalink to this headline">¶</a></h2>
+<p>The default perspective menu for a workbench window.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.perspective_menu_manager.PerspectiveMenuManager">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.perspective_menu_manager.</tt><tt class="descname">PerspectiveMenuManager</tt><big>(</big><em>*args</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.perspective_menu_manager.PerspectiveMenuManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.action.html#pyface.ui.wx.action.menu_manager.MenuManager" title="pyface.ui.wx.action.menu_manager.MenuManager"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.action.menu_manager.MenuManager</span></tt></a></p>
+<p>The default perspective menu for a workbench window.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.perspective_menu_manager.PerspectiveMenuManager.rebuild">
+<tt class="descname">rebuild</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.workbench.action.perspective_menu_manager.PerspectiveMenuManager.rebuild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rebuild the menu.</p>
+<p>This is called when user perspectives have been added or removed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.rename_user_perspective_action">
+<span id="rename-user-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">rename_user_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.rename_user_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that renames a user perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.rename_user_perspective_action.RenameUserPerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.rename_user_perspective_action.</tt><tt class="descname">RenameUserPerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.rename_user_perspective_action.RenameUserPerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.user_perspective_action.UserPerspectiveAction" title="pyface.workbench.action.user_perspective_action.UserPerspectiveAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.user_perspective_action.UserPerspectiveAction</span></tt></a></p>
+<p>An action that renames a user perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.rename_user_perspective_action.RenameUserPerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.rename_user_perspective_action.RenameUserPerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.reset_active_perspective_action">
+<span id="reset-active-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">reset_active_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.reset_active_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that resets the active perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.reset_active_perspective_action.ResetActivePerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.reset_active_perspective_action.</tt><tt class="descname">ResetActivePerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.reset_active_perspective_action.ResetActivePerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that resets the active perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.reset_active_perspective_action.ResetActivePerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.reset_active_perspective_action.ResetActivePerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.reset_all_perspectives_action">
+<span id="reset-all-perspectives-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">reset_all_perspectives_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.reset_all_perspectives_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that resets <em>all</em> perspectives.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.reset_all_perspectives_action.ResetAllPerspectivesAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.reset_all_perspectives_action.</tt><tt class="descname">ResetAllPerspectivesAction</tt><a class="headerlink" href="#pyface.workbench.action.reset_all_perspectives_action.ResetAllPerspectivesAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that resets <em>all</em> perspectives.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.reset_all_perspectives_action.ResetAllPerspectivesAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.reset_all_perspectives_action.ResetAllPerspectivesAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.save_as_user_perspective_action">
+<span id="save-as-user-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">save_as_user_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.save_as_user_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that saves the active perspective as a user perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.save_as_user_perspective_action.SaveAsUserPerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.save_as_user_perspective_action.</tt><tt class="descname">SaveAsUserPerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.save_as_user_perspective_action.SaveAsUserPerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that saves the active perspective as a user perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.save_as_user_perspective_action.SaveAsUserPerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.save_as_user_perspective_action.SaveAsUserPerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.set_active_perspective_action">
+<span id="set-active-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">set_active_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.set_active_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that sets the active perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.set_active_perspective_action.</tt><tt class="descname">SetActivePerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that sets the active perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the action.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.set_active_perspective_action.SetActivePerspectiveAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.setattr_action">
+<span id="setattr-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">setattr_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.setattr_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that sets an attribute.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.setattr_action.SetattrAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.setattr_action.</tt><tt class="descname">SetattrAction</tt><a class="headerlink" href="#pyface.workbench.action.setattr_action.SetattrAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that sets an attribute.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.setattr_action.SetattrAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.setattr_action.SetattrAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.show_view_action">
+<span id="show-view-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">show_view_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.show_view_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that shows a dialog to allow the user to choose a view.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.show_view_action.ShowViewAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.show_view_action.</tt><tt class="descname">ShowViewAction</tt><a class="headerlink" href="#pyface.workbench.action.show_view_action.ShowViewAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that shows a dialog to allow the user to choose a view.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.show_view_action.ShowViewAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.show_view_action.ShowViewAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.toggle_view_visibility_action">
+<span id="toggle-view-visibility-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">toggle_view_visibility_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.toggle_view_visibility_action" title="Permalink to this headline">¶</a></h2>
+<p>An action that toggles a view&#8217;s visibility (ie. hides/shows it).</p>
+<dl class="class">
+<dt id="pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.toggle_view_visibility_action.</tt><tt class="descname">ToggleViewVisibilityAction</tt><a class="headerlink" href="#pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>An action that toggles a view&#8217;s visibility (ie. hides/shows it).</p>
+<dl class="method">
+<dt id="pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the action is no longer required.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.toggle_view_visibility_action.ToggleViewVisibilityAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.tool_bar_manager">
+<span id="tool-bar-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tool_bar_manager</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.tool_bar_manager" title="Permalink to this headline">¶</a></h2>
+<p>The tool bar manager for the Envisage workbench window.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.tool_bar_manager.ToolBarManager">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.tool_bar_manager.</tt><tt class="descname">ToolBarManager</tt><big>(</big><em>*args</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.tool_bar_manager.ToolBarManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.action.html#pyface.ui.wx.action.tool_bar_manager.ToolBarManager" title="pyface.ui.wx.action.tool_bar_manager.ToolBarManager"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.action.tool_bar_manager.ToolBarManager</span></tt></a></p>
+<p>The tool bar manager for the Envisage workbench window.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.tool_bar_manager.ToolBarManager.create_tool_bar">
+<tt class="descname">create_tool_bar</tt><big>(</big><em>parent</em>, <em>controller=None</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.tool_bar_manager.ToolBarManager.create_tool_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a tool bar representation of the manager.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.user_perspective_action">
+<span id="user-perspective-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">user_perspective_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.user_perspective_action" title="Permalink to this headline">¶</a></h2>
+<p>The base class for user perspective actions.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.user_perspective_action.UserPerspectiveAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.user_perspective_action.</tt><tt class="descname">UserPerspectiveAction</tt><a class="headerlink" href="#pyface.workbench.action.user_perspective_action.UserPerspectiveAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="pyface.workbench.action.workbench_action.WorkbenchAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.action.workbench_action.WorkbenchAction</span></tt></a></p>
+<p>The base class for user perspective actions.</p>
+<p>Instances of this class (or its subclasses ;^) are enabled only when the
+active perspective is a user perspective.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.user_perspective_action.UserPerspectiveAction.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.workbench.action.user_perspective_action.UserPerspectiveAction.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the action.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.user_perspective_name">
+<span id="user-perspective-name-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">user_perspective_name</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.user_perspective_name" title="Permalink to this headline">¶</a></h2>
+<p>Object with views for naming or renaming a user perspective.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.user_perspective_name.UserPerspectiveName">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.user_perspective_name.</tt><tt class="descname">UserPerspectiveName</tt><a class="headerlink" href="#pyface.workbench.action.user_perspective_name.UserPerspectiveName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Object with views for naming or renaming a user perspective.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.workbench.action.user_perspective_name.not_empty_string">
+<tt class="descclassname">pyface.workbench.action.user_perspective_name.</tt><tt class="descname">not_empty_string</tt><big>(</big><em>object</em>, <em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.user_perspective_name.not_empty_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>a not-empty string</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.view_chooser">
+<span id="view-chooser-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">view_chooser</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.view_chooser" title="Permalink to this headline">¶</a></h2>
+<p>A UI that allows the user to choose a view.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.view_chooser.Category">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.view_chooser.</tt><tt class="descname">Category</tt><a class="headerlink" href="#pyface.workbench.action.view_chooser.Category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>A view category.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.workbench.action.view_chooser.IViewTreeNode">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.view_chooser.</tt><tt class="descname">IViewTreeNode</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_chooser.IViewTreeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traitsui.tree_node.TreeNode</span></tt></p>
+<p>A tree node for objects that implement the &#8216;IView&#8217; interface.</p>
+<p>This node does <em>not</em> recognise objects that can be <em>adapted</em> to the &#8216;IView&#8217;
+interface, only those that actually implement it. If we wanted to allow
+for adaptation we would have to work out a way for the rest of the
+&#8216;TreeNode&#8217; code to access the adapter, not the original object. We could,
+of course override every method, but that seems a little, errr, tedious.
+We could probably do with something like in the PyFace tree where there
+is a method that returns the actual object that we want to manipulate.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.view_chooser.IViewTreeNode.get_icon">
+<tt class="descname">get_icon</tt><big>(</big><em>obj</em>, <em>is_expanded</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_chooser.IViewTreeNode.get_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the icon for a specified object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.action.view_chooser.IViewTreeNode.is_node_for">
+<tt class="descname">is_node_for</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_chooser.IViewTreeNode.is_node_for" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this is the node that handles a specified object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.workbench.action.view_chooser.ViewChooser">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.view_chooser.</tt><tt class="descname">ViewChooser</tt><a class="headerlink" href="#pyface.workbench.action.view_chooser.ViewChooser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Allow the user to choose a view.</p>
+<p>This implementation shows views in a tree grouped by category.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.view_chooser.</tt><tt class="descname">WorkbenchWindowTreeNode</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traitsui.tree_node.TreeNode</span></tt></p>
+<p>A tree node for workbench windows that displays the window&#8217;s views.</p>
+<p>The views are grouped by their category.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode.get_children">
+<tt class="descname">get_children</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_chooser.WorkbenchWindowTreeNode.get_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the object&#8217;s children.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.view_menu_manager">
+<span id="view-menu-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">view_menu_manager</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.view_menu_manager" title="Permalink to this headline">¶</a></h2>
+<p>The &#8216;View&#8217; menu</p>
+<dl class="class">
+<dt id="pyface.workbench.action.view_menu_manager.ViewMenuManager">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.view_menu_manager.</tt><tt class="descname">ViewMenuManager</tt><big>(</big><em>*args</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_menu_manager.ViewMenuManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.action.html#pyface.ui.wx.action.menu_manager.MenuManager" title="pyface.ui.wx.action.menu_manager.MenuManager"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.action.menu_manager.MenuManager</span></tt></a></p>
+<p>The &#8216;View&#8217; menu.</p>
+<p>By default, this menu is displayed on the main menu bar.</p>
+<dl class="method">
+<dt id="pyface.workbench.action.view_menu_manager.ViewMenuManager.refresh">
+<tt class="descname">refresh</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.workbench.action.view_menu_manager.ViewMenuManager.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refreshes the checked state of the actions in the menu.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.workbench.action.workbench_action">
+<span id="workbench-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">workbench_action</span></tt> Module<a class="headerlink" href="#module-pyface.workbench.action.workbench_action" title="Permalink to this headline">¶</a></h2>
+<p>Abstract base class for all workbench actions.</p>
+<dl class="class">
+<dt id="pyface.workbench.action.workbench_action.WorkbenchAction">
+<em class="property">class </em><tt class="descclassname">pyface.workbench.action.workbench_action.</tt><tt class="descname">WorkbenchAction</tt><a class="headerlink" href="#pyface.workbench.action.workbench_action.WorkbenchAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></tt></a></p>
+<p>Abstract base class for all workbench actions.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">action Package</a><ul>
+<li><a class="reference internal" href="#module-pyface.workbench.action.action_controller"><tt class="docutils literal"><span class="pre">action_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.delete_user_perspective_action"><tt class="docutils literal"><span class="pre">delete_user_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.menu_bar_manager"><tt class="docutils literal"><span class="pre">menu_bar_manager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.new_user_perspective_action"><tt class="docutils literal"><span class="pre">new_user_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.perspective_menu_manager"><tt class="docutils literal"><span class="pre">perspective_menu_manager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.rename_user_perspective_action"><tt class="docutils literal"><span class="pre">rename_user_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.reset_active_perspective_action"><tt class="docutils literal"><span class="pre">reset_active_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.reset_all_perspectives_action"><tt class="docutils literal"><span class="pre">reset_all_perspectives_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.save_as_user_perspective_action"><tt class="docutils literal"><span class="pre">save_as_user_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.set_active_perspective_action"><tt class="docutils literal"><span class="pre">set_active_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.setattr_action"><tt class="docutils literal"><span class="pre">setattr_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.show_view_action"><tt class="docutils literal"><span class="pre">show_view_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.toggle_view_visibility_action"><tt class="docutils literal"><span class="pre">toggle_view_visibility_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.tool_bar_manager"><tt class="docutils literal"><span class="pre">tool_bar_manager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.user_perspective_action"><tt class="docutils literal"><span class="pre">user_perspective_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.user_perspective_name"><tt class="docutils literal"><span class="pre">user_perspective_name</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.view_chooser"><tt class="docutils literal"><span class="pre">view_chooser</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.view_menu_manager"><tt class="docutils literal"><span class="pre">view_menu_manager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.workbench.action.workbench_action"><tt class="docutils literal"><span class="pre">workbench_action</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.workbench.html"
+                        title="previous chapter">workbench Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.workbench.debug.html"
+                        title="next chapter">debug Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.workbench.action.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.workbench.debug.html" title="debug Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.workbench.html" title="workbench Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.workbench.html" >workbench Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>timer Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="qt4 Package" href="pyface.ui.qt4.html" />
+    <link rel="next" title="wizard Package" href="pyface.ui.qt4.wizard.html" />
+    <link rel="prev" title="tasks Package" href="pyface.ui.qt4.tasks.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.wizard.html" title="wizard Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.tasks.html" title="tasks Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" accesskey="U">qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="timer-package">
+<h1>timer Package<a class="headerlink" href="#timer-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">timer</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.ui.qt4.timer"></span></div>
+<div class="section" id="module-pyface.ui.qt4.timer.do_later">
+<span id="do-later-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">do_later</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.timer.do_later" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.timer.do_later.DoLaterTimer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.timer.do_later.</tt><tt class="descname">DoLaterTimer</tt><big>(</big><em>interval</em>, <em>callable</em>, <em>args</em>, <em>kw_args</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtCore.QTimer</span></tt></p>
+<dl class="method">
+<dt id="pyface.ui.qt4.timer.do_later.DoLaterTimer.Notify">
+<tt class="descname">Notify</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.do_later.DoLaterTimer.Notify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.timer.do_later.DoLaterTimer.active_timers">
+<tt class="descname">active_timers</tt><em class="property"> = []</em><a class="headerlink" href="#pyface.ui.qt4.timer.do_later.DoLaterTimer.active_timers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.timer.do_later.DoLaterTimer.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x18d3ccd8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.timer.do_later.DoLaterTimer.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.timer.timer">
+<span id="timer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">timer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.timer.timer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.timer.timer.Timer">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.timer.timer.</tt><tt class="descname">Timer</tt><big>(</big><em>millisecs</em>, <em>callable</em>, <em>*args</em>, <em>**kw_args</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtCore.QTimer</span></tt></p>
+<p>Simple subclass of QTimer that allows the user to have a function called
+periodically.  Some code assumes that this is a sub-class of wx.Timer, so
+we add a few wrapper methods to pretend it is.</p>
+<p>Any exceptions raised in the callable are caught.  If
+<cite>StopIteration</cite> is raised the timer stops.  If other exceptions are
+encountered the timer is stopped and the exception re-raised.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.timer.timer.Timer.IsRunning">
+<tt class="descname">IsRunning</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer.IsRunning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulate wx.Timer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.timer.timer.Timer.Notify">
+<tt class="descname">Notify</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer.Notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the given callable.  Exceptions raised in the callable are
+caught.  If <cite>StopIteration</cite> is raised the timer stops.  If other
+exceptions are encountered the timer is stopped and the exception
+re-raised.  Note that the name of this method is part of the API
+because some code expects this to be a wx.Timer sub-class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.timer.timer.Timer.Start">
+<tt class="descname">Start</tt><big>(</big><em>millisecs=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer.Start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulate wx.Timer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.timer.timer.Timer.Stop">
+<tt class="descname">Stop</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer.Stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulate wx.Timer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.timer.timer.Timer.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x192dd850&gt;</em><a class="headerlink" href="#pyface.ui.qt4.timer.timer.Timer.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">timer Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">timer</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.timer.do_later"><tt class="docutils literal"><span class="pre">do_later</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.timer.timer"><tt class="docutils literal"><span class="pre">timer</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.tasks.html"
+                        title="previous chapter">tasks Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.wizard.html"
+                        title="next chapter">wizard Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.ui.qt4.timer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.wizard.html" title="wizard Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.tasks.html" title="tasks Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" >qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

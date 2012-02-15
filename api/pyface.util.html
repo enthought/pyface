@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>util Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="pyface Package" href="pyface.html" />
+    <link rel="next" title="viewer Package" href="pyface.viewer.html" />
+    <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.viewer.html" title="viewer Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.wx.workbench.html" title="workbench Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="util-package">
+<h1>util Package<a class="headerlink" href="#util-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.util"></span></div>
+<div class="section" id="module-pyface.util.fix_introspect_bug">
+<span id="fix-introspect-bug-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">fix_introspect_bug</span></tt> Module<a class="headerlink" href="#module-pyface.util.fix_introspect_bug" title="Permalink to this headline">¶</a></h2>
+<p>This module adds a fix for wx.py&#8217;s introspect module.</p>
+<p>In order to do code-completion, the function
+<cite>introspect.getAttributeName</cite> accesses all the attributes of the
+current object.  This causes severe problems for modules like tvtk
+which depend on lazy importing.  The original introspect module also
+has severe problems with large Numeric arrays because it calls str()
+on the Numeric object in order to find its methods.</p>
+<p>This file defines a fixed function that works fine with lazy objects
+and large Numeric arrays.  This fixed function is injected into the
+introspect module.</p>
+<dl class="function">
+<dt id="pyface.util.fix_introspect_bug.getAllAttributeNames">
+<tt class="descclassname">pyface.util.fix_introspect_bug.</tt><tt class="descname">getAllAttributeNames</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAllAttributeNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dict of all attributes, including inherited, for an object.</p>
+<p>Recursively walk through a class and all base classes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.fix_introspect_bug.getAttributeNames">
+<tt class="descclassname">pyface.util.fix_introspect_bug.</tt><tt class="descname">getAttributeNames</tt><big>(</big><em>object</em>, <em>includeMagic=1</em>, <em>includeSingle=1</em>, <em>includeDouble=1</em><big>)</big><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAttributeNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of unique attributes, including inherited, for object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.util.font_helper">
+<span id="font-helper-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">font_helper</span></tt> Module<a class="headerlink" href="#module-pyface.util.font_helper" title="Permalink to this headline">¶</a></h2>
+<p>Utility functions for working with wx Fonts.</p>
+<dl class="function">
+<dt id="pyface.util.font_helper.new_font_like">
+<tt class="descclassname">pyface.util.font_helper.</tt><tt class="descname">new_font_like</tt><big>(</big><em>font</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.util.font_helper.new_font_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new font, like another one, only different.  Maybe.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.util.guisupport">
+<span id="guisupport-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">guisupport</span></tt> Module<a class="headerlink" href="#module-pyface.util.guisupport" title="Permalink to this headline">¶</a></h2>
+<p>Support for creating GUI apps and starting event loops.</p>
+<p>IPython&#8217;s GUI integration allows interative plotting and GUI usage in IPython
+session. IPython has two different types of GUI integration:</p>
+<ol class="arabic simple">
+<li>The terminal based IPython supports GUI event loops through Python&#8217;s
+PyOS_InputHook. PyOS_InputHook is a hook that Python calls periodically
+whenever raw_input is waiting for a user to type code. We implement GUI
+support in the terminal by setting PyOS_InputHook to a function that
+iterates the event loop for a short while. It is important to note that
+in this situation, the real GUI event loop is NOT run in the normal
+manner, so you can&#8217;t use the normal means to detect that it is running.</li>
+<li>In the two process IPython kernel/frontend, the GUI event loop is run in
+the kernel. In this case, the event loop is run in the normal manner by
+calling the function or method of the GUI toolkit that starts the event
+loop.</li>
+</ol>
+<p>In addition to starting the GUI event loops in one of these two ways, IPython
+will <em>always</em> create an appropriate GUI application object when GUi
+integration is enabled.</p>
+<p>If you want your GUI apps to run in IPython you need to do two things:</p>
+<ol class="arabic simple">
+<li>Test to see if there is already an existing main application object. If
+there is, you should use it. If there is not an existing application object
+you should create one.</li>
+<li>Test to see if the GUI event loop is running. If it is, you should not
+start it. If the event loop is not running you may start it.</li>
+</ol>
+<p>This module contains functions for each toolkit that perform these things
+in a consistent manner. Because of how PyOS_InputHook runs the event loop
+you cannot detect if the event loop is running using the traditional calls
+(such as <tt class="docutils literal"><span class="pre">wx.GetApp.IsMainLoopRunning()</span></tt> in wxPython). If PyOS_InputHook is
+set These methods will return a false negative. That is, they will say the
+event loop is not running, when is actually is. To work around this limitation
+we proposed the following informal protocol:</p>
+<ul class="simple">
+<li>Whenever someone starts the event loop, they <em>must</em> set the <tt class="docutils literal"><span class="pre">_in_event_loop</span></tt>
+attribute of the main application object to <tt class="docutils literal"><span class="pre">True</span></tt>. This should be done
+regardless of how the event loop is actually run.</li>
+<li>Whenever someone stops the event loop, they <em>must</em> set the <tt class="docutils literal"><span class="pre">_in_event_loop</span></tt>
+attribute of the main application object to <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
+<li>If you want to see if the event loop is running, you <em>must</em> use <tt class="docutils literal"><span class="pre">hasattr</span></tt>
+to see if <tt class="docutils literal"><span class="pre">_in_event_loop</span></tt> attribute has been set. If it is set, you
+<em>must</em> use its value. If it has not been set, you can query the toolkit
+in the normal manner.</li>
+<li>If you want GUI support and no one else has created an application or
+started the event loop you <em>must</em> do this. We don&#8217;t want projects to
+attempt to defer these things to someone else if they themselves need it.</li>
+</ul>
+<p>The functions below implement this logic for each GUI toolkit. If you need
+to create custom application subclasses, you will likely have to modify this
+code for your own purposes. This code can be copied into your own project
+so you don&#8217;t have to depend on IPython.</p>
+<dl class="function">
+<dt id="pyface.util.guisupport.get_app_qt4">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">get_app_qt4</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new qt4 app or return an existing one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.get_app_wx">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">get_app_wx</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new wx app or return an exiting one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.is_event_loop_running_qt4">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">is_event_loop_running_qt4</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the qt4 event loop running.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.is_event_loop_running_wx">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">is_event_loop_running_wx</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_wx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the wx event loop running.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.start_event_loop_qt4">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">start_event_loop_qt4</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the qt4 event loop in a consistent manner.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.start_event_loop_wx">
+<tt class="descclassname">pyface.util.guisupport.</tt><tt class="descname">start_event_loop_wx</tt><big>(</big><em>app=None</em><big>)</big><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the wx event loop in a consistent manner.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.util.python_stc">
+<span id="python-stc-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">python_stc</span></tt> Module<a class="headerlink" href="#module-pyface.util.python_stc" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.util.python_stc.PythonSTC">
+<em class="property">class </em><tt class="descclassname">pyface.util.python_stc.</tt><tt class="descname">PythonSTC</tt><big>(</big><em>parent</em>, <em>ID</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.stc.StyledTextCtrl</span></tt></p>
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.Expand">
+<tt class="descname">Expand</tt><big>(</big><em>line</em>, <em>doExpand</em>, <em>force=False</em>, <em>visLevels=0</em>, <em>level=-1</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.Expand" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.FoldAll">
+<tt class="descname">FoldAll</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.FoldAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.OnKeyPressed">
+<tt class="descname">OnKeyPressed</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnKeyPressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.OnMarginClick">
+<tt class="descname">OnMarginClick</tt><big>(</big><em>evt</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnMarginClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.OnUpdateUI">
+<tt class="descname">OnUpdateUI</tt><big>(</big><em>evt</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.python_stc.runTest">
+<tt class="descclassname">pyface.util.python_stc.</tt><tt class="descname">runTest</tt><big>(</big><em>frame</em>, <em>nb</em>, <em>log</em><big>)</big><a class="headerlink" href="#pyface.util.python_stc.runTest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">util Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">util</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.util.fix_introspect_bug"><tt class="docutils literal"><span class="pre">fix_introspect_bug</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.font_helper"><tt class="docutils literal"><span class="pre">font_helper</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.guisupport"><tt class="docutils literal"><span class="pre">guisupport</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.python_stc"><tt class="docutils literal"><span class="pre">python_stc</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.wx.workbench.html"
+                        title="previous chapter">workbench Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.viewer.html"
+                        title="next chapter">viewer Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.util.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.viewer.html" title="viewer Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.wx.workbench.html" title="workbench Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

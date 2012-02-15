@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>wizard Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="pyface Package" href="pyface.html" />
+    <link rel="next" title="workbench Package" href="pyface.workbench.html" />
+    <link rel="prev" title="viewer Package" href="pyface.viewer.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.workbench.html" title="workbench Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.viewer.html" title="viewer Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="wizard-package">
+<h1>wizard Package<a class="headerlink" href="#wizard-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">wizard</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.wizard"></span></div>
+<div class="section" id="module-pyface.wizard.api">
+<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.wizard.chained_wizard">
+<span id="chained-wizard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">chained_wizard</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.chained_wizard" title="Permalink to this headline">¶</a></h2>
+<p>A wizard model that can be chained with other wizards.</p>
+<dl class="class">
+<dt id="pyface.wizard.chained_wizard.ChainedWizard">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.chained_wizard.</tt><tt class="descname">ChainedWizard</tt><a class="headerlink" href="#pyface.wizard.chained_wizard.ChainedWizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.wizard.html#pyface.ui.wx.wizard.wizard.Wizard" title="pyface.ui.wx.wizard.wizard.Wizard"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.wizard.wizard.Wizard</span></tt></a></p>
+<p>A wizard model that can be chained with other wizards.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.chained_wizard_controller">
+<span id="chained-wizard-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">chained_wizard_controller</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.chained_wizard_controller" title="Permalink to this headline">¶</a></h2>
+<p>A wizard controller that can be chained with others.</p>
+<dl class="class">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.chained_wizard_controller.</tt><tt class="descname">ChainedWizardController</tt><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.wizard.wizard_controller.WizardController" title="pyface.wizard.wizard_controller.WizardController"><tt class="xref py py-class docutils literal"><span class="pre">pyface.wizard.wizard_controller.WizardController</span></tt></a></p>
+<p>A wizard controller that can be chained with others.</p>
+<dl class="method">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController.dispose_pages">
+<tt class="descname">dispose_pages</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController.dispose_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispose the wizard&#8217;s pages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController.get_next_page">
+<tt class="descname">get_next_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController.get_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the next page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController.get_previous_page">
+<tt class="descname">get_previous_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController.get_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previous page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController.is_first_page">
+<tt class="descname">is_first_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController.is_first_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the first page?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.chained_wizard_controller.ChainedWizardController.is_last_page">
+<tt class="descname">is_last_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.chained_wizard_controller.ChainedWizardController.is_last_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the last page?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.i_wizard">
+<span id="i-wizard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">i_wizard</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.i_wizard" title="Permalink to this headline">¶</a></h2>
+<p>The interface for all pyface wizards.</p>
+<dl class="class">
+<dt id="pyface.wizard.i_wizard.IWizard">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.i_wizard.</tt><tt class="descname">IWizard</tt><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></tt></p>
+<p>The interface for all pyface wizards.</p>
+<dl class="method">
+<dt id="pyface.wizard.i_wizard.IWizard.next">
+<tt class="descname">next</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance to the next page in the wizard.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard.IWizard.previous">
+<tt class="descname">previous</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard.IWizard.previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return to the previous page in the wizard.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wizard.i_wizard.MWizard">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.i_wizard.</tt><tt class="descname">MWizard</tt><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWizard interface.</p>
+<p>Implements: next(), previous()
+Reimplements: _create_contents()</p>
+<dl class="method">
+<dt id="pyface.wizard.i_wizard.MWizard.next">
+<tt class="descname">next</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Advance to the next page in the wizard.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard.MWizard.previous">
+<tt class="descname">previous</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard.MWizard.previous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return to the previous page in the wizard.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.i_wizard_controller">
+<span id="i-wizard-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">i_wizard_controller</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.i_wizard_controller" title="Permalink to this headline">¶</a></h2>
+<p>The interface for all pyface wizard controllers.</p>
+<dl class="class">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.i_wizard_controller.</tt><tt class="descname">IWizardController</tt><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></tt></p>
+<p>The interface for all pyface wizard controllers.</p>
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.dispose_pages">
+<tt class="descname">dispose_pages</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.dispose_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispose all the pages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.get_first_page">
+<tt class="descname">get_first_page</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.get_first_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first page in the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.get_next_page">
+<tt class="descname">get_next_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.get_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the next page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.get_previous_page">
+<tt class="descname">get_previous_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.get_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previous page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.is_first_page">
+<tt class="descname">is_first_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.is_first_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the first page?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_controller.IWizardController.is_last_page">
+<tt class="descname">is_last_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_controller.IWizardController.is_last_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the last page?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.i_wizard_page">
+<span id="i-wizard-page-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">i_wizard_page</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.i_wizard_page" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a page in a wizard.</p>
+<dl class="class">
+<dt id="pyface.wizard.i_wizard_page.IWizardPage">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.i_wizard_page.</tt><tt class="descname">IWizardPage</tt><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></tt></p>
+<p>The interface for a page in a wizard.</p>
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_page.IWizardPage.create_page">
+<tt class="descname">create_page</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.create_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the wizard page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_page.IWizardPage.dispose_page">
+<tt class="descname">dispose_page</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_page.IWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disposes the wizard page.</p>
+<p>Subclasses are expected to override this method if they need to
+dispose of the contents of a page.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wizard.i_wizard_page.MWizardPage">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.i_wizard_page.</tt><tt class="descname">MWizardPage</tt><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWizardPage interface.</p>
+<p>Implements: dispose_page()</p>
+<dl class="method">
+<dt id="pyface.wizard.i_wizard_page.MWizardPage.dispose_page">
+<tt class="descname">dispose_page</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.i_wizard_page.MWizardPage.dispose_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disposes the wizard page.</p>
+<p>Subclasses are expected to override this method if they need to
+dispose of the contents of a page.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.simple_wizard">
+<span id="simple-wizard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">simple_wizard</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.simple_wizard" title="Permalink to this headline">¶</a></h2>
+<p>SimpleWizard is deprecated.  Use Wizard instead.</p>
+<dl class="class">
+<dt id="pyface.wizard.simple_wizard.SimpleWizard">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.simple_wizard.</tt><tt class="descname">SimpleWizard</tt><a class="headerlink" href="#pyface.wizard.simple_wizard.SimpleWizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.wizard.html#pyface.ui.wx.wizard.wizard.Wizard" title="pyface.ui.wx.wizard.wizard.Wizard"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.wizard.wizard.Wizard</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.simple_wizard_controller">
+<span id="simple-wizard-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">simple_wizard_controller</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.simple_wizard_controller" title="Permalink to this headline">¶</a></h2>
+<p>SimpleWizardController is deprecated.  Use WizardController instead.</p>
+<dl class="class">
+<dt id="pyface.wizard.simple_wizard_controller.SimpleWizardController">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.simple_wizard_controller.</tt><tt class="descname">SimpleWizardController</tt><a class="headerlink" href="#pyface.wizard.simple_wizard_controller.SimpleWizardController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.wizard.wizard_controller.WizardController" title="pyface.wizard.wizard_controller.WizardController"><tt class="xref py py-class docutils literal"><span class="pre">pyface.wizard.wizard_controller.WizardController</span></tt></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.wizard">
+<span id="wizard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">wizard</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.wizard" title="Permalink to this headline">¶</a></h2>
+<p>The implementation of a wizard.</p>
+</div>
+<div class="section" id="module-pyface.wizard.wizard_controller">
+<span id="wizard-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">wizard_controller</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.wizard_controller" title="Permalink to this headline">¶</a></h2>
+<p>A wizard controller that has a static list of pages.</p>
+<dl class="class">
+<dt id="pyface.wizard.wizard_controller.WizardController">
+<em class="property">class </em><tt class="descclassname">pyface.wizard.wizard_controller.</tt><tt class="descname">WizardController</tt><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>A wizard controller that has a static list of pages.</p>
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.dispose_pages">
+<tt class="descname">dispose_pages</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.dispose_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispose the wizard pages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.get_first_page">
+<tt class="descname">get_first_page</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.get_first_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.get_next_page">
+<tt class="descname">get_next_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.get_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the next page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.get_previous_page">
+<tt class="descname">get_previous_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.get_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previous page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.is_first_page">
+<tt class="descname">is_first_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.is_first_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the first page?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wizard.wizard_controller.WizardController.is_last_page">
+<tt class="descname">is_last_page</tt><big>(</big><em>page</em><big>)</big><a class="headerlink" href="#pyface.wizard.wizard_controller.WizardController.is_last_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the page the last page?</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wizard.wizard_page">
+<span id="wizard-page-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">wizard_page</span></tt> Module<a class="headerlink" href="#module-pyface.wizard.wizard_page" title="Permalink to this headline">¶</a></h2>
+<p>The implementation of a page in a wizard.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">wizard Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">wizard</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.chained_wizard"><tt class="docutils literal"><span class="pre">chained_wizard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.chained_wizard_controller"><tt class="docutils literal"><span class="pre">chained_wizard_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.i_wizard"><tt class="docutils literal"><span class="pre">i_wizard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.i_wizard_controller"><tt class="docutils literal"><span class="pre">i_wizard_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.i_wizard_page"><tt class="docutils literal"><span class="pre">i_wizard_page</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.simple_wizard"><tt class="docutils literal"><span class="pre">simple_wizard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.simple_wizard_controller"><tt class="docutils literal"><span class="pre">simple_wizard_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.wizard"><tt class="docutils literal"><span class="pre">wizard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.wizard_controller"><tt class="docutils literal"><span class="pre">wizard_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wizard.wizard_page"><tt class="docutils literal"><span class="pre">wizard_page</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.viewer.html"
+                        title="previous chapter">viewer Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.workbench.html"
+                        title="next chapter">workbench Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.wizard.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.workbench.html" title="workbench Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.viewer.html" title="viewer Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,607 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>code_editor Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="qt4 Package" href="pyface.ui.qt4.html" />
+    <link rel="next" title="console Package" href="pyface.ui.qt4.console.html" />
+    <link rel="prev" title="action Package" href="pyface.ui.qt4.action.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.console.html" title="console Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.action.html" title="action Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" accesskey="U">qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="code-editor-package">
+<h1>code_editor Package<a class="headerlink" href="#code-editor-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">code_editor</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.ui.qt4.code_editor"></span></div>
+<div class="section" id="module-pyface.ui.qt4.code_editor.code_widget">
+<span id="code-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">code_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.code_editor.code_widget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.code_widget.</tt><tt class="descname">AdvancedCodeWidget</tt><big>(</big><em>parent</em>, <em>font=None</em>, <em>lexer=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></tt></p>
+<p>Advanced widget for viewing and editing code, with support
+for search &amp; replace</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.centerCursor">
+<tt class="descname">centerCursor</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.centerCursor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.enable_find">
+<tt class="descname">enable_find</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.enable_find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.enable_replace">
+<tt class="descname">enable_replace</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.enable_replace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.ensureCursorVisible">
+<tt class="descname">ensureCursorVisible</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.ensureCursorVisible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_in_document">
+<tt class="descname">find_in_document</tt><big>(</big><em>search_text</em>, <em>direction='forward'</em>, <em>replace=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_in_document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the next occurance of the desired text and optionally
+replaces it. If &#8216;replace&#8217; is None, a regular search will
+be executed, otherwise it will replace the occurance with
+the value of &#8216;replace&#8217;.</p>
+<p>Returns the number of occurances found (0 or 1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_next">
+<tt class="descname">find_next</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_prev">
+<tt class="descname">find_prev</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.find_prev" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.get_line_column">
+<tt class="descname">get_line_column</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.get_line_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current line and column numbers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.get_selected_text">
+<tt class="descname">get_selected_text</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.get_selected_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the currently selected text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.keyPressEvent">
+<tt class="descname">keyPressEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.lines">
+<tt class="descname">lines</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of lines.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.print_">
+<tt class="descname">print_</tt><big>(</big><em>printer</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.print_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to call &#8216;<a href="#id2"><span class="problematic" id="id3">print_</span></a>&#8216; on the CodeWidget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.replace_all">
+<tt class="descname">replace_all</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.replace_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.replace_next">
+<tt class="descname">replace_next</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.replace_next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_error_lines">
+<tt class="descname">set_error_lines</tt><big>(</big><em>error_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_error_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_info_lines">
+<tt class="descname">set_info_lines</tt><big>(</big><em>info_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_info_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_line_column">
+<tt class="descname">set_line_column</tt><big>(</big><em>line</em>, <em>column</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_line_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the cursor to a particular line/column position.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_warn_lines">
+<tt class="descname">set_warn_lines</tt><big>(</big><em>warn_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.set_warn_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x126f1d00&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.AdvancedCodeWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.code_widget.</tt><tt class="descname">CodeWidget</tt><big>(</big><em>parent</em>, <em>should_highlight_current_line=True</em>, <em>font=None</em>, <em>lexer=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QPlainTextEdit</span></tt></p>
+<p>A widget for viewing and editing code.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.autoindent_newline">
+<tt class="descname">autoindent_newline</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.autoindent_newline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_comment">
+<tt class="descname">block_comment</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>the comment char will be placed at the first non-whitespace
+char of the first line. For example:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if foo:</dt>
+<dd>bar</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>will be commented as:</dt>
+<dd>#if foo:
+#    bar</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_indent">
+<tt class="descname">block_indent</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_indent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_unindent">
+<tt class="descname">block_unindent</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.block_unindent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.get_line_column">
+<tt class="descname">get_line_column</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.get_line_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current line and column numbers.</p>
+<p>These line and column numbers are 1-indexed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.get_selected_text">
+<tt class="descname">get_selected_text</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.get_selected_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the currently selected text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.highlight_current_line">
+<tt class="descname">highlight_current_line</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.highlight_current_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Highlight the line with the cursor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.keyPressEvent">
+<tt class="descname">keyPressEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.keyPressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.keyPressEvent_action">
+<tt class="descname">keyPressEvent_action</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.keyPressEvent_action" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_comment">
+<tt class="descname">line_comment</tt><big>(</big><em>cursor</em>, <em>position</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_indent">
+<tt class="descname">line_indent</tt><big>(</big><em>cursor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_indent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_uncomment">
+<tt class="descname">line_uncomment</tt><big>(</big><em>cursor</em>, <em>position=0</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_uncomment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_unindent">
+<tt class="descname">line_unindent</tt><big>(</big><em>cursor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.line_unindent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unindents the cursor&#8217;s line. Returns the number of characters
+removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.lines">
+<tt class="descname">lines</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of lines.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.resizeEvent">
+<tt class="descname">resizeEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.resizeEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_error_lines">
+<tt class="descname">set_error_lines</tt><big>(</big><em>error_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_error_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_font">
+<tt class="descname">set_font</tt><big>(</big><em>font</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the new QFont.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_info_lines">
+<tt class="descname">set_info_lines</tt><big>(</big><em>info_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_info_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_line_column">
+<tt class="descname">set_line_column</tt><big>(</big><em>line</em>, <em>column</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_line_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the cursor to a particular line/column number.</p>
+<p>These line and column numbers are 1-indexed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_warn_lines">
+<tt class="descname">set_warn_lines</tt><big>(</big><em>warn_lines</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.set_warn_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.sizeHint">
+<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x1f075a8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.update_line_number_width">
+<tt class="descname">update_line_number_width</tt><big>(</big><em>nblocks=0</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.update_line_number_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the width of the line number widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.update_line_numbers">
+<tt class="descname">update_line_numbers</tt><big>(</big><em>rect</em>, <em>dy</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.update_line_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the line numbers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.code_widget.CodeWidget.word_under_cursor">
+<tt class="descname">word_under_cursor</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.code_widget.CodeWidget.word_under_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the word under the cursor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.code_editor.find_widget">
+<span id="find-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">find_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.code_editor.find_widget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.find_widget.FindWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.find_widget.</tt><tt class="descname">FindWidget</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.find_widget.FindWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></tt></p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.find_widget.FindWidget.setFocus">
+<tt class="descname">setFocus</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.find_widget.FindWidget.setFocus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.find_widget.FindWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x177cad50&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.find_widget.FindWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.code_editor.gutters">
+<span id="gutters-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">gutters</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.code_editor.gutters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.gutters.</tt><tt class="descname">GutterWidget</tt><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></tt></p>
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.background_color">
+<tt class="descname">background_color</tt><em class="property"> = PySide.QtGui.QColor.fromRgbF(0.862745, 0.862745, 0.862745, 1.000000)</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.background_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.min_width">
+<tt class="descname">min_width</tt><em class="property"> = 5</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.min_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.paintEvent">
+<tt class="descname">paintEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paint the line numbers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.sizeHint">
+<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x177cc6c0&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.GutterWidget.wheelEvent">
+<tt class="descname">wheelEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget.wheelEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delegate mouse wheel events to parent for seamless scrolling.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.gutters.</tt><tt class="descname">LineNumberWidget</tt><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget" title="pyface.ui.qt4.code_editor.gutters.GutterWidget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.code_editor.gutters.GutterWidget</span></tt></a></p>
+<p>Draw line numbers.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.digits_width">
+<tt class="descname">digits_width</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.digits_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.fontMetrics">
+<tt class="descname">fontMetrics</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.fontMetrics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.min_char_width">
+<tt class="descname">min_char_width</tt><em class="property"> = 4</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.min_char_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.paintEvent">
+<tt class="descname">paintEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paint the line numbers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.set_font">
+<tt class="descname">set_font</tt><big>(</big><em>font</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.set_font" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.sizeHint">
+<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.LineNumberWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x177ccaf8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.LineNumberWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.gutters.StatusGutterWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.gutters.</tt><tt class="descname">StatusGutterWidget</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.StatusGutterWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.code_editor.gutters.GutterWidget" title="pyface.ui.qt4.code_editor.gutters.GutterWidget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.code_editor.gutters.GutterWidget</span></tt></a></p>
+<p>Draws status markers</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.paintEvent">
+<tt class="descname">paintEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Paint the line numbers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.sizeHint">
+<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x177cc800&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.gutters.StatusGutterWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.code_editor.pygments_highlighter">
+<span id="pygments-highlighter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">pygments_highlighter</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.code_editor.pygments_highlighter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.BlockUserData">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.pygments_highlighter.</tt><tt class="descname">BlockUserData</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.BlockUserData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QTextBlockUserData</span></tt></p>
+<p>Storage for the user data associated with each line.</p>
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.BlockUserData.syntax_stack">
+<tt class="descname">syntax_stack</tt><em class="property"> = ('root',)</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.BlockUserData.syntax_stack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.pygments_highlighter.</tt><tt class="descname">PygmentsHighlighter</tt><big>(</big><em>parent</em>, <em>lexer=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QSyntaxHighlighter</span></tt></p>
+<p>Syntax highlighter that uses Pygments for parsing.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.highlightBlock">
+<tt class="descname">highlightBlock</tt><big>(</big><em>qstring</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.highlightBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Highlight a block of text.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.previous_block_data">
+<tt class="descname">previous_block_data</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.previous_block_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method for returning the previous block&#8217;s user data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x19e6d00&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.PygmentsHighlighter.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.get_tokens_unprocessed">
+<tt class="descclassname">pyface.ui.qt4.code_editor.pygments_highlighter.</tt><tt class="descname">get_tokens_unprocessed</tt><big>(</big><em>self</em>, <em>text</em>, <em>stack=('root'</em>, <em>)</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.get_tokens_unprocessed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split <tt class="docutils literal"><span class="pre">text</span></tt> into (tokentype, text) pairs.</p>
+<p>Monkeypatched to store the final stack on the object itself.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.ui.qt4.code_editor.pygments_highlighter.replace_pattern">
+<tt class="descclassname">pyface.ui.qt4.code_editor.pygments_highlighter.</tt><tt class="descname">replace_pattern</tt><big>(</big><em>tokens</em>, <em>new_pattern</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.pygments_highlighter.replace_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a RegexLexer token dictionary &#8216;tokens&#8217;, replace all patterns that
+match the token specified in &#8216;new_pattern&#8217; with &#8216;new_pattern&#8217;.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.code_editor.replace_widget">
+<span id="replace-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">replace_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.code_editor.replace_widget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.code_editor.replace_widget.ReplaceWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.code_editor.replace_widget.</tt><tt class="descname">ReplaceWidget</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.code_editor.replace_widget.ReplaceWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.code_editor.find_widget.FindWidget" title="pyface.ui.qt4.code_editor.find_widget.FindWidget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.code_editor.find_widget.FindWidget</span></tt></a></p>
+<dl class="attribute">
+<dt id="pyface.ui.qt4.code_editor.replace_widget.ReplaceWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x177cc8c8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.code_editor.replace_widget.ReplaceWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">code_editor Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">code_editor</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.code_editor.code_widget"><tt class="docutils literal"><span class="pre">code_widget</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.code_editor.find_widget"><tt class="docutils literal"><span class="pre">find_widget</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.code_editor.gutters"><tt class="docutils literal"><span class="pre">gutters</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.code_editor.pygments_highlighter"><tt class="docutils literal"><span class="pre">pygments_highlighter</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.code_editor.replace_widget"><tt class="docutils literal"><span class="pre">replace_widget</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.action.html"
+                        title="previous chapter">action Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.console.html"
+                        title="next chapter">console Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.ui.qt4.code_editor.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.console.html" title="console Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.action.html" title="action Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" >qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

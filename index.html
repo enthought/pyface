@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to the Pyface documentation! &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="#" />
+    <link rel="next" title="pyface Package" href="api/pyface.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api/pyface.html" title="pyface Package"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">pyface 4.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-the-pyface-documentation">
+<h1>Welcome to the Pyface documentation!<a class="headerlink" href="#welcome-to-the-pyface-documentation" title="Permalink to this headline">¶</a></h1>
+<p>If you want to display Traits-based user interfaces, you need, in addition to
+the Traits project:</p>
+<blockquote>
+<div>-The TraitsUI project
+-A Python GUI toolkit, either wxPython or PyQt
+-A &#8220;backend&#8221; connector, either TraitsBackendWX or TraitsBackendQt</div></blockquote>
+<p>TraitsUI contains a toolkit-independent GUI abstraction layers, used to support
+the &#8220;visualization&#8221; features of the Traits package. Thus, you can write code in
+terms of the Traits API (view, items, editors, etc.), and let Pyface and your
+selected toolkit and backend take care of the details of displaying them.</p>
+<div class="section" id="pyface">
+<h2>Pyface<a class="headerlink" href="#pyface" title="Permalink to this headline">¶</a></h2>
+<p>Pyface enables programmers to interact with generic GUI objects, such as an
+&#8220;MDI Application Window&#8221;, rather than with raw GUI widgets. (Pyface is named by
+analogy to JFace in Java.) Traits uses Pyface to implement views and editors
+for displaying and editing Traits-based objects.</p>
+</div>
+<div class="section" id="toolkit-backends">
+<h2>Toolkit Backends<a class="headerlink" href="#toolkit-backends" title="Permalink to this headline">¶</a></h2>
+<p>Traits and Pyface define APIs that are independent of any GUI toolkit. However,
+in order to actually produce user interfaces with them, you must install a
+supported Python-based GUI toolkit and the appropriate toolkit-specific backend
+project. Conversely, if you wish to use Traits without a UI, a &#8220;null&#8221; backend
+is automatically used in the absence of a real backend.</p>
+<p>Currently, the supported GUI toolkits are wxPython and PyQt. While both
+toolkits funtion with Traits, integration with wxPython is currently more
+complete. All future development, however, will focus on supporting PyQt.</p>
+<p>NOTE: Enthought.pyface.ui.qt4 and Enthought.traits.ui.qt4 are licensed under
+the Gnu Public License.  If you develop software using Qt, you must select an
+appropriate license from TrollTech, the publishers of Qt.</p>
+</div>
+<div class="section" id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/pyface.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.action.html">action Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.dock.html">dock Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.grid.html">grid Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.preference.html">preference Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.qt.html">qt Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.resource.html">resource Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.sizers.html">sizers Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.tasks.html">tasks Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.timer.html">timer Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.tree.html">tree Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.ui.html">ui Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.util.html">util Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.viewer.html">viewer Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.wizard.html">wizard Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.workbench.html">workbench Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.wx.html">wx Package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to the Pyface documentation!</a><ul>
+<li><a class="reference internal" href="#pyface">Pyface</a></li>
+<li><a class="reference internal" href="#toolkit-backends">Toolkit Backends</a></li>
+<li><a class="reference internal" href="#contents">Contents</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api/pyface.html"
+                        title="next chapter">pyface Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api/pyface.html" title="pyface Package"
+             >next</a> |</li>
+        <li><a href="#">pyface 4.1.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

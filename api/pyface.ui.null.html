@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>null Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="ui Package" href="pyface.ui.html" />
+    <link rel="next" title="action Package" href="pyface.ui.null.action.html" />
+    <link rel="prev" title="ui Package" href="pyface.ui.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.null.action.html" title="action Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.html" title="ui Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" accesskey="U">ui Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="null-package">
+<h1>null Package<a class="headerlink" href="#null-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.ui.null.clipboard">
+<span id="clipboard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.clipboard" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.null.clipboard.Clipboard">
+<em class="property">class </em><tt class="descclassname">pyface.ui.null.clipboard.</tt><tt class="descname">Clipboard</tt><a class="headerlink" href="#pyface.ui.null.clipboard.Clipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.i_clipboard.BaseClipboard</span></tt></p>
+<p>A dummy clipboard implementationf for the null backend.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.null.image_resource">
+<span id="image-resource-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image_resource</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.image_resource" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.null.image_resource.ImageResource">
+<em class="property">class </em><tt class="descclassname">pyface.ui.null.image_resource.</tt><tt class="descname">ImageResource</tt><big>(</big><em>name</em>, <em>search_path=None</em><big>)</big><a class="headerlink" href="#pyface.ui.null.image_resource.ImageResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.i_image_resource.MImageResource</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>The &#8216;null&#8217; toolkit specific implementation of an ImageResource.  See the
+IImageResource interface for the API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.null.image_resource.ImageResource.create_bitmap">
+<tt class="descname">create_bitmap</tt><big>(</big><em>size=None</em><big>)</big><a class="headerlink" href="#pyface.ui.null.image_resource.ImageResource.create_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.null.image_resource.ImageResource.create_icon">
+<tt class="descname">create_icon</tt><big>(</big><em>size=None</em><big>)</big><a class="headerlink" href="#pyface.ui.null.image_resource.ImageResource.create_icon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.null.init">
+<span id="init-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">init</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.init" title="Permalink to this headline">¶</a></h2>
+<p>Initialize this backend.</p>
+</div>
+<div class="section" id="module-pyface.ui.null.resource_manager">
+<span id="resource-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">resource_manager</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.resource_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.null.resource_manager.PyfaceResourceFactory">
+<em class="property">class </em><tt class="descclassname">pyface.ui.null.resource_manager.</tt><tt class="descname">PyfaceResourceFactory</tt><a class="headerlink" href="#pyface.ui.null.resource_manager.PyfaceResourceFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.resource.html#pyface.resource.resource_factory.ResourceFactory" title="pyface.resource.resource_factory.ResourceFactory"><tt class="xref py py-class docutils literal"><span class="pre">pyface.resource.resource_factory.ResourceFactory</span></tt></a></p>
+<p>The implementation of a shared resource manager.</p>
+<dl class="method">
+<dt id="pyface.ui.null.resource_manager.PyfaceResourceFactory.image_from_data">
+<tt class="descname">image_from_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#pyface.ui.null.resource_manager.PyfaceResourceFactory.image_from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an image from the specified data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.null.resource_manager.PyfaceResourceFactory.image_from_file">
+<tt class="descname">image_from_file</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyface.ui.null.resource_manager.PyfaceResourceFactory.image_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an image from the data in the specified filename.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.null.widget">
+<span id="widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.widget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.null.widget.Widget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.null.widget.</tt><tt class="descname">Widget</tt><a class="headerlink" href="#pyface.ui.null.widget.Widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.i_widget.MWidget</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>The toolkit specific implementation of a Widget.  See the IWidget
+interface for the API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.null.widget.Widget.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.null.widget.Widget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.null.window">
+<span id="window-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">window</span></tt> Module<a class="headerlink" href="#module-pyface.ui.null.window" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.null.window.Window">
+<em class="property">class </em><tt class="descclassname">pyface.ui.null.window.</tt><tt class="descname">Window</tt><a class="headerlink" href="#pyface.ui.null.window.Window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.i_window.MWindow</span></tt>, <a class="reference internal" href="#pyface.ui.null.widget.Widget" title="pyface.ui.null.widget.Widget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.null.widget.Widget</span></tt></a></p>
+<p>The toolkit specific implementation of a Window.  See the IWindow
+interface for the API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.null.window.Window.show">
+<tt class="descname">show</tt><big>(</big><em>visible</em><big>)</big><a class="headerlink" href="#pyface.ui.null.window.Window.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.ui.null.action.html">action Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#id1"><tt class="docutils literal"><span class="pre">action</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.action_item"><tt class="docutils literal"><span class="pre">action_item</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.menu_bar_manager"><tt class="docutils literal"><span class="pre">menu_bar_manager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.menu_manager"><tt class="docutils literal"><span class="pre">menu_manager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.status_bar_manager"><tt class="docutils literal"><span class="pre">status_bar_manager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.tool_bar_manager"><tt class="docutils literal"><span class="pre">tool_bar_manager</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.tool_palette"><tt class="docutils literal"><span class="pre">tool_palette</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.ui.null.action.html#module-pyface.ui.null.action.tool_palette_manager"><tt class="docutils literal"><span class="pre">tool_palette_manager</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">null Package</a><ul>
+<li><a class="reference internal" href="#module-pyface.ui.null.clipboard"><tt class="docutils literal"><span class="pre">clipboard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.null.image_resource"><tt class="docutils literal"><span class="pre">image_resource</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.null.init"><tt class="docutils literal"><span class="pre">init</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.null.resource_manager"><tt class="docutils literal"><span class="pre">resource_manager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.null.widget"><tt class="docutils literal"><span class="pre">widget</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.null.window"><tt class="docutils literal"><span class="pre">window</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.html"
+                        title="previous chapter">ui Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.null.action.html"
+                        title="next chapter">action Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.ui.null.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.null.action.html" title="action Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.html" title="ui Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

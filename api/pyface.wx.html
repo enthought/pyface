@@ -1,0 +1,508 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>wx Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="pyface Package" href="pyface.html" />
+    <link rel="next" title="spreadsheet Package" href="pyface.wx.spreadsheet.html" />
+    <link rel="prev" title="debug Package" href="pyface.workbench.debug.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.wx.spreadsheet.html" title="spreadsheet Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.workbench.debug.html" title="debug Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="wx-package">
+<h1>wx Package<a class="headerlink" href="#wx-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">wx</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.wx"></span></div>
+<div class="section" id="module-pyface.wx.clipboard">
+<span id="clipboard-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">clipboard</span></tt> Module<a class="headerlink" href="#module-pyface.wx.clipboard" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.wx.color">
+<span id="color-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">color</span></tt> Module<a class="headerlink" href="#module-pyface.wx.color" title="Permalink to this headline">¶</a></h2>
+<p>Color utilities.</p>
+<dl class="function">
+<dt id="pyface.wx.color.wx_to_enable_color">
+<tt class="descclassname">pyface.wx.color.</tt><tt class="descname">wx_to_enable_color</tt><big>(</big><em>color</em><big>)</big><a class="headerlink" href="#pyface.wx.color.wx_to_enable_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a wx color spec. to an enable color spec.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.dialog">
+<span id="dialog-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">dialog</span></tt> Module<a class="headerlink" href="#module-pyface.wx.dialog" title="Permalink to this headline">¶</a></h2>
+<p>Dialog utilities.</p>
+<dl class="class">
+<dt id="pyface.wx.dialog.OpenDirDialog">
+<em class="property">class </em><tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">OpenDirDialog</tt><big>(</big><em>parent=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.OpenDirDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.DirDialog</span></tt></p>
+<p>An open-directory dialog.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.dialog.OpenFileDialog">
+<em class="property">class </em><tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">OpenFileDialog</tt><big>(</big><em>parent=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.OpenFileDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.FileDialog</span></tt></p>
+<p>An open-file dialog.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.dialog.SaveFileAsDialog">
+<em class="property">class </em><tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">SaveFileAsDialog</tt><big>(</big><em>parent=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.SaveFileAsDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.FileDialog</span></tt></p>
+<p>A save-file dialog.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.dialog.confirmation">
+<tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">confirmation</tt><big>(</big><em>parent</em>, <em>message</em>, <em>title=None</em>, <em>default=128</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.confirmation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a confirmation dialog.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.dialog.error">
+<tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">error</tt><big>(</big><em>parent</em>, <em>message</em>, <em>title=None</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a modal error dialog.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.dialog.information">
+<tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">information</tt><big>(</big><em>parent</em>, <em>message</em>, <em>title=None</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a modal information dialog.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.dialog.warning">
+<tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">warning</tt><big>(</big><em>parent</em>, <em>message</em>, <em>title=None</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a modal warning dialog.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.dialog.yes_no_cancel">
+<tt class="descclassname">pyface.wx.dialog.</tt><tt class="descname">yes_no_cancel</tt><big>(</big><em>parent</em>, <em>message</em>, <em>title=None</em>, <em>default=128</em><big>)</big><a class="headerlink" href="#pyface.wx.dialog.yes_no_cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays a Yes/No/Cancel dialog.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.divider">
+<span id="divider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">divider</span></tt> Module<a class="headerlink" href="#module-pyface.wx.divider" title="Permalink to this headline">¶</a></h2>
+<p>A thin visual divider.</p>
+<dl class="class">
+<dt id="pyface.wx.divider.Divider">
+<em class="property">class </em><tt class="descclassname">pyface.wx.divider.</tt><tt class="descname">Divider</tt><big>(</big><em>parent</em>, <em>id</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.divider.Divider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._controls.StaticLine</span></tt></p>
+<p>A thin visual divider.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.drag_and_drop">
+<span id="drag-and-drop-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">drag_and_drop</span></tt> Module<a class="headerlink" href="#module-pyface.wx.drag_and_drop" title="Permalink to this headline">¶</a></h2>
+<p>Drag and drop utilities.</p>
+<dl class="class">
+<dt id="pyface.wx.drag_and_drop.Clipboard">
+<em class="property">class </em><tt class="descclassname">pyface.wx.drag_and_drop.</tt><tt class="descname">Clipboard</tt><a class="headerlink" href="#pyface.wx.drag_and_drop.Clipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>The clipboard is used when dragging and dropping Python objects.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.drag_and_drop.FileDropTarget">
+<em class="property">class </em><tt class="descclassname">pyface.wx.drag_and_drop.</tt><tt class="descname">FileDropTarget</tt><big>(</big><em>handler</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.FileDropTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._misc.FileDropTarget</span></tt></p>
+<p>Drop target for files.</p>
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.FileDropTarget.OnDropFiles">
+<tt class="descname">OnDropFiles</tt><big>(</big><em>x</em>, <em>y</em>, <em>filenames</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.FileDropTarget.OnDropFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the files have been dropped.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.drag_and_drop.PythonDropSource">
+<em class="property">class </em><tt class="descclassname">pyface.wx.drag_and_drop.</tt><tt class="descname">PythonDropSource</tt><big>(</big><em>source</em>, <em>data</em>, <em>handler=None</em>, <em>allow_move=True</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._misc.DropSource</span></tt></p>
+<p>Drop source for Python objects.</p>
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.PythonDropSource.on_dropped">
+<tt class="descname">on_dropped</tt><big>(</big><em>drag_result</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropSource.on_dropped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the data has been dropped.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.drag_and_drop.PythonDropTarget">
+<em class="property">class </em><tt class="descclassname">pyface.wx.drag_and_drop.</tt><tt class="descname">PythonDropTarget</tt><big>(</big><em>handler</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._misc.DropTarget</span></tt></p>
+<p>Drop target for Python objects.</p>
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.PythonDropTarget.OnData">
+<tt class="descname">OnData</tt><big>(</big><em>x</em>, <em>y</em>, <em>default_drag_result</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropTarget.OnData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when OnDrop returns True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.PythonDropTarget.OnDragOver">
+<tt class="descname">OnDragOver</tt><big>(</big><em>x</em>, <em>y</em>, <em>default_drag_result</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropTarget.OnDragOver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a data object is being dragged over the target.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.PythonDropTarget.OnDrop">
+<tt class="descname">OnDrop</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropTarget.OnDrop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the user drops a data object on the target.</p>
+<p>Return &#8216;False&#8217; to veto the operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.drag_and_drop.PythonDropTarget.OnLeave">
+<tt class="descname">OnLeave</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wx.drag_and_drop.PythonDropTarget.OnLeave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the mouse leaves the drop target.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.font">
+<span id="font-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">font</span></tt> Module<a class="headerlink" href="#module-pyface.wx.font" title="Permalink to this headline">¶</a></h2>
+<p>Font utilities.</p>
+<dl class="function">
+<dt id="pyface.wx.font.clone_font">
+<tt class="descclassname">pyface.wx.font.</tt><tt class="descname">clone_font</tt><big>(</big><em>font</em><big>)</big><a class="headerlink" href="#pyface.wx.font.clone_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clones the specified font.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.font.decrease_font_size">
+<tt class="descclassname">pyface.wx.font.</tt><tt class="descname">decrease_font_size</tt><big>(</big><em>window</em>, <em>delta=2</em><big>)</big><a class="headerlink" href="#pyface.wx.font.decrease_font_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively decreases the font size starting from &#8216;window&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.font.increase_font_size">
+<tt class="descclassname">pyface.wx.font.</tt><tt class="descname">increase_font_size</tt><big>(</big><em>window</em>, <em>delta=2</em><big>)</big><a class="headerlink" href="#pyface.wx.font.increase_font_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively increases the font size starting from &#8216;window&#8217;.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.font.set_bold_font">
+<tt class="descclassname">pyface.wx.font.</tt><tt class="descname">set_bold_font</tt><big>(</big><em>window</em><big>)</big><a class="headerlink" href="#pyface.wx.font.set_bold_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set &#8216;window&#8217;s font to be bold.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.wx.font.set_font_size">
+<tt class="descclassname">pyface.wx.font.</tt><tt class="descname">set_font_size</tt><big>(</big><em>window</em>, <em>size</em><big>)</big><a class="headerlink" href="#pyface.wx.font.set_font_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively sets the font size starting from &#8216;window&#8217;.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.image">
+<span id="image-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image</span></tt> Module<a class="headerlink" href="#module-pyface.wx.image" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyface.wx.image.get_bitmap">
+<tt class="descclassname">pyface.wx.image.</tt><tt class="descname">get_bitmap</tt><big>(</big><em>root</em>, <em>name</em><big>)</big><a class="headerlink" href="#pyface.wx.image.get_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function that returns a bitmap
+root - either an instance of a class or a path
+name - name of png file to load</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.image_cache">
+<span id="image-cache-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image_cache</span></tt> Module<a class="headerlink" href="#module-pyface.wx.image_cache" title="Permalink to this headline">¶</a></h2>
+<p>An image cache.</p>
+<dl class="class">
+<dt id="pyface.wx.image_cache.ImageCache">
+<em class="property">class </em><tt class="descclassname">pyface.wx.image_cache.</tt><tt class="descname">ImageCache</tt><big>(</big><em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#pyface.wx.image_cache.ImageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>An image cache.</p>
+<dl class="method">
+<dt id="pyface.wx.image_cache.ImageCache.get_image">
+<tt class="descname">get_image</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyface.wx.image_cache.ImageCache.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the specified image (currently as a bitmap).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.image_list">
+<span id="image-list-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">image_list</span></tt> Module<a class="headerlink" href="#module-pyface.wx.image_list" title="Permalink to this headline">¶</a></h2>
+<p>A cached image list.</p>
+<dl class="class">
+<dt id="pyface.wx.image_list.ImageList">
+<em class="property">class </em><tt class="descclassname">pyface.wx.image_list.</tt><tt class="descname">ImageList</tt><big>(</big><em>width</em>, <em>height</em><big>)</big><a class="headerlink" href="#pyface.wx.image_list.ImageList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._gdi.ImageList</span></tt></p>
+<p>A cached image list.</p>
+<dl class="method">
+<dt id="pyface.wx.image_list.ImageList.GetIndex">
+<tt class="descname">GetIndex</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyface.wx.image_list.ImageList.GetIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the index of the specified image.</p>
+<p>The image will be loaded and added to the image list if it is not
+already there.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.lazy_switcher">
+<span id="lazy-switcher-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">lazy_switcher</span></tt> Module<a class="headerlink" href="#module-pyface.wx.lazy_switcher" title="Permalink to this headline">¶</a></h2>
+<p>Classes to provide a switcher.</p>
+<dl class="class">
+<dt id="pyface.wx.lazy_switcher.Switcher">
+<em class="property">class </em><tt class="descclassname">pyface.wx.lazy_switcher.</tt><tt class="descname">Switcher</tt><big>(</big><em>parent</em>, <em>id</em>, <em>model</em>, <em>label=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.lazy_switcher.Switcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.Panel</span></tt></p>
+<p>A switcher.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.lazy_switcher.SwitcherControl">
+<em class="property">class </em><tt class="descclassname">pyface.wx.lazy_switcher.</tt><tt class="descname">SwitcherControl</tt><big>(</big><em>parent</em>, <em>id</em>, <em>model</em>, <em>label=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.lazy_switcher.SwitcherControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.Panel</span></tt></p>
+<p>The default switcher control (a combo box).</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.lazy_switcher.SwitcherModel">
+<em class="property">class </em><tt class="descclassname">pyface.wx.lazy_switcher.</tt><tt class="descname">SwitcherModel</tt><a class="headerlink" href="#pyface.wx.lazy_switcher.SwitcherModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Base class for switcher models.</p>
+<dl class="method">
+<dt id="pyface.wx.lazy_switcher.SwitcherModel.create_page">
+<tt class="descname">create_page</tt><big>(</big><em>parent</em>, <em>index</em><big>)</big><a class="headerlink" href="#pyface.wx.lazy_switcher.SwitcherModel.create_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a page for the switcher panel.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.lazy_switcher.SwitcherPanel">
+<em class="property">class </em><tt class="descclassname">pyface.wx.lazy_switcher.</tt><tt class="descname">SwitcherPanel</tt><big>(</big><em>parent</em>, <em>id</em>, <em>model</em>, <em>label=None</em>, <em>cache=True</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.lazy_switcher.SwitcherPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.lib.scrolledpanel.ScrolledPanel</span></tt></p>
+<p>The default switcher panel.</p>
+<dl class="method">
+<dt id="pyface.wx.lazy_switcher.SwitcherPanel.show_page">
+<tt class="descname">show_page</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyface.wx.lazy_switcher.SwitcherPanel.show_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the page at the specified index.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pager-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">pager</span></tt> Module<a class="headerlink" href="#pager-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.wx.progress_meter">
+<span id="progress-meter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">progress_meter</span></tt> Module<a class="headerlink" href="#module-pyface.wx.progress_meter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.wx.progress_meter.ProgressDialog">
+<em class="property">class </em><tt class="descclassname">pyface.wx.progress_meter.</tt><tt class="descname">ProgressDialog</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#pyface.wx.progress_meter.ProgressDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.ProgressDialog</span></tt></p>
+<dl class="method">
+<dt id="pyface.wx.progress_meter.ProgressDialog.SetButtonLabel">
+<tt class="descname">SetButtonLabel</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#pyface.wx.progress_meter.ProgressDialog.SetButtonLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the Cancel button label to something else eg Stop.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.scrolled_message_dialog">
+<span id="scrolled-message-dialog-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">scrolled_message_dialog</span></tt> Module<a class="headerlink" href="#module-pyface.wx.scrolled_message_dialog" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.wx.scrolled_message_dialog.ScrolledMessageDialog">
+<em class="property">class </em><tt class="descclassname">pyface.wx.scrolled_message_dialog.</tt><tt class="descname">ScrolledMessageDialog</tt><big>(</big><em>parent</em>, <em>msg</em>, <em>caption</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=(500</em>, <em>300)</em><big>)</big><a class="headerlink" href="#pyface.wx.scrolled_message_dialog.ScrolledMessageDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.Dialog</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="shell-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">shell</span></tt> Module<a class="headerlink" href="#shell-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.wx.sized_panel">
+<span id="sized-panel-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">sized_panel</span></tt> Module<a class="headerlink" href="#module-pyface.wx.sized_panel" title="Permalink to this headline">¶</a></h2>
+<p>A panel sized by a sizer.</p>
+<dl class="class">
+<dt id="pyface.wx.sized_panel.SizedPanel">
+<em class="property">class </em><tt class="descclassname">pyface.wx.sized_panel.</tt><tt class="descname">SizedPanel</tt><big>(</big><em>parent</em>, <em>wxid</em>, <em>sizer</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.sized_panel.SizedPanel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.Panel</span></tt></p>
+<p>A panel sized by a sizer.</p>
+<dl class="method">
+<dt id="pyface.wx.sized_panel.SizedPanel.Fit">
+<tt class="descname">Fit</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wx.sized_panel.SizedPanel.Fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resizes the panel to match the sizer&#8217;s minimal size.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.sized_panel.SizedPanel.Layout">
+<tt class="descname">Layout</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.wx.sized_panel.SizedPanel.Layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lays out the sizer without changing the panel geometry.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.wx.spacer">
+<span id="spacer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">spacer</span></tt> Module<a class="headerlink" href="#module-pyface.wx.spacer" title="Permalink to this headline">¶</a></h2>
+<p>A panel used as a spacer.</p>
+<p>It is in a separate class so that you can set the background color in a
+single place to give visual feedback on sizer layouts (in particular,
+FlexGridSizer layouts).</p>
+<dl class="class">
+<dt id="pyface.wx.spacer.Spacer">
+<em class="property">class </em><tt class="descclassname">pyface.wx.spacer.</tt><tt class="descname">Spacer</tt><big>(</big><em>parent</em>, <em>id</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.wx.spacer.Spacer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx._windows.Panel</span></tt></p>
+<p>A panel used as a spacer.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="switcher-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">switcher</span></tt> Module<a class="headerlink" href="#switcher-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.wx.spreadsheet.html">spreadsheet Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#id1"><tt class="docutils literal"><span class="pre">spreadsheet</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#module-pyface.wx.spreadsheet.abstract_grid_view"><tt class="docutils literal"><span class="pre">abstract_grid_view</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#module-pyface.wx.spreadsheet.default_renderer"><tt class="docutils literal"><span class="pre">default_renderer</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#module-pyface.wx.spreadsheet.font_renderer"><tt class="docutils literal"><span class="pre">font_renderer</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#module-pyface.wx.spreadsheet.unit_renderer"><tt class="docutils literal"><span class="pre">unit_renderer</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.wx.spreadsheet.html#module-pyface.wx.spreadsheet.virtual_model"><tt class="docutils literal"><span class="pre">virtual_model</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">wx Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">wx</span></tt> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.clipboard"><tt class="docutils literal"><span class="pre">clipboard</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.color"><tt class="docutils literal"><span class="pre">color</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.dialog"><tt class="docutils literal"><span class="pre">dialog</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.divider"><tt class="docutils literal"><span class="pre">divider</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.drag_and_drop"><tt class="docutils literal"><span class="pre">drag_and_drop</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.font"><tt class="docutils literal"><span class="pre">font</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.image"><tt class="docutils literal"><span class="pre">image</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.image_cache"><tt class="docutils literal"><span class="pre">image_cache</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.image_list"><tt class="docutils literal"><span class="pre">image_list</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.lazy_switcher"><tt class="docutils literal"><span class="pre">lazy_switcher</span></tt> Module</a></li>
+<li><a class="reference internal" href="#pager-module"><tt class="docutils literal"><span class="pre">pager</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.progress_meter"><tt class="docutils literal"><span class="pre">progress_meter</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.scrolled_message_dialog"><tt class="docutils literal"><span class="pre">scrolled_message_dialog</span></tt> Module</a></li>
+<li><a class="reference internal" href="#shell-module"><tt class="docutils literal"><span class="pre">shell</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.sized_panel"><tt class="docutils literal"><span class="pre">sized_panel</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.spacer"><tt class="docutils literal"><span class="pre">spacer</span></tt> Module</a></li>
+<li><a class="reference internal" href="#switcher-module"><tt class="docutils literal"><span class="pre">switcher</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.workbench.debug.html"
+                        title="previous chapter">debug Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.wx.spreadsheet.html"
+                        title="next chapter">spreadsheet Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.wx.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.wx.spreadsheet.html" title="spreadsheet Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.workbench.debug.html" title="debug Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

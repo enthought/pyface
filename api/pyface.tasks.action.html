@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>action Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="tasks Package" href="pyface.tasks.html" />
+    <link rel="next" title="contrib Package" href="pyface.tasks.contrib.html" />
+    <link rel="prev" title="tasks Package" href="pyface.tasks.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.tasks.contrib.html" title="contrib Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.tasks.html" title="tasks Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.tasks.html" accesskey="U">tasks Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="action-package">
+<h1>action Package<a class="headerlink" href="#action-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.tasks.action.api">
+<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.api" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.tasks.action.dock_pane_toggle_group">
+<span id="dock-pane-toggle-group-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">dock_pane_toggle_group</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.dock_pane_toggle_group" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.dock_pane_toggle_group.</tt><tt class="descname">DockPaneToggleAction</tt><a class="headerlink" href="#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></tt></a></p>
+<p>An Action for toggling the visibily of a dock pane.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event=None</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleGroup">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.dock_pane_toggle_group.</tt><tt class="descname">DockPaneToggleGroup</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.dock_pane_toggle_group.DockPaneToggleGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.group.Group" title="pyface.action.group.Group"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.group.Group</span></tt></a></p>
+<p>A Group for toggling the visibility of a task&#8217;s dock panes.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.listening_action">
+<span id="listening-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">listening_action</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.listening_action" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.listening_action.ListeningAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.listening_action.</tt><tt class="descname">ListeningAction</tt><a class="headerlink" href="#pyface.tasks.action.listening_action.ListeningAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></tt></a></p>
+<p>An Action that listens and makes a callback to an object.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.listening_action.ListeningAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event=None</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.listening_action.ListeningAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the appropriate function.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.schema">
+<span id="schema-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">schema</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.schema" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.schema.GroupSchema">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">GroupSchema</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.schema.Schema</span></tt></a></p>
+<p>A schema for a Pyface Group.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.schema.GroupSchema.create">
+<tt class="descname">create</tt><big>(</big><em>children</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.GroupSchema.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.schema.MenuBarSchema">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">MenuBarSchema</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.schema.Schema</span></tt></a></p>
+<p>A schema for a Pyface MenuBarManager.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.schema.MenuBarSchema.create">
+<tt class="descname">create</tt><big>(</big><em>children</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.MenuBarSchema.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.schema.MenuSchema">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">MenuSchema</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.schema.Schema</span></tt></a></p>
+<p>A schema for a Pyface MenuManager.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.schema.MenuSchema.create">
+<tt class="descname">create</tt><big>(</big><em>children</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.MenuSchema.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.SGroup">
+<tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">SGroup</tt><a class="headerlink" href="#pyface.tasks.action.schema.SGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.tasks.action.schema.GroupSchema" title="pyface.tasks.action.schema.GroupSchema"><tt class="xref py py-class docutils literal"><span class="pre">GroupSchema</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.SMenu">
+<tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">SMenu</tt><a class="headerlink" href="#pyface.tasks.action.schema.SMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.tasks.action.schema.MenuSchema" title="pyface.tasks.action.schema.MenuSchema"><tt class="xref py py-class docutils literal"><span class="pre">MenuSchema</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.SMenuBar">
+<tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">SMenuBar</tt><a class="headerlink" href="#pyface.tasks.action.schema.SMenuBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.tasks.action.schema.MenuBarSchema" title="pyface.tasks.action.schema.MenuBarSchema"><tt class="xref py py-class docutils literal"><span class="pre">MenuBarSchema</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.action.schema.SToolBar">
+<tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">SToolBar</tt><a class="headerlink" href="#pyface.tasks.action.schema.SToolBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pyface.tasks.action.schema.ToolBarSchema" title="pyface.tasks.action.schema.ToolBarSchema"><tt class="xref py py-class docutils literal"><span class="pre">ToolBarSchema</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.schema.Schema">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">Schema</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>The abstract base class for all Tasks action schemas.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.schema.Schema.create">
+<tt class="descname">create</tt><big>(</big><em>children</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.Schema.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the appropriate pyface.action instance with the specified
+child items.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.schema.ToolBarSchema">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema.</tt><tt class="descname">ToolBarSchema</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.schema.Schema" title="pyface.tasks.action.schema.Schema"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.schema.Schema</span></tt></a></p>
+<p>A schema for a Pyface ToolBarManager.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.schema.ToolBarSchema.create">
+<tt class="descname">create</tt><big>(</big><em>children</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.schema.ToolBarSchema.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.schema_addition">
+<span id="schema-addition-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">schema_addition</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.schema_addition" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.schema_addition.SchemaAddition">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.schema_addition.</tt><tt class="descname">SchemaAddition</tt><a class="headerlink" href="#pyface.tasks.action.schema_addition.SchemaAddition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>An addition to an existing menu bar or tool bar schema.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.task_action">
+<span id="task-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_action</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.task_action" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.task_action.CentralPaneAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action.</tt><tt class="descname">CentralPaneAction</tt><a class="headerlink" href="#pyface.tasks.action.task_action.CentralPaneAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.task_action.TaskAction" title="pyface.tasks.action.task_action.TaskAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.task_action.TaskAction</span></tt></a></p>
+<p>An Action that makes a callback to a Task&#8217;s central pane.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.task_action.DockPaneAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action.</tt><tt class="descname">DockPaneAction</tt><a class="headerlink" href="#pyface.tasks.action.task_action.DockPaneAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.task_action.TaskAction" title="pyface.tasks.action.task_action.TaskAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.task_action.TaskAction</span></tt></a></p>
+<p>An Action the makes a callback to one of a Task&#8217;s dock panes.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.task_action.EditorAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action.</tt><tt class="descname">EditorAction</tt><a class="headerlink" href="#pyface.tasks.action.task_action.EditorAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.task_action.CentralPaneAction" title="pyface.tasks.action.task_action.CentralPaneAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.task_action.CentralPaneAction</span></tt></a></p>
+<p>An action that makes a callback to the active editor in an editor pane.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.task_action.TaskAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action.</tt><tt class="descname">TaskAction</tt><a class="headerlink" href="#pyface.tasks.action.task_action.TaskAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.listening_action.ListeningAction" title="pyface.tasks.action.listening_action.ListeningAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.listening_action.ListeningAction</span></tt></a></p>
+<p>An Action that makes a callback to a Task.</p>
+<p>Note that this is a convenience class. Actions associated with a Task need
+not inherit TaskAction, although they must, of course, inherit Action.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.task_action.TaskWindowAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action.</tt><tt class="descname">TaskWindowAction</tt><a class="headerlink" href="#pyface.tasks.action.task_action.TaskWindowAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.tasks.action.task_action.TaskAction" title="pyface.tasks.action.task_action.TaskAction"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.action.task_action.TaskAction</span></tt></a></p>
+<p>An Action that makes a callback to a Task&#8217;s window.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.task_action_controller">
+<span id="task-action-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_action_controller</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.task_action_controller" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.task_action_controller.TaskActionController">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action_controller.</tt><tt class="descname">TaskActionController</tt><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action_controller.ActionController" title="pyface.action.action_controller.ActionController"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action_controller.ActionController</span></tt></a></p>
+<p>An action controller for menu and tool bars.</p>
+<p>The controller is used to &#8216;hook&#8217; the invocation of every action on the menu
+and tool bars. This is done so that additional, Task-specific information
+can be added to action events. Currently, we attach a reference to the Task.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_controller.TaskActionController.add_to_menu">
+<tt class="descname">add_to_menu</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when an action item is added to a menu/menubar.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_controller.TaskActionController.add_to_toolbar">
+<tt class="descname">add_to_toolbar</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when an action item is added to a toolbar.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_controller.TaskActionController.perform">
+<tt class="descname">perform</tt><big>(</big><em>action</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_controller.TaskActionController.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Control an action invocation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.task_action_manager_builder">
+<span id="task-action-manager-builder-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_action_manager_builder</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.task_action_manager_builder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_action_manager_builder.</tt><tt class="descname">TaskActionManagerBuilder</tt><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>Builds menu bars and tool bars from menu bar and tool bar schema, along
+with any additions provided by the task.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager">
+<tt class="descname">create_action_manager</tt><big>(</big><em>schema</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_action_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a manager for the given schema using the task&#8217;s additions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager">
+<tt class="descname">create_menu_bar_manager</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_menu_bar_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a menu bar manager from the task&#8217;s menu bar schema and
+additions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_tool_bar_managers">
+<tt class="descname">create_tool_bar_managers</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.create_tool_bar_managers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create tool bar managers from the tasks&#8217;s tool bar schemas and
+additions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item">
+<tt class="descname">prepare_item</tt><big>(</big><em>item</em>, <em>path</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_action_manager_builder.TaskActionManagerBuilder.prepare_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called immediately after a concrete Pyface item has been created
+(or, in the case of items that are not produced from schemas,
+immediately before they are processed).</p>
+<p>This hook can be used to perform last-minute transformations or
+configuration. Returns a concrete Pyface item.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.tasks.action.task_toggle_group">
+<span id="task-toggle-group-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_toggle_group</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.action.task_toggle_group" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_toggle_group.</tt><tt class="descname">TaskToggleAction</tt><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.action.Action" title="pyface.action.action.Action"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></tt></a></p>
+<p>An action for activating a task.</p>
+<dl class="method">
+<dt id="pyface.tasks.action.task_toggle_group.TaskToggleAction.perform">
+<tt class="descname">perform</tt><big>(</big><em>event=None</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleAction.perform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.action.task_toggle_group.TaskToggleGroup">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.action.task_toggle_group.</tt><tt class="descname">TaskToggleGroup</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.tasks.action.task_toggle_group.TaskToggleGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.action.html#pyface.action.group.Group" title="pyface.action.group.Group"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.group.Group</span></tt></a></p>
+<p>A menu for changing the active task in a task window.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">action Package</a><ul>
+<li><a class="reference internal" href="#module-pyface.tasks.action.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.dock_pane_toggle_group"><tt class="docutils literal"><span class="pre">dock_pane_toggle_group</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.listening_action"><tt class="docutils literal"><span class="pre">listening_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.schema"><tt class="docutils literal"><span class="pre">schema</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.schema_addition"><tt class="docutils literal"><span class="pre">schema_addition</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.task_action"><tt class="docutils literal"><span class="pre">task_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.task_action_controller"><tt class="docutils literal"><span class="pre">task_action_controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.task_action_manager_builder"><tt class="docutils literal"><span class="pre">task_action_manager_builder</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.tasks.action.task_toggle_group"><tt class="docutils literal"><span class="pre">task_toggle_group</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.tasks.html"
+                        title="previous chapter">tasks Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.tasks.contrib.html"
+                        title="next chapter">contrib Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.tasks.action.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.tasks.contrib.html" title="contrib Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.tasks.html" title="tasks Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.tasks.html" >tasks Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

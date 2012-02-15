@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>contrib Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="tasks Package" href="pyface.tasks.html" />
+    <link rel="next" title="timer Package" href="pyface.timer.html" />
+    <link rel="prev" title="action Package" href="pyface.tasks.action.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.timer.html" title="timer Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.tasks.action.html" title="action Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.tasks.html" accesskey="U">tasks Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contrib-package">
+<h1>contrib Package<a class="headerlink" href="#contrib-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.tasks.contrib.python_shell">
+<span id="python-shell-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">python_shell</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.contrib.python_shell" title="Permalink to this headline">¶</a></h2>
+<p>Module defining a simple Python shell task.</p>
+<p>This task provides a view with a simple Python shell.  This shouldn&#8217;t be
+confused with a more full-featured shell, such as those provided by IPython.</p>
+<dl class="class">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.contrib.python_shell.</tt><tt class="descname">PythonShellPane</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<p>A Tasks Pane containing a Pyface PythonShell</p>
+<dl class="attribute">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.bindings">
+<tt class="descname">bindings</tt><em class="property"> = &lt;traits.trait_types.List object at 0x17094d50&gt;</em><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.bindings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.commands">
+<tt class="descname">commands</tt><em class="property"> = &lt;traits.trait_types.List object at 0x17149bd0&gt;</em><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.commands" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the python shell task pane</p>
+<p>This wraps the standard pyface PythonShell</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the python shell task pane</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.editor">
+<tt class="descname">editor</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x1716c090&gt;</em><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.editor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.id">
+<tt class="descname">id</tt><em class="property"> = 'pyface.tasks.contrib.python_shell.pane'</em><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellPane.name">
+<tt class="descname">name</tt><em class="property"> = 'Python Shell'</em><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellPane.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellTask">
+<em class="property">class </em><tt class="descclassname">pyface.tasks.contrib.python_shell.</tt><tt class="descname">PythonShellTask</tt><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.tasks.html#pyface.tasks.task.Task" title="pyface.tasks.task.Task"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.task.Task</span></tt></a></p>
+<p>A task which provides a simple Python Shell to the user.</p>
+<dl class="method">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellTask.create_central_pane">
+<tt class="descname">create_central_pane</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellTask.create_central_pane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a view pane with a Python shell</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.tasks.contrib.python_shell.PythonShellTask.open">
+<tt class="descname">open</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.contrib.python_shell.PythonShellTask.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows a dialog to open a file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">contrib Package</a><ul>
+<li><a class="reference internal" href="#module-pyface.tasks.contrib.python_shell"><tt class="docutils literal"><span class="pre">python_shell</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.tasks.action.html"
+                        title="previous chapter">action Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.timer.html"
+                        title="next chapter">timer Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.tasks.contrib.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.timer.html" title="timer Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.tasks.action.html" title="action Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.tasks.html" >tasks Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>

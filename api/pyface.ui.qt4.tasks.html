@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tasks Package &mdash; pyface 4.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '4.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico"/>
+    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="up" title="qt4 Package" href="pyface.ui.qt4.html" />
+    <link rel="next" title="timer Package" href="pyface.ui.qt4.timer.html" />
+    <link rel="prev" title="console Package" href="pyface.ui.qt4.console.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.timer.html" title="timer Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.console.html" title="console Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" accesskey="U">qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tasks-package">
+<h1>tasks Package<a class="headerlink" href="#tasks-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.ui.qt4.tasks.advanced_editor_area_pane">
+<span id="advanced-editor-area-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">advanced_editor_area_pane</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.advanced_editor_area_pane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.advanced_editor_area_pane.</tt><tt class="descname">AdvancedEditorAreaPane</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.tasks.task_pane.TaskPane" title="pyface.ui.qt4.tasks.task_pane.TaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.task_pane.TaskPane</span></tt></a>, <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane" title="pyface.tasks.i_editor_area_pane.MEditorAreaPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_editor_area_pane.MEditorAreaPane</span></tt></a></p>
+<p>The toolkit-specific implementation of an AdvancedEditorAreaPane.</p>
+<p>See the IAdvancedEditorAreaPane interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.activate_editor">
+<tt class="descname">activate_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.activate_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the specified editor in the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.add_editor">
+<tt class="descname">add_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.add_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an editor to the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and set the toolkit-specific control that represents the
+pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the toolkit-specific control that represents the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.get_layout">
+<tt class="descname">get_layout</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.get_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a LayoutItem that reflects the current state of the editors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.remove_editor">
+<tt class="descname">remove_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.remove_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an editor from the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.set_layout">
+<tt class="descname">set_layout</tt><big>(</big><em>layout</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.AdvancedEditorAreaPane.set_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a LayoutItem to the editors in the pane.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaMainWindowLayout">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.advanced_editor_area_pane.</tt><tt class="descname">EditorAreaMainWindowLayout</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaMainWindowLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout" title="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout</span></tt></a></p>
+<p>A MainWindowLayout for implementing AdvancedEditorAreaPane.</p>
+<p>Used for getting and setting layouts for the pane.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.advanced_editor_area_pane.</tt><tt class="descname">EditorAreaWidget</tt><big>(</big><em>editor_area</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QMainWindow</span></tt></p>
+<p>An auxillary widget for implementing AdvancedEditorAreaPane.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.add_editor_widget">
+<tt class="descname">add_editor_widget</tt><big>(</big><em>editor_widget</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.add_editor_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a dock widget to the editor area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.childEvent">
+<tt class="descname">childEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.childEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented to gain access to the tab bars as they are created.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.destroy_editor_widget">
+<tt class="descname">destroy_editor_widget</tt><big>(</big><em>editor_widget</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.destroy_editor_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroys a dock widget in the editor area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.eventFilter">
+<tt class="descname">eventFilter</tt><big>(</big><em>obj</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reimplemented to dispatch to sub-handlers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.focusInEvent">
+<tt class="descname">focusInEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign focus to the active editor, if possible.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets">
+<tt class="descname">get_dock_widgets</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all visible dock widgets.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets_for_bar">
+<tt class="descname">get_dock_widgets_for_bar</tt><big>(</big><em>tab_bar</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets_for_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dock widgets, in order, attached to given tab bar.</p>
+<p>Because QMainWindow locks this info down, we have resorted to a hack.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets_ordered">
+<tt class="descname">get_dock_widgets_ordered</tt><big>(</big><em>visible_only=False</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.get_dock_widgets_ordered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all dock widgets in left-to-right, top-to-bottom order.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.remove_editor_widget">
+<tt class="descname">remove_editor_widget</tt><big>(</big><em>editor_widget</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.remove_editor_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a dock widget from the editor area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.reset_drag">
+<tt class="descname">reset_drag</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.reset_drag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear out all drag state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.set_hover_widget">
+<tt class="descname">set_hover_widget</tt><big>(</big><em>widget</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.set_hover_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the dock widget being &#8216;hovered over&#8217; during a drag.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x174a1080&gt;</em><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorAreaWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.advanced_editor_area_pane.</tt><tt class="descname">EditorTitleBarWidget</tt><big>(</big><em>editor_widget</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QTabBar</span></tt></p>
+<p>An auxillary widget for implementing AdvancedEditorAreaPane.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mouseMoveEvent">
+<tt class="descname">mouseMoveEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mouseMoveEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mousePressEvent">
+<tt class="descname">mousePressEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mousePressEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mouseReleaseEvent">
+<tt class="descname">mouseReleaseEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.mouseReleaseEvent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x173b65a8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorTitleBarWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.advanced_editor_area_pane.</tt><tt class="descname">EditorWidget</tt><big>(</big><em>editor</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QDockWidget</span></tt></p>
+<p>An auxillary widget for implementing AdvancedEditorAreaPane.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.set_title_bar">
+<tt class="descname">set_title_bar</tt><big>(</big><em>title_bar</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.set_title_bar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x173b6440&gt;</em><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_title">
+<tt class="descname">update_title</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_title_bar">
+<tt class="descname">update_title_bar</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_title_bar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_tooltip">
+<tt class="descname">update_tooltip</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.advanced_editor_area_pane.EditorWidget.update_tooltip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.dock_pane">
+<span id="dock-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">dock_pane</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.dock_pane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.dock_pane.DockPane">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.dock_pane.</tt><tt class="descname">DockPane</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.dock_pane.DockPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.tasks.task_pane.TaskPane" title="pyface.ui.qt4.tasks.task_pane.TaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.task_pane.TaskPane</span></tt></a>, <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_dock_pane.MDockPane" title="pyface.tasks.i_dock_pane.MDockPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_dock_pane.MDockPane</span></tt></a></p>
+<p>The toolkit-specific implementation of a DockPane.</p>
+<p>See the IDockPane interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.dock_pane.DockPane.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.dock_pane.DockPane.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and set the dock widget that contains the pane contents.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.dock_pane.DockPane.create_contents">
+<tt class="descname">create_contents</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.dock_pane.DockPane.create_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return the toolkit-specific contents of the dock pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.dock_pane.DockPane.set_focus">
+<tt class="descname">set_focus</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.dock_pane.DockPane.set_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives focus to the control that represents the pane.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.editor">
+<span id="editor-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.editor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.editor.Editor">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.editor.</tt><tt class="descname">Editor</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.editor.Editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_editor.MEditor" title="pyface.tasks.i_editor.MEditor"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_editor.MEditor</span></tt></a></p>
+<p>The toolkit-specific implementation of a Editor.</p>
+<p>See the IEditor interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor.Editor.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor.Editor.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and set the toolkit-specific control that represents the
+pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor.Editor.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor.Editor.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the toolkit-specific control that represents the pane.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.editor_area_pane">
+<span id="editor-area-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">editor_area_pane</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.editor_area_pane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.editor_area_pane.</tt><tt class="descname">EditorAreaDropFilter</tt><big>(</big><em>editor_area</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtCore.QObject</span></tt></p>
+<p>Implements drag and drop support.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter.eventFilter">
+<tt class="descname">eventFilter</tt><big>(</big><em>object</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle drag and drop events with MIME type &#8216;text/uri-list&#8217;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x18bafa30&gt;</em><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaDropFilter.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.editor_area_pane.</tt><tt class="descname">EditorAreaPane</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.tasks.task_pane.TaskPane" title="pyface.ui.qt4.tasks.task_pane.TaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.task_pane.TaskPane</span></tt></a>, <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_editor_area_pane.MEditorAreaPane" title="pyface.tasks.i_editor_area_pane.MEditorAreaPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_editor_area_pane.MEditorAreaPane</span></tt></a></p>
+<p>The toolkit-specific implementation of a EditorAreaPane.</p>
+<p>See the IEditorAreaPane interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.activate_editor">
+<tt class="descname">activate_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.activate_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the specified editor in the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.add_editor">
+<tt class="descname">add_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.add_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an editor to the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and set the toolkit-specific control that represents the
+pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the toolkit-specific control that represents the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.remove_editor">
+<tt class="descname">remove_editor</tt><big>(</big><em>editor</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaPane.remove_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an editor from the pane.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.editor_area_pane.</tt><tt class="descname">EditorAreaWidget</tt><big>(</big><em>editor_area</em>, <em>parent=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QTabWidget</span></tt></p>
+<p>An auxillary widget for implementing AdvancedEditorAreaPane.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget.focusInEvent">
+<tt class="descname">focusInEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget.focusInEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign focus to the active editor, if possible.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget.staticMetaObject">
+<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x126d1e90&gt;</em><a class="headerlink" href="#pyface.ui.qt4.tasks.editor_area_pane.EditorAreaWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.main_window_layout">
+<span id="main-window-layout-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">main_window_layout</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.main_window_layout" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.main_window_layout.</tt><tt class="descname">MainWindowLayout</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<p>A class for applying declarative layouts to a QMainWindow.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.get_layout">
+<tt class="descname">get_layout</tt><big>(</big><em>layout</em>, <em>include_sizes=True</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.get_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the layout by adding sublayouts to the specified DockLayout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.get_layout_for_area">
+<tt class="descname">get_layout_for_area</tt><big>(</big><em>q_dock_area</em>, <em>include_sizes=True</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.get_layout_for_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a LayoutItem for the specified dock area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.set_layout">
+<tt class="descname">set_layout</tt><big>(</big><em>layout</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.set_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a DockLayout to the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.set_layout_for_area">
+<tt class="descname">set_layout_for_area</tt><big>(</big><em>layout</em>, <em>q_dock_area</em>, <em>_toplevel_added=False</em>, <em>_toplevel_call=True</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout.set_layout_for_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a LayoutItem to the specified dock area.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayoutError">
+<em class="property">exception </em><tt class="descclassname">pyface.ui.qt4.tasks.main_window_layout.</tt><tt class="descname">MainWindowLayoutError</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayoutError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<p>Exception raised when a malformed LayoutItem is passed to the
+MainWindowLayout.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.task_pane">
+<span id="task-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_pane</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.task_pane" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.task_pane.TaskPane">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.task_pane.</tt><tt class="descname">TaskPane</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.task_pane.TaskPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_task_pane.MTaskPane" title="pyface.tasks.i_task_pane.MTaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_task_pane.MTaskPane</span></tt></a></p>
+<p>The toolkit-specific implementation of a TaskPane.</p>
+<p>See the ITaskPane interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_pane.TaskPane.create">
+<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_pane.TaskPane.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and set the toolkit-specific control that represents the
+pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_pane.TaskPane.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_pane.TaskPane.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the toolkit-specific control that represents the pane.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_pane.TaskPane.set_focus">
+<tt class="descname">set_focus</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_pane.TaskPane.set_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives focus to the control that represents the pane.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.task_window_backend">
+<span id="task-window-backend-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">task_window_backend</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.task_window_backend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.task_window_backend.</tt><tt class="descname">TaskWindowBackend</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.tasks.html#pyface.tasks.i_task_window_backend.MTaskWindowBackend" title="pyface.tasks.i_task_window_backend.MTaskWindowBackend"><tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.i_task_window_backend.MTaskWindowBackend</span></tt></a></p>
+<p>The toolkit-specific implementation of a TaskWindowBackend.</p>
+<p>See the ITaskWindowBackend interface for API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.create_contents">
+<tt class="descname">create_contents</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.create_contents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return the TaskWindow&#8217;s contents.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.destroy">
+<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the backend.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.get_layout">
+<tt class="descname">get_layout</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.get_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a TaskLayout for the current state of the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.hide_task">
+<tt class="descname">hide_task</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.hide_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assuming the specified TaskState is active, hide its controls.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.set_layout">
+<tt class="descname">set_layout</tt><big>(</big><em>layout</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.set_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a TaskLayout (which should be suitable for the active task)
+to the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.show_task">
+<tt class="descname">show_task</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assumming no task is currently active, show the controls of the
+specified TaskState.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowLayout">
+<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.tasks.task_window_backend.</tt><tt class="descname">TaskWindowLayout</tt><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout" title="pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.main_window_layout.MainWindowLayout</span></tt></a></p>
+<p>A MainWindowLayout for a TaskWindow.</p>
+<dl class="method">
+<dt id="pyface.ui.qt4.tasks.task_window_backend.TaskWindowLayout.set_layout">
+<tt class="descname">set_layout</tt><big>(</big><em>layout</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.task_window_backend.TaskWindowLayout.set_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies a DockLayout to the window.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.qt4.tasks.util">
+<span id="util-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.tasks.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyface.ui.qt4.tasks.util.set_focus">
+<tt class="descclassname">pyface.ui.qt4.tasks.util.</tt><tt class="descname">set_focus</tt><big>(</big><em>control</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.tasks.util.set_focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign keyboard focus to the given control.</p>
+<p>Ideally, we would just call <tt class="docutils literal"><span class="pre">setFocus()</span></tt> on the control and let Qt do the
+right thing. Unfortunately, this method is implemented in the most naive
+manner possible, and is essentially a no-op if the toplevel widget does not
+itself accept focus. We adopt the following procedure:</p>
+<ol class="arabic simple">
+<li>If the control itself accepts focus, use it. This is important since the
+control may have custom focus dispatching logic.</li>
+<li>Otherwise, if there is a child widget of the control that previously had
+focus, use it.</li>
+<li>Finally, have Qt determine the next item using its internal logic. Qt
+will only restrict itself to this widget&#8217;s children if it is a Qt::Window
+or Qt::SubWindow, hence the hack below.</li>
+</ol>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">tasks Package</a><ul>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.advanced_editor_area_pane"><tt class="docutils literal"><span class="pre">advanced_editor_area_pane</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.dock_pane"><tt class="docutils literal"><span class="pre">dock_pane</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.editor"><tt class="docutils literal"><span class="pre">editor</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.editor_area_pane"><tt class="docutils literal"><span class="pre">editor_area_pane</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.main_window_layout"><tt class="docutils literal"><span class="pre">main_window_layout</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.task_pane"><tt class="docutils literal"><span class="pre">task_pane</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.task_window_backend"><tt class="docutils literal"><span class="pre">task_window_backend</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.tasks.util"><tt class="docutils literal"><span class="pre">util</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.console.html"
+                        title="previous chapter">console Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.qt4.timer.html"
+                        title="next chapter">timer Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/pyface.ui.qt4.tasks.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.timer.html" title="timer Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyface.ui.qt4.console.html" title="console Package"
+             >previous</a> |</li>
+        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li><a href="pyface.ui.qt4.html" >qt4 Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2012, Enthought.
+      Last updated on Feb 15, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+    </div>
+  </body>
+</html>
