@@ -114,7 +114,9 @@ class ToolBarManager(ActionManager):
             if len(group.items) > 0:
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
-                    tool_bar.addSeparator()
+                    separator = tool_bar.addSeparator()
+                    group.on_trait_change(self._separator_visibility_method(separator),
+                                          'visible')
 
                 previous_non_empty_group = group
 
@@ -129,6 +131,10 @@ class ToolBarManager(ActionManager):
                     )
 
         return
+
+    def _separator_visibility_method(self, separator):
+        """ Method to return closure to set visibility of group separators. """
+        return lambda visible: separator.setVisible(visible)
 
 
 class _ToolBar(QtGui.QToolBar):
