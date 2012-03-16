@@ -125,18 +125,11 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._create_trim_widgets(self.control)
 
     def _create_control(self, parent):
-        control = QtGui.QMainWindow(parent)
+        control = super(ApplicationWindow, self)._create_control(parent)
         control.setObjectName('ApplicationWindow')
-
-        if self.position != (-1, -1):
-            control.move(*self.position)
-
-        if self.size != (-1, -1):
-            control.resize(*self.size)
 
         control.setAnimated(False)
         control.setDockNestingEnabled(True)
-        control.setWindowTitle(self.title)
 
         return control
 

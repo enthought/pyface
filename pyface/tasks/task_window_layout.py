@@ -1,5 +1,5 @@
 # Enthought library imports.
-from traits.api import Either, List, Str, Tuple
+from traits.api import Either, List, Str, Tuple, Enum
 
 # Local imports.
 from task_layout import LayoutContainer, TaskLayout
@@ -21,6 +21,8 @@ class TaskWindowLayout(LayoutContainer):
 
     # The size of the window.
     size = Tuple(800, 600)
+
+    size_state = Enum('normal', 'maximized')
 
     def get_active_task(self):
         """ Returns the ID of the active task in the layout, or None if there is
