@@ -291,7 +291,8 @@ class TaskWindow(ApplicationWindow):
     def get_window_layout(self):
         """ Returns a TaskWindowLayout for the current state of the window.
         """
-        result = TaskWindowLayout(position=self.position, size=self.size)
+        result = TaskWindowLayout(position=self.position, size=self.size,
+                                  size_state=self.size_state)
         for state in self._states:
             if state == self._active_state:
                 result.active_task = state.task.id
@@ -308,6 +309,7 @@ class TaskWindow(ApplicationWindow):
         # Set window size before laying it out.
         self.position = window_layout.position
         self.size = window_layout.size
+        self.size_state = window_layout.size_state
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
@@ -318,7 +320,7 @@ class TaskWindow(ApplicationWindow):
                 state.layout = layout
             else:
                 logger.warn("Cannot apply layout for task %r: task does not "
-                            "belong to the window." % task)
+                            "belong to the window." % layout.id)
 
         # Attempt to activate the requested task.
         state = self._get_state(window_layout.get_active_task())
