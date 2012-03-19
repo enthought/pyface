@@ -176,14 +176,8 @@ class _FutureCall(QtCore.QObject):
         """ QObject event handler.
         """
         if event.type() == self._pyface_event:
-            # Invoke the callable
-            if self._ms:
-                QtCore.QTimer.singleShot(self._ms, self._dispatch)
-            else:
-                self._callable(*self._args, **self._kw)
-                # We cannot remove from self._calls here. QObjects don't like
-                # being garbage collected during event handlers.
-                QtCore.QTimer.singleShot(0, self._finished)
+            # Invoke the callable (puts it at the end of the event queue)
+            QtCore.QTimer.singleShot(self._ms, self._dispatch)
             return True
 
         return super(_FutureCall, self).event(event)
