@@ -35,7 +35,7 @@ class SplashScreenLogHandler(Handler):
     def emit(self, record):
         """ Emits the log record. """
 
-        self._splash_screen.text = str(record.getMessage()) + '...'
+        self._splash_screen.text = unicode(record.getMessage()) + u'...'
 
         return
 
