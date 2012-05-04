@@ -1,3 +1,11 @@
+"""
+Simple example of a task application creating tasks and panes from traits 
+components. 
+
+Note: Run it with 
+$ ETS_TOOLKIT='qt4' python run.py
+as the wx backend is not supported yet for the TaskWindow.
+"""
 # Enthought library imports.
 from pyface.api import GUI
 from pyface.tasks.api import TaskWindow
