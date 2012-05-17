@@ -15,7 +15,7 @@
     Part of the TraitsGUI project of the Enthought Tool Suite.
 """
 
-__version__ = '4.2.0'
+__version__ = '4.2.1'
 
 __requires__ = [
     'traits',
