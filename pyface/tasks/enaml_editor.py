@@ -25,7 +25,6 @@ class EnamlEditor(Editor):
         self.component = self.create_component()
         self.component.setup(parent=parent)
         self.control = self.component.toolkit_widget
-        self.component.on_trait_change(self.size_hint_changed, 'size_hint_updated')
 
     def destroy(self):
         self.control = None
