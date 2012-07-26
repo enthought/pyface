@@ -68,7 +68,11 @@ class DockPane(TaskPane, MDockPane):
 
         # For some reason the QDockWidget doesn't respect the minimum size
         # of its widgets
-        control.setMinimumSize(contents.minimumSize())
+        contents_minsize = contents.minimumSize()
+        style = control.style()
+        contents_minsize.setHeight(contents_minsize.height()
+            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        control.setMinimumSize(contents_minsize)
 
         # Hide the control by default. Otherwise, the widget will visible in its
         # parent immediately!
