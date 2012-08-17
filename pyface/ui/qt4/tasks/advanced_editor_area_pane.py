@@ -109,6 +109,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         self.editors.remove(editor)
         self.control.remove_editor_widget(editor_widget)
         editor.editor_area = None
+        if not self.editors:
+            self.active_editor = None
 
     ###########################################################################
     # 'IAdvancedEditorAreaPane' interface.

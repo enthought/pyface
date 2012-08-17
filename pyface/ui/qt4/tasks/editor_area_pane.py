@@ -111,6 +111,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         editor.destroy()
         editor.editor_area = None
         self._update_tab_bar()
+        if not self.editors:
+            self.active_editor = None
 
     ###########################################################################
     # Protected interface.
