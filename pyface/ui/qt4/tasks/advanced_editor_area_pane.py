@@ -1,5 +1,6 @@
 # Standard library imports.
 import sys
+import pdb
 
 # System library imports.
 from pyface.qt import QtCore, QtGui
@@ -105,6 +106,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def remove_editor(self, editor):
         """ Removes an editor from the pane.
         """
+        print 'removed editor'
         editor_widget = editor.control.parent()
         self.editors.remove(editor)
         self.control.remove_editor_widget(editor_widget)
@@ -278,6 +280,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def destroy_editor_widget(self, editor_widget):
         """ Destroys a dock widget in the editor area.
         """
+        print 'destroy editor widget'
         editor_widget.hide()
         editor_widget.removeEventFilter(self)
         editor_widget.editor.destroy()
@@ -288,21 +291,76 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """
         return [ child for child in self.children()
                  if isinstance(child, QtGui.QDockWidget) and child.isVisible() ]
+        
+    def get_tab_bars(self):
+        """Gets all visible tab bars.
+        """
+        return [ child for child in self.children()
+                 if isinstance(child, QtGui.QTabBar) and child.isVisible() ]
     
-    def get_dock_widgets_for_bar(self, tab_bar):
+    def get_first_widget(self,tab_bar):
+        """Gets first widget of the given tab bar
+        """
+        all_widgets = self.get_dock_widgets()
+        
+    
+    def get_dock_widgets_for_bar(self, tab_bar,debug=False):
         """ Get the dock widgets, in order, attached to given tab bar.
+        FIX this function.
 
         Because QMainWindow locks this info down, we have resorted to a hack.
         """
         pos = tab_bar.pos()
         key = lambda w: QtGui.QVector2D(pos - w.pos()).lengthSquared()
+        all_bars = self.get_tab_bars()
         all_widgets = self.get_dock_widgets()
+        
+        # ignoring invisible dock widgets
+        all_widgets = [w for w in all_widgets if w.pos().toTuple() >= (0,0)]
+        if debug:
+            for w in all_widgets:
+                print w.editor.name, w.mapToGlobal(w.pos()), tab_bar.mapToGlobal(tab_bar.pos())
         if all_widgets:
             current = min(all_widgets, key=key)
             widgets = self.tabifiedDockWidgets(current)
             widgets.insert(tab_bar.currentIndex(), current)
             return widgets
         return []
+
+    def _meta_children(self,visible_only=False,debug=False):
+        """Get only widgetTyped, visible children which are:
+            1. either a Tab bar
+            2. or a dock widget with no tabifiedDockWidgets
+        """
+        children = []
+        
+        if debug:
+            import pdb
+            pdb.set_trace()
+        
+        for child in self.children():
+            if child.isWidgetType():
+                if child.isVisible():
+                    if isinstance(child, QtGui.QTabBar):
+                        if visible_only: # don't return the useless tab bar in case visible only is selected
+                            pass
+                        else:
+                            children.append(child)
+                    elif isinstance(child, QtGui.QDockWidget):
+                        if len(self.tabifiedDockWidgets(child))==0:
+                            children.append(child)
+                        elif visible_only:
+                            children.append(child)
+                        
+        """
+        for child in self.children():
+            if (child.isWidgetType() and child.isVisible() and
+                ((isinstance(child, QtGui.QTabBar) and not visible_only) or
+                 (isinstance(child, QtGui.QDockWidget) and
+                  (visible_only or not self.tabifiedDockWidgets(child))))):
+                children.append(child)
+        """
+        return children
 
     def get_dock_widgets_ordered(self, visible_only=False):
         """ Gets all dock widgets in left-to-right, top-to-bottom order.
@@ -311,13 +369,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
             y = cmp(one.pos().y(), two.pos().y())
             return cmp(one.pos().x(), two.pos().x()) if y == 0 else y
         
-        children = []
-        for child in self.children():
-            if (child.isWidgetType() and child.isVisible() and
-                ((isinstance(child, QtGui.QTabBar) and not visible_only) or
-                 (isinstance(child, QtGui.QDockWidget) and
-                  (visible_only or not self.tabifiedDockWidgets(child))))):
-                children.append(child)
+        children = self._meta_children(visible_only)
         children.sort(cmp=compare)
         
         widgets = []
@@ -328,9 +380,30 @@ class EditorAreaWidget(QtGui.QMainWindow):
                 widgets.append(child)
         return widgets
 
+    def get_children_names(self,children=None):
+        """Gets the names of children if they are editor widgets, and a list
+        containing docked widgets if they are tab bars 
+        """
+        if children==None:
+            children = self.children()
+        s = ''
+        for child in children:
+            if child.isWidgetType() and child.isVisible():
+                try:
+                    s += 'Editor: %s\n'%child.editor.name
+                except AttributeError:
+                    if isinstance(child,QtGui.QTabBar):
+                        s += 'Tab bar: %s\n'%[w.editor.name for w in self.get_dock_widgets_for_bar(child)]
+                    else:
+                        pass
+        return s
+    
     def remove_editor_widget(self, editor_widget):
         """ Removes a dock widget from the editor area.
         """
+        print 'remove editor widget'
+        print 'children before:',  self.get_children_names(self._meta_children())
+        #pdb.set_trace()
         # Get the tabs in this editor's dock area before removing it.
         tabified = self.tabifiedDockWidgets(editor_widget)
         if tabified:
@@ -342,7 +415,8 @@ class EditorAreaWidget(QtGui.QMainWindow):
         # Destroy and remove the editor. Get the active widget first, since it
         # may be destroyed!
         next_widget = self.editor_area.active_editor.control.parent()
-        self.destroy_editor_widget(editor_widget)
+        #pdb.set_trace()
+        
 
         # Ensure that the appropriate editor is activated.
         editor_area = self.editor_area
@@ -351,6 +425,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
              i = choices.index(editor_widget)
              next_widget = choices[i+1] if i+1 < len(choices) else choices[i-1]
              editor_area.activate_editor(next_widget.editor)
+        #pdb.set_trace()
+        self.destroy_editor_widget(editor_widget)
+        print 'children after:',  self.get_children_names(self._meta_children())
 
         # Update tab bar hide state.
         if len(tabified) == 2:
@@ -524,6 +601,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def _tab_close_requested(self, index):
         """ Handle a tab close request.
         """
+        print 'tab close'
         editor_widget = self.get_dock_widgets_for_bar(self.sender())[index]
         editor_widget.editor.close()
 
