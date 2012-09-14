@@ -3,7 +3,7 @@ import logging
 
 # Enthought library imports.
 from pyface.action.api import Action
-from traits.api import Any, Str
+from traits.api import Any, Str, List, Dict
 
 # Logging.
 logger = logging.getLogger(__name__)
