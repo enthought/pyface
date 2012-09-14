@@ -19,6 +19,12 @@ class ListeningAction(Action):
     # function will be called with the event.
     method = Str
 
+    # Extra arguments to method
+    args = List()
+
+    # Extra keyword arguments to method
+    kwargs = Dict()
+
     # The (extended) name of the attribute that determines whether the action is
     # enabled. By default, the action is always enabled when an object is set.
     enabled_name = Str
@@ -40,7 +46,7 @@ class ListeningAction(Action):
         if self.method != '':
             method = self._get_attr(self.object, self.method)
             if method:
-                method()
+                method(*self.args, **self.kwargs)
         else:
             super(ListeningAction, self).perform(event)
 
