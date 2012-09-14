@@ -111,6 +111,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         self.editors.remove(editor)
         self.control.remove_editor_widget(editor_widget)
         editor.editor_area = None
+        if not self.editors:
+            self.active_editor = None
 
     ###########################################################################
     # 'IAdvancedEditorAreaPane' interface.
@@ -617,6 +619,13 @@ class EditorWidget(QtGui.QDockWidget):
                          QtGui.QDockWidget.DockWidgetMovable)
         self.setWidget(editor.control)
         self.update_title()
+
+        # Update the minimum size.
+        contents_minsize = editor.control.minimumSize()
+        style = self.style()
+        contents_minsize.setHeight(contents_minsize.height()
+            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        self.setMinimumSize(contents_minsize)
 
         self.dockLocationChanged.connect(self.update_title_bar)
         self.visibilityChanged.connect(self.update_title_bar)
