@@ -49,8 +49,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             pane.
         """
         # Create and configure the Editor Area Widget.
-        self.active_tabwidget = DraggableTabWidget(editor_area=self)
-        self.control = EditorAreaWidget(self, self.active_tabwidget, parent)
+        self.control = EditorAreaWidget(self, parent)
         self.drag_widget = None
 
         # handle application level focus changes
@@ -94,6 +93,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         tabwidget.removeTab(tabwidget.indexOf(editor.control))
         editor.destroy()
         editor.editor_area = None
+        if not self.editors:
+            self.active_editor = None
+            self.active_tabwidget = None
 
 
 
@@ -156,7 +158,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def _focus_changed(self, old, new):
         """ Handle an application-level focus change to set the active_tabwidget
         """
-        print 'old: ', old, '\tnew: ', new
+        #print 'old: ', old, '\tnew: ', new
         if new:
             for editor in self.editors:
                 control = editor.control
@@ -181,7 +183,7 @@ class EditorAreaWidget(QtGui.QSplitter):
     tree.
     """
 
-    def __init__(self, editor_area, tabwidget, parent=None):
+    def __init__(self, editor_area, parent=None, tabwidget=None):
         """ Creates an EditorAreaWidget object.
 
         editor_area : global EditorAreaPane instance
@@ -192,6 +194,9 @@ class EditorAreaWidget(QtGui.QSplitter):
         super(EditorAreaWidget, self).__init__(parent=parent)
         self.editor_area = editor_area
         
+        if not tabwidget:
+            tabwidget = DraggableTabWidget(editor_area=self.editor_area, parent=self)
+
         # add the tabwidget to the splitter
         self.addWidget(tabwidget)
         
@@ -202,8 +207,9 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         # handle context menu events
         event_manager = self.editor_area.task.window.application.get_service(BaseEventManager)
-        event_manager.connect(ContextMenuEvent, self._add_split_actiongroup)
+        event_manager.connect(ContextMenuEvent, self._add_split_actions)
         event_manager.connect(ContextMenuEvent, self._add_collapse_action)
+
 
     def tabwidget(self):
         """ Obtain the tabwidget associated with current EditorAreaWidget
@@ -214,9 +220,15 @@ class EditorAreaWidget(QtGui.QSplitter):
         return None
 
     def brother(self):
-        """ Returns another child of its parent.
+        """ Returns another child of its parent. Returns None if it can't find any 
+        brother.
         """
         parent = self.parent()
+
+        # dirty hack to check if self is root
+        if not isinstance(parent, EditorAreaWidget):
+            return None
+
         if self is parent.leftchild:
             return parent.rightchild
         elif self is parent.rightchild:
@@ -231,15 +243,18 @@ class EditorAreaWidget(QtGui.QSplitter):
         """
         # set splitter orientation
         self.setOrientation(orientation)
+        orig_size = self.sizes()[0]
 
-        # add new children
-        self.leftchild = EditorAreaWidget(self.editor_area, parent=self,
-                        tabwidget=self.tabwidget())
-        self.rightchild = EditorAreaWidget(self.editor_area, parent=self,
-                        tabwidget=DraggableTabWidget(editor_area=editor_area))
+        # create new children
+        self.leftchild = EditorAreaWidget(self.editor_area, tabwidget=self.tabwidget())
+        self.rightchild = EditorAreaWidget(self.editor_area, tabwidget=None)
+
+        # add newly generated children
+        self.addWidget(self.leftchild)
+        self.addWidget(self.rightchild)
 
         # set equal sizes of splits
-        self.setSizes([50,50])
+        self.setSizes([orig_size/2,orig_size/2])
         
         # make the rightchild's tabwidget active
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()
@@ -272,36 +287,45 @@ class EditorAreaWidget(QtGui.QSplitter):
 
     ###### Signal handlers #####################################################
 
-    def _add_split_actiongroup(self, event):
-        """ Adds Split tabwidget action buttons to the contextmenu
+    def _add_split_actions(self, event):
+        """ Adds "Split horizontally"/"Split vertically" action buttons to the 
+        contextmenu
         """
-        menu = event.menu
-        
-        tabwidget = event.source.parent().parent()
+        # add these actions only if they have not been added before
+        if event.menu.find_group(id='split'):
+            return
+
+        tabwidget = event.source.control.parent().parent()
         assert isinstance(tabwidget, QtGui.QTabWidget)
-        source = tabwidget.parent()
+        splitter = tabwidget.parent()
         
         actions = [Action(id='split_hor', name='Split horizontally', 
-                  on_perform=lambda : source.split(orientation=QtCore.Qt.Horizontal)),
+                  on_perform=lambda : splitter.split(orientation=QtCore.Qt.Horizontal)),
                    Action(id='split_ver', name='Split vertically', 
-                  on_perform=lambda : source.split(orientation=QtCore.Qt.Vertical))]
+                  on_perform=lambda : splitter.split(orientation=QtCore.Qt.Vertical))]
 
-        group = Group(*actions, id='splitting')
+        group = Group(*actions, id='split')
         event.menu.append(group)
 
     def _add_collapse_action(self, event):
-        """ Adds Collapse split action buttons to the contextmenu
+        """ Adds "Collapse split" action button to the contextmenu
         """
-        menu = event.menu
+        # show collapse action only when there is a brother to collapse with
+        if not self.brother():
+            return
 
-        tabwidget = event.source.parent().parent()
+        # add this action only if it has not been added before
+        if event.menu.find_group(id='collapse'):
+            return
+
+        tabwidget = event.source.control.parent().parent()
         assert isinstance(tabwidget, QtGui.QTabWidget)
-        source = tabwidget.parent()
+        splitter = tabwidget.parent()
         
         actions = [Action(id='merge', name='Collapse split', 
-                  on_perform=lambda : source.collapse())]
+                  on_perform=lambda : splitter.collapse())]
 
-        group = Group(*actions, id='merging')
+        group = Group(*actions, id='collapse')
         event.menu.append(group)
 
     
@@ -310,7 +334,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     """ Implements a QTabWidget with event filters for tab drag and drop
     """
 
-    def __init__(self, editor_area, parent=None):
+    def __init__(self, editor_area, parent):
         """ 
         editor_area : EditorAreaPane instance
         parent : parent of the tabwidget
@@ -428,18 +452,3 @@ class TabWidgetFilter(QtCore.QObject):
                     return True
 
         return False
-
-"""
-class EditorWidget(QtGui.QWidget):
-    "The widget associated with editor object.
-    "
-
-    def __init__(self, editor, parent=None, tabwidget=None):
-        super(EditorWidget, self).__init__(parent)
-        self.editor = editor
-        self.editor.editor_area = self.editor_area = parent.editor_area
-        self.tabwidget = tabwidget
-        self.editor.create(self)
-        self.setLayout(QtGui.QStackedLayout())
-        self.layout().addWidget(self.editor.control)
-"""
