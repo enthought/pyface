@@ -343,13 +343,15 @@ class EditorAreaWidget(QtGui.QSplitter):
         Does nothing if the current splitter is not collapsible.
         """
         if not self.is_collapsible():
-            return
-
-        # save original currentwidget to make active later
-        orig_currentWidget = self.tabwidget().currentWidget()
+            return 
 
         parent = self.parent()
         brother = self.brother()
+
+        # save original currentwidget to make active later
+        # (if one of them is empty, make the currentwidget of other active)
+        orig_currentWidget = (self.tabwidget().currentWidget() or \
+                                brother.tabwidget().currentWidget())
 
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
@@ -485,17 +487,18 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 # else, just add it at the end
                 else:
                     self.addTab(widget, label)
-            # Note: above actions automatically remove the tab from source tabwidget
-            # However, we want that if we remove the last tab, we should also 
-            # collapse the split
-            if from_tabwidget.count()==0:
-                from_tabwidget.parent().collapse()
-            else:
-                # needed to stop flickering of tabwidget on drop
-                from_tabwidget.update()
             
             # make the dropped widget active
             self.setCurrentWidget(widget)
+
+            # Note: insertTab/addTab automatically remove tab from source tabwidget
+            # However, we want that if we remove the last tab from source, we should 
+            # also collapse that unnecessary split
+            if from_tabwidget.count()==0:
+                from_tabwidget.parent().collapse()
+            else:
+                # needed to stop flickering of tabBar on drop
+                from_tabwidget.update()
 
             # empty out drag info, making the drag inactive again
             self.editor_area.drag_info = {}
