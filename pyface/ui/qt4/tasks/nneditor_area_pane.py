@@ -51,7 +51,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         # Create and configure the Editor Area Widget.
         self.control = EditorAreaWidget(self, parent)
-        self.drag_widget = None
+        self.drag_info = {}
 
         # handle application level focus changes
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
@@ -99,7 +99,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         editor.editor_area = None
         if not self.editors:
             self.active_editor = None
-            self.active_tabwidget = None
 
 
     ##########################################################################
@@ -182,15 +181,15 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def on_context_menu(self, event):
         """ Adds split/collapse context menu actions
         """
-        print 'contextmenu'
         if isinstance(event.source, QtGui.QTabWidget):
             tabwidget = event.source
         else:
             tabwidget = event.source.control.parent().parent()
         splitter = tabwidget.parent()
 
-        # add split actions (only show for non-empty tabwidgets)
+        # add this group only if it has not been added before
         if not event.menu.find_group(id='split'):
+            # add split actions (only show for non-empty tabwidgets)
             if not splitter.is_empty():
                 actions = [Action(id='split_hor', name='Split horizontally', 
                            on_perform=lambda : splitter.split(orientation=
@@ -202,13 +201,15 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
                 splitgroup = Group(*actions, id='split')
                 event.menu.append(splitgroup)
 
-        # add collapse action (only show for collapsible splitters)
-        if splitter.is_collapsible():
-            actions = [Action(id='merge', name='Collapse split', 
-                        on_perform=lambda : splitter.collapse())]
+        # add this group only if it has not been added before
+        if not event.menu.find_group(id='collapse'):
+            # add collapse action (only show for collapsible splitters)
+            if splitter.is_collapsible():
+                actions = [Action(id='merge', name='Collapse split', 
+                            on_perform=lambda : splitter.collapse())]
 
-            collapsegroup = Group(*actions, id='collapse')
-            event.menu.append(collapsegroup)
+                collapsegroup = Group(*actions, id='collapse')
+                event.menu.append(collapsegroup)
 
 
 ###############################################################################
@@ -366,7 +367,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         # add target to parent
         parent.addWidget(target)
 
-        # activate the active widget of current tabwidget
+        # activate the active widget of source tabwidget
         target.setCurrentWidget(orig_currentWidget)
 
         # remove parent's splitter children
@@ -389,7 +390,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.editor_area = editor_area
 
         # configure QTabWidget
-        self.setTabBar(QtGui.QTabBar(parent=self))
+        self.setTabBar(DraggableTabBar(editor_area=editor_area, parent=self))
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setFocusProxy(None)
@@ -399,17 +400,18 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # set drop and context menu policies
         self.setAcceptDrops(True)
-        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(self.on_context_menu)
+        self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
 
-        # event handling
-        self._filter = TabWidgetFilter(self.editor_area)
-        self.tab_bar = self.tabBar()
-        self.tab_bar.installEventFilter(self._filter)
+        # connecting signals
+        self.currentChanged.connect(self._update_active_editor)
+        self.tabCloseRequested.connect(self._close_requested)
+        #self._filter = TabWidgetFilter(self.editor_area)
+        #self.tab_bar = self.tabBar()
+        #self.tab_bar.installEventFilter(self._filter)
 
     def get_names(self):
-        """ Utility function to return names of various editors open in the current 
-        tabwidget.
+        """ Utility function to return names of all the editors open in the 
+        current tabwidget.
         """
         names = []
         for i in range(self.count()):
@@ -421,46 +423,115 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
     ###### Signal handlers #####################################################
 
-    def tabCloseRequested(self, index):
+    def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
         editor_widget = self.widget(index)
         editor = self.editor_area._get_editor(editor_widget)
         editor.close()
 
+    def _update_active_editor(self, index):
+        """ Updates editor area's active editor when current index changes
+        """
+        editor_widget = self.widget(index)
+        editor = self.editor_area._get_editor(editor_widget)
+        self.editor_area.active_editor = editor
+        editor_widget.raise_()
+
+    ##### Event handlers #######################################################
+
+    def tabRemoved(self, index):
         # collapse split if all tabs are closed
         if self.count()==0:
             self.parent().collapse()
 
-    def on_context_menu(self, pos):
+        # modify current index
+        # Note: self.count() returns the count after tab has been removed
+        # and index stores the original index
+        
+        self.currentWidget().raise_()
+        editor = self.editor_area._get_editor(editor_widget)
+        print 'current:', self.editor_area._get_label(editor)
+
+    def contextMenuEvent(self, event):
         """ To fire ContextMenuEvent even on empty tabwidgets
         """
         parent = self.parent()
         if parent.is_empty():
             menu = Menu()
-            em = self.editor_area.task.window.application.get_service(BaseEventManager)
-            evt = ContextMenuEvent(source=self, widget=parent, pos=pos, menu=menu)
+            em = (self.editor_area.task.window.application.
+                    get_service(BaseEventManager))
+            evt = ContextMenuEvent(source=self, widget=parent, 
+                                pos=event.pos(), menu=menu)
             em.emit(evt)
             qmenu = menu.create_menu(self)
             qmenu.show()
+        return super(DraggableTabWidget, self).contextMenuEvent(event)            
 
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
         """
-        print 'drag enter'
-        mimeData = event.mimeData()
-        
-        print mimeData
-        #from IPython.core.debugger import Tracer; Tracer()()
-        #if mimeData.hasFormat("text/plain"):
-        event.acceptProposedAction()
+        if self.editor_area.drag_info:
+            event.acceptProposedAction()
+
+        return super(DraggableTabWidget, self).dropEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
-        drag_widget = self.editor_area.drag_widget 
-        self.addTab(drag_widget, self.editor_area._get_label(drag_widget))
-        event.acceptProposedAction()
+        if self.editor_area.drag_info:
+            from_index = self.editor_area.drag_info['from_index'] 
+            widget = self.editor_area.drag_info['widget']
+            from_tabwidget = self.editor_area.drag_info['from_tabwidget']
+
+            editor = self.editor_area._get_editor(widget)
+            label = self.editor_area._get_label(editor)
+            if self is from_tabwidget:
+                self.insertTab(from_index, widget, label)
+            else:
+                if not self.tabBar().tabAt(event.pos())==-1:
+                    index = self.tabBar().tabAt(event.pos())
+                    self.insertTab(index, widget, label)
+                else:
+                    self.addTab(widget, label)
+                from_tabwidget.removeTab(from_index)
+            self.setCurrentWidget(widget)
+            self.editor_area.drag_info = {}
+            event.acceptProposedAction()
+        #return super(DraggableTabWidget, self).dropEvent(event)
+
+
+class DraggableTabBar(QtGui.QTabBar):
+    """ Implements a QTabBar with event filters for tab drag and drop
+    """
+    def __init__(self, editor_area, parent):
+        super(DraggableTabBar, self).__init__(parent)
+        self.editor_area = editor_area
+        #self.setAcceptDrops(True)
+
+    def mousePressEvent(self, event):
+        if event.button()==QtCore.Qt.LeftButton:
+            self.editor_area.drag_info['from_index'] = from_index = self.tabAt(event.pos())
+            self.editor_area.drag_info['widget'] = widget = self.parent().widget(from_index)
+            self.editor_area.drag_info['from_tabwidget'] = self.parent()
+            self.editor_area.drag_info['pixmap'] = QtGui.QPixmap.grabWidget(widget)
+        return super(DraggableTabBar, self).mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        # is the left mouse button still pressed?
+        if not event.buttons()==QtCore.Qt.LeftButton:
+            pass
+        # is the pointer still within tab bar area?
+        if self.rect().contains(event.pos()):
+            pass
+        # initiate drag
+        else:
+            drag = QtGui.QDrag(self.editor_area.drag_info['widget'])
+            mimedata = QtCore.QMimeData()
+            drag.setPixmap(self.editor_area.drag_info['pixmap'])
+            drag.setMimeData(mimedata)
+            drag.exec_()
+        return super(DraggableTabBar, self).mouseMoveEvent(event)
 
 
 class TabWidgetFilter(QtCore.QObject):
