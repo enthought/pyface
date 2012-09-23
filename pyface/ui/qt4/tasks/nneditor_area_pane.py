@@ -368,8 +368,11 @@ class EditorAreaWidget(QtGui.QSplitter):
         # add target to parent
         parent.addWidget(target)
 
-        # activate the active widget of source tabwidget
+        # make target the new active tabwidget and make the original focused widget
+        # active in the target too
+        self.editor_area.active_tabwidget = target
         target.setCurrentWidget(orig_currentWidget)
+
 
         # remove parent's splitter children
         self.deleteLater()
@@ -487,6 +490,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
             # collapse the split
             if from_tabwidget.count()==0:
                 from_tabwidget.parent().collapse()
+            else:
+                # needed to stop flickering of tabwidget on drop
+                from_tabwidget.update()
             
             # make the dropped widget active
             self.setCurrentWidget(widget)
