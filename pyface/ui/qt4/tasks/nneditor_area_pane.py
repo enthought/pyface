@@ -56,9 +56,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         # handle application level focus changes
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
 
-        # handle context menu events
-        event_manager = (self.task.window.application.get_service(BaseEventManager))
-        event_manager.connect(ContextMenuEvent, self.context_menu_actions)
+        em = self.task.window.application.get_service(BaseEventManager)
+        em.connect(ContextMenuEvent, self.on_context_menu)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
@@ -181,9 +180,10 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             elif isinstance(new, QtGui.QTabBar):
                 self.active_tabwidget = new.parent() 
 
-    def context_menu_actions(self, event):
+    def on_context_menu(self, event):
         """ Adds split/collapse context menu actions
         """
+        print 'contextmenu'
         if isinstance(event.source, QtGui.QTabWidget):
             tabwidget = event.source
         else:
@@ -191,16 +191,17 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         splitter = tabwidget.parent()
 
         # add split actions (only show for non-empty tabwidgets)
-        if not splitter.is_empty():
-            actions = [Action(id='split_hor', name='Split horizontally', 
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Horizontal)),
-                       Action(id='split_ver', name='Split vertically', 
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Vertical))]
+        if not event.menu.find_group(id='split'):
+            if not splitter.is_empty():
+                actions = [Action(id='split_hor', name='Split horizontally', 
+                           on_perform=lambda : splitter.split(orientation=
+                            QtCore.Qt.Horizontal)),
+                           Action(id='split_ver', name='Split vertically', 
+                           on_perform=lambda : splitter.split(orientation=
+                            QtCore.Qt.Vertical))]
 
-            splitgroup = Group(*actions, id='split')
-            event.menu.append(splitgroup)
+                splitgroup = Group(*actions, id='split')
+                event.menu.append(splitgroup)
 
         # add collapse action (only show for non root splitters)
         if not splitter.is_root():
@@ -209,54 +210,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
             collapsegroup = Group(*actions, id='collapse')
             event.menu.append(collapsegroup)
-
-    def _add_split_actions(self, event):
-        """ Adds "Split horizontally"/"Split vertically" action buttons to the 
-        contextmenu
-        """
-        print 'src:'
-        print event.source.name
-        # add these actions only if they have not been added before
-        if event.menu.find_group(id='split'):
-            return
-
-        if isinstance(event.source, QtGui.QTabWidget):
-            tabwidget = event.source
-        else:
-            tabwidget = event.source.control.parent().parent()
-        splitter = tabwidget.parent()
-        
-        actions = [Action(id='split_hor', name='Split horizontally', 
-                  on_perform=lambda : splitter.split(orientation=QtCore.Qt.Horizontal)),
-                   Action(id='split_ver', name='Split vertically', 
-                  on_perform=lambda : splitter.split(orientation=QtCore.Qt.Vertical))]
-
-        group = Group(*actions, id='split')
-        event.menu.append(group)
-
-    def _add_collapse_action(self, event):
-        """ Adds "Collapse split" action button to the contextmenu
-        """
-        # show collapse action only when there is a brother to collapse with
-        if not self.brother():
-            return
-
-        # add this action only if it has not been added before
-        if event.menu.find_group(id='collapse'):
-            return
-
-        if isinstance(event.source, QtGui.QTabWidget):
-            tabwidget = event.source
-        else:
-            tabwidget = event.source.control.parent().parent()
-        splitter = tabwidget.parent()
-        
-        actions = [Action(id='merge', name='Collapse split', 
-                  on_perform=lambda : splitter.collapse())]
-
-        group = Group(*actions, id='collapse')
-        event.menu.append(group)
-
+            
 
 ###############################################################################
 # Auxillary classes.
@@ -404,13 +358,17 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # configure QTabWidget
         self.setTabBar(QtGui.QTabBar(parent=self))
-        self.setAcceptDrops(True)
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setFocusProxy(None)
         self.setMovable(True)
         self.setTabsClosable(True)
         self.setUsesScrollButtons(True)
+
+        # set drop and context menu policies
+        self.setAcceptDrops(True)
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.on_context_menu)
 
         # event handling
         self._filter = TabWidgetFilter(self.editor_area)
@@ -425,28 +383,25 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         editor_widget = self.widget(index)
 
-        # find the editor correspinding to this widget, and close it
-        for editor in self.editor_area.editors:
-            if editor.control==editor_widget:
-                editor.close()
-                break
+        # find the editor corresponding to this widget, and close it
+        editor = self.editor_area._get_editor(editor_widget)
+        editor.close()
 
         # collapse split if all tabs are closed
         if self.count()==0:
             self.parent().collapse()
 
-    def mousePressEvent(self, event):
-        """ Re-implemented to fire ContextMenuEvent even on empty tabwidgets
+    def on_context_menu(self, pos):
+        """ To fire ContextMenuEvent even on empty tabwidgets
         """
-        if event.button() == QtCore.Qt.RightButton and not self.count():
-            event_manager = (self.editor_area.task.window.
-                            application.get_service(BaseEventManager))
-            parent = self.parent()
-            if not parent.is_root():
-                print 'mouse press event on tabwidget'
-                set_context_menu_emit(target=self, widget=parent,
-                            event_manager=event_manager, 
-                            default_handler=self.editor_area.context_menu_actions)
+        parent = self.parent()
+        if parent.is_empty():
+            menu = Menu()
+            em = self.editor_area.task.window.application.get_service(BaseEventManager)
+            evt = ContextMenuEvent(source=self, widget=parent, pos=pos, menu=menu)
+            em.emit(evt)
+            qmenu = menu.create_menu(self)
+            qmenu.show()
 
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
