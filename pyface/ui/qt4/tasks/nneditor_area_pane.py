@@ -260,7 +260,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         """
         parent = self.parent()
 
-        # dirty hack to check if self is root
         if self.is_root():
             return None
 
@@ -279,32 +278,37 @@ class EditorAreaWidget(QtGui.QSplitter):
             return True
 
     def is_leaf(self):
-        """ Returns if the current EditorAreaWidget is a leaf, i.e., it has a tabwidget
-        as one of it's immediate child.
+        """ Returns True if the current EditorAreaWidget is a leaf, i.e., it has a 
+        tabwidget as one of it's immediate child.
         """
-        for child in self.children():
-            if isinstance(child, QtGui.QTabWidget):
-                return True
+        # a leaf has it's leftchild and rightchild None
+        if not self.leftchild and not self.rightchild:
+            return True
         return False
 
     def is_empty(self):
-        """ Returns True if the current tabwidget doesn't contain any editor.
+        """ Returns True if the current splitter's tabwidget doesn't contain any 
+        tab.
         """
         return not bool(self.tabwidget().count())
 
     def is_collapsible(self):
-        """ Returns True if the current splitter is collapsible to its brother, i.e.
-        if it's brother is also a leaf.
+        """ Returns True if the current splitter can be collapsed to its brother, i.e.
+        if it is a) either empty, or b) it has a brother which is a leaf.
         """
         if self.is_root():
             return False
+        
+        if self.is_empty():
+            return True
+        
+        parent = self.parent()
+        brother = self.brother()
+            
+        if brother.is_leaf():
+            return True
         else:
-            parent = self.parent()
-            brother = self.brother()
-            if brother.is_leaf():
-                return True
-            else:
-                return False
+            return False
 
     def split(self, orientation=QtCore.Qt.Horizontal):
         """ Split the current splitter into two children splitters. The tabwidget is 
@@ -340,6 +344,9 @@ class EditorAreaWidget(QtGui.QSplitter):
         if not self.is_collapsible():
             return
 
+        # save original currentwidget to make active later
+        orig_currentWidget = self.tabwidget().currentWidget()
+
         parent = self.parent()
         brother = self.brother()
 
@@ -349,20 +356,17 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         # add tabs of left and right tabwidgets to target
         for source in (left, right):
-            for i in range(source.count()):
-                editor_widget = source.widget(i)
+            widgets = [source.widget(i) for i in range(source.count())]
+            for editor_widget in widgets:
                 editor = self.editor_area._get_editor(editor_widget)
                 target.addTab(editor_widget, 
-                            self.editor_area._get_label(editor))
-
-        left.deleteLater()
-        right.deleteLater()
+                            self.editor_area._get_label(editor))                    
 
         # add target to parent
         parent.addWidget(target)
 
         # activate the active widget of current tabwidget
-        target.setCurrentWidget(self.tabwidget().currentWidget())
+        target.setCurrentWidget(orig_currentWidget)
 
         # remove parent's splitter children
         self.deleteLater()
@@ -402,15 +406,24 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.tab_bar = self.tabBar()
         self.tab_bar.installEventFilter(self._filter)
 
+    def get_names(self):
+        """ Utility function to return names of various editors open in the current 
+        tabwidget.
+        """
+        names = []
+        for i in range(self.count()):
+            editor_widget = self.widget(i)
+            editor = self.editor_area._get_editor(editor_widget)
+            names.append(editor.name)
+        return names
+
 
     ###### Signal handlers #####################################################
 
-    def tabRemoved(self, index):
-        """ Re-implemented to collapse splitter when no tab is present
+    def tabCloseRequested(self, index):
+        """ Re-implemented to close the editor when it's tab is closed
         """
         editor_widget = self.widget(index)
-
-        # find the editor corresponding to this widget, and close it
         editor = self.editor_area._get_editor(editor_widget)
         editor.close()
 
