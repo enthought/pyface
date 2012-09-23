@@ -203,14 +203,14 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
                 splitgroup = Group(*actions, id='split')
                 event.menu.append(splitgroup)
 
-        # add collapse action (only show for non root splitters)
-        if not splitter.is_root():
+        # add collapse action (only show for collapsible splitters)
+        if splitter.is_collapsible():
             actions = [Action(id='merge', name='Collapse split', 
                         on_perform=lambda : splitter.collapse())]
 
             collapsegroup = Group(*actions, id='collapse')
             event.menu.append(collapsegroup)
-            
+
 
 ###############################################################################
 # Auxillary classes.
@@ -246,7 +246,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         self.leftchild = None 
         self.rightchild = None
 
-
     def tabwidget(self):
         """ Obtain the tabwidget associated with current EditorAreaWidget
         """
@@ -279,10 +278,33 @@ class EditorAreaWidget(QtGui.QSplitter):
         else:
             return True
 
+    def is_leaf(self):
+        """ Returns if the current EditorAreaWidget is a leaf, i.e., it has a tabwidget
+        as one of it's immediate child.
+        """
+        for child in self.children():
+            if isinstance(child, QtGui.QTabWidget):
+                return True
+        return False
+
     def is_empty(self):
         """ Returns True if the current tabwidget doesn't contain any editor.
         """
         return not bool(self.tabwidget().count())
+
+    def is_collapsible(self):
+        """ Returns True if the current splitter is collapsible to its brother, i.e.
+        if it's brother is also a leaf.
+        """
+        if self.is_root():
+            return False
+        else:
+            parent = self.parent()
+            brother = self.brother()
+            if brother.is_leaf():
+                return True
+            else:
+                return False
 
     def split(self, orientation=QtCore.Qt.Horizontal):
         """ Split the current splitter into two children splitters. The tabwidget is 
@@ -312,7 +334,12 @@ class EditorAreaWidget(QtGui.QSplitter):
     def collapse(self):
         """ Collapses the current splitter and its brother splitter to their 
         parent splitter. Merges together the tabs of both's tabwidgets. 
+
+        Does nothing if the current splitter is not collapsible.
         """
+        if not self.is_collapsible():
+            return
+
         parent = self.parent()
         brother = self.brother()
 
