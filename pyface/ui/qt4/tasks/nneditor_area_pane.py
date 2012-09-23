@@ -404,11 +404,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
 
         # connecting signals
-        self.currentChanged.connect(self._update_active_editor)
         self.tabCloseRequested.connect(self._close_requested)
-        #self._filter = TabWidgetFilter(self.editor_area)
-        #self.tab_bar = self.tabBar()
-        #self.tab_bar.installEventFilter(self._filter)
 
     def get_names(self):
         """ Utility function to return names of all the editors open in the 
@@ -434,16 +430,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor = self.editor_area._get_editor(editor_widget)
         if editor:
             editor.close()
-
-    def _update_active_editor(self, index):
-        """ Updates editor area's active editor when current index changes
-        """
-        editor_widget = self.widget(index)
-        editor = self.editor_area._get_editor(editor_widget)
-        self.editor_area.active_editor = editor
-
-        if editor:
-            editor.control.raise_()
 
     ##### Event handlers #######################################################
 
@@ -473,27 +459,41 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
+        # accept drops only if a drag is active
         if self.editor_area.drag_info:
+            # extract drag info
             from_index = self.editor_area.drag_info['from_index'] 
             widget = self.editor_area.drag_info['widget']
             from_tabwidget = self.editor_area.drag_info['from_tabwidget']
 
+            # extract drag widget label
             editor = self.editor_area._get_editor(widget)
             label = self.editor_area._get_label(editor)
+
+            # if the drag initiated from the same tabwidget, put the tab 
+            # back at the original index
             if self is from_tabwidget:
                 self.insertTab(from_index, widget, label)
             else:
+                # if drop occurs at the tab bar, insert the tab at that position
                 if not self.tabBar().tabAt(event.pos())==-1:
                     index = self.tabBar().tabAt(event.pos())
                     self.insertTab(index, widget, label)
+                # else, just add it at the end
                 else:
                     self.addTab(widget, label)
-                if from_tabwidget.count()==0:
-                    from_tabwidget.parent().collapse()
+            # Note: above actions automatically remove the tab from source tabwidget
+            # However, we want that if we remove the last tab, we should also 
+            # collapse the split
+            if from_tabwidget.count()==0:
+                from_tabwidget.parent().collapse()
+            
+            # make the dropped widget active
             self.setCurrentWidget(widget)
+
+            # empty out drag info, making the drag inactive again
             self.editor_area.drag_info = {}
             event.acceptProposedAction()
-        #return super(DraggableTabWidget, self).dropEvent(event)
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -502,7 +502,6 @@ class DraggableTabBar(QtGui.QTabBar):
     def __init__(self, editor_area, parent):
         super(DraggableTabBar, self).__init__(parent)
         self.editor_area = editor_area
-        #self.setAcceptDrops(True)
 
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
@@ -526,6 +525,7 @@ class DraggableTabBar(QtGui.QTabBar):
             drag.setPixmap(self.editor_area.drag_info['pixmap'])
             drag.setMimeData(mimedata)
             drag.exec_()
+            return True
         return super(DraggableTabBar, self).mouseMoveEvent(event)
 
 
