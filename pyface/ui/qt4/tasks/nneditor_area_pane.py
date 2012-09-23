@@ -169,12 +169,11 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def _focus_changed(self, old, new):
         """ Handle an application-level focus change to set the active_tabwidget
         """
-        #print 'old: ', old, '\tnew: ', new
         if new:
             for editor in self.editors:
                 control = editor.control
                 if control is not None and control.isAncestorOf(new):
-                    self.active_editor = editor#self.activate_editor(editor)
+                    self.activate_editor(editor)
             if isinstance(new, DraggableTabWidget):
                 self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
@@ -356,6 +355,8 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         # add tabs of left and right tabwidgets to target
         for source in (left, right):
+            # Note: addTab removes widgets from source tabwidget, so 
+            # grabbing all the source widgets beforehand
             widgets = [source.widget(i) for i in range(source.count())]
             for editor_widget in widgets:
                 editor = self.editor_area._get_editor(editor_widget)
