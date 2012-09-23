@@ -76,6 +76,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.active_editor = editor
         editor.control.setFocus()
+        editor.control.raise_()
         self.active_tabwidget = editor.control.parent().parent()
         self.active_tabwidget.setCurrentWidget(editor.control)
         
@@ -426,13 +427,13 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
-        editor_widget = self.widget(index)
-        editor = self.editor_area._get_editor(editor_widget)
-        editor.close()
-
         if self.count()==0:
             self.parent().collapse()
 
+        editor_widget = self.widget(index)
+        editor = self.editor_area._get_editor(editor_widget)
+        if editor:
+            editor.close()
 
     def _update_active_editor(self, index):
         """ Updates editor area's active editor when current index changes
@@ -440,6 +441,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor_widget = self.widget(index)
         editor = self.editor_area._get_editor(editor_widget)
         self.editor_area.active_editor = editor
+
+        if editor:
+            editor.control.raise_()
 
     ##### Event handlers #######################################################
 
@@ -484,7 +488,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
                     self.insertTab(index, widget, label)
                 else:
                     self.addTab(widget, label)
-                from_tabwidget.removeTab(from_index)
+                if from_tabwidget.count()==0:
+                    from_tabwidget.parent().collapse()
             self.setCurrentWidget(widget)
             self.editor_area.drag_info = {}
             event.acceptProposedAction()
