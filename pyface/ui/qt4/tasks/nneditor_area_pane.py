@@ -430,28 +430,18 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor = self.editor_area._get_editor(editor_widget)
         editor.close()
 
+        if self.count()==0:
+            self.parent().collapse()
+
+
     def _update_active_editor(self, index):
         """ Updates editor area's active editor when current index changes
         """
         editor_widget = self.widget(index)
         editor = self.editor_area._get_editor(editor_widget)
         self.editor_area.active_editor = editor
-        editor_widget.raise_()
 
     ##### Event handlers #######################################################
-
-    def tabRemoved(self, index):
-        # collapse split if all tabs are closed
-        if self.count()==0:
-            self.parent().collapse()
-
-        # modify current index
-        # Note: self.count() returns the count after tab has been removed
-        # and index stores the original index
-        
-        self.currentWidget().raise_()
-        editor = self.editor_area._get_editor(editor_widget)
-        print 'current:', self.editor_area._get_label(editor)
 
     def contextMenuEvent(self, event):
         """ To fire ContextMenuEvent even on empty tabwidgets
