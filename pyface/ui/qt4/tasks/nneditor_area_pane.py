@@ -35,9 +35,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
 
-    # List of tabwidgets
-    tabwidgets = List(Instance(QtGui.QTabWidget))
-
     # tree based layout object 
     #layout = Instance(EditorAreaLayout) 
 
@@ -51,13 +48,18 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         # Create and configure the Editor Area Widget.
         self.control = EditorAreaWidget(self, parent)
+        self.active_tabwidget = self.control.tabwidget()
         self.drag_info = {}
 
         # handle application level focus changes
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
 
+        # handle context menu events to display split/collapse actions
         em = self.task.window.application.get_service(BaseEventManager)
-        em.connect(ContextMenuEvent, self.on_context_menu)
+        em.connect(ContextMenuEvent, func=self.on_context_menu)
+
+        # set key bindings
+        self.set_key_bindings()
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
@@ -138,19 +140,52 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
                 return editor
         return None
 
+    def set_key_bindings(self):
+        """ Set keyboard shortcuts for tabbed navigation
+        """
+        # Add shortcuts for scrolling through tabs.
+        if sys.platform == 'darwin':
+            next_seq = 'Ctrl+}'
+            prev_seq = 'Ctrl+{'
+        elif sys.platform.startswith('linux'):
+            next_seq = 'Ctrl+PgDown'
+            prev_seq = 'Ctrl+PgUp'
+        else:
+            next_seq = 'Alt+n'
+            prev_seq = 'Alt+p'
+        shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
+        shortcut.activated.connect(self._next_tab)
+        shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
+        shortcut.activated.connect(self._previous_tab)
+
+        # Add shortcuts for switching to a specific tab.
+        mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
+        mapper = QtCore.QSignalMapper(self.control)
+        mapper.mapped.connect(self._activate_tab)
+        for i in xrange(1, 10):
+            sequence = QtGui.QKeySequence(mod + str(i))
+            shortcut = QtGui.QShortcut(sequence, self.control)
+            shortcut.activated.connect(mapper.map)
+            mapper.setMapping(shortcut, i - 1)
+
+    def _activate_tab(self, index):
+        """ Activates the tab with the specified index, if there is one.
+        """
+        self.active_tabwidget.setCurrentIndex(index)
+
     def _next_tab(self):
         """ Activate the tab after the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
-        index = index + 1 if index < active_tabwidget.count() - 1 else index
-        self.active_tabwidget.setCurrentIndex(index)
+        new_index = index + 1 if index < self.active_tabwidget.count() - 1 else 0
+        self.active_tabwidget.setCurrentIndex(new_index)
 
     def _previous_tab(self):
         """ Activate the tab before the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
-        index = index - 1 if index > 0  else index
-        self.active_tabwidget.setCurrentIndex(index)
+        new_index = index - 1 if index > 0  else self.active_tabwidget.count() - 1
+        self.active_tabwidget.setCurrentIndex(new_index)
 
     #### Trait change handlers ################################################
 
@@ -177,15 +212,18 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             if isinstance(new, DraggableTabWidget):
                 self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
-                self.active_tabwidget = new.parent() 
+                self.active_tabwidget = new.parent()
 
     def on_context_menu(self, event):
         """ Adds split/collapse context menu actions
         """
         if isinstance(event.source, QtGui.QTabWidget):
             tabwidget = event.source
-        else:
+        elif isinstance(event.source, Editor):
             tabwidget = event.source.control.parent().parent()
+        else:
+            return
+
         splitter = tabwidget.parent()
 
         # add this group only if it has not been added before
@@ -434,7 +472,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             names.append(editor.name)
         return names
 
-
     ###### Signal handlers #####################################################
 
     def _close_requested(self, index):
@@ -571,4 +608,3 @@ class DraggableTabBar(QtGui.QTabBar):
             drag.exec_()
             return True
         return super(DraggableTabBar, self).mouseMoveEvent(event)
-        
