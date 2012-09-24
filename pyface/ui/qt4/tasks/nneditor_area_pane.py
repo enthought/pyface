@@ -412,7 +412,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setFocusProxy(None)
-        #self.setMovable(True)
+        self.setMovable(False) # handling move events myself
         self.setTabsClosable(True)
         self.setUsesScrollButtons(True)
 
@@ -477,6 +477,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         if self.editor_area.drag_info:
             event.acceptProposedAction()
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
 
         return super(DraggableTabWidget, self).dropEvent(event)
 
@@ -521,6 +523,20 @@ class DraggableTabWidget(QtGui.QTabWidget):
             self.editor_area.drag_info = {}
             event.acceptProposedAction()
 
+        # handle file drops events
+        if event.mimeData().hasUrls():
+            # Build list of accepted files.
+            extensions = tuple(self.editor_area.file_drop_extensions)
+            file_paths = []
+            for url in event.mimeData().urls():
+                file_path = url.toLocalFile()
+                if file_path.endswith(extensions):
+                    file_paths.append(file_path)
+
+            # dispatch file drop event
+            for file_path in file_paths:
+                self.editor_area.file_dropped = file_path
+
 
 class DraggableTabBar(QtGui.QTabBar):
     """ Implements a QTabBar with event filters for tab drag and drop
@@ -555,37 +571,4 @@ class DraggableTabBar(QtGui.QTabBar):
             drag.exec_()
             return True
         return super(DraggableTabBar, self).mouseMoveEvent(event)
-
-
-class TabWidgetFilter(QtCore.QObject):
-    """ Handles tab widget focus and drag/drop events
-    """
-    def __init__(self, editor_area):
-        super(TabWidgetFilter, self).__init__()
-        self.editor_area = editor_area
-
-    def eventFilter(self, object, event):
-        """ Handle drag and drop events with MIME type 'text/uri-list'.
-        """
-        if event.type() in (QtCore.QEvent.DragEnter, QtCore.QEvent.Drop):
-            # Build list of accepted files.
-            extensions = tuple(self.editor_area.file_drop_extensions)
-            file_paths = []
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(extensions):
-                    file_paths.append(file_path)
-
-            # Accept the event if we have at least one accepted file.
-            if event.type() == QtCore.QEvent.DragEnter:
-                if file_paths:
-                    event.acceptProposedAction()
-
-            # Dispatch the events.
-            elif event.type() == QtCore.QEvent.Drop:
-                for file_path in file_paths:
-                    self.editor_area.file_dropped = file_path
-
-            return True
-
-        return False
+        
