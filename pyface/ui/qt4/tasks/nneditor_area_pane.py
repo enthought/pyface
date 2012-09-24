@@ -348,6 +348,18 @@ class EditorAreaWidget(QtGui.QSplitter):
         parent = self.parent()
         brother = self.brother()
 
+        # this will happen only if self is empty, else it will not be collapsible at all
+        if brother and (not brother.is_leaf()):
+            parent.setOrientation(brother.orientation())
+            # reparent brother's children to parent
+            parent.addWidget(brother.leftchild)
+            parent.addWidget(brother.rightchild)
+            parent.leftchild = brother.leftchild
+            parent.rightchild = brother.rightchild
+            self.deleteLater()
+            brother.deleteLater()
+            return
+
         # save original currentwidget to make active later
         # (if one of them is empty, make the currentwidget of brother active)
         orig_currentWidget = (self.tabwidget().currentWidget() or \
@@ -428,31 +440,20 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
+        #from IPython.core.debugger import Tracer; Tracer()()
+        # grab the editor widget
+        editor_widget = self.widget(index)
+        
+        # remove tab
+        self.removeTab(index)
+        
+        # collapse if necessary
         if self.count()==0:
             self.parent().collapse()
 
-        editor_widget = self.widget(index)
+        # close editor
         editor = self.editor_area._get_editor(editor_widget)
-        if editor:
-            editor.close()
-
-    def tabRemoved(self, index):
-        """ Re-implemented to set appropriate tab active when tab at `index` is 
-        removed
-        """
-        super(DraggableTabWidget, self).tabRemoved(index)
-
-        # self.setCurrentIndex(focus)
-#        widget = self.widget(index)
-#        editor = self.editor_area._get_editor(widget)
-#        label = self.editor_area._get_label(editor)
-##        #editor.control.setFocus()
-#        #editor.control.raise_()
-#        print 'activating ', label
-#        self.setCurrentWidget(widget)
-#        self.setTabText(index, label)
-#        self.tabBar().update()
-
+        editor.close()
 
     ##### Event handlers #######################################################
 
