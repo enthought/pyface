@@ -349,9 +349,9 @@ class EditorAreaWidget(QtGui.QSplitter):
         brother = self.brother()
 
         # save original currentwidget to make active later
-        # (if one of them is empty, make the currentwidget of other active)
+        # (if one of them is empty, make the currentwidget of brother active)
         orig_currentWidget = (self.tabwidget().currentWidget() or \
-                                brother.tabwidget().currentWidget())
+                            brother.tabwidget().currentWidget())
 
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
@@ -400,7 +400,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setFocusProxy(None)
-        self.setMovable(True)
+        #self.setMovable(True)
         self.setTabsClosable(True)
         self.setUsesScrollButtons(True)
 
@@ -435,6 +435,24 @@ class DraggableTabWidget(QtGui.QTabWidget):
         editor = self.editor_area._get_editor(editor_widget)
         if editor:
             editor.close()
+
+    def tabRemoved(self, index):
+        """ Re-implemented to set appropriate tab active when tab at `index` is 
+        removed
+        """
+        super(DraggableTabWidget, self).tabRemoved(index)
+
+        # self.setCurrentIndex(focus)
+#        widget = self.widget(index)
+#        editor = self.editor_area._get_editor(widget)
+#        label = self.editor_area._get_label(editor)
+##        #editor.control.setFocus()
+#        #editor.control.raise_()
+#        print 'activating ', label
+#        self.setCurrentWidget(widget)
+#        self.setTabText(index, label)
+#        self.tabBar().update()
+
 
     ##### Event handlers #######################################################
 
@@ -475,15 +493,16 @@ class DraggableTabWidget(QtGui.QTabWidget):
             editor = self.editor_area._get_editor(widget)
             label = self.editor_area._get_label(editor)
 
-            # if the drag initiated from the same tabwidget, put the tab 
-            # back at the original index
-            if self is from_tabwidget:
-                self.insertTab(from_index, widget, label)
+            # if drop occurs at a tab bar, insert the tab at that position
+            if not self.tabBar().tabAt(event.pos())==-1:
+                index = self.tabBar().tabAt(event.pos())
+                self.insertTab(index, widget, label)
+
             else:
-                # if drop occurs at the tab bar, insert the tab at that position
-                if not self.tabBar().tabAt(event.pos())==-1:
-                    index = self.tabBar().tabAt(event.pos())
-                    self.insertTab(index, widget, label)
+                # if the drag initiated from the same tabwidget, put the tab 
+                # back at the original index
+                if self is from_tabwidget:
+                    self.insertTab(from_index, widget, label)
                 # else, just add it at the end
                 else:
                     self.addTab(widget, label)
@@ -496,9 +515,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             # also collapse that unnecessary split
             if from_tabwidget.count()==0:
                 from_tabwidget.parent().collapse()
-            else:
-                # needed to stop flickering of tabBar on drop
-                from_tabwidget.update()
 
             # empty out drag info, making the drag inactive again
             self.editor_area.drag_info = {}
@@ -514,6 +530,7 @@ class DraggableTabBar(QtGui.QTabBar):
 
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
+            self.editor_area.drag_info['start_pos'] = event.pos()
             self.editor_area.drag_info['from_index'] = from_index = self.tabAt(event.pos())
             self.editor_area.drag_info['widget'] = widget = self.parent().widget(from_index)
             self.editor_area.drag_info['from_tabwidget'] = self.parent()
@@ -524,8 +541,9 @@ class DraggableTabBar(QtGui.QTabBar):
         # is the left mouse button still pressed?
         if not event.buttons()==QtCore.Qt.LeftButton:
             pass
-        # is the pointer still within tab bar area?
-        if self.rect().contains(event.pos()):
+        # has the mouse been dragged for sufficient distance?
+        if ((event.pos() - self.editor_area.drag_info['start_pos']).manhattanLength()
+            < QtGui.QApplication.startDragDistance()):
             pass
         # initiate drag
         else:
@@ -568,31 +586,5 @@ class TabWidgetFilter(QtCore.QObject):
                     self.editor_area.file_dropped = file_path
 
             return True
-
-        # Handle drag/drop events on QTabBar
-        if isinstance(object, QtGui.QTabBar):
-            # register drag widget
-            if event.type() == QtCore.QEvent.MouseButtonPress:
-                from_index = object.tabAt(event.pos())
-                self.editor_area.drag_widget = object.parent().widget(from_index)
-                
-            # initiate drag event
-            if event.type() == QtCore.QEvent.MouseMove:
-                # if mouse isn't dragged outside of tab bar then return
-                if object.rect().contains(event.pos()):
-                    return False
-                # initiate drag, send a drop event
-                else:
-                    drag = QtGui.QDrag(self.editor_area.drag_widget)
-                    drag_widget = self.editor_area.drag_widget
-                    tabwidget = object.parent()
-                    tabIcon = tabwidget.tabIcon(tabwidget.indexOf(drag_widget))
-                    iconPixmap = tabIcon.pixmap(QtCore.QSize(22,22))
-                    iconPixmap = QtGui.QPixmap.grabWidget(drag_widget)
-                    mimeData = QtCore.QMimeData()
-                    drag.setPixmap(iconPixmap)
-                    drag.setMimeData(mimeData)
-                    dropAction = drag.exec_()
-                    return True
 
         return False
