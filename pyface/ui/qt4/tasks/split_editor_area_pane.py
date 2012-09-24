@@ -22,15 +22,15 @@ from encore.events.api import BaseEventManager
 # 'SplitEditorAreaPane' class.
 ###############################################################################
 
-class EditorAreaPane(TaskPane, MEditorAreaPane):
-    """ The toolkit-specific implementation of a EditorAreaPane.
+class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
+    """ The toolkit-specific implementation of a SplitEditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
 
     implements(IEditorAreaPane)
 
-    #### EditorAreaPane interface #############################################
+    #### SplitEditorAreaPane interface #############################################
 
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
@@ -47,7 +47,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             pane.
         """
         # Create and configure the Editor Area Widget.
-        self.control = EditorAreaWidget(self, parent)
+        self.control = SplitAreaWidget(self, parent)
         self.active_tabwidget = self.control.tabwidget()
         self.drag_info = {}
 
@@ -67,7 +67,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         for editor in self.editors:
             self.remove_editor(editor)
 
-        super(EditorAreaPane, self).destroy()
+        super(SplitEditorAreaPane, self).destroy()
 
     ###########################################################################
     # 'IEditorAreaPane' interface.
@@ -105,7 +105,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
 
     ##########################################################################
-    # 'EditorAreaPane' interface.
+    # 'SplitEditorAreaPane' interface.
     ##########################################################################
 
     def get_layout(self):
@@ -255,23 +255,23 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxillary classes.
 ###############################################################################
 
-class EditorAreaWidget(QtGui.QSplitter):
+class SplitAreaWidget(QtGui.QSplitter):
     """ Container widget to hold a QTabWidget which are separated by other 
     QTabWidgets via splitters.  
     
-    An EditorAreaWidget is essentially a Node object in the editor area layout 
+    An SplitAreaWidget is essentially a Node object in the editor area layout 
     tree.
     """
 
     def __init__(self, editor_area, parent=None, tabwidget=None):
-        """ Creates an EditorAreaWidget object.
+        """ Creates an SplitAreaWidget object.
 
-        editor_area : global EditorAreaPane instance
+        editor_area : global SplitEditorAreaPane instance
         parent : parent splitter
         tabwidget : tabwidget object contained by this splitter
 
         """
-        super(EditorAreaWidget, self).__init__(parent=parent)
+        super(SplitAreaWidget, self).__init__(parent=parent)
         self.editor_area = editor_area
         
         if not tabwidget:
@@ -286,7 +286,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         self.rightchild = None
 
     def tabwidget(self):
-        """ Obtain the tabwidget associated with current EditorAreaWidget
+        """ Obtain the tabwidget associated with current SplitAreaWidget
         """
         for child in self.children():
             if isinstance(child, QtGui.QTabWidget):
@@ -308,16 +308,16 @@ class EditorAreaWidget(QtGui.QSplitter):
             return parent.leftchild
 
     def is_root(self):
-        """ Returns True if the current EditorAreaWidget is the root widget.
+        """ Returns True if the current SplitAreaWidget is the root widget.
         """
         parent = self.parent()
-        if isinstance(parent, EditorAreaWidget):
+        if isinstance(parent, SplitAreaWidget):
             return False
         else:
             return True
 
     def is_leaf(self):
-        """ Returns True if the current EditorAreaWidget is a leaf, i.e., it has a 
+        """ Returns True if the current SplitAreaWidget is a leaf, i.e., it has a 
         tabwidget as one of it's immediate child.
         """
         # a leaf has it's leftchild and rightchild None
@@ -361,8 +361,8 @@ class EditorAreaWidget(QtGui.QSplitter):
         orig_size = self.sizes()[0]
 
         # create new children
-        self.leftchild = EditorAreaWidget(self.editor_area, tabwidget=self.tabwidget())
-        self.rightchild = EditorAreaWidget(self.editor_area, tabwidget=None)
+        self.leftchild = SplitAreaWidget(self.editor_area, tabwidget=self.tabwidget())
+        self.rightchild = SplitAreaWidget(self.editor_area, tabwidget=None)
 
         # add newly generated children
         self.addWidget(self.leftchild)
@@ -439,7 +439,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
     def __init__(self, editor_area, parent):
         """ 
-        editor_area : EditorAreaPane instance
+        editor_area : global SplitEditorAreaPane instance
         parent : parent of the tabwidget
         """
         super(DraggableTabWidget, self).__init__(parent)
