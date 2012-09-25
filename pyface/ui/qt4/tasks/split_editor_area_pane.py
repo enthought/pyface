@@ -70,7 +70,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         super(SplitEditorAreaPane, self).destroy()
 
     ###########################################################################
-    # 'IEditorAreaPane' interface.
+    # 'IEditorAreaPane' interface.s
     ###########################################################################
 
     def activate_editor(self, editor):
@@ -112,13 +112,13 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Returns a LayoutItem that reflects the current state of the 
         tabwidgets in the split framework.
         """
-        #node = dict(left=a,right=b,data=dict(orientation, isChildless=True))
-        pass
+        return self.control.get_layout()
+
 
     def set_layout(self, layout):
         """ Applies a LayoutItem to the tabwidgets in the pane.
         """
-        pass
+        self.control.set_layout(layout)
 
     ###########################################################################
     # Protected interface.
@@ -205,14 +205,19 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Handle an application-level focus change to set the active_tabwidget
         """
         if new:
-            for editor in self.editors:
-                control = editor.control
-                if control is not None and control.isAncestorOf(new):
-                    self.activate_editor(editor)
             if isinstance(new, DraggableTabWidget):
                 self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
                 self.active_tabwidget = new.parent()
+            else:
+                # check if any of the editor widgets (or their focus proxies) have
+                # focus. If yes, make it active
+                for editor in self.editors:
+                    # hasFocus is True if control or it's focusproxy has focus
+                    if editor.control.hasFocus():
+                        self.activate_editor(editor)
+                        break
+
 
     def on_context_menu(self, event):
         """ Adds split/collapse context menu actions
@@ -284,6 +289,60 @@ class SplitAreaWidget(QtGui.QSplitter):
         # children are present) 
         self.leftchild = None 
         self.rightchild = None
+
+    def get_layout(self):
+        """ Returns the layout of the current splitter node in the following dict 
+        format:
+        {
+        'leftchild': similar layout for left child if it has one, else None,
+        'rightchild': similar layout for left child if it has one, else None,
+        'orientation': QtCore.Qt.Horizontal or QtCore.Qt.Vertical orientation, 
+        'sizes': sizes of it's children (width for horizontal splitter, 
+                height for vertical)
+        'editor_states': editor states for open editors on current tabwidget (None, 
+            if self is a non-leaf splitter)
+        'currentIndex': currently active index (if leaf, else None)
+        }
+        """
+        orientation_code = {QtCore.Qt.Horizontal: 'h', 
+                            QtCore.Qt.Vertical: 'v'}
+
+        return {'leftchild'    : (None if self.is_leaf() else 
+                                  self.leftchild.get_layout()),
+                'rightchild'   : (None if self.is_leaf() else 
+                                  self.rightchild.get_layout()),
+                'orientation'  :  orientation_code[self.orientation()],
+                'sizes'         : self.sizes(),
+                'editor_states': (None if not self.is_leaf() else 
+                                  self.tabwidget().get_editor_states()),
+                'currentIndex' : (None if not self.is_leaf() else 
+                                  self.tabwidget().currentIndex())
+                }
+
+    def set_layout(self, layout):
+        """ Sets the layout of the current splitter based on layout object
+        """
+        orientation_decode = {'h': QtCore.Qt.Horizontal, 
+                              'v': QtCore.Qt.Vertical}
+        # if not a leaf splitter
+        if layout['leftchild']:
+            self.split(orientation=orientation_decode[layout['orientation']])
+            #from IPython.core.debugger import Tracer; Tracer()()
+            self.leftchild.set_layout(layout=layout['leftchild'])
+            self.rightchild.set_layout(layout=layout['rightchild'])
+            self.setSizes(layout['sizes'])
+
+        # if it is a leaf splitter 
+        else:
+            # sets the current tabwidget active, so that the files open in this 
+            # tabwidget only
+            self.editor_area.active_tabwidget = self.tabwidget()
+            # open necessary files
+            for editor_state in layout['editor_states']:
+                self.editor_area.task.edit(editor_state[0], editor_factory=None, 
+                                        **editor_state[1])
+            # make appropriate widget active
+            self.tabwidget().setCurrentIndex(layout['currentIndex'])
 
     def tabwidget(self):
         """ Obtain the tabwidget associated with current SplitAreaWidget
@@ -471,6 +530,27 @@ class DraggableTabWidget(QtGui.QTabWidget):
             editor = self.editor_area._get_editor(editor_widget)
             names.append(editor.name)
         return names
+
+    def get_editor_states(self):
+        """ Utility function to return editor_states by calling get_editor_args
+        on all the editors open in the current tabwidget.
+        """
+        editor_states = []
+        for i in range(self.count()):
+            editor_widget = self.widget(i)
+            editor = self.editor_area._get_editor(editor_widget)
+            if callable(getattr(editor, 'get_editor_args', None)):
+                # NOTE: get_editor_args() method must return either a jsonable
+                # object or a list of which the first element is a jsonable
+                # object and the second argument is a dictionary of additional
+                # keyword arguments.
+                args = editor.get_editor_args()
+                if args is not None:
+                    if not isinstance(args, list):
+                        args = [args, {}]
+                    editor_states.append(args)
+        return editor_states
+
 
     ###### Signal handlers #####################################################
 
