@@ -1,5 +1,5 @@
 # Local imports.
-from split_editor_area_pane import SplitEditorAreaPane
+from advanced_editor_area_pane import AdvancedEditorAreaPane
 from dock_pane import DockPane
 from editor import Editor
 from editor_area_pane import EditorAreaPane
