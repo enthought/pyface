@@ -55,10 +55,6 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # handle application level focus changes
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
 
-        # handle context menu events to display split/collapse actions
-        em = self.task.window.application.get_service(BaseEventManager)
-        em.connect(ContextMenuEvent, func=self.on_context_menu)
-
         # set key bindings
         self.set_key_bindings()
 
@@ -115,11 +111,52 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         return self.control.get_layout()
 
-
     def set_layout(self, layout):
         """ Applies the given LayoutItem.
         """
         self.control.set_layout(layout)
+
+    def get_context_menu(self, pos):
+        """ Returns a context menu containing split/collapse actions
+
+        pos : position (in global coordinates) where the context menu was requested
+        """
+        menu = Menu()
+
+        for tabwidget in self.tabwidgets():
+            # obtain tabwidget's bounding rectangle in global coordinates
+            global_rect = QtCore.QRect(tabwidget.mapToGlobal(QtCore.QPoint(0, 0)),
+                                        tabwidget.size())
+            if global_rect.contains(pos):
+                splitter = tabwidget.parent()
+
+        # no split/collapse context menu for positions outside any tabwidget region
+        if not splitter:
+            return
+
+        # add split actions (only show for non-empty tabwidgets)
+        if not splitter.is_empty():
+            actions = [Action(id='split_hor', name='Split horizontally', 
+                       on_perform=lambda : splitter.split(orientation=
+                        QtCore.Qt.Horizontal)),
+                       Action(id='split_ver', name='Split vertically', 
+                       on_perform=lambda : splitter.split(orientation=
+                        QtCore.Qt.Vertical))]
+
+            splitgroup = Group(*actions, id='split')
+            menu.append(splitgroup)
+
+        # add collapse action (only show for collapsible splitters)
+        if splitter.is_collapsible():
+            actions = [Action(id='merge', name='Collapse split', 
+                        on_perform=lambda : splitter.collapse())]
+
+            collapsegroup = Group(*actions, id='collapse')
+            menu.append(collapsegroup)
+
+        # return QMenu object
+        qmenu = menu.create_menu(splitter)
+        return qmenu
 
     ###########################################################################
     # Protected interface.
@@ -188,6 +225,11 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         new_index = index - 1 if index > 0  else self.active_tabwidget.count() - 1
         self.active_tabwidget.setCurrentIndex(new_index)
 
+    def tabwidgets(self):
+        """ Returns the list of tabwidgets associated with current editor area.
+        """
+        return self.control.tabwidgets()
+
     #### Trait change handlers ################################################
 
     @on_trait_change('editors:[dirty, name]')
@@ -218,43 +260,6 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                     if editor.control.hasFocus():
                         self.activate_editor(editor)
                         break
-
-
-    def on_context_menu(self, event):
-        """ Adds split/collapse context menu actions
-        """
-        if isinstance(event.source, QtGui.QTabWidget):
-            tabwidget = event.source
-        elif isinstance(event.source, Editor):
-            tabwidget = event.source.control.parent().parent()
-        else:
-            return
-
-        splitter = tabwidget.parent()
-
-        # add this group only if it has not been added before
-        if not event.menu.find_group(id='split'):
-            # add split actions (only show for non-empty tabwidgets)
-            if not splitter.is_empty():
-                actions = [Action(id='split_hor', name='Split horizontally', 
-                           on_perform=lambda : splitter.split(orientation=
-                            QtCore.Qt.Horizontal)),
-                           Action(id='split_ver', name='Split vertically', 
-                           on_perform=lambda : splitter.split(orientation=
-                            QtCore.Qt.Vertical))]
-
-                splitgroup = Group(*actions, id='split')
-                event.menu.append(splitgroup)
-
-        # add this group only if it has not been added before
-        if not event.menu.find_group(id='collapse'):
-            # add collapse action (only show for collapsible splitters)
-            if splitter.is_collapsible():
-                actions = [Action(id='merge', name='Collapse split', 
-                            on_perform=lambda : splitter.collapse())]
-
-                collapsegroup = Group(*actions, id='collapse')
-                event.menu.append(collapsegroup)
 
 
 ###############################################################################
@@ -298,6 +303,7 @@ class SplitAreaWidget(QtGui.QSplitter):
         """
         ORIENTATION_MAP = {QtCore.Qt.Horizontal: 'horizontal', 
                            QtCore.Qt.Vertical: 'vertical'}
+        # obtain layout based on children layouts
         if not self.is_leaf():
             layout = Splitter(self.leftchild.get_layout(), self.rightchild.get_layout(),
                             orientation=ORIENTATION_MAP[self.orientation()])
@@ -347,12 +353,27 @@ class SplitAreaWidget(QtGui.QSplitter):
             self.tabwidget().setCurrentIndex(layout.active_tab)
 
     def tabwidget(self):
-        """ Obtain the tabwidget associated with current SplitAreaWidget
+        """ Obtain the tabwidget associated with current SplitAreaWidget (returns 
+            None for non-leaf splitters)
         """
         for child in self.children():
             if isinstance(child, QtGui.QTabWidget):
                 return child
         return None
+
+    def tabwidgets(self):
+        """ Return a list of tabwidgets associated with current splitter or any of 
+        its descendents.
+        """
+        tabwidgets = []
+        if self.is_leaf():
+            tabwidgets.append(self.tabwidget())
+
+        else:
+            tabwidgets.extend(self.leftchild.tabwidgets())
+            tabwidgets.extend(self.rightchild.tabwidgets())
+        
+        return tabwidgets
 
     def brother(self):
         """ Returns another child of its parent. Returns None if it can't find any 
@@ -394,7 +415,7 @@ class SplitAreaWidget(QtGui.QSplitter):
 
     def is_collapsible(self):
         """ Returns True if the current splitter can be collapsed to its brother, i.e.
-        if it is a) either empty, or b) it has a brother which is a leaf.
+        if it is (a) either empty, or (b) it has a brother which is a leaf.
         """
         if self.is_root():
             return False
@@ -556,19 +577,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
     ##### Event handlers #######################################################
 
     def contextMenuEvent(self, event):
-        """ To fire ContextMenuEvent even on empty tabwidgets
+        """ To show collapse context menu even on empty tabwidgets
         """
-        parent = self.parent()
-        if parent.is_empty():
-            menu = Menu()
-            em = (self.editor_area.task.window.application.
-                    get_service(BaseEventManager))
-            evt = ContextMenuEvent(source=self, widget=parent, 
-                                pos=event.pos(), menu=menu)
-            em.emit(evt)
-            qmenu = menu.create_menu(self)
-            qmenu.show()
-        return super(DraggableTabWidget, self).contextMenuEvent(event)            
+        global_pos = self.mapToGlobal(event.pos())
+        menu = self.editor_area.get_context_menu(pos=global_pos)
+        menu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
@@ -642,6 +655,14 @@ class DraggableTabBar(QtGui.QTabBar):
     def __init__(self, editor_area, parent):
         super(DraggableTabBar, self).__init__(parent)
         self.editor_area = editor_area
+        self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+
+    def contextMenuEvent(self, event):
+        """ Re-implemented to provide split/collapse context menu on the tab bar. 
+        """
+        global_pos = self.mapToGlobal(event.pos())
+        menu = self.editor_area.get_context_menu(pos=global_pos)
+        menu.exec_(global_pos)
 
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
@@ -669,3 +690,4 @@ class DraggableTabBar(QtGui.QTabBar):
             drag.exec_()
             return True
         return super(DraggableTabBar, self).mouseMoveEvent(event)
+
