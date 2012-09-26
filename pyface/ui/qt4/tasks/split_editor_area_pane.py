@@ -10,6 +10,7 @@ from traits.api import implements, on_trait_change, Instance, List
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.editor import Editor
+from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter, HSplitter, VSplitter
 from traitsui.api import Menu
 
 # Local imports.
@@ -116,7 +117,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
 
     def set_layout(self, layout):
-        """ Applies a LayoutItem to the tabwidgets in the pane.
+        """ Applies the given LayoutItem.
         """
         self.control.set_layout(layout)
 
@@ -278,6 +279,8 @@ class SplitAreaWidget(QtGui.QSplitter):
         """
         super(SplitAreaWidget, self).__init__(parent=parent)
         self.editor_area = editor_area
+        #self.setSizePolicy(QtGui.QSizePolicy(QtGui.QSizePolicy.Ignored, 
+        #                                    QtGui.QSizePolicy.Ignored))
         
         if not tabwidget:
             tabwidget = DraggableTabWidget(editor_area=self.editor_area, parent=self)
@@ -291,58 +294,57 @@ class SplitAreaWidget(QtGui.QSplitter):
         self.rightchild = None
 
     def get_layout(self):
-        """ Returns the layout of the current splitter node in the following dict 
-        format:
-        {
-        'leftchild': similar layout for left child if it has one, else None,
-        'rightchild': similar layout for left child if it has one, else None,
-        'orientation': QtCore.Qt.Horizontal or QtCore.Qt.Vertical orientation, 
-        'sizes': sizes of it's children (width for horizontal splitter, 
-                height for vertical)
-        'editor_states': editor states for open editors on current tabwidget (None, 
-            if self is a non-leaf splitter)
-        'currentIndex': currently active index (if leaf, else None)
-        }
+        """ Returns a LayoutItem that reflects the layout of the current splitter.
         """
-        orientation_code = {QtCore.Qt.Horizontal: 'h', 
-                            QtCore.Qt.Vertical: 'v'}
-
-        return {'leftchild'    : (None if self.is_leaf() else 
-                                  self.leftchild.get_layout()),
-                'rightchild'   : (None if self.is_leaf() else 
-                                  self.rightchild.get_layout()),
-                'orientation'  :  orientation_code[self.orientation()],
-                'sizes'         : self.sizes(),
-                'editor_states': (None if not self.is_leaf() else 
-                                  self.tabwidget().get_editor_states()),
-                'currentIndex' : (None if not self.is_leaf() else 
-                                  self.tabwidget().currentIndex())
-                }
+        ORIENTATION_MAP = {QtCore.Qt.Horizontal: 'horizontal', 
+                           QtCore.Qt.Vertical: 'vertical'}
+        if not self.is_leaf():
+            layout = Splitter(self.leftchild.get_layout(), self.rightchild.get_layout(),
+                            orientation=ORIENTATION_MAP[self.orientation()])
+        # obtain the Tabbed layout
+        else:
+            items = []
+            for i in range(self.tabwidget().count()):
+                editor_widget = self.tabwidget().widget(i)
+                editor = self.editor_area._get_editor(editor_widget)
+                item_id = self.editor_area.editors.index(editor)
+                item_width = self.width()
+                item_height = self.height()
+                items.append(PaneItem(id=item_id, width=item_width, height=item_height))
+            layout = Tabbed(*items, active_tab=self.tabwidget().currentIndex())
+        return layout
 
     def set_layout(self, layout):
-        """ Sets the layout of the current splitter based on layout object
+        """ Applies the given LayoutItem to current splitter.
         """
-        orientation_decode = {'h': QtCore.Qt.Horizontal, 
-                              'v': QtCore.Qt.Vertical}
+        ORIENTATION_MAP = {'horizontal': QtCore.Qt.Horizontal, 
+                           'vertical': QtCore.Qt.Vertical}
         # if not a leaf splitter
-        if layout['leftchild']:
-            self.split(orientation=orientation_decode[layout['orientation']])
-            #from IPython.core.debugger import Tracer; Tracer()()
-            self.leftchild.set_layout(layout=layout['leftchild'])
-            self.rightchild.set_layout(layout=layout['rightchild'])
-            self.setSizes(layout['sizes'])
+        if isinstance(layout, Splitter):
+            self.split(orientation=ORIENTATION_MAP[layout.orientation])
+            self.leftchild.set_layout(layout=layout.items[0])
+            self.rightchild.set_layout(layout=layout.items[1])
+
+            # setting sizes of children along splitter direction
+            if layout.orientation=='horizontal':
+                sizes = [self.leftchild.width(), self.rightchild.width()]
+                self.resize(sum(sizes), self.leftchild.height())
+            else:
+                sizes = [self.leftchild.height(), self.rightchild.height()]
+                self.resize(self.leftchild.width(), sum(sizes))
+            self.setSizes(sizes)
 
         # if it is a leaf splitter 
-        else:
-            # sets the current tabwidget active, so that the files open in this 
-            # tabwidget only
-            self.editor_area.active_tabwidget = self.tabwidget()
-            # open necessary files
-            for editor_state in layout['editor_states']:
-                self.editor_area.task.edit(editor_state[0], editor_factory=None, 
-                                        **editor_state[1])
-            # make appropriate widget active
-            self.tabwidget().setCurrentIndex(layout['currentIndex'])
+        elif isinstance(layout, Tabbed):
+            self.tabwidget().clear()
+
+            items = []
+            for item in layout.items:
+                editor = self.editor_area.editors[item.id]
+                self.tabwidget().addTab(editor.control, 
+                                        self.editor_area._get_label(editor))
+                self.resize(item.width, item.height)
+            self.tabwidget().setCurrentIndex(layout.active_tab)
 
     def tabwidget(self):
         """ Obtain the tabwidget associated with current SplitAreaWidget
@@ -530,27 +532,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             editor = self.editor_area._get_editor(editor_widget)
             names.append(editor.name)
         return names
-
-    def get_editor_states(self):
-        """ Utility function to return editor_states by calling get_editor_args
-        on all the editors open in the current tabwidget.
-        """
-        editor_states = []
-        for i in range(self.count()):
-            editor_widget = self.widget(i)
-            editor = self.editor_area._get_editor(editor_widget)
-            if callable(getattr(editor, 'get_editor_args', None)):
-                # NOTE: get_editor_args() method must return either a jsonable
-                # object or a list of which the first element is a jsonable
-                # object and the second argument is a dictionary of additional
-                # keyword arguments.
-                args = editor.get_editor_args()
-                if args is not None:
-                    if not isinstance(args, list):
-                        args = [args, {}]
-                    editor_states.append(args)
-        return editor_states
-
 
     ###### Signal handlers #####################################################
 
