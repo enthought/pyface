@@ -475,6 +475,9 @@ class EditorAreaWidget(QtGui.QSplitter):
             parent.addWidget(sibling.rightchild)
             parent.leftchild = sibling.leftchild
             parent.rightchild = sibling.rightchild
+            # blindly make the first tabwidget active as it is not clear which 
+            # tabwidget should get focus now (FIXME??)
+            self.editor_area.active_tabwidget = parent.tabwidgets()[0]
             self.deleteLater()
             sibling.deleteLater()
             return
