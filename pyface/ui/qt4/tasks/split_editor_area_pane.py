@@ -36,9 +36,6 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
 
-    # tree based layout object 
-    #layout = Instance(EditorAreaLayout) 
-
     ###########################################################################
     # 'TaskPane' interface.
     ###########################################################################
@@ -61,6 +58,10 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """        
+        # disconnect focus change handlers first, else it gives weird runtime 
+        # errors
+        QtGui.QApplication.instance().focusChanged.disconnect(self._focus_changed)
+
         for editor in self.editors:
             self.remove_editor(editor)
 
@@ -155,8 +156,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             menu.append(collapsegroup)
 
         # return QMenu object
-        qmenu = menu.create_menu(splitter)
-        return qmenu
+        return menu
 
     ###########################################################################
     # Protected interface.
@@ -559,7 +559,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
-        #from IPython.core.debugger import Tracer; Tracer()()
         # grab the editor widget
         editor_widget = self.widget(index)
         
@@ -581,7 +580,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         global_pos = self.mapToGlobal(event.pos())
         menu = self.editor_area.get_context_menu(pos=global_pos)
-        menu.exec_(global_pos)
+        qmenu = menu.create_menu(self)
+        qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
@@ -662,7 +662,8 @@ class DraggableTabBar(QtGui.QTabBar):
         """
         global_pos = self.mapToGlobal(event.pos())
         menu = self.editor_area.get_context_menu(pos=global_pos)
-        menu.exec_(global_pos)
+        qmenu = menu.create_menu(self)
+        qmenu.exec_(global_pos)
 
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
