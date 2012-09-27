@@ -545,6 +545,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # connecting signals
         self.tabCloseRequested.connect(self._close_requested)
+        self.currentChanged.connect(self._current_changed)
 
     def get_names(self):
         """ Utility function to return names of all the editors open in the 
@@ -575,6 +576,14 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # close editor
         editor = self.editor_area._get_editor(editor_widget)
         editor.close()
+
+    def _current_changed(self, index):
+        """Re-implemented to update active editor
+        """
+        self.setCurrentIndex(index)
+
+        editor_widget = self.widget(index)
+        self.editor_area.active_editor = self.editor_area._get_editor(editor_widget)
 
     ##### Event handlers #######################################################
 
