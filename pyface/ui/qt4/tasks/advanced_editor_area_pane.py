@@ -179,6 +179,40 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 return editor
         return None
 
+    def _get_dragpixmap(self):
+        """ Returns the drag pixmap including page widget and tab rectangle. Returns
+        None if no drag is active.
+        """
+        if not self._drag_info.enabled:
+            return
+
+        drag_widget = self._drag_info.drag_widget
+        index = self._drag_info.from_index
+        tabwidget = self._drag_info.from_tabwidget
+
+        # instatiate the painter object with gray-color filled pixmap
+        result_pixmap = QtGui.QPixmap(tabwidget.rect().size())
+        self.painter = QtGui.QPainter(result_pixmap)
+        self.painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
+        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
+        
+        # region of active tab
+        tab_rect = tabwidget.tabBar().tabRect(index)
+        pixmap1 = QtGui.QPixmap.grabWidget(tabwidget.tabBar(), tab_rect)
+        self.painter.drawPixmap(tab_rect, pixmap1)
+
+        # region of the page widget
+        page_rect = drag_widget.geometry()
+        pixmap2 = QtGui.QPixmap.grabWidget(drag_widget)
+        self.painter.drawPixmap(0, tab_rect.height(), pixmap2)
+        pixmap = self.painter.device()
+        
+        # finish painting
+        self.painter.end()
+
+        return result_pixmap
+
+
     def set_key_bindings(self):
         """ Set keyboard shortcuts for tabbed navigation
         """
@@ -675,39 +709,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
 
-    def construct_dragpixmap(self):
-        """ Constructs the drag pixmap including page widget and tab rectangle
-        """
-        drag_widget = self.editor_area._drag_info.drag_widget
-        index = self.editor_area._drag_info.from_index
-        tabwidget = self.editor_area._drag_info.from_tabwidget
-
-        # instatiate the painter object
-        result_img = QtGui.QImage(tabwidget.rect().size(), 
-                                QtGui.QImage.Format_ARGB32_Premultiplied)
-        self.painter = QtGui.QPainter(result_img)
-        self.painter.fillRect(result_img.rect(), QtCore.Qt.darkGray)
-        
-        # region of the page widget
-        rect1 = drag_widget.rect()
-        img1 = QtGui.QPixmap.grabWidget(drag_widget, rect1).toImage()
-        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
-        self.painter.drawImage(0, tabwidget.tabBar().tabRect(index).height(), img1)
-
-        # region of active tab
-        rect2 = tabwidget.tabBar().tabRect(index)
-        img2 = QtGui.QPixmap.grabWidget(tabwidget.tabBar(), rect2).toImage()
-        self.painter.drawImage(0, 0, img2)
-        self.painter.end()
-
-        # paint rest of the image white
-        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_DestinationOver)
-        self.painter.fillRect(result_img.rect(), QtCore.Qt.white)        
-
-        pixmap = QtGui.QPixmap.fromImage(result_img)
-
-        return pixmap
-
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -732,7 +733,6 @@ class DraggableTabBar(QtGui.QTabBar):
             self.editor_area._drag_info.from_index = from_index = self.tabAt(event.pos())
             self.editor_area._drag_info.drag_widget = widget = self.parent().widget(from_index)
             self.editor_area._drag_info.from_tabwidget = self.parent()
-            self.editor_area._drag_info.pixmap = self.parent().construct_dragpixmap()#QtGui.QPixmap.grabWidget(widget)
         return super(DraggableTabBar, self).mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
@@ -746,6 +746,7 @@ class DraggableTabBar(QtGui.QTabBar):
         # initiate drag
         else:
             self.editor_area._drag_info.enabled = True
+            self.editor_area._drag_info.pixmap = self.editor_area._get_dragpixmap()
             drag = QtGui.QDrag(self.editor_area._drag_info.widget)
             mimedata = QtCore.QMimeData()
             drag.setPixmap(self.editor_area._drag_info.pixmap)
