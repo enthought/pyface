@@ -537,6 +537,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setMovable(False) # handling move events myself
         self.setTabsClosable(True)
         self.setUsesScrollButtons(True)
+        self.setAutoFillBackground(True)
 
         # set drop and context menu policies
         self.setAcceptDrops(True)
@@ -588,9 +589,14 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
         """
+        accepted = False
         if self.editor_area._drag_info.enabled:
-            event.acceptProposedAction()
+            accepted = True
         if event.mimeData().hasUrls():
+            accepted = True
+
+        if accepted:
+            self.palette().setColor(QtGui.QPalette.Highlight, QtCore.Qt.yellow)
             event.acceptProposedAction()
 
         return super(DraggableTabWidget, self).dropEvent(event)
@@ -632,9 +638,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
             if from_tabwidget.count()==0:
                 from_tabwidget.parent().collapse()
 
-            # empty out drag info, making the drag inactive again
-            self.editor_area._drag_info.enabled = False
-            event.acceptProposedAction()
+            accepted = True
 
         # handle file drops events
         if event.mimeData().hasUrls():
@@ -649,6 +653,52 @@ class DraggableTabWidget(QtGui.QTabWidget):
             # dispatch file drop event
             for file_path in file_paths:
                 self.editor_area.file_dropped = file_path
+                accepted = True
+
+        if accepted:
+            # empty out drag info, making the drag inactive again
+            self.editor_area._drag_info.enabled = False
+            self.setBackgroundRole(QtGui.QPalette.Window)
+            event.acceptProposedAction()
+
+    def dragLeaveEvent(self, event):
+        """ Clear widget highlight on leaving
+        """
+        self.setBackgroundRole(QtGui.QPalette.Window)
+
+    def construct_dragpixmap(self):
+        """ Constructs the drag pixmap including page widget and tab rectangle
+        """
+        drag_widget = self.editor_area._drag_info.drag_widget
+        index = self.editor_area._drag_info.from_index
+        tabwidget = self.editor_area._drag_info.from_tabwidget
+
+        # instatiate the painter object
+        result_img = QtGui.QImage(tabwidget.rect().size(), 
+                                QtGui.QImage.Format_ARGB32_Premultiplied)
+        self.painter = QtGui.QPainter(result_img)
+        self.painter.fillRect(result_img.rect(), QtCore.Qt.darkGray)
+        
+        # region of the page widget
+        rect1 = drag_widget.rect()
+        img1 = QtGui.QPixmap.grabWidget(drag_widget, rect1).toImage()
+        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
+        self.painter.drawImage(0, tabwidget.tabBar().tabRect(index).height(), img1)
+
+        # region of active tab
+        rect2 = tabwidget.tabBar().tabRect(index)
+        img2 = QtGui.QPixmap.grabWidget(tabwidget.tabBar(), rect2).toImage()
+        self.painter.drawImage(0, 0, img2)
+        self.painter.end()
+
+        # paint rest of the image white
+        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_DestinationOver)
+        self.painter.fillRect(result_img.rect(), QtCore.Qt.white)        
+
+        pixmap = QtGui.QPixmap.fromImage(result_img)
+
+        return pixmap
+
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -673,7 +723,7 @@ class DraggableTabBar(QtGui.QTabBar):
             self.editor_area._drag_info.from_index = from_index = self.tabAt(event.pos())
             self.editor_area._drag_info.drag_widget = widget = self.parent().widget(from_index)
             self.editor_area._drag_info.from_tabwidget = self.parent()
-            self.editor_area._drag_info.pixmap = QtGui.QPixmap.grabWidget(widget)
+            self.editor_area._drag_info.pixmap = self.parent().construct_dragpixmap()#QtGui.QPixmap.grabWidget(widget)
         return super(DraggableTabBar, self).mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
