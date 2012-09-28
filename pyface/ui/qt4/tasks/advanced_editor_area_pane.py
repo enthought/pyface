@@ -382,6 +382,7 @@ class EditorAreaWidget(QtGui.QSplitter):
 
             items = []
             for item in layout.items:
+                # if item specifies empty widget
                 if item.id==-1:
                     self.tabwidget().show_empty_widget()
                 else:
@@ -598,10 +599,10 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """ Shows the empty widget (containing buttons to open new file, and 
         collapse the split).
         """
-        self.tabBar().hide()
         empty_widget = self.create_empty_widget()
         self.addTab(empty_widget, 'button label')
         self.empty_widget = empty_widget
+        self.tabBar().hide()
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
