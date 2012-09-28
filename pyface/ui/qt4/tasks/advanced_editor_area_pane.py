@@ -199,7 +199,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         # region of active tab
         tab_rect = tabwidget.tabBar().tabRect(index)
         pixmap1 = QtGui.QPixmap.grabWidget(tabwidget.tabBar(), tab_rect)
-        self.painter.drawPixmap(tab_rect, pixmap1)
+        self.painter.drawPixmap(0, 0, pixmap1)
 
         # region of the page widget
         page_rect = drag_widget.geometry()
@@ -346,7 +346,10 @@ class EditorAreaWidget(QtGui.QSplitter):
             for i in range(self.tabwidget().count()):
                 editor_widget = self.tabwidget().widget(i)
                 editor = self.editor_area._get_editor(editor_widget)
-                item_id = self.editor_area.editors.index(editor)
+                if editor:
+                    item_id = self.editor_area.editors.index(editor)
+                else:
+                    item_id = -1 # to specify tabwidget's empty_widget
                 item_width = self.width()
                 item_height = self.height()
                 items.append(PaneItem(id=item_id, width=item_width, height=item_height))
@@ -379,9 +382,12 @@ class EditorAreaWidget(QtGui.QSplitter):
 
             items = []
             for item in layout.items:
-                editor = self.editor_area.editors[item.id]
-                self.tabwidget().addTab(editor.control, 
-                                        self.editor_area._get_label(editor))
+                if item.id==-1:
+                    self.tabwidget().show_empty_widget()
+                else:
+                    editor = self.editor_area.editors[item.id]
+                    self.tabwidget().addTab(editor.control, 
+                                            self.editor_area._get_label(editor))
                 self.resize(item.width, item.height)
             self.tabwidget().setCurrentIndex(layout.active_tab)
 
@@ -444,7 +450,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         """ Returns True if the current splitter's tabwidget doesn't contain any 
         tab.
         """
-        return not bool(self.tabwidget().count())
+        return bool(self.tabwidget().empty_widget)
 
     def is_collapsible(self):
         """ Returns True if the current splitter can be collapsed to its sibling, i.e.
@@ -517,9 +523,11 @@ class EditorAreaWidget(QtGui.QSplitter):
             return
 
         # save original currentwidget to make active later
-        # (if one of them is empty, make the currentwidget of sibling active)
-        orig_currentWidget = (self.tabwidget().currentWidget() or \
-                            sibling.tabwidget().currentWidget())
+        # (if self is empty, make the currentwidget of sibling active)
+        if not self.is_empty():
+            orig_currentWidget = self.tabwidget().currentWidget()
+        else:
+            orig_currentWidget = sibling.tabwidget().currentWidget()
 
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
@@ -529,7 +537,9 @@ class EditorAreaWidget(QtGui.QSplitter):
         for source in (left, right):
             # Note: addTab removes widgets from source tabwidget, so 
             # grabbing all the source widgets beforehand
-            widgets = [source.widget(i) for i in range(source.count())]
+            # (not grabbing empty_widget)
+            widgets = [source.widget(i) for i in range(source.count()) if not 
+                        source.widget(i) is source.empty_widget]
             for editor_widget in widgets:
                 editor = self.editor_area._get_editor(editor_widget)
                 target.addTab(editor_widget, 
@@ -581,6 +591,24 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.tabCloseRequested.connect(self._close_requested)
         self.currentChanged.connect(self._current_changed)
 
+        self.show_empty_widget()
+
+    def show_empty_widget(self):
+        """ Shows the empty widget (containing buttons to open new file, and 
+            collapse the split).
+        """
+        self.tabBar().hide()
+        self.empty_widget = QtGui.QPushButton('Click me', parent=self)
+        super(DraggableTabWidget, self).addTab(self.empty_widget, 'button label')
+
+    def hide_empty_widget(self):
+        """ Hides the empty widget (containing buttons to open new file, and 
+            collapse the split) based on whether the tabwidget is empty or not.
+        """
+        self.tabBar().show()
+        super(DraggableTabWidget, self).removeTab(self.indexOf(self.empty_widget))
+        self.empty_widget = None
+
     def get_names(self):
         """ Utility function to return names of all the editors open in the 
         current tabwidget.
@@ -597,17 +625,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
-        # grab the editor widget
         editor_widget = self.widget(index)
-        
-        # remove tab
-        self.removeTab(index)
-        
-        # collapse if necessary
-        if self.count()==0:
-            self.parent().collapse()
-
-        # close editor
         editor = self.editor_area._get_editor(editor_widget)
         editor.close()
 
@@ -615,9 +633,31 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """Re-implemented to update active editor
         """
         self.setCurrentIndex(index)
-
         editor_widget = self.widget(index)
         self.editor_area.active_editor = self.editor_area._get_editor(editor_widget)
+
+    def insertTab(self, index, page, label):
+        """ Re-implemented to remove empty widget when adding a new widget
+        """
+        if self.empty_widget:
+            self.hide_empty_widget()
+        return super(DraggableTabWidget, self).insertTab(index, page, label)
+
+    def addTab(self, page, label):
+        """ Re-implemented to remove empty widget when adding a new widget
+        """
+        if self.empty_widget:
+            self.hide_empty_widget()
+        return super(DraggableTabWidget, self).addTab(page, label)
+
+    def removeTab(self, index):
+        """ Re-implemented to show the empty tabwidget again if all tabs are removed
+        """
+        super(DraggableTabWidget, self).removeTab(index)
+
+        # show the empty widget if no widget left
+        if not self.count():
+            self.show_empty_widget()
 
     ##### Event handlers #######################################################
 
@@ -629,6 +669,19 @@ class DraggableTabWidget(QtGui.QTabWidget):
         qmenu = menu.create_menu(self)
         qmenu.exec_(global_pos)
 
+    def paintEvent(self, event):
+        """ Re implemented to set highlight on drop
+        """
+        super(DraggableTabWidget, self).paintEvent(event)
+
+        if hasattr(self, 'highlight'):
+            if self.highlight:
+                print 'highlight'
+                palette = QtGui.QPalette(self.palette())
+                palette.setColor(QtGui.QPalette.Highlight, QtCore.Qt.yellow)
+                self.setPalette(palette)
+
+
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
         """
@@ -639,7 +692,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             accepted = True
 
         if accepted:
-            self.palette().setColor(QtGui.QPalette.Highlight, QtCore.Qt.yellow)
             event.acceptProposedAction()
 
         return super(DraggableTabWidget, self).dropEvent(event)
@@ -674,12 +726,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             
             # make the dropped widget active
             self.setCurrentWidget(widget)
-
-            # Note: insertTab/addTab automatically remove tab from source tabwidget
-            # However, we want that if we remove the last tab from source, we should 
-            # also collapse that unnecessary split
-            if from_tabwidget.count()==0:
-                from_tabwidget.parent().collapse()
 
             accepted = True
 
