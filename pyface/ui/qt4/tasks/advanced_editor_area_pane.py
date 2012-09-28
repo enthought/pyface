@@ -345,11 +345,11 @@ class EditorAreaWidget(QtGui.QSplitter):
             items = []
             for i in range(self.tabwidget().count()):
                 editor_widget = self.tabwidget().widget(i)
-                editor = self.editor_area._get_editor(editor_widget)
-                if editor:
-                    item_id = self.editor_area.editors.index(editor)
-                else:
+                if editor_widget is self.tabwidget().empty_widget:
                     item_id = -1 # to specify tabwidget's empty_widget
+                else:
+                    editor = self.editor_area._get_editor(editor_widget)
+                    item_id = self.editor_area.editors.index(editor)
                 item_width = self.width()
                 item_height = self.height()
                 items.append(PaneItem(id=item_id, width=item_width, height=item_height))
@@ -598,21 +598,19 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """ Shows the empty widget (containing buttons to open new file, and 
         collapse the split).
         """
-        if not self.empty_widget:
-            self.tabBar().hide()
-            empty_widget = self.create_empty_widget()
-            self.addTab(empty_widget, 'button label')
-            self.empty_widget = empty_widget
+        self.tabBar().hide()
+        empty_widget = self.create_empty_widget()
+        self.addTab(empty_widget, 'button label')
+        self.empty_widget = empty_widget
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
         collapse the split) based on whether the tabwidget is empty or not.
         """
-        if self.empty_widget:
-            self.tabBar().show()
-            index = self.indexOf(self.empty_widget)
-            self.removeTab(index)
-            self.empty_widget = None
+        self.tabBar().show()
+        index = self.indexOf(self.empty_widget)
+        self.removeTab(index)
+        self.empty_widget = None
 
     def create_empty_widget(self):
         """ Creates the QFrame object to be shown when the current tabwidget is 
