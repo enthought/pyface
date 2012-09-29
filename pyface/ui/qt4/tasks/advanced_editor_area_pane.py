@@ -298,7 +298,6 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 for editor in self.editors:
                     # hasFocus is True if control or it's focusproxy has focus
                     if editor.control.hasFocus():
-                        print 'focus on:', editor.name
                         self.activate_editor(editor)
                         break
 
@@ -548,6 +547,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
         target = DraggableTabWidget(editor_area=self.editor_area, parent=parent)
+        target.show_empty_widget()
 
         # add tabs of left and right tabwidgets to target
         for source in (left, right):
@@ -568,8 +568,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         # widget active in the target too
         self.editor_area.active_tabwidget = target
         target.setCurrentWidget(orig_currentWidget)
-        if not target.empty_widget:
-            target.show_empty_widget()
 
         # remove parent's splitter children
         self.deleteLater()
@@ -643,11 +641,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
             collapse_btn.clicked.connect(self.parent().collapse)
 
             # set the layout
-            layout = QtGui.QBoxLayout(QtGui.QBoxLayout.TopToBottom, frame)
-            childlayout = QtGui.QVBoxLayout()
-            childlayout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
-            childlayout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
-            layout.addLayout(childlayout, alignment=QtCore.Qt.AlignCenter)
+            layout = QtGui.QVBoxLayout(frame)
+            layout.addStretch()
+            layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+            layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
+            layout.addStretch()
             frame.setLayout(layout)
 
         return frame
