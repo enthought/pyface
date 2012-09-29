@@ -14,6 +14,7 @@ from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter, HSplitter, VSpl
 from traits.api import Tuple
 from traitsui.api import Menu
 from traitsui.qt4.clipboard import PyMimeData
+from pyface.api import FileDialog
 
 # Local imports.
 from task_pane import TaskPane
@@ -613,7 +614,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         collapse the split).
         """
         empty_widget = self.create_empty_widget()
-        self.addTab(empty_widget, 'button label')
+        self.addTab(empty_widget, 'dummy label')
         self.empty_widget = empty_widget
         self.tabBar().hide()
 
@@ -631,20 +632,32 @@ class DraggableTabWidget(QtGui.QTabWidget):
         empty.
         """
         frame = QtGui.QFrame(parent=self)
-        frame.setFrameShape(QtGui.QFrame.Panel)
+        frame.setFrameShape(QtGui.QFrame.StyledPanel)
 
         if not self.parent().is_root():
-            # generate buttons and labels
-            label = QtGui.QLabel('Drag existing tabs here, or open new ones', 
-                                parent=frame)
-            collapse_btn = QtGui.QPushButton('Collapse split', parent=frame)
+            # generate open button
+            open_btn = QtGui.QPushButton('Open file', parent=frame)
+            open_dlg = FileDialog(action='open')
+            def _open():
+                open_dlg.open()
+                self.editor_area.active_tabwidget = self
+                self.editor_area.task.open_file(open_dlg.path)
+            open_btn.clicked.connect(_open)
+
+            # generate collapse button
+            collapse_btn = QtGui.QPushButton('Close this pane', parent=frame)
             collapse_btn.clicked.connect(self.parent().collapse)
+
+            # generate label
+            label = QtGui.QLabel('Or, drag tabs from other panes here', 
+                                parent=frame)
 
             # set the layout
             layout = QtGui.QVBoxLayout(frame)
             layout.addStretch()
-            layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+            layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
             layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
+            layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
             layout.addStretch()
             frame.setLayout(layout)
 
