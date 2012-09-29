@@ -568,7 +568,8 @@ class EditorAreaWidget(QtGui.QSplitter):
         # widget active in the target too
         self.editor_area.active_tabwidget = target
         target.setCurrentWidget(orig_currentWidget)
-
+        if not target.empty_widget:
+            target.show_empty_widget()
 
         # remove parent's splitter children
         self.deleteLater()
