@@ -298,6 +298,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 for editor in self.editors:
                     # hasFocus is True if control or it's focusproxy has focus
                     if editor.control.hasFocus():
+                        print 'focus on:', editor.name
                         self.activate_editor(editor)
                         break
 
@@ -658,7 +659,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
         for i in range(self.count()):
             editor_widget = self.widget(i)
             editor = self.editor_area._get_editor(editor_widget)
-            names.append(editor.name)
+            if editor:
+                names.append(editor.name)
         return names
 
     ###### Signal handlers ####################################################
@@ -699,19 +701,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
         qmenu = menu.create_menu(self)
         qmenu.exec_(global_pos)
 
-    def paintEvent(self, event):
-        """ Re implemented to set highlight on drop
-        """
-        super(DraggableTabWidget, self).paintEvent(event)
-
-        if hasattr(self, 'highlight'):
-            if self.highlight:
-                print 'highlight'
-                palette = QtGui.QPalette(self.palette())
-                palette.setColor(QtGui.QPalette.Highlight, QtCore.Qt.yellow)
-                self.setPalette(palette)
-
-
     def dragEnterEvent(self, event):
         """ Re-implemented to handle drag enter events 
         """
@@ -731,6 +720,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 accepted = True
 
         if accepted:
+            self.editor_area.active_tabwidget = self
+            self.setBackgroundRole(QtGui.QPalette.Highlight)
             event.acceptProposedAction()
 
         return super(DraggableTabWidget, self).dropEvent(event)
@@ -782,6 +773,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
             # dispatch file drop event
             for file_path in file_paths:
+                self.editor_area.active_tabwidget = self
                 self.editor_area.file_dropped = file_path
                 accepted = True
 
@@ -791,11 +783,13 @@ class DraggableTabWidget(QtGui.QTabWidget):
             extensions = tuple(self.editor_area.file_drop_extensions)
             file_paths = []
             for url in event.mimeData().instance().urls:
-                if url.endswith(extensions):
-                    file_paths.append(url)
+                file_path = event.mimeData().instance().to_local_path(url)
+                if file_path.endswith(extensions):
+                    file_paths.append(file_path)
 
             # dispatch file drop event
             for file_path in file_paths:
+                self.editor_area.active_tabwidget = self
                 self.editor_area.file_dropped = file_path
                 accepted = True
 
