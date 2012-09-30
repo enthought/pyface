@@ -68,8 +68,8 @@ class TestListeningAction(unittest.TestCase):
 		self.assertEquals(action.enabled, True)
 
 	def test_visible_name(self):
-		""" Whether the action follows enabled_name attribute of object to 
-		enable/disable the action
+		""" Whether the action follows visible_name attribute of object to 
+		make the action visible/invisible
 		"""
 		# enabled by default since enabled_name is not specified
 		dummy_obj = self._class()
