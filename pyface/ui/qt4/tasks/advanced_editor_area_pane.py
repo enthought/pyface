@@ -4,21 +4,16 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import implements, on_trait_change, Instance, List
-
-# System library imports.
+from traits.api import implements, on_trait_change, Instance, Tuple
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
-from pyface.tasks.editor import Editor
-from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter, HSplitter, VSplitter
-from traits.api import Tuple
+from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
 from traitsui.qt4.clipboard import PyMimeData
 from pyface.api import FileDialog
 
 # Local imports.
 from task_pane import TaskPane
-from util import set_focus
 
 ###############################################################################
 # 'AdvancedEditorAreaPane' class.
@@ -207,10 +202,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         self.painter.drawPixmap(0, 0, pixmap1)
 
         # region of the page widget
-        page_rect = drag_widget.geometry()
         pixmap2 = QtGui.QPixmap.grabWidget(drag_widget)
         self.painter.drawPixmap(0, tab_rect.height(), pixmap2)
-        pixmap = self.painter.device()
         
         # finish painting
         self.painter.end()
@@ -391,7 +384,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         elif isinstance(layout, Tabbed):
             self.tabwidget().clear()
 
-            items = []
             for item in layout.items:
                 # if item specifies empty widget
                 if item.id==-1:
@@ -474,7 +466,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         if self.is_empty():
             return True
         
-        parent = self.parent()
         sibling = self.sibling()
             
         if sibling.is_leaf():
@@ -839,8 +830,8 @@ class DraggableTabBar(QtGui.QTabBar):
             self.editor_area._drag_info.start_pos = event.pos()
             self.editor_area._drag_info.from_index = from_index \
                                                    = self.tabAt(event.pos())
-            self.editor_area._drag_info.drag_widget = widget \
-                                            = self.parent().widget(from_index)
+            self.editor_area._drag_info.drag_widget = \
+                                            self.parent().widget(from_index)
             self.editor_area._drag_info.from_tabwidget = self.parent()
         return super(DraggableTabBar, self).mousePressEvent(event)
 
