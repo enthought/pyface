@@ -65,7 +65,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         super(AdvancedEditorAreaPane, self).destroy()
 
     ###########################################################################
-    # 'IEditorAreaPane' interface.s
+    # 'IEditorAreaPane' interface.
     ###########################################################################
 
     def activate_editor(self, editor):
@@ -166,9 +166,12 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def _get_label(self, editor):
         """ Return a tab label for an editor.
         """
-        label = editor.name
-        if editor.dirty:
-            label = '*' + label
+        try:
+            label = editor.name
+            if editor.dirty:
+                label = '*' + label
+        except AttributeError:
+            label = ''
         return label
 
     def _get_editor(self, editor_widget):
@@ -530,8 +533,8 @@ class EditorAreaWidget(QtGui.QSplitter):
             # blindly make the first tabwidget active as it is not clear which 
             # tabwidget should get focus now (FIXME??)
             self.editor_area.active_tabwidget = parent.tabwidgets()[0]
-            self.deleteLater()
-            sibling.deleteLater()
+            self.setParent(None)
+            sibling.setParent(None)
             return
 
         # save original currentwidget to make active later
@@ -566,10 +569,10 @@ class EditorAreaWidget(QtGui.QSplitter):
         target.setCurrentWidget(orig_currentWidget)
 
         # remove parent's splitter children
-        self.deleteLater()
-        sibling.deleteLater()
         parent.leftchild = None
         parent.rightchild = None
+        self.setParent(None)
+        sibling.setParent(None)
     
 
 class DraggableTabWidget(QtGui.QTabWidget):
