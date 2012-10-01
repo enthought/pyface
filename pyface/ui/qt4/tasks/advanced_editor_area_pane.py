@@ -325,6 +325,8 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         # add the tabwidget to the splitter
         self.addWidget(tabwidget)
+        # showing the tabwidget after reparenting
+        tabwidget.show()
         
         # Initializes left and right children to None (since no initial splitter
         # children are present) 
@@ -344,20 +346,24 @@ class EditorAreaWidget(QtGui.QSplitter):
                             orientation=ORIENTATION_MAP[self.orientation()])
         # obtain the Tabbed layout
         else:
-            items = []
-            for i in range(self.tabwidget().count()):
-                editor_widget = self.tabwidget().widget(i)
-                if editor_widget is self.tabwidget().empty_widget:
-                    item_id = -1 # to specify tabwidget's empty_widget
-                else:
-                    editor = self.editor_area._get_editor(editor_widget)
+            if self.is_empty():
+                layout = Tabbed(PaneItem(id=-1, 
+                                        width=self.width(), 
+                                        height=self.height()),
+                                active_tab=0)
+            else:
+                items = []
+                for i in range(self.tabwidget().count()):
+                    widget = self.tabwidget().widget(i)
+                    # mark identification for empty_widget
+                    editor = self.editor_area._get_editor(widget)
                     item_id = self.editor_area.editors.index(editor)
-                item_width = self.width()
-                item_height = self.height()
-                items.append(PaneItem(id=item_id, 
-                                    width=item_width, 
-                                    height=item_height))
-            layout = Tabbed(*items, active_tab=self.tabwidget().currentIndex())
+                    item_width = self.width()
+                    item_height = self.height()
+                    items.append(PaneItem(id=item_id, 
+                                        width=item_width, 
+                                        height=item_height))
+                layout = Tabbed(*items, active_tab=self.tabwidget().currentIndex())
         return layout
 
     def set_layout(self, layout):
@@ -382,13 +388,13 @@ class EditorAreaWidget(QtGui.QSplitter):
 
         # if it is a leaf splitter 
         elif isinstance(layout, Tabbed):
-            self.tabwidget().clear()
+            # don't clear-out empty_widget's information if all it contains is an
+            # empty_widget
+            if not self.is_empty():
+                self.tabwidget().clear()
 
             for item in layout.items:
-                # if item specifies empty widget
-                if item.id==-1:
-                    self.tabwidget().show_empty_widget()
-                else:
+                if not item.id==-1:
                     editor = self.editor_area.editors[item.id]
                     self.tabwidget().addTab(editor.control, 
                                             self.editor_area._get_label(editor))
@@ -485,9 +491,9 @@ class EditorAreaWidget(QtGui.QSplitter):
         orig_size = self.sizes()[0]
 
         # create new children
-        self.leftchild = EditorAreaWidget(self.editor_area, 
+        self.leftchild = EditorAreaWidget(self.editor_area, parent=self,
                                         tabwidget=self.tabwidget())
-        self.rightchild = EditorAreaWidget(self.editor_area, 
+        self.rightchild = EditorAreaWidget(self.editor_area, parent=self,
                                         tabwidget=None)
 
         # add newly generated children
@@ -499,7 +505,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         
         # make the rightchild's tabwidget active & show its empty widget
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()
-        self.rightchild.tabwidget().show_empty_widget()
 
     def collapse(self):
         """ Collapses the current splitter and its sibling splitter to their 
@@ -539,7 +544,6 @@ class EditorAreaWidget(QtGui.QSplitter):
         left = parent.leftchild.tabwidget()
         right = parent.rightchild.tabwidget()
         target = DraggableTabWidget(editor_area=self.editor_area, parent=parent)
-        target.show_empty_widget()
 
         # add tabs of left and right tabwidgets to target
         for source in (left, right):
@@ -598,12 +602,14 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.tabCloseRequested.connect(self._close_requested)
         self.currentChanged.connect(self._current_changed)
 
-        self.empty_widget = None
+        # shows the custom empty widget containing buttons for relevant actions
+        self.show_empty_widget()
 
     def show_empty_widget(self):
         """ Shows the empty widget (containing buttons to open new file, and 
         collapse the split).
         """
+        self.empty_widget = None
         empty_widget = self.create_empty_widget()
         self.addTab(empty_widget, 'dummy label')
         self.empty_widget = empty_widget
@@ -624,33 +630,32 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         frame = QtGui.QFrame(parent=self)
         frame.setFrameShape(QtGui.QFrame.StyledPanel)
+        layout = QtGui.QVBoxLayout(frame)
+        layout.addStretch()
 
+        # generate open button
+        open_btn = QtGui.QPushButton('Open file', parent=frame)
+        open_dlg = FileDialog(action='open')
+        def _open():
+            open_dlg.open()
+            self.editor_area.active_tabwidget = self
+            self.editor_area.task.open_file(open_dlg.path)
+        open_btn.clicked.connect(_open)
+        layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
+
+        # generate collapse button
         if not self.parent().is_root():
-            # generate open button
-            open_btn = QtGui.QPushButton('Open file', parent=frame)
-            open_dlg = FileDialog(action='open')
-            def _open():
-                open_dlg.open()
-                self.editor_area.active_tabwidget = self
-                self.editor_area.task.open_file(open_dlg.path)
-            open_btn.clicked.connect(_open)
-
-            # generate collapse button
             collapse_btn = QtGui.QPushButton('Close this pane', parent=frame)
             collapse_btn.clicked.connect(self.parent().collapse)
-
-            # generate label
-            label = QtGui.QLabel('Or, drag tabs from other panes here', 
-                                parent=frame)
-
-            # set the layout
-            layout = QtGui.QVBoxLayout(frame)
-            layout.addStretch()
-            layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
             layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
-            layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
-            layout.addStretch()
-            frame.setLayout(layout)
+
+        # generate label
+        label = QtGui.QLabel('Or, drop things from other panes here', 
+                            parent=frame)
+        layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+        
+        layout.addStretch()
+        frame.setLayout(layout)
 
         return frame
 
