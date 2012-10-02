@@ -138,10 +138,10 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
         # add split actions (only show for non-empty tabwidgets)
         if not splitter.is_empty():
-            actions = [Action(id='split_hor', name='Split horizontally', 
+            actions = [Action(id='split_hor', name='Create new pane to the right', 
                        on_perform=lambda : splitter.split(orientation=
                         QtCore.Qt.Horizontal)),
-                       Action(id='split_ver', name='Split vertically', 
+                       Action(id='split_ver', name='Create new pane to the bottom', 
                        on_perform=lambda : splitter.split(orientation=
                         QtCore.Qt.Vertical))]
 
@@ -150,7 +150,17 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
         # add collapse action (only show for collapsible splitters)
         if splitter.is_collapsible():
-            actions = [Action(id='merge', name='Collapse split', 
+            if splitter is splitter.parent().leftchild:
+                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                    text = 'Merge to right pane'
+                else:
+                    text = 'Merge to bottom pane'
+            else:
+                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                    text = 'Merge to left pane'
+                else:
+                    text = 'Merge to top pane'
+            actions = [Action(id='merge', name=text, 
                         on_perform=lambda : splitter.collapse())]
 
             collapsegroup = Group(*actions, id='collapse')
