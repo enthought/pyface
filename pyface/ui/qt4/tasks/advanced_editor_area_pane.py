@@ -88,9 +88,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
         """
-        self.editors.remove(editor)
         tabwidget = editor.control.parent().parent()
         tabwidget.removeTab(tabwidget.indexOf(editor.control))
+        self.editors.remove(editor)
         editor.destroy()
         editor.editor_area = None
         if not self.editors:
@@ -617,6 +617,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.addTab(empty_widget, 'dummy label')
         self.empty_widget = empty_widget
         self.tabBar().hide()
+        self.setFocus()
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
@@ -653,7 +654,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
             layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
-        label = QtGui.QLabel('Or, drop things from other panes here', 
+        label = QtGui.QLabel('Or, drop files here', 
                             parent=frame)
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
         
