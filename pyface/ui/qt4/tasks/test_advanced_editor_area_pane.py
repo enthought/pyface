@@ -1,9 +1,11 @@
 # Tests basic layout operations of the splitter used in advanced_editor_area_pane.py
 
-import unittest
+import unittest, os
 
 from advanced_editor_area_pane import AdvancedEditorAreaPane, EditorAreaWidget
 from pyface.qt import QtGui, QtCore
+from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
+from pyface.tasks.api import Editor
 
 class TestEditorAreaWidget(unittest.TestCase):
 
@@ -66,12 +68,14 @@ class TestEditorAreaWidget(unittest.TestCase):
 						root.rightchild.tabwidget())
 
 	def _setUp_collapse(self, parent=None):
-		""" Sets up self, sibling and parent - the necessary components of a collapse.
+		""" Creates a root, its leftchild and rightchild, so that collapse can be tested on
+		one of the children.
+
 		Returns the root, leftchild and rightchild of such layout.
 
 		parent : parent of the returned root
 		"""
-		# setup left
+		# setup leftchild
 		left = EditorAreaWidget(editor_area=AdvancedEditorAreaPane(), parent=None)
 		btn0 = QtGui.QPushButton('btn0')
 		btn1 = QtGui.QPushButton('btn1')
@@ -80,7 +84,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 		tabwidget.addTab(btn1, '1')
 		tabwidget.setCurrentIndex(1)
 		
-		# setup right
+		# setup rightchild
 		right = EditorAreaWidget(editor_area=left.editor_area, parent=None)
 		btn2 = QtGui.QPushButton('btn2')
 		btn3 = QtGui.QPushButton('btn3')
@@ -112,7 +116,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 		btn2 = right.tabwidget().widget(0)
 		btn3 = right.tabwidget().widget(1)
 
-		# perform
+		# perform collapse on rightchild
 		root.rightchild.collapse()
 
 		# test
@@ -156,6 +160,102 @@ class TestEditorAreaWidget(unittest.TestCase):
 
 		# what is the current active_tabwidget?
 		self.assertEquals(root.editor_area.active_tabwidget, root.leftchild.tabwidget())
+
+	def test_persistence(self):
+		""" Tests whether get_layout/set_layout work correctly by setting a given layout
+		and getting back the obtained layout.
+		"""
+		# setup the test layout - one horizontal split and one vertical split on the 
+		# rightchild of horizontal split, where the top tabwidget of the vertical split 
+		# is empty.
+		layout = Splitter(Tabbed(PaneItem(id=0, width=600, height=600), 
+						active_tab=0), 
+						Splitter(Tabbed(PaneItem(id=-1, width=600, height=300), 
+										active_tab=0), 
+								Tabbed(PaneItem(id=1, width=600, height=300), 
+									   PaneItem(id=2, width=600, height=300),
+									   active_tab=0), orientation='vertical'), 
+						orientation='horizontal')
+		# a total of 3 files are needed to give this layout - one on the leftchild of
+		# horizontal split, and the other two on the bottom tabwidget of the 
+		# rightchild's vertical split
+		import tempfile
+		file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
+		file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
+		file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
+
+		# adding the editors
+		editor_area = AdvancedEditorAreaPane()
+		editor_area.create(parent=None)
+		editor_area.add_editor(Editor(obj=file0))
+		editor_area.add_editor(Editor(obj=file1))
+		editor_area.add_editor(Editor(obj=file2))
+
+		######## test set_layout #############
+		
+		# set the layout
+		editor_area.set_layout(layout)
+
+		# file0 goes to left pane?
+		left = editor_area.control.leftchild
+		editor = editor_area._get_editor(left.tabwidget().widget(0))
+		self.assertEquals(editor.obj, file0)
+		
+		# right pane is a splitter made of two panes?
+		right = editor_area.control.rightchild
+		self.assertFalse(right.is_leaf())
+		
+		# right pane is vertical splitter?
+		self.assertEquals(right.orientation(), QtCore.Qt.Vertical)
+		
+		# top pane of this vertical split is empty?
+		right_top = right.leftchild 
+		self.assertTrue(right_top.is_empty())
+		
+		# bottom pane is not empty?
+		right_bottom = right.rightchild 
+		self.assertFalse(right_bottom.is_empty())
+		
+		# file1 goes first on bottom pane?
+		editor = editor_area._get_editor(right_bottom.tabwidget().widget(0))
+		self.assertEquals(editor.obj, file1)
+		
+		# file2 goes second on bottom pane?
+		editor = editor_area._get_editor(right_bottom.tabwidget().widget(1))
+		self.assertEquals(editor.obj, file2)
+
+		# file1 tab is active?
+		self.assertEquals(right_bottom.tabwidget().currentIndex(), 0)
+
+		######### test get_layout #############
+
+		# obtain layout
+		layout_new = editor_area.get_layout()
+
+		# is the top level a horizontal splitter?
+		self.assertIsInstance(layout_new, Splitter)
+		self.assertEquals(layout_new.orientation, 'horizontal')
+		
+		# tests on left child
+		left = layout_new.items[0]
+		self.assertIsInstance(left, Tabbed)
+		self.assertEquals(left.items[0].id, 0)
+
+		# tests on right child
+		right = layout_new.items[1]
+		self.assertIsInstance(right, Splitter)
+		self.assertEquals(right.orientation, 'vertical')
+
+		# tests on top pane of right child
+		right_top = right.items[0]
+		self.assertIsInstance(right_top, Tabbed)
+		self.assertEquals(right_top.items[0].id, -1)
+
+		# tests on bottom pane of right child
+		right_bottom = right.items[1]
+		self.assertIsInstance(right_bottom, Tabbed)
+		self.assertEquals(right_bottom.items[0].id, 1)
+		self.assertEquals(right_bottom.items[1].id, 2)
 
 
 if __name__=="__main__":
