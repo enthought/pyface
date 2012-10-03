@@ -152,14 +152,14 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         if splitter.is_collapsible():
             if splitter is splitter.parent().leftchild:
                 if splitter.parent().orientation() is QtCore.Qt.Horizontal:
-                    text = 'Merge to right pane'
+                    text = 'Merge with right pane'
                 else:
-                    text = 'Merge to bottom pane'
+                    text = 'Merge with bottom pane'
             else:
                 if splitter.parent().orientation() is QtCore.Qt.Horizontal:
-                    text = 'Merge to left pane'
+                    text = 'Merge with left pane'
                 else:
-                    text = 'Merge to top pane'
+                    text = 'Merge with top pane'
             actions = [Action(id='merge', name=text, 
                         on_perform=lambda : splitter.collapse())]
 
