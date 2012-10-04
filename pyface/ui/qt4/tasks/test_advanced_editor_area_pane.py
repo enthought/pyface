@@ -1,9 +1,9 @@
 # Tests basic layout operations of the splitter used in advanced_editor_area_pane.py
 
-import unittest, os
+import unittest, os, tempfile
 
 from advanced_editor_area_pane import AdvancedEditorAreaPane, EditorAreaWidget
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtGui, QtCore, QtTest
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.tasks.api import Editor
 
@@ -179,7 +179,6 @@ class TestEditorAreaWidget(unittest.TestCase):
 		# a total of 3 files are needed to give this layout - one on the leftchild of
 		# horizontal split, and the other two on the bottom tabwidget of the 
 		# rightchild's vertical split
-		import tempfile
 		file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
 		file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
 		file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
@@ -256,6 +255,72 @@ class TestEditorAreaWidget(unittest.TestCase):
 		self.assertIsInstance(right_bottom, Tabbed)
 		self.assertEquals(right_bottom.items[0].id, 1)
 		self.assertEquals(right_bottom.items[1].id, 2)
+
+class TestDraggableTabWidget(unittest.TestCase):
+	""" Tests for DraggableTabWidget object
+	"""
+
+	def setUp(self):
+		""" Setup a layout having a single split, each pane containing two tabs.
+		"""
+		self.editor_area = AdvancedEditorAreaPane()
+		self.editor_area.create(parent=None)
+		
+		# open files
+		self.file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
+		self.file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
+		self.file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
+		self.file3 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
+
+		# add editors
+		self.editor_area.add_editor(Editor(obj=self.file0))
+		self.editor_area.add_editor(Editor(obj=self.file1))
+
+		# create split and add rest of the editors
+		self.editor_area.control.split()
+		self.editor_area.add_editor(Editor(obj=self.file2))
+		self.editor_area.add_editor(Editor(obj=self.file3))
+
+		# we now have file0 and file1 on the left pane, while file2 and file3 on 
+		# the right pane
+		self.left = self.editor_area.control.leftchild.tabwidget()
+		self.right = self.editor_area.control.rightchild.tabwidget()
+
+	def test_empty_widget(self):
+		""" Tests whether empty_widget is shown and hidden appropriately
+		"""
+		pass
+
+	def test_drag_drop_within_tabbar(self):
+		""" Tests drag drop function when both source and target of drag-drop are
+		in the same tabbar. This is done by checking whether tab swapping works
+		or not.
+		"""
+		tabBar = self.left.tabBar()
+		# press mouse button at second tab of left pane
+		QtTest.QTest.mousePress(tabBar, QtCore.Qt.LeftButton, 
+								pos=tabBar.tabRect(1).center())
+		# move to first tab of the same pane
+		# explicitly calling mousemoveEvent on tabBar since qtest doesn't emit 
+		# mousemove event (FIXME??)
+		mousemove_evt = QtGui.QMouseEvent(QtCore.QEvent.MouseMove,
+										tabBar.tabRect(0).center(), 
+										QtCore.Qt.LeftButton,
+										QtCore.Qt.LeftButton,
+										QtCore.Qt.NoModifier)
+		tabBar.event(mousemove_evt)
+		#QtCore.QCoreApplication()
+
+		# release the mouse here
+		QtTest.QTest.mouseRelease(self.left, QtCore.Qt.LeftButton, 
+							pos=tabBar.tabRect(0).center())
+
+		# test whether the files have been swapped?
+		editor0 = self.editor_area._get_editor(self.left.widget(0))
+		self.assertEquals(editor0.obj, self.file1)
+
+		editor1 = self.editor_area._get_editor(self.left.widget(1))
+		self.assertEquals(editor1.obj, self.file0)
 
 
 if __name__=="__main__":
