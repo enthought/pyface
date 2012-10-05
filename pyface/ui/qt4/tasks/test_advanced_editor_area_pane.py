@@ -3,7 +3,7 @@
 import unittest, os, tempfile
 
 from advanced_editor_area_pane import AdvancedEditorAreaPane, EditorAreaWidget
-from pyface.qt import QtGui, QtCore, QtTest
+from pyface.qt import QtGui, QtCore
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.tasks.api import Editor
 
