@@ -1,6 +1,6 @@
 # Tests basic layout operations of the splitter used in advanced_editor_area_pane.py
 
-import unittest, os
+import unittest, os, tempfile
 
 from advanced_editor_area_pane import AdvancedEditorAreaPane, EditorAreaWidget
 from pyface.qt import QtGui, QtCore
@@ -179,7 +179,6 @@ class TestEditorAreaWidget(unittest.TestCase):
 		# a total of 3 files are needed to give this layout - one on the leftchild of
 		# horizontal split, and the other two on the bottom tabwidget of the 
 		# rightchild's vertical split
-		import tempfile
 		file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
 		file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
 		file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
@@ -256,7 +255,6 @@ class TestEditorAreaWidget(unittest.TestCase):
 		self.assertIsInstance(right_bottom, Tabbed)
 		self.assertEquals(right_bottom.items[0].id, 1)
 		self.assertEquals(right_bottom.items[1].id, 2)
-
 
 if __name__=="__main__":
 	unittest.main()
