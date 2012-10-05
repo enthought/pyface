@@ -11,6 +11,7 @@ from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
 from traitsui.qt4.clipboard import PyMimeData
 from pyface.api import FileDialog
+from pyface.constant import OK, CANCEL
 
 # Local imports.
 from task_pane import TaskPane
@@ -653,7 +654,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
         def _open():
             open_dlg.open()
             self.editor_area.active_tabwidget = self
-            self.editor_area.task.open_file(open_dlg.path)
+            if open_dlg.return_code==OK:
+                self.editor_area.task.open_file(open_dlg.path)
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
