@@ -654,7 +654,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         def _open():
             open_dlg.open()
             self.editor_area.active_tabwidget = self
-            if open_dlg.return_code==OK:
+            if open_dlg.return_code == OK:
                 self.editor_area.task.open_file(open_dlg.path)
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
