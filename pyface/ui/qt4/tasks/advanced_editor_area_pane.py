@@ -740,7 +740,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # handle file drop events from the file browser pane
         if isinstance(event.mimeData(), PyMimeData):
-            if event.mimeData().instance().has_urls:
+            if getattr(event.mimeData().instance(), 'has_urls', False):
                 accepted = True
 
         if accepted:
@@ -861,7 +861,7 @@ class DraggableTabBar(QtGui.QTabBar):
         if not event.buttons()==QtCore.Qt.LeftButton:
             pass
         # has the mouse been dragged for sufficient distance?
-        if ((event.pos() - self.editor_area._drag_info.start_pos).manhattanLength()
+        elif ((event.pos() - self.editor_area._drag_info.start_pos).manhattanLength()
             < QtGui.QApplication.startDragDistance()):
             pass
         # initiate drag
@@ -873,6 +873,6 @@ class DraggableTabBar(QtGui.QTabBar):
             drag.setPixmap(self.editor_area._drag_info.pixmap)
             drag.setMimeData(mimedata)
             drag.exec_()
-            return True
+            return
         return super(DraggableTabBar, self).mouseMoveEvent(event)
 
