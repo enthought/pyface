@@ -4,7 +4,7 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import implements, on_trait_change, Instance, Tuple
+from traits.api import implements, on_trait_change, Instance, Tuple, Callable
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -32,6 +32,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
+
+    # Callable to tell whether the editor task can handle a given object
+    can_handle = Callable(lambda obj: None)
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -798,6 +801,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 file_path = url.toLocalFile()
                 if file_path.endswith(extensions):
                     file_paths.append(file_path)
+                elif self.editor_area.can_handle(file_path):
+                    file_paths.append(file_path)
 
             # dispatch file drop event
             for file_path in file_paths:
@@ -814,6 +819,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 file_path = event.mimeData().instance().to_local_path(url)
                 if file_path.endswith(extensions):
                     file_paths.append(file_path)
+                elif self.editor_area.can_handle(file_path):
+                    file_paths.append(file_path)
 
             # dispatch file drop event
             for file_path in file_paths:
@@ -824,8 +831,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
         if accepted:
             # empty out drag info, making the drag inactive again
             self.editor_area._drag_info.enabled = False
-            self.setBackgroundRole(QtGui.QPalette.Window)
             event.acceptProposedAction()
+
+        self.setBackgroundRole(QtGui.QPalette.Window)
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
