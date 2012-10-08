@@ -84,9 +84,10 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         editor.editor_area = self
         editor.create(self.active_tabwidget)
+        index = self.active_tabwidget.addTab(editor.control, 
+                                            self._get_label(editor))
+        self.active_tabwidget.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
-        self.active_tabwidget.addTab(editor.control, 
-                                    self._get_label(editor))
 
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
@@ -745,17 +746,12 @@ class DraggableTabWidget(QtGui.QTabWidget):
         if event.mimeData().hasUrls():
             accepted = True
 
-        # handle file drop events from the file browser pane
-        if isinstance(event.mimeData(), PyMimeData):
-            if getattr(event.mimeData().instance(), 'has_urls', False):
-                accepted = True
-
         if accepted:
             self.editor_area.active_tabwidget = self
             self.setBackgroundRole(QtGui.QPalette.Highlight)
             event.acceptProposedAction()
 
-        return super(DraggableTabWidget, self).dropEvent(event)
+        return super(DraggableTabWidget, self).dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
@@ -799,24 +795,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
             file_paths = []
             for url in event.mimeData().urls():
                 file_path = url.toLocalFile()
-                if file_path.endswith(extensions):
-                    file_paths.append(file_path)
-                elif self.editor_area.can_handle(file_path):
-                    file_paths.append(file_path)
-
-            # dispatch file drop event
-            for file_path in file_paths:
-                self.editor_area.active_tabwidget = self
-                self.editor_area.file_dropped = file_path
-                accepted = True
-
-        # handle file drop events from the file browser pane
-        if isinstance(event.mimeData(), PyMimeData):
-            # Build list of accepted files.
-            extensions = tuple(self.editor_area.file_drop_extensions)
-            file_paths = []
-            for url in event.mimeData().instance().urls:
-                file_path = event.mimeData().instance().to_local_path(url)
                 if file_path.endswith(extensions):
                     file_paths.append(file_path)
                 elif self.editor_area.can_handle(file_path):
