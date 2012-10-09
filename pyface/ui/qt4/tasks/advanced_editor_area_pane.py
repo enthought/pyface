@@ -9,7 +9,6 @@ from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
-from traitsui.qt4.clipboard import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
 
@@ -787,7 +786,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
             accepted = True
 
-        # handle file drop events from outside the application
+        # handle file drop events
         if event.mimeData().hasUrls():
             # Build list of accepted files.
             extensions = tuple(self.editor_area.file_drop_extensions)
