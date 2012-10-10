@@ -819,6 +819,9 @@ class DraggableTabBar(QtGui.QTabBar):
         return super(DraggableTabBar, self).mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
+        """ Re-implemented to create a drag event when the mouse is moved for a 
+        sufficient distance while holding down mouse button.
+        """
         # go into the drag logic only if a drag_obj is active
         if self.drag_obj:
             # is the left mouse button still pressed?
@@ -838,6 +841,14 @@ class DraggableTabBar(QtGui.QTabBar):
                 self.drag_obj = None # deactivate the drag_obj again
                 return
         return super(DraggableTabBar, self).mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """ Re-implemented to deactivate the drag when mouse button is 
+        released
+        """
+        self.drag_obj = None
+        return super(DraggableTabBar, self).mouseReleaseEvent(event)        
+
 
 class TabDragObject:
     """ Class to hold information related to tab dragging/dropping
