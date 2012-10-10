@@ -8,7 +8,8 @@ from traits.api import implements, on_trait_change, Instance, Tuple, Callable
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
-from traitsui.api import Menu, PyMimeData
+from traitsui.api import Menu
+from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
 
