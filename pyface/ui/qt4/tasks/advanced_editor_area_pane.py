@@ -81,11 +81,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         editor.editor_area = self
         editor.create(self.active_tabwidget)
+        self.editors.append(editor)
         self.active_tabwidget.addTab(editor.control, 
                                     self._get_label(editor))
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabToolTip(index, editor.tooltip)
-        self.editors.append(editor)
 
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
@@ -707,6 +705,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def tabInserted(self, index):
         """ Re-implemented to hide empty_widget when adding a new widget
         """
+        # sets tab tooltip only if a real editor was added (not an empty_widget)
+        editor = self.editor_area._get_editor(self.widget(index))
+        if editor:
+            self.setTabToolTip(index, editor.tooltip)
+
         if self.empty_widget:
             self.hide_empty_widget()
 
