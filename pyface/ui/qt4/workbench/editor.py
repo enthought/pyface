@@ -54,7 +54,10 @@ class Editor(MEditor):
         if self.control is not None:
             self.control.hide()
             self.control.close()
-            self.control.deleteLater()
+            # Copy the reference: PySide schedules a delete on self.control
+            # but it is garbage collected before it can do so.
+            _control = self.control
+            _control.deleteLater()
             self.control = None
 
         return
