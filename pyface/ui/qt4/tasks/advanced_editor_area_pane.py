@@ -125,6 +125,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         requested
         """
         menu = Menu()
+        splitter = None
 
         for tabwidget in self.tabwidgets():
             # obtain tabwidget's bounding rectangle in global coordinates
