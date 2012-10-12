@@ -4,7 +4,8 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import implements, on_trait_change, Instance, Tuple, Callable
+from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
+    Property
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -36,6 +37,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # Callable to handle drop events. Returns None if it cannot handle the drop 
     # with the given mimedata. Returns a callable to handle the drop, if it can.
     drop_handler = Callable(lambda mimedata: None)
+
+    # Empty Widget
+    empty_widget = Property(Callable, depends_on='active_tabwidget')
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -126,6 +130,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         requested
         """
         menu = Menu()
+        splitter = None
 
         for tabwidget in self.tabwidgets():
             # obtain tabwidget's bounding rectangle in global coordinates
@@ -259,6 +264,11 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def _update_tooltip(self, editor, name, new):
         index = self.active_tabwidget.indexOf(editor.control)
         self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
+
+    def _get_empty_widget(self):
+        """ Default empty widget constructor function
+        """
+        return self.active_tabwidget.create_empty_widget()
 
     #### Signal handlers ######################################################
 
@@ -575,7 +585,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setFocusProxy(None)
         self.setMovable(False) # handling move events myself
         self.setTabsClosable(True)
-        self.setUsesScrollButtons(True)
         self.setAutoFillBackground(True)
 
         # set drop and context menu policies
@@ -594,20 +603,22 @@ class DraggableTabWidget(QtGui.QTabWidget):
         collapse the split).
         """
         self.empty_widget = None
-        empty_widget = self.create_empty_widget()
-        self.addTab(empty_widget, 'dummy label')
+        self.editor_area.active_tabwidget = self
+        empty_widget = self.editor_area.empty_widget
+        self.addTab(empty_widget, ' ')
         self.empty_widget = empty_widget
-        self.tabBar().hide()
         self.setFocus()
+        if self.parent().is_root():
+            self.setTabsClosable(False)
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
         collapse the split) based on whether the tabwidget is empty or not.
         """
-        self.tabBar().show()
         index = self.indexOf(self.empty_widget)
         self.removeTab(index)
         self.empty_widget = None
+        self.setTabsClosable(True)
 
     def create_empty_widget(self):
         """ Creates the QFrame object to be shown when the current tabwidget is 
@@ -618,8 +629,20 @@ class DraggableTabWidget(QtGui.QTabWidget):
         layout = QtGui.QVBoxLayout(frame)
         layout.addStretch()
 
+        # generate new file button
+        newfile_btn = QtGui.QPushButton('Create a new file', parent=frame)
+        newfile_btn.clicked.connect(self.editor_area.task.new_file)
+        layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
+
+        # generate label
+        label = QtGui.QLabel(parent=frame)
+        label.setText("""<span style='font-size:14pt; color:#999999'>
+                        or
+                        </span>""")
+        layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+
         # generate open button
-        open_btn = QtGui.QPushButton('Open file', parent=frame)
+        open_btn = QtGui.QPushButton('Select files from your computer', parent=frame)
         open_dlg = FileDialog(action='open')
         def _open():
             open_dlg.open()
@@ -629,15 +652,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
-        # generate collapse button
-        if not self.parent().is_root():
-            collapse_btn = QtGui.QPushButton('Close this pane', parent=frame)
-            collapse_btn.clicked.connect(self.parent().collapse)
-            layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
-
         # generate label
-        label = QtGui.QLabel('Or, drop files here', 
-                            parent=frame)
+        label = QtGui.QLabel(parent=frame)
+        label.setText("""<span style='font-size:14pt; color:#999999'>
+                        Tip: You can also drag and drop files/tabs here.
+                        </span>""")
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
         
         layout.addStretch()
@@ -662,8 +681,13 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
-        editor_widget = self.widget(index)
-        editor = self.editor_area._get_editor(editor_widget)
+        widget = self.widget(index)
+
+        # if close requested on empty_widget, collapse the pane and return 
+        if widget is self.empty_widget:
+            self.parent().collapse()
+            return
+        editor = self.editor_area._get_editor(widget)
         editor.close()
 
     def _current_changed(self, index):
