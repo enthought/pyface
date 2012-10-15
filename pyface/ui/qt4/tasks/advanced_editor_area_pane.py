@@ -45,12 +45,24 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # pane that gets created when the user makes a split
     callbacks = Dict(key=Str, value=Callable)
 
-    def _drop_handlers_default(self):
-        """ By default, two drop handlers are installed: 
-            1. For dropping of tabs
-            2. For dropping of supported files
+    #### Private interface ###################################################
+
+    _pvt_drop_handlers = List(IDropHandler)
+    _all_drop_handlers = Property(List(IDropHandler), 
+                                depends_on=['drop_handlers', '_pvt_drop_handlers'])
+
+    def __pvt_drop_handlers_default(self):
+        """ By default, two private drop handlers are installed: 
+
+            1. For dropping of tabs from one pane to other
+            2. For dropping of supported files from file-browser pane or outside
+            the application
         """
-        return [TabDropHandler(), FileDropHandler(extensions=self.file_drop_extensions)]
+        return [TabDropHandler(), 
+                FileDropHandler(extensions=self.file_drop_extensions)]
+
+    def _get__all_drop_handlers(self):
+        return self.drop_handlers + self._pvt_drop_handlers
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -741,7 +753,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
-        for handler in self.editor_area.drop_handlers:
+        for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 self.editor_area.active_tabwidget = self
                 self.setBackgroundRole(QtGui.QPalette.Highlight)
@@ -752,7 +764,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
-        for handler in self.editor_area.drop_handlers:
+        for handler in self.editor_area._all_drop_handlers:
             if handler.handle_drop(event, self):
                 self.setBackgroundRole(QtGui.QPalette.Window)
                 event.acceptProposedAction()
