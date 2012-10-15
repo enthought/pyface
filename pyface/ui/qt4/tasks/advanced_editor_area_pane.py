@@ -5,7 +5,7 @@ import sys
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property
+    Property, Dict, Str
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -34,12 +34,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
 
-    # Callable to handle drop events. Returns None if it cannot handle the drop 
-    # with the given mimedata. Returns a callable to handle the drop, if it can.
-    drop_handler = Callable(lambda mimedata: None)
-
-    # Empty Widget
-    empty_widget = Property(Callable, depends_on='active_tabwidget')
+    # Additional callback functions
+    callbacks = Dict(key=Str, value=Callable)
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -264,11 +260,6 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     def _update_tooltip(self, editor, name, new):
         index = self.active_tabwidget.indexOf(editor.control)
         self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
-
-    def _get_empty_widget(self):
-        """ Default empty widget constructor function
-        """
-        return self.active_tabwidget.create_empty_widget()
 
     #### Signal handlers ######################################################
 
@@ -604,7 +595,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         self.empty_widget = None
         self.editor_area.active_tabwidget = self
-        empty_widget = self.editor_area.empty_widget
+        empty_widget = self.create_empty_widget()
         self.addTab(empty_widget, ' ')
         self.empty_widget = empty_widget
         self.setFocus()
@@ -627,11 +618,19 @@ class DraggableTabWidget(QtGui.QTabWidget):
         frame = QtGui.QFrame(parent=self)
         frame.setFrameShape(QtGui.QFrame.StyledPanel)
         layout = QtGui.QVBoxLayout(frame)
+
+        # Add new file button and open file button only if the `callbacks` trait
+        # of the editor_area has a callable for key `new` and key `open`
+        new_file_action = self.editor_area.callbacks.get('new', None)
+        open_file_action = self.editor_area.callbacks.get('open', None)
+        if not (new_file_action and open_file_action):
+            return frame
+
         layout.addStretch()
 
         # generate new file button
         newfile_btn = QtGui.QPushButton('Create a new file', parent=frame)
-        newfile_btn.clicked.connect(self.editor_area.task.new_file)
+        newfile_btn.clicked.connect(new_file_action)
         layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
@@ -648,7 +647,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
             open_dlg.open()
             self.editor_area.active_tabwidget = self
             if open_dlg.return_code == OK:
-                self.editor_area.task.open_file(open_dlg.path)
+                open_file_action(open_dlg.path)
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
@@ -735,7 +734,8 @@ class DraggableTabWidget(QtGui.QTabWidget):
             accepted = True
 
         # if the given drop handler can handle it
-        elif self.editor_area.drop_handler(event.mimeData()):
+        handler = self.editor_area.callbacks.get('drop_handler', None)
+        if handler(event.mimeData()):
             accepted = True
 
         # if it is one of the supported file drops (backwards compatibility)
@@ -787,9 +787,10 @@ class DraggableTabWidget(QtGui.QTabWidget):
             accepted = True
 
         # check if the given handler can handle it
-        elif self.editor_area.drop_handler(event.mimeData()):
-            handler = self.editor_area.drop_handler(event.mimeData())
-            handler(event.mimeData())
+        handler = self.editor_area.callbacks.get('drop_handler', None)
+        if handler(event.mimeData()):
+            f = handler(event.mimeData())
+            f(event.mimeData())
             accepted = True
 
         # handle file drop events (default support for drop event - 
