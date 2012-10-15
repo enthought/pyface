@@ -5,7 +5,7 @@ import sys
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property, Dict, Str
+    Property, Dict, Str, List, HasTraits
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -13,6 +13,7 @@ from traitsui.api import Menu
 from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
+from pyface.i_drop_handler import IDropHandler
 
 # Local imports.
 from task_pane import TaskPane
@@ -34,8 +35,22 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
 
-    # Additional callback functions
+    # list of installed drop handlers
+    drop_handlers = List(IDropHandler)
+
+    # Additional callback functions. Two useful callbacks that can be included:
+    #  'new': new file action (takes no argument)
+    #  'open': open file action (takes file_path as single argument)
+    # They are used to create shortcut buttons for these actions in the empty 
+    # pane that gets created when the user makes a split
     callbacks = Dict(key=Str, value=Callable)
+
+    def _drop_handlers_default(self):
+        """ By default, two drop handlers are installed: 
+            1. For dropping of tabs
+            2. For dropping of supported files
+        """
+        return [TabDropHandler(), FileDropHandler(extensions=self.file_drop_extensions)]
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -726,99 +741,29 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
-        accepted = False
-
-        # if tab drop events come
-        if isinstance(event.mimeData(), PyMimeData) and \
-            isinstance(event.mimeData().instance(), TabDragObject):
-            accepted = True
-
-        # if the given drop handler can handle it
-        handler = self.editor_area.callbacks.get('drop_handler', None)
-        if handler(event.mimeData()):
-            accepted = True
-
-        # if it is one of the supported file drops (backwards compatibility)
-        elif event.mimeData().hasUrls():
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(tuple(self.editor_area.file_drop_extensions)):
-                    accepted = True
-                    break
-
-        if accepted:
-            self.editor_area.active_tabwidget = self
-            self.setBackgroundRole(QtGui.QPalette.Highlight)
-            event.acceptProposedAction()
+        for handler in self.editor_area.drop_handlers:
+            if handler.can_handle_drop(event, self):
+                self.editor_area.active_tabwidget = self
+                self.setBackgroundRole(QtGui.QPalette.Highlight)
+                event.acceptProposedAction()
+                return True
         return super(DraggableTabWidget, self).dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
-        accepted = False
-
-        # handle tab drop events
-        if isinstance(event.mimeData(), PyMimeData) and \
-            isinstance(event.mimeData().instance(), TabDragObject):
-            # get the drop object back
-            drag_obj = event.mimeData().instance()
-
-            # extract widget label
-            editor = self.editor_area._get_editor(drag_obj.widget)
-            label = self.editor_area._get_label(editor)
-
-            # if drop occurs at a tab bar, insert the tab at that position
-            if not self.tabBar().tabAt(event.pos())==-1:
-                index = self.tabBar().tabAt(event.pos())
-                self.insertTab(index, drag_obj.widget, label)
-
-            else:
-                # if the drag initiated from the same tabwidget, put the tab 
-                # back at the original index
-                if self is drag_obj.from_tabwidget:
-                    self.insertTab(drag_obj.from_index, drag_obj.widget, label)
-                # else, just add it at the end
-                else:
-                    self.addTab(drag_obj.widget, label)
-            
-            # make the dropped widget active
-            self.setCurrentWidget(drag_obj.widget)
-
-            accepted = True
-
-        # check if the given handler can handle it
-        handler = self.editor_area.callbacks.get('drop_handler', None)
-        if handler(event.mimeData()):
-            f = handler(event.mimeData())
-            f(event.mimeData())
-            accepted = True
-
-        # handle file drop events (default support for drop event - 
-        # backwards compatibility)
-        elif event.mimeData().hasUrls():
-            # Build list of accepted files.
-            extensions = tuple(self.editor_area.file_drop_extensions)
-            file_paths = []
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(extensions):
-                    file_paths.append(file_path)
-
-            # dispatch file drop event
-            for file_path in file_paths:
-                self.editor_area.active_tabwidget = self
-                self.editor_area.file_dropped = file_path
-                accepted = True
-
-        if accepted:
-            event.acceptProposedAction()
-
-        self.setBackgroundRole(QtGui.QPalette.Window)
+        for handler in self.editor_area.drop_handlers:
+            if handler.handle_drop(event, self):
+                self.setBackgroundRole(QtGui.QPalette.Window)
+                event.acceptProposedAction()
+                return True
+        return super(DraggableTabWidget, self).dropEvent(event)
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
+        return super(DraggableTabWidget, self).dragLeaveEvent(event)
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -917,4 +862,75 @@ class TabDragObject:
         self.painter.end()
 
         return result_pixmap
+
+###############################################################################
+# Default drop handlers.
+###############################################################################
+
+class TabDropHandler(HasTraits):
+    """ Class to handle tab drop events
+    """
+    implements(IDropHandler)
+
+    def can_handle_drop(self, event, target):
+        if isinstance(event.mimeData(), PyMimeData) and \
+            isinstance(event.mimeData().instance(), TabDragObject):    
+            return True
+        return False
+
+    def handle_drop(self, event, target):
+        if not self.can_handle_drop(event, target):
+            return False
+
+        # get the drop object back
+        drag_obj = event.mimeData().instance()
+
+        # extract widget label
+        editor = target.editor_area._get_editor(drag_obj.widget)
+        label = target.editor_area._get_label(editor)
+
+        # if drop occurs at a tab bar, insert the tab at that position
+        if not target.tabBar().tabAt(event.pos())==-1:
+            index = target.tabBar().tabAt(event.pos())
+            target.insertTab(index, drag_obj.widget, label)
+
+        else:
+            # if the drag initiated from the same tabwidget, put the tab 
+            # back at the original index
+            if target is drag_obj.from_tabwidget:
+                target.insertTab(drag_obj.from_index, drag_obj.widget, label)
+            # else, just add it at the end
+            else:
+                target.addTab(drag_obj.widget, label)
+        
+        # make the dropped widget active
+        target.setCurrentWidget(drag_obj.widget)
+
+        return True
+
+class FileDropHandler(HasTraits):
+    """ Class to handle backward compatible file drop events
+    """
+    implements(IDropHandler)
+
+    # supported extensions
+    extensions = List(Str)
+
+    def can_handle_drop(self, event, target):
+        if event.mimeData().hasUrls():
+            for url in event.mimeData().urls():
+                file_path = url.toLocalFile()
+                if file_path.endswith(tuple(self.extensions)):
+                    return True
+        return False
+
+    def handle_drop(self, event, target):
+        if not self.can_handle_drop(event, target):
+            return False
+
+        accepted = False
+        for url in event.mimeData().urls():
+            target.editor_area.file_dropped = url.toLocalFile()
+            accepted = True
+        return accepted
 
