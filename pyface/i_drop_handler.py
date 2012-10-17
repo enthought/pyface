@@ -1,4 +1,4 @@
-from traits.api import Interface, Instance
+from traits.api import Interface
 
 class IDropHandler(Interface):
 	""" Interface for a drop event handler, which provides API to check if the drop can

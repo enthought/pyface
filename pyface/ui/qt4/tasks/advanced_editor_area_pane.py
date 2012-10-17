@@ -5,7 +5,7 @@ import sys
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property, Dict, Str, List, HasTraits
+    Property, Dict, Str, List, HasTraits, cached_property
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -64,6 +64,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         return [TabDropHandler(), 
                 FileDropHandler(extensions=self.file_drop_extensions)]
 
+    @cached_property
     def _get__all_drop_handlers(self):
         return self.drop_handlers + self._pvt_drop_handlers
 
@@ -846,7 +847,7 @@ class DraggableTabBar(QtGui.QTabBar):
         return super(DraggableTabBar, self).mouseReleaseEvent(event)        
 
 
-class TabDragObject:
+class TabDragObject(object):
     """ Class to hold information related to tab dragging/dropping
     """
 
