@@ -45,6 +45,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # pane that gets created when the user makes a split
     callbacks = Dict(key=Str, value=Callable)
 
+    # The constructor of the empty widget which comes up when one creates a split
+    create_empty_widget = Callable
+
     #### Private interface ###################################################
 
     _pvt_drop_handlers = List(IDropHandler)
@@ -63,6 +66,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     def _get__all_drop_handlers(self):
         return self.drop_handlers + self._pvt_drop_handlers
+
+    def _create_empty_widget_default(self):
+        return lambda : self.active_tabwidget.create_empty_widget()
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -622,10 +628,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         self.empty_widget = None
         self.editor_area.active_tabwidget = self
-        empty_widget = self.create_empty_widget()
+
+        # callback to editor_area's public `create_empty_widget` Callable trait
+        empty_widget = self.editor_area.create_empty_widget()
+        
         self.addTab(empty_widget, ' ')
         self.empty_widget = empty_widget
         self.setFocus()
+
+        # don't allow tab closing if empty widget comes up on a root tabwidget
         if self.parent().is_root():
             self.setTabsClosable(False)
 
