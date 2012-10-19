@@ -109,5 +109,32 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                  id='MenuBar')
         self.assertActionElementsEqual(actual, desired)
 
+    def test_absolute_and_before_after(self):
+        """ Does specifying absolute_position along with before, after work?
+        """
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, self.action2, id='FileGroup'),
+                       id='File'))
+        extras = [ SchemaAddition(factory=lambda: self.action3,
+                                  id='action3',
+                                  after='action2',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action4,
+                                  after='action3',
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action5,
+                                  absolute_position='last',
+                                  path='MenuBar/File/FileGroup')]
+        builder = TaskActionManagerBuilder(task=Task(menu_bar=schema,
+                                                     extra_actions=extras))
+        actual = builder.create_menu_bar_manager()
+        desired = MenuBarManager(MenuManager(Group(self.action1, self.action2,
+                                                   self.action3, self.action4,
+                                                   self.action5,
+                                                   id='FileGroup'),
+                                             id='File'),
+                                 id='MenuBar')
+        self.assertActionElementsEqual(actual, desired)
+
 if __name__ == '__main__':
     unittest.main()

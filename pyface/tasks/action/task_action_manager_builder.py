@@ -128,7 +128,7 @@ class TaskActionManagerBuilder(HasTraits):
                 end.append(schema)
             else:
                 begin.append(schema)
-        return before_after_sort(begin + middle + end)
+        return begin + before_after_sort(middle) + end
 
     #### Trait initializers ###################################################
 
