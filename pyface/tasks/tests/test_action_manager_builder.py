@@ -39,7 +39,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     def setUp(self):
         """ Create some dummy actions to use while testing.
         """
-        for i in xrange(1, 6):
+        for i in xrange(1, 7):
             action_id = 'action%i' % i
             setattr(self, action_id, Action(id=action_id, name='Action %i' % i))
 
@@ -123,14 +123,20 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                   after='action3',
                                   path='MenuBar/File/FileGroup'),
                    SchemaAddition(factory=lambda: self.action5,
+                                  id='action5',
                                   absolute_position='last',
-                                  path='MenuBar/File/FileGroup')]
+                                  path='MenuBar/File/FileGroup'),
+                   SchemaAddition(factory=lambda: self.action6,
+                                  absolute_position='last',
+                                  before='action5',
+                                  path='MenuBar/File/FileGroup')
+                   ]
         builder = TaskActionManagerBuilder(task=Task(menu_bar=schema,
                                                      extra_actions=extras))
         actual = builder.create_menu_bar_manager()
         desired = MenuBarManager(MenuManager(Group(self.action1, self.action2,
                                                    self.action3, self.action4,
-                                                   self.action5,
+                                                   self.action6, self.action5,
                                                    id='FileGroup'),
                                              id='File'),
                                  id='MenuBar')

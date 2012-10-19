@@ -120,6 +120,7 @@ class TaskActionManagerBuilder(HasTraits):
         begin = []
         middle = []
         end = []
+
         for schema in schemas:
             absolute_position = getattr(schema, 'absolute_position', None)
             if absolute_position is None:
@@ -128,7 +129,10 @@ class TaskActionManagerBuilder(HasTraits):
                 end.append(schema)
             else:
                 begin.append(schema)
-        return begin + before_after_sort(middle) + end
+
+        schemas = (before_after_sort(begin)
+                   + before_after_sort(middle)
+                   + before_after_sort(end))
 
     #### Trait initializers ###################################################
 
