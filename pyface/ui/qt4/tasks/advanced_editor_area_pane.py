@@ -124,6 +124,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         menu = Menu()
 
+        splitter = None
         for tabwidget in self.tabwidgets():
             # obtain tabwidget's bounding rectangle in global coordinates
             global_rect = QtCore.QRect(tabwidget.mapToGlobal(QtCore.QPoint(0, 0)),
