@@ -43,7 +43,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     #  'open': open file action (takes file_path as single argument)
     # They are used to create shortcut buttons for these actions in the empty 
     # pane that gets created when the user makes a split
-    callbacks = Dict(key=Str, value=Callable)
+    callbacks = Dict({}, key=Str, value=Callable)
 
     # The constructor of the empty widget which comes up when one creates a split
     create_empty_widget = Callable
