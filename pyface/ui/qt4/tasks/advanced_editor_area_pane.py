@@ -4,14 +4,16 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import implements, on_trait_change, Instance, Tuple
+from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
+    Property, Dict, Str, List, HasTraits, cached_property
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
-from traitsui.qt4.clipboard import PyMimeData
+from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
+from pyface.i_drop_handler import IDropHandler
 
 # Local imports.
 from task_pane import TaskPane
@@ -33,6 +35,42 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
 
+    # list of installed drop handlers
+    drop_handlers = List(IDropHandler)
+
+    # Additional callback functions. Two useful callbacks that can be included:
+    #  'new': new file action (takes no argument)
+    #  'open': open file action (takes file_path as single argument)
+    # They are used to create shortcut buttons for these actions in the empty 
+    # pane that gets created when the user makes a split
+    callbacks = Dict(key=Str, value=Callable)
+
+    # The constructor of the empty widget which comes up when one creates a split
+    create_empty_widget = Callable
+
+    #### Private interface ###################################################
+
+    _pvt_drop_handlers = List(IDropHandler)
+    _all_drop_handlers = Property(List(IDropHandler), 
+                                depends_on=['drop_handlers', '_pvt_drop_handlers'])
+
+    def __pvt_drop_handlers_default(self):
+        """ By default, two private drop handlers are installed: 
+
+            1. For dropping of tabs from one pane to other
+            2. For dropping of supported files from file-browser pane or outside
+            the application
+        """
+        return [TabDropHandler(), 
+                FileDropHandler(extensions=self.file_drop_extensions)]
+
+    @cached_property
+    def _get__all_drop_handlers(self):
+        return self.drop_handlers + self._pvt_drop_handlers
+
+    def _create_empty_widget_default(self):
+        return lambda : self.active_tabwidget.create_empty_widget()
+
     ###########################################################################
     # 'TaskPane' interface.
     ###########################################################################
@@ -44,8 +82,6 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         # Create and configure the Editor Area Widget.
         self.control = EditorAreaWidget(self, parent)
         self.active_tabwidget = self.control.tabwidget()
-        self._drag_info = Tuple(enabled=False, start_pos=-1, from_index=-1,
-                        drag_widget=None, from_tabwidget=None, pixmap=None)
 
         # handle application level focus changes
         QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
@@ -81,9 +117,10 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         editor.editor_area = self
         editor.create(self.active_tabwidget)
+        index = self.active_tabwidget.addTab(editor.control, 
+                                            self._get_label(editor))
+        self.active_tabwidget.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
-        self.active_tabwidget.addTab(editor.control, 
-                                    self._get_label(editor))
 
     def remove_editor(self, editor):
         """ Removes an editor from the associated tabwidget
@@ -123,6 +160,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         requested
         """
         menu = Menu()
+        splitter = None
 
         splitter = None
         for tabwidget in self.tabwidgets():
@@ -192,38 +230,6 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             if editor.control is editor_widget:
                 return editor
         return None
-
-    def _get_dragpixmap(self):
-        """ Returns the drag pixmap including page widget and tab rectangle. 
-        Returns None if no drag is active.
-        """
-        if not self._drag_info.enabled:
-            return
-
-        drag_widget = self._drag_info.drag_widget
-        index = self._drag_info.from_index
-        tabwidget = self._drag_info.from_tabwidget
-
-        # instatiate the painter object with gray-color filled pixmap
-        result_pixmap = QtGui.QPixmap(tabwidget.rect().size())
-        self.painter = QtGui.QPainter(result_pixmap)
-        self.painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
-        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
-        
-        # region of active tab
-        tab_rect = tabwidget.tabBar().tabRect(index)
-        pixmap1 = QtGui.QPixmap.grabWidget(tabwidget.tabBar(), tab_rect)
-        self.painter.drawPixmap(0, 0, pixmap1)
-
-        # region of the page widget
-        pixmap2 = QtGui.QPixmap.grabWidget(drag_widget)
-        self.painter.drawPixmap(0, tab_rect.height(), pixmap2)
-        
-        # finish painting
-        self.painter.end()
-
-        return result_pixmap
-
 
     def set_key_bindings(self):
         """ Set keyboard shortcuts for tabbed navigation
@@ -605,7 +611,6 @@ class DraggableTabWidget(QtGui.QTabWidget):
         self.setFocusProxy(None)
         self.setMovable(False) # handling move events myself
         self.setTabsClosable(True)
-        self.setUsesScrollButtons(True)
         self.setAutoFillBackground(True)
 
         # set drop and context menu policies
@@ -624,20 +629,27 @@ class DraggableTabWidget(QtGui.QTabWidget):
         collapse the split).
         """
         self.empty_widget = None
-        empty_widget = self.create_empty_widget()
-        self.addTab(empty_widget, 'dummy label')
+        self.editor_area.active_tabwidget = self
+
+        # callback to editor_area's public `create_empty_widget` Callable trait
+        empty_widget = self.editor_area.create_empty_widget()
+        
+        self.addTab(empty_widget, ' ')
         self.empty_widget = empty_widget
-        self.tabBar().hide()
         self.setFocus()
+
+        # don't allow tab closing if empty widget comes up on a root tabwidget
+        if self.parent().is_root():
+            self.setTabsClosable(False)
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
         collapse the split) based on whether the tabwidget is empty or not.
         """
-        self.tabBar().show()
         index = self.indexOf(self.empty_widget)
         self.removeTab(index)
         self.empty_widget = None
+        self.setTabsClosable(True)
 
     def create_empty_widget(self):
         """ Creates the QFrame object to be shown when the current tabwidget is 
@@ -646,28 +658,44 @@ class DraggableTabWidget(QtGui.QTabWidget):
         frame = QtGui.QFrame(parent=self)
         frame.setFrameShape(QtGui.QFrame.StyledPanel)
         layout = QtGui.QVBoxLayout(frame)
+
+        # Add new file button and open file button only if the `callbacks` trait
+        # of the editor_area has a callable for key `new` and key `open`
+        new_file_action = self.editor_area.callbacks.get('new', None)
+        open_file_action = self.editor_area.callbacks.get('open', None)
+        if not (new_file_action and open_file_action):
+            return frame
+
         layout.addStretch()
 
+        # generate new file button
+        newfile_btn = QtGui.QPushButton('Create a new file', parent=frame)
+        newfile_btn.clicked.connect(new_file_action)
+        layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
+
+        # generate label
+        label = QtGui.QLabel(parent=frame)
+        label.setText("""<span style='font-size:14pt; color:#999999'>
+                        or
+                        </span>""")
+        layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
+
         # generate open button
-        open_btn = QtGui.QPushButton('Open file', parent=frame)
+        open_btn = QtGui.QPushButton('Select files from your computer', parent=frame)
         open_dlg = FileDialog(action='open')
         def _open():
             open_dlg.open()
             self.editor_area.active_tabwidget = self
             if open_dlg.return_code == OK:
-                self.editor_area.task.open_file(open_dlg.path)
+                open_file_action(open_dlg.path)
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
-        # generate collapse button
-        if not self.parent().is_root():
-            collapse_btn = QtGui.QPushButton('Close this pane', parent=frame)
-            collapse_btn.clicked.connect(self.parent().collapse)
-            layout.addWidget(collapse_btn, alignment=QtCore.Qt.AlignHCenter)
-
         # generate label
-        label = QtGui.QLabel('Or, drop files here', 
-                            parent=frame)
+        label = QtGui.QLabel(parent=frame)
+        label.setText("""<span style='font-size:14pt; color:#999999'>
+                        Tip: You can also drag and drop files/tabs here.
+                        </span>""")
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
         
         layout.addStretch()
@@ -692,8 +720,13 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
         """
-        editor_widget = self.widget(index)
-        editor = self.editor_area._get_editor(editor_widget)
+        widget = self.widget(index)
+
+        # if close requested on empty_widget, collapse the pane and return 
+        if widget is self.empty_widget:
+            self.parent().collapse()
+            return
+        editor = self.editor_area._get_editor(widget)
         editor.close()
 
     def _current_changed(self, index):
@@ -731,108 +764,31 @@ class DraggableTabWidget(QtGui.QTabWidget):
         qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
-        """ Re-implemented to handle drag enter events 
+        """ Re-implemented to highlight the tabwidget on drag enter
         """
-        accepted = False
-
-        # handle tab drop events
-        if self.editor_area._drag_info.enabled:
-            accepted = True
-
-        # handle file drop events from outside the application
-        if event.mimeData().hasUrls():
-            accepted = True
-
-        # handle file drop events from the file browser pane
-        if isinstance(event.mimeData(), PyMimeData):
-            if getattr(event.mimeData().instance(), 'has_urls', False):
-                accepted = True
-
-        if accepted:
-            self.editor_area.active_tabwidget = self
-            self.setBackgroundRole(QtGui.QPalette.Highlight)
-            event.acceptProposedAction()
-
-        return super(DraggableTabWidget, self).dropEvent(event)
+        for handler in self.editor_area._all_drop_handlers:
+            if handler.can_handle_drop(event, self):
+                self.editor_area.active_tabwidget = self
+                self.setBackgroundRole(QtGui.QPalette.Highlight)
+                event.acceptProposedAction()
+                return True
+        return super(DraggableTabWidget, self).dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
-        accepted = False
-
-        # handle tab drop events
-        if self.editor_area._drag_info.enabled:
-            # extract drag info
-            from_index = self.editor_area._drag_info.from_index 
-            widget = self.editor_area._drag_info.drag_widget
-            from_tabwidget = self.editor_area._drag_info.from_tabwidget
-
-            # extract drag widget label
-            editor = self.editor_area._get_editor(widget)
-            label = self.editor_area._get_label(editor)
-
-            # if drop occurs at a tab bar, insert the tab at that position
-            if not self.tabBar().tabAt(event.pos())==-1:
-                index = self.tabBar().tabAt(event.pos())
-                self.insertTab(index, widget, label)
-
-            else:
-                # if the drag initiated from the same tabwidget, put the tab 
-                # back at the original index
-                if self is from_tabwidget:
-                    self.insertTab(from_index, widget, label)
-                # else, just add it at the end
-                else:
-                    self.addTab(widget, label)
-            
-            # make the dropped widget active
-            self.setCurrentWidget(widget)
-
-            accepted = True
-
-        # handle file drop events from outside the application
-        if event.mimeData().hasUrls():
-            # Build list of accepted files.
-            extensions = tuple(self.editor_area.file_drop_extensions)
-            file_paths = []
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(extensions):
-                    file_paths.append(file_path)
-
-            # dispatch file drop event
-            for file_path in file_paths:
-                self.editor_area.active_tabwidget = self
-                self.editor_area.file_dropped = file_path
-                accepted = True
-
-        # handle file drop events from the file browser pane
-        if isinstance(event.mimeData(), PyMimeData):
-            # Build list of accepted files.
-            extensions = tuple(self.editor_area.file_drop_extensions)
-            file_paths = []
-            for url in event.mimeData().instance().urls:
-                file_path = event.mimeData().instance().to_local_path(url)
-                if file_path.endswith(extensions):
-                    file_paths.append(file_path)
-
-            # dispatch file drop event
-            for file_path in file_paths:
-                self.editor_area.active_tabwidget = self
-                self.editor_area.file_dropped = file_path
-                accepted = True
-
-        if accepted:
-            # empty out drag info, making the drag inactive again
-            self.editor_area._drag_info.enabled = False
-            self.setBackgroundRole(QtGui.QPalette.Window)
-            event.acceptProposedAction()
+        for handler in self.editor_area._all_drop_handlers:
+            if handler.handle_drop(event, self):
+                self.setBackgroundRole(QtGui.QPalette.Window)
+                event.acceptProposedAction()
+                return True
+        return super(DraggableTabWidget, self).dropEvent(event)
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
-
+        return super(DraggableTabWidget, self).dragLeaveEvent(event)
 
 
 class DraggableTabBar(QtGui.QTabBar):
@@ -842,6 +798,7 @@ class DraggableTabBar(QtGui.QTabBar):
         super(DraggableTabBar, self).__init__(parent)
         self.editor_area = editor_area
         self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        self.drag_obj = None
 
     def contextMenuEvent(self, event):
         """ Re-implemented to provide split/collapse context menu on the tab bar. 
@@ -853,31 +810,152 @@ class DraggableTabBar(QtGui.QTabBar):
 
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
-            self.editor_area._drag_info.start_pos = event.pos()
-            self.editor_area._drag_info.from_index = from_index \
-                                                   = self.tabAt(event.pos())
-            self.editor_area._drag_info.drag_widget = \
-                                            self.parent().widget(from_index)
-            self.editor_area._drag_info.from_tabwidget = self.parent()
+            index = self.tabAt(event.pos())
+            tabwidget = self.parent()
+            if not tabwidget.widget(index) == tabwidget.empty_widget:
+                self.drag_obj = TabDragObject(start_pos=event.pos(), tabBar=self)
         return super(DraggableTabBar, self).mousePressEvent(event)
 
     def mouseMoveEvent(self, event):
-        # is the left mouse button still pressed?
-        if not event.buttons()==QtCore.Qt.LeftButton:
-            pass
-        # has the mouse been dragged for sufficient distance?
-        elif ((event.pos() - self.editor_area._drag_info.start_pos).manhattanLength()
-            < QtGui.QApplication.startDragDistance()):
-            pass
-        # initiate drag
-        else:
-            self.editor_area._drag_info.enabled = True
-            self.editor_area._drag_info.pixmap = self.editor_area._get_dragpixmap()
-            drag = QtGui.QDrag(self.editor_area._drag_info.widget)
-            mimedata = QtCore.QMimeData()
-            drag.setPixmap(self.editor_area._drag_info.pixmap)
-            drag.setMimeData(mimedata)
-            drag.exec_()
-            return
+        """ Re-implemented to create a drag event when the mouse is moved for a 
+        sufficient distance while holding down mouse button.
+        """
+        # go into the drag logic only if a drag_obj is active
+        if self.drag_obj:
+            # is the left mouse button still pressed?
+            if not event.buttons()==QtCore.Qt.LeftButton:
+                pass
+            # has the mouse been dragged for sufficient distance?
+            elif ((event.pos() - self.drag_obj.start_pos).manhattanLength()
+                < QtGui.QApplication.startDragDistance()):
+                pass
+            # initiate drag
+            else:
+                drag = QtGui.QDrag(self.drag_obj.widget)
+                mimedata = PyMimeData(data=self.drag_obj)
+                drag.setPixmap(self.drag_obj.get_pixmap())
+                drag.setMimeData(mimedata)
+                drag.exec_()
+                self.drag_obj = None # deactivate the drag_obj again
+                return
         return super(DraggableTabBar, self).mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """ Re-implemented to deactivate the drag when mouse button is 
+        released
+        """
+        self.drag_obj = None
+        return super(DraggableTabBar, self).mouseReleaseEvent(event)        
+
+
+class TabDragObject(object):
+    """ Class to hold information related to tab dragging/dropping
+    """
+
+    def __init__(self, start_pos, tabBar):
+        """
+        Parameters
+        ----------
+
+        start_pos : position in tabBar coordinates where the drag was started
+        tabBar : tabBar containing the tab on which drag started
+        """
+        self.start_pos = start_pos
+        self.from_index = tabBar.tabAt(self.start_pos)
+        self.from_tabwidget = tabBar.parent()
+        self.widget = self.from_tabwidget.widget(self.from_index)
+
+    def get_pixmap(self):
+        """ Returns the drag pixmap including page widget and tab rectangle.
+        """
+        # instatiate the painter object with gray-color filled pixmap
+        result_pixmap = QtGui.QPixmap(self.from_tabwidget.rect().size())
+        self.painter = QtGui.QPainter(result_pixmap)
+        self.painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
+        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
+        
+        # region of active tab
+        tab_rect = self.from_tabwidget.tabBar().tabRect(self.from_index)
+        pixmap1 = QtGui.QPixmap.grabWidget(self.from_tabwidget.tabBar(), tab_rect)
+        self.painter.drawPixmap(0, 0, pixmap1)
+
+        # region of the page widget
+        pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
+        self.painter.drawPixmap(0, tab_rect.height(), pixmap2)
+        
+        # finish painting
+        self.painter.end()
+
+        return result_pixmap
+
+###############################################################################
+# Default drop handlers.
+###############################################################################
+
+class TabDropHandler(HasTraits):
+    """ Class to handle tab drop events
+    """
+    implements(IDropHandler)
+
+    def can_handle_drop(self, event, target):
+        if isinstance(event.mimeData(), PyMimeData) and \
+            isinstance(event.mimeData().instance(), TabDragObject):    
+            return True
+        return False
+
+    def handle_drop(self, event, target):
+        if not self.can_handle_drop(event, target):
+            return False
+
+        # get the drop object back
+        drag_obj = event.mimeData().instance()
+
+        # extract widget label
+        editor = target.editor_area._get_editor(drag_obj.widget)
+        label = target.editor_area._get_label(editor)
+
+        # if drop occurs at a tab bar, insert the tab at that position
+        if not target.tabBar().tabAt(event.pos())==-1:
+            index = target.tabBar().tabAt(event.pos())
+            target.insertTab(index, drag_obj.widget, label)
+
+        else:
+            # if the drag initiated from the same tabwidget, put the tab 
+            # back at the original index
+            if target is drag_obj.from_tabwidget:
+                target.insertTab(drag_obj.from_index, drag_obj.widget, label)
+            # else, just add it at the end
+            else:
+                target.addTab(drag_obj.widget, label)
+        
+        # make the dropped widget active
+        target.setCurrentWidget(drag_obj.widget)
+
+        return True
+
+class FileDropHandler(HasTraits):
+    """ Class to handle backward compatible file drop events
+    """
+    implements(IDropHandler)
+
+    # supported extensions
+    extensions = List(Str)
+
+    def can_handle_drop(self, event, target):
+        if event.mimeData().hasUrls():
+            for url in event.mimeData().urls():
+                file_path = url.toLocalFile()
+                if file_path.endswith(tuple(self.extensions)):
+                    return True
+        return False
+
+    def handle_drop(self, event, target):
+        if not self.can_handle_drop(event, target):
+            return False
+
+        accepted = False
+        for url in event.mimeData().urls():
+            target.editor_area.file_dropped = url.toLocalFile()
+            accepted = True
+        return accepted
 
