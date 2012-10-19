@@ -133,6 +133,7 @@ class TaskActionManagerBuilder(HasTraits):
         schemas = (before_after_sort(begin)
                    + before_after_sort(middle)
                    + before_after_sort(end))
+        return schemas
 
     #### Trait initializers ###################################################
 

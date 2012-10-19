@@ -35,11 +35,12 @@ class SchemaAddition(HasTraits):
     before = Str
 
     # The action appears at the absolute specified position first or last.
-    # This is useful for example to keep the File menu the first menu
-    # in a menubar, the help menu the last etc.
-    # If multiple actions in a schema have absolute_position 'first',
-    # they will appear in the same order specified; likewise for 'last'.
-    # Absolute positions are subject to subsequent topological reordering
-    # if 'after' or 'before' traits are also specified, hence it must not
-    # be used alongwith after and before traits
+    # This is useful for example to keep the File menu the first menu in a
+    # menubar, the help menu the last etc.
+    # If multiple actions in a schema have absolute_position 'first', they
+    # will appear in the same order specified; unless 'before' and 'after'
+    # traits are set to sort these multiple items.
+    # This trait takes precedence over 'after' and 'before', and values of
+    # those traits that are not compatible with the  absolute_position are
+    # ignored.
     absolute_position = Enum(None, 'first', 'last')
