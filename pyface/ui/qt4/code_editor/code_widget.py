@@ -714,7 +714,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
             self.enable_find()
         elif key_sequence.matches(QtGui.QKeySequence.Replace):
             self.enable_replace()
-        elif key_sequence.matches(QtCore.Qt.Key_Escape):
+        elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Escape)):
             if self.active_find_widget:
                 self.find.hide()
                 self.replace.hide()
