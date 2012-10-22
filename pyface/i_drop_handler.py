@@ -11,7 +11,7 @@ class IDropHandler(Interface):
 		"""
 
 	def handle_drop(self, event, target):
-		""" Performs drop action when drop event occurs on target widget. Returns True 
-		if it successfully handled the event, otherwise False. Does nothing if it 
-		couldn't handle the event.
+		""" Performs drop action when drop event occurs on target widget. Returns 
+		True if it successfully handled the event, otherwise False. Does nothing if 
+		it couldn't handle the event.
 		"""
