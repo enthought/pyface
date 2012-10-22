@@ -800,14 +800,6 @@ class DraggableTabBar(QtGui.QTabBar):
         self.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
         self.drag_obj = None
 
-    def contextMenuEvent(self, event):
-        """ Re-implemented to provide split/collapse context menu on the tab bar. 
-        """
-        global_pos = self.mapToGlobal(event.pos())
-        menu = self.editor_area.get_context_menu(pos=global_pos)
-        qmenu = menu.create_menu(self)
-        qmenu.exec_(global_pos)
-
     def mousePressEvent(self, event):
         if event.button()==QtCore.Qt.LeftButton:
             index = self.tabAt(event.pos())
