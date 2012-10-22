@@ -917,9 +917,9 @@ class TabDropHandler(BaseDropHandler):
         # (editor_area is common to both source and target in most cases but when
         # the dragging happens across different windows, they are not, and hence it
         # must be pulled in directly from the source)
-        editor_area = drag_obj.from_tabwidget.editor_area
-        editor = editor_area._get_editor(drag_obj.widget)
-        label = editor_area._get_label(editor)
+        src_editor_area = drag_obj.from_tabwidget.editor_area
+        editor = src_editor_area._get_editor(drag_obj.widget)
+        label = src_editor_area._get_label(editor)
 
         # if drop occurs at a tab bar, insert the tab at that position
         if not target.tabBar().tabAt(event.pos())==-1:
@@ -937,6 +937,12 @@ class TabDropHandler(BaseDropHandler):
         
         # make the dropped widget active
         target.setCurrentWidget(drag_obj.widget)
+
+        # add this editor to the list of target editor_area editors and remove from 
+        # source. this operation doesn't affect editors list in case the source and
+        # target editor_area are same
+        src_editor_area.editors.remove(editor)    
+        target.editor_area.editors.append(editor)
 
         return True
 
