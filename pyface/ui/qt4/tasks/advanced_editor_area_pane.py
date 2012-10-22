@@ -635,13 +635,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # callback to editor_area's public `create_empty_widget` Callable trait
         empty_widget = self.editor_area.create_empty_widget()
         
-        self.addTab(empty_widget, ' ')
+        self.addTab(empty_widget, '')
         self.empty_widget = empty_widget
         self.setFocus()
 
         # don't allow tab closing if empty widget comes up on a root tabwidget
         if self.parent().is_root():
             self.setTabsClosable(False)
+            
+        self.setTabText(0, '     ')
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
