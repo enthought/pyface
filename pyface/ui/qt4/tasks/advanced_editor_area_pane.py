@@ -13,7 +13,7 @@ from traitsui.api import Menu
 from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
-from pyface.i_drop_handler import IDropHandler
+from pyface.i_drop_handler import IDropHandler, BaseDropHandler
 
 # Local imports.
 from task_pane import TaskPane
@@ -766,6 +766,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
+        #from IPython.core.debugger import Tracer; Tracer()()
         for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 self.editor_area.active_tabwidget = self
@@ -892,18 +893,17 @@ class TabDragObject(object):
 # Default drop handlers.
 ###############################################################################
 
-class TabDropHandler(HasTraits):
+class TabDropHandler(BaseDropHandler):
     """ Class to handle tab drop events
-    """
-    implements(IDropHandler)
+    """     
 
-    def can_handle_drop(self, event, target):
+    def _can_handle_drop(self, event, target):
         if isinstance(event.mimeData(), PyMimeData) and \
             isinstance(event.mimeData().instance(), TabDragObject):    
             return True
         return False
 
-    def handle_drop(self, event, target):
+    def _handle_drop(self, event, target):
         if not self.can_handle_drop(event, target):
             return False
 
@@ -933,15 +933,13 @@ class TabDropHandler(HasTraits):
 
         return True
 
-class FileDropHandler(HasTraits):
+class FileDropHandler(BaseDropHandler):
     """ Class to handle backward compatible file drop events
     """
-    implements(IDropHandler)
-
     # supported extensions
     extensions = List(Str)
 
-    def can_handle_drop(self, event, target):
+    def _can_handle_drop(self, event, target):
         if event.mimeData().hasUrls():
             for url in event.mimeData().urls():
                 file_path = url.toLocalFile()
@@ -949,7 +947,7 @@ class FileDropHandler(HasTraits):
                     return True
         return False
 
-    def handle_drop(self, event, target):
+    def _handle_drop(self, event, target):
         if not self.can_handle_drop(event, target):
             return False
 
