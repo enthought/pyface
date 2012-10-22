@@ -13,7 +13,7 @@ from traitsui.api import Menu
 from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
-from pyface.i_drop_handler import IDropHandler, BaseDropHandler
+from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
 # Local imports.
 from task_pane import TaskPane
@@ -62,7 +62,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             the application
         """
         return [TabDropHandler(), 
-                FileDropHandler(extensions=self.file_drop_extensions)]
+                FileDropHandler(extensions=self.file_drop_extensions, 
+                                open_file=lambda path:self.trait_set(file_dropped=path))]
 
     @cached_property
     def _get__all_drop_handlers(self):
@@ -897,13 +898,13 @@ class TabDropHandler(BaseDropHandler):
     """ Class to handle tab drop events
     """     
 
-    def _can_handle_drop(self, event, target):
+    def can_handle_drop(self, event, target):
         if isinstance(event.mimeData(), PyMimeData) and \
             isinstance(event.mimeData().instance(), TabDragObject):    
             return True
         return False
 
-    def _handle_drop(self, event, target):
+    def handle_drop(self, event, target):
         if not self.can_handle_drop(event, target):
             return False
 
@@ -932,28 +933,4 @@ class TabDropHandler(BaseDropHandler):
         target.setCurrentWidget(drag_obj.widget)
 
         return True
-
-class FileDropHandler(BaseDropHandler):
-    """ Class to handle backward compatible file drop events
-    """
-    # supported extensions
-    extensions = List(Str)
-
-    def _can_handle_drop(self, event, target):
-        if event.mimeData().hasUrls():
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(tuple(self.extensions)):
-                    return True
-        return False
-
-    def _handle_drop(self, event, target):
-        if not self.can_handle_drop(event, target):
-            return False
-
-        accepted = False
-        for url in event.mimeData().urls():
-            target.editor_area.file_dropped = url.toLocalFile()
-            accepted = True
-        return accepted
 
