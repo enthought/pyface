@@ -5,7 +5,7 @@ import sys
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property, Dict, Str, List, HasTraits, cached_property
+    Property, Dict, Str, List, HasTraits, cached_property, Bool
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -867,6 +867,7 @@ class TabDragObject(object):
         self.start_pos = start_pos
         self.from_index = tabBar.tabAt(self.start_pos)
         self.from_tabwidget = tabBar.parent()
+        self.from_editor_area = self.from_tabwidget.editor_area
         self.widget = self.from_tabwidget.widget(self.from_index)
 
     def get_pixmap(self):
@@ -898,12 +899,19 @@ class TabDragObject(object):
 
 class TabDropHandler(BaseDropHandler):
     """ Class to handle tab drop events
-    """     
+    """
+
+    # whether to allow dragging of tabs across different opened windows
+    allow_cross_window_drop = Bool(False)
 
     def can_handle_drop(self, event, target):
         if isinstance(event.mimeData(), PyMimeData) and \
             isinstance(event.mimeData().instance(), TabDragObject):    
-            return True
+            if not self.allow_cross_window_drop:
+                drag_obj = event.mimeData().instance()
+                return drag_obj.from_editor_area == target.editor_area
+            else:
+                return True
         return False
 
     def handle_drop(self, event, target):
@@ -917,9 +925,8 @@ class TabDropHandler(BaseDropHandler):
         # (editor_area is common to both source and target in most cases but when
         # the dragging happens across different windows, they are not, and hence it
         # must be pulled in directly from the source)
-        src_editor_area = drag_obj.from_tabwidget.editor_area
-        editor = src_editor_area._get_editor(drag_obj.widget)
-        label = src_editor_area._get_label(editor)
+        editor = target.editor_area._get_editor(drag_obj.widget)
+        label = target.editor_area._get_label(editor)
 
         # if drop occurs at a tab bar, insert the tab at that position
         if not target.tabBar().tabAt(event.pos())==-1:
@@ -937,12 +944,6 @@ class TabDropHandler(BaseDropHandler):
         
         # make the dropped widget active
         target.setCurrentWidget(drag_obj.widget)
-
-        # add this editor to the list of target editor_area editors and remove from 
-        # source. this operation doesn't affect editors list in case the source and
-        # target editor_area are same
-        src_editor_area.editors.remove(editor)    
-        target.editor_area.editors.append(editor)
 
         return True
 
