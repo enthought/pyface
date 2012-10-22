@@ -5,7 +5,7 @@ import sys
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property, Dict, Str, List, HasTraits, cached_property
+    Property, Dict, Str, List, HasTraits, cached_property, Bool
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
@@ -13,7 +13,7 @@ from traitsui.api import Menu
 from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK, CANCEL
-from pyface.i_drop_handler import IDropHandler
+from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
 # Local imports.
 from task_pane import TaskPane
@@ -62,7 +62,8 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             the application
         """
         return [TabDropHandler(), 
-                FileDropHandler(extensions=self.file_drop_extensions)]
+                FileDropHandler(extensions=self.file_drop_extensions, 
+                                open_file=lambda path:self.trait_set(file_dropped=path))]
 
     @cached_property
     def _get__all_drop_handlers(self):
@@ -634,13 +635,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # callback to editor_area's public `create_empty_widget` Callable trait
         empty_widget = self.editor_area.create_empty_widget()
         
-        self.addTab(empty_widget, ' ')
+        self.addTab(empty_widget, '')
         self.empty_widget = empty_widget
         self.setFocus()
 
         # don't allow tab closing if empty widget comes up on a root tabwidget
         if self.parent().is_root():
             self.setTabsClosable(False)
+            
+        self.setTabText(0, '     ')
 
     def hide_empty_widget(self):
         """ Hides the empty widget (containing buttons to open new file, and 
@@ -766,6 +769,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
+        #from IPython.core.debugger import Tracer; Tracer()()
         for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 self.editor_area.active_tabwidget = self
@@ -855,6 +859,7 @@ class TabDragObject(object):
         self.start_pos = start_pos
         self.from_index = tabBar.tabAt(self.start_pos)
         self.from_tabwidget = tabBar.parent()
+        self.from_editor_area = self.from_tabwidget.editor_area
         self.widget = self.from_tabwidget.widget(self.from_index)
 
     def get_pixmap(self):
@@ -884,15 +889,21 @@ class TabDragObject(object):
 # Default drop handlers.
 ###############################################################################
 
-class TabDropHandler(HasTraits):
+class TabDropHandler(BaseDropHandler):
     """ Class to handle tab drop events
     """
-    implements(IDropHandler)
+
+    # whether to allow dragging of tabs across different opened windows
+    allow_cross_window_drop = Bool(False)
 
     def can_handle_drop(self, event, target):
         if isinstance(event.mimeData(), PyMimeData) and \
             isinstance(event.mimeData().instance(), TabDragObject):    
-            return True
+            if not self.allow_cross_window_drop:
+                drag_obj = event.mimeData().instance()
+                return drag_obj.from_editor_area == target.editor_area
+            else:
+                return True
         return False
 
     def handle_drop(self, event, target):
@@ -903,6 +914,9 @@ class TabDropHandler(HasTraits):
         drag_obj = event.mimeData().instance()
 
         # extract widget label
+        # (editor_area is common to both source and target in most cases but when
+        # the dragging happens across different windows, they are not, and hence it
+        # must be pulled in directly from the source)
         editor = target.editor_area._get_editor(drag_obj.widget)
         label = target.editor_area._get_label(editor)
 
@@ -924,30 +938,4 @@ class TabDropHandler(HasTraits):
         target.setCurrentWidget(drag_obj.widget)
 
         return True
-
-class FileDropHandler(HasTraits):
-    """ Class to handle backward compatible file drop events
-    """
-    implements(IDropHandler)
-
-    # supported extensions
-    extensions = List(Str)
-
-    def can_handle_drop(self, event, target):
-        if event.mimeData().hasUrls():
-            for url in event.mimeData().urls():
-                file_path = url.toLocalFile()
-                if file_path.endswith(tuple(self.extensions)):
-                    return True
-        return False
-
-    def handle_drop(self, event, target):
-        if not self.can_handle_drop(event, target):
-            return False
-
-        accepted = False
-        for url in event.mimeData().urls():
-            target.editor_area.file_dropped = url.toLocalFile()
-            accepted = True
-        return accepted
 
