@@ -830,6 +830,7 @@ class DraggableTabBar(QtGui.QTabBar):
                 drag = QtGui.QDrag(self.drag_obj.widget)
                 mimedata = PyMimeData(data=self.drag_obj)
                 drag.setPixmap(self.drag_obj.get_pixmap())
+                drag.setHotSpot(self.drag_obj.get_hotspot())
                 drag.setMimeData(mimedata)
                 drag.exec_()
                 self.drag_obj = None # deactivate the drag_obj again
@@ -858,32 +859,42 @@ class TabDragObject(object):
         """
         self.start_pos = start_pos
         self.from_index = tabBar.tabAt(self.start_pos)
-        self.from_tabwidget = tabBar.parent()
-        self.from_editor_area = self.from_tabwidget.editor_area
-        self.widget = self.from_tabwidget.widget(self.from_index)
+        self.from_editor_area = tabBar.parent().editor_area
+        self.widget = tabBar.parent().widget(self.from_index)
+        self.from_tabbar = tabBar
 
     def get_pixmap(self):
         """ Returns the drag pixmap including page widget and tab rectangle.
         """
         # instatiate the painter object with gray-color filled pixmap
-        result_pixmap = QtGui.QPixmap(self.from_tabwidget.rect().size())
-        self.painter = QtGui.QPainter(result_pixmap)
-        self.painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
-        self.painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
-        
+        tabBar = self.from_tabbar
+        tab_rect = tabBar.tabRect(self.from_index)
+        size = self.widget.rect().size()
+        result_pixmap = QtGui.QPixmap(size)
+        painter = QtGui.QStylePainter(result_pixmap, tabBar)
+
+        painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
+        painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
+
+        optTabBase = QtGui.QStyleOptionTabBarBaseV2()
+        optTabBase.initFrom(tabBar)
+        painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
+
         # region of active tab
-        tab_rect = self.from_tabwidget.tabBar().tabRect(self.from_index)
-        pixmap1 = QtGui.QPixmap.grabWidget(self.from_tabwidget.tabBar(), tab_rect)
-        self.painter.drawPixmap(0, 0, pixmap1)
+        pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
+        painter.drawPixmap(0,0,pixmap1) #tab_rect.topLeft(), pixmap1)
 
         # region of the page widget
         pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
-        self.painter.drawPixmap(0, tab_rect.height(), pixmap2)
-        
+        painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
+
         # finish painting
-        self.painter.end()
+        painter.end()
 
         return result_pixmap
+
+    def get_hotspot(self):
+        return self.start_pos - self.from_tabbar.tabRect(self.from_index).topLeft()
 
 ###############################################################################
 # Default drop handlers.
@@ -928,7 +939,7 @@ class TabDropHandler(BaseDropHandler):
         else:
             # if the drag initiated from the same tabwidget, put the tab 
             # back at the original index
-            if target is drag_obj.from_tabwidget:
+            if target is drag_obj.from_tabbar.parent():
                 target.insertTab(drag_obj.from_index, drag_obj.widget, label)
             # else, just add it at the end
             else:
