@@ -52,13 +52,19 @@ class Editor(MEditor):
         """ Destroy the toolkit-specific control that represents the part. """
 
         if self.control is not None:
-            self.control.hide()
-            self.control.close()
-            # Copy the reference: PySide schedules a delete on self.control
-            # but it is garbage collected before it can do so.
+            # The `close` method emits a closeEvent event which is listened
+            # by the workbench window layout, which responds by calling
+            # destroy_control again.
+
+            # We copy the control locally and set it to None immediately
+            # to make sure this block of codeis executed exactly once.
+
             _control = self.control
-            _control.deleteLater()
             self.control = None
+
+            _control.hide()
+            _control.close()
+            _control.deleteLater()
 
         return
 
