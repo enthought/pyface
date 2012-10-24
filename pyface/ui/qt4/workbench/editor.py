@@ -57,7 +57,7 @@ class Editor(MEditor):
             # destroy_control again.
 
             # We copy the control locally and set it to None immediately
-            # to make sure this block of codeis executed exactly once.
+            # to make sure this block of code is executed exactly once.
 
             _control = self.control
             self.control = None
