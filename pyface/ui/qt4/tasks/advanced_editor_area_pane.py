@@ -4,15 +4,15 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import implements, on_trait_change, Instance, Tuple, Callable, \
-    Property, Dict, Str, List, HasTraits, cached_property, Bool
+from traits.api import implements, on_trait_change, Instance, Callable, \
+    Property, Dict, Str, List, cached_property, Bool
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
 from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
-from pyface.constant import OK, CANCEL
+from pyface.constant import OK
 from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
 # Local imports.
@@ -50,11 +50,13 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     #### Private interface ###################################################
 
-    _pvt_drop_handlers = List(IDropHandler)
-    _all_drop_handlers = Property(List(IDropHandler), 
-                                depends_on=['drop_handlers', '_pvt_drop_handlers'])
+    _private_drop_handlers = List(IDropHandler)
+    _all_drop_handlers = Property(
+        List(IDropHandler),
+        depends_on=['drop_handlers', '_private_drop_handlers']
+    )
 
-    def __pvt_drop_handlers_default(self):
+    def __private_drop_handlers_default(self):
         """ By default, two private drop handlers are installed: 
 
             1. For dropping of tabs from one pane to other
@@ -67,7 +69,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     @cached_property
     def _get__all_drop_handlers(self):
-        return self.drop_handlers + self._pvt_drop_handlers
+        return self.drop_handlers + self._private_drop_handlers
 
     def _create_empty_widget_default(self):
         return lambda : self.active_tabwidget.create_empty_widget()
@@ -769,24 +771,23 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
-        #from IPython.core.debugger import Tracer; Tracer()()
         for handler in self.editor_area._all_drop_handlers:
             if handler.can_handle_drop(event, self):
                 self.editor_area.active_tabwidget = self
                 self.setBackgroundRole(QtGui.QPalette.Highlight)
                 event.acceptProposedAction()
-                return True
-        return super(DraggableTabWidget, self).dragEnterEvent(event)
+                return
+
+        super(DraggableTabWidget, self).dragEnterEvent(event)
 
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
         for handler in self.editor_area._all_drop_handlers:
-            if handler.handle_drop(event, self):
+            if handler.can_handle_drop(event, self):
+                handler.handle_drop(event, self)
                 self.setBackgroundRole(QtGui.QPalette.Window)
                 event.acceptProposedAction()
-                return True
-        return super(DraggableTabWidget, self).dropEvent(event)
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
@@ -828,7 +829,7 @@ class DraggableTabBar(QtGui.QTabBar):
             # initiate drag
             else:
                 drag = QtGui.QDrag(self.drag_obj.widget)
-                mimedata = PyMimeData(data=self.drag_obj)
+                mimedata = PyMimeData(data=self.drag_obj, pickle=False)
                 drag.setPixmap(self.drag_obj.get_pixmap())
                 drag.setHotSpot(self.drag_obj.get_hotspot())
                 drag.setMimeData(mimedata)
@@ -918,9 +919,6 @@ class TabDropHandler(BaseDropHandler):
         return False
 
     def handle_drop(self, event, target):
-        if not self.can_handle_drop(event, target):
-            return False
-
         # get the drop object back
         drag_obj = event.mimeData().instance()
 
@@ -947,6 +945,4 @@ class TabDropHandler(BaseDropHandler):
         
         # make the dropped widget active
         target.setCurrentWidget(drag_obj.widget)
-
-        return True
 
