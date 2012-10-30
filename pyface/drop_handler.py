@@ -23,6 +23,14 @@ On any toolkit widget on which you wish to handle drops, call the function::
 
 with the handler being an instance of BaseDropHandler.
 
+If you need to pass additional python object to the handler's event,
+you can do it by calling the method:
+
+    set_drop_target(widget, target)
+
+with the target being an object which is set as the DropEvent's target
+attribute and can be used by drop handlers to perform any actions they need.
+
 """
 
 # Enthought library imports
@@ -35,13 +43,12 @@ from traits.api import HasTraits, Callable, implements, List, Str
 class DragEvent(object):
     """ The event class for drag-drop events.
 
-    Parameters
-    ----------
+    Attributes:
+    -----------
     data - The instance of PyMimeData associated with the drag event
-    widget - The source native widget for the drag event.
+    widget - The widget (toolkit widget) on which the drop handler was set
     target - The drop target set on the widget, if any
-    source - The source widget for the event.
-    widget - The widget on which the drop handler was set
+    source - The source widget for the event
 
     Notes:
     ------

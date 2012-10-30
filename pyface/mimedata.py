@@ -30,4 +30,4 @@ class PyMimeData:
 from pyface.toolkit import toolkit_object
 
 # WIP: API might change without prior notification
-PyMimeData = toolkit_object('clipboard:PyMimeData')
+PyMimeData = toolkit_object('mimedata:PyMimeData')

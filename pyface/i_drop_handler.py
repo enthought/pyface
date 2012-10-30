@@ -32,7 +32,12 @@ class IDragEvent(Interface):
 	widget = Any('the widget on which the drop handler was set')
 
 	def accept(self, action=None):
-		""" Accept the event with the specified action. """
+		""" Accept the event with the specified action.
+
+		Action can be one of: copy, move or link; to perform the specified
+		action on the dropped data.
+
+		"""
 
 
 
