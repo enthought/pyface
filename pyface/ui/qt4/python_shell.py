@@ -24,6 +24,7 @@ from pygments.lexers import PythonLexer
 
 # Enthought library imports.
 from traits.api import Event, implements
+from traits.util.clean_strings import python_name
 
 # Local imports.
 from code_editor.pygments_highlighter import PygmentsHighlighter
@@ -31,6 +32,7 @@ from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
+from pyface.drop_handler import add_drop_handler, set_drop_target, BaseDropHandler
 from widget import Widget
 
 #-------------------------------------------------------------------------------
@@ -62,6 +64,12 @@ class PythonShell(MPythonShell, Widget):
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)
 
+        # Add python object drop capability to shell
+        set_drop_target(self.control, self)
+        add_drop_handler(self.control, BaseDropHandler(
+                                   on_can_handle=self._can_handle_drop,
+                                   on_handle=self._handle_drop))
+
         # Set up to be notified whenever a Python statement is executed:
         self.control.executed.connect(self._on_command_executed)
 
@@ -84,6 +92,41 @@ class PythonShell(MPythonShell, Widget):
 
     def _create_control(self, parent):
         return PyfacePythonWidget(self, parent)
+
+    #--------------------------------------------------------------------------
+    # Drop handling interface
+    #--------------------------------------------------------------------------
+
+    def _can_handle_drop(self, event):
+        if event.data.has_instance():
+            event.accept('link')
+            return True
+
+    def _handle_drop(self, event):
+        obj = event.data.instance()
+        if obj is None:
+            return
+
+        # If we can't create a valid Python identifier for the name of an
+        # object we use this instead.
+        name = 'dragged'
+
+        if hasattr(obj, 'name') \
+           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+            py_name = python_name(obj.name)
+
+            # Make sure that the name is actually a valid Python identifier.
+            try:
+                if eval(py_name, {py_name : True}):
+                    name = py_name
+            except Exception:
+                pass
+
+        self.control.interpreter.locals[name] = obj
+        self.control.execute(name)
+        self.control._control.setFocus()
+        event.accept('link')
+
 
 #-------------------------------------------------------------------------------
 # 'PythonWidget' class:
