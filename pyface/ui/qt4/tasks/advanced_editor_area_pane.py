@@ -1,3 +1,17 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2012, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
+
 # Standard library imports.
 import sys
 
@@ -10,10 +24,10 @@ from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from traitsui.api import Menu
-from traitsui.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK
-from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
+from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler,\
+    DragEvent, PyMimeData
 
 # Local imports.
 from task_pane import TaskPane
@@ -627,6 +641,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # shows the custom empty widget containing buttons for relevant actions
         self.show_empty_widget()
 
+        # The active drop handler for drag/drop on tab bar
+        self._drop_handler = None
+
     def show_empty_widget(self):
         """ Shows the empty widget (containing buttons to open new file, and 
         collapse the split).
@@ -771,9 +788,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
         """
+        evt = DragEvent(data=PyMimeData.coerce(event.mimeData()),
+                        target=self.editor_area,
+                        widget=self,
+                        source=event.source(),
+                        native_event=event)
         for handler in self.editor_area._all_drop_handlers:
-            if handler.can_handle_drop(event, self):
+            if handler.can_handle_drop(evt):
                 self.editor_area.active_tabwidget = self
+                self._drop_handler = handler
                 self.setBackgroundRole(QtGui.QPalette.Highlight)
                 event.acceptProposedAction()
                 return
@@ -783,16 +806,25 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def dropEvent(self, event):
         """ Re-implemented to handle drop events
         """
-        for handler in self.editor_area._all_drop_handlers:
-            if handler.can_handle_drop(event, self):
-                handler.handle_drop(event, self)
-                self.setBackgroundRole(QtGui.QPalette.Window)
-                event.acceptProposedAction()
+        self.setBackgroundRole(QtGui.QPalette.Window)
+        if self._drop_handler:
+            self.setBackgroundRole(QtGui.QPalette.Window)
+            evt = DragEvent(data=PyMimeData.coerce(event.mimeData()),
+                            target=self.editor_area,
+                            widget=self,
+                            source=event.source(),
+                            native_event=event)
+            self._drop_handler.handle_drop(evt)
+            event.acceptProposedAction()
+            self._drop_handler = None
+            return True
+        return super(DraggableTabWidget, self).dropEvent(event)
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
         """
         self.setBackgroundRole(QtGui.QPalette.Window)
+        self._drop_handler = None
         return super(DraggableTabWidget, self).dragLeaveEvent(event)
 
 
@@ -906,43 +938,45 @@ class TabDropHandler(BaseDropHandler):
     """
 
     # whether to allow dragging of tabs across different opened windows
+    # FIXME: has some issues before it can be enabled.
     allow_cross_window_drop = Bool(False)
 
-    def can_handle_drop(self, event, target):
-        if isinstance(event.mimeData(), PyMimeData) and \
-            isinstance(event.mimeData().instance(), TabDragObject):    
+    def can_handle_drop(self, event):
+        if issubclass(event.data.instance_type(), TabDragObject):
             if not self.allow_cross_window_drop:
-                drag_obj = event.mimeData().instance()
-                return drag_obj.from_editor_area == target.editor_area
+                drag_obj = event.data.instance()
+                return drag_obj.from_editor_area == event.target
             else:
                 return True
         return False
 
-    def handle_drop(self, event, target):
+    def handle_drop(self, event):
         # get the drop object back
-        drag_obj = event.mimeData().instance()
+        drag_obj = event.data.instance()
+        from_editor_area = drag_obj.from_editor_area
+        tab_widget = event.widget
 
         # extract widget label
         # (editor_area is common to both source and target in most cases but when
         # the dragging happens across different windows, they are not, and hence it
         # must be pulled in directly from the source)
-        editor = target.editor_area._get_editor(drag_obj.widget)
-        label = target.editor_area._get_label(editor)
+        editor = from_editor_area._get_editor(drag_obj.widget)
+        label = from_editor_area._get_label(editor)
 
         # if drop occurs at a tab bar, insert the tab at that position
-        if not target.tabBar().tabAt(event.pos())==-1:
-            index = target.tabBar().tabAt(event.pos())
-            target.insertTab(index, drag_obj.widget, label)
+        if not tab_widget.tabBar().tabAt(event._event.pos())==-1:
+            index = tab_widget.tabBar().tabAt(event._event.pos())
+            tab_widget.insertTab(index, drag_obj.widget, label)
 
         else:
             # if the drag initiated from the same tabwidget, put the tab 
             # back at the original index
-            if target is drag_obj.from_tabbar.parent():
-                target.insertTab(drag_obj.from_index, drag_obj.widget, label)
+            if tab_widget is drag_obj.from_tabbar.parent():
+                tab_widget.insertTab(drag_obj.from_index, drag_obj.widget, label)
             # else, just add it at the end
             else:
-                target.addTab(drag_obj.widget, label)
+                tab_widget.addTab(drag_obj.widget, label)
         
         # make the dropped widget active
-        target.setCurrentWidget(drag_obj.widget)
+        tab_widget.setCurrentWidget(drag_obj.widget)
 
