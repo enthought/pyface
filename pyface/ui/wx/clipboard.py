@@ -19,11 +19,8 @@ import wx
 # ETS imports
 from traits.api import implements
 from pyface.i_clipboard import IClipboard, BaseClipboard
+from mimedata import TextFormat, FileFormat, PythonObjectFormat
 
-# Data formats
-PythonObjectFormat = wx.CustomDataFormat('PythonObject')
-TextFormat         = wx.DataFormat(wx.DF_TEXT)
-FileFormat         = wx.DataFormat(wx.DF_FILENAME)
 
 # Shortcuts
 cb           = wx.TheClipboard

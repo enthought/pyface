@@ -15,6 +15,7 @@
 # Standard library imports
 from cStringIO import StringIO
 from cPickle import dumps, load, loads
+from types import NoneType
 
 # System library imports
 from pyface.qt import QtCore, QtGui
@@ -25,6 +26,7 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Shortcuts
 cb = QtGui.QApplication.clipboard()
+
 
 # Custom MIME type representing python objects
 PYTHON_TYPE = "python/object"
