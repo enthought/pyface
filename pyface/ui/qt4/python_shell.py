@@ -24,6 +24,7 @@ from pygments.lexers import PythonLexer
 
 # Enthought library imports.
 from traits.api import Event, implements
+from traits.util.clean_strings import python_name
 
 # Local imports.
 from code_editor.pygments_highlighter import PygmentsHighlighter
@@ -65,6 +66,9 @@ class PythonShell(MPythonShell, Widget):
         # Set up to be notified whenever a Python statement is executed:
         self.control.executed.connect(self._on_command_executed)
 
+        # Handle dropped objects.
+        _DropEventEmitter(self.control).signal.connect(self._on_obj_drop)
+
     #--------------------------------------------------------------------------
     # 'IPythonShell' interface
     #--------------------------------------------------------------------------
@@ -84,6 +88,32 @@ class PythonShell(MPythonShell, Widget):
 
     def _create_control(self, parent):
         return PyfacePythonWidget(self, parent)
+
+    #--------------------------------------------------------------------------
+    # 'Private' interface.
+    #--------------------------------------------------------------------------
+
+    def _on_obj_drop(self, obj):
+        """ Handle dropped objects and add to interpreter local namespace. """
+        # If we can't create a valid Python identifier for the name of an
+        # object we use this instead.
+        name = 'dragged'
+
+        if hasattr(obj, 'name') \
+           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+            py_name = python_name(obj.name)
+
+            # Make sure that the name is actually a valid Python identifier.
+            try:
+                if eval(py_name, {py_name : True}):
+                    name = py_name
+            except Exception:
+                pass
+
+        self.control.interpreter.locals[name] = obj
+        self.control.execute(name)
+        self.control._control.setFocus()
+
 
 #-------------------------------------------------------------------------------
 # 'PythonWidget' class:
@@ -522,3 +552,41 @@ class PyfacePythonWidget(PythonWidget):
             event        = event)
 
         super(PyfacePythonWidget, self).keyPressEvent(event)
+
+
+#-------------------------------------------------------------------------------
+# '_DropEventFilter' class:
+#-------------------------------------------------------------------------------
+
+class _DropEventEmitter(QtCore.QObject):
+    """ Handle object drops on widget. """
+    signal = QtCore.Signal(object)
+
+    def __init__(self, widget):
+        QtCore.QObject.__init__(self, widget)
+        self.widget = widget
+
+        widget.setAcceptDrops(True)
+        widget.installEventFilter(self)
+
+    def eventFilter(self, source, event):
+        """ Handle drop events on widget. """
+        typ = event.type()
+        if typ == QtCore.QEvent.DragEnter:
+            if hasattr(event.mimeData(), 'instance'):
+                # It is pymimedata and has instance data
+                obj = event.mimeData().instance()
+                if obj is not None:
+                    event.accept()
+                    return True
+
+        elif typ == QtCore.QEvent.Drop:
+            if hasattr(event.mimeData(), 'instance'):
+                # It is pymimedata and has instance data
+                obj = event.mimeData().instance()
+                if obj is not None:
+                    self.signal.emit(obj)
+                    event.accept()
+                    return True
+
+        return QtCore.QObject.eventFilter(self, source, event)
