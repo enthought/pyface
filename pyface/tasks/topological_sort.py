@@ -12,8 +12,8 @@ def before_after_sort(items):
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
 
-    If a cycle is found in the dependecies, a warning is logged and the order of
-    the items is undefined.
+    If a cycle is found in the dependencies, a warning is logged and the order
+    of the items is undefined.
     """
     # Handle a degenerate case for which the logic below will fail (because
     # prev_item will not be set).
