@@ -42,7 +42,7 @@ class DockPaneToggleAction(Action):
 
     def _get_name(self):
         if self.dock_pane is None:
-            return 'DELETED DOCK TOGGLE'
+            return 'UNDEFINED'
         return self.dock_pane.name
 
     def _get_tooltip(self):

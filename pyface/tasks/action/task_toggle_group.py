@@ -43,7 +43,7 @@ class TaskToggleAction(Action):
 
     def _get_name(self):
         if self.task is None:
-            return 'DELETED TASK TOGGLE'
+            return 'UNDEFINED'
         return self.task.name
 
     def _get_tooltip(self):
