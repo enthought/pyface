@@ -1,7 +1,6 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, Bool, List, Instance, Property, Unicode, \
-    on_trait_change
+from traits.api import Any, List, Instance, Property, Unicode, on_trait_change
 
 # Local imports.
 from pyface.tasks.task import Task
@@ -26,6 +25,14 @@ class TaskToggleAction(Action):
     # 'Action' interface.
     ###########################################################################
 
+    def destroy(self):
+        super(TaskToggleAction, self).destroy()
+
+        # Make sure that we are not listening to changes in the task anymore
+        # In traits style, we will set the basic object to None and have the
+        # listener check that if it is still there.
+        self.task = None
+
     def perform(self, event=None):
         window = self.task.window
         window.activate_task(self.task)
@@ -35,6 +42,8 @@ class TaskToggleAction(Action):
     ###########################################################################
 
     def _get_name(self):
+        if self.task is None:
+            return 'UNDEFINED'
         return self.task.name
 
     def _get_tooltip(self):
@@ -42,8 +51,10 @@ class TaskToggleAction(Action):
 
     @on_trait_change('task.window.active_task')
     def _update_checked(self):
-        window = self.task.window
-        self.checked = window is not None and window.active_task == self.task
+        if self.task:
+            window = self.task.window
+            self.checked = (window is not None
+                            and window.active_task == self.task)
 
 
 class TaskToggleGroup(Group):
