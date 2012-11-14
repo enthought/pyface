@@ -7,7 +7,8 @@ from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
                   Instance('pyface.tasks.action.schema.GroupSchema'),
-                  Instance('pyface.tasks.action.schema.MenuSchema'))
+                  Instance('pyface.tasks.action.schema.MenuSchema'),
+                  Instance('pyface.tasks.action.schema.Schema'))
 
 
 class Schema(HasTraits):
