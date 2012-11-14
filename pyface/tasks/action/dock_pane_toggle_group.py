@@ -1,13 +1,13 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Bool, Instance, List, Property, Unicode, on_trait_change
+from traits.api import Instance, List, Property, Unicode, on_trait_change
 
 # Local imports.
 from pyface.tasks.i_dock_pane import IDockPane
 
 
 class DockPaneToggleAction(Action):
-    """ An Action for toggling the visibily of a dock pane.
+    """ An Action for toggling the visibility of a dock pane.
     """
 
     #### 'DockPaneToggleAction' interface #####################################
@@ -24,6 +24,14 @@ class DockPaneToggleAction(Action):
     # 'Action' interface.
     ###########################################################################
 
+    def destroy(self):
+        super(DockPaneToggleAction, self).destroy()
+
+        # Make sure that we are not listening to changes to the pane anymore.
+        # In traits style, we will set the basic object to None and have the
+        # listener check that if it is still there.
+        self.dock_pane = None
+
     def perform(self, event=None):
         if self.dock_pane:
             self.dock_pane.visible = not self.dock_pane.visible
@@ -33,18 +41,22 @@ class DockPaneToggleAction(Action):
     ###########################################################################
 
     def _get_name(self):
+        if self.dock_pane is None:
+            return 'DELETED DOCK TOGGLE'
         return self.dock_pane.name
 
     def _get_tooltip(self):
-        return u'Toggles the visibilty of the %s pane.' % self.name
+        return u'Toggles the visibility of the %s pane.' % self.name
 
     @on_trait_change('dock_pane.visible')
     def _update_checked(self):
-        self.checked = self.dock_pane.visible
+        if self.dock_pane:
+            self.checked = self.dock_pane.visible
 
     @on_trait_change('dock_pane.closable')
     def _update_visible(self):
-        self.visible = self.dock_pane.closable
+        if self.dock_pane:
+            self.visible = self.dock_pane.closable
 
 
 class DockPaneToggleGroup(Group):

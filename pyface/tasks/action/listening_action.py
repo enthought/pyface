@@ -34,6 +34,21 @@ class ListeningAction(Action):
     # 'Action' interface.
     ###########################################################################
 
+    def destroy(self):
+        """ Called when the action is no longer required.
+
+        Remove all the task listeners.
+
+        """
+
+        if self.object:
+            self.object.on_trait_change(
+                self._enabled_update, self.enabled_name, remove=True
+            )
+            self.object.on_trait_change(
+                self._visible_update, self.visible_name, remove=True
+            )
+
     def perform(self, event=None):
         """ Call the appropriate function.
         """
