@@ -1,8 +1,8 @@
-# Tests basic layout operations of the splitter used in advanced_editor_area_pane.py
+# Tests basic layout operations of the splitter used in split_editor_area_pane.py
 
 import unittest, os, tempfile
 
-from advanced_editor_area_pane import AdvancedEditorAreaPane, EditorAreaWidget
+from pyface.tasks.split_editor_area_pane import SplitEditorAreaPane, EditorAreaWidget
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.tasks.api import Editor
@@ -14,7 +14,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
 		parent : parent of the returned root
 		"""
-		root = EditorAreaWidget(editor_area=AdvancedEditorAreaPane(), parent=parent)
+		root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=parent)
 		btn0 = QtGui.QPushButton('0')
 		btn1 = QtGui.QPushButton('1')
 		tabwidget = root.tabwidget()
@@ -76,7 +76,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 		parent : parent of the returned root
 		"""
 		# setup leftchild
-		left = EditorAreaWidget(editor_area=AdvancedEditorAreaPane(), parent=None)
+		left = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
 		btn0 = QtGui.QPushButton('btn0')
 		btn1 = QtGui.QPushButton('btn1')
 		tabwidget = left.tabwidget()
@@ -135,7 +135,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 		be such that this layout is transferred to the parent.
 		"""
 		# setup
-		root = EditorAreaWidget(editor_area=AdvancedEditorAreaPane(), parent=None)
+		root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
 		tabwidget = root.tabwidget()
 		tabwidget.setParent(None)
 		left, left_left, left_right = self._setUp_collapse(parent=root)
@@ -184,7 +184,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 		file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
 
 		# adding the editors
-		editor_area = AdvancedEditorAreaPane()
+		editor_area = SplitEditorAreaPane()
 		editor_area.create(parent=None)
 		editor_area.add_editor(Editor(obj=file0))
 		editor_area.add_editor(Editor(obj=file1))
