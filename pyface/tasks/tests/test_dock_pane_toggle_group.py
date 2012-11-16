@@ -20,8 +20,8 @@ class BogusTask(Task):
 
     def create_dock_panes(self):
         self.dock_panes = dock_panes = [
-            DockPane(id='tests.bogus_task.dock_pane_1', name='Dock Pane 2'),
-            DockPane(id='tests.bogus_task.dock_pane_2', name='Dock Pane 1'),
+            DockPane(id='tests.bogus_task.dock_pane_2', name='Dock Pane 2'),
+            DockPane(id='tests.bogus_task.dock_pane_1', name='Dock Pane 1'),
         ]
 
         return dock_panes
@@ -75,6 +75,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         # Check that there are 2 dock panes in the group at the beginning.
         self.assertEqual(2, len(self.dock_pane_toggle_group.items))
 
+        # Names are sorted by the group.
         names = self.get_dock_pane_toggle_action_names()
         expected_names = ['Dock Pane 1', 'Dock Pane 2']
         self.assertItemsEqual(expected_names, names)
@@ -88,6 +89,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         # Check that there are 3 dock panes in the group.
         self.assertEqual(3, len(self.dock_pane_toggle_group.items))
 
+        # Names are sorted by the group.
         names = self.get_dock_pane_toggle_action_names()
         expected_names = ['Dock Pane 0', 'Dock Pane 1', 'Dock Pane 2']
         self.assertItemsEqual(expected_names, names)
@@ -96,7 +98,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         # Remove a dock pane from the task.
         self.task_state.dock_panes.remove(self.task.dock_panes[0])
 
-        # Check that there are 3 dock panes in the group.
+        # Check that there is only 1 dock pane left in the group.
         self.assertEqual(1, len(self.dock_pane_toggle_group.items))
 
         names = self.get_dock_pane_toggle_action_names()
