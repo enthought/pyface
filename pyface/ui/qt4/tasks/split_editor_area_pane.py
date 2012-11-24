@@ -114,7 +114,15 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         self.active_editor = editor
         self.active_tabwidget = editor.control.parent().parent()
         self.active_tabwidget.setCurrentWidget(editor.control)
-        
+        editor_widget = editor.control.parent()
+        editor_widget.setVisible(True)
+        editor_widget.raise_()
+        # Set focus on last active widget in editor if possible
+        if editor.control.focusWidget():
+            editor.control.focusWidget().setFocus()
+        else:
+            editor.control.setFocus()
+
     def add_editor(self, editor):
         """ Adds an editor to the active_tabwidget
         """
@@ -266,20 +274,24 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Activates the tab with the specified index, if there is one.
         """
         self.active_tabwidget.setCurrentIndex(index)
+        current_widget = self.active_tabwidget.currentWidget()
+        for editor in self.editors:
+            if current_widget == editor.control:
+                self.activate_editor(editor)
 
     def _next_tab(self):
         """ Activate the tab after the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
         new_index = index + 1 if index < self.active_tabwidget.count() - 1 else 0
-        self.active_tabwidget.setCurrentIndex(new_index)
+        self._activate_tab(new_index)
 
     def _previous_tab(self):
         """ Activate the tab before the currently active tab.
         """
         index = self.active_tabwidget.currentIndex()
         new_index = index - 1 if index > 0  else self.active_tabwidget.count() - 1
-        self.active_tabwidget.setCurrentIndex(new_index)
+        self._activate_tab(new_index)
 
     def tabwidgets(self):
         """ Returns the list of tabwidgets associated with the current editor 
@@ -310,12 +322,14 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             elif isinstance(new, QtGui.QTabBar):
                 self.active_tabwidget = new.parent()
             else:
-                # check if any of the editor widgets (or their focus proxies) 
-                # have focus. If yes, make it active
+                # check if any of the editor widgets have focus.
+                # If yes, make it active
                 for editor in self.editors:
-                    # hasFocus is True if control or it's focusproxy has focus
-                    if editor.control.hasFocus():
-                        self.activate_editor(editor)
+                    control = editor.control
+                    if control is not None and control.isAncestorOf(new):
+                        self.active_editor = editor
+                        self.active_tabwidget = editor.control.parent().parent()
+                        self.active_tabwidget.setCurrentWidget(editor.control)
                         break
 
 
