@@ -1,6 +1,10 @@
+""" A Group for toggling the visibility of a task's dock panes. """
+
+
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Instance, List, Property, Unicode, on_trait_change
+from traits.api import cached_property, Instance, List, on_trait_change, \
+    Property, Unicode
 
 # Local imports.
 from pyface.tasks.i_dock_pane import IDockPane
@@ -58,7 +62,6 @@ class DockPaneToggleAction(Action):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
 
-
 class DockPaneToggleGroup(Group):
     """ A Group for toggling the visibility of a task's dock panes.
     """
@@ -69,21 +72,54 @@ class DockPaneToggleGroup(Group):
 
     items = List
 
-    ###########################################################################
-    # Protected interface.
-    ###########################################################################
+    #### 'DockPaneToggleGroup' interface ######################################
 
-    def _items_default(self):
-        """ Create a DockPaneToggleAction for each dock pane.
-        """
+    task = Property(depends_on='parent.controller')
+
+    @cached_property
+    def _get_task(self):
+        manager = self.get_manager()
+
+        if manager is None or manager.controller is None:
+            return None
+
+        return manager.controller.task
+
+    dock_panes = Property(depends_on='task.window._states.dock_panes')
+
+    @cached_property
+    def _get_dock_panes(self):
+        if self.task is None or self.task.window is None:
+            return []
+
+        task_state = self.task.window._get_state(self.task)
+        return task_state.dock_panes
+
+    def get_manager(self):
+        # FIXME: Is there no better way to get a reference to the menu manager?
         manager = self
         while isinstance(manager, Group):
             manager = manager.parent
-        task = manager.controller.task
+        return manager
+
+    #### Private interface ####################################################
+
+    @on_trait_change('dock_panes[]')
+    def _dock_panes_updated(self):
+        """Recreate the group items when dock panes have been added/removed.
+        """
+
+        # Remove the previous group items.
+        self.destroy()
 
         items = []
-        for dock_pane in task.window.get_dock_panes(task):
+        for dock_pane in self.dock_panes:
             action = DockPaneToggleAction(dock_pane=dock_pane)
             items.append(ActionItem(action=action))
+
         items.sort(key=lambda item: item.action.name)
-        return items
+        self.items = items
+
+        # Inform the parent menu manager.
+        manager = self.get_manager()
+        manager.changed = True
