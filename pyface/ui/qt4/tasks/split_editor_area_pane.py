@@ -318,9 +318,11 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         if new:
             if isinstance(new, DraggableTabWidget):
-                self.active_tabwidget = new
+                if new.editor_area == self:
+                    self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
-                self.active_tabwidget = new.parent()
+                if new.parent().editor_area == self:
+                    self.active_tabwidget = new.parent()
             else:
                 # check if any of the editor widgets have focus.
                 # If yes, make it active
