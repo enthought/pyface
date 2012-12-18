@@ -40,7 +40,7 @@ class ActionSchema(Schema):
 
     An action schema cannot have children. It is used as an action factory
     to make sure a larger schema (e.g., a menu schema) can be used multiple
-    times. Without using an ActionSchema, a reference to the copy is added
+    times. Without using an ActionSchema, a reference to the action is added
     to every menu created from the schema. When one of the menus is destroyed,
     the action is also destroyed and is made unusable.
 
