@@ -2,7 +2,7 @@
 from pyface.action.api import Action, ActionItem, Group, \
      MenuManager, MenuBarManager, ToolBarManager
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
-     List, Str, Trait, Tuple, Unicode
+     List, Property, Str, Trait, Tuple, Unicode
 
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
@@ -17,6 +17,9 @@ class Schema(HasTraits):
 
     # The schema's identifier (unique within its parent schema).
     id = Str
+
+    def _id_default(self):
+        return self.__class__.__name__ + get_unique_number()
 
     # The list of sub-items in the schema. These items can be other
     # (non-top-level) schema or concrete instances from the Pyface API.

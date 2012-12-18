@@ -167,6 +167,45 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         )
         self.assertActionElementsEqual(actual, desired)
 
+    def test_unwanted_merge(self):
+        """ Test that we don't have automatic merges due to forgetting to set
+        a schema ID. """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, id='FileGroup'),
+                       name='File 1')
+        )
+
+        # Contributed menus.
+        extra_menu = MenuSchema(
+            GroupSchema(self.action2, id='FileGroup'),
+            name='File 2'
+        )
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=lambda : extra_menu,
+                           id='DummyActionsSMenu'),
+            ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        # Note that we expect the name of the menu to be inherited from
+        # the menu in the menu bar schema that is defined first.
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        name='File 1', id='MenuSchema_1'),
+            MenuManager(Group(self.action2, id='FileGroup'),
+                        name='File 2', id='MenuSchema_2'),
+            id='MenuBar'
+        )
+        self.assertActionElementsEqual(actual, desired)
+
     def test_merging_items_with_same_id_but_different_class(self):
         """ Schemas with the same path but different types (menus, groups)
         are not merged together.
