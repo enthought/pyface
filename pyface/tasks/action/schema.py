@@ -103,7 +103,7 @@ class ToolBarSchema(Schema):
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
 
-    # A factory for instantiating a pyfce ToolBarManager
+    # A factory for instantiating a pyface ToolBarManager
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):
