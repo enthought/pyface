@@ -2,7 +2,7 @@
 from pyface.action.api import Action, ActionItem, Group, \
      MenuManager, MenuBarManager, ToolBarManager
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
-     List, Str, Trait, Tuple, Unicode
+     List, Property, Str, Trait, Tuple, Unicode
 
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
@@ -33,6 +33,30 @@ class Schema(HasTraits):
             child items.
         """
         raise NotImplementedError
+
+
+class ActionSchema(Schema):
+    """ Action schema for Pyface Actions.
+
+    An action schema cannot have children. It is used as an action factory
+    to make sure a larger schema (e.g., a menu schema) can be used multiple
+    times. Without using an ActionSchema, a reference to the copy is added
+    to menus created from the schema. When the menus are destroyed, the action
+    is made unusable.
+
+    """
+
+    #: A factory for the Action instance.
+    action_factory = Callable(Action)
+
+    items = Property()
+    def _get_items(self):
+        return []
+
+    def create(self, children):
+        """ Create the appropriate PyFace Action instance. """
+
+        return self.action_factory()
 
 
 class GroupSchema(Schema):
