@@ -1,6 +1,7 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group, \
      MenuManager, MenuBarManager, ToolBarManager
+from pyface.util.id_helper import get_unique_id
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
      List, Property, Str, Trait, Tuple, Unicode
 
@@ -19,7 +20,7 @@ class Schema(HasTraits):
     id = Str
 
     def _id_default(self):
-        return self.__class__.__name__ + get_unique_number()
+        return get_unique_id(self)
 
     # The list of sub-items in the schema. These items can be other
     # (non-top-level) schema or concrete instances from the Pyface API.
