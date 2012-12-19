@@ -56,7 +56,9 @@ class ActionSchema(Schema):
     def create(self, children):
         """ Create the appropriate PyFace Action instance. """
 
-        return self.action_factory()
+    def create(self, children):
+        traits = dict(id=self.id)
+        return self.action_factory(**traits)
 
 
 class GroupSchema(Schema):
