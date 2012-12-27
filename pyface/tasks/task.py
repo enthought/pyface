@@ -4,7 +4,7 @@ from traits.api import Callable, HasTraits, Instance, List, Str, \
      Unicode
 
 # Local imports.
-from action.schema import MenuSchema, MenuBarSchema, ToolBarSchema
+from action.schema import MenuBarSchema, ToolBarSchema
 from action.schema_addition import SchemaAddition
 from task_layout import TaskLayout
 

@@ -81,41 +81,6 @@ class TaskActionManagerBuilder(HasTraits):
     # Private interface.
     ###########################################################################
 
-    def _create_action_manager_recurse(self, schema, additions, path=''):
-        """ Recursively create a manager for the given schema and additions map.
-        """
-        # Compute the new action path.
-        if path: path += '/'
-        path += schema.id
-
-        # Determine the order of the items at this path.
-        items = schema.items
-        if additions[path]:
-            items = self._get_ordered_schemas(items + additions[path])
-
-        # Create the actual children by calling factory items.
-        children = []
-        for item in items:
-            # Unpack additions first, since they may themselves be schemas.
-            if isinstance(item, SchemaAddition):
-                item = item.factory()
-
-            if isinstance(item, Schema):
-                item = self._create_action_manager_recurse(item,additions,path)
-            else:
-                item = self.prepare_item(item, path+'/'+item.id)
-
-            if isinstance(item, ActionManager):
-                # Give even non-root action managers a reference to the
-                # controller so that custom Groups, MenuManagers, etc. can get
-                # access to their Tasks.
-                item.controller = self.controller
-            
-            children.append(item)
-            
-        # Finally, create the pyface.action instance for this schema.
-        return self.prepare_item(schema.create(children), path)
-
     def _get_ordered_schemas(self, schemas):
         begin = []
         middle = []
@@ -134,6 +99,159 @@ class TaskActionManagerBuilder(HasTraits):
                    + before_after_sort(middle)
                    + before_after_sort(end))
         return schemas
+
+    def _group_items_by_id(self, items):
+        """ Group a list of action items by their ID.
+
+        Action items are Schemas and Groups, MenuManagers, etc.
+
+        Return a dictionary {item_id: list_of_items}, and a list containing
+        all the ids ordered by their appearance in the `all_items` list. The
+        ordered IDs are used as a replacement for an ordered dictionary, to
+        keep compatibility with Python <2.7 .
+
+        """
+
+        ordered_items_ids = []
+        id_to_items = defaultdict(list)
+
+        for item in items:
+            if item.id not in id_to_items:
+                ordered_items_ids.append(item.id)
+            id_to_items[item.id].append(item)
+
+        return id_to_items, ordered_items_ids
+
+    def _group_items_by_class(self, items):
+        """ Group a list of action items by their class.
+
+        Action items are Schemas and Groups, MenuManagers, etc.
+
+        Return a dictionary {item_class: list_of_items}, and a list containing
+        all the classes ordered by their appearance in the `all_items` list.
+        The ordered classes are used as a replacement for an ordered
+        dictionary, to keep compatibility with Python <2.7 .
+
+        """
+
+        ordered_items_class = []
+        class_to_items = defaultdict(list)
+
+        for item in items:
+            if item.__class__ not in class_to_items:
+                ordered_items_class.append(item.__class__)
+            class_to_items[item.__class__].append(item)
+
+        return class_to_items, ordered_items_class
+
+    def _unpack_schema_additions(self, items):
+        """ Unpack additions, since they may themselves be schemas. """
+
+        unpacked_items = []
+
+        for item in items:
+            if isinstance(item, SchemaAddition):
+                unpacked_items.append(item.factory())
+            else:
+                unpacked_items.append(item)
+
+        return unpacked_items
+
+    def _merge_items_with_same_path(self, id_to_items, ordered_items_ids):
+        """ Merge items with the same path if possible.
+
+        Items must be subclasses of `Schema` and they must be instances of
+        the same class to be merged.
+
+        """
+
+        merged_items = []
+        for item_id in ordered_items_ids:
+            items_with_same_id = id_to_items[item_id]
+
+            # Group items by class.
+            class_to_items, ordered_items_class =\
+            self._group_items_by_class(items_with_same_id)
+
+            for items_class in ordered_items_class:
+                items_with_same_class = class_to_items[items_class]
+
+                if len(items_with_same_class) == 1:
+                    merged_items.extend(items_with_same_class)
+
+                else:
+                    # Only schemas can be merged.
+                    if issubclass(items_class, Schema):
+                        # Merge into a single schema.
+                        items_content = sum(
+                            (item.items for item in items_with_same_class), []
+                        )
+
+                        merged_item = items_with_same_class[0].clone_traits()
+                        merged_item.items = items_content
+                        merged_items.append(merged_item)
+
+                    else:
+                        merged_items.extend(items_with_same_class)
+
+        return merged_items
+
+    def _preprocess_schemas(self, schema, additions, path):
+        """ Sort and merge a schema and a set of schema additions. """
+
+        # Determine the order of the items at this path.
+        if additions[path]:
+            all_items = self._get_ordered_schemas(schema.items+additions[path])
+        else:
+            all_items = schema.items
+
+        unpacked_items = self._unpack_schema_additions(all_items)
+
+        id_to_items, ordered_items_ids = self._group_items_by_id(unpacked_items)
+
+        merged_items = self._merge_items_with_same_path(id_to_items,
+                                                        ordered_items_ids)
+
+        return merged_items
+
+    def _create_action_manager_recurse(self, schema, additions, path=''):
+        """ Recursively create a manager for the given schema and additions map.
+
+        Items with the same path are merged together in a single entry if
+        possible (i.e., if they have the same class).
+
+        When a list of items is merged, their children are added to a clone
+        of the first item in the list. As a consequence, traits like menu
+        names etc. are inherited from the first item.
+
+        """
+
+        # Compute the new action path.
+        if path:
+            path = path + '/' + schema.id
+        else:
+            path = schema.id
+
+        preprocessed_items = self._preprocess_schemas(schema, additions, path)
+
+        # Create the actual children by calling factory items.
+        children = []
+        for item in preprocessed_items:
+            if isinstance(item, Schema):
+                item = self._create_action_manager_recurse(item,additions,path)
+            else:
+                item = self.prepare_item(item, path+'/'+item.id)
+
+            if isinstance(item, ActionManager):
+                # Give even non-root action managers a reference to the
+                # controller so that custom Groups, MenuManagers, etc. can get
+                # access to their Tasks.
+                item.controller = self.controller
+            
+            children.append(item)
+
+        # Finally, create the pyface.action instance for this schema.
+        return self.prepare_item(schema.create(children), path)
 
     #### Trait initializers ###################################################
 

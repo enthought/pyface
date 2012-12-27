@@ -29,7 +29,7 @@ class ActionManager(HasTraits):
     An action manager contains a list of groups, with each group containing a
     list of items.
 
-    There are currently three concrete sub-classes:-
+    There are currently three concrete sub-classes:
 
     1) 'MenuBarManager'
     2) 'MenuManager'
