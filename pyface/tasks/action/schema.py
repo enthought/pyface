@@ -49,6 +49,8 @@ class ActionSchema(Schema):
     #: A factory for the Action instance.
     action_factory = Callable(Action)
 
+    #: Items is overwritten to be empty and read-only to avoid assigning to
+    #: it by mistake.
     items = Property()
     def _get_items(self):
         return []
@@ -56,7 +58,6 @@ class ActionSchema(Schema):
     def create(self, children):
         """ Create the appropriate PyFace Action instance. """
 
-    def create(self, children):
         traits = dict(id=self.id)
         return self.action_factory(**traits)
 
