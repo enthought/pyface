@@ -13,6 +13,17 @@ from pyface.tasks.api import Task
 
 class ActionManagerBuilderTestCase(unittest.TestCase):
 
+    #### 'TestCase' protocol ##################################################
+
+    def setUp(self):
+        """ Create some dummy actions to use while testing.
+        """
+        for i in xrange(1, 7):
+            action_id = 'action%i' % i
+            setattr(self, action_id, Action(id=action_id, name='Action %i'%i))
+
+    #### 'ActionManagerBuilderTestCase' protocol ##############################
+
     def assertActionElementsEqual(self, first, second):
         """ Checks that two action managers are (logically) equivalent.
         """
@@ -36,12 +47,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         for i in xrange(len(children1)):
             self.assertActionElementsEqual(children1[i], children2[i])
 
-    def setUp(self):
-        """ Create some dummy actions to use while testing.
-        """
-        for i in xrange(1, 7):
-            action_id = 'action%i' % i
-            setattr(self, action_id, Action(id=action_id, name='Action %i' % i))
+    #### Tests ################################################################
 
     def test_simple_menu_bar(self):
         """ Does constructing a simple menu with no additions work?
@@ -58,16 +64,18 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                  id='MenuBar')
         self.assertActionElementsEqual(actual, desired)
 
+    #### Tests about schema additions #########################################
+
     def test_additions_menu_bar(self):
         """ Does constructing a menu with a few additions work?
         """
         schema = MenuBarSchema(
             MenuSchema(GroupSchema(self.action1, self.action2, id='FileGroup'),
                        id='File'))
-        extras = [ SchemaAddition(factory=lambda: self.action3, 
+        extras = [ SchemaAddition(factory=lambda: self.action3,
                                   before='action1',
                                   path='MenuBar/File/FileGroup'),
-                   SchemaAddition(factory=lambda: self.action4, 
+                   SchemaAddition(factory=lambda: self.action4,
                                   before='action1',
                                   path='MenuBar/File/FileGroup'),
                    SchemaAddition(factory=lambda: self.action5,
@@ -82,6 +90,199 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                                              id='File'),
                                  id='MenuBar')
         self.assertActionElementsEqual(actual, desired)
+
+    def test_extra_menu(self):
+        """ Test contributing a whole new menu to the menu bar. """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, id='FileGroup'),
+                       id='FileMenu')
+        )
+
+        # Contributed menu.
+        extra_menu = MenuSchema(
+            GroupSchema(self.action2, id='BarGroup'),
+            id= 'DummyActionsMenu',
+        )
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=lambda : extra_menu,
+                           id='DummyActionsSMenu'),
+        ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        id='FileMenu'),
+            MenuManager(Group(self.action2, id='BarGroup'),
+                        id='DummyActionsMenu'),
+            id='MenuBar'
+        )
+
+        self.assertActionElementsEqual(actual, desired)
+
+    #### Tests about merging schemas ##########################################
+
+    def test_merging_redundant_items(self):
+        """ Menus and groups with matching path are merged together. """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, id='FileGroup'),
+                       name='File menu number one', id='FileMenu')
+        )
+
+        # Contributed menus.
+        extra_menu = MenuSchema(
+            GroupSchema(self.action2, id='FileGroup'),
+            name='File menu number two',
+            id= 'FileMenu',
+        )
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=lambda : extra_menu,
+                           id='DummyActionsSMenu'),
+        ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        # Note that we expect the name of the menu to be inherited from
+        # the menu in the menu bar schema that is defined first.
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, self.action2, id='FileGroup'),
+                        name='File menu number one', id='FileMenu'),
+            id='MenuBar'
+        )
+        self.assertActionElementsEqual(actual, desired)
+
+    def test_unwanted_merge(self):
+        """ Test that we don't have automatic merges due to forgetting to set
+        a schema ID. """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, id='FileGroup'),
+                       name='File 1')
+        )
+
+        # Contributed menus.
+        extra_menu = MenuSchema(
+            GroupSchema(self.action2, id='FileGroup'),
+            name='File 2'
+        )
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=lambda : extra_menu,
+                           id='DummyActionsSMenu'),
+            ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        # Note that we expect the name of the menu to be inherited from
+        # the menu in the menu bar schema that is defined first.
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        name='File 1', id='MenuSchema_1'),
+            MenuManager(Group(self.action2, id='FileGroup'),
+                        name='File 2', id='MenuSchema_2'),
+            id='MenuBar'
+        )
+        self.assertActionElementsEqual(actual, desired)
+
+    def test_merging_items_with_same_id_but_different_class(self):
+        """ Schemas with the same path but different types (menus, groups)
+        are not merged together.
+
+        Having a group and a menu with the same path is of course bad practice,
+        but we need a predictable outcome.
+
+        """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            MenuSchema(GroupSchema(self.action1, id='FileGroup'),
+                       id='FileSchema')
+        )
+
+        # Contributed menus.
+        extra_group = GroupSchema(self.action2, id='FileSchema')
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=(lambda : extra_group),
+                           id='DummyActionsSMenu'),
+        ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        id='FileSchema'),
+            Group(self.action2, id='FileSchema'),
+            id='MenuBar'
+        )
+        self.assertActionElementsEqual(actual, desired)
+
+    def test_merging_redundant_items_that_are_not_schemas(self):
+        """ Items that are not schemas cannot be merged, but we should
+        not crash, either. """
+
+        # Initial menu.
+        schema = MenuBarSchema(
+            # This menu is not a schema...
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        id='FileMenu')
+        )
+
+        # Contributed menus.
+        extra_menu = MenuSchema(
+            GroupSchema(self.action2, id='FileGroup'),
+            id= 'FileMenu',
+        )
+
+        extra_actions = [
+            SchemaAddition(path='MenuBar',
+                           factory=lambda : extra_menu,
+                           id='DummyActionsSMenu'),
+        ]
+
+        # Build the final menu.
+        builder = TaskActionManagerBuilder(
+            task=Task(menu_bar=schema, extra_actions=extra_actions)
+        )
+        actual = builder.create_menu_bar_manager()
+
+        desired = MenuBarManager(
+            MenuManager(Group(self.action1, id='FileGroup'),
+                        id='FileMenu'),
+            MenuManager(Group(self.action2, id='FileGroup'),
+                        id='FileMenu'),
+            id='MenuBar'
+        )
+        self.assertActionElementsEqual(actual, desired)
+
+    #### Tests about ordering #################################################
 
     def test_absolute_ordering(self):
         """ Does specifying absolute_position work?
