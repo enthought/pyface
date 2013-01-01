@@ -59,7 +59,7 @@ class TaskWindowBackend(MTaskWindowBackend):
             self.control.removeDockWidget(dock_pane.control)
 
     def show_task(self, state):
-        """ Assumming no task is currently active, show the controls of the
+        """ Assuming no task is currently active, show the controls of the
             specified TaskState.
         """
         # Show the central pane.
