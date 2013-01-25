@@ -99,7 +99,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # weird runtime errors trying to access non-existent objects
         QtGui.QApplication.instance().focusChanged.disconnect(self._focus_changed)
 
-        for editor in self.editors:
+        for editor in self.editors[:]:
             self.remove_editor(editor)
 
         super(SplitEditorAreaPane, self).destroy()
