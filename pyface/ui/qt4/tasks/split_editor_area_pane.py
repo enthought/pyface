@@ -825,7 +825,7 @@ class DraggableTabBar(QtGui.QTabBar):
         if event.button()==QtCore.Qt.LeftButton:
             index = self.tabAt(event.pos())
             tabwidget = self.parent()
-            if not tabwidget.widget(index) == tabwidget.empty_widget:
+            if tabwidget.widget(index) and (not tabwidget.widget(index) == tabwidget.empty_widget):
                 self.drag_obj = TabDragObject(start_pos=event.pos(), tabBar=self)
         return super(DraggableTabBar, self).mousePressEvent(event)
 
