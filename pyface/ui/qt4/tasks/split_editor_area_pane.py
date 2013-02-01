@@ -696,7 +696,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # generate label
         label = QtGui.QLabel(parent=frame)
-        label.setText("""<span style='font-size:14pt; color:#999999'>
+        label.setText("""<span style='font-size:14px; color:#999999'>
                         or
                         </span>""")
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
@@ -714,7 +714,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # generate label
         label = QtGui.QLabel(parent=frame)
-        label.setText("""<span style='font-size:14pt; color:#999999'>
+        label.setText("""<span style='font-size:14px; color:#999999'>
                         Tip: You can also drag and drop files/tabs here.
                         </span>""")
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
@@ -825,7 +825,7 @@ class DraggableTabBar(QtGui.QTabBar):
         if event.button()==QtCore.Qt.LeftButton:
             index = self.tabAt(event.pos())
             tabwidget = self.parent()
-            if not tabwidget.widget(index) == tabwidget.empty_widget:
+            if tabwidget.widget(index) and (not tabwidget.widget(index) == tabwidget.empty_widget):
                 self.drag_obj = TabDragObject(start_pos=event.pos(), tabBar=self)
         return super(DraggableTabBar, self).mousePressEvent(event)
 
