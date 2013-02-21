@@ -110,14 +110,17 @@ class Window(MWindow, Widget):
 
         if self.control is not None:
             # Avoid problems with recursive calls.
+            # Widget.destroy() sets self.control to None,
+            # so we need a reference to control
             control = self.control
-            self.control = None
 
-            # Hide the widget before closing it. This is not strictly necessary
-            # (closing the window in fact hides it), but the close may
-            # trigger an application shutdown, which can take a long time.
-            # The window should not be visible during this process.
-            control.hide()
+            # Widget.destroy() hides the widget, sets self.control to None
+            # and deletes it later, so we call it before control.close()
+            # This is not strictly necessary (closing the window in fact
+            # hides it), but the close may trigger an application shutdown,
+            # which can take a long time and may also attempt to recursively
+            # destroy the window again.
+            super(Window, self).destroy()
             control.close()
 
     ###########################################################################
