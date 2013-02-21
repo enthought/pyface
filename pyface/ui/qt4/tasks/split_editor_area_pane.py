@@ -669,6 +669,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """
         index = self.indexOf(self.empty_widget)
         self.removeTab(index)
+        self.empty_widget.deleteLater()
         self.empty_widget = None
         self.setTabsClosable(True)
 
