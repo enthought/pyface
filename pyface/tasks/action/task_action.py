@@ -29,6 +29,11 @@ class TaskAction(ListeningAction):
     def _get_object(self):
         return self.task
 
+    def destroy(self):
+        # Disconnect listeners to task and dependent properties.
+        self.task = None
+        super(TaskAction, self).destroy()
+
 
 class TaskWindowAction(TaskAction):
     """ An Action that makes a callback to a Task's window.
