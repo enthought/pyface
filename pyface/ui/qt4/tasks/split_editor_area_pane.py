@@ -38,9 +38,11 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     # list of installed drop handlers
     drop_handlers = List(IDropHandler)
 
-    # Additional callback functions. Two useful callbacks that can be included:
+    # Additional callback functions. Few useful callbacks that can be included:
     #  'new': new file action (takes no argument)
     #  'open': open file action (takes file_path as single argument)
+    #  'open_dialog': show the open file dialog (responsibility of the callback,
+    #     takes no argument), overrides 'open' callback
     # They are used to create shortcut buttons for these actions in the empty 
     # pane that gets created when the user makes a split
     callbacks = Dict({}, key=Str, value=Callable)
@@ -684,7 +686,11 @@ class DraggableTabWidget(QtGui.QTabWidget):
         # Add new file button and open file button only if the `callbacks` trait
         # of the editor_area has a callable for key `new` and key `open`
         new_file_action = self.editor_area.callbacks.get('new', None)
-        open_file_action = self.editor_area.callbacks.get('open', None)
+        open_file_action = self.editor_area.callbacks.get('open_dialog', None)
+        open_show_dialog = False
+        if open_file_action is None:
+            open_file_action = self.editor_area.callbacks.get('open', None)
+            open_show_dialog = True
         if not (new_file_action and open_file_action):
             return frame
 
@@ -704,12 +710,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
         # generate open button
         open_btn = QtGui.QPushButton('Select files from your computer', parent=frame)
-        open_dlg = FileDialog(action='open')
         def _open():
-            open_dlg.open()
-            self.editor_area.active_tabwidget = self
-            if open_dlg.return_code == OK:
-                open_file_action(open_dlg.path)
+            if open_show_dialog:
+                open_dlg = FileDialog(action='open')
+                open_dlg.open()
+                self.editor_area.active_tabwidget = self
+                if open_dlg.return_code == OK:
+                    open_file_action(open_dlg.path)
+            else:
+                open_file_action()
         open_btn.clicked.connect(_open)
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
