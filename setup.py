@@ -6,7 +6,8 @@ from setuptools import setup, find_packages
 
 
 info = {}
-execfile(join('pyface', '__init__.py'), info)
+pyface_init = join('pyface', '__init__.py')
+exec(compile(open(pyface_init).read(), pyface_init, 'exec'), info)
 
 
 setup(
@@ -44,4 +45,5 @@ setup(
     packages = find_packages(),
     platforms = ["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
     zip_safe   = False,
+    use_2to3 = True
 )
