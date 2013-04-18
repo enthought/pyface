@@ -814,6 +814,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 handler.handle_drop(event, self)
                 self.setBackgroundRole(QtGui.QPalette.Window)
                 event.acceptProposedAction()
+                break
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
