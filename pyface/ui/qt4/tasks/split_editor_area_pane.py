@@ -113,7 +113,6 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        self.active_editor = editor
         self.active_tabwidget = editor.control.parent().parent()
         self.active_tabwidget.setCurrentWidget(editor.control)
         editor_widget = editor.control.parent()
@@ -124,6 +123,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             editor.control.focusWidget().setFocus()
         else:
             editor.control.setFocus()
+        # Set active_editor at the end of the method so that the notification
+        # occurs when everything is ready.
+        self.active_editor = editor
 
     def add_editor(self, editor):
         """ Adds an editor to the active_tabwidget
@@ -326,19 +328,21 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                 if self.control.isAncestorOf(new):
                     self.active_tabwidget = new.parent()
             else:
-                # check if any of the editor widgets have focus.
-                # If yes, make it active
+                # Check if any of the editor widgets have focus.
+                # If so, make it active.
                 for editor in self.editors:
                     control = editor.control
                     if control is not None and control.isAncestorOf(new):
-                        self.active_editor = editor
                         self.active_tabwidget = editor.control.parent().parent()
                         self.active_tabwidget.setCurrentWidget(editor.control)
+                        # Set active_editor at the end so that the notification
+                        # occurs when everything is ready.
+                        self.active_editor = editor
                         break
 
 
 ###############################################################################
-# Auxillary classes.
+# Auxiliary classes.
 ###############################################################################
 
 class EditorAreaWidget(QtGui.QSplitter):
@@ -814,6 +818,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 handler.handle_drop(event, self)
                 self.setBackgroundRole(QtGui.QPalette.Window)
                 event.acceptProposedAction()
+                break
 
     def dragLeaveEvent(self, event):
         """ Clear widget highlight on leaving
