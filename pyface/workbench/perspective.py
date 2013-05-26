@@ -5,7 +5,7 @@
 import logging
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, List, Str, Tuple, implements
+from traits.api import Bool, HasTraits, List, Str, Tuple, provides
 
 # Local imports.
 from i_perspective import IPerspective
@@ -16,11 +16,9 @@ from perspective_item import PerspectiveItem
 logger = logging.getLogger(__name__)
 
 
+@provides(IPerspective)
 class Perspective(HasTraits):
     """ The default perspective. """
-
-    implements(IPerspective)
-
     # The ID of the default perspective.
     DEFAULT_ID = 'pyface.workbench.default'
 

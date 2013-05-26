@@ -18,7 +18,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import implements, Instance, List, Unicode
+from traits.api import provides, Instance, List, Unicode
 
 # Local imports.
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
@@ -56,12 +56,12 @@ _DIALOG_TEXT = '''
 '''
 
 
+@provides(IAboutDialog)
 class AboutDialog(MAboutDialog, Dialog):
     """ The toolkit specific implementation of an AboutDialog.  See the
     IAboutDialog interface for the API documentation.
     """
 
-    implements(IAboutDialog)
 
     #### 'IAboutDialog' interface #############################################
 

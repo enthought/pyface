@@ -14,7 +14,7 @@
 
 
 # Enthought library imports.
-from traits.api import Any, Event, implements, Property, Unicode
+from traits.api import Any, Event, provides, Property, Unicode
 from traits.api import Tuple
 
 # Local imports.
@@ -23,12 +23,12 @@ from pyface.key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 
+@provides(IWindow)
 class Window(MWindow, Widget):
     """ The toolkit specific implementation of a Window.  See the IWindow
     interface for the API documentation.
     """
 
-    implements(IWindow)
 
     #### 'IWindow' interface ##################################################
 

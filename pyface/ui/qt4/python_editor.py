@@ -18,7 +18,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, Event, implements, Unicode
+from traits.api import Bool, Event, provides, Unicode
 
 # Local imports.
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
@@ -27,12 +27,12 @@ from code_editor.code_widget import AdvancedCodeWidget
 from widget import Widget
 
 
+@provides(IPythonEditor)
 class PythonEditor(MPythonEditor, Widget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
 
-    implements(IPythonEditor)
 
     #### 'IPythonEditor' interface ############################################
 

@@ -5,7 +5,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import DelegatesTo, Instance, implements, on_trait_change
+from traits.api import DelegatesTo, Instance, provides, on_trait_change
 
 # Local imports.
 from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane
@@ -19,13 +19,13 @@ from util import set_focus
 # 'AdvancedEditorAreaPane' class.
 ###############################################################################
 
+@provides(IAdvancedEditorAreaPane)
 class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
 
-    implements(IAdvancedEditorAreaPane)
 
     #### Private interface ####################################################
 

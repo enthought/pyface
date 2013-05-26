@@ -16,7 +16,7 @@
 
 # Enthought library imports.
 from traits.api import Event, HasTraits, Instance, Interface, Str
-from traits.api import implements
+from traits.api import provides
 
 # Local imports.
 from i_editor import IEditor
@@ -211,11 +211,9 @@ class IWorkbenchWindowLayout(Interface):
         """
 
 
+@provides(IWorkbenchWindowLayout)
 class MWorkbenchWindowLayout(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
-
-    implements(IWorkbenchWindowLayout)
-
     #### 'IWorkbenchWindowLayout' interface ###################################
 
     # The Id of the editor area.

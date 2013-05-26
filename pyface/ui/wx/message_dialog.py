@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Enum, implements, Unicode
+from traits.api import Enum, provides, Unicode
 
 # Local imports.
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
@@ -36,12 +36,12 @@ _SEVERITY_TO_ICON_MAP = {
 }
 
 
+@provides(IMessageDialog)
 class MessageDialog(MMessageDialog, Dialog):
     """ The toolkit specific implementation of a MessageDialog.  See the
     IMessageDialog interface for the API documentation.
     """
 
-    implements(IMessageDialog)
 
     #### 'IMessageDialog' interface ###########################################
 

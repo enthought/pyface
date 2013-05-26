@@ -33,7 +33,7 @@ import wx
 from apptools.io.file import File as EnthoughtFile
 from pyface.i_python_shell import IPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from traits.api import Event, implements, Instance, Str
+from traits.api import Event, provides, Instance, Str
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
@@ -312,12 +312,12 @@ class IPython09Controller(IPythonController):
                 self.input_buffer += '\t'
 
 
+@provides(IPythonShell)
 class IPythonWidget(Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
-    implements(IPythonShell)
 
     #### 'IPythonShell' interface #############################################
 

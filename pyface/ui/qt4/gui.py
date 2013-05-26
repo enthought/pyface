@@ -18,7 +18,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, implements, Unicode
+from traits.api import Bool, HasTraits, provides, Unicode
 from pyface.util.guisupport import start_event_loop_qt4
 
 # Local imports.
@@ -29,12 +29,12 @@ from pyface.i_gui import IGUI, MGUI
 logger = logging.getLogger(__name__)
 
 
+@provides(IGUI)
 class GUI(MGUI, HasTraits):
     """ The toolkit specific implementation of a GUI.  See the IGUI interface
     for the API documentation.
     """
 
-    implements(IGUI)
 
     #### 'GUI' interface ######################################################
 

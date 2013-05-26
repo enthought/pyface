@@ -17,7 +17,7 @@
 
 """ Pyface 'DockSizer' support.
 
-    This package implements the sizer associated with a Pyface DockWindow
+    This package provides the sizer associated with a Pyface DockWindow
     component. The sizer manages the layout of the DockWindow child controls
     and the notebook tabs and dragbars associated with the DockWindow.
 """

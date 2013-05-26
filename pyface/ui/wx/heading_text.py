@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import implements, Instance, Int, Unicode
+from traits.api import provides, Instance, Int, Unicode
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText
@@ -30,12 +30,12 @@ from pyface.util.font_helper import new_font_like
 from widget import Widget
 
 
+@provides(IHeadingText)
 class HeadingText(MHeadingText, Widget):
     """ The toolkit specific implementation of a HeadingText.  See the
     IHeadingText interface for the API documentation.
     """
 
-    implements(IHeadingText)
 
     #### 'IHeadingText' interface #############################################
 
