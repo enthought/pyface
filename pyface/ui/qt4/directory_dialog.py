@@ -15,19 +15,19 @@
 from pyface.qt import QtGui
 
 # Enthought library imports.
-from traits.api import Bool, implements, Unicode
+from traits.api import Bool, provides, Unicode
 
 # Local imports.
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from dialog import Dialog
 
 
+@provides(IDirectoryDialog)
 class DirectoryDialog(MDirectoryDialog, Dialog):
     """ The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
 
-    implements(IDirectoryDialog)
 
     #### 'IDirectoryDialog' interface #########################################
 

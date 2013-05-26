@@ -9,7 +9,7 @@ import os
 # Enthought library imports.
 from traits.etsconfig.api import ETSConfig
 from pyface.api import NO
-from traits.api import Bool, Callable, Event, HasTraits, implements
+from traits.api import Bool, Callable, Event, HasTraits, provides
 from traits.api import Instance, List, Unicode, Vetoable
 from traits.api import VetoableEvent
 
@@ -25,6 +25,7 @@ from window_event import WindowEvent, VetoableWindowEvent
 logger = logging.getLogger(__name__)
 
 
+@provides(IWorkbench)
 class Workbench(HasTraits):
     """ A workbench.
 
@@ -32,9 +33,6 @@ class Workbench(HasTraits):
     any number of workbench windows.
 
     """
-
-    implements(IWorkbench)
-
     #### 'IWorkbench' interface ###############################################
 
     # The active workbench window (the last one to get focus).

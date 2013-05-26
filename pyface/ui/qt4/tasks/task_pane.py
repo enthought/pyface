@@ -1,6 +1,6 @@
 # Enthought library imports.
 from pyface.tasks.i_task_pane import ITaskPane, MTaskPane
-from traits.api import Bool, Property, implements
+from traits.api import Bool, Property, provides
 
 # System library imports.
 from pyface.qt import QtGui
@@ -9,13 +9,13 @@ from pyface.qt import QtGui
 from util import set_focus
 
 
+@provides(ITaskPane)
 class TaskPane(MTaskPane):
     """ The toolkit-specific implementation of a TaskPane.
 
     See the ITaskPane interface for API documentation.
     """
 
-    implements(ITaskPane)
 
     ###########################################################################
     # 'ITaskPane' interface.

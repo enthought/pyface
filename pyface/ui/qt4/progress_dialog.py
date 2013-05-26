@@ -19,7 +19,7 @@ from pyface.qt import QtGui, QtCore
 
 
 # Enthought library imports
-from traits.api import Instance, Enum, Int, Bool, Unicode, implements
+from traits.api import Instance, Enum, Int, Bool, Unicode, provides
 
 # Local imports
 from widget import Widget

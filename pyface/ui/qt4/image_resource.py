@@ -18,19 +18,19 @@ import os
 from pyface.qt import QtGui
 
 # Enthought library imports.
-from traits.api import Any, HasTraits, implements, List, Property
+from traits.api import Any, HasTraits, provides, List, Property
 from traits.api import Unicode
 
 # Local imports.
 from pyface.i_image_resource import IImageResource, MImageResource
 
 
+@provides(IImageResource)
 class ImageResource(MImageResource, HasTraits):
     """ The toolkit specific implementation of an ImageResource.  See the
     IImageResource interface for the API documentation.
     """
 
-    implements(IImageResource)
 
     #### Private interface ####################################################
 

@@ -17,7 +17,7 @@
 
 """ Pyface 'DockWindow' support.
 
-    This package implements a Pyface 'dockable' window component that allows
+    This package provides a Pyface 'dockable' window component that allows
     child windows to be reorganized within the DockWindow using drag and drop.
     The component also allows multiple sub-windows to occupy the same
     sub-region of the DockWindow, in which case each sub-window appears as a

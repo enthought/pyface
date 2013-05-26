@@ -21,7 +21,7 @@ import wx
 import time
 
 # Enthought library imports
-from traits.api import Instance, Enum, Int, Bool, Str, implements, Property
+from traits.api import Instance, Enum, Int, Bool, Str, provides, Property
 
 # Local imports
 from widget import Widget

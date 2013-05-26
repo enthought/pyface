@@ -18,7 +18,7 @@ from logging import DEBUG
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Any, Bool, Font, implements, Instance, Int
+from traits.api import Any, Bool, Font, provides, Instance, Int
 from traits.api import Tuple, Unicode
 
 # Local imports.
@@ -27,12 +27,12 @@ from pyface.image_resource import ImageResource
 from window import Window
 
 
+@provides(ISplashScreen)
 class SplashScreen(MSplashScreen, Window):
     """ The toolkit specific implementation of a SplashScreen.  See the
     ISplashScreen interface for the API documentation.
     """
 
-    implements(ISplashScreen)
 
     #### 'ISplashScreen' interface ############################################
 

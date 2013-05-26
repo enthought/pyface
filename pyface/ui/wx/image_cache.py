@@ -21,18 +21,18 @@
 import wx
 
 # Enthought library imports.
-from traits.api import HasTraits, implements
+from traits.api import HasTraits, provides
 
 # Local imports.
 from pyface.i_image_cache import IImageCache, MImageCache
 
 
+@provides(IImageCache)
 class ImageCache(MImageCache, HasTraits):
     """ The toolkit specific implementation of an ImageCache.  See the
     IImageCache interface for the API documentation.
     """
 
-    implements(IImageCache)
 
     ###########################################################################
     # 'object' interface.

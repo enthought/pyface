@@ -4,18 +4,16 @@
 import weakref
 
 # Enthought library imports.
-from traits.api import HasTraits, Instance, implements
+from traits.api import HasTraits, Instance, provides
 
 # Local imports.
 from i_editor_manager import IEditorManager
 from traits_ui_editor import TraitsUIEditor
 
 
+@provides(IEditorManager)
 class EditorManager(HasTraits):
     """ The default editor manager. """
-
-    implements(IEditorManager)
-
     #### 'IEditorManager' interface ###########################################
 
     # The workbench window that the editor manager manages editors for ;^)

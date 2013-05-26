@@ -92,7 +92,7 @@ class IEditorAreaPane(ITaskPane):
 
         The 'factory' parameter is a callabe of form:
             callable(editor_area=editor_area, obj=obj) -> IEditor
-        Often, factory will be a class that implements the 'IEditor' interface.
+        Often, factory will be a class that provides the 'IEditor' interface.
 
         The 'filter' parameter is a callable of form:
             callable(obj) -> bool

@@ -1,6 +1,6 @@
 # Enthought library imports.
 from traits.api import Any, DelegatesTo, HasTraits, Instance, Interface, \
-    implements
+    provides
 
 
 class ITaskWindowBackend(Interface):
@@ -52,11 +52,11 @@ class ITaskWindowBackend(Interface):
         """
 
 
+@provides(ITaskWindowBackend)
 class MTaskWindowBackend(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
 
-    implements(ITaskWindowBackend)
 
     #### 'ITaskWindowBackend' interface #######################################
 

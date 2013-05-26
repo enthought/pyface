@@ -16,11 +16,12 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, implements, HasTraits, Str, Tuple, \
+from traits.api import Bool, provides, HasTraits, Str, Tuple, \
         Unicode
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 
+@provides(IWizardPage)
 class WizardPage(MWizardPage, HasTraits):
     """ The toolkit specific implementation of a WizardPage.
 
@@ -28,7 +29,6 @@ class WizardPage(MWizardPage, HasTraits):
 
     """
 
-    implements(IWizardPage)
 
     #### 'IWizardPage' interface ##############################################
 

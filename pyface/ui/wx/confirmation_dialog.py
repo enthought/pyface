@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, Enum, implements, Instance, Unicode
+from traits.api import Bool, Enum, provides, Instance, Unicode
 
 # Local imports.
 from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
@@ -30,12 +30,12 @@ from pyface.image_resource import ImageResource
 from dialog import Dialog
 
 
+@provides(IConfirmationDialog)
 class ConfirmationDialog(MConfirmationDialog, Dialog):
     """ The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
 
-    implements(IConfirmationDialog)
 
     #### 'IConfirmationDialog' interface ######################################
 

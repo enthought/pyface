@@ -16,7 +16,7 @@ from pyface.qt import QtGui
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, Unicode, implements, \
+from traits.api import Instance, List, Unicode, provides, \
      on_trait_change
 
 # Local imports.
@@ -26,12 +26,12 @@ from pyface.image_resource import ImageResource
 from window import Window
 
 
+@provides(IApplicationWindow)
 class ApplicationWindow(MApplicationWindow, Window):
     """ The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
 
-    implements(IApplicationWindow)
 
     #### 'IApplicationWindow' interface #######################################
 
