@@ -1,5 +1,5 @@
 from pyface.i_drop_handler import IDropHandler
-from traits.api import HasTraits, Callable, provides, List, Str
+from traits.api import Callable, HasTraits, List, provides, Str
 
 @provides(IDropHandler)
 class BaseDropHandler(HasTraits):

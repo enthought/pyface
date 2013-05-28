@@ -17,7 +17,7 @@
 import os
 
 # Enthought library imports.
-from traits.api import Any, HasTraits, provides, List, Property
+from traits.api import Any, HasTraits, List, Property, provides
 from traits.api import Unicode
 
 # Local imports.

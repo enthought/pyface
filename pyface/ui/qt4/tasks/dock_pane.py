@@ -3,8 +3,7 @@ from contextlib import contextmanager
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, Property, Tuple, provides, \
-    on_trait_change
+from traits.api import Bool, on_trait_change, Property, provides, Tuple
 
 # System library imports.
 from pyface.qt import QtCore, QtGui

@@ -15,8 +15,7 @@
 
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Instance, List, \
-        Property
+from traits.api import Bool, HasTraits, Instance, List, Property, provides
 
 # Local imports.
 from i_wizard_controller import IWizardController

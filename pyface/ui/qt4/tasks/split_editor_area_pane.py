@@ -4,8 +4,8 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import provides, on_trait_change, Instance, Callable, \
-    Property, Dict, Str, List, cached_property, Bool
+from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
+    on_trait_change, Property, provides, Str
 from pyface.qt import QtCore, QtGui
 from pyface.action.api import Action, Group
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter

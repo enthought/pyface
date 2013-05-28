@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import provides, Int, Unicode
+from traits.api import Int, provides, Unicode
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText

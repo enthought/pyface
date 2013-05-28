@@ -4,7 +4,7 @@ import sys
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
-from traits.api import provides, on_trait_change
+from traits.api import on_trait_change, provides
 
 # System library imports.
 from pyface.qt import QtCore, QtGui

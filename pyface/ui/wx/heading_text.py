@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import provides, Instance, Int, Unicode
+from traits.api import Instance, Int, provides, Unicode
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText
