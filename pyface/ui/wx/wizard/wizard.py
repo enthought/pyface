@@ -18,14 +18,14 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, implements, Instance, List, Property, \
-        Unicode
+from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
 from pyface.wizard.i_wizard_page import IWizardPage
 
 
+@provides(IWizard)
 class Wizard(MWizard, Dialog):
     """ The base class for all pyface wizards.
 
@@ -33,7 +33,6 @@ class Wizard(MWizard, Dialog):
 
     """
 
-    implements(IWizard)
 
     #### 'IWizard' interface ##################################################
 

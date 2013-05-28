@@ -1,11 +1,10 @@
 from pyface.i_drop_handler import IDropHandler
-from traits.api import HasTraits, Callable, implements, List, Str
+from traits.api import Callable, HasTraits, List, provides, Str
 
+@provides(IDropHandler)
 class BaseDropHandler(HasTraits):
     """ Basic drop handler
     """
-    implements(IDropHandler)
-
     ### BaseDropHandler interface #############################################
 
     # Returns True if the current drop handler can handle the given drag event
@@ -24,11 +23,10 @@ class BaseDropHandler(HasTraits):
         return self.on_handle(event, target)
 
 
+@provides(IDropHandler)
 class FileDropHandler(HasTraits):
     """ Class to handle backward compatible file drop events
     """
-    implements(IDropHandler)
-
     ### FileDropHandler interface #############################################
 
     # supported extensions

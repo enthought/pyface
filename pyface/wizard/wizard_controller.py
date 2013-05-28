@@ -15,19 +15,16 @@
 
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, implements, Instance, List, \
-        Property
+from traits.api import Bool, HasTraits, Instance, List, Property, provides
 
 # Local imports.
 from i_wizard_controller import IWizardController
 from i_wizard_page import IWizardPage
 
 
+@provides(IWizardController)
 class WizardController(HasTraits):
     """ A wizard controller that has a static list of pages. """
-
-    implements(IWizardController)
-
     #### 'IWizardController' interface ########################################
 
     # The pages under the control of this controller.

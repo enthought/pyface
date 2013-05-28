@@ -18,8 +18,7 @@ import logging
 
 # Enthought library imports.
 from pyface.api import ImageResource
-from traits.api import Bool, Enum, Float, Instance, List, Str, \
-     implements
+from traits.api import Bool, Enum, Float, Instance, List, provides, Str
 from traits.util.camel_case import camel_case_to_words
 
 # Local imports.
@@ -69,11 +68,9 @@ class IView(IWorkbenchPart, IPerspectiveItem):
         """
 
 
+@provides(IView)
 class MView(MWorkbenchPart, PerspectiveItem):
     """ Mixin containing common code for toolkit-specific implementations. """
-
-    implements(IView)
-
     #### 'IView' interface ####################################################
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be

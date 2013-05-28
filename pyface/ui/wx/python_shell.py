@@ -28,7 +28,7 @@ from wx.py.shell import Shell as PyShellBase
 import wx
 
 # Enthought library imports.
-from traits.api import Event, implements
+from traits.api import Event, provides
 
 # Private Enthought library imports.
 from traits.util.clean_strings import python_name
@@ -40,12 +40,12 @@ from pyface.key_pressed_event import KeyPressedEvent
 from widget import Widget
 
 
+@provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
-    implements(IPythonShell)
 
     #### 'IPythonShell' interface #############################################
 

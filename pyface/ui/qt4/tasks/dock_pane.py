@@ -3,8 +3,7 @@ from contextlib import contextmanager
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, Property, Tuple, implements, \
-    on_trait_change
+from traits.api import Bool, on_trait_change, Property, provides, Tuple
 
 # System library imports.
 from pyface.qt import QtCore, QtGui
@@ -21,13 +20,13 @@ AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
 
 
+@provides(IDockPane)
 class DockPane(TaskPane, MDockPane):
     """ The toolkit-specific implementation of a DockPane.
 
     See the IDockPane interface for API documentation.
     """
 
-    implements(IDockPane)
 
     #### 'IDockPane' interface ################################################
 

@@ -1,18 +1,18 @@
 # Enthought library imports.
 from pyface.tasks.i_editor import IEditor, MEditor
-from traits.api import Bool, Property, implements
+from traits.api import Bool, Property, provides
 
 # System library imports.
 from pyface.qt import QtGui
 
 
+@provides(IEditor)
 class Editor(MEditor):
     """ The toolkit-specific implementation of a Editor.
 
     See the IEditor interface for API documentation.
     """
 
-    implements(IEditor)
 
     #### 'IEditor' interface ##################################################
 

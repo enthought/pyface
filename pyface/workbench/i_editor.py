@@ -18,7 +18,7 @@ import uuid
 # Enthought library imports.
 from traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
     HasTraits, Instance, Interface
-from traits.api import implements
+from traits.api import provides
 
 # Local imports.
 from i_workbench_part import IWorkbenchPart, MWorkbenchPart
@@ -59,11 +59,9 @@ class IEditor(IWorkbenchPart):
         """
 
 
+@provides(IEditor)
 class MEditor(MWorkbenchPart):
     """ Mixin containing common code for toolkit-specific implementations. """
-
-    implements(IEditor)
-
     #### 'IEditor' interface ##################################################
 
     # The optional command stack.

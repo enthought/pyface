@@ -18,18 +18,18 @@
 """
 
 # Enthought library imports.
-from traits.api import Any, HasTraits, implements
+from traits.api import Any, HasTraits, provides
 
 # Local imports.
 from pyface.i_widget import IWidget, MWidget
 
 
+@provides(IWidget)
 class Widget(MWidget, HasTraits):
     """ The toolkit specific implementation of a Widget.  See the IWidget
     interface for the API documentation.
     """
 
-    implements(IWidget)
 
     #### 'IWidget' interface ##################################################
 

@@ -15,19 +15,19 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import implements, Int, Unicode
+from traits.api import Int, provides, Unicode
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from widget import Widget
 
 
+@provides(IHeadingText)
 class HeadingText(MHeadingText, Widget):
     """ The toolkit specific implementation of a HeadingText.  See the
     IHeadingText interface for the API documentation.
     """
 
-    implements(IHeadingText)
 
     #### 'IHeadingText' interface #############################################
 

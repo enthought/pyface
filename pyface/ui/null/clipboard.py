@@ -13,15 +13,15 @@
 #------------------------------------------------------------------------------
 
 # ETS imports
-from traits.api import implements
+from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 
+@provides(IClipboard)
 class Clipboard(BaseClipboard):
     """ A dummy clipboard implementationf for the null backend.
     """
 
-    implements(IClipboard)
 
     #---------------------------------------------------------------------------
     #  'data' property methods:

@@ -16,14 +16,14 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, implements, Instance, List, Property, \
-        Unicode
+from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
 from pyface.wizard.i_wizard_page import IWizardPage
 
 
+@provides(IWizard)
 class Wizard(MWizard, Dialog):
     """ The base class for all pyface wizards.
 
@@ -31,7 +31,6 @@ class Wizard(MWizard, Dialog):
 
     """
 
-    implements(IWizard)
 
     #### 'IWizard' interface ##################################################
 
@@ -173,7 +172,7 @@ class _Wizard(QtGui.QWizard):
                 self._update_controller)
 
     def addWizardPage(self, page):
-        """ Add a page that implements IWizardPage. """
+        """ Add a page that provides IWizardPage. """
 
         # We must pass a parent otherwise TraitsUI does the wrong thing.
         qpage = page.create_page(self)

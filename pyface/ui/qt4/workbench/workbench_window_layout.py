@@ -57,7 +57,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     #### Private interface ####################################################
 
-    # The widget that implements the editor area.  We keep (and use) this
+    # The widget that provides the editor area.  We keep (and use) this
     # separate reference because we can't always assume that it has been set to
     # be the main window's central widget.
     _qt4_editor_area = Instance(SplitTabWidget)

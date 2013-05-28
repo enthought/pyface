@@ -23,7 +23,7 @@ from pyface.qt import QtCore, QtGui
 from pygments.lexers import PythonLexer
 
 # Enthought library imports.
-from traits.api import Event, implements
+from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
 # Local imports.
@@ -38,12 +38,12 @@ from widget import Widget
 # 'PythonShell' class:
 #-------------------------------------------------------------------------------
 
+@provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
 
-    implements(IPythonShell)
 
     #### 'IPythonShell' interface #############################################
 
