@@ -16,7 +16,7 @@
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, Interface
-from traits.api import List, Str, Unicode, implements
+from traits.api import List, provides, Str, Unicode
 
 
 class IWorkbenchPart(Interface):
@@ -76,11 +76,9 @@ class IWorkbenchPart(Interface):
         """
 
 
+@provides(IWorkbenchPart)
 class MWorkbenchPart(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
-
-    implements(IWorkbenchPart)
-
     #### 'IWorkbenchPart' interface ###########################################
 
     # The toolkit-specific control that represents the part.

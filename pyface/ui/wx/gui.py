@@ -25,7 +25,7 @@ import sys
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, implements, Unicode
+from traits.api import Bool, HasTraits, provides, Unicode
 from pyface.util.guisupport import start_event_loop_wx
 
 # Local imports.
@@ -36,9 +36,9 @@ from pyface.i_gui import IGUI, MGUI
 logger = logging.getLogger(__name__)
 
 
+@provides(IGUI)
 class GUI(MGUI, HasTraits):
 
-    implements(IGUI)
 
     #### 'GUI' interface ######################################################
 

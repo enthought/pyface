@@ -20,7 +20,7 @@ from cPickle import dumps, load, loads
 from pyface.qt import QtCore, QtGui
 
 # ETS imports
-from traits.api import implements
+from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Shortcuts
@@ -30,9 +30,9 @@ cb = QtGui.QApplication.clipboard()
 PYTHON_TYPE = "python/object"
 
 
+@provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-    implements(IClipboard)
 
     #---------------------------------------------------------------------------
     #  'data' property methods:

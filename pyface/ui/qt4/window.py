@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Enum, Event, implements, Property, Unicode
+from traits.api import Enum, Event, Property, provides, Unicode
 from traits.api import Tuple
 
 # Local imports.
@@ -25,12 +25,12 @@ from gui import GUI
 from widget import Widget
 
 
+@provides(IWindow)
 class Window(MWindow, Widget):
     """ The toolkit specific implementation of a Window.  See the IWindow
     interface for the API documentation.
     """
 
-    implements(IWindow)
 
     #### 'IWindow' interface ##################################################
 

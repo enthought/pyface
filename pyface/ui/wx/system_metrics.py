@@ -24,18 +24,18 @@ import sys
 import wx
 
 # Enthought library imports.
-from traits.api import HasTraits, implements, Int, Property, Tuple
+from traits.api import HasTraits, Int, Property, provides, Tuple
 
 # Local imports.
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
 
+@provides(ISystemMetrics)
 class SystemMetrics(MSystemMetrics, HasTraits):
     """ The toolkit specific implementation of a SystemMetrics.  See the
     ISystemMetrics interface for the API documentation.
     """
 
-    implements(ISystemMetrics)
 
     #### 'ISystemMetrics' interface ###########################################
 

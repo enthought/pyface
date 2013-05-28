@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, Enum, implements, Int, Str, Unicode
+from traits.api import Bool, Enum, Int, provides, Str, Unicode
 
 # Local imports.
 from pyface.i_dialog import IDialog, MDialog
@@ -34,12 +34,12 @@ _RESULT_MAP = {
 }
 
 
+@provides(IDialog)
 class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
 
-    implements(IDialog)
 
     #### 'IDialog' interface ##################################################
 

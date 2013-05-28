@@ -17,7 +17,7 @@ from cPickle import dumps, load, loads
 import wx
 
 # ETS imports
-from traits.api import implements
+from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
@@ -29,9 +29,9 @@ FileFormat         = wx.DataFormat(wx.DF_FILENAME)
 cb           = wx.TheClipboard
 
 
+@provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-    implements(IClipboard)
 
     #---------------------------------------------------------------------------
     #  'data' property methods:

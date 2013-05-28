@@ -24,19 +24,19 @@ import os
 import wx
 
 # Enthought library imports.
-from traits.api import Enum, implements, Unicode, Int, List
+from traits.api import Enum, Int, List, provides, Unicode
 
 # Local imports.
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from dialog import Dialog
 
 
+@provides(IFileDialog)
 class FileDialog(MFileDialog, Dialog):
     """ The toolkit specific implementation of a FileDialog.  See the
     IFileDialog interface for the API documentation.
     """
 
-    implements(IFileDialog)
 
     #### 'IFileDialog' interface ##############################################
 

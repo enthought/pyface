@@ -25,7 +25,7 @@ from logging import DEBUG
 import wx
 
 # Enthought library imports.
-from traits.api import Any, Bool, Font, implements, Instance, Int
+from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
 # Private Enthought library imports.
@@ -38,12 +38,12 @@ from pyface.image_resource import ImageResource
 from window import Window
 
 
+@provides(ISplashScreen)
 class SplashScreen(MSplashScreen, Window):
     """ The toolkit specific implementation of a SplashScreen.  See the
     ISplashScreen interface for the API documentation.
     """
 
-    implements(ISplashScreen)
 
     #### 'ISplashScreen' interface ############################################
 
