@@ -3,7 +3,7 @@ from cStringIO import StringIO
 import sys
 
 # Enthought library imports.
-from traits.api import Either, Enum, HasStrictTraits, Int, List, Str, This
+from traits.api import Either, Enum, HasStrictTraits, Int, Instance, List, Str, This
 
 
 class LayoutItem(HasStrictTraits):
@@ -132,7 +132,8 @@ class Splitter(LayoutContainer):
 
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
-    items = List(Either(PaneItem, Tabbed, This), pretty_skip=True)
+    items = List(Either(PaneItem, Tabbed,
+                        Instance('pyface.tasks.api.Splitter')), pretty_skip=True)
     
 class HSplitter(Splitter):
     """ A convenience class for horizontal splitters.
