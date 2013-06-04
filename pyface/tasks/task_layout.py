@@ -133,8 +133,9 @@ class Splitter(LayoutContainer):
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
     items = List(Either(PaneItem, Tabbed,
-                        Instance('pyface.tasks.api.Splitter')), pretty_skip=True)
-    
+                        Instance('pyface.tasks.task_layout.Splitter')),
+                        pretty_skip=True)
+
 class HSplitter(Splitter):
     """ A convenience class for horizontal splitters.
     """
