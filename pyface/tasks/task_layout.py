@@ -38,7 +38,7 @@ class LayoutItem(HasStrictTraits):
         indent += len(call)
         stream.write(call)
 
-        args = [ (None, arg) for arg in self.pargs() ]
+        args = [(None, arg) for arg in self.pargs()]
         traits = []
         for name, trait in sorted(self.traits().iteritems()):
             if not trait.pretty_skip and not trait.transient:
@@ -63,9 +63,9 @@ class LayoutItem(HasStrictTraits):
                     stream.write('\n' + indent * ' ')
                 else:
                     stream.write(' ')
-            
+
         stream.write(')')
-    
+
 
 class LayoutContainer(LayoutItem):
     """ The base class for all layout items that contain other layout items.
@@ -84,7 +84,7 @@ class LayoutContainer(LayoutItem):
 
     def pargs(self):
         return self.items
-    
+
 
 class PaneItem(LayoutItem):
     """ A pane in a Task layout.
@@ -98,8 +98,8 @@ class PaneItem(LayoutItem):
     # according to its size hint.
     width = Int(-1)
 
-    # The height of the pane in pixels. If not specified, the pane will be sized
-    # according to its size hint.
+    # The height of the pane in pixels. If not specified, the pane will be
+    # sized according to its size hint.
     height = Int(-1)
 
     def __init__(self, id='', **traits):
@@ -107,7 +107,7 @@ class PaneItem(LayoutItem):
         self.id = id
 
     def pargs(self):
-        return [ self.id ]
+        return [self.id]
 
 
 class Tabbed(LayoutContainer):
@@ -121,7 +121,7 @@ class Tabbed(LayoutContainer):
     # The ID of the TaskPane which is active in layout. If not specified, the
     # first pane is active.
     active_tab = Either(Str, Int, default='')
-    
+
 
 class Splitter(LayoutContainer):
     """ A split area in a Task layout.
@@ -132,14 +132,17 @@ class Splitter(LayoutContainer):
 
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
-    items = List(Either(PaneItem, Tabbed,
-                        Instance('pyface.tasks.task_layout.Splitter')),
-                        pretty_skip=True)
+    items = List(Either(
+        PaneItem,
+        Tabbed,
+        Instance('pyface.tasks.task_layout.Splitter')), pretty_skip=True)
+
 
 class HSplitter(Splitter):
     """ A convenience class for horizontal splitters.
     """
     orientation = Str('horizontal')
+
 
 class VSplitter(Splitter):
     """ A convenience class for vertical splitters.
@@ -157,14 +160,14 @@ class DockLayout(LayoutItem):
     top = Either(PaneItem, Tabbed, Splitter)
     bottom = Either(PaneItem, Tabbed, Splitter)
 
-    # Assignments of dock areas to the window's corners. By default, the top and
-    # bottom dock areas extend into both of the top and both of the bottom
+    # Assignments of dock areas to the window's corners. By default, the top
+    # and bottom dock areas extend into both of the top and both of the bottom
     # corners, respectively.
     top_left_corner = Enum('top', 'left')
     top_right_corner = Enum('top', 'right')
     bottom_left_corner = Enum('bottom', 'left')
     bottom_right_corner = Enum('bottom', 'right')
-    
+
 
 class TaskLayout(DockLayout):
     """ The layout for a Task.
