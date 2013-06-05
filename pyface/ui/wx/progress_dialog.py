@@ -124,9 +124,10 @@ class ProgressDialog(MProgressDialog, Window):
 
             msg_control_size = self._message_control.GetSize()
             self.dialog_size.x = max(self.dialog_size.x, msg_control_size.x + 2*self.margin)
-            self.control.SetClientSize(self.dialog_size)
+            if self.control is not None:
+                self.control.SetClientSize(self.dialog_size)
 
-            self.control.GetSizer().Layout()
+                self.control.GetSizer().Layout()
 
     def update(self, value):
         """
