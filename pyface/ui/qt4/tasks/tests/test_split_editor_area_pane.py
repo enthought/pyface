@@ -4,10 +4,59 @@ import os
 import tempfile
 import unittest
 
+from traits.api import HasTraits, Instance
+from traitsui.api import Group, UItem, View
+from traitsui.api import Tabbed as TabbedGroup
+
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
     SplitEditorAreaPane
-from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed
+from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
+    TaskWindow
+from pyface.util.guisupport import get_app_qt4
+from pyface.util.testing import event_loop
+
+
+class ViewWithTabs(HasTraits):
+    """ A view with tabs used to confuse the SplitEditorAreaPane. """
+    traits_view = View(
+        TabbedGroup(
+            Group(UItem(label='tab 1')),
+            Group(UItem(label='tab 2')),
+        )
+    )
+
+
+class ViewWithTabsEditor(Editor):
+    """ Test editor, displaying a TraitsUI view with tabs. """
+
+    name = 'Test Editor'
+
+    def create(self, parent):
+        """ Create and set the toolkit-specific contents of the editor.
+        """
+        view = ViewWithTabs()
+        self.ui = view.edit_traits(kind='subpanel', parent=parent)
+        self.control = self.ui.control
+
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the editor.
+        """
+        self.control = None
+        self.ui.dispose()
+        self.ui = None
+
+
+class SplitEditorAreaPaneTestTask(Task):
+    """ A test task containing a SplitEditorAreaPane. """
+
+    id = 'test_task'
+    name = 'Test Task'
+
+    editor_area = Instance(SplitEditorAreaPane, ())
+
+    def create_central_pane(self):
+        return self.editor_area
 
 
 class TestEditorAreaWidget(unittest.TestCase):
@@ -261,6 +310,40 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertIsInstance(right_bottom, Tabbed)
         self.assertEquals(right_bottom.items[0].id, 1)
         self.assertEquals(right_bottom.items[1].id, 2)
+
+    def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
+        # Regression test: if an editor contains tabs, a change in focus
+        # sets the editor area pane `active_tabwidget` to one of those tabs,
+        # rather than the editor's tab, after certain operations (e.g.,
+        # navigating the editor tabs using keyboard shortcuts).
+
+        window = TaskWindow()
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        # Show the window.
+        with event_loop():
+            window.open()
+
+        with event_loop():
+            app = get_app_qt4()
+            app.setActiveWindow(window.control)
+
+        # Add and activate an editor which contains tabs.
+        editor = ViewWithTabsEditor()
+        with event_loop():
+            editor_area.add_editor(editor)
+        with event_loop():
+            editor_area.activate_editor(editor)
+
+        # Check that the active tabwidget is the right one.
+        self.assertIs(editor_area.active_tabwidget,
+                      editor_area.control.tabwidget())
+
+        with event_loop():
+            window.close()
 
 if __name__=="__main__":
     unittest.main()
