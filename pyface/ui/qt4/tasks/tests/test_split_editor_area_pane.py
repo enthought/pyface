@@ -1,20 +1,25 @@
-# Tests basic layout operations of the splitter used in split_editor_area_pane.py
+""" Tests for the SplitEditorAreaPane class. """
 
-import unittest, os, tempfile
+import os
+import tempfile
+import unittest
 
-from pyface.tasks.split_editor_area_pane import SplitEditorAreaPane, EditorAreaWidget
 from pyface.qt import QtGui, QtCore
-from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
-from pyface.tasks.api import Editor
+from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
+    SplitEditorAreaPane
+from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed
+
 
 class TestEditorAreaWidget(unittest.TestCase):
+    """ Tests for the SplitEditorAreaPane class. """
 
     def _setUp_split(self, parent=None):
         """ Sets up the root splitter for splitting. Returns this root.
 
         parent : parent of the returned root
         """
-        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=parent)
+        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(),
+                                parent=parent)
         btn0 = QtGui.QPushButton('0')
         btn1 = QtGui.QPushButton('1')
         tabwidget = root.tabwidget()
@@ -68,8 +73,8 @@ class TestEditorAreaWidget(unittest.TestCase):
                         root.rightchild.tabwidget())
 
     def _setUp_collapse(self, parent=None):
-        """ Creates a root, its leftchild and rightchild, so that collapse can be tested on
-        one of the children.
+        """ Creates a root, its leftchild and rightchild, so that collapse can
+        be tested on one of the children.
 
         Returns the root, leftchild and rightchild of such layout.
 
@@ -105,9 +110,9 @@ class TestEditorAreaWidget(unittest.TestCase):
         return root, left, right
 
     def test_collapse_nonempty(self):
-        """ Test for collapse function when the source of collapse is not an empty 
-        tabwidget. This would result in a new tabwidget which merges the tabs of the 
-        collapsing tabwidgets.
+        """ Test for collapse function when the source of collapse is not an
+        empty  tabwidget. This would result in a new tabwidget which merges
+        the tabs of the  collapsing tabwidgets.
         """
         # setup root
         root, left, right = self._setUp_collapse()
@@ -131,8 +136,8 @@ class TestEditorAreaWidget(unittest.TestCase):
 
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty 
-        tabwidget. It's sibling can have an arbitrary layout and the result would
-        be such that this layout is transferred to the parent.
+        tabwidget. It's sibling can have an arbitrary layout and the result
+        would be such that this layout is transferred to the parent.
         """
         # setup
         root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
@@ -159,15 +164,16 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(root.rightchild.tabwidget().currentIndex(), 0)
 
         # what is the current active_tabwidget?
-        self.assertEquals(root.editor_area.active_tabwidget, root.leftchild.tabwidget())
+        self.assertEquals(root.editor_area.active_tabwidget,
+                          root.leftchild.tabwidget())
 
     def test_persistence(self):
-        """ Tests whether get_layout/set_layout work correctly by setting a given layout
-        and getting back the obtained layout.
+        """ Tests whether get_layout/set_layout work correctly by setting a
+        given layout and getting back the obtained layout.
         """
-        # setup the test layout - one horizontal split and one vertical split on the 
-        # rightchild of horizontal split, where the top tabwidget of the vertical split 
-        # is empty.
+        # setup the test layout - one horizontal split and one vertical split
+        # on the rightchild of horizontal split, where the top tabwidget of
+        # the vertical split is empty.
         layout = Splitter(Tabbed(PaneItem(id=0, width=600, height=600), 
                         active_tab=0), 
                         Splitter(Tabbed(PaneItem(id=-1, width=600, height=300), 
@@ -176,9 +182,9 @@ class TestEditorAreaWidget(unittest.TestCase):
                                        PaneItem(id=2, width=600, height=300),
                                        active_tab=0), orientation='vertical'), 
                         orientation='horizontal')
-        # a total of 3 files are needed to give this layout - one on the leftchild of
-        # horizontal split, and the other two on the bottom tabwidget of the 
-        # rightchild's vertical split
+        # a total of 3 files are needed to give this layout - one on the
+        # leftchild of horizontal split, and the other two on the bottom
+        # tabwidget of the rightchild's vertical split
         file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
         file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
         file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
