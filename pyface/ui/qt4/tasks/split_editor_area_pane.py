@@ -344,8 +344,8 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                     control = editor.control
                     if control is not None and control.isAncestorOf(new):
                         self.active_tabwidget = \
-                            self._find_ancestor_draggable_tab_widget(new)
-                        self.active_tabwidget.setCurrentWidget(editor.control)
+                            self._find_ancestor_draggable_tab_widget(control)
+                        self.active_tabwidget.setCurrentWidget(control)
                         # Set active_editor at the end so that the notification
                         # occurs when everything is ready.
                         self.active_editor = editor
