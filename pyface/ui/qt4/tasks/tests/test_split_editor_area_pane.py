@@ -14,7 +14,7 @@ from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
     TaskWindow
 from pyface.util.guisupport import get_app_qt4
-from pyface.util.testing import event_loop
+from pyface.ui.qt4.util.testing import event_loop
 
 
 class ViewWithTabs(HasTraits):
@@ -112,14 +112,14 @@ class TestEditorAreaWidget(unittest.TestCase):
         # does the right tabwidget contain nothing but the empty widget?
         self.assertEquals(root.rightchild.tabwidget().count(), 1)
         self.assertEquals(root.rightchild.tabwidget().widget(0), 
-                        root.rightchild.tabwidget().empty_widget)
+                          root.rightchild.tabwidget().empty_widget)
 
         # do we have an equally sized split?
         self.assertEquals(root.leftchild.width(), root.rightchild.width())
 
         # is the rightchild active?
         self.assertEquals(root.editor_area.active_tabwidget, 
-                        root.rightchild.tabwidget())
+                          root.rightchild.tabwidget())
 
     def _setUp_collapse(self, parent=None):
         """ Creates a root, its leftchild and rightchild, so that collapse can
@@ -180,8 +180,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # how does the combined list look?
         self.assertEquals(root.tabwidget().count(), 4)
-        self.assertEquals(root.tabwidget().currentWidget(), 
-                        btn2)
+        self.assertEquals(root.tabwidget().currentWidget(), btn2)
 
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty 
@@ -223,14 +222,16 @@ class TestEditorAreaWidget(unittest.TestCase):
         # setup the test layout - one horizontal split and one vertical split
         # on the rightchild of horizontal split, where the top tabwidget of
         # the vertical split is empty.
-        layout = Splitter(Tabbed(PaneItem(id=0, width=600, height=600), 
-                        active_tab=0), 
-                        Splitter(Tabbed(PaneItem(id=-1, width=600, height=300), 
-                                        active_tab=0), 
-                                Tabbed(PaneItem(id=1, width=600, height=300), 
-                                       PaneItem(id=2, width=600, height=300),
-                                       active_tab=0), orientation='vertical'), 
-                        orientation='horizontal')
+        layout = Splitter(
+            Tabbed(PaneItem(id=0, width=600, height=600),
+                   active_tab=0),
+            Splitter(Tabbed(PaneItem(id=-1, width=600, height=300),
+                            active_tab=0),
+                     Tabbed(PaneItem(id=1, width=600, height=300),
+                            PaneItem(id=2, width=600, height=300),
+                            active_tab=0),
+                     orientation='vertical'),
+            orientation='horizontal')
         # a total of 3 files are needed to give this layout - one on the
         # leftchild of horizontal split, and the other two on the bottom
         # tabwidget of the rightchild's vertical split
@@ -345,5 +346,5 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             window.close()
 
-if __name__=="__main__":
+if __name__ == '__main__':
     unittest.main()
