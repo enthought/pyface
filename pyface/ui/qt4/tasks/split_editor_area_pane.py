@@ -317,29 +317,39 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
     #### Signal handlers ######################################################
 
+    def _find_ancestor_draggable_tab_widget(self, control):
+        """ Find the draggable tab widget to which a widget belongs. """
+
+        while not isinstance(control, DraggableTabWidget):
+            control = control.parent()
+
+        return control
+
     def _focus_changed(self, old, new):
-        """ Handle an application-level focus change to set the active_tabwidget
+        """Set the active tabwidget after an application-level change in focus.
         """
+
         if new:
             if isinstance(new, DraggableTabWidget):
                 if new.editor_area == self:
                     self.active_tabwidget = new
             elif isinstance(new, QtGui.QTabBar):
                 if self.control.isAncestorOf(new):
-                    self.active_tabwidget = new.parent()
+                    self.active_tabwidget = \
+                        self._find_ancestor_draggable_tab_widget(new)
             else:
                 # Check if any of the editor widgets have focus.
                 # If so, make it active.
                 for editor in self.editors:
                     control = editor.control
                     if control is not None and control.isAncestorOf(new):
-                        self.active_tabwidget = editor.control.parent().parent()
-                        self.active_tabwidget.setCurrentWidget(editor.control)
+                        self.active_tabwidget = \
+                            self._find_ancestor_draggable_tab_widget(control)
+                        self.active_tabwidget.setCurrentWidget(control)
                         # Set active_editor at the end so that the notification
                         # occurs when everything is ready.
                         self.active_editor = editor
                         break
-
 
 ###############################################################################
 # Auxiliary classes.
@@ -457,7 +467,7 @@ class EditorAreaWidget(QtGui.QSplitter):
 
     def tabwidgets(self):
         """ Return a list of tabwidgets associated with current splitter or 
-        any of its descendents.
+        any of its descendants.
         """
         tabwidgets = []
         if self.is_leaf():

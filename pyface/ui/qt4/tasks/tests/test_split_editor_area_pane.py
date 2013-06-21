@@ -1,20 +1,74 @@
-# Tests basic layout operations of the splitter used in split_editor_area_pane.py
+""" Tests for the SplitEditorAreaPane class. """
 
-import unittest, os, tempfile
+import os
+import tempfile
+import unittest
 
-from pyface.tasks.split_editor_area_pane import SplitEditorAreaPane, EditorAreaWidget
+from traits.api import HasTraits, Instance
+from traitsui.api import Group, UItem, View
+from traitsui.api import Tabbed as TabbedGroup
+
 from pyface.qt import QtGui, QtCore
-from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
-from pyface.tasks.api import Editor
+from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
+    SplitEditorAreaPane
+from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
+    TaskWindow
+from pyface.util.guisupport import get_app_qt4
+from pyface.ui.qt4.util.testing import event_loop
+
+
+class ViewWithTabs(HasTraits):
+    """ A view with tabs used to confuse the SplitEditorAreaPane. """
+    traits_view = View(
+        TabbedGroup(
+            Group(UItem(label='tab 1')),
+            Group(UItem(label='tab 2')),
+        )
+    )
+
+
+class ViewWithTabsEditor(Editor):
+    """ Test editor, displaying a TraitsUI view with tabs. """
+
+    name = 'Test Editor'
+
+    def create(self, parent):
+        """ Create and set the toolkit-specific contents of the editor.
+        """
+        view = ViewWithTabs()
+        self.ui = view.edit_traits(kind='subpanel', parent=parent)
+        self.control = self.ui.control
+
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the editor.
+        """
+        self.control = None
+        self.ui.dispose()
+        self.ui = None
+
+
+class SplitEditorAreaPaneTestTask(Task):
+    """ A test task containing a SplitEditorAreaPane. """
+
+    id = 'test_task'
+    name = 'Test Task'
+
+    editor_area = Instance(SplitEditorAreaPane, ())
+
+    def create_central_pane(self):
+        return self.editor_area
+
 
 class TestEditorAreaWidget(unittest.TestCase):
+    """ Tests for the SplitEditorAreaPane class. """
 
     def _setUp_split(self, parent=None):
         """ Sets up the root splitter for splitting. Returns this root.
 
         parent : parent of the returned root
         """
-        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=parent)
+        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(),
+                                parent=parent)
         btn0 = QtGui.QPushButton('0')
         btn1 = QtGui.QPushButton('1')
         tabwidget = root.tabwidget()
@@ -58,18 +112,18 @@ class TestEditorAreaWidget(unittest.TestCase):
         # does the right tabwidget contain nothing but the empty widget?
         self.assertEquals(root.rightchild.tabwidget().count(), 1)
         self.assertEquals(root.rightchild.tabwidget().widget(0), 
-                        root.rightchild.tabwidget().empty_widget)
+                          root.rightchild.tabwidget().empty_widget)
 
         # do we have an equally sized split?
         self.assertEquals(root.leftchild.width(), root.rightchild.width())
 
         # is the rightchild active?
         self.assertEquals(root.editor_area.active_tabwidget, 
-                        root.rightchild.tabwidget())
+                          root.rightchild.tabwidget())
 
     def _setUp_collapse(self, parent=None):
-        """ Creates a root, its leftchild and rightchild, so that collapse can be tested on
-        one of the children.
+        """ Creates a root, its leftchild and rightchild, so that collapse can
+        be tested on one of the children.
 
         Returns the root, leftchild and rightchild of such layout.
 
@@ -105,9 +159,9 @@ class TestEditorAreaWidget(unittest.TestCase):
         return root, left, right
 
     def test_collapse_nonempty(self):
-        """ Test for collapse function when the source of collapse is not an empty 
-        tabwidget. This would result in a new tabwidget which merges the tabs of the 
-        collapsing tabwidgets.
+        """ Test for collapse function when the source of collapse is not an
+        empty  tabwidget. This would result in a new tabwidget which merges
+        the tabs of the  collapsing tabwidgets.
         """
         # setup root
         root, left, right = self._setUp_collapse()
@@ -126,13 +180,12 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # how does the combined list look?
         self.assertEquals(root.tabwidget().count(), 4)
-        self.assertEquals(root.tabwidget().currentWidget(), 
-                        btn2)
+        self.assertEquals(root.tabwidget().currentWidget(), btn2)
 
     def test_collapse_empty(self):
         """ Test for collapse function when the collapse origin is an empty 
-        tabwidget. It's sibling can have an arbitrary layout and the result would
-        be such that this layout is transferred to the parent.
+        tabwidget. It's sibling can have an arbitrary layout and the result
+        would be such that this layout is transferred to the parent.
         """
         # setup
         root = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
@@ -159,26 +212,29 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(root.rightchild.tabwidget().currentIndex(), 0)
 
         # what is the current active_tabwidget?
-        self.assertEquals(root.editor_area.active_tabwidget, root.leftchild.tabwidget())
+        self.assertEquals(root.editor_area.active_tabwidget,
+                          root.leftchild.tabwidget())
 
     def test_persistence(self):
-        """ Tests whether get_layout/set_layout work correctly by setting a given layout
-        and getting back the obtained layout.
+        """ Tests whether get_layout/set_layout work correctly by setting a
+        given layout and getting back the obtained layout.
         """
-        # setup the test layout - one horizontal split and one vertical split on the 
-        # rightchild of horizontal split, where the top tabwidget of the vertical split 
-        # is empty.
-        layout = Splitter(Tabbed(PaneItem(id=0, width=600, height=600), 
-                        active_tab=0), 
-                        Splitter(Tabbed(PaneItem(id=-1, width=600, height=300), 
-                                        active_tab=0), 
-                                Tabbed(PaneItem(id=1, width=600, height=300), 
-                                       PaneItem(id=2, width=600, height=300),
-                                       active_tab=0), orientation='vertical'), 
-                        orientation='horizontal')
-        # a total of 3 files are needed to give this layout - one on the leftchild of
-        # horizontal split, and the other two on the bottom tabwidget of the 
-        # rightchild's vertical split
+        # setup the test layout - one horizontal split and one vertical split
+        # on the rightchild of horizontal split, where the top tabwidget of
+        # the vertical split is empty.
+        layout = Splitter(
+            Tabbed(PaneItem(id=0, width=600, height=600),
+                   active_tab=0),
+            Splitter(Tabbed(PaneItem(id=-1, width=600, height=300),
+                            active_tab=0),
+                     Tabbed(PaneItem(id=1, width=600, height=300),
+                            PaneItem(id=2, width=600, height=300),
+                            active_tab=0),
+                     orientation='vertical'),
+            orientation='horizontal')
+        # a total of 3 files are needed to give this layout - one on the
+        # leftchild of horizontal split, and the other two on the bottom
+        # tabwidget of the rightchild's vertical split
         file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
         file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
         file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
@@ -256,5 +312,39 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(right_bottom.items[0].id, 1)
         self.assertEquals(right_bottom.items[1].id, 2)
 
-if __name__=="__main__":
+    def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
+        # Regression test: if an editor contains tabs, a change in focus
+        # sets the editor area pane `active_tabwidget` to one of those tabs,
+        # rather than the editor's tab, after certain operations (e.g.,
+        # navigating the editor tabs using keyboard shortcuts).
+
+        window = TaskWindow()
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        # Show the window.
+        with event_loop():
+            window.open()
+
+        with event_loop():
+            app = get_app_qt4()
+            app.setActiveWindow(window.control)
+
+        # Add and activate an editor which contains tabs.
+        editor = ViewWithTabsEditor()
+        with event_loop():
+            editor_area.add_editor(editor)
+        with event_loop():
+            editor_area.activate_editor(editor)
+
+        # Check that the active tabwidget is the right one.
+        self.assertIs(editor_area.active_tabwidget,
+                      editor_area.control.tabwidget())
+
+        with event_loop():
+            window.close()
+
+if __name__ == '__main__':
     unittest.main()
