@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, Enum, provides, Int, Str, Unicode
+from traits.api import Bool, Enum, Int, provides, Str, Unicode
 
 # Local imports.
 from pyface.i_dialog import IDialog, MDialog

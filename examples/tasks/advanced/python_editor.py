@@ -19,19 +19,18 @@ from os.path import basename
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, Event, implements, Instance, File, Unicode, Property
+from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
 from pyface.tasks.api import Editor
 
 # Local imports.
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 
+@provides(IPythonEditor)
 class PythonEditor(Editor):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
-
-    implements(IPythonEditor)
 
     #### 'IPythonEditor' interface ############################################
 

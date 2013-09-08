@@ -16,8 +16,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, provides, HasTraits, Str, Tuple, \
-        Unicode
+from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 

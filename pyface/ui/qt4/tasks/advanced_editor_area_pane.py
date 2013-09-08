@@ -5,7 +5,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import DelegatesTo, Instance, provides, on_trait_change
+from traits.api import DelegatesTo, Instance, on_trait_change, provides
 
 # Local imports.
 from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane

@@ -15,7 +15,7 @@
 from pyface.qt import QtGui
 
 # Enthought library imports.
-from traits.api import HasTraits, provides, Int, Property, Tuple
+from traits.api import HasTraits, Int, Property, provides, Tuple
 
 # Local imports.
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics

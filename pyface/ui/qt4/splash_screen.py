@@ -18,7 +18,7 @@ from logging import DEBUG
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Any, Bool, Font, provides, Instance, Int
+from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
 # Local imports.

@@ -25,7 +25,7 @@ from logging import DEBUG
 import wx
 
 # Enthought library imports.
-from traits.api import Any, Bool, Font, provides, Instance, Int
+from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
 # Private Enthought library imports.

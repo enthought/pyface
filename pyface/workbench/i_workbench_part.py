@@ -16,7 +16,7 @@
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, Interface
-from traits.api import List, Str, Unicode, provides
+from traits.api import List, provides, Str, Unicode
 
 
 class IWorkbenchPart(Interface):

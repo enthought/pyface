@@ -18,8 +18,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, provides, Instance, List, Property, \
-        Unicode
+from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController

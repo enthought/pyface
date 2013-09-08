@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Enum, Event, provides, Property, Unicode
+from traits.api import Enum, Event, Property, provides, Unicode
 from traits.api import Tuple
 
 # Local imports.

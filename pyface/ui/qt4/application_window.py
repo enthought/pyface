@@ -16,8 +16,7 @@ from pyface.qt import QtGui
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, Unicode, provides, \
-     on_trait_change
+from traits.api import Instance, List, on_trait_change, provides, Unicode
 
 # Local imports.
 from pyface.i_application_window import IApplicationWindow, \

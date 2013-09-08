@@ -5,7 +5,7 @@
 import logging
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, List, Str, Tuple, provides
+from traits.api import Bool, HasTraits, List, provides, Str, Tuple
 
 # Local imports.
 from i_perspective import IPerspective

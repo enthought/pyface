@@ -21,7 +21,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Any, Event, provides, Property, Unicode
+from traits.api import Any, Event, Property, provides, Unicode
 from traits.api import Tuple
 
 # Local imports.

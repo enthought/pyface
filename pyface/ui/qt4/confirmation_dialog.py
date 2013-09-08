@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, Dict, Enum, provides, Instance, Unicode
+from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
 
 # Local imports.
 from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
