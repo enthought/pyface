@@ -1,6 +1,6 @@
 # Enthought library imports.
 from traits.api import Instance, on_trait_change
-from enaml.components.constraints_widget import ConstraintsWidget
+from enaml.widgets.constraints_widget import ConstraintsWidget
 
 # local imports
 from pyface.tasks.editor import Editor
