@@ -1,36 +1,63 @@
 # Enthought library imports.
-from traits.api import Instance, on_trait_change
-from enaml.components.constraints_widget import ConstraintsWidget
+from traits.api import Instance
+from enaml.widgets.toolkit_object import ToolkitObject
 
-# local imports
+# Local imports.
 from pyface.tasks.dock_pane import DockPane
 
 
 class EnamlDockPane(DockPane):
-    """ Create an Dock pane for Enaml Components.
-    """
+    """ Create a Dock pane for Enaml Components. """
 
-    #### EnamlDockPane interface ##############################################
+    ###########################################################################
+    # 'EnamlDockPane' interface
+    ###########################################################################
 
-    component = Instance(ConstraintsWidget)
+    #: The Enaml component defining the contents of the DockPane.
+    component = Instance(ToolkitObject)
 
     def create_component(self):
-        raise NotImplementedError
+        """ Return an Enaml component defining the contents of the DockPane.
 
+        Returns
+        -------
+        component : ToolkitObject
+        """
+        raise NotImplementedError
 
     ###########################################################################
     # 'IDockPane' interface.
     ###########################################################################
 
     def create_contents(self, parent):
+        """ Return the toolkit-specific control that represents the pane. """
+
         self.component = self.create_component()
-        self.component.setup(parent=parent)
-        contents = self.component.toolkit_widget
+
+        # Initialize the proxy.
+        self.component.initialize()
+
+        # Activate the proxy.
+        if not self.component.proxy_is_active:
+            self.component.activate_proxy()
+
+        # Fish the Qt control out of the proxy. That's our DockPane content.
+        contents = self.component.proxy.widget
+
         return contents
 
-    def destroy(self):        
-        self.component.destroy()
-        # Destroy the dock control.
-        super(EnamlDockPane, self).destroy()
+    ###########################################################################
+    # 'ITaskPane' interface.
+    ###########################################################################
 
-        
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the pane. """
+
+        control = self.control
+        if control is not None:
+            control.hide()
+            self.component.destroy()
+            control.setParent(None)
+            control.deleteLater()
+
+        self.control = None
