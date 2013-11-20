@@ -1,6 +1,6 @@
 # Enthought library imports.
 from pyface.tasks.i_task_pane import ITaskPane, MTaskPane
-from traits.api import Bool, Property, provides
+from traits.api import provides
 
 # System library imports.
 from pyface.qt import QtGui
