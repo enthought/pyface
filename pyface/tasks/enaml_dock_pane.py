@@ -61,3 +61,4 @@ class EnamlDockPane(DockPane):
             control.deleteLater()
 
         self.control = None
+        self.component = None

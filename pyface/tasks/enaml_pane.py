@@ -69,3 +69,4 @@ class EnamlPane(HasTraits):
             control.deleteLater()
 
         self.control = None
+        self.component = None
