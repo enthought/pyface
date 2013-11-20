@@ -2,6 +2,7 @@
 
 # Enthought library imports.
 from enaml.widgets.toolkit_object import ToolkitObject
+from enaml.widgets.constraints_widget import ProxyConstraintsWidget
 from traits.api import HasTraits, Instance
 
 
@@ -54,7 +55,8 @@ class EnamlPane(HasTraits):
 
         # Restore the visibility state
         self.component.visible = visible
-        self.component.proxy.relayout()
+        if isinstance(self.component, ProxyConstraintsWidget):
+            self.component.proxy.request_relayout()
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the editor.
