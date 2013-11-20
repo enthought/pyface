@@ -4,6 +4,7 @@ from split_editor_area_pane import SplitEditorAreaPane
 from dock_pane import DockPane
 from editor import Editor
 from editor_area_pane import EditorAreaPane
+from enaml_task_pane import EnamlTaskPane
 from i_dock_pane import IDockPane
 from i_editor import IEditor
 from i_editor_area_pane import IEditorAreaPane
