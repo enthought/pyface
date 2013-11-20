@@ -5,6 +5,7 @@ from .dock_pane import DockPane
 from .editor import Editor
 from .editor_area_pane import EditorAreaPane
 from .enaml_dock_pane import EnamlDockPane
+from .enaml_editor import EnamlEditor
 from .enaml_task_pane import EnamlTaskPane
 from .i_dock_pane import IDockPane
 from .i_editor import IEditor
