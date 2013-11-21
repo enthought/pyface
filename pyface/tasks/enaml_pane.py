@@ -1,8 +1,6 @@
 """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
 
 # Enthought library imports.
-from enaml.widgets.toolkit_object import ToolkitObject
-from enaml.widgets.constraints_widget import ProxyConstraintsWidget
 from traits.api import HasTraits, Instance
 
 
@@ -14,7 +12,7 @@ class EnamlPane(HasTraits):
     ###########################################################################
 
     #: The Enaml component defining the contents of the TaskPane.
-    component = Instance(ToolkitObject)
+    component = Instance('enaml.widgets.toolkit_object.ToolkitObject')
 
     def create_component(self):
         """ Return an Enaml component defining the contents of the pane.
@@ -31,6 +29,8 @@ class EnamlPane(HasTraits):
 
     def create(self, parent):
         """ Create the toolkit-specific control that represents the editor. """
+
+        from enaml.widgets.constraints_widget import ProxyConstraintsWidget
 
         self.component = self.create_component()
 

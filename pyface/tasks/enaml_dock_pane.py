@@ -1,6 +1,5 @@
 # Enthought library imports.
 from traits.api import Instance
-from enaml.widgets.toolkit_object import ToolkitObject
 
 # Local imports.
 from pyface.tasks.dock_pane import DockPane
@@ -14,7 +13,7 @@ class EnamlDockPane(DockPane):
     ###########################################################################
 
     #: The Enaml component defining the contents of the DockPane.
-    component = Instance(ToolkitObject)
+    component = Instance('enaml.widgets.toolkit_object.ToolkitObject')
 
     def create_component(self):
         """ Return an Enaml component defining the contents of the DockPane.
