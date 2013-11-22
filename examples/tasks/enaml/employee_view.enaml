@@ -1,8 +1,10 @@
 #------------------------------------------------------------------------------
-#  Copyright (c) 2011, Enthought, Inc.
+#  Copyright (c) 2013, Enthought, Inc.
 #  All rights reserved.
 #------------------------------------------------------------------------------
-from phone_converter import PhoneNumberConverter
+from enaml.layout.api import align, vbox
+from enaml.widgets.api import CheckBox, Container, DateSelector, Field, Form, \
+    GroupBox, Label
 
 
 enamldef EmployeeForm(Form):
@@ -11,20 +13,14 @@ enamldef EmployeeForm(Form):
     Label:
         text = "First name:"
     Field:
-        value := employee.first_name
+        text := employee.first_name
     Label:
         text = "Last name:"
     Field:
-        value := employee.last_name
-    Label:
-        text = "Home phone:"
-    Field:
-        value := employee.phone
-        converter = PhoneNumberConverter()
-        bgcolor << 'error' if error else 'none'
+        text := employee.last_name
     Label:
         text = 'Date of Birth:'
-    DateEdit:
+    DateSelector:
         date := employee.dob
     Label:
         text = 'Age:'
@@ -33,15 +29,14 @@ enamldef EmployeeForm(Form):
     Label:
         text = 'Password'
     Field:
-        password_mode << 'password' if not pw_cb.checked else 'normal'
-        value :: print 'Password:', value
+        echo_mode << 'password' if not pw_cb.checked else 'normal'
+        text :: print 'Password:', text
     Label:
         text = 'Show Password:'
-    CheckBox:
-        id: pw_cb
+    CheckBox: pw_cb:
         checked = False
     Label:
-        text = 'Show Employer Details:'
+        text = 'Edit Employer Details:'
     CheckBox:
         checked := show_employer
 
@@ -51,43 +46,30 @@ enamldef EmployerForm(Form):
     Label:
         text = "Company:"
     Field:
-        value << employer.company_name
-        enabled << en_cb.checked
+        text << employer.company_name
     Label:
         text = "Reporting Manager:"
     Field:
-        value << "%s %s" % (employer.first_name, employer.last_name)
-        enabled << en_cb.checked
-    Label:
-        text = "Allow Editing:"
-    CheckBox:
-        id: en_cb
-        checked = True
+        text << "%s %s" % (employer.first_name, employer.last_name)
 
 
-enamldef EmployeeView(Container):
-    id: main
+enamldef EmployeeView(Container): main:
     attr employee
     
     constraints = [
         vbox(top_box, bottom_box),
         align('midline', top_form, bottom_form),
     ]
-    GroupBox:
-        id: top_box
+    GroupBox: top_box:
         title = "Personal Details"
-        EmployeeForm:
-            id: top_form
+        EmployeeForm: top_form:
             # We access the employee object through the identifier
             # 'main' here, because the EmployeeForm also has an 
             # 'employee' attribute declared, and that would be 
             # found first.
             employee = main.employee
-    GroupBox:
-        id: bottom_box
+    GroupBox: bottom_box:
         title = "Employer Details"
-        visible << top_form.show_employer
-        EmployerForm:
-            id: bottom_form
+        EmployerForm: bottom_form:
+            enabled << top_form.show_employer
             employer << employee.boss
-
