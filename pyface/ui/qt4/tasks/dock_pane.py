@@ -27,7 +27,6 @@ class DockPane(TaskPane, MDockPane):
     See the IDockPane interface for API documentation.
     """
 
-
     #### 'IDockPane' interface ################################################
 
     size = Property(Tuple)
