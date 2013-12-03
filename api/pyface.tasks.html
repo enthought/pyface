@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>tasks Package &mdash; pyface 4.1.1 documentation</title>
+    <title>tasks Package &mdash; pyface 4.4.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.1.1',
+        VERSION:     '4.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.1.1 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.4.0 documentation" href="../index.html" />
     <link rel="up" title="pyface Package" href="pyface.html" />
     <link rel="next" title="action Package" href="pyface.tasks.action.html" />
     <link rel="prev" title="sizers Package" href="pyface.sizers.html" /> 
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="pyface.sizers.html" title="sizers Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
       </ul>
     </div>  
@@ -75,28 +75,40 @@
 <span id="enaml-dock-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">enaml_dock_pane</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.enaml_dock_pane" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.enaml_dock_pane.EnamlDockPane">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_dock_pane.</tt><tt class="descname">EnamlDockPane</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
-<p>Create an Dock pane for Enaml Components.</p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_dock_pane.</tt><tt class="descname">EnamlDockPane</tt><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.dock_pane.DockPane" title="pyface.ui.qt4.tasks.dock_pane.DockPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.dock_pane.DockPane</span></tt></a></p>
+<p>Create a Dock pane for Enaml Components.</p>
 <dl class="attribute">
 <dt id="pyface.tasks.enaml_dock_pane.EnamlDockPane.component">
-<tt class="descname">component</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11d2e2b0&gt;</em><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane.component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">component</tt><em class="property"> = None</em><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane.component" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Enaml component defining the contents of the DockPane.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.enaml_dock_pane.EnamlDockPane.create_component">
 <tt class="descname">create_component</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane.create_component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return an Enaml component defining the contents of the DockPane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>component</strong> (ToolkitObject)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.enaml_dock_pane.EnamlDockPane.create_contents">
 <tt class="descname">create_contents</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane.create_contents" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return the toolkit-specific control that represents the pane.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.enaml_dock_pane.EnamlDockPane.destroy">
 <tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_dock_pane.EnamlDockPane.destroy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Destroy the toolkit-specific control that represents the pane.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -105,29 +117,9 @@
 <span id="enaml-editor-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">enaml_editor</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.enaml_editor" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.enaml_editor.EnamlEditor">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_editor.</tt><tt class="descname">EnamlEditor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_editor.</tt><tt class="descname">EnamlEditor</tt><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.enaml_pane.EnamlPane</span></tt>, <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.editor.Editor" title="pyface.ui.qt4.tasks.editor.Editor"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.editor.Editor</span></tt></a></p>
 <p>Create an Editor for Enaml Components.</p>
-<dl class="attribute">
-<dt id="pyface.tasks.enaml_editor.EnamlEditor.component">
-<tt class="descname">component</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11a04210&gt;</em><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor.component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_editor.EnamlEditor.create">
-<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor.create" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_editor.EnamlEditor.create_component">
-<tt class="descname">create_component</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor.create_component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_editor.EnamlEditor.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_editor.EnamlEditor.destroy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
@@ -135,29 +127,9 @@
 <span id="enaml-task-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">enaml_task_pane</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.enaml_task_pane" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.enaml_task_pane.EnamlTaskPane">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_task_pane.</tt><tt class="descname">EnamlTaskPane</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.enaml_task_pane.</tt><tt class="descname">EnamlTaskPane</tt><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.tasks.enaml_pane.EnamlPane</span></tt>, <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.task_pane.TaskPane" title="pyface.ui.qt4.tasks.task_pane.TaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.task_pane.TaskPane</span></tt></a></p>
 <p>Create a Task pane for Enaml Components.</p>
-<dl class="attribute">
-<dt id="pyface.tasks.enaml_task_pane.EnamlTaskPane.component">
-<tt class="descname">component</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11f89970&gt;</em><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane.component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_task_pane.EnamlTaskPane.create">
-<tt class="descname">create</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane.create" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_task_pane.EnamlTaskPane.create_component">
-<tt class="descname">create_component</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane.create_component" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tasks.enaml_task_pane.EnamlTaskPane.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.enaml_task_pane.EnamlTaskPane.destroy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </dd></dl>
 
 </div>
@@ -357,7 +329,7 @@ not be created.</p>
 <dt>The &#8216;factory&#8217; parameter is a callabe of form:</dt>
 <dd>callable(editor_area=editor_area, obj=obj) -&gt; IEditor</dd>
 </dl>
-<p>Often, factory will be a class that implements the &#8216;IEditor&#8217; interface.</p>
+<p>Often, factory will be a class that provides the &#8216;IEditor&#8217; interface.</p>
 <dl class="docutils">
 <dt>The &#8216;filter&#8217; parameter is a callable of form:</dt>
 <dd>callable(obj) -&gt; bool</dd>
@@ -507,7 +479,7 @@ to the window.</p>
 <dl class="method">
 <dt id="pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task">
 <tt class="descname">show_task</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#pyface.tasks.i_task_window_backend.ITaskWindowBackend.show_task" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assumming no task is currently active, show the controls of the
+<dd><p>Assuming no task is currently active, show the controls of the
 specified TaskState.</p>
 </dd></dl>
 
@@ -734,7 +706,7 @@ pane exists.</p>
 <dl class="class">
 <dt id="pyface.tasks.task_window.TaskWindow">
 <em class="property">class </em><tt class="descclassname">pyface.tasks.task_window.</tt><tt class="descname">TaskWindow</tt><a class="headerlink" href="#pyface.tasks.task_window.TaskWindow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.html#pyface.ui.wx.application_window.ApplicationWindow" title="pyface.ui.wx.application_window.ApplicationWindow"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.application_window.ApplicationWindow</span></tt></a></p>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.application_window.ApplicationWindow" title="pyface.ui.qt4.application_window.ApplicationWindow"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.application_window.ApplicationWindow</span></tt></a></p>
 <p>The the top-level window to which tasks can be assigned.</p>
 <p>A TaskWindow is responsible for creating and the managing the controls of
 its tasks.</p>
@@ -897,8 +869,8 @@ contain the same tasks.</p>
 <dd><p>Sort a sequence of items with &#8216;before&#8217;, &#8216;after&#8217;, and &#8216;id&#8217; attributes.</p>
 <p>The sort is topological. If an item does not specify a &#8216;before&#8217; or &#8216;after&#8217;,
 it is placed after the preceding item.</p>
-<p>If a cycle is found in the dependecies, a warning is logged and the order of
-the items is undefined.</p>
+<p>If a cycle is found in the dependencies, a warning is logged and the order
+of the items is undefined.</p>
 </dd></dl>
 
 <dl class="function">
@@ -921,8 +893,8 @@ additional dependency forcing another ordering).</p>
 <span id="traits-dock-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">traits_dock_pane</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.traits_dock_pane" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.traits_dock_pane.TraitsDockPane">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_dock_pane.</tt><tt class="descname">TraitsDockPane</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.traits_dock_pane.TraitsDockPane" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_dock_pane.</tt><tt class="descname">TraitsDockPane</tt><a class="headerlink" href="#pyface.tasks.traits_dock_pane.TraitsDockPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.dock_pane.DockPane" title="pyface.ui.qt4.tasks.dock_pane.DockPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.dock_pane.DockPane</span></tt></a></p>
 <p>A DockPane that displays a Traits UI View.</p>
 <dl class="method">
 <dt id="pyface.tasks.traits_dock_pane.TraitsDockPane.create_contents">
@@ -936,21 +908,11 @@ additional dependency forcing another ordering).</p>
 <dd><p>Destroy the toolkit-specific control that represents the pane.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="pyface.tasks.traits_dock_pane.TraitsDockPane.model">
-<tt class="descname">model</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11d10f90&gt;</em><a class="headerlink" href="#pyface.tasks.traits_dock_pane.TraitsDockPane.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="pyface.tasks.traits_dock_pane.TraitsDockPane.trait_context">
 <tt class="descname">trait_context</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.traits_dock_pane.TraitsDockPane.trait_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the model object for the Traits UI context, if appropriate.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.traits_dock_pane.TraitsDockPane.ui">
-<tt class="descname">ui</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11d1f6f0&gt;</em><a class="headerlink" href="#pyface.tasks.traits_dock_pane.TraitsDockPane.ui" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -959,8 +921,8 @@ additional dependency forcing another ordering).</p>
 <span id="traits-editor-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">traits_editor</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.traits_editor" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.traits_editor.TraitsEditor">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_editor.</tt><tt class="descname">TraitsEditor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.traits_editor.TraitsEditor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_editor.</tt><tt class="descname">TraitsEditor</tt><a class="headerlink" href="#pyface.tasks.traits_editor.TraitsEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.editor.Editor" title="pyface.ui.qt4.tasks.editor.Editor"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.editor.Editor</span></tt></a></p>
 <p>An Editor that displays a Traits UI View.</p>
 <dl class="method">
 <dt id="pyface.tasks.traits_editor.TraitsEditor.create">
@@ -974,21 +936,11 @@ additional dependency forcing another ordering).</p>
 <dd><p>Destroy the toolkit-specific control that represents the editor.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="pyface.tasks.traits_editor.TraitsEditor.model">
-<tt class="descname">model</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x12b3abb0&gt;</em><a class="headerlink" href="#pyface.tasks.traits_editor.TraitsEditor.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="pyface.tasks.traits_editor.TraitsEditor.trait_context">
 <tt class="descname">trait_context</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.traits_editor.TraitsEditor.trait_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the model object for the Traits UI context, if appropriate.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.traits_editor.TraitsEditor.ui">
-<tt class="descname">ui</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x124232d0&gt;</em><a class="headerlink" href="#pyface.tasks.traits_editor.TraitsEditor.ui" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -997,8 +949,8 @@ additional dependency forcing another ordering).</p>
 <span id="traits-task-pane-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">traits_task_pane</span></tt> Module<a class="headerlink" href="#module-pyface.tasks.traits_task_pane" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.tasks.traits_task_pane.TraitsTaskPane">
-<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_task_pane.</tt><tt class="descname">TraitsTaskPane</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.tasks.traits_task_pane.TraitsTaskPane" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyface.toolkit.Unimplemented</span></tt></p>
+<em class="property">class </em><tt class="descclassname">pyface.tasks.traits_task_pane.</tt><tt class="descname">TraitsTaskPane</tt><a class="headerlink" href="#pyface.tasks.traits_task_pane.TraitsTaskPane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.tasks.html#pyface.ui.qt4.tasks.task_pane.TaskPane" title="pyface.ui.qt4.tasks.task_pane.TaskPane"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.tasks.task_pane.TaskPane</span></tt></a></p>
 <p>A TaskPane that displays a Traits UI View.</p>
 <dl class="method">
 <dt id="pyface.tasks.traits_task_pane.TraitsTaskPane.create">
@@ -1013,21 +965,11 @@ pane.</p>
 <dd><p>Destroy the toolkit-specific control that represents the pane.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="pyface.tasks.traits_task_pane.TraitsTaskPane.model">
-<tt class="descname">model</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x129dc350&gt;</em><a class="headerlink" href="#pyface.tasks.traits_task_pane.TraitsTaskPane.model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="method">
 <dt id="pyface.tasks.traits_task_pane.TraitsTaskPane.trait_context">
 <tt class="descname">trait_context</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.tasks.traits_task_pane.TraitsTaskPane.trait_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use the model object for the Traits UI context, if appropriate.</p>
 </dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.tasks.traits_task_pane.TraitsTaskPane.ui">
-<tt class="descname">ui</tt><em class="property"> = &lt;traits.trait_types.Instance object at 0x11d1f770&gt;</em><a class="headerlink" href="#pyface.tasks.traits_task_pane.TraitsTaskPane.ui" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 
@@ -1140,14 +1082,14 @@ pane.</p>
         <li class="right" >
           <a href="pyface.sizers.html" title="sizers Package"
              >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.1.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2012, Enthought.
-      Last updated on Feb 15, 2012.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2pre/65e4c29a24e4+.
+        &copy; Copyright 2008-2013, Enthought.
+      Last updated on Dec 03, 2013.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
