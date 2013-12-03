@@ -4,7 +4,23 @@ Pyface Changelog
 Release 4.4.0
 -------------
 
-The biggest change in this release is support for the new adaptation mechanism
-in Traits 4.4.0.  This release also includes Tasks support for Enaml 0.8.
-Other than that, there are a number of other minor changes, improvements and
-bugfixes.
+This is a bug fix release. The biggest change in this release is support for the new adaptation
+mechanism in Traits 4.4.0.
+
+
+Change summary since 4.3.0
+--------------------------
+
+New features
+
+ * Support Enaml 0.8 (PR#92)
+
+Enhancements
+
+ * Improvements to SplitEditorAreaPane (PR#83).
+
+Fixes
+
+ * Fixed split editor area pane focus (PR#89).
+ * Fixed bug when a VSplitter contains an HSplitter (PR#88, issue#87)
+
