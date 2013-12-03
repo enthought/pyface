@@ -1,0 +1,10 @@
+Pyface Changelog
+================
+
+Release 4.4.0
+-------------
+
+The biggest change in this release is support for the new adaptation mechanism
+in Traits 4.4.0.  This release also includes Tasks support for Enaml 0.8.
+Other than that, there are a number of other minor changes, improvements and
+bugfixes.
