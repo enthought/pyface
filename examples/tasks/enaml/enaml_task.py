@@ -1,3 +1,8 @@
+#------------------------------------------------------------------------------
+# Copyright (c) 2013, Enthought, Inc.
+# All rights reserved.
+#------------------------------------------------------------------------------
+
 # Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem
 
@@ -6,7 +11,7 @@ from enaml_panes import DummyTaskPane, DummyDockPane
 
 
 class EnamlTask(Task):
-    """ A simple task for demonstraiting the use of Enaml in Tasks.
+    """ A simple task for demonstrating the use of Enaml in Tasks.
     """
 
     #### Task interface #######################################################

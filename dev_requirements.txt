@@ -1,0 +1,5 @@
+unittest2
+https://github.com/nucleic/enaml/archive/0.8.8.tar.gz#egg=enaml
+-e git+http://github.com/enthought/traits.git#egg=traits
+-e git+http://github.com/enthought/traitsui.git#egg=traitsui
+-e git+http://github.com/enthought/traits_enaml.git#egg=traits_enaml
