@@ -14,6 +14,10 @@ The following GUI backends are supported:
 - PyQt
 - PySide
 
+Documentation
+-------------
+`Online Documentation <http://docs.enthought.com/pyface/>`_.
+`API Documentation <http://docs.enthought.com/pyface/api/pyface.html>`_.
 
 Prerequisites
 -------------
