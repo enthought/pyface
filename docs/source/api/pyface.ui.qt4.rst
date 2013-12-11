@@ -25,6 +25,14 @@ qt4 Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`beep` Module
+------------------
+
+.. automodule:: pyface.ui.qt4.beep
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`clipboard` Module
 -----------------------
 
@@ -195,6 +203,7 @@ Subpackages
     pyface.ui.qt4.console
     pyface.ui.qt4.tasks
     pyface.ui.qt4.timer
+    pyface.ui.qt4.util
     pyface.ui.qt4.wizard
     pyface.ui.qt4.workbench
 

@@ -41,6 +41,14 @@ tasks Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`split_editor_area_pane` Module
+------------------------------------
+
+.. automodule:: pyface.ui.qt4.tasks.split_editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`task_pane` Module
 -----------------------
 
