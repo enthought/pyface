@@ -23,12 +23,16 @@ import sys
 # Major package imports.
 import wx
 
+# Prefer the pure python implementation of AUI if available
 try:
-    import wx.aui
+    from wx.lib.agw import aui
     AUI = True
-
 except ImportError:
-    AUI = False
+    try:
+        from wx import aui
+        AUI = True
+    except ImportError:
+        AUI = False
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
@@ -138,15 +142,11 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create(self):
 
-        if AUI:
-            # fixme: We have to capture the AUI manager as an attribute,
-            # otherwise it gets garbage collected and we get a core dump...
-            # Ahh, the sweet smell of open-source ;^()
-            self._aui_manager = wx.aui.AuiManager()
-
         super(ApplicationWindow, self)._create()
 
         if AUI:
+            self._aui_manager = aui.AuiManager()
+            self._aui_manager.SetManagedWindow(self.control)
             body = self._create_body(self.control)
             contents = self._create_contents(body)
             body.GetSizer().Add(contents, 1, wx.EXPAND)
@@ -177,10 +177,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
 
-        if AUI:
-            # Let the AUI manager look after the frame.
-            self._aui_manager.SetManagedWindow(control)
-
         return control
 
     def destroy(self):
@@ -195,7 +191,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _add_toolbar_to_aui_manager(self, tool_bar, name='Tool Bar'):
         """ Add a toolbar to the AUI manager. """
 
-        info = wx.aui.AuiPaneInfo()
+        info = aui.AuiPaneInfo()
         info.Caption(name)
         info.LeftDockable(False)
         info.Name(name)
@@ -214,7 +210,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         sizer = wx.BoxSizer(wx.VERTICAL)
         panel.SetSizer(sizer)
 
-        info = wx.aui.AuiPaneInfo()
+        info = aui.AuiPaneInfo()
         info.Caption('Body')
         info.Dockable(False)
         info.Floatable(False)
