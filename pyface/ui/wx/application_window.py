@@ -37,7 +37,7 @@ except ImportError:
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, provides, Unicode
+from traits.api import Instance, List, on_trait_change, provides, Unicode
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -85,7 +85,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     ###########################################################################
 
     def _create_contents(self, parent):
-        panel = wx.Panel(parent, -1)
+        panel = wx.Panel(parent, -1, name="ApplicationWindow")
         panel.SetSize((500, 400))
         panel.SetBackgroundColour('blue')
 
@@ -112,6 +112,7 @@ class ApplicationWindow(MApplicationWindow, Window):
                     self._add_toolbar_to_aui_manager(
                         tool_bar, tool_bar_manager.name
                     )
+                self._aui_manager.Update()
             else:
                 tool_bar = tool_bar_managers[0].create_tool_bar(parent)
                 self.control.SetToolBar(tool_bar)
@@ -265,6 +266,20 @@ class ApplicationWindow(MApplicationWindow, Window):
         return
 
     #### Trait change handlers ################################################
+
+    def _menu_bar_manager_changed(self):
+        if self.control is not None:
+            self._create_menu_bar(self.control)
+
+    def _status_bar_manager_changed(self):
+        if self.control is not None:
+            self._create_status_bar(self.control)
+
+    @on_trait_change('tool_bar_manager, tool_bar_managers')
+    def _update_tool_bar_managers(self):
+        if self.control is not None:
+            self._create_tool_bar(self.control)
+
     def _icon_changed(self):
         self._set_window_icon()
 
