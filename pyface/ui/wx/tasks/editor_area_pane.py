@@ -36,7 +36,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         print "editor pane parent: %s" % parent
         # Create and configure the tab widget.
-        self.control = control = aui.AuiNotebook(parent, agwStyle=self.style, size=(1000, 1000))
+        self.control = control = aui.AuiNotebook(parent, agwStyle=self.style)
 #        control.tabBar().setVisible(not self.hide_tab_bar)
 
         # Connect to the widget's signals.

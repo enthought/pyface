@@ -30,8 +30,6 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         print "parent of TaskWindowBackend: %s" % parent
         control = wx.Panel(parent, name="TaskWindowBackend")
-        self.mgr = aui.AuiManager()
-        self.mgr.SetManagedWindow(control)
         return control
 
     def destroy(self):
@@ -59,9 +57,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         # Show the central pane.
         info = aui.AuiPaneInfo().Caption('Central').Dockable(False).Floatable(False).Name('Central').CentrePane().Maximize()
-        print "reparenting central pane to %s" % self.control
-        self.mgr.AddPane(state.central_pane.control, info)
-        self.mgr.Update()
+        print "adding central pane to %s" % self.window
+        self.window._aui_manager.AddPane(state.central_pane.control, info)
+        self.window._aui_manager.Update()
 
         # Show the dock panes.
         self._layout_state(state)
