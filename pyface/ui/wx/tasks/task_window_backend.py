@@ -1,6 +1,6 @@
 # System library imports.
 import wx
-from wx.lib.agw import aui
+from pyface.wx.aui import aui
 
 # Enthought library imports.
 from traits.api import Instance, List

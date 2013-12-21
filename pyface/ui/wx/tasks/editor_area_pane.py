@@ -8,8 +8,7 @@ from traits.api import on_trait_change, provides
 
 # System library imports.
 import wx
-#from wx import aui
-from wx.lib.agw import aui
+from pyface.wx.aui import aui
 
 # Local imports.
 from task_pane import TaskPane

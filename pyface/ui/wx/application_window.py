@@ -22,17 +22,7 @@ import sys
 
 # Major package imports.
 import wx
-
-# Prefer the pure python implementation of AUI if available
-try:
-    from wx.lib.agw import aui
-    AUI = True
-except ImportError:
-    try:
-        from wx import aui
-        AUI = True
-    except ImportError:
-        AUI = False
+from pyface.wx.aui import aui
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
@@ -106,7 +96,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
-            if AUI:
+            if aui is not None:
                 for tool_bar_manager in reversed(tool_bar_managers):
                     tool_bar = tool_bar_manager.create_tool_bar(parent)
                     self._add_toolbar_to_aui_manager(
@@ -145,17 +135,19 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         super(ApplicationWindow, self)._create()
 
-        if AUI:
+        if aui is not None:
             self._aui_manager = aui.AuiManager()
             self._aui_manager.SetManagedWindow(self.control)
-            contents = self._create_contents(self.control)
+            
+            # Keep a reference to the AUI Manager in the control because Panes
+            # will need to access it in order to lay themselves out
+            self.control._aui_manager = self._aui_manager
 
-        else:
-            contents = self._create_contents(self.control)
+        contents = self._create_contents(self.control)
 
         self._create_trim_widgets(self.control)
 
-        if AUI:
+        if aui is not None:
             # Updating the AUI manager actually commits all of the pane's added
             # to it (this allows batch updates).
             self._aui_manager.Update()
@@ -216,7 +208,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _wx_enable_tool_bar(self, tool_bar, enabled):
         """ Enable/Disablea tool bar. """
 
-        if AUI:
+        if aui is not None:
             # AUI toolbars cannot be enabled/disabled.
             pass
 
@@ -228,7 +220,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _wx_show_tool_bar(self, tool_bar, visible):
         """ Hide/Show a tool bar. """
 
-        if AUI:
+        if aui is not None:
             pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.name)
 
             if visible:
