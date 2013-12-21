@@ -3,10 +3,11 @@ from contextlib import contextmanager
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, on_trait_change, Property, provides, Tuple
+from traits.api import Bool, on_trait_change, Property, provides, Tuple, Str
 
 # System library imports.
-from wx.lib.agw import aui
+import wx
+from pyface.wx.aui import aui
 
 # Local imports.
 from task_pane import TaskPane
@@ -26,7 +27,10 @@ class DockPane(TaskPane, MDockPane):
 
     See the IDockPane interface for API documentation.
     """
-
+    
+    # Keep a reference to the Aui pane name in order to update dock state
+    pane_name = Str
+    
     #### 'IDockPane' interface ################################################
 
     size = Property(Tuple)
@@ -39,48 +43,54 @@ class DockPane(TaskPane, MDockPane):
     # 'ITaskPane' interface.
     ###########################################################################
 
+    @classmethod
+    def print_hierarchy(cls, parent, indent=""):
+        print "%s%s %s" % (indent, str(parent), parent.GetName())
+        for child in parent.GetChildren():
+            cls.print_hierarchy(child, indent + "  ")
+
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
         """
-        self.control = control = QtGui.QDockWidget(parent)
+        self.print_hierarchy(parent)
+        
+        # wx doesn't need a wrapper control, so the contents become the control
+        self.control = self.create_contents(parent)
 
         # Set the widget's object name. This important for QMainWindow state
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
-        control.setObjectName(self.task.id + ':' + self.id)
+        self.pane_name = self.task.id + ':' + self.id
+        
+        info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
+
+        # size?
 
         # Configure the dock widget according to the DockPane settings.
-        self._set_dock_features()
-        self._set_dock_title()
-        self._set_floating()
-        self._set_visible()
+        self.update_dock_features(info)
+        self.update_dock_title(info)
+        self.update_floating(info)
+        #self.update_visible(info)
+        
+        info.Hide()
+        info.Show(False)
+        self.task.window._aui_manager.AddPane(self.control, info)
+        self.commit_layout()
 
         # Connect signal handlers for updating DockPane traits.
-        control.dockLocationChanged.connect(self._receive_dock_area)
-        control.topLevelChanged.connect(self._receive_floating)
-        control.visibilityChanged.connect(self._receive_visible)
+#        control.dockLocationChanged.connect(self._receive_dock_area)
+#        control.topLevelChanged.connect(self._receive_floating)
+#        control.visibilityChanged.connect(self._receive_visible)
 
-        # Add the pane contents to the dock widget.
-        contents = self.create_contents(control)
-        control.setWidget(contents)
-
-        # For some reason the QDockWidget doesn't respect the minimum size
-        # of its widgets
-        contents_minsize = contents.minimumSize()
-        style = control.style()
-        contents_minsize.setHeight(contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
-        control.setMinimumSize(contents_minsize)
-
-        # Hide the control by default. Otherwise, the widget will visible in its
-        # parent immediately!
-        control.hide()
-
-    def set_focus(self):
-        """ Gives focus to the control that represents the pane.
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the contents.
         """
         if self.control is not None:
-            set_focus(self.control.widget())
+            print "Destroying %s" % self.control
+            self.task.window._aui_manager.DetachPane(self.control)
+            self.control.Hide()
+            self.control.Destroy()
+            self.control = None
 
     ###########################################################################
     # 'IDockPane' interface.
@@ -89,68 +99,99 @@ class DockPane(TaskPane, MDockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        return QtGui.QWidget(parent)
+        return wx.Window(parent)
 
-    ###########################################################################
-    # Protected interface.
-    ###########################################################################
-
-    @contextmanager
-    def _signal_context(self):
-        """ Defines a context appropriate for Qt signal callbacks. Necessary to
-            prevent feedback between Traits and Qt event handlers.
-        """
-        original = self._receiving
-        self._receiving = True
-        yield
-        self._receiving = original
+#    ###########################################################################
+#    # Protected interface.
+#    ###########################################################################
+#
+#    @contextmanager
+#    def _signal_context(self):
+#        """ Defines a context appropriate for Qt signal callbacks. Necessary to
+#            prevent feedback between Traits and Qt event handlers.
+#        """
+#        original = self._receiving
+#        self._receiving = True
+#        yield
+#        self._receiving = original
 
     #### Trait property getters/setters #######################################
 
     def _get_size(self):
         if self.control is not None:
-            return (self.control.width(), self.control.height())
+            return self.control.GetSizeTuple()
         return (-1, -1)
 
     #### Trait change handlers ################################################
 
+    def get_pane_info(self):
+        info = self.task.window._aui_manager.GetPane(self.pane_name)
+        return info
+    
+    def commit_layout(self):
+        self.task.window._aui_manager.Update()
+
+    def update_dock_area(self, info):
+        info.Direction(AREA_MAP[self.dock_area])
+
     @on_trait_change('dock_area')
     def _set_dock_area(self):
-        if self.control is not None and not self._receiving:
+        if self.control is not None:
             # Only attempt to adjust the area if the task is active.
             main_window = self.task.window.control
             if main_window and self.task == self.task.window.active_task:
-                # Qt will automatically remove the dock widget from its previous
-                # area, if it had one.
-                main_window.addDockWidget(AREA_MAP[self.dock_area], 
-                                          self.control)
+                info = self.get_pane_info()
+                self.update_dock_area(info)
+                self.commit_layout()
+
+    def update_dock_features(self, info):
+        info.CloseButton(self.closable)
+        info.Floatable(self.floatable)
+        info.Movable(self.movable)
 
     @on_trait_change('closable', 'floatable', 'movable')
     def _set_dock_features(self):
         if self.control is not None:
-            features = QtGui.QDockWidget.NoDockWidgetFeatures
-            if self.closable:
-                features |= QtGui.QDockWidget.DockWidgetClosable
-            if self.floatable:
-                features |= QtGui.QDockWidget.DockWidgetFloatable
-            if self.movable:
-                features |= QtGui.QDockWidget.DockWidgetMovable
-            self.control.setFeatures(features)
+                info = self.get_pane_info()
+                self.update_dock_features(info)
+                self.commit_layout()
+
+    def update_dock_title(self, info):
+        info.Caption(self.name)
 
     @on_trait_change('name')
     def _set_dock_title(self):
         if self.control is not None:
-            self.control.setWindowTitle(self.name)
+            info = self.get_pane_info()
+            self.update_dock_title(info)
+            self.commit_layout()
+
+    def update_floating(self, info):
+        if self.floating:
+            info.Float()
+        else:
+            info.Dock()
 
     @on_trait_change('floating')
     def _set_floating(self):
-        if self.control is not None and not self._receiving:
-            self.control.setFloating(self.floating)
+        if self.control is not None:
+            info = self.get_pane_info()
+            self.update_floating(info)
+            self.commit_layout()
+
+    def update_visible(self, info):
+        if self.visible:
+            info.Show()
+        else:
+            info.Hide()
 
     @on_trait_change('visible')
     def _set_visible(self):
-        if self.control is not None and not self._receiving:
-            self.control.setVisible(self.visible)
+        if self.control is not None:
+            print "WX: _set_visible"
+            info = self.get_pane_info()
+            self.update_visible(info)
+            self.commit_layout()
 
     #### Signal handlers ######################################################
 
