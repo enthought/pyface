@@ -148,10 +148,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         if AUI:
             self._aui_manager = aui.AuiManager()
             self._aui_manager.SetManagedWindow(self.control)
-            body = self._create_body(self.control)
-            contents = self._create_contents(body)
-            body.GetSizer().Add(contents, 1, wx.EXPAND)
-            body.Fit()
+            contents = self._create_contents(self.control)
 
         else:
             contents = self._create_contents(self.control)
@@ -203,24 +200,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._aui_manager.AddPane(tool_bar, info)
 
         return
-
-    def _create_body(self, parent):
-        """ Create the body of the frame. """
-
-        panel = wx.Panel(parent, -1)
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        panel.SetSizer(sizer)
-
-        info = aui.AuiPaneInfo()
-        info.Caption('Body')
-        info.Dockable(False)
-        info.Floatable(False)
-        info.Name('Body')
-        info.CentrePane()
-
-        self._aui_manager.AddPane(panel, info)
-
-        return panel
 
     def _get_tool_bar_managers(self):
         """ Return all tool bar managers specified for the window. """

@@ -28,9 +28,9 @@ class TaskWindowBackend(MTaskWindowBackend):
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
-        print "parent of TaskWindowBackend: %s" % parent
-        control = wx.Panel(parent, name="TaskWindowBackend")
-        return control
+        # No extra control needed for wx! It's all handled by the AUIManager in
+        # the ApplicationWindow
+        pass
 
     def destroy(self):
         """ Destroy the backend.
