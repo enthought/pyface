@@ -3,7 +3,7 @@ from pyface.tasks.i_editor import IEditor, MEditor
 from traits.api import Bool, Property, provides
 
 # System library imports.
-#from pyface.qt import QtGui
+import wx
 
 
 @provides(IEditor)
@@ -26,14 +26,13 @@ class Editor(MEditor):
         """ Create and set the toolkit-specific control that represents the
             pane.
         """
-        self.control = QtGui.QWidget(parent)
+        self.control = wx.Window(parent, name="Editor")
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         if self.control is not None:
-            self.control.hide()
-            self.control.deleteLater()
+            self.control.Destroy()
             self.control = None
 
     ###########################################################################
@@ -42,5 +41,5 @@ class Editor(MEditor):
 
     def _get_has_focus(self):
         if self.control is not None:
-            return self.control.hasFocus()
+            return self.control.FindFocus() == self.control
         return False

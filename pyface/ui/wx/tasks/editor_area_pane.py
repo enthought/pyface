@@ -7,6 +7,8 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
 from traits.api import on_trait_change, provides
 
 # System library imports.
+import wx
+#from wx import aui
 from wx.lib.agw import aui
 
 # Local imports.
@@ -36,7 +38,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         print "editor pane parent: %s" % parent
         # Create and configure the tab widget.
-        self.control = control = aui.AuiNotebook(parent, agwStyle=self.style)
+        self.control = control = aui.AuiNotebook(parent, style=self.style)
 #        control.tabBar().setVisible(not self.hide_tab_bar)
 
         # Connect to the widget's signals.
@@ -60,7 +62,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        self.control.SetSelectionToWindow(editor.control)
+        index = self.control.GetPageIndex(editor.control)
+        self.control.SetSelection(index)
         
     def add_editor(self, editor):
         """ Adds an editor to the pane.
@@ -68,7 +71,11 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         editor.editor_area = self
         editor.create(self.control)
         self.control.AddPage(editor.control, self._get_label(editor))
-        self.control.SetPageToolTip(editor.control, editor.tooltip)
+        try:
+            index = self.control.GetPageIndex(editor.control)
+            self.control.SetPageToolTip(index, editor.tooltip)
+        except AttributeError:
+            pass
         self.editors.append(editor)
         self._update_tab_bar()
 
@@ -81,7 +88,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """ Removes an editor from the pane.
         """
         self.editors.remove(editor)
-        self.control.removeTab(self.control.indexOf(editor.control))
+        index = self.control.GetPageIndex(editor.control)
+        print "Removing page %d" % index
+        self.control.RemovePage(index)
         editor.destroy()
         editor.editor_area = None
         self._update_tab_bar()
@@ -98,6 +107,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         label = editor.name
         if editor.dirty:
             label = '*' + label
+        if not label:
+            label = " " # bug in agw that fails on empty label
         return label
 
     def _get_editor_with_control(self, control):
@@ -130,16 +141,27 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     #### Signal handlers ######################################################
 
-    def _close_requested(self, index):
+    def _close_requested(self, evt):
+        index = evt.GetSelection()
+        print "index=%d" % index
         control = self.control.GetPage(index)
         editor = self._get_editor_with_control(control)
+        
+        # Veto the event even though we are going to delete the tab, otherwise
+        # the notebook will delete the editor wx control and the call to
+        # editor.close() will fail.  IEditorAreaPane.remove_editor() needs
+        # the control to exist so it can remove it from the list of managed
+        # editors.
+        evt.Veto()
         editor.close()
         
     def _update_active_editor(self, evt):
         index = evt.GetSelection()
-        if index == -1:
+        print "index=%d" % index
+        if index == wx.NOT_FOUND:
             self.active_editor = None
         else:
+            print "num pages=%d" % self.control.GetPageCount()
             control = self.control.GetPage(index)
             self.active_editor = self._get_editor_with_control(control)
 
@@ -147,4 +169,4 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def _update_tab_bar(self):
         if self.control is not None:
             visible = self.control.GetPageCount() > 1 if self.hide_tab_bar else True
-            self.control.tabBar().setVisible(visible)
+            pass # Can't actually hide the tab bar on wx.aui
