@@ -29,20 +29,20 @@ class MainWindowLayout(HasTraits):
     # 'MainWindowLayout' interface.
     ###########################################################################
 
-    def get_layout(self, layout, aui_manager):
+    def get_layout(self, layout, window):
         """ Get the layout by adding sublayouts to the specified DockLayout.
         """
         print "WX: get_layout: %s" % layout
-        layout.aui_perspective = aui_manager.SavePerspective()
+        layout.perspective = window._aui_manager.SavePerspective()
+        print "WX: get_layout: saving perspective %s" % layout.perspective
 
-    def set_layout(self, layout, aui_manager):
+    def set_layout(self, layout, window):
         """ Applies a DockLayout to the window.
         """
         print "WX: set_layout: %s" % layout
         
-        if hasattr(layout, "aui_perspective"):
-            print "WX: set_layout: using saved perspective"
-            aui_manager.LoadPerspective(layout.aui_perspective)
+        if hasattr(layout, "perspective"):
+            self._set_layout_from_aui(layout, window)
             return
 
         # Perform the layout. This will assign fixed sizes to the dock widgets
@@ -52,6 +52,27 @@ class MainWindowLayout(HasTraits):
             if sublayout:
                 self.set_layout_for_area(sublayout, direction,
                                          _toplevel_call=False)
+
+        # Add all panes not assigned an area by the TaskLayout.
+        mgr = window._aui_manager
+        for dock_pane in self.state.dock_panes:
+            info = mgr.GetPane(dock_pane.pane_name)
+            if not info.IsOk():
+                print "WX: set_layout: managing pane %s" % dock_pane.pane_name
+                dock_pane.add_to_manager()
+            else:
+                print "WX: set_layout: arleady managed pane: %s" % dock_pane.pane_name
+    
+    def _set_layout_from_aui(self, layout, window):
+        # The central pane will have already been added, but we need to add all
+        # of the dock panes to the manager before the call to LoadPerspective
+        print "WX: _set_layout_from_aui: using saved perspective"
+        for dock_pane in self.state.dock_panes:
+            print "WX: adding dock pane %s" % dock_pane.id
+            dock_pane.add_to_manager()
+        print "WX: _set_layout_from_aui: restoring perspective %s" % layout.perspective
+        window._aui_manager.LoadPerspective(layout.perspective)
+        
 
     def set_layout_for_area(self, layout, direction,
                             _toplevel_added=False, _toplevel_call=True):
@@ -69,6 +90,7 @@ class MainWindowLayout(HasTraits):
                 dock_pane = self._get_dock_pane(layout)
                 dock_pane.dock_area = INVERSE_AREA_MAP[direction]
                 print "WX: layout size (%d,%d)" % (layout.width, layout.height)
+                dock_pane.add_to_manager()
 #                if layout.width > 0:
 #                    dock_widget.widget().setFixedWidth(layout.width)
 #                if layout.height > 0:

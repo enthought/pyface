@@ -3,13 +3,18 @@ import wx
 from pyface.wx.aui import aui
 
 # Enthought library imports.
-from traits.api import Instance, List
+from traits.api import Instance, List, Str
 
 # Local imports.
 from main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
 
+
+class AUILayout(TaskLayout):
+    """ The layout for a main window's dock area using AUI Perspectives
+    """
+    perspective = Str
 
 class TaskWindowBackend(MTaskWindowBackend):
     """ The toolkit-specific implementation of a TaskWindowBackend.
@@ -44,12 +49,19 @@ class TaskWindowBackend(MTaskWindowBackend):
         self.window._active_state.layout = self.get_layout()
 
         # Now hide its controls.
-        self.control.centralWidget().removeWidget(state.central_pane.control)
+        self.window._aui_manager.DetachPane(state.central_pane.control)
+        state.central_pane.control.Hide()
+        
         for dock_pane in state.dock_panes:
-            # Warning: The layout behavior is subtly different (and wrong!) if
-            # the order of these two statement is switched.
-            dock_pane.control.hide()
-            self.control.removeDockWidget(dock_pane.control)
+            print "hiding dock pane %s" % dock_pane.id
+            self.window._aui_manager.DetachPane(dock_pane.control)
+            dock_pane.control.Hide()
+        
+        for info in self.window._aui_manager.GetAllPanes():
+            print "remaining pane: %s" % info.name
+            control = info.window
+            self.window._aui_manager.DetachPane(control)
+            control.Hide()
 
     def show_task(self, state):
         """ Assuming no task is currently active, show the controls of the
@@ -75,9 +87,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         """ Returns a TaskLayout for the current state of the window.
         """
         # Extract the layout from the main window.
-        layout = TaskLayout(id=self.window._active_state.task.id)
+        layout = AUILayout(id=self.window._active_state.task.id)
         self._main_window_layout.state = self.window._active_state
-        self._main_window_layout.get_layout(layout, self.window._aui_manager)
+        self._main_window_layout.get_layout(layout, self.window)
 
         return layout
 
@@ -104,15 +116,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Add all panes in the TaskLayout.
         self._main_window_layout.state = state
-        self._main_window_layout.set_layout(state.layout, self.window._aui_manager)
-
-        # Add all panes not assigned an area by the TaskLayout.
-        for dock_pane in state.dock_panes:
-            if dock_pane.control not in self._main_window_layout.consumed:
-                print "WX: in _layout_state: %s" % dock_pane.control
-#                info = dock_pane.get_pane_info()
-#                dock_pane.update_dock_area(info)
-#                dock_pane.update_visible(info)
+        self._main_window_layout.set_layout(state.layout, self.window)
 
     #### Trait initializers ###################################################
 

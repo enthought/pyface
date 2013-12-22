@@ -52,17 +52,22 @@ class DockPane(TaskPane, MDockPane):
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
         """
-        self.print_hierarchy(parent)
-        
         # wx doesn't need a wrapper control, so the contents become the control
         self.control = self.create_contents(parent)
 
-        # Set the widget's object name. This important for QMainWindow state
+        # Set the widget's object name. This important for AUI Manager state
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
         self.pane_name = self.task.id + ':' + self.id
         print "WX: dock_pane.create: %s" % self.pane_name
         
+        self.print_hierarchy(parent)
+        # Connect signal handlers for updating DockPane traits.
+#        control.dockLocationChanged.connect(self._receive_dock_area)
+#        control.topLevelChanged.connect(self._receive_floating)
+#        control.visibilityChanged.connect(self._receive_visible)
+    
+    def get_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
 
         # size?
@@ -75,13 +80,12 @@ class DockPane(TaskPane, MDockPane):
         
         info.Hide()
         info.Show(False)
+        
+        return info
+    
+    def add_to_manager(self):
+        info = self.get_info()
         self.task.window._aui_manager.AddPane(self.control, info)
-        self.commit_layout()
-
-        # Connect signal handlers for updating DockPane traits.
-#        control.dockLocationChanged.connect(self._receive_dock_area)
-#        control.topLevelChanged.connect(self._receive_floating)
-#        control.visibilityChanged.connect(self._receive_visible)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the contents.
@@ -100,7 +104,7 @@ class DockPane(TaskPane, MDockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        return wx.Window(parent)
+        return wx.Window(parent, name=self.task.id + ':' + self.id)
 
 #    ###########################################################################
 #    # Protected interface.
@@ -137,6 +141,8 @@ class DockPane(TaskPane, MDockPane):
         main_window = self.task.window.control
         if main_window and self.task == self.task.window.active_task:
             self.commit_layout()
+        else:
+            print "task not active so not committing..."
 
     def update_dock_area(self, info):
         info.Direction(AREA_MAP[self.dock_area])
@@ -194,7 +200,7 @@ class DockPane(TaskPane, MDockPane):
     @on_trait_change('visible')
     def _set_visible(self):
         if self.control is not None:
-            print "WX: _set_visible"
+            print "WX: _set_visible on %s" % self.control.GetName()
             info = self.get_pane_info()
             self.update_visible(info)
             self.commit_if_active()
