@@ -77,13 +77,8 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Extract the layout from the main window.
         layout = TaskLayout(id=self.window._active_state.task.id)
         self._main_window_layout.state = self.window._active_state
-        self._main_window_layout.get_layout(layout)
+        self._main_window_layout.get_layout(layout, self.window._aui_manager)
 
-        # Extract the window's corner configuration.
-        for name, corner in CORNER_MAP.iteritems():
-            area = INVERSE_AREA_MAP[int(self.control.corner(corner))]
-            setattr(layout, name + '_corner', area)
-            
         return layout
 
     def set_layout(self, layout):
@@ -92,6 +87,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         self.window._active_state.layout = layout
         self._layout_state(self.window._active_state)
+        self.window._aui_manager.Update()
 
     ###########################################################################
     # Private interface.
@@ -108,23 +104,20 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Add all panes in the TaskLayout.
         self._main_window_layout.state = state
-        self._main_window_layout.set_layout(state.layout)
+        self._main_window_layout.set_layout(state.layout, self.window._aui_manager)
 
         # Add all panes not assigned an area by the TaskLayout.
         for dock_pane in state.dock_panes:
             if dock_pane.control not in self._main_window_layout.consumed:
-                print dock_pane.control
-#                self.control.addDockWidget(AREA_MAP[dock_pane.dock_area],
-#                                           dock_pane.control)
-                # By default, these panes are not visible. However, if a pane
-                # has been explicitly set as visible, honor that setting.
-                if dock_pane.visible:
-                    dock_pane.control.show()
+                print "WX: in _layout_state: %s" % dock_pane.control
+#                info = dock_pane.get_pane_info()
+#                dock_pane.update_dock_area(info)
+#                dock_pane.update_visible(info)
 
     #### Trait initializers ###################################################
 
     def __main_window_layout_default(self):
-        return TaskWindowLayout(control=self.control)
+        return TaskWindowLayout()
 
     #### Signal handlers ######################################################
 
@@ -148,21 +141,11 @@ class TaskWindowLayout(MainWindowLayout):
     state = Instance('pyface.tasks.task_window.TaskState')
 
     ###########################################################################
-    # 'MainWindowLayout' interface.
-    ###########################################################################
-
-    def set_layout(self, layout):
-        """ Applies a DockLayout to the window.
-        """
-        self.consumed = []
-        super(TaskWindowLayout, self).set_layout(layout)
-
-    ###########################################################################
     # 'MainWindowLayout' abstract interface.
     ###########################################################################
 
     def _get_dock_widget(self, pane):
-        """ Returns the QDockWidget associated with a PaneItem.
+        """ Returns the control associated with a PaneItem.
         """
         for dock_pane in self.state.dock_panes:
             if dock_pane.id == pane.id:
@@ -171,7 +154,7 @@ class TaskWindowLayout(MainWindowLayout):
         return None
 
     def _get_pane(self, dock_widget):
-        """ Returns a PaneItem for a QDockWidget.
+        """ Returns a PaneItem for a control.
         """
         for dock_pane in self.state.dock_panes:
             if dock_pane.control == dock_widget:

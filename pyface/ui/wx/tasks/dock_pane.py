@@ -61,6 +61,7 @@ class DockPane(TaskPane, MDockPane):
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
         self.pane_name = self.task.id + ':' + self.id
+        print "WX: dock_pane.create: %s" % self.pane_name
         
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
 
@@ -131,18 +132,23 @@ class DockPane(TaskPane, MDockPane):
     def commit_layout(self):
         self.task.window._aui_manager.Update()
 
+    def commit_if_active(self):
+        # Only attempt to commit the AUI changes if the area if the task is active.
+        main_window = self.task.window.control
+        if main_window and self.task == self.task.window.active_task:
+            self.commit_layout()
+
     def update_dock_area(self, info):
         info.Direction(AREA_MAP[self.dock_area])
+        print "info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction)
 
     @on_trait_change('dock_area')
     def _set_dock_area(self):
+        print "trait change: dock_area"
         if self.control is not None:
-            # Only attempt to adjust the area if the task is active.
-            main_window = self.task.window.control
-            if main_window and self.task == self.task.window.active_task:
-                info = self.get_pane_info()
-                self.update_dock_area(info)
-                self.commit_layout()
+            info = self.get_pane_info()
+            self.update_dock_area(info)
+            self.commit_if_active()
 
     def update_dock_features(self, info):
         info.CloseButton(self.closable)
@@ -152,9 +158,9 @@ class DockPane(TaskPane, MDockPane):
     @on_trait_change('closable', 'floatable', 'movable')
     def _set_dock_features(self):
         if self.control is not None:
-                info = self.get_pane_info()
-                self.update_dock_features(info)
-                self.commit_layout()
+            info = self.get_pane_info()
+            self.update_dock_features(info)
+            self.commit_if_active()
 
     def update_dock_title(self, info):
         info.Caption(self.name)
@@ -164,7 +170,7 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_title(info)
-            self.commit_layout()
+            self.commit_if_active()
 
     def update_floating(self, info):
         if self.floating:
@@ -177,7 +183,7 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_floating(info)
-            self.commit_layout()
+            self.commit_if_active()
 
     def update_visible(self, info):
         if self.visible:
@@ -191,7 +197,7 @@ class DockPane(TaskPane, MDockPane):
             print "WX: _set_visible"
             info = self.get_pane_info()
             self.update_visible(info)
-            self.commit_layout()
+            self.commit_if_active()
 
     #### Signal handlers ######################################################
 

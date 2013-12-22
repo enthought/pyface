@@ -9,7 +9,7 @@ import logging
 from traits.api import Any, HasTraits
 
 # Local imports.
-from dock_pane import AREA_MAP
+from dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
      Splitter, HSplitter, VSplitter
 
@@ -25,112 +25,35 @@ class MainWindowLayout(HasTraits):
     """ A class for applying declarative layouts to a QMainWindow.
     """
 
-    #### 'MainWindowLayout' interface #########################################
-
-    # The QMainWindow control to lay out.
-    control = Any
-
     ###########################################################################
     # 'MainWindowLayout' interface.
     ###########################################################################
 
-    def get_layout(self, layout, include_sizes=True):
+    def get_layout(self, layout, aui_manager):
         """ Get the layout by adding sublayouts to the specified DockLayout.
         """
-        for name, q_dock_area in AREA_MAP.iteritems():
-            sublayout = self.get_layout_for_area(q_dock_area, include_sizes)
-            setattr(layout, name, sublayout)
+        print "WX: get_layout: %s" % layout
+        layout.aui_perspective = aui_manager.SavePerspective()
 
-    def get_layout_for_area(self, q_dock_area, include_sizes=True):
-        """ Gets a LayoutItem for the specified dock area.
-        """
-        # Build the initial set of leaf-level items.
-        items = set()
-        rects = {}
-        for child in self.control.children():
-            # Iterate through *visibile* dock widgets. (Inactive tabbed dock
-            # widgets are "visible" but have invalid positions.)
-            if isinstance(child, QtGui.QDockWidget) and child.isVisible() and \
-                   self.control.dockWidgetArea(child) == q_dock_area and \
-                   child.x() >= 0 and child.y() >= 0:
-                # Get the list of dock widgets in this tab group in order.
-                geometry = child.geometry()
-                tabs = [ tab for tab in self.control.tabifiedDockWidgets(child)
-                         if tab.isVisible() ]
-                if tabs:
-                    tab_bar = self._get_tab_bar(child)
-                    tab_index = tab_bar.currentIndex()
-                    tabs.insert(tab_index, child)
-                    geometry = tab_bar.geometry().united(geometry)
-
-                # Create the leaf-level item for the child.
-                if tabs:
-                    panes = [ self._prepare_pane(dock_widget, include_sizes)
-                              for dock_widget in tabs ]
-                    item = Tabbed(*panes, active_tab=panes[tab_index].id)
-                else:
-                    item = self._prepare_pane(child, include_sizes)
-                items.add(item)
-                rects[item] = geometry
-
-        # Build the layout tree bottom-up, in multiple passes.
-        while len(items) > 1:
-            add, remove = set(), set()
-            
-            for item1, item2 in combinations(items, 2):
-                if item1 not in remove and item2 not in remove:
-                    rect1, rect2 = rects[item1], rects[item2]
-                    orient = self._get_division_orientation(rect1, rect2, True)
-                    if orient == QtCore.Qt.Horizontal:
-                        if rect1.y() < rect2.y():
-                            item = VSplitter(item1, item2)
-                        else:
-                            item = VSplitter(item2, item1)
-                    elif orient == QtCore.Qt.Vertical:
-                        if rect1.x() < rect2.x():
-                            item = HSplitter(item1, item2)
-                        else:
-                            item = HSplitter(item2, item1)
-                    else:
-                        continue
-                    rects[item] = rect1.united(rect2)
-                    add.add(item)
-                    remove.update((item1, item2))
-                    
-            if add or remove:
-                items.update(add)
-                items.difference_update(remove)
-            else:
-                # Raise an exception instead of falling into an infinite loop.
-                raise RuntimeError('Unable to extract layout from QMainWindow.')
-
-        if items:
-            return items.pop()
-        return None
-
-    def set_layout(self, layout):
+    def set_layout(self, layout, aui_manager):
         """ Applies a DockLayout to the window.
         """
-        print self.control
-        print layout
-#        # Remove all existing dock widgets.
-#        for child in self.control.children():
-#            if isinstance(child, QtGui.QDockWidget):
-#                child.hide()
-#                self.control.removeDockWidget(child)
+        print "WX: set_layout: %s" % layout
+        
+        if hasattr(layout, "aui_perspective"):
+            print "WX: set_layout: using saved perspective"
+            aui_manager.LoadPerspective(layout.aui_perspective)
+            return
 
         # Perform the layout. This will assign fixed sizes to the dock widgets
         # to enforce size constraints specified in the PaneItems.
-        for name, q_dock_area in AREA_MAP.iteritems():
+        for name, direction in AREA_MAP.iteritems():
             sublayout = getattr(layout, name)
             if sublayout:
-                self.set_layout_for_area(sublayout, q_dock_area,
+                self.set_layout_for_area(sublayout, direction,
                                          _toplevel_call=False)
 
-        # Remove the fixed sizes once Qt activates the layout.
-#        QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
-
-    def set_layout_for_area(self, layout, q_dock_area,
+    def set_layout_for_area(self, layout, direction,
                             _toplevel_added=False, _toplevel_call=True):
         """ Applies a LayoutItem to the specified dock area.
         """
@@ -139,13 +62,17 @@ class MainWindowLayout(HasTraits):
         # "effectively" top level, requiring us to reach down to the leaves of
         # the layout. (This is really only an issue for Splitter layouts, since
         # Tabbed layouts are, for our purposes, leaves.)
-
+        print "WX: set_layout_for_area: %s" % INVERSE_AREA_MAP[direction]
+        
         if isinstance(layout, PaneItem):
             if not _toplevel_added:
-                widget = self._prepare_toplevel_for_item(layout)
-                if widget:
-                    self.control.addDockWidget(q_dock_area, widget)
-                    widget.show()
+                dock_pane = self._get_dock_pane(layout)
+                dock_pane.dock_area = INVERSE_AREA_MAP[direction]
+                print "WX: layout size (%d,%d)" % (layout.width, layout.height)
+#                if layout.width > 0:
+#                    dock_widget.widget().setFixedWidth(layout.width)
+#                if layout.height > 0:
+#                    dock_widget.widget().setFixedHeight(layout.height)
         
         elif isinstance(layout, Tabbed):
             active_widget = first_widget = None
@@ -212,6 +139,14 @@ class MainWindowLayout(HasTraits):
         """ Returns a PaneItem for a QDockWidget.
         """
         raise NotImplementedError
+
+    def _get_dock_pane(self, pane):
+        """ Returns the DockPane associated with a PaneItem.
+        """
+        for dock_pane in self.state.dock_panes:
+            if dock_pane.id == pane.id:
+                return dock_pane
+        return None
 
     ###########################################################################
     # Private interface.

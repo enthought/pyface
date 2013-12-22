@@ -17,7 +17,7 @@ class ExamplePane(DockPane):
 
     #### TaskPane interface ###################################################
 
-    id = 'steps.example__pane'
+    id = 'steps.example_pane'
     name = 'Example Pane'
 
 class ExampleTask(Task):
@@ -51,7 +51,7 @@ class ExampleTask(Task):
 
     def _default_layout_default(self):
         return TaskLayout(
-            left=PaneItem('steps.example_pane'))
+            top=PaneItem('steps.example_pane'))
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
