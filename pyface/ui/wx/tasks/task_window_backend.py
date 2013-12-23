@@ -42,6 +42,13 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         pass
 
+    def begin_batch_window_updates(self):
+        self.window.control.Freeze()
+
+    def end_batch_window_updates(self):
+        if self.window.control.IsFrozen():
+            self.window.control.Thaw()
+
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
         """
@@ -75,11 +82,6 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Show the dock panes.
         self._layout_state(state)
-
-        # OSX-specific: if there is only a single tool bar, it doesn't matter if
-        # the user can drag it around or not. Therefore, we can combine it with
-        # the title bar, which is idiomatic on the Mac.
-        #FIXME: wx?
 
     #### Methods for saving and restoring the layout ##########################
 

@@ -31,6 +31,18 @@ class ITaskWindowBackend(Interface):
         but this method may be used to perform additional cleanup.
         """
 
+    def begin_batch_window_updates(self):
+        """ Hint that a large number of window updates are pending
+        
+        Hook for toolkits that can provide a method to prevent window redrawing
+        while layout updates of the controls is taking place.  If used, must
+        be followed with a call to end_batch_window_updates.
+        """
+
+    def end_batch_window_updates(self):
+        """ Restore normal window redrawing after begin_batch_window_updates
+        """
+
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
         """
@@ -71,6 +83,12 @@ class MTaskWindowBackend(HasTraits):
         raise NotImplementedError
 
     def destroy(self):
+        pass
+
+    def begin_batch_window_updates(self):
+        pass
+
+    def end_batch_window_updates(self):
         pass
 
     def hide_task(self, state):
