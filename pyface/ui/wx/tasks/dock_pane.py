@@ -73,6 +73,7 @@ class DockPane(TaskPane, MDockPane):
         # size?
 
         # Configure the dock widget according to the DockPane settings.
+        self.update_dock_area(info)
         self.update_dock_features(info)
         self.update_dock_title(info)
         self.update_floating(info)
