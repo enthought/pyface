@@ -91,35 +91,25 @@ class MainWindowLayout(HasTraits):
                 dock_pane.dock_area = INVERSE_AREA_MAP[direction]
                 print "WX: layout size (%d,%d)" % (layout.width, layout.height)
                 dock_pane.add_to_manager()
-#                if layout.width > 0:
-#                    dock_widget.widget().setFixedWidth(layout.width)
-#                if layout.height > 0:
-#                    dock_widget.widget().setFixedHeight(layout.height)
         
         elif isinstance(layout, Tabbed):
-            active_widget = first_widget = None
+            active_pane = first_pane = None
             for item in layout.items:
-                widget = self._prepare_toplevel_for_item(item)
-                if not widget:
-                    continue
+                dock_pane = self._get_dock_pane(item)
+                dock_pane.dock_area = INVERSE_AREA_MAP[direction]
                 if item.id == layout.active_tab:
-                    active_widget = widget
-                if first_widget:
-                    self.control.tabifyDockWidget(first_widget, widget)
-                else:
-                    if not _toplevel_added:
-                        self.control.addDockWidget(q_dock_area, widget)
-                    first_widget = widget
-                widget.show()
+                    active_pane = dock_pane
+                dock_pane.add_to_manager(first_pane)
+                if not first_pane:
+                    first_pane = dock_pane
 
             # Activate the appropriate tab, if possible.
-            if not active_widget:
+            if not active_pane:
                 # By default, Qt will activate the last widget.
-                active_widget = first_widget
-            if active_widget:
-                # It seems that the 'raise_' call only has an effect after the
-                # QMainWindow has performed its internal layout.
-                QtCore.QTimer.singleShot(0, active_widget.raise_)
+                active_pane = first_pane
+            if active_pane:
+                # set pane is active in the AUI notebook (somehow)
+                pass
 
         elif isinstance(layout, Splitter):
             # Perform top-level splitting as per above comment.

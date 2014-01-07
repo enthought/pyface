@@ -67,7 +67,7 @@ class DockPane(TaskPane, MDockPane):
 #        control.topLevelChanged.connect(self._receive_floating)
 #        control.visibilityChanged.connect(self._receive_visible)
     
-    def get_info(self):
+    def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
 
         # size?
@@ -84,9 +84,14 @@ class DockPane(TaskPane, MDockPane):
         
         return info
     
-    def add_to_manager(self):
-        info = self.get_info()
-        self.task.window._aui_manager.AddPane(self.control, info)
+    def add_to_manager(self, tabify_pane=None):
+        info = self.get_new_info()
+        if tabify_pane is not None:
+            target = tabify_pane.get_pane_info()
+            print "WX: dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name)
+        else:
+            target = None
+        self.task.window._aui_manager.AddPane(self.control, info, target=target)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the contents.
