@@ -66,6 +66,7 @@ class DockPane(TaskPane, MDockPane):
 #        control.dockLocationChanged.connect(self._receive_dock_area)
 #        control.topLevelChanged.connect(self._receive_floating)
 #        control.visibilityChanged.connect(self._receive_visible)
+#        self.control.Bind(wx.EVT_SHOW, self._receive_visible)
     
     def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
@@ -77,10 +78,7 @@ class DockPane(TaskPane, MDockPane):
         self.update_dock_features(info)
         self.update_dock_title(info)
         self.update_floating(info)
-        #self.update_visible(info)
-        
-        info.Hide()
-        info.Show(False)
+        self.update_visible(info)
         
         return info
     
@@ -205,8 +203,9 @@ class DockPane(TaskPane, MDockPane):
 
     @on_trait_change('visible')
     def _set_visible(self):
+        print "WX: _set_visible on pane %s" % self.pane_name
         if self.control is not None:
-            print "WX: _set_visible on %s" % self.control.GetName()
+            print "WX: _set_visible on control %s" % self.control
             info = self.get_pane_info()
             self.update_visible(info)
             self.commit_if_active()
@@ -221,7 +220,8 @@ class DockPane(TaskPane, MDockPane):
         with self._signal_context():
             self.floating = floating
 
-    def _receive_visible(self):
-        with self._signal_context():
-            if self.control is not None:
-                self.visible = self.control.isVisible()
+    def _receive_visible(self, evt):
+        print "WX: _receive_visible!"
+        if self.control is not None:
+            self.visible = evt.GetShow()
+            print "WX: _receive_visible = %s" % self.visible

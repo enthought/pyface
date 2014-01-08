@@ -91,6 +91,7 @@ class MainWindowLayout(HasTraits):
                 dock_pane.dock_area = INVERSE_AREA_MAP[direction]
                 print "WX: layout size (%d,%d)" % (layout.width, layout.height)
                 dock_pane.add_to_manager()
+                dock_pane.visible = True
         
         elif isinstance(layout, Tabbed):
             active_pane = first_pane = None
@@ -102,6 +103,7 @@ class MainWindowLayout(HasTraits):
                 dock_pane.add_to_manager(first_pane)
                 if not first_pane:
                     first_pane = dock_pane
+                dock_pane.visible = True
 
             # Activate the appropriate tab, if possible.
             if not active_pane:
