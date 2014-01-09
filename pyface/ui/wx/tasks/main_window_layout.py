@@ -122,12 +122,14 @@ class MainWindowLayout(HasTraits):
                     row = 0
                 else:
                     row += 1
-            
-            # Now we can recurse.
-            pos = 0
-            for i, item in enumerate(layout.items):
-                self.set_layout_for_area(item, direction, row, pos)
-                pos += 1
+                for i, item in enumerate(layout.items):
+                    self.set_layout_for_area(item, direction, row, pos)
+                    row += 1
+            else:
+                pos = 0
+                for i, item in enumerate(layout.items):
+                    self.set_layout_for_area(item, direction, row, pos)
+                    pos += 1
                 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
