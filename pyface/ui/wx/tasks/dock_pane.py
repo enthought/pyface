@@ -82,13 +82,17 @@ class DockPane(TaskPane, MDockPane):
         
         return info
     
-    def add_to_manager(self, tabify_pane=None):
+    def add_to_manager(self, row=None, pos=None, tabify_pane=None):
         info = self.get_new_info()
         if tabify_pane is not None:
             target = tabify_pane.get_pane_info()
             print "WX: dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name)
         else:
             target = None
+        if row is not None:
+            info.Row(row)
+        if pos is not None:
+            info.Position(pos)
         self.task.window._aui_manager.AddPane(self.control, info, target=target)
 
     def destroy(self):

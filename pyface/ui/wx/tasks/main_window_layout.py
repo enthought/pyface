@@ -13,9 +13,12 @@ from dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
      Splitter, HSplitter, VSplitter
 
-# Contants.
-#ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,
-#                    'vertical': QtCore.Qt.Vertical }
+# row/col orientation for AUI
+ORIENTATION_NEEDS_NEW_ROW = { 
+    'horizontal' : { 'top': False, 'bottom': False, 'left': True, 'right': True},
+    'vertical': { 'top': True, 'bottom': True, 'left': False, 'right': False},
+    }
+
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -50,8 +53,7 @@ class MainWindowLayout(HasTraits):
         for name, direction in AREA_MAP.iteritems():
             sublayout = getattr(layout, name)
             if sublayout:
-                self.set_layout_for_area(sublayout, direction,
-                                         _toplevel_call=False)
+                self.set_layout_for_area(sublayout, direction)
 
         # Add all panes not assigned an area by the TaskLayout.
         mgr = window._aui_manager
@@ -74,24 +76,23 @@ class MainWindowLayout(HasTraits):
         window._aui_manager.LoadPerspective(layout.perspective)
         
 
-    def set_layout_for_area(self, layout, direction,
-                            _toplevel_added=False, _toplevel_call=True):
+    def set_layout_for_area(self, layout, direction, row=None, pos=None):
         """ Applies a LayoutItem to the specified dock area.
         """
-        # If we try to do the layout bottom-up, Qt will become confused. In
-        # order to do it top-down, we have know which dock widget is
-        # "effectively" top level, requiring us to reach down to the leaves of
-        # the layout. (This is really only an issue for Splitter layouts, since
-        # Tabbed layouts are, for our purposes, leaves.)
+        # AUI doesn't have full, arbitrary row/col positions, nor infinitely
+        # splittable areas.  Top and bottom docks are only splittable
+        # vertically, and within each vertical split each can be split
+        # horizontally and that's it.  Similarly, left and right docks can
+        # only be split horizontally and within each horizontal split can be
+        # split vertically.
         print "WX: set_layout_for_area: %s" % INVERSE_AREA_MAP[direction]
         
         if isinstance(layout, PaneItem):
-            if not _toplevel_added:
-                dock_pane = self._get_dock_pane(layout)
-                dock_pane.dock_area = INVERSE_AREA_MAP[direction]
-                print "WX: layout size (%d,%d)" % (layout.width, layout.height)
-                dock_pane.add_to_manager()
-                dock_pane.visible = True
+            dock_pane = self._get_dock_pane(layout)
+            dock_pane.dock_area = INVERSE_AREA_MAP[direction]
+            print "WX: layout size (%d,%d)" % (layout.width, layout.height)
+            dock_pane.add_to_manager(row=row, pos=pos)
+            dock_pane.visible = True
         
         elif isinstance(layout, Tabbed):
             active_pane = first_pane = None
@@ -100,7 +101,7 @@ class MainWindowLayout(HasTraits):
                 dock_pane.dock_area = INVERSE_AREA_MAP[direction]
                 if item.id == layout.active_tab:
                     active_pane = dock_pane
-                dock_pane.add_to_manager(first_pane)
+                dock_pane.add_to_manager(tabify_pane=first_pane)
                 if not first_pane:
                     first_pane = dock_pane
                 dock_pane.visible = True
@@ -114,31 +115,22 @@ class MainWindowLayout(HasTraits):
                 pass
 
         elif isinstance(layout, Splitter):
-            # Perform top-level splitting as per above comment.
-            orient = ORIENTATION_MAP[layout.orientation]
-            prev_widget = None
-            for item in layout.items:
-                widget = self._prepare_toplevel_for_item(item)
-                if not widget:
-                    continue
-                if prev_widget:
-                    self.control.splitDockWidget(prev_widget, widget, orient)
-                elif not _toplevel_added:
-                    self.control.addDockWidget(q_dock_area, widget)
-                prev_widget = widget
-                widget.show()
-
+            dock_area = INVERSE_AREA_MAP[direction]
+            needs_new_row = ORIENTATION_NEEDS_NEW_ROW[layout.orientation][dock_area]
+            if needs_new_row:
+                if row is None:
+                    row = 0
+                else:
+                    row += 1
+            
             # Now we can recurse.
+            pos = 0
             for i, item in enumerate(layout.items):
-                self.set_layout_for_area(item, q_dock_area,
-                    _toplevel_added=True, _toplevel_call=False)
+                self.set_layout_for_area(item, direction, row, pos)
+                pos += 1
                 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
-
-        # Remove the fixed sizes once Qt activates the layout.
-        if _toplevel_call:
-            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
     ###########################################################################
     # 'MainWindowLayout' abstract interface.
