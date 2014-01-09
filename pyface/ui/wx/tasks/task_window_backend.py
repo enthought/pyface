@@ -64,8 +64,13 @@ class TaskWindowBackend(MTaskWindowBackend):
             self.window._aui_manager.DetachPane(dock_pane.control)
             dock_pane.control.Hide()
         
+        # Remove any tabbed notebooks left over after all the panes have been
+        # removed
+        self.window._aui_manager.UpdateNotebook()
+        
+        # Remove any still-left over stuff (i.e. toolbars)
         for info in self.window._aui_manager.GetAllPanes():
-            print "remaining pane: %s" % info.name
+            print "hiding remaining pane: %s" % info.name
             control = info.window
             self.window._aui_manager.DetachPane(control)
             control.Hide()
