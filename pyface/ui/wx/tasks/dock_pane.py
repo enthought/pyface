@@ -101,8 +101,15 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             print "Destroying %s" % self.control
             self.task.window._aui_manager.DetachPane(self.control)
-            self.control.Hide()
-            self.control.Destroy()
+            
+            # Some containers (e.g.  TraitsDockPane) will destroy the control
+            # before we get here (e.g.  traitsui.ui.UI.finish by way of
+            # TraitsDockPane.destroy), so check to see if it's already been
+            # destroyed.  Fortunately, the Reparent in DetachPane still seems
+            # to work on a destroyed control.
+            if self.control:
+                self.control.Hide()
+                self.control.Destroy()
             self.control = None
 
     ###########################################################################
