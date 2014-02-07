@@ -44,7 +44,7 @@ class ExampleTask(Task):
                            TaskAction(method='save',
                                       tooltip='Save the current file',
                                       image=ImageResource('document_save')),
-                           image_size = (32, 32)), ]
+                           image_size = (32, 32), show_tool_names=False), ]
 
     ###########################################################################
     # 'Task' interface.
