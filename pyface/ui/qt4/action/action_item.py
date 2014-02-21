@@ -300,6 +300,9 @@ class _Tool(HasTraits):
         action.on_trait_change(self._on_action_enabled_changed, 'enabled')
         action.on_trait_change(self._on_action_visible_changed, 'visible')
         action.on_trait_change(self._on_action_checked_changed, 'checked')
+        action.on_trait_change(self._on_action_name_changed, 'name')
+        action.on_trait_change(self._on_action_accelerator_changed,
+                               'accelerator')
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -388,6 +391,16 @@ class _Tool(HasTraits):
         """ Called when the checked trait is changed on an action. """
         if self.control is not None:
             self.control.setChecked(action.checked)
+
+    def _on_action_name_changed(self, action, trait_name, old, new):
+        """ Called when the name trait is changed on an action. """
+        if self.control is not None:
+            self.control.setText(action.name)
+
+    def _on_action_accelerator_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            self.control.setShortcut(action.accelerator)
 
 
 class _PaletteTool(HasTraits):
