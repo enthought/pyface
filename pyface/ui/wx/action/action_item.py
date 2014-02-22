@@ -85,7 +85,16 @@ class _MenuItem(HasTraits):
         if len(label) == 0:
             label = item.action.__class__.__name__
 
-        self.control_id = wx.NewId()
+        
+        if getattr(action, 'menu_role', False):
+            if action.menu_role == "About":
+                self.control_id = wx.ID_ABOUT
+            elif action.menu_role == "Preferences":
+                self.control_id = wx.ID_PREFERENCES
+            elif action.menu_role == "Quit":
+                self.control_id = wx.ID_EXIT
+        else:
+            self.control_id = wx.NewId()
         self.control = wx.MenuItem(menu, self.control_id, label, longtip, kind)
 
         # If the action has an image then display it.
