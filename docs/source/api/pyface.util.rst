@@ -33,6 +33,14 @@ util Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`id_helper` Module
+-----------------------
+
+.. automodule:: pyface.util.id_helper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`python_stc` Module
 ------------------------
 
@@ -41,11 +49,11 @@ util Package
     :undoc-members:
     :show-inheritance:
 
-..
- Subpackages
- -----------
+Subpackages
+-----------
 
- .. toctree::
+.. toctree::
 
-     pyface.util.grid
+    pyface.util.grid
+    pyface.util.tests
 

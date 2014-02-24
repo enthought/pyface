@@ -12,6 +12,7 @@ pyface Package
     pyface.resource
     pyface.sizers
     pyface.tasks
+    pyface.tests
     pyface.timer
     pyface.tree
     pyface.ui
