@@ -143,6 +143,8 @@ class Window(MWindow, Widget):
         else:
             self.deactivated = self
 
+        event.Skip()
+
     def _wx_on_close(self, event):
         """ Called when the frame is being closed. """
 
