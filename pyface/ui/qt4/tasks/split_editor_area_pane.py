@@ -253,12 +253,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         if sys.platform == 'darwin':
             next_seq = 'Ctrl+}'
             prev_seq = 'Ctrl+{'
-        elif sys.platform.startswith('linux'):
+        else:
             next_seq = 'Ctrl+PgDown'
             prev_seq = 'Ctrl+PgUp'
-        else:
-            next_seq = 'Alt+n'
-            prev_seq = 'Alt+p'
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
