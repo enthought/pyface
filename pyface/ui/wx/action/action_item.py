@@ -99,7 +99,12 @@ class _MenuItem(HasTraits):
 
         # If the action has an image then display it.
         if action.image is not None:
-            self.control.SetBitmap(action.image.create_bitmap())
+            try:
+                self.control.SetBitmap(action.image.create_bitmap())
+            except:
+                # Some wx implementations don't allow radio buttons to have
+                # bitmaps, so just ignore the exception if it happens
+                pass
 
         menu.AppendItem(self.control)
         menu.menu_items.append(self)
