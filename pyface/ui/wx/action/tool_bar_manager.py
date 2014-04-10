@@ -170,8 +170,12 @@ class ToolBarManager(ActionManager):
                 # If the group is a radio group,  set the initial checked state
                 # of every tool in it.
                 if item.action.style == 'radio':
-                    tool_bar.ToggleTool(item.control_id, item.action.checked)
-                    checked = checked or item.action.checked
+                    if item.control_id is not None:
+                        # Only set checked state if control has been created.
+                        # Using extra_actions of tasks, it appears that this
+                        # may be called multiple times.
+                        tool_bar.ToggleTool(item.control_id, item.action.checked)
+                        checked = checked or item.action.checked
 
                 # Every item in a radio group MUST be 'radio' style, so we
                 # can just skip to the next group.
