@@ -368,7 +368,10 @@ class _Tool(HasTraits):
         tool_bar.ToggleTool(self.control_id, action.checked)
 
         # Set the initial enabled/disabled state of the action.
-        tool_bar.EnableTool(self.control_id, action.enabled and action.visible)
+        tool_bar.EnableTool(self.control_id, action.enabled)
+        
+        # Set the initial visibility
+        tool_bar.ShowTool(self.control_id, action.visible)
 
         # Wire it up.
         wx.EVT_TOOL(parent, self.control_id, self._on_tool)
@@ -394,14 +397,14 @@ class _Tool(HasTraits):
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
 
-        self.tool_bar.EnableTool(self.control_id, self.enabled and self.visible)
+        self.tool_bar.EnableTool(self.control_id, self.enabled)
 
         return
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
-        self.tool_bar.EnableTool(self.control_id, self.visible and self.enabled)
+        self.tool_bar.ShowTool(self.control_id, self.visible)
 
         return
 
@@ -428,14 +431,14 @@ class _Tool(HasTraits):
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
-        self.tool_bar.EnableTool(self.control_id, action.enabled and action.visible)
+        self.tool_bar.EnableTool(self.control_id, action.enabled)
 
         return
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
-        self.tool_bar.EnableTool(self.control_id, action.visible and action.enabled)
+        self.tool_bar.ShowTool(self.control_id, action.visible)
 
         return
 

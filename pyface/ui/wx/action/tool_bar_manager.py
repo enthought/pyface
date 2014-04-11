@@ -221,8 +221,61 @@ class _ToolBar(toolbarobject):
         self.tool_bar_manager.on_trait_change(
             self._on_tool_bar_manager_visible_changed, 'visible'
         )
+        
+        # we need to defer hiding tools until first time Realize is called so
+        # we can get the correct order of the toolbar for reinsertion at the
+        # correct position
+        self.initially_hidden_tool_ids = []
+        
+        # map of tool ids to a tuple: position in full toolbar and the
+        # ToolBarTool itself.  Can't keep a weak reference here because once
+        # removed from the toolbar the item would be garbage collected.
+        self.tool_map = {}
 
         return
+    
+    def Realize(self):
+        if len(self.tool_map) == 0:
+            for pos in range(self.GetToolsCount()):
+                tool = self.GetToolByPos(pos)
+                self.tool_map[tool.GetId()] = (pos, tool)
+        toolbarobject.Realize(self)
+        if len(self.initially_hidden_tool_ids) > 0:
+            for tool_id in self.initially_hidden_tool_ids:
+                self.RemoveTool(tool_id)
+            self.initially_hidden_tool_ids = []
+        self.ShowTool = self.ShowToolPostRealize
+    
+    def ShowTool(self, tool_id, state):
+        """Used before realization to flag which need to be initially hidden
+        """
+        if not state:
+            self.initially_hidden_tool_ids.append(tool_id)
+    
+    def ShowToolPostRealize(self, tool_id, state):
+        """Normal ShowTool method, activated after first call to Realize
+        """
+        tool = self.FindById(tool_id)
+        if state and tool is None:
+            self.InsertToolInOrder(tool_id)
+            self.EnableTool(tool_id, True)
+            self.Realize()
+            # Update the toolbar in the AUI manager to force toolbar resize
+            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+        elif not state and tool is not None:
+            self.RemoveTool(tool_id)
+            # Update the toolbar in the AUI manager to force toolbar resize
+            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+        
+    def InsertToolInOrder(self, tool_id):
+        orig_pos, tool = self.tool_map[tool_id]
+        for pos in range(self.GetToolsCount()):
+            existing_tool = self.GetToolByPos(pos)
+            existing_id = existing_tool.GetId()
+            existing_orig_pos, _ = self.tool_map[tool_id]
+            if existing_orig_pos > orig_pos:
+                break
+        self.InsertToolItem(pos+1, tool)
 
     ###########################################################################
     # Trait change handlers.
