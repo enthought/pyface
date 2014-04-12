@@ -284,14 +284,14 @@ class _ToolBar(toolbarobject):
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_enable_tool_bar(self, new)
+        obj.controller.task.window._wx_enable_tool_bar(self, new)
 
         return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_show_tool_bar(self, new)
+        obj.controller.task.window._wx_show_tool_bar(self, new)
 
         return
 

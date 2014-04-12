@@ -100,7 +100,7 @@ class ApplicationWindow(MApplicationWindow, Window):
                 for tool_bar_manager in reversed(tool_bar_managers):
                     tool_bar = tool_bar_manager.create_tool_bar(parent)
                     self._add_toolbar_to_aui_manager(
-                        tool_bar, tool_bar_manager.name
+                        tool_bar
                     )
                 self._aui_manager.Update()
             else:
@@ -178,20 +178,24 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Private interface.
     ###########################################################################
 
-    def _add_toolbar_to_aui_manager(self, tool_bar, name='Tool Bar'):
+    def _add_toolbar_to_aui_manager(self, tool_bar):
         """ Add a toolbar to the AUI manager. """
 
+        info = self._get_tool_par_pane_info(tool_bar)
+        self._aui_manager.AddPane(tool_bar, info)
+
+        return
+    
+    def _get_tool_par_pane_info(self, tool_bar):
         info = aui.AuiPaneInfo()
-        info.Caption(name)
+        info.Caption(tool_bar.tool_bar_manager.name)
         info.LeftDockable(False)
-        info.Name(name)
+        info.Name(tool_bar.tool_bar_manager.id)
         info.RightDockable(False)
         info.ToolbarPane()
         info.Top()
 
-        self._aui_manager.AddPane(tool_bar, info)
-
-        return
+        return info
 
     def _get_tool_bar_managers(self):
         """ Return all tool bar managers specified for the window. """
@@ -221,13 +225,19 @@ class ApplicationWindow(MApplicationWindow, Window):
         """ Hide/Show a tool bar. """
 
         if aui is not None:
-            pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.name)
+            pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.id)
 
             if visible:
                 pane.Show()
 
             else:
-                pane.Hide()
+                # Without this workaround, toolbars know the sizes of other
+                # hidden toolbars and leave gaps in the toolbar dock
+                pane.window.Show(False)
+                self._aui_manager.DetachPane(pane.window)
+                info = self._get_tool_par_pane_info(pane.window)
+                info.Hide()
+                self._aui_manager.AddPane(pane.window, info)
 
             self._aui_manager.Update()
 
