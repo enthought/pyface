@@ -252,8 +252,11 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             self._create_menu_bar(self.control)
 
-    def _status_bar_manager_changed(self):
+    def _status_bar_manager_changed(self, old, new):
         if self.control is not None:
+            if old is not None:
+                self.control.SetStatusBar(None)
+                old.remove_status_bar(self.control)
             self._create_status_bar(self.control)
 
     @on_trait_change('tool_bar_manager, tool_bar_managers')
