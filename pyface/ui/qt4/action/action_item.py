@@ -12,7 +12,7 @@
 """ The PyQt specific implementations the action manager internal classes. """
 
 
-# Standard libary imports.
+# Standard library imports.
 from inspect import getargspec
 
 # Major package imports.

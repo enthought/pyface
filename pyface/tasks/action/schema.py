@@ -88,11 +88,16 @@ class MenuSchema(Schema):
     # The menu's user visible name.
     name = Unicode
 
+    # The default action for tool button when shown in a toolbar (Qt only)
+    action = Instance(Action)
+
     # A factory for instantiating a pyface MenuManager.
     menu_manager_factory = Callable(MenuManager)
 
     def create(self, children):
         traits = dict(id=self.id, name=self.name)
+        if self.action:
+            traits['action'] = self.action
         return self.menu_manager_factory(*children, **traits)
 
 

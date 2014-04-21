@@ -16,11 +16,12 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Unicode
+from traits.api import Instance, Unicode
 
 # Local imports.
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
+from pyface.action.action_item import _Tool, Action
 from pyface.action.group import Group
 
 
@@ -35,6 +36,9 @@ class MenuManager(ActionManager, ActionManagerItem):
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
     name = Unicode
+
+    # The default action for tool button when shown in a toolbar (Qt only)
+    action = Instance(Action)
 
     ###########################################################################
     # 'MenuManager' interface.
@@ -63,10 +67,22 @@ class MenuManager(ActionManager, ActionManagerItem):
         submenu.menuAction().setText(self.name)
         menu.addMenu(submenu)
 
-    def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
+    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
+                       show_labels=True):
         """ Adds the item to a tool bar. """
+        menu = self.create_menu(parent, controller)
+        if self.action:
+            tool_action = _Tool(
+                parent, tool_bar, image_cache, self, controller, show_labels).control
+            tool_action.setMenu(menu)
+        else:
+            tool_action = menu.menuAction()
+            tool_bar.addAction(tool_action)
 
-        raise ValueError("Cannot add a menu manager to a toolbar.")
+        tool_action.setText(self.name)
+        tool_button = tool_bar.widgetForAction(tool_action)
+        tool_button.setPopupMode(tool_button.MenuButtonPopup if self.action
+                                 else tool_button.InstantPopup)
 
 
 class _Menu(QtGui.QMenu):
