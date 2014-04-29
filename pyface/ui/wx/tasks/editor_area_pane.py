@@ -132,7 +132,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     @on_trait_change('editors:[dirty, name]')
     def _update_label(self, editor, name, new):
-        self.control.SetPageText(editor.control, self._get_label(editor))
+        index = self.control.GetPageIndex(editor.control)
+        self.control.SetPageText(index, self._get_label(editor))
 
     @on_trait_change('editors:tooltip')
     def _update_tooltip(self, editor, name, new):
