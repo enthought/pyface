@@ -24,8 +24,8 @@ def get_tokens_unprocessed(self, text, stack=('root',)):
     """
     pos = 0
     tokendefs = self._tokens
-    if hasattr(self, '_epd_state_stack'):
-        statestack = list(self._epd_state_stack)
+    if hasattr(self, '_saved_state_stack'):
+        statestack = list(self._saved_state_stack)
     else:
         statestack = list(stack)
     statetokens = tokendefs[statestack[-1]]
@@ -71,7 +71,7 @@ def get_tokens_unprocessed(self, text, stack=('root',)):
                 pos += 1
             except IndexError:
                 break
-    self._epd_state_stack  = list(statestack)
+    self._saved_state_stack  = list(statestack)
 
 # Monkeypatch!
 RegexLexer.get_tokens_unprocessed = get_tokens_unprocessed
@@ -145,9 +145,9 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         prev_data = self.previous_block_data()
 
         if prev_data is not None:
-            self._lexer._epd_state_stack = prev_data.syntax_stack
-        elif hasattr(self._lexer, '_epd_state_stack'):
-            del self._lexer._epd_state_stack
+            self._lexer._saved_state_stack = prev_data.syntax_stack
+        elif hasattr(self._lexer, '_saved_state_stack'):
+            del self._lexer._saved_state_stack
 
         index = 0
         # Lex the text using Pygments
@@ -158,8 +158,8 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
                 self.setFormat(index, l, format)
             index += l
 
-        if hasattr(self._lexer, '_epd_state_stack'):
-            data = BlockUserData(syntax_stack=self._lexer._epd_state_stack)
+        if hasattr(self._lexer, '_saved_state_stack'):
+            data = BlockUserData(syntax_stack=self._lexer._saved_state_stack)
             self.currentBlock().setUserData(data)
 
             # there is a bug in pyside and it will crash unless we
@@ -167,7 +167,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
             data = self.currentBlock().userData()
 
             # Clean up for the next go-round.
-            del self._lexer._epd_state_stack
+            del self._lexer._saved_state_stack
 
     def previous_block_data(self):
         """ Convenience method for returning the previous block's user data.
