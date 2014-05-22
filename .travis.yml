@@ -21,6 +21,8 @@ install:
     - pip install git+http://github.com/enthought/traits.git#egg=traits
     - python setup.py build
     - python setup.py develop
+    # TraitsUI is needed for some tests.
+    - pip install git+http://github.com/pradyun/traitsui.git@python3#egg=traitsui
 
 script:
     - python setup.py nosetests
