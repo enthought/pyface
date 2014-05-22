@@ -1,7 +1,12 @@
 from traits.testing.unittest_tools import unittest
 
-from enaml.widgets.api import Label
-from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
+try:
+    from enaml.widgets.api import Label
+    from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
+except ImportError:
+    @unittest.skip("Enaml not installed")
+    class GuiTestAssistant(object):
+        pass
 
 from pyface.tasks.api import EnamlTaskPane
 
