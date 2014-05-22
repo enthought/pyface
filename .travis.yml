@@ -1,0 +1,26 @@
+language: python
+python:
+    - 2.7
+    - 3.3
+before_install:
+    # Set up for UI tests.
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start
+    - export ETS_TOOLKIT=qt4
+    - 'export LD_LIBRARY_PATH=`python -c "import os,nose; print(os.path.dirname(os.path.dirname(nose.__file__)))"`/PySide'
+
+install:
+    - pip install wheel
+    # Basic dependencies
+    - pip install numpy
+    - pip install pygments
+    # PySide from a wheel
+    - git clone https://github.com/pradyun/travis-dependencies dependencies
+    - pip install -v -v -v --no-index --find-links=./dependencies PySide
+    # Test against the current master of traits
+    - pip install git+http://github.com/enthought/traits.git#egg=traits
+    - python setup.py build
+    - python setup.py develop
+
+script:
+    - python setup.py nosetests
