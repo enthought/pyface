@@ -21,7 +21,7 @@ class EditorAreaPaneTestCase(unittest.TestCase):
         area.register_factory(Editor, lambda obj: isinstance(obj, int))
         self.assertEqual(area.get_factory(0), Editor)
         self.assertEqual(area.get_factory('foo'), None)
-        
+
         area.unregister_factory(Editor)
         self.assertEqual(area.get_factory(0), None)
 
