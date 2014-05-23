@@ -2,6 +2,8 @@ language: python
 python:
     - 2.7
     - 3.3
+    - 3.4
+
 before_install:
     # Set up for UI tests.
     - export DISPLAY=:99.0
