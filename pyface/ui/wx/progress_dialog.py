@@ -299,7 +299,7 @@ class ProgressDialog(MProgressDialog, Window):
         sizer = wx.BoxSizer(wx.VERTICAL)
         dialog.SetSizer(sizer)
         dialog.SetAutoLayout(True)
-        dialog.SetBackgroundColour(wx.NullColor)
+        dialog.SetBackgroundColour(wx.NullColour)
 
         self.dialog_size = wx.Size()
 
