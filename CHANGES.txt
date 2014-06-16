@@ -1,6 +1,13 @@
 Pyface Changelog
 ================
 
+Change summary since 4.4.0
+--------------------------
+
+Fixes
+
+* Fixed wx 2.9 incompatibility bug in ProgressDialog (PR#106).
+
 Release 4.4.0
 -------------
 
