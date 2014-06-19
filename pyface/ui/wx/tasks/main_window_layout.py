@@ -89,6 +89,8 @@ class MainWindowLayout(HasTraits):
         
         if isinstance(layout, PaneItem):
             dock_pane = self._get_dock_pane(layout)
+            if dock_pane is None:
+                raise MainWindowLayoutError("Unknown dock pane %r" % layout)
             dock_pane.dock_area = INVERSE_AREA_MAP[direction]
             print "WX: layout size (%d,%d)" % (layout.width, layout.height)
             dock_pane.add_to_manager(row=row, pos=pos)
