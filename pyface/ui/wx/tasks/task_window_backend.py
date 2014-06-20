@@ -33,9 +33,9 @@ class TaskWindowBackend(MTaskWindowBackend):
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
-        # No extra control needed for wx! It's all handled by the AUIManager in
-        # the ApplicationWindow
-        pass
+        # No extra control needed for wx (it's all handled by the AUIManager in
+        # the ApplicationWindow) but we do need to handle some events here
+        self.window._aui_manager.Bind(aui.EVT_AUI_PANE_CLOSE, self._pane_close_requested)
 
     def destroy(self):
         """ Destroy the backend.
@@ -131,6 +131,16 @@ class TaskWindowBackend(MTaskWindowBackend):
         return TaskWindowLayout()
 
     #### Signal handlers ######################################################
+
+    def _pane_close_requested(self, evt):
+        pane = evt.GetPane()
+        print "_pane_close_requested: pane=%s" % pane.name
+        for dock_pane in self.window.dock_panes:
+            print "_pane_close_requested: checking pane=%s" % dock_pane.pane_name
+            if dock_pane.pane_name == pane.name:
+                print "_pane_close_requested: FOUND PANE!!!!!!"
+                dock_pane.visible = False
+                break
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
