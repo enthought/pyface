@@ -214,9 +214,8 @@ class DockPane(TaskPane, MDockPane):
 
     @on_trait_change('visible')
     def _set_visible(self):
-        print "WX: _set_visible on pane %s" % self.pane_name
+        print "WX: _set_visible %s on pane=%s, control=%s" % (self.visible, self.pane_name, self.control)
         if self.control is not None:
-            print "WX: _set_visible on control %s" % self.control
             info = self.get_pane_info()
             self.update_visible(info)
             self.commit_if_active()

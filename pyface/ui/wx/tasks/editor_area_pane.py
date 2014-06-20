@@ -143,7 +143,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     def _close_requested(self, evt):
         index = evt.GetSelection()
-        print "index=%d" % index
+        print "_close_requested: index=%d" % index
         control = self.control.GetPage(index)
         editor = self._get_editor_with_control(control)
         
