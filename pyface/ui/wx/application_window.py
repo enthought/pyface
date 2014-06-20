@@ -165,7 +165,9 @@ class ApplicationWindow(MApplicationWindow, Window):
             pos=self.position
         )
 
-        control.SetBackgroundColour(SystemMetrics().dialog_background_color)
+        # Mac/Win needs this, otherwise background color is black
+        attr = control.GetDefaultAttributes()
+        control.SetBackgroundColour(attr.colBg)
 
         return control
 
