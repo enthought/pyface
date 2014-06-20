@@ -94,6 +94,15 @@ class DockPane(TaskPane, MDockPane):
         if pos is not None:
             info.Position(pos)
         self.task.window._aui_manager.AddPane(self.control, info, target=target)
+    
+    def validate_traits_from_pane_info(self):
+        """ Sync traits from the AUI pane info.
+        
+        Useful after perspective restore to make sure e.g. visibility state
+        is set correctly.
+        """
+        info = self.get_pane_info()
+        self.visible = info.IsShown()
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the contents.

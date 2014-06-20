@@ -74,7 +74,9 @@ class MainWindowLayout(HasTraits):
             dock_pane.add_to_manager()
         print "WX: _set_layout_from_aui: restoring perspective %s" % layout.perspective
         window._aui_manager.LoadPerspective(layout.perspective)
-        
+        for dock_pane in self.state.dock_panes:
+            print "WX: validating dock pane traits for %s" % dock_pane.id
+            dock_pane.validate_traits_from_pane_info()
 
     def set_layout_for_area(self, layout, direction, row=None, pos=None):
         """ Applies a LayoutItem to the specified dock area.
