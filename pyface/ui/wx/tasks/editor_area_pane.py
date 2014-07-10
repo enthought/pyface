@@ -1,5 +1,6 @@
 # Standard library imports.
 import sys
+import logging
 
 # Enthought library imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
@@ -13,6 +14,10 @@ from pyface.wx.aui import aui
 # Local imports.
 from task_pane import TaskPane
 from util import set_focus
+
+# Logging
+logger = logging.getLogger(__name__)
+
 
 ###############################################################################
 # 'EditorAreaPane' class.
@@ -35,7 +40,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """ Create and set the toolkit-specific control that represents the
             pane.
         """
-        print "editor pane parent: %s" % parent
+        logger.debug("editor pane parent: %s" % parent)
         # Create and configure the tab widget.
         self.control = control = aui.AuiNotebook(parent, style=self.style)
 #        control.tabBar().setVisible(not self.hide_tab_bar)
@@ -88,7 +93,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.editors.remove(editor)
         index = self.control.GetPageIndex(editor.control)
-        print "Removing page %d" % index
+        logger.debug("Removing page %d" % index)
         self.control.RemovePage(index)
         editor.destroy()
         editor.editor_area = None
@@ -143,7 +148,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     def _close_requested(self, evt):
         index = evt.GetSelection()
-        print "_close_requested: index=%d" % index
+        logger.debug("_close_requested: index=%d" % index)
         control = self.control.GetPage(index)
         editor = self._get_editor_with_control(control)
         
@@ -157,11 +162,11 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         
     def _update_active_editor(self, evt):
         index = evt.GetSelection()
-        print "index=%d" % index
+        logger.debug("index=%d" % index)
         if index == wx.NOT_FOUND:
             self.active_editor = None
         else:
-            print "num pages=%d" % self.control.GetPageCount()
+            logger.debug("num pages=%d" % self.control.GetPageCount())
             control = self.control.GetPage(index)
             self.active_editor = self._get_editor_with_control(control)
 

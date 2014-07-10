@@ -35,14 +35,14 @@ class MainWindowLayout(HasTraits):
     def get_layout(self, layout, window):
         """ Get the layout by adding sublayouts to the specified DockLayout.
         """
-        print "WX: get_layout: %s" % layout
+        logger.debug("get_layout: %s" % layout)
         layout.perspective = window._aui_manager.SavePerspective()
-        print "WX: get_layout: saving perspective %s" % layout.perspective
+        logger.debug("get_layout: saving perspective %s" % layout.perspective)
 
     def set_layout(self, layout, window):
         """ Applies a DockLayout to the window.
         """
-        print "WX: set_layout: %s" % layout
+        logger.debug("set_layout: %s" % layout)
         
         if hasattr(layout, "perspective"):
             self._set_layout_from_aui(layout, window)
@@ -60,22 +60,22 @@ class MainWindowLayout(HasTraits):
         for dock_pane in self.state.dock_panes:
             info = mgr.GetPane(dock_pane.pane_name)
             if not info.IsOk():
-                print "WX: set_layout: managing pane %s" % dock_pane.pane_name
+                logger.debug("set_layout: managing pane %s" % dock_pane.pane_name)
                 dock_pane.add_to_manager()
             else:
-                print "WX: set_layout: arleady managed pane: %s" % dock_pane.pane_name
+                logger.debug("set_layout: arleady managed pane: %s" % dock_pane.pane_name)
     
     def _set_layout_from_aui(self, layout, window):
         # The central pane will have already been added, but we need to add all
         # of the dock panes to the manager before the call to LoadPerspective
-        print "WX: _set_layout_from_aui: using saved perspective"
+        logger.debug("_set_layout_from_aui: using saved perspective")
         for dock_pane in self.state.dock_panes:
-            print "WX: adding dock pane %s" % dock_pane.id
+            logger.debug("adding dock pane %s" % dock_pane.id)
             dock_pane.add_to_manager()
-        print "WX: _set_layout_from_aui: restoring perspective %s" % layout.perspective
+        logger.debug("_set_layout_from_aui: restoring perspective %s" % layout.perspective)
         window._aui_manager.LoadPerspective(layout.perspective)
         for dock_pane in self.state.dock_panes:
-            print "WX: validating dock pane traits for %s" % dock_pane.id
+            logger.debug("validating dock pane traits for %s" % dock_pane.id)
             dock_pane.validate_traits_from_pane_info()
 
     def set_layout_for_area(self, layout, direction, row=None, pos=None):
@@ -87,14 +87,14 @@ class MainWindowLayout(HasTraits):
         # horizontally and that's it.  Similarly, left and right docks can
         # only be split horizontally and within each horizontal split can be
         # split vertically.
-        print "WX: set_layout_for_area: %s" % INVERSE_AREA_MAP[direction]
+        logger.debug("set_layout_for_area: %s" % INVERSE_AREA_MAP[direction])
         
         if isinstance(layout, PaneItem):
             dock_pane = self._get_dock_pane(layout)
             if dock_pane is None:
                 raise MainWindowLayoutError("Unknown dock pane %r" % layout)
             dock_pane.dock_area = INVERSE_AREA_MAP[direction]
-            print "WX: layout size (%d,%d)" % (layout.width, layout.height)
+            logger.debug("layout size (%d,%d)" % (layout.width, layout.height))
             dock_pane.add_to_manager(row=row, pos=pos)
             dock_pane.visible = True
         

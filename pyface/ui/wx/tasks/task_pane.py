@@ -31,7 +31,6 @@ class TaskPane(MTaskPane):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         if self.control is not None:
-            print "Destroying %s" % self.control
             self.control.Hide()
             self.control.Destroy()
             self.control = None

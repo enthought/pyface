@@ -5,7 +5,6 @@ import os
 
 # Logger.
 logger = logging.getLogger(__name__)
-print __name__
 
 requested = ""
 if 'ETS_WX_AUI' in os.environ:

@@ -1,5 +1,6 @@
 # Standard library imports
 from contextlib import contextmanager
+import logging
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
@@ -19,6 +20,9 @@ AREA_MAP = { 'left'   : aui.AUI_DOCK_LEFT,
              'top'    : aui.AUI_DOCK_TOP,
              'bottom' : aui.AUI_DOCK_BOTTOM }
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
+
+# Logging
+logger = logging.getLogger(__name__)
 
 
 @provides(IDockPane)
@@ -44,10 +48,11 @@ class DockPane(TaskPane, MDockPane):
     ###########################################################################
 
     @classmethod
-    def print_hierarchy(cls, parent, indent=""):
-        print "%s%s %s" % (indent, str(parent), parent.GetName())
+    def get_hierarchy(cls, parent, indent=""):
+        lines = ["%s%s %s" % (indent, str(parent), parent.GetName())]
         for child in parent.GetChildren():
-            cls.print_hierarchy(child, indent + "  ")
+            lines.append(cls.get_hierarchy(child, indent + "  "))
+        return "\n".join(lines)
 
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
@@ -59,9 +64,8 @@ class DockPane(TaskPane, MDockPane):
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
         self.pane_name = self.task.id + ':' + self.id
-        print "WX: dock_pane.create: %s" % self.pane_name
+        logger.debug("dock_pane.create: %s  HIERARCHY:\n%s" % (self.pane_name, self.get_hierarchy(parent, "    ")))
         
-        self.print_hierarchy(parent)
         # Connect signal handlers for updating DockPane traits.
 #        control.dockLocationChanged.connect(self._receive_dock_area)
 #        control.topLevelChanged.connect(self._receive_floating)
@@ -86,7 +90,7 @@ class DockPane(TaskPane, MDockPane):
         info = self.get_new_info()
         if tabify_pane is not None:
             target = tabify_pane.get_pane_info()
-            print "WX: dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name)
+            logger.debug("dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name))
         else:
             target = None
         if row is not None:
@@ -108,7 +112,7 @@ class DockPane(TaskPane, MDockPane):
         """ Destroy the toolkit-specific control that represents the contents.
         """
         if self.control is not None:
-            print "Destroying %s" % self.control
+            logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
             
             # Some containers (e.g.  TraitsDockPane) will destroy the control
@@ -166,15 +170,15 @@ class DockPane(TaskPane, MDockPane):
         if main_window and self.task == self.task.window.active_task:
             self.commit_layout()
         else:
-            print "task not active so not committing..."
+            logger.debug("task not active so not committing...")
 
     def update_dock_area(self, info):
         info.Direction(AREA_MAP[self.dock_area])
-        print "info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction)
+        logger.debug("info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction))
 
     @on_trait_change('dock_area')
     def _set_dock_area(self):
-        print "trait change: dock_area"
+        logger.debug("trait change: dock_area")
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_area(info)
@@ -223,7 +227,7 @@ class DockPane(TaskPane, MDockPane):
 
     @on_trait_change('visible')
     def _set_visible(self):
-        print "WX: _set_visible %s on pane=%s, control=%s" % (self.visible, self.pane_name, self.control)
+        logger.debug("_set_visible %s on pane=%s, control=%s" % (self.visible, self.pane_name, self.control))
         if self.control is not None:
             info = self.get_pane_info()
             self.update_visible(info)
@@ -240,7 +244,7 @@ class DockPane(TaskPane, MDockPane):
             self.floating = floating
 
     def _receive_visible(self, evt):
-        print "WX: _receive_visible!"
+        logger.debug("_receive_visible!")
         if self.control is not None:
             self.visible = evt.GetShow()
-            print "WX: _receive_visible = %s" % self.visible
+            logger.debug("_receive_visible = %s" % self.visible)

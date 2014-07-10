@@ -1,3 +1,6 @@
+# Standard library imports.
+import logging
+
 # System library imports.
 import wx
 from pyface.wx.aui import aui
@@ -9,6 +12,9 @@ from traits.api import Instance, List, Str
 from main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
+
+# Logging
+logger = logging.getLogger(__name__)
 
 
 class AUILayout(TaskLayout):
@@ -60,7 +66,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         state.central_pane.control.Hide()
         
         for dock_pane in state.dock_panes:
-            print "hiding dock pane %s" % dock_pane.id
+            logger.debug("hiding dock pane %s" % dock_pane.id)
             self.window._aui_manager.DetachPane(dock_pane.control)
             dock_pane.control.Hide()
         
@@ -70,7 +76,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         
         # Remove any still-left over stuff (i.e. toolbars)
         for info in self.window._aui_manager.GetAllPanes():
-            print "hiding remaining pane: %s" % info.name
+            logger.debug("hiding remaining pane: %s" % info.name)
             control = info.window
             self.window._aui_manager.DetachPane(control)
             control.Hide()
@@ -81,7 +87,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         # Show the central pane.
         info = aui.AuiPaneInfo().Caption('Central').Dockable(False).Floatable(False).Name('Central').CentrePane().Maximize()
-        print "adding central pane to %s" % self.window
+        logger.debug("adding central pane to %s" % self.window)
         self.window._aui_manager.AddPane(state.central_pane.control, info)
         self.window._aui_manager.Update()
 
@@ -134,11 +140,11 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def _pane_close_requested(self, evt):
         pane = evt.GetPane()
-        print "_pane_close_requested: pane=%s" % pane.name
+        logger.debug("_pane_close_requested: pane=%s" % pane.name)
         for dock_pane in self.window.dock_panes:
-            print "_pane_close_requested: checking pane=%s" % dock_pane.pane_name
+            logger.debug("_pane_close_requested: checking pane=%s" % dock_pane.pane_name)
             if dock_pane.pane_name == pane.name:
-                print "_pane_close_requested: FOUND PANE!!!!!!"
+                logger.debug("_pane_close_requested: FOUND PANE!!!!!!")
                 dock_pane.visible = False
                 break
 
