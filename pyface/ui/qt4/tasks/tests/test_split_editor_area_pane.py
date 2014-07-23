@@ -242,9 +242,18 @@ class TestEditorAreaWidget(unittest.TestCase):
         # adding the editors
         editor_area = SplitEditorAreaPane()
         editor_area.create(parent=None)
-        editor_area.add_editor(Editor(obj=file0))
-        editor_area.add_editor(Editor(obj=file1))
-        editor_area.add_editor(Editor(obj=file2))
+        editor_area.add_editor(Editor(obj=file0, tooltip="test_tooltip0"))
+        editor_area.add_editor(Editor(obj=file1, tooltip="test_tooltip1"))
+        editor_area.add_editor(Editor(obj=file2, tooltip="test_tooltip2"))
+
+        ######## test tooltips #############
+
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(0),
+                          "test_tooltip0")
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(1),
+                          "test_tooltip1")
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(2),
+                          "test_tooltip2")
 
         ######## test set_layout #############
 
