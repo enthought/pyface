@@ -8,6 +8,9 @@ Fixes
 
 * Fixed wx 2.9 incompatibility bug in ProgressDialog (PR#106).
 
+* Tooltip for first editor of SplitEditorAreaPane was broken (PR#108)
+
+
 Release 4.4.0
 -------------
 
