@@ -13,7 +13,9 @@
 
 
 # Standard library imports.
+import functools
 from inspect import getargspec
+import logging
 
 # Major package imports.
 from pyface.qt import QtGui, QtCore
@@ -23,6 +25,37 @@ from traits.api import Any, Bool, HasTraits
 
 # Local imports.
 from pyface.action.action_event import ActionEvent
+
+logger = logging.getLogger(__name__)
+
+
+def log_exceptions(logger):
+    """ Decorator factory for logging (and re-raising) exceptions.
+
+    Usage:
+
+        @log_exceptions(my_logger)
+        def my_method(args, ...):
+            pass
+
+    This will catch any exceptions that occur during the execution of
+    my_method, and log them to the given logger before re-raising them.
+
+    """
+    def exception_log_decorator(target_function):
+        """ Log and reraise exceptions from the decorated function. """
+
+        @functools.wraps(target_function)
+        def wrapped_function(*args, **kwargs):
+            try:
+                result = target_function(*args, **kwargs)
+            except BaseException:
+                logger.exception('Exception occurred during action')
+                raise
+            return result
+        return wrapped_function
+
+    return exception_log_decorator
 
 
 class _MenuItem(HasTraits):
@@ -135,6 +168,7 @@ class _MenuItem(HasTraits):
         """
         self.control = None
 
+    @log_exceptions(logger)
     def _qt4_on_triggered(self):
         """ Called when the menu item has been clicked. """
 
@@ -321,6 +355,7 @@ class _Tool(HasTraits):
         """
         self.control = None
 
+    @log_exceptions(logger)
     def _qt4_on_triggered(self):
         """ Called when the tool bar tool is clicked. """
 
@@ -488,6 +523,7 @@ class _PaletteTool(HasTraits):
 
     #### Tool palette event handlers ##########################################
 
+    @log_exceptions(logger)
     def _on_tool(self, event):
         """ Called when the tool palette button is clicked. """
 
