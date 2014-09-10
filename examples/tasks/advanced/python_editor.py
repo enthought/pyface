@@ -167,7 +167,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         if self.__editor.control and obj == self.__editor.control and \
                event.type() == QtCore.QEvent.FocusOut:
             # Hack for Traits UI compatibility.
-            self.control.emit(QtCore.SIGNAL('lostFocus'))
+            self.__editor.control.emit(QtCore.SIGNAL('lostFocus'))
 
         elif self.__editor.control and obj == self.__editor.control.code and \
                event.type() == QtCore.QEvent.KeyPress:
