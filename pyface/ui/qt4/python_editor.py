@@ -23,8 +23,8 @@ from traits.api import Bool, Event, provides, Unicode
 # Local imports.
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from code_editor.code_widget import AdvancedCodeWidget
-from widget import Widget
+from pyface.code_editor.code_widget import AdvancedCodeWidget
+from pyface.widget import Widget
 
 
 @provides(IPythonEditor)
@@ -160,7 +160,7 @@ class PythonEditorEventFilter(QtCore.QObject):
         if self.__editor.control and obj == self.__editor.control and \
                event.type() == QtCore.QEvent.FocusOut:
             # Hack for Traits UI compatibility.
-            self.control.emit(QtCore.SIGNAL('lostFocus'))
+            self.__editor.control.emit(QtCore.SIGNAL('lostFocus'))
 
         elif self.__editor.control and obj == self.__editor.control.code and \
                event.type() == QtCore.QEvent.KeyPress:
