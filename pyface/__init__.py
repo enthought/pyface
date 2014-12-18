@@ -15,7 +15,10 @@
     Part of the TraitsGUI project of the Enthought Tool Suite.
 """
 
-__version__ = '4.4.0'
+try:
+    from ._version import full_version as __version__
+except ImportError:
+    __version__ = 'not-built'
 
 __requires__ = [
     'traits',
