@@ -203,21 +203,21 @@ class PythonShell(MPythonShell, Widget):
 
         # This was originally in the python_shell plugin, but is toolkit
         # specific.
-        if event.m_altDown and event.m_keyCode == 317:
+        if event.AltDown() and event.GetKeyCode() == 317:
             zoom = self.shell.control.GetZoom()
             if zoom != 20:
                 self.control.SetZoom(zoom+1)
 
-        elif event.m_altDown and event.m_keyCode == 319:
+        elif event.AltDown() and event.GetKeyCode() == 319:
             zoom = self.shell.control.GetZoom()
             if zoom != -10:
                 self.control.SetZoom(zoom-1)
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
+            alt_down     = event.AltDown() == 1,
+            control_down = event.ControlDown() == 1,
+            shift_down   = event.ShiftDown() == 1,
+            key_code     = event.GetKeyCode(),
             event        = event
         )
 

@@ -15,17 +15,14 @@ import wx
 
 
 # Check the version number is late enough.
-if wx.VERSION < (2, 6):
+if wx.VERSION < (2, 8):
     raise RuntimeError, "Need wx version 2.6 or higher, but got %s" % str(wx.VERSION)
 
 # It's possible that it has already been initialised.
 _app = wx.GetApp()
 
 if _app is None:
-    _app = wx.PySimpleApp()
+    _app = wx.App()
 
-    # Before we can load any images we have to initialize wxPython's image
-    # handlers.
-    wx.InitAllImageHandlers()
 
 #### EOF ######################################################################
