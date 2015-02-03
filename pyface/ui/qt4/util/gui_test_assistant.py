@@ -7,7 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-
 import contextlib
 import threading
 
@@ -19,58 +18,8 @@ from traits.testing.unittest_tools import UnittestTools
 from traits.testing.unittest_tools import _TraitsChangeCollector as \
     TraitsChangeCollector
 
+from .testing import find_qt_widget, print_qt_widget_tree
 from .event_loop_helper import EventLoopHelper, ConditionTimeoutError
-
-
-def print_qt_widget_tree(widget, level=0):
-    """ Debugging helper to print out the Qt widget tree starting at a
-    particular `widget`.
-
-    Parameters
-    ----------
-    widget : QObject
-        The root widget in the tree to print.
-    level : int
-        The current level in the tree. Used internally for displaying the
-        tree level.
-    """
-    level = level + 4
-    if level == 0:
-        print
-    print ' '*level, widget
-    for child in widget.children():
-        print_qt_widget_tree(child, level=level)
-    if level == 0:
-        print
-
-
-def find_qt_widget(start, type_, test=None):
-    """Recursively walks the Qt widget tree from Qt widget `start` until it
-    finds a widget of type `type_` (a QWidget subclass) that
-    satisfies the provided `test` method.
-
-    Parameters
-    ----------
-    start : QWidget
-        The widget from which to start walking the tree
-    type_ : type
-        A subclass of QWidget to use for an initial type filter while
-        walking the tree
-    test : callable
-        A filter function that takes one argument (the current widget being
-        evaluated) and returns either True or False to determine if the
-        widget matches the required criteria.
-    """
-    if test is None:
-        test = lambda widget: True
-    if isinstance(start, type_):
-        if test(start):
-            return start
-    for child in start.children():
-        widget = find_qt_widget(child, type_, test=test)
-        if widget:
-            return widget
-    return None
 
 
 class GuiTestAssistant(UnittestTools):
