@@ -184,6 +184,15 @@ class ApplicationWindow(MApplicationWindow, Window):
         return control
 
     ###########################################################################
+    # 'IWindow' interface.
+    ###########################################################################
+
+    def close(self):
+        if AUI:
+            self._aui_manager.UnInit()
+        super(ApplicationWindow, self).close()
+            
+    ###########################################################################
     # Private interface.
     ###########################################################################
 
