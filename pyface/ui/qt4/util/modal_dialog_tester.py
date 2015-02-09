@@ -11,8 +11,8 @@ from pyface.api import GUI
 from pyface.qt import QtCore, QtGui
 from traits.api import Undefined
 
-from canopy_data.util.test_assistants.event_loop_helper import EventLoopHelper
-from canopy_data.util.test_assistants.gui_test_assistant import find_qt_widget
+from .event_loop_helper import EventLoopHelper
+from .gui_test_assistant import find_qt_widget
 
 
 class ModalDialogTester(object):
