@@ -17,7 +17,6 @@ from node_monitor import NodeMonitor
 from node_manager import NodeManager
 from node_tree import NodeTree
 from node_tree_model import NodeTreeModel
-from node_type import NodeType
 from trait_dict_node_type import TraitDictNodeType
 from trait_list_node_type import TraitListNodeType
 from tree_model import TreeModel
