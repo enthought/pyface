@@ -4,15 +4,25 @@ Pyface Changelog
 Change summary since 4.4.0
 --------------------------
 
+Enhancements
+
+* Support menus in toolbars (Qt) (PR#104).
+* keybindings update for other editor area classes (PR#103).
+* Change advanced editor area tab switching shortcut to Ctrl+PgUp/Down (PR#99).
+* ToolBar: Listen to Action name changes for toolbar actions (PR#90).
+
 Fixes
 
+* Fix reference to attribute (PR#112).
 * Fixed wx 2.9 incompatibility bug in ProgressDialog (PR#106).
+* Qt CodeEditor pygments monkeypatch conflict with ipython (PR#100).
+* Documentation fix (PR#95).
 
 Release 4.4.0
 -------------
 
-This is a bug fix release. The biggest change in this release is support for the new adaptation
-mechanism in Traits 4.4.0.
+This is a bug fix release. The biggest change in this release is support for the
+new adaptation mechanism in Traits 4.4.0.
 
 
 Change summary since 4.3.0
