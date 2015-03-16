@@ -57,6 +57,14 @@ tasks Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`enaml_pane` Module
+------------------------
+
+.. automodule:: pyface.tasks.enaml_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`enaml_task_pane` Module
 -----------------------------
 
@@ -109,6 +117,14 @@ tasks Package
 -----------------------------------
 
 .. automodule:: pyface.tasks.i_task_window_backend
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`split_editor_area_pane` Module
+------------------------------------
+
+.. automodule:: pyface.tasks.split_editor_area_pane
     :members:
     :undoc-members:
     :show-inheritance:
