@@ -25,6 +25,14 @@ wx Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`beep` Module
+------------------
+
+.. automodule:: pyface.ui.wx.beep
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`clipboard` Module
 -----------------------
 
@@ -105,11 +113,10 @@ wx Package
     :undoc-members:
     :show-inheritance:
 
-..
- :mod:`ipython_widget` Module
- ----------------------------
+:mod:`ipython_widget` Module
+----------------------------
 
- .. automodule:: pyface.ui.wx.ipython_widget
+.. automodule:: pyface.ui.wx.ipython_widget
     :members:
     :undoc-members:
     :show-inheritance:

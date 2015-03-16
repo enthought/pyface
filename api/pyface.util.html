@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>util Package &mdash; pyface 4.4.0 documentation</title>
+    <title>util Package &mdash; pyface 4.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.4.0',
+        VERSION:     '4.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +24,9 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.4.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
     <link rel="up" title="pyface Package" href="pyface.html" />
-    <link rel="next" title="viewer Package" href="pyface.viewer.html" />
+    <link rel="next" title="grid Package" href="pyface.util.grid.html" />
     <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" /> 
   </head>
   <body>
@@ -39,12 +37,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="pyface.viewer.html" title="viewer Package"
+          <a href="pyface.util.grid.html" title="grid Package"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="pyface.ui.wx.workbench.html" title="workbench Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
       </ul>
     </div>  
@@ -186,6 +184,18 @@ so you don&#8217;t have to depend on IPython.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-pyface.util.id_helper">
+<span id="id-helper-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">id_helper</span></tt> Module<a class="headerlink" href="#module-pyface.util.id_helper" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions to automatically generate unique IDs.</p>
+<dl class="function">
+<dt id="pyface.util.id_helper.get_unique_id">
+<tt class="descclassname">pyface.util.id_helper.</tt><tt class="descname">get_unique_id</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#pyface.util.id_helper.get_unique_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a unique ID of the form ClassName_X, where X is an integer.</p>
+<p>It is only guaranteed that IDs are unique to a specific Python session, not
+across sessions.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-pyface.util.python_stc">
 <span id="python-stc-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">python_stc</span></tt> Module<a class="headerlink" href="#module-pyface.util.python_stc" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -225,6 +235,26 @@ so you don&#8217;t have to depend on IPython.</p>
 <dd></dd></dl>
 
 </div>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.util.grid.html">grid Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#id1"><tt class="docutils literal"><span class="pre">grid</span></tt> Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#api-module"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-module"><tt class="docutils literal"><span class="pre">grid</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.grid_column"><tt class="docutils literal"><span class="pre">grid_column</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-model-module"><tt class="docutils literal"><span class="pre">grid_model</span></tt> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-row-module"><tt class="docutils literal"><span class="pre">grid_row</span></tt> Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.util.tests.html">tests Package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.tests.html#module-pyface.util.tests.test_id_helper"><tt class="docutils literal"><span class="pre">test_id_helper</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -243,7 +273,9 @@ so you don&#8217;t have to depend on IPython.</p>
 <li><a class="reference internal" href="#module-pyface.util.fix_introspect_bug"><tt class="docutils literal"><span class="pre">fix_introspect_bug</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.font_helper"><tt class="docutils literal"><span class="pre">font_helper</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.guisupport"><tt class="docutils literal"><span class="pre">guisupport</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.id_helper"><tt class="docutils literal"><span class="pre">id_helper</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.python_stc"><tt class="docutils literal"><span class="pre">python_stc</span></tt> Module</a></li>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 </ul>
 </li>
 </ul>
@@ -252,8 +284,8 @@ so you don&#8217;t have to depend on IPython.</p>
   <p class="topless"><a href="pyface.ui.wx.workbench.html"
                         title="previous chapter">workbench Package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.viewer.html"
-                        title="next chapter">viewer Package</a></p>
+  <p class="topless"><a href="pyface.util.grid.html"
+                        title="next chapter">grid Package</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/api/pyface.util.txt"
@@ -283,19 +315,19 @@ so you don&#8217;t have to depend on IPython.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="pyface.viewer.html" title="viewer Package"
+          <a href="pyface.util.grid.html" title="grid Package"
              >next</a> |</li>
         <li class="right" >
           <a href="pyface.ui.wx.workbench.html" title="workbench Package"
              >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2013, Enthought.
-      Last updated on Dec 03, 2013.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright 2008-2015, Enthought.
+      Last updated on Mar 16, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>

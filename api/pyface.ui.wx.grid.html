@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>grid Package &mdash; pyface 4.4.0 documentation</title>
+    <title>grid Package &mdash; pyface 4.5.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.4.0',
+        VERSION:     '4.5.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +24,7 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.4.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
     <link rel="up" title="wx Package" href="pyface.ui.wx.html" />
     <link rel="next" title="timer Package" href="pyface.ui.wx.timer.html" />
     <link rel="prev" title="action Package" href="pyface.ui.wx.action.html" /> 
@@ -44,7 +42,7 @@
         <li class="right" >
           <a href="pyface.ui.wx.action.html" title="action Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
           <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
           <li><a href="pyface.ui.wx.html" accesskey="U">wx Package</a> &raquo;</li> 
@@ -61,8 +59,8 @@
 <div class="section" id="id1">
 <h2><tt class="xref py py-mod docutils literal"><span class="pre">grid</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.ui.wx.grid"></span></div>
-<div class="section" id="module-pyface.ui.wx.grid.api">
-<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="api-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#api-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.ui.wx.grid.checkbox_image_renderer">
 <span id="checkbox-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">checkbox_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.checkbox_image_renderer" title="Permalink to this headline">¶</a></h2>
@@ -304,7 +302,7 @@ indicates that the sort should be done in reverse.</p>
 
 <dl class="attribute">
 <dt id="pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.image">
-<tt class="descname">image</tt><em class="property"> = &lt;pyface.ui.wx.image_resource.ImageResource object at 0x11245f2f0&gt;</em><a class="headerlink" href="#pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.image" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">image</tt><em class="property"> = &lt;pyface.ui.qt4.image_resource.ImageResource object at 0x118e4ea10&gt;</em><a class="headerlink" href="#pyface.ui.wx.grid.edit_image_renderer.EditImageRenderer.image" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -325,64 +323,8 @@ indicates that the sort should be done in reverse.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-pyface.ui.wx.grid.grid">
-<span id="grid-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid" title="Permalink to this headline">¶</a></h2>
-<p>A grid control with a model/ui architecture.</p>
-<dl class="class">
-<dt id="pyface.ui.wx.grid.grid.DummyGridCellEditor">
-<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid.</tt><tt class="descname">DummyGridCellEditor</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.DummyGridCellEditor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">wx.grid.PyGridCellEditor</span></tt></p>
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.DummyGridCellEditor.Show">
-<tt class="descname">Show</tt><big>(</big><em>show</em>, <em>attr</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.DummyGridCellEditor.Show" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.ui.wx.grid.grid.Grid">
-<em class="property">class </em><tt class="descclassname">pyface.ui.wx.grid.grid.</tt><tt class="descname">Grid</tt><big>(</big><em>parent</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.html#pyface.ui.wx.widget.Widget" title="pyface.ui.wx.widget.Widget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.widget.Widget</span></tt></a></p>
-<p>A grid control with a model/ui architecture.</p>
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.dispose">
-<tt class="descname">dispose</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.dispose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.get_selection">
-<tt class="descname">get_selection</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.get_selection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of the currently selected objects.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.set_selection">
-<tt class="descname">set_selection</tt><big>(</big><em>selection_list</em>, <em>notify=True</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.set_selection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the current selection to the objects listed in selection_list.
-Note that these objects are model-specific, as the grid depends on the
-underlying model to translate these objects into grid coordinates.
-A ValueError will be raised if the objects are not in the proper format
-for the underlying model.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.stop_editing_indices">
-<tt class="descname">stop_editing_indices</tt><big>(</big><em>indices</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.stop_editing_indices" title="Permalink to this definition">¶</a></dt>
-<dd><p>If editing is occuring in a row in &#8216;indices&#8217;, stop editing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.wx_drag_over">
-<tt class="descname">wx_drag_over</tt><big>(</big><em>x</em>, <em>y</em>, <em>drag_object</em>, <em>drag_result</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.wx_drag_over" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.ui.wx.grid.grid.Grid.wx_dropped_on">
-<tt class="descname">wx_dropped_on</tt><big>(</big><em>x</em>, <em>y</em>, <em>drag_object</em>, <em>drag_result</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.grid.grid.Grid.wx_dropped_on" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="grid-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">grid</span></tt> Module<a class="headerlink" href="#grid-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.ui.wx.grid.grid_cell_image_renderer">
 <span id="grid-cell-image-renderer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">grid_cell_image_renderer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.grid.grid_cell_image_renderer" title="Permalink to this headline">¶</a></h2>
@@ -1340,14 +1282,14 @@ be TraitGridSelection objects.</p>
   <ul>
 <li><a class="reference internal" href="#">grid Package</a><ul>
 <li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">grid</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.wx.grid.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
+<li><a class="reference internal" href="#api-module"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.checkbox_image_renderer"><tt class="docutils literal"><span class="pre">checkbox_image_renderer</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.checkbox_renderer"><tt class="docutils literal"><span class="pre">checkbox_renderer</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.combobox_focus_handler"><tt class="docutils literal"><span class="pre">combobox_focus_handler</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.composite_grid_model"><tt class="docutils literal"><span class="pre">composite_grid_model</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.edit_image_renderer"><tt class="docutils literal"><span class="pre">edit_image_renderer</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.edit_renderer"><tt class="docutils literal"><span class="pre">edit_renderer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid"><tt class="docutils literal"><span class="pre">grid</span></tt> Module</a></li>
+<li><a class="reference internal" href="#grid-module"><tt class="docutils literal"><span class="pre">grid</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_cell_image_renderer"><tt class="docutils literal"><span class="pre">grid_cell_image_renderer</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_cell_renderer"><tt class="docutils literal"><span class="pre">grid_cell_renderer</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.grid.grid_model"><tt class="docutils literal"><span class="pre">grid_model</span></tt> Module</a></li>
@@ -1400,16 +1342,16 @@ be TraitGridSelection objects.</p>
         <li class="right" >
           <a href="pyface.ui.wx.action.html" title="action Package"
              >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.4.0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
           <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
           <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
           <li><a href="pyface.ui.wx.html" >wx Package</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2008-2013, Enthought.
-      Last updated on Dec 03, 2013.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright 2008-2015, Enthought.
+      Last updated on Mar 16, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
