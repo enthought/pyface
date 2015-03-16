@@ -6,6 +6,7 @@ Change summary since 4.4.0
 
 Enhancements
 
+* Add testing assistants (Qt) (PR#118).
 * Support menus in toolbars (Qt) (PR#104).
 * keybindings update for other editor area classes (PR#103).
 * Change advanced editor area tab switching shortcut to Ctrl+PgUp/Down (PR#99).
