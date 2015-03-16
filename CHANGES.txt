@@ -19,6 +19,9 @@ Fixes
 * Qt CodeEditor pygments monkeypatch conflict with ipython (PR#100).
 * Documentation fix (PR#95).
 
+* Tooltip for first editor of SplitEditorAreaPane was broken (PR#108)
+
+
 Release 4.4.0
 -------------
 

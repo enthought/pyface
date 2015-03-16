@@ -111,14 +111,14 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # does the right tabwidget contain nothing but the empty widget?
         self.assertEquals(root.rightchild.tabwidget().count(), 1)
-        self.assertEquals(root.rightchild.tabwidget().widget(0), 
+        self.assertEquals(root.rightchild.tabwidget().widget(0),
                           root.rightchild.tabwidget().empty_widget)
 
         # do we have an equally sized split?
         self.assertEquals(root.leftchild.width(), root.rightchild.width())
 
         # is the rightchild active?
-        self.assertEquals(root.editor_area.active_tabwidget, 
+        self.assertEquals(root.editor_area.active_tabwidget,
                           root.rightchild.tabwidget())
 
     def _setUp_collapse(self, parent=None):
@@ -137,7 +137,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         tabwidget.addTab(btn0, '0')
         tabwidget.addTab(btn1, '1')
         tabwidget.setCurrentIndex(1)
-        
+
         # setup rightchild
         right = EditorAreaWidget(editor_area=left.editor_area, parent=None)
         btn2 = QtGui.QPushButton('btn2')
@@ -146,7 +146,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         tabwidget.addTab(btn2, '2')
         tabwidget.addTab(btn3, '3')
         tabwidget.setCurrentIndex(0)
-        
+
         # setup root
         root = EditorAreaWidget(editor_area=left.editor_area, parent=parent)
         tabwidget = root.tabwidget()
@@ -183,7 +183,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(root.tabwidget().currentWidget(), btn2)
 
     def test_collapse_empty(self):
-        """ Test for collapse function when the collapse origin is an empty 
+        """ Test for collapse function when the collapse origin is an empty
         tabwidget. It's sibling can have an arbitrary layout and the result
         would be such that this layout is transferred to the parent.
         """
@@ -242,12 +242,21 @@ class TestEditorAreaWidget(unittest.TestCase):
         # adding the editors
         editor_area = SplitEditorAreaPane()
         editor_area.create(parent=None)
-        editor_area.add_editor(Editor(obj=file0))
-        editor_area.add_editor(Editor(obj=file1))
-        editor_area.add_editor(Editor(obj=file2))
+        editor_area.add_editor(Editor(obj=file0, tooltip="test_tooltip0"))
+        editor_area.add_editor(Editor(obj=file1, tooltip="test_tooltip1"))
+        editor_area.add_editor(Editor(obj=file2, tooltip="test_tooltip2"))
+
+        ######## test tooltips #############
+
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(0),
+                          "test_tooltip0")
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(1),
+                          "test_tooltip1")
+        self.assertEquals(editor_area.active_tabwidget.tabToolTip(2),
+                          "test_tooltip2")
 
         ######## test set_layout #############
-        
+
         # set the layout
         editor_area.set_layout(layout)
 
@@ -255,26 +264,26 @@ class TestEditorAreaWidget(unittest.TestCase):
         left = editor_area.control.leftchild
         editor = editor_area._get_editor(left.tabwidget().widget(0))
         self.assertEquals(editor.obj, file0)
-        
+
         # right pane is a splitter made of two panes?
         right = editor_area.control.rightchild
         self.assertFalse(right.is_leaf())
-        
+
         # right pane is vertical splitter?
         self.assertEquals(right.orientation(), QtCore.Qt.Vertical)
-        
+
         # top pane of this vertical split is empty?
-        right_top = right.leftchild 
+        right_top = right.leftchild
         self.assertTrue(right_top.is_empty())
-        
+
         # bottom pane is not empty?
-        right_bottom = right.rightchild 
+        right_bottom = right.rightchild
         self.assertFalse(right_bottom.is_empty())
-        
+
         # file1 goes first on bottom pane?
         editor = editor_area._get_editor(right_bottom.tabwidget().widget(0))
         self.assertEquals(editor.obj, file1)
-        
+
         # file2 goes second on bottom pane?
         editor = editor_area._get_editor(right_bottom.tabwidget().widget(1))
         self.assertEquals(editor.obj, file2)
@@ -290,7 +299,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # is the top level a horizontal splitter?
         self.assertIsInstance(layout_new, Splitter)
         self.assertEquals(layout_new.orientation, 'horizontal')
-        
+
         # tests on left child
         left = layout_new.items[0]
         self.assertIsInstance(left, Tabbed)
