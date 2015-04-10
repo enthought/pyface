@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2014 by Enthought, Inc.
+# Copyright (c) 2008-2015 by Enthought, Inc.
 # All rights reserved.
 
 import os
@@ -8,8 +8,8 @@ import subprocess
 from setuptools import setup, find_packages
 
 MAJOR = 4
-MINOR = 5
-MICRO = 1
+MINOR = 6
+MICRO = 0
 
 IS_RELEASED = False
 
