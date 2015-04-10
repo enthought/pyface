@@ -1,6 +1,14 @@
 Pyface Changelog
 ================
 
+Change summary since 4.5.0
+--------------------------
+
+Fixes
+
+* fix MANIFEST.in (PR#131).
+
+
 Change summary since 4.4.0
 --------------------------
 
@@ -44,4 +52,3 @@ Fixes
 
  * Fixed split editor area pane focus (PR#89).
  * Fixed bug when a VSplitter contains an HSplitter (PR#88, issue#87)
-
