@@ -1,0 +1,15 @@
+include CHANGES.txt
+include LICENSE.txt
+include image_LICENSE.txt
+include image_LICENSE_Eclipse.txt
+include image_LICENSE_Nuvola.txt
+include image_LICENSE_OOo.txt
+include README.rst
+include dev_requirements.txt
+recursive-include pyface *.png *.jpg *.gif *.svg
+graft docs
+prune docs/build
+recursive-exclude docs *.pyc
+graft examples
+recursive-exclude examples *.pyc
+recursive-include encore *.py
