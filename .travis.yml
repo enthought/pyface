@@ -5,7 +5,7 @@ virtualenv:
   system_site_packages: true
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install python-qt4
+  - sudo apt-get install python-qt4 python-wxgtk2.8
 install:
   - pip install traits
   - pip install coverage
