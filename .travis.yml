@@ -8,12 +8,14 @@ before_install:
   - sudo apt-get install python-qt4 python-wxgtk2.8
 install:
   - pip install traits
+  - pip install nose-exclude
   - pip install coverage
   - pip install codecov
   - python setup.py develop
 script:
   - export DISPLAY=:99.0
   - /etc/init.d/xvfb start
-  - ETS_TOOKIT=qt4 coverage run -m nose.core -v
+  - ETS_TOOKIT=qt4 coverage run -m nose.core -v --exclude-dir=pyface/ui/wx
+  - ETS_TOOKIT=wx coverage run -a -m nose.core -v --exclude-dir=pyface/ui/wx
 after_success:
   - codecov
