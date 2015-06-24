@@ -9,8 +9,9 @@ before_install:
 install:
   - pip install traits
   - pip install coverage
+  - pip install codecov
   - python setup.py develop
 script:
   - coverage -m nose.core -v
 after_success:
-  - coverage report
+  - codecov
