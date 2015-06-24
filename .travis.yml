@@ -17,6 +17,6 @@ script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - ETS_TOOLKIT=qt4 coverage run -m nose.core -v --exclude-dir=pyface/ui/wx
-  - ETS_TOOLKIT=wx coverage run -a -m nose.core -v --exclude-dir=pyface/ui/qt
+  - ETS_TOOLKIT=wx coverage run -a -m nose.core -v --exclude-dir=pyface/ui/qt4
 after_success:
   - codecov
