@@ -9,6 +9,7 @@ before_install:
 install:
   - pip install traits
   - pip install traitsui
+  - pip install traits_enaml
   - pip install nose-exclude
   - pip install coverage
   - pip install codecov
