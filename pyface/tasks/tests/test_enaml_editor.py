@@ -1,8 +1,13 @@
 from traits.testing.unittest_tools import unittest
-
-from enaml.widgets.api import Label
 from traits.api import Str
+from traits.etsconfig.api import ETSConfig
+
+if ETSConfig.toolkit not in ['', 'qt4']:
+    raise unittest.SkipTest("TestEnamlEditor: Enaml does not support WX")
+
 from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
+from enaml.widgets.api import Label
+
 
 from pyface.tasks.api import EnamlEditor
 
