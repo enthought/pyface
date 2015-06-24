@@ -8,6 +8,7 @@ before_install:
   - sudo apt-get install python-qt4 python-wxgtk2.8
 install:
   - pip install traits
+  - pip install traitsui
   - pip install nose-exclude
   - pip install coverage
   - pip install codecov
