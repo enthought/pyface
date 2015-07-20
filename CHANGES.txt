@@ -7,6 +7,8 @@ Change summary since 4.5.0
 Fixes
 
 * fix MANIFEST.in (PR#131).
+* Fix incompatibility with Pygments 2.x, which was causing tracebacks
+  during syntax highlighting (PR#136).
 
 
 Change summary since 4.4.0
