@@ -1,0 +1,9 @@
+include *.txt
+include README.rst
+include MANIFEST.in
+recursive-include pyface *.py *.png *.jpg *.gif *.svg
+graft docs
+prune docs/build
+recursive-exclude docs *.pyc
+graft examples
+recursive-exclude examples *.pyc
