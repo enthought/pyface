@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
     setup(name='pyface',
           version=__version__,
-          url='http://code.enthought.com/projects/traits_gui',
+          url='https://docs.enthought.com/pyface',
           author='David C. Morrill, et al.',
           author_email='dmorrill@enthought.com',
           classifiers=[c.strip() for c in """\
@@ -121,13 +121,20 @@ if __name__ == "__main__":
               """.splitlines() if len(c.split()) > 0],
           description='traits-capable windowing framework',
           long_description=open('README.rst').read(),
-          download_url=('http://www.enthought.com/repo/ets/pyface-%s.tar.gz' %
-                        __version__),
+          download_url=('https://github.com/enthought/pyface'),
           install_requires=__requires__,
           license='BSD',
           maintainer='ETS Developers',
           maintainer_email='enthought-dev@enthought.com',
-          package_data={'': ['images/*']},
+          package_data={'': [
+            'images/*',
+            'action/images/*',
+            'dock/images/*',
+            'tree/images/*',
+            'ui/qt4/images/*',
+            'ui/wx/images/*',
+            'ui/wx/grid/images/*',
+          ]},
           packages=find_packages(),
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
