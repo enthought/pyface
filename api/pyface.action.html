@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>action Package &mdash; pyface 4.5.0 documentation</title>
+    <title>action Package &mdash; pyface 4.5.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.5.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,13 +24,17 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.1 documentation" href="../index.html" />
     <link rel="up" title="pyface Package" href="pyface.html" />
     <link rel="next" title="dock Package" href="pyface.dock.html" />
-    <link rel="prev" title="pyface Package" href="pyface.html" /> 
+    <link rel="prev" title="pyface Package" href="pyface.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,28 +46,28 @@
         <li class="right" >
           <a href="pyface.html" title="pyface Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="action-package">
 <h1>action Package<a class="headerlink" href="#action-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">action</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><code class="xref py py-mod docutils literal"><span class="pre">action</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.action"></span></div>
 <div class="section" id="module-pyface.action.action">
-<span id="action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action</span></tt> Module<a class="headerlink" href="#module-pyface.action.action" title="Permalink to this headline">¶</a></h2>
+<span id="action-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action</span></code> Module<a class="headerlink" href="#module-pyface.action.action" title="Permalink to this headline">¶</a></h2>
 <p>The base class for all actions.</p>
 <dl class="class">
 <dt id="pyface.action.action.Action">
-<em class="property">class </em><tt class="descclassname">pyface.action.action.</tt><tt class="descname">Action</tt><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action.</code><code class="descname">Action</code><a class="headerlink" href="#pyface.action.action.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The base class for all actions.</p>
 <p>An action is the non-UI side of a command which can be triggered by the end
 user.  Actions are typically associated with buttons, menu items and tool
@@ -72,7 +76,7 @@ bar tools.</p>
 method is invoked to do the actual work.</p>
 <dl class="method">
 <dt id="pyface.action.action.Action.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the action is no longer required.</p>
 <p>By default this method does nothing, but this would be a great place to
 unhook trait listeners etc.</p>
@@ -80,7 +84,7 @@ unhook trait listeners etc.</p>
 
 <dl class="method">
 <dt id="pyface.action.action.Action.perform">
-<tt class="descname">perform</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
+<code class="descname">perform</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action.Action.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the action.</p>
 </dd></dl>
 
@@ -88,40 +92,40 @@ unhook trait listeners etc.</p>
 
 </div>
 <div class="section" id="module-pyface.action.action_controller">
-<span id="action-controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_controller</span></tt> Module<a class="headerlink" href="#module-pyface.action.action_controller" title="Permalink to this headline">¶</a></h2>
+<span id="action-controller-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action_controller</span></code> Module<a class="headerlink" href="#module-pyface.action.action_controller" title="Permalink to this headline">¶</a></h2>
 <p>The default action controller for menus, menu bars and tool bars.</p>
 <dl class="class">
 <dt id="pyface.action.action_controller.ActionController">
-<em class="property">class </em><tt class="descclassname">pyface.action.action_controller.</tt><tt class="descname">ActionController</tt><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action_controller.</code><code class="descname">ActionController</code><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The default action controller for menus, menu bars and tool bars.</p>
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.add_to_menu">
-<tt class="descname">add_to_menu</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a menu/menubar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.add_to_toolbar">
-<tt class="descname">add_to_toolbar</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a toolbar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_menu">
-<tt class="descname">can_add_to_menu</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the action can be added to a menu/menubar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_toolbar">
-<tt class="descname">can_add_to_toolbar</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the action can be added to a toolbar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.perform">
-<tt class="descname">perform</tt><big>(</big><em>action</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<code class="descname">perform</code><span class="sig-paren">(</span><em>action</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control an action invocation.</p>
 </dd></dl>
 
@@ -129,45 +133,45 @@ unhook trait listeners etc.</p>
 
 </div>
 <div class="section" id="module-pyface.action.action_event">
-<span id="action-event-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_event</span></tt> Module<a class="headerlink" href="#module-pyface.action.action_event" title="Permalink to this headline">¶</a></h2>
+<span id="action-event-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action_event</span></code> Module<a class="headerlink" href="#module-pyface.action.action_event" title="Permalink to this headline">¶</a></h2>
 <p>The event passed to an action&#8217;s &#8216;perform&#8217; method.</p>
 <dl class="class">
 <dt id="pyface.action.action_event.ActionEvent">
-<em class="property">class </em><tt class="descclassname">pyface.action.action_event.</tt><tt class="descname">ActionEvent</tt><big>(</big><em>**traits</em><big>)</big><a class="headerlink" href="#pyface.action.action_event.ActionEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action_event.</code><code class="descname">ActionEvent</code><span class="sig-paren">(</span><em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_event.ActionEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The event passed to an action&#8217;s &#8216;perform&#8217; method.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.action.action_item">
-<span id="action-item-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_item</span></tt> Module<a class="headerlink" href="#module-pyface.action.action_item" title="Permalink to this headline">¶</a></h2>
+<span id="action-item-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action_item</span></code> Module<a class="headerlink" href="#module-pyface.action.action_item" title="Permalink to this headline">¶</a></h2>
 <p>An action manager item that represents an actual action.</p>
 <dl class="class">
 <dt id="pyface.action.action_item.ActionItem">
-<em class="property">class </em><tt class="descclassname">pyface.action.action_item.</tt><tt class="descname">ActionItem</tt><a class="headerlink" href="#pyface.action.action_item.ActionItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action_manager_item.ActionManagerItem</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action_item.</code><code class="descname">ActionItem</code><a class="headerlink" href="#pyface.action.action_item.ActionItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><code class="xref py py-class docutils literal"><span class="pre">pyface.action.action_manager_item.ActionManagerItem</span></code></a></p>
 <p>An action manager item that represents an actual action.</p>
 <dl class="method">
 <dt id="pyface.action.action_item.ActionItem.add_to_menu">
-<tt class="descname">add_to_menu</tt><big>(</big><em>parent</em>, <em>menu</em>, <em>controller</em><big>)</big><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>parent</em>, <em>menu</em>, <em>controller</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the item to a menu.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_item.ActionItem.add_to_palette">
-<tt class="descname">add_to_palette</tt><big>(</big><em>tool_palette</em>, <em>image_cache</em>, <em>show_labels=True</em><big>)</big><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_palette" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_palette</code><span class="sig-paren">(</span><em>tool_palette</em>, <em>image_cache</em>, <em>show_labels=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_palette" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the item to a tool palette.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_item.ActionItem.add_to_toolbar">
-<tt class="descname">add_to_toolbar</tt><big>(</big><em>parent</em>, <em>tool_bar</em>, <em>image_cache</em>, <em>controller</em>, <em>show_labels=True</em><big>)</big><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>parent</em>, <em>tool_bar</em>, <em>image_cache</em>, <em>controller</em>, <em>show_labels=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_item.ActionItem.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the item to a tool bar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_item.ActionItem.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.action.action_item.ActionItem.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_item.ActionItem.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the action is no longer required.</p>
 <p>By default this method calls &#8216;destroy&#8217; on the action itself.</p>
 </dd></dl>
@@ -176,12 +180,12 @@ unhook trait listeners etc.</p>
 
 </div>
 <div class="section" id="module-pyface.action.action_manager">
-<span id="action-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.action_manager" title="Permalink to this headline">¶</a></h2>
+<span id="action-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.action_manager" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all action managers.</p>
 <dl class="class">
 <dt id="pyface.action.action_manager.ActionManager">
-<em class="property">class </em><tt class="descclassname">pyface.action.action_manager.</tt><tt class="descname">ActionManager</tt><big>(</big><em>*args</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action_manager.</code><code class="descname">ActionManager</code><span class="sig-paren">(</span><em>*args</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all action managers.</p>
 <p>An action manager contains a list of groups, with each group containing a
 list of items.</p>
@@ -193,14 +197,14 @@ list of items.</p>
 </ol>
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.append">
-<tt class="descname">append</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append an item to the manager.</p>
 <p>See the documentation for &#8216;insert&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the manager is no longer required.</p>
 <p>By default this method simply calls &#8216;destroy&#8217; on all of the manager&#8217;s
 groups.</p>
@@ -208,20 +212,20 @@ groups.</p>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.dump">
-<tt class="descname">dump</tt><big>(</big><em>indent=''</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.dump" title="Permalink to this definition">¶</a></dt>
+<code class="descname">dump</code><span class="sig-paren">(</span><em>indent=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render a manager!</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.find_group">
-<tt class="descname">find_group</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.find_group" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find_group</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.find_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the group with the specified Id.</p>
 <p>Return None if no such group exists.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.find_item">
-<tt class="descname">find_item</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.find_item" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find_item</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.find_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the item found at the specified path.</p>
 <p>&#8216;path&#8217; is a &#8216;/&#8217; separated list of contribution Ids.</p>
 <p>Returns None if any component of the path is not found.</p>
@@ -229,7 +233,7 @@ groups.</p>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.insert">
-<tt class="descname">insert</tt><big>(</big><em>index</em>, <em>item</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.insert" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Insert an item into the manager at the specified index.</p>
 <p>The item can be:-</p>
 <ol class="arabic">
@@ -256,31 +260,31 @@ group.</p>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.render_group">
-<tt class="descname">render_group</tt><big>(</big><em>group</em>, <em>indent=''</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.render_group" title="Permalink to this definition">¶</a></dt>
+<code class="descname">render_group</code><span class="sig-paren">(</span><em>group</em>, <em>indent=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.render_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render a group!</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.render_item">
-<tt class="descname">render_item</tt><big>(</big><em>item</em>, <em>indent=''</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.render_item" title="Permalink to this definition">¶</a></dt>
+<code class="descname">render_item</code><span class="sig-paren">(</span><em>item</em>, <em>indent=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.render_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Render an item!</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.walk">
-<tt class="descname">walk</tt><big>(</big><em>fn</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk" title="Permalink to this definition">¶</a></dt>
+<code class="descname">walk</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Walk the manager applying a function at every item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.walk_group">
-<tt class="descname">walk_group</tt><big>(</big><em>group</em>, <em>fn</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk_group" title="Permalink to this definition">¶</a></dt>
+<code class="descname">walk_group</code><span class="sig-paren">(</span><em>group</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk_group" title="Permalink to this definition">¶</a></dt>
 <dd><p>Walk a group applying a function at every item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager.ActionManager.walk_item">
-<tt class="descname">walk_item</tt><big>(</big><em>item</em>, <em>fn</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk_item" title="Permalink to this definition">¶</a></dt>
+<code class="descname">walk_item</code><span class="sig-paren">(</span><em>item</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager.ActionManager.walk_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Walk an item (may be a sub-menu manager remember!).</p>
 </dd></dl>
 
@@ -288,12 +292,12 @@ group.</p>
 
 </div>
 <div class="section" id="module-pyface.action.action_manager_item">
-<span id="action-manager-item-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">action_manager_item</span></tt> Module<a class="headerlink" href="#module-pyface.action.action_manager_item" title="Permalink to this headline">¶</a></h2>
+<span id="action-manager-item-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">action_manager_item</span></code> Module<a class="headerlink" href="#module-pyface.action.action_manager_item" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all action manager items.</p>
 <dl class="class">
 <dt id="pyface.action.action_manager_item.ActionManagerItem">
-<em class="property">class </em><tt class="descclassname">pyface.action.action_manager_item.</tt><tt class="descname">ActionManagerItem</tt><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.action_manager_item.</code><code class="descname">ActionManagerItem</code><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all action manager items.</p>
 <p>An action manager item represents a contribution to a shared UI resource
 such as a menu bar, menu or tool bar.</p>
@@ -303,13 +307,13 @@ separator.  In a menu bar a contribution item is a menu, and in a menu
 a contribution item is a menu item or separator.</p>
 <dl class="method">
 <dt id="pyface.action.action_manager_item.ActionManagerItem.add_to_menu">
-<tt class="descname">add_to_menu</tt><big>(</big><em>parent</em>, <em>menu</em>, <em>controller</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>parent</em>, <em>menu</em>, <em>controller</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the item to a menu.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_manager_item.ActionManagerItem.add_to_toolbar">
-<tt class="descname">add_to_toolbar</tt><big>(</big><em>parent</em>, <em>tool_bar</em>, <em>image_cache</em>, <em>controller</em><big>)</big><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>parent</em>, <em>tool_bar</em>, <em>image_cache</em>, <em>controller</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_manager_item.ActionManagerItem.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the item to a tool bar.</p>
 </dd></dl>
 
@@ -317,35 +321,35 @@ a contribution item is a menu item or separator.</p>
 
 </div>
 <div class="section" id="module-pyface.action.api">
-<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.action.api" title="Permalink to this headline">¶</a></h2>
+<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.action.api" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.action.group">
-<span id="group-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">group</span></tt> Module<a class="headerlink" href="#module-pyface.action.group" title="Permalink to this headline">¶</a></h2>
+<span id="group-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">group</span></code> Module<a class="headerlink" href="#module-pyface.action.group" title="Permalink to this headline">¶</a></h2>
 <p>A group of action manager items.</p>
 <dl class="class">
 <dt id="pyface.action.group.Group">
-<em class="property">class </em><tt class="descclassname">pyface.action.group.</tt><tt class="descname">Group</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.action.group.</code><code class="descname">Group</code><span class="sig-paren">(</span><em>*items</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>A group of action manager items.</p>
 <p>By default, a group declares itself as requiring a separator when it is
 visualized, but this can be changed by setting its &#8216;separator&#8217; trait to
 False.</p>
 <dl class="method">
 <dt id="pyface.action.group.Group.append">
-<tt class="descname">append</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends an item to the group.</p>
 <p>See the documentation for &#8216;insert&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.clear">
-<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.action.group.Group.clear" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove all items from the group.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.destroy">
-<tt class="descname">destroy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.action.group.Group.destroy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.destroy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when the manager is no longer required.</p>
 <p>By default this method simply calls &#8216;destroy&#8217; on all items in the
 group.</p>
@@ -353,14 +357,14 @@ group.</p>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.find">
-<tt class="descname">find</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.find" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.find" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the item with the specified Id.</p>
 <p>Returns None if no such item exists.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.insert">
-<tt class="descname">insert</tt><big>(</big><em>index</em>, <em>item</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.insert" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts an item into the group at the specified index.</p>
 <ol class="arabic">
 <li><p class="first">An &#8216;ActionManagerItem&#8217; instance.</p>
@@ -385,21 +389,21 @@ it is performed, and the action is then wrapped as in 2).</p>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.insert_after">
-<tt class="descname">insert_after</tt><big>(</big><em>after</em>, <em>item</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.insert_after" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_after</code><span class="sig-paren">(</span><em>after</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.insert_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts an item into the group after the specified item.</p>
 <p>See the documentation for &#8216;insert&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.insert_before">
-<tt class="descname">insert_before</tt><big>(</big><em>before</em>, <em>item</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.insert_before" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_before</code><span class="sig-paren">(</span><em>before</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.insert_before" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts an item into the group before the specified item.</p>
 <p>See the documentation for &#8216;insert&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.group.Group.remove">
-<tt class="descname">remove</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.action.group.Group.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Group.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes an item from the group.</p>
 </dd></dl>
 
@@ -407,8 +411,8 @@ it is performed, and the action is then wrapped as in 2).</p>
 
 <dl class="class">
 <dt id="pyface.action.group.Separator">
-<em class="property">class </em><tt class="descclassname">pyface.action.group.</tt><tt class="descname">Separator</tt><big>(</big><em>*items</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.action.group.Separator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.action.group.Group" title="pyface.action.group.Group"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.group.Group</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.action.group.</code><code class="descname">Separator</code><span class="sig-paren">(</span><em>*items</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.group.Separator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.action.group.Group" title="pyface.action.group.Group"><code class="xref py py-class docutils literal"><span class="pre">pyface.action.group.Group</span></code></a></p>
 <p>A convenience class.</p>
 <p>This is only used in &#8216;cheap and cheerful&#8217; applications that create menus
 like:</p>
@@ -424,32 +428,32 @@ like:</p>
 
 </div>
 <div class="section" id="module-pyface.action.menu_bar_manager">
-<span id="menu-bar-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">menu_bar_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.menu_bar_manager" title="Permalink to this headline">¶</a></h2>
+<span id="menu-bar-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">menu_bar_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.menu_bar_manager" title="Permalink to this headline">¶</a></h2>
 <p>A menu bar manager realizes itself in errr, a menu bar control.</p>
 </div>
 <div class="section" id="module-pyface.action.menu_manager">
-<span id="menu-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">menu_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.menu_manager" title="Permalink to this headline">¶</a></h2>
+<span id="menu-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">menu_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.menu_manager" title="Permalink to this headline">¶</a></h2>
 <p>A menu manager realizes itself in a menu control.</p>
 </div>
 <div class="section" id="module-pyface.action.status_bar_manager">
-<span id="status-bar-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">status_bar_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.status_bar_manager" title="Permalink to this headline">¶</a></h2>
+<span id="status-bar-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">status_bar_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.status_bar_manager" title="Permalink to this headline">¶</a></h2>
 <p>A status bar manager realizes itself in a status bar control.</p>
 </div>
 <div class="section" id="module-pyface.action.tool_bar_manager">
-<span id="tool-bar-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tool_bar_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.tool_bar_manager" title="Permalink to this headline">¶</a></h2>
+<span id="tool-bar-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tool_bar_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.tool_bar_manager" title="Permalink to this headline">¶</a></h2>
 <p>A tool bar manager realizes itself in a tool bar control.</p>
 </div>
 <div class="section" id="module-pyface.action.tool_palette_manager">
-<span id="tool-palette-manager-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tool_palette_manager</span></tt> Module<a class="headerlink" href="#module-pyface.action.tool_palette_manager" title="Permalink to this headline">¶</a></h2>
+<span id="tool-palette-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tool_palette_manager</span></code> Module<a class="headerlink" href="#module-pyface.action.tool_palette_manager" title="Permalink to this headline">¶</a></h2>
 <p>A tool bar manager realizes itself in a tool palette control.</p>
 </div>
 <div class="section" id="module-pyface.action.window_action">
-<span id="window-action-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">window_action</span></tt> Module<a class="headerlink" href="#module-pyface.action.window_action" title="Permalink to this headline">¶</a></h2>
+<span id="window-action-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">window_action</span></code> Module<a class="headerlink" href="#module-pyface.action.window_action" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all window actions.</p>
 <dl class="class">
 <dt id="pyface.action.window_action.WindowAction">
-<em class="property">class </em><tt class="descclassname">pyface.action.window_action.</tt><tt class="descname">WindowAction</tt><a class="headerlink" href="#pyface.action.window_action.WindowAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><tt class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.action.window_action.</code><code class="descname">WindowAction</code><a class="headerlink" href="#pyface.action.window_action.WindowAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><code class="xref py py-class docutils literal"><span class="pre">pyface.action.action.Action</span></code></a></p>
 <p>Abstract base class for all window actions.</p>
 </dd></dl>
 
@@ -460,7 +464,7 @@ like:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -468,21 +472,21 @@ like:</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">action Package</a><ul>
-<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">action</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action"><tt class="docutils literal"><span class="pre">action</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action_controller"><tt class="docutils literal"><span class="pre">action_controller</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action_event"><tt class="docutils literal"><span class="pre">action_event</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action_item"><tt class="docutils literal"><span class="pre">action_item</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action_manager"><tt class="docutils literal"><span class="pre">action_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.action_manager_item"><tt class="docutils literal"><span class="pre">action_manager_item</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.group"><tt class="docutils literal"><span class="pre">group</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.menu_bar_manager"><tt class="docutils literal"><span class="pre">menu_bar_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.menu_manager"><tt class="docutils literal"><span class="pre">menu_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.status_bar_manager"><tt class="docutils literal"><span class="pre">status_bar_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.tool_bar_manager"><tt class="docutils literal"><span class="pre">tool_bar_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.tool_palette_manager"><tt class="docutils literal"><span class="pre">tool_palette_manager</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.action.window_action"><tt class="docutils literal"><span class="pre">window_action</span></tt> Module</a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">action</span></code> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action"><code class="docutils literal"><span class="pre">action</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action_controller"><code class="docutils literal"><span class="pre">action_controller</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action_event"><code class="docutils literal"><span class="pre">action_event</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action_item"><code class="docutils literal"><span class="pre">action_item</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action_manager"><code class="docutils literal"><span class="pre">action_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.action_manager_item"><code class="docutils literal"><span class="pre">action_manager_item</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.group"><code class="docutils literal"><span class="pre">group</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.menu_bar_manager"><code class="docutils literal"><span class="pre">menu_bar_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.menu_manager"><code class="docutils literal"><span class="pre">menu_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.status_bar_manager"><code class="docutils literal"><span class="pre">status_bar_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.tool_bar_manager"><code class="docutils literal"><span class="pre">tool_bar_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.tool_palette_manager"><code class="docutils literal"><span class="pre">tool_palette_manager</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.action.window_action"><code class="docutils literal"><span class="pre">window_action</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -493,12 +497,14 @@ like:</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.dock.html"
                         title="next chapter">dock Package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/pyface.action.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/pyface.action.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -515,26 +521,20 @@ like:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="pyface.dock.html" title="dock Package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="pyface.html" title="pyface Package"
-             >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2008-2015, Enthought.
-      Last updated on Mar 16, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2008-2015, Enthought.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/api/pyface.action.txt"
+          rel="nofollow">Page source</a></li>
     </div>
+
+    
+
+    
   </body>
 </html>
