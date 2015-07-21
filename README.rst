@@ -16,10 +16,19 @@ The following GUI backends are supported:
 
 Documentation
 -------------
-`Online Documentation <http://docs.enthought.com/pyface/>`_.
-`API Documentation <http://docs.enthought.com/pyface/api/pyface.html>`_.
+
+* `Online Documentation <http://docs.enthought.com/pyface/>`_.
+
+* `API Documentation <http://docs.enthought.com/pyface/api/pyface.html>`_.
 
 Prerequisites
 -------------
-If you want to run pyface, you must also install
-`traits <https://github.com/enthought/traits>`_.
+
+Pyface depends on:
+
+* a GUI toolkit: one of PySide, PyQt or WxPython
+
+* `Traits <https://github.com/enthought/traits>`_
+
+* some widgets may have additional optional dependencies.  For example, the
+  IPython shell widgets require IPython to be installed.
