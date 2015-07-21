@@ -30,13 +30,13 @@ supported Python-based GUI toolkit and the appropriate toolkit-specific backend
 project. Conversely, if you wish to use Traits without a UI, a "null" backend
 is automatically used in the absence of a real backend.
 
-Currently, the supported GUI toolkits are wxPython and PyQt. While both
+Currently, the supported GUI toolkits are wxPython, PySide and PyQt. While all
 toolkits funtion with Traits, integration with wxPython is currently more
-complete. All future development, however, will focus on supporting PyQt.
+complete. All future development, however, will focus on supporting Qt.
 
-NOTE: Enthought.pyface.ui.qt4 and Enthought.traits.ui.qt4 are licensed under
-the Gnu Public License.  If you develop software using Qt, you must select an
-appropriate license from TrollTech, the publishers of Qt.
+NOTE: Although the code in this library is BSD licensed, when the PyQt backend
+is used the more restrictive terms of PyQt's GPL or proprietary licensing will
+likely apply to your code.
 
 Contents
 --------

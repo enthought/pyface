@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>console Package &mdash; pyface 4.5.0 documentation</title>
+    <title>console Package &mdash; pyface 4.5.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.5.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,13 +24,17 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.1 documentation" href="../index.html" />
     <link rel="up" title="qt4 Package" href="pyface.ui.qt4.html" />
     <link rel="next" title="tasks Package" href="pyface.ui.qt4.tasks.html" />
-    <link rel="prev" title="code_editor Package" href="pyface.ui.qt4.code_editor.html" /> 
+    <link rel="prev" title="code_editor Package" href="pyface.ui.qt4.code_editor.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,93 +46,93 @@
         <li class="right" >
           <a href="pyface.ui.qt4.code_editor.html" title="code_editor Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
-          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
-          <li><a href="pyface.ui.qt4.html" accesskey="U">qt4 Package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="pyface.ui.qt4.html" accesskey="U">qt4 Package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="console-package">
 <h1>console Package<a class="headerlink" href="#console-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyface.ui.qt4.console.api">
-<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.api" title="Permalink to this headline">¶</a></h2>
+<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.api" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.ui.qt4.console.bracket_matcher">
-<span id="bracket-matcher-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">bracket_matcher</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.bracket_matcher" title="Permalink to this headline">¶</a></h2>
+<span id="bracket-matcher-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">bracket_matcher</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.bracket_matcher" title="Permalink to this headline">¶</a></h2>
 <p>Provides bracket matching for Q[Plain]TextEdit widgets.</p>
 <dl class="class">
 <dt id="pyface.ui.qt4.console.bracket_matcher.BracketMatcher">
-<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.console.bracket_matcher.</tt><tt class="descname">BracketMatcher</tt><big>(</big><em>text_edit</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.bracket_matcher.BracketMatcher" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtCore.QObject</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.bracket_matcher.</code><code class="descname">BracketMatcher</code><span class="sig-paren">(</span><em>text_edit</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.bracket_matcher.BracketMatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PySide.QtCore.QObject</span></code></p>
 <p>Matches square brackets, braces, and parentheses based on cursor
 position.</p>
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.bracket_matcher.BracketMatcher.staticMetaObject">
-<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x11869a248&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.bracket_matcher.BracketMatcher.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">staticMetaObject</code><em class="property"> = &lt;PySide.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.bracket_matcher.BracketMatcher.staticMetaObject" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.ui.qt4.console.call_tip_widget">
-<span id="call-tip-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">call_tip_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.call_tip_widget" title="Permalink to this headline">¶</a></h2>
+<span id="call-tip-widget-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">call_tip_widget</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.call_tip_widget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget">
-<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.console.call_tip_widget.</tt><tt class="descname">CallTipWidget</tt><big>(</big><em>text_edit</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QLabel</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.call_tip_widget.</code><code class="descname">CallTipWidget</code><span class="sig-paren">(</span><em>text_edit</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QLabel</span></code></p>
 <p>Shows call tips by parsing the current text of Q[Plain]TextEdit.</p>
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.enterEvent">
-<tt class="descname">enterEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">enterEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.enterEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to cancel the hide timer.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.eventFilter">
-<tt class="descname">eventFilter</tt><big>(</big><em>obj</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="descname">eventFilter</code><span class="sig-paren">(</span><em>obj</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to hide on certain key presses and on text edit focus
 changes.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.hideEvent">
-<tt class="descname">hideEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.hideEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hideEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.hideEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to disconnect signal handlers and event filter.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.leaveEvent">
-<tt class="descname">leaveEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">leaveEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.leaveEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to start the hide timer.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.paintEvent">
-<tt class="descname">paintEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">paintEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.paintEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to paint the background panel.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.setFont">
-<tt class="descname">setFont</tt><big>(</big><em>font</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.setFont" title="Permalink to this definition">¶</a></dt>
+<code class="descname">setFont</code><span class="sig-paren">(</span><em>font</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.setFont" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to allow use of this method as a slot.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.showEvent">
-<tt class="descname">showEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.showEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">showEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.showEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to connect signal handlers and event filter.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_call_info">
-<tt class="descname">show_call_info</tt><big>(</big><em>call_line=None</em>, <em>doc=None</em>, <em>maxlines=20</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_call_info" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_call_info</code><span class="sig-paren">(</span><em>call_line=None</em>, <em>doc=None</em>, <em>maxlines=20</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_call_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to show the specified call line and docstring at the
 current cursor location. The docstring is possibly truncated for
 length.</p>
@@ -136,18 +140,18 @@ length.</p>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_tip">
-<tt class="descname">show_tip</tt><big>(</big><em>tip</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_tip" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_tip</code><span class="sig-paren">(</span><em>tip</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.show_tip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Attempts to show the specified tip at the current cursor location.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.staticMetaObject">
-<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x11869a7e8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">staticMetaObject</code><em class="property"> = &lt;PySide.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.call_tip_widget.CallTipWidget.timerEvent">
-<tt class="descname">timerEvent</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">timerEvent</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.call_tip_widget.CallTipWidget.timerEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to hide the widget when the hide timer fires.</p>
 </dd></dl>
 
@@ -155,50 +159,50 @@ length.</p>
 
 </div>
 <div class="section" id="module-pyface.ui.qt4.console.completion_lexer">
-<span id="completion-lexer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">completion_lexer</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.completion_lexer" title="Permalink to this headline">¶</a></h2>
+<span id="completion-lexer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">completion_lexer</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.completion_lexer" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer">
-<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.console.completion_lexer.</tt><tt class="descname">CompletionLexer</tt><big>(</big><em>lexer</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.completion_lexer.</code><code class="descname">CompletionLexer</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Uses Pygments and some auxillary information to lex code snippets for 
 symbol contexts.</p>
 <dl class="method">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_context">
-<tt class="descname">get_context</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_context" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_context</code><span class="sig-paren">(</span><em>string</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assuming the cursor is at the end of the specified string, get the
 context (a list of names) for the symbol at cursor position.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_lexer">
-<tt class="descname">get_lexer</tt><big>(</big><em>lexer</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_lexer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_lexer</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.get_lexer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.lexer">
-<tt class="descname">lexer</tt><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.lexer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">lexer</code><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.lexer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.separator_map">
-<tt class="descname">separator_map</tt><em class="property"> = {'Python': ['.'], 'C': ['.', '-&gt;'], 'C++': ['.', '-&gt;', '::']}</em><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.separator_map" title="Permalink to this definition">¶</a></dt>
+<code class="descname">separator_map</code><em class="property"> = {'Python': ['.'], 'C': ['.', '-&gt;'], 'C++': ['.', '-&gt;', '::']}</em><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.separator_map" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.set_lexer">
-<tt class="descname">set_lexer</tt><big>(</big><em>lexer</em>, <em>name_separators=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.set_lexer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_lexer</code><span class="sig-paren">(</span><em>lexer</em>, <em>name_separators=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer.set_lexer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.ui.qt4.console.console_widget">
-<span id="console-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">console_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.console_widget" title="Permalink to this headline">¶</a></h2>
+<span id="console-widget-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">console_widget</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.console_widget" title="Permalink to this headline">¶</a></h2>
 <p>An abstract base class for console-type widgets.</p>
 <dl class="class">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget">
-<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.console.console_widget.</tt><tt class="descname">ConsoleWidget</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.console_widget.</code><code class="descname">ConsoleWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></p>
 <p>An abstract base class for console-type widgets. This class has 
 functionality for:</p>
 <blockquote>
@@ -213,43 +217,43 @@ functionality for:</p>
 convenient to implementors of a console-style widget.</p>
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.buffer_size">
-<tt class="descname">buffer_size</tt><em class="property"> = 500</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.buffer_size" title="Permalink to this definition">¶</a></dt>
+<code class="descname">buffer_size</code><em class="property"> = 500</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.buffer_size" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.can_copy">
-<tt class="descname">can_copy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_copy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether text can be copied to the clipboard.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.can_cut">
-<tt class="descname">can_cut</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_cut" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_cut</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_cut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether text can be cut to the clipboard.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.can_export">
-<tt class="descname">can_export</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_export" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_export</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_export" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether we can export. Currently only rich widgets
 can export html.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.can_paste">
-<tt class="descname">can_paste</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_paste" title="Permalink to this definition">¶</a></dt>
+<code class="descname">can_paste</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.can_paste" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether text can be pasted from the clipboard.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.change_font_size">
-<tt class="descname">change_font_size</tt><big>(</big><em>delta</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.change_font_size" title="Permalink to this definition">¶</a></dt>
+<code class="descname">change_font_size</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.change_font_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the font size by the specified amount (in points).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.clear">
-<tt class="descname">clear</tt><big>(</big><em>keep_input=True</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.clear" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><em>keep_input=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.clear" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear the console.</p>
 <dl class="docutils">
 <dt>keep_input <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional (default True)</span></dt>
@@ -259,37 +263,37 @@ can export html.</p>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.copy">
-<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.copy" title="Permalink to this definition">¶</a></dt>
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy the currently selected text to the clipboard.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.copy_available">
-<tt class="descname">copy_available</tt><em class="property"> = &lt;PySide.QtCore.Signal object at 0x1186a5500&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.copy_available" title="Permalink to this definition">¶</a></dt>
+<code class="descname">copy_available</code><em class="property"> = &lt;PySide.QtCore.Signal object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.copy_available" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.custom_page_requested">
-<tt class="descname">custom_page_requested</tt><em class="property"> = &lt;PySide.QtCore.Signal object at 0x1186a55a8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.custom_page_requested" title="Permalink to this definition">¶</a></dt>
+<code class="descname">custom_page_requested</code><em class="property"> = &lt;PySide.QtCore.Signal object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.custom_page_requested" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.cut">
-<tt class="descname">cut</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.cut" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cut</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.cut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Copy the currently selected text to the clipboard and delete it
 if it&#8217;s inside the input buffer.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.eventFilter">
-<tt class="descname">eventFilter</tt><big>(</big><em>obj</em>, <em>event</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
+<code class="descname">eventFilter</code><span class="sig-paren">(</span><em>obj</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.eventFilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to ensure a console-like behavior in the underlying
 text widgets.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.execute">
-<tt class="descname">execute</tt><big>(</big><em>source=None</em>, <em>hidden=False</em>, <em>interactive=False</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.execute" title="Permalink to this definition">¶</a></dt>
+<code class="descname">execute</code><span class="sig-paren">(</span><em>source=None</em>, <em>hidden=False</em>, <em>interactive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes source or the input buffer, possibly prompting for more
 input.</p>
 <p>source : str, optional</p>
@@ -317,13 +321,13 @@ it is not possible to prompt for more input.</dd>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.export">
-<tt class="descname">export</tt><big>(</big><em>parent=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export" title="Permalink to this definition">¶</a></dt>
+<code class="descname">export</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export HTML/XML in various modes from one Dialog.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.export_html">
-<tt class="descname">export_html</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export_html" title="Permalink to this definition">¶</a></dt>
+<code class="descname">export_html</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export_html" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the contents of the ConsoleWidget as HTML.</p>
 <dl class="docutils">
 <dt>filename <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
@@ -337,13 +341,13 @@ web browsers&#8217; &#8220;Web Page, Complete&#8221; behavior.</dd>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.export_xhtml">
-<tt class="descname">export_xhtml</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export_xhtml" title="Permalink to this definition">¶</a></dt>
+<code class="descname">export_xhtml</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.export_xhtml" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the contents of the ConsoleWidget as XHTML with inline SVGs.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.fix_html_encoding">
-<tt class="descname">fix_html_encoding</tt><big>(</big><em>html</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.fix_html_encoding" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fix_html_encoding</code><span class="sig-paren">(</span><em>html</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.fix_html_encoding" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return html string, with a UTF-8 declaration added to &lt;HEAD&gt;.</p>
 <p>Assumes that html is Qt generated and has already been UTF-8 encoded
 and coerced to a python string.  If the expected head element is
@@ -357,18 +361,18 @@ header).</p>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.font">
-<tt class="descname">font</tt><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.font" title="Permalink to this definition">¶</a></dt>
+<code class="descname">font</code><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.font" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base font being used by the ConsoleWidget.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.font_changed">
-<tt class="descname">font_changed</tt><em class="property"> = &lt;PySide.QtCore.Signal object at 0x1186a55e0&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.font_changed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">font_changed</code><em class="property"> = &lt;PySide.QtCore.Signal object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.font_changed" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.image_tag">
-<tt class="descname">image_tag</tt><big>(</big><em>match</em>, <em>path=None</em>, <em>format='png'</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.image_tag" title="Permalink to this definition">¶</a></dt>
+<code class="descname">image_tag</code><span class="sig-paren">(</span><em>match</em>, <em>path=None</em>, <em>format='png'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.image_tag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return (X)HTML mark-up for the image-tag given by match.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -392,28 +396,28 @@ method.</p>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.input_buffer">
-<tt class="descname">input_buffer</tt><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.input_buffer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">input_buffer</code><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.input_buffer" title="Permalink to this definition">¶</a></dt>
 <dd><p>The text that the user has entered entered at the current prompt.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.kind">
-<tt class="descname">kind</tt><em class="property"> = 'plain'</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.kind" title="Permalink to this definition">¶</a></dt>
+<code class="descname">kind</code><em class="property"> = 'plain'</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.kind" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.override_shortcuts">
-<tt class="descname">override_shortcuts</tt><em class="property"> = False</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.override_shortcuts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">override_shortcuts</code><em class="property"> = False</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.override_shortcuts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.paging">
-<tt class="descname">paging</tt><em class="property"> = 'inside'</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.paging" title="Permalink to this definition">¶</a></dt>
+<code class="descname">paging</code><em class="property"> = 'inside'</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.paging" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.paste">
-<tt class="descname">paste</tt><big>(</big><em>mode=PySide.QtGui.QClipboard.Mode.Clipboard</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.paste" title="Permalink to this definition">¶</a></dt>
+<code class="descname">paste</code><span class="sig-paren">(</span><em>mode=PySide.QtGui.QClipboard.Mode.Clipboard</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.paste" title="Permalink to this definition">¶</a></dt>
 <dd><p>Paste the contents of the clipboard into the input region.</p>
 <p>mode : QClipboard::Mode, optional [default QClipboard::Clipboard]</p>
 <blockquote>
@@ -424,96 +428,96 @@ in Mac OS. By default, the regular clipboard is used.</div></blockquote>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.print_">
-<tt class="descname">print_</tt><big>(</big><em>printer=None</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.print_" title="Permalink to this definition">¶</a></dt>
+<code class="descname">print_</code><span class="sig-paren">(</span><em>printer=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.print_" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the contents of the ConsoleWidget to the specified QPrinter.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.prompt_to_top">
-<tt class="descname">prompt_to_top</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.prompt_to_top" title="Permalink to this definition">¶</a></dt>
+<code class="descname">prompt_to_top</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.prompt_to_top" title="Permalink to this definition">¶</a></dt>
 <dd><p>Moves the prompt to the top of the viewport.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.redo">
-<tt class="descname">redo</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.redo" title="Permalink to this definition">¶</a></dt>
+<code class="descname">redo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.redo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redo the last operation. If there is no operation to redo, nothing
 happens.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.redo_available">
-<tt class="descname">redo_available</tt><em class="property"> = &lt;PySide.QtCore.Signal object at 0x1186a5538&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.redo_available" title="Permalink to this definition">¶</a></dt>
+<code class="descname">redo_available</code><em class="property"> = &lt;PySide.QtCore.Signal object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.redo_available" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.reset_font">
-<tt class="descname">reset_font</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.reset_font" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reset_font</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.reset_font" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the font to the default fixed-width font for this platform.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.select_all">
-<tt class="descname">select_all</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.select_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">select_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.select_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Selects all the text in the buffer.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.sizeHint">
-<tt class="descname">sizeHint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sizeHint</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.sizeHint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to suggest a size that is 80 characters wide and
 25 lines high.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.staticMetaObject">
-<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x1186ab440&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">staticMetaObject</code><em class="property"> = &lt;PySide.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.tab_width">
-<tt class="descname">tab_width</tt><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.tab_width" title="Permalink to this definition">¶</a></dt>
+<code class="descname">tab_width</code><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.tab_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>The width (in terms of space characters) for tab characters.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.undo">
-<tt class="descname">undo</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.undo" title="Permalink to this definition">¶</a></dt>
+<code class="descname">undo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.undo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Undo the last operation. If there is no operation to undo, nothing
 happens.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget.undo_available">
-<tt class="descname">undo_available</tt><em class="property"> = &lt;PySide.QtCore.Signal object at 0x1186a5570&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.undo_available" title="Permalink to this definition">¶</a></dt>
+<code class="descname">undo_available</code><em class="property"> = &lt;PySide.QtCore.Signal object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget.undo_available" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.ui.qt4.console.console_widget.is_letter_or_number">
-<tt class="descclassname">pyface.ui.qt4.console.console_widget.</tt><tt class="descname">is_letter_or_number</tt><big>(</big><em>char</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.is_letter_or_number" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyface.ui.qt4.console.console_widget.</code><code class="descname">is_letter_or_number</code><span class="sig-paren">(</span><em>char</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.is_letter_or_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether the specified unicode character is a letter or a number.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.ui.qt4.console.history_console_widget">
-<span id="history-console-widget-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">history_console_widget</span></tt> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.history_console_widget" title="Permalink to this headline">¶</a></h2>
+<span id="history-console-widget-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">history_console_widget</span></code> Module<a class="headerlink" href="#module-pyface.ui.qt4.console.history_console_widget" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget">
-<em class="property">class </em><tt class="descclassname">pyface.ui.qt4.console.history_console_widget.</tt><tt class="descname">HistoryConsoleWidget</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget" title="pyface.ui.qt4.console.console_widget.ConsoleWidget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.console.console_widget.ConsoleWidget</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.history_console_widget.</code><code class="descname">HistoryConsoleWidget</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget" title="pyface.ui.qt4.console.console_widget.ConsoleWidget"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.console.console_widget.ConsoleWidget</span></code></a></p>
 <p>A ConsoleWidget that keeps a history of the commands that have been
 executed and provides a readline-esque interface to this history.</p>
 <dl class="method">
 <dt id="pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.execute">
-<tt class="descname">execute</tt><big>(</big><em>source=None</em>, <em>hidden=False</em>, <em>interactive=False</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.execute" title="Permalink to this definition">¶</a></dt>
+<code class="descname">execute</code><span class="sig-paren">(</span><em>source=None</em>, <em>hidden=False</em>, <em>interactive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.execute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reimplemented to the store history.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_next">
-<tt class="descname">history_next</tt><big>(</big><em>prefix=''</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_next" title="Permalink to this definition">¶</a></dt>
+<code class="descname">history_next</code><span class="sig-paren">(</span><em>prefix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_next" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the input buffer to a subsequent item in the history, or to the
 original search prefix if there is no such item.</p>
 <dl class="docutils">
@@ -524,7 +528,7 @@ original search prefix if there is no such item.</p>
 
 <dl class="method">
 <dt id="pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_previous">
-<tt class="descname">history_previous</tt><big>(</big><em>prefix=''</em><big>)</big><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_previous" title="Permalink to this definition">¶</a></dt>
+<code class="descname">history_previous</code><span class="sig-paren">(</span><em>prefix=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.history_previous" title="Permalink to this definition">¶</a></dt>
 <dd><p>If possible, set the input buffer to a previous item in the history.</p>
 <dl class="docutils">
 <dt>prefix <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
@@ -534,7 +538,7 @@ original search prefix if there is no such item.</p>
 
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.staticMetaObject">
-<tt class="descname">staticMetaObject</tt><em class="property"> = &lt;PySide.QtCore.QMetaObject object at 0x1186ab5a8&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">staticMetaObject</code><em class="property"> = &lt;PySide.QtCore.QMetaObject object&gt;</em><a class="headerlink" href="#pyface.ui.qt4.console.history_console_widget.HistoryConsoleWidget.staticMetaObject" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -546,7 +550,7 @@ original search prefix if there is no such item.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -554,12 +558,12 @@ original search prefix if there is no such item.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">console Package</a><ul>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.bracket_matcher"><tt class="docutils literal"><span class="pre">bracket_matcher</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.call_tip_widget"><tt class="docutils literal"><span class="pre">call_tip_widget</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.completion_lexer"><tt class="docutils literal"><span class="pre">completion_lexer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.console_widget"><tt class="docutils literal"><span class="pre">console_widget</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.qt4.console.history_console_widget"><tt class="docutils literal"><span class="pre">history_console_widget</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.bracket_matcher"><code class="docutils literal"><span class="pre">bracket_matcher</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.call_tip_widget"><code class="docutils literal"><span class="pre">call_tip_widget</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.completion_lexer"><code class="docutils literal"><span class="pre">completion_lexer</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.console_widget"><code class="docutils literal"><span class="pre">console_widget</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.qt4.console.history_console_widget"><code class="docutils literal"><span class="pre">history_console_widget</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -570,12 +574,14 @@ original search prefix if there is no such item.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.ui.qt4.tasks.html"
                         title="next chapter">tasks Package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/pyface.ui.qt4.console.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/pyface.ui.qt4.console.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -592,28 +598,20 @@ original search prefix if there is no such item.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="pyface.ui.qt4.tasks.html" title="tasks Package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="pyface.ui.qt4.code_editor.html" title="code_editor Package"
-             >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
-          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
-          <li><a href="pyface.ui.qt4.html" >qt4 Package</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2008-2015, Enthought.
-      Last updated on Mar 16, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2008-2015, Enthought.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/api/pyface.ui.qt4.console.txt"
+          rel="nofollow">Page source</a></li>
     </div>
+
+    
+
+    
   </body>
 </html>

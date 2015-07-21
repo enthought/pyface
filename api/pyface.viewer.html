@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>viewer Package &mdash; pyface 4.5.0 documentation</title>
+    <title>viewer Package &mdash; pyface 4.5.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.5.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,13 +24,17 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.1 documentation" href="../index.html" />
     <link rel="up" title="pyface Package" href="pyface.html" />
     <link rel="next" title="wizard Package" href="pyface.wizard.html" />
-    <link rel="prev" title="tests Package" href="pyface.util.tests.html" /> 
+    <link rel="prev" title="tests Package" href="pyface.util.tests.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,49 +46,49 @@
         <li class="right" >
           <a href="pyface.util.tests.html" title="tests Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="viewer-package">
 <h1>viewer Package<a class="headerlink" href="#viewer-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">viewer</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><code class="xref py py-mod docutils literal"><span class="pre">viewer</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.viewer"></span></div>
 <div class="section" id="module-pyface.viewer.api">
-<span id="api-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">api</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.api" title="Permalink to this headline">¶</a></h2>
+<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.viewer.api" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.viewer.column_provider">
-<span id="column-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">column_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.column_provider" title="Permalink to this headline">¶</a></h2>
+<span id="column-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">column_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.column_provider" title="Permalink to this headline">¶</a></h2>
 <p>Base class for all column providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.column_provider.ColumnProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.column_provider.</tt><tt class="descname">ColumnProvider</tt><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.column_provider.</code><code class="descname">ColumnProvider</code><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Base class for all column providers.</p>
 <p>By default a column&#8217;s label is &#8216;Column n&#8217; and is 100 pixels wide.</p>
 <dl class="method">
 <dt id="pyface.viewer.column_provider.ColumnProvider.get_alignment">
-<tt class="descname">get_alignment</tt><big>(</big><em>viewer</em>, <em>column_index</em><big>)</big><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_alignment" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_alignment</code><span class="sig-paren">(</span><em>viewer</em>, <em>column_index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_alignment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the alignment of the column header and cells.</p>
 <p>Returns, &#8216;left&#8217;, &#8216;right&#8217;, &#8216;centre&#8217; or &#8216;center&#8217; (&#8216;left&#8217; by default).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.column_provider.ColumnProvider.get_label">
-<tt class="descname">get_label</tt><big>(</big><em>viewer</em>, <em>column_index</em><big>)</big><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_label" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_label</code><span class="sig-paren">(</span><em>viewer</em>, <em>column_index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label for a column.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.column_provider.ColumnProvider.get_width">
-<tt class="descname">get_width</tt><big>(</big><em>viewer</em>, <em>column_index</em><big>)</big><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_width" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_width</code><span class="sig-paren">(</span><em>viewer</em>, <em>column_index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.column_provider.ColumnProvider.get_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the width of a column.</p>
 <p>Returning -1 (the default) means that the column will be sized to
 fit its longest item (or its column header if it is longer than any
@@ -95,16 +99,16 @@ item).</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.content_provider">
-<span id="content-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">content_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.content_provider" title="Permalink to this headline">¶</a></h2>
+<span id="content-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">content_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.content_provider" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for content providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.content_provider.ContentProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.content_provider.</tt><tt class="descname">ContentProvider</tt><a class="headerlink" href="#pyface.viewer.content_provider.ContentProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.content_provider.</code><code class="descname">ContentProvider</code><a class="headerlink" href="#pyface.viewer.content_provider.ContentProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for content providers.</p>
 <dl class="method">
 <dt id="pyface.viewer.content_provider.ContentProvider.get_elements">
-<tt class="descname">get_elements</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.content_provider.ContentProvider.get_elements" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_elements</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.content_provider.ContentProvider.get_elements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of the elements to display in a viewer.</p>
 <p>Returns a list of elements to display in a viewer when its (ie. the
 viewer&#8217;s) input is set to the given element.</p>
@@ -115,12 +119,12 @@ viewer&#8217;s) input is set to the given element.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.content_viewer">
-<span id="content-viewer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">content_viewer</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.content_viewer" title="Permalink to this headline">¶</a></h2>
+<span id="content-viewer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">content_viewer</span></code> Module<a class="headerlink" href="#module-pyface.viewer.content_viewer" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all content viewers.</p>
 <dl class="class">
 <dt id="pyface.viewer.content_viewer.ContentViewer">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.content_viewer.</tt><tt class="descname">ContentViewer</tt><a class="headerlink" href="#pyface.viewer.content_viewer.ContentViewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.viewer.Viewer" title="pyface.viewer.viewer.Viewer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.viewer.Viewer</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.content_viewer.</code><code class="descname">ContentViewer</code><a class="headerlink" href="#pyface.viewer.content_viewer.ContentViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.viewer.Viewer" title="pyface.viewer.viewer.Viewer"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.viewer.Viewer</span></code></a></p>
 <p>Abstract base class for all content viewers.</p>
 <p>A content viewer is a model-based adapter on some underlying
 toolkit-specific widget that acceses the model via a content provider and
@@ -132,52 +136,52 @@ image.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.default_tree_content_provider">
-<span id="default-tree-content-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">default_tree_content_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.default_tree_content_provider" title="Permalink to this headline">¶</a></h2>
+<span id="default-tree-content-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">default_tree_content_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.default_tree_content_provider" title="Permalink to this headline">¶</a></h2>
 <p>The default tree content provider.</p>
 <dl class="class">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.default_tree_content_provider.</tt><tt class="descname">DefaultTreeContentProvider</tt><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.tree_content_provider.TreeContentProvider" title="pyface.viewer.tree_content_provider.TreeContentProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.tree_content_provider.TreeContentProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.default_tree_content_provider.</code><code class="descname">DefaultTreeContentProvider</code><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.tree_content_provider.TreeContentProvider" title="pyface.viewer.tree_content_provider.TreeContentProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.tree_content_provider.TreeContentProvider</span></code></a></p>
 <p>The default tree content provider.</p>
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.append">
-<tt class="descname">append</tt><big>(</big><em>parent</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>parent</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends &#8216;child&#8217; to the &#8216;parent&#8217; item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_children">
-<tt class="descname">get_children</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_children" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_children</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the children of an item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_parent">
-<tt class="descname">get_parent</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_parent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_parent</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.get_parent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parent of an item.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.has_children">
-<tt class="descname">has_children</tt><big>(</big><em>item</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.has_children" title="Permalink to this definition">¶</a></dt>
+<code class="descname">has_children</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.has_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>True iff the item has children.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert">
-<tt class="descname">insert</tt><big>(</big><em>parent</em>, <em>index</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert</code><span class="sig-paren">(</span><em>parent</em>, <em>index</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts &#8216;child&#8217; into the &#8216;parent&#8217; item at &#8216;index&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert_before">
-<tt class="descname">insert_before</tt><big>(</big><em>parent</em>, <em>before</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert_before" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_before</code><span class="sig-paren">(</span><em>parent</em>, <em>before</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.insert_before" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts &#8216;child&#8217; into &#8216;parent&#8217; item before &#8216;before&#8217;.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.remove">
-<tt class="descname">remove</tt><big>(</big><em>parent</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>parent</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.default_tree_content_provider.DefaultTreeContentProvider.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes &#8216;child&#8217; from the &#8216;parent&#8217; item.</p>
 </dd></dl>
 
@@ -185,36 +189,36 @@ image.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.label_provider">
-<span id="label-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">label_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.label_provider" title="Permalink to this headline">¶</a></h2>
+<span id="label-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">label_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.label_provider" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for label providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.label_provider.LabelProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.label_provider.</tt><tt class="descname">LabelProvider</tt><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.label_provider.</code><code class="descname">LabelProvider</code><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for label providers.</p>
 <p>By default an element has no label image, and &#8216;str&#8217; is used to generate its
 label text.</p>
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.get_image">
-<tt class="descname">get_image</tt><big>(</big><em>viewer</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_image</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label image for an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.get_text">
-<tt class="descname">get_text</tt><big>(</big><em>viewer</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label text for an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.is_editable">
-<tt class="descname">is_editable</tt><big>(</big><em>viewer</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.is_editable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_editable</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.is_editable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can the label text be changed via the viewer?</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.set_text">
-<tt class="descname">set_text</tt><big>(</big><em>tree</em>, <em>element</em>, <em>text</em><big>)</big><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_text</code><span class="sig-paren">(</span><em>tree</em>, <em>element</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the text representation of a node.</p>
 <p>Returns True if setting the text succeeded, otherwise False.</p>
 </dd></dl>
@@ -223,47 +227,47 @@ label text.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.table_column_provider">
-<span id="table-column-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">table_column_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.table_column_provider" title="Permalink to this headline">¶</a></h2>
+<span id="table-column-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">table_column_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.table_column_provider" title="Permalink to this headline">¶</a></h2>
 <p>Base class for all table column providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.table_column_provider.TableColumnProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.table_column_provider.</tt><tt class="descname">TableColumnProvider</tt><a class="headerlink" href="#pyface.viewer.table_column_provider.TableColumnProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.column_provider.ColumnProvider" title="pyface.viewer.column_provider.ColumnProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.column_provider.ColumnProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.table_column_provider.</code><code class="descname">TableColumnProvider</code><a class="headerlink" href="#pyface.viewer.table_column_provider.TableColumnProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.column_provider.ColumnProvider" title="pyface.viewer.column_provider.ColumnProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.column_provider.ColumnProvider</span></code></a></p>
 <p>Base class for all table label providers.</p>
 <p>By default an item has no icon, and &#8216;str&#8217; is used to generate its label.</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.viewer.table_content_provider">
-<span id="table-content-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">table_content_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.table_content_provider" title="Permalink to this headline">¶</a></h2>
+<span id="table-content-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">table_content_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.table_content_provider" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for table content providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.table_content_provider.TableContentProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.table_content_provider.</tt><tt class="descname">TableContentProvider</tt><a class="headerlink" href="#pyface.viewer.table_content_provider.TableContentProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_provider.ContentProvider" title="pyface.viewer.content_provider.ContentProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_provider.ContentProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.table_content_provider.</code><code class="descname">TableContentProvider</code><a class="headerlink" href="#pyface.viewer.table_content_provider.TableContentProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_provider.ContentProvider" title="pyface.viewer.content_provider.ContentProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_provider.ContentProvider</span></code></a></p>
 <p>Abstract base class for table content providers.</p>
 <p>Table content providers are used by (surprise, surprise) table viewers!</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-pyface.viewer.table_label_provider">
-<span id="table-label-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">table_label_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.table_label_provider" title="Permalink to this headline">¶</a></h2>
+<span id="table-label-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">table_label_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.table_label_provider" title="Permalink to this headline">¶</a></h2>
 <p>Base class for all table label providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.table_label_provider.TableLabelProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.table_label_provider.</tt><tt class="descname">TableLabelProvider</tt><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.label_provider.LabelProvider" title="pyface.viewer.label_provider.LabelProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.label_provider.LabelProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.table_label_provider.</code><code class="descname">TableLabelProvider</code><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.label_provider.LabelProvider" title="pyface.viewer.label_provider.LabelProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.label_provider.LabelProvider</span></code></a></p>
 <p>Base class for all table label providers.</p>
 <p>By default an item has no icon, and &#8216;str&#8217; is used to generate its label.</p>
 <dl class="method">
 <dt id="pyface.viewer.table_label_provider.TableLabelProvider.get_image">
-<tt class="descname">get_image</tt><big>(</big><em>viewer</em>, <em>element</em>, <em>column_index=0</em><big>)</big><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_image</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em>, <em>column_index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the filename of the label image for an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.table_label_provider.TableLabelProvider.get_text">
-<tt class="descname">get_text</tt><big>(</big><em>viewer</em>, <em>element</em>, <em>column_index=0</em><big>)</big><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em>, <em>column_index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.table_label_provider.TableLabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label text for an element.</p>
 </dd></dl>
 
@@ -271,21 +275,21 @@ label text.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.table_viewer">
-<span id="table-viewer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">table_viewer</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.table_viewer" title="Permalink to this headline">¶</a></h2>
+<span id="table-viewer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">table_viewer</span></code> Module<a class="headerlink" href="#module-pyface.viewer.table_viewer" title="Permalink to this headline">¶</a></h2>
 <p>A viewer for tabular data.</p>
 <dl class="class">
 <dt id="pyface.viewer.table_viewer.TableViewer">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.table_viewer.</tt><tt class="descname">TableViewer</tt><big>(</big><em>parent</em>, <em>image_size=(16</em>, <em>16)</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_viewer.ContentViewer" title="pyface.viewer.content_viewer.ContentViewer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_viewer.ContentViewer</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.table_viewer.</code><code class="descname">TableViewer</code><span class="sig-paren">(</span><em>parent</em>, <em>image_size=(16</em>, <em>16)</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_viewer.ContentViewer" title="pyface.viewer.content_viewer.ContentViewer"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_viewer.ContentViewer</span></code></a></p>
 <p>A viewer for tabular data.</p>
 <dl class="attribute">
 <dt id="pyface.viewer.table_viewer.TableViewer.FORMAT_MAP">
-<tt class="descname">FORMAT_MAP</tt><em class="property"> = {'right': 1, 'center': 2, 'centre': 2, 'left': 0}</em><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer.FORMAT_MAP" title="Permalink to this definition">¶</a></dt>
+<code class="descname">FORMAT_MAP</code><em class="property"> = {'right': 1, 'center': 2, 'centre': 2, 'left': 0}</em><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer.FORMAT_MAP" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.table_viewer.TableViewer.select_row">
-<tt class="descname">select_row</tt><big>(</big><em>row</em><big>)</big><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer.select_row" title="Permalink to this definition">¶</a></dt>
+<code class="descname">select_row</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.table_viewer.TableViewer.select_row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select the specified row.</p>
 </dd></dl>
 
@@ -293,23 +297,23 @@ label text.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.tree_content_provider">
-<span id="tree-content-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tree_content_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.tree_content_provider" title="Permalink to this headline">¶</a></h2>
+<span id="tree-content-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tree_content_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.tree_content_provider" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for tree content providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.tree_content_provider.TreeContentProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.tree_content_provider.</tt><tt class="descname">TreeContentProvider</tt><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_provider.ContentProvider" title="pyface.viewer.content_provider.ContentProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_provider.ContentProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.tree_content_provider.</code><code class="descname">TreeContentProvider</code><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_provider.ContentProvider" title="pyface.viewer.content_provider.ContentProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_provider.ContentProvider</span></code></a></p>
 <p>Abstract base class for tree content providers.</p>
 <p>Tree content providers are used by (surprise, surprise) tree viewers!</p>
 <dl class="method">
 <dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_children">
-<tt class="descname">get_children</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_children" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_children</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the children of an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_elements">
-<tt class="descname">get_elements</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_elements" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_elements</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_elements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of the elements to display in a viewer.</p>
 <p>Returns a list of elements to display in a viewer when its (ie. the
 viewer&#8217;s) input is set to the given element.</p>
@@ -318,7 +322,7 @@ viewer&#8217;s) input is set to the given element.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_content_provider.TreeContentProvider.get_parent">
-<tt class="descname">get_parent</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_parent" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_parent</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.get_parent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parent of an element.</p>
 <p>Returns None if the element either has no parent (ie. it is the root of
 the tree), or if the parent cannot be computed.</p>
@@ -326,7 +330,7 @@ the tree), or if the parent cannot be computed.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_content_provider.TreeContentProvider.has_children">
-<tt class="descname">has_children</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.has_children" title="Permalink to this definition">¶</a></dt>
+<code class="descname">has_children</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_content_provider.TreeContentProvider.has_children" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True iff the element has children, otherwise False.</p>
 </dd></dl>
 
@@ -334,7 +338,7 @@ the tree), or if the parent cannot be computed.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.tree_item">
-<span id="tree-item-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tree_item</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.tree_item" title="Permalink to this headline">¶</a></h2>
+<span id="tree-item-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tree_item</span></code> Module<a class="headerlink" href="#module-pyface.viewer.tree_item" title="Permalink to this headline">¶</a></h2>
 <p>A generic base-class for items in a tree data structure.</p>
 <p>An example:-</p>
 <p>root = TreeItem(data=&#8217;Root&#8217;)</p>
@@ -350,40 +354,40 @@ veg.append(TreeItem(data=&#8217;Sprout&#8217;, allows_children=False))
 root.append(veg)</p>
 <dl class="class">
 <dt id="pyface.viewer.tree_item.TreeItem">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.tree_item.</tt><tt class="descname">TreeItem</tt><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.tree_item.</code><code class="descname">TreeItem</code><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>A generic base-class for items in a tree data structure.</p>
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.append">
-<tt class="descname">append</tt><big>(</big><em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Appends a child to this item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert">
-<tt class="descname">insert</tt><big>(</big><em>index</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item at the specified index.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert_after">
-<tt class="descname">insert_after</tt><big>(</big><em>after</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_after" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_after</code><span class="sig-paren">(</span><em>after</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item after the specified item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.insert_before">
-<tt class="descname">insert_before</tt><big>(</big><em>before</em>, <em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_before" title="Permalink to this definition">¶</a></dt>
+<code class="descname">insert_before</code><span class="sig-paren">(</span><em>before</em>, <em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.insert_before" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts a child into this item before the specified item.</p>
 <p>This removes the child from its current parent (if it has one).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_item.TreeItem.remove">
-<tt class="descname">remove</tt><big>(</big><em>child</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>child</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_item.TreeItem.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a child from this item.</p>
 </dd></dl>
 
@@ -391,37 +395,37 @@ root.append(veg)</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.tree_label_provider">
-<span id="tree-label-provider-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tree_label_provider</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.tree_label_provider" title="Permalink to this headline">¶</a></h2>
+<span id="tree-label-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tree_label_provider</span></code> Module<a class="headerlink" href="#module-pyface.viewer.tree_label_provider" title="Permalink to this headline">¶</a></h2>
 <p>Base class for all tree label providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.tree_label_provider.TreeLabelProvider">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.tree_label_provider.</tt><tt class="descname">TreeLabelProvider</tt><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.label_provider.LabelProvider" title="pyface.viewer.label_provider.LabelProvider"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.label_provider.LabelProvider</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.tree_label_provider.</code><code class="descname">TreeLabelProvider</code><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.label_provider.LabelProvider" title="pyface.viewer.label_provider.LabelProvider"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.label_provider.LabelProvider</span></code></a></p>
 <p>Base class for all tree label providers.</p>
 <p>By default an element has no label image, and &#8216;str&#8217; is used to generate its
 label text.</p>
 <dl class="method">
 <dt id="pyface.viewer.tree_label_provider.TreeLabelProvider.get_drag_value">
-<tt class="descname">get_drag_value</tt><big>(</big><em>viewer</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.get_drag_value" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_drag_value</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.get_drag_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the value that is dragged for an element.</p>
 <p>By default the drag value is the element itself.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_label_provider.TreeLabelProvider.is_collapsible">
-<tt class="descname">is_collapsible</tt><big>(</big><em>viewer</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.is_collapsible" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_collapsible</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.is_collapsible" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True is the element is collapsible, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_label_provider.TreeLabelProvider.is_expandable">
-<tt class="descname">is_expandable</tt><big>(</big><em>viewer</em>, <em>node</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.is_expandable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_expandable</code><span class="sig-paren">(</span><em>viewer</em>, <em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.is_expandable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True is the node is expandanble, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_label_provider.TreeLabelProvider.set_text">
-<tt class="descname">set_text</tt><big>(</big><em>viewer</em>, <em>element</em>, <em>text</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_text</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_label_provider.TreeLabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the text representation of a node.</p>
 <p>Returns True if setting the text succeeded, otherwise False.</p>
 </dd></dl>
@@ -430,40 +434,40 @@ label text.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.tree_viewer">
-<span id="tree-viewer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">tree_viewer</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.tree_viewer" title="Permalink to this headline">¶</a></h2>
+<span id="tree-viewer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">tree_viewer</span></code> Module<a class="headerlink" href="#module-pyface.viewer.tree_viewer" title="Permalink to this headline">¶</a></h2>
 <p>A viewer based on a tree control.</p>
 <dl class="class">
 <dt id="pyface.viewer.tree_viewer.TreeViewer">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.tree_viewer.</tt><tt class="descname">TreeViewer</tt><big>(</big><em>parent</em>, <em>image_size=(16</em>, <em>16)</em>, <em>**traits</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_viewer.ContentViewer" title="pyface.viewer.content_viewer.ContentViewer"><tt class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_viewer.ContentViewer</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.tree_viewer.</code><code class="descname">TreeViewer</code><span class="sig-paren">(</span><em>parent</em>, <em>image_size=(16</em>, <em>16)</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.viewer.content_viewer.ContentViewer" title="pyface.viewer.content_viewer.ContentViewer"><code class="xref py py-class docutils literal"><span class="pre">pyface.viewer.content_viewer.ContentViewer</span></code></a></p>
 <p>A viewer based on a tree control.</p>
 <dl class="attribute">
 <dt id="pyface.viewer.tree_viewer.TreeViewer.STYLE">
-<tt class="descname">STYLE</tt><em class="property"> = 4194817</em><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.STYLE" title="Permalink to this definition">¶</a></dt>
+<code class="descname">STYLE</code><em class="property"> = 4194817</em><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.STYLE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_viewer.TreeViewer.is_expanded">
-<tt class="descname">is_expanded</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.is_expanded" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_expanded</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.is_expanded" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the element is expanded, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_viewer.TreeViewer.is_selected">
-<tt class="descname">is_selected</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.is_selected" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_selected</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.is_selected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the element is selected, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_viewer.TreeViewer.refresh">
-<tt class="descname">refresh</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.refresh" title="Permalink to this definition">¶</a></dt>
+<code class="descname">refresh</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh the tree starting from the specified element.</p>
 <p>Call this when the STRUCTURE of the content has changed.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.tree_viewer.TreeViewer.update">
-<tt class="descname">update</tt><big>(</big><em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.tree_viewer.TreeViewer.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the tree starting from the specified element.</p>
 <p>Call this when the APPEARANCE of the content has changed.</p>
 </dd></dl>
@@ -472,12 +476,12 @@ label text.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.viewer">
-<span id="viewer-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">viewer</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.viewer" title="Permalink to this headline">¶</a></h2>
+<span id="viewer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">viewer</span></code> Module<a class="headerlink" href="#module-pyface.viewer.viewer" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all viewers.</p>
 <dl class="class">
 <dt id="pyface.viewer.viewer.Viewer">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.viewer.</tt><tt class="descname">Viewer</tt><a class="headerlink" href="#pyface.viewer.viewer.Viewer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.widget.Widget" title="pyface.ui.qt4.widget.Widget"><tt class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.widget.Widget</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.viewer.</code><code class="descname">Viewer</code><a class="headerlink" href="#pyface.viewer.viewer.Viewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.widget.Widget" title="pyface.ui.qt4.widget.Widget"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.widget.Widget</span></code></a></p>
 <p>Abstract base class for all viewers.</p>
 <p>A viewer is a model-based adapter on some underlying toolkit-specific
 widget.</p>
@@ -485,16 +489,16 @@ widget.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.viewer_filter">
-<span id="viewer-filter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">viewer_filter</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.viewer_filter" title="Permalink to this headline">¶</a></h2>
+<span id="viewer-filter-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">viewer_filter</span></code> Module<a class="headerlink" href="#module-pyface.viewer.viewer_filter" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all viewer filters.</p>
 <dl class="class">
 <dt id="pyface.viewer.viewer_filter.ViewerFilter">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.viewer_filter.</tt><tt class="descname">ViewerFilter</tt><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.viewer_filter.</code><code class="descname">ViewerFilter</code><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all viewer filters.</p>
 <dl class="method">
 <dt id="pyface.viewer.viewer_filter.ViewerFilter.filter">
-<tt class="descname">filter</tt><big>(</big><em>viewer</em>, <em>parent</em>, <em>elements</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.filter" title="Permalink to this definition">¶</a></dt>
+<code class="descname">filter</code><span class="sig-paren">(</span><em>viewer</em>, <em>parent</em>, <em>elements</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filters a list of elements.</p>
 <p>&#8216;viewer&#8217;   is the viewer that we are filtering elements for.
 &#8216;parent&#8217;   is the parent element.
@@ -505,7 +509,7 @@ returns True.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_filter.ViewerFilter.is_filter_trait">
-<tt class="descname">is_filter_trait</tt><big>(</big><em>element</em>, <em>trait_name</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.is_filter_trait" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_filter_trait</code><span class="sig-paren">(</span><em>element</em>, <em>trait_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.is_filter_trait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the filter affected by changes to an element&#8217;s trait?</p>
 <p>&#8216;element&#8217;    is the element.
 &#8216;trait_name&#8217; is the name of the trait.</p>
@@ -516,7 +520,7 @@ named &#8216;trait_name&#8217; on the specified element.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_filter.ViewerFilter.select">
-<tt class="descname">select</tt><big>(</big><em>viewer</em>, <em>parent</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.select" title="Permalink to this definition">¶</a></dt>
+<code class="descname">select</code><span class="sig-paren">(</span><em>viewer</em>, <em>parent</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_filter.ViewerFilter.select" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the element is &#8216;allowed&#8217; (ie. NOT filtered).</p>
 <p>&#8216;viewer&#8217;  is the viewer that we are filtering elements for.
 &#8216;parent&#8217;  is the parent element.
@@ -528,16 +532,16 @@ named &#8216;trait_name&#8217; on the specified element.</p>
 
 </div>
 <div class="section" id="module-pyface.viewer.viewer_sorter">
-<span id="viewer-sorter-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">viewer_sorter</span></tt> Module<a class="headerlink" href="#module-pyface.viewer.viewer_sorter" title="Permalink to this headline">¶</a></h2>
+<span id="viewer-sorter-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">viewer_sorter</span></code> Module<a class="headerlink" href="#module-pyface.viewer.viewer_sorter" title="Permalink to this headline">¶</a></h2>
 <p>Abstract base class for all viewer sorters.</p>
 <dl class="class">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter">
-<em class="property">class </em><tt class="descclassname">pyface.viewer.viewer_sorter.</tt><tt class="descname">ViewerSorter</tt><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></tt></p>
+<em class="property">class </em><code class="descclassname">pyface.viewer.viewer_sorter.</code><code class="descname">ViewerSorter</code><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for all viewer sorters.</p>
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.category">
-<tt class="descname">category</tt><big>(</big><em>viewer</em>, <em>parent</em>, <em>element</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.category" title="Permalink to this definition">¶</a></dt>
+<code class="descname">category</code><span class="sig-paren">(</span><em>viewer</em>, <em>parent</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.category" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the category (an integer) for an element.</p>
 <p>&#8216;parent&#8217;   is the parent element.
 &#8216;elements&#8217; is the element to return the category for.</p>
@@ -549,7 +553,7 @@ are arranged as dictated by the sorter&#8217;s &#8216;compare&#8217; method.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.compare">
-<tt class="descname">compare</tt><big>(</big><em>viewer</em>, <em>parent</em>, <em>element_a</em>, <em>element_b</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.compare" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compare</code><span class="sig-paren">(</span><em>viewer</em>, <em>parent</em>, <em>element_a</em>, <em>element_b</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.compare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the result of comparing two elements.</p>
 <p>&#8216;viewer&#8217;    is the viewer that we are sorting elements for.
 &#8216;parent&#8217;    is the parent element.
@@ -559,7 +563,7 @@ are arranged as dictated by the sorter&#8217;s &#8216;compare&#8217; method.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait">
-<tt class="descname">is_sorter_trait</tt><big>(</big><em>element</em>, <em>trait_name</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_sorter_trait</code><span class="sig-paren">(</span><em>element</em>, <em>trait_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.is_sorter_trait" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the sorter affected by changes to an element&#8217;s trait?</p>
 <p>&#8216;element&#8217;    is the element.
 &#8216;trait_name&#8217; is the name of the trait.</p>
@@ -570,7 +574,7 @@ named &#8216;trait_name&#8217; on the specified element.</p>
 
 <dl class="method">
 <dt id="pyface.viewer.viewer_sorter.ViewerSorter.sort">
-<tt class="descname">sort</tt><big>(</big><em>viewer</em>, <em>parent</em>, <em>elements</em><big>)</big><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.sort" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sort</code><span class="sig-paren">(</span><em>viewer</em>, <em>parent</em>, <em>elements</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.viewer_sorter.ViewerSorter.sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sorts a list of elements IN PLACE.</p>
 <p>&#8216;viewer&#8217;   is the viewer that we are sorting elements for.
 &#8216;parent&#8217;   is the parent element.
@@ -587,7 +591,7 @@ named &#8216;trait_name&#8217; on the specified element.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -595,24 +599,24 @@ named &#8216;trait_name&#8217; on the specified element.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">viewer Package</a><ul>
-<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">viewer</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.api"><tt class="docutils literal"><span class="pre">api</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.column_provider"><tt class="docutils literal"><span class="pre">column_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.content_provider"><tt class="docutils literal"><span class="pre">content_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.content_viewer"><tt class="docutils literal"><span class="pre">content_viewer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.default_tree_content_provider"><tt class="docutils literal"><span class="pre">default_tree_content_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.label_provider"><tt class="docutils literal"><span class="pre">label_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.table_column_provider"><tt class="docutils literal"><span class="pre">table_column_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.table_content_provider"><tt class="docutils literal"><span class="pre">table_content_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.table_label_provider"><tt class="docutils literal"><span class="pre">table_label_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.table_viewer"><tt class="docutils literal"><span class="pre">table_viewer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.tree_content_provider"><tt class="docutils literal"><span class="pre">tree_content_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.tree_item"><tt class="docutils literal"><span class="pre">tree_item</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.tree_label_provider"><tt class="docutils literal"><span class="pre">tree_label_provider</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.tree_viewer"><tt class="docutils literal"><span class="pre">tree_viewer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.viewer"><tt class="docutils literal"><span class="pre">viewer</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.viewer_filter"><tt class="docutils literal"><span class="pre">viewer_filter</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.viewer.viewer_sorter"><tt class="docutils literal"><span class="pre">viewer_sorter</span></tt> Module</a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">viewer</span></code> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.column_provider"><code class="docutils literal"><span class="pre">column_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.content_provider"><code class="docutils literal"><span class="pre">content_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.content_viewer"><code class="docutils literal"><span class="pre">content_viewer</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.default_tree_content_provider"><code class="docutils literal"><span class="pre">default_tree_content_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.label_provider"><code class="docutils literal"><span class="pre">label_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.table_column_provider"><code class="docutils literal"><span class="pre">table_column_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.table_content_provider"><code class="docutils literal"><span class="pre">table_content_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.table_label_provider"><code class="docutils literal"><span class="pre">table_label_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.table_viewer"><code class="docutils literal"><span class="pre">table_viewer</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.tree_content_provider"><code class="docutils literal"><span class="pre">tree_content_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.tree_item"><code class="docutils literal"><span class="pre">tree_item</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.tree_label_provider"><code class="docutils literal"><span class="pre">tree_label_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.tree_viewer"><code class="docutils literal"><span class="pre">tree_viewer</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.viewer"><code class="docutils literal"><span class="pre">viewer</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.viewer_filter"><code class="docutils literal"><span class="pre">viewer_filter</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.viewer.viewer_sorter"><code class="docutils literal"><span class="pre">viewer_sorter</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -623,12 +627,14 @@ named &#8216;trait_name&#8217; on the specified element.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.wizard.html"
                         title="next chapter">wizard Package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/pyface.viewer.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/pyface.viewer.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -645,26 +651,20 @@ named &#8216;trait_name&#8217; on the specified element.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="pyface.wizard.html" title="wizard Package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="pyface.util.tests.html" title="tests Package"
-             >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2008-2015, Enthought.
-      Last updated on Mar 16, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2008-2015, Enthought.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/api/pyface.viewer.txt"
+          rel="nofollow">Page source</a></li>
     </div>
+
+    
+
+    
   </body>
 </html>

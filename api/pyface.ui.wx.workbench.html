@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>workbench Package &mdash; pyface 4.5.0 documentation</title>
+    <title>workbench Package &mdash; pyface 4.5.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.0',
+        VERSION:     '4.5.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,13 +24,17 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.0 documentation" href="../index.html" />
+    <link rel="top" title="pyface 4.5.1 documentation" href="../index.html" />
     <link rel="up" title="wx Package" href="pyface.ui.wx.html" />
     <link rel="next" title="util Package" href="pyface.util.html" />
-    <link rel="prev" title="wizard Package" href="pyface.ui.wx.wizard.html" /> 
+    <link rel="prev" title="wizard Package" href="pyface.ui.wx.wizard.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,94 +46,314 @@
         <li class="right" >
           <a href="pyface.ui.wx.wizard.html" title="wizard Package"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
-          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
-          <li><a href="pyface.ui.wx.html" accesskey="U">wx Package</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="pyface.html" >pyface Package</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
+          <li class="nav-item nav-item-3"><a href="pyface.ui.wx.html" accesskey="U">wx Package</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="workbench-package">
 <h1>workbench Package<a class="headerlink" href="#workbench-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">workbench</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><code class="xref py py-mod docutils literal"><span class="pre">workbench</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.ui.wx.workbench"></span></div>
 <div class="section" id="module-pyface.ui.wx.workbench.editor">
-<span id="editor-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">editor</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.editor" title="Permalink to this headline">¶</a></h2>
+<span id="editor-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">editor</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.editor" title="Permalink to this headline">¶</a></h2>
 <p>Enthought pyface package component</p>
 <dl class="class">
 <dt id="pyface.ui.wx.workbench.editor.Editor">
-<em class="property">class </em><tt class="descclassname">pyface.ui.wx.workbench.editor.</tt><tt class="descname">Editor</tt><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.workbench.html#pyface.workbench.i_editor.MEditor" title="pyface.workbench.i_editor.MEditor"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.i_editor.MEditor</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.editor.</code><code class="descname">Editor</code><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.workbench.html#pyface.workbench.i_editor.MEditor" title="pyface.workbench.i_editor.MEditor"><code class="xref py py-class docutils literal"><span class="pre">pyface.workbench.i_editor.MEditor</span></code></a></p>
 <p>The toolkit specific implementation of an Editor.</p>
 <p>See the IEditor interface for the API documentation.</p>
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.editor.Editor.create_control">
-<tt class="descname">create_control</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_control</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the toolkit-specific control that represents the part.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.editor.Editor.destroy_control">
-<tt class="descname">destroy_control</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.destroy_control" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.destroy_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the toolkit-specific control that represents the part.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.editor.Editor.set_focus">
-<tt class="descname">set_focus</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.set_focus" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.editor.Editor.set_focus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the focus to the appropriate control in the part.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="editor-set-structure-handler-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">editor_set_structure_handler</span></tt> Module<a class="headerlink" href="#editor-set-structure-handler-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.ui.wx.workbench.editor_set_structure_handler">
+<span id="editor-set-structure-handler-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">editor_set_structure_handler</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.editor_set_structure_handler" title="Permalink to this headline">¶</a></h2>
+<p>The handler used to restore editors.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.workbench.editor_set_structure_handler.EditorSetStructureHandler">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.editor_set_structure_handler.</code><code class="descname">EditorSetStructureHandler</code><span class="sig-paren">(</span><em>window_layout</em>, <em>editor_mementos</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.editor_set_structure_handler.EditorSetStructureHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.dock.html#pyface.dock.dock_sizer.SetStructureHandler" title="pyface.dock.dock_sizer.SetStructureHandler"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.SetStructureHandler</span></code></a></p>
+<p>The handler used to restore editors.</p>
+<p>This is part of the &#8216;dock window&#8217; API. It is used to resolve dock control
+Ids when setting the structure of a dock window.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.editor_set_structure_handler.EditorSetStructureHandler.resolve_id">
+<code class="descname">resolve_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.editor_set_structure_handler.EditorSetStructureHandler.resolve_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves an unresolved dock control id.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyface.ui.wx.workbench.view">
-<span id="view-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">view</span></tt> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.view" title="Permalink to this headline">¶</a></h2>
+<span id="view-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">view</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.view" title="Permalink to this headline">¶</a></h2>
 <p>Enthought pyface package component</p>
 <dl class="class">
 <dt id="pyface.ui.wx.workbench.view.View">
-<em class="property">class </em><tt class="descclassname">pyface.ui.wx.workbench.view.</tt><tt class="descname">View</tt><a class="headerlink" href="#pyface.ui.wx.workbench.view.View" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.workbench.html#pyface.workbench.i_view.MView" title="pyface.workbench.i_view.MView"><tt class="xref py py-class docutils literal"><span class="pre">pyface.workbench.i_view.MView</span></tt></a></p>
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.view.</code><code class="descname">View</code><a class="headerlink" href="#pyface.ui.wx.workbench.view.View" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.workbench.html#pyface.workbench.i_view.MView" title="pyface.workbench.i_view.MView"><code class="xref py py-class docutils literal"><span class="pre">pyface.workbench.i_view.MView</span></code></a></p>
 <p>The toolkit specific implementation of a View.</p>
 <p>See the IView interface for the API documentation.</p>
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.view.View.create_control">
-<tt class="descname">create_control</tt><big>(</big><em>parent</em><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.create_control" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_control</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.create_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the toolkit-specific control that represents the part.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.view.View.destroy_control">
-<tt class="descname">destroy_control</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.destroy_control" title="Permalink to this definition">¶</a></dt>
+<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.destroy_control" title="Permalink to this definition">¶</a></dt>
 <dd><p>Destroy the toolkit-specific control that represents the part.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.ui.wx.workbench.view.View.set_focus">
-<tt class="descname">set_focus</tt><big>(</big><big>)</big><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.set_focus" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_focus</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.view.View.set_focus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the focus to the appropriate control in the part.</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="view-set-structure-handler-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">view_set_structure_handler</span></tt> Module<a class="headerlink" href="#view-set-structure-handler-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.ui.wx.workbench.view_set_structure_handler">
+<span id="view-set-structure-handler-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">view_set_structure_handler</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.view_set_structure_handler" title="Permalink to this headline">¶</a></h2>
+<p>The handler used to restore views.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.workbench.view_set_structure_handler.ViewSetStructureHandler">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.view_set_structure_handler.</code><code class="descname">ViewSetStructureHandler</code><span class="sig-paren">(</span><em>window_layout</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.view_set_structure_handler.ViewSetStructureHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.dock.html#pyface.dock.dock_sizer.SetStructureHandler" title="pyface.dock.dock_sizer.SetStructureHandler"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.SetStructureHandler</span></code></a></p>
+<p>The handler used to restore views.</p>
+<p>This is part of the &#8216;dock window&#8217; API. It is used to resolve dock control
+IDs when setting the structure of a dock window.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.view_set_structure_handler.ViewSetStructureHandler.resolve_id">
+<code class="descname">resolve_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.view_set_structure_handler.ViewSetStructureHandler.resolve_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves an unresolved dock control <em>id</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="workbench-dock-window-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">workbench_dock_window</span></tt> Module<a class="headerlink" href="#workbench-dock-window-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.ui.wx.workbench.workbench_dock_window">
+<span id="workbench-dock-window-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">workbench_dock_window</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.workbench_dock_window" title="Permalink to this headline">¶</a></h2>
+<p>Base class for workbench dock windows.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.workbench_dock_window.</code><code class="descname">WorkbenchDockWindow</code><span class="sig-paren">(</span><em>parent</em>, <em>wid=-1</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=65536</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.dock.html#pyface.dock.dock_window.DockWindow" title="pyface.dock.dock_window.DockWindow"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_window.DockWindow</span></code></a></p>
+<p>Base class for workbench dock windows.</p>
+<p>This class just adds a few useful methods to the standard &#8216;DockWindow&#8217;
+interface. Hopefully at some stage these can be part of that API too!</p>
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.activate_control">
+<code class="descname">activate_control</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.activate_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the dock control with the specified Id.</p>
+<p>Does nothing if no such dock control exists (well, it <em>does</em> write
+a debug message to the logger).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.close_control">
+<code class="descname">close_control</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.close_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the dock control with the specified Id.</p>
+<p>Does nothing if no such dock control exists (well, it <em>does</em> write
+a debug message to the logger).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_control">
+<code class="descname">get_control</code><span class="sig-paren">(</span><em>id</em>, <em>visible_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the dock control with the specified Id.</p>
+<p>Returns None if no such dock control exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_controls">
+<code class="descname">get_controls</code><span class="sig-paren">(</span><em>visible_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_controls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all of the dock controls in the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_regions">
+<code class="descname">get_regions</code><span class="sig-paren">(</span><em>group</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all dock regions in a dock group (recursively).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_structure">
+<code class="descname">get_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.get_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the window structure (minus the content).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.reset_regions">
+<code class="descname">reset_regions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.reset_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the first dock control in every region.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.set_structure">
+<code class="descname">set_structure</code><span class="sig-paren">(</span><em>structure</em>, <em>handler=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_dock_window.WorkbenchDockWindow.set_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the window structure.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="workbench-window-layout-module">
-<h2><tt class="xref py py-mod docutils literal"><span class="pre">workbench_window_layout</span></tt> Module<a class="headerlink" href="#workbench-window-layout-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.ui.wx.workbench.workbench_window_layout">
+<span id="workbench-window-layout-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">workbench_window_layout</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.workbench.workbench_window_layout" title="Permalink to this headline">¶</a></h2>
+<p>The wx implementation of the workbench window layout interface.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.workbench.workbench_window_layout.</code><code class="descname">WorkbenchWindowLayout</code><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.workbench.html#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout" title="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout"><code class="xref py py-class docutils literal"><span class="pre">pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout</span></code></a></p>
+<p>The wx implementation of the workbench window layout interface.</p>
+<p>See the &#8216;IWorkbenchWindowLayout&#8217; interface for the API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.activate_editor">
+<code class="descname">activate_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.activate_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activate an editor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.activate_view">
+<code class="descname">activate_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.activate_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activate a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.add_editor">
+<code class="descname">add_editor</code><span class="sig-paren">(</span><em>editor</em>, <em>title</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.add_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an editor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.add_view">
+<code class="descname">add_view</code><span class="sig-paren">(</span><em>view</em>, <em>position=None</em>, <em>relative_to=None</em>, <em>size=(-1</em>, <em>-1)</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.add_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the entire window layout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close_editor">
+<code class="descname">close_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close and editor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close_view">
+<code class="descname">close_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.close_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.contains_view">
+<code class="descname">contains_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.contains_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the view exists in the window layout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.create_initial_layout">
+<code class="descname">create_initial_layout</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.create_initial_layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the initial window layout.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.get_editor_memento">
+<code class="descname">get_editor_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.get_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.get_view_memento">
+<code class="descname">get_view_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.get_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.hide_editor_area">
+<code class="descname">hide_editor_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.hide_editor_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide the editor area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.hide_view">
+<code class="descname">hide_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.hide_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hide a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.refresh">
+<code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh the window layout to reflect any changes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.reset_editors">
+<code class="descname">reset_editors</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.reset_editors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activate the first editor in every group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.reset_views">
+<code class="descname">reset_views</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.reset_views" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activate the first view in every group.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.set_editor_memento">
+<code class="descname">set_editor_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.set_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.set_view_memento">
+<code class="descname">set_view_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.set_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.show_editor_area">
+<code class="descname">show_editor_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.show_editor_area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the editor area.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.show_view">
+<code class="descname">show_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.workbench.workbench_window_layout.WorkbenchWindowLayout.show_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show a view.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -137,7 +361,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
@@ -145,13 +369,13 @@
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">workbench Package</a><ul>
-<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">workbench</span></tt> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.editor"><tt class="docutils literal"><span class="pre">editor</span></tt> Module</a></li>
-<li><a class="reference internal" href="#editor-set-structure-handler-module"><tt class="docutils literal"><span class="pre">editor_set_structure_handler</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.view"><tt class="docutils literal"><span class="pre">view</span></tt> Module</a></li>
-<li><a class="reference internal" href="#view-set-structure-handler-module"><tt class="docutils literal"><span class="pre">view_set_structure_handler</span></tt> Module</a></li>
-<li><a class="reference internal" href="#workbench-dock-window-module"><tt class="docutils literal"><span class="pre">workbench_dock_window</span></tt> Module</a></li>
-<li><a class="reference internal" href="#workbench-window-layout-module"><tt class="docutils literal"><span class="pre">workbench_window_layout</span></tt> Module</a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">workbench</span></code> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.editor"><code class="docutils literal"><span class="pre">editor</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.editor_set_structure_handler"><code class="docutils literal"><span class="pre">editor_set_structure_handler</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.view"><code class="docutils literal"><span class="pre">view</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.view_set_structure_handler"><code class="docutils literal"><span class="pre">view_set_structure_handler</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.workbench_dock_window"><code class="docutils literal"><span class="pre">workbench_dock_window</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.workbench.workbench_window_layout"><code class="docutils literal"><span class="pre">workbench_window_layout</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -162,12 +386,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.util.html"
                         title="next chapter">util Package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="../_sources/api/pyface.ui.wx.workbench.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/pyface.ui.wx.workbench.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
@@ -184,28 +410,20 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="pyface.util.html" title="util Package"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="pyface.ui.wx.wizard.html" title="wizard Package"
-             >previous</a> |</li>
-        <li><a href="../index.html">pyface 4.5.0 documentation</a> &raquo;</li>
-          <li><a href="pyface.html" >pyface Package</a> &raquo;</li>
-          <li><a href="pyface.ui.html" >ui Package</a> &raquo;</li>
-          <li><a href="pyface.ui.wx.html" >wx Package</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2008-2015, Enthought.
-      Last updated on Mar 16, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2008-2015, Enthought.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="../_sources/api/pyface.ui.wx.workbench.txt"
+          rel="nofollow">Page source</a></li>
     </div>
+
+    
+
+    
   </body>
 </html>
