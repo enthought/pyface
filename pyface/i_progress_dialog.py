@@ -25,17 +25,29 @@ class IProgressDialog(IDialog):
     """
 
     #### 'IProgressDialog' interface ##################################
-    title = Str
+
+    #: The message to display in the dialog
     message = Str
+
+    #: The minimum progress value
     min = Int
+
+    #: The maximum progress value
     max = Int
+
+    #: The margin around the progress bar
     margin = Int(5)
+
+    #: Whether the operation can be cancelled
     can_cancel = Bool(False)
+
+    #: Whether to show progress times
     show_time = Bool(False)
+
+    #: Whether to show progress percent
     show_percent = Bool(False)
 
-
-    # Label for the 'cancel' button
+    #: Label for the 'cancel' button
     cancel_button_label = Str
 
     ###########################################################################

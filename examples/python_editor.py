@@ -17,7 +17,7 @@
 # Enthought library imports.
 from pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
         PythonEditor
-from pyface.action.api import Action, MenuManager, MenuBarManager
+from pyface.action.api import Action, Group, MenuManager, MenuBarManager
 
 
 class MainWindow(ApplicationWindow):
@@ -34,13 +34,28 @@ class MainWindow(ApplicationWindow):
         super(MainWindow, self).__init__(**traits)
 
         # Add a menu bar.
-        self.menu_bar_manager = MenuBarManager(MenuManager(
-                    Action(name='&Open...', on_perform=self._open_file),
-                    Action(name='&Save', on_perform=self._save_file),
-                    Action(name='E&xit', on_perform=self.close),
-                name='&File'))
-
-        return
+        self.menu_bar_manager = MenuBarManager(
+            MenuManager(
+                Group(
+                    Action(
+                        name='&Open...',
+                        accelerator='Ctrl+O',
+                        on_perform=self.on_open_file
+                    ),
+                    Action(
+                        name='&Save',
+                        accelerator='Ctrl+S',
+                        on_perform=self.on_save_file
+                    ),
+                    id='document_group',
+                ),
+                Action(
+                    name='&Close',
+                    accelerator='Ctrl+W',
+                    on_perform=self.close
+                ),
+                name='&File')
+        )
 
     ###########################################################################
     # Protected 'IApplication' interface.
@@ -57,7 +72,7 @@ class MainWindow(ApplicationWindow):
     # Private interface.
     ###########################################################################
 
-    def _open_file(self):
+    def on_open_file(self):
         """ Open a new file. """
 
         if self.control:
@@ -66,7 +81,7 @@ class MainWindow(ApplicationWindow):
             if dlg.open() == OK:
                 self._editor.path = dlg.path
 
-    def _save_file(self):
+    def on_save_file(self):
         """ Save the file. """
 
         if self.control:

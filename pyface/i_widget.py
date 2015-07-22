@@ -26,10 +26,10 @@ class IWidget(Interface):
 
     #### 'IWidget' interface ##################################################
 
-    # The toolkit specific control that represents the widget.
+    #: The toolkit specific control that represents the widget.
     control = Any
 
-    # The control's optional parent control.
+    #: The control's optional parent control.
     parent = Any
 
     ###########################################################################

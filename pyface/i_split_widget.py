@@ -27,20 +27,20 @@ class ISplitWidget(Interface):
 
     #### 'ISplitWidget' interface #############################################
 
-    # The direction in which the widget is split.
+    #: The direction in which the widget is split.
     #
-    # Splitting vertically means there will be a left hand panel and a right
-    # hand panel, splitting horizontally means there will be a top panel and
-    # a bottom panel.
+    #: Splitting vertically means there will be a left hand panel and a right
+    #: hand panel, splitting horizontally means there will be a top panel and
+    #: a bottom panel.
     direction = Enum('vertical', 'vertical', 'horizontal')
 
-    # The ratio of the size of the left/top pane to the right/bottom pane.
+    #: The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.5)
 
-    # An optional callable that provides the left hand/top panel.
+    #: An optional callable that provides the left hand/top panel.
     lhs = Callable
 
-    # An optional callable that provides the right hand/bottom panel.
+    #: An optional callable that provides the right hand/bottom panel.
     rhs = Callable
 
     ###########################################################################

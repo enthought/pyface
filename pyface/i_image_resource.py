@@ -27,14 +27,14 @@ class IImageResource(Interface):
 
     #### 'ImageResource' interface ############################################
 
-    # The absolute path to the image.
+    #: The absolute path to the image.
     absolute_path = Unicode
 
-    # The name of the image.
+    #: The name of the image.
     name = Unicode
 
-    # A list of directories, classes or instances that will be used to search
-    # for the image (see the resource manager for more details).
+    #: A list of directories, classes or instances that will be used to search
+    #: for the image (see the resource manager for more details).
     search_path = List
 
     ###########################################################################

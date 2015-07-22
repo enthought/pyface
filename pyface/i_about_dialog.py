@@ -27,10 +27,10 @@ class IAboutDialog(IDialog):
 
     #### 'IAboutDialog' interface #############################################
 
-    # Additional strings to be added to the dialog.
+    #: Additional strings to be added to the dialog.
     additions = List(Unicode)
 
-    # The image displayed in the dialog.
+    #: The image displayed in the dialog.
     image = Instance(ImageResource, ImageResource('about'))
 
 

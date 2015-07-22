@@ -26,21 +26,21 @@ class IPythonEditor(Interface):
 
     #### 'IPythonEditor' interface ############################################
 
-    # Has the file in the editor been modified?
+    #: Has the file in the editor been modified?
     dirty = Bool(False)
 
-    # The pathname of the file being edited.
+    #: The pathname of the file being edited.
     path = Unicode
 
-    # Should line numbers be shown in the margin?
+    #: Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
 
     #### Events ####
 
-    # The contents of the editor has changed.
+    #: The contents of the editor has changed.
     changed = Event
 
-    # A key has been pressed.
+    #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
     ###########################################################################

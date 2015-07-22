@@ -30,33 +30,33 @@ class IFileDialog(IDialog):
 
     #### 'IFileDialog' interface ##############################################
 
-    # The 'action' that the user is peforming on the directory.
+    #: The 'action' that the user is peforming on the directory.
     action = Enum('open', 'save as')
 
-    # The default directory.
+    #: The default directory.
     default_directory = Unicode
 
-    # The default filename.
+    #: The default filename.
     default_filename = Unicode
 
-    # The default path (directory and filename) of the chosen file.  This is
-    # only used when the *default_directory* and *default_filename* are not set
-    # and is equivalent to setting both.
+    #: The default path (directory and filename) of the chosen file.  This is
+    #: only used when the *default_directory* and *default_filename* are not set
+    #: and is equivalent to setting both.
     default_path = Unicode
 
-    # The directory containing the chosen file.
+    #: The directory containing the chosen file.
     directory = Unicode
 
-    # The name of the chosen file.
+    #: The name of the chosen file.
     filename = Unicode
 
-    # The path (directory and filename) of the chosen file.
+    #: The path (directory and filename) of the chosen file.
     path = Unicode
 
-    # The wildcard used to restrict the set of files.
+    #: The wildcard used to restrict the set of files.
     wildcard = Unicode
 
-    # The index of the selected wildcard.
+    #: The index of the selected wildcard.
     wildcard_index = Int(0)
 
 
@@ -75,19 +75,19 @@ class MFileDialog(object):
     # the format to be portable between toolkits - so stick with PyQt
     # supporting the wx format or invent a data structure.
 
-    # A file dialog wildcard for Python files.
+    #: A file dialog wildcard for Python files.
     WILDCARD_PY = "Python files (*.py)|*.py|"
 
-    # A file dialog wildcard for text files.
+    #: A file dialog wildcard for text files.
     WILDCARD_TXT = "Text files (*.txt)|*.txt|"
 
-    # A file dialog wildcard for all files.
+    #: A file dialog wildcard for all files.
     if sys.platform == 'win32':
         WILDCARD_ALL = "All files (*.*)|*.*|"
     else:
         WILDCARD_ALL = "All files (*)|*"
 
-    # A file dialog wildcard for Zip archives.
+    #: A file dialog wildcard for Zip archives.
     WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
     ###########################################################################

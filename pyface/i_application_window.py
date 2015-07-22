@@ -35,20 +35,20 @@ class IApplicationWindow(IWindow):
 
     #### 'IApplicationWindow' interface #######################################
 
-    # The window icon.  The default is toolkit specific.
+    #: The window icon.  The default is toolkit specific.
     icon = Instance(ImageResource)
 
-    # The menu bar manager (None iff there is no menu bar).
+    #: The menu bar manager (None iff there is no menu bar).
     menu_bar_manager = Instance(MenuBarManager)
 
-    # The status bar manager (None iff there is no status bar).
+    #: The status bar manager (None iff there is no status bar).
     status_bar_manager = Instance(StatusBarManager)
 
-    # The tool bar manager (None iff there is no tool bar).
+    #: The tool bar manager (None iff there is no tool bar).
     tool_bar_manager = Instance(ToolBarManager)
 
-    # If the underlying toolkit supports multiple toolbars, you can use this
-    # list instead of the single ToolBarManager instance above.
+    #: If the underlying toolkit supports multiple toolbars, you can use this
+    #: list instead of the single ToolBarManager instance above.
     tool_bar_managers = List(ToolBarManager)
 
     ###########################################################################
@@ -102,10 +102,10 @@ class MApplicationWindow(object):
 
     def destroy(self):
         """ Destroy the control if it exists. """
-        
+
         if self.menu_bar_manager is not None:
             self.menu_bar_manager.destroy()
-            
+
         if self.tool_bar_manager is not None:
             self.tool_bar_manager.destroy()
         for tool_bar_manager in self.tool_bar_managers:

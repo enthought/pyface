@@ -32,16 +32,16 @@ class IGUI(Interface):
 
     #### 'GUI' interface ######################################################
 
-    # Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
-    # displayed)?
+    #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
+    #: displayed)?
     busy = Bool(False)
 
-    # Has the GUI's event loop been started?
+    #: Has the GUI's event loop been started?
     started = Bool(False)
 
-    # A directory on the local file system that we can read and write to at
-    # will.  This is used to persist layout information etc.  Note that
-    # individual toolkits will have their own directory.
+    #: A directory on the local file system that we can read and write to at
+    #: will.  This is used to persist layout information etc.  Note that
+    #: individual toolkits will have their own directory.
     state_location = Unicode
 
     ###########################################################################
@@ -57,6 +57,7 @@ class IGUI(Interface):
     # 'GUI' class interface.
     ###########################################################################
 
+    @staticmethod
     def allow_interrupt():
         """ Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
@@ -66,42 +67,34 @@ class IGUI(Interface):
         run interactively.
         """
 
-    allow_interrupt = staticmethod(allow_interrupt)
-
+    @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
         """ Call a callable after a specific delay in the main GUI thread. """
 
-    invoke_after = classmethod(invoke_after)
-
+    @classmethod
     def invoke_later(cls, callable, *args, **kw):
         """ Call a callable in the main GUI thread. """
 
-    invoke_later = classmethod(invoke_later)
-
+    @classmethod
     def set_trait_after(cls, millisecs, obj, trait_name, new):
         """ Sets a trait after a specific delay in the main GUI thread. """
 
-    set_trait_after = classmethod(set_trait_after)
-
+    @classmethod
     def set_trait_later(cls, obj, trait_name, new):
         """ Sets a trait in the main GUI thread. """
 
-    set_trait_later = classmethod(set_trait_later)
-
+    @staticmethod
     def process_events(allow_user_events=True):
         """ Process any pending GUI events. If allow_user_events is False then
         user generated events are not processed.
         """
 
-    process_events = staticmethod(process_events)
-
+    @staticmethod
     def set_busy(busy=True):
         """Specify if the GUI is busy.  If `True` is passed, the
         cursor is set to a 'busy' cursor.  Passing `False` will reset
         the cursor to the default.
         """
-
-    set_busy = staticmethod(set_busy)
 
     ###########################################################################
     # 'GUI' interface.
@@ -121,6 +114,7 @@ class MGUI(object):
     Implements: _default_state_location()
     """
 
+    @staticmethod
     def allow_interrupt():
         """ Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
@@ -128,8 +122,6 @@ class MGUI(object):
         """
         import signal
         signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-    allow_interrupt = staticmethod(allow_interrupt)
 
     def _default_state_location(self):
         """ Return the default state location. """

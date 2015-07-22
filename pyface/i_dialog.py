@@ -34,27 +34,27 @@ class IDialog(IWindow):
 
     #### 'IDialog' interface ##################################################
 
-    # The label for the 'cancel' button.  The default is toolkit specific.
+    #: The label for the 'cancel' button.  The default is toolkit specific.
     cancel_label = Unicode
 
-    # The context sensitive help Id (the 'Help' button is only shown iff this
-    # is set).
+    #: The context sensitive help Id (the 'Help' button is only shown iff this
+    #: is set).
     help_id = Str
 
-    # The label for the 'help' button.  The default is toolkit specific.
+    #: The label for the 'help' button.  The default is toolkit specific.
     help_label = Unicode
 
-    # The label for the 'ok' button.  The default is toolkit specific.
+    #: The label for the 'ok' button.  The default is toolkit specific.
     ok_label = Unicode
 
-    # Is the dialog resizeable?
+    #: Is the dialog resizeable?
     resizeable = Bool(True)
 
-    # The return code after the window is closed to indicate whether the dialog
-    # was closed via 'Ok' or 'Cancel').
+    #: The return code after the window is closed to indicate whether the dialog
+    #: was closed via 'Ok' or 'Cancel').
     return_code = Int(OK)
 
-    # The dialog style (is it modal or not).
+    #: The dialog style (is it modal or not).
     # FIXME v3: It doesn't seem possible to use non-modal dialogs.  (How do you
     # get access to the buttons?)
     style = Enum('modal', 'nonmodal')
