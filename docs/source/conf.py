@@ -199,3 +199,10 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# Options for autodoc
+# -------------------
+
+autodoc_member_order = 'bysource'
+
+autodoc_mock_imports = ['wx', 'wx.grid', 'wx.lib', 'qt4']
