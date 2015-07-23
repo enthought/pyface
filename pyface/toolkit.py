@@ -102,7 +102,7 @@ def toolkit_object(name):
             pass
     except ImportError as exc:
         # is the error while trying to import be_mname or not?
-        if not exc.message.endswith(be_mname):
+        if not exc.message.endswith(mname):
             # something else went wrong - let the exception be raised
             raise
 
