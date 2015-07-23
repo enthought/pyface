@@ -23,8 +23,8 @@ from traits.api import Bool, Event, provides, Unicode
 # Local imports.
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.code_editor.code_widget import AdvancedCodeWidget
 from pyface.widget import Widget
+from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
 
 
 @provides(IPythonEditor)
