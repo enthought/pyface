@@ -30,5 +30,7 @@ Pyface depends on:
 
 * `Traits <https://github.com/enthought/traits>`_
 
+* Pygments for syntax highlighting in the Qt code editor widget.
+
 * some widgets may have additional optional dependencies.  For example, the
   IPython shell widgets require IPython to be installed.
