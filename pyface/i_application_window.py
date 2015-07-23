@@ -29,8 +29,11 @@ class IApplicationWindow(IWindow):
     The application window has support for a menu bar, tool bar and a status
     bar (all of which are optional).
 
-    Usage: Create a sub-class of this class and override the protected
-    '_create_contents' method.
+    Usage
+    -----
+
+    Create a sub-class of this class and override the
+    :py:meth:`._create_contents` method.
     """
 
     #### 'IApplicationWindow' interface #######################################
@@ -58,31 +61,52 @@ class IApplicationWindow(IWindow):
     def _create_contents(self, parent):
         """ Create and return the window's contents.
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control to be used as the parent for
+            widgets in the contents.
+
+        Returns
+        -------
+        control : toolkit control
+            A control to be used for contents of the window.
         """
 
     def _create_menu_bar(self, parent):
         """ Creates the menu bar (if required).
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control.
         """
 
     def _create_status_bar(self, parent):
         """ Creates the status bar (if required).
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control.
         """
 
     def _create_tool_bar(self, parent):
         """ Creates the tool bar (if required).
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control.
         """
 
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window).
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control.
         """
 
     def _set_window_icon(self):
@@ -91,7 +115,7 @@ class IApplicationWindow(IWindow):
 
 class MApplicationWindow(object):
     """ The mixin class that contains common code for toolkit specific
-    implementations of the IApplicationWindow interface.
+    implementations of the :py:calass:`IApplicationWindow` interface.
 
     Implements: destroy(), _create_trim_widgets()
     """
@@ -118,14 +142,16 @@ class MApplicationWindow(object):
     ###########################################################################
 
     def _create_trim_widgets(self, parent):
-        """ Creates the 'trim' widgets (the widgets around the window). """
+        """ Creates the 'trim' widgets (the widgets around the window).
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control.
+        """
 
         # All of these are optional.
         self._set_window_icon()
         self._create_menu_bar(parent)
         self._create_tool_bar(parent)
         self._create_status_bar(parent)
-
-        return
-
-#### EOF ######################################################################
