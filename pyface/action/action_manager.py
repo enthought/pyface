@@ -228,8 +228,8 @@ class ActionManager(HasTraits):
         id : str
             The id of the group to find.
 
-        Return
-        ------
+        Returns
+        -------
         group : Group instance
             The group which matches the id, or None if no such group exists.
         """
@@ -324,8 +324,8 @@ class ActionManager(HasTraits):
 
         This will create this group if it doesn't already exist.
 
-        Return
-        ------
+        Returns
+        -------
         group : Group instance
             The manager's default group.
         """

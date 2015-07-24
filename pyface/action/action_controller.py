@@ -37,8 +37,8 @@ class ActionController(HasTraits):
         action : Action instance
             The action to consider.
 
-        Return
-        ------
+        Returns
+        -------
         can_add : bool
             ``True` if the action can be added to a menu/menubar.
         """
@@ -62,8 +62,8 @@ class ActionController(HasTraits):
         action : Action instance
             The action to consider.
 
-        Return
-        ------
+        Returns
+        -------
         can_add : bool
             ``True` if the action can be added to a toolbar.
         """

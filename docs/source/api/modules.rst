@@ -9,21 +9,6 @@ Abstract Interfaces and Mixins
     :undoc-members:
     :show-inheritance:
 
-:py:mod:`pyface.i_application_window` Module
---------------------------------------------
-
-.. module: pyface.i_application_window
-
-.. autoclass:: pyface.i_application_window.IApplicationWindow
-    :members: icon, menu_bar_manager, tool_bar_manager, status_bar_manager, _create_contents
-    :undoc-members:
-    :show-inheritance:
-
-.. autoclass:: pyface.i_application_window.MApplicationWindow
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :py:mod:`pyface.i_clipboard` Module
 -----------------------------------
 

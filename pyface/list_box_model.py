@@ -20,8 +20,8 @@ class ListBoxModel(HasTraits):
     def get_item_count(self):
         """ Get the number of items in the list.
 
-        Return
-        ------
+        Returns
+        -------
         item_count : int
             The number of items in the list.
         """

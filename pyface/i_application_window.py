@@ -115,7 +115,7 @@ class IApplicationWindow(IWindow):
 
 class MApplicationWindow(object):
     """ The mixin class that contains common code for toolkit specific
-    implementations of the :py:calass:`IApplicationWindow` interface.
+    implementations of the :py:class:`IApplicationWindow` interface.
 
     Implements: destroy(), _create_trim_widgets()
     """
