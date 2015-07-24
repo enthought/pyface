@@ -48,18 +48,49 @@ class ISplitWidget(Interface):
     ###########################################################################
 
     def _create_splitter(self, parent):
-        """ Create the toolkit-specific control that represents the widget. """
+        """ Create the toolkit-specific control that represents the widget.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control that contains the splitter.
+
+        Returns
+        -------
+        splitter : toolkit control
+            The toolkit control for the splitter.
+        """
 
     def _create_lhs(self, parent):
-        """ Creates the left hand/top panel depending on the direction. """
+        """ Creates the left hand/top panel depending on the direction.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The splitter's toolkit control.
+
+        Returns
+        -------
+        lhs : toolkit control
+            The toolkit control for the lhs.
+        """
 
     def _create_rhs(self, parent):
-        """ Creates the right hand/bottom panel depending on the direction. """
+        """ Creates the right hand/bottom panel depending on the direction.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The splitter's toolkit control.
+
+        Returns
+        -------
+        rhs : toolkit control
+            The toolkit control for the rhs.
+        """
 
 
 class MSplitWidget(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISplitWidget interface.
     """
-
-#### EOF ######################################################################
