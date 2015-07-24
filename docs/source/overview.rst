@@ -83,16 +83,8 @@ label::
     class MainWindow(ApplicationWindow):
         """ The main application window. """
 
-        #--------------------------------------------------------------------------
-        # 'IWindow' interface
-        #--------------------------------------------------------------------------
-
         # The window title.
         title = 'Hello World'
-
-        #--------------------------------------------------------------------------
-        # 'IApplicationWindow' interface.
-        #--------------------------------------------------------------------------
 
         def _create_contents(self, parent):
             """ Create the editor. """
