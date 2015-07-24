@@ -27,8 +27,17 @@ class SplitApplicationWindow(ApplicationWindow, SplitWidget):
     ###########################################################################
 
     def _create_contents(self, parent):
-        """ Creates the window contents. """
+        """ Creates the window contents.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control to be used as the parent for the
+            splitter control.
+
+        Returns
+        -------
+        control : toolkit control
+            The splitter control to be used for contents of the window.
+        """
         return self._create_splitter(parent)
-
-#### EOF ######################################################################

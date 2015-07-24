@@ -75,16 +75,22 @@ del _init_toolkit
 
 
 def toolkit_object(name):
-    """ Return the toolkit specific object with the given name.  The name
-    consists of the relative module path and the object name separated by a
-    colon.
+    """ Return the toolkit specific object with the given name.
+
+    Parameters
+    ----------
+    name : str
+        The name consists of the relative module path and the object name
+        separated by a colon.
     """
 
     mname, oname = name.split(':')
     be_mname = _toolkit_backend + mname
 
     class Unimplemented(object):
-        """ This is returned if an object isn't implemented by the selected
+        """ An unimplemented toolkit object
+
+        This is returned if an object isn't implemented by the selected
         toolkit.  It raises an exception if it is ever instantiated.
         """
 

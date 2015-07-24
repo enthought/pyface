@@ -7,11 +7,11 @@ class BaseDropHandler(HasTraits):
     """
     ### BaseDropHandler interface #############################################
 
-    # Returns True if the current drop handler can handle the given drag event
-    # occurring on the given target widget.
+    #: Returns True if the current drop handler can handle the given drag event
+    #: occurring on the given target widget.
     on_can_handle = Callable
 
-    # Performs drop action when drop event occurs on target widget.
+    #: Performs drop action when drop event occurs on target widget.
     on_handle = Callable
 
     ### IDropHandler interface ################################################
@@ -29,15 +29,16 @@ class FileDropHandler(HasTraits):
     """
     ### FileDropHandler interface #############################################
 
-    # supported extensions
+    #: supported extensions
     extensions = List(Str)
 
-    # Called when file is opened. Takes single argument: path of file
+    #: Called when file is opened. Takes single argument: path of file
     open_file = Callable
 
     ### IDropHandler interface ################################################
 
     def can_handle_drop(self, event, target):
+        """ Does the drop event contails file data with matching extensions """
         if event.mimeData().hasUrls():
             for url in event.mimeData().urls():
                 file_path = url.toLocalFile()
@@ -46,5 +47,6 @@ class FileDropHandler(HasTraits):
         return False
 
     def handle_drop(self, event, target):
+        """ Open the file using the supplied callback """
         for url in event.mimeData().urls():
             self.open_file(url.toLocalFile())

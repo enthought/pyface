@@ -27,8 +27,16 @@ class SplitDialog(Dialog, SplitWidget):
     ###########################################################################
 
     def _create_dialog_area(self, parent):
-        """ Creates the main content of the dialog. """
+        """ Creates the main content of the dialog.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            A toolkit control to be used as the parent for the splitter.
+
+        Returns
+        -------
+        control : toolkit control
+            The splitter control.
+        """
         return self._create_splitter(parent)
-
-#### EOF ######################################################################

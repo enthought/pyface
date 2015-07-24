@@ -119,13 +119,13 @@ class IDialog(IWindow):
         Parameters
         ----------
         parent : toolkit control
-            A toolkit control to be used as the parent for
-            widgets in the contents.
+            A toolkit control to be used as the parent for widgets in the
+            contents.
 
         Returns
         -------
         control : toolkit control
-            A control to be used for main contents of the dialig.
+            A control to be used for main contents of the dialog.
         """
 
     def _show_modal(self):
