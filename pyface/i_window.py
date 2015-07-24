@@ -82,37 +82,58 @@ class IWindow(IWidget):
     def show(self, visible):
         """ Show or hide the window.
 
-        visible is set if the window should be shown.
+        Parameter
+        ---------
+        visible : bool
+            Visible should be ``True`` if the window should be shown.
         """
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
 
-        message is the text of the message to display.
-        title is the text of the window title.
-        cancel is set if the dialog should contain a Cancel button.
-        default is the default button.
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
+        cancel : bool
+            ``True`` if the dialog should contain a Cancel button.
+        default : NO, YES or CANCEL
+            Which button should be the default button.
         """
 
     def information(self, message, title='Information'):
         """ Convenience method to show an information message dialog.
 
-        message is the text of the message to display.
-        title is the text of the window title.
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
         """
 
     def warning(self, message, title='Warning'):
         """ Convenience method to show a warning message dialog.
 
-        message is the text of the message to display.
-        title is the text of the window title.
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
         """
 
     def error(self, message, title='Error'):
         """ Convenience method to show an error message dialog.
 
-        message is the text of the message to display.
-        title is the text of the window title.
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
         """
 
     ###########################################################################
@@ -149,8 +170,6 @@ class MWindow(object):
         # Trait notification.
         self.opened = self
 
-        return
-
     def close(self):
         """ Closes the window. """
 
@@ -164,32 +183,62 @@ class MWindow(object):
             # Trait notification.
             self.closed = self
 
-        return
-
     def confirm(self, message, title=None, cancel=False, default=NO):
-        """ Convenience method to show a confirmation dialog. """
+        """ Convenience method to show a confirmation dialog.
 
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
+        cancel : bool
+            ``True`` if the dialog should contain a Cancel button.
+        default : NO, YES or CANCEL
+            Which button should be the default button.
+        """
         from confirmation_dialog import confirm
 
         return confirm(self.control, message, title, cancel, default)
 
     def information(self, message, title='Information'):
-        """ Convenience method to show an information message dialog. """
+        """ Convenience method to show an information message dialog.
 
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
+        """
         from message_dialog import information
 
         return information(self.control, message, title)
 
     def warning(self, message, title='Warning'):
-        """ Convenience method to show a warning message dialog. """
+        """ Convenience method to show a warning message dialog.
 
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
+        """
         from message_dialog import warning
 
         return warning(self.control, message, title)
 
     def error(self, message, title='Error'):
-        """ Convenience method to show an error message dialog. """
+        """ Convenience method to show an error message dialog.
 
+        Parameters
+        ----------
+        message : str
+            The text of the message to display.
+        title : str
+            The text of the dialog title.
+        """
         from message_dialog import error
 
         return error(self.control, message, title)

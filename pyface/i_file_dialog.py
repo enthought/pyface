@@ -94,8 +94,17 @@ class MFileDialog(object):
     # 'MFileDialog' *CLASS* interface.
     ###########################################################################
 
+    @classmethod
     def create_wildcard(cls, description, extension):
-        """ Creates a wildcard for a given extension. """
+        """ Creates a wildcard for a given extension.
+
+        Parameters
+        ----------
+        description : str
+            A human-readable description of the pattern.
+        extenstion : list
+            The wildcard patterns for the extension.
+        """
 
         if isinstance(extension, basestring):
             pattern = extension
@@ -104,7 +113,3 @@ class MFileDialog(object):
             pattern = ';'.join(extension)
 
         return "%s (%s)|%s|" % (description, pattern, pattern)
-
-    create_wildcard = classmethod(create_wildcard)
-
-#### EOF ######################################################################

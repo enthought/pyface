@@ -55,11 +55,15 @@ class IProgressDialog(IDialog):
     ###########################################################################
 
     def update(self, value):
-        """
-        updates the progress bar to the desired value. If the value is >=
-        the maximum and the progress bar is not contained in another panel
-        the parent window will be closed
+        """ Update the progress bar to the desired value
 
+        If the value is >= the maximum and the progress bar is not contained
+        in another panel the parent window will be closed.
+
+        Parameters
+        ----------
+        value :
+            The progress value to set.
         """
 
 
@@ -70,6 +74,8 @@ class MProgressDialog(object):
     Implements: update()
     """
 
+    #: The progress bar toolkit object
+    # XXX why not the control?
     progress_bar = Any
 
     ###########################################################################
@@ -77,11 +83,15 @@ class MProgressDialog(object):
     ###########################################################################
 
     def update(self, value):
-        """
-        updates the progress bar to the desired value. If the value is >=
-        the maximum and the progress bar is not contained in another panel
-        the parent window will be closed
+        """ Update the progress bar to the desired value
 
+        If the value is >= the maximum and the progress bar is not contained
+        in another panel the parent window will be closed.
+
+        Parameters
+        ----------
+        value :
+            The progress value to set.
         """
 
         if self.progress_bar is not None:

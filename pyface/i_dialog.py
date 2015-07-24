@@ -70,7 +70,12 @@ class IDialog(IWindow):
         dialog closed afterwards.  The 'return_code' trait is updated according
         to the button the user pressed and this value is also returned.
 
-        If the dialog is non-modal 'OK' is returned.
+        If the dialog is non-modal the return_code trait is set to 'OK'.
+
+        Returns
+        -------
+        return_code : OK or CANCEL
+            The value of the ``return_code`` trait.
         """
 
     ###########################################################################
@@ -80,23 +85,57 @@ class IDialog(IWindow):
     def _create_buttons(self, parent):
         """ Create and return the buttons.
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The dialog's toolkit control to be used as the parent for
+            buttons.
+
+        Returns
+        -------
+        buttons : toolkit control
+            A control containing the dialog's buttons.
+
         """
 
     def _create_contents(self, parent):
-        """ Create the dialog contents.
+        """ Create and return the dialog's contents.
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control to be used as the parent for
+            widgets in the contents.
+
+        Returns
+        -------
+        control : toolkit control
+            A control to be used for contents of the window.
         """
 
     def _create_dialog_area(self, parent):
-        """ Create and return the main content of the dialog.
+        """ Create and return the main content of the dialog's window.
 
-        parent is the parent control.
+        Parameters
+        ----------
+        parent : toolkit control
+            A toolkit control to be used as the parent for
+            widgets in the contents.
+
+        Returns
+        -------
+        control : toolkit control
+            A control to be used for main contents of the dialig.
         """
 
     def _show_modal(self):
-        """ Opens the dialog as a modal dialog and returns the return code. """
+        """ Opens the dialog as a modal dialog.
+
+        Returns
+        -------
+        return_code : OK or CANCEL
+            The return code from the user's interactions.
+        """
 
 
 class MDialog(object):
@@ -112,8 +151,19 @@ class MDialog(object):
     ###########################################################################
 
     def open(self):
-        """ Opens the dialog. """
+        """ Opens the dialog.
 
+        If the dialog is modal then the dialog's event loop is entered and the
+        dialog closed afterwards.  The 'return_code' trait is updated according
+        to the button the user pressed and this value is also returned.
+
+        If the dialog is non-modal the return_code trait is set to 'OK'.
+
+        Returns
+        -------
+        return_code : OK or CANCEL
+            The value of the ``return_code`` trait.
+        """
         if self.control is None:
             self._create()
 
@@ -147,5 +197,3 @@ class MDialog(object):
 
         # We don't bother for dialogs.
         pass
-
-#### EOF ######################################################################

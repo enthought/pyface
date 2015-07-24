@@ -49,8 +49,13 @@ class IGUI(Interface):
     ###########################################################################
 
     def __init__(self, splash_screen=None):
-        """ Initialise a new GUI.  splash_screen is an optional splash screen
-        that will be displayed until the event loop is started.
+        """ Initialise a new GUI.
+
+        Parameters
+        ----------
+        splash_screen : ISplashScreen instance or None
+            An optional splash screen that will be displayed until the event
+            loop is started.
         """
 
     ###########################################################################
@@ -59,7 +64,9 @@ class IGUI(Interface):
 
     @staticmethod
     def allow_interrupt():
-        """ Override the SIGINT handler to ensure the process can be
+        """ Override SIGINT to prevent swallowing KeyboardInterrupt
+
+        Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
         KeyboardInterrupt exceptions.
 
@@ -69,31 +76,80 @@ class IGUI(Interface):
 
     @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
-        """ Call a callable after a specific delay in the main GUI thread. """
+        """ Call a callable after a specific delay in the main GUI thread.
+
+        Parameters
+        ----------
+        millisecs : float
+            Delay in milliseconds
+        callable : callable
+            Callable to be called after the delay
+        args, kwargs :
+            Arguments and keyword arguments to be used when calling.
+        """
 
     @classmethod
     def invoke_later(cls, callable, *args, **kw):
-        """ Call a callable in the main GUI thread. """
+        """ Call a callable in the main GUI thread.
+
+        Parameters
+        ----------
+        callable : callable
+            Callable to be called after the delay
+        args, kwargs :
+            Arguments and keyword arguments to be used when calling.
+        """
 
     @classmethod
     def set_trait_after(cls, millisecs, obj, trait_name, new):
-        """ Sets a trait after a specific delay in the main GUI thread. """
+        """ Sets a trait after a specific delay in the main GUI thread.
+
+        Parameters
+        ----------
+        millisecs : float
+            Delay in milliseconds
+        obj : HasTraits instance
+            Object on which the trait is to be set
+        trait_name : str
+            The name of the trait to set
+        new : any
+            The value to set.
+        """
 
     @classmethod
     def set_trait_later(cls, obj, trait_name, new):
-        """ Sets a trait in the main GUI thread. """
+        """ Sets a trait in the main GUI thread.
+
+        Parameters
+        ----------
+        obj : HasTraits instance
+            Object on which the trait is to be set
+        trait_name : str
+            The name of the trait to set
+        new : any
+            The value to set.
+        """
 
     @staticmethod
     def process_events(allow_user_events=True):
-        """ Process any pending GUI events. If allow_user_events is False then
-        user generated events are not processed.
+        """ Process any pending GUI events.
+
+        Parameters
+        ----------
+        allow_user_events : bool
+            If allow_user_events is ``False`` then user generated events are not
+            processed.
         """
 
     @staticmethod
     def set_busy(busy=True):
-        """Specify if the GUI is busy.  If `True` is passed, the
-        cursor is set to a 'busy' cursor.  Passing `False` will reset
-        the cursor to the default.
+        """Specify if the GUI is busy.
+
+        Parameters
+        ----------
+        busy : bool
+            If ``True`` is passed, the cursor is set to a 'busy' cursor.
+            Passing ``False`` will reset the cursor to the default.
         """
 
     ###########################################################################
@@ -116,9 +172,14 @@ class MGUI(object):
 
     @staticmethod
     def allow_interrupt():
-        """ Override the SIGINT handler to ensure the process can be
+        """ Override SIGINT to prevent swallowing KeyboardInterrupt
+
+        Override the SIGINT handler to ensure the process can be
         interrupted. This prevents GUI toolkits from swallowing
         KeyboardInterrupt exceptions.
+
+        Warning: do not call this method if you intend your application to be
+        run interactively.
         """
         import signal
         signal.signal(signal.SIGINT, signal.SIG_DFL)

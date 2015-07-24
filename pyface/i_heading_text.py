@@ -27,9 +27,9 @@ class IHeadingText(Interface):
     #### 'IHeadingText' interface #############################################
 
     #: Heading level.
-    #:
-    #: fixme: Currently we ignore anything but one, but in future we could
-    #: have different visualizations based on the level.
+    #
+    # fixme: Currently we ignore anything but one, but in future we could
+    # have different visualizations based on the level.
     level = Int(1)
 
     #: The heading text.

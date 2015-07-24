@@ -48,10 +48,22 @@ class IPythonEditor(Interface):
     ###########################################################################
 
     def load(self, path=None):
-        """ Loads the contents of the editor. """
+        """ Loads the contents of the editor.
+
+        Parameters
+        ----------
+        path : str or None
+            The path to the file to load.
+        """
 
     def save(self, path=None):
-        """ Saves the contents of the editor. """
+        """ Saves the contents of the editor.
+
+        Parameters
+        ----------
+        path : str or None
+            The path to the file to save.
+        """
 
     # FIXME v3: This is very dependent on the underlying implementation.
     def set_style(self, n, fore, back):
@@ -60,7 +72,13 @@ class IPythonEditor(Interface):
         """
 
     def select_line(self, lineno):
-        """ Selects the specified line. """
+        """ Selects the specified line.
+
+        Parameters
+        ----------
+        lineno : int
+            The line number to select.
+        """
 
 
 class MPythonEditor(object):
@@ -75,7 +93,3 @@ class MPythonEditor(object):
 
         if self.control is not None:
             self.load()
-
-        return
-
-#### EOF ######################################################################

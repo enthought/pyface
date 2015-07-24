@@ -28,29 +28,29 @@ class IConfirmationDialog(IDialog):
 
     #### 'IConfirmationDialog' interface ######################################
 
-    # Should the cancel button be displayed?
+    #: Should the cancel button be displayed?
     cancel = Bool(False)
 
-    # The default button.
+    #: The default button.
     default = Enum(NO, YES, CANCEL)
 
-    # The image displayed with the message.  The default is toolkit specific.
+    #: The image displayed with the message.  The default is toolkit specific.
     image = Instance(ImageResource)
 
-    # The message displayed in the body of the dialog (use the inherited
-    # 'title' trait to set the title of the dialog itself).
+    #: The message displayed in the body of the dialog (use the inherited
+    #: 'title' trait to set the title of the dialog itself).
     message = Unicode
 
-    # Some informative text to display below the main message
+    #: Some informative text to display below the main message
     informative = Unicode
 
-    # Some additional details that can be exposed by the user
+    #: Some additional details that can be exposed by the user
     detail = Unicode
 
-    # The label for the 'no' button.  The default is toolkit specific.
+    #: The label for the 'no' button.  The default is toolkit specific.
     no_label = Unicode
 
-    # The label for the 'yes' button.  The default is toolkit specific.
+    #: The label for the 'yes' button.  The default is toolkit specific.
     yes_label = Unicode
 
 
@@ -58,5 +58,3 @@ class MConfirmationDialog(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IConfirmationDialog interface.
     """
-
-#### EOF ######################################################################

@@ -95,5 +95,3 @@ class MSplashScreen(object):
             logger.removeHandler(self._log_handler)
 
         super(MSplashScreen, self).close()
-
-#### EOF ######################################################################

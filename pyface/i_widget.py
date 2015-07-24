@@ -44,11 +44,25 @@ class IWidget(Interface):
     ###########################################################################
 
     def _create(self):
-        """ Creates the toolkit specific control. """
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
+        """
 
     def _create_control(self, parent):
-        """ Create and return the toolkit specific control that represents the
-        widget.
+        """ Create toolkit specific control that represents the widget.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control to be used as the parent for the widget's
+            control.
+
+        Returns
+        -------
+        control : toolkit control
+            A control for the widget.
         """
 
 
@@ -64,9 +78,25 @@ class MWidget(object):
     ###########################################################################
 
     def _create(self):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
+        """
         self.control = self._create_control(self.parent)
 
     def _create_control(self, parent):
-        raise NotImplementedError
+        """ Create toolkit specific control that represents the widget.
 
-#### EOF ######################################################################
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control to be used as the parent for the widget's
+            control.
+
+        Returns
+        -------
+        control : toolkit control
+            A control for the widget.
+        """
+        raise NotImplementedError
