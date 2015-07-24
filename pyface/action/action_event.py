@@ -13,7 +13,7 @@ class ActionEvent(HasTraits):
 
     #### 'ActionEvent' interface ##############################################
 
-    # When the action was performed (time.time()).
+    #: When the action was performed (time.time()).
     when = Float
 
     ###########################################################################
@@ -24,19 +24,9 @@ class ActionEvent(HasTraits):
         """ Creates a new action event.
 
         Note: Every keyword argument becoames a public attribute of the event.
-
         """
-
         # Base-class constructor.
         super(ActionEvent, self).__init__(**traits)
 
-        # fixme: We currently allow anything to be tagged onto the event, which
-        # is going to make code very hard to read.
-        self.__dict__.update(traits)
-
         # When the action was performed.
         self.when = time.time()
-
-        return
-
-#### EOF ######################################################################

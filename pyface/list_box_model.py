@@ -18,7 +18,13 @@ class ListBoxModel(HasTraits):
     list_changed = Event
 
     def get_item_count(self):
-        """ Returns the number of items in the list. """
+        """ Get the number of items in the list.
+
+        Return
+        ------
+        item_count : int
+            The number of items in the list.
+        """
         raise NotImplementedError
 
     def get_item_at(self, index):
@@ -28,6 +34,11 @@ class ListBoxModel(HasTraits):
         ----------
         index : int
             The index to return the value of.
+
+        Returns
+        -------
+        label, item : str, any
+            The user-visible string and model data of the item.
         """
         raise NotImplementedError
 

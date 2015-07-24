@@ -31,17 +31,17 @@ class ActionManagerItem(HasTraits):
 
     """
 
-    # The item's unique identifier ('unique' in this case means unique within
-    # its group)
+    #: The item's unique identifier ('unique' in this case means unique within
+    #: its group)
     id = Str
 
-    # The group the item belongs to.
+    #: The group the item belongs to.
     parent = Instance('pyface.action.api.Group')
 
-    # Is the item enabled?
+    #: Is the item enabled?
     enabled = Bool(True)
 
-    # Is the item visible?
+    #: Is the item visible?
     visible = Bool(True)
 
     ###########################################################################
@@ -49,13 +49,33 @@ class ActionManagerItem(HasTraits):
     ###########################################################################
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu. """
+        """ Adds the item to a menu.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The parent of the new menu item control.
+        menu : toolkit menu
+            The menu to add the action item to.
+        controller : ActionController instance or None
+            The controller to use.
+        """
         raise NotImplementedError
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
-        """ Adds the item to a tool bar. """
+        """ Adds the item to a tool bar.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The parent of the new menu item control.
+        tool_bar : toolkit toolbar
+            The toolbar to add the action item to.
+        image_cache : ImageCache instance
+            The image cache for resized images.
+        controller : ActionController instance or None
+            The controller to use.
+        show_labels : bool
+            Should the toolbar item show a label.
+        """
         raise NotImplementedError
-
-#### EOF ######################################################################

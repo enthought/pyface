@@ -36,28 +36,28 @@ class Group(HasTraits):
 
     #### 'Group' interface ####
 
-    # Is the group enabled?
+    #: Is the group enabled?
     enabled = Bool(True)
 
-    # Is the group visible?
+    #: Is the group visible?
     visible = Bool(True)
 
-    # The group's unique identifier (only needs to be unique within the action
-    # manager that the group belongs to).
+    #: The group's unique identifier (only needs to be unique within the action
+    #: manager that the group belongs to).
     id = Str
 
-    # All of the items in the group.
+    #: All of the items in the group.
     items = Property
 
-    # The action manager that the group belongs to.
+    #: The action manager that the group belongs to.
     parent = Any#Instance('pyface.action.ActionManager')
 
-    # Does this group require a separator when it is visualized?
+    #: Does this group require a separator when it is visualized?
     separator = Bool(True)
 
     #### Private interface ####
 
-    # All of the items in the group.
+    #: All of the items in the group.
     _items = List#(ActionManagerItem)
 
     ###########################################################################
@@ -65,16 +65,19 @@ class Group(HasTraits):
     ###########################################################################
 
     def __init__(self, *items,  **traits):
-        """ Creates a new menu manager. """
+        """ Creates a new menu manager.
 
+        Parameters
+        ----------
+        items : collection of ActionManagerItems
+            Items to add to the group.
+        """
         # Base class constructor.
         super(Group, self).__init__(**traits)
 
         # Add any specified items.
         for item in items:
             self.append(item)
-
-        return
 
     ###########################################################################
     # 'Group' interface.
@@ -83,73 +86,76 @@ class Group(HasTraits):
     #### Trait Properties #####################################################
 
     def _get_items(self):
-        """ Returns the items in the group. """
-
         return self._items[:]
 
     #### Trait change handlers ################################################
 
     def _enabled_changed(self, trait_name, old, new):
-        """ Static trait change handler. """
-
         for item in self.items:
             item.enabled = new
-
-        return
 
     #### Methods ##############################################################
 
     def append(self, item):
         """ Appends an item to the group.
 
-        See the documentation for 'insert'.
+        Parameters
+        ----------
+        item : ActionManagerItem, Action or callable
+            The item to append.
 
+        Returns
+        -------
+        item : ActionManagerItem
+            The actually inserted item.
+
+        Notes
+        -----
+        If the item is an ActionManagerItem instance it is simply appended.
+        If the item is an Action instance, an ActionItem is created for the
+        action, and that is appended.  If the item is a callable, then an
+        Action is created for the callable, and then that is handled as above.
         """
-
         return self.insert(len(self._items), item)
 
     def clear(self):
         """ Remove all items from the group. """
-
         self._items = []
-
-        return
 
     def destroy(self):
         """ Called when the manager is no longer required.
 
         By default this method simply calls 'destroy' on all items in the
         group.
-
         """
-
         for item in self.items:
             item.destroy()
-
-        return
 
     def insert(self, index, item):
         """ Inserts an item into the group at the specified index.
 
-        1) An 'ActionManagerItem' instance.
+        Parameters
+        ----------
+        index : int
+            The position to insert the item.
+        item : ActionManagerItem, Action or callable
+            The item to insert.
 
-            In which case the item is simply inserted into the group.
+        Returns
+        -------
+        item : ActionManagerItem
+            The actually inserted item.
 
-        2) An 'Action' instance.
+        Notes
+        -----
 
-            In which case an 'ActionItem' instance is created with the action
-            and then inserted into the group.
-
-        3) A Python callable (ie.'callable(item)' returns True).
-
-            In which case an 'Action' is created that calls the callable when
-            it is performed, and the action is then wrapped as in 2).
-
+        If the item is an ActionManagerItem instance it is simply inserted.
+        If the item is an Action instance, an ActionItem is created for the
+        action, and that is inserted.  If the item is a callable, then an
+        Action is created for the callable, and then that is handled as above.
         """
-
         if isinstance(item, Action):
             item = ActionItem(action=item)
-
         elif callable(item):
             text = user_name_for(item.func_name)
             item = ActionItem(action=Action(text=text, on_perform=item))
@@ -160,54 +166,88 @@ class Group(HasTraits):
         return item
 
     def remove(self, item):
-        """ Removes an item from the group. """
+        """ Removes an item from the group.
 
+        Parameters
+        ----------
+        item : ActionManagerItem
+            The item to remove.
+        """
         self._items.remove(item)
         item.parent = None
-
-        return
 
     def insert_before(self, before, item):
         """ Inserts an item into the group before the specified item.
 
-        See the documentation for 'insert'.
+        Parameters
+        ----------
+        before : ActionManagerItem
+            The item to insert before.
+        item : ActionManagerItem, Action or callable
+            The item to insert.
 
+        Returns
+        -------
+        index, item : int, ActionManagerItem
+            The position inserted, and the item actually inserted.
+
+        Notes
+        -----
+
+        If the item is an ActionManagerItem instance it is simply inserted.
+        If the item is an Action instance, an ActionItem is created for the
+        action, and that is inserted.  If the item is a callable, then an
+        Action is created for the callable, and then that is handled as above.
         """
-
         index = self._items.index(before)
-
         self.insert(index, item)
-
         return (index, item)
 
     def insert_after(self, after, item):
         """ Inserts an item into the group after the specified item.
 
-        See the documentation for 'insert'.
+        Parameters
+        ----------
+        before : ActionManagerItem
+            The item to insert after.
+        item : ActionManagerItem, Action or callable
+            The item to insert.
 
+        Returns
+        -------
+        index, item : int, ActionManagerItem
+            The position inserted, and the item actually inserted.
+
+        Notes
+        -----
+
+        If the item is an ActionManagerItem instance it is simply inserted.
+        If the item is an Action instance, an ActionItem is created for the
+        action, and that is inserted.  If the item is a callable, then an
+        Action is created for the callable, and then that is handled as above.
         """
-
         index = self._items.index(after)
-
         self.insert(index + 1, item)
-
         return (index, item)
 
     def find(self, id):
-        """ Returns the item with the specified Id.
+        """ Find the item with the specified id.
 
-        Returns None if no such item exists.
+        Parameters
+        ----------
+        id : str
+            The id of the item
 
+        Returns
+        -------
+        item : ActionManagerItem
+            The item with the specified Id, or None if no such item exists.
         """
-
         for item in self._items:
             if item.id == id:
-                break
-
+                return item
         else:
-            item = None
-
-        return item
+            return None
 
 
 class Separator(Group):
@@ -223,9 +263,5 @@ class Separator(Group):
         )
 
     Hopefully, 'Separator' is more readable than 'Group'...
-
     """
-
     pass
-
-#### EOF ######################################################################

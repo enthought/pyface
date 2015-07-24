@@ -77,8 +77,10 @@ class Action(HasTraits):
     #### Initializers #########################################################
 
     def _id_default(self):
-        """ Initializes the 'id' trait. """
+        """ Initializes the 'id' trait.
 
+        The default is the ``name`` trait.
+        """
         return self.name
 
     #### Methods ##############################################################
@@ -88,17 +90,15 @@ class Action(HasTraits):
 
         By default this method does nothing, but this would be a great place to
         unhook trait listeners etc.
-
         """
 
-        return
-
     def perform(self, event):
-        """ Performs the action. """
+        """ Performs the action.
 
+        Parameters
+        ----------
+        event : ActionEvent instance
+            The event which triggered the action.
+        """
         if self.on_perform is not None:
             self.on_perform()
-
-        return
-
-#### EOF ######################################################################
