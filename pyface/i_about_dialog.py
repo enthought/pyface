@@ -38,5 +38,3 @@ class MAboutDialog(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IAboutDialog interface.
     """
-
-### EOF #######################################################################

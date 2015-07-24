@@ -78,5 +78,3 @@ class MImageCache(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IImageCache interface.
     """
-
-#### EOF ######################################################################

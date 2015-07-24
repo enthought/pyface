@@ -43,5 +43,3 @@ class MHeadingText(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """
-
-#### EOF ######################################################################

@@ -215,6 +215,3 @@ class MImageResource(object):
             cls._image_not_found = ImageResource('image_not_found')
 
         return cls._image_not_found
-
-
-#### EOF ######################################################################
