@@ -120,6 +120,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         retval = self.control.exec_()
         if self.control is None:
             # dialog window closed
+            if self.cancel:
+                # if cancel is available, close is Cancel
+                return CANCEL
             return self.default
         clicked_button = self.control.clickedButton()
         if clicked_button in self._button_result_map:

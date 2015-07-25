@@ -84,6 +84,15 @@ class TestConfirmationDialog(unittest.TestCase):
         self.assertEqual(self.dialog.return_code, NO)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_close_with_cancel(self):
+        # test that closing works as expected
+        self.dialog.cancel = True
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_run(when_opened=lambda x: self.dialog.close())
+        self.assertEqual(tester.result, CANCEL)
+        self.assertEqual(self.dialog.return_code, CANCEL)
+
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_yes(self):
         # test that Yes works as expected
         tester = ModalDialogTester(self.dialog.open)
