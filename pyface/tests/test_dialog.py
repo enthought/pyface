@@ -17,6 +17,48 @@ class TestDialog(unittest.TestCase):
         self.gui = GUI()
         self.dialog = Dialog()
 
+    def test_create(self):
+        # test that creation and destruction works as expected
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_size(self):
+        # test that default size works as expected
+        self.dialog.size = (100, 100)
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_ok_renamed(self):
+        # test that creation and destruction works as expected with ok_label
+        self.dialog.ok_label = u"Sure"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_cancel_renamed(self):
+        # test that creation and destruction works as expected with cancel_label
+        self.dialog.cancel_label = u"I Don't Think So"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_help(self):
+        # test that creation and destruction works as expected with help
+        self.dialog.help_id = "test_help"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_help_label(self):
+        # test that creation and destruction works as expected with help
+        self.dialog.help_id = "test_help"
+        self.dialog.help_label = u"Assistance"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
         # test that accept works as expected
