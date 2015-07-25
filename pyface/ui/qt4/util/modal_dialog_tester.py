@@ -247,6 +247,22 @@ class ModalDialogTester(object):
         )
         widget.click()
 
+    def click_ok(self):
+        """ Find and click the 'OK' button """
+        self.click_widget('OK')
+
+    def click_cancel(self):
+        """ Find and click the 'Cancel' button """
+        self.click_widget('Cancel')
+
+    def click_yes(self):
+        """ Find and click the 'Yes' button """
+        self.click_widget('&Yes')
+
+    def click_no(self):
+        """ Find and click the 'No' button """
+        self.click_widget('&No')
+
     def value_assigned(self):
         """ A value was assigned to the result attribute.
 
