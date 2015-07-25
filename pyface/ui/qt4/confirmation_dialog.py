@@ -118,6 +118,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.ApplicationModal)
         retval = self.control.exec_()
+        if self.control is None:
+            # dialog window closed
+            return self.default
         clicked_button = self.control.clickedButton()
         if clicked_button in self._button_result_map:
             retval = self._button_result_map[clicked_button]
