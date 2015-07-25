@@ -5,6 +5,7 @@ from traits.testing.unittest_tools import unittest
 from ..confirmation_dialog import ConfirmationDialog
 from ..constant import YES, NO, OK, CANCEL
 from ..gui import GUI
+from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
@@ -66,10 +67,25 @@ class TestConfirmationDialog(unittest.TestCase):
         self.gui.process_events()
         self.dialog.destroy()
 
+    def test_create_cancel_renamed(self):
+        # test that creation and destruction works with cancel button
+        self.dialog.cancel = True
+        self.dialog.cancel_label = "Back"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
     def test_create_cancel_default(self):
         # test that creation and destruction works as expected with ok_label
         self.dialog.cancel = True
         self.dialog.default = CANCEL
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_image(self):
+        # test that creation and destruction works with a non-standard image
+        self.dialog.image = ImageResource('core')
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
@@ -132,6 +148,16 @@ class TestConfirmationDialog(unittest.TestCase):
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_cancel())
+        self.assertEqual(tester.result, CANCEL)
+        self.assertEqual(self.dialog.return_code, CANCEL)
+
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_cancel_renamed(self):
+        self.dialog.cancel = True
+        self.dialog.cancel_label = u"Back"
+        # test that Cancel works as expected
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Back"))
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 

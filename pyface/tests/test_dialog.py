@@ -158,11 +158,11 @@ class TestDialog(unittest.TestCase):
         self.assertEqual(result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
-    def test_resizable(self):
+    def test_not_resizable(self):
         # test that a resizable dialog can be created
         # XXX use nonmodal for better cross-platform coverage
         self.dialog.style = 'nonmodal'
-        self.dialog.resizable = True
+        self.dialog.resizable = False
         result = self.dialog.open()
         self.gui.process_events()
         self.dialog.close()
