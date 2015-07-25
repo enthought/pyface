@@ -6,6 +6,7 @@ from ..about_dialog import AboutDialog
 from ..constant import OK, CANCEL
 from ..gui import GUI
 from ..toolkit import toolkit_object
+from ..window import Window
 
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
@@ -49,5 +50,17 @@ class TestAboutDialog(unittest.TestCase):
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        self.assertEqual(tester.result, OK)
+        self.assertEqual(self.dialog.return_code, OK)
+
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_parent(self):
+        # test that lifecycle works with a parent
+        parent = Window()
+        self.dialog.parent = parent.control
+        parent.open()
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
+        parent.close()
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
