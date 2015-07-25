@@ -27,6 +27,7 @@ from traits.api import Tuple
 # Local imports.
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
+from system_metrics import SystemMetrics
 from widget import Widget
 
 
@@ -90,6 +91,26 @@ class Window(MWindow, Widget):
         wx.EVT_SIZE(self.control, self._wx_on_control_size)
         wx.EVT_MOVE(self.control, self._wx_on_control_move)
         wx.EVT_CHAR(self.control, self._wx_on_char)
+
+    ###########################################################################
+    # Protected 'IWidget' interface.
+    ###########################################################################
+
+    def _create_control(self, parent):
+        # create a basic window control
+
+        style = wx.DEFAULT_FRAME_STYLE \
+                | wx.FRAME_NO_WINDOW_MENU \
+                | wx.CLIP_CHILDREN
+
+        control = wx.Frame(
+            parent, -1, self.title, style=style, size=self.size,
+            pos=self.position
+        )
+
+        control.SetBackgroundColour(SystemMetrics().dialog_background_color)
+
+        return control
 
     ###########################################################################
     # Private interface.
