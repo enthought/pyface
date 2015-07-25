@@ -23,6 +23,10 @@ class TestDialog(unittest.TestCase):
         self.gui.process_events()
         self.dialog.destroy()
 
+    def test_destroy(self):
+        # test that destroy works even when no control
+        self.dialog.destroy()
+
     def test_size(self):
         # test that default size works as expected
         self.dialog.size = (100, 100)
