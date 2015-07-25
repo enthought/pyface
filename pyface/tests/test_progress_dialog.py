@@ -49,31 +49,42 @@ class TestDialog(unittest.TestCase):
         self.gui.process_events()
         self.dialog.destroy()
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_update(self):
-        # test that accept works as expected
-        def update(tester):
-            for i in range(101):
-                self.dialog.update(i)
-                self.gui.process_events()
-
         self.dialog.min = 0
         self.dialog.max = 100
-        tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_run(when_opened=update)
+        self.dialog.open()
+        for i in range(101):
+            result = self.dialog.update(i)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_cancel(self):
-        # test that accept works as expected
-        def update(tester):
-            for i in range(100):
-                self.dialog.update(i)
-                self.gui.process_events()
-            tester.click_cancel()
-
+    def test_incomplete_update(self):
         self.dialog.min = 0
         self.dialog.max = 100
         self.can_cancel = True
-        tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_run(when_opened=update)
-        # XXX no distinction between user close and update close
+        self.dialog.open()
+        for i in range(50):
+            result = self.dialog.update(i)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
+        self.dialog.close()
+
+    def test_change_message(self):
+        self.dialog.min = 0
+        self.dialog.max = 100
+        self.dialog.open()
+        for i in range(101):
+            self.dialog.change_message('Updating {}'.format(i))
+            result = self.dialog.update(i)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
+
+    def test_update_show_time(self):
+        self.dialog.min = 0
+        self.dialog.max = 100
+        self.show_time = True
+        self.dialog.open()
+        for i in range(101):
+            result = self.dialog.update(i)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
