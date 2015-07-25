@@ -17,6 +17,10 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.gui = GUI()
         self.window = Window()
 
+    def test_destroy(self):
+        # test that destroy works even when no control
+        self.window.destroy()
+
     def test_open_close(self):
         # test that openaing and closing works as expected
         with self.assertTraitChanges(self.window, 'opening', count=1):

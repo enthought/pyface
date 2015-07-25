@@ -60,6 +60,7 @@ class MessageDialog(MMessageDialog, Dialog):
     ###########################################################################
 
     def _create_control(self, parent):
+        # FIXME: should be possble to set ok_label, but not implemented
         message_box = QtGui.QMessageBox(_SEVERITY_TO_ICON_MAP[self.severity],
                 self.title, self.message, QtGui.QMessageBox.Ok, parent)
         message_box.setInformativeText(self.informative)
