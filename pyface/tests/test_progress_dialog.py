@@ -51,40 +51,74 @@ class TestDialog(unittest.TestCase):
 
     def test_update(self):
         self.dialog.min = 0
-        self.dialog.max = 100
+        self.dialog.max = 10
         self.dialog.open()
-        for i in range(101):
+        for i in range(11):
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
+        self.assertIsNone(self.dialog.control)
+
+    @unittest.skip("inconsistent implementations")
+    def test_update_no_control(self):
+        self.dialog.min = 0
+        self.dialog.max = 10
+        result = self.dialog.update(1)
+        self.assertEqual(result, (None, None))
 
     def test_incomplete_update(self):
         self.dialog.min = 0
-        self.dialog.max = 100
+        self.dialog.max = 10
         self.can_cancel = True
         self.dialog.open()
-        for i in range(50):
+        for i in range(5):
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
+        self.assertIsNotNone(self.dialog.control)
         self.dialog.close()
+        self.assertIsNone(self.dialog.control)
 
     def test_change_message(self):
         self.dialog.min = 0
-        self.dialog.max = 100
+        self.dialog.max = 10
         self.dialog.open()
-        for i in range(101):
+        for i in range(11):
             self.dialog.change_message('Updating {}'.format(i))
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
+        self.assertIsNone(self.dialog.control)
 
     def test_update_show_time(self):
         self.dialog.min = 0
-        self.dialog.max = 100
-        self.show_time = True
+        self.dialog.max = 10
+        self.dialog.show_time = True
         self.dialog.open()
-        for i in range(101):
+        for i in range(11):
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
+        self.assertIsNone(self.dialog.control)
+
+    def test_update_degenerate(self):
+        self.dialog.min = 0
+        self.dialog.max = 0
+        self.dialog.open()
+        for i in range(10):
+            result = self.dialog.update(i)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
+        self.dialog.close()
+        # XXX not really sure what correct behaviour is here
+
+    def test_update_negative(self):
+        self.dialog.min = 0
+        self.dialog.max = -10
+        self.dialog.open()
+        for i in range(11):
+            result = self.dialog.update(1)
+            self.gui.process_events()
+            self.assertEqual(result, (True, False))
+        self.dialog.close()
+        self.assertIsNone(self.dialog.control)
