@@ -34,3 +34,20 @@ class TestAboutDialog(unittest.TestCase):
         tester.open_and_run(when_opened=lambda x: self.dialog.close())
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
+
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_ok(self):
+        # test that OK works as expected if renames
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_wait(when_opened=lambda x: x.click_ok())
+        self.assertEqual(tester.result, OK)
+        self.assertEqual(self.dialog.return_code, OK)
+
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_renamed_ok(self):
+        self.dialog.ok_label = u"Sure"
+        # test that OK works as expected if renames
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        self.assertEqual(tester.result, OK)
+        self.assertEqual(self.dialog.return_code, OK)
