@@ -12,7 +12,7 @@ ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestDialog(unittest.TestCase):
+class TestFileDialog(unittest.TestCase):
 
     def setUp(self):
         self.gui = GUI()
