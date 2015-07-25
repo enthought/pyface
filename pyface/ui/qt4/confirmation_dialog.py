@@ -21,7 +21,7 @@ from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
 from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
-from dialog import Dialog
+from dialog import Dialog, _RESULT_MAP
 
 
 @provides(IConfirmationDialog)
