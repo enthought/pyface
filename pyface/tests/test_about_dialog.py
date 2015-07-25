@@ -18,6 +18,29 @@ class TestAboutDialog(unittest.TestCase):
         self.gui = GUI()
         self.dialog = AboutDialog()
 
+    def test_create(self):
+        # test that creation and destruction works as expected
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_create_parent(self):
+        # test that creation and destruction works as expected with a parent
+        parent = Window()
+        self.dialog.parent = parent.control
+        parent._create()
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+        parent.destroy()
+
+    def test_create_ok_renamed(self):
+        # test that creation and destruction works as expected with ok_label
+        self.dialog.ok_label = u"Sure"
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
         # test that accept works as expected
