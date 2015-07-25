@@ -12,7 +12,7 @@ ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestDialog(unittest.TestCase):
+class TestDirectoryDialog(unittest.TestCase):
 
     def setUp(self):
         self.gui = GUI()
@@ -41,15 +41,15 @@ class TestDialog(unittest.TestCase):
         self.gui.process_events()
         self.dialog.close()
 
-    def test_new_directory(self):
-        # test that open files action works
-        self.dialog.new_directory = True
+    def test_no_new_directory(self):
+        # test that block on new directories works
+        self.dialog.new_directory = False
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
 
     def test_message(self):
-        # test that open files action works
+        # test that message setting works
         self.dialog.message = 'Select a directory'
         self.dialog._create()
         self.gui.process_events()

@@ -183,6 +183,11 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return control
 
+    def destroy(self):
+        if self.control and AUI:
+            self._aui_manager.UnInit()
+        super(ApplicationWindow, self).destroy()
+
     ###########################################################################
     # Private interface.
     ###########################################################################
