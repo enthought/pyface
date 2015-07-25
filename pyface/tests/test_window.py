@@ -112,7 +112,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_confirm_no(self):
-        # test that yes works as expected
+        # test that no works as expected
         tester = ModalDialogTester(lambda: self.window.confirm("message"))
         tester.open_and_wait(when_opened=lambda x: x.click_no())
         self.gui.process_events()
@@ -120,7 +120,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_confirm_cancel(self):
-        # test that yes works as expected
+        # test that cncel works as expected
         tester = ModalDialogTester(
             lambda: self.window.confirm("message", cancel=True))
         tester.open_and_wait(when_opened=lambda x: x.click_cancel())
@@ -129,42 +129,42 @@ class TestWindow(unittest.TestCase, UnittestTools):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_information_accept(self):
-        # test that cancel works as expected
+        # test that information works as expected
         tester = ModalDialogTester(lambda: self.window.information("message"))
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertIsNone(tester.result)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_information_ok(self):
-        # test that cancel works as expected
+        # test that information works as expected
         tester = ModalDialogTester(lambda: self.window.information("message"))
         tester.open_and_wait(when_opened=lambda x: x.click_ok())
         self.assertIsNone(tester.result)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_warning_accept(self):
-        # test that cancel works as expected
+        # test that warning works as expected
         tester = ModalDialogTester(lambda: self.window.warning("message"))
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertIsNone(tester.result)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_warning_ok(self):
-        # test that cancel works as expected
+        # test that warning works as expected
         tester = ModalDialogTester(lambda: self.window.warning("message"))
         tester.open_and_wait(when_opened=lambda x: x.click_ok())
         self.assertIsNone(tester.result)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_error_accept(self):
-        # test that cancel works as expected
+        # test that error works as expected
         tester = ModalDialogTester(lambda: self.window.error("message"))
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertIsNone(tester.result)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_error_ok(self):
-        # test that cancel works as expected
+        # test that error works as expected
         tester = ModalDialogTester(lambda: self.window.error("message"))
         tester.open_and_wait(when_opened=lambda x: x.click_ok())
         self.assertIsNone(tester.result)
