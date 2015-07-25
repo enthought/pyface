@@ -41,13 +41,14 @@ class TestClipboard(unittest.TestCase):
         self.assertFalse(self.clipboard.has_file_data)
         self.assertFalse(self.clipboard.has_object_data)
 
+    unittest.skip('backends not consistent')
     def test_set_file_data(self):
-        self.clipboard.data = ['images']
+        self.clipboard.data = ['file:///images']
         self.assertTrue(self.clipboard.has_data)
         self.assertEquals(self.clipboard.data_type, 'file')
-        self.assertEquals(self.clipboard.data, ['images'])
+        self.assertEquals(self.clipboard.data, ['/images'])
         self.assertTrue(self.clipboard.has_file_data)
-        self.assertEquals(self.clipboard.file_data, ['images'])
+        self.assertEquals(self.clipboard.file_data, ['/images'])
         self.assertFalse(self.clipboard.has_text_data)
         self.assertFalse(self.clipboard.has_object_data)
 
