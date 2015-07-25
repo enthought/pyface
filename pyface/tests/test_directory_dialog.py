@@ -4,7 +4,7 @@ import os
 
 from traits.testing.unittest_tools import unittest
 
-from ..file_dialog import FileDialog
+from ..directory_dialog import DirectoryDialog
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
@@ -16,16 +16,7 @@ class TestDialog(unittest.TestCase):
 
     def setUp(self):
         self.gui = GUI()
-        self.dialog = FileDialog()
-
-    def test_create_wildcard(self):
-        wildcard = FileDialog.create_wildcard('Python', '*.py')
-        self.assertTrue(len(wildcard) != 0)
-
-    def test_create_wildcard_multiple(self):
-        wildcard = FileDialog.create_wildcard(
-            'Python', ['*.py', '*.pyo', '*.pyc', '*.pyd'])
-        self.assertTrue(len(wildcard) != 0)
+        self.dialog = DirectoryDialog()
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -50,24 +41,16 @@ class TestDialog(unittest.TestCase):
         self.gui.process_events()
         self.dialog.close()
 
-    def test_default_dir_and_file(self):
-        # test that default dir and path works
-        self.dialog.default_directory = 'images'
-        self.dialog.default_filename = 'core.png'
+    def test_new_directory(self):
+        # test that open files action works
+        self.dialog.new_directory = True
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
 
-    def test_open_files(self):
+    def test_message(self):
         # test that open files action works
-        self.dialog.action = 'open files'
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.close()
-
-    def test_save_as(self):
-        # test that open files action works
-        self.dialog.action = 'save as'
+        self.dialog.message = 'Select a directory'
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
