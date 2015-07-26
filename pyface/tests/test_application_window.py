@@ -4,16 +4,11 @@ from traits.testing.unittest_tools import unittest, UnittestTools
 
 from ..action.api import Action, MenuManager, MenuBarManager, StatusBarManager, ToolBarManager
 from ..application_window import ApplicationWindow
-from ..constant import CANCEL, NO, OK, YES
 from ..gui import GUI
 from ..image_resource import ImageResource
-from ..toolkit import toolkit_object
-
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestWindow(unittest.TestCase, UnittestTools):
+class TestApplicationWindow(unittest.TestCase, UnittestTools):
 
     def setUp(self):
         self.gui = GUI()
@@ -24,7 +19,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.window.destroy()
 
     def test_open_close(self):
-        # test that openaing and closing works as expected
+        # test that opening and closing works as expected
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
@@ -35,7 +30,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
 
     def test_show(self):
-        # test that opening and closing works as expected
+        # test that show and hide works as expected
         self.window._create()
         self.window.show(True)
         self.gui.process_events()
