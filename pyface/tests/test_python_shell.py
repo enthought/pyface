@@ -51,7 +51,7 @@ class TestPythonShell(unittest.TestCase, UnittestTools):
         self.widget.destroy()
         self.gui.process_events()
 
-    def test_execute_command_hidden(self):
+    def test_execute_command_not_hidden(self):
         # test that executing a non-hidden command works
         self.widget = PythonShell(self.window.control)
         self.gui.process_events()
@@ -68,6 +68,18 @@ class TestPythonShell(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         with self.assertTraitChanges(self.widget, 'command_executed', count=1):
             self.widget.execute_file(PYTHON_SCRIPT)
+            self.gui.process_events()
+        self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
+        self.assertEqual(self.widget.interpreter().locals.get('sys'), sys)
+        self.widget.destroy()
+        self.gui.process_events()
+
+    def test_execute_file_not_hidden(self):
+        # test that executing a file works
+        self.widget = PythonShell(self.window.control)
+        self.gui.process_events()
+        with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+            self.widget.execute_file(PYTHON_SCRIPT, hidden=False)
             self.gui.process_events()
         self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
         self.assertEqual(self.widget.interpreter().locals.get('sys'), sys)
