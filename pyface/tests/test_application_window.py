@@ -2,10 +2,12 @@ from __future__ import absolute_import
 
 from traits.testing.unittest_tools import unittest, UnittestTools
 
+from ..action.api import Action, MenuManager, MenuBarManager, StatusBarManager, ToolBarManager
+from ..application_window import ApplicationWindow
 from ..constant import CANCEL, NO, OK, YES
 from ..gui import GUI
+from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
-from ..application_window import ApplicationWindow
 
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
@@ -16,7 +18,6 @@ class TestWindow(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.gui = GUI()
         self.window = ApplicationWindow()
-
 
     def test_destroy(self):
         # test that destroy works even when no control
@@ -34,7 +35,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
 
     def test_show(self):
-        # test that openaing and closing works as expected
+        # test that opening and closing works as expected
         self.window._create()
         self.window.show(True)
         self.gui.process_events()
@@ -94,3 +95,60 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.window.title = "Test Title"
         self.gui.process_events()
         self.window.close()
+
+    def test_menubar(self):
+        # test that menubar gets created as expected
+        self.window.menu_bar_manager = MenuBarManager(
+            MenuManager(
+                Action(name="New"),
+                Action(name="Open"),
+                Action(name="Save"),
+                Action(name="Close"),
+                Action(name="Quit"),
+                name='File',
+            )
+        )
+        self.window._create()
+        self.window.show(True)
+        self.gui.process_events()
+        self.window.show(False)
+        self.gui.process_events()
+        self.window.destroy()
+
+    def test_toolbar(self):
+        # test that toolbar gets created as expected
+        self.window.tool_bar_manager = ToolBarManager(
+            Action(name="New", image=ImageResource('core')),
+            Action(name="Open", image=ImageResource('core')),
+            Action(name="Save", image=ImageResource('core')),
+            Action(name="Close", image=ImageResource('core')),
+            Action(name="Quit", image=ImageResource('core')),
+        )
+        self.window._create()
+        self.window.show(True)
+        self.gui.process_events()
+        self.window.show(False)
+        self.gui.process_events()
+        self.window.destroy()
+
+    def test_statusbar(self):
+        # test that status bar gets created as expected
+        self.window.status_bar_manager = StatusBarManager(
+            message="hello world",
+        )
+        self.window._create()
+        self.window.show(True)
+        self.gui.process_events()
+        self.window.show(False)
+        self.gui.process_events()
+        self.window.destroy()
+
+    def test_icon(self):
+        # test that status bar gets created as expected
+        self.window.icon = ImageResource('core')
+        self.window._create()
+        self.window.show(True)
+        self.gui.process_events()
+        self.window.show(False)
+        self.gui.process_events()
+        self.window.destroy()
