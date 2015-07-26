@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import unittest
 
 from ..gui import GUI
 from ..heading_text import HeadingText
