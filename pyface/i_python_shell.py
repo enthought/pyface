@@ -80,7 +80,6 @@ class MPythonShell(object):
     def _on_command_executed(self):
         """ Called when a command has been executed in the shell. """
 
-        print 'here'
         self.command_executed = self
 
 #### EOF ######################################################################
