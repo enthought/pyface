@@ -22,7 +22,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.window.destroy()
 
     def test_open_close(self):
-        # test that openaing and closing works as expected
+        # test that opening and closing works as expected
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
@@ -33,7 +33,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
 
     def test_show(self):
-        # test that openaing and closing works as expected
+        # test that showing works as expected
         self.window._create()
         self.window.show(True)
         self.gui.process_events()
