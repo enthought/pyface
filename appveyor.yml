@@ -20,4 +20,4 @@ install:
   - ps: pip --version
   - cmd /v:on /e:on /c ".\appveyor-install.cmd"
 test_script:
-  - ps: pip --version
+  - echo 'DONE'
