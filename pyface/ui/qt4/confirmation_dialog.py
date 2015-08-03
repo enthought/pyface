@@ -21,7 +21,7 @@ from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
 from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
-from dialog import Dialog
+from dialog import Dialog, _RESULT_MAP
 
 
 @provides(IConfirmationDialog)
@@ -118,6 +118,12 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.ApplicationModal)
         retval = self.control.exec_()
+        if self.control is None:
+            # dialog window closed
+            if self.cancel:
+                # if cancel is available, close is Cancel
+                return CANCEL
+            return self.default
         clicked_button = self.control.clickedButton()
         if clicked_button in self._button_result_map:
             retval = self._button_result_map[clicked_button]

@@ -73,7 +73,7 @@ class ActionItem(ActionManagerItem):
         self.action.enabled = new
 
     def _visible_changed(self, trait_name, old, new):
-        self.action.visible = True
+        self.action.visible = new
 
     @on_trait_change('_wrappers.control')
     def _on_destroy(self, object, name, old, new):
