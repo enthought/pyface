@@ -2,8 +2,6 @@ from __future__ import absolute_import
 
 from traits.testing.unittest_tools import UnittestTools, unittest
 
-from ...image_cache import ImageCache
-from ...window import Window
 from ..action import Action
 from ..action_item import ActionItem
 from ..group import Group
