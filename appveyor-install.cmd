@@ -2,6 +2,8 @@
 call setenv /x64
 
 rem install python packages
+pip install --cache-dir c:/temp nose
+pip install --cache-dir c:/temp nose-exclude
 pip install --cache-dir c:/temp pyside
 pip install --cache-dir c:/temp pygments
 pip install --cache-dir c:/temp traits
