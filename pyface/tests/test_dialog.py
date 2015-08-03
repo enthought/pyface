@@ -91,7 +91,7 @@ class TestDialog(unittest.TestCase):
     def test_ok(self):
         # test that OK works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_ok())
+        tester.open_and_wait(when_opened=lambda x: x.click_button(OK))
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
@@ -99,7 +99,7 @@ class TestDialog(unittest.TestCase):
     def test_cancel(self):
         # test that cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_run(when_opened=lambda x: x.click_cancel())
+        tester.open_and_run(when_opened=lambda x: x.click_button(CANCEL))
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
