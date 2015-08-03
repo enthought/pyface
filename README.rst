@@ -14,6 +14,9 @@ The following GUI backends are supported:
 - PyQt
 - PySide
 
+**Warning:** In Pyface version 5.0 the default GUI backend will change from
+``wx`` to ``qt4``.
+
 Documentation
 -------------
 
