@@ -63,7 +63,8 @@ class TestWindow(unittest.TestCase, UnittestTools):
 
     def test_text_changed(self):
         # test that images work
-        # XXX this throws a silent exception on wx
+        # XXX this throws a non-failing exception on wx
+        #     - probably the way the test is written.
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
