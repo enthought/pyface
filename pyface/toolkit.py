@@ -39,8 +39,8 @@ def _init_toolkit():
     else:
         # Toolkits to check for if none is explicitly specified.
         import warnings
-        warnings.warn(DeprecationWarning(
-            "Default toolkit will change to 'qt4' in PyFace 5.0"))
+        warnings.warn("Default toolkit will change to 'qt4' in PyFace 5.0",
+                      DeprecationWarning)
 
         known_toolkits = ('wx', 'qt4', 'null')
 
