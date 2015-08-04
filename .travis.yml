@@ -13,7 +13,7 @@ addons:
     - ccache
 env:
   - ETS_TOOLKIT=qt4 EXCLUDE=wx
-  - ETS_TOOLKIT=wx EXCLUDE=qt
+  - ETS_TOOLKIT=wx EXCLUDE=qt4
 cache:
   directories:
     - $HOME/.cache/pip
