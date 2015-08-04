@@ -19,7 +19,7 @@ init:
   - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + "C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin;" + $Env:path
 install:
   - ps: if ((Test-Path "c:/temp") -eq 0) { mkdir c:/temp }
-  - ps: if ($Env:ets_toolkit -eq 'qt4') {(new-object net.webclient).DownloadFile($wxpythonurl, 'wxPython.exe')}
+  - ps: if ($Env:ets_toolkit -eq 'wx') {(new-object net.webclient).DownloadFile($Env:wxpythonurl, 'wxPython.exe')}
   - ps: (new-object net.webclient).DownloadFile('https://raw.github.com/pypa/pip/master/contrib/get-pip.py', 'c:/get-pip.py')
   - ps: python c:/get-pip.py
   - ps: pip --version
