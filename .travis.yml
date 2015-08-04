@@ -36,6 +36,7 @@ install:
   - pip install coverage
   - pip install codecov
   - python setup.py develop
-  - coverage run -m nose.core -v --exclude-dir=pyface/ui/${EXCLUDE}
+  - coverage run -m nose.core -v --exclude-dir=pyface/ui/${EXCLUDE} --exclude="enaml"
+  - if [[ ${ETS_TOOLKIT} == "qt4" ]]; then coverage run -a -m nose.core -v pyface/tasks/tests/*enaml*; fi
 after_success:
   - codecov
