@@ -6,11 +6,7 @@ environment:
     distutils_use_sdk: 1
     sdkver: "C:/Program Files/Microsoft SDKs/Windows/v7.0/Setup/WindowsSdkVer.exe"
     python: "C:/Python27-x64"
-    wxpythonurl : "http://downloads.sourceforge.net/project/wxpython/wxPython/2.8.12.1/wxPython2.8-win64-unicode-2.8.12.1-py27.exe"
-
-  matrix:
-  - ETS_TOOLKIT: "qt4"
-  - ETS_TOOLKIT: "wx"
+    ets_toolkit: "qt4"
 
 cache:
   - c:\temp
@@ -19,7 +15,6 @@ init:
   - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + "C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin;" + $Env:path
 install:
   - ps: if ((Test-Path "c:/temp") -eq 0) { mkdir c:/temp }
-  - ps: if ($Env:ets_toolkit -eq 'wx') {(new-object net.webclient).DownloadFile($Env:wxpythonurl, 'wxPython.exe')}
   - ps: (new-object net.webclient).DownloadFile('https://raw.github.com/pypa/pip/master/contrib/get-pip.py', 'c:/get-pip.py')
   - ps: python c:/get-pip.py
   - ps: pip --version

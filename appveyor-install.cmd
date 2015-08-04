@@ -5,10 +5,7 @@ rem install python packages
 pip install --cache-dir c:/temp nose
 pip install --cache-dir c:/temp nose-exclude
 pip install --cache-dir c:/temp mock
-if %ETS_TOOLKIT%==qt4 (
-   pip install --cache-dir c:/temp pyside
-) else (
-   wxPython.exe /sp- /verysilent /norestart /SUPPRESSMSGBOXES)
+pip install --cache-dir c:/temp pyside
 pip install --cache-dir c:/temp pygments
 pip install --cache-dir c:/temp traits
 pip install --cache-dir c:/temp traitsui
