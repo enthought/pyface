@@ -7,12 +7,15 @@ environment:
     sdkver: "C:/Program Files/Microsoft SDKs/Windows/v7.0/Setup/WindowsSdkVer.exe"
     python: "C:/Python27-x64"
 
+  matrix:
+  - ETS_TOOLKIT: "qt4"
+  - ETS_TOOLKIT: "wx"
+
 cache:
   - c:\temp
 
 init:
   - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + "C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin;" + $Env:path
-  - ps: $env:ETS_TOOLKIT="qt4"
 install:
   - ps: if ((Test-Path "c:/temp") -eq 0) { mkdir c:/temp }
   - ps: (new-object net.webclient).DownloadFile('https://raw.github.com/pypa/pip/master/contrib/get-pip.py', 'c:/get-pip.py')
