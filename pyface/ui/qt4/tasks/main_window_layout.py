@@ -282,16 +282,17 @@ class MainWindowLayout(HasTraits):
     def _reset_fixed_sizes(self):
         """ Clears any fixed sizes assined to QDockWidgets.
         """
+        if self.control is None:
+            return
         QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
-        if self.control is not None:
-            for child in self.control.children():
-                if isinstance(child, QtGui.QDockWidget):
-                    child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                    child.widget().setMinimumSize(0, 0)
-                    # QDockWidget somehow manages to set its own
-                    # min/max sizes and hence that too needs to be reset.
-                    child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                    child.setMinimumSize(0, 0)
+        for child in self.control.children():
+            if isinstance(child, QtGui.QDockWidget):
+                child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
+                child.widget().setMinimumSize(0, 0)
+                # QDockWidget somehow manages to set its own
+                # min/max sizes and hence that too needs to be reset.
+                child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
+                child.setMinimumSize(0, 0)
 
 
 
