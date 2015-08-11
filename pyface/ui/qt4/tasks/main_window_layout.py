@@ -76,7 +76,7 @@ class MainWindowLayout(HasTraits):
         # Build the layout tree bottom-up, in multiple passes.
         while len(items) > 1:
             add, remove = set(), set()
-            
+
             for item1, item2 in combinations(items, 2):
                 if item1 not in remove and item2 not in remove:
                     rect1, rect2 = rects[item1], rects[item2]
@@ -96,7 +96,7 @@ class MainWindowLayout(HasTraits):
                     rects[item] = rect1.united(rect2)
                     add.add(item)
                     remove.update((item1, item2))
-                    
+
             if add or remove:
                 items.update(add)
                 items.difference_update(remove)
@@ -144,7 +144,7 @@ class MainWindowLayout(HasTraits):
                 if widget:
                     self.control.addDockWidget(q_dock_area, widget)
                     widget.show()
-        
+
         elif isinstance(layout, Tabbed):
             active_widget = first_widget = None
             for item in layout.items:
@@ -189,7 +189,7 @@ class MainWindowLayout(HasTraits):
             for i, item in enumerate(layout.items):
                 self.set_layout_for_area(item, q_dock_area,
                     _toplevel_added=True, _toplevel_call=False)
-                
+
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
 
@@ -226,15 +226,15 @@ class MainWindowLayout(HasTraits):
             sep = self.control.style().pixelMetric(
                 QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self.control)
             united.adjust(0, 0, -sep, -sep)
-            
+
         if one.x() == two.x() and one.width() == two.width() and \
                united.height() == one.height() + two.height():
             return QtCore.Qt.Horizontal
-        
+
         elif one.y() == two.y() and one.height() == two.height() and \
                  united.width() == one.width() + two.width():
             return QtCore.Qt.Vertical
-        
+
         return 0
 
     def _get_tab_bar(self, dock_widget):
@@ -272,10 +272,10 @@ class MainWindowLayout(HasTraits):
                 if layout.height > 0:
                     dock_widget.widget().setFixedHeight(layout.height)
             return dock_widget
-        
+
         elif isinstance(layout, LayoutContainer):
             return self._prepare_toplevel_for_item(layout.items[0])
-        
+
         else:
             raise MainWindowLayoutError("Leaves of layout must be PaneItems")
 
@@ -283,14 +283,15 @@ class MainWindowLayout(HasTraits):
         """ Clears any fixed sizes assined to QDockWidgets.
         """
         QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
-        for child in self.control.children():
-            if isinstance(child, QtGui.QDockWidget):
-                child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                child.widget().setMinimumSize(0, 0)
-                # QDockWidget somehow manages to set its own
-                # min/max sizes and hence that too needs to be reset.
-                child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                child.setMinimumSize(0, 0)
+        if self.control is not None:
+            for child in self.control.children():
+                if isinstance(child, QtGui.QDockWidget):
+                    child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
+                    child.widget().setMinimumSize(0, 0)
+                    # QDockWidget somehow manages to set its own
+                    # min/max sizes and hence that too needs to be reset.
+                    child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
+                    child.setMinimumSize(0, 0)
 
 
 
