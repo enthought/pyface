@@ -122,10 +122,10 @@ class PythonShell(MPythonShell, Widget):
 class PythonWidget(HistoryConsoleWidget):
     """ A basic in-process Python interpreter.
     """
-    
+
     # Emitted when a command has been executed in the interpeter.
     executed = QtCore.Signal()
-    
+
     #--------------------------------------------------------------------------
     # 'object' interface
     #--------------------------------------------------------------------------
@@ -329,12 +329,12 @@ class PythonWidget(HistoryConsoleWidget):
         """ Attempts to execute file with 'path'. If 'hidden', no output is
             shown.
         """
-        self.execute('execfile("%s")' % path, hidden=hidden)
+        self.execute('execfile(%s)' % repr(path), hidden=hidden)
 
     def reset(self):
         """ Resets the widget to its initial state. Similar to ``clear``, but
             also re-writes the banner.
-        """ 
+        """
         self._reading = False
         self._highlighter.highlighting_on = False
 
@@ -385,7 +385,7 @@ class PythonWidget(HistoryConsoleWidget):
                     cursor.movePosition(QtGui.QTextCursor.Left,
                                         n=len(context[-1]))
                     self._complete_with_items(cursor, completions)
-    
+
     def _get_banner(self):
         """ Gets a banner to display at the beginning of a session.
         """
@@ -399,7 +399,7 @@ class PythonWidget(HistoryConsoleWidget):
         """
         if cursor is None:
             cursor = self._get_cursor()
-        cursor.movePosition(QtGui.QTextCursor.StartOfBlock, 
+        cursor.movePosition(QtGui.QTextCursor.StartOfBlock,
                             QtGui.QTextCursor.KeepAnchor)
         text = cursor.selection().toPlainText()
         return self._completion_lexer.get_context(text)
@@ -542,11 +542,11 @@ class PyfacePythonWidget(PythonWidget):
 
         mods = event.modifiers()
         self._pyface_widget.key_pressed = KeyPressedEvent(
-            alt_down     = ((mods & QtCore.Qt.AltModifier) == 
+            alt_down     = ((mods & QtCore.Qt.AltModifier) ==
                             QtCore.Qt.AltModifier),
-            control_down = ((mods & QtCore.Qt.ControlModifier) == 
+            control_down = ((mods & QtCore.Qt.ControlModifier) ==
                             QtCore.Qt.ControlModifier),
-            shift_down   = ((mods & QtCore.Qt.ShiftModifier) == 
+            shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
                             QtCore.Qt.ShiftModifier),
             key_code     = kcode,
             event        = event)

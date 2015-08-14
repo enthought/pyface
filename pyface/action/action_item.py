@@ -81,7 +81,7 @@ class ActionItem(ActionManagerItem):
     def _visible_changed(self, trait_name, old, new):
         """ Static trait change handler. """
 
-        self.action.visible = True
+        self.action.visible = new
 
         return
 

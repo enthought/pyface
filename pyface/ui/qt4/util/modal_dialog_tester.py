@@ -7,12 +7,20 @@ import contextlib
 import sys
 import traceback
 
-from pyface.api import GUI
+from pyface.api import GUI, OK, CANCEL, YES, NO
 from pyface.qt import QtCore, QtGui
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
 from .gui_test_assistant import find_qt_widget
+
+
+BUTTON_TEXT = {
+    OK: 'OK',
+    CANCEL: 'Cancel',
+    YES: '&Yes',
+    NO: '&No',
+}
 
 
 class ModalDialogTester(object):
@@ -246,6 +254,10 @@ class ModalDialogTester(object):
             test=lambda widget: widget.text() == text
         )
         widget.click()
+
+    def click_button(self, button_id):
+        text = BUTTON_TEXT[button_id]
+        self.click_widget(text)
 
     def value_assigned(self):
         """ A value was assigned to the result attribute.
