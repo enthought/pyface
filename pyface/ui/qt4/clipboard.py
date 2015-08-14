@@ -79,7 +79,7 @@ class Clipboard(BaseClipboard):
     #---------------------------------------------------------------------------
 
     def _get_text_data(self):
-        return str(cb.text())
+        return cb.text()
 
     def _set_text_data(self, data):
         cb.setText(data)
