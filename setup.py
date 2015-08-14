@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 MAJOR = 4
 MINOR = 5
-MICRO = 2
+MICRO = 3
 
 IS_RELEASED = False
 

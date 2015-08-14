@@ -1,12 +1,42 @@
 Pyface Changelog
 ================
 
+Release 4.5.2
+———————————
+
+This release includes a large number of additions to the test suite that
+provide at least basic smoke-test coverage of the core of the library.  There
+has also been work done to improve the continuous integration testing of
+the library.  Much more work needs to be done on this front, but the situation
+is improving.
+
+The process of adding these tests also discovered a number of minor bugs
+which have been fixed.
+
+Finally, this release warns that as of Pyface 5.0 the default GUI toolkit
+will switch from Wx to Qt.  This future update will change the behaviour of
+the library in the case where both WxPython and PyQt/PySide are installed and
+the user or code doesn't specify the toolkit to use explicitly.
+
 Change summary since 4.5.1
 --------------------------
 
+Enhancements
+
+* Added many tests, increasing test coverage by about 10% (PR#147)
+* Add continuous integration support for Windows and Qt via Appveyor (PR #154)
+* Use Travis CI's container infrastructure (PR #153)
+
 Fixes
 
-* improve error handling in toolkit imports; fix some import errors which
+* Stop TaskWindow layout running after window control destroyed (PR#156).
+* Fix file execution for PythonShell on Windows with Qt backend (PR#147).
+* Fix Group objects setting wrong trait when naming new Actions (PR#147).
+* Fix ActionItem change handler for `visible` trait (PR#147).
+* Fix failure to release application window from AUIManager in Wx (PR#147).
+* Fix missing import for qt4 confirmation dialog (PR#147).
+* Deprecate Wx as the default toolkit choice for Pyface (PR#150).
+* Improve error handling in toolkit imports; fix some import errors which
   made the Qt PythonEditor unavailable; and make pygments a formal requirement
   rather than implicit (PR#144).
 
