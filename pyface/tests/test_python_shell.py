@@ -10,7 +10,8 @@ from ..python_shell import PythonShell
 from ..window import Window
 
 
-PYTHON_SCRIPT = os.path.join(os.path.dirname(__file__), 'python_shell_script.py')
+PYTHON_SCRIPT = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                'python_shell_script.py'))
 
 
 class TestPythonShell(unittest.TestCase, UnittestTools):

@@ -38,6 +38,10 @@ def _init_toolkit():
         be = import_toolkit(ETSConfig.toolkit)
     else:
         # Toolkits to check for if none is explicitly specified.
+        import warnings
+        warnings.warn("Default toolkit will change to 'qt4' in PyFace 5.0",
+                      DeprecationWarning)
+
         known_toolkits = ('wx', 'qt4', 'null')
 
         for tk in known_toolkits:
