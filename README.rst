@@ -14,6 +14,9 @@ The following GUI backends are supported:
 - PyQt
 - PySide
 
+**Warning:** In Pyface version 5.0 the default GUI backend will change from
+``wx`` to ``qt4``.
+
 Documentation
 -------------
 
@@ -29,6 +32,8 @@ Pyface depends on:
 * a GUI toolkit: one of PySide, PyQt or WxPython
 
 * `Traits <https://github.com/enthought/traits>`_
+
+* Pygments for syntax highlighting in the Qt code editor widget.
 
 * some widgets may have additional optional dependencies.  For example, the
   IPython shell widgets require IPython to be installed.

@@ -38,6 +38,10 @@ def _init_toolkit():
         be = import_toolkit(ETSConfig.toolkit)
     else:
         # Toolkits to check for if none is explicitly specified.
+        import warnings
+        warnings.warn("Default toolkit will change to 'qt4' in PyFace 5.0",
+                      DeprecationWarning)
+
         known_toolkits = ('wx', 'qt4', 'null')
 
         for tk in known_toolkits:
@@ -100,7 +104,11 @@ def toolkit_object(name):
             be_obj = getattr(sys.modules[be_mname], oname)
         except AttributeError:
             pass
-    except ImportError, e:
+    except ImportError as exc:
+        # is the error while trying to import be_mname or not?
+        if not exc.message.endswith(mname):
+            # something else went wrong - let the exception be raised
+            raise
 
         # Ignore *ANY* errors unless a debug ENV variable is set.
         if 'ETS_DEBUG' in os.environ:

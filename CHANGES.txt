@@ -1,6 +1,19 @@
 Pyface Changelog
 ================
 
+Change summary since 4.5.1
+--------------------------
+
+Fixes
+
+* improve error handling in toolkit imports; fix some import errors which
+  made the Qt PythonEditor unavailable; and make pygments a formal requirement
+  rather than implicit (PR#144).
+
+
+Release 4.5.1
+-------------
+
 Change summary since 4.5.0
 --------------------------
 
@@ -10,6 +23,9 @@ Fixes
 * Fix incompatibility with Pygments 2.x, which was causing tracebacks
   during syntax highlighting (PR#136).
 
+
+Release 4.5.0
+-------------
 
 Change summary since 4.4.0
 --------------------------
