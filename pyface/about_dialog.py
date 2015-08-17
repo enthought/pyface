@@ -13,10 +13,9 @@
 #------------------------------------------------------------------------------
 """ The implementation of a simple 'About' dialog. """
 
-
-# Import the toolkit specific version.
 from __future__ import absolute_import
 
+# Import the toolkit specific version.
 from .toolkit import toolkit_object
 AboutDialog = toolkit_object('about_dialog:AboutDialog')
 
