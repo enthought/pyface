@@ -1,9 +1,15 @@
 import unittest
 
-from pyface.ui.wx.grid.api \
-     import CompositeGridModel, GridRow, GridColumn, SimpleGridModel
+try:
+    from pyface.ui.wx.grid.api \
+        import CompositeGridModel, GridRow, GridColumn, SimpleGridModel
+except ImportError:
+    wx_available = False
+else:
+    wx_available = True
 
 
+@unittest.skipUnless(wx_available, "Wx is not available")
 class CompositeGridModelTestCase( unittest.TestCase ):
 
     def setUp(self):

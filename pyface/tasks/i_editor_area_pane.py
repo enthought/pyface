@@ -49,7 +49,7 @@ class IEditorAreaPane(ITaskPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        
+
     def add_editor(self, editor):
         """ Adds an editor to the pane.
         """
@@ -160,7 +160,7 @@ class MEditorAreaPane(HasTraits):
         else:
             self.add_editor(editor)
             self.activate_editor(editor)
-            
+
         return editor
 
     def get_editor(self, obj):
@@ -175,10 +175,10 @@ class MEditorAreaPane(HasTraits):
         """ Returns an editor factory suitable for editing an object.
         """
         for factory, filters in self._factory_map.iteritems():
-            for filter in filters:
+            for filter_ in filters:
                 # FIXME: We should swallow exceptions, but silently?
                 try:
-                    if filter(obj):
+                    if filter_(obj):
                         return factory
                 except:
                     pass
