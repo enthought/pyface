@@ -15,7 +15,7 @@
 
 
 # Local imports.
-from tree_content_provider import TreeContentProvider
+from .tree_content_provider import TreeContentProvider
 
 
 class DefaultTreeContentProvider(TreeContentProvider):

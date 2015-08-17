@@ -39,8 +39,8 @@ from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
 
 # Local imports.
-from window import Window
-from system_metrics import SystemMetrics
+from .window import Window
+from .system_metrics import SystemMetrics
 
 
 @provides(IApplicationWindow)

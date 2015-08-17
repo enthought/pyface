@@ -3,7 +3,7 @@ from pyface.tasks.api import Editor, Task, TaskPane
 from traits.api import Bool, Instance, Property, Str, cached_property
 
 # Local imports.
-from listening_action import ListeningAction
+from pyface.tasks.action.listening_action import ListeningAction
 
 
 class TaskAction(ListeningAction):
@@ -21,7 +21,7 @@ class TaskAction(ListeningAction):
 
     # The Task with which the action is associated. Set by the framework.
     task = Instance(Task)
-    
+
     ###########################################################################
     # Protected interface.
     ###########################################################################
@@ -38,7 +38,7 @@ class TaskAction(ListeningAction):
 class TaskWindowAction(TaskAction):
     """ An Action that makes a callback to a Task's window.
     """
-    
+
     #### ListeningAction interface ############################################
 
     object = Property(depends_on='task.window')
@@ -51,7 +51,7 @@ class TaskWindowAction(TaskAction):
         if self.task:
             return self.task.window
         return None
-    
+
 
 class CentralPaneAction(TaskAction):
     """ An Action that makes a callback to a Task's central pane.
@@ -113,7 +113,7 @@ class DockPaneAction(TaskAction):
 class EditorAction(CentralPaneAction):
     """ An action that makes a callback to the active editor in an editor pane.
     """
-    
+
     #### ListeningAction interface ############################################
 
     object = Property(depends_on='active_editor')
@@ -121,7 +121,7 @@ class EditorAction(CentralPaneAction):
     #### EditorAction interface ###############################################
 
     # The active editor in the central pane with which the action is associated.
-    active_editor = Property(Instance(Editor), 
+    active_editor = Property(Instance(Editor),
                              depends_on='central_pane.active_editor')
 
     ###########################################################################

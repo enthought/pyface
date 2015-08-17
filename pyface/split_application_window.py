@@ -15,8 +15,8 @@
 
 
 # Local imports.
-from application_window import ApplicationWindow
-from split_widget import SplitWidget
+from pyface.application_window import ApplicationWindow
+from pyface.split_widget import SplitWidget
 
 
 class SplitApplicationWindow(ApplicationWindow, SplitWidget):

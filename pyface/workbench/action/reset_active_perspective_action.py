@@ -5,7 +5,7 @@
 from pyface.api import YES
 
 # Local imports.
-from workbench_action import WorkbenchAction
+from .workbench_action import WorkbenchAction
 
 
 # The message used when confirming the action.

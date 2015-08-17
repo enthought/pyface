@@ -5,7 +5,7 @@
 from traits.api import Enum, Float, HasTraits, provides, Str
 
 # Local imports.
-from i_perspective_item import IPerspectiveItem
+from .i_perspective_item import IPerspectiveItem
 
 
 @provides(IPerspectiveItem)

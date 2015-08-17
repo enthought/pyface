@@ -9,8 +9,8 @@ from traits.api import HasTraits, Instance
 # Local imports.
 from pyface.tasks.task import Task
 from pyface.tasks.topological_sort import before_after_sort
-from schema import Schema, ToolBarSchema
-from schema_addition import SchemaAddition
+from pyface.tasks.action.schema import Schema, ToolBarSchema
+from pyface.tasks.action.schema_addition import SchemaAddition
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -247,7 +247,7 @@ class TaskActionManagerBuilder(HasTraits):
                 # controller so that custom Groups, MenuManagers, etc. can get
                 # access to their Tasks.
                 item.controller = self.controller
-            
+
             children.append(item)
 
         # Finally, create the pyface.action instance for this schema.

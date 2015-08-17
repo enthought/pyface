@@ -24,9 +24,9 @@ import time
 from traits.api import Bool, Enum, Instance, Int, Property, provides, Str
 
 # Local imports
-from widget import Widget
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
-from window import Window
+from .widget import Widget
+from .window import Window
 
 class ProgressBar(Widget):
     """ A simple progress bar dialog intended to run in the UI thread """
@@ -315,4 +315,3 @@ class ProgressDialog(MProgressDialog, Window):
         dialog.CentreOnParent()
 
         return dialog
-

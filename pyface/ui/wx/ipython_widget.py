@@ -38,7 +38,7 @@ from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
-from widget import Widget
+from .widget import Widget
 
 # Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split('.')))

@@ -13,7 +13,7 @@ import weakref
 
 from pyface.qt import QtGui, QtCore
 
-from find_widget import FindWidget
+from .find_widget import FindWidget
 
 class ReplaceWidget(FindWidget):
 
@@ -54,4 +54,3 @@ class ReplaceWidget(FindWidget):
 
         control.setLayout(layout)
         return control
-

@@ -22,7 +22,7 @@ from traits.api import Instance, List, on_trait_change, provides, Unicode
 from pyface.i_application_window import IApplicationWindow, \
      MApplicationWindow
 from pyface.image_resource import ImageResource
-from window import Window
+from .window import Window
 
 
 @provides(IApplicationWindow)
@@ -176,4 +176,3 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _icon_changed(self):
         self._set_window_icon()
-

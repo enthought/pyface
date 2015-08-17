@@ -2,14 +2,14 @@
 from pyface.qt import QtGui
 
 # Local imports
-from console_widget import ConsoleWidget
+from .console_widget import ConsoleWidget
 
 
 class HistoryConsoleWidget(ConsoleWidget):
     """ A ConsoleWidget that keeps a history of the commands that have been
         executed and provides a readline-esque interface to this history.
     """
-    
+
     #---------------------------------------------------------------------------
     # 'object' interface
     #---------------------------------------------------------------------------
@@ -36,7 +36,7 @@ class HistoryConsoleWidget(ConsoleWidget):
             source, hidden, interactive)
 
         if executed and not hidden:
-            # Save the command unless it was an empty string or was identical 
+            # Save the command unless it was an empty string or was identical
             # to the previous command.
             history = history.rstrip()
             if history and (not self._history or self._history[-1] != history):
@@ -74,7 +74,7 @@ class HistoryConsoleWidget(ConsoleWidget):
             # search.
             cursor = self._get_prompt_cursor()
             if self._history_prefix:
-                cursor.movePosition(QtGui.QTextCursor.Right, 
+                cursor.movePosition(QtGui.QTextCursor.Right,
                                     n=len(self._history_prefix))
             else:
                 cursor.movePosition(QtGui.QTextCursor.EndOfLine)
@@ -100,7 +100,7 @@ class HistoryConsoleWidget(ConsoleWidget):
             # input buffer is set.)
             if self._history_prefix:
                 cursor = self._get_prompt_cursor()
-                cursor.movePosition(QtGui.QTextCursor.Right, 
+                cursor.movePosition(QtGui.QTextCursor.Right,
                                     n=len(self._history_prefix))
                 self._set_cursor(cursor)
 
@@ -128,7 +128,7 @@ class HistoryConsoleWidget(ConsoleWidget):
                 break
         else:
             history = None
-        
+
         if history is not None:
             self._history_index = index
             self.input_buffer = history

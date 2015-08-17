@@ -17,10 +17,10 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 # Local imports
-from find_widget import FindWidget
-from gutters import LineNumberWidget, StatusGutterWidget
-from replace_widget import ReplaceWidget
-from pygments_highlighter import PygmentsHighlighter
+from .find_widget import FindWidget
+from .gutters import LineNumberWidget, StatusGutterWidget
+from .replace_widget import ReplaceWidget
+from .pygments_highlighter import PygmentsHighlighter
 
 
 class CodeWidget(QtGui.QPlainTextEdit):
@@ -759,4 +759,3 @@ if __name__ == '__main__':
     window.resize(640, 640)
     window.show()
     sys.exit(app.exec_())
-

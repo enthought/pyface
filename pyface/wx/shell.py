@@ -30,8 +30,8 @@ from wx.py.pseudo import PseudoFileIn, PseudoFileOut, PseudoFileErr
 from wx.py.version import VERSION
 
 # local imports
-from drag_and_drop import PythonObject
-from drag_and_drop import clipboard as enClipboard
+from .drag_and_drop import PythonObject
+from .drag_and_drop import clipboard as enClipboard
 
 sys.ps3 = '<-- '  # Input prompt.
 
@@ -1363,4 +1363,3 @@ class ShellMenu:
             event.Check(self.crust.filling.fillingTree.showDoc)
         elif id == ID_FILLING_SHOW_MODULE:
             event.Check(self.crust.filling.fillingTree.showModule)
-

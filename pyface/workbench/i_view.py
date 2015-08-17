@@ -22,9 +22,9 @@ from traits.api import Bool, Enum, Float, Instance, List, provides, Str
 from traits.util.camel_case import camel_case_to_words
 
 # Local imports.
-from i_perspective_item import IPerspectiveItem
-from i_workbench_part import IWorkbenchPart, MWorkbenchPart
-from perspective_item import PerspectiveItem
+from .i_perspective_item import IPerspectiveItem
+from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
+from .perspective_item import PerspectiveItem
 
 # Logging.
 logger = logging.getLogger(__name__)

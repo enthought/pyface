@@ -2,8 +2,8 @@
 
 
 # Local imports.
-from view_chooser import ViewChooser
-from workbench_action import WorkbenchAction
+from .view_chooser import ViewChooser
+from .workbench_action import WorkbenchAction
 
 
 class ShowViewAction(WorkbenchAction):

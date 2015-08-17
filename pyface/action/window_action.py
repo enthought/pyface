@@ -19,7 +19,7 @@ from pyface.window import Window
 from traits.api import Instance
 
 # Local imports.
-from action import Action
+from pyface.action.action import Action
 
 
 class WindowAction(Action):

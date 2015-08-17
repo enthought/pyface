@@ -22,10 +22,10 @@ from pyface.image_list import ImageList
 from traits.api import Color, Event, Instance, Trait
 
 # Local imports.
-from content_viewer import ContentViewer
-from table_column_provider import TableColumnProvider
-from table_content_provider import TableContentProvider
-from table_label_provider import TableLabelProvider
+from .content_viewer import ContentViewer
+from .table_column_provider import TableColumnProvider
+from .table_content_provider import TableContentProvider
+from .table_label_provider import TableLabelProvider
 
 
 class TableViewer(ContentViewer):

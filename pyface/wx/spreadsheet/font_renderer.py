@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 import wx
 
-from default_renderer import DefaultRenderer
+from .default_renderer import DefaultRenderer
 
 class FontRenderer(DefaultRenderer):
     """Render data in the specified color and font and fontsize.
@@ -91,4 +91,3 @@ class FontRendererFactory88:
 
     def __call__(self, table):
         return FontRenderer(table, self.color, self.font, self.fontsize)
-

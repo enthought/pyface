@@ -6,7 +6,7 @@ from pyface.action.api import MenuBarManager as BaseMenuBarManager
 from traits.api import Instance
 
 # Local imports.
-from action_controller import ActionController
+from .action_controller import ActionController
 
 
 class MenuBarManager(BaseMenuBarManager):

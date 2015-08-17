@@ -11,14 +11,14 @@ from traits.api import List, Str, Tuple, Unicode, Vetoable
 from traits.api import on_trait_change, provides
 
 # Local imports.
-from i_editor import IEditor
-from i_editor_manager import IEditorManager
-from i_perspective import IPerspective
-from i_view import IView
-from i_workbench_part import IWorkbenchPart
-from perspective import Perspective
-from workbench_window_layout import WorkbenchWindowLayout
-from workbench_window_memento import WorkbenchWindowMemento
+from .i_editor import IEditor
+from .i_editor_manager import IEditorManager
+from .i_perspective import IPerspective
+from .i_view import IView
+from .i_workbench_part import IWorkbenchPart
+from .perspective import Perspective
+from .workbench_window_layout import WorkbenchWindowLayout
+from .workbench_window_memento import WorkbenchWindowMemento
 
 
 # Logging.

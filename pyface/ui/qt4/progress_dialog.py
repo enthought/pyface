@@ -22,9 +22,9 @@ from pyface.qt import QtGui, QtCore
 from traits.api import Bool, Enum, Instance, Int, provides, Unicode
 
 # Local imports
-from widget import Widget
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
-from window import Window
+from .widget import Widget
+from .window import Window
 
 class ProgressDialog(MProgressDialog, Window):
     """ A simple progress dialog window which allows itself to be updated

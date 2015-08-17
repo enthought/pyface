@@ -11,19 +11,21 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from column_provider import ColumnProvider
-from content_provider import ContentProvider
-from content_viewer import ContentViewer
-from default_tree_content_provider import DefaultTreeContentProvider
-from label_provider import LabelProvider
-from table_column_provider import TableColumnProvider
-from table_content_provider import TableContentProvider
-from table_label_provider import TableLabelProvider
-from table_viewer import TableViewer
-from tree_content_provider import TreeContentProvider
-from tree_label_provider import TreeLabelProvider
-from tree_item import TreeItem
-from tree_viewer import TreeViewer
-from viewer import Viewer
-from viewer_filter import ViewerFilter
-from viewer_sorter import ViewerSorter
+from __future__ import absolute_import
+
+from .column_provider import ColumnProvider
+from .content_provider import ContentProvider
+from .content_viewer import ContentViewer
+from .default_tree_content_provider import DefaultTreeContentProvider
+from .label_provider import LabelProvider
+from .table_column_provider import TableColumnProvider
+from .table_content_provider import TableContentProvider
+from .table_label_provider import TableLabelProvider
+from .table_viewer import TableViewer
+from .tree_content_provider import TreeContentProvider
+from .tree_label_provider import TreeLabelProvider
+from .tree_item import TreeItem
+from .tree_viewer import TreeViewer
+from .viewer import Viewer
+from .viewer_filter import ViewerFilter
+from .viewer_sorter import ViewerSorter

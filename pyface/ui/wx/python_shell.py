@@ -37,7 +37,7 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 # Local imports.
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from widget import Widget
+from .widget import Widget
 
 
 @provides(IPythonShell)

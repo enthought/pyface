@@ -15,7 +15,7 @@
 
 
 # Local imports.
-from wizard_controller import WizardController
+from .wizard_controller import WizardController
 
 
 class SimpleWizardController(WizardController): pass

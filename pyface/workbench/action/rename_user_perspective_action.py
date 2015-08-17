@@ -10,8 +10,8 @@
 
 
 # Local imports.
-from user_perspective_action import UserPerspectiveAction
-from user_perspective_name import UserPerspectiveName
+from .user_perspective_action import UserPerspectiveAction
+from .user_perspective_name import UserPerspectiveName
 
 
 class RenameUserPerspectiveAction(UserPerspectiveAction):
@@ -43,4 +43,3 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
         return
 
 #### EOF #####################################################################
-

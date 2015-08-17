@@ -15,8 +15,8 @@
 
 
 # Local imports.
-from dialog import Dialog
-from split_widget import SplitWidget
+from pyface.dialog import Dialog
+from pyface.split_widget import SplitWidget
 
 
 class SplitDialog(Dialog, SplitWidget):

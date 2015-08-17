@@ -18,7 +18,7 @@
 from traits.api import Any, HasTraits, Instance
 
 # Local imports.
-from resource_factory import ResourceFactory
+from pyface.resource.resource_factory import ResourceFactory
 
 
 class ResourceReference(HasTraits):

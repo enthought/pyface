@@ -5,7 +5,7 @@
 from traits.api import HasTraits, Instance, Vetoable
 
 # Local imports.
-from workbench_window import WorkbenchWindow
+from .workbench_window import WorkbenchWindow
 
 
 class WindowEvent(HasTraits):
@@ -23,4 +23,3 @@ class VetoableWindowEvent(WindowEvent, Vetoable):
     pass
 
 #### EOF ######################################################################
-

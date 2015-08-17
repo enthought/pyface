@@ -5,7 +5,7 @@
 from traits.api import Bool, Interface, List, Str, Tuple
 
 # Local imports.
-from perspective_item import PerspectiveItem
+from .perspective_item import PerspectiveItem
 
 
 class IPerspective(Interface):

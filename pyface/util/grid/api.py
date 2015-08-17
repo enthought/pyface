@@ -11,7 +11,9 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from grid import Grid
-from grid_column import GridColumn
-from grid_model import GridModel
-from grid_row import GridRow
+from __future__ import absolute_import
+
+from .grid import Grid
+from .grid_column import GridColumn
+from .grid_model import GridModel
+from .grid_row import GridRow

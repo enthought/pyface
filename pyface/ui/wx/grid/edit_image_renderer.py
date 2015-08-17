@@ -16,7 +16,7 @@
 from pyface.image_resource import ImageResource
 
 # Local import
-from grid_cell_image_renderer import GridCellImageRenderer
+from .grid_cell_image_renderer import GridCellImageRenderer
 
 class EditImageRenderer(GridCellImageRenderer):
     image = ImageResource('table_edit')

@@ -7,7 +7,7 @@ the underlying model's sense of row and column. """
 from traits.api import Instance
 
 # local imports
-from grid_model import GridModel
+from .grid_model import GridModel
 
 class InvertedGridModel(GridModel):
     """ An adapter model that inverts all of its row/column targets. Use

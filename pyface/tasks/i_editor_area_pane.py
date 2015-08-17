@@ -6,8 +6,8 @@ from traits.api import Bool, Callable, Dict, Event, File, HasTraits, Instance, \
     List, Str
 
 # Local imports.
-from i_editor import IEditor
-from i_task_pane import ITaskPane
+from pyface.tasks.i_editor import IEditor
+from pyface.tasks.i_task_pane import ITaskPane
 
 # Logger.
 logger = logging.getLogger(__name__)
