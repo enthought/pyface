@@ -36,4 +36,4 @@ from .window_action import WindowAction
 
 from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':
-    from tool_palette_manager import ToolPaletteManager
+    from .tool_palette_manager import ToolPaletteManager
