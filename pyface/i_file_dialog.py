@@ -21,7 +21,7 @@ import sys
 from traits.api import Enum, Unicode, Int
 
 # Local imports.
-from i_dialog import IDialog
+from pyface.i_dialog import IDialog
 
 
 class IFileDialog(IDialog):
