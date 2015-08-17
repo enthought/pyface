@@ -1,18 +1,28 @@
 build: false
 shallow_clone: true
+
 environment:
 
   global:
     distutils_use_sdk: 1
-    sdkver: "C:/Program Files/Microsoft SDKs/Windows/v7.0/Setup/WindowsSdkVer.exe"
-    python: "C:/Python27-x64"
     ets_toolkit: "qt4"
+
+  matrix:
+
+    - python: "C:/Python27-x64"
+      sdkver: "v7.0"
+
+    - python: "C:/Python34-x64"
+      sdkver: "v7.1"
 
 cache:
   - c:\temp
 
 init:
-  - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + "C:\Program Files\Microsoft SDKs\Windows\v7.0\Bin;" + $Env:path
+  - ps: $Env:sdkbin = "C:\Program Files\Microsoft SDKs\Windows\" + $Env:sdkver + "\Bin"
+  - ps: $Env:sdkverpath = "C:/Program Files/Microsoft SDKs/Windows/" + $Env:sdkver + "/Setup/WindowsSdkVer.exe"
+  - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + $Env:sdkbin + ";" + $Env:path
+
 install:
   - ps: if ((Test-Path "c:/temp") -eq 0) { mkdir c:/temp }
   - ps: (new-object net.webclient).DownloadFile('https://raw.github.com/pypa/pip/master/contrib/get-pip.py', 'c:/get-pip.py')
