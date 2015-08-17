@@ -16,7 +16,7 @@
 from __future__ import absolute_import
 
 # Local imports.
-from constant import NO
+from .constant import NO
 
 
 def confirm(parent, message, title=None, cancel=False, default=NO):
