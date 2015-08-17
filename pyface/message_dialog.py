@@ -47,7 +47,9 @@ def error(parent, message, title='Error'):
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from __future__ import absolute_import
+
+from .toolkit import toolkit_object
 MessageDialog = toolkit_object('message_dialog:MessageDialog')
 
 #### EOF ######################################################################

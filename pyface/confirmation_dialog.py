@@ -36,7 +36,9 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from __future__ import absolute_import
+
+from .toolkit import toolkit_object
 ConfirmationDialog = toolkit_object('confirmation_dialog:ConfirmationDialog')
 
 #### EOF ######################################################################

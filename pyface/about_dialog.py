@@ -15,7 +15,9 @@
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from __future__ import absolute_import
+
+from .toolkit import toolkit_object
 AboutDialog = toolkit_object('about_dialog:AboutDialog')
 
 ### EOF #######################################################################
