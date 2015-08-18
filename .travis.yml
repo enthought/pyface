@@ -39,7 +39,7 @@ before_script:
   - cp .coveragerc testrun/
   - cd testrun
 script:
-  - coverage run -m nose.core -v pyface
+  - coverage run -m nose.core -v pyface --exclude=${EXCLUDE}
 after_success:
   - pip install codecov
   - codecov
