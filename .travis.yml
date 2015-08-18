@@ -19,7 +19,8 @@ env:
   - ETS_TOOLKIT=wx EXCLUDE=qt4
 matrix:
   allow_failures:
-    - env: ETS_TOOLKIT=wx python=3.4
+    - python: 3.4
+      env: ETS_TOOLKIT=wx EXCLUDE=qt4
 cache:
   directories:
     - $HOME/.cache
