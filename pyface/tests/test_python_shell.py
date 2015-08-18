@@ -69,7 +69,6 @@ class TestPythonShell(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         # XXX inconsistent behaviour between backends
         #with self.assertTraitChanges(self.widget, 'command_executed', count=1):
-        print(PYTHON_SCRIPT)
         self.widget.execute_file(PYTHON_SCRIPT)
         self.gui.process_events()
         self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
