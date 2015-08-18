@@ -121,12 +121,7 @@ class PythonShell(MPythonShell, Widget):
                 self.control.clearCommand()
                 self.control.write('# Executing "%s"\n' % path)
 
-            if sys.platform == 'win32' and sys.version_info < (2,5,1):
-                # Work around a bug in Python for Windows. For details, see:
-                # http://projects.scipy.org/ipython/ipython/ticket/123
-                exec file(path) in prog_ns, prog_ns
-            else:
-                execfile(path, prog_ns, prog_ns)
+            execfile(path, prog_ns, prog_ns)
 
             if not hidden:
                 self.control.prompt()
