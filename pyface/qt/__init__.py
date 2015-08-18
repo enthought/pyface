@@ -16,6 +16,7 @@ def prepare_pyqt4():
     import sip
     sip.setapi('QString', 2)
     sip.setapi('QVariant', 2)
+    sip.setapi('QDate', 2)
 
 qt_api = os.environ.get('QT_API')
 
