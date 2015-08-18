@@ -1,34 +1,43 @@
 language: python
 sudo: false
 python:
-  - 2.7
+  - 2.7_with_system_site_packages
+  - 3.4
 addons:
   apt:
     packages:
     - python-qt4
+    - pyhton-qt4-dev
     - python-qt4-gl
     - python-pip
     - python-numpy
     - python-wxtools
     - ccache
+    - cmake
 env:
   - ETS_TOOLKIT=qt4 EXCLUDE=wx
   - ETS_TOOLKIT=wx EXCLUDE=qt4
+matrix:
+  allow_failures:
+    - env: ETS_TOOLKIT=wx TRAVIS_PYTHON_VERSION=3.4
 cache:
   directories:
-    - $HOME/.cache/pip
+    - $HOME/.cache
     - $HOME/.ccache
-virtualenv:
-  system_site_packages: true
 before_install:
   - ccache -s
   - pip install --upgrade pip
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" ]]; then ./build_pyside_wheel.sh; fi
   - pip install -r travis-ci-requirements.txt
 install:
   - python setup.py develop
+before_script:
+  - mkdir testrun
+  - cp .coveragerc testrun/
+  - cd testrun
 script:
   - coverage run -m nose.core -v --exclude-dir=pyface/ui/${EXCLUDE} --exclude="enaml"
   - if [[ ${ETS_TOOLKIT} == "qt4" ]]; then coverage run -a -m nose.core -v pyface/tasks/tests/*enaml*; fi
