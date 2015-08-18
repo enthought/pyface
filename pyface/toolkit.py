@@ -106,8 +106,7 @@ def toolkit_object(name):
             pass
     except ImportError as exc:
         # is the error while trying to import be_mname or not?
-        for part in mname.split('.'):
-            if part not in exc.args[0]:
+        if all(part not in exc.args[0] for part in mname.split('.')):
                 # something else went wrong - let the exception be raised
                 raise
 
