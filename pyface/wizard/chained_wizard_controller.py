@@ -18,8 +18,8 @@
 from traits.api import Instance
 
 # Local imports.
-from i_wizard_controller import IWizardController
-from wizard_controller import WizardController
+from .i_wizard_controller import IWizardController
+from .wizard_controller import WizardController
 
 
 class ChainedWizardController(WizardController):

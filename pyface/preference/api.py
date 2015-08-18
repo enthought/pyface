@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2015, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -11,6 +11,9 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from preference_page import PreferencePage
-from preference_dialog import PreferenceDialog
-from preference_node import PreferenceNode
+
+from __future__ import absolute_import
+
+from .preference_page import PreferencePage
+from .preference_dialog import PreferenceDialog
+from .preference_node import PreferenceNode

@@ -6,13 +6,13 @@ from pyface.action.api import Group, MenuManager
 from traits.api import Instance, List, on_trait_change
 
 # Local imports.
-from delete_user_perspective_action import DeleteUserPerspectiveAction
-from new_user_perspective_action import NewUserPerspectiveAction
-from rename_user_perspective_action import RenameUserPerspectiveAction
-from reset_all_perspectives_action import ResetAllPerspectivesAction
-from reset_active_perspective_action import ResetActivePerspectiveAction
-from save_as_user_perspective_action import SaveAsUserPerspectiveAction
-from set_active_perspective_action import SetActivePerspectiveAction
+from .delete_user_perspective_action import DeleteUserPerspectiveAction
+from .new_user_perspective_action import NewUserPerspectiveAction
+from .rename_user_perspective_action import RenameUserPerspectiveAction
+from .reset_all_perspectives_action import ResetAllPerspectivesAction
+from .reset_active_perspective_action import ResetActivePerspectiveAction
+from .save_as_user_perspective_action import SaveAsUserPerspectiveAction
+from .set_active_perspective_action import SetActivePerspectiveAction
 
 
 class PerspectiveMenuManager(MenuManager):

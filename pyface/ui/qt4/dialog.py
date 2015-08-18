@@ -20,7 +20,7 @@ from traits.api import Bool, Enum, Int, provides, Str, Unicode
 # Local imports.
 from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
-from window import Window
+from .window import Window
 
 
 # Map PyQt dialog related constants to the pyface equivalents.

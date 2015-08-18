@@ -18,7 +18,7 @@ try:
 except ImportError:
     unit_parser = None
 
-from default_renderer import DefaultRenderer
+from .default_renderer import DefaultRenderer
 
 class UnitRenderer(DefaultRenderer):
 

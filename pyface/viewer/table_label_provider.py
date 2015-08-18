@@ -15,7 +15,7 @@
 
 
 # Local imports.
-from label_provider import LabelProvider
+from .label_provider import LabelProvider
 
 
 class TableLabelProvider(LabelProvider):

@@ -13,9 +13,10 @@
 #------------------------------------------------------------------------------
 """ The implementation of a top-level application window. """
 
+from __future__ import absolute_import
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from .toolkit import toolkit_object
 ApplicationWindow = toolkit_object('application_window:ApplicationWindow')
 
 #### EOF ######################################################################

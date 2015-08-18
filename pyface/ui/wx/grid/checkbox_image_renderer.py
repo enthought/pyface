@@ -18,7 +18,7 @@
 from pyface.image_resource import ImageResource
 
 # local imports
-from mapped_grid_cell_image_renderer import MappedGridCellImageRenderer
+from .mapped_grid_cell_image_renderer import MappedGridCellImageRenderer
 
 checked_image_map = { True: ImageResource('checked'),
                       False: ImageResource('unchecked'),

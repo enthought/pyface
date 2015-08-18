@@ -5,7 +5,7 @@
 from traits.api import Any, Str
 
 # Local imports.
-from node_type import NodeType
+from .node_type import NodeType
 
 
 class TraitListNodeType(NodeType):

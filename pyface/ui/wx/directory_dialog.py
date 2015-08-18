@@ -25,7 +25,7 @@ from traits.api import Bool, provides, Unicode
 
 # Local imports.
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
-from dialog import Dialog
+from .dialog import Dialog
 
 
 @provides(IDirectoryDialog)

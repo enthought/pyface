@@ -7,8 +7,8 @@ import weakref
 from traits.api import HasTraits, Instance, provides
 
 # Local imports.
-from i_editor_manager import IEditorManager
-from traits_ui_editor import TraitsUIEditor
+from .i_editor_manager import IEditorManager
+from .traits_ui_editor import TraitsUIEditor
 
 
 @provides(IEditorManager)

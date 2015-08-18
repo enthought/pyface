@@ -22,10 +22,10 @@ from pyface.action.api import ActionEvent
 from traits.api import Instance, List, Property
 
 # Local imports.
-from node_manager import NodeManager
-from node_type import NodeType
-from node_tree_model import NodeTreeModel
-from tree import Tree
+from .node_manager import NodeManager
+from .node_type import NodeType
+from .node_tree_model import NodeTreeModel
+from .tree import Tree
 
 
 class NodeTree(Tree):

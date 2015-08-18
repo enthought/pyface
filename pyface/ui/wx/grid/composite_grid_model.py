@@ -16,7 +16,7 @@
 from traits.api import Dict, List, Trait
 
 # local imports
-from grid_model import GridModel, GridRow
+from .grid_model import GridModel, GridRow
 
 class CompositeGridModel(GridModel):
     """ A CompositeGridModel is a model whose underlying data is

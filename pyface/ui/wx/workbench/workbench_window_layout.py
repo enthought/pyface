@@ -37,9 +37,9 @@ from pyface.workbench.i_workbench_window_layout import \
      MWorkbenchWindowLayout
 
 # Local imports.
-from editor_set_structure_handler import EditorSetStructureHandler
-from view_set_structure_handler import ViewSetStructureHandler
-from workbench_dock_window import WorkbenchDockWindow
+from .editor_set_structure_handler import EditorSetStructureHandler
+from .view_set_structure_handler import ViewSetStructureHandler
+from .workbench_dock_window import WorkbenchDockWindow
 
 
 # Logging.

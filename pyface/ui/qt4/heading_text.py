@@ -19,7 +19,7 @@ from traits.api import Int, provides, Unicode
 
 # Local imports.
 from pyface.i_heading_text import IHeadingText, MHeadingText
-from widget import Widget
+from .widget import Widget
 
 
 @provides(IHeadingText)

@@ -18,9 +18,9 @@
 from traits.api import Bool, Enum, Instance, Unicode
 
 # Local imports.
-from constant import CANCEL, NO, YES
-from i_dialog import IDialog
-from image_resource import ImageResource
+from pyface.constant import CANCEL, NO, YES
+from pyface.i_dialog import IDialog
+from pyface.i_image_resource import IImageResource
 
 
 class IConfirmationDialog(IDialog):
@@ -35,7 +35,7 @@ class IConfirmationDialog(IDialog):
     default = Enum(NO, YES, CANCEL)
 
     # The image displayed with the message.  The default is toolkit specific.
-    image = Instance(ImageResource)
+    image = Instance(IImageResource)
 
     # The message displayed in the body of the dialog (use the inherited
     # 'title' trait to set the title of the dialog itself).

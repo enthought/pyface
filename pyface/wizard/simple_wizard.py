@@ -15,7 +15,8 @@
 
 
 # Local imports.
-from wizard import Wizard
+from .wizard import Wizard
 
 
-class SimpleWizard(Wizard): pass
+class SimpleWizard(Wizard):
+    pass

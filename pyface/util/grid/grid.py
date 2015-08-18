@@ -20,7 +20,7 @@ from wx.grid import Grid as wxGrid
 
 
 # Local imports.
-from grid_model import GridModel
+from .grid_model import GridModel
 
 
 class Grid(wxGrid):

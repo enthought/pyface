@@ -13,9 +13,10 @@
 #------------------------------------------------------------------------------
 """ The implementation of an image cache. """
 
+from __future__ import absolute_import
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from .toolkit import toolkit_object
 ImageCache = toolkit_object('image_cache:ImageCache')
 
 #### EOF ######################################################################

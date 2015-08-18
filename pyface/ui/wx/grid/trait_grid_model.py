@@ -23,8 +23,8 @@ from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
      Int, List, Str, Trait, TraitError, Type
 
 # local imports
-from grid_model import GridColumn, GridModel, GridSortEvent
-from trait_grid_cell_adapter import TraitGridCellAdapter
+from .grid_model import GridColumn, GridModel, GridSortEvent
+from .trait_grid_cell_adapter import TraitGridCellAdapter
 
 # The classes below are part of the table specification.
 class TraitGridColumn(GridColumn):
@@ -702,4 +702,3 @@ class TraitGridModel(GridModel):
         return
 
 #### EOF ####################################################################
-

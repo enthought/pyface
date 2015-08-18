@@ -8,12 +8,12 @@ from traits.api import Bool, Callable, HasTraits, HasStrictTraits, Instance, \
     List, Property, Unicode, Vetoable, on_trait_change
 
 # Local imports.
-from action.task_action_manager_builder import TaskActionManagerBuilder
-from i_dock_pane import IDockPane
-from i_task_pane import ITaskPane
-from task import Task, TaskLayout
-from task_window_backend import TaskWindowBackend
-from task_window_layout import TaskWindowLayout
+from pyface.tasks.action.task_action_manager_builder import TaskActionManagerBuilder
+from pyface.tasks.i_dock_pane import IDockPane
+from pyface.tasks.i_task_pane import ITaskPane
+from pyface.tasks.task import Task, TaskLayout
+from pyface.tasks.task_window_backend import TaskWindowBackend
+from pyface.tasks.task_window_layout import TaskWindowLayout
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -72,7 +72,7 @@ class TaskWindow(ApplicationWindow):
         """
         # Allow the TaskWindowBackend to clean up first.
         self._window_backend.destroy()
-        
+
         # Don't use 'remove_task' here to avoid changing the active state and
         # thereby removing the window's menus and toolbars. This can lead to
         # undesirable animations when the window is being closed.
@@ -103,7 +103,7 @@ class TaskWindow(ApplicationWindow):
 
             self.show(True)
             self.opened = self
-                
+
         return self.control is not None
 
     def close(self):
@@ -117,7 +117,7 @@ class TaskWindow(ApplicationWindow):
             if not event.veto:
                 self.destroy()
                 self.closed = self
-        
+
         return self.control is None
 
     ###########################################################################
@@ -154,7 +154,7 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-            
+
         elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)

@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2015, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -24,7 +24,7 @@ from pyface.viewer.api import TreeViewer, DefaultTreeContentProvider
 from traits.api import Any, Dict, Float, Instance, Str
 
 # Local imports.
-from preference_node import PreferenceNode
+from pyface.preference.preference_node import PreferenceNode
 
 
 class PreferenceDialog(SplitDialog):

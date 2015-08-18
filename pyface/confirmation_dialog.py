@@ -13,9 +13,10 @@
 #------------------------------------------------------------------------------
 """ The implementation of a dialog that prompts the user for confirmation. """
 
+from __future__ import absolute_import
 
 # Local imports.
-from constant import NO
+from .constant import NO
 
 
 def confirm(parent, message, title=None, cancel=False, default=NO):
@@ -36,7 +37,7 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from .toolkit import toolkit_object
 ConfirmationDialog = toolkit_object('confirmation_dialog:ConfirmationDialog')
 
 #### EOF ######################################################################

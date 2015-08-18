@@ -13,7 +13,7 @@
 from pyface.api import YES
 
 # Local imports.
-from user_perspective_action import UserPerspectiveAction
+from .user_perspective_action import UserPerspectiveAction
 
 
 class DeleteUserPerspectiveAction(UserPerspectiveAction):
@@ -77,4 +77,3 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
         return window.perspectives[index]
 
 #### EOF #####################################################################
-

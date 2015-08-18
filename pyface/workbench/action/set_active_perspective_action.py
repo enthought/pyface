@@ -6,7 +6,7 @@ from pyface.workbench.api import IPerspective
 from traits.api import Delegate, Instance, on_trait_change
 
 # Local imports.
-from workbench_action import WorkbenchAction
+from .workbench_action import WorkbenchAction
 
 
 class SetActivePerspectiveAction(WorkbenchAction):

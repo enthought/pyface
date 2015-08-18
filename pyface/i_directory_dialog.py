@@ -19,7 +19,7 @@
 from traits.api import Bool, Unicode
 
 # Local imports.
-from i_dialog import IDialog
+from pyface.i_dialog import IDialog
 
 
 class IDirectoryDialog(IDialog):

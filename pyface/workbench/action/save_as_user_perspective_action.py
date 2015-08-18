@@ -10,8 +10,8 @@
 
 
 # Local imports.
-from user_perspective_name import UserPerspectiveName
-from workbench_action import WorkbenchAction
+from .user_perspective_name import UserPerspectiveName
+from .workbench_action import WorkbenchAction
 
 
 class SaveAsUserPerspectiveAction(WorkbenchAction):

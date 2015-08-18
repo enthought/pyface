@@ -3,7 +3,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import UI
 
 # Local imports.
-from dock_pane import DockPane
+from pyface.tasks.dock_pane import DockPane
 
 
 class TraitsDockPane(DockPane):

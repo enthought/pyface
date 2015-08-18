@@ -18,7 +18,7 @@
 from traits.api import Bool, Event, Interface, Unicode
 
 # Local imports.
-from key_pressed_event import KeyPressedEvent
+from pyface.key_pressed_event import KeyPressedEvent
 
 
 class IPythonEditor(Interface):

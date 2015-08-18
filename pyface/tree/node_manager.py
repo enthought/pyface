@@ -20,7 +20,7 @@ import logging
 from traits.api import HasPrivateTraits, List
 
 # Local imports
-from node_type import NodeType
+from .node_type import NodeType
 
 
 # Create a logger for this module.

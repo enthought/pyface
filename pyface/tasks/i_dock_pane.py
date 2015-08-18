@@ -2,7 +2,7 @@
 from traits.api import Bool, Enum, HasTraits, Str, Tuple
 
 # Local imports.
-from i_task_pane import ITaskPane
+from pyface.tasks.i_task_pane import ITaskPane
 
 
 class IDockPane(ITaskPane):

@@ -20,7 +20,7 @@ import logging
 from traits.api import Any, Event, HasTraits
 
 # Local imports.
-from node_event import NodeEvent
+from .node_event import NodeEvent
 
 
 # Create a logger for this module.

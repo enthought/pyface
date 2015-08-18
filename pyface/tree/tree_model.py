@@ -18,7 +18,7 @@
 from traits.api import Any, HasTraits, Event
 
 # Local imports.
-from node_event import NodeEvent
+from .node_event import NodeEvent
 
 
 class TreeModel(HasTraits):

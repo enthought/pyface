@@ -19,7 +19,7 @@ from traits.api import Enum, provides, Unicode
 
 # Local imports.
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
-from dialog import Dialog
+from .dialog import Dialog
 
 
 # Map the ETS severity to the corresponding PyQt standard icon.

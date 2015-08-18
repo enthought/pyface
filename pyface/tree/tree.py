@@ -29,7 +29,7 @@ from traits.api import List, Property, Callable, Str, Trait, Tuple
 from pyface.wx.drag_and_drop import PythonDropSource, PythonDropTarget
 
 # Local imports.
-from tree_model import TreeModel
+from .tree_model import TreeModel
 
 
 # Create a logger for this module.

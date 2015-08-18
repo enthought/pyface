@@ -14,7 +14,12 @@ import os
 def prepare_pyqt4():
     # Set PySide compatible APIs.
     import sip
+    sip.setapi('QDate', 2)
+    sip.setapi('QDateTime', 2)
     sip.setapi('QString', 2)
+    sip.setapi('QTextStream', 2)
+    sip.setapi('QTime', 2)
+    sip.setapi('QUrl', 2)
     sip.setapi('QVariant', 2)
 
 qt_api = os.environ.get('QT_API')

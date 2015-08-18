@@ -3,7 +3,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import UI
 
 # Local imports.
-from editor import Editor
+from pyface.tasks.editor import Editor
 
 
 class TraitsEditor(Editor):

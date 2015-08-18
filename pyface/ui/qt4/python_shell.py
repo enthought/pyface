@@ -32,7 +32,8 @@ from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
-from widget import Widget
+from .widget import Widget
+
 
 #-------------------------------------------------------------------------------
 # 'PythonShell' class:
@@ -329,7 +330,8 @@ class PythonWidget(HistoryConsoleWidget):
         """ Attempts to execute file with 'path'. If 'hidden', no output is
             shown.
         """
-        self.execute('execfile(%s)' % repr(path), hidden=hidden)
+
+        self.execute("exec(open(%s).read())" % repr(path), hidden=hidden)
 
     def reset(self):
         """ Resets the widget to its initial state. Similar to ``clear``, but
