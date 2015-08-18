@@ -40,7 +40,7 @@ before_script:
   - cd testrun
 script:
   - coverage run -m nose.core -v ../pyface --exclude-dir=../pyface/ui/${EXCLUDE} --exclude="enaml"
-  - if [[ ${ETS_TOOLKIT} == "qt4" ]]; then coverage run -a -m nose.core -v pyface/tasks/tests/*enaml*; fi
+  - if [[ ${TRAVIS_PYTHON_VERSION} == "2.7" && ${ETS_TOOLKIT} == "qt4" ]]; then coverage run -a -m nose.core -v ../pyface/tasks/tests/*enaml*; fi
 after_success:
   - pip install codecov
   - codecov
