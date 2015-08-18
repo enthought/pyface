@@ -26,18 +26,12 @@ before_install:
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - pip install -r travis-ci-requirements.txt
 install:
-  - pip install pygments
-  - pip install traits
-  - pip install traitsui
-  - pip install traits_enaml
-  - pip install enaml
-  - pip install nose-exclude
-  - pip install coverage
-  - pip install codecov
   - python setup.py develop
 script:
   - coverage run -m nose.core -v --exclude-dir=pyface/ui/${EXCLUDE} --exclude="enaml"
   - if [[ ${ETS_TOOLKIT} == "qt4" ]]; then coverage run -a -m nose.core -v pyface/tasks/tests/*enaml*; fi
 after_success:
+  - pip install codecov
   - codecov
