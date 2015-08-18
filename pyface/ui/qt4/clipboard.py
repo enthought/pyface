@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
-from cStringIO import StringIO
+from io import BytesIO
 from cPickle import dumps, load, loads
 
 # System library imports
@@ -49,7 +49,7 @@ class Clipboard(BaseClipboard):
         obj = None
         mime_data = cb.mimeData()
         if mime_data.hasFormat(PYTHON_TYPE):
-            serialized_data = StringIO(mime_data.data(PYTHON_TYPE).data())
+            serialized_data = BytesIO(mime_data.data(PYTHON_TYPE).data())
             klass = load(serialized_data)
             obj = load(serialized_data)
         return obj
