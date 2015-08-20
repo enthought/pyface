@@ -571,7 +571,7 @@ class ConsoleWidget(QtGui.QWidget):
 
             try:
                 return exporter(filename)
-            except Exception, e:
+            except Exception as e:
                 title = self.window().windowTitle()
                 msg = "Error while saving to: %s\n"%filename+str(e)
                 reply = QtGui.QMessageBox.warning(self, title, msg,

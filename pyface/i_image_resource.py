@@ -10,8 +10,7 @@
 #------------------------------------------------------------------------------
 """ The interface for an image resource. """
 
-
-import operator
+from collections import Sequence
 
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
@@ -80,7 +79,7 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        if search_path is not None and operator.isSequenceType(search_path):
+        if search_path is not None and isinstance(search_path, Sequence):
             _path = search_path
         elif search_path is not None:
             _path = [search_path]
