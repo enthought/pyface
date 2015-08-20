@@ -96,7 +96,7 @@ class PerspectiveMenuManager(MenuManager):
         # fixme: Not sure if alphabetic sorting is appropriate in all cases,
         # but it will do for now!
         perspectives = window.perspectives[:]
-        perspectives.sort(lambda x, y: cmp(x.name, y.name))
+        perspectives.sort(key=lambda x:x.name)
 
         # For each perspective, create an action that sets the active
         # perspective to it.

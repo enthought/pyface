@@ -129,7 +129,7 @@ class ViewMenuManager(MenuManager):
         """ Initializes a group containing the view 'togglers'. """
 
         views = window.views[:]
-        views.sort(None, lambda view: view.name)
+        views.sort(key=lambda view: view.name)
 
         for view in views:
             # fixme: It seems a little smelly to be reaching in to the window
