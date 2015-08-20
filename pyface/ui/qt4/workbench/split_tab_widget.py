@@ -10,6 +10,9 @@
 # Standard library imports.
 import sys
 
+if sys.version_info[0] > 2:
+    unicode = str
+
 # Major library imports.
 from pyface.qt import QtCore, QtGui, qt_api
 
