@@ -107,7 +107,7 @@ class SplitTabWidget(QtGui.QSplitter):
 
             sp_ch_states.append(ch_state)
 
-        return (str(QtGui.QSplitter.saveState(qsplitter)), sp_ch_states)
+        return (QtGui.QSplitter.saveState(qsplitter).data(), sp_ch_states)
 
     def restoreState(self, state, factory):
         """ Restore the contents from the given state (returned by a previous
