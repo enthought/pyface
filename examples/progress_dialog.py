@@ -1,6 +1,8 @@
 #
 # simple example of its use
 #
+from __future__ import print_function
+
 import time
 from pyface.api import GUI, ApplicationWindow, ProgressDialog
 from pyface.action.api import Action, MenuManager, MenuBarManager
@@ -11,7 +13,7 @@ def task_func(t):
 
     for i in range(0,t+1):
         time.sleep(1)
-        print i
+        print(i)
         (cont, skip) = progress.update(i)
         if not cont or skip:
             break

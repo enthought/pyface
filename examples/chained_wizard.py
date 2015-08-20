@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 """ Chained wizard example. """
 
+from __future__ import print_function
 
 # Standard library imports.
 import os
@@ -99,8 +100,8 @@ if __name__ == '__main__':
 
     # Open the wizard.
     if wizard.open() == OK:
-        print 'Wizard completed successfully'
+        print('Wizard completed successfully')
     else:
-        print 'Wizard cancelled'
+        print('Wizard cancelled')
 
 #### EOF ######################################################################
