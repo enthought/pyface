@@ -22,7 +22,7 @@ from traits.api import HasTraits, Any, List, Str, Bool, Trait
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 
 # local imports
-from grid_model import GridColumn, GridModel, GridRow
+from .grid_model import GridColumn, GridModel, GridRow
 
 class SimpleGridModel(GridModel):
     """ A SimpleGridModel simply builds a table from a 2-dimensional
@@ -301,4 +301,3 @@ class _CopyAction(Action):
 
 
 #### EOF ####################################################################
-

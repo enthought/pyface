@@ -24,7 +24,7 @@ from traits.api import Tuple, Unicode
 # Local imports.
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
-from window import Window
+from .window import Window
 
 
 @provides(ISplashScreen)

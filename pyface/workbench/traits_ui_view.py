@@ -9,7 +9,7 @@ from traits.api import Any, Instance, Str
 from traitsui.api import UI
 
 # Local imports.
-from view import View
+from .view import View
 
 
 # Logging.

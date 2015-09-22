@@ -13,13 +13,12 @@
 #------------------------------------------------------------------------------
 """ The interface for a simple 'About' dialog. """
 
-
 # Enthought library imports.
 from traits.api import Instance, List, Unicode
 
 # Local imports.
-from i_dialog import IDialog
-from image_resource import ImageResource
+from pyface.i_dialog import IDialog
+from pyface.image_resource import ImageResource
 
 
 class IAboutDialog(IDialog):

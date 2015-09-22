@@ -21,9 +21,9 @@ import logging
 from traits.api import Any, Bool, Instance, Int, Tuple, Unicode
 
 # Local imports.
-from image_resource import ImageResource
-from splash_screen_log_handler import SplashScreenLogHandler
-from i_window import IWindow
+from pyface.image_resource import ImageResource
+from pyface.splash_screen_log_handler import SplashScreenLogHandler
+from pyface.i_window import IWindow
 
 
 class ISplashScreen(IWindow):

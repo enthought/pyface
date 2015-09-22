@@ -3,7 +3,7 @@ from traits.api import Any, Bool, HasTraits, Interface, Instance, \
      Str, Unicode
 
 # Local imports.
-from task import Task
+from pyface.tasks.task import Task
 
 
 class ITaskPane(Interface):

@@ -12,19 +12,21 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-from node_event import NodeEvent
-from node_monitor import NodeMonitor
-from node_manager import NodeManager
-from node_tree import NodeTree
-from node_tree_model import NodeTreeModel
-from node_type import NodeType
-from trait_dict_node_type import TraitDictNodeType
-from trait_list_node_type import TraitListNodeType
-from tree_model import TreeModel
+from __future__ import absolute_import
+
+from .node_event import NodeEvent
+from .node_monitor import NodeMonitor
+from .node_manager import NodeManager
+from .node_tree import NodeTree
+from .node_tree_model import NodeTreeModel
+from .node_type import NodeType
+from .trait_dict_node_type import TraitDictNodeType
+from .trait_list_node_type import TraitListNodeType
+from .tree_model import TreeModel
 
 from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':
     # Tree has not yet been ported to qt
-    from tree import Tree
+    from .tree import Tree
 
 del ETSConfig

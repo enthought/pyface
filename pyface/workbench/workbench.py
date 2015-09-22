@@ -14,11 +14,11 @@ from traits.api import Instance, List, Unicode, Vetoable
 from traits.api import VetoableEvent
 
 # Local imports.
-from i_editor_manager import IEditorManager
-from i_workbench import IWorkbench
-from user_perspective_manager import UserPerspectiveManager
-from workbench_window import WorkbenchWindow
-from window_event import WindowEvent, VetoableWindowEvent
+from .i_editor_manager import IEditorManager
+from .i_workbench import IWorkbench
+from .user_perspective_manager import UserPerspectiveManager
+from .workbench_window import WorkbenchWindow
+from .window_event import WindowEvent, VetoableWindowEvent
 
 
 # Logging.
@@ -315,7 +315,7 @@ class Workbench(HasTraits):
                 # If the memento class itself has been modified then there
                 # is a chance that the unpickle will fail. If so then we just
                 # carry on as if there was no memento!
-                f = file(filename, 'r')
+                f = open(filename, 'rb')
                 memento = cPickle.load(f)
                 f.close()
 
@@ -334,7 +334,7 @@ class Workbench(HasTraits):
         """ Save the window layout. """
 
         # Save the window layout.
-        f = file(os.path.join(self.state_location, 'window_memento'), 'w')
+        f = open(os.path.join(self.state_location, 'window_memento'), 'wb')
         cPickle.dump(window.get_memento(), f)
         f.close()
 

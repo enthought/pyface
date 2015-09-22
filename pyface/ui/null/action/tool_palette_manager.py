@@ -20,7 +20,7 @@ from traits.api import Any, Bool, Enum, Instance, Tuple
 # Local imports.
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
-from tool_palette import ToolPalette
+from .tool_palette import ToolPalette
 
 
 class ToolPaletteManager(ActionManager):

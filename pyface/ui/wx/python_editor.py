@@ -27,7 +27,7 @@ from traits.api import Bool, Event, provides, Unicode
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.util.python_stc import PythonSTC, faces
-from widget import Widget
+from .widget import Widget
 
 
 @provides(IPythonEditor)

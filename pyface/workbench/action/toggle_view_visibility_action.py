@@ -6,7 +6,7 @@ from pyface.workbench.api import IView
 from traits.api import Delegate, Instance
 
 # Local imports.
-from workbench_action import WorkbenchAction
+from .workbench_action import WorkbenchAction
 
 
 class ToggleViewVisibilityAction(WorkbenchAction):

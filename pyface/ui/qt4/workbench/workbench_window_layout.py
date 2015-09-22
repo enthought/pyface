@@ -21,10 +21,10 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Instance, on_trait_change
 
 # Local imports.
-from split_tab_widget import SplitTabWidget
 from pyface.message_dialog import error
 from pyface.workbench.i_workbench_window_layout import \
         MWorkbenchWindowLayout
+from .split_tab_widget import SplitTabWidget
 
 
 # Logging.

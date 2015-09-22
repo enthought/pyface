@@ -18,7 +18,7 @@
 from traits.api import Int
 
 # Local imports.
-from column_provider import ColumnProvider
+from .column_provider import ColumnProvider
 
 
 class TableColumnProvider(ColumnProvider):

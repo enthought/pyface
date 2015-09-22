@@ -15,7 +15,7 @@
     text displayed in the same way the standard string renderer normally
     would, all data retrieved from specified value maps. """
 
-from grid_cell_image_renderer import GridCellImageRenderer
+from .grid_cell_image_renderer import GridCellImageRenderer
 
 class MappedGridCellImageRenderer(GridCellImageRenderer):
     """ Maps data values to image and text. """

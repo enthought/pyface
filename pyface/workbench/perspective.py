@@ -8,8 +8,8 @@ import logging
 from traits.api import Bool, HasTraits, List, provides, Str, Tuple
 
 # Local imports.
-from i_perspective import IPerspective
-from perspective_item import PerspectiveItem
+from .i_perspective import IPerspective
+from .perspective_item import PerspectiveItem
 
 
 # Logging.

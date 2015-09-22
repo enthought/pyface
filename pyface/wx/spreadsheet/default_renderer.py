@@ -15,6 +15,8 @@
 #
 #-------------------------------------------------------------------------------
 
+from __future__ import print_function
+
 import types
 from string import atof
 import wx
@@ -99,7 +101,7 @@ class DefaultRenderer(PyGridCellRenderer):
         text = grid.model.GetValue(row, col)
         if not isinstance(text, basestring):
             msg = 'Problem appending "..." to cell: %d %d' % (row, col)
-            raise TypeError, msg
+            raise TypeError(msg)
 
         width, height = dc.GetTextExtent(text)
         if width > rect.width-2:
@@ -112,6 +114,6 @@ class DefaultRenderer(PyGridCellRenderer):
     def GetBestSize88(self, grid, attr, dc, row, col):
         """ This crashes the app - hmmmm. """
         size = PyGridCellRenderer.GetBestSize(self, grid, attr, dc, row, col)
-        print '-----------------------------', size
+        print('-----------------------------', size)
         return size
 #-------------------------------------------------------------------------------

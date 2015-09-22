@@ -24,8 +24,8 @@ from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
 
 # Local imports.
-from resource_factory import ResourceFactory
-from resource_reference import ImageReference
+from pyface.resource.resource_factory import ResourceFactory
+from pyface.resource.resource_reference import ImageReference
 
 
 class ResourceManager(HasTraits):

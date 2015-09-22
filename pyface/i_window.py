@@ -18,9 +18,9 @@
 from traits.api import Event, Tuple, Unicode
 
 # Local imports.
-from constant import NO
-from key_pressed_event import KeyPressedEvent
-from i_widget import IWidget
+from pyface.constant import NO
+from pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_widget import IWidget
 
 
 class IWindow(IWidget):

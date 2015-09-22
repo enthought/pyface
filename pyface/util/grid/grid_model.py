@@ -22,8 +22,8 @@ from traits.api import Any, Bool, HasTraits, Trait, Event, List
 from traits.standard import false_trait, true_trait
 
 # Local imports.
-from grid_column import GridColumn
-from grid_row import GridRow
+from .grid_column import GridColumn
+from .grid_row import GridRow
 
 
 class GridModel(HasTraits):

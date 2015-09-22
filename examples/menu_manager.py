@@ -11,6 +11,8 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
+from __future__ import print_function
+
 # Standard library imports.
 import os, sys
 
@@ -79,25 +81,25 @@ file_menu.dump()
 
 
 def new_project():
-    print 'new project'
+    print('new project')
 
 def open_project():
-    print 'open project'
+    print('open project')
 
 def close_project():
-    print 'close project'
+    print('close project')
 
 def close_active_editor():
-    print 'close active editor'
+    print('close active editor')
 
 def export_to_html():
-    print 'export to html'
+    print('export to html')
 
 def printit():
-    print 'print'
+    print('print')
 
 def exit():
-    print 'exit'
+    print('exit')
 
 
 file_menu = MenuManager(

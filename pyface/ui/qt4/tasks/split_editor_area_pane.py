@@ -16,7 +16,7 @@ from pyface.constant import OK
 from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
 # Local imports.
-from task_pane import TaskPane
+from .task_pane import TaskPane
 
 ###############################################################################
 # 'SplitEditorAreaPane' class.

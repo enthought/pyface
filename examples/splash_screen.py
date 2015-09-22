@@ -1,5 +1,7 @@
 """Example of using a splash screen (and the use of pyface Timer)."""
 
+from __future__ import print_function
+
 import time
 
 from pyface.timer.api import Timer
@@ -58,7 +60,7 @@ class MainWindow(ApplicationWindow):
         """The method run periodically by the timer."""
 
         self.counter += 1
-        print "counter = %d" % self.counter
+        print("counter = %d" % self.counter)
 
 
 if __name__ == "__main__":
@@ -74,4 +76,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop!
     gui.start_event_loop()
-

@@ -2,7 +2,7 @@
 from traits.api import Interface
 
 # Local imports.
-from i_editor_area_pane import IEditorAreaPane
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane
 
 
 class IAdvancedEditorAreaPane(IEditorAreaPane):
@@ -29,7 +29,7 @@ class IAdvancedEditorAreaPane(IEditorAreaPane):
         The layout should have panes with IDs as described in ``get_layout()``.
         For example, if one wanted to open two editors side by side, with the
         first to the left of the right, something like this would appropriate::
-        
+
             editor_area.edit(File('foo.py'))
             editor_area.edit(File('bar.py'))
             editor_area.set_layout(VSplitter(PaneItem(0),

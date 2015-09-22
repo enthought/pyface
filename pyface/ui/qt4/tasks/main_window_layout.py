@@ -9,9 +9,9 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Any, HasTraits
 
 # Local imports.
-from dock_pane import AREA_MAP
 from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
      Splitter, HSplitter, VSplitter
+from .dock_pane import AREA_MAP
 
 # Contants.
 ORIENTATION_MAP = { 'horizontal' : QtCore.Qt.Horizontal,

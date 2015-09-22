@@ -18,7 +18,7 @@ from wx.grid import GRIDTABLE_REQUEST_VIEW_GET_VALUES
 from wx.grid import GRID_VALUE_BOOL
 from wx import ALIGN_LEFT, ALIGN_CENTRE, Colour
 
-from default_renderer import DefaultRenderer
+from .default_renderer import DefaultRenderer
 
 class VirtualModel(PyGridTableBase):
     """

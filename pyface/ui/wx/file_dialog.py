@@ -28,7 +28,7 @@ from traits.api import Enum, Int, List, provides, Unicode
 
 # Local imports.
 from pyface.i_file_dialog import IFileDialog, MFileDialog
-from dialog import Dialog
+from .dialog import Dialog
 
 
 @provides(IFileDialog)

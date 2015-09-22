@@ -20,9 +20,9 @@ from traits.api import Str
 from traits.trait_base import user_name_for
 
 # Local imports.
-from action import Action
-from action_item import ActionItem
-from action_manager_item import ActionManagerItem
+from pyface.action.action import Action
+from pyface.action.action_item import ActionItem
+from pyface.action.action_manager_item import ActionManagerItem
 
 
 class Group(HasTraits):

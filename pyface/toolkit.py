@@ -112,9 +112,9 @@ def toolkit_object(name):
             pass
     except ImportError as exc:
         # is the error while trying to import be_mname or not?
-        if not exc.message.endswith(mname):
-            # something else went wrong - let the exception be raised
-            raise
+        if all(part not in exc.args[0] for part in mname.split('.')):
+                # something else went wrong - let the exception be raised
+                raise
 
         # Ignore *ANY* errors unless a debug ENV variable is set.
         if 'ETS_DEBUG' in os.environ:

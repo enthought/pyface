@@ -18,7 +18,7 @@
 from traits.api import Instance, Int, Interface, Unicode
 
 # Local imports.
-from image_resource import ImageResource
+from pyface.i_image_resource import IImageResource
 
 
 class IHeadingText(Interface):
@@ -36,7 +36,7 @@ class IHeadingText(Interface):
     text = Unicode('Default')
 
     #: The background image.
-    image = Instance(ImageResource)
+    image = Instance(IImageResource)
 
 
 class MHeadingText(object):

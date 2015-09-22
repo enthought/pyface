@@ -19,8 +19,8 @@ from traits.api import Event, HasTraits, Instance, Interface, Str
 from traits.api import provides
 
 # Local imports.
-from i_editor import IEditor
-from i_view import IView
+from .i_editor import IEditor
+from .i_view import IView
 
 
 class IWorkbenchWindowLayout(Interface):

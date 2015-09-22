@@ -9,7 +9,7 @@ from traits.api import Instance, Str
 from traitsui.api import UI
 
 # Local imports.
-from editor import Editor
+from .editor import Editor
 
 
 # Logging.

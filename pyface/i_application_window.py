@@ -13,14 +13,13 @@
 #------------------------------------------------------------------------------
 """ The interface of a top-level application window. """
 
-
 # Enthought library imports.
 from traits.api import Instance, List
 
 # Local imports.
-from action.api import MenuBarManager, StatusBarManager, ToolBarManager
-from image_resource import ImageResource
-from i_window import IWindow
+from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
+from pyface.i_image_resource import IImageResource
+from pyface.i_window import IWindow
 
 
 class IApplicationWindow(IWindow):
@@ -39,7 +38,7 @@ class IApplicationWindow(IWindow):
     #### 'IApplicationWindow' interface #######################################
 
     #: The window icon.  The default is toolkit specific.
-    icon = Instance(ImageResource)
+    icon = Instance(IImageResource)
 
     #: The menu bar manager (None iff there is no menu bar).
     menu_bar_manager = Instance(MenuBarManager)

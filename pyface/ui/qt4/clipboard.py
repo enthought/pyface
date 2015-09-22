@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
-from cStringIO import StringIO
+from io import BytesIO
 from cPickle import dumps, load, loads
 
 # System library imports
@@ -49,7 +49,7 @@ class Clipboard(BaseClipboard):
         obj = None
         mime_data = cb.mimeData()
         if mime_data.hasFormat(PYTHON_TYPE):
-            serialized_data = StringIO(str(mime_data.data(PYTHON_TYPE)))
+            serialized_data = BytesIO(mime_data.data(PYTHON_TYPE).data())
             klass = load(serialized_data)
             obj = load(serialized_data)
         return obj
@@ -69,7 +69,7 @@ class Clipboard(BaseClipboard):
         if mime_data.hasFormat(PYTHON_TYPE):
             try:
                 # We may not be able to load the required class:
-                result = loads(str(mime_data.data(PYTHON_TYPE)))
+                result = loads(mime_data.data(PYTHON_TYPE).data())
             except:
                 pass
         return result
@@ -79,7 +79,7 @@ class Clipboard(BaseClipboard):
     #---------------------------------------------------------------------------
 
     def _get_text_data(self):
-        return str(cb.text())
+        return cb.text()
 
     def _set_text_data(self, data):
         cb.setText(data)
@@ -94,15 +94,15 @@ class Clipboard(BaseClipboard):
     def _get_file_data(self):
         mime_data = cb.mimeData()
         if mime_data.hasUrls():
-            return [ str(url.toString()) for url in mime_data.urls() ]
+            return [url.toString() for url in mime_data.urls()]
         else:
             return []
 
     def _set_file_data(self, data):
         if isinstance(data, basestring):
-            data = [ data ]
+            data = [data]
         mime_data = QtCore.QMimeData()
-        mime_data.setUrls([ QtCore.QUrl(path) for path in data ])
+        mime_data.setUrls([QtCore.QUrl(path) for path in data])
         cb.setMimeData(mime_data)
 
     def _get_has_file_data (self):

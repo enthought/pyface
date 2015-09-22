@@ -9,8 +9,8 @@ from traits.api import Bool, on_trait_change, Property, provides, Tuple
 from pyface.qt import QtCore, QtGui
 
 # Local imports.
-from task_pane import TaskPane
-from util import set_focus
+from .task_pane import TaskPane
+from .util import set_focus
 
 # Constants.
 AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
@@ -122,7 +122,7 @@ class DockPane(TaskPane, MDockPane):
             if main_window and self.task == self.task.window.active_task:
                 # Qt will automatically remove the dock widget from its previous
                 # area, if it had one.
-                main_window.addDockWidget(AREA_MAP[self.dock_area], 
+                main_window.addDockWidget(AREA_MAP[self.dock_area],
                                           self.control)
 
     @on_trait_change('closable', 'floatable', 'movable')

@@ -6,7 +6,7 @@ from traits.api import provides
 from pyface.qt import QtGui
 
 # Local imports.
-from util import set_focus
+from .util import set_focus
 
 
 @provides(ITaskPane)

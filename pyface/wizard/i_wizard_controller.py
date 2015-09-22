@@ -18,7 +18,7 @@
 from traits.api import Bool, Interface, Instance, List
 
 # Local imports.
-from i_wizard_page import IWizardPage
+from .i_wizard_page import IWizardPage
 
 
 class IWizardController(Interface):

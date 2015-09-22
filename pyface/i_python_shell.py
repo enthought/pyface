@@ -17,8 +17,8 @@
 from traits.api import Event
 
 # Local imports.
-from key_pressed_event import KeyPressedEvent
-from i_widget import IWidget
+from pyface.key_pressed_event import KeyPressedEvent
+from pyface.i_widget import IWidget
 
 
 class IPythonShell(IWidget):

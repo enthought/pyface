@@ -12,8 +12,8 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-from edit_image_renderer import EditImageRenderer
-from grid_cell_renderer import GridCellRenderer
+from .edit_image_renderer import EditImageRenderer
+from .grid_cell_renderer import GridCellRenderer
 
 class EditRenderer(GridCellRenderer):
 

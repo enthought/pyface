@@ -1,10 +1,11 @@
 """Example of using a pyface Timer."""
-
+from __future__ import print_function
 
 from pyface.timer.api import Timer
 from pyface.api import GUI, ApplicationWindow
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from traits.api import Any, Int
+
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
@@ -53,7 +54,7 @@ class MainWindow(ApplicationWindow):
         """The method run periodically by the timer."""
 
         self.counter += 1
-        print "counter = %d" % self.counter
+        print("counter = %d" % self.counter)
 
 
 if __name__ == "__main__":
@@ -65,4 +66,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop!
     gui.start_event_loop()
-

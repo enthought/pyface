@@ -18,9 +18,9 @@
 from traits.api import Any, Instance, List
 
 # Local imports.
-from viewer import Viewer
-from viewer_filter import ViewerFilter
-from viewer_sorter import ViewerSorter
+from .viewer import Viewer
+from .viewer_filter import ViewerFilter
+from .viewer_sorter import ViewerSorter
 
 
 class ContentViewer(Viewer):

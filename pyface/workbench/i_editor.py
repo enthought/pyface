@@ -21,7 +21,7 @@ from traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
 from traits.api import provides
 
 # Local imports.
-from i_workbench_part import IWorkbenchPart, MWorkbenchPart
+from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
 
 class IEditor(IWorkbenchPart):

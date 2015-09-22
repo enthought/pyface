@@ -18,8 +18,8 @@
 from traits.api import Bool, HasTraits, Instance, List, Property, provides
 
 # Local imports.
-from i_wizard_controller import IWizardController
-from i_wizard_page import IWizardPage
+from .i_wizard_controller import IWizardController
+from .i_wizard_page import IWizardPage
 
 
 @provides(IWizardController)

@@ -23,7 +23,7 @@ from traits.api import Instance, List, provides, Unicode
 # Local imports.
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
-from dialog import Dialog
+from .dialog import Dialog
 
 
 # The HTML displayed in the QLabel.

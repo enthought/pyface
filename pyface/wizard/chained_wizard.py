@@ -18,8 +18,8 @@
 from traits.api import Instance
 
 # Local imports.
-from i_wizard import IWizard
-from wizard import Wizard
+from .i_wizard import IWizard
+from .wizard import Wizard
 
 
 class ChainedWizard(Wizard):

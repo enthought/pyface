@@ -23,9 +23,9 @@ from traits.api import Any, Bool, Enum, Event, Instance, List
 from pyface.wx.drag_and_drop import PythonDropSource
 
 # Local imports.
-from content_viewer import ContentViewer
-from tree_content_provider import TreeContentProvider
-from tree_label_provider import TreeLabelProvider
+from .content_viewer import ContentViewer
+from .tree_content_provider import TreeContentProvider
+from .tree_label_provider import TreeLabelProvider
 
 
 class TreeViewer(ContentViewer):

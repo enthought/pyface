@@ -38,8 +38,8 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard
 from traitsui.wx.dnd_editor import FileDropSource
 
 # local imports
-from grid_model import GridModel
-from combobox_focus_handler import ComboboxFocusHandler
+from .grid_model import GridModel
+from .combobox_focus_handler import ComboboxFocusHandler
 
 # Is this code running on MS Windows?
 is_win32 = (sys.platform == 'win32')

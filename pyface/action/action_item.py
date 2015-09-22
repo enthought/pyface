@@ -18,8 +18,8 @@
 from traits.api import Any, Instance, List, Property, Str, on_trait_change
 
 # Local imports.
-from action import Action
-from action_manager_item import ActionManagerItem
+from pyface.action.action import Action
+from pyface.action.action_manager_item import ActionManagerItem
 
 # Import the toolkit specific versions of the internal classes.
 from pyface.toolkit import toolkit_object

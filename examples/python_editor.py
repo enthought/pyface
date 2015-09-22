@@ -87,7 +87,7 @@ class MainWindow(ApplicationWindow):
         if self.control:
             try:
                 self._editor.save()
-            except IOError, e:
+            except IOError as e:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
                 dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")

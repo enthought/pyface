@@ -13,6 +13,8 @@
 #------------------------------------------------------------------------------
 """ The implementation of a dialog that displays a message. """
 
+from __future__ import absolute_import
+
 
 # Convenience functions.
 def information(parent, message, title='Information'):
@@ -74,7 +76,7 @@ def error(parent, message, title='Error'):
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from .toolkit import toolkit_object
 MessageDialog = toolkit_object('message_dialog:MessageDialog')
 
 #### EOF ######################################################################

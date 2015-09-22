@@ -69,7 +69,7 @@ class UserPerspectiveManager(HasTraits):
         if self._id_to_perspective is None:
             self._id_to_perspective = dic = {}
             try:
-                fh = file( self.file_name, 'r' )
+                fh = open( self.file_name, 'r' )
                 for line in fh:
                     data = line.split( ':', 1 )
                     if len( data ) == 2:
@@ -206,7 +206,7 @@ class UserPerspectiveManager(HasTraits):
         """ Update the persistent file information. """
 
         try:
-            fh = file( self.file_name, 'w' )
+            fh = open( self.file_name, 'w' )
             fh.write( '\n'.join( [ '%s: %s' % ( p.id, p.name )
                                    for p in self.perspectives ] ) )
             fh.close()

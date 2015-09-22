@@ -18,7 +18,7 @@
 from traits.api import Enum, Unicode
 
 # Local imports.
-from i_dialog import IDialog
+from pyface.i_dialog import IDialog
 
 
 class IMessageDialog(IDialog):

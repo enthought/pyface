@@ -4,7 +4,7 @@ from traits.api import Instance
 
 # Local imports.
 from pyface.tasks.task import Task
-from task_action import TaskAction
+from pyface.tasks.action.task_action import TaskAction
 
 
 class TaskActionController(ActionController):

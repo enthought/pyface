@@ -18,8 +18,8 @@
 from traits.api import Bool, Enum, Int, Str, Unicode
 
 # Local imports.
-from constant import OK
-from i_window import IWindow
+from pyface.constant import OK
+from pyface.i_window import IWindow
 
 
 class IDialog(IWindow):

@@ -13,7 +13,7 @@
 from traits.api import on_trait_change
 
 # Local imports.
-from workbench_action import WorkbenchAction
+from .workbench_action import WorkbenchAction
 
 
 class UserPerspectiveAction(WorkbenchAction):

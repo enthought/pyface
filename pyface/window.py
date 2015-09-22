@@ -15,7 +15,9 @@
 
 
 # Import the toolkit specific version.
-from toolkit import toolkit_object
+from __future__ import absolute_import
+
+from .toolkit import toolkit_object
 Window = toolkit_object('window:Window')
 
 #### EOF ######################################################################

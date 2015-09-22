@@ -13,8 +13,8 @@
 #------------------------------------------------------------------------------
 
 # local imports
-from checkbox_image_renderer import CheckboxImageRenderer
-from grid_cell_renderer import GridCellRenderer
+from .checkbox_image_renderer import CheckboxImageRenderer
+from .grid_cell_renderer import GridCellRenderer
 
 class CheckboxRenderer(GridCellRenderer):
 

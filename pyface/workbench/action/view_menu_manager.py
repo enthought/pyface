@@ -10,9 +10,9 @@ from traits.api import Any, Bool, Instance, List, Str, Unicode
 from traits.api import on_trait_change
 
 # Local imports.
-from perspective_menu_manager import PerspectiveMenuManager
-from show_view_action import ShowViewAction
-from toggle_view_visibility_action import ToggleViewVisibilityAction
+from .perspective_menu_manager import PerspectiveMenuManager
+from .show_view_action import ShowViewAction
+from .toggle_view_visibility_action import ToggleViewVisibilityAction
 
 
 # Logging.
@@ -129,7 +129,7 @@ class ViewMenuManager(MenuManager):
         """ Initializes a group containing the view 'togglers'. """
 
         views = window.views[:]
-        views.sort(None, lambda view: view.name)
+        views.sort(key=lambda view: view.name)
 
         for view in views:
             # fixme: It seems a little smelly to be reaching in to the window

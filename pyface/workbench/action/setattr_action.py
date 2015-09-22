@@ -5,7 +5,7 @@
 from traits.api import Any, Str
 
 # Local imports.
-from workbench_action import WorkbenchAction
+from .workbench_action import WorkbenchAction
 
 
 class SetattrAction(WorkbenchAction):
