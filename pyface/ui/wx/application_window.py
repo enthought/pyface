@@ -189,6 +189,15 @@ class ApplicationWindow(MApplicationWindow, Window):
         super(ApplicationWindow, self).destroy()
 
     ###########################################################################
+    # 'IWindow' interface.
+    ###########################################################################
+
+    def close(self):
+        if AUI:
+            self._aui_manager.UnInit()
+        super(ApplicationWindow, self).close()
+            
+    ###########################################################################
     # Private interface.
     ###########################################################################
 
