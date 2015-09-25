@@ -11,8 +11,9 @@
 #------------------------------------------------------------------------------
 
 import logging
-logging.warn('DEPRECATED: pyface.wx.clipboard, '
-             'use pyface.api instead.')
+
+logger = logging.getLogger()
+logger.warning('DEPRECATED: pyface.wx.clipboard, use pyface.api instead.')
 
 from pyface.ui.wx.clipboard import Clipboard
 clipboard = Clipboard()
