@@ -11,41 +11,35 @@
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
 #------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-#
-#  Provides a simple function for scheduling some code to run at some time in
-#  the future (assumes application is wxPython based).
-#
-#  Written by: David C. Morrill
-#
-#  Date: 05/18/2005
-#
-#  (c) Copyright 2005 by Enthought, Inc.
-#
-#-------------------------------------------------------------------------------
-
-#-------------------------------------------------------------------------------
-#  Imports:
-#-------------------------------------------------------------------------------
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 DoLaterTimer = toolkit_object('timer.do_later:DoLaterTimer')
 
-#-------------------------------------------------------------------------------
-#  Does something 50 milliseconds from now:
-#-------------------------------------------------------------------------------
 
-def do_later ( callable, *args, **kw_args ):
+def do_later(callable, *args, **kw_args):
     """ Does something 50 milliseconds from now.
+
+    Parameters
+    ----------
+    callable : callable
+        The callable to call in 50ms time.
+    args, kwargs :
+        Arguments to be passed through to the callable.
     """
-    DoLaterTimer( 50, callable, args, kw_args )
+    DoLaterTimer(50, callable, args, kw_args)
 
-#-------------------------------------------------------------------------------
-#  Does something after some specified time interval:
-#-------------------------------------------------------------------------------
 
-def do_after ( interval, callable, *args, **kw_args ):
+def do_after(interval, callable, *args, **kw_args):
     """ Does something after some specified time interval.
+
+    Parameters
+    ----------
+    interval : float
+        The time interval to wait before calling.
+    callable : callable
+        The callable to call in 50ms time.
+    args, kwargs :
+        Arguments to be passed through to the callable.
     """
-    DoLaterTimer( interval, callable, args, kw_args )
+    DoLaterTimer(interval, callable, args, kw_args)

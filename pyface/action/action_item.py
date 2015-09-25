@@ -33,29 +33,29 @@ class ActionItem(ActionManagerItem):
 
     #### 'ActionManagerItem' interface ########################################
 
-    # The item's unique identifier ('unique' in this case means unique within
-    # its group).
+    #: The item's unique identifier ('unique' in this case means unique within
+    #: its group).
     id = Property(Str)
 
     #### 'ActionItem' interface ###############################################
 
-    # The action!
+    #: The action!
     action = Instance(Action)
 
-    # The toolkit specific control created for this item.
+    #: The toolkit specific control created for this item.
     control = Any
 
-    # The toolkit specific Id of the control created for this item.
+    #: The toolkit specific Id of the control created for this item.
     #
-    # We have to keep the Id as well as the control because wx tool bar tools
-    # are created as 'wxObjectPtr's which do not have Ids, and the Id is
-    # required to manipulate the state of a tool via the tool bar 8^(
+    #: We have to keep the Id as well as the control because wx tool bar tools
+    #: are created as 'wxObjectPtr's which do not have Ids, and the Id is
+    #: required to manipulate the state of a tool via the tool bar 8^(
     # FIXME v3: Why is this part of the public interface?
     control_id = Any
 
     #### Private interface ####################################################
 
-    # All of the internal instances that wrap this item.
+    #: All of the internal instances that wrap this item.
     _wrappers = List(Any)
 
     ###########################################################################
@@ -65,30 +65,19 @@ class ActionItem(ActionManagerItem):
     #### Trait properties #####################################################
 
     def _get_id(self):
-        """ Return's the item's Id. """
-
         return self.action.id
 
     #### Trait change handlers ################################################
 
     def _enabled_changed(self, trait_name, old, new):
-        """ Static trait change handler. """
-
         self.action.enabled = new
 
-        return
-
     def _visible_changed(self, trait_name, old, new):
-        """ Static trait change handler. """
-
         self.action.visible = new
-
-        return
 
     @on_trait_change('_wrappers.control')
     def _on_destroy(self, object, name, old, new):
-        """ Handle the destruction of the wrapper.
-        """
+        """ Handle the destruction of the wrapper. """
         if name == 'control' and new is None:
             self._wrappers.remove(object)
 
@@ -97,8 +86,17 @@ class ActionItem(ActionManagerItem):
     ###########################################################################
 
     def add_to_menu(self, parent, menu, controller):
-        """ Adds the item to a menu. """
+        """ Add the item to a menu.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The parent of the new menu item control.
+        menu : toolkit menu
+            The menu to add the action item to.
+        controller : ActionController instance or None
+            The controller to use.
+        """
         if (controller is None) or controller.can_add_to_menu(self.action):
             wrapper = _MenuItem(parent, menu, self, controller)
 
@@ -109,12 +107,23 @@ class ActionItem(ActionManagerItem):
 
             self._wrappers.append(wrapper)
 
-        return
-
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
                        show_labels=True):
-        """ Adds the item to a tool bar. """
+        """ Adds the item to a tool bar.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The parent of the new menu item control.
+        tool_bar : toolkit toolbar
+            The toolbar to add the action item to.
+        image_cache : ImageCache instance
+            The image cache for resized images.
+        controller : ActionController instance or None
+            The controller to use.
+        show_labels : bool
+            Should the toolbar item show a label.
+        """
         if (controller is None) or controller.can_add_to_toolbar(self.action):
             wrapper = _Tool(
                 parent, tool_bar, image_cache, self, controller, show_labels
@@ -127,25 +136,26 @@ class ActionItem(ActionManagerItem):
 
             self._wrappers.append(wrapper)
 
-        return
-
     def add_to_palette(self, tool_palette, image_cache, show_labels=True):
-        """ Adds the item to a tool palette. """
+        """ Adds the item to a tool palette.
 
+        Parameters
+        ----------
+        parent : toolkit control
+            The parent of the new menu item control.
+        tool_palette : toolkit tool palette
+            The tool palette to add the action item to.
+        image_cache : ImageCache instance
+            The image cache for resized images.
+        show_labels : bool
+            Should the toolbar item show a label.
+        """
         wrapper = _PaletteTool(tool_palette, image_cache, self, show_labels)
-
         self._wrappers.append(wrapper)
-
-        return
 
     def destroy(self):
         """ Called when the action is no longer required.
 
         By default this method calls 'destroy' on the action itself.
         """
-
         self.action.destroy()
-
-        return
-
-#### EOF ######################################################################

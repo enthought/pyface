@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2015, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -22,21 +22,25 @@ class SplashScreenLogHandler(Handler):
     """ A log handler that displays log messages on a splash screen. """
 
     def __init__(self, splash_screen):
-        """ Creates a new handler for a splash screen. """
+        """ Creates a new handler for a splash screen.
 
+        Parameters
+        ----------
+        splash_screen : ISplashScreen instance
+            The splash screen being used to display the log messages
+        """
         # Base class constructor.
-        Handler.__init__(self)
+        super(SplashScreenLogHandler, self).__init__()
 
         # The splash screen that we will display log messages on.
         self._splash_screen = splash_screen
 
-        return
-
     def emit(self, record):
-        """ Emits the log record. """
+        """ Emits the log record's message to the splash screen.
 
+        Parameters
+        ----------
+        record : logging record instance
+            The log record to be displayed.
+        """
         self._splash_screen.text = unicode(record.getMessage()) + u'...'
-
-        return
-
-#### EOF ######################################################################

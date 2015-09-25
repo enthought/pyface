@@ -34,7 +34,3 @@ class SplitPanel(Widget, SplitWidget):
 
         # Create the widget's toolkit-specific control.
         self.control = self._create_splitter(parent)
-
-        return
-
-#### EOF ######################################################################

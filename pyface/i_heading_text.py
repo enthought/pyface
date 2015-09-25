@@ -26,16 +26,16 @@ class IHeadingText(Interface):
 
     #### 'IHeadingText' interface #############################################
 
-    # Heading level.
+    #: Heading level.
     #
     # fixme: Currently we ignore anything but one, but in future we could
     # have different visualizations based on the level.
     level = Int(1)
 
-    # The heading text.
+    #: The heading text.
     text = Unicode('Default')
 
-    # The background image.
+    #: The background image.
     image = Instance(IImageResource)
 
 
@@ -43,5 +43,3 @@ class MHeadingText(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """
-
-#### EOF ######################################################################

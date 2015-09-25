@@ -13,28 +13,68 @@ class ActionController(HasTraits):
     ###########################################################################
 
     def perform(self, action, event):
-        """ Control an action invocation. """
+        """ Control an action invocation.
 
+        Parameters
+        ----------
+        action : Action instance
+            The action to perform.
+        event : ActionEvent instance
+            The event that triggered the action.
+
+        Returns
+        -------
+        result : any
+            The result of the action's perform method (usually None).
+        """
         return action.perform(event)
 
     def can_add_to_menu(self, action):
-        """ Returns True if the action can be added to a menu/menubar. """
+        """ Can add an action to a menu
 
+        Parameters
+        ----------
+        action : Action instance
+            The action to consider.
+
+        Returns
+        -------
+        can_add : bool
+            ``True` if the action can be added to a menu/menubar.
+        """
         return True
 
     def add_to_menu(self, action):
-        """ Called when an action is added to the a menu/menubar. """
+        """ Called when an action is added to the a menu/menubar.
 
-        return
+        Parameters
+        ----------
+        action : Action instance
+            The action added to the menu.
+        """
+        pass
 
     def can_add_to_toolbar(self, action):
-        """ Returns True if the action can be added to a toolbar. """
+        """ Returns True if the action can be added to a toolbar.
 
+        Parameters
+        ----------
+        action : Action instance
+            The action to consider.
+
+        Returns
+        -------
+        can_add : bool
+            ``True` if the action can be added to a toolbar.
+        """
         return True
 
     def add_to_toolbar(self, action):
-        """ Called when an action is added to the a toolbar. """
+        """ Called when an action is added to the a toolbar.
 
-        return
-
-#### EOF ######################################################################
+        Parameters
+        ----------
+        action : Action instance
+            The action added to the toolbar.
+        """
+        pass

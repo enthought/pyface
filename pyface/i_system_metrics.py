@@ -23,14 +23,14 @@ class ISystemMetrics(Interface):
 
     #### 'ISystemMetrics' interface ###########################################
 
-    # The width of the screen in pixels.
+    #: The width of the screen in pixels.
     screen_width = Int
 
-    # The height of the screen in pixels.
+    #: The height of the screen in pixels.
     screen_height = Int
 
-    # Background color of a standard dialog window as a tuple of RGB values
-    # between 0.0 and 1.0.
+    #: Background color of a standard dialog window as a tuple of RGB values
+    #: between 0.0 and 1.0.
     # FIXME v3: Why isn't this a traits colour?
     dialog_background_color = Tuple
 
@@ -39,5 +39,3 @@ class MSystemMetrics(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISystemMetrics interface.
     """
-
-#### EOF ######################################################################

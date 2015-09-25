@@ -26,10 +26,10 @@ class IPythonShell(IWidget):
 
     #### 'IPythonShell' interface #############################################
 
-    # A command has been executed.
+    #: A command has been executed.
     command_executed = Event
 
-    # A key has been pressed.
+    #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
     ###########################################################################
@@ -37,23 +37,47 @@ class IPythonShell(IWidget):
     ###########################################################################
 
     def interpreter(self):
-        """ Returns the code.InteractiveInterpreter instance. """
+        """ Get the shell's interpreter
+
+        Returns
+        -------
+        interpreter : InteractiveInterpreter instance
+            Returns the InteractiveInterpreter instance.
+        """
 
     def bind(self, name, value):
-        """ Binds a name to a value in the interpreter's namespace. """
+        """ Binds a name to a value in the interpreter's namespace.
+
+        Parameters
+        ----------
+        name : str
+            The python idetifier to bind the value to.
+        value : any
+            The python object to be bound into the interpreter's namespace.
+        """
 
     def execute_command(self, command, hidden=True):
         """ Execute a command in the interpreter.
 
-        If 'hidden' is True then nothing is shown in the shell - not even
-        a blank line.
+        Parameters
+        ----------
+        command : str
+            A Python command to execute.
+        hidden : bool
+            If 'hidden' is True then nothing is shown in the shell - not even
+            a blank line.
         """
 
     def execute_file(self, path, hidden=True):
         """ Execute a file in the interpeter.
 
-        If 'hidden' is True then nothing is shown in the shell - not even
-        a blank line.
+        Parameters
+        ----------
+        path : str
+            The path to the Python file to execute.
+        hidden : bool
+            If 'hidden' is True then nothing is shown in the shell - not even
+            a blank line.
         """
 
 
@@ -69,8 +93,15 @@ class MPythonShell(object):
     ###########################################################################
 
     def bind(self, name, value):
-        """ Binds a name to a value in the interpreter's namespace. """
+        """ Binds a name to a value in the interpreter's namespace.
 
+        Parameters
+        ----------
+        name : str
+            The python idetifier to bind the value to.
+        value : any
+            The python object to be bound into the interpreter's namespace.
+        """
         self.interpreter().locals[name] = value
 
     ###########################################################################
@@ -81,5 +112,3 @@ class MPythonShell(object):
         """ Called when a command has been executed in the shell. """
 
         self.command_executed = self
-
-#### EOF ######################################################################

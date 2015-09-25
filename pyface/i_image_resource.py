@@ -26,14 +26,14 @@ class IImageResource(Interface):
 
     #### 'ImageResource' interface ############################################
 
-    # The absolute path to the image.
+    #: The absolute path to the image.
     absolute_path = Unicode
 
-    # The name of the image.
+    #: The name of the image.
     name = Unicode
 
-    # A list of directories, classes or instances that will be used to search
-    # for the image (see the resource manager for more details).
+    #: A list of directories, classes or instances that will be used to search
+    #: for the image (see the resource manager for more details).
     search_path = List
 
     ###########################################################################
@@ -48,16 +48,55 @@ class IImageResource(Interface):
     ###########################################################################
 
     def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource. """
+        """ Creates a toolkit specific image for this resource.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.
+
+        Returns
+        -------
+        image : toolkit image
+            The toolkit image corresponding to the resource and the specified
+            size.
+        """
 
     # FIXME v3: The need to distinguish between bitmaps and images is toolkit
     # specific so, strictly speaking, the conversion to a bitmap should be done
     # wherever the toolkit actually needs it.
     def create_bitmap(self, size=None):
-        """ Creates a toolkit specific bitmap for this resource. """
+        """ Creates a toolkit specific bitmap for this resource.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.
+
+        Returns
+        -------
+        image : toolkit image
+            The toolkit image corresponding to the resource and the specified
+            size as a bitmap.
+        """
 
     def create_icon(self, size=None):
-        """ Creates a toolkit-specific icon for this resource. """
+        """ Creates a toolkit-specific icon for this resource.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.
+
+        Returns
+        -------
+        image : toolkit image
+            The toolkit image corresponding to the resource and the specified
+            size as an icon.
+        """
 
 
 class MImageResource(object):
@@ -69,7 +108,7 @@ class MImageResource(object):
 
     #### Private interface ####################################################
 
-    # The image-not-found image.  Note that it is not a trait.
+    #: The image-not-found image.  Note that it is not a trait.
     _image_not_found = None
 
     ###########################################################################
@@ -92,8 +131,20 @@ class MImageResource(object):
     ###########################################################################
 
     def create_image(self, size=None):
-        """ Creates a toolkit specific image for this resource. """
+        """ Creates a toolkit specific image for this resource.
 
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.
+
+        Returns
+        -------
+        image : toolkit image
+            The toolkit image corresponding to the resource and the specified
+            size.
+        """
         ref = self._get_ref(size)
         if ref is not None:
             image = ref.load()
@@ -108,7 +159,19 @@ class MImageResource(object):
     ###########################################################################
 
     def _get_ref(self, size=None):
-        """ Return the resource manager reference to the image. """
+        """ Return the resource manager reference to the image.
+
+        Parameters
+        ----------
+        size : (int, int) or None
+            The desired size as a width, height tuple, or None if wanting
+            default image size.
+
+        Returns
+        -------
+        ref : ImageReference instance
+            The reference to the requested image.
+        """
 
         if self._ref is None:
             self._ref = resource_manager.locate_image(self.name,
@@ -117,7 +180,13 @@ class MImageResource(object):
         return self._ref
 
     def _get_image_not_found_image(self):
-        """ Returns the 'image not found' image. """
+        """ Returns the 'image not found' image.
+
+        Returns
+        -------
+        image : toolkit image
+            The 'not found' toolkit image.
+        """
 
         not_found = self._get_image_not_found()
 
@@ -129,8 +198,15 @@ class MImageResource(object):
 
         return image
 
+    @classmethod
     def _get_image_not_found(cls):
-        """ Returns the 'image not found' image resource. """
+        """ Returns the 'image not found' image resource.
+
+        Returns
+        -------
+        not_found : ImageResource instance
+            An image resource for the the 'not found' image.
+        """
 
         if cls._image_not_found is None:
             from pyface.image_resource import ImageResource
@@ -138,7 +214,3 @@ class MImageResource(object):
             cls._image_not_found = ImageResource('image_not_found')
 
         return cls._image_not_found
-
-    _get_image_not_found = classmethod(_get_image_not_found)
-
-#### EOF ######################################################################

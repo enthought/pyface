@@ -39,32 +39,32 @@ class ActionManager(HasTraits):
 
     #### 'ActionManager' interface ############################################
 
-    # The Id of the default group.
+    #: The Id of the default group.
     DEFAULT_GROUP = Constant('additions')
 
-    # The action controller (if any) used to control how actions are performed.
+    #: The action controller (if any) used to control how actions are performed.
     controller = Instance(ActionController)
 
-    # Is the action manager enabled?
+    #: Is the action manager enabled?
     enabled = Bool(True)
 
-    # All of the contribution groups in the manager.
+    #: All of the contribution groups in the manager.
     groups = Property(List(Group))
 
-    # The manager's unique identifier (if it has one).
+    #: The manager's unique identifier (if it has one).
     id = Str
 
-    # Is the action manager visible?
+    #: Is the action manager visible?
     visible = Bool(True)
 
     #### Events ####
 
-    # fixme: We probably need more granular events than this!
+    #: fixme: We probably need more granular events than this!
     changed = Event
 
     #### Private interface ####################################################
 
-    # All of the contribution groups in the manager.
+    #: All of the contribution groups in the manager.
     _groups = List(Group)
 
     ###########################################################################
@@ -72,8 +72,23 @@ class ActionManager(HasTraits):
     ###########################################################################
 
     def __init__(self, *args, **traits):
-        """ Creates a new menu manager. """
+        """ Creates a new action manager.
 
+        Parameters
+        ----------
+        args : collection of strings, Group instances, or ActionManagerItem instances
+            Positional arguments are interpreted as Items or Groups managed
+            by the action manager.
+
+        Notes
+        -----
+
+        If a Group is passed as a positional agrument then it is added to the
+        manager and any subsequent Items arguments are appended to the Group
+        until another Group is encountered.
+
+        If a string is passed, a Group is created with id set to the string.
+        """
         # Base class constructor.
         super(ActionManager, self).__init__(**traits)
 
@@ -109,8 +124,6 @@ class ActionManager(HasTraits):
 
                 group.append(arg)
 
-        return
-
     ###########################################################################
     # 'ActionManager' interface.
     ###########################################################################
@@ -118,35 +131,36 @@ class ActionManager(HasTraits):
     #### Trait properties #####################################################
 
     def _get_groups(self):
-        """ Returns the groups in the manager. """
-
         return self._groups[:]
 
     #### Trait change handlers ################################################
 
     def _enabled_changed(self, trait_name, old, new):
-        """ Static trait change handler. """
-
         for group in self._groups:
             group.enabled = new
 
-        return
-
     def _visible_changed(self, trait_name, old, new):
-        """ Static trait change handler. """
-
         for group in self._groups:
             group.visible = new
-
-        return
 
     #### Methods ##############################################################
 
     def append(self, item):
         """ Append an item to the manager.
 
-        See the documentation for 'insert'.
+        Parameters
+        ----------
+        item : string, Group instance or ActionManagerItem instance
+            The item to append.
 
+        Notes
+        -----
+
+        If the item is a group, the Group is appended to the manager's list
+        of groups.  It the item is a string, then a group is created with
+        the string as the ``id`` and the new group is appended to the list
+        of groups.  If the item is an ActionManagerItem then the item is
+        appended to the manager's defualt group.
         """
 
         return self.insert(len(self._groups), item)
@@ -156,36 +170,29 @@ class ActionManager(HasTraits):
 
         By default this method simply calls 'destroy' on all of the manager's
         groups.
-
         """
-
         for group in self.groups:
             group.destroy()
-
-        return
 
     def insert(self, index, item):
         """ Insert an item into the manager at the specified index.
 
-        The item can be:-
+        Parameters
+        ----------
+        index : int
+            The position at which to insert the object
+        item : string, Group instance or ActionManagerItem instance
+            The item to insert.
 
-        1) A 'Group' instance.
+        Notes
+        -----
 
-            In which case the group is inserted into the manager's list of
-            groups.
-
-        2) A string.
-
-            In which case a 'Group' instance is created with that Id, and then
-            inserted into the manager's list of groups.
-
-        3) An 'ActionManagerItem' instance.
-
-            In which case the item is inserted into the manager's default
-            group.
-
+        If the item is a group, the Group is inserted into the manager's list
+        of groups.  It the item is a string, then a group is created with
+        the string as the ``id`` and the new group is inserted into the list
+        of groups.  If the item is an ActionManagerItem then the item is
+        inserted into the manager's defualt group.
         """
-
         # 1) The item is a 'Group' instance.
         if isinstance(item, Group):
             group = item
@@ -214,87 +221,114 @@ class ActionManager(HasTraits):
         return group
 
     def find_group(self, id):
-        """ Return the group with the specified Id.
+        """ Find a group with a specified Id.
 
-        Return None if no such group exists.
+        Parameters
+        ----------
+        id : str
+            The id of the group to find.
 
+        Returns
+        -------
+        group : Group instance
+            The group which matches the id, or None if no such group exists.
         """
-
         for group in self._groups:
             if group.id == id:
-                break
-
+                return group
         else:
-            group = None
-
-        return group
+            return None
 
     def find_item(self, path):
-        """ Return the item found at the specified path.
+        """ Find an item using a path.
 
-        'path' is a '/' separated list of contribution Ids.
+        Parameters
+        ----------
+        path : str
+            A '/' separated list of contribution Ids.
 
-        Returns None if any component of the path is not found.
-
+        Returns
+        -------
+        item : ActionManagerItem or None
+            Returns the matching ActionManagerItem, or None if any component
+            of the path is not found.
         """
-
         components = path.split('/')
 
         # If there is only one component, then the path is just an Id so look
         # it up in this manager.
         if len(components) > 0:
             item = self._find_item(components[0])
-
             if len(components) > 1 and item is not None:
                 item = item.find_item('/'.join(components[1:]))
-
         else:
             item = None
 
         return item
 
     def walk(self, fn):
-        """ Walk the manager applying a function at every item. """
+        """ Walk the manager applying a function at every item.
 
+        The components are walked in pre-order.
+
+        Parameters
+        ----------
+        fn : callable
+            A callable to apply to the tree of groups and items, starting with
+            the manager.
+        """
         fn(self)
 
         for group in self._groups:
             self.walk_group(group, fn)
 
-        return
-
     def walk_group(self, group, fn):
-        """ Walk a group applying a function at every item. """
+        """ Walk a group applying a function at every item.
 
+        The components are walked in pre-order.
+
+        Parameters
+        ----------
+        fn : callable
+            A callable to apply to the tree of groups and items.
+        """
         fn(group)
 
         for item in group.items:
             if isinstance(item, Group):
                 self.walk_group(item, fn)
-
             else:
                 self.walk_item(item, fn)
 
-        return
-
     def walk_item(self, item, fn):
-        """ Walk an item (may be a sub-menu manager remember!). """
+        """ Walk an item (may be a sub-menu manager remember!).
 
+        The components are walked in pre-order.
+
+        Parameters
+        ----------
+        fn : callable
+            A callable to apply to the tree of items and subgroups.
+        """
         if hasattr(item, 'groups'):
             item.walk(fn)
-
         else:
             fn(item)
-
-        return
 
     ###########################################################################
     # Private interface.
     ###########################################################################
 
     def _get_default_group(self):
-        """ Returns the manager's default group. """
+        """ Returns the manager's default group.
 
+        This will create this group if it doesn't already exist.
+
+        Returns
+        -------
+        group : Group instance
+            The manager's default group.
+        """
         group = self.find_group(self.DEFAULT_GROUP)
         if group is None:
             group = Group(id=self.DEFAULT_GROUP)
@@ -303,21 +337,25 @@ class ActionManager(HasTraits):
         return group
 
     def _find_item(self, id):
-        """ Returns the item with the specified Id.
+        """ Find an item with a spcified Id.
 
-        Returns None if no such item exists.
+        Parameters
+        ----------
+        id : str
+            The id of the item to be found.
 
+        Returns
+        -------
+        item : ActionManagerItem or None
+            Returns the item with the specified Id, or None if no such item
+            exists.
         """
-
         for group in self.groups:
             item = group.find(id)
             if item is not None:
-                break
-
+                return item
         else:
-            item = None
-
-        return item
+            return None
 
     ###########################################################################
     # Debugging interface.
@@ -325,18 +363,14 @@ class ActionManager(HasTraits):
 
     def dump(self, indent=''):
         """ Render a manager! """
-
         print indent, 'Manager', self.id
         indent += '  '
 
         for group in self._groups:
             self.render_group(group, indent)
 
-        return
-
     def render_group(self, group, indent=''):
         """ Render a group! """
-
         print indent, 'Group', group.id
         indent += '    '
 
@@ -348,8 +382,6 @@ class ActionManager(HasTraits):
             else:
                 self.render_item(item, indent)
 
-        return
-
     def render_item(self, item, indent=''):
         """ Render an item! """
 
@@ -358,7 +390,3 @@ class ActionManager(HasTraits):
 
         else:
             print indent, 'Item', item.id
-
-        return
-
-#### EOF ######################################################################

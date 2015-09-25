@@ -85,7 +85,7 @@ pygments_style = 'sphinx'
 # The style sheet to use for HTML and HTML Help pages. A file of that name
 # must exist either in Sphinx' static/ path, or in one of the custom paths
 # given in html_static_path.
-html_style = 'default.css'
+#html_style = 'default.css'
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -96,7 +96,7 @@ html_style = 'default.css'
 
 # The name of an image file (within the static path) to place at the top of
 # the sidebar.
-html_logo = "_static/e-logo-rev.png"
+#html_logo = "_static/e-logo-rev.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -144,7 +144,28 @@ html_use_modindex = False
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ETSdoc'
+htmlhelp_basename = 'Pyfacedoc'
+
+# html theme information
+try:
+    import enthought_sphinx_theme
+
+    html_theme_path = [enthought_sphinx_theme.theme_path]
+    html_theme = 'enthought'
+except ImportError as exc:
+    import warnings
+    msg = "Can't find Enthought Sphinx Theme, using default.\nException was:\n{}"
+    warnings.warn(RuntimeWarning(msg.format(exc)))
+
+    # old defaults
+    html_logo = "e-logo-rev.png"
+    html_style = 'default.css'
+
+# Useful aliases to avoid repeating long URLs.
+extlinks = {'github-examples': (
+    'https://github.com/enthought/pyface/tree/master/examples/%s',
+    'github-examples')
+}
 
 
 # Options for LaTeX output
@@ -178,3 +199,10 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# Options for autodoc
+# -------------------
+
+autodoc_member_order = 'bysource'
+
+autodoc_mock_imports = ['wx', 'wx.grid', 'wx.lib', 'qt4']

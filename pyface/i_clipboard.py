@@ -24,19 +24,35 @@ class IClipboard(Interface):
     """ The interface for manipulating the toolkit clipboard.
     """
 
-    data_type       = Property  # The type of data in the clipboard (string)
-    data            = Property  # Arbitrary Python data
-    has_data        = Property  # Arbitrary Python data is available
+    #: The type of data in the clipboard (string)
+    data_type = Property
 
-    object_type     = Property  # Name of the class of object in the clipboard
-    object_data     = Property  # Python object data
-    has_object_data = Property  # Python object data is available
+    #: Arbitrary Python data stored in the clipboard
+    data = Property
 
-    text_data       = Property  # Text data
-    has_text_data   = Property  # Text data is available
+    #: Arbitrary Python data is available in the clipboard
+    has_data = Property
 
-    file_data       = Property  # File name data
-    has_file_data   = Property  # File name data is available
+    #: Name of the class of object in the clipboard
+    object_type = Property
+
+    #: Python object data
+    object_data = Property
+
+    #: Python object data is available
+    has_object_data = Property
+
+    #: Text data
+    text_data = Property
+
+    #: Text data is available
+    has_text_data = Property
+
+    #: File name data
+    file_data = Property
+
+    #: File name data is available
+    has_file_data = Property
 
 
 class BaseClipboard(HasStrictTraits):
@@ -44,19 +60,35 @@ class BaseClipboard(HasStrictTraits):
         implementations of IClipboard.
     """
 
-    data_type       = Property  # The type of data in the clipboard (string)
-    data            = Property  # Arbitrary Python data
-    has_data        = Property  # Arbitrary Python data is available
+    #: The type of data in the clipboard (string)
+    data_type = Property
 
-    object_type     = Property  # Name of the class of object in the clipboard
-    object_data     = Property  # Python object data
-    has_object_data = Property  # Python object data is available
+    #: Arbitrary Python data stored in the clipboard
+    data = Property
 
-    text_data       = Property  # Text data
-    has_text_data   = Property  # Text data is available
+    #: Arbitrary Python data is available in the clipboard
+    has_data = Property
 
-    file_data       = Property  # File name data
-    has_file_data   = Property  # File name data is available
+    #: Name of the class of object in the clipboard
+    object_type = Property
+
+    #: Python object data
+    object_data = Property
+
+    #: Python object data is available
+    has_object_data = Property
+
+    #: Text data
+    text_data = Property
+
+    #: Text data is available
+    has_text_data = Property
+
+    #: File name data
+    file_data = Property
+
+    #: File name data is available
+    has_file_data = Property
 
     def _get_data(self):
         if self.has_text_data:

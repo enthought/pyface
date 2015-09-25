@@ -26,21 +26,21 @@ class IPythonEditor(Interface):
 
     #### 'IPythonEditor' interface ############################################
 
-    # Has the file in the editor been modified?
+    #: Has the file in the editor been modified?
     dirty = Bool(False)
 
-    # The pathname of the file being edited.
+    #: The pathname of the file being edited.
     path = Unicode
 
-    # Should line numbers be shown in the margin?
+    #: Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
 
     #### Events ####
 
-    # The contents of the editor has changed.
+    #: The contents of the editor has changed.
     changed = Event
 
-    # A key has been pressed.
+    #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
     ###########################################################################
@@ -48,10 +48,22 @@ class IPythonEditor(Interface):
     ###########################################################################
 
     def load(self, path=None):
-        """ Loads the contents of the editor. """
+        """ Loads the contents of the editor.
+
+        Parameters
+        ----------
+        path : str or None
+            The path to the file to load.
+        """
 
     def save(self, path=None):
-        """ Saves the contents of the editor. """
+        """ Saves the contents of the editor.
+
+        Parameters
+        ----------
+        path : str or None
+            The path to the file to save.
+        """
 
     # FIXME v3: This is very dependent on the underlying implementation.
     def set_style(self, n, fore, back):
@@ -60,7 +72,13 @@ class IPythonEditor(Interface):
         """
 
     def select_line(self, lineno):
-        """ Selects the specified line. """
+        """ Selects the specified line.
+
+        Parameters
+        ----------
+        lineno : int
+            The line number to select.
+        """
 
 
 class MPythonEditor(object):
@@ -75,7 +93,3 @@ class MPythonEditor(object):
 
         if self.control is not None:
             self.load()
-
-        return
-
-#### EOF ######################################################################

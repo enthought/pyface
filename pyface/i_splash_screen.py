@@ -31,33 +31,33 @@ class ISplashScreen(IWindow):
 
     #### 'ISplashScreen' interface ############################################
 
-    # The image to display on the splash screen.
+    #: The image to display on the splash screen.
     image = Instance(ImageResource, ImageResource('splash'))
 
-    # If log messages are to be displayed then this is the logging level. See
-    # the Python documentation for the 'logging' module for more details.
+    #: If log messages are to be displayed then this is the logging level. See
+    #: the Python documentation for the 'logging' module for more details.
     log_level = Int(logging.DEBUG)
 
-    # Should the splash screen display log messages in the splash text?
+    #: Should the splash screen display log messages in the splash text?
     show_log_messages = Bool(True)
 
-    # Optional text to display on top of the splash image.
+    #: Optional text to display on top of the splash image.
     text = Unicode
 
-    # The text color.
+    #: The text color.
     # FIXME v3: When TraitsUI supports PyQt then change this to 'Color',
     # (unless that needs the toolkit to be selected too soon, in which case it
     # may need to stay as Any - or Str?)
     #text_color = WxColor('black')
     text_color = Any
 
-    # The text font.
+    #: The text font.
     # FIXME v3: When TraitsUI supports PyQt then change this back to
     # 'Font(None)' with the actual default being toolkit specific.
     #text_font = Font(None)
     text_font = Any
 
-    # The x, y location where the text will be drawn.
+    #: The x, y location where the text will be drawn.
     # FIXME v3: Remove this.
     text_location  = Tuple(5, 5)
 
@@ -95,5 +95,3 @@ class MSplashScreen(object):
             logger.removeHandler(self._log_handler)
 
         super(MSplashScreen, self).close()
-
-#### EOF ######################################################################
