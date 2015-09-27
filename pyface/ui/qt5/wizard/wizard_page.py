@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
@@ -55,15 +55,15 @@ class WizardPage(MWizardPage, HasTraits):
         content = self._create_page_content(parent)
 
         # We allow some flexibility with the sort of control we are given.
-        if not isinstance(content, QtGui.QWizardPage):
+        if not isinstance(content, QtWidgets.QWizardPage):
             wp = _WizardPage(self)
 
-            if isinstance(content, QtGui.QLayout):
+            if isinstance(content, QtWidgets.QLayout):
                 wp.setLayout(content)
             else:
-                assert isinstance(content, QtGui.QWidget)
+                assert isinstance(content, QtWidgets.QWidget)
 
-                lay = QtGui.QVBoxLayout()
+                lay = QtWidgets.QVBoxLayout()
                 lay.addWidget(content)
 
                 wp.setLayout(lay)
@@ -93,7 +93,7 @@ class WizardPage(MWizardPage, HasTraits):
         """ Creates the actual page content. """
 
         # Dummy implementation - override!
-        control = QtGui.QWidget(parent)
+        control = QtWidgets.QWidget(parent)
 
         palette = control.palette()
         palette.setColor(QtGui.QPalette.Window, QtGui.QColor('yellow'))
@@ -103,14 +103,14 @@ class WizardPage(MWizardPage, HasTraits):
         return control
 
 
-class _WizardPage(QtGui.QWizardPage):
+class _WizardPage(QtWidgets.QWizardPage):
     """ A QWizardPage sub-class that hooks into the IWizardPage's 'complete'
     trait. """
 
     def __init__(self, page):
         """ Initialise the object. """
 
-        QtGui.QWizardPage.__init__(self)
+        QtWidgets.QWizardPage.__init__(self)
 
         self.pyface_wizard = None
 

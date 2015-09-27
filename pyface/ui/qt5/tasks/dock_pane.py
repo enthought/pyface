@@ -42,7 +42,7 @@ class DockPane(TaskPane, MDockPane):
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
         """
-        self.control = control = QtGui.QDockWidget(parent)
+        self.control = control = QtWidgets.QDockWidget(parent)
 
         # Set the widget's object name. This important for QMainWindow state
         # saving. Use the task ID and the pane ID to avoid collisions when a
@@ -89,7 +89,7 @@ class DockPane(TaskPane, MDockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        return QtGui.QWidget(parent)
+        return QtWidgets.QWidget(parent)
 
     ###########################################################################
     # Protected interface.
@@ -128,13 +128,13 @@ class DockPane(TaskPane, MDockPane):
     @on_trait_change('closable', 'floatable', 'movable')
     def _set_dock_features(self):
         if self.control is not None:
-            features = QtGui.QDockWidget.NoDockWidgetFeatures
+            features = QtWidgets.QDockWidget.NoDockWidgetFeatures
             if self.closable:
-                features |= QtGui.QDockWidget.DockWidgetClosable
+                features |= QtWidgets.QDockWidget.DockWidgetClosable
             if self.floatable:
-                features |= QtGui.QDockWidget.DockWidgetFloatable
+                features |= QtWidgets.QDockWidget.DockWidgetFloatable
             if self.movable:
-                features |= QtGui.QDockWidget.DockWidgetMovable
+                features |= QtWidgets.QDockWidget.DockWidgetMovable
             self.control.setFeatures(features)
 
     @on_trait_change('name')

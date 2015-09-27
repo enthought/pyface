@@ -613,13 +613,13 @@ class AdvancedCodeWidget(QtWidgets.QWidget):
         document = self.code.document()
         find_cursor = None
 
-        flags = QtWidgets.QTextDocument.FindFlags(0)
+        flags = QtGui.QTextDocument.FindFlags(0)
         if self.active_find_widget.case_action.isChecked():
-            flags |= QtWidgets.QTextDocument.FindCaseSensitively
+            flags |= QtGui.QTextDocument.FindCaseSensitively
         if self.active_find_widget.word_action.isChecked():
-            flags |= QtWidgets.QTextDocument.FindWholeWords
+            flags |= QtGui.QTextDocument.FindWholeWords
         if direction == 'backward':
-            flags |= QtWidgets.QTextDocument.FindBackward
+            flags |= QtGui.QTextDocument.FindBackward
 
         find_cursor = document.find(search_text, self.code.textCursor(), flags)
         if find_cursor.isNull() and wrap:

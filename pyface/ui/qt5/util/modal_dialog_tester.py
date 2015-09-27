@@ -52,7 +52,7 @@ class ModalDialogTester(object):
         self.function = function
         self._assigned = False
         self._result = Undefined
-        self._qt_app = QtGui.QApplication.instance()
+        self._qt_app = QtWidgets.QApplication.instance()
         self._gui = GUI()
         self._event_loop_error = []
         self._helper = EventLoopHelper(qt_app=self._qt_app, gui=self._gui)
@@ -243,7 +243,7 @@ class ModalDialogTester(object):
 
             raise type_(msg.format('\n\n'.join(tracebacks)))
 
-    def click_widget(self, text, type_=QtGui.QPushButton):
+    def click_widget(self, text, type_=QtWidgets.QPushButton):
         """ Execute click on the widget of `type_` with `text`.
 
         """
@@ -288,7 +288,7 @@ class ModalDialogTester(object):
         # window if this Tester is used for non-modal windows.
         return self._qt_app.activeModalWidget()
 
-    def has_widget(self, text=None, type_=QtGui.QPushButton):
+    def has_widget(self, text=None, type_=QtWidgets.QPushButton):
         """ Return true if there is a widget of `type_` with `text`.
 
         """
@@ -298,7 +298,7 @@ class ModalDialogTester(object):
             test = lambda qwidget: qwidget.text() == text
         return self.find_qt_widget(type_=type_, test=test) is not None
 
-    def find_qt_widget(self, type_=QtGui.QPushButton, test=None):
+    def find_qt_widget(self, type_=QtWidgets.QPushButton, test=None):
         """ Return the widget of `type_` for which `test` returns true.
 
         """

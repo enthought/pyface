@@ -31,7 +31,7 @@ class View(MView):
 
         from pyface.qt import QtGui
 
-        control = QtGui.QWidget(parent)
+        control = QtWidgets.QWidget(parent)
 
         palette = control.palette()
         palette.setColor(QtGui.QPalette.Window, QtGui.QColor('red'))

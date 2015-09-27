@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, Instance, List, Property, provides, Unicode
@@ -71,8 +71,8 @@ class Wizard(MWizard, Dialog):
 
     def _create_control(self, parent):
         control = _Wizard(parent, self)
-        control.setOptions(QtGui.QWizard.NoDefaultButton |
-                           QtGui.QWizard.NoBackButtonOnStartPage)
+        control.setOptions(QtWidgets.QWizard.NoDefaultButton |
+                           QtWidgets.QWizard.NoBackButtonOnStartPage)
         control.setModal(self.style == 'modal')
         control.setWindowTitle(self.title)
 
@@ -87,12 +87,11 @@ class Wizard(MWizard, Dialog):
             control.resize(size)
 
         if not self.show_cancel:
-            control.setOption(QtGui.QWizard.NoCancelButton)
+            control.setOption(QtWidgets.QWizard.NoCancelButton)
 
         if self.help_id:
-            control.setOption(QtGui.QWizard.HaveHelpButton)
-            QtCore.QObject.connect(control, QtCore.SIGNAL('helpRequested()'),
-                    self._help_requested)
+            control.setOption(QtWidgets.QWizard.HaveHelpButton)
+            control.helpRequested.connect(self._help_requested)
 
         # Add the initial pages.
         for page in self.pages:
@@ -155,14 +154,14 @@ class Wizard(MWizard, Dialog):
         return WizardController()
 
 
-class _Wizard(QtGui.QWizard):
+class _Wizard(QtWidgets.QWizard):
     """ A QWizard sub-class that hooks into the controller to determine the
     next page to show. """
 
     def __init__(self, parent, pyface_wizard):
         """ Initialise the object. """
 
-        QtGui.QWizard.__init__(self, parent)
+        QtWidgets.QWizard.__init__(self, parent)
 
         self._pyface_wizard = pyface_wizard
         self._controller = pyface_wizard.controller

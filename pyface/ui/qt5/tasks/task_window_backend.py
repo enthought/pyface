@@ -34,14 +34,14 @@ class TaskWindowBackend(MTaskWindowBackend):
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
-        QtGui.QApplication.instance().focusChanged.connect(
+        QtWidgets.QApplication.instance().focusChanged.connect(
             self._focus_changed_signal)
-        return QtGui.QStackedWidget(parent)
+        return QtWidgets.QStackedWidget(parent)
 
     def destroy(self):
         """ Destroy the backend.
         """
-        QtGui.QApplication.instance().focusChanged.disconnect(
+        QtWidgets.QApplication.instance().focusChanged.disconnect(
             self._focus_changed_signal)
         # signal to layout we don't need it any more
         self._main_window_layout.control = None

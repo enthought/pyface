@@ -37,7 +37,7 @@ class Editor(MEditor):
         from pyface.qt import QtCore, QtGui
 
         # By default we create a yellow panel!
-        control = QtGui.QWidget(parent)
+        control = QtWidgets.QWidget(parent)
 
         pal = control.palette()
         pal.setColour(QtGui.QPalette.Window, QtCore.Qt.yellow)

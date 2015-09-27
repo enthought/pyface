@@ -11,7 +11,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from pyface.qt import QtGui
+from pyface.qt import QtGui, QtWidgets
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
@@ -53,7 +53,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     ###########################################################################
 
     def _create_contents(self, parent):
-        panel = QtGui.QWidget(parent)
+        panel = QtWidgets.QWidget(parent)
 
         palette = QtGui.QPalette(panel.palette())
         palette.setColor(QtGui.QPalette.Window, QtGui.QColor('blue'))
@@ -167,7 +167,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             # Remove the old toolbars.
             for child in self.control.children():
-                if isinstance(child, QtGui.QToolBar):
+                if isinstance(child, QtWidgets.QToolBar):
                     self.control.removeToolBar(child)
                     child.deleteLater()
 

@@ -28,15 +28,15 @@ class CallTipWidget(QtWidgets.QLabel):
         self.setFont(text_edit.document().defaultFont())
         self.setForegroundRole(QtGui.QPalette.ToolTipText)
         self.setBackgroundRole(QtGui.QPalette.ToolTipBase)
-        self.setPalette(QtGui.QToolTip.palette())
+        self.setPalette(QtWidgets.QToolTip.palette())
 
         self.setAlignment(QtCore.Qt.AlignLeft)
         self.setIndent(1)
         self.setFrameStyle(QtWidgets.QFrame.NoFrame)
         self.setMargin(1 + self.style().pixelMetric(
-                QtGui.QStyle.PM_ToolTipLabelFrameWidth, None, self))
+                QtWidgets.QStyle.PM_ToolTipLabelFrameWidth, None, self))
         self.setWindowOpacity(self.style().styleHint(
-                QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None) / 255.0)
+                QtWidgets.QStyle.SH_ToolTipLabel_Opacity, None, self, None) / 255.0)
 
     def eventFilter(self, obj, event):
         """ Reimplemented to hide on certain key presses and on text edit focus

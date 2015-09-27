@@ -69,7 +69,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     ###########################################################################
 
     def _create_control(self, parent):
-        dlg = QtGui.QMessageBox(parent)
+        dlg = QtWidgets.QMessageBox(parent)
 
         dlg.setWindowTitle(self.title)
         dlg.setText(self.message)
@@ -77,15 +77,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         dlg.setDetailedText(self.detail)
 
         if self.image is None:
-            dlg.setIcon(QtGui.QMessageBox.Warning)
+            dlg.setIcon(QtWidgets.QMessageBox.Warning)
         else:
             dlg.setIconPixmap(self.image.create_image())
 
         # The 'Yes' button.
         if self.yes_label:
-            btn = dlg.addButton(self.yes_label, QtGui.QMessageBox.YesRole)
+            btn = dlg.addButton(self.yes_label, QtWidgets.QMessageBox.YesRole)
         else:
-            btn = dlg.addButton(QtGui.QMessageBox.Yes)
+            btn = dlg.addButton(QtWidgets.QMessageBox.Yes)
         self._button_result_map[btn] = YES
 
         if self.default == YES:
@@ -93,9 +93,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The 'No' button.
         if self.no_label:
-            btn = dlg.addButton(self.no_label, QtGui.QMessageBox.NoRole)
+            btn = dlg.addButton(self.no_label, QtWidgets.QMessageBox.NoRole)
         else:
-            btn = dlg.addButton(QtGui.QMessageBox.No)
+            btn = dlg.addButton(QtWidgets.QMessageBox.No)
         self._button_result_map[btn] = NO
 
         if self.default == NO:
@@ -104,9 +104,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         # The 'Cancel' button.
         if self.cancel:
             if self.cancel_label:
-                btn = dlg.addButton(self.cancel_label, QtGui.QMessageBox.RejectRole)
+                btn = dlg.addButton(self.cancel_label, QtWidgets.QMessageBox.RejectRole)
             else:
-                btn = dlg.addButton(QtGui.QMessageBox.Cancel)
+                btn = dlg.addButton(QtWidgets.QMessageBox.Cancel)
 
             self._button_result_map[btn] = CANCEL
 

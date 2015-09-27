@@ -25,7 +25,7 @@ class GutterWidget(QtWidgets.QWidget):
     def paintEvent(self, event):
         """ Paint the line numbers.
         """
-        painter = QtWidgets.QPainter(self)
+        painter = QtGui.QPainter(self)
         painter.fillRect(event.rect(), QtCore.Qt.lightGray)
 
     def wheelEvent(self, event):

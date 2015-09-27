@@ -41,7 +41,7 @@ class StatusBarManager(HasTraits):
         """ Creates a status bar. """
 
         if self.status_bar is None:
-            self.status_bar = QtGui.QStatusBar(parent)
+            self.status_bar = QtWidgets.QStatusBar(parent)
             self.status_bar.setSizeGripEnabled(self.size_grip)
             self.status_bar.setVisible(self.visible)
 

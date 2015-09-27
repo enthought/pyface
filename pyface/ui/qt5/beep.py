@@ -7,4 +7,4 @@ from pyface.qt import QtGui
 
 def beep():
     """Sound the system bell."""
-    QtGui.QApplication.beep()
+    QtWidgets.QApplication.beep()

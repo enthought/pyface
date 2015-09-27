@@ -41,13 +41,13 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     ###########################################################################
 
     def _get_screen_width(self):
-        return QtGui.QApplication.instance().desktop().screenGeometry().width()
+        return QtWidgets.QApplication.instance().desktop().screenGeometry().width()
 
     def _get_screen_height(self):
-        return QtGui.QApplication.instance().desktop().screenGeometry().height()
+        return QtWidgets.QApplication.instance().desktop().screenGeometry().height()
 
     def _get_dialog_background_color(self):
-        color = QtGui.QApplication.instance().palette().color(QtGui.QPalette.Window)
+        color = QtWidgets.QApplication.instance().palette().color(QtGui.QPalette.Window)
 
         return (color.redF(), color.greenF(), color.blueF())
 

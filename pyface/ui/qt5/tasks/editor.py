@@ -26,7 +26,7 @@ class Editor(MEditor):
         """ Create and set the toolkit-specific control that represents the
             pane.
         """
-        self.control = QtGui.QWidget(parent)
+        self.control = QtWidgets.QWidget(parent)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.

@@ -50,9 +50,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         else:
             next_seq = 'Ctrl+PgDown'
             prev_seq = 'Ctrl+PgUp'
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
 
         # Add shortcuts for switching to a specific tab.
@@ -61,7 +61,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         mapper.mapped.connect(self._activate_tab)
         for i in xrange(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
-            shortcut = QtGui.QShortcut(sequence, self.control)
+            shortcut = QtWidgets.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
             mapper.setMapping(shortcut, i - 1)
 
@@ -219,7 +219,7 @@ class EditorAreaMainWindowLayout(MainWindowLayout):
         return None
 
 
-class EditorAreaWidget(QtGui.QMainWindow):
+class EditorAreaWidget(QtWidgets.QMainWindow):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 
@@ -235,13 +235,13 @@ class EditorAreaWidget(QtGui.QMainWindow):
         # Fish out the rubber band used by Qt to indicate a drop region. We use
         # it to determine which dock widget is the hover widget.
         for child in self.children():
-            if isinstance(child, QtGui.QRubberBand):
+            if isinstance(child, QtWidgets.QRubberBand):
                 child.installEventFilter(self)
                 self._rubber_band = child
                 break
 
         # Monitor focus changes so we can set the active editor.
-        QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
+        QtWidgets.QApplication.instance().focusChanged.connect(self._focus_changed)
 
         # Configure the QMainWindow.
         # FIXME: Currently animation is not supported.
@@ -251,7 +251,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         self.setDocumentMode(True)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setTabPosition(QtCore.Qt.AllDockWidgetAreas,
-                            QtGui.QTabWidget.North)
+                            QtWidgets.QTabWidget.North)
 
     def add_editor_widget(self, editor_widget):
         """ Adds a dock widget to the editor area.
@@ -284,7 +284,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """ Gets all visible dock widgets.
         """
         return [ child for child in self.children()
-                 if isinstance(child, QtGui.QDockWidget) and child.isVisible() ]
+                 if isinstance(child, QtWidgets.QDockWidget) and child.isVisible() ]
 
     def get_dock_widgets_for_bar(self, tab_bar):
         """ Get the dock widgets, in order, attached to given tab bar.
@@ -311,15 +311,15 @@ class EditorAreaWidget(QtGui.QMainWindow):
         children = []
         for child in self.children():
             if (child.isWidgetType() and child.isVisible() and
-                ((isinstance(child, QtGui.QTabBar) and not visible_only) or
-                 (isinstance(child, QtGui.QDockWidget) and
+                ((isinstance(child, QtWidgets.QTabBar) and not visible_only) or
+                 (isinstance(child, QtWidgets.QDockWidget) and
                   (visible_only or not self.tabifiedDockWidgets(child))))):
                 children.append(child)
         children.sort(cmp=compare)
 
         widgets = []
         for child in children:
-            if isinstance(child, QtGui.QTabBar):
+            if isinstance(child, QtWidgets.QTabBar):
                 widgets.extend(self.get_dock_widgets_for_bar(child))
             else:
                 widgets.append(child)
@@ -393,7 +393,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         super(EditorAreaWidget, self).childEvent(event)
         if event.polished():
             child = event.child()
-            if isinstance(child, QtGui.QTabBar):
+            if isinstance(child, QtWidgets.QTabBar):
                 # Use UniqueConnections since Qt recycles the tab bars.
                 child.installEventFilter(self)
                 child.currentChanged.connect(self._tab_index_changed,
@@ -409,13 +409,13 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def eventFilter(self, obj, event):
         """ Reimplemented to dispatch to sub-handlers.
         """
-        if isinstance(obj, QtGui.QDockWidget):
+        if isinstance(obj, QtWidgets.QDockWidget):
             return self._filter_dock_widget(obj, event)
 
-        elif isinstance(obj, QtGui.QRubberBand):
+        elif isinstance(obj, QtWidgets.QRubberBand):
             return self._filter_rubber_band(obj, event)
 
-        elif isinstance(obj, QtGui.QTabBar):
+        elif isinstance(obj, QtWidgets.QTabBar):
             return self._filter_tab_bar(obj, event)
 
         return False
@@ -481,7 +481,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
             index = tab_bar.tabAt(event.pos())
             tooltip = widgets[index].editor.tooltip if index >= 0 else ''
             if tooltip:
-                QtGui.QToolTip.showText(event.globalPos(), tooltip, tab_bar)
+                QtWidgets.QToolTip.showText(event.globalPos(), tooltip, tab_bar)
             return True
 
         return False
@@ -525,7 +525,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         editor_widget.editor.close()
 
 
-class EditorWidget(QtGui.QDockWidget):
+class EditorWidget(QtWidgets.QDockWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 
@@ -534,8 +534,8 @@ class EditorWidget(QtGui.QDockWidget):
         self.editor = editor
         self.editor.create(self)
         self.setAllowedAreas(QtCore.Qt.LeftDockWidgetArea)
-        self.setFeatures(QtGui.QDockWidget.DockWidgetClosable |
-                         QtGui.QDockWidget.DockWidgetMovable)
+        self.setFeatures(QtWidgets.QDockWidget.DockWidgetClosable |
+                         QtWidgets.QDockWidget.DockWidgetMovable)
         self.setWidget(editor.control)
         self.update_title()
 
@@ -575,10 +575,10 @@ class EditorWidget(QtGui.QDockWidget):
             if not isinstance(current, EditorTitleBarWidget):
                 self.setTitleBarWidget(EditorTitleBarWidget(self))
         elif current is None or isinstance(current, EditorTitleBarWidget):
-            self.setTitleBarWidget(QtGui.QWidget())
+            self.setTitleBarWidget(QtWidgets.QWidget())
 
 
-class EditorTitleBarWidget(QtGui.QTabBar):
+class EditorTitleBarWidget(QtWidgets.QTabBar):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 
