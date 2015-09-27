@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Int, provides, Unicode
@@ -55,13 +55,13 @@ class HeadingText(MHeadingText, Widget):
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
 
-        self.control = QtGui.QLabel(parent)
+        self.control = QtWidgets.QLabel(parent)
         self._set_text(self.text)
 
-        self.control.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.control.setFrameShadow(QtGui.QFrame.Raised)
-        self.control.setSizePolicy(QtGui.QSizePolicy.Preferred,
-                                   QtGui.QSizePolicy.Fixed)
+        self.control.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.control.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.control.setSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                                   QtWidgets.QSizePolicy.Fixed)
 
     def _set_text(self, text):
         """ Set the text on the toolkit specific widget. """

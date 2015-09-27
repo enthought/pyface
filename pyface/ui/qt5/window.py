@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Enum, Event, Property, provides, Unicode
@@ -83,7 +83,7 @@ class Window(MWindow, Widget):
 
     def _create_control(self, parent):
         """ Create a default QMainWindow. """
-        control = QtGui.QMainWindow(parent)
+        control = QtWidgets.QMainWindow(parent)
 
         if self.size != (-1, -1):
             control.resize(*self.size)

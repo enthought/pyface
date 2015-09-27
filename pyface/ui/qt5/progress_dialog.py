@@ -15,8 +15,7 @@
 
 import time
 
-from pyface.qt import QtGui, QtCore
-
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports
 from traits.api import Bool, Enum, Instance, Int, provides, Unicode
@@ -33,7 +32,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     """
 
-    progress_bar = Instance(QtGui.QProgressBar)
+    progress_bar = Instance(QtWidgets.QProgressBar)
     title = Unicode
     message = Unicode
     min = Int
@@ -111,7 +110,7 @@ class ProgressDialog(MProgressDialog, Window):
             if self._user_cancelled:
                 self.close()
 
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
 
         return (not self._user_cancelled, False)
 
@@ -135,12 +134,12 @@ class ProgressDialog(MProgressDialog, Window):
             return
 
         # Create the button.
-        buttons = QtGui.QDialogButtonBox()
+        buttons = QtWidgets.QDialogButtonBox()
 
         if self.can_cancel:
-            buttons.addButton(self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole)
+            buttons.addButton(self.cancel_button_label, QtWidgets.QDialogButtonBox.RejectRole)
         if self.can_ok:
-            buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            buttons.addButton(QtWidgets.QDialogButtonBox.Ok)
 
         # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
 
@@ -153,13 +152,13 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_label(self, dialog, layout, text):
 
-        dummy = QtGui.QLabel(text, dialog)
+        dummy = QtWidgets.QLabel(text, dialog)
         dummy.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
 
-        label = QtGui.QLabel("unknown", dialog)
+        label = QtWidgets.QLabel("unknown", dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight)
 
-        sub_layout = QtGui.QHBoxLayout()
+        sub_layout = QtWidgets.QHBoxLayout()
 
         sub_layout.addWidget(dummy)
         sub_layout.addWidget(label)
@@ -170,8 +169,8 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_gauge(self, dialog, layout):
 
-        self.progress_bar = QtGui.QProgressBar(dialog)
-#        self.progress_bar.setFrameStyle(QtGui.QFrame.Sunken | QtGui.QFrame.Panel)
+        self.progress_bar = QtWidgets.QProgressBar(dialog)
+#        self.progress_bar.setFrameStyle(QtWidgets.QFrame.Sunken | QtWidgets.QFrame.Panel)
         self.progress_bar.setRange(self.min, self.max)
         layout.addWidget(self.progress_bar)
 
@@ -184,7 +183,7 @@ class ProgressDialog(MProgressDialog, Window):
         return
 
     def _create_message(self, dialog, layout):
-        label = QtGui.QLabel(self.message, dialog)
+        label = QtWidgets.QLabel(self.message, dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         layout.addWidget(label)
 
@@ -205,7 +204,7 @@ class ProgressDialog(MProgressDialog, Window):
         return
 
     def _create_control(self, parent):
-        return QtGui.QDialog(parent)
+        return QtWidgets.QDialog(parent)
 
     def _create(self):
         super(ProgressDialog, self)._create()
@@ -213,7 +212,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_contents(self, parent):
         dialog = parent
-        layout  = QtGui.QVBoxLayout(dialog)
+        layout  = QtWidgets.QVBoxLayout(dialog)
 
         # The 'guts' of the dialog.
         self._create_message(dialog, layout)

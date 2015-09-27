@@ -11,10 +11,10 @@
 
 import math
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 
-class GutterWidget(QtGui.QWidget):
+class GutterWidget(QtWidgets.QWidget):
 
     min_width = 5
     background_color = QtGui.QColor(220, 220, 220)
@@ -25,7 +25,7 @@ class GutterWidget(QtGui.QWidget):
     def paintEvent(self, event):
         """ Paint the line numbers.
         """
-        painter = QtGui.QPainter(self)
+        painter = QtWidgets.QPainter(self)
         painter.fillRect(event.rect(), QtCore.Qt.lightGray)
 
     def wheelEvent(self, event):

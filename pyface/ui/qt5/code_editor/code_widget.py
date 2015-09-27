@@ -14,7 +14,7 @@ import math
 import sys
 
 # System library imports
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Local imports
 from .find_widget import FindWidget
@@ -23,7 +23,7 @@ from .replace_widget import ReplaceWidget
 from .pygments_highlighter import PygmentsHighlighter
 
 
-class CodeWidget(QtGui.QPlainTextEdit):
+class CodeWidget(QtWidgets.QPlainTextEdit):
     """ A widget for viewing and editing code.
     """
 
@@ -80,7 +80,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.highlight_current_line()
 
         # Don't wrap text
-        self.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
+        self.setLineWrapMode(QtWidgets.QPlainTextEdit.NoWrap)
 
         # Key bindings
         self.indent_key = QtGui.QKeySequence(QtCore.Qt.Key_Tab)
@@ -171,7 +171,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         """ Highlight the line with the cursor.
         """
         if self.should_highlight_current_line:
-            selection = QtGui.QTextEdit.ExtraSelection()
+            selection = QtWidgets.QTextEdit.ExtraSelection()
             selection.format.setBackground(self.line_highlight_color)
             selection.format.setProperty(
                 QtGui.QTextFormat.FullWidthSelection, True)
@@ -412,7 +412,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         return super(CodeWidget, self).keyPressEvent(event)
 
     def resizeEvent(self, event):
-        QtGui.QPlainTextEdit.resizeEvent(self, event)
+        QtWidgets.QPlainTextEdit.resizeEvent(self, event)
         contents = self.contentsRect()
         self.line_number_widget.setGeometry(QtCore.QRect(contents.left(),
             contents.top(), self.line_number_widget.digits_width(),
@@ -429,12 +429,12 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def sizeHint(self):
         # Suggest a size that is 80 characters wide and 40 lines tall.
         style = self.style()
-        opt = QtGui.QStyleOptionHeader()
+        opt = QtWidgets.QStyleOptionHeader()
         font_metrics = QtGui.QFontMetrics(self.document().defaultFont())
         width = font_metrics.width(' ') * 80
         width += self.line_number_widget.sizeHint().width()
         width += self.status_widget.sizeHint().width()
-        width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent, opt, self)
+        width += style.pixelMetric(QtWidgets.QStyle.PM_ScrollBarExtent, opt, self)
         height = font_metrics.height() * 40
         return QtCore.QSize(width, height)
 
@@ -500,7 +500,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             return column == self._get_indent_position(cursor.block().text())
 
 
-class AdvancedCodeWidget(QtGui.QWidget):
+class AdvancedCodeWidget(QtWidgets.QWidget):
     """ Advanced widget for viewing and editing code, with support
         for search & replace
     """
@@ -537,7 +537,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.replace.replace_button.clicked.connect(self.replace_next)
         self.replace.replace_all_button.clicked.connect(self.replace_all)
 
-        layout = QtGui.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         layout.addWidget(self.code)
@@ -613,13 +613,13 @@ class AdvancedCodeWidget(QtGui.QWidget):
         document = self.code.document()
         find_cursor = None
 
-        flags = QtGui.QTextDocument.FindFlags(0)
+        flags = QtWidgets.QTextDocument.FindFlags(0)
         if self.active_find_widget.case_action.isChecked():
-            flags |= QtGui.QTextDocument.FindCaseSensitively
+            flags |= QtWidgets.QTextDocument.FindCaseSensitively
         if self.active_find_widget.word_action.isChecked():
-            flags |= QtGui.QTextDocument.FindWholeWords
+            flags |= QtWidgets.QTextDocument.FindWholeWords
         if direction == 'backward':
-            flags |= QtGui.QTextDocument.FindBackward
+            flags |= QtWidgets.QTextDocument.FindBackward
 
         find_cursor = document.find(search_text, self.code.textCursor(), flags)
         if find_cursor.isNull() and wrap:
@@ -747,7 +747,7 @@ if __name__ == '__main__':
 
     import sys
 
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = AdvancedCodeWidget(None)
 
     if len(sys.argv) > 1:

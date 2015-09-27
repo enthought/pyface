@@ -17,14 +17,15 @@ from io import BytesIO
 from cPickle import dumps, load, loads
 
 # System library imports
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore
+from pyface.qt.QtWidgets import QApplication
 
 # ETS imports
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Shortcuts
-cb = QtGui.QApplication.clipboard()
+cb = QApplication.clipboard()
 
 # Custom MIME type representing python objects
 PYTHON_TYPE = "python/object"
