@@ -140,6 +140,42 @@ def start_event_loop_qt4(app=None):
         app._in_event_loop = True
 
 #-----------------------------------------------------------------------------
+# qt5
+#-----------------------------------------------------------------------------
+
+def get_app_qt5(*args, **kwargs):
+    """Create a new qt5 app or return an existing one."""
+    from pyface.qt import QtWidgets
+    app = QtWidgets.QApplication.instance()
+    if app is None:
+        if not args:
+            args = ([''],)
+        app = QtWidgets.QApplication(*args, **kwargs)
+    return app
+
+def is_event_loop_running_qt5(app=None):
+    """Is the qt5 event loop running."""
+    if app is None:
+        app = get_app_qt5([''])
+    if hasattr(app, '_in_event_loop'):
+        return app._in_event_loop
+    else:
+        # Does qt5 provide a other way to detect this?
+        return False
+
+def start_event_loop_qt5(app=None):
+    """Start the qt4 event loop in a consistent manner."""
+    if app is None:
+        app = get_app_qt5([''])
+    if not is_event_loop_running_qt5(app):
+        app._in_event_loop = True
+        app.exec_()
+        app._in_event_loop = False
+    else:
+        app._in_event_loop = True
+
+        
+#-----------------------------------------------------------------------------
 # Tk
 #-----------------------------------------------------------------------------
 
