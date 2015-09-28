@@ -108,10 +108,10 @@ def start_event_loop_wx(app=None):
 # qt4
 #-----------------------------------------------------------------------------
 
-def get_app_qt4(*args, **kwargs):
+def get_app_qt4(*args, **kwargs): # TODO: is even called with qt_api='pyqt5'
     """Create a new qt4 app or return an existing one."""
-    from pyface.qt import QtGui
-    app = QtGui.QApplication.instance()
+    from pyface.qt import QtWidgets
+    app = QtWidgets.QApplication.instance() 
     if app is None:
         if not args:
             args = ([''],)
