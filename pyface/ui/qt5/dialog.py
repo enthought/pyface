@@ -76,8 +76,7 @@ class Dialog(MDialog, Window):
             btn = buttons.addButton(QtWidgets.QDialogButtonBox.Ok)
 
         btn.setDefault(True)
-        QtCore.QObject.connect(btn, QtCore.SIGNAL('clicked()'),
-                               self.control, QtCore.SLOT('accept()'))
+        btn.clicked.connect(self.control.accept)
 
         # 'Cancel' button.
         if self.cancel_label:
@@ -86,8 +85,7 @@ class Dialog(MDialog, Window):
         else:
             btn = buttons.addButton(QtWidgets.QDialogButtonBox.Cancel)
 
-        QtCore.QObject.connect(btn, QtCore.SIGNAL('clicked()'),
-                               self.control, QtCore.SLOT('reject()'))
+        btn.clicked.connect(self.control.reject)
 
         # 'Help' button.
         # FIXME v3: In the original code the only possible hook into the help

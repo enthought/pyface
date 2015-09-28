@@ -107,6 +107,8 @@ class _WizardPage(QtWidgets.QWizardPage):
     """ A QWizardPage sub-class that hooks into the IWizardPage's 'complete'
     trait. """
 
+    completeChanged = QtCore.Signal()
+
     def __init__(self, page):
         """ Initialise the object. """
 
@@ -137,6 +139,6 @@ class _WizardPage(QtWidgets.QWizardPage):
     def _on_complete_changed(self):
         """ The trait handler for when the page's completion state changes. """
 
-        self.emit(QtCore.SIGNAL('completeChanged()'))
+        self.emit(self.completeChanged)
 
 #### EOF ######################################################################
