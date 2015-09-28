@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtGui
+from pyface.qt import QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import HasTraits, Int, Property, provides, Tuple

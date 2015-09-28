@@ -8,7 +8,7 @@ from traits.api import HasTraits, Instance
 from traitsui.api import Group, UItem, View
 from traitsui.api import Tabbed as TabbedGroup
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtCore, QtWidgets
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
     SplitEditorAreaPane
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \

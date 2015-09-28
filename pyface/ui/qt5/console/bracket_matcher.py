@@ -2,7 +2,7 @@
 """
 
 # System library imports
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 
 class BracketMatcher(QtCore.QObject):

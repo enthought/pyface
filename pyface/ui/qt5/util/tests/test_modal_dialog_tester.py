@@ -12,7 +12,7 @@
 import unittest
 import cStringIO
 
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 from pyface.api import MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 from traitsui.api import CancelButton, OKButton, View

@@ -2,7 +2,7 @@
 
 """Sound the system bell, Qt implementation."""
 
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 
 
 def beep():

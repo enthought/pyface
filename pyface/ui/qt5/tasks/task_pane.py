@@ -3,7 +3,7 @@ from pyface.tasks.i_task_pane import ITaskPane, MTaskPane
 from traits.api import provides
 
 # System library imports.
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 
 # Local imports.
 from .util import set_focus

@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, List, Property, Str, \

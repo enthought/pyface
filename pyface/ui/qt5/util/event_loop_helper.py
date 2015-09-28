@@ -12,7 +12,7 @@ import contextlib
 import threading
 
 from pyface.gui import GUI
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 from traits.api import HasStrictTraits, Instance
 
 

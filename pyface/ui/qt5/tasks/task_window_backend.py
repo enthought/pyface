@@ -1,5 +1,5 @@
 # System library imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Instance, List

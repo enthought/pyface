@@ -8,7 +8,7 @@ import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper

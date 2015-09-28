@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from pyface.qt import QtGui, QtWidgets
+from pyface.qt import QtWidgets
 
 # Local imports.
 from pyface.action.action_manager import ActionManager
