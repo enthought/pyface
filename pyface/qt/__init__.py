@@ -39,6 +39,9 @@ if qt_api is None:
 elif qt_api == 'pyqt':
     prepare_pyqt4()
 
+elif qt_api == 'pyqt5':
+    import PyQt5
+
 elif qt_api != 'pyside':
     raise RuntimeError("Invalid Qt API %r, valid values are: 'pyqt' or 'pyside'"
                        % qt_api)
