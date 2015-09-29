@@ -40,7 +40,7 @@ class DoLaterTimer(QtCore.QTimer):
         self.args = args
         self.kw_args = kw_args
 
-        self.connect(self, QtCore.SIGNAL('timeout()'), self.Notify)
+        self.timeout.connect(self.Notify)
 
         self.setSingleShot(True)
         self.start(interval)

@@ -35,7 +35,7 @@ class Timer(QtCore.QTimer):
         self.args = args
         self.kw_args = kw_args
 
-        self.connect(self, QtCore.SIGNAL('timeout()'), self.Notify)
+        self.timeout.connect(self.Notify)
 
         self._is_active = True
         self.start(millisecs)

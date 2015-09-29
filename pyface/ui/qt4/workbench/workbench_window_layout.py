@@ -130,8 +130,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     def close(self):
         # Don't fire signals for editors that have destroyed their controls.
-        QtCore.QObject.disconnect(self._qt4_editor_area,
-                QtCore.SIGNAL('hasFocus'), self._qt4_editor_focus)
+        self._qt4_editor_area.hasFocus.disconnect(self._qt4_editor_focus)
 
         self._qt4_editor_area.clear()
 
@@ -143,19 +142,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def create_initial_layout(self, parent):
         self._qt4_editor_area = editor_area = SplitTabWidget(parent)
 
-        QtCore.QObject.connect(editor_area, QtCore.SIGNAL('hasFocus'),
-                               self._qt4_editor_focus)
+        editor_area.hasFocus.connect(self._qt4_editor_focus)
 
         # We are interested in focus changes but we get them from the editor
         # area rather than qApp to allow the editor area to restrict them when
         # needed.
-        QtCore.QObject.connect(
-            editor_area, QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
-            self._qt4_view_focus_changed)
+        editor_area.focusChanged.connect(self._qt4_view_focus_changed)
 
-        QtCore.QObject.connect(self._qt4_editor_area,
-                QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
-                self._qt4_editor_title_changed)
+        self._qt4_editor_area.tabTextChanged.connect(self._qt4_editor_title_changed)
 
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
@@ -501,10 +495,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             dw = QtGui.QDockWidget(view.name, self.window.control)
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
-            dw.connect(dw.toggleViewAction(), QtCore.SIGNAL('toggled(bool)'),
-                    self._qt4_handle_dock_visibility)
-            dw.connect(dw, QtCore.SIGNAL('visibilityChanged(bool)'),
-                    self._qt4_handle_dock_visibility)
+            dw.toggleViewAction().toggled.connect(self._qt4_handle_dock_visibility)
+            dw.visibilityChanged.connect(self._qt4_handle_dock_visibility)
 
             # Save the dock window.
             view._qt4_dock = dw
