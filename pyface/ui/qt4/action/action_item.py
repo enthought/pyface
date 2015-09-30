@@ -16,7 +16,7 @@
 from inspect import getargspec
 
 # Major package imports.
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtWidgets
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits
@@ -77,9 +77,9 @@ class _MenuItem(HasTraits):
 
         if getattr(action, 'menu_role', False):
             if action.menu_role == "About":
-                self.control.setMenuRole(QtGui.QAction.AboutRole)
+                self.control.setMenuRole(QtWidgets.QAction.AboutRole)
             elif action.menu_role == "Preferences":
-                self.control.setMenuRole(QtGui.QAction.PreferencesRole)
+                self.control.setMenuRole(QtWidgets.QAction.PreferencesRole)
 
         if action.style == 'toggle':
             self.control.setCheckable(True)
@@ -89,7 +89,7 @@ class _MenuItem(HasTraits):
             try:
                 ag = item.parent._qt4_ag
             except AttributeError:
-                ag = item.parent._qt4_ag = QtGui.QActionGroup(parent)
+                ag = item.parent._qt4_ag = QtWidgets.QActionGroup(parent)
 
             self.control.setActionGroup(ag)
 
@@ -282,7 +282,7 @@ class _Tool(HasTraits):
             try:
                 ag = item.parent._qt4_ag
             except AttributeError:
-                ag = item.parent._qt4_ag = QtGui.QActionGroup(parent)
+                ag = item.parent._qt4_ag = QtWidgets.QActionGroup(parent)
 
             self.control.setActionGroup(ag)
 

@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, Enum, Int, provides, Str, Unicode
@@ -25,12 +25,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted):     OK,
-    int(QtGui.QDialog.Rejected):     CANCEL,
-    int(QtGui.QMessageBox.Ok):       OK,
-    int(QtGui.QMessageBox.Cancel):   CANCEL,
-    int(QtGui.QMessageBox.Yes):      YES,
-    int(QtGui.QMessageBox.No):       NO
+    int(QtWidgets.QDialog.Accepted):     OK,
+    int(QtWidgets.QDialog.Rejected):     CANCEL,
+    int(QtWidgets.QMessageBox.Ok):       OK,
+    int(QtWidgets.QMessageBox.Cancel):   CANCEL,
+    int(QtWidgets.QMessageBox.Yes):      YES,
+    int(QtWidgets.QMessageBox.No):       NO
 }
 
 
@@ -66,14 +66,14 @@ class Dialog(MDialog, Window):
     ###########################################################################
 
     def _create_buttons(self, parent):
-        buttons = QtGui.QDialogButtonBox()
+        buttons = QtWidgets.QDialogButtonBox()
 
         # 'OK' button.
         if self.ok_label:
             btn = buttons.addButton(self.ok_label,
-                                    QtGui.QDialogButtonBox.AcceptRole)
+                                    QtWidgets.QDialogButtonBox.AcceptRole)
         else:
-            btn = buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            btn = buttons.addButton(QtWidgets.QDialogButtonBox.Ok)
 
         btn.setDefault(True)
         btn.clicked.connect(self.control.accept)
@@ -81,9 +81,9 @@ class Dialog(MDialog, Window):
         # 'Cancel' button.
         if self.cancel_label:
             btn = buttons.addButton(self.cancel_label,
-                                    QtGui.QDialogButtonBox.RejectRole)
+                                    QtWidgets.QDialogButtonBox.RejectRole)
         else:
-            btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
+            btn = buttons.addButton(QtWidgets.QDialogButtonBox.Cancel)
 
         btn.clicked.connect(self.control.reject)
 
@@ -94,17 +94,17 @@ class Dialog(MDialog, Window):
         # display it but can't actually use it.
         if len(self.help_id) > 0:
             if self.help_label:
-                buttons.addButton(self.help_label, QtGui.QDialogButtonBox.HelpRole)
+                buttons.addButton(self.help_label, QtWidgets.QDialogButtonBox.HelpRole)
             else:
-                buttons.addButton(QtGui.QDialogButtonBox.Help)
+                buttons.addButton(QtWidgets.QDialogButtonBox.Help)
 
         return buttons
 
     def _create_contents(self, parent):
-        layout = QtGui.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
 
         if not self.resizeable:
-            layout.setSizeConstraint(QtGui.QLayout.SetFixedSize)
+            layout.setSizeConstraint(QtWidgets.QLayout.SetFixedSize)
 
         layout.addWidget(self._create_dialog_area(parent))
         layout.addWidget(self._create_buttons(parent))
@@ -112,7 +112,7 @@ class Dialog(MDialog, Window):
         parent.setLayout(layout)
 
     def _create_dialog_area(self, parent):
-        panel = QtGui.QWidget(parent)
+        panel = QtWidgets.QWidget(parent)
         panel.setMinimumSize(QtCore.QSize(100, 200))
 
         palette = panel.palette()
@@ -132,7 +132,7 @@ class Dialog(MDialog, Window):
     ###########################################################################
 
     def _create_control(self, parent):
-        dlg = QtGui.QDialog(parent)
+        dlg = QtWidgets.QDialog(parent)
 
         # Setting return code and firing close events is handled for 'modal' in
         # MDialog's open method. For 'nonmodal', we do it here.

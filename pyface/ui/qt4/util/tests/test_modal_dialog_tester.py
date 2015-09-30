@@ -12,7 +12,7 @@
 import unittest
 import cStringIO
 
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 from pyface.api import MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 from traitsui.api import CancelButton, OKButton, View
@@ -116,7 +116,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QPushButton)
+                        tester.has_widget('OK', QtWidgets.QPushButton)
                     )
                     self.assertFalse(
                         tester.has_widget(text='I am a virtual button')
@@ -134,10 +134,10 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
-                        type_=QtGui.QPushButton,
+                        type_=QtWidgets.QPushButton,
                         test=lambda x: x.text() == 'OK'
                     )
-                    self.assertIsInstance(widget, QtGui.QPushButton)
+                    self.assertIsInstance(widget, QtWidgets.QPushButton)
             finally:
                 tester.close()
 

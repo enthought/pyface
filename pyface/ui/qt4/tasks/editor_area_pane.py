@@ -7,7 +7,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
 from traits.api import on_trait_change, provides
 
 # System library imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Local imports.
 from .task_pane import TaskPane
@@ -50,9 +50,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         else:
             next_seq = 'Ctrl+PgDown'
             prev_seq = 'Ctrl+PgUp'
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
 
         # Add shortcuts for switching to a specific tab.
@@ -61,7 +61,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         mapper.mapped.connect(self.control.setCurrentIndex)
         for i in xrange(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
-            shortcut = QtGui.QShortcut(sequence, self.control)
+            shortcut = QtWidgets.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
             mapper.setMapping(shortcut, i - 1)
 
@@ -178,7 +178,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxillary classes.
 ###############################################################################
 
-class EditorAreaWidget(QtGui.QTabWidget):
+class EditorAreaWidget(QtWidgets.QTabWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 

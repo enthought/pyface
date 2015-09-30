@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui, qt_api
+from pyface.qt import QtCore, QtWidgets, qt_api
 
 if qt_api == 'pyqt':
     # Check the version numbers are late enough.
@@ -30,9 +30,9 @@ if qt_api == 'pyqt':
         )
 
 # It's possible that it has already been initialised.
-_app = QtGui.QApplication.instance()
+_app = QtWidgets.QApplication.instance()
 
 if _app is None:
-    _app = QtGui.QApplication(sys.argv)
+    _app = QtWidgets.QApplication(sys.argv)
 
 #### EOF ######################################################################

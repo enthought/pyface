@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 
 # Enthought library imports.
 from traits.api import Enum, provides, Unicode
@@ -24,9 +24,9 @@ from .dialog import Dialog
 
 # Map the ETS severity to the corresponding PyQt standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    'information':  QtGui.QMessageBox.Information,
-    'warning':      QtGui.QMessageBox.Warning,
-    'error':        QtGui.QMessageBox.Critical
+    'information':  QtWidgets.QMessageBox.Information,
+    'warning':      QtWidgets.QMessageBox.Warning,
+    'error':        QtWidgets.QMessageBox.Critical
 }
 
 
@@ -61,8 +61,8 @@ class MessageDialog(MMessageDialog, Dialog):
 
     def _create_control(self, parent):
         # FIXME: should be possble to set ok_label, but not implemented
-        message_box = QtGui.QMessageBox(_SEVERITY_TO_ICON_MAP[self.severity],
-                self.title, self.message, QtGui.QMessageBox.Ok, parent)
+        message_box = QtWidgets.QMessageBox(_SEVERITY_TO_ICON_MAP[self.severity],
+                self.title, self.message, QtWidgets.QMessageBox.Ok, parent)
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
         return message_box

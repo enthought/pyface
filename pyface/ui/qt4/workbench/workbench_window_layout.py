@@ -15,7 +15,7 @@
 import logging
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Instance, on_trait_change
@@ -492,7 +492,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         try:
             dw = view._qt4_dock
         except AttributeError:
-            dw = QtGui.QDockWidget(view.name, self.window.control)
+            dw = QtWidgets.QDockWidget(view.name, self.window.control)
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
             dw.toggleViewAction().toggled.connect(self._qt4_handle_dock_visibility)
@@ -592,7 +592,7 @@ class _Monitor(QtCore.QObject):
         return False
 
 
-class _ViewContainer(QtGui.QMainWindow):
+class _ViewContainer(QtWidgets.QMainWindow):
     """ This class is a container for a view that allows an initial size
     (specified as a tuple) to be set.
     """
@@ -600,7 +600,7 @@ class _ViewContainer(QtGui.QMainWindow):
     def __init__(self, size, main_window):
         """ Initialise the object. """
 
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
 
         # Save the size and main window.
         self._width, self._height = size
@@ -636,6 +636,6 @@ class _ViewContainer(QtGui.QMainWindow):
 
         self._width = self._height = -1
 
-        QtGui.QMainWindow.showEvent(self, e)
+        QtWidgets.QMainWindow.showEvent(self, e)
 
 #### EOF ######################################################################

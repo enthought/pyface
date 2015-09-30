@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Callable, Enum, Float, HasTraits, provides
@@ -46,7 +46,7 @@ class SplitWidget(MSplitWidget, HasTraits):
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
 
-        splitter = QtGui.QSplitter(parent)
+        splitter = QtWidgets.QSplitter(parent)
 
         # Yes, this is correct.
         if self.direction == 'horizontal':
@@ -76,12 +76,12 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
-            if not isinstance(lhs, QtGui.QWidget):
+            if not isinstance(lhs, QtWidgets.QWidget):
                 lhs = lhs.control
 
         else:
             # Dummy implementation - override!
-            lhs = QtGui.QWidget(parent)
+            lhs = QtWidgets.QWidget(parent)
 
         return lhs
 
@@ -90,12 +90,12 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
-            if not isinstance(rhs, QtGui.QWidget):
+            if not isinstance(rhs, QtWidgets.QWidget):
                 rhs = rhs.control
 
         else:
             # Dummy implementation - override!
-            rhs = QtGui.QWidget(parent)
+            rhs = QtWidgets.QWidget(parent)
 
         return rhs
 
