@@ -26,6 +26,8 @@ class SplitTabWidget(QtWidgets.QSplitter):
     """
 
     # Signals for WorkbenchWindowLayout to handle
+    hasFocus = QtCore.Signal(QtWidgets.QWidget)
+    focusChanged = QtCore.Signal(QtWidgets.QWidget, QtWidgets.QWidget)
     new_window_request = QtCore.Signal(QtCore.QPoint, QtWidgets.QWidget)
     tab_close_request = QtCore.Signal(QtWidgets.QWidget)
     tab_window_changed = QtCore.Signal(QtWidgets.QWidget)
