@@ -24,12 +24,18 @@ supported Python-based GUI toolkit and the appropriate toolkit-specific backend
 project. Conversely, if you wish to use Traits without a UI, a "null" backend
 is automatically used in the absence of a real backend.
 
-Currently, the supported GUI toolkits are wxPython, PySide and PyQt. While all
-toolkits funtion with Traits, integration with wxPython is currently more
-complete. All future development, however, will focus on supporting Qt.
+Currently, the supported GUI toolkits are
 
-.. warning:: Currently the default toolkit if none is supplied is 'wx', but
-   this will change to `qt` in Pyface 5.0.
+* wxPython (>= 2.8, including experimental support for WxPython 3.0)
+* PySide
+* PyQt (Qt4 only, but Qt5 support is in development)
+
+While all toolkits funtion with Pyface, integration with wxPython is currently
+more complete.  Future development, however, will be more focused on
+supporting Qt.
+
+.. warning:: The default toolkit if none is supplied is ``qt4``.
+   This changed from ``wx`` in Pyface 5.0.
 
 NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt's GPL or proprietary licensing will
