@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     
-    <title>resource Package &mdash; pyface 4.5.2 documentation</title>
+    <title>resource Package &mdash; pyface 4.6.0.dev209 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.2',
+        VERSION:     '4.6.0.dev209',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,38 +23,60 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.2 documentation" href="../index.html" />
-    <link rel="up" title="pyface Package" href="pyface.html" />
-    <link rel="next" title="sizers Package" href="pyface.sizers.html" />
-    <link rel="prev" title="qt Package" href="pyface.qt.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico">
+    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="sizers Package" href="pyface.sizers.html" >
+    <link rel="prev" title="qt Package" href="pyface.qt.html" > 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="pyface.sizers.html" title="sizers Package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pyface.qt.html" title="qt Package"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.2 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
 
-    <div class="document">
-      <div class="documentwrapper">
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.sizers.html" title="sizers Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.qt.html" title="qt Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body" id="spc-section-body">
             
   <div class="section" id="resource-package">
 <h1>resource Package<a class="headerlink" href="#resource-package" title="Permalink to this headline">¶</a></h1>
@@ -74,15 +96,15 @@ Part of the TraitsGUI project of the Enthought Tool Suite.</p>
 <em class="property">class </em><code class="descclassname">pyface.resource.resource_factory.</code><code class="descname">ResourceFactory</code><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Default base-class for resource factories.</p>
 <dl class="method">
-<dt id="pyface.resource.resource_factory.ResourceFactory.image_from_data">
-<code class="descname">image_from_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory.image_from_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an image from the specified data.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.resource.resource_factory.ResourceFactory.image_from_file">
 <code class="descname">image_from_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory.image_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an image from the data in the specified filename.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.resource.resource_factory.ResourceFactory.image_from_data">
+<code class="descname">image_from_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory.image_from_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an image from the specified data.</p>
 </dd></dl>
 
 </dd></dl>
@@ -106,15 +128,15 @@ and sounds etc.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pyface.resource.resource_manager.ResourceManager.load_image">
-<code class="descname">load_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads an image.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.resource.resource_manager.ResourceManager.locate_image">
 <code class="descname">locate_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.locate_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locates an image.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.resource.resource_manager.ResourceManager.load_image">
+<code class="descname">load_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an image.</p>
 </dd></dl>
 
 </dd></dl>
@@ -145,19 +167,6 @@ for our default resource sub-dirs as children.</p>
 <span id="resource-reference-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">resource_reference</span></code> Module<a class="headerlink" href="#module-pyface.resource.resource_reference" title="Permalink to this headline">¶</a></h2>
 <p>Resource references.</p>
 <dl class="class">
-<dt id="pyface.resource.resource_reference.ImageReference">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_reference.</code><code class="descname">ImageReference</code><span class="sig-paren">(</span><em>resource_factory</em>, <em>filename=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.resource.resource_reference.ResourceReference" title="pyface.resource.resource_reference.ResourceReference"><code class="xref py py-class docutils literal"><span class="pre">pyface.resource.resource_reference.ResourceReference</span></code></a></p>
-<p>A reference to an image resource.</p>
-<dl class="method">
-<dt id="pyface.resource.resource_reference.ImageReference.load">
-<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="pyface.resource.resource_reference.ResourceReference">
 <em class="property">class </em><code class="descclassname">pyface.resource.resource_reference.</code><code class="descname">ResourceReference</code><a class="headerlink" href="#pyface.resource.resource_reference.ResourceReference" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
@@ -172,17 +181,30 @@ resource manager.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="pyface.resource.resource_reference.ImageReference">
+<em class="property">class </em><code class="descclassname">pyface.resource.resource_reference.</code><code class="descname">ImageReference</code><span class="sig-paren">(</span><em>resource_factory</em>, <em>filename=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.resource.resource_reference.ResourceReference" title="pyface.resource.resource_reference.ResourceReference"><code class="xref py py-class docutils literal"><span class="pre">pyface.resource.resource_reference.ResourceReference</span></code></a></p>
+<p>A reference to an image resource.</p>
+<dl class="method">
+<dt id="pyface.resource.resource_reference.ImageReference.load">
+<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the resource.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
 
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+          </div>
+      <div class="spc-rightsidebar span3">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -203,13 +225,11 @@ resource manager.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.sizers.html"
                         title="next chapter">sizers Package</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api/pyface.resource.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.resource.txt"
+       rel="nofollow">Show Source</a>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -225,22 +245,31 @@ resource manager.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-      <div class="clearer"></div>
+        </div>
+      </div>
     </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
     <div class="footer">
-      &copy;2008-2015, Enthought.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
-      
-      |
-      <a href="../_sources/api/pyface.resource.txt"
-          rel="nofollow">Page source</a></li>
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2015, Enthought
+      </li>
+      <li>
+      Last updated on Oct 27, 2015.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      </li>
+    </ul>
     </div>
-
-    
-
-    
+    </div>
+    </div>
   </body>
 </html>

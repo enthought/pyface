@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     
-    <title>dock Package &mdash; pyface 4.5.2 documentation</title>
+    <title>dock Package &mdash; pyface 4.6.0.dev209 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.2',
+        VERSION:     '4.6.0.dev209',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,38 +23,60 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.2 documentation" href="../index.html" />
-    <link rel="up" title="pyface Package" href="pyface.html" />
-    <link rel="next" title="grid Package" href="pyface.grid.html" />
-    <link rel="prev" title="action Package" href="pyface.action.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico">
+    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="grid Package" href="pyface.grid.html" >
+    <link rel="prev" title="action Package" href="pyface.action.html" > 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="pyface.grid.html" title="grid Package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pyface.action.html" title="action Package"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.2 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
 
-    <div class="document">
-      <div class="documentwrapper">
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.grid.html" title="grid Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.html" title="action Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body" id="spc-section-body">
             
   <div class="section" id="dock-package">
 <h1>dock Package<a class="headerlink" href="#dock-package" title="Permalink to this headline">¶</a></h1>
@@ -67,1583 +89,26 @@ The component also allows multiple sub-windows to occupy the same
 sub-region of the DockWindow, in which case each sub-window appears as a
 separate notebook-like tab within the region.</p>
 </div>
-<div class="section" id="module-pyface.dock.api">
-<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.dock.api" title="Permalink to this headline">¶</a></h2>
-<p>Pyface &#8216;DockWindow&#8217; support.</p>
-<p>This package provides a Pyface &#8216;dockable&#8217; window component that allows
-child windows to be reorganized within the DockWindow using drag and drop.
-The component also allows multiple sub-windows to occupy the same
-sub-region of the DockWindow, in which case each sub-window appears as a
-separate notebook-like tab within the region.</p>
+<div class="section" id="api-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#api-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pyface.dock.dock_sizer">
-<span id="dock-sizer-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">dock_sizer</span></code> Module<a class="headerlink" href="#module-pyface.dock.dock_sizer" title="Permalink to this headline">¶</a></h2>
-<p>Pyface &#8216;DockSizer&#8217; support.</p>
-<p>This package provides the sizer associated with a Pyface DockWindow
-component. The sizer manages the layout of the DockWindow child controls
-and the notebook tabs and dragbars associated with the DockWindow.</p>
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockControl">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockControl</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_sizer.DockItem" title="pyface.dock.dock_sizer.DockItem"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.DockItem</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.activate">
-<code class="descname">activate</code><span class="sig-paren">(</span><em>layout=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.activate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Activates a control (i.e. makes it the active page within its
-containing notebook).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.calc_min">
-<code class="descname">calc_min</code><span class="sig-paren">(</span><em>use_size=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.calc_min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the minimum size of the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.check_features">
-<code class="descname">check_features</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.check_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks to make sure that all applicable DockWindowFeatures have been
-applied.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.close">
-<code class="descname">close</code><span class="sig-paren">(</span><em>layout=True</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.draw">
-<code class="descname">draw</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the contents of the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.dump">
-<code class="descname">dump</code><span class="sig-paren">(</span><em>indent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.dump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the contents of the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.get_controls">
-<code class="descname">get_controls</code><span class="sig-paren">(</span><em>visible_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.get_controls" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns all DockControl objects contained in the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.get_image">
-<code class="descname">get_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.get_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the image (if any) associated with the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.get_structure">
-<code class="descname">get_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.get_structure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a copy of the control &#8216;structure&#8217;, minus the actual content.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.object_at">
-<code class="descname">object_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.object_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object at a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.recalc_sizes">
-<code class="descname">recalc_sizes</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.recalc_sizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the region based on the specified bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.reset_features">
-<code class="descname">reset_features</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.reset_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets all currently defined features.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.reset_tab">
-<code class="descname">reset_tab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.reset_tab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the state of the tab.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.set_name">
-<code class="descname">set_name</code><span class="sig-paren">(</span><em>name</em>, <em>layout=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.set_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets a new name for the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.set_visibility">
-<code class="descname">set_visibility</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.set_visibility" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the visibility of the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.show">
-<code class="descname">show</code><span class="sig-paren">(</span><em>visible=True</em>, <em>layout=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hides or shows the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockControl.toggle_lock">
-<code class="descname">toggle_lock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockControl.toggle_lock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the &#8216;lock&#8217; status of the control.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockGroup">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockGroup</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_sizer.DockItem" title="pyface.dock.dock_sizer.DockItem"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.DockItem</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.close">
-<code class="descname">close</code><span class="sig-paren">(</span><em>layout=True</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.get_controls">
-<code class="descname">get_controls</code><span class="sig-paren">(</span><em>visible_only=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.get_controls" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns all DockControl objects contained in the group.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.get_cursor">
-<code class="descname">get_cursor</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.get_cursor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the cursor to use when the mouse is over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.get_image">
-<code class="descname">get_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.get_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the image (if any) associated with the group.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.replace_control">
-<code class="descname">replace_control</code><span class="sig-paren">(</span><em>old</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.replace_control" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replaces a specified DockControl by another.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.show">
-<code class="descname">show</code><span class="sig-paren">(</span><em>visible=True</em>, <em>layout=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hides or shows the contents of the group.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockGroup.toggle_lock">
-<code class="descname">toggle_lock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockGroup.toggle_lock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the &#8216;lock&#8217; status of every control in the group.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockInfo">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockInfo</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockInfo.dock">
-<code class="descname">dock</code><span class="sig-paren">(</span><em>control</em>, <em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockInfo.dock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Docks the specified control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockInfo.draw">
-<code class="descname">draw</code><span class="sig-paren">(</span><em>window</em>, <em>bitmap=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockInfo.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the DockInfo on the display.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockItem">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockItem</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.begin_draw">
-<code class="descname">begin_draw</code><span class="sig-paren">(</span><em>dc</em>, <em>ox=0</em>, <em>oy=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.begin_draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prepares for drawing into a device context.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.dock_info_at">
-<code class="descname">dock_info_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>tdx</em>, <em>is_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.dock_info_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the DockInfo object for a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.draw_fixed">
-<code class="descname">draw_fixed</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.draw_fixed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a fixed drag bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.draw_horizontal">
-<code class="descname">draw_horizontal</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.draw_horizontal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a horizontal drag bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.draw_tab">
-<code class="descname">draw_tab</code><span class="sig-paren">(</span><em>dc</em>, <em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.draw_tab" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.draw_vertical">
-<code class="descname">draw_vertical</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.draw_vertical" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws a vertical drag bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.end_draw">
-<code class="descname">end_draw</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.end_draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Terminates drawing into a device context.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.feature_activate">
-<code class="descname">feature_activate</code><span class="sig-paren">(</span><em>event</em>, <em>drag_object=&lt;undefined&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.feature_activate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.feature_bar_closed">
-<code class="descname">feature_bar_closed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.feature_bar_closed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.fill_bg_color">
-<code class="descname">fill_bg_color</code><span class="sig-paren">(</span><em>dc</em>, <em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.fill_bg_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fills a specified region with the control&#8217;s background color.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.get_bg_color">
-<code class="descname">get_bg_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.get_bg_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the background color</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.get_cursor">
-<code class="descname">get_cursor</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.get_cursor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the cursor to use when the mouse is over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.hover_enter">
-<code class="descname">hover_enter</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.hover_enter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse hovering over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.hover_exit">
-<code class="descname">hover_exit</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.hover_exit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse exiting from hovering over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.is_at">
-<code class="descname">is_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>bounds=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.is_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether or not the item is at a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.is_in">
-<code class="descname">is_in</code><span class="sig-paren">(</span><em>event</em>, <em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.is_in" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether or not an event is within a specified bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.mark_bounds">
-<code class="descname">mark_bounds</code><span class="sig-paren">(</span><em>begin</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.mark_bounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Marks/Unmarks the bounds of the bounding DockWindow.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.mouse_down">
-<code class="descname">mouse_down</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.mouse_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.mouse_move">
-<code class="descname">mouse_move</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.mouse_move" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse moving while the left mouse button is pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.mouse_up">
-<code class="descname">mouse_up</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.mouse_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being released.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.post_drag">
-<code class="descname">post_drag</code><span class="sig-paren">(</span><em>tag=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.post_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore this DockControl after a drag operation is completed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.post_drag_all">
-<code class="descname">post_drag_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.post_drag_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore all DockControls in the associated DockWindow after a drag
-operation is completed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.pre_drag">
-<code class="descname">pre_drag</code><span class="sig-paren">(</span><em>object</em>, <em>tag=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.pre_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prepare this DockControl for being dragged over.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.pre_drag_all">
-<code class="descname">pre_drag_all</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.pre_drag_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prepare all DockControls in the associated DockWindow for being
-dragged over.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.reset_feature_popup">
-<code class="descname">reset_feature_popup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.reset_feature_popup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.set_drag_bounds">
-<code class="descname">set_drag_bounds</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.set_drag_bounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the control&#8217;s drag bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockItem.set_feature_mode">
-<code class="descname">set_feature_mode</code><span class="sig-paren">(</span><em>changed=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockItem.set_feature_mode" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockRegion">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockRegion</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_sizer.DockGroup" title="pyface.dock.dock_sizer.DockGroup"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.DockGroup</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.activate">
-<code class="descname">activate</code><span class="sig-paren">(</span><em>control</em>, <em>layout=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.activate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Activates a specified control (i.e. makes it the current notebook
-tab).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>control</em>, <em>before=None</em>, <em>after=None</em>, <em>activate=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a new control before a specified control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.calc_min">
-<code class="descname">calc_min</code><span class="sig-paren">(</span><em>use_size=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.calc_min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the minimum size of the region.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.dock_info_at">
-<code class="descname">dock_info_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>tdx</em>, <em>is_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.dock_info_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the DockInfo object for a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.draw">
-<code class="descname">draw</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the contents of the region.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.dump">
-<code class="descname">dump</code><span class="sig-paren">(</span><em>indent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.dump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the contents of the region.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.get_structure">
-<code class="descname">get_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.get_structure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a copy of the region &#8216;structure&#8217;, minus the actual content.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.make_active_tab_visible">
-<code class="descname">make_active_tab_visible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.make_active_tab_visible" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes sure the active control&#8217;s tab is completely visible (if
-possible).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.mouse_down">
-<code class="descname">mouse_down</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.mouse_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.mouse_move">
-<code class="descname">mouse_move</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.mouse_move" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse moving while the left mouse button is pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.mouse_up">
-<code class="descname">mouse_up</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.mouse_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being released.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.object_at">
-<code class="descname">object_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.object_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object at a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.recalc_sizes">
-<code class="descname">recalc_sizes</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.recalc_sizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the region based on the specified bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes a specified item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.scroll">
-<code class="descname">scroll</code><span class="sig-paren">(</span><em>type</em>, <em>left_tab=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.scroll" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user clicking an active scroll button.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.set_visibility">
-<code class="descname">set_visibility</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.set_visibility" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the visibility of the region.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.show_hide">
-<code class="descname">show_hide</code><span class="sig-paren">(</span><em>control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.show_hide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a contained DockControl item being hidden or shown.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.tab_clicked">
-<code class="descname">tab_clicked</code><span class="sig-paren">(</span><em>control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.tab_clicked" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a contained notebook tab being clicked.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockRegion.toggle_lock">
-<code class="descname">toggle_lock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockRegion.toggle_lock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the &#8216;lock&#8217; status of every control in the group.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockSection">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockSection</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_sizer.DockGroup" title="pyface.dock.dock_sizer.DockGroup"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.DockGroup</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>control</em>, <em>region</em>, <em>kind</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a control to the section at the edge of the region specified.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.calc_min">
-<code class="descname">calc_min</code><span class="sig-paren">(</span><em>use_size=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.calc_min" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculates the minimum size of the section.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.dock_info_at">
-<code class="descname">dock_info_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>tdx</em>, <em>is_control</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.dock_info_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the DockInfo object for a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.draw">
-<code class="descname">draw</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the contents of the section.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.dump">
-<code class="descname">dump</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.dump" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints the contents of the section.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.get_splitter_bounds">
-<code class="descname">get_splitter_bounds</code><span class="sig-paren">(</span><em>splitter</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.get_splitter_bounds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the maximum bounds that a splitter bar is allowed to be dragged.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.get_structure">
-<code class="descname">get_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.get_structure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a copy of the section &#8216;structure&#8217;, minus the actual content.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.initial_recalc_sizes">
-<code class="descname">initial_recalc_sizes</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.initial_recalc_sizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the section based on the specified bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.object_at">
-<code class="descname">object_at</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.object_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object at a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.recalc_sizes">
-<code class="descname">recalc_sizes</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.recalc_sizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the section based on the specified bounds.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.recalc_sizes_fixed">
-<code class="descname">recalc_sizes_fixed</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>dx</em>, <em>dy</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.recalc_sizes_fixed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the section based on the specified bounds
-using the minimum requested size for each item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes a specified region or section from the section.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.set_visibility">
-<code class="descname">set_visibility</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.set_visibility" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the visibility of the group.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSection.update_splitter">
-<code class="descname">update_splitter</code><span class="sig-paren">(</span><em>splitter</em>, <em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSection.update_splitter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the affected regions when a splitter bar is released.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockSizer">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockSizer</code><span class="sig-paren">(</span><em>contents=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wx._core.PySizer</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.CalcMin">
-<code class="descname">CalcMin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.CalcMin" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.DockInfoAt">
-<code class="descname">DockInfoAt</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>size</em>, <em>is_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.DockInfoAt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a DockInfo object at a specified x, y position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.Draw">
-<code class="descname">Draw</code><span class="sig-paren">(</span><em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.Draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the contents of the sizer.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.GetContents">
-<code class="descname">GetContents</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.GetContents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the current sizer contents.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.GetStructure">
-<code class="descname">GetStructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.GetStructure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a copy of the layout &#8216;structure&#8217;, minus the actual content
-(i.e. controls, splitters, bounds). This method is intended for use
-in persisting the current user layout, so that it can be restored in
-a future session.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.IsMaximizable">
-<code class="descname">IsMaximizable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.IsMaximizable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the sizer can be maximized now.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.MinMax">
-<code class="descname">MinMax</code><span class="sig-paren">(</span><em>window</em>, <em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.MinMax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Minimizes/Maximizes a specified DockControl.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.ObjectAt">
-<code class="descname">ObjectAt</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>force=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.ObjectAt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object at a specified window position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.RecalcSizes">
-<code class="descname">RecalcSizes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.RecalcSizes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Layout the contents of the sizer based on the sizer&#8217;s current size
-and position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.Reset">
-<code class="descname">Reset</code><span class="sig-paren">(</span><em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.Reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the DockSizer to a known state.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.ResetStructure">
-<code class="descname">ResetStructure</code><span class="sig-paren">(</span><em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.ResetStructure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the previously saved structure (if any).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.SetContents">
-<code class="descname">SetContents</code><span class="sig-paren">(</span><em>contents</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.SetContents" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes the layout of a DockWindow from a content list.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.SetStructure">
-<code class="descname">SetStructure</code><span class="sig-paren">(</span><em>window</em>, <em>structure</em>, <em>handler=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.SetStructure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a previously saved &#8216;GetStructure&#8217; result and applies it to the
-contents of the sizer in order to restore a previous layout using a
-new set of controls.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSizer.ToggleLock">
-<code class="descname">ToggleLock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSizer.ToggleLock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the current &#8216;lock&#8217; setting of the contents.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.DockSplitter">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">DockSplitter</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_sizer.DockItem" title="pyface.dock.dock_sizer.DockItem"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_sizer.DockItem</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.collapse">
-<code class="descname">collapse</code><span class="sig-paren">(</span><em>forward</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.collapse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move the splitter has far as possible in one direction. &#8216;forward&#8217;
-is a boolean: True=right/down, False=left/up.</p>
-<p>If the splitter is already collapsed, restores it to its previous
-position.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.draw">
-<code class="descname">draw</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.draw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Draws the contents of the splitter.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.get_cursor">
-<code class="descname">get_cursor</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.get_cursor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the cursor to use when the mouse is over the splitter bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.get_structure">
-<code class="descname">get_structure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.get_structure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a copy of the splitter &#8216;structure&#8217;, minus the actual
-content.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.hover_enter">
-<code class="descname">hover_enter</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.hover_enter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse hovering over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.hover_exit">
-<code class="descname">hover_exit</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.hover_exit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse exiting from hovering over the item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.mouse_down">
-<code class="descname">mouse_down</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.mouse_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.mouse_move">
-<code class="descname">mouse_move</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.mouse_move" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the mouse moving while the left mouse button is pressed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.DockSplitter.mouse_up">
-<code class="descname">mouse_up</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.DockSplitter.mouse_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the left mouse button being released.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_sizer.SetStructureHandler">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">SetStructureHandler</code><a class="headerlink" href="#pyface.dock.dock_sizer.SetStructureHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.SetStructureHandler.resolve_extras">
-<code class="descname">resolve_extras</code><span class="sig-paren">(</span><em>structure</em>, <em>extras</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.SetStructureHandler.resolve_extras" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resolves extra, unused DockControls not referenced by the structure.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_sizer.SetStructureHandler.resolve_id">
-<code class="descname">resolve_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.SetStructureHandler.resolve_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resolves an unresolved DockControl id.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.dock.dock_sizer.add_feature">
-<code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">add_feature</code><span class="sig-paren">(</span><em>feature_class</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.add_feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a new DockWindowFeature class to the list of available features.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.dock.dock_sizer.clear_window">
-<code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">clear_window</code><span class="sig-paren">(</span><em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.clear_window" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clears a window to the standard background color.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.dock.dock_sizer.get_dc">
-<code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">get_dc</code><span class="sig-paren">(</span><em>window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.get_dc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a temporary device context for a specified window to draw in.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.dock.dock_sizer.set_standard_font">
-<code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">set_standard_font</code><span class="sig-paren">(</span><em>dc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.set_standard_font" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the standard font to use for a specified device context.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.dock.dock_sizer.top_level_window_for">
-<code class="descclassname">pyface.dock.dock_sizer.</code><code class="descname">top_level_window_for</code><span class="sig-paren">(</span><em>control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_sizer.top_level_window_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the top-level window for a specified control.</p>
-</dd></dl>
-
+<div class="section" id="dock-sizer-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_sizer</span></code> Module<a class="headerlink" href="#dock-sizer-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pyface.dock.dock_window">
-<span id="dock-window-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window</span></code> Module<a class="headerlink" href="#module-pyface.dock.dock_window" title="Permalink to this headline">¶</a></h2>
-<p>Pyface &#8216;DockWindow&#8217; support.</p>
-<p>This package provides a Pyface &#8216;dockable&#8217; window component that allows
-child windows to be reorganized within the DockWindow using drag and drop.
-The component also allows multiple sub-windows to occupy the same
-sub-region of the DockWindow, in which case each sub-window appears as a
-separate notebook-like tab within the region.</p>
-<dl class="class">
-<dt id="pyface.dock.dock_window.ControlInfo">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window.</code><code class="descname">ControlInfo</code><a class="headerlink" href="#pyface.dock.dock_window.ControlInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_window.DockWindow">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window.</code><code class="descname">DockWindow</code><span class="sig-paren">(</span><em>parent</em>, <em>wid=-1</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=65536</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.add_to_menu">
-<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>menu_item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.add_to_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a menu item to the menu bar being constructed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.add_to_toolbar">
-<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>toolbar_item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a tool bar item to the tool bar being constructed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.can_add_to_menu">
-<code class="descname">can_add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the action should be defined in the user interface.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.can_add_to_toolbar">
-<code class="descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the toolbar action should be defined in the user
-interface.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the dock window.  In this case, all event handlers are
-unregistered.  Other cleanup operations go here, but at the moment Linux
-(and other non-Windows platforms?) are less forgiving when things like
-event handlers arent unregistered.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.dock_window_empty">
-<code class="descname">dock_window_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.dock_window_empty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Notifies the DockWindow that its contents are empty.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.feature_bar_popup">
-<code class="descname">feature_bar_popup</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.feature_bar_popup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pops up the feature bar for a specified DockControl.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.min_max">
-<code class="descname">min_max</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.min_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Minimizes/maximizes a specified DockControl.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_delete_layout">
-<code class="descname">on_delete_layout</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_delete_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user reqesting a specified layout to be deleted.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_disable_all_features">
-<code class="descname">on_disable_all_features</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_disable_all_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disables all features.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_edit">
-<code class="descname">on_edit</code><span class="sig-paren">(</span><em>object=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting to edit an item.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_enable_all_features">
-<code class="descname">on_enable_all_features</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_enable_all_features" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enables all features.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_hide">
-<code class="descname">on_hide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_hide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting an element to be hidden.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_lock_layout">
-<code class="descname">on_lock_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_lock_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting that the layout be locked/unlocked.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_min_max">
-<code class="descname">on_min_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_min_max" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user asking for a DockControl to be maximized/restored.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_restore_layout">
-<code class="descname">on_restore_layout</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_restore_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting a specified layout to be restored.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_save_layout">
-<code class="descname">on_save_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_save_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting that the layout be saved.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_show">
-<code class="descname">on_show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting an element to be shown.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_switch_layout">
-<code class="descname">on_switch_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_switch_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting that the current layout be switched.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_toggle_feature">
-<code class="descname">on_toggle_feature</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_toggle_feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the enabled/disabled state of the action&#8217;s associated
-feature.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.on_undock">
-<code class="descname">on_undock</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.on_undock" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user requesting an element to be undocked.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.perform">
-<code class="descname">perform</code><span class="sig-paren">(</span><em>action_object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.perform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the action described by a specified Action object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.release_mouse">
-<code class="descname">release_mouse</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.release_mouse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Releases ownership of the mouse capture.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.right_up">
-<code class="descname">right_up</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.right_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the right mouse button being released.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.set_cursor">
-<code class="descname">set_cursor</code><span class="sig-paren">(</span><em>cursor=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.set_cursor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the cursor to a specified cursor shape.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.update_layout">
-<code class="descname">update_layout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.update_layout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the layout of the window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.wx_drag_any">
-<code class="descname">wx_drag_any</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>data</em>, <em>drag_result</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.wx_drag_any" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a Python object being dragged over the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.wx_drag_leave">
-<code class="descname">wx_drag_leave</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.wx_drag_leave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a dragged Python object leaving the window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindow.wx_dropped_on">
-<code class="descname">wx_dropped_on</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>data</em>, <em>drag_result</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindow.wx_dropped_on" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a Python object being dropped on the window.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_window.DockWindowHandler">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window.</code><code class="descname">DockWindowHandler</code><a class="headerlink" href="#pyface.dock.dock_window.DockWindowHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindowHandler.can_drop">
-<code class="descname">can_drop</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindowHandler.can_drop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether or not a specified object can be inserted into the
-view.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindowHandler.dock_control_for">
-<code class="descname">dock_control_for</code><span class="sig-paren">(</span><em>parent</em>, <em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindowHandler.dock_control_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the DockControl object for a specified object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindowHandler.dock_window_empty">
-<code class="descname">dock_window_empty</code><span class="sig-paren">(</span><em>dock_window</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindowHandler.dock_window_empty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the DockWindow becoming empty.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.DockWindowHandler.open_view_for">
-<code class="descname">open_view_for</code><span class="sig-paren">(</span><em>control</em>, <em>use_mouse=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.DockWindowHandler.open_view_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a new view of a specified control.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_window.FakeEvent">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window.</code><code class="descname">FakeEvent</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.FakeEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_window.FakeEvent.GetEventObject">
-<code class="descname">GetEventObject</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.FakeEvent.GetEventObject" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.FakeEvent.GetX">
-<code class="descname">GetX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.FakeEvent.GetX" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window.FakeEvent.GetY">
-<code class="descname">GetY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.FakeEvent.GetY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.dock_window.LayoutName">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window.</code><code class="descname">LayoutName</code><a class="headerlink" href="#pyface.dock.dock_window.LayoutName" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traitsui.handler.Handler</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_window.LayoutName.close">
-<code class="descname">close</code><span class="sig-paren">(</span><em>info</em>, <em>is_ok</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window.LayoutName.close" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="dock-window-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window</span></code> Module<a class="headerlink" href="#dock-window-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pyface.dock.dock_window_feature">
-<span id="dock-window-feature-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_feature</span></code> Module<a class="headerlink" href="#module-pyface.dock.dock_window_feature" title="Permalink to this headline">¶</a></h2>
-<p>Implements the DockWindowFeature base class.</p>
-<p>A DockWindowFeature is an optional feature of a DockControl that can be
-dynamically contributed to the package. Whenever a DockControl is added to
-a DockWindow, each feature will be given the opportunity to add itself to
-the DockControl.</p>
-<p>Each feature is manifested as an image that appears on the DockControl tab
-(or drag bar). The user interacts wth the feature using mouse clicks and
-drag and drop operations (depending upon how the feature is implemented).</p>
-<dl class="class">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window_feature.</code><code class="descname">DockWindowFeature</code><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<p>Implements &#8220;features&#8221; on DockWindows.</p>
-<p>See &#8220;The DockWindowFeature Feature of DockWindows&#8221; document (.doc or .pdf)
-in pyface.doc for details on using this class.</p>
-<p>Traits are defined on each feature instance. One or more feature instances
-are created for each application component that a feature class applies to.
-A given feature class might or might not apply to a specific application
-component. The feature class determines whether it applies to an application
-component when the feature is activated, or when a new application
-component is added to the DockWindow (and the feature is already active).</p>
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.add_to_menu">
-<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>menu_item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.add_to_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a menu item to the menu bar being constructed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.add_to_toolbar">
-<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>toolbar_item</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a tool bar item to the tool bar being constructed.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.alt_drag">
-<code class="descname">alt_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.alt_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user drags a feature
-image while pressing the &#8216;Alt&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If
-Alt-dragging is supported by the feature, then the method returns
-the object to be dragged; otherwise it returns <strong>None</strong>. The default
-implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.alt_right_drag">
-<code class="descname">alt_right_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.alt_right_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user right mouse button
-drags a feature image while pressing the &#8216;Alt&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If right
-Alt-dragging is supported by the feature, then the method returns
-the object to be dragged; otherwise it returns <strong>None</strong>. The default
-implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.can_add_to_menu">
-<code class="descname">can_add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the action should be defined in the user interface.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.can_add_to_toolbar">
-<code class="descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether the toolbar action should be defined in the user
-interface.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.can_drop">
-<code class="descname">can_drop</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.can_drop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether a specified object can be dropped on a feature
-image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object</strong> (<em>any object</em>) &#8211; The object being dragged onto the feature image</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p><strong>True</strong> if <em>object</em> is a valid object for the feature to process;
-<strong>False</strong> otherwise.</p>
-<p class="rubric">Description</p>
-<p>This method is designed to be overridden by subclasses. It is called
-whenever the user drags an icon over the feature&#8217;s tab or drag bar
-image. The method does not perform any processing on <em>object</em>; it only
-examines it. Processing of the object occurs in the <strong>drop()</strong> method,
-which is called when the user release the object over the feature&#8217;s
-image, which typically occurs after the <strong>can_drop()</strong> method has
-indicated that the feature can process the object, by returning
-<strong>True</strong>. The default implementation returns <strong>False</strong>, indicating that
-the feature does not accept any objects for dropping.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.click">
-<code class="descname">click</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.click" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user left-clicking on a feature image.</p>
-<p>This method is designed to be overridden by subclasses. The default
-implementation attempts to perform a &#8216;quick drag&#8217; operation (see the
-&#8216;quick_drag&#8217; method). Returns nothing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.control_drag">
-<code class="descname">control_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.control_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user drags a feature
-image while pressing the &#8216;Ctrl&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If
-control-dragging is supported by the feature, then the method returns
-the object to be dragged; otherwise it returns <strong>None</strong>. The default
-implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.control_right_drag">
-<code class="descname">control_right_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.control_right_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user right mouse button
-drags a feature image while pressing the &#8216;Ctrl&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If
-right control-dragging is supported by the feature, then the method
-returns the object to be dragged; otherwise it returns <strong>None</strong>. The
-default implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.disable">
-<code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.disable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Disables the feature.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>Nothing.</p>
-<p class="rubric">Description</p>
-<p>This helper method temporarily disables the feature for the associated
-application component. The feature can be re-enabled by calling the
-<strong>enable()</strong> method. Disabling the feature removes the feature&#8217;s icon
-from the feature bar, without actually deleting the feature (i.e., the
-<strong>dispose()</strong> method is not called).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.dispose">
-<code class="descname">dispose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.dispose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs any clean-up needed when the feature is removed from its
-associated application component (for example, when the user disables
-the feature).</p>
-<p>This method is designed to be overridden by subclasses. The method
-performs any clean-up actions needed by the feature, such as closing
-files, removing trait listeners, and so on. The method does not return
-a result. The default implementation does nothing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.drag">
-<code class="descname">drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user drags a feature
-image.</p>
-<p>This method can be overridden by subclasses. If dragging is supported
-by the feature, then the method returns the object to be dragged;
-otherwise it returns <strong>None</strong>. The default implementation returns
-<strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.drop">
-<code class="descname">drop</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.drop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user dropping a specified object on a feature image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object</strong> (<em>any object</em>) &#8211; The object being dropped onto the feature image</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>Nothing.</p>
-<p class="rubric">Description</p>
-<p>This method is designed to be overridden by subclasses. It is called
-whenever the user drops an object on the feature&#8217;s tab or drag bar
-image. This method can be called only if a previous call to
-<strong>can_drop()</strong> for the same object returned <strong>True</strong>. The default
-implementation does nothing.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.enable">
-<code class="descname">enable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.enable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Enables the feature.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>Nothing.</p>
-<p class="rubric">Description</p>
-<p>This helper method re-enables a previously disabled feature for its
-associated application component. Enabling a feature restores the
-feature bar icon that the feature displayed at the time it was disabled.</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.feature_for">
-<em class="property">classmethod </em><code class="descname">feature_for</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.feature_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a single new feature object or list of new feature objects
-for a specified DockControl.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dock_control</strong> (<em>pyface.dock.api.DockControl</em>) &#8211; The DockControl object that corresponds to the application
-component being added, or for which the feature is being enabled.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>An instance or list of instances of this class that will be associated
-with the application component; <strong>None</strong> if the feature does not apply
-to the application component.</p>
-<p class="rubric">Description</p>
-<p>This class method is designed to be overridden by subclasses. Normally,
-a feature class determines whether it applies to an application
-component by examining the component to see if it is an instance of a
-certain class, supports a specified interface, or has trait attributes
-with certain types of metadata. The application component is available
-through the <em>dock_control.object</em> trait attribute. Note that it is
-possible for <em>dock_control.object</em> to be <strong>None</strong>.</p>
-<p>The default implementation for this method calls the
-<strong>is_feature_for()</strong> class method to determine whether the feature
-applies to the specified DockControl. If it does, it calls the
-<strong>new_feature()</strong> class method to create the feature instances to be
-returned. If it does not, it simply returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.feature_name">
-<code class="descname">feature_name</code><em class="property"> = ''</em><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.feature_name" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.instances">
-<code class="descname">instances</code><em class="property"> = []</em><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.instances" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.is_feature_for">
-<em class="property">classmethod </em><code class="descname">is_feature_for</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.is_feature_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether this class is a valid feature for the application
-object corresponding to a specified DockControl.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dock_control</strong> (<em>pyface.dock.api.DockControl</em>) &#8211; The DockControl object that corresponds to the application
-component being added, or for which the feature is being enabled.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p><strong>True</strong> if the feature applies to the application object associated
-with the <em>dock_control</em>; <strong>False</strong> otherwise.</p>
-<p class="rubric">Description</p>
-<p>This class method is designed to be overridden by subclasses. It is
-called by the default implementation of the <strong>feature_for()</strong> class
-method to determine whether the feature applies to the application
-object specified by <em>dock_control</em>. The default implementation always
-returns <strong>True</strong>.</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.new_feature">
-<em class="property">classmethod </em><code class="descname">new_feature</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.new_feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a new feature instance for a specified DockControl.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dock_control</strong> (<em>pyface.dock.api.DockControl</em>) &#8211; The DockControl object that corresponds to the application
-component being added, or for which the feature is being enabled.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>An instance or list of instances of this class to be associated
-with the application component; it can also return <strong>None</strong>.</p>
-<p class="rubric">Description</p>
-<p>This method is designed to be overridden by subclasses. This method is
-called by the default implementation of the <strong>feature_for()</strong> class
-method to create the feature instances to be associated with the
-application component specified by <em>dock_control</em>. The default
-implementation returns the result of calling the class constructor as
-follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">cls</span><span class="p">(</span> <span class="n">dock_control</span><span class="o">=</span><span class="n">dock_control</span> <span class="p">)</span>
-</pre></div>
+<div class="section" id="dock-window-feature-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_feature</span></code> Module<a class="headerlink" href="#dock-window-feature-module" title="Permalink to this headline">¶</a></h2>
 </div>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.new_feature_for">
-<em class="property">classmethod </em><code class="descname">new_feature_for</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.new_feature_for" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a feature object for use with the specified DockControl (or
-<strong>None</strong> if the feature does not apply to the DockControl object).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.perform">
-<code class="descname">perform</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.perform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs the action described by a specified Action object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.popup_menu">
-<code class="descname">popup_menu</code><span class="sig-paren">(</span><em>menu</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.popup_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Displays a shortcut menu.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>menu</strong> (<em>traitsui.menu.Menu object</em>) &#8211; The menu to be displayed</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>Nothing.</p>
-<p class="rubric">Description</p>
-<p>This helper method displays the shortcut menu specified by <em>menu</em> at a
-point near the feature object&#8217;s current (x,y) value, as specified by
-the <strong>x</strong> and <strong>y</strong> traits. Normally, the (x,y) value contains the
-screen location where the user clicked on the feature&#8217;s tab or drag
-bar image. The effect is that the menu is displayed near the feature&#8217;s
-icon, with the pointer directly over the top menu option.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.quick_drag">
-<code class="descname">quick_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.quick_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a quick drag and drop operation by displaying a pop-up menu
-containing all targets that the feature&#8217;s xxx_drag() method can be
-dropped on. Selecting an item drops the item on the selected target.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.quick_right_drag">
-<code class="descname">quick_right_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.quick_right_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a quick drag and drop operation with the right mouse button
-by displaying a pop-up menu containing all targets that the
-feature&#8217;s xxx_right_drag() method can be dropped on. Selecting an
-item drops the item on the selected target.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.refresh">
-<code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.refresh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refreshes the display of the feature image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<p>Nothing.</p>
-<p class="rubric">Description</p>
-<p>This helper method requests the containing DockWindow to refresh the
-feature bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.right_click">
-<code class="descname">right_click</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.right_click" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user right-clicking on a feature image.</p>
-<p>This method is designed to be overridden by subclasses. The default
-implementation attempts to perform a &#8216;quick drag&#8217; operation (see the
-&#8216;quick_right_drag&#8217; method). Returns nothing. Typically, you override
-this method to display the feature&#8217;s shortcut menu.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.right_drag">
-<code class="descname">right_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.right_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user right mouse button
-drags a feature image.</p>
-<p>This method can be overridden by subclasses. If right dragging is
-supported by the feature, then the method returns the object to be
-dragged; otherwise it returns <strong>None</strong>. The default implementation
-returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.shift_control_drag">
-<code class="descname">shift_control_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.shift_control_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user right mouse button
-drags a feature image while pressing the &#8216;Shift&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If right
-shift-dragging is supported by the feature, then the method returns
-the object to be dragged; otherwise it returns <strong>None</strong>. The default
-implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.shift_drag">
-<code class="descname">shift_drag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.shift_drag" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the object to be dragged when the user drags a feature
-image while pressing the &#8216;Shift&#8217; key.</p>
-<p>This method is designed to be overridden by subclasses. If
-shift-dragging is supported by the feature, then the method returns
-the object to be dragged; otherwise it returns <strong>None</strong>. The default
-implementation returns <strong>None</strong>.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.state">
-<code class="descname">state</code><em class="property"> = 0</em><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="pyface.dock.dock_window_feature.DockWindowFeature.toggle_feature">
-<em class="property">classmethod </em><code class="descname">toggle_feature</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_feature.DockWindowFeature.toggle_feature" title="Permalink to this definition">¶</a></dt>
-<dd><p>Toggles the feature on or off.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="dock-window-shell-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_shell</span></code> Module<a class="headerlink" href="#dock-window-shell-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pyface.dock.dock_window_shell">
-<span id="dock-window-shell-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_shell</span></code> Module<a class="headerlink" href="#module-pyface.dock.dock_window_shell" title="Permalink to this headline">¶</a></h2>
-<p>Defines the DockWindowShell class used to house drag and drag DockWindow
-items that are dropped on the desktop or on the DockWindowShell window.</p>
-<dl class="class">
-<dt id="pyface.dock.dock_window_shell.DockWindowShell">
-<em class="property">class </em><code class="descclassname">pyface.dock.dock_window_shell.</code><code class="descname">DockWindowShell</code><span class="sig-paren">(</span><em>dock_control</em>, <em>use_mouse=False</em>, <em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_shell.DockWindowShell" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.dock_window_shell.DockWindowShell.add_control">
-<code class="descname">add_control</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.dock_window_shell.DockWindowShell.add_control" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a new DockControl to the shell window.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="feature-bar-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">feature_bar</span></code> Module<a class="headerlink" href="#feature-bar-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-pyface.dock.feature_bar">
-<span id="feature-bar-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">feature_bar</span></code> Module<a class="headerlink" href="#module-pyface.dock.feature_bar" title="Permalink to this headline">¶</a></h2>
-<p>Pyface &#8216;FeatureBar&#8217; support.</p>
-<p>Defines the &#8216;FeatureBar&#8217; class which displays and allows the user to
-interact with a set of DockWindowFeatures for a specified DockControl.</p>
-<dl class="class">
-<dt id="pyface.dock.feature_bar.FakeEvent">
-<em class="property">class </em><code class="descclassname">pyface.dock.feature_bar.</code><code class="descname">FakeEvent</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FakeEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FakeEvent.GetX">
-<code class="descname">GetX</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FakeEvent.GetX" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FakeEvent.GetY">
-<code class="descname">GetY</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FakeEvent.GetY" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.dock.feature_bar.FeatureBar">
-<em class="property">class </em><code class="descclassname">pyface.dock.feature_bar.</code><code class="descname">FeatureBar</code><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasPrivateTraits</span></code></p>
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FeatureBar.hide">
-<code class="descname">hide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar.hide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hides the feature bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FeatureBar.show">
-<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shows the feature bar.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FeatureBar.wx_drag_leave">
-<code class="descname">wx_drag_leave</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar.wx_drag_leave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a dragged Python object leaving the window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FeatureBar.wx_drag_over">
-<code class="descname">wx_drag_over</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>data</em>, <em>drag_result</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar.wx_drag_over" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a Python object being dragged over the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.feature_bar.FeatureBar.wx_dropped_on">
-<code class="descname">wx_dropped_on</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>data</em>, <em>drag_result</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_bar.FeatureBar.wx_dropped_on" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles a Python object being dropped on the window.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyface.dock.feature_tool">
-<span id="feature-tool-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">feature_tool</span></code> Module<a class="headerlink" href="#module-pyface.dock.feature_tool" title="Permalink to this headline">¶</a></h2>
-<p>Implements the FeatureTool feature that allows a dragged object
-implementing the IFeatureTool interface to be dropped onto any compatible
-object.</p>
-<dl class="class">
-<dt id="pyface.dock.feature_tool.FeatureTool">
-<em class="property">class </em><code class="descclassname">pyface.dock.feature_tool.</code><code class="descname">FeatureTool</code><a class="headerlink" href="#pyface.dock.feature_tool.FeatureTool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.dock.dock_window_feature.DockWindowFeature" title="pyface.dock.dock_window_feature.DockWindowFeature"><code class="xref py py-class docutils literal"><span class="pre">pyface.dock.dock_window_feature.DockWindowFeature</span></code></a></p>
-<dl class="method">
-<dt id="pyface.dock.feature_tool.FeatureTool.can_drop">
-<code class="descname">can_drop</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.feature_tool.FeatureTool.can_drop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether a specified object can be dropped on the feature
-image.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="feature-tool-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">feature_tool</span></code> Module<a class="headerlink" href="#feature-tool-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.dock.idock_ui_provider">
 <span id="idock-ui-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">idock_ui_provider</span></code> Module<a class="headerlink" href="#module-pyface.dock.idock_ui_provider" title="Permalink to this headline">¶</a></h2>
@@ -1672,23 +137,16 @@ a different DockWindow.</p>
 <em class="property">class </em><code class="descclassname">pyface.dock.idockable.</code><code class="descname">IDockable</code><a class="headerlink" href="#pyface.dock.idockable.IDockable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
-<dt id="pyface.dock.idockable.IDockable.dockable_bind">
-<code class="descname">dockable_bind</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_bind" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the dockable being bound to a specified DockControl.</p>
+<dt id="pyface.dock.idockable.IDockable.dockable_should_close">
+<code class="descname">dockable_should_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_should_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the current DockControl be closed before creating the new
+one.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.dock.idockable.IDockable.dockable_close">
 <code class="descname">dockable_close</code><span class="sig-paren">(</span><em>dock_control</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns whether or not it is OK to close the control.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.dock.idockable.IDockable.dockable_dclick">
-<code class="descname">dockable_dclick</code><span class="sig-paren">(</span><em>dock_control</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_dclick" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles the user double-clicking on the DockControl.
-A result of False indicates the event was not handled; all other
-results indicate that the event was handled successfully.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1710,10 +168,11 @@ results indicate that the event was handled successfully.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.dock.idockable.IDockable.dockable_should_close">
-<code class="descname">dockable_should_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_should_close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Should the current DockControl be closed before creating the new
-one.</p>
+<dt id="pyface.dock.idockable.IDockable.dockable_dclick">
+<code class="descname">dockable_dclick</code><span class="sig-paren">(</span><em>dock_control</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_dclick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user double-clicking on the DockControl.
+A result of False indicates the event was not handled; all other
+results indicate that the event was handled successfully.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1723,6 +182,12 @@ one.</p>
 <p>&#8216;dock_control&#8217; is the control being activated or deactivated.</p>
 <p>If &#8216;activated&#8217; is True, the control is being activated; otherwise
 the control is being deactivated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_bind">
+<code class="descname">dockable_bind</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the dockable being bound to a specified DockControl.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1773,23 +238,23 @@ specified target object&#8217;s DockControl.</p>
 
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+          </div>
+      <div class="spc-rightsidebar span3">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">dock Package</a><ul>
 <li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">dock</span></code> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.dock_sizer"><code class="docutils literal"><span class="pre">dock_sizer</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.dock_window"><code class="docutils literal"><span class="pre">dock_window</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.dock_window_feature"><code class="docutils literal"><span class="pre">dock_window_feature</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.dock_window_shell"><code class="docutils literal"><span class="pre">dock_window_shell</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.feature_bar"><code class="docutils literal"><span class="pre">feature_bar</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.dock.feature_tool"><code class="docutils literal"><span class="pre">feature_tool</span></code> Module</a></li>
+<li><a class="reference internal" href="#api-module"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-sizer-module"><code class="docutils literal"><span class="pre">dock_sizer</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-module"><code class="docutils literal"><span class="pre">dock_window</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-feature-module"><code class="docutils literal"><span class="pre">dock_window_feature</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-shell-module"><code class="docutils literal"><span class="pre">dock_window_shell</span></code> Module</a></li>
+<li><a class="reference internal" href="#feature-bar-module"><code class="docutils literal"><span class="pre">feature_bar</span></code> Module</a></li>
+<li><a class="reference internal" href="#feature-tool-module"><code class="docutils literal"><span class="pre">feature_tool</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.dock.idock_ui_provider"><code class="docutils literal"><span class="pre">idock_ui_provider</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.dock.idockable"><code class="docutils literal"><span class="pre">idockable</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.dock.ifeature_tool"><code class="docutils literal"><span class="pre">ifeature_tool</span></code> Module</a></li>
@@ -1803,13 +268,11 @@ specified target object&#8217;s DockControl.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.grid.html"
                         title="next chapter">grid Package</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api/pyface.dock.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.dock.txt"
+       rel="nofollow">Show Source</a>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -1825,22 +288,31 @@ specified target object&#8217;s DockControl.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-      <div class="clearer"></div>
+        </div>
+      </div>
     </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
     <div class="footer">
-      &copy;2008-2015, Enthought.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
-      
-      |
-      <a href="../_sources/api/pyface.dock.txt"
-          rel="nofollow">Page source</a></li>
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2015, Enthought
+      </li>
+      <li>
+      Last updated on Oct 27, 2015.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      </li>
+    </ul>
     </div>
-
-    
-
-    
+    </div>
+    </div>
   </body>
 </html>

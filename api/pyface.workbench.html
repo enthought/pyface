@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     
-    <title>workbench Package &mdash; pyface 4.5.2 documentation</title>
+    <title>workbench Package &mdash; pyface 4.6.0.dev209 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.2',
+        VERSION:     '4.6.0.dev209',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,38 +23,60 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.2 documentation" href="../index.html" />
-    <link rel="up" title="pyface Package" href="pyface.html" />
-    <link rel="next" title="action Package" href="pyface.workbench.action.html" />
-    <link rel="prev" title="wizard Package" href="pyface.wizard.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico">
+    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="action Package" href="pyface.workbench.action.html" >
+    <link rel="prev" title="wizard Package" href="pyface.wizard.html" > 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="pyface.workbench.action.html" title="action Package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pyface.wizard.html" title="wizard Package"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.2 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
 
-    <div class="document">
-      <div class="documentwrapper">
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.workbench.action.html" title="action Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.wizard.html" title="wizard Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body" id="spc-section-body">
             
   <div class="section" id="workbench-package">
 <h1>workbench Package<a class="headerlink" href="#workbench-package" title="Permalink to this headline">¶</a></h1>
@@ -436,13 +458,6 @@ editors etc).</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the entire window layout.</p>
-<p>FIXME v3: Should this be called &#8216;destroy&#8217;?</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close_editor">
 <code class="descname">close_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close an editor.</p>
@@ -464,10 +479,10 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.contains_view">
-<code class="descname">contains_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.contains_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True if the view exists in the window layout.</p>
-<p>Note that this returns True even if the view is hidden.</p>
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the entire window layout.</p>
+<p>FIXME v3: Should this be called &#8216;destroy&#8217;?</p>
 </dd></dl>
 
 <dl class="method">
@@ -478,21 +493,10 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_editor_memento">
-<code class="descname">get_editor_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_editor_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the state of the editors.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_toolkit_memento">
-<code class="descname">get_toolkit_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_toolkit_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return any toolkit-specific data that should be part of the memento.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_view_memento">
-<code class="descname">get_view_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_view_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the state of the views.</p>
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.contains_view">
+<code class="descname">contains_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.contains_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the view exists in the window layout.</p>
+<p>Note that this returns True even if the view is hidden.</p>
 </dd></dl>
 
 <dl class="method">
@@ -527,24 +531,6 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_editor_memento">
-<code class="descname">set_editor_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_editor_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the state of the editors.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_toolkit_memento">
-<code class="descname">set_toolkit_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_toolkit_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores any toolkit-specific data.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_view_memento">
-<code class="descname">set_view_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_view_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the state of the views.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_editor_area">
 <code class="descname">show_editor_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_editor_area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the editor area.</p>
@@ -554,6 +540,42 @@ again.</p>
 <dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_view">
 <code class="descname">show_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.show_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_view_memento">
+<code class="descname">get_view_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_view_memento">
+<code class="descname">set_view_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the state of the views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_editor_memento">
+<code class="descname">get_editor_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the editors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_editor_memento">
+<code class="descname">set_editor_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the state of the editors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_toolkit_memento">
+<code class="descname">get_toolkit_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.get_toolkit_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return any toolkit-specific data that should be part of the memento.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_toolkit_memento">
+<code class="descname">set_toolkit_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.IWorkbenchWindowLayout.set_toolkit_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores any toolkit-specific data.</p>
 </dd></dl>
 
 </dd></dl>
@@ -588,12 +610,6 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the entire window layout.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close_editor">
 <code class="descname">close_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close an editor.</p>
@@ -606,9 +622,9 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.contains_view">
-<code class="descname">contains_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.contains_view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True if the view exists in the window layout.</p>
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the entire window layout.</p>
 </dd></dl>
 
 <dl class="method">
@@ -618,21 +634,9 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_editor_memento">
-<code class="descname">get_editor_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_editor_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the state of the editors.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_toolkit_memento">
-<code class="descname">get_toolkit_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_toolkit_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return any toolkit-specific data that should be part of the memento.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_view_memento">
-<code class="descname">get_view_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_view_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the state of the views.</p>
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.contains_view">
+<code class="descname">contains_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.contains_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the view exists in the window layout.</p>
 </dd></dl>
 
 <dl class="method">
@@ -666,24 +670,6 @@ again.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_editor_memento">
-<code class="descname">set_editor_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_editor_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the state of the editors.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_toolkit_memento">
-<code class="descname">set_toolkit_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_toolkit_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores any toolkit-specific data.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_view_memento">
-<code class="descname">set_view_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_view_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the state of the views.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_editor_area">
 <code class="descname">show_editor_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_editor_area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the editor area.</p>
@@ -693,6 +679,42 @@ again.</p>
 <dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_view">
 <code class="descname">show_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.show_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_view_memento">
+<code class="descname">get_view_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_view_memento">
+<code class="descname">set_view_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_view_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the state of the views.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_editor_memento">
+<code class="descname">get_editor_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the editors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_editor_memento">
+<code class="descname">set_editor_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_editor_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the state of the editors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_toolkit_memento">
+<code class="descname">get_toolkit_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.get_toolkit_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return any toolkit-specific data that should be part of the memento.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_toolkit_memento">
+<code class="descname">set_toolkit_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.i_workbench_window_layout.MWorkbenchWindowLayout.set_toolkit_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores any toolkit-specific data.</p>
 </dd></dl>
 
 </dd></dl>
@@ -754,7 +776,7 @@ activated.</p>
 <dl class="class">
 <dt id="pyface.workbench.traits_ui_editor.TraitsUIEditor">
 <em class="property">class </em><code class="descclassname">pyface.workbench.traits_ui_editor.</code><code class="descname">TraitsUIEditor</code><a class="headerlink" href="#pyface.workbench.traits_ui_editor.TraitsUIEditor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.workbench.html#pyface.ui.wx.workbench.editor.Editor" title="pyface.ui.wx.workbench.editor.Editor"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.workbench.editor.Editor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.workbench.html#pyface.ui.qt4.workbench.editor.Editor" title="pyface.ui.qt4.workbench.editor.Editor"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.workbench.editor.Editor</span></code></a></p>
 <p>An editor whose content is provided by a traits UI.</p>
 <dl class="method">
 <dt id="pyface.workbench.traits_ui_editor.TraitsUIEditor.create_control">
@@ -765,18 +787,18 @@ activated.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyface.workbench.traits_ui_editor.TraitsUIEditor.destroy_control">
+<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_editor.TraitsUIEditor.destroy_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroys the toolkit-specific control that represents the editor.</p>
+<p>Overridden to call &#8216;dispose&#8217; on the traits UI.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyface.workbench.traits_ui_editor.TraitsUIEditor.create_ui">
 <code class="descname">create_ui</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_editor.TraitsUIEditor.create_ui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the traits UI that represents the editor.</p>
 <p>By default it calls &#8216;edit_traits&#8217; on the editor&#8217;s &#8216;obj&#8217;. If you
 want more control over the creation of the traits UI then override!</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.traits_ui_editor.TraitsUIEditor.destroy_control">
-<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_editor.TraitsUIEditor.destroy_control" title="Permalink to this definition">¶</a></dt>
-<dd><p>Destroys the toolkit-specific control that represents the editor.</p>
-<p>Overridden to call &#8216;dispose&#8217; on the traits UI.</p>
 </dd></dl>
 
 </dd></dl>
@@ -788,7 +810,7 @@ want more control over the creation of the traits UI then override!</p>
 <dl class="class">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView">
 <em class="property">class </em><code class="descclassname">pyface.workbench.traits_ui_view.</code><code class="descname">TraitsUIView</code><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.workbench.html#pyface.ui.wx.workbench.view.View" title="pyface.ui.wx.workbench.view.View"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.workbench.view.View</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.workbench.html#pyface.ui.qt4.workbench.view.View" title="pyface.ui.qt4.workbench.view.View"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.workbench.view.View</span></code></a></p>
 <p>A view whose content is provided by a traits UI.</p>
 <dl class="method">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView.create_control">
@@ -799,18 +821,18 @@ want more control over the creation of the traits UI then override!</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyface.workbench.traits_ui_view.TraitsUIView.destroy_control">
+<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.destroy_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroys the toolkit-specific control that represents the editor.</p>
+<p>Overridden to call &#8216;dispose&#8217; on the traits UI.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyface.workbench.traits_ui_view.TraitsUIView.create_ui">
 <code class="descname">create_ui</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.create_ui" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the traits UI that represents the editor.</p>
 <p>By default it calls &#8216;edit_traits&#8217; on the view&#8217;s &#8216;model&#8217;. If you
 want more control over the creation of the traits UI then override!</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.traits_ui_view.TraitsUIView.destroy_control">
-<code class="descname">destroy_control</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.traits_ui_view.TraitsUIView.destroy_control" title="Permalink to this definition">¶</a></dt>
-<dd><p>Destroys the toolkit-specific control that represents the editor.</p>
-<p>Overridden to call &#8216;dispose&#8217; on the traits UI.</p>
 </dd></dl>
 
 </dd></dl>
@@ -825,9 +847,9 @@ want more control over the creation of the traits UI then override!</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Manages a set of user perspectives.</p>
 <dl class="method">
-<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.add">
-<code class="descname">add</code><span class="sig-paren">(</span><em>perspective</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a perspective with an optional name.</p>
+<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.create_perspective">
+<code class="descname">create_perspective</code><span class="sig-paren">(</span><em>name</em>, <em>show_editor_area=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.create_perspective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new (and empty) user-defined perspective.</p>
 </dd></dl>
 
 <dl class="method">
@@ -837,16 +859,15 @@ want more control over the creation of the traits UI then override!</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.create_perspective">
-<code class="descname">create_perspective</code><span class="sig-paren">(</span><em>name</em>, <em>show_editor_area=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.create_perspective" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new (and empty) user-defined perspective.</p>
+<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Persist the current state of the user perspectives.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove the user perspective with the specified id.</p>
-<p>This method also updates the persistent data.</p>
+<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>perspective</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a perspective with an optional name.</p>
 </dd></dl>
 
 <dl class="method">
@@ -856,9 +877,10 @@ want more control over the creation of the traits UI then override!</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.save">
-<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Persist the current state of the user perspectives.</p>
+<dt id="pyface.workbench.user_perspective_manager.UserPerspectiveManager.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.user_perspective_manager.UserPerspectiveManager.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the user perspective with the specified id.</p>
+<p>This method also updates the persistent data.</p>
 </dd></dl>
 
 </dd></dl>
@@ -872,17 +894,17 @@ want more control over the creation of the traits UI then override!</p>
 <span id="window-event-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">window_event</span></code> Module<a class="headerlink" href="#module-pyface.workbench.window_event" title="Permalink to this headline">¶</a></h2>
 <p>Window events.</p>
 <dl class="class">
-<dt id="pyface.workbench.window_event.VetoableWindowEvent">
-<em class="property">class </em><code class="descclassname">pyface.workbench.window_event.</code><code class="descname">VetoableWindowEvent</code><a class="headerlink" href="#pyface.workbench.window_event.VetoableWindowEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.window_event.WindowEvent" title="pyface.workbench.window_event.WindowEvent"><code class="xref py py-class docutils literal"><span class="pre">pyface.workbench.window_event.WindowEvent</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Vetoable</span></code></p>
-<p>A vetoable window lifecycle event.</p>
-</dd></dl>
-
-<dl class="class">
 <dt id="pyface.workbench.window_event.WindowEvent">
 <em class="property">class </em><code class="descclassname">pyface.workbench.window_event.</code><code class="descname">WindowEvent</code><a class="headerlink" href="#pyface.workbench.window_event.WindowEvent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>A window lifecycle event.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.workbench.window_event.VetoableWindowEvent">
+<em class="property">class </em><code class="descclassname">pyface.workbench.window_event.</code><code class="descname">VetoableWindowEvent</code><a class="headerlink" href="#pyface.workbench.window_event.VetoableWindowEvent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.workbench.window_event.WindowEvent" title="pyface.workbench.window_event.WindowEvent"><code class="xref py py-class docutils literal"><span class="pre">pyface.workbench.window_event.WindowEvent</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Vetoable</span></code></p>
+<p>A vetoable window lifecycle event.</p>
 </dd></dl>
 
 </div>
@@ -897,27 +919,9 @@ want more control over the creation of the traits UI then override!</p>
 <p>There is exactly <em>one</em> workbench per application. The workbench can create
 any number of workbench windows.</p>
 <dl class="method">
-<dt id="pyface.workbench.workbench.Workbench.confirm">
-<code class="descname">confirm</code><span class="sig-paren">(</span><em>message</em>, <em>title=None</em>, <em>cancel=False</em>, <em>default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.confirm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience method to show a confirmation dialog.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.create_window">
 <code class="descname">create_window</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.create_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Factory method that creates a new workbench window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.workbench.Workbench.edit">
-<code class="descname">edit</code><span class="sig-paren">(</span><em>obj</em>, <em>kind=None</em>, <em>use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Edit an object in the active workbench window.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.workbench.Workbench.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience method to show an error message dialog.</p>
 </dd></dl>
 
 <dl class="method">
@@ -929,6 +933,12 @@ any number of workbench windows.</p>
 they do an Alt+F4 in Windows. It is only called when the application
 menu File-&gt;Exit item is selected.</p>
 <p>Returns True if the exit succeeded, False if it was vetoed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.workbench.Workbench.edit">
+<code class="descname">edit</code><span class="sig-paren">(</span><em>obj</em>, <em>kind=None</em>, <em>use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an object in the active workbench window.</p>
 </dd></dl>
 
 <dl class="method">
@@ -946,6 +956,12 @@ menu File-&gt;Exit item is selected.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyface.workbench.workbench.Workbench.confirm">
+<code class="descname">confirm</code><span class="sig-paren">(</span><em>message</em>, <em>title=None</em>, <em>cancel=False</em>, <em>default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyface.workbench.workbench.Workbench.information">
 <code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
@@ -957,6 +973,12 @@ menu File-&gt;Exit item is selected.</p>
 <dd><p>Convenience method to show a warning message dialog.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="pyface.workbench.workbench.Workbench.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench.Workbench.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -966,8 +988,26 @@ menu File-&gt;Exit item is selected.</p>
 <dl class="class">
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow">
 <em class="property">class </em><code class="descclassname">pyface.workbench.workbench_window.</code><code class="descname">WorkbenchWindow</code><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.wx.html#pyface.ui.wx.application_window.ApplicationWindow" title="pyface.ui.wx.application_window.ApplicationWindow"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.wx.application_window.ApplicationWindow</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.application_window.ApplicationWindow" title="pyface.ui.qt4.application_window.ApplicationWindow"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.application_window.ApplicationWindow</span></code></a></p>
 <p>A workbench window.</p>
+<dl class="method">
+<dt id="pyface.workbench.workbench_window.WorkbenchWindow.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the window.</p>
+<p>Overridden to make the &#8216;opening&#8217; event vetoable.</p>
+<p>Return True if the window opened successfully; False if the open event
+was vetoed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.workbench_window.WorkbenchWindow.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+<p>Overridden to make the &#8216;closing&#8217; event vetoable.</p>
+<p>Return True if the window closed successfully (or was not even open!),
+False if the close event was vetoed.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.activate_editor">
 <code class="descname">activate_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.activate_editor" title="Permalink to this definition">¶</a></dt>
@@ -991,15 +1031,6 @@ menu File-&gt;Exit item is selected.</p>
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.add_view">
 <code class="descname">add_view</code><span class="sig-paren">(</span><em>view</em>, <em>position=None</em>, <em>relative_to=None</em>, <em>size=(-1</em>, <em>-1)</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.add_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a view.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.workbench.workbench_window.WorkbenchWindow.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the window.</p>
-<p>Overridden to make the &#8216;closing&#8217; event vetoable.</p>
-<p>Return True if the window closed successfully (or was not even open!),
-False if the close event was vetoed.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1064,12 +1095,6 @@ one already exists.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.workbench_window.WorkbenchWindow.get_memento">
-<code class="descname">get_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.get_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the state of the window suitable for pickling etc.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.get_part_by_id">
 <code class="descname">get_part_by_id</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.get_part_by_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the workbench part with the specified Id.</p>
@@ -1110,15 +1135,6 @@ one already exists.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.workbench_window.WorkbenchWindow.open">
-<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open the window.</p>
-<p>Overridden to make the &#8216;opening&#8217; event vetoable.</p>
-<p>Return True if the window opened successfully; False if the open event
-was vetoed.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.refresh">
 <code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh the window to reflect any changes.</p>
@@ -1149,12 +1165,6 @@ was vetoed.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.workbench.workbench_window.WorkbenchWindow.set_memento">
-<code class="descname">set_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.set_memento" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore the state of the window from a memento.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.show_editor_area">
 <code class="descname">show_editor_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.show_editor_area" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the editor area.</p>
@@ -1164,6 +1174,18 @@ was vetoed.</p>
 <dt id="pyface.workbench.workbench_window.WorkbenchWindow.show_view">
 <code class="descname">show_view</code><span class="sig-paren">(</span><em>view</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.show_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show a view.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.workbench_window.WorkbenchWindow.get_memento">
+<code class="descname">get_memento</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.get_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the state of the window suitable for pickling etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.workbench.workbench_window.WorkbenchWindow.set_memento">
+<code class="descname">set_memento</code><span class="sig-paren">(</span><em>memento</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.workbench_window.WorkbenchWindow.set_memento" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the state of the window from a memento.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1224,11 +1246,11 @@ was vetoed.</p>
 
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+          </div>
+      <div class="spc-rightsidebar span3">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
@@ -1266,13 +1288,11 @@ was vetoed.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.workbench.action.html"
                         title="next chapter">action Package</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api/pyface.workbench.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.workbench.txt"
+       rel="nofollow">Show Source</a>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -1288,22 +1308,31 @@ was vetoed.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-      <div class="clearer"></div>
+        </div>
+      </div>
     </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
     <div class="footer">
-      &copy;2008-2015, Enthought.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
-      
-      |
-      <a href="../_sources/api/pyface.workbench.txt"
-          rel="nofollow">Page source</a></li>
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2015, Enthought
+      </li>
+      <li>
+      Last updated on Oct 27, 2015.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      </li>
+    </ul>
     </div>
-
-    
-
-    
+    </div>
+    </div>
   </body>
 </html>
