@@ -1,20 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     
-    <title>util Package &mdash; pyface 4.5.2 documentation</title>
+    <title>util Package &mdash; pyface 4.6.0.dev209 documentation</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.5.2',
+        VERSION:     '4.6.0.dev209',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,69 +23,68 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico"/>
-    <link rel="top" title="pyface 4.5.2 documentation" href="../index.html" />
-    <link rel="up" title="pyface Package" href="pyface.html" />
-    <link rel="next" title="grid Package" href="pyface.util.grid.html" />
-    <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/et.ico">
+    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="grid Package" href="pyface.util.grid.html" >
+    <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" > 
   </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="pyface.util.grid.html" title="grid Package"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="pyface.ui.wx.workbench.html" title="workbench Package"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">pyface 4.5.2 documentation</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="pyface.html" accesskey="U">pyface Package</a> &raquo;</li> 
-      </ul>
-    </div>  
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
 
-    <div class="document">
-      <div class="documentwrapper">
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.util.grid.html" title="grid Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.ui.wx.workbench.html" title="workbench Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
         <div class="bodywrapper">
-          <div class="body" role="main">
+          <div class="body" id="spc-section-body">
             
   <div class="section" id="util-package">
 <h1>util Package<a class="headerlink" href="#util-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><code class="xref py py-mod docutils literal"><span class="pre">util</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.util"></span></div>
-<div class="section" id="module-pyface.util.fix_introspect_bug">
-<span id="fix-introspect-bug-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">fix_introspect_bug</span></code> Module<a class="headerlink" href="#module-pyface.util.fix_introspect_bug" title="Permalink to this headline">¶</a></h2>
-<p>This module adds a fix for wx.py&#8217;s introspect module.</p>
-<p>In order to do code-completion, the function
-<cite>introspect.getAttributeName</cite> accesses all the attributes of the
-current object.  This causes severe problems for modules like tvtk
-which depend on lazy importing.  The original introspect module also
-has severe problems with large Numeric arrays because it calls str()
-on the Numeric object in order to find its methods.</p>
-<p>This file defines a fixed function that works fine with lazy objects
-and large Numeric arrays.  This fixed function is injected into the
-introspect module.</p>
-<dl class="function">
-<dt id="pyface.util.fix_introspect_bug.getAllAttributeNames">
-<code class="descclassname">pyface.util.fix_introspect_bug.</code><code class="descname">getAllAttributeNames</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAllAttributeNames" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return dict of all attributes, including inherited, for an object.</p>
-<p>Recursively walk through a class and all base classes.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.util.fix_introspect_bug.getAttributeNames">
-<code class="descclassname">pyface.util.fix_introspect_bug.</code><code class="descname">getAttributeNames</code><span class="sig-paren">(</span><em>object</em>, <em>includeMagic=1</em>, <em>includeSingle=1</em>, <em>includeDouble=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAttributeNames" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return list of unique attributes, including inherited, for object.</p>
-</dd></dl>
-
+<div class="section" id="fix-introspect-bug-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">fix_introspect_bug</span></code> Module<a class="headerlink" href="#fix-introspect-bug-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-pyface.util.font_helper">
 <span id="font-helper-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">font_helper</span></code> Module<a class="headerlink" href="#module-pyface.util.font_helper" title="Permalink to this headline">¶</a></h2>
@@ -152,21 +151,9 @@ to create custom application subclasses, you will likely have to modify this
 code for your own purposes. This code can be copied into your own project
 so you don&#8217;t have to depend on IPython.</p>
 <dl class="function">
-<dt id="pyface.util.guisupport.get_app_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">get_app_qt4</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new qt4 app or return an existing one.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="pyface.util.guisupport.get_app_wx">
 <code class="descclassname">pyface.util.guisupport.</code><code class="descname">get_app_wx</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new wx app or return an exiting one.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.util.guisupport.is_event_loop_running_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">is_event_loop_running_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is the qt4 event loop running.</p>
 </dd></dl>
 
 <dl class="function">
@@ -176,15 +163,27 @@ so you don&#8217;t have to depend on IPython.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="pyface.util.guisupport.start_event_loop_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">start_event_loop_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the qt4 event loop in a consistent manner.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="pyface.util.guisupport.start_event_loop_wx">
 <code class="descclassname">pyface.util.guisupport.</code><code class="descname">start_event_loop_wx</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the wx event loop in a consistent manner.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.get_app_qt4">
+<code class="descclassname">pyface.util.guisupport.</code><code class="descname">get_app_qt4</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new qt4 app or return an existing one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.is_event_loop_running_qt4">
+<code class="descclassname">pyface.util.guisupport.</code><code class="descname">is_event_loop_running_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the qt4 event loop running.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.guisupport.start_event_loop_qt4">
+<code class="descclassname">pyface.util.guisupport.</code><code class="descname">start_event_loop_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the qt4 event loop in a consistent manner.</p>
 </dd></dl>
 
 </div>
@@ -205,20 +204,15 @@ across sessions.</p>
 <dl class="class">
 <dt id="pyface.util.python_stc.PythonSTC">
 <em class="property">class </em><code class="descclassname">pyface.util.python_stc.</code><code class="descname">PythonSTC</code><span class="sig-paren">(</span><em>parent</em>, <em>ID</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">wx.stc.StyledTextCtrl</span></code></p>
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.Expand">
-<code class="descname">Expand</code><span class="sig-paren">(</span><em>line</em>, <em>doExpand</em>, <em>force=False</em>, <em>visLevels=0</em>, <em>level=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.Expand" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.FoldAll">
-<code class="descname">FoldAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.FoldAll" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.ext.autodoc.StyledTextCtrl</span></code></p>
 <dl class="method">
 <dt id="pyface.util.python_stc.PythonSTC.OnKeyPressed">
 <code class="descname">OnKeyPressed</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnKeyPressed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.OnUpdateUI">
+<code class="descname">OnUpdateUI</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -227,8 +221,13 @@ across sessions.</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.OnUpdateUI">
-<code class="descname">OnUpdateUI</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
+<dt id="pyface.util.python_stc.PythonSTC.FoldAll">
+<code class="descname">FoldAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.FoldAll" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.python_stc.PythonSTC.Expand">
+<code class="descname">Expand</code><span class="sig-paren">(</span><em>line</em>, <em>doExpand</em>, <em>force=False</em>, <em>visLevels=0</em>, <em>level=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.Expand" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -264,17 +263,17 @@ across sessions.</p>
 
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+          </div>
+      <div class="spc-rightsidebar span3">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/e-logo-rev.png" alt="Logo"/>
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">util Package</a><ul>
 <li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">util</span></code> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.util.fix_introspect_bug"><code class="docutils literal"><span class="pre">fix_introspect_bug</span></code> Module</a></li>
+<li><a class="reference internal" href="#fix-introspect-bug-module"><code class="docutils literal"><span class="pre">fix_introspect_bug</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.font_helper"><code class="docutils literal"><span class="pre">font_helper</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.guisupport"><code class="docutils literal"><span class="pre">guisupport</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.id_helper"><code class="docutils literal"><span class="pre">id_helper</span></code> Module</a></li>
@@ -290,13 +289,11 @@ across sessions.</p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.util.grid.html"
                         title="next chapter">grid Package</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/api/pyface.util.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.util.txt"
+       rel="nofollow">Show Source</a>
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -312,22 +309,31 @@ across sessions.</p>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-      <div class="clearer"></div>
+        </div>
+      </div>
     </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
     <div class="footer">
-      &copy;2008-2015, Enthought.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
-      
-      |
-      <a href="../_sources/api/pyface.util.txt"
-          rel="nofollow">Page source</a></li>
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2015, Enthought
+      </li>
+      <li>
+      Last updated on Oct 27, 2015.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      </li>
+    </ul>
     </div>
-
-    
-
-    
+    </div>
+    </div>
   </body>
 </html>
