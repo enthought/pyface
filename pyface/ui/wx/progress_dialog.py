@@ -108,6 +108,8 @@ class ProgressDialog(MProgressDialog, Window):
 
     #: Whether or not the dialog was cancelled by the user
     _user_cancelled = Bool(False)
+
+    #: The text of the message label
     _message_text = Str()
 
     #: The size of the dialog
@@ -115,6 +117,18 @@ class ProgressDialog(MProgressDialog, Window):
 
     # Label for the 'cancel' button
     cancel_button_label = Str('Cancel')
+
+    #: The widget showing the message text
+    _message_control = Instance(wx.StaticText)
+
+    #: The widget showing the time elapsed
+    _elapsed_control = Instance(wx.StaticText)
+
+    #: The widget showing the estimated time to completion
+    _estimated_control = Instance(wx.StaticText)
+
+    #: The widget showing the estimated time remaining
+    _remaining_control = Instance(wx.StaticText)
 
     def __init__(self, *args, **kw):
         if 'message' in kw:
