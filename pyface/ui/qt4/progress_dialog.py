@@ -17,28 +17,38 @@ import time
 
 from pyface.qt import QtGui, QtCore
 
+from traits.api import Bool, Instance, Int, Unicode, provides
 
-# Enthought library imports
-from traits.api import Bool, Enum, Instance, Int, provides, Unicode
-
-# Local imports
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
-from .widget import Widget
 from .window import Window
 
+
+@provides(IProgressDialog)
 class ProgressDialog(MProgressDialog, Window):
     """ A simple progress dialog window which allows itself to be updated
 
-        FIXME: buttons are not set up correctly yet
-
     """
+    # FIXME: buttons are not set up correctly yet
 
+    #: The progress bar widget
     progress_bar = Instance(QtGui.QProgressBar)
+
+    #: The window title
     title = Unicode
+
+    #: The text message to display in the dialog
     message = Unicode
+
+    #: The minimum value of the progress range
     min = Int
+
+    #: The minimum value of the progress range
     max = Int
+
+    #: The margin around the progress bar
     margin = Int(5)
+
+    #: Whether or not the progress dialog can be cancelled
     can_cancel = Bool(False)
 
     # The IProgressDialog interface doesn't declare this, but since this is a
@@ -46,36 +56,63 @@ class ProgressDialog(MProgressDialog, Window):
     # offer an option to disable it.
     can_ok = Bool(False)
 
+    #: Whether or not to show the time taken (not implemented in Qt)
     show_time = Bool(False)
-    show_percent = Bool(False)
-    _user_cancelled = Bool(False)
 
+    #: Whether or not to show the percent completed
+    show_percent = Bool(False)
+
+    #: The size of the dialog
     dialog_size = Instance(QtCore.QRect)
 
-    # Label for the 'cancel' button
+    #: Label for the 'cancel' button
     cancel_button_label = Unicode('Cancel')
 
+    #: Whether or not the dialog was cancelled by the user
+    _user_cancelled = Bool(False)
+
+    #: The widget showing the message text
+    _message_control = Instance(QtGui.QLabel)
+
+    #: The widget showing the time elapsed
+    _elapsed_control = Instance(QtGui.QLabel)
+
+    #: The widget showing the estimated time to completion
+    _estimated_control = Instance(QtGui.QLabel)
+
+    #: The widget showing the estimated time remaining
+    _remaining_control = Instance(QtGui.QLabel)
+
+    #-------------------------------------------------------------------------
+    # IWindow Interface
+    #-------------------------------------------------------------------------
+
     def open(self):
+        """ Opens the window. """
         super(ProgressDialog, self).open()
         self._start_time = time.time()
 
     def close(self):
+        """ Closes the window. """
         self.progress_bar.destroy()
         self.progress_bar = None
 
         super(ProgressDialog, self).close()
 
-    def change_message(self, message):
-        self.message = message
-        if self._message_control is not None:
-            self._message_control.setText(message)
+    #-------------------------------------------------------------------------
+    # IProgressDialog Interface
+    #-------------------------------------------------------------------------
 
     def update(self, value):
-        """
-        updates the progress bar to the desired value. If the value is >=
-        the maximum and the progress bar is not contained in another panel
-        the parent window will be closed
+        """ Update the progress bar to the desired value
 
+        If the value is >= the maximum and the progress bar is not contained
+        in another panel the parent window will be closed.
+
+        Parameters
+        ----------
+        value :
+            The progress value to set.
         """
 
         if self.progress_bar is None:
@@ -95,15 +132,9 @@ class ProgressDialog(MProgressDialog, Window):
                 estimated = elapsed/percent
                 remaining = estimated - elapsed
 
-                self._set_time_label(elapsed,
-                                    self._elapsed_control)
-                self._set_time_label(estimated,
-                                    self._estimated_control)
-                self._set_time_label(remaining,
-                                    self._remaining_control)
-
-            if self.show_percent:
-                self._percent_control = "%3f" % ((percent * 100) % 1)
+                self._set_time_label(elapsed, self._elapsed_control)
+                self._set_time_label(estimated, self._estimated_control)
+                self._set_time_label(remaining, self._remaining_control)
 
             if value >= self.max or self._user_cancelled:
                 self.close()
@@ -117,10 +148,13 @@ class ProgressDialog(MProgressDialog, Window):
 
         return (not self._user_cancelled, False)
 
+    #-------------------------------------------------------------------------
+    # Private Interface
+    #-------------------------------------------------------------------------
+
     def reject(self, event):
         self._user_cancelled = True
         self.close()
-
 
     def _set_time_label(self, value, control):
         hours = value / 3600
@@ -173,7 +207,6 @@ class ProgressDialog(MProgressDialog, Window):
     def _create_gauge(self, dialog, layout):
 
         self.progress_bar = QtGui.QProgressBar(dialog)
-#        self.progress_bar.setFrameStyle(QtGui.QFrame.Sunken | QtGui.QFrame.Panel)
         self.progress_bar.setRange(self.min, self.max)
         layout.addWidget(self.progress_bar)
 
@@ -182,18 +215,11 @@ class ProgressDialog(MProgressDialog, Window):
         else:
             self.progress_bar.setFormat("%v")
 
-
-        return
-
     def _create_message(self, dialog, layout):
         label = QtGui.QLabel(self.message, dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         layout.addWidget(label)
         self._message_control = label
-        return
-
-    def _create_percent(self, dialog, layout):
-        #not an option with the QT progress bar
         return
 
     def _create_timer(self, dialog, layout):
@@ -204,14 +230,12 @@ class ProgressDialog(MProgressDialog, Window):
         self._estimated_control = self._create_label(dialog, layout, "Estimated time : ")
         self._remaining_control = self._create_label(dialog, layout, "Remaining time : ")
 
-        return
-
     def _create_control(self, parent):
         return QtGui.QDialog(parent)
 
     def _create(self):
         super(ProgressDialog, self)._create()
-        contents = self._create_contents(self.control)
+        self._create_contents(self.control)
 
     def _create_contents(self, parent):
         dialog = parent
@@ -222,13 +246,16 @@ class ProgressDialog(MProgressDialog, Window):
         # The 'guts' of the dialog.
         self._create_message(dialog, layout)
         self._create_gauge(dialog, layout)
-        self._create_percent(dialog, layout)
         self._create_timer(dialog, layout)
         self._create_buttons(dialog, layout)
 
         dialog.setWindowTitle(self.title)
 
         parent.setLayout(layout)
+
+    #-------------------------------------------------------------------------
+    # Trait change handlers
+    #-------------------------------------------------------------------------
 
     def _max_changed(self, new):
         if self.progress_bar is not None:
