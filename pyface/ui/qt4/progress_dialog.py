@@ -67,6 +67,8 @@ class ProgressDialog(MProgressDialog, Window):
 
     def change_message(self, message):
         self.message = message
+        if self._message_control is not None:
+            self._message_control.setText(message)
 
     def update(self, value):
         """
@@ -187,7 +189,7 @@ class ProgressDialog(MProgressDialog, Window):
         label = QtGui.QLabel(self.message, dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         layout.addWidget(label)
-
+        self._message_control = label
         return
 
     def _create_percent(self, dialog, layout):
@@ -214,6 +216,8 @@ class ProgressDialog(MProgressDialog, Window):
     def _create_contents(self, parent):
         dialog = parent
         layout  = QtGui.QVBoxLayout(dialog)
+        layout.setContentsMargins(self.margin, self.margin,
+                                  self.margin, self.margin)
 
         # The 'guts' of the dialog.
         self._create_message(dialog, layout)
@@ -233,3 +237,7 @@ class ProgressDialog(MProgressDialog, Window):
     def _min_changed(self, new):
         if self.progress_bar is not None:
             self.progress_bar.setMinimum(new)
+
+    def _message_changed(self, new):
+        if self._message_control is not None:
+            self._message_control.setText(new)

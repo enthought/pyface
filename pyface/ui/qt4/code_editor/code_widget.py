@@ -30,6 +30,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     ###########################################################################
     # CodeWidget interface
     ###########################################################################
+    focus_lost = QtCore.Signal()
 
     def __init__(self, parent, should_highlight_current_line=True, font=None,
                  lexer=None):
@@ -425,6 +426,11 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.status_widget.setGeometry(QtCore.QRect(right_pos,
             contents.top(), self.status_widget.sizeHint().width(),
             contents.height()))
+
+    def focusOutEvent(self, event):
+        QtGui.QPlainTextEdit.focusOutEvent(self, event)
+        self.focus_lost.emit()
+
 
     def sizeHint(self):
         # Suggest a size that is 80 characters wide and 40 lines tall.
