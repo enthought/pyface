@@ -191,12 +191,11 @@ class ToolBarManager(ActionManager):
 
         return
 
-toolbarobject = wx.ToolBar
-import os
-if "ETS_AUI_TOOLBAR" in os.environ:
-    from pyface.wx.aui import aui
-    if aui is not None:
-        toolbarobject = aui.AuiToolBar
+from pyface.wx.aui import aui
+if aui is not None:
+    toolbarobject = aui.AuiToolBar
+else:
+    toolbarobject = wx.ToolBar
 
 class _ToolBar(toolbarobject):
     """ The toolkit-specific tool bar implementation. """
