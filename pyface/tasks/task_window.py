@@ -359,6 +359,9 @@ class TaskWindow(ApplicationWindow):
             if state.menu_bar_manager:
                 state.menu_bar_manager.destroy()
             for tool_bar_manager in state.tool_bar_managers:
+                # FIXME: toolbars were not getting removed, but this isn't the right place for it
+                pane = self._window_backend.window._aui_manager.GetPane(tool_bar_manager.id)
+                self._window_backend.window._aui_manager.DetachPane(pane.window)
                 tool_bar_manager.destroy()
 
         # Destroy all controls associated with the task.

@@ -8,6 +8,10 @@ import wx
 # Local imports.
 from util import set_focus
 
+# Logging
+import logging
+logger = logging.getLogger(__name__)
+
 
 @provides(ITaskPane)
 class TaskPane(MTaskPane):
@@ -31,6 +35,9 @@ class TaskPane(MTaskPane):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         if self.control is not None:
+            logger.debug("Destroying %s" % self.control)
+            self.task.window._aui_manager.DetachPane(self.control)
+            
             self.control.Hide()
             self.control.Destroy()
             self.control = None
