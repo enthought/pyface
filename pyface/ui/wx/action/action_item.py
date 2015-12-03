@@ -231,7 +231,10 @@ class _MenuItem(HasTraits):
     def _on_action_name_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
 
-        self.control.SetText(action.name)
+        label = action.name
+        if len(action.accelerator) > 0:
+            label = label + '\t' + action.accelerator
+        self.control.SetText(label)
 
         return
 
