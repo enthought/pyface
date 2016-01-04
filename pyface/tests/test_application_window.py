@@ -14,9 +14,9 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui = GUI()
         self.window = ApplicationWindow()
 
-    def test_destroy(self):
-        # test that destroy works even when no control
-        self.window.destroy()
+    def test_close(self):
+        # test that close works even when no control
+        self.window.close()
 
     def test_open_close(self):
         # test that opening and closing works as expected
@@ -36,7 +36,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         self.window.show(False)
         self.gui.process_events()
-        self.window.destroy()
+        self.window.close()
 
     def test_activate(self):
         # test that activation works as expected
@@ -108,7 +108,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         self.window.show(False)
         self.gui.process_events()
-        self.window.destroy()
+        self.window.close()
 
     def test_toolbar(self):
         # test that toolbar gets created as expected
@@ -124,7 +124,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         self.window.show(False)
         self.gui.process_events()
-        self.window.destroy()
+        self.window.close()
 
     def test_statusbar(self):
         # test that status bar gets created as expected
@@ -136,7 +136,7 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         self.window.show(False)
         self.gui.process_events()
-        self.window.destroy()
+        self.window.close()
 
     def test_icon(self):
         # test that status bar gets created as expected
@@ -146,4 +146,4 @@ class TestApplicationWindow(unittest.TestCase, UnittestTools):
         self.gui.process_events()
         self.window.show(False)
         self.gui.process_events()
-        self.window.destroy()
+        self.window.close()
