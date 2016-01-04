@@ -126,7 +126,7 @@ class ProgressDialog(MProgressDialog, Window):
         seconds = value % 60
         label = "%1u:%02u:%02u" % (hours, minutes, seconds)
 
-        control.setText(control.text()[:-7] + label)
+        control.setText(label)
 
     def _create_buttons(self, dialog, layout):
         """ Creates the buttons. """
