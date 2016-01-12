@@ -73,9 +73,9 @@ class LayoutContainer(LayoutItem):
 
     items = List(pretty_skip=True)
 
-    def __init__(self, *items, **traits):
-        super(LayoutContainer, self).__init__(**traits)
-        self.items = list(items)
+    def __init__(self, *args, **kwargs):
+        super(LayoutContainer, self).__init__(**kwargs)
+        self.items = list(args)
 
     def iterleaves(self):
         for item in self.items:
