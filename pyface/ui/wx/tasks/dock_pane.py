@@ -59,6 +59,10 @@ class DockPane(TaskPane, MDockPane):
         """
         # wx doesn't need a wrapper control, so the contents become the control
         self.control = self.create_contents(parent)
+        
+        # hide the pane till the task gets activated, whereupon it will take
+        # its visibility from the task state
+        self.control.Hide()
 
         # Set the widget's object name. This important for AUI Manager state
         # saving. Use the task ID and the pane ID to avoid collisions when a
