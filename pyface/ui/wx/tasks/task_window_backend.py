@@ -93,6 +93,22 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Show the dock panes.
         self._layout_state(state)
+    
+    def get_toolbars(self, task=None):
+        if task is None:
+            state = self.window._active_state
+        else:
+            state = self.window._get_state(task)
+        toolbars = []
+        for tool_bar_manager in state.tool_bar_managers:
+            info = self.window._aui_manager.GetPane(tool_bar_manager.id)
+            toolbars.append(info)
+        return toolbars
+    
+    def show_toolbars(self, toolbars):
+        for info in toolbars:
+            info.Show()
+        self.window._aui_manager.Update()
 
     #### Methods for saving and restoring the layout ##########################
 
