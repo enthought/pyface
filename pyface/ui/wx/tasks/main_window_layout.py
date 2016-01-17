@@ -55,23 +55,24 @@ class MainWindowLayout(HasTraits):
             if sublayout:
                 self.set_layout_for_area(sublayout, direction)
 
+        self._add_dock_panes(window)
+
+    def _add_dock_panes(self, window):
         # Add all panes not assigned an area by the TaskLayout.
         mgr = window._aui_manager
         for dock_pane in self.state.dock_panes:
             info = mgr.GetPane(dock_pane.pane_name)
             if not info.IsOk():
-                logger.debug("set_layout: managing pane %s" % dock_pane.pane_name)
+                logger.debug("_add_dock_panes: managing pane %s" % dock_pane.pane_name)
                 dock_pane.add_to_manager()
             else:
-                logger.debug("set_layout: arleady managed pane: %s" % dock_pane.pane_name)
+                logger.debug("_add_dock_panes: arleady managed pane: %s" % dock_pane.pane_name)
     
     def _set_layout_from_aui(self, layout, window):
         # The central pane will have already been added, but we need to add all
         # of the dock panes to the manager before the call to LoadPerspective
         logger.debug("_set_layout_from_aui: using saved perspective")
-        for dock_pane in self.state.dock_panes:
-            logger.debug("adding dock pane %s" % dock_pane.id)
-            dock_pane.add_to_manager()
+        self._add_dock_panes(window)
         logger.debug("_set_layout_from_aui: restoring perspective %s" % layout.perspective)
         window._aui_manager.LoadPerspective(layout.perspective)
         for dock_pane in self.state.dock_panes:
