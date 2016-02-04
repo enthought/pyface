@@ -57,7 +57,8 @@ class ModalDialogTester(object):
         self._event_loop_error = []
         self._helper = EventLoopHelper(qt_app=self._qt_app, gui=self._gui)
         self._dialog_widget = None
-
+        self.dialog_was_opened = False
+        
     @property
     def result(self):
         """ The return value of the provided function.
@@ -105,6 +106,7 @@ class ModalDialogTester(object):
             """ Run the when_opened as soon as the dialog has opened. """
             if self.dialog_opened():
                 self._gui.invoke_later(when_opened, self)
+                self.dialog_was_opened = True
             else:
                 condition_timer.start()
 
@@ -158,6 +160,7 @@ class ModalDialogTester(object):
             if self.dialog_opened():
                 self._dialog_widget = self.get_dialog_widget()
                 self._gui.invoke_later(when_opened, self)
+                self.dialog_was_opened = True
             else:
                 condition_timer.start()
 
