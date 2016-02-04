@@ -58,7 +58,7 @@ class ModalDialogTester(object):
         self._helper = EventLoopHelper(qt_app=self._qt_app, gui=self._gui)
         self._dialog_widget = None
         self.dialog_was_opened = False
-        
+
     @property
     def result(self):
         """ The return value of the provided function.
