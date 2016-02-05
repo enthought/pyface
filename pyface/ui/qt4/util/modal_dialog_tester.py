@@ -36,6 +36,10 @@ class ModalDialogTester(object):
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertEqual(tester.result, <expected>)
 
+        # Even if the dialog was not opened upon calling `function`,
+        # `result` is assigned and the test may not fail.
+        # To test if the dialog was once opened:
+        self.assertTrue(tester.dialog_was_opened)
 
     .. note::
 
