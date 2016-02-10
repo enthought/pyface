@@ -1,35 +1,67 @@
 """
-Simple example of a task application creating tasks and panes from traits 
-components. 
+Simple example of an advanced task application creating tasks and panes from
+traits components. Compared to the basic example, this version creates a real
+TaskGuiApplication to manage the GUI part. Additionally, the code editor uses a
+tab viewer to support opening multiple files at once.
 
-Note: Run it with 
+Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
 # Enthought library imports.
-from pyface.api import GUI
-from pyface.tasks.api import TaskWindow
+from traits.api import Str, Tuple
+
+from pyface.tasks.api import TaskApplication
 
 # Local imports.
 from example_task import ExampleTask
 
 
-def main(argv):
-    """ A simple example of using Tasks.
+class MyApplication(TaskApplication):
+    """ This application object can subclass TaskApplication and customize
+    any of the Application attributes: name, window size, logging setup, splash
+    screen, ...
     """
-    # Create the GUI (this does NOT start the GUI event loop).
-    gui = GUI()
 
-    # Create a Task and add it to a TaskWindow.
-    task = ExampleTask()
-    window = TaskWindow(size=(800, 600))
-    window.add_task(task)
+    # -------------------------------------------------------------------------
+    # TaskGuiApplication interface
+    # -------------------------------------------------------------------------
 
-    # Show the window.
-    window.open()
+    app_name = Str("My Pyface Application")
 
-    # Start the GUI event loop.
-    gui.start_event_loop()
+    window_size = Tuple((800, 600))
+
+
+    def start(self):
+        starting = super(MyApplication, self).start()
+        if not starting:
+            return False
+
+        self.create_new_task_window()
+        return True
+
+    # -------------------------------------------------------------------------
+    # MyApplication interface
+    # -------------------------------------------------------------------------
+
+    def create_new_task_window(self):
+        """ Create a new task and open a window for it.
+
+        Returns
+        -------
+        window : TaskWindow
+            Window that was created, containing the newly created task.
+        """
+        task = ExampleTask()
+        window = self.create_task_window(task)
+        return window
+
+
+def main(argv):
+    """ A more advanced example of using Tasks.
+    """
+    app = MyApplication()
+    app.run()
 
 
 if __name__ == '__main__':
