@@ -1,5 +1,5 @@
 # Enthought library imports.
-from traits.api import Bool, Enum, HasTraits, Str, Tuple
+from traits.api import Bool, Enum, HasTraits, Str, Tuple, Int
 
 # Local imports.
 from pyface.tasks.i_task_pane import ITaskPane
@@ -36,6 +36,13 @@ class IDockPane(ITaskPane):
     # Whether the pane is currently visible.
     visible = Bool(False)
 
+    # Whether the title bar of the pane is currently visible.
+    caption_visible = Bool(True)
+
+    # AUI ring number; note that panes won't be movable out of their ring
+    # number.  This is a way to isolate panes
+    dock_layer = Int(0)
+
     ###########################################################################
     # 'IDockPane' interface.
     ###########################################################################
@@ -66,6 +73,8 @@ class MDockPane(HasTraits):
     movable = Bool(True)
     size = Tuple
     visible = Bool(False)
+    caption_visible = Bool(True)
+    dock_layer = Bool(0)
 
     ###########################################################################
     # 'IDockPane' interface.

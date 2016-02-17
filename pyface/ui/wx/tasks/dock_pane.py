@@ -192,8 +192,10 @@ class DockPane(TaskPane, MDockPane):
         info.CloseButton(self.closable)
         info.Floatable(self.floatable)
         info.Movable(self.movable)
+        info.CaptionVisible(self.caption_visible)
+        info.Layer(self.dock_layer)
 
-    @on_trait_change('closable', 'floatable', 'movable')
+    @on_trait_change('closable', 'floatable', 'movable', 'caption_visible', 'dock_layer')
     def _set_dock_features(self):
         if self.control is not None:
             info = self.get_pane_info()
