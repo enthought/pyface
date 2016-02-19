@@ -31,9 +31,17 @@ from .window import Window
 class ProgressBar(Widget):
     """ A simple progress bar dialog intended to run in the UI thread """
 
+    #: The progress bar's parent control.
     parent = Instance(wx.Window)
+
+    #: The progress bar's control.
     control = Instance(wx.Gauge)
+
+    #: The orientation of the progress bar.
     direction = Enum('horizontal', 'horizontal', 'vertical')
+
+    #: The maximum value for the progress bar.
+    _max = Int
 
     def __init__(self, parent, minimum=0, maximum=100, direction='horizontal',
                  size=(200, -1)):
@@ -52,10 +60,7 @@ class ProgressBar(Widget):
         self.control = wx.Gauge(parent, -1, maximum, style=style, size=size)
 
     def update(self, value):
-        """
-        Updates the progress bar to the desired value.
-
-        """
+        """ Update the progress bar to the desired value. """
         if self._max == 0:
             self.control.Pulse()
         else:
@@ -70,25 +75,60 @@ class ProgressBar(Widget):
         # Show the toolkit-specific control in the parent
         self.control.Show()
 
+
 class ProgressDialog(MProgressDialog, Window):
     """ A simple progress dialog window which allows itself to be updated """
 
+    #: The progress bar
     progress_bar = Instance(ProgressBar)
+
+    #: The window title
     title = Str
+
+    #: The text message to display in the dialog
     message = Property()
+
+    #: The minimum value of the progress range
     min = Int
+
+    #: The minimum value of the progress range
     max = Int
+
+    #: The margin around the progress bar
     margin = Int(5)
+
+    #: Whether or not the progress dialog can be cancelled
     can_cancel = Bool(False)
+
+    #: Whether or not to show the time taken
     show_time = Bool(False)
+
+    #: Whether or not to show the percent completed
     show_percent = Bool(False)
+
+    #: Whether or not the dialog was cancelled by the user
     _user_cancelled = Bool(False)
+
+    #: The text of the message label
     _message_text = Str()
 
+    #: The size of the dialog
     dialog_size = Instance(wx.Size)
 
     # Label for the 'cancel' button
     cancel_button_label = Str('Cancel')
+
+    #: The widget showing the message text
+    _message_control = Instance(wx.StaticText)
+
+    #: The widget showing the time elapsed
+    _elapsed_control = Instance(wx.StaticText)
+
+    #: The widget showing the estimated time to completion
+    _estimated_control = Instance(wx.StaticText)
+
+    #: The widget showing the estimated time remaining
+    _remaining_control = Instance(wx.StaticText)
 
     def __init__(self, *args, **kw):
         if 'message' in kw:
@@ -100,12 +140,18 @@ class ProgressDialog(MProgressDialog, Window):
 
         super(ProgressDialog, self).__init__( *args, **kw)
 
+    #-------------------------------------------------------------------------
+    # IWindow Interface
+    #-------------------------------------------------------------------------
+
     def open(self):
+        """ Opens the window. """
         super(ProgressDialog, self).open()
         self._start_time = time.time()
         wx.GetApp().Yield(True)
 
     def close(self):
+        """ Closes the window. """
         if self.progress_bar is not None:
             self.progress_bar.destroy()
             self.progress_bar = None
@@ -115,7 +161,19 @@ class ProgressDialog(MProgressDialog, Window):
 
         super(ProgressDialog, self).close()
 
+    #-------------------------------------------------------------------------
+    # IProgressDialog Interface
+    #-------------------------------------------------------------------------
+
     def change_message(self, value):
+        """ Change the displayed message in the progress dialog
+
+        Parameters
+        ----------
+        message : str or unicode
+            The new message to display.
+
+        """
         self._message_text = value
 
         if self._message_control is not None:
@@ -124,16 +182,21 @@ class ProgressDialog(MProgressDialog, Window):
 
             msg_control_size = self._message_control.GetSize()
             self.dialog_size.x = max(self.dialog_size.x, msg_control_size.x + 2*self.margin)
-            self.control.SetClientSize(self.dialog_size)
+            if self.control is not None:
+                self.control.SetClientSize(self.dialog_size)
 
-            self.control.GetSizer().Layout()
+                self.control.GetSizer().Layout()
 
     def update(self, value):
-        """
-        updates the progress bar to the desired value. If the value is >=
-        the maximum and the progress bar is not contained in another panel
-        the parent window will be closed
+        """ Update the progress bar to the desired value
 
+        If the value is >= the maximum and the progress bar is not contained
+        in another panel the parent window will be closed.
+
+        Parameters
+        ----------
+        value :
+            The progress value to set.
         """
 
         if self.progress_bar is None:
@@ -183,6 +246,10 @@ class ProgressDialog(MProgressDialog, Window):
 
         return (not self._user_cancelled, False)
 
+    #-------------------------------------------------------------------------
+    # Private Interface
+    #-------------------------------------------------------------------------
+
     def _on_cancel(self, event):
         self._user_cancelled = True
         self.close()
@@ -209,7 +276,6 @@ class ProgressDialog(MProgressDialog, Window):
         self._cancel = None
 
         if self.can_cancel == True:
-
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(dialog, wx.ID_CANCEL,
                                               self.cancel_button_label)
@@ -221,7 +287,6 @@ class ProgressDialog(MProgressDialog, Window):
             self.dialog_size.y += button_size.y + 2*self.margin
 
             parent_sizer.Add(sizer, 0, wx.ALIGN_RIGHT | wx.ALL, self.margin)
-        return
 
     def _create_label(self, dialog, parent_sizer, text):
         local_sizer = wx.BoxSizer()
@@ -244,8 +309,6 @@ class ProgressDialog(MProgressDialog, Window):
         self.dialog_size.x = max(self.dialog_size.x, progress_bar_size.x + 2*self.margin + horiz_spacer)
         self.dialog_size.y += progress_bar_size.y + 2*self.margin
 
-        return
-
     def _create_message(self, dialog, parent_sizer):
         self._message_control = wx.StaticText(dialog, -1, self.message)
         parent_sizer.Add(self._message_control, 0, wx.LEFT | wx.TOP, self.margin)
@@ -254,14 +317,11 @@ class ProgressDialog(MProgressDialog, Window):
         self.dialog_size.x = max(self.dialog_size.x, msg_control_size.x + 2*self.margin)
         self.dialog_size.y += msg_control_size.y + 2*self.margin
 
-        return
-
     def _create_percent(self, dialog, parent_sizer):
         if not self.show_percent:
             return
 
         raise NotImplementedError
-
 
     def _create_timer(self, dialog, parent_sizer):
         if not self.show_time:
@@ -281,8 +341,6 @@ class ProgressDialog(MProgressDialog, Window):
 
         self.dialog_size.x = max(self.dialog_size.x, timer_size.x + 2*self.margin)
         self.dialog_size.y += timer_size.y + 2*self.margin
-
-        return
 
     def _create_control(self, parent):
         """ Creates the window contents.
