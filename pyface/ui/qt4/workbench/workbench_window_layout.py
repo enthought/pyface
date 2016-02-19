@@ -520,7 +520,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view.window = self.window
 
             try:
-                view.control = view.create_control(self.window.control)
+                view.control = view.create_control(dw.widget())
             except:
                 # Tidy up if the view couldn't be created.
                 delattr(view, '_qt4_dock')
