@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2016 by Enthought, Inc., Austin, TX
+# Copyright (c) 2014-2016 by Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -15,10 +15,10 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import os
 import logging
+from time import sleep
 
-from traits.api import (Bool, Event, HasStrictTraits, Instance, List, Property,
-                        Str, Tuple, Vetoable)
-from traits.etsconfig.etsconfig import ETSConfig
+from traits.api import (Bool, Event, HasStrictTraits, Instance, Int, List,
+                        Property, Str, Tuple, Vetoable)
 
 from ..image_resource import ImageResource
 from .task_window import TaskWindow
@@ -54,11 +54,17 @@ class TaskApplication(HasStrictTraits):
     #: The splash screen for the application. No splash screen by default
     splash_screen = Instance('pyface.i_splash_screen.ISplashScreen')
 
+    #: How long to pause application start to show splash screen
+    splash_screen_duration = Int(3)
+
     #: Icon for the application
     icon = Instance(ImageResource)
 
-    #: Location of the log files ($ETSConfig.application_data$/logdir)
-    logdir = Str
+    #: Name of log folder. Leave empty to avoid the creation of a log folder.
+    logdir_name = Str("log")
+
+    #: Absolute location of log folder (ETSConfig.application_data/logdir_name)
+    logdir_path = Str
 
     # Window management -------------------------------------------------------
 
@@ -88,7 +94,7 @@ class TaskApplication(HasStrictTraits):
     #: Upon successful completion of the start method.
     started = Event(ApplicationEvent)
 
-    #: Fired after the GUI event loop has been started.
+    #: Fired after the GUI event loop has been started during the run method.
     application_initialized = Event(ApplicationEvent)
 
     #: Fired when the application is starting. Called immediately before the
@@ -112,7 +118,8 @@ class TaskApplication(HasStrictTraits):
 
     # Protected interface -----------------------------------------------------
 
-    # An 'explicit' exit is when the the 'exit' method is called.
+    #: Flag if the exiting of the application was explicitely requested by user
+    # An 'explicit' exit is when the 'exit' method is called.
     # An 'implicit' exit is when the user closes the last open window.
     _explicit_exit = Bool(False)
 
@@ -131,6 +138,9 @@ class TaskApplication(HasStrictTraits):
 
         # create the GUI so that the splash screen comes up first thing
         self.gui
+
+        if self.splash_screen is not None:
+            sleep(self.splash_screen_duration)
 
         return True
 
@@ -215,57 +225,49 @@ class TaskApplication(HasStrictTraits):
         # get garbage collected
         self.windows_created.append(window)
 
-        # set up listener to ensure we release reference to windows
-        window.on_trait_change(self._on_close_window, 'closed')
-
-        # set up listener to ensure undo manager has correct active stack
+        # set up window listeners
+        # NOTE: 'activated' is not fired on a window when the window first
+        # opens and gets focus. It is only fired when the window comes from
+        # lower in the stack to be the active window.
         window.on_trait_change(self._on_activate_window, 'activated')
+        window.on_trait_change(self._on_window_closing, 'closing')
+        window.on_trait_change(self._on_window_closed, 'closed')
 
         window.add_task(task)
         window.open()
 
         return window
 
-    def _on_close_window(self, window, trait, old, new):
-        """ Listener that ensures windows are released when closed.
-        """
-        if window.active_task in self.tasks_created:
-            self.tasks_created.remove(window.active_task)
-
-        self.windows_created.remove(window)
-
-    def _on_activate_window(self, window, trait, old, new):
-        """ Listener that ensures active undo command stack is correct. """
-        if getattr(window.active_task, 'command_stack', None) is not None:
-            self.undo_manager.active_stack = window.active_task.command_stack
-
-        self.active_window = window
-
     # -------------------------------------------------------------------------
     # Private interface
     # -------------------------------------------------------------------------
+
+    # Initialization utilities ------------------------------------------------
 
     def _initialize_application_home(self):
         """ Setup the home directory for the application where logs, preference
         files and other config files will be stored.
         """
+        from traits.etsconfig.etsconfig import ETSConfig
+
         ETSConfig.application_data = os.path.join(ETSConfig.application_data,
-                                                  self.app_name)
+                                                  sanitize(self.app_name))
         ETSConfig.application_home = ETSConfig.application_data
         ETSConfig.user_data = ETSConfig.application_home
 
-        self.logdir = os.path.join(ETSConfig.application_home, 'log')
-        if not os.path.exists(self.logdir):
-            os.makedirs(self.logdir)
+        if self.logdir_name:
+            self.logdir_path = os.path.join(ETSConfig.application_home,
+                                            self.logdir_name)
+            if not os.path.exists(self.logdir_path):
+                os.makedirs(self.logdir_path)
 
     def _setup_logging(self):
         """ Initialize logger. """
         pass
 
     def _run(self):
-        """ Private shadow method that does the actual work
-
-        Subclasses may sometimes need to override this.
+        """ Actual implementation of running the application: starting the GUI
+        event loop.
         """
         # Fire a notification that the app is running.  This is guaranteed to
         # happen after all initialization has occurred and the event loop has
@@ -275,6 +277,29 @@ class TaskApplication(HasStrictTraits):
 
         # start the GUI - script blocks here
         self.gui.start_event_loop()
+
+    def _on_activate_window(self, window, trait, old, new):
+        """ Listener that ensures active undo command stack is correct.
+        """
+        if getattr(window.active_task, 'command_stack', None) is not None:
+            self.undo_manager.active_stack = window.active_task.command_stack
+
+        self.active_window = window
+
+    # Destruction utilities ---------------------------------------------------
+
+
+    def _on_window_closing(self, window, trait, old, new):
+        """ Custom behavior when the closing of a window is requested."""
+        pass
+
+    def _on_window_closed(self, window, trait, old, new):
+        """ Listener that ensures window handles are released when closed.
+        """
+        if window.active_task in self.tasks_created:
+            self.tasks_created.remove(window.active_task)
+
+        self.windows_created.remove(window)
 
     def _prepare_exit(self):
         """ Do any application-level state saving and clean-up """
@@ -295,7 +320,7 @@ class TaskApplication(HasStrictTraits):
 
         clear_handlers(logger)
 
-    # Trait initializers -----------------------------------------------------
+    # Trait initializers and property getters ---------------------------------
 
     def _gui_default(self):
         from pyface.api import GUI
@@ -312,3 +337,15 @@ class TaskApplication(HasStrictTraits):
             return self.active_window.active_task
         else:
             return None
+
+
+def sanitize(name):
+    """ Convert an application name into a sanitized folder name."""
+    import unicodedata
+    import re
+
+    value = unicode(name.strip().lower())
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+    value = unicode(re.sub('[^\w\s\-_]', '', value))
+    value = unicode(re.sub('[\-\s]+', '_', value))
+    return value
