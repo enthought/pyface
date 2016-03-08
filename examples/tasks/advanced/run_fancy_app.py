@@ -50,6 +50,12 @@ class MyApplication(TaskApplication):
     # MyApplication interface
     # -------------------------------------------------------------------------
 
+    #: Hook to add global schema additions to tasks/windows
+    extra_actions = List(Instance(
+        'pyface.tasks.action.schema_addition.SchemaAddition'
+    ))
+
+
     def create_new_task_window(self):
         """ Create a new task and open a window for it.
 

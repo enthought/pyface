@@ -3,7 +3,7 @@ licensed accordingly to the original license:
 
 Project                 License                   File
 ----------------------------------------------------------------------------
-Enthought               BSD 3-Clause              LICENSE.txt
+Enthought               Proprietary
 Oxygen                  CC-SA 3.0                 http://creativecommons.org/licenses/by-sa/3.0/
 
 Unless stated in this file, icons are the work of Enthought, and are
@@ -14,3 +14,5 @@ Files and orginal authors:
                    document_new.png | Oxygen
                   document_open.png | Oxygen
                   document_save.png | Oxygen
+           enthought-logo-w-tag.png | Enthought
+                 enthought_icon.png | Enthought

@@ -18,6 +18,7 @@ class ExampleTask(Task):
     #### Task interface #######################################################
 
     id = 'example.example_task'
+
     name = 'Multi-Tab Editor'
 
     active_editor = Property(Instance(IEditor),
