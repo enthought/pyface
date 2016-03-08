@@ -41,6 +41,37 @@ NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt's GPL or proprietary licensing will
 likely apply to your code.
 
+Toolkit Backend Selection
+-------------------------
+
+Selecting the backend to use is possible via the singleton object **ETSConfig**
+(importable from `traits.etsconfig.api`), which has a string attribute, toolkit,
+that signifies the GUI toolkit.
+
+The supported values of **ETSConfig.toolkit** are:
+
+* 'qt4': `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_, which provides Python
+  bindings for the `Qt <http://trolltech.com/products/qt>`_ framework version 4.
+* 'wx': `wxPython <http://www.wxpython.org>`_, which provides Python bindings 
+  for the `wxWidgets <http://wxwidgets.org>`_ toolkit.
+* 'null': A do-nothing toolkit, for situations where neither of the other 
+  toolkits is installed, but Traits is needed for non-UI purposes.
+
+The default behavior of TraitsUI is to search for available toolkit-specific
+packages in the order listed, and uses the first one it finds. The programmer or
+the user can override this behavior in any of several ways, in the following
+order of precedence:
+
+#. The program can explicitly set **ETSConfig.toolkit**. It must do this before
+   importing from any other Enthought Tool Suite component, including
+   traits.  For example, at the beginning of a program::
+   
+       from traits.etsconfig.api import ETSConfig
+       ETSConfig.toolkit = 'wx'
+
+#. The user can specify a -toolkit flag on the command line of the program. 
+#. The user can define a value for the ETS_TOOLKIT environment variable.
+
 Contents
 ========
 
