@@ -104,15 +104,6 @@ class TaskApplication(HasStrictTraits):
     #: Upon successful completion of the stop method.
     stopped = Event(ApplicationEvent)
 
-    # Other -------------------------------------------------------------------
-
-    #: The UndoManager for the application.
-    undo_manager = Instance('apptools.undo.i_undo_manager.IUndoManager')
-
-    #: The root preferences node.
-    preferences = Instance('apptools.preferences.i_preferences.IPreferences')
-
-
     #: The Pyface GUI instance for the application
     gui = Instance('pyface.i_gui.IGUI')
 
