@@ -14,5 +14,3 @@ Files and orginal authors:
                    document_new.png | Oxygen
                   document_open.png | Oxygen
                   document_save.png | Oxygen
-           enthought-logo-w-tag.png | Enthought
-                 enthought_icon.png | Enthought
