@@ -318,11 +318,6 @@ class TaskApplication(HasStrictTraits):
 
         return GUI(splash_screen=self.splash_screen)
 
-    def _undo_manager_default(self):
-        from apptools.undo.api import UndoManager
-
-        return UndoManager()
-
     def _get_active_task(self):
         if self.active_window is not None:
             return self.active_window.active_task
