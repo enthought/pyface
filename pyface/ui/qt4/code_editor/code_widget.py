@@ -370,6 +370,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
         pass
 
     def keyPressEvent(self, event):
+        if self.isReadOnly():
+            return super(CodeWidget, self).keyPressEvent(event)
+
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
 
         self.keyPressEvent_action(event) # FIXME: see above
@@ -713,7 +716,8 @@ class AdvancedCodeWidget(QtGui.QWidget):
         if key_sequence.matches(QtGui.QKeySequence.Find):
             self.enable_find()
         elif key_sequence.matches(QtGui.QKeySequence.Replace):
-            self.enable_replace()
+            if not self.isReadOnly():
+                self.enable_replace()
         elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Escape)):
             if self.active_find_widget:
                 self.find.hide()
