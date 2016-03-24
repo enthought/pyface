@@ -10,6 +10,7 @@
 
 # Standard library imports.
 import unittest
+import mock
 
 # System library imports.
 from pyface.qt import QtCore, QtGui
@@ -54,10 +55,22 @@ class TestCodeWidget(unittest.TestCase):
         acw.code.setPlainText(text)
         acw.show()
 
+        # On some platforms, Find/Replace do not have default keybindings
+        FindKey = QtGui.QKeySequence('Ctrl+F')
+        ReplaceKey = QtGui.QKeySequence('Ctrl+H')
+        patcher_find = mock.patch('pyface.qt.QtGui.QKeySequence.Find', FindKey)
+        patcher_replace = mock.patch('pyface.qt.QtGui.QKeySequence.Replace',
+                                     ReplaceKey)
+        patcher_find.start()
+        patcher_replace.start()
+        self.addCleanup(patcher_find.stop)
+        self.addCleanup(patcher_replace.stop)
+
         def click_key_seq(widget, key_seq):
             if not isinstance(key_seq, QtGui.QKeySequence):
                 key_seq = QtGui.QKeySequence(key_seq)
             try:
+                # QKeySequence on python3-pyside does not have `len`
                 first_key = key_seq[0]
             except IndexError:
                 return False
@@ -68,21 +81,21 @@ class TestCodeWidget(unittest.TestCase):
             return True
 
         acw.code.setReadOnly(True)
-        if click_key_seq(acw, QtGui.QKeySequence.Find):
+        if click_key_seq(acw, FindKey):
             self.assertTrue(acw.find.isVisible())
             acw.find.hide()
 
         acw.code.setReadOnly(False)
-        if click_key_seq(acw, QtGui.QKeySequence.Find):
+        if click_key_seq(acw, FindKey):
             self.assertTrue(acw.find.isVisible())
             acw.find.hide()
 
         acw.code.setReadOnly(True)
-        if click_key_seq(acw, QtGui.QKeySequence.Replace):
+        if click_key_seq(acw, ReplaceKey):
             self.assertFalse(acw.replace.isVisible())
 
         acw.code.setReadOnly(False)
-        if click_key_seq(acw, QtGui.QKeySequence.Replace):
+        if click_key_seq(acw, ReplaceKey):
             self.assertTrue(acw.replace.isVisible())
         acw.replace.hide()
         self.assertFalse(acw.replace.isVisible())
