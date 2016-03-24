@@ -712,11 +712,10 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
     def keyPressEvent(self, event):
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
-
         if key_sequence.matches(QtGui.QKeySequence.Find):
             self.enable_find()
         elif key_sequence.matches(QtGui.QKeySequence.Replace):
-            if not self.isReadOnly():
+            if not self.code.isReadOnly():
                 self.enable_replace()
         elif key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Escape)):
             if self.active_find_widget:
