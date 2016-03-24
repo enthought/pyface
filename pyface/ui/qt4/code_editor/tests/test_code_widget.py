@@ -57,27 +57,31 @@ class TestCodeWidget(unittest.TestCase):
         def click_key_seq(widget, key_seq):
             if not isinstance(key_seq, QtGui.QKeySequence):
                 key_seq = QtGui.QKeySequence(key_seq)
-            key = key_seq[0] & ~QtCore.Qt.KeyboardModifierMask
-            modifier = key_seq[0] & QtCore.Qt.KeyboardModifierMask
+            if len(key_seq) == 0:
+                return False
+            key = QtCore.Qt.Key(key_seq[0] & ~QtCore.Qt.KeyboardModifierMask)
+            modifier = QtCore.Qt.KeyboardModifier(
+                key_seq[0] & QtCore.Qt.KeyboardModifierMask)
             QTest.keyClick(widget, key, modifier)
+            return True
 
         acw.code.setReadOnly(True)
-        click_key_seq(acw, QtGui.QKeySequence.Find)
-        self.assertTrue(acw.find.isVisible())
-        acw.find.hide()
+        if click_key_seq(acw, QtGui.QKeySequence.Find):
+            self.assertTrue(acw.find.isVisible())
+            acw.find.hide()
 
         acw.code.setReadOnly(False)
-        click_key_seq(acw, QtGui.QKeySequence.Find)
-        self.assertTrue(acw.find.isVisible())
-        acw.find.hide()
+        if click_key_seq(acw, QtGui.QKeySequence.Find):
+            self.assertTrue(acw.find.isVisible())
+            acw.find.hide()
 
         acw.code.setReadOnly(True)
-        click_key_seq(acw, QtGui.QKeySequence.Replace)
-        self.assertFalse(acw.replace.isVisible())
+        if click_key_seq(acw, QtGui.QKeySequence.Replace):
+            self.assertFalse(acw.replace.isVisible())
 
         acw.code.setReadOnly(False)
-        click_key_seq(acw, QtGui.QKeySequence.Replace)
-        self.assertTrue(acw.replace.isVisible())
+        if click_key_seq(acw, QtGui.QKeySequence.Replace):
+            self.assertTrue(acw.replace.isVisible())
         acw.replace.hide()
         self.assertFalse(acw.replace.isVisible())
 
