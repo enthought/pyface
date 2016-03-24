@@ -57,11 +57,13 @@ class TestCodeWidget(unittest.TestCase):
         def click_key_seq(widget, key_seq):
             if not isinstance(key_seq, QtGui.QKeySequence):
                 key_seq = QtGui.QKeySequence(key_seq)
-            if len(key_seq) == 0:
+            try:
+                first_key = key_seq[0]
+            except IndexError:
                 return False
-            key = QtCore.Qt.Key(key_seq[0] & ~QtCore.Qt.KeyboardModifierMask)
+            key = QtCore.Qt.Key(first_key & ~QtCore.Qt.KeyboardModifierMask)
             modifier = QtCore.Qt.KeyboardModifier(
-                key_seq[0] & QtCore.Qt.KeyboardModifierMask)
+                first_key & QtCore.Qt.KeyboardModifierMask)
             QTest.keyClick(widget, key, modifier)
             return True
 
