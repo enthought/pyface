@@ -29,6 +29,12 @@ def information(parent, message, title='Information',
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
         parent=parent, message=message, title=title,
@@ -50,6 +56,12 @@ def warning(parent, message, title='Warning', detail='', informative=''):
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
         parent=parent, message=message, title=title,
@@ -71,6 +83,12 @@ def error(parent, message, title='Error', detail='', informative=''):
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
         parent=parent, message=message, title=title, severity='error',
