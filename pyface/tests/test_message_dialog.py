@@ -3,16 +3,18 @@ from __future__ import absolute_import
 from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
-from ..message_dialog import MessageDialog
-from ..constant import OK, CANCEL
+from ..message_dialog import MessageDialog, information, warning, error
+from ..constant import OK
 from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 USING_QT = ETSConfig.toolkit not in ['', 'wx']
+
 
 class TestMessageDialog(unittest.TestCase):
 
@@ -132,3 +134,43 @@ class TestMessageDialog(unittest.TestCase):
         parent.close()
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
+
+
+@unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+class TestMessageDialogHelpers(unittest.TestCase):
+
+    def test_information(self):
+        self._check_dialog_properties(information, 'information')
+
+    def test_warning(self):
+        self._check_dialog_properties(warning, 'warning')
+
+    def test_error(self):
+        self._check_dialog_properties(error, 'error')
+
+    def _check_dialog_properties(self, helper, severity):
+        message = 'message'
+        kwargs = {
+            'title': 'Title',
+            'detail': 'Detail',
+            'informative': 'Informative'
+        }
+
+        dialog = self._open_and_close(helper, message, **kwargs)
+
+        self.assertEqual(dialog.severity, severity)
+        self.assertEqual(dialog.message, message)
+        for attr, value in kwargs.items():
+            self.assertEqual(getattr(dialog, attr), value)
+
+    def _open_and_close(self, helper, message, **kwargs):
+        parent = Window()
+        parent.open()
+
+        when_opened = lambda x: x.close(accept=True)
+
+        tester = ModalDialogTester(helper)
+        tester.open_and_wait(when_opened, parent.control, message, **kwargs)
+
+        parent.close()
+        return tester.result
