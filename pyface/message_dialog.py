@@ -42,7 +42,7 @@ def information(parent, message, title='Information',
     )
     dialog.open()
 
-    return
+    return dialog
 
 
 def warning(parent, message, title='Warning', detail='', informative=''):
@@ -69,7 +69,7 @@ def warning(parent, message, title='Warning', detail='', informative=''):
     )
     dialog.open()
 
-    return
+    return dialog
 
 
 def error(parent, message, title='Error', detail='', informative=''):
@@ -96,7 +96,7 @@ def error(parent, message, title='Error', detail='', informative=''):
     )
     dialog.open()
 
-    return
+    return dialog
 
 
 # Import the toolkit specific version.
