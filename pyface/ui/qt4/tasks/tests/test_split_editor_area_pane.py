@@ -355,5 +355,43 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             window.close()
 
+    def test_active_editor_after_focus_change(self):
+        window = TaskWindow(size=(800, 600))
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        # Show the window.
+        with event_loop():
+            window.open()
+
+        with event_loop():
+            app = get_app_qt4()
+            app.setActiveWindow(window.control)
+
+        # Add and activate an editor which contains tabs.
+        left_editor = ViewWithTabsEditor()
+        right_editor = ViewWithTabsEditor()
+
+        with event_loop():
+            editor_area.add_editor(left_editor)
+        with event_loop():
+            editor_area.control.split(orientation=QtCore.Qt.Horizontal)
+        with event_loop():
+            editor_area.add_editor(right_editor)
+
+        editor_area.activate_editor(right_editor)
+        self.assertEqual(editor_area.active_editor, right_editor)
+
+        with event_loop():
+            left_editor.control.setFocus()
+
+        self.assertIsNotNone(editor_area.active_editor)
+        self.assertEqual(editor_area.active_editor, left_editor)
+
+        with event_loop():
+            window.close()
+
 if __name__ == '__main__':
     unittest.main()
