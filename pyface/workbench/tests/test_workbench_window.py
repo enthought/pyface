@@ -49,3 +49,14 @@ class TestWindow(unittest.TestCase, UnittestTools):
         # show_editor_area should not be called and hide_editor_area is called
         self.assertFalse(workbench_window.show_editor_area.called)
         self.assertTrue(workbench_window.hide_editor_area.called)
+
+        # The with_editor has been seen so this will read from the memento
+        workbench_window.show_editor_area.reset_mock()
+        workbench_window.hide_editor_area.reset_mock()
+        workbench_window._show_perspective(None, with_editor)
+
+        # show_editor_area should be called
+        # hide_editor_area should not be called as we fake
+        # old perspective to be None
+        self.assertTrue(workbench_window.show_editor_area.called)
+        self.assertFalse(workbench_window.hide_editor_area.called)
