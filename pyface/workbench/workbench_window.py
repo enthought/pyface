@@ -532,7 +532,6 @@ class WorkbenchWindow(ApplicationWindow):
 
     def show_editor_area(self):
         """ Show the editor area. """
-
         self.layout.show_editor_area()
 
         return
@@ -745,7 +744,20 @@ class WorkbenchWindow(ApplicationWindow):
 
         if memento is not None:
             # Show the editor area?
-            self._restore_editor_area_visibility(memento)
+            # We need to set the editor area before setting the views
+            if len(memento) == 2:
+                logger.warning(("Restoring perspective from a file saved from "
+                                "an older version."))
+                editor_area_visible = True
+            else:
+                editor_area_visible = memento[2]
+
+            # Show the editor area if it is set to be visible
+            if editor_area_visible:
+                self.show_editor_area()
+            else:
+                self.hide_editor_area()
+                self.active_editor = None
 
             # Now set the views
             view_memento, active_view_id = memento[:2]
@@ -787,28 +799,9 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    def _restore_editor_area_visibility(self, memento):
-        # Is the editor area visible?
-        if len(memento) == 2:
-            logger.warning(("Restoring perspective from a file saved from "
-                            "an older version."))
-            editor_area_visible = True
-        else:
-            editor_area_visible = memento[2]
-
-        # Show the editor area if it is set to be visible
-        if editor_area_visible:
-            self.show_editor_area()
-        else:
-            self.hide_editor_area()
-            self.active_editor = None
-
     def _restore_contents(self):
         """ Restore the contents of the window. """
         self.layout.set_editor_memento(self._memento.editor_area_memento)
-
-        memento = self._memento.perspective_mementos[self.active_perspective.id]
-        self._restore_editor_area_visibility(memento)
 
         self.size = self._memento.size
         self.position = self._memento.position
