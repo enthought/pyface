@@ -33,18 +33,19 @@ class TestWindow(unittest.TestCase, UnittestTools):
         workbench_window.hide_editor_area = mock.MagicMock()
 
         # Show a perspective with editor area
-        workbench_window._show_perspective(None, with_editor)
+        workbench_window.active_perspective = with_editor
+        workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=True)
 
         # show_editor_area should be called
-        # hide_editor_area should not be called when there was
-        # no old perspective
+        # hide_editor_area should not be called
         self.assertTrue(workbench_window.show_editor_area.called)
         self.assertFalse(workbench_window.hide_editor_area.called)
 
         # Show a perspective with editor area
         workbench_window.show_editor_area.reset_mock()
         workbench_window.hide_editor_area.reset_mock()
-        workbench_window._show_perspective(with_editor, without_editor)
+        workbench_window.active_perspective = without_editor
+        workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=False)
 
         # show_editor_area should not be called and hide_editor_area is called
         self.assertFalse(workbench_window.show_editor_area.called)
@@ -53,10 +54,9 @@ class TestWindow(unittest.TestCase, UnittestTools):
         # The with_editor has been seen so this will read from the memento
         workbench_window.show_editor_area.reset_mock()
         workbench_window.hide_editor_area.reset_mock()
-        workbench_window._show_perspective(None, with_editor)
+        workbench_window.active_perspective = with_editor
+        workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=True)
 
         # show_editor_area should be called
-        # hide_editor_area should not be called as we fake
-        # old perspective to be None
         self.assertTrue(workbench_window.show_editor_area.called)
         self.assertFalse(workbench_window.hide_editor_area.called)
