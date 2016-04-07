@@ -220,7 +220,6 @@ class WorkbenchWindow(ApplicationWindow):
         # to a perspective that has not been seen yet.
         self._initial_layout = self.layout.get_view_memento()
 
-
         # Are we creating the window from scratch or restoring it from a
         # memento?
         if self._memento is None:
@@ -533,7 +532,6 @@ class WorkbenchWindow(ApplicationWindow):
     def show_editor_area(self):
         """ Show the editor area. """
         self.layout.show_editor_area()
-
         return
 
     def show_view(self, view):
