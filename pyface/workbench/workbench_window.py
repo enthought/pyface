@@ -220,16 +220,20 @@ class WorkbenchWindow(ApplicationWindow):
         # to a perspective that has not been seen yet.
         self._initial_layout = self.layout.get_view_memento()
 
+
         # Are we creating the window from scratch or restoring it from a
         # memento?
         if self._memento is None:
             self._memento = WorkbenchWindowMemento()
 
-        else:
-            self._restore_contents()
+            # Set the initial perspective.
+            self.active_perspective = self._get_initial_perspective()
 
-        # Set the initial perspective.
-        self.active_perspective = self._get_initial_perspective()
+        else:
+            # Set the initial perspective.
+            self.active_perspective = self._get_initial_perspective()
+
+            self._restore_contents()
 
         return contents
 
@@ -467,7 +471,6 @@ class WorkbenchWindow(ApplicationWindow):
         """ Hide the editor area. """
 
         self.layout.hide_editor_area()
-
         return
 
     def hide_view(self, view):
@@ -568,7 +571,8 @@ class WorkbenchWindow(ApplicationWindow):
         # The layout of the active perspective.
         self._memento.perspective_mementos[self.active_perspective.id] = (
             self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None
+            self.active_view and self.active_view.id or None,
+            self.layout.is_editor_area_visible()
         )
 
         # The layout of the editor area.
@@ -727,7 +731,8 @@ class WorkbenchWindow(ApplicationWindow):
         # Save the current layout of the perspective.
         self._memento.perspective_mementos[perspective.id] = (
             self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None
+            self.active_view and self.active_view.id or None,
+            self.layout.is_editor_area_visible()
         )
 
         return
@@ -737,15 +742,26 @@ class WorkbenchWindow(ApplicationWindow):
 
         # If the perspective has been seen before then restore it.
         memento = self._memento.perspective_mementos.get(new.id)
+
         if memento is not None:
             # Show the editor area?
-            if new.show_editor_area:
+            if len(memento) == 2:
+                logger.warning(("Your saved layout is from an older version. "
+                                "Please reset."))
+                editor_area_visible = True
+            else:
+                editor_area_visible = memento[2]
+
+            # We need to show/hide the editor area before setting
+            # the views
+            if editor_area_visible:
                 self.show_editor_area()
             else:
                 self.hide_editor_area()
                 self.active_editor = None
 
-            view_memento, active_view_id = memento
+            # Now set the views
+            view_memento, active_view_id = memento[:2]
             self.layout.set_view_memento(view_memento)
 
             # Make sure the active part, view and editor reflect the new
@@ -768,12 +784,12 @@ class WorkbenchWindow(ApplicationWindow):
             # perspective.
             self.active_view = None
 
-        # Show the editor area?
-        if new.show_editor_area:
-            self.show_editor_area()
-        else:
-            self.hide_editor_area()
-            self.active_editor = None
+            # Show the editor area?
+            if new.show_editor_area:
+                self.show_editor_area()
+            else:
+                self.hide_editor_area()
+                self.active_editor = None
 
         # Inform the perspective that it has been shown.
         new.show(self)
@@ -788,6 +804,17 @@ class WorkbenchWindow(ApplicationWindow):
         """ Restore the contents of the window. """
 
         self.layout.set_editor_memento(self._memento.editor_area_memento)
+
+        # Is the editor area visible?
+        perspective = self.active_perspective
+        memento = self._memento.perspective_mementos[perspective.id]
+        editor_area_visible = memento[2]
+
+        if editor_area_visible:
+            self.show_editor_area()
+        else:
+            self.hide_editor_area()
+            self.active_editor = None
 
         self.size = self._memento.size
         self.position = self._memento.position
