@@ -225,14 +225,11 @@ class WorkbenchWindow(ApplicationWindow):
         if self._memento is None:
             self._memento = WorkbenchWindowMemento()
 
-            # Set the initial perspective.
-            self.active_perspective = self._get_initial_perspective()
-
         else:
-            # Set the initial perspective.
-            self.active_perspective = self._get_initial_perspective()
-
             self._restore_contents()
+
+        # Set the initial perspective.
+        self.active_perspective = self._get_initial_perspective()
 
         return contents
 
@@ -470,6 +467,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Hide the editor area. """
 
         self.layout.hide_editor_area()
+
         return
 
     def hide_view(self, view):
@@ -531,7 +529,9 @@ class WorkbenchWindow(ApplicationWindow):
 
     def show_editor_area(self):
         """ Show the editor area. """
+
         self.layout.show_editor_area()
+
         return
 
     def show_view(self, view):
@@ -799,6 +799,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     def _restore_contents(self):
         """ Restore the contents of the window. """
+
         self.layout.set_editor_memento(self._memento.editor_area_memento)
 
         self.size = self._memento.size
