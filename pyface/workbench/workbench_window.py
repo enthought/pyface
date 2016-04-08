@@ -744,8 +744,7 @@ class WorkbenchWindow(ApplicationWindow):
             # Show the editor area?
             # We need to set the editor area before setting the views
             if len(memento) == 2:
-                logger.warning(("Restoring perspective from a file saved from "
-                                "an older version."))
+                logger.warning("Restoring perspective from an older version.")
                 editor_area_visible = True
             else:
                 editor_area_visible = memento[2]
