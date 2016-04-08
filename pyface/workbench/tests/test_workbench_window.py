@@ -61,3 +61,14 @@ class TestWindow(unittest.TestCase, UnittestTools):
         # show_editor_area should be called
         self.assertEqual(workbench_window.show_editor_area.call_count, 1)
         self.assertEqual(workbench_window.hide_editor_area.call_count, 0)
+
+        # The without_editor has been seen so this will read from the memento
+        workbench_window.show_editor_area.reset_mock()
+        workbench_window.hide_editor_area.reset_mock()
+        workbench_window.active_perspective = without_editor
+        workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=False)
+
+        # hide_editor_area should be called
+        self.assertEqual(workbench_window.show_editor_area.call_count, 0)
+        self.assertEqual(workbench_window.hide_editor_area.call_count, 1)
+        
