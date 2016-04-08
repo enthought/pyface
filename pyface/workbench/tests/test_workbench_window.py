@@ -53,12 +53,13 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
             return_value=perspective.show_editor_area)
     
     def test_editor_area_with_perspectives(self):
+        """ Test show_editor_area is respected while switching perspective"""
+
         # The workbench and workbench window with layout mocked
         workbench, workbench_window = self.get_workbench_with_window()
         workbench.active_window = workbench_window
 
         # Add perspectives
-        # This will write to the state file
         workbench.user_perspective_manager.add(self.with_editor)
         workbench.user_perspective_manager.add(self.without_editor)
         
@@ -91,6 +92,8 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
         self.assertTrue(workbench_window.show_editor_area.called)
 
     def test_editor_area_restore_from_saved_state(self):
+        """ Test if show_editor_area is restored properly from saved state """
+
         # The workbench and workbench window with layout mocked
         workbench, workbench_window = self.get_workbench_with_window()
         workbench.active_window = workbench_window
@@ -104,6 +107,7 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
         workbench_window._initial_layout = workbench_window._memento
 
         # Mock layout functions for pickling
+        # We only care about show_editor_area and not the layout in this test
         layout_functions = {"get_view_memento.return_value": (0, (None, None)),
                             "get_editor_memento.return_value": (0, (None, None)),
                             "get_toolkit_memento.return_value": (0, dict(geometry=""))}
@@ -122,7 +126,7 @@ class TestWorkbenchWindowUserPerspective(unittest.TestCase, UnittestTools):
         del workbench
         
         # We create another workbench which uses the state location
-        # and we test if we can retore them correctly
+        # and we test if we can retore the saved perspective correctly
         workbench, workbench_window = self.get_workbench_with_window()
 
         # Mock window factory since we already created a workbench window
