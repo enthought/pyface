@@ -27,7 +27,7 @@ class TestWindow(unittest.TestCase, UnittestTools):
         workbench_window._memento = WorkbenchWindowMemento()
         workbench_window._initial_layout = workbench_window._memento
         workbench_window.layout = mock.Mock(spec=WorkbenchWindowLayout)
-
+        
         # There are the methods we want to test if they are called
         workbench_window.show_editor_area = mock.MagicMock()
         workbench_window.hide_editor_area = mock.MagicMock()
@@ -38,18 +38,19 @@ class TestWindow(unittest.TestCase, UnittestTools):
 
         # show_editor_area should be called
         # hide_editor_area should not be called
-        self.assertTrue(workbench_window.show_editor_area.called)
-        self.assertFalse(workbench_window.hide_editor_area.called)
+        self.assertEqual(workbench_window.show_editor_area.call_count, 1)
+        self.assertEqual(workbench_window.hide_editor_area.call_count, 0)
 
         # Show a perspective with editor area
         workbench_window.show_editor_area.reset_mock()
-        workbench_window.hide_editor_area.reset_mock()
+        workbench_window.hide_editor_area.reset_mock()        
         workbench_window.active_perspective = without_editor
         workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=False)
 
-        # show_editor_area should not be called and hide_editor_area is called
-        self.assertFalse(workbench_window.show_editor_area.called)
-        self.assertTrue(workbench_window.hide_editor_area.called)
+        # show_editor_area should not be called
+        # hide_editor_area should be called
+        self.assertEqual(workbench_window.show_editor_area.call_count, 0)
+        self.assertEqual(workbench_window.hide_editor_area.call_count, 1)
 
         # The with_editor has been seen so this will read from the memento
         workbench_window.show_editor_area.reset_mock()
@@ -58,5 +59,5 @@ class TestWindow(unittest.TestCase, UnittestTools):
         workbench_window.layout.is_editor_area_visible = mock.MagicMock(return_value=True)
 
         # show_editor_area should be called
-        self.assertTrue(workbench_window.show_editor_area.called)
-        self.assertFalse(workbench_window.hide_editor_area.called)
+        self.assertEqual(workbench_window.show_editor_area.call_count, 1)
+        self.assertEqual(workbench_window.hide_editor_area.call_count, 0)
