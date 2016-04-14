@@ -72,16 +72,16 @@ class ProgressDialog(MProgressDialog, Window):
     _user_cancelled = Bool(False)
 
     #: The widget showing the message text
-    _message_control = Instance(QtGui.QLabel)
+    _message_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the time elapsed
-    _elapsed_control = Instance(QtGui.QLabel)
+    _elapsed_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the estimated time to completion
-    _estimated_control = Instance(QtGui.QLabel)
+    _estimated_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the estimated time remaining
-    _remaining_control = Instance(QtGui.QLabel)
+    _remaining_control = Instance(QtWidgets.QLabel)
 
     #-------------------------------------------------------------------------
     # IWindow Interface

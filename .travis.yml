@@ -7,11 +7,11 @@ addons:
   apt:
     packages:
     - python-qt4
-    - pyhton-qt4-dev
+    - python-qt4-dev
     - python-qt4-gl
-    - python-qt5
-    - pyhton-qt5-dev
-    - python-qt5-gl
+    - python-pyqt5
+    - python-pyqt5-dev
+    - python-pyqt5-qtopengl
     - python-pip
     - python-numpy
     - python-wxtools
