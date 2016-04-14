@@ -9,18 +9,27 @@ addons:
     - python-qt4
     - pyhton-qt4-dev
     - python-qt4-gl
+    - python-qt5
+    - pyhton-qt5-dev
+    - python-qt5-gl
     - python-pip
     - python-numpy
     - python-wxtools
     - ccache
     - cmake
 env:
-  - ETS_TOOLKIT=qt4 EXCLUDE=wx
+  - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyside
+  - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt
+  - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
   - ETS_TOOLKIT=wx EXCLUDE=qt4
 matrix:
   allow_failures:
     - python: 3.4
       env: ETS_TOOLKIT=wx EXCLUDE=qt4
+    - python: 3.4
+      env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt
+    - python: 3.4
+      env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
 cache:
   directories:
     - $HOME/.cache
@@ -31,7 +40,7 @@ before_install:
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" ]]; then ./build_pyside_wheel.sh; fi
+  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" && ${QT_API} == "pyside" ]]; then ./build_pyside_wheel.sh; fi
   - pip install -r travis-ci-requirements.txt
 install:
   - python setup.py develop
