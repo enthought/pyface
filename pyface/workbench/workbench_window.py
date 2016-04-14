@@ -7,7 +7,7 @@ import logging
 # Enthought library imports.
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Callable, Constant, Delegate, Event, Instance
-from traits.api import List, Str, Tuple, Unicode, Vetoable
+from traits.api import List, Str, Tuple, Unicode, Vetoable, Undefined
 from traits.api import on_trait_change, provides
 
 # Local imports.
@@ -892,6 +892,9 @@ class WorkbenchWindow(ApplicationWindow):
     @on_trait_change('layout.editor_closed')
     def _on_editor_closed(self, editor):
         """ Dynamic trait change handler. """
+
+        if editor is None or editor is Undefined:
+            return
 
         index = self.editors.index(editor)
         del self.editors[index]
