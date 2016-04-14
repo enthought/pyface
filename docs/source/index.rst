@@ -57,7 +57,7 @@ The supported values of **ETSConfig.toolkit** are:
 * 'null': A do-nothing toolkit, for situations where neither of the other 
   toolkits is installed, but Traits is needed for non-UI purposes.
 
-The default behavior of TraitsUI is to search for available toolkit-specific
+The default behavior of Pyface is to search for available toolkit-specific
 packages in the order listed, and uses the first one it finds. The programmer or
 the user can override this behavior in any of several ways, in the following
 order of precedence:
