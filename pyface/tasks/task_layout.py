@@ -73,9 +73,16 @@ class LayoutContainer(LayoutItem):
 
     items = List(pretty_skip=True)
 
-    def __init__(self, *args, **kwargs):
-        super(LayoutContainer, self).__init__(**kwargs)
-        self.items = list(args)
+    def __init__(self, *items, **traits):
+        # Items may either be specified as a positional arg or a kwarg.
+        if items:
+            if 'items' in traits:
+                raise ValueError(
+                    "Received 'items' as positional and keyword argument."
+                )
+            else:
+                traits['items'] = list(items)
+        super(LayoutContainer, self).__init__(**traits)
 
     def iterleaves(self):
         for item in self.items:

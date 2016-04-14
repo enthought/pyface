@@ -3,6 +3,7 @@ import unittest
 
 # Enthought library imports.
 from pyface.tasks.api import HSplitter, PaneItem, Tabbed, VSplitter
+from ..task_layout import LayoutContainer
 
 
 class LayoutItemsTestCase(unittest.TestCase):
@@ -29,6 +30,22 @@ class LayoutItemsTestCase(unittest.TestCase):
     def test_vsplitter_items(self):
         layout = VSplitter(*self.items)
         self.assertEqual(layout.items, self.items)
+
+    def test_layout_container_positional_items(self):
+        items = self.items
+        container = LayoutContainer(*items)
+        self.assertListEqual(items, container.items)
+
+    def test_layout_container_keyword_items(self):
+        items = self.items
+        container = LayoutContainer(items=items)
+        self.assertListEqual(items, container.items)
+
+    def test_layout_container_keyword_and_positional_items(self):
+        items = self.items
+        with self.assertRaises(ValueError):
+            LayoutContainer(*items, items=items)
+
 
 
 if __name__ == '__main__':
