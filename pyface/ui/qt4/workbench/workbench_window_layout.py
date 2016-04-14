@@ -202,7 +202,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view_ids = [v.id for v in self.window.views if self.contains_view(v)]
 
         # Everything else is provided by QMainWindow.
-        state = str(self.window.control.saveState())
+        state = self.window.control.saveState()
 
         return (0, (view_ids, state))
 
@@ -292,7 +292,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, dict(geometry=str(self.window.control.saveGeometry())))
+        return (0, {'geometry' : self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
         if hasattr(memento, 'toolkit_data'):
