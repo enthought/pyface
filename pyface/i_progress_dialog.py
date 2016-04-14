@@ -66,6 +66,16 @@ class IProgressDialog(IDialog):
             The progress value to set.
         """
 
+    def change_message(self, message):
+        """ Change the displayed message in the progress dialog
+
+        Parameters
+        ----------
+        message : str or unicode
+            The new message to display.
+
+        """
+
 
 class MProgressDialog(object):
     """ The mixin class that contains common code for toolkit specific
@@ -99,3 +109,14 @@ class MProgressDialog(object):
 
         if value >= self.max:
             self.close()
+
+    def change_message(self, message):
+        """ Change the displayed message in the progress dialog
+
+        Parameters
+        ----------
+        message : str or unicode
+            The new message to display.
+
+        """
+        self.message = message

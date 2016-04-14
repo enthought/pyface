@@ -125,7 +125,7 @@ class DockPane(TaskPane, MDockPane):
                 main_window.addDockWidget(AREA_MAP[self.dock_area],
                                           self.control)
 
-    @on_trait_change('closable', 'floatable', 'movable')
+    @on_trait_change('closable,floatable,movable')
     def _set_dock_features(self):
         if self.control is not None:
             features = QtWidgets.QDockWidget.NoDockWidgetFeatures

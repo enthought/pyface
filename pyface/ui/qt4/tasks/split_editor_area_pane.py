@@ -113,8 +113,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
         """
-        self.active_tabwidget = editor.control.parent().parent()
-        self.active_tabwidget.setCurrentWidget(editor.control)
+        active_tabwidget = editor.control.parent().parent()
+        active_tabwidget.setCurrentWidget(editor.control)
+        self.active_tabwidget = active_tabwidget
         editor_widget = editor.control.parent()
         editor_widget.setVisible(True)
         editor_widget.raise_()
@@ -330,7 +331,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """Set the active tabwidget after an application-level change in focus.
         """
 
-        if new:
+        if new is not None:
             if isinstance(new, DraggableTabWidget):
                 if new.editor_area == self:
                     self.active_tabwidget = new
@@ -344,13 +345,23 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
                 for editor in self.editors:
                     control = editor.control
                     if control is not None and control.isAncestorOf(new):
-                        self.active_tabwidget = \
+                        active_tabwidget = \
                             self._find_ancestor_draggable_tab_widget(control)
-                        self.active_tabwidget.setCurrentWidget(control)
-                        # Set active_editor at the end so that the notification
-                        # occurs when everything is ready.
-                        self.active_editor = editor
+                        active_tabwidget.setCurrentWidget(control)
+                        self.active_tabwidget = active_tabwidget
                         break
+
+    def _active_tabwidget_changed(self, new):
+        """Set the active editor whenever the active tabwidget updates.
+        """
+
+        if new is None or new.parent().is_empty():
+            active_editor = None
+        else:
+            active_editor = self._get_editor(new.currentWidget())
+
+        self.active_editor = active_editor
+
 
 ###############################################################################
 # Auxiliary classes.
