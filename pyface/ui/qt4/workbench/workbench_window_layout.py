@@ -292,7 +292,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, dict(geometry=self.window.control.saveGeometry()))
+        return (0, {'geometry' : self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
         if hasattr(memento, 'toolkit_data'):
