@@ -36,6 +36,10 @@ class ModalDialogTester(object):
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertEqual(tester.result, <expected>)
 
+        # Even if the dialog was not opened upon calling `function`,
+        # `result` is assigned and the test may not fail.
+        # To test if the dialog was once opened:
+        self.assertTrue(tester.dialog_was_opened)
 
     .. note::
 
@@ -57,6 +61,7 @@ class ModalDialogTester(object):
         self._event_loop_error = []
         self._helper = EventLoopHelper(qt_app=self._qt_app, gui=self._gui)
         self._dialog_widget = None
+        self.dialog_was_opened = False
 
     @property
     def result(self):
@@ -105,6 +110,7 @@ class ModalDialogTester(object):
             """ Run the when_opened as soon as the dialog has opened. """
             if self.dialog_opened():
                 self._gui.invoke_later(when_opened, self)
+                self.dialog_was_opened = True
             else:
                 condition_timer.start()
 
@@ -158,6 +164,7 @@ class ModalDialogTester(object):
             if self.dialog_opened():
                 self._dialog_widget = self.get_dialog_widget()
                 self._gui.invoke_later(when_opened, self)
+                self.dialog_was_opened = True
             else:
                 condition_timer.start()
 
