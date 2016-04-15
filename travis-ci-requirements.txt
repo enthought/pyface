@@ -3,4 +3,4 @@ pygments
 git+http://github.com/enthought/traits.git#egg=traits
 git+http://github.com/enthought/traitsui.git#egg=traitsui
 traits_enaml ; python_version == '2.7'
-enaml ; python_version == '2.7'
+enaml==0.9.8 ; python_version == '2.7'
