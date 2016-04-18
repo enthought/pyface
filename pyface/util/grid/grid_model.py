@@ -19,7 +19,6 @@ from wx.grid import PyGridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APP
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Trait, Event, List
-from traits.standard import false_trait, true_trait
 
 # Local imports.
 from .grid_column import GridColumn
