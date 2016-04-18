@@ -205,4 +205,16 @@ latex_documents = [
 
 autodoc_member_order = 'bysource'
 
-autodoc_mock_imports = ['wx', 'wx.grid', 'wx.lib', 'qt4']
+autodoc_mock_imports = ['wx',
+                        'wx.grid',
+                        'wx.html',
+                        'wx.lib',
+                        'wx.lib.scrolledpanel',
+                        'wx.lib.layoutf',
+                        'wx.lib.mixins',
+                        'wx.lib.mixins.grid',
+                        'wx.lib.wxpTag',
+                        'wx.lib.gridmovers',
+                        'wx.stc',
+                        'wx.py',
+                        'IPython']
