@@ -25,10 +25,10 @@
 
 @font-face {
   font-family: 'Source Code Pro';
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
   font-stretch: normal;
-  src: local('Source Code Pro Bold'), local('SourceCodePro-Bold'), url('fonts/SourceCodePro-Bold.otf.woff') format('woff');
+  src: local('Source Code Pro Semibold'), local('SourceCodePro-Semibold'), url('fonts/SourceCodePro-Semibold.otf.woff') format('woff');
 }
 
 @font-face{
@@ -41,10 +41,10 @@
 
 @font-face{
   font-family: 'Source Sans Pro';
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
   font-stretch: normal;
-  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url('fonts/SourceSansPro-Bold.otf.woff') format('woff');
+  src: local('Source Sans Pro Semibold'), local('SourceSansPro-Semibold'), url('fonts/SourceSansPro-Semibold.otf.woff') format('woff');
 }
 
 @font-face{
@@ -57,10 +57,10 @@
 
 @font-face{
   font-family: 'Source Sans Pro';
-  font-weight: 700;
+  font-weight: 600;
   font-style: italic;
   font-stretch: normal;
-  src: local('Source Sans Pro Bold Italic'), local('SourceSansPro-BoldIt'), url('fonts/SourceSansPro-BoldIt.otf.woff') format('woff');
+  src: local('Source Sans Pro Semibold Italic'), local('SourceSansPro-SemiboldIt'), url('fonts/SourceSansPro-SemiboldIt.otf.woff') format('woff');
 }
 
 /*
@@ -111,10 +111,26 @@ tt.descname {
     font-size: 20px;
 }
 
+dl.class,
+dl.function,
+dl.data
+{
+    border-top: 2px solid #888;
+    padding-top: 1px;
+}
+
+dl.attribute,
+dl.classmethod,
+dl.staticmethod,
+dl.method
+{
+    border-top: 1px solid #aaa;
+    padding-top: 1px;
+}
 
 dl.attribute > dt > tt.descname,
-dl.classmethod > dt > ttc.descname,
-dl.staticmethod > dt > ttc.descname,
+dl.classmethod > dt > tt.descname,
+dl.staticmethod > dt > tt.descname,
 dl.method > dt > tt.descname
 {
     font-size: inherit;
@@ -150,6 +166,10 @@ pre {
   background-color: #253370;
 }
 
+.nav-pills.pull-right > li {
+    float: right;
+}
+
 a {
   color: #253370;
   text-decoration: none;
@@ -163,18 +183,31 @@ table.field-list {
     border-collapse: collapse;
     border-spacing: 5px;
     margin-left: 1px;
-    border-left: 5px solid rgb(238, 238, 238) !important;
+    border-left: 5px solid #DFDFDF !important;
 }
 
 table.field-list th.field-name {
-    display: inline-block;
+    display: block;
+    text-align: left;
     padding: 1px 8px 1px 5px;
     white-space: nowrap;
-    background-color: rgb(238, 238, 238);
+    background-color: #DFDFDF;
 }
 
 table.field-list td.field-body {
+    display: block;
     border-left: none !important;
+    padding-left: 1em;
+}
+
+table.field-list td.field-body > ul {
+    padding-left: 1em;
+}
+
+table.field-list td.field-body > p,
+table.field-list td.field-body > ul > li > p
+{
+    display: inline;
 }
 
 table.field-list td.field-body > p > strong {
@@ -190,6 +223,8 @@ td.field-body blockquote {
 td.field-body blockquote p,
 dl.class blockquote p,
 dl.function blockquote p,
+dl.classmethod blockquote p,
+dl.staticmethod blockquote p,
 dl.method blockquote p 
 {
     font-family: inherit;
@@ -214,13 +249,17 @@ div.sphinxsidebarwrapper p.logo {
 div.spc-rightsidebar h3 {
     font-size: 120%;
     line-height: inherit;
-    border-bottom: none;
+    border-bottom: 1px solid #656565;
 }
 
 div.spc-rightsidebar h4 {
-    font-size: 120%;
+    font-size: 110%;
     line-height: inherit;
-    border-bottom: none;
+    border-bottom: 1px solid #656565;
+}
+
+form.search > input[type="text"] {
+    width: auto;
 }
 
 /*
@@ -242,17 +281,17 @@ h5 tt { font: inherit; border-bottom: none; }
 h6 tt { font: inherit; border-bottom: none; }
 
 div#spc-section-body h1, h2, h3, h4, h5, h6{
-    color: #333333;
+    color: #444444;
     font-weight: normal;
     border-bottom: 0px solid #656565;
     margin-bottom: 0.5em;
 }
-div#spc-section-body h1 { font-size: 200%; font-weight: bold; }
-div#spc-section-body h2 { font-size: 160%; font-weight: bold; color: #444; } 
-div#spc-section-body h3 { font-size: 140%; color: #444; }
-div#spc-section-body h4 { font-size: 120%; border-bottom: none; color: #444; }
-div#spc-section-body h5 { font-size: 110%; border-bottom: none; color: #444; }
-div#spc-section-body h6 { font-size: 100%; border-bottom: none; color: #444; }
+div#spc-section-body h1 { font-size: 200%; font-weight: bold; color: #333333; }
+div#spc-section-body h2 { font-size: 160%; font-weight: bold; } 
+div#spc-section-body h3 { font-size: 140%; }
+div#spc-section-body h4 { font-size: 120%; border-bottom: none; }
+div#spc-section-body h5 { font-size: 110%; border-bottom: none; }
+div#spc-section-body h6 { font-size: 100%; border-bottom: none; }
 
 /* Styling for hyperlinks */
 div#spc-section-body a{

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Welcome to the Pyface Documentation! &mdash; pyface 4.6.0.dev209 documentation</title>
+    <title>Welcome to the Pyface Documentation! &mdash; pyface 5.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '4.6.0.dev209',
+        VERSION:     '5.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="_static/et.ico">
-    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="#" >
+    <link rel="top" title="pyface 5.1.0 documentation" href="#" >
     <link rel="next" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -106,6 +106,39 @@ This changed from <code class="docutils literal"><span class="pre">wx</span></co
 <p>NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt&#8217;s GPL or proprietary licensing will
 likely apply to your code.</p>
+<div class="section" id="toolkit-backend-selection">
+<h3>Toolkit Backend Selection<a class="headerlink" href="#toolkit-backend-selection" title="Permalink to this headline">¶</a></h3>
+<p>Selecting the backend to use is possible via the singleton object <strong>ETSConfig</strong>
+(importable from <cite>traits.etsconfig.api</cite>), which has a string attribute, toolkit,
+that signifies the GUI toolkit.</p>
+<p>The supported values of <strong>ETSConfig.toolkit</strong> are:</p>
+<ul class="simple">
+<li>&#8216;qt4&#8217;: <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>, which provides Python
+bindings for the <a class="reference external" href="http://trolltech.com/products/qt">Qt</a> framework version 4.</li>
+<li>&#8216;wx&#8217;: <a class="reference external" href="http://www.wxpython.org">wxPython</a>, which provides Python bindings
+for the <a class="reference external" href="http://wxwidgets.org">wxWidgets</a> toolkit.</li>
+<li>&#8216;null&#8217;: A do-nothing toolkit, for situations where neither of the other
+toolkits is installed, but Traits is needed for non-UI purposes.</li>
+</ul>
+<p>The default behavior of Pyface is to search for available toolkit-specific
+packages in the order listed, and uses the first one it finds. The programmer or
+the user can override this behavior in any of several ways, in the following
+order of precedence:</p>
+<ol class="arabic">
+<li><p class="first">The program can explicitly set <strong>ETSConfig.toolkit</strong>. It must do this before
+importing from any other Enthought Tool Suite component, including
+traits.  For example, at the beginning of a program:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="kn">import</span> <span class="n">ETSConfig</span>
+<span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="s1">&#39;wx&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The user can specify a -toolkit flag on the command line of the program.</p>
+</li>
+<li><p class="first">The user can define a value for the ETS_TOOLKIT environment variable.</p>
+</li>
+</ol>
+</div>
 </div>
 <div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
@@ -158,7 +191,10 @@ likely apply to your code.</p>
   <ul>
 <li><a class="reference internal" href="#">Welcome to the Pyface Documentation!</a><ul>
 <li><a class="reference internal" href="#pyface">Pyface</a></li>
-<li><a class="reference internal" href="#toolkit-backends">Toolkit Backends</a></li>
+<li><a class="reference internal" href="#toolkit-backends">Toolkit Backends</a><ul>
+<li><a class="reference internal" href="#toolkit-backend-selection">Toolkit Backend Selection</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#contents">Contents</a></li>
 </ul>
 </li>
@@ -201,13 +237,13 @@ likely apply to your code.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2015, Enthought
+        &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Oct 27, 2015.
+      Last updated on Apr 18, 2016.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
       </li>
     </ul>
     </div>

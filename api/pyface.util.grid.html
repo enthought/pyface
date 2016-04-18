@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>grid Package &mdash; pyface 4.6.0.dev209 documentation</title>
+    <title>grid Package &mdash; pyface 5.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.6.0.dev209',
+        VERSION:     '5.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
     <link rel="up" title="util Package" href="pyface.util.html" >
     <link rel="next" title="tests Package" href="pyface.util.tests.html" >
     <link rel="prev" title="util Package" href="pyface.util.html" > 
@@ -46,7 +46,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface Package</a></li>
           <li class="active"><a href="pyface.util.html" accesskey="U">util Package</a></li> 
@@ -84,11 +84,31 @@
 <div class="section" id="id1">
 <h2><code class="xref py py-mod docutils literal"><span class="pre">grid</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.util.grid"></span></div>
-<div class="section" id="api-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#api-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.util.grid.api">
+<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.util.grid.api" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="grid-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">grid</span></code> Module<a class="headerlink" href="#grid-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.util.grid.grid">
+<span id="grid-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">grid</span></code> Module<a class="headerlink" href="#module-pyface.util.grid.grid" title="Permalink to this headline">¶</a></h2>
+<p>A grid (spreadsheet) widget.</p>
+<dl class="class">
+<dt id="pyface.util.grid.grid.Grid">
+<em class="property">class </em><code class="descclassname">pyface.util.grid.grid.</code><code class="descname">Grid</code><span class="sig-paren">(</span><em>parent</em>, <em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid.Grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.ext.autodoc.Grid</span></code></p>
+<p>A grid (spreadsheet) widget.</p>
+<dl class="method">
+<dt id="pyface.util.grid.grid.Grid.Reset">
+<code class="descname">Reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid.Grid.Reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid.Grid.ResetView">
+<code class="descname">ResetView</code><span class="sig-paren">(</span><em>grid</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid.Grid.ResetView" title="Permalink to this definition">¶</a></dt>
+<dd><p>(wxGrid) -&gt; Reset the grid view.   Call this to
+update the grid if rows and columns have been added or deleted</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyface.util.grid.grid_column">
 <span id="grid-column-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">grid_column</span></code> Module<a class="headerlink" href="#module-pyface.util.grid.grid_column" title="Permalink to this headline">¶</a></h2>
@@ -101,11 +121,97 @@
 </dd></dl>
 
 </div>
-<div class="section" id="grid-model-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">grid_model</span></code> Module<a class="headerlink" href="#grid-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.util.grid.grid_model">
+<span id="grid-model-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">grid_model</span></code> Module<a class="headerlink" href="#module-pyface.util.grid.grid_model" title="Permalink to this headline">¶</a></h2>
+<p>A model that provides data for a grid.</p>
+<dl class="class">
+<dt id="pyface.util.grid.grid_model.GridModel">
+<em class="property">class </em><code class="descclassname">pyface.util.grid.grid_model.</code><code class="descname">GridModel</code><span class="sig-paren">(</span><em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A model that provides data for a grid.</p>
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetNumberRows">
+<code class="descname">GetNumberRows</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetNumberRows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of rows in the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetNumberCols">
+<code class="descname">GetNumberCols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetNumberCols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the number of columns in the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.IsEmptyCell">
+<code class="descname">IsEmptyCell</code><span class="sig-paren">(</span><em>row</em>, <em>col</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.IsEmptyCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the specified cell empty?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetValue">
+<code class="descname">GetValue</code><span class="sig-paren">(</span><em>row</em>, <em>col</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value at the specified row and column.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.SetValue">
+<code class="descname">SetValue</code><span class="sig-paren">(</span><em>row</em>, <em>col</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.SetValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value at the specified row and column.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetRowLabelValue">
+<code class="descname">GetRowLabelValue</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetRowLabelValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the grid needs to display a row label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetColLabelValue">
+<code class="descname">GetColLabelValue</code><span class="sig-paren">(</span><em>col</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetColLabelValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the grid needs to display a column label.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.GetTypeName">
+<code class="descname">GetTypeName</code><span class="sig-paren">(</span><em>row</em>, <em>col</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.GetTypeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to determine the kind of editor/renderer to use.</p>
+<p>This doesn&#8217;t necessarily have to be the same type used natively by the
+editor/renderer if they know how to convert.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.CanGetValueAs">
+<code class="descname">CanGetValueAs</code><span class="sig-paren">(</span><em>row</em>, <em>col</em>, <em>type_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.CanGetValueAs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to determine how the data can be fetched.</p>
+<p>This allows you to enforce some type-safety in the grid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.CanSetValueAs">
+<code class="descname">CanSetValueAs</code><span class="sig-paren">(</span><em>row</em>, <em>col</em>, <em>type_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.CanSetValueAs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called to determine how the data can be stored.</p>
+<p>This allows you to enforce some type-safety in the grid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.util.grid.grid_model.GridModel.DeleteRows">
+<code class="descname">DeleteRows</code><span class="sig-paren">(</span><em>pos</em>, <em>num_rows</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_model.GridModel.DeleteRows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the view is deleting rows.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="grid-row-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">grid_row</span></code> Module<a class="headerlink" href="#grid-row-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.util.grid.grid_row">
+<span id="grid-row-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">grid_row</span></code> Module<a class="headerlink" href="#module-pyface.util.grid.grid_row" title="Permalink to this headline">¶</a></h2>
+<p>A description of a row in a grid.</p>
+<dl class="class">
+<dt id="pyface.util.grid.grid_row.GridRow">
+<em class="property">class </em><code class="descclassname">pyface.util.grid.grid_row.</code><code class="descname">GridRow</code><span class="sig-paren">(</span><em>row_data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.grid.grid_row.GridRow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>A description of a row in a grid.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -122,11 +228,11 @@
   <ul>
 <li><a class="reference internal" href="#">grid Package</a><ul>
 <li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">grid</span></code> Package</a></li>
-<li><a class="reference internal" href="#api-module"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
-<li><a class="reference internal" href="#grid-module"><code class="docutils literal"><span class="pre">grid</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.grid.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.grid.grid"><code class="docutils literal"><span class="pre">grid</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.grid.grid_column"><code class="docutils literal"><span class="pre">grid_column</span></code> Module</a></li>
-<li><a class="reference internal" href="#grid-model-module"><code class="docutils literal"><span class="pre">grid_model</span></code> Module</a></li>
-<li><a class="reference internal" href="#grid-row-module"><code class="docutils literal"><span class="pre">grid_row</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.grid.grid_model"><code class="docutils literal"><span class="pre">grid_model</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.grid.grid_row"><code class="docutils literal"><span class="pre">grid_row</span></code> Module</a></li>
 </ul>
 </li>
 </ul>
@@ -171,13 +277,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2015, Enthought
+        &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Oct 27, 2015.
+      Last updated on Apr 18, 2016.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
       </li>
     </ul>
     </div>
