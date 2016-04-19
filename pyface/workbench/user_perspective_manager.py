@@ -131,7 +131,8 @@ class UserPerspectiveManager(HasTraits):
         # fixme: This needs to be pushed into the window API!!!!!!!
         window._memento.perspective_mementos[clone.id] = (
             window.layout.get_view_memento(),
-            window.active_view and window.active_view.id or None
+            window.active_view and window.active_view.id or None,
+            window.layout.is_editor_area_visible()
         )
 
         # Update the persistent file information.

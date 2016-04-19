@@ -7,7 +7,7 @@ import logging
 # Enthought library imports.
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Callable, Constant, Delegate, Event, Instance
-from traits.api import List, Str, Tuple, Unicode, Vetoable
+from traits.api import List, Str, Tuple, Unicode, Vetoable, Undefined
 from traits.api import on_trait_change, provides
 
 # Local imports.
@@ -568,7 +568,8 @@ class WorkbenchWindow(ApplicationWindow):
         # The layout of the active perspective.
         self._memento.perspective_mementos[self.active_perspective.id] = (
             self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None
+            self.active_view and self.active_view.id or None,
+            self.layout.is_editor_area_visible()
         )
 
         # The layout of the editor area.
@@ -727,7 +728,8 @@ class WorkbenchWindow(ApplicationWindow):
         # Save the current layout of the perspective.
         self._memento.perspective_mementos[perspective.id] = (
             self.layout.get_view_memento(),
-            self.active_view and self.active_view.id or None
+            self.active_view and self.active_view.id or None,
+            self.layout.is_editor_area_visible()
         )
 
         return
@@ -737,15 +739,25 @@ class WorkbenchWindow(ApplicationWindow):
 
         # If the perspective has been seen before then restore it.
         memento = self._memento.perspective_mementos.get(new.id)
+
         if memento is not None:
             # Show the editor area?
-            if new.show_editor_area:
+            # We need to set the editor area before setting the views
+            if len(memento) == 2:
+                logger.warning("Restoring perspective from an older version.")
+                editor_area_visible = True
+            else:
+                editor_area_visible = memento[2]
+
+            # Show the editor area if it is set to be visible
+            if editor_area_visible:
                 self.show_editor_area()
             else:
                 self.hide_editor_area()
                 self.active_editor = None
 
-            view_memento, active_view_id = memento
+            # Now set the views
+            view_memento, active_view_id = memento[:2]
             self.layout.set_view_memento(view_memento)
 
             # Make sure the active part, view and editor reflect the new
@@ -768,12 +780,12 @@ class WorkbenchWindow(ApplicationWindow):
             # perspective.
             self.active_view = None
 
-        # Show the editor area?
-        if new.show_editor_area:
-            self.show_editor_area()
-        else:
-            self.hide_editor_area()
-            self.active_editor = None
+            # Show the editor area?
+            if new.show_editor_area:
+                self.show_editor_area()
+            else:
+                self.hide_editor_area()
+                self.active_editor = None
 
         # Inform the perspective that it has been shown.
         new.show(self)
@@ -880,6 +892,9 @@ class WorkbenchWindow(ApplicationWindow):
     @on_trait_change('layout.editor_closed')
     def _on_editor_closed(self, editor):
         """ Dynamic trait change handler. """
+
+        if editor is None or editor is Undefined:
+            return
 
         index = self.editors.index(editor)
         del self.editors[index]
