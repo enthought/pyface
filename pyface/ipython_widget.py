@@ -19,10 +19,10 @@ from __future__ import absolute_import
 try:
     import IPython.frontend
 except ImportError:
-    raise ImportError, '''
+    raise ImportError('''
 ________________________________________________________________________________
 Could not load the Wx frontend for ipython.
-You need to have ipython >= 0.9 installed to use the ipython widget.'''
+You need to have ipython >= 0.9 installed to use the ipython widget.''')
 
 
 from .toolkit import toolkit_object
