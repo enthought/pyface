@@ -15,6 +15,7 @@ Enhancements
 
 Fixes
 
+* Fix restoring show_editor_area from saved perspective(#207)
 * Fix WorkbenchWindowLayout in Python 3 (#206)
 * Update SplitEditorAreaPane's active editor when focus changes under Qt (#203, #204)
 * Read-only CodeEditor should not allow adding newlines in View (#200)
