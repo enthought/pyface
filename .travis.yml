@@ -9,9 +9,6 @@ addons:
     - python-qt4
     - python-qt4-dev
     - python-qt4-gl
-    - python-pyqt5
-    - python-pyqt5-dev
-    - python-pyqt5-qtopengl
     - python-pip
     - python-numpy
     - python-wxtools
@@ -40,7 +37,7 @@ before_install:
   - export PATH=/usr/lib/ccache:${PATH}
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - if [[ ${TRAVIS_PYTHON_VERSION} == "3.4" && ${ETS_TOOLKIT} == "qt4" && ${QT_API} == "pyside" ]]; then ./build_pyside_wheel.sh; fi
+  - if [[ ${ETS_TOOLKIT} == "qt4" ]]; then ./build_qt_bindings_wheel.sh ; fi
   - pip install -r travis-ci-requirements.txt
 install:
   - python setup.py develop
