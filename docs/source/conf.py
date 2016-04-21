@@ -40,7 +40,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'pyface'
-copyright = '2008-2015, Enthought'
+copyright = '2008-2016, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
@@ -205,4 +205,19 @@ latex_documents = [
 
 autodoc_member_order = 'bysource'
 
-autodoc_mock_imports = ['wx', 'wx.grid', 'wx.lib', 'qt4']
+autodoc_mock_imports = ['wx',
+                        'wx.grid',
+                        'wx.html',
+                        'wx.lib',
+                        'wx.lib.scrolledpanel',
+                        'wx.lib.layoutf',
+                        'wx.lib.mixins',
+                        'wx.lib.mixins.grid',
+                        'wx.lib.wxpTag',
+                        'wx.lib.gridmovers',
+                        'wx.stc',
+                        'wx.py',
+                        'IPython',
+                        'IPython.frontend',
+                        'IPython.frontend.wx',
+                        'IPython.frontend.wx.wx_frontend']

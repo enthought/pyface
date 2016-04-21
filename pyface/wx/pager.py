@@ -16,7 +16,7 @@
 
 # Major package imports.
 import wx
-from wx.lib.scrolledpanel import wxScrolledPanel
+from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
 
 class Pager(wxScrolledPanel):
