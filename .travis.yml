@@ -6,9 +6,6 @@ python:
 addons:
   apt:
     packages:
-    - python-qt4
-    - python-qt4-dev
-    - python-qt4-gl
     - python-pip
     - python-numpy
     - python-wxtools

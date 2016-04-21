@@ -13,7 +13,7 @@ case $QT_API in
         FILENAME=$QT_API-$BINDING_VER-cp$PYTHON_VER.tar.gz
         ;;
     pyqt5)
-        BINDING_VER=
+        BINDING_VER=5.5.1
         FILENAME=$QT_API-$BINDING_VER-cp$PYTHON_VER.tar.gz
         ;;
     *)
@@ -88,10 +88,32 @@ function build_pyqt()
     popd
 }
 
+
+function install_qt5()
+{
+    QTVER=5.6.0
+    echo "Installing Qt $QTVER"
+    curl -L -o ~/qt-opensource-linux-x64-$QTVER.run http://download.qt.io/official_releases/qt/5.6/$QTVER/qt-opensource-linux-x64-$QTVER.run
+    echo "8ef8e13a8142b51987b4656e97e58c3a  $HOME/qt-opensource-linux-x64-$QTVER.run" | md5sum -c -
+    chmod a+x ~/qt-opensource-linux-x64-$QTVER.run
+    # Install into ~/Qt
+    ~/qt-opensource-linux-x64-5.6.0.run --script qt-scripted-install.js --verbose
+}
+
 function build_pyqt5()
 {
-    echo "Building PyQt5: Not implemented"
-    exit 1
+    install_qt5
+    build_sip
+    echo "Building PyQt5"
+    curl -L -o ~/pyqt-$BINDING_VER.tar.gz http://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-$BINDING_VER/PyQt-gpl-$BINDING_VER.tar.gz
+    echo "586ed481b734c665b52fbb4f32161ff7  $HOME/pyqt-$BINDING_VER.tar.gz" | md5sum -c -
+    tar xf ~/pyqt-$BINDING_VER.tar.gz
+    pushd PyQt-*
+    python configure.py -c --confirm-license -b $BUILD_PREFIX/bin -d $SITEDIR --sip-incdir $INCDIR --qmake $HOME/Qt/5.6/gcc_64/bin/qmake
+    make -j2
+    cd ..
+    tar cf ~/.cache/$FILENAME PyQt-*
+    popd
 }
 
 
