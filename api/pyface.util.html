@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>util Package &mdash; pyface 4.6.0.dev209 documentation</title>
+    <title>util Package &mdash; pyface 5.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '4.6.0.dev209',
+        VERSION:     '5.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
     <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 4.6.0.dev209 documentation" href="../index.html" >
+    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
     <link rel="up" title="pyface Package" href="pyface.html" >
     <link rel="next" title="grid Package" href="pyface.util.grid.html" >
     <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" > 
@@ -46,7 +46,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 4.6.0.dev209 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
     </ul>
@@ -83,8 +83,31 @@
 <div class="section" id="id1">
 <h2><code class="xref py py-mod docutils literal"><span class="pre">util</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.util"></span></div>
-<div class="section" id="fix-introspect-bug-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">fix_introspect_bug</span></code> Module<a class="headerlink" href="#fix-introspect-bug-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.util.fix_introspect_bug">
+<span id="fix-introspect-bug-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">fix_introspect_bug</span></code> Module<a class="headerlink" href="#module-pyface.util.fix_introspect_bug" title="Permalink to this headline">¶</a></h2>
+<p>This module adds a fix for wx.py&#8217;s introspect module.</p>
+<p>In order to do code-completion, the function
+<cite>introspect.getAttributeName</cite> accesses all the attributes of the
+current object.  This causes severe problems for modules like tvtk
+which depend on lazy importing.  The original introspect module also
+has severe problems with large Numeric arrays because it calls str()
+on the Numeric object in order to find its methods.</p>
+<p>This file defines a fixed function that works fine with lazy objects
+and large Numeric arrays.  This fixed function is injected into the
+introspect module.</p>
+<dl class="function">
+<dt id="pyface.util.fix_introspect_bug.getAttributeNames">
+<code class="descclassname">pyface.util.fix_introspect_bug.</code><code class="descname">getAttributeNames</code><span class="sig-paren">(</span><em>object</em>, <em>includeMagic=1</em>, <em>includeSingle=1</em>, <em>includeDouble=1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAttributeNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of unique attributes, including inherited, for object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyface.util.fix_introspect_bug.getAllAttributeNames">
+<code class="descclassname">pyface.util.fix_introspect_bug.</code><code class="descname">getAllAttributeNames</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.fix_introspect_bug.getAllAttributeNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dict of all attributes, including inherited, for an object.</p>
+<p>Recursively walk through a class and all base classes.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyface.util.font_helper">
 <span id="font-helper-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">font_helper</span></code> Module<a class="headerlink" href="#module-pyface.util.font_helper" title="Permalink to this headline">¶</a></h2>
@@ -244,11 +267,11 @@ across sessions.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.grid.html">grid Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#id1"><code class="docutils literal"><span class="pre">grid</span></code> Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#api-module"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-module"><code class="docutils literal"><span class="pre">grid</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.grid"><code class="docutils literal"><span class="pre">grid</span></code> Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.grid_column"><code class="docutils literal"><span class="pre">grid_column</span></code> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-model-module"><code class="docutils literal"><span class="pre">grid_model</span></code> Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#grid-row-module"><code class="docutils literal"><span class="pre">grid_row</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.grid_model"><code class="docutils literal"><span class="pre">grid_model</span></code> Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#module-pyface.util.grid.grid_row"><code class="docutils literal"><span class="pre">grid_row</span></code> Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.tests.html">tests Package</a><ul>
@@ -273,7 +296,7 @@ across sessions.</p>
   <ul>
 <li><a class="reference internal" href="#">util Package</a><ul>
 <li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">util</span></code> Package</a></li>
-<li><a class="reference internal" href="#fix-introspect-bug-module"><code class="docutils literal"><span class="pre">fix_introspect_bug</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.util.fix_introspect_bug"><code class="docutils literal"><span class="pre">fix_introspect_bug</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.font_helper"><code class="docutils literal"><span class="pre">font_helper</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.guisupport"><code class="docutils literal"><span class="pre">guisupport</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.util.id_helper"><code class="docutils literal"><span class="pre">id_helper</span></code> Module</a></li>
@@ -323,13 +346,13 @@ across sessions.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2015, Enthought
+        &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Oct 27, 2015.
+      Last updated on Apr 18, 2016.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
       </li>
     </ul>
     </div>
