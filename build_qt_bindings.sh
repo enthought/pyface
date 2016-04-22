@@ -37,6 +37,9 @@ export CXXFLAGS="-I$INCDIR -L$LIBDIR"
 SITEDIR=$BUILD_PREFIX/lib/python$PYVER/site-packages
 export PYTHONPATH=$SITEDIR
 
+SIP_VERSION=4.18
+SIP_FILE=~/.cache/sip-$SIP_VERSION.tar.gz
+
 set -xe
 
 function build_pyside()
@@ -59,17 +62,17 @@ function build_pyside()
 function build_sip()
 {
     echo "Building sip"
-    SIP_VERSION=4.18
-    SIP_FILE=~/sip-$SIP_VERSION.tar.gz
     curl -L -o $SIP_FILE http://sourceforge.net/projects/pyqt/files/sip/sip-$SIP_VERSION/sip-$SIP_VERSION.tar.gz
-    echo "78724bf2a79878201c3bc81a1d8248ea  $HOME/sip-$SIP_VERSION.tar.gz" | md5sum -c -
+    echo "78724bf2a79878201c3bc81a1d8248ea  $SIP_FILE" | md5sum -c -
     tar xf $SIP_FILE
     pushd sip-*
     python configure.py -b $BUILD_PREFIX/bin -d $SITEDIR -e $INCDIR
     make -j2
     make install
+    cd ..
+    tar cf $SIP_FILE sip-*
     python -m site
-    python -c "import sip; print sip"
+    python -c "import sip; print(sip)"
     popd
 }
 
@@ -102,7 +105,6 @@ function install_qt5()
 
 function build_pyqt5()
 {
-    install_qt5
     build_sip
     echo "Building PyQt5"
     curl -L -o ~/pyqt-$BINDING_VER.tar.gz http://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-$BINDING_VER/PyQt-gpl-$BINDING_VER.tar.gz
@@ -118,6 +120,10 @@ function build_pyqt5()
 
 
 # Build the bindings
+if [ "$QT_API" = "pyqt5" ]; then
+    install_qt5
+fi
+
 if [ -f "${HOME}/.cache/$FILENAME" ]; then
     echo "Cache file found: ${HOME}/.cache/$FILENAME"
 else
@@ -129,11 +135,20 @@ if [ "$QT_API" = "pyside" ]; then
     # Install pyside wheel
     python -m pip install "${HOME}/.cache/$FILENAME"
 else
-    # make install the compiled pyqt archive bundle
-    mkdir temp
-    pushd temp
+    # make install the compiled sip and pyqt archive bundles
+    mkdir sip
+    pushd sip
+    tar xf $SIP_FILE
+    pushd */
+    make install
+    popd
+    popd
+
+    mkdir pyqt
+    pushd pyqt
     tar xf "${HOME}/.cache/$FILENAME"
     pushd */
     make install
+    popd
     popd
 fi
