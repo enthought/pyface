@@ -26,11 +26,11 @@ env:
     - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyside
     - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt
     - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
-    - ETS_TOOLKIT=wx EXCLUDE=qt4
+    - ETS_TOOLKIT=wx EXCLUDE=qt
 matrix:
   allow_failures:
     - python: 3.4
-      env: ETS_TOOLKIT=wx EXCLUDE=qt4
+      env: ETS_TOOLKIT=wx EXCLUDE=qt
     - python: 3.4
       env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt
     - python: 3.4

@@ -18,8 +18,8 @@ from .gui_test_assistant import find_qt_widget
 BUTTON_TEXT = {
     OK: 'OK',
     CANCEL: 'Cancel',
-    YES: '&Yes',
-    NO: '&No',
+    YES: 'Yes',
+    NO: 'No',
 }
 
 
@@ -255,11 +255,13 @@ class ModalDialogTester(object):
 
         """
         control = self.get_dialog_widget()
-        widget = find_qt_widget(
-            control,
-            type_,
-            test=lambda widget: widget.text() == text
-        )
+        def check_text(widget):
+            if issubclass(type_, QtWidgets.QAbstractButton):
+                # Ignore mnemonic keys in buttons
+                return widget.text().replace('&', '') == text.replace('&', '')
+            else:
+                return widget.text() == text
+        widget = find_qt_widget(control, type_, test=check_text)
         widget.click()
 
     def click_button(self, button_id):

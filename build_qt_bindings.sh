@@ -78,7 +78,6 @@ function build_sip()
 
 function build_pyqt()
 {
-    build_sip
     echo "Building PyQt4"
     curl -L -o ~/pyqt-$BINDING_VER.tar.gz http://sourceforge.net/projects/pyqt/files/PyQt4/PyQt-$BINDING_VER/PyQt-x11-gpl-$BINDING_VER.tar.gz
     echo "2fe8265b2ae2fc593241c2c84d09d481  $HOME/pyqt-$BINDING_VER.tar.gz" | md5sum -c -
@@ -105,7 +104,6 @@ function install_qt5()
 
 function build_pyqt5()
 {
-    build_sip
     echo "Building PyQt5"
     curl -L -o ~/pyqt-$BINDING_VER.tar.gz http://downloads.sourceforge.net/project/pyqt/PyQt5/PyQt-$BINDING_VER/PyQt-gpl-$BINDING_VER.tar.gz
     echo "586ed481b734c665b52fbb4f32161ff7  $HOME/pyqt-$BINDING_VER.tar.gz" | md5sum -c -
@@ -136,13 +134,7 @@ if [ "$QT_API" = "pyside" ]; then
     python -m pip install "${HOME}/.cache/$FILENAME"
 else
     # make install the compiled sip and pyqt archive bundles
-    mkdir sip
-    pushd sip
-    tar xf $SIP_FILE
-    pushd */
-    make install
-    popd
-    popd
+    build_sip
 
     mkdir pyqt
     pushd pyqt
