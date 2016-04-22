@@ -61,7 +61,7 @@ script:
   - python -m site
   - if [ "${QT_API#pyqt}" != "${QT_API}" ] ; then python -c "import sip; print(sip)" ; fi
   - if [ "$QT_API" = "pyqt5" ] ; then python -c "import PyQt5.QtWidgets; print(PyQt5.QtWidgets.QApplication([]))" ; fi
-  - coverage run -m nose.core -v pyface --exclude=${EXCLUDE}
+  - coverage run -m nose -v pyface --exclude=${EXCLUDE}
 after_success:
   - pip install codecov
   - codecov

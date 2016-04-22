@@ -13,7 +13,7 @@ import unittest
 import mock
 
 # System library imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 from pyface.qt.QtTest import QTest
 
 # Enthought library imports.
@@ -26,7 +26,7 @@ from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
 class TestCodeWidget(unittest.TestCase):
     @classmethod
     def setupClass(cls):
-        cls.qapp = QtGui.QApplication.instance() or QtGui.QApplication([])
+        cls.qapp = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
 
     def tearDown(self):
         self.qapp.processEvents()
