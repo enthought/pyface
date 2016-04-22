@@ -83,7 +83,7 @@ function build_pyqt()
     echo "2fe8265b2ae2fc593241c2c84d09d481  $HOME/pyqt-$BINDING_VER.tar.gz" | md5sum -c -
     tar xf ~/pyqt-$BINDING_VER.tar.gz
     pushd PyQt-*
-    python configure-ng.py -c --confirm-license -b $BUILD_PREFIX/bin -d $SITEDIR --sip-incdir $INCDIR
+    python configure-ng.py -c --confirm-license -b $BUILD_PREFIX/bin -d $SITEDIR --sip-incdir $INCDIR --no-designer-plugin --no-sip-files
     make -j2
     cd ..
     tar cf ~/.cache/$FILENAME PyQt-*
@@ -109,7 +109,7 @@ function build_pyqt5()
     echo "586ed481b734c665b52fbb4f32161ff7  $HOME/pyqt-$BINDING_VER.tar.gz" | md5sum -c -
     tar xf ~/pyqt-$BINDING_VER.tar.gz
     pushd PyQt-*
-    python configure.py -c --confirm-license -b $BUILD_PREFIX/bin -d $SITEDIR --sip-incdir $INCDIR --qmake $HOME/Qt/5.6/gcc_64/bin/qmake
+    python configure.py -c --confirm-license -b $BUILD_PREFIX/bin -d $SITEDIR --sip-incdir $INCDIR --qmake $HOME/Qt/5.6/gcc_64/bin/qmake --no-designer-plugin --no-sip-files
     make -j2
     cd ..
     tar cf ~/.cache/$FILENAME PyQt-*
@@ -117,25 +117,23 @@ function build_pyqt5()
 }
 
 
-# Build the bindings
-if [ "$QT_API" = "pyqt5" ]; then
-    install_qt5
-fi
-
-if [ -f "${HOME}/.cache/$FILENAME" ]; then
-    echo "Cache file found: ${HOME}/.cache/$FILENAME"
-else
-    build_$QT_API
-fi
-
-
 if [ "$QT_API" = "pyside" ]; then
     # Install pyside wheel
+    if [ -f "${HOME}/.cache/$FILENAME" ]; then
+        echo "Cache file found: ${HOME}/.cache/$FILENAME"
+    else
+        build_$QT_API
+    fi
     python -m pip install "${HOME}/.cache/$FILENAME"
 else
-    # make install the compiled sip and pyqt archive bundles
+    # Build pyqt bindings
+    if [ "$QT_API" = "pyqt5" ]; then
+        install_qt5
+    fi
     build_sip
+    build_$QT_API
 
+    # Install the built tarball
     mkdir pyqt
     pushd pyqt
     tar xf "${HOME}/.cache/$FILENAME"
