@@ -100,8 +100,12 @@ class FileDialog(MFileDialog, Dialog):
         self.directory, self.filename = os.path.split(self.path)
 
         # Get the index of the selected filter.
-        self.wildcard_index = self.control.nameFilters().index(
-            self.control.selectedNameFilter())
+        try:
+            self.wildcard_index = self.control.nameFilters().index(
+                self.control.selectedNameFilter())
+        except ValueError as e:
+            # selectedNameFilter() sometimes returns empty string on pyqt5
+            pass
 
         # Let the window close as normal.
         super(FileDialog, self).close()

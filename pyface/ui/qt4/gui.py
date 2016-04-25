@@ -187,6 +187,9 @@ class _FutureCall(QtCore.QObject):
         """
         try:
             self._callable(*self._args, **self._kw)
+        except Exception as e:
+            # Raising an exception in a slot is a fatal error in Qt5
+            logger.info("Exception in slot: %s", e, exc_info=True)
         finally:
             self._finished()
 
