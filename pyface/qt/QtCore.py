@@ -33,3 +33,6 @@ else:
     except ImportError:
         pass
     from PySide.QtCore import *
+
+    # forward compatibility with Qt5
+    from PySide.QtGui import QItemSelection, QItemSelectionModel
