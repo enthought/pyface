@@ -7,7 +7,7 @@ coverage:
   round : up
 
   status:
-    project
+    project:
     patch:
       only_pulls: yes
 
