@@ -11,6 +11,8 @@ case $QT_API in
     pyqt)
         BINDING_VER=4.11.4
         FILENAME=$QT_API-$BINDING_VER-cp$PYTHON_VER.tar.gz
+        # FIXME: Using travis system pyqt4 since the compiled one segfaults
+        exit 0
         ;;
     pyqt5)
         BINDING_VER=5.5.1
@@ -47,10 +49,6 @@ function build_pyside()
     echo "Building PySide"
     git clone https://github.com/PySide/pyside-setup.git
     pushd pyside-setup
-
-    # The normal pyside repos only have the right tags upto 1.1.1
-    # So we need to replace the repos with the newer ones
-    git submodule sync
 
     # now it is time to build the pyside wheels
     python setup.py bdist_wheel --qmake=/usr/bin/qmake-qt4 --version=$BINDING_VER --jobs=2
