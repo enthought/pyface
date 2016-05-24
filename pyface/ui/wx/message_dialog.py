@@ -72,7 +72,13 @@ class MessageDialog(MMessageDialog, Dialog):
         else:
             message = self.message
 
-        return wx.MessageDialog(parent, message, self.title,
-                _SEVERITY_TO_ICON_MAP[self.severity] | wx.OK | wx.STAY_ON_TOP)
+        style = _SEVERITY_TO_ICON_MAP[self.severity] | wx.OK | wx.STAY_ON_TOP
+        if self.resizeable:
+            style |= wx.RESIZE_BORDER
 
-#### EOF ######################################################################
+        dlg = wx.MessageDialog(parent, message, self.title, style,
+                               self.position)
+        if self.size != (-1, -1):
+            dlg.SetSize(self.size)
+
+        return dlg

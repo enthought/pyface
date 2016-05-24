@@ -76,6 +76,12 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         dlg.setInformativeText(self.informative)
         dlg.setDetailedText(self.detail)
 
+        if self.size != (-1, -1):
+            dlg.resize(*self.size)
+
+        if self.position != (-1, -1):
+            dlg.move(*self.position)
+
         if self.image is None:
             dlg.setIcon(QtGui.QMessageBox.Warning)
         else:
