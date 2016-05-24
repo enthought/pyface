@@ -202,7 +202,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view_ids = [v.id for v in self.window.views if self.contains_view(v)]
 
         # Everything else is provided by QMainWindow.
-        state = str(self.window.control.saveState())
+        state = self.window.control.saveState()
 
         return (0, (view_ids, state))
 
@@ -292,7 +292,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, dict(geometry=str(self.window.control.saveGeometry())))
+        return (0, {'geometry' : self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
         if hasattr(memento, 'toolkit_data'):
@@ -304,6 +304,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                     if geometry is not None:
                         self.window.control.restoreGeometry(geometry)
 
+    def is_editor_area_visible(self):
+        return self._qt4_editor_area.isVisible()
 
     ###########################################################################
     # Private interface.
@@ -336,7 +338,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_active_editor_changed(self, old, new):
         """ Handle change of active editor """
         # Reset tab title to foreground color
-        self._qt4_editor_area.setTabTextColor(new.control)
+        if new is not None:
+            self._qt4_editor_area.setTabTextColor(new.control)
 
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
@@ -520,7 +523,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view.window = self.window
 
             try:
-                view.control = view.create_control(self.window.control)
+                view.control = view.create_control(dw.widget())
             except:
                 # Tidy up if the view couldn't be created.
                 delattr(view, '_qt4_dock')

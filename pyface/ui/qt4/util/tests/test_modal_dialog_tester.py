@@ -38,6 +38,9 @@ class MyClass(HasStrictTraits):
         else:
             return 'rejected'
 
+    def do_not_show_dialog(self):
+        return True
+
 
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
@@ -52,11 +55,13 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertTrue(tester.value_assigned())
         self.assertEqual(tester.result, OK)
+        self.assertTrue(tester.dialog_was_opened)
 
         # reject
         tester.open_and_run(when_opened=lambda x: x.close())
         self.assertTrue(tester.value_assigned())
         self.assertEqual(tester.result, CANCEL)
+        self.assertTrue(tester.dialog_was_opened)
 
     def test_on_traitsui_dialog(self):
         my_class = MyClass()
@@ -66,11 +71,13 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         self.assertTrue(tester.value_assigned())
         self.assertEqual(tester.result, 'accepted')
+        self.assertTrue(tester.dialog_was_opened)
 
         # reject
         tester.open_and_run(when_opened=lambda x: x.close())
         self.assertTrue(tester.value_assigned())
         self.assertEqual(tester.result, 'rejected')
+        self.assertTrue(tester.dialog_was_opened)
 
     def test_capture_errors_on_failure(self):
         dialog = MessageDialog()
@@ -142,6 +149,18 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         tester.open_and_run(when_opened=check_and_close)
+
+    def test_dialog_was_not_opened_on_traitsui_dialog(self):
+        my_class = MyClass()
+        tester = ModalDialogTester(my_class.do_not_show_dialog)
+
+        # it runs okay
+        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
+        self.assertTrue(tester.value_assigned())
+        self.assertEqual(tester.result, True)
+
+        # but no dialog is opened
+        self.assertFalse(tester.dialog_was_opened)
 
 
 if __name__ == '__main__':
