@@ -65,13 +65,13 @@ class TaskApplication(Application):
     # -------------------------------------------------------------------------
 
     # Destruction utilities ---------------------------------------------------
+
     def _on_window_closed(self, window, trait, old, new):
         """ Listener that ensures window handles are released when closed.
         """
         if window.active_task in self.tasks:
             self.tasks.remove(window.active_task)
-
-        self.windows.remove(window)
+        super(TaskApplication, self)._on_window_close(window, trait, old, new)
 
     # Trait initializers and property getters ---------------------------------
 
