@@ -118,11 +118,10 @@ class BaseApplication(HasStrictTraits):
         before doing any work themselves.
         """
         logger.info('---- Application starting ----')
-
         return True
 
     def stop(self):
-        """ Stop the application, cleanly releasing resources, if possible. """
+        """ Stop the application, cleanly releasing resources if possible. """
         logger.info('---- Application stopping ----')
         return True
 
@@ -148,6 +147,12 @@ class BaseApplication(HasStrictTraits):
                 self.stopped = ApplicationEvent(application=self,
                                                 event_type='stopped')
                 logger.info('---- Application stopped ----')
+
+                # exit normally
+                self.exit(0)
+
+        # exit with an error
+        self.exit(1)
 
     def exit(self, force=False):
         """ Exits the application.
@@ -225,9 +230,6 @@ class BaseApplication(HasStrictTraits):
         # callback (eg. gui.set_trait_later).
         self.application_initialized = ApplicationEvent(application=self)
 
-        # do nothing and quit
-        self.exit()
-
     # Destruction methods -----------------------------------------------------
 
     def _can_exit(self):
@@ -249,7 +251,9 @@ class BaseApplication(HasStrictTraits):
 
         This is where application event loops and similar should be shut down.
         """
-        pass
+        import sys
+        # invoke a normal exit from the application
+        sys.exit()
 
     # Traits defaults ---------------------------------------------------------
 
