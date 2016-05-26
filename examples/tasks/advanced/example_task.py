@@ -36,16 +36,17 @@ class ExampleTask(Task):
                         SMenu(DockPaneToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           TaskAction(method='open',
-                                      tooltip='Open a file',
-                                      image=ImageResource('document_open')),
-                           TaskAction(method='save',
-                                      tooltip='Save the current file',
-                                      image=ImageResource('document_save')),
-                           image_size = (32, 32), show_tool_names=False), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          TaskAction(method='open',
+                                     tooltip='Open a file',
+                                     image=ImageResource('document_open')),
+                          TaskAction(method='save',
+                                     tooltip='Save the current file',
+                                     image=ImageResource('document_save')),
+                          image_size=(32, 32),
+                          show_tool_names=False),]
 
     ###########################################################################
     # 'Task' interface.

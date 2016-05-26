@@ -4,10 +4,12 @@ licensed accordingly to the original license:
 Project                 License                   File
 ----------------------------------------------------------------------------              
 Oxygen                  CC-SA 3.0                 http://creativecommons.org/licenses/by-sa/3.0/
-
+PSF                     Trademark                 https://www.python.org/community/logos/
 
 Files and orginal authors:
 ----------------------------------------------------------------------------
                    document_new.png | Oxygen
                   document_open.png | Oxygen
                   document_save.png | Oxygen
+                    python_logo.png | PSF
+                    python_icon.png | Oxygen

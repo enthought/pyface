@@ -27,18 +27,11 @@ class MyApplication(TaskApplication):
     # TaskGuiApplication interface
     # -------------------------------------------------------------------------
 
-    app_name = Str("My Pyface Application")
+    id = "MyPyfaceApplication"
 
-    window_size = Tuple((800, 600))
+    name = "Python Editor"
 
-
-    def start(self):
-        starting = super(MyApplication, self).start()
-        if not starting:
-            return False
-
-        self.create_new_task_window()
-        return True
+    window_size = (800, 600)
 
     # -------------------------------------------------------------------------
     # MyApplication interface
@@ -55,6 +48,12 @@ class MyApplication(TaskApplication):
         task = ExampleTask()
         window = self.create_task_window(task)
         return window
+
+    # Traits change handlers ------------------------------------------------
+
+    def _application_initialized_changed(self, event):
+        """ Wait for event loop to be running before opening task window. """
+        self.create_new_task_window()
 
 
 def main(argv):
