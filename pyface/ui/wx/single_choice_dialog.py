@@ -29,7 +29,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     #### 'ISingleChoiceDialog' interface ######################################
 
-    #: Whether or not the dialog can be cancelled.
+    #: Whether or not the dialog can be cancelled (Wx Only).
     cancel = Bool(True)
 
     #: List of objects to choose from.

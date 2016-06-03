@@ -16,10 +16,11 @@
 
 from pyface.qt import QtCore, QtGui
 
-from traits.api import Any, Bool, List, Str, provides
+from traits.api import Any, List, Str, provides
 
+from pyface.constant import CANCEL
 from pyface.i_single_choice_dialog import ISingleChoiceDialog, MSingleChoiceDialog
-from .dialog import Dialog
+from .dialog import Dialog, _RESULT_MAP
 
 
 @provides(ISingleChoiceDialog)
@@ -31,9 +32,6 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     """
 
     #### 'ISingleChoiceDialog' interface ######################################
-
-    #: Whether or not the dialog can be cancelled.  Ignored in Qt backend.
-    cancel = Bool(True)
 
     #: List of objects to choose from.
     choices = List(Any)
@@ -47,6 +45,12 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     #: The message to display to the user.
     message = Str
 
+    def set_dialog_choice(self, choice):
+        if self.control is not None:
+            if self.name_attribute != '':
+                choice = getattr(choice, self.name_attribute)
+            self.control.setTextValue(str(choice))
+
     ###########################################################################
     # Protected 'IDialog' interface.
     ###########################################################################
@@ -56,6 +60,16 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         # In this case, Qt does it all for us in 'QInputDialog'
         pass
 
+    def _show_modal(self):
+        self.control.setWindowModality(QtCore.Qt.ApplicationModal)
+        retval = self.control.exec_()
+        if self.control is None:
+            # dialog window closed, treat as Cancel, nullify choice
+            retval = CANCEL
+        else:
+            retval = _RESULT_MAP[retval]
+        return retval
+
     ###########################################################################
     # 'IWindow' interface.
     ###########################################################################
@@ -64,10 +78,14 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         """ Closes the window. """
 
         # Get the chosen object.
-        if self.control is not None:
+        if self.control is not None and self.return_code != CANCEL:
             text = self.control.textValue()
-            idx = self._choice_strings().index(text)
-            self.choice = self.choices[idx]
+            choices = self._choice_strings()
+            if text in choices:
+                idx = self._choice_strings().index(text)
+                self.choice = self.choices[idx]
+            else:
+                self.choice = None
 
         # Let the window close as normal.
         super(SingleChoiceDialog, self).close()
@@ -78,13 +96,17 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the window. """
-
         dialog = QtGui.QInputDialog(parent)
 
         dialog.setOption(QtGui.QInputDialog.UseListViewForComboBoxItems, True)
         dialog.setWindowTitle(self.title)
         dialog.setLabelText(self.message)
-        dialog.setComboBoxItems(self._choice_strings())
+
+        # initialize choices: set initial value to first choice
+        choices = self._choice_strings()
+        dialog.setComboBoxItems(choices)
+        dialog.setTextValue(choices[0])
+
         if self.size != (-1, -1):
             self.resize(*self.size)
         if self.position != (-1, -1):
