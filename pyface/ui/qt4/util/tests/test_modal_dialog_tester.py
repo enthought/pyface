@@ -11,7 +11,6 @@
 from __future__ import absolute_import
 
 import unittest
-from functools import wraps
 import cStringIO
 
 from pyface.qt import QtGui
@@ -21,25 +20,7 @@ from traits.api import HasStrictTraits
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
-
-
-def has_traitsui():
-    """ Is traitsui installed? """
-    try:
-        import traitsui
-    except ImportError:
-        return False
-    return True
-
-
-def skip_if_no_traitsui(test):
-    @wraps(test)
-    def new_test(self):
-        if has_traitsui():
-            test(self)
-        else:
-            self.skipTest("Can't import traitsui.")
-    return new_test
+from pyface.util.testing import skip_if_no_traitsui
 
 
 class MyClass(HasStrictTraits):

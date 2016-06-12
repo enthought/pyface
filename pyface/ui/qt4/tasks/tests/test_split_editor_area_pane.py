@@ -5,8 +5,6 @@ import tempfile
 import unittest
 
 from traits.api import HasTraits, Instance
-from traitsui.api import Group, UItem, View
-from traitsui.api import Tabbed as TabbedGroup
 
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
@@ -14,17 +12,24 @@ from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
     TaskWindow
 from pyface.util.guisupport import get_app_qt4
+from pyface.util.testing import skip_if_no_traitsui
 from pyface.ui.qt4.util.testing import event_loop
 
 
 class ViewWithTabs(HasTraits):
     """ A view with tabs used to confuse the SplitEditorAreaPane. """
-    traits_view = View(
-        TabbedGroup(
-            Group(UItem(label='tab 1')),
-            Group(UItem(label='tab 2')),
+
+    def default_traits_view(self):
+        from traitsui.api import Group, UItem, View
+        from traitsui.api import Tabbed as TabbedGroup
+
+        traits_view = View(
+            TabbedGroup(
+                Group(UItem(label='tab 1')),
+                Group(UItem(label='tab 2')),
+            )
         )
-    )
+        return traits_view
 
 
 class ViewWithTabsEditor(Editor):
@@ -321,6 +326,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(right_bottom.items[0].id, 1)
         self.assertEquals(right_bottom.items[1].id, 2)
 
+    @skip_if_no_traitsui
     def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
         # Regression test: if an editor contains tabs, a change in focus
         # sets the editor area pane `active_tabwidget` to one of those tabs,
@@ -355,6 +361,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             window.close()
 
+    @skip_if_no_traitsui
     def test_active_editor_after_focus_change(self):
         window = TaskWindow(size=(800, 600))
 
