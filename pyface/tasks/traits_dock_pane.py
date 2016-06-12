@@ -1,6 +1,5 @@
 # Enthought library imports.
 from traits.api import HasTraits, Instance
-from traitsui.api import UI
 
 # Local imports.
 from pyface.tasks.dock_pane import DockPane
@@ -16,7 +15,7 @@ class TraitsDockPane(DockPane):
     model = Instance(HasTraits)
 
     # The UI object associated with the Traits view, if it has been constructed.
-    ui = Instance(UI)
+    ui = Instance('traitsui.ui.UI')
 
     ###########################################################################
     # 'HasTraits' interface.
