@@ -8,23 +8,45 @@
 # Thanks for using Enthought open source!
 
 """ Tests for the tabular editor tester. """
+from __future__ import absolute_import
 
 import unittest
+from functools import wraps
 import cStringIO
 
 from pyface.qt import QtGui
 from pyface.api import MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
-from traitsui.api import CancelButton, OKButton, View
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
 
 
+def has_traitsui():
+    """ Is traitsui installed? """
+    try:
+        import traitsui
+    except ImportError:
+        return False
+    return True
+
+
+def skip_if_no_traitsui(test):
+    @wraps(test)
+    def new_test(self):
+        if has_traitsui():
+            test(self)
+        else:
+            self.skipTest("Can't import traitsui.")
+    return new_test
+
+
 class MyClass(HasStrictTraits):
 
     def default_traits_view(self):
+        from traitsui.api import CancelButton, OKButton, View
+
         view = View(
             buttons=[OKButton, CancelButton],
             resizable=False,
@@ -63,6 +85,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
         self.assertTrue(tester.dialog_was_opened)
 
+    @skip_if_no_traitsui
     def test_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -115,6 +138,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
+    @skip_if_no_traitsui
     def test_has_widget(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -133,6 +157,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
 
         tester.open_and_run(when_opened=check_and_close)
 
+    @skip_if_no_traitsui
     def test_find_widget(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -150,6 +175,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
 
         tester.open_and_run(when_opened=check_and_close)
 
+    @skip_if_no_traitsui
     def test_dialog_was_not_opened_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.do_not_show_dialog)
