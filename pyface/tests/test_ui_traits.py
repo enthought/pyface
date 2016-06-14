@@ -1,0 +1,463 @@
+#------------------------------------------------------------------------------
+#
+#  Copyright (c) 2016, Enthought, Inc.
+#  All rights reserved.
+#
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+#
+#  Author: Enthought Developers
+#
+#------------------------------------------------------------------------------
+
+
+import unittest
+
+from traits.api import HasTraits, TraitError
+from traits.testing.unittest_tools import UnittestTools
+
+from ..ui_traits import Border, HasBorder, HasMargin, Margin
+
+
+class HasMarginClass(HasTraits):
+
+    margin = HasMargin
+
+
+class HasBorderClass(HasTraits):
+
+    border = HasBorder
+
+
+class TestMargin(unittest.TestCase):
+
+    def test_defaults(self):
+        margin = Margin()
+        self.assertEqual(margin.top, 0)
+        self.assertEqual(margin.bottom, 0)
+        self.assertEqual(margin.left, 0)
+        self.assertEqual(margin.right, 0)
+
+    def test_init_one_arg(self):
+        margin = Margin(4)
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_init_two_args(self):
+        margin = Margin(4, 2)
+        self.assertEqual(margin.top, 2)
+        self.assertEqual(margin.bottom, 2)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_init_four_args(self):
+        margin = Margin(4, 2, 3, 1)
+        self.assertEqual(margin.top, 3)
+        self.assertEqual(margin.bottom, 1)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 2)
+
+
+class TestHasMargin(unittest.TestCase, UnittestTools):
+
+    def test_defaults(self):
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 0)
+        self.assertEqual(margin.bottom, 0)
+        self.assertEqual(margin.left, 0)
+        self.assertEqual(margin.right, 0)
+
+    def test_default_int(self):
+
+        class HasMarginClass(HasTraits):
+
+            margin = HasMargin(4)
+
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_default_one_tuple(self):
+
+        class HasMarginClass(HasTraits):
+
+            margin = HasMargin((4,))
+
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_default_two_tuple(self):
+
+        class HasMarginClass(HasTraits):
+
+            margin = HasMargin((4, 2))
+
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 2)
+        self.assertEqual(margin.bottom, 2)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_default_four_tuple(self):
+
+        class HasMarginClass(HasTraits):
+
+            margin = HasMargin((4, 2, 3, 1))
+
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 3)
+        self.assertEqual(margin.bottom, 1)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 2)
+
+    def test_default_margin(self):
+        m = Margin(left=4, right=2, top=3, bottom=1)
+
+        class HasMarginClass(HasTraits):
+
+            margin = HasMargin(m)
+
+        has_margin = HasMarginClass()
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 3)
+        self.assertEqual(margin.bottom, 1)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 2)
+
+    def test_init_int(self):
+        has_margin = HasMarginClass(margin=4)
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_init_one_tuple(self):
+        has_margin = HasMarginClass(margin=(4,))
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_init_two_tuple(self):
+        has_margin = HasMarginClass(margin=(4, 2))
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 2)
+        self.assertEqual(margin.bottom, 2)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_init_four_tuple(self):
+        has_margin = HasMarginClass(margin=(4, 2, 3, 1))
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 3)
+        self.assertEqual(margin.bottom, 1)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 2)
+
+    def test_init_margin(self):
+        margin = Margin()
+        has_margin = HasMarginClass(margin=margin)
+
+        self.assertEqual(has_margin.margin, margin)
+
+    def test_set_int(self):
+        has_margin = HasMarginClass()
+        with self.assertTraitChanges(has_margin, 'margin', 1):
+            has_margin.margin = 4
+
+        margin = has_margin.margin
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_set_one_tuple(self):
+        has_margin = HasMarginClass()
+        with self.assertTraitChanges(has_margin, 'margin', 1):
+            has_margin.margin = (4,)
+
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 4)
+        self.assertEqual(margin.bottom, 4)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_set_two_tuple(self):
+        has_margin = HasMarginClass()
+        with self.assertTraitChanges(has_margin, 'margin', 1):
+            has_margin.margin = (4, 2)
+
+        margin = has_margin.margin
+
+        self.assertEqual(margin.top, 2)
+        self.assertEqual(margin.bottom, 2)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 4)
+
+    def test_set_four_tuple(self):
+        has_margin = HasMarginClass()
+        with self.assertTraitChanges(has_margin, 'margin', 1):
+            has_margin.margin = (4, 2, 3, 1)
+
+        margin = has_margin.margin
+        self.assertEqual(margin.top, 3)
+        self.assertEqual(margin.bottom, 1)
+        self.assertEqual(margin.left, 4)
+        self.assertEqual(margin.right, 2)
+
+    def test_set_margin(self):
+        margin = Margin()
+        has_margin = HasMarginClass()
+        with self.assertTraitChanges(has_margin, 'margin', 1):
+            has_margin.margin = margin
+
+        self.assertEqual(has_margin.margin, margin)
+
+    def test_set_invalid(self):
+        has_margin = HasMarginClass()
+        with self.assertRaises(TraitError):
+            has_margin.margin = (1, 2, 3)
+
+
+class TestBorder(unittest.TestCase):
+
+    def test_defaults(self):
+        border = Border()
+        self.assertEqual(border.top, 0)
+        self.assertEqual(border.bottom, 0)
+        self.assertEqual(border.left, 0)
+        self.assertEqual(border.right, 0)
+
+    def test_init_one_arg(self):
+        border = Border(4)
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_init_two_args(self):
+        border = Border(4, 2)
+        self.assertEqual(border.top, 2)
+        self.assertEqual(border.bottom, 2)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_init_four_args(self):
+        border = Border(4, 2, 3, 1)
+        self.assertEqual(border.top, 3)
+        self.assertEqual(border.bottom, 1)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 2)
+
+
+class TestHasBorder(unittest.TestCase, UnittestTools):
+
+    def test_defaults(self):
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 0)
+        self.assertEqual(border.bottom, 0)
+        self.assertEqual(border.left, 0)
+        self.assertEqual(border.right, 0)
+
+    def test_default_int(self):
+
+        class HasBorderClass(HasTraits):
+
+            border = HasBorder(4)
+
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_default_one_tuple(self):
+
+        class HasBorderClass(HasTraits):
+
+            border = HasBorder((4,))
+
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_default_two_tuple(self):
+
+        class HasBorderClass(HasTraits):
+
+            border = HasBorder((4, 2))
+
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 2)
+        self.assertEqual(border.bottom, 2)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_default_four_tuple(self):
+
+        class HasBorderClass(HasTraits):
+
+            border = HasBorder((4, 2, 3, 1))
+
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 3)
+        self.assertEqual(border.bottom, 1)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 2)
+
+    def test_default_border(self):
+        m = Margin(left=4, right=2, top=3, bottom=1)
+
+        class HasBorderClass(HasTraits):
+
+            border = HasBorder(m)
+
+        has_border = HasBorderClass()
+        border = has_border.border
+
+        self.assertEqual(border.top, 3)
+        self.assertEqual(border.bottom, 1)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 2)
+
+    def test_init_int(self):
+        has_border = HasBorderClass(border=4)
+        border = has_border.border
+
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_init_one_tuple(self):
+        has_border = HasBorderClass(border=(4,))
+        border = has_border.border
+
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_init_two_tuple(self):
+        has_border = HasBorderClass(border=(4, 2))
+        border = has_border.border
+
+        self.assertEqual(border.top, 2)
+        self.assertEqual(border.bottom, 2)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_init_four_tuple(self):
+        has_border = HasBorderClass(border=(4, 2, 3, 1))
+        border = has_border.border
+
+        self.assertEqual(border.top, 3)
+        self.assertEqual(border.bottom, 1)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 2)
+
+    def test_init_border(self):
+        border = Border()
+        has_border = HasBorderClass(border=border)
+
+        self.assertEqual(has_border.border, border)
+
+    def test_set_int(self):
+        has_border = HasBorderClass()
+        with self.assertTraitChanges(has_border, 'border', 1):
+            has_border.border = 4
+
+        border = has_border.border
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_set_one_tuple(self):
+        has_border = HasBorderClass()
+        with self.assertTraitChanges(has_border, 'border', 1):
+            has_border.border = (4,)
+
+        border = has_border.border
+
+        self.assertEqual(border.top, 4)
+        self.assertEqual(border.bottom, 4)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_set_two_tuple(self):
+        has_border = HasBorderClass()
+        with self.assertTraitChanges(has_border, 'border', 1):
+            has_border.border = (4, 2)
+
+        border = has_border.border
+
+        self.assertEqual(border.top, 2)
+        self.assertEqual(border.bottom, 2)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 4)
+
+    def test_set_four_tuple(self):
+        has_border = HasBorderClass()
+        with self.assertTraitChanges(has_border, 'border', 1):
+            has_border.border = (4, 2, 3, 1)
+
+        border = has_border.border
+        self.assertEqual(border.top, 3)
+        self.assertEqual(border.bottom, 1)
+        self.assertEqual(border.left, 4)
+        self.assertEqual(border.right, 2)
+
+    def test_set_border(self):
+        border = Border()
+        has_border = HasBorderClass()
+        with self.assertTraitChanges(has_border, 'border', 1):
+            has_border.border = border
+
+        self.assertEqual(has_border.border, border)
+
+    def test_set_invalid(self):
+        has_border = HasBorderClass()
+        with self.assertRaises(TraitError):
+            has_border.border = (1, 2, 3)
