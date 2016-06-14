@@ -35,17 +35,16 @@ def convert_image(value, level=3):
         return value
 
     key = value
-    is_traits_image = (value[:1] == '@')
-    if not is_traits_image:
+    is_pyface_image = value.startswith('@')
+    if not is_pyface_image:
         search_path = get_resource_path(level)
         key = '%s[%s]' % (value, search_path)
 
     result = image_resource_cache.get(key)
     if result is None:
-        if is_traits_image:
+        if is_pyface_image:
             try:
                 from .image.image import ImageLibrary
-
                 result = ImageLibrary.image_resource(value)
             except Exception:
                 result = None
@@ -108,7 +107,7 @@ class Image(TraitType):
     def create_editor(self):
         """ Returns the default UI editor for the trait.
         """
-        from .editors.api import ImageEditor
+        from traitsui.editors.api import ImageEditor
         return ImageEditor()
 
 

@@ -14,13 +14,22 @@
 #
 #------------------------------------------------------------------------------
 
-
+import os
 import unittest
 
 from traits.api import HasTraits, TraitError
 from traits.testing.unittest_tools import UnittestTools
 
-from ..ui_traits import Border, HasBorder, HasMargin, Margin
+from ..i_image_resource import IImageResource
+from ..ui_traits import Border, HasBorder, HasMargin, Image, Margin
+
+
+IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
+
+
+class ImageClass(HasTraits):
+
+    image = Image
 
 
 class HasMarginClass(HasTraits):
@@ -31,6 +40,46 @@ class HasMarginClass(HasTraits):
 class HasBorderClass(HasTraits):
 
     border = HasBorder
+
+
+class TestImageTrait(unittest.TestCase, UnittestTools):
+
+    def test_defaults(self):
+        image_class = ImageClass()
+
+        self.assertIsNone(image_class.image)
+
+    def test_init_local_image(self):
+        from pyface.image_resource import ImageResource
+
+        image_class = ImageClass(image=ImageResource('core'))
+
+        self.assertIsInstance(image_class.image, ImageResource)
+        self.assertEqual(image_class.image.name, 'core')
+        self.assertEqual(image_class.image.absolute_path,
+                         os.path.abspath(IMAGE_PATH))
+
+    def test_init_pyface_image(self):
+        from pyface.image_resource import ImageResource
+
+        image_class = ImageClass(image='about')
+        im = image_class.image.create_image()
+
+        self.assertIsInstance(image_class.image, ImageResource)
+        self.assertEqual(image_class.image.name, 'about')
+        self.assertIsNone(image_class.image._image_not_found)
+        self.assertIsNotNone(image_class.image._ref.data)
+
+    def test_init_pyface_image_library(self):
+        from pyface.image_resource import ImageResource
+
+        image_class = ImageClass(image='@icons:dialog-warning')
+
+        self.assertIsInstance(image_class.image, ImageResource)
+        self.assertEqual(image_class.image.name, 'dialog-warning.png')
+        self.assertIsNone(image_class.image._image_not_found)
+        self.assertEqual(image_class.image._ref.file_name, 'dialog-warning.png')
+        self.assertEqual(image_class.image._ref.volume_name, 'icons')
 
 
 class TestMargin(unittest.TestCase):
