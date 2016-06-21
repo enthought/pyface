@@ -102,7 +102,7 @@ class _MenuItem(HasTraits):
             try:
                 self.control.SetBitmap(action.image.create_bitmap())
             except:
-                # Some wx implementations don't allow radio buttons to have
+                # Some platforms don't allow radio buttons to have
                 # bitmaps, so just ignore the exception if it happens
                 pass
 

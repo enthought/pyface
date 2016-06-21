@@ -56,7 +56,7 @@ class StatusBarManager(HasTraits):
         return self.status_bar
 
     def remove_status_bar(self, parent):
-        """ Creates a status bar. """
+        """ Removes a status bar. """
 
         if self.status_bar is not None:
             self.status_bar.Destroy()
