@@ -5,9 +5,6 @@ from traits.api import provides
 # System library imports.
 import wx
 
-# Local imports.
-from util import set_focus
-
 # Logging
 import logging
 logger = logging.getLogger(__name__)

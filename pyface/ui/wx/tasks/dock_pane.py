@@ -12,7 +12,6 @@ from pyface.wx.aui import aui
 
 # Local imports.
 from task_pane import TaskPane
-from util import set_focus
 
 # Constants.
 AREA_MAP = { 'left'   : aui.AUI_DOCK_LEFT,
