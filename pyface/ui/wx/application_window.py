@@ -22,7 +22,7 @@ import sys
 
 # Major package imports.
 import wx
-from pyface.wx.aui import aui
+from pyface.wx.aui import aui, PyfaceAuiManager
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
@@ -96,16 +96,12 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
-            if aui is not None:
-                for tool_bar_manager in reversed(tool_bar_managers):
-                    tool_bar = tool_bar_manager.create_tool_bar(parent)
-                    self._add_toolbar_to_aui_manager(
-                        tool_bar
-                    )
-                self._aui_manager.Update()
-            else:
-                tool_bar = tool_bar_managers[0].create_tool_bar(parent)
-                self.control.SetToolBar(tool_bar)
+            for tool_bar_manager in reversed(tool_bar_managers):
+                tool_bar = tool_bar_manager.create_tool_bar(parent)
+                self._add_toolbar_to_aui_manager(
+                    tool_bar
+                )
+            self._aui_manager.Update()
 
     def _set_window_icon(self):
         if self.icon is None:
@@ -135,22 +131,20 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         super(ApplicationWindow, self)._create()
 
-        if aui is not None:
-            self._aui_manager = aui.AuiManager()
-            self._aui_manager.SetManagedWindow(self.control)
-            
-            # Keep a reference to the AUI Manager in the control because Panes
-            # will need to access it in order to lay themselves out
-            self.control._aui_manager = self._aui_manager
+        self._aui_manager = PyfaceAuiManager()
+        self._aui_manager.SetManagedWindow(self.control)
+        
+        # Keep a reference to the AUI Manager in the control because Panes
+        # will need to access it in order to lay themselves out
+        self.control._aui_manager = self._aui_manager
 
         contents = self._create_contents(self.control)
 
         self._create_trim_widgets(self.control)
 
-        if aui is not None:
-            # Updating the AUI manager actually commits all of the pane's added
-            # to it (this allows batch updates).
-            self._aui_manager.Update()
+        # Updating the AUI manager actually commits all of the pane's added
+        # to it (this allows batch updates).
+        self._aui_manager.Update()
 
         return
 
@@ -172,7 +166,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         return control
 
     def destroy(self):
-        if self.control and AUI:
+        if self.control:
             self._aui_manager.UnInit()
         super(ApplicationWindow, self).destroy()
 
@@ -214,37 +208,28 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _wx_enable_tool_bar(self, tool_bar, enabled):
         """ Enable/Disablea tool bar. """
 
-        if aui is not None:
-            # AUI toolbars cannot be enabled/disabled.
-            pass
-
-        else:
-            tool_bar.Enable(enabled)
+        # AUI toolbars cannot be enabled/disabled.
 
         return
 
     def _wx_show_tool_bar(self, tool_bar, visible):
         """ Hide/Show a tool bar. """
 
-        if aui is not None:
-            pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.id)
+        pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.id)
 
-            if visible:
-                pane.Show()
-
-            else:
-                # Without this workaround, toolbars know the sizes of other
-                # hidden toolbars and leave gaps in the toolbar dock
-                pane.window.Show(False)
-                self._aui_manager.DetachPane(pane.window)
-                info = self._get_tool_par_pane_info(pane.window)
-                info.Hide()
-                self._aui_manager.AddPane(pane.window, info)
-
-            self._aui_manager.Update()
+        if visible:
+            pane.Show()
 
         else:
-            tool_bar.Show(visible)
+            # Without this workaround, toolbars know the sizes of other
+            # hidden toolbars and leave gaps in the toolbar dock
+            pane.window.Show(False)
+            self._aui_manager.DetachPane(pane.window)
+            info = self._get_tool_par_pane_info(pane.window)
+            info.Hide()
+            self._aui_manager.AddPane(pane.window, info)
+
+        self._aui_manager.Update()
 
         return
 

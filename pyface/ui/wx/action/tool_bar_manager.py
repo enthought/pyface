@@ -24,6 +24,7 @@ import wx
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
 # Local imports.
+from pyface.wx.aui import aui
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -191,13 +192,8 @@ class ToolBarManager(ActionManager):
 
         return
 
-from pyface.wx.aui import aui
-if aui is not None:
-    toolbarobject = aui.AuiToolBar
-else:
-    toolbarobject = wx.ToolBar
 
-class _ToolBar(toolbarobject):
+class _ToolBar(aui.AuiToolBar):
     """ The toolkit-specific tool bar implementation. """
 
     ###########################################################################
@@ -207,7 +203,7 @@ class _ToolBar(toolbarobject):
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
 
-        toolbarobject.__init__(self, parent, -1, style=style)
+        aui.AuiToolBar.__init__(self, parent, -1, style=style)
 
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
@@ -238,7 +234,7 @@ class _ToolBar(toolbarobject):
             for pos in range(self.GetToolsCount()):
                 tool = self.GetToolByPos(pos)
                 self.tool_map[tool.GetId()] = (pos, tool)
-        toolbarobject.Realize(self)
+        aui.AuiToolBar.Realize(self)
         if len(self.initially_hidden_tool_ids) > 0:
             for tool_id in self.initially_hidden_tool_ids:
                 self.RemoveTool(tool_id)
@@ -275,6 +271,69 @@ class _ToolBar(toolbarobject):
             if existing_orig_pos > orig_pos:
                 break
         self.InsertToolItem(pos+1, tool)
+
+
+    ##### Additional convenience functions for the normal AGW AUI toolbar
+
+    AddLabelTool = aui.AuiToolBar.AddTool
+
+    def InsertToolItem(self, pos, tool):
+        self._items[pos:pos] = [tool]
+        return tool
+
+    def DeleteTool(self, tool_id):
+        """
+        Removes the specified tool from the toolbar and deletes it.
+
+        :param integer `tool_id`: the :class:`AuiToolBarItem` identifier.
+        :returns: ``True`` if the tool was deleted, ``False`` otherwise.
+        :note: Note that it is unnecessary to call :meth:`Realize` for the
+            change to take place, it will happen immediately.
+        """
+
+        tool = self.RemoveTool(tool_id)
+        if tool is not None:
+            tool.Destroy()
+            return True
+        
+        return False
+
+
+    def RemoveTool(self, tool_id):
+        """
+        Removes the specified tool from the toolbar but doesn't delete it.
+
+        :param integer `tool_id`: the :class:`AuiToolBarItem` identifier.
+        :returns: ``True`` if the tool was deleted, ``False`` otherwise.
+        :note: Note that it is unnecessary to call :meth:`Realize` for the
+            change to take place, it will happen immediately.
+        """
+
+        idx = self.GetToolIndex(tool_id)
+        
+        if idx >= 0 and idx < len(self._items):
+            self._items.pop(idx)
+            self.Realize()
+            return True
+        
+        return False
+
+    FindById = aui.AuiToolBar.FindTool
+
+    GetToolState = aui.AuiToolBar.GetToolToggled
+
+    GetToolsCount = aui.AuiToolBar.GetToolCount
+
+    def GetToolByPos(self, pos):
+        return self._items[pos]
+
+    def OnSize(self, event):
+        # Quickly short-circuit if the toolbar isn't realized
+        if not hasattr(self, '_absolute_min_size'):
+            return
+
+        aui.AuiToolBar.OnSize(self, event)
+
 
     ###########################################################################
     # Trait change handlers.
