@@ -113,8 +113,9 @@ class MainWindowLayout(HasTraits):
                 # By default, AUI will activate the last widget.
                 active_pane = first_pane
             if active_pane:
-                # set pane is active in the AUI notebook (somehow)
-                pass
+                mgr = active_pane.task.window._aui_manager
+                info = active_pane.get_pane_info()
+                mgr.ShowPane(info.window, True)
 
         elif isinstance(layout, Splitter):
             dock_area = INVERSE_AREA_MAP[direction]
