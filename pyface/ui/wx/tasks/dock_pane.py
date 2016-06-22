@@ -4,7 +4,7 @@ import logging
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, on_trait_change, Property, provides, Tuple, Str
+from traits.api import Bool, on_trait_change, Property, provides, Tuple, Str, Int
 
 # System library imports.
 import wx
@@ -33,7 +33,14 @@ class DockPane(TaskPane, MDockPane):
     
     # Keep a reference to the Aui pane name in order to update dock state
     pane_name = Str
-    
+
+    # Whether the title bar of the pane is currently visible.
+    caption_visible = Bool(True)
+
+    # AUI ring number; note that panes won't be movable out of their ring
+    # number.  This is a way to isolate panes
+    dock_layer = Int(0)
+
     #### 'IDockPane' interface ################################################
 
     size = Property(Tuple)
