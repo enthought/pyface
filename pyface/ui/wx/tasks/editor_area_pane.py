@@ -46,8 +46,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         # Connect to the widget's signals.
         control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._update_active_editor)
         control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CLOSE, self._close_requested)
-#        control.Bind(aui.EVT_AUINOTEBOOK_TAB_RIGHT_DOWN, self.OnTabContextMenu)
-#        control.Bind(aui.EVT_AUINOTEBOOK_BG_RIGHT_DOWN, self.OnTabBackgroundContextMenu)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
