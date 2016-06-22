@@ -76,7 +76,7 @@ class Dialog(MDialog, Window):
     ###########################################################################
 
     def _create_buttons(self, parent):
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer = wx.StdDialogButtonSizer()
 
         # The 'OK' button.
         if self.ok_label:
@@ -87,7 +87,7 @@ class Dialog(MDialog, Window):
         self._wx_ok = ok = wx.Button(parent, wx.ID_OK, label)
         ok.SetDefault()
         wx.EVT_BUTTON(parent, wx.ID_OK, self._wx_on_ok)
-        sizer.Add(ok)
+        sizer.AddButton(ok)
 
         # The 'Cancel' button.
         if self.cancel_label:
@@ -97,7 +97,7 @@ class Dialog(MDialog, Window):
 
         self._wx_cancel = cancel = wx.Button(parent, wx.ID_CANCEL, label)
         wx.EVT_BUTTON(parent, wx.ID_CANCEL, self._wx_on_cancel)
-        sizer.Add(cancel, 0, wx.LEFT, 10)
+        sizer.AddButton(cancel)
 
         # The 'Help' button.
         if len(self.help_id) > 0:
@@ -108,8 +108,9 @@ class Dialog(MDialog, Window):
 
             help = wx.Button(parent, wx.ID_HELP, label)
             wx.EVT_BUTTON(parent, wx.ID_HELP, self._wx_on_help)
-            sizer.Add(help, 0, wx.LEFT, 10)
+            sizer.AddButton(help)
 
+        sizer.Realize()
         return sizer
 
     def _create_contents(self, parent):
