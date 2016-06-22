@@ -2,9 +2,6 @@
 from itertools import combinations
 import logging
 
-# System library imports.
-#from pyface.qt import QtCore, QtGui
-
 # Enthought library imports.
 from traits.api import Any, HasTraits
 
@@ -25,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class MainWindowLayout(HasTraits):
-    """ A class for applying declarative layouts to a QMainWindow.
+    """ A class for applying declarative layouts to an AUI managed window.
     """
 
     ###########################################################################
@@ -113,7 +110,7 @@ class MainWindowLayout(HasTraits):
 
             # Activate the appropriate tab, if possible.
             if not active_pane:
-                # By default, Qt will activate the last widget.
+                # By default, AUI will activate the last widget.
                 active_pane = first_pane
             if active_pane:
                 # set pane is active in the AUI notebook (somehow)
@@ -160,75 +157,6 @@ class MainWindowLayout(HasTraits):
             if dock_pane.id == pane.id:
                 return dock_pane
         return None
-
-    ###########################################################################
-    # Private interface.
-    ###########################################################################
-
-    def _get_division_orientation(self, one, two, splitter=False):
-        """ Returns whether there is a division between two visible QWidgets.
-
-        Divided in context means that the widgets are adjacent and aligned along
-        the direction of the adjaceny.
-        """
-        united = one.united(two)
-        if splitter:
-            sep = self.control.style().pixelMetric(
-                QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self.control)
-            united.adjust(0, 0, -sep, -sep)
-            
-        if one.x() == two.x() and one.width() == two.width() and \
-               united.height() == one.height() + two.height():
-            return QtCore.Qt.Horizontal
-        
-        elif one.y() == two.y() and one.height() == two.height() and \
-                 united.width() == one.width() + two.width():
-            return QtCore.Qt.Vertical
-        
-        return 0
-
-    def _get_tab_bar(self, dock_widget):
-        """ Returns the tab bar associated with the given QDockWidget, or None
-        if there is no tab bar.
-        """
-        dock_geometry = dock_widget.geometry()
-        for child in self.control.children():
-            if isinstance(child, QtGui.QTabBar) and child.isVisible():
-                geometry = child.geometry()
-                if self._get_division_orientation(dock_geometry, geometry):
-                    return child
-        return None
-
-    def _prepare_pane(self, dock_widget, include_sizes=True):
-        """ Returns a sized PaneItem for a QDockWidget.
-        """
-        pane = self._get_pane(dock_widget)
-        if include_sizes:
-            pane.width = dock_widget.widget().width()
-            pane.height = dock_widget.widget().height()
-        return pane
-
-    def _prepare_toplevel_for_item(self, layout):
-        """ Returns a sized toplevel QDockWidget for a LayoutItem.
-        """
-        if isinstance(layout, PaneItem):
-            dock_widget = self._get_dock_widget(layout)
-            if dock_widget is None:
-                logger.warning('Cannot retrieve dock widget for pane %r'
-                               % layout.id)
-            else:
-                if layout.width > 0:
-                    dock_widget.widget().setFixedWidth(layout.width)
-                if layout.height > 0:
-                    dock_widget.widget().setFixedHeight(layout.height)
-            return dock_widget
-        
-        elif isinstance(layout, LayoutContainer):
-            return self._prepare_toplevel_for_item(layout.items[0])
-        
-        else:
-            raise MainWindowLayoutError("Leaves of layout must be PaneItems")
-
 
 
 class MainWindowLayoutError(ValueError):

@@ -75,13 +75,7 @@ class DockPane(TaskPane, MDockPane):
         # pane is present in multiple tasks attached to the same window.
         self.pane_name = self.task.id + ':' + self.id
         logger.debug("dock_pane.create: %s  HIERARCHY:\n%s" % (self.pane_name, self.get_hierarchy(parent, "    ")))
-        
-        # Connect signal handlers for updating DockPane traits.
-#        control.dockLocationChanged.connect(self._receive_dock_area)
-#        control.topLevelChanged.connect(self._receive_floating)
-#        control.visibilityChanged.connect(self._receive_visible)
-#        self.control.Bind(wx.EVT_SHOW, self._receive_visible)
-    
+
     def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
 
@@ -143,20 +137,6 @@ class DockPane(TaskPane, MDockPane):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         return wx.Window(parent, name=self.task.id + ':' + self.id)
-
-#    ###########################################################################
-#    # Protected interface.
-#    ###########################################################################
-#
-#    @contextmanager
-#    def _signal_context(self):
-#        """ Defines a context appropriate for Qt signal callbacks. Necessary to
-#            prevent feedback between Traits and Qt event handlers.
-#        """
-#        original = self._receiving
-#        self._receiving = True
-#        yield
-#        self._receiving = original
 
     #### Trait property getters/setters #######################################
 
@@ -244,19 +224,3 @@ class DockPane(TaskPane, MDockPane):
             info = self.get_pane_info()
             self.update_visible(info)
             self.commit_if_active()
-
-    #### Signal handlers ######################################################
-
-    def _receive_dock_area(self, area):
-        with self._signal_context():
-            self.dock_area = INVERSE_AREA_MAP[int(area)]
-
-    def _receive_floating(self, floating):
-        with self._signal_context():
-            self.floating = floating
-
-    def _receive_visible(self, evt):
-        logger.debug("_receive_visible!")
-        if self.control is not None:
-            self.visible = evt.GetShow()
-            logger.debug("_receive_visible = %s" % self.visible)
