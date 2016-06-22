@@ -42,7 +42,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         logger.debug("editor pane parent: %s" % parent)
         # Create and configure the tab widget.
         self.control = control = PyfaceAuiNotebook(parent, agwStyle=self.style)
-#        control.tabBar().setVisible(not self.hide_tab_bar)
 
         # Connect to the widget's signals.
         control.Bind(aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self._update_active_editor)
@@ -82,7 +81,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.editors.append(editor)
         self._update_tab_bar()
 
-        # The 'currentChanged' signal, used below, is not emitted when the first
+        # The EVT_AUINOTEBOOK_PAGE_CHANGED event is not sent when the first
         # editor is added.
         if len(self.editors) == 1:
             self.active_editor = editor
@@ -121,16 +120,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             if editor.control == control:
                 return editor
         return None
-
-    def _next_tab(self):
-        """ Activate the tab after the currently active tab.
-        """
-        self.control.setCurrentIndex(self.control.currentIndex() + 1)
-
-    def _previous_tab(self):
-        """ Activate the tab before the currently active tab.
-        """
-        self.control.setCurrentIndex(self.control.currentIndex() - 1)
 
     #### Trait change handlers ################################################
 
