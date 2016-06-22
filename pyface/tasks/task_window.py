@@ -138,8 +138,6 @@ class TaskWindow(ApplicationWindow):
         """
         state = self._get_state(task)
         if state and state != self._active_state:
-            self._window_backend.begin_batch_window_updates()
-            
             # Hide the panes of the currently active task, if necessary.
             if self._active_state is not None:
                 self._window_backend.hide_task(self._active_state)
@@ -156,8 +154,6 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-
-            self._window_backend.end_batch_window_updates()
         elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)
@@ -179,8 +175,6 @@ class TaskWindow(ApplicationWindow):
         if self.control is None:
             self._create()
 
-        self._window_backend.begin_batch_window_updates()
-
         # Create the central pane.
         state.central_pane = task.create_central_pane()
         state.central_pane.task = task
@@ -200,16 +194,12 @@ class TaskWindow(ApplicationWindow):
         state.status_bar_manager = task.status_bar
         state.tool_bar_managers = builder.create_tool_bar_managers()
 
-        self._window_backend.end_batch_window_updates()
-
     def remove_task(self, task):
         """ Removes a task that has already been added to the window. All the
             task's panes are destroyed.
         """
         state = self._get_state(task)
         if state:
-            self._window_backend.begin_batch_window_updates()
-
             # If the task is active, make sure it is de-activated before
             # deleting its controls.
             if self._active_state == state:
@@ -218,8 +208,6 @@ class TaskWindow(ApplicationWindow):
 
             self._destroy_state(state)
             self._states.remove(state)
-
-            self._window_backend.end_batch_window_updates()
         else:
             logger.warn("Cannot remove task %r: task does not belong to the "
                         "window." % task)

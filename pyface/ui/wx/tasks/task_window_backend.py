@@ -48,13 +48,6 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         pass
 
-    def begin_batch_window_updates(self):
-        self.window.control.Freeze()
-
-    def end_batch_window_updates(self):
-        if self.window.control.IsFrozen():
-            self.window.control.Thaw()
-
     def hide_task(self, state):
         """ Assuming the specified TaskState is active, hide its controls.
         """
