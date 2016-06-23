@@ -19,9 +19,9 @@ from wx.lib.agw import aui
 # for pyface but not for the standard wxPython version
 
 class PyfaceAuiNotebook(aui.AuiNotebook):
-    SetPageToolTip = aui.AuiNotebook.SetPageTooltip
-
-    GetPageToolTip = aui.AuiNotebook.GetPageTooltip
+    if wx.version() >= '3.':
+        SetPageToolTip = aui.AuiNotebook.SetPageTooltip
+        GetPageToolTip = aui.AuiNotebook.GetPageTooltip
 
 
 class PyfaceAuiManager(aui.AuiManager):
@@ -92,7 +92,7 @@ class PyfaceAuiManager(aui.AuiManager):
             else:
                 pos = dock.rect.y
                 size = dock.rect.height
-            
+
             min_pos = pos
             max_pos = pos + size
             if right_or_down:
@@ -109,7 +109,7 @@ class PyfaceAuiManager(aui.AuiManager):
                         break
                     else:
                         min_pos = p + sash_size
-            
+
             return min_pos, max_pos
 
         direction = new_dock.dock_direction

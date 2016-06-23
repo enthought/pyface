@@ -60,7 +60,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     ###########################################################################
 
     def _create_buttons(self, parent):
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
+        sizer = wx.StdDialogButtonSizer()
 
         # 'YES' button.
         if self.yes_label:
@@ -72,7 +72,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         if self.default == YES:
             yes.SetDefault()
         wx.EVT_BUTTON(parent, wx.ID_YES, self._on_yes)
-        sizer.Add(yes)
+        sizer.AddButton(yes)
 
         # 'NO' button.
         if self.no_label:
@@ -84,7 +84,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         if self.default == NO:
             no.SetDefault()
         wx.EVT_BUTTON(parent, wx.ID_NO, self._on_no)
-        sizer.Add(no, 0, wx.LEFT, 10)
+        sizer.AddButton(no)
 
         if self.cancel:
             # 'Cancel' button.
@@ -98,8 +98,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
                 cancel.SetDefault()
 
             wx.EVT_BUTTON(parent, wx.ID_CANCEL, self._wx_on_cancel)
-            sizer.Add(cancel, 0, wx.LEFT, 10)
+            sizer.AddButton(cancel)
 
+        sizer.Realize()
         return sizer
 
     def _create_dialog_area(self, parent):
