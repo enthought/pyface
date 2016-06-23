@@ -22,7 +22,8 @@ from traits.testing.unittest_tools import UnittestTools
 
 from ..i_image_resource import IImageResource
 from ..image_resource import ImageResource
-from ..ui_traits import Border, HasBorder, HasMargin, Image, Margin
+from ..ui_traits import (Border, HasBorder, HasMargin, Image, Margin,
+                         image_resource_cache, image_bitmap_cache)
 
 
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
@@ -46,6 +47,9 @@ class HasBorderClass(HasTraits):
 class TestImageTrait(unittest.TestCase, UnittestTools):
 
     def setUp(self):
+        # clear all cached images
+        image_resource_cache.clear()
+        image_bitmap_cache.clear()
         # clear cached "not found" image
         ImageResource._image_not_found = None
 
