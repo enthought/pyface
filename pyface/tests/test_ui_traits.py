@@ -21,6 +21,7 @@ from traits.api import HasTraits, TraitError
 from traits.testing.unittest_tools import UnittestTools
 
 from ..i_image_resource import IImageResource
+from ..image_resource import ImageResource
 from ..ui_traits import Border, HasBorder, HasMargin, Image, Margin
 
 
@@ -44,6 +45,10 @@ class HasBorderClass(HasTraits):
 
 class TestImageTrait(unittest.TestCase, UnittestTools):
 
+    def setUp(self):
+        # clear cached "not found" image
+        ImageResource._image_not_found = None
+
     def test_defaults(self):
         image_class = ImageClass()
 
@@ -52,10 +57,10 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
     def test_init_local_image(self):
         from pyface.image_resource import ImageResource
 
-        image_class = ImageClass(image=ImageResource('core'))
+        image_class = ImageClass(image=ImageResource('core.png'))
 
         self.assertIsInstance(image_class.image, ImageResource)
-        self.assertEqual(image_class.image.name, 'core')
+        self.assertEqual(image_class.image.name, 'core.png')
         self.assertEqual(image_class.image.absolute_path,
                          os.path.abspath(IMAGE_PATH))
 
