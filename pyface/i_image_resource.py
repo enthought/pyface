@@ -98,6 +98,22 @@ class IImageResource(Interface):
             size as an icon.
         """
 
+    @classmethod
+    def image_size(cls, image):
+        """ Get the size of a toolkit image
+
+        Parameters
+        ----------
+        image : toolkit image
+            A toolkit image to compute the size of.
+
+        Returns
+        -------
+        size : tuple
+            The (width, height) tuple giving the size of the image.
+        """
+
+
 
 class MImageResource(object):
     """ The mixin class that contains common code for toolkit specific
@@ -118,7 +134,9 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        if search_path is not None and isinstance(search_path, Sequence):
+        if isinstance(search_path, basestring):
+            _path = [search_path]
+        elif isinstance(search_path, Sequence):
             _path = search_path
         elif search_path is not None:
             _path = [search_path]

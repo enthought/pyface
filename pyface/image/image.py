@@ -22,7 +22,8 @@ from os.path import (join, isdir, isfile, splitext, abspath, dirname,
 from stat import ST_MTIME
 from platform import system
 from zipfile import is_zipfile, ZipFile, ZIP_DEFLATED
-from time import time, sleep, localtime, strftime
+import datetime
+import time
 from thread import allocate_lock
 from threading import Thread
 
@@ -157,10 +158,10 @@ def get_python_value ( source, name ):
 #  Returns a specified time as a text string:
 #-------------------------------------------------------------------------------
 
-def time_stamp_for ( time ):
+def time_stamp_for(time):
     """ Returns a specified time as a text string.
     """
-    return strftime( '%Y%m%d%H%M%S', localtime( time ) )
+    return datetime.datetime.utcfromtimestamp(time).strftime('%Y%m%d%H%M%S')
 
 #-------------------------------------------------------------------------------
 #  Adds all traits from a specified object to a dictionary with a specified name
@@ -269,7 +270,7 @@ class FastZipFile ( HasPrivateTraits ):
 
     def _get_zf ( self ):
         # Restart the time-out:
-        self.time_stamp = time()
+        self.time_stamp = time.time()
 
         if self._zf is None:
             self._zf = ZipFile( self.path, 'r' )
@@ -286,9 +287,9 @@ class FastZipFile ( HasPrivateTraits ):
             closes the file and exits.
         """
         while True:
-            sleep( 1 )
+            time.sleep( 1 )
             self.access.acquire()
-            if time() > (self.time_stamp + 2.0):
+            if time.time() > (self.time_stamp + 2.0):
                 if self._zf is not None:
                     self._zf.close()
                     self._zf = None
@@ -571,7 +572,7 @@ class ImageVolume ( HasPrivateTraits ):
             # it needs to be the same or newer then the time stamp of the file
             # it is in. So we use the current time plus a 'fudge factor' to
             # allow for some slop in when the OS actually time stamps the file:
-            self.time_stamp = time_stamp_for( time() + 5.0 )
+            self.time_stamp = time_stamp_for( time.time() + 5.0 )
 
             # Write the volume manifest source code to a file:
             write_file( join( path, 'image_volume.py' ),
@@ -609,7 +610,7 @@ class ImageVolume ( HasPrivateTraits ):
             # it needs to be the same or newer then the time stamp of the file
             # it is in. So we use the current time plus a 'fudge factor' to
             # allow for some slop in when the OS actually time stamps the file:
-            self.time_stamp = time_stamp_for( time() + 10.0 )
+            self.time_stamp = time_stamp_for( time.time() + 10.0 )
 
             # Write the volume manifest source code to the zip file:
             new_zf.writestr( 'image_volume.py', self.image_volume_code )
@@ -635,7 +636,7 @@ class ImageVolume ( HasPrivateTraits ):
                     rename( path, temp_name )
                     break
                 except:
-                    sleep( 0.1 )
+                    time.sleep( 0.1 )
 
             try:
                 rename( file_name, path )
