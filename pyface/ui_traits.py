@@ -15,13 +15,16 @@
 #------------------------------------------------------------------------------
 
 """ Defines common traits used within the pyface library. """
+import logging
 
 from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType
 from traits.trait_base import get_resource_path
 
 
+logger = logging.getLogger(__name__)
+
 #-------------------------------------------------------------------------------
-#  'Image' trait:
+#  Images
 #-------------------------------------------------------------------------------
 
 image_resource_cache = {}
@@ -46,7 +49,9 @@ def convert_image(value, level=3):
             try:
                 from .image.image import ImageLibrary
                 result = ImageLibrary.image_resource(value)
-            except Exception:
+            except Exception as exc:
+                logger.error("Can't load image resource '%s'." % value)
+                logger.exception(exc)
                 result = None
         else:
             from pyface.image_resource import ImageResource
@@ -112,7 +117,69 @@ class Image(TraitType):
 
 
 #-------------------------------------------------------------------------------
-#  'BasePMB' class:
+#  Themes (deprecated)
+#-------------------------------------------------------------------------------
+
+def convert_theme(value, level=3):
+    """ Converts a specified value to a Theme if possible.
+    """
+    if not isinstance(value, basestring):
+        return value
+
+    if (value[:1] == '@') and (value.find(':') >= 2):
+        try:
+            from .image.image import ImageLibrary
+
+            info = ImageLibrary.image_info(value)
+        except:
+            info = None
+
+        if info is not None:
+            return info.theme
+
+    from .theme import Theme
+    return Theme(image=convert_image(value, level + 1))
+
+
+class ATheme(TraitType):
+    """ Defines a trait whose value must be a traits UI Theme or a string that
+        can be converted to one.
+    """
+
+    # Define the default value for the trait:
+    default_value = None
+
+    # A description of the type of value this trait accepts:
+    info_text = 'a Theme or string that can be used to define one'
+
+    def __init__(self, value=None, **metadata):
+        """ Creates an ATheme trait.
+
+        Parameters
+        ----------
+        value : string or Theme
+            The default value for the ATheme, either a Theme object, or a
+            string from which a Theme object can be derived.
+        """
+        super(ATheme, self).__init__(convert_theme(value), **metadata)
+
+    def validate(self, object, name, value):
+        """ Validates that a specified value is valid for this trait.
+        """
+        from .theme import Theme
+
+        if value is None:
+            return None
+
+        new_value = convert_theme(value, 4)
+        if isinstance(new_value, Theme):
+            return new_value
+
+        self.error(object, name, value)
+
+
+#-------------------------------------------------------------------------------
+#  Borders, Margins and Layout
 #-------------------------------------------------------------------------------
 
 class BaseMB(ABCHasStrictTraits):
@@ -144,10 +211,6 @@ class BaseMB(ABCHasStrictTraits):
         super(BaseMB, self).__init__(**traits)
 
 
-#-------------------------------------------------------------------------------
-#  'Margin' class:
-#-------------------------------------------------------------------------------
-
 class Margin(BaseMB):
 
     # The amount of padding/margin at the top:
@@ -162,9 +225,6 @@ class Margin(BaseMB):
     # The amount of padding/margin on the right:
     right = Range(-32, 32, 0)
 
-#-------------------------------------------------------------------------------
-#  'Border' class:
-#-------------------------------------------------------------------------------
 
 class Border(BaseMB):
 
@@ -180,10 +240,6 @@ class Border(BaseMB):
     # The amount of border on the right:
     right = Range(0, 32, 0)
 
-
-#-------------------------------------------------------------------------------
-#  'HasMargin' trait:
-#-------------------------------------------------------------------------------
 
 class HasMargin(TraitType):
     """ Defines a trait whose value must be a Margin object or an integer or
@@ -242,10 +298,6 @@ class HasMargin(TraitType):
         return (dvt, dv)
 
 
-#-------------------------------------------------------------------------------
-#  'HasBorder' trait:
-#-------------------------------------------------------------------------------
-
 class HasBorder(HasMargin):
     """ Defines a trait whose value must be a Border object or an integer
         or tuple value that can be converted to one.
@@ -263,12 +315,8 @@ class HasBorder(HasMargin):
                  'used to define one')
 
 
-#-------------------------------------------------------------------------------
-#  Other trait definitions:
-#-------------------------------------------------------------------------------
-
-# The position of an image relative to its associated text:
+#: The position of an image relative to its associated text.
 Position = Enum('left', 'right', 'above', 'below')
 
-# The alignment of text within a control:
+#: The alignment of text within a control.
 Alignment = Enum('default', 'left', 'center', 'right')
