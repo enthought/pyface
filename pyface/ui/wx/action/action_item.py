@@ -364,7 +364,7 @@ class _Tool(HasTraits):
 
         self.control_id = wx.NewId()
         self.control = tool_bar.AddLabelTool(
-            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip
+            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
         )
 
         # Set the initial checked state.
