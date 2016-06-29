@@ -14,7 +14,7 @@ import unittest
 import cStringIO
 
 from pyface.qt import QtGui
-from pyface.api import MessageDialog, OK, CANCEL
+from pyface.api import ConfirmationDialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 
 from pyface.ui.qt4.util.testing import silence_output
@@ -83,6 +83,19 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, 'rejected')
         self.assertTrue(tester.dialog_was_opened)
 
+    @skip_if_no_traitsui
+    def test_dialog_was_not_opened_on_traitsui_dialog(self):
+        my_class = MyClass()
+        tester = ModalDialogTester(my_class.do_not_show_dialog)
+
+        # it runs okay
+        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
+        self.assertTrue(tester.value_assigned())
+        self.assertEqual(tester.result, True)
+
+        # but no dialog is opened
+        self.assertFalse(tester.dialog_was_opened)
+
     def test_capture_errors_on_failure(self):
         dialog = MessageDialog()
         tester = ModalDialogTester(dialog.open)
@@ -119,10 +132,9 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
-    @skip_if_no_traitsui
     def test_has_widget(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.run)
+        dialog = ConfirmationDialog()
+        tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
@@ -138,10 +150,9 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
 
         tester.open_and_run(when_opened=check_and_close)
 
-    @skip_if_no_traitsui
     def test_find_widget(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.run)
+        dialog = ConfirmationDialog()
+        tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
@@ -155,19 +166,6 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         tester.open_and_run(when_opened=check_and_close)
-
-    @skip_if_no_traitsui
-    def test_dialog_was_not_opened_on_traitsui_dialog(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.do_not_show_dialog)
-
-        # it runs okay
-        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
-        self.assertTrue(tester.value_assigned())
-        self.assertEqual(tester.result, True)
-
-        # but no dialog is opened
-        self.assertFalse(tester.dialog_was_opened)
 
 
 if __name__ == '__main__':
