@@ -14,7 +14,7 @@ import unittest
 import cStringIO
 
 from pyface.qt import QtGui
-from pyface.api import ConfirmationDialog, MessageDialog, OK, CANCEL
+from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 
 from pyface.ui.qt4.util.testing import silence_output
@@ -133,14 +133,14 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             self.assertIn('ZeroDivisionError', alt_stderr)
 
     def test_has_widget(self):
-        dialog = ConfirmationDialog()
+        dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QPushButton)
+                        tester.has_widget('OK', QtGui.QAbstractButton)
                     )
                     self.assertFalse(
                         tester.has_widget(text='I am a virtual button')
@@ -151,14 +151,14 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=check_and_close)
 
     def test_find_widget(self):
-        dialog = ConfirmationDialog()
+        dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
-                        type_=QtGui.QPushButton,
+                        type_=QtGui.QAbstractButton,
                         test=lambda x: x.text() == 'OK'
                     )
                     self.assertIsInstance(widget, QtGui.QPushButton)
