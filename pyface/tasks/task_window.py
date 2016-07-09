@@ -154,7 +154,6 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-
         elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)
