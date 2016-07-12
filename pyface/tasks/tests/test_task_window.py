@@ -64,3 +64,9 @@ class TestTaskWindow(unittest.TestCase, UnittestTools):
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_window.title = "New Window title"
         self.assertEqual(task_window.title, "New Window title")
+
+        # go back to getting title from task
+        task_window.active_task = task_2
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.title = ""
+        self.assertEqual(task_window.title, 'Test Task 2')
