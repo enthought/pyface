@@ -29,7 +29,7 @@ class TaskWindow(ApplicationWindow):
     #### IWindow interface ####################################################
 
     # Unless a title is specifically assigned, delegate to the active task.
-    title = Property(Unicode, depends_on='active_task, _title')
+    title = Property(Unicode, depends_on=['active_task.name', '_title'])
 
     #### TaskWindow interface ################################################
 
