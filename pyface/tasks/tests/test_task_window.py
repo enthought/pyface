@@ -5,68 +5,149 @@ from pyface.tasks.api import Task
 from ..task_window import TaskWindow
 
 
+
+def _task_window_with_named_tasks(*names, **kwargs):
+    tasks = [Task(name=name) for name in names]
+
+    first_active = kwargs.pop('first_active', False)
+    if first_active:
+        kwargs['active_task'] = tasks[0]
+
+    task = TaskWindow(tasks=tasks, **kwargs)
+    return task
+
+
 class TestTaskWindow(unittest.TestCase, UnittestTools):
 
-    def test_title(self):
-        task_1 = Task(name='Test Task')
-        task_2 = Task(name='Test Task 2')
-        task_window = TaskWindow(tasks=[task_1, task_2])
+    def test_title_default(self):
+        task_window = TaskWindow()
 
-        # initially nothing
+        # default is empty
         self.assertEqual(task_window.title, '')
+
+    def test_title_no_active_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', 'Test Task 2')
+
+        # should be empty
+        self.assertEqual(task_window.title, '')
+
+    def test_title_activate_task(self):
+        task_window = _task_window_with_named_tasks('Test Task')
+        task = task_window.tasks[0]
 
         # activate task
         with self.assertTraitChanges(task_window, 'title', count=1):
-            task_window.active_task = task_1
+            task_window.active_task = task
         self.assertEqual(task_window.title, 'Test Task')
+
+    def test_title_change_active_task_name(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', first_active=True)
+        task_1 = task_window.tasks[0]
 
         # change task name
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_1.name = 'Changed Name'
         self.assertEqual(task_window.title, 'Changed Name')
 
+    def test_title_change_active_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task 1', 'Test Task 2', first_active=True)
+        task = task_window.tasks[1]
+
         # change active task
         with self.assertTraitChanges(task_window, 'title', count=1):
-            task_window.active_task = task_2
+            task_window.active_task = task
         self.assertEqual(task_window.title, 'Test Task 2')
 
-        # no active task
+    def test_title_change_deactivate_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task 1', first_active=True)
+
+        # change active task
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_window.active_task = None
         self.assertEqual(task_window.title, '')
 
-    def test_set_title(self):
-        task_1 = Task(name='Test Task')
-        task_2 = Task(name='Test Task 2')
-        task_window = TaskWindow(tasks=[task_1, task_2], active_task=task_1)
+    def test_set_title_no_tasks(self):
+        task_window = _task_window_with_named_tasks()
 
         # set window title
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_window.title = "Window title"
         self.assertEqual(task_window.title, "Window title")
 
-        # change task name (trait fires, no window title change)
-        with self.assertTraitChanges(task_window, 'title', count=1):
-            task_1.name = 'Changed Name'
-        self.assertEqual(task_window.title, "Window title")
+    def test_set_title_change_title(self):
+        task_window = _task_window_with_named_tasks(title="Window Title")
 
-        # change active task (trait fires, no window title change)
-        with self.assertTraitChanges(task_window, 'title', count=1):
-            task_window.active_task = task_2
-        self.assertEqual(task_window.title, "Window title")
-
-        # no active task (trait fires, no window title change)
-        with self.assertTraitChanges(task_window, 'title', count=1):
-            task_window.active_task = None
-        self.assertEqual(task_window.title, "Window title")
-
-        # change window title
+        # set window title
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_window.title = "New Window title"
         self.assertEqual(task_window.title, "New Window title")
 
-        # go back to getting title from task
-        task_window.active_task = task_2
+    def test_set_title_no_active_task(self):
+        task_window = _task_window_with_named_tasks('Test Task')
+
+        # set window title
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.title = "Window title"
+        self.assertEqual(task_window.title, "Window title")
+
+    def test_set_title_active_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', first_active=True)
+
+        # set window title
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.title = "Window title"
+        self.assertEqual(task_window.title, "Window title")
+
+    def test_set_title_activate_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', title="Window title")
+        task = task_window.tasks[0]
+
+        # change activate task (trait fires, no window title change)
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.active_task = task
+        self.assertEqual(task_window.title, "Window title")
+
+    def test_set_title_change_active_task_name(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', title="Window title", first_active=True)
+        task = task_window.tasks[0]
+
+        # change task name (trait fires, no window title change)
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task.name = 'Changed Name'
+        self.assertEqual(task_window.title, "Window title")
+
+    def test_set_title_change_active_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', 'Test Task 2', title="Window title",
+            active_first=True)
+        task = task_window.tasks[1]
+
+        # change task name (trait fires, no window title change)
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.active_task = task
+        self.assertEqual(task_window.title, "Window title")
+
+    def test_reset_title_active_task(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', title="Window title", first_active=True)
+
+        # reset window title
         with self.assertTraitChanges(task_window, 'title', count=1):
             task_window.title = ""
-        self.assertEqual(task_window.title, 'Test Task 2')
+        self.assertEqual(task_window.title, "Test Task")
+
+    def test_reset_title(self):
+        task_window = _task_window_with_named_tasks(
+            'Test Task', title="Window title")
+
+        # set window title
+        with self.assertTraitChanges(task_window, 'title', count=1):
+            task_window.title = ""
+        self.assertEqual(task_window.title, "")
