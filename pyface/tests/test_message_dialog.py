@@ -140,15 +140,15 @@ class TestMessageDialog(unittest.TestCase):
 class TestMessageDialogHelpers(unittest.TestCase):
 
     def test_information(self):
-        self._check_dialog_properties(information, 'information')
+        self._check_dialog(information)
 
     def test_warning(self):
-        self._check_dialog_properties(warning, 'warning')
+        self._check_dialog(warning)
 
     def test_error(self):
-        self._check_dialog_properties(error, 'error')
+        self._check_dialog(error)
 
-    def _check_dialog_properties(self, helper, severity):
+    def _check_dialog(self, helper):
         message = 'message'
         kwargs = {
             'title': 'Title',
@@ -156,12 +156,10 @@ class TestMessageDialogHelpers(unittest.TestCase):
             'informative': 'Informative'
         }
 
-        dialog = self._open_and_close(helper, message, **kwargs)
+        # smoke test, since dialog helper is opaque
+        result = self._open_and_close(helper, message, **kwargs)
 
-        self.assertEqual(dialog.severity, severity)
-        self.assertEqual(dialog.message, message)
-        for attr, value in kwargs.items():
-            self.assertEqual(getattr(dialog, attr), value)
+        self.assertIsNone(result)
 
     def _open_and_close(self, helper, message, **kwargs):
         parent = Window()

@@ -42,8 +42,6 @@ def information(parent, message, title='Information',
     )
     dialog.open()
 
-    return dialog
-
 
 def warning(parent, message, title='Warning', detail='', informative=''):
     """ Convenience function to show a warning message dialog.
@@ -69,8 +67,6 @@ def warning(parent, message, title='Warning', detail='', informative=''):
     )
     dialog.open()
 
-    return dialog
-
 
 def error(parent, message, title='Error', detail='', informative=''):
     """ Convenience function to show an error message dialog.
@@ -95,8 +91,6 @@ def error(parent, message, title='Error', detail='', informative=''):
         detail=detail, informative=informative
     )
     dialog.open()
-
-    return dialog
 
 
 # Import the toolkit specific version.

@@ -235,7 +235,7 @@ class MWindow(object):
         """
         from message_dialog import information
 
-        return information(self.control, message, title, detail, informative)
+        information(self.control, message, title, detail, informative)
 
     def warning(self, message, title='Warning', detail='', informative=''):
         """ Convenience method to show a warning message dialog.
@@ -254,7 +254,7 @@ class MWindow(object):
         """
         from message_dialog import warning
 
-        return warning(self.control, message, title, detail, informative)
+        warning(self.control, message, title, detail, informative)
 
     def error(self, message, title='Error', detail='', informative=''):
         """ Convenience method to show an error message dialog.
@@ -273,7 +273,7 @@ class MWindow(object):
         """
         from message_dialog import error
 
-        return error(self.control, message, title, detail, informative)
+        error(self.control, message, title, detail, informative)
 
     ###########################################################################
     # Protected 'IWidget' interface.
