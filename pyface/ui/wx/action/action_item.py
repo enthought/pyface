@@ -85,12 +85,26 @@ class _MenuItem(HasTraits):
         if len(label) == 0:
             label = item.action.__class__.__name__
 
-        self.control_id = wx.NewId()
+
+        if getattr(action, 'menu_role', False):
+            if action.menu_role == "About":
+                self.control_id = wx.ID_ABOUT
+            elif action.menu_role == "Preferences":
+                self.control_id = wx.ID_PREFERENCES
+            elif action.menu_role == "Quit":
+                self.control_id = wx.ID_EXIT
+        else:
+            self.control_id = wx.NewId()
         self.control = wx.MenuItem(menu, self.control_id, label, longtip, kind)
 
         # If the action has an image then display it.
         if action.image is not None:
-            self.control.SetBitmap(action.image.create_bitmap())
+            try:
+                self.control.SetBitmap(action.image.create_bitmap())
+            except:
+                # Some platforms don't allow radio buttons to have
+                # bitmaps, so just ignore the exception if it happens
+                pass
 
         menu.AppendItem(self.control)
         menu.menu_items.append(self)
@@ -217,7 +231,10 @@ class _MenuItem(HasTraits):
     def _on_action_name_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
 
-        self.control.SetText(action.name)
+        label = action.name
+        if len(action.accelerator) > 0:
+            label = label + '\t' + action.accelerator
+        self.control.SetText(label)
 
         return
 
@@ -347,14 +364,17 @@ class _Tool(HasTraits):
 
         self.control_id = wx.NewId()
         self.control = tool_bar.AddLabelTool(
-            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip
+            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
         )
 
         # Set the initial checked state.
         tool_bar.ToggleTool(self.control_id, action.checked)
 
         # Set the initial enabled/disabled state of the action.
-        tool_bar.EnableTool(self.control_id, action.enabled and action.visible)
+        tool_bar.EnableTool(self.control_id, action.enabled)
+
+        # Set the initial visibility
+        tool_bar.ShowTool(self.control_id, action.visible)
 
         # Wire it up.
         wx.EVT_TOOL(parent, self.control_id, self._on_tool)
@@ -380,14 +400,14 @@ class _Tool(HasTraits):
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
 
-        self.tool_bar.EnableTool(self.control_id, self.enabled and self.visible)
+        self.tool_bar.EnableTool(self.control_id, self.enabled)
 
         return
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
-        self.tool_bar.EnableTool(self.control_id, self.visible and self.enabled)
+        self.tool_bar.ShowTool(self.control_id, self.visible)
 
         return
 
@@ -414,14 +434,14 @@ class _Tool(HasTraits):
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
-        self.tool_bar.EnableTool(self.control_id, action.enabled and action.visible)
+        self.tool_bar.EnableTool(self.control_id, action.enabled)
 
         return
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
-        self.tool_bar.EnableTool(self.control_id, action.visible and action.enabled)
+        self.tool_bar.ShowTool(self.control_id, action.visible)
 
         return
 
