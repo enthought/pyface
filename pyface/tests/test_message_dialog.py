@@ -30,6 +30,20 @@ class TestMessageDialog(unittest.TestCase):
         # test that destroy works even when no control
         self.dialog.destroy()
 
+    def test_size(self):
+        # test that size works as expected
+        self.dialog.size = (100, 100)
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_position(self):
+        # test that position works as expected
+        self.dialog.position = (100, 100)
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
         parent = Window()

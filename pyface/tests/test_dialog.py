@@ -28,8 +28,15 @@ class TestDialog(unittest.TestCase):
         self.dialog.destroy()
 
     def test_size(self):
-        # test that default size works as expected
+        # test that size works as expected
         self.dialog.size = (100, 100)
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_position(self):
+        # test that position works as expected
+        self.dialog.position = (100, 100)
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
