@@ -13,9 +13,9 @@ the creation of application windows.
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-import os
 import logging
-from time import sleep
+import sys
+from traceback import format_exception, format_exception_only
 
 from traits.api import Instance, List, Tuple, Vetoable
 
@@ -159,6 +159,33 @@ class Application(BaseApplication):
 
         # start the GUI - script blocks here
         self.gui.start_event_loop()
+
+    # Exception handling ------------------------------------------------------
+
+    def _unhandled_exception(self, type, value, traceback):
+        """ Show an error dialog with exception information, if possible. """
+        from pyface.message_dialog import error
+
+        informative = """An unexpected error occurred: {}""".format(
+            format_exception_only(type, value))
+        detail = format_exception(type, value, traceback)
+        error("Unhandled Exception", informative=informative, detail=detail)
+
+    def _excepthook(self, type, value, traceback):
+        """ Handle any exceptions not explicitly caught
+
+        Try to display an appropriate error dialog, if possible.  Fail over to
+        the standard excepthook if that doesn't work.
+        """
+        try:
+            # try to log the exception, could fail eg. if disk full
+            logger.exception(value)
+            self._unhandled_exception(type, value, traceback)
+        except Exception:
+            # something went wrong, use base class excepthook
+            super(Application, self)._excepthook(type, value, traceback)
+        finally:
+            sys.exit(1)
 
     # Destruction methods -----------------------------------------------------
 

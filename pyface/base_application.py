@@ -108,6 +108,10 @@ class BaseApplication(HasStrictTraits):
         """
         logger.info('---- Application configuration ----')
 
+        # install our own exception hook for unhandled exceptions
+        sys.excepthook = self._excepthook
+        logger.debug('Exception hook installed')
+
         # make sure we have a home directory
         self._initialize_application_home()
 
@@ -230,6 +234,25 @@ class BaseApplication(HasStrictTraits):
         # should be fired _after_ the event loop starts using an appropriate
         # callback (eg. gui.set_trait_later).
         self.application_initialized = ApplicationEvent(application=self)
+
+    # Exception handling ------------------------------------------------------
+
+    def _excepthook(self, type, value, traceback):
+        """ Handle any exceptions not explicitly caught
+
+        This can be overridden by GUI applications to display an appropriate
+        error dialog, if possible.  Keep in mind that the application can be
+        in an arbitrary state when this is called, so anything provided by the
+        user should fail over to the standard excepthook.
+        """
+        try:
+            # try to log the exception, could fail eg. if disk full
+            logger.exception(value)
+        finally:
+            # just use standard excepthook in this app
+            sys.__excepthook__(type, value, traceback)
+            # die, in an error state
+            sys.exit(1)
 
     # Destruction methods -----------------------------------------------------
 
