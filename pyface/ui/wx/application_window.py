@@ -22,18 +22,12 @@ import sys
 
 # Major package imports.
 import wx
-
-try:
-    import wx.aui
-    AUI = True
-
-except ImportError:
-    AUI = False
+from pyface.wx.aui import aui, PyfaceAuiManager
 
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, provides, Unicode
+from traits.api import Instance, List, on_trait_change, provides, Unicode
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -81,7 +75,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     ###########################################################################
 
     def _create_contents(self, parent):
-        panel = wx.Panel(parent, -1)
+        panel = wx.Panel(parent, -1, name="ApplicationWindow")
         panel.SetSize((500, 400))
         panel.SetBackgroundColour('blue')
 
@@ -102,15 +96,12 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
-            if AUI:
-                for tool_bar_manager in reversed(tool_bar_managers):
-                    tool_bar = tool_bar_manager.create_tool_bar(parent)
-                    self._add_toolbar_to_aui_manager(
-                        tool_bar, tool_bar_manager.name
-                    )
-            else:
-                tool_bar = tool_bar_managers[0].create_tool_bar(parent)
-                self.control.SetToolBar(tool_bar)
+            for tool_bar_manager in reversed(tool_bar_managers):
+                tool_bar = tool_bar_manager.create_tool_bar(parent)
+                self._add_toolbar_to_aui_manager(
+                    tool_bar
+                )
+            self._aui_manager.Update()
 
     def _set_window_icon(self):
         if self.icon is None:
@@ -138,29 +129,22 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create(self):
 
-        if AUI:
-            # fixme: We have to capture the AUI manager as an attribute,
-            # otherwise it gets garbage collected and we get a core dump...
-            # Ahh, the sweet smell of open-source ;^()
-            self._aui_manager = wx.aui.AuiManager()
-
         super(ApplicationWindow, self)._create()
 
-        if AUI:
-            body = self._create_body(self.control)
-            contents = self._create_contents(body)
-            body.GetSizer().Add(contents, 1, wx.EXPAND)
-            body.Fit()
+        self._aui_manager = PyfaceAuiManager()
+        self._aui_manager.SetManagedWindow(self.control)
+        
+        # Keep a reference to the AUI Manager in the control because Panes
+        # will need to access it in order to lay themselves out
+        self.control._aui_manager = self._aui_manager
 
-        else:
-            contents = self._create_contents(self.control)
+        contents = self._create_contents(self.control)
 
         self._create_trim_widgets(self.control)
 
-        if AUI:
-            # Updating the AUI manager actually commits all of the pane's added
-            # to it (this allows batch updates).
-            self._aui_manager.Update()
+        # Updating the AUI manager actually commits all of the pane's added
+        # to it (this allows batch updates).
+        self._aui_manager.Update()
 
         return
 
@@ -175,16 +159,14 @@ class ApplicationWindow(MApplicationWindow, Window):
             pos=self.position
         )
 
-        control.SetBackgroundColour(SystemMetrics().dialog_background_color)
-
-        if AUI:
-            # Let the AUI manager look after the frame.
-            self._aui_manager.SetManagedWindow(control)
+        # Mac/Win needs this, otherwise background color is black
+        attr = control.GetDefaultAttributes()
+        control.SetBackgroundColour(attr.colBg)
 
         return control
 
     def destroy(self):
-        if self.control and AUI:
+        if self.control:
             self._aui_manager.UnInit()
         super(ApplicationWindow, self).destroy()
 
@@ -192,38 +174,24 @@ class ApplicationWindow(MApplicationWindow, Window):
     # Private interface.
     ###########################################################################
 
-    def _add_toolbar_to_aui_manager(self, tool_bar, name='Tool Bar'):
+    def _add_toolbar_to_aui_manager(self, tool_bar):
         """ Add a toolbar to the AUI manager. """
 
-        info = wx.aui.AuiPaneInfo()
-        info.Caption(name)
+        info = self._get_tool_par_pane_info(tool_bar)
+        self._aui_manager.AddPane(tool_bar, info)
+
+        return
+    
+    def _get_tool_par_pane_info(self, tool_bar):
+        info = aui.AuiPaneInfo()
+        info.Caption(tool_bar.tool_bar_manager.name)
         info.LeftDockable(False)
-        info.Name(name)
+        info.Name(tool_bar.tool_bar_manager.id)
         info.RightDockable(False)
         info.ToolbarPane()
         info.Top()
 
-        self._aui_manager.AddPane(tool_bar, info)
-
-        return
-
-    def _create_body(self, parent):
-        """ Create the body of the frame. """
-
-        panel = wx.Panel(parent, -1)
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        panel.SetSizer(sizer)
-
-        info = wx.aui.AuiPaneInfo()
-        info.Caption('Body')
-        info.Dockable(False)
-        info.Floatable(False)
-        info.Name('Body')
-        info.CentrePane()
-
-        self._aui_manager.AddPane(panel, info)
-
-        return panel
+        return info
 
     def _get_tool_bar_managers(self):
         """ Return all tool bar managers specified for the window. """
@@ -240,35 +208,49 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _wx_enable_tool_bar(self, tool_bar, enabled):
         """ Enable/Disablea tool bar. """
 
-        if AUI:
-            # AUI toolbars cannot be enabled/disabled.
-            pass
-
-        else:
-            tool_bar.Enable(enabled)
+        # AUI toolbars cannot be enabled/disabled.
 
         return
 
     def _wx_show_tool_bar(self, tool_bar, visible):
         """ Hide/Show a tool bar. """
 
-        if AUI:
-            pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.name)
+        pane = self._aui_manager.GetPane(tool_bar.tool_bar_manager.id)
 
-            if visible:
-                pane.Show()
-
-            else:
-                pane.Hide()
-
-            self._aui_manager.Update()
+        if visible:
+            pane.Show()
 
         else:
-            tool_bar.Show(visible)
+            # Without this workaround, toolbars know the sizes of other
+            # hidden toolbars and leave gaps in the toolbar dock
+            pane.window.Show(False)
+            self._aui_manager.DetachPane(pane.window)
+            info = self._get_tool_par_pane_info(pane.window)
+            info.Hide()
+            self._aui_manager.AddPane(pane.window, info)
+
+        self._aui_manager.Update()
 
         return
 
     #### Trait change handlers ################################################
+
+    def _menu_bar_manager_changed(self):
+        if self.control is not None:
+            self._create_menu_bar(self.control)
+
+    def _status_bar_manager_changed(self, old, new):
+        if self.control is not None:
+            if old is not None:
+                self.control.SetStatusBar(None)
+                old.remove_status_bar(self.control)
+            self._create_status_bar(self.control)
+
+    @on_trait_change('tool_bar_manager, tool_bar_managers')
+    def _update_tool_bar_managers(self):
+        if self.control is not None:
+            self._create_tool_bar(self.control)
+
     def _icon_changed(self):
         self._set_window_icon()
 

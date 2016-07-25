@@ -72,7 +72,7 @@ class CentralPaneAction(TaskAction):
 
     @cached_property
     def _get_central_pane(self):
-        if self.task:
+        if self.task and self.task.window is not None:
             return self.task.window.get_central_pane(self.task)
         return None
 
@@ -102,7 +102,7 @@ class DockPaneAction(TaskAction):
 
     @cached_property
     def _get_dock_pane(self):
-        if self.task:
+        if self.task and self.task.window is not None:
             return self.task.window.get_dock_pane(self.dock_pane_id, self.task)
         return None
 
