@@ -24,6 +24,7 @@ import wx
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
 # Local imports.
+from pyface.wx.aui import aui
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -170,8 +171,12 @@ class ToolBarManager(ActionManager):
                 # If the group is a radio group,  set the initial checked state
                 # of every tool in it.
                 if item.action.style == 'radio':
-                    tool_bar.ToggleTool(item.control_id, item.action.checked)
-                    checked = checked or item.action.checked
+                    if item.control_id is not None:
+                        # Only set checked state if control has been created.
+                        # Using extra_actions of tasks, it appears that this
+                        # may be called multiple times.
+                        tool_bar.ToggleTool(item.control_id, item.action.checked)
+                        checked = checked or item.action.checked
 
                 # Every item in a radio group MUST be 'radio' style, so we
                 # can just skip to the next group.
@@ -188,7 +193,7 @@ class ToolBarManager(ActionManager):
         return
 
 
-class _ToolBar(wx.ToolBar):
+class _ToolBar(aui.AuiToolBar):
     """ The toolkit-specific tool bar implementation. """
 
     ###########################################################################
@@ -198,7 +203,7 @@ class _ToolBar(wx.ToolBar):
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
 
-        wx.ToolBar.__init__(self, parent, -1, style=style)
+        aui.AuiToolBar.__init__(self, parent, -1, style=style)
 
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
@@ -211,8 +216,124 @@ class _ToolBar(wx.ToolBar):
         self.tool_bar_manager.on_trait_change(
             self._on_tool_bar_manager_visible_changed, 'visible'
         )
+        
+        # we need to defer hiding tools until first time Realize is called so
+        # we can get the correct order of the toolbar for reinsertion at the
+        # correct position
+        self.initially_hidden_tool_ids = []
+        
+        # map of tool ids to a tuple: position in full toolbar and the
+        # ToolBarTool itself.  Can't keep a weak reference here because once
+        # removed from the toolbar the item would be garbage collected.
+        self.tool_map = {}
 
         return
+    
+    def Realize(self):
+        if len(self.tool_map) == 0:
+            for pos in range(self.GetToolsCount()):
+                tool = self.GetToolByPos(pos)
+                self.tool_map[tool.GetId()] = (pos, tool)
+        aui.AuiToolBar.Realize(self)
+        if len(self.initially_hidden_tool_ids) > 0:
+            for tool_id in self.initially_hidden_tool_ids:
+                self.RemoveTool(tool_id)
+            self.initially_hidden_tool_ids = []
+        self.ShowTool = self.ShowToolPostRealize
+    
+    def ShowTool(self, tool_id, state):
+        """Used before realization to flag which need to be initially hidden
+        """
+        if not state:
+            self.initially_hidden_tool_ids.append(tool_id)
+    
+    def ShowToolPostRealize(self, tool_id, state):
+        """Normal ShowTool method, activated after first call to Realize
+        """
+        tool = self.FindById(tool_id)
+        if state and tool is None:
+            self.InsertToolInOrder(tool_id)
+            self.EnableTool(tool_id, True)
+            self.Realize()
+            # Update the toolbar in the AUI manager to force toolbar resize
+            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+        elif not state and tool is not None:
+            self.RemoveTool(tool_id)
+            # Update the toolbar in the AUI manager to force toolbar resize
+            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+        
+    def InsertToolInOrder(self, tool_id):
+        orig_pos, tool = self.tool_map[tool_id]
+        for pos in range(self.GetToolsCount()):
+            existing_tool = self.GetToolByPos(pos)
+            existing_id = existing_tool.GetId()
+            existing_orig_pos, _ = self.tool_map[tool_id]
+            if existing_orig_pos > orig_pos:
+                break
+        self.InsertToolItem(pos+1, tool)
+
+
+    ##### Additional convenience functions for the normal AGW AUI toolbar
+
+    AddLabelTool = aui.AuiToolBar.AddTool
+
+    def InsertToolItem(self, pos, tool):
+        self._items[pos:pos] = [tool]
+        return tool
+
+    def DeleteTool(self, tool_id):
+        """
+        Removes the specified tool from the toolbar and deletes it.
+
+        :param integer `tool_id`: the :class:`AuiToolBarItem` identifier.
+        :returns: ``True`` if the tool was deleted, ``False`` otherwise.
+        :note: Note that it is unnecessary to call :meth:`Realize` for the
+            change to take place, it will happen immediately.
+        """
+
+        tool = self.RemoveTool(tool_id)
+        if tool is not None:
+            tool.Destroy()
+            return True
+        
+        return False
+
+
+    def RemoveTool(self, tool_id):
+        """
+        Removes the specified tool from the toolbar but doesn't delete it.
+
+        :param integer `tool_id`: the :class:`AuiToolBarItem` identifier.
+        :returns: ``True`` if the tool was deleted, ``False`` otherwise.
+        :note: Note that it is unnecessary to call :meth:`Realize` for the
+            change to take place, it will happen immediately.
+        """
+
+        idx = self.GetToolIndex(tool_id)
+        
+        if idx >= 0 and idx < len(self._items):
+            self._items.pop(idx)
+            self.Realize()
+            return True
+        
+        return False
+
+    FindById = aui.AuiToolBar.FindTool
+
+    GetToolState = aui.AuiToolBar.GetToolToggled
+
+    GetToolsCount = aui.AuiToolBar.GetToolCount
+
+    def GetToolByPos(self, pos):
+        return self._items[pos]
+
+    def OnSize(self, event):
+        # Quickly short-circuit if the toolbar isn't realized
+        if not hasattr(self, '_absolute_min_size'):
+            return
+
+        aui.AuiToolBar.OnSize(self, event)
+
 
     ###########################################################################
     # Trait change handlers.
@@ -221,14 +342,14 @@ class _ToolBar(wx.ToolBar):
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_enable_tool_bar(self, new)
+        obj.controller.task.window._wx_enable_tool_bar(self, new)
 
         return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_show_tool_bar(self, new)
+        obj.controller.task.window._wx_show_tool_bar(self, new)
 
         return
 

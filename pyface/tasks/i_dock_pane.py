@@ -66,6 +66,8 @@ class MDockPane(HasTraits):
     movable = Bool(True)
     size = Tuple
     visible = Bool(False)
+    caption_visible = Bool(True)
+    dock_layer = Bool(0)
 
     ###########################################################################
     # 'IDockPane' interface.
