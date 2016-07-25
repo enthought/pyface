@@ -15,6 +15,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import os
 import logging
+import sys
 
 from traits.api import Bool, Directory, Event, HasStrictTraits, Instance, Str
 
@@ -149,10 +150,10 @@ class BaseApplication(HasStrictTraits):
                 logger.info('---- Application stopped ----')
 
                 # exit normally
-                self.exit(0)
+                sys.exit()
 
         # exit with an error
-        self.exit(1)
+        sys.exit(1)
 
     def exit(self, force=False):
         """ Exits the application.
@@ -251,7 +252,6 @@ class BaseApplication(HasStrictTraits):
 
         This is where application event loops and similar should be shut down.
         """
-        import sys
         # invoke a normal exit from the application
         sys.exit()
 
