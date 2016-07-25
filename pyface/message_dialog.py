@@ -17,7 +17,8 @@ from __future__ import absolute_import
 
 
 # Convenience functions.
-def information(parent, message, title='Information'):
+def information(parent, message, title='Information',
+                detail='', informative=''):
     """ Convenience method to show an information message dialog.
 
     Parameters
@@ -28,15 +29,21 @@ def information(parent, message, title='Information'):
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title, severity='information'
+        parent=parent, message=message, title=title,
+        severity='information', detail=detail, informative=informative
     )
     dialog.open()
 
-    return
 
-def warning(parent, message, title='Warning'):
+def warning(parent, message, title='Warning', detail='', informative=''):
     """ Convenience function to show a warning message dialog.
 
     Parameters
@@ -47,15 +54,21 @@ def warning(parent, message, title='Warning'):
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title, severity='warning'
+        parent=parent, message=message, title=title,
+        severity='warning', detail=detail, informative=informative
     )
     dialog.open()
 
-    return
 
-def error(parent, message, title='Error'):
+def error(parent, message, title='Error', detail='', informative=''):
     """ Convenience function to show an error message dialog.
 
     Parameters
@@ -66,13 +79,18 @@ def error(parent, message, title='Error'):
         The text of the message to display.
     title : str
         The text of the dialog title.
+    detail : str
+        Further details about the message (displayed when the user clicks
+        "Show details").
+    informative : str
+        Explanatory text to display along with the message.
+
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title, severity='error'
+        parent=parent, message=message, title=title, severity='error',
+        detail=detail, informative=informative
     )
     dialog.open()
-
-    return
 
 
 # Import the toolkit specific version.

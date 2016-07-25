@@ -103,7 +103,8 @@ class IWindow(IWidget):
             Which button should be the default button.
         """
 
-    def information(self, message, title='Information'):
+    def information(
+            self, message, title='Information', detail='', informative=''):
         """ Convenience method to show an information message dialog.
 
         Parameters
@@ -112,9 +113,14 @@ class IWindow(IWidget):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
 
-    def warning(self, message, title='Warning'):
+    def warning(self, message, title='Warning', detail='', informative=''):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -123,9 +129,14 @@ class IWindow(IWidget):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
 
-    def error(self, message, title='Error'):
+    def error(self, message, title='Error', detail='', informative=''):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -134,6 +145,11 @@ class IWindow(IWidget):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
 
     ###########################################################################
@@ -201,7 +217,8 @@ class MWindow(object):
 
         return confirm(self.control, message, title, cancel, default)
 
-    def information(self, message, title='Information'):
+    def information(
+            self, message, title='Information', detail='', informative=''):
         """ Convenience method to show an information message dialog.
 
         Parameters
@@ -210,12 +227,17 @@ class MWindow(object):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
         from message_dialog import information
 
-        return information(self.control, message, title)
+        information(self.control, message, title, detail, informative)
 
-    def warning(self, message, title='Warning'):
+    def warning(self, message, title='Warning', detail='', informative=''):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -224,12 +246,17 @@ class MWindow(object):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
         from message_dialog import warning
 
-        return warning(self.control, message, title)
+        warning(self.control, message, title, detail, informative)
 
-    def error(self, message, title='Error'):
+    def error(self, message, title='Error', detail='', informative=''):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -238,10 +265,15 @@ class MWindow(object):
             The text of the message to display.
         title : str
             The text of the dialog title.
+        detail : str
+            Further details about the message.
+        informative : str
+            Explanatory text to display along with the message.
+
         """
         from message_dialog import error
 
-        return error(self.control, message, title)
+        error(self.control, message, title, detail, informative)
 
     ###########################################################################
     # Protected 'IWidget' interface.

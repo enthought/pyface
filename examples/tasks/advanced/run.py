@@ -1,66 +1,45 @@
 """
 Simple example of an advanced task application creating tasks and panes from
 traits components. Compared to the basic example, this version creates a real
-TaskGuiApplication to manage the GUI part. Additionally, the code editor uses a
+TaskApplication to manage the GUI part. Additionally, the code editor uses a
 tab viewer to support opening multiple files at once.
 
 Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
-# Enthought library imports.
-from traits.api import Str, Tuple
-
 from pyface.tasks.api import TaskApplication
 
-# Local imports.
 from example_task import ExampleTask
 
 
-class MyApplication(TaskApplication):
-    """ This application object can subclass TaskApplication and customize
-    any of the Application attributes: name, window size, logging setup, splash
-    screen, ...
-    """
+def create_task_window(application, files=()):
+    """ Create a new task and open a window for it. """
+    task = ExampleTask()
+    window = application.create_task_window(task)
 
-    # -------------------------------------------------------------------------
-    # TaskGuiApplication interface
-    # -------------------------------------------------------------------------
-
-    app_name = Str("My Pyface Application")
-
-    window_size = Tuple((800, 600))
-
-
-    def start(self):
-        starting = super(MyApplication, self).start()
-        if not starting:
-            return False
-
-        self.create_new_task_window()
-        return True
-
-    # -------------------------------------------------------------------------
-    # MyApplication interface
-    # -------------------------------------------------------------------------
-
-    def create_new_task_window(self):
-        """ Create a new task and open a window for it.
-
-        Returns
-        -------
-        window : TaskWindow
-            Window that was created, containing the newly created task.
-        """
-        task = ExampleTask()
-        window = self.create_task_window(task)
-        return window
+    # open files passed in as arguments
+    for filename in files:
+        try:
+            task._open_file(filename)
+        except Exception as exc:
+            window.error(
+                message="Can't open '{}'".format(filename),
+            )
 
 
 def main(argv):
-    """ A more advanced example of using Tasks.
-    """
-    app = MyApplication()
+    """ A more advanced example of using Tasks. """
+    app = TaskApplication(
+        id="MyPyfaceApplication",
+        name="Python Editor",
+        window_size=(800, 600),
+    )
+    # hook up listener to application initialized event
+    app.on_trait_change(
+        lambda event: create_task_window(event.application, files=argv[1:]),
+        "application_initialized"
+    )
     app.run()
 
 

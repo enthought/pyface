@@ -29,7 +29,7 @@ class TaskWindow(ApplicationWindow):
     #### IWindow interface ####################################################
 
     # Unless a title is specifically assigned, delegate to the active task.
-    title = Property(Unicode, depends_on='active_task, _title')
+    title = Property(Unicode, depends_on=['active_task.name', '_title'])
 
     #### TaskWindow interface ################################################
 
@@ -154,7 +154,6 @@ class TaskWindow(ApplicationWindow):
             # replaced at this time.
             self._active_state = state
             task.activated()
-
         elif not state:
             logger.warn("Cannot activate task %r: task does not belong to the "
                         "window." % task)
