@@ -96,7 +96,7 @@ class PythonEditor(MPythonEditor, Widget):
         if path is None:
             path = self.path
 
-        f = file(path, 'w')
+        f = open(path, 'w')
         f.write(self.control.GetText())
         f.close()
 
