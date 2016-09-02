@@ -39,6 +39,7 @@ from .split_application_window import SplitApplicationWindow
 from .split_dialog import SplitDialog
 from .split_panel import SplitPanel
 from .system_metrics import SystemMetrics
+from .ui_traits import Alignment, Border, HasBorder, HasMargin, Image, Margin
 from .window import Window
 from .widget import Widget
 
