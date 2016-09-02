@@ -115,36 +115,20 @@ ImageInfoTemplate = \
         alignment=%(alignment)s
     )"""
 
-#-------------------------------------------------------------------------------
-#  Returns the contents of the specified file:
-#-------------------------------------------------------------------------------
 
 def read_file ( file_name ):
     """ Returns the contents of the specified *file_name*.
     """
-    fh = file( file_name, 'rb' )
-    try:
+    with file(file_name, 'rb') as fh:
         return fh.read()
-    finally:
-        fh.close()
 
-#-------------------------------------------------------------------------------
-#  Writes the specified data to the specified file:
-#-------------------------------------------------------------------------------
 
 def write_file ( file_name, data ):
     """ Writes the specified data to the specified file.
     """
-    fh = file( file_name, 'wb' )
-    try:
+    with file( file_name, 'wb' ) as fh:
         fh.write( data )
-    finally:
-        fh.close()
 
-#-------------------------------------------------------------------------------
-#  Returns the value of a Python symbol loaded from a specified source code
-#  string:
-#-------------------------------------------------------------------------------
 
 def get_python_value ( source, name ):
     """ Returns the value of a Python symbol loaded from a specified source
@@ -154,19 +138,12 @@ def get_python_value ( source, name ):
     exec source.replace( b'\r', b'' ) in globals(), temp
     return temp[ name ]
 
-#-------------------------------------------------------------------------------
-#  Returns a specified time as a text string:
-#-------------------------------------------------------------------------------
 
 def time_stamp_for(time):
     """ Returns a specified time as a text string.
     """
     return datetime.datetime.utcfromtimestamp(time).strftime('%Y%m%d%H%M%S')
 
-#-------------------------------------------------------------------------------
-#  Adds all traits from a specified object to a dictionary with a specified name
-#  prefix:
-#-------------------------------------------------------------------------------
 
 def add_object_prefix ( dict, object, prefix ):
     """ Adds all traits from a specified object to a dictionary with a specified
@@ -175,10 +152,6 @@ def add_object_prefix ( dict, object, prefix ):
     for name, value in object.trait_get().iteritems():
         dict[ prefix + name ] = value
 
-#-------------------------------------------------------------------------------
-#  Splits a specified **image_name** into its constituent volume and file names
-#  and returns a tuple of the form: ( volume_name, file_name ).
-#-------------------------------------------------------------------------------
 
 def split_image_name ( image_name ):
     """ Splits a specified **image_name** into its constituent volume and file
@@ -192,10 +165,6 @@ def split_image_name ( image_name ):
 
     return ( volume_name, file_name )
 
-#-------------------------------------------------------------------------------
-#  Joins a specified **volume_name** and **file_name** into an image name, and
-#  return the resulting image name:
-#-------------------------------------------------------------------------------
 
 def join_image_name ( volume_name, file_name ):
     """ Joins a specified **volume_name** and **file_name** into an image name,
@@ -207,25 +176,22 @@ def join_image_name ( volume_name, file_name ):
 
     return '@%s:%s' % ( volume_name, file_name )
 
-#-------------------------------------------------------------------------------
-#  'FastZipFile' class:
-#-------------------------------------------------------------------------------
 
 class FastZipFile ( HasPrivateTraits ):
     """ Provides fast access to zip files by keeping the underlying zip file
         open across multiple uses.
     """
 
-    # The path to the zip file:
+    #: The path to the zip file:
     path = File
 
-    # The open zip file object (if None, the file is closed):
+    #: The open zip file object (if None, the file is closed):
     zf = Property
 
-    # The time stamp of when the zip file was most recently accessed:
+    #: The time stamp of when the zip file was most recently accessed:
     time_stamp = Float
 
-    # The lock used to manage access to the 'zf' trait between the two threads:
+    #: The lock used to manage access to the 'zf' trait between the two threads:
     access = Any
 
     #-- Public Methods ---------------------------------------------------------
@@ -309,50 +275,50 @@ class ImageInfo ( HasPrivateTraits ):
         image.
     """
 
-    # The volume this image belongs to:
+    #: The volume this image belongs to:
     volume = Instance( 'ImageVolume' )
 
-    # The user friendly name of the image:
+    #: The user friendly name of the image:
     name = Str
 
-    # The full image name (e.g. '@standard:floppy'):
+    #: The full image name (e.g. '@standard:floppy'):
     image_name = Str
 
-    # A description of the image:
+    #: A description of the image:
     description = Str
 
-    # The category that the image belongs to:
+    #: The category that the image belongs to:
     category = Str( 'General' )
 
-    # A list of keywords used to describe/categorize the image:
+    #: A list of keywords used to describe/categorize the image:
     keywords = List( Str )
 
-    # The image width (in pixels):
+    #: The image width (in pixels):
     width = Int
 
-    # The image height (in pixels):
+    #: The image height (in pixels):
     height = Int
 
-    # The border inset:
+    #: The border inset:
     border = HasBorder
 
-    # The margin to use around the content:
+    #: The margin to use around the content:
     content = HasMargin
 
-    # The margin to use around the label:
+    #: The margin to use around the label:
     label = HasMargin
 
-    # The alignment to use for the label:
+    #: The alignment to use for the label:
     alignment = Alignment
 
-    # The copyright that applies to this image:
+    #: The copyright that applies to this image:
     copyright = Property
 
-    # The license that applies to this image:
+    #: The license that applies to this image:
     license = Property
 
-    # A read-only string containing the Python code needed to construct this
-    # ImageInfo object:
+    #: A read-only string containing the Python code needed to construct this
+    #: ImageInfo object:
     image_info_code = Property
 
     #-- Default Value Implementations ------------------------------------------
@@ -424,25 +390,25 @@ class ImageInfo ( HasPrivateTraits ):
 
 class ImageVolumeInfo ( HasPrivateTraits ):
 
-    # A general description of the images:
+    #: A general description of the images:
     description = Str( 'No volume description specified.' )
 
-    # The copyright that applies to the images:
+    #: The copyright that applies to the images:
     copyright = Str( 'No copyright information specified.' )
 
-    # The license that applies to the images:
+    #: The license that applies to the images:
     license = Str( 'No license information specified.' )
 
-    # The list of image names within the volume the information applies to.
-    # Note that an empty list means that the information applies to all images
-    # in the volume:
+    #: The list of image names within the volume the information applies to.
+    #: Note that an empty list means that the information applies to all images
+    #: in the volume:
     image_names = List( Str )
 
-    # A read-only string containing the Python code needed to construct this
-    # ImageVolumeInfo object:
+    #: A read-only string containing the Python code needed to construct this
+    #: ImageVolumeInfo object:
     image_volume_info_code = Property
 
-    # A read-only string containing the text describing the volume info:
+    #: A read-only string containing the text describing the volume info:
     image_volume_info_text = Property
 
     #-- Property Implementations -----------------------------------------------
@@ -474,8 +440,7 @@ class ImageVolumeInfo ( HasPrivateTraits ):
     def clone ( self ):
         """ Returns a copy of the ImageVolumeInfo object.
         """
-        return self.__class__(**self.trait_get('description', 'copyright',
-                                               'license'))
+        return self.clone(['description', 'copyright', 'license'])
 
 #-------------------------------------------------------------------------------
 #  'ImageVolume' class:
@@ -483,50 +448,50 @@ class ImageVolumeInfo ( HasPrivateTraits ):
 
 class ImageVolume ( HasPrivateTraits ):
 
-    # The canonical name of this volume:
+    #: The canonical name of this volume:
     name = Str
 
-    # The list of volume descriptors that apply to this volume:
+    #: The list of volume descriptors that apply to this volume:
     info = List( ImageVolumeInfo )
 
-    # The category that the volume belongs to:
+    #: The category that the volume belongs to:
     category = Str( 'General' )
 
-    # A list of keywords used to describe the volume:
+    #: A list of keywords used to describe the volume:
     keywords = List( Str )
 
-    # The list of aliases for this volume:
+    #: The list of aliases for this volume:
     aliases = List( Str )
 
-    # The path of the file that defined this volume:
+    #: The path of the file that defined this volume:
     path = File
 
-    # Is the path a zip file?
+    #: Is the path a zip file?
     is_zip_file = Bool( True )
 
-    # The FastZipFile object used to access the underlying zip file:
+    #: The FastZipFile object used to access the underlying zip file:
     zip_file = Instance( FastZipFile )
 
-    # The list of images available in the volume:
+    #: The list of images available in the volume:
     images = List( ImageInfo )
 
-    # A dictionary mapping image names to ImageInfo objects:
+    #: A dictionary mapping image names to ImageInfo objects:
     catalog = Property( depends_on = 'images' )
 
-    # The time stamp of when the image library was last modified:
+    #: The time stamp of when the image library was last modified:
     time_stamp = Str
 
-    # A read-only string containing the Python code needed to construct this
-    # ImageVolume object:
+    #: A read-only string containing the Python code needed to construct this
+    #: ImageVolume object:
     image_volume_code = Property
 
-    # A read-only string containing the Python code needed to construct the
-    # 'images' list for this ImageVolume object:
+    #: A read-only string containing the Python code needed to construct the
+    #: 'images' list for this ImageVolume object:
     images_code = Property
 
-    # A read-only string containing the text describing the contents of the
-    # volume (description, copyright, license information, and the images they
-    # apply to):
+    #: A read-only string containing the text describing the contents of the
+    #: volume (description, copyright, license information, and the images they
+    #: apply to):
     license_text = Property
 
     #-- Public Methods ---------------------------------------------------------
@@ -540,7 +505,7 @@ class ImageVolume ( HasPrivateTraits ):
             image.volume = None
 
         # Make sure the images are up to date by deleting any current value:
-        del self.images
+        self.reset_traits(['images'])
 
         # Save the new image volume information:
         self.save()
@@ -635,7 +600,7 @@ class ImageVolume ( HasPrivateTraits ):
                 try:
                     rename( path, temp_name )
                     break
-                except:
+                except Exception:
                     time.sleep( 0.1 )
 
             try:
@@ -707,8 +672,8 @@ class ImageVolume ( HasPrivateTraits ):
                 (image_name in info.image_names)):
                 return info
 
-        # Should never occur:
-        return None
+        raise ValueError('Volume info for image name {} not found.'.format(
+            repr(info)))
 
     #-- Default Value Implementations ------------------------------------------
 
@@ -848,21 +813,21 @@ class ImageVolume ( HasPrivateTraits ):
 
 class ZipFileReference ( ResourceReference ):
 
-    # The zip file to read;
+    #: The zip file to read;
     zip_file = Instance( FastZipFile )
 
-    # The volume name:
+    #: The volume name:
     volume_name = Str
 
-    # The file within the zip file:
+    #: The file within the zip file:
     file_name = Str
 
-    # The name of the cached image file:
+    #: The name of the cached image file:
     cache_file = File
 
     #-- The 'ResourceReference' API --------------------------------------------
 
-    # The file name of the image (in this case, the cache file name):
+    #: The file name of the image (in this case, the cache file name):
     filename = Property
 
     #-- ResourceReference Interface Implementation -----------------------------
@@ -920,19 +885,19 @@ class ImageLibrary ( HasPrivateTraits ):
     """ Manages Traits UI image libraries.
     """
 
-    # The list of available image volumes in the library:
+    #: The list of available image volumes in the library:
     volumes = List( ImageVolume )
 
-    # The volume dictionary (the keys are volume names, and the values are the
-    # corresponding ImageVolume objects):
+    #: The volume dictionary (the keys are volume names, and the values are the
+    #: corresponding ImageVolume objects):
     catalog = Dict( Str, ImageVolume )
 
-    # The list of available images in the library:
+    #: The list of available images in the library:
     images = Property( List, depends_on = 'volumes.images' )
 
     #-- Private Traits ---------------------------------------------------------
 
-    # Mapping from a 'virtual' library name to a 'real' library name:
+    #: Mapping from a 'virtual' library name to a 'real' library name:
     aliases = Dict
 
     #-- Public methods ---------------------------------------------------------
