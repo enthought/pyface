@@ -88,6 +88,9 @@ class MenuSchema(Schema):
     # The menu's user visible name.
     name = Unicode
 
+    # Does the menu require a separator before the menu item?
+    separator = Bool(False)
+
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
@@ -95,7 +98,7 @@ class MenuSchema(Schema):
     menu_manager_factory = Callable(MenuManager)
 
     def create(self, children):
-        traits = dict(id=self.id, name=self.name)
+        traits = dict(id=self.id, name=self.name, separator=self.separator)
         if self.action:
             traits['action'] = self.action
         return self.menu_manager_factory(*children, **traits)

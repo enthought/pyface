@@ -1,47 +1,50 @@
 #------------------------------------------------------------------------------
+# Copyright (c) 2007, Riverbank Computing Limited
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD license.
+# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
+# Author: Riverbank Computing Limited
+# Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-""" Enthought pyface package component
-"""
+
+# Standard library imports.
+import sys
+from os.path import basename
 
 # Major package imports.
+import wx
 import wx.stc
 
 # Enthought library imports.
-from traits.api import Bool, Event, provides, Unicode
+from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
+from pyface.tasks.api import Editor
+from pyface.util.python_stc import PythonSTC, faces
 
 # Local imports.
-from pyface.i_python_editor import IPythonEditor, MPythonEditor
+from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.util.python_stc import PythonSTC, faces
-from .widget import Widget
-
 
 @provides(IPythonEditor)
-class PythonEditor(MPythonEditor, Widget):
-    """ The toolkit specific implementation of a PythonEditor.  See the
-    IPythonEditor interface for the API documentation.
+class PythonEditor(Editor):
+    """ The toolkit specific implementation of a StyledTextEditor.  See the
+    IStyledTextEditor interface for the API documentation.
     """
-
 
     #### 'IPythonEditor' interface ############################################
 
-    dirty = Bool(False)
+    obj = Instance(File)
 
     path = Unicode
+
+    dirty = Bool(False)
+
+    name = Property(Unicode, depends_on='path')
+
+    tooltip = Property(Unicode, depends_on='path')
 
     show_line_numbers = Bool(True)
 
@@ -51,28 +54,22 @@ class PythonEditor(MPythonEditor, Widget):
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
-    # 'object' interface.
-    ###########################################################################
+    def _get_tooltip(self):
+        return self.path
 
-    def __init__(self, parent, **traits):
-        """ Creates a new pager. """
-
-        # Base class constructor.
-        super(PythonEditor, self).__init__(**traits)
-
-        # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        return
+    def _get_name(self):
+        return basename(self.path) or 'Untitled'
 
     ###########################################################################
     # 'PythonEditor' interface.
     ###########################################################################
 
-    def load(self, path=None):
-        """ Loads the contents of the editor. """
+    def create(self, parent):
+        self.control = self._create_control(parent)
 
+    def load(self, path=None):
+        """ Loads the contents of the editor.
+        """
         if path is None:
             path = self.path
 
@@ -81,31 +78,33 @@ class PythonEditor(MPythonEditor, Widget):
             f = open(self.path, 'r')
             text = f.read()
             f.close()
-
         else:
             text = ''
 
         self.control.SetText(text)
         self.dirty = False
 
-        return
-
     def save(self, path=None):
-        """ Saves the contents of the editor. """
-
+        """ Saves the contents of the editor.
+        """
         if path is None:
             path = self.path
 
-        f = open(path, 'w')
+        f = file(path, 'w')
         f.write(self.control.GetText())
         f.close()
 
         self.dirty = False
 
-        return
+    def select_line(self, lineno):
+        """ Selects the specified line.
+        """
+        start = self.control.PositionFromLine(lineno)
+        end   = self.control.GetLineEndPosition(lineno)
+
+        self.control.SetSelection(start, end)
 
     def set_style(self, n, fore, back):
-
         self.control.StyleSetForeground(n, fore)
         #self.StyleSetBackground(n, '#c0c0c0')
         #self.StyleSetBackground(n, '#ffffff')
@@ -113,51 +112,33 @@ class PythonEditor(MPythonEditor, Widget):
         self.control.StyleSetFaceName(n, "courier new")
         self.control.StyleSetSize(n, faces['size'])
 
-        #self.StyleSetForeground(n, "#f0f0f0")
-        ##self.StyleSetBackground(n, "#000000")
-        #self.StyleSetFaceName(n, "courier new")
-        #self.StyleSetSize(n, 20)
-        #self.StyleSetUnderline(n, 1)
-        #self.StyleSetItalic(n, 1)
-        #self.StyleSetBold(n, 1)
-        #StyleClearAll
-        #StyleResetDefault
-        #StyleSetCase
-        #StyleSetChangeable
-        #StyleSetCharacterSet
-        #StyleSetEOLFilled
-        #StyleSetFont
-        #StyleSetFontAttr
-        #StyleSetHotSpot
-        #StyleSetSpec --- batch
-        #StyleSetVisible
-
-        return
-
-    def select_line(self, lineno):
-        """ Selects the specified line. """
-
-        start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
-
-        self.control.SetSelection(start, end)
-
-        return
-
     ###########################################################################
     # Trait handlers.
     ###########################################################################
 
     def _path_changed(self):
-        """ Handle a change to path. """
+        if self.control is not None:
+            self.load()
 
-        self._changed_path()
-
-        return
+    def _show_line_numbers_changed(self):
+        if self.control is not None:
+            c = self.control
+            if self.show_line_numbers:
+                c.SetMarginType(1, wx.stc.STC_MARGIN_NUMBER)
+                c.SetMarginWidth(1, 45)
+            else:
+                c.SetMarginWidth(1, 4)
 
     ###########################################################################
     # Private interface.
     ###########################################################################
+
+    def _create_control(self, parent):
+        """ Creates the toolkit-specific control for the widget.
+        """
+        from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
+        self.control = control = AdvancedCodeWidget(parent)
+        self._show_line_numbers_changed()
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """
@@ -172,9 +153,10 @@ class PythonEditor(MPythonEditor, Widget):
         stc.SetEdgeMode(wx.stc.STC_EDGE_LINE)
         stc.SetEdgeColumn(79)
 
+        stc.SetMarginType(1, wx.stc.STC_MARGIN_NUMBER)
+        stc.SetMarginMask(1, ~wx.stc.STC_MASK_FOLDERS)
         # Display line numbers in the margin.
         if self.show_line_numbers:
-            stc.SetMarginType(1, wx.stc.STC_MARGIN_NUMBER)
             stc.SetMarginWidth(1, 45)
             self.set_style(wx.stc.STC_STYLE_LINENUMBER, "#000000", "#c0c0c0")
         else:
@@ -297,5 +279,3 @@ class PythonEditor(MPythonEditor, Widget):
         event.Skip()
 
         return
-
-#### EOF ######################################################################
