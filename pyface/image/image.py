@@ -854,11 +854,8 @@ class ZipFileReference ( ResourceReference ):
 
             # Write the image data to the cache file:
             cache_file = join( cache_dir, self.file_name )
-            fh         = file( cache_file, 'wb' )
-            try:
+            with open(cache_file, 'wb') as fh:
                 fh.write( data )
-            finally:
-                fh.close()
 
             # Save the cache file name in case we are called again:
             self.cache_file = cache_file

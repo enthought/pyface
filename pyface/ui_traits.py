@@ -201,12 +201,12 @@ class HasMargin(TraitType):
         if isinstance(value, int):
             try:
                 value = self.klass(value)
-            except:
+            except Exception:
                 self.error(object, name, value)
         elif isinstance(value, tuple):
             try:
                 value = self.klass(*value)
-            except:
+            except Exception:
                 self.error(object, name, value)
 
         if isinstance(value, self.klass):
