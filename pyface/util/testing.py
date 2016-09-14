@@ -19,3 +19,15 @@ def skip_if_no_traitsui(test):
         else:
             self.skipTest("Can't import traitsui.")
     return new_test
+
+
+def skip_if_pyqt5(test):
+    """ Decorator that skips test for qt5 backend """
+    @wraps(test)
+    def new_test(self):
+        import os
+        if os.environ('QT_API') != 'pyqt5':
+            test(self)
+        else:
+            self.skipTest("Skipping test for pyqt5.")
+    return new_test
