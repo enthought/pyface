@@ -26,7 +26,7 @@ def skip_if_pyqt5(test):
     @wraps(test)
     def new_test(self):
         import os
-        if os.environ('QT_API') != 'pyqt5':
+        if os.environ.get('QT_API') != 'pyqt5':
             test(self)
         else:
             self.skipTest("Skipping test for pyqt5.")
