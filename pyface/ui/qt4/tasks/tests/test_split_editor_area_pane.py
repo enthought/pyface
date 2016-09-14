@@ -23,9 +23,9 @@ class ViewWithTabsEditor(Editor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        control = QtGui.QTabWidget()
-        control.addTab(QtGui.QLabel('tab 1'), 'group 1')
-        control.addTab(QtGui.QLabel('tab 2'), 'group 2')
+        control = QtWidgets.QTabWidget()
+        control.addTab(QtWidgets.QLabel('tab 1'), 'group 1')
+        control.addTab(QtWidgets.QLabel('tab 2'), 'group 2')
         self.control = control
 
     def destroy(self):
