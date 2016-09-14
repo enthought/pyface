@@ -140,11 +140,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-<<<<<<< HEAD
-                        tester.has_widget('OK', QtWidgets.QPushButton)
-=======
-                        tester.has_widget('OK', QtGui.QAbstractButton)
->>>>>>> master
+                        tester.has_widget('OK', QtWidgets.QAbstractButton)
                     )
                     self.assertFalse(
                         tester.has_widget(text='I am a virtual button')
@@ -162,11 +158,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
-<<<<<<< HEAD
-                        type_=QtWidgets.QPushButton,
-=======
-                        type_=QtGui.QAbstractButton,
->>>>>>> master
+                        type_=QtWidgets.QAbstractButton,
                         test=lambda x: x.text() == 'OK'
                     )
                     self.assertIsInstance(widget, QtWidgets.QPushButton)
