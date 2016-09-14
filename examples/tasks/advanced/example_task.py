@@ -1,6 +1,6 @@
 # Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem, IEditor, \
-    IEditorAreaPane, SplitEditorAreaPane
+    IEditorAreaPane, EditorAreaPane
 from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
 from pyface.api import ConfirmationDialog, FileDialog, \
@@ -44,7 +44,7 @@ class ExampleTask(Task):
                            TaskAction(method='save',
                                       tooltip='Save the current file',
                                       image=ImageResource('document_save')),
-                           image_size = (32, 32)), ]
+                           image_size = (32, 32), show_tool_names=False), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -64,7 +64,7 @@ class ExampleTask(Task):
     def create_central_pane(self):
         """ Create the central pane: the script editor.
         """
-        self.editor_area = SplitEditorAreaPane()
+        self.editor_area = EditorAreaPane()
         return self.editor_area
 
     def create_dock_panes(self):

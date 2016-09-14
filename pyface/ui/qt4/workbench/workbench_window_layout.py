@@ -298,6 +298,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                     if geometry is not None:
                         self.window.control.restoreGeometry(geometry)
 
+    def is_editor_area_visible(self):
+        return self._qt4_editor_area.isVisible()
 
     ###########################################################################
     # Private interface.

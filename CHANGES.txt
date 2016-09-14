@@ -1,6 +1,34 @@
 Pyface Changelog
 ================
 
+Release 5.1.0
+=============
+
+Change summary since 5.0.0
+--------------------------
+
+Enhancements
+
+* Added documentation on toolkit selection (#197)
+* Clarify the purpose of LayoutContainer construction args (#189)
+* Improve ETSConfig toolkit selection (#187)
+
+Fixes
+
+* Fix restoring show_editor_area from saved perspective(#207)
+* Fix WorkbenchWindowLayout in Python 3 (#206)
+* Update SplitEditorAreaPane's active editor when focus changes under Qt (#203, #204)
+* Read-only CodeEditor should not allow adding newlines in View (#200)
+* Fix exception when closing all docks in a workbench window (#199)
+* Fix extended trait change description in qt dock pane (#194)
+* Fix Qt Workbench dock widget control in a workbench window (#192)
+* Fix double UnInit of AUI in ApplicationWindow under Wx (#184, #185)
+* Fix IPythonWidget syntax error (#178, #186)
+* Fix ProgressDialog timer labels #(183)
+* Fix Qt CodeWidget when focus goes out of a widget (#176, #177)
+* Fix Qt and Wx ProgressDialog for updating message (#176, #177)
+
+
 Release 5.0.0
 =============
 

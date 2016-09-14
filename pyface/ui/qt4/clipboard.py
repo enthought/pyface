@@ -33,7 +33,6 @@ PYTHON_TYPE = "python/object"
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-
     #---------------------------------------------------------------------------
     #  'data' property methods:
     #---------------------------------------------------------------------------

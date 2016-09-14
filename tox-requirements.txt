@@ -1,0 +1,8 @@
+mock
+nose
+numpy
+pygments
+traits
+git+http://github.com/enthought/traitsui.git#egg=traitsui
+traits_enaml ; python_version == '2.7'
+enaml ; python_version == '2.7'

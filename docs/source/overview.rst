@@ -252,8 +252,9 @@ Application Frameworks
 
 Pyface provides two application frameworks that help in building complex,
 composable interfaces for applications.  The first is Workbench, which is an
-older framework for both Wx and Qt.  The second is Tasks, which is currently
-available only for Qt, but is under active development.
+older framework for both Wx and Qt.  The second is Tasks, which is more 
+flexible than Workbench but is only available for Qt.  The Tasks framework is
+still under active development.
 
 For new projects, it's recommended that developers should use Tasks if they
 need such an application framework.
