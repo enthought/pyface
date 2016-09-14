@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import os
 from traits.testing.unittest_tools import unittest
 
 from ..confirmation_dialog import ConfirmationDialog, confirm
@@ -11,6 +12,7 @@ from ..window import Window
 
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+is_qt5 = (os.environ.get('QT_API') == 'pyqt5')
 
 
 class TestConfirmationDialog(unittest.TestCase):
@@ -116,6 +118,7 @@ class TestConfirmationDialog(unittest.TestCase):
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
+    @unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_renamed_yes(self):
         self.dialog.yes_label = u"Sure"
