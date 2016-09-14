@@ -177,6 +177,7 @@ class TestConfirmationDialog(unittest.TestCase):
         self.assertEqual(self.dialog.return_code, OK)
 
 
+@unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
 class TestConfirm(unittest.TestCase):
 
     def setUp(self):
