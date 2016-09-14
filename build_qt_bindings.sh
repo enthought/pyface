@@ -12,7 +12,9 @@ case $QT_API in
         BINDING_VER=4.11.4
         FILENAME=$QT_API-$BINDING_VER-cp$PYTHON_VER.tar.gz
         # FIXME: Using travis system pyqt4 since the compiled one segfaults
-        exit 0
+        if [ "$TRAVIS_PYTHON_VERSION" = "2.7_with_system_site_packages" ]; then
+            exit 0
+        fi
         ;;
     pyqt5)
         BINDING_VER=5.5.1
@@ -123,6 +125,18 @@ if [ "$QT_API" = "pyside" ]; then
         build_$QT_API
     fi
     python -m pip install "${HOME}/.cache/$FILENAME"
+elif [ "$TRAVIS_PYTHON_VERSION" = "3.5" ]; then
+    # Build pyqt bindings
+    if [ "$QT_API" = "pyqt5" ]; then
+        install_qt5
+    fi
+
+    pip install sip
+    if [ "$QT_API" = "pyqt5" ]; then
+        pip install pyqt5
+    else
+        pip install pyqt
+    fi
 else
     # Build pyqt bindings
     if [ "$QT_API" = "pyqt5" ]; then

@@ -3,6 +3,7 @@ sudo: false
 python:
   - 2.7_with_system_site_packages
   - 3.4
+  - 3.5
 addons:
   apt:
     packages:
@@ -35,7 +36,11 @@ env:
     - ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
     - ETS_TOOLKIT=wx EXCLUDE=qt
 matrix:
-  allow_failures:
+  exclude:
+    - python: 3.5
+      env: ETS_TOOLKIT=wx EXCLUDE=qt
+    - python: 3.5
+      env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyside
     - python: 3.4
       env: ETS_TOOLKIT=wx EXCLUDE=qt
     - python: 3.4
