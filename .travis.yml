@@ -37,7 +37,7 @@ env:
     - ETS_TOOLKIT=wx EXCLUDE=qt
 matrix:
   allow_failures:
-    - python: 2.7
+    - python: 2.7_with_system_site_packages
       env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
     - python: 3.4
       env: ETS_TOOLKIT=qt4 EXCLUDE=wx QT_API=pyqt5
