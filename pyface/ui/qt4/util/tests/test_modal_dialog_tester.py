@@ -67,7 +67,6 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertTrue(tester.dialog_was_opened)
 
     @skip_if_no_traitsui
-    @skip_if_pyqt5
     def test_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -85,7 +84,6 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertTrue(tester.dialog_was_opened)
 
     @skip_if_no_traitsui
-    @skip_if_pyqt5
     def test_dialog_was_not_opened_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.do_not_show_dialog)

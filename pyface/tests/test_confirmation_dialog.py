@@ -15,7 +15,6 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 is_qt5 = (os.environ.get('QT_API') == 'pyqt5')
 
 
-@unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
 class TestConfirmationDialog(unittest.TestCase):
 
     def setUp(self):
@@ -177,7 +176,6 @@ class TestConfirmationDialog(unittest.TestCase):
         self.assertEqual(self.dialog.return_code, OK)
 
 
-@unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
 class TestConfirm(unittest.TestCase):
 
     def setUp(self):
