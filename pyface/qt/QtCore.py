@@ -1,3 +1,4 @@
+from builtins import map
 from . import qt_api
 
 if qt_api == 'pyqt':

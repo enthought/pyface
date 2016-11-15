@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 # Standard library imports.
 import sys
 
@@ -6,7 +7,7 @@ from traits.api import provides
 
 # Local imports.
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane
-from editor_area_pane import EditorAreaPane
+from .editor_area_pane import EditorAreaPane
 
 ###############################################################################
 # 'AdvancedEditorAreaPane' class.

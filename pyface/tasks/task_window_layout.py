@@ -1,4 +1,5 @@
 # Enthought library imports.
+from past.builtins import basestring
 from traits.api import Either, List, Str, Tuple, Enum
 
 # Local imports.

@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 # Major package imports.
+from builtins import range
 import wx
 
 # Enthought library imports.

@@ -10,6 +10,7 @@
 
 
 # Enthought library imports.
+from past.builtins import basestring
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
 

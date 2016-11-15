@@ -15,6 +15,7 @@
 #------------------------------------------------------------------------------
 
 """ Defines common traits used within the pyface library. """
+from past.builtins import basestring
 import logging
 
 from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType

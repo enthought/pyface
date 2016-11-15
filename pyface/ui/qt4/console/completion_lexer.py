@@ -1,4 +1,5 @@
 # System library imports
+from builtins import object
 from pygments.token import Token, is_token_subtype
 
 

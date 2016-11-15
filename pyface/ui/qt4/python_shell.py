@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 #------------------------------------------------------------------------------
 # Copyright (c) 2011, Enthought, Inc.
 # All rights reserved.
@@ -12,9 +13,14 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports.
-import __builtin__
+from future import standard_library
+standard_library.install_aliases()
+from builtins import map
+from builtins import str
+from past.builtins import basestring
+import builtins
 from code import compile_command, InteractiveInterpreter
-from cStringIO import StringIO
+from io import StringIO
 import sys
 from time import time
 
@@ -27,8 +33,8 @@ from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
 # Local imports.
-from code_editor.pygments_highlighter import PygmentsHighlighter
-from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
+from .code_editor.pygments_highlighter import PygmentsHighlighter
+from .console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
@@ -377,8 +383,8 @@ class PythonWidget(HistoryConsoleWidget):
             if len(leftover) == 1:
                 leftover = leftover[0]
                 if symbol is None:
-                    names = self.interpreter.locals.keys()
-                    names += __builtin__.__dict__.keys()
+                    names = list(self.interpreter.locals.keys())
+                    names += list(builtins.__dict__.keys())
                 else:
                     names = dir(symbol)
                 completions = [ n for n in names if n.startswith(leftover) ]
@@ -410,14 +416,14 @@ class PythonWidget(HistoryConsoleWidget):
         """ Find a python object in the interpeter namespace from a context (a
             list of names).
         """
-        context = map(str, context)
+        context = list(map(str, context))
         if len(context) == 0:
             return None, context
 
         base_symbol_string = context[0]
         symbol = self.interpreter.locals.get(base_symbol_string, None)
         if symbol is None:
-            symbol = __builtin__.__dict__.get(base_symbol_string, None)
+            symbol = builtins.__dict__.get(base_symbol_string, None)
         if symbol is None:
             return None, context
 

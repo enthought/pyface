@@ -1,4 +1,5 @@
 # Standard library imports.
+from builtins import range
 import unittest
 
 # Enthought library imports.
@@ -18,7 +19,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     def setUp(self):
         """ Create some dummy actions to use while testing.
         """
-        for i in xrange(1, 7):
+        for i in range(1, 7):
             action_id = 'action%i' % i
             setattr(self, action_id, Action(id=action_id, name='Action %i'%i))
 
@@ -44,7 +45,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
             children1, children2 = first.items, second.items
 
         self.assertEquals(len(children1), len(children2))
-        for i in xrange(len(children1)):
+        for i in range(len(children1)):
             self.assertActionElementsEqual(children1[i], children2[i])
 
     #### Tests ################################################################

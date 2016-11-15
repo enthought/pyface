@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 # Standard library imports.
 import sys
 import logging
@@ -12,7 +13,7 @@ import wx
 from pyface.wx.aui import aui, PyfaceAuiNotebook
 
 # Local imports.
-from task_pane import TaskPane
+from .task_pane import TaskPane
 
 # Logging
 logger = logging.getLogger(__name__)

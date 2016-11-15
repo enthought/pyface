@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
 import os
 
 from traits.testing.unittest_tools import unittest

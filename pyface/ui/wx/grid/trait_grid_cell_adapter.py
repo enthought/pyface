@@ -12,6 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ Adapter class to make trait editor controls work inside of a grid. """
+from __future__ import absolute_import
 
 # Major package imports
 import wx
@@ -22,7 +23,7 @@ from wx import SIZE_ALLOW_MINUS_ONE
 from traitsui.api import UI, default_handler
 
 # Local imports:
-from combobox_focus_handler import ComboboxFocusHandler
+from .combobox_focus_handler import ComboboxFocusHandler
 
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
 

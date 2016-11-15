@@ -1,11 +1,12 @@
+from __future__ import absolute_import
 # Enthought library imports.
 from pyface.action.api import StatusBarManager
 from traits.api import Callable, HasTraits, Instance, List, Str, \
      Unicode
 
 # Local imports.
-from action.schema import MenuBarSchema, ToolBarSchema
-from action.schema_addition import SchemaAddition
+from .action.schema import MenuBarSchema, ToolBarSchema
+from .action.schema_addition import SchemaAddition
 from pyface.tasks.task_layout import TaskLayout
 
 

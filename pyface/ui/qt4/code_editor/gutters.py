@@ -1,3 +1,4 @@
+from __future__ import division
 #------------------------------------------------------------------------------
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
@@ -9,6 +10,8 @@
 # Description: <Enthought pyface code editor>
 #------------------------------------------------------------------------------
 
+from builtins import str
+from past.utils import old_div
 import math
 
 from pyface.qt import QtCore, QtGui
@@ -55,7 +58,7 @@ class StatusGutterWidget(GutterWidget):
 
         cw = self.parent()
 
-        pixels_per_block = self.height()/float(cw.blockCount())
+        pixels_per_block = old_div(self.height(),float(cw.blockCount()))
 
         for line in self.info_lines:
             painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
@@ -114,7 +117,7 @@ class LineNumberWidget(GutterWidget):
                 painter.drawText(0, top, self.width() - 2,
                                  self.fontMetrics().height(),
                                  QtCore.Qt.AlignRight, str(blocknum + 1))
-            block = block.next()
+            block = next(block)
             top = bottom
             bottom = top + int(cw.blockBoundingRect(block).height())
             blocknum += 1

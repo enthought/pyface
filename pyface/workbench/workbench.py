@@ -2,7 +2,9 @@
 
 
 # Standard library imports.
-import cPickle
+from future import standard_library
+standard_library.install_aliases()
+import pickle
 import logging
 import os
 
@@ -316,7 +318,7 @@ class Workbench(HasTraits):
                 # is a chance that the unpickle will fail. If so then we just
                 # carry on as if there was no memento!
                 f = open(filename, 'rb')
-                memento = cPickle.load(f)
+                memento = pickle.load(f)
                 f.close()
 
                 # The memento doesn't actually get used until the window is
@@ -335,7 +337,7 @@ class Workbench(HasTraits):
 
         # Save the window layout.
         f = open(os.path.join(self.state_location, 'window_memento'), 'wb')
-        cPickle.dump(window.get_memento(), f)
+        pickle.dump(window.get_memento(), f)
         f.close()
 
         return

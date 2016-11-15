@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 # Standard library imports.
 from itertools import combinations
 import logging
@@ -6,7 +7,7 @@ import logging
 from traits.api import Any, HasTraits
 
 # Local imports.
-from dock_pane import AREA_MAP, INVERSE_AREA_MAP
+from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
      Splitter, HSplitter, VSplitter
 
@@ -47,7 +48,7 @@ class MainWindowLayout(HasTraits):
 
         # Perform the layout. This will assign fixed sizes to the dock widgets
         # to enforce size constraints specified in the PaneItems.
-        for name, direction in AREA_MAP.iteritems():
+        for name, direction in AREA_MAP.items():
             sublayout = getattr(layout, name)
             if sublayout:
                 self.set_layout_for_area(sublayout, direction)

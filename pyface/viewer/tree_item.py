@@ -33,6 +33,7 @@ root.append(veg)
 
 
 # Enthought library imports.
+from builtins import str
 from traits.api import Any, Bool, HasTraits, Instance, List, Property
 
 

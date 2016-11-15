@@ -16,8 +16,10 @@
 
 """ Enthought pyface package component
 """
+from __future__ import division
 
 # Standard library imports.
+from past.utils import old_div
 import sys
 
 # Major package imports.
@@ -62,6 +64,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         else:
             color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_MENUBAR).Get()
 
-        return (color[0]/255., color[1]/255., color[2]/255.)
+        return (old_div(color[0],255.), old_div(color[1],255.), old_div(color[2],255.))
 
 #### EOF ######################################################################

@@ -15,6 +15,8 @@
 
 
 # Standard library imports.
+from past.builtins import basestring
+from builtins import object
 import sys
 
 # Enthought library imports.

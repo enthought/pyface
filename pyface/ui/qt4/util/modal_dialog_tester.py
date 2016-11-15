@@ -3,6 +3,7 @@
 """ A class to facilitate testing components that use TraitsUI or Qt Dialogs.
 
 """
+from builtins import object
 import contextlib
 import sys
 import traceback

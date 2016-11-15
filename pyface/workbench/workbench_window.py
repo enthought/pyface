@@ -1,4 +1,5 @@
 """ A workbench window. """
+from __future__ import absolute_import
 
 
 # Standard library imports.
@@ -242,7 +243,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _editor_manager_default(self):
         """ Trait initializer. """
 
-        from editor_manager import EditorManager
+        from .editor_manager import EditorManager
 
         return EditorManager(window=self)
 
@@ -504,7 +505,7 @@ class WorkbenchWindow(ApplicationWindow):
         """ Reset all perspectives back to their original contents. """
 
         # Remove all perspective mementos (except user perspectives).
-        for id in self._memento.perspective_mementos.keys():
+        for id in list(self._memento.perspective_mementos.keys()):
             if not id.startswith('__user_perspective'):
                 del self._memento.perspective_mementos[id]
 

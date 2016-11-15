@@ -14,8 +14,10 @@
 """ A renderer which will display a cell-specific image in addition to some
     text displayed in the same way the standard string renderer normally
     would. """
+from __future__ import division
 
 # Major package imports
+from past.utils import old_div
 import wx
 
 from wx.grid import PyGridCellRenderer
@@ -76,14 +78,14 @@ class GridCellImageRenderer(PyGridCellRenderer):
         wdelta = rect.width - size.GetWidth()
         x = rect.x
         if halign == wx.ALIGN_CENTRE and wdelta > 0:
-            x += wdelta / 2
+            x += old_div(wdelta, 2)
 
         # now height
         hdelta = rect.height - size.GetHeight()
 
         y = rect.y
         if valign == wx.ALIGN_CENTRE and hdelta > 0:
-            y += hdelta / 2
+            y += old_div(hdelta, 2)
 
         dc.SetClippingRegion(*rect)
 

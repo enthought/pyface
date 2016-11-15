@@ -12,6 +12,7 @@
 
 
 # Major package imports.
+from builtins import str
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.

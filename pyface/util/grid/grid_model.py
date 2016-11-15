@@ -12,8 +12,11 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A model that provides data for a grid. """
+from __future__ import print_function
 
 # Major package imports.
+from builtins import str
+from builtins import range
 import wx
 from wx.grid import PyGridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED
 
@@ -58,7 +61,7 @@ class GridModel(HasTraits):
         self._grid_table_base = _GridTableBase(self)
 
         if len(self.columns) == 0 and self.data is not None:
-            print "Building default table column model"
+            print("Building default table column model")
             columns = []
             # Assume data is rectangular and use the length of the first row.
             for i in range(len(self.data[0])):

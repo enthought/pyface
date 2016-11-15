@@ -12,6 +12,7 @@
 
 
 # Standard library imports.
+from builtins import str
 import sys
 
 # Major package imports.

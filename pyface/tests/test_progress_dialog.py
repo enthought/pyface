@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+from builtins import range
 from traits.testing.unittest_tools import unittest
 
 from ..constant import CANCEL

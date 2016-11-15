@@ -12,8 +12,13 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A grid control with a model/ui architecture. """
+from __future__ import division
 
 # Major package imports
+from builtins import str
+from builtins import range
+from past.builtins import basestring
+from past.utils import old_div
 import sys
 import wx
 import wx.lib.gridmovers as grid_movers
@@ -1396,11 +1401,11 @@ class Grid(Widget):
         wdx     = 0.0
         widths  = []
         cached  = getattr( self, '_cached_widths', None )
-        current = [ grid.GetColSize( i ) for i in xrange( n ) ]
+        current = [ grid.GetColSize( i ) for i in range( n ) ]
         if (cached is None) or (len( cached ) != n):
             self._cached_widths = cached = [ None ] * n
 
-        for i in xrange( n ):
+        for i in range( n ):
             cw = cached[i]
             if ((cw is None) or (-cw == current[i]) or
                 # hack: For some reason wx always seems to adjust column 0 by
@@ -1433,7 +1438,7 @@ class Grid(Widget):
             if width < 0:
                 width = widths[i]
                 if width <= 1.0:
-                    w         = max( 30, int( round( (adx * width) / wdx ) ) )
+                    w         = max( 30, int( round( old_div((adx * width), wdx) ) ) )
                     wdx      -= width
                     width     = w
                     adx      -= width
@@ -1521,11 +1526,11 @@ class _GridTableBase(PyGridTableBase):
     def dispose(self):
 
         # Make sure dispose gets called on all traits editors:
-        for editor in self._editor_cache.values():
+        for editor in list(self._editor_cache.values()):
             editor.dispose()
         self._editor_cache = {}
 
-        for renderer in self._renderer_cache.values():
+        for renderer in list(self._renderer_cache.values()):
             renderer.dispose()
         self._renderer_cache = {}
 
@@ -1572,12 +1577,12 @@ class _GridTableBase(PyGridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = str(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = str(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1592,12 +1597,12 @@ class _GridTableBase(PyGridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = str(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = str(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1771,7 +1776,7 @@ class _GridTableBase(PyGridTableBase):
 
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event:
-        do_later( self._editor_dispose, self._editor_cache.values() )
+        do_later( self._editor_dispose, list(self._editor_cache.values()) )
 
         self._editor_cache   = {}
         self._renderer_cache = {}

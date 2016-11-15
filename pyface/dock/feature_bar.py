@@ -20,11 +20,13 @@
     Defines the 'FeatureBar' class which displays and allows the user to
     interact with a set of DockWindowFeatures for a specified DockControl.
 """
+from __future__ import absolute_import
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from builtins import object
 import wx
 
 from traits.api \
@@ -33,10 +35,10 @@ from traits.api \
 from pyface.wx.drag_and_drop \
     import PythonDropTarget, PythonDropSource
 
-from dock_sizer \
+from .dock_sizer \
     import DockControl, FEATURE_EXTERNAL_DRAG
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 #-------------------------------------------------------------------------------

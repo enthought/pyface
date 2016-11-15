@@ -11,6 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
 #------------------------------------------------------------------------------
+from builtins import object
 import wx
 
 from .default_renderer import DefaultRenderer
@@ -75,7 +76,7 @@ class FontRenderer(DefaultRenderer):
         dc.DestroyClippingRegion()
         return
 
-class FontRendererFactory88:
+class FontRendererFactory88(object):
     """ I don't grok why this Factory (which I copied from the wx demo)
         was ever necessary? """
     def __init__(self, color, font, fontsize):

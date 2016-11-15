@@ -16,7 +16,9 @@
 
 """ A simple progress bar intended to run in the UI thread
 """
+from __future__ import division
 
+from past.utils import old_div
 import wx
 import time
 
@@ -218,12 +220,12 @@ class ProgressDialog(MProgressDialog, Window):
             self.control.Raise()
 
         if self.max > 0:
-            percent = (float(value) - self.min)/(self.max - self.min)
+            percent = old_div((float(value) - self.min),(self.max - self.min))
 
             if self.show_time and (percent != 0):
                 current_time = time.time()
                 elapsed = current_time - self._start_time
-                estimated = elapsed/percent
+                estimated = old_div(elapsed,percent)
                 remaining = estimated - elapsed
 
                 self._set_time_label(elapsed,
@@ -259,8 +261,8 @@ class ProgressDialog(MProgressDialog, Window):
         return self.close()
 
     def _set_time_label(self, value, control):
-        hours = value / 3600
-        minutes = (value % 3600) / 60
+        hours = old_div(value, 3600)
+        minutes = old_div((value % 3600), 60)
         seconds = value % 60
         label = "%u:%02u:%02u" % (hours, minutes, seconds)
 

@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from builtins import str
 from traits.api import Any, HasPrivateTraits, Instance, List
 from pyface.api import ImageResource
 from pyface.action.api import Action, ActionManagerItem, Group

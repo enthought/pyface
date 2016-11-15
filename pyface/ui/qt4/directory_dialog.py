@@ -12,6 +12,7 @@
 
 
 # Major package imports.
+from builtins import str
 from pyface.qt import QtGui
 
 # Enthought library imports.
@@ -56,7 +57,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
+            self.path = str(files[0])
         else:
             self.path = ''
 

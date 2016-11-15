@@ -14,6 +14,7 @@
 
 """ The interface for manipulating the toolkit clipboard.
 """
+from past.builtins import basestring
 from collections import Sequence
 
 # ETS imports

@@ -12,9 +12,11 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ Abstract base class for all action managers. """
+from __future__ import print_function
 
 
 # Enthought library imports.
+from past.builtins import basestring
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
@@ -363,7 +365,7 @@ class ActionManager(HasTraits):
 
     def dump(self, indent=''):
         """ Render a manager! """
-        print indent, 'Manager', self.id
+        print(indent, 'Manager', self.id)
         indent += '  '
 
         for group in self._groups:
@@ -371,12 +373,12 @@ class ActionManager(HasTraits):
 
     def render_group(self, group, indent=''):
         """ Render a group! """
-        print indent, 'Group', group.id
+        print(indent, 'Group', group.id)
         indent += '    '
 
         for item in group.items:
             if isinstance(item, Group):
-                print 'Surely, a group cannot contain another group!!!!'
+                print('Surely, a group cannot contain another group!!!!')
                 self.render_group(item, indent)
 
             else:
@@ -389,4 +391,4 @@ class ActionManager(HasTraits):
             item.dump(indent)
 
         else:
-            print indent, 'Item', item.id
+            print(indent, 'Item', item.id)

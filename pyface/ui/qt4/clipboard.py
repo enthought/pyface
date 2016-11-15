@@ -13,8 +13,9 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
+from past.builtins import basestring
 from io import BytesIO
-from cPickle import dumps, load, loads
+from pickle import dumps, load, loads
 
 # System library imports
 from pyface.qt import QtCore, QtGui

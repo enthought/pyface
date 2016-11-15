@@ -23,11 +23,14 @@
     sub-region of the DockWindow, in which case each sub-window appears as a
     separate notebook-like tab within the region.
 """
+from __future__ import absolute_import
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from past.builtins import cmp
+from builtins import object
 import shelve
 import os
 import wx
@@ -62,14 +65,14 @@ from pyface.wx.drag_and_drop \
 from pyface.message_dialog \
     import error as warning
 
-from dock_sizer \
+from .dock_sizer \
     import DockSizer, DockControl, DockRegion, DockStyle, DockSplitter, \
            no_dock_info, clear_window, features
 
-from idockable \
+from .idockable \
     import IDockable
 
-from idock_ui_provider \
+from .idock_ui_provider \
     import IDockUIProvider
 
 is_mac = (sys.platform == 'darwin')
@@ -197,7 +200,7 @@ class DockWindowHandler ( HasPrivateTraits ):
     def open_view_for ( self, control, use_mouse = True ):
         """ Creates a new view of a specified control.
         """
-        from dock_window_shell import DockWindowShell
+        from .dock_window_shell import DockWindowShell
 
         DockWindowShell( control, use_mouse = use_mouse )
 
@@ -422,7 +425,7 @@ class DockWindow ( HasPrivateTraits ):
         """
         fb = self._feature_bar
         if fb is None:
-            from feature_bar import FeatureBar
+            from .feature_bar import FeatureBar
 
             self._feature_bar = fb = FeatureBar( parent = self.control )
             fb.on_trait_change( self._feature_bar_closed, 'completed' )
@@ -897,7 +900,7 @@ class DockWindow ( HasPrivateTraits ):
         """
         layouts = self._get_layouts()
         if layouts is not None:
-            return layouts.keys()
+            return list(layouts.keys())
 
         return []
 

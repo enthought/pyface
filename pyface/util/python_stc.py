@@ -11,6 +11,8 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
+from builtins import chr
+from builtins import range
 import wx
 from wx import stc
 

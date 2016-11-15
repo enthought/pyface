@@ -9,6 +9,7 @@
 """ Test the scripting tools. """
 
 
+from builtins import object
 import unittest
 from pyface.util.id_helper import get_unique_id, object_counter
 

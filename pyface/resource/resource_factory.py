@@ -14,7 +14,8 @@
 """ Default base-class for resource factories. """
 
 
-class ResourceFactory:
+from builtins import object
+class ResourceFactory(object):
     """ Default base-class for resource factories. """
 
     ###########################################################################

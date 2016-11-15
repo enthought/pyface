@@ -14,6 +14,7 @@
 """ The interface for an interactive Python shell. """
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Event
 
 # Local imports.

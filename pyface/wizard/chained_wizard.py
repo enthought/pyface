@@ -12,6 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A wizard model that can be chained with other wizards. """
+from __future__ import absolute_import
 
 
 # Enthought library imports.
@@ -39,7 +40,7 @@ class ChainedWizard(Wizard):
     def _controller_default(self):
         """ Provide a default controller. """
 
-        from chained_wizard_controller import ChainedWizardController
+        from .chained_wizard_controller import ChainedWizardController
 
         return ChainedWizardController()
 

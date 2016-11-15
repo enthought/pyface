@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+from builtins import object
 import unittest
 
 from traits.api import Any, HasTraits, Unicode

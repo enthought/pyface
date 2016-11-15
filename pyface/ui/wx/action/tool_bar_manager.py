@@ -18,6 +18,7 @@
 """
 
 # Major package imports.
+from builtins import range
 import wx
 
 # Enthought library imports.

@@ -121,7 +121,7 @@ class _WizardPage(QtGui.QWizardPage):
         """ Reimplemented to call the IWizard's 'next'. """
 
         if self.pyface_wizard is not None:
-            self.pyface_wizard.next()
+            next(self.pyface_wizard)
 
     def cleanupPage(self):
         """ Reimplemented to call the IWizard's 'previous'. """

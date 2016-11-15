@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 # Major package imports.
+from builtins import str
 import wx
 
 # Enthought library imports.

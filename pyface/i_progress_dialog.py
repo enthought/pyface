@@ -14,6 +14,7 @@
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Any, Bool, Int, Str
 
 # Local imports.

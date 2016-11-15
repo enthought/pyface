@@ -14,6 +14,7 @@
 """ The interface of a top-level application window. """
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Instance, List
 
 # Local imports.

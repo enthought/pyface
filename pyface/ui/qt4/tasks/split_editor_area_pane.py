@@ -1,4 +1,9 @@
+from __future__ import division
 # Standard library imports.
+from builtins import str
+from builtins import range
+from builtins import object
+from past.utils import old_div
 import sys
 
 # Enthought library imports.
@@ -269,7 +274,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
-        for i in xrange(1, 10):
+        for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
@@ -567,7 +572,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         self.addWidget(self.rightchild)
 
         # set equal sizes of splits
-        self.setSizes([orig_size/2,orig_size/2])
+        self.setSizes([old_div(orig_size,2),old_div(orig_size,2)])
 
         # make the rightchild's tabwidget active & show its empty widget
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()

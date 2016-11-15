@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+from builtins import object
 from traits.testing.unittest_tools import unittest
 
 from ..clipboard import clipboard
@@ -7,13 +8,13 @@ from ..clipboard import clipboard
 
 class TestObject(object):
     def __init__(self, **kwargs):
-        for key, value in kwargs.items():
+        for key, value in list(kwargs.items()):
             setattr(self, key, value)
 
     def __eq__(self, other):
         if isinstance(other, TestObject):
             return all(getattr(other, key) == value
-                       for key, value in self.__dict__.items())
+                       for key, value in list(self.__dict__.items()))
 
 
 class TestClipboard(unittest.TestCase):

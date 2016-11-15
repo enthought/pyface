@@ -1,3 +1,4 @@
+from __future__ import division
 #------------------------------------------------------------------------------
 # Copyright (c) 2008, Riverbank Computing Limited
 # All rights reserved.
@@ -8,10 +9,14 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports.
+from builtins import str
+from builtins import range
+from builtins import object
+from past.utils import old_div
 import sys
 
 if sys.version_info[0] > 2:
-    unicode = str
+    str = str
 
 # Major library imports.
 from pyface.qt import QtCore, QtGui, qt_api
@@ -33,7 +38,7 @@ class SplitTabWidget(QtGui.QSplitter):
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
 
-    tabTextChanged = QtCore.Signal(QtGui.QWidget, unicode)
+    tabTextChanged = QtCore.Signal(QtGui.QWidget, str)
     _HS_NONE = -1
     _HS_AFTER_LAST_TAB = -2
     _HS_NORTH = -3
@@ -95,8 +100,8 @@ class SplitTabWidget(QtGui.QSplitter):
                 for t in range(ch.count()):
                     # A tab state is a tuple of the widget's object name and
                     # the title.
-                    name = unicode(ch.widget(t).objectName())
-                    title = unicode(ch.tabText(t))
+                    name = str(ch.widget(t).objectName())
+                    title = str(ch.tabText(t))
 
                     tab_states.append((name, title))
 
@@ -648,17 +653,17 @@ class SplitTabWidget(QtGui.QSplitter):
 
                 # The corners of the widget belong to the north and south
                 # sides.
-                if y < h / 4:
-                    return (tw, self._HS_NORTH, (gx, gy, w, h / 4))
+                if y < old_div(h, 4):
+                    return (tw, self._HS_NORTH, (gx, gy, w, old_div(h, 4)))
 
-                if y >= (3 * h) / 4:
-                    return (tw, self._HS_SOUTH, (gx, gy + (3*h) / 4, w, h / 4))
+                if y >= old_div((3 * h), 4):
+                    return (tw, self._HS_SOUTH, (gx, gy + old_div((3*h), 4), w, old_div(h, 4)))
 
-                if x < w / 4:
-                    return (tw, self._HS_WEST, (gx, gy, w / 4, h))
+                if x < old_div(w, 4):
+                    return (tw, self._HS_WEST, (gx, gy, old_div(w, 4), h))
 
-                if x >= (3 * w) / 4:
-                    return (tw, self._HS_EAST, (gx + (3*w) / 4, gy, w / 4, h))
+                if x >= old_div((3 * w), 4):
+                    return (tw, self._HS_EAST, (gx + old_div((3*w), 4), gy, old_div(w, 4), h))
 
                 return miss
 
@@ -682,15 +687,15 @@ class SplitTabWidget(QtGui.QSplitter):
                 if top_bottom:
                     off = pos.x() - rect.x()
                     ext = w
-                    gx -= w / 2
+                    gx -= old_div(w, 2)
                 else:
                     off = pos.y() - rect.y()
                     ext = h
-                    gy -= h / 2
+                    gy -= old_div(h, 2)
 
                 # See if it is in the left (or top) half or the right (or
                 # bottom) half.
-                if off < ext / 2:
+                if off < old_div(ext, 2):
                     return (tw, i, (gx, gy, w, h))
 
                 if top_bottom:
@@ -802,7 +807,7 @@ class _TabWidget(QtGui.QTabWidget):
             p.fillRect(0, 0, width, height, p.background())
 
             # Create the colour gradient.
-            rg = QtGui.QRadialGradient(width / 2, height / 2, width)
+            rg = QtGui.QRadialGradient(old_div(width, 2), old_div(height, 2), width)
             rg.setColorAt(0.0, start)
             rg.setColorAt(1.0, stop)
 

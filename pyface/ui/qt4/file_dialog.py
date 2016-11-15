@@ -12,6 +12,8 @@
 
 
 # Standard library imports.
+from builtins import str
+from past.builtins import basestring
 import os
 
 # Major package imports.
@@ -90,8 +92,8 @@ class FileDialog(MFileDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
-            self.paths = [unicode(file) for file in files]
+            self.path = str(files[0])
+            self.paths = [str(file) for file in files]
         else:
             self.path = ''
             self.paths = ['']

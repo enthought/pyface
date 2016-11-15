@@ -14,6 +14,7 @@
 """ The node manager looks after a collection of node types. """
 
 # Standard library imports.
+from builtins import str
 import logging
 
 # Enthought library imports.

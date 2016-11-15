@@ -15,6 +15,7 @@
 
 
 # Major package imports.
+from past.builtins import basestring
 import wx
 
 

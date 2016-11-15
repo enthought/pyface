@@ -8,6 +8,7 @@
 # Thanks for using Enthought open source!
 
 
+from builtins import range
 import contextlib
 import threading
 

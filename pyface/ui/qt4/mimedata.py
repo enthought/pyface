@@ -1,5 +1,6 @@
-
-from cPickle import dumps, load, loads, PickleError
+from builtins import bytes
+from builtins import str
+from pickle import dumps, load, loads, PickleError
 import warnings
 import io
 import sys

@@ -1,6 +1,7 @@
 """ The model for list boxes. """
 
 # Enthought library imports
+from builtins import object
 from traits.api import Event, HasTraits
 
 

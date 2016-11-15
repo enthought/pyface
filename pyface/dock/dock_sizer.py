@@ -21,11 +21,17 @@
     component. The sizer manages the layout of the DockWindow child controls
     and the notebook tabs and dragbars associated with the DockWindow.
 """
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from builtins import range
+from builtins import object
+from past.utils import old_div
 import wx, sys
 
 from traits.api \
@@ -50,10 +56,10 @@ from pyface.wx.drag_and_drop \
 from pyface.timer.api \
     import do_later, do_after
 
-from idockable \
+from .idockable \
     import IDockable
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 # Define version dependent values:
@@ -562,7 +568,7 @@ class DockItem ( HasPrivateTraits ):
                     tab_bounds = ( x, y, dx, dy )
                 else:
                     kind       = DOCK_TAB
-                    tab_bounds = ( x - (tdx / 2), y, tdx, dy )
+                    tab_bounds = ( x - (old_div(tdx, 2)), y, tdx, dy )
             else:
                 if is_control:
                     kind       = DOCK_TABADD
@@ -878,8 +884,8 @@ class DockItem ( HasPrivateTraits ):
         tdx, text_dy = dc.GetTextExtent( name )
         tc           = theme.content
         ox, oy       = theme.label.left, theme.label.top
-        y = (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                    text_dy) / 2))
+        y = (oy + (old_div((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
+                    text_dy), 2)))
         x = ox + slice.xleft + tc.left
 
         mode = self.feature_mode
@@ -1004,8 +1010,8 @@ class DockItem ( HasPrivateTraits ):
 
             # fixme: x calculation seems to be off by -1...
             return ( x + dx + ox - slice.xright - tc.right - CloseTabSize,
-                     y + oy + ((dy + slice.xtop + tc.top - slice.xbottom -
-                                tc.bottom - text_dy) / 2) + 3,
+                     y + oy + (old_div((dy + slice.xtop + tc.top - slice.xbottom -
+                                tc.bottom - text_dy), 2)) + 3,
                      CloseTabSize, CloseTabSize )
 
         return ( 0, 0, 0, 0 )
@@ -1067,8 +1073,8 @@ class DockItem ( HasPrivateTraits ):
         slice  = theme.image_slice
         tc     = theme.content
         ox, oy = theme.label.left, theme.label.top
-        y     += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                         text_dy) / 2))
+        y     += (oy + (old_div((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
+                         text_dy), 2)))
         x     += ox + slice.xleft + tc.left
         result = self.is_in( event, x, y, idx, idy )
 
@@ -1144,7 +1150,7 @@ class DockItem ( HasPrivateTraits ):
             if isinstance( object, IFeatureTool ):
                 if (object.feature_can_drop_on( self.object ) or
                     object.feature_can_drop_on_dock_control( self )):
-                    from feature_tool import FeatureTool
+                    from .feature_tool import FeatureTool
 
                     self.drop_features = [
                         FeatureTool( dock_control = self ) ]
@@ -1237,7 +1243,7 @@ class DockSplitter ( DockItem ):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x+idx+1,y+dy/2,x+dx-2,y+dy/2)
+            dc.DrawLine(x+idx+1,y+old_div(dy,2),x+dx-2,y+old_div(dy,2))
 
             iy = y+2
             ix = x
@@ -1250,7 +1256,7 @@ class DockSplitter ( DockItem ):
             # should be a darkish color in the users color scheme
             pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
-            dc.DrawLine(x+dx/2,y+idy+1,x+dx/2,y+dy-2)
+            dc.DrawLine(x+old_div(dx,2),y+idy+1,x+old_div(dx,2),y+dy-2)
 
             iy = y
             ix = x + 2
@@ -1316,12 +1322,12 @@ class DockSplitter ( DockItem ):
             if not self.is_in( event, hx, hy, hdx, hdy ):
                 return
             if self.style == 'horizontal':
-                if event.GetX() < (hx + (hdx / 2)):
+                if event.GetX() < (hx + (old_div(hdx, 2))):
                     self.collapse(True)
                 else:
                     self.collapse(False)
             else:
-                if event.GetY() < (hy + (hdy / 2)):
+                if event.GetY() < (hy + (old_div(hdy, 2))):
                     self.collapse(True)
                 else:
                     self.collapse(False)
@@ -1386,7 +1392,7 @@ class DockSplitter ( DockItem ):
                 if ((y == self.bounds[1]) or
                     (y < iy1)             or
                     ((y + dy) > (iy2 + idy2))):
-                    y = (iy1 + iy2 + idy2 - dy) / 2
+                    y = old_div((iy1 + iy2 + idy2 - dy), 2)
             else:
                 self._last_bounds = self.bounds
                 if forward:
@@ -1397,7 +1403,7 @@ class DockSplitter ( DockItem ):
             if ((x == self.bounds[0]) or
                 (x < ix1)             or
                 ((x + dx) > (ix2 + idx2))):
-                x = (ix1 + ix2 + idx2 - dx) / 2
+                x = old_div((ix1 + ix2 + idx2 - dx), 2)
         else:
             self._last_bounds = self.bounds
             if forward:
@@ -1447,10 +1453,10 @@ class DockSplitter ( DockItem ):
             nx, ny, ndx, ndy = bounds
             if is_horizontal:
                 ady = (ndy - 6)
-                ay  = ady / 2
+                ay  = old_div(ady, 2)
             else:
                 adx = (ndx - 6)
-                ax  = adx / 2
+                ax  = old_div(adx, 2)
             nx  += ax
             ny  += ay
             ndx -= adx
@@ -1461,10 +1467,10 @@ class DockSplitter ( DockItem ):
             ox, oy, odx, ody = self._bounds
             if is_horizontal:
                 ady = (ody - 6)
-                ay  = ady / 2
+                ay  = old_div(ady, 2)
             else:
                 adx = (odx - 6)
-                ax  = adx / 2
+                ax  = old_div(adx, 2)
             ox  += ax
             oy  += ay
             odx -= adx
@@ -2622,8 +2628,8 @@ class DockRegion ( DockGroup ):
         top    = y  - ty
         bottom = ty + dy - 1 - y
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = old_div(dx, 3)
+        mdy    = old_div(dy, 3)
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -2805,8 +2811,8 @@ class DockRegion ( DockGroup ):
     def dump ( self, indent ):
         """ Prints the contents of the region.
         """
-        print '%sRegion( %08X, active = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.active, self.width, self.height )
+        print('%sRegion( %08X, active = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.active, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -2820,7 +2826,7 @@ class DockRegion ( DockGroup ):
         x, y, dx, dy = self._tab_clip_bounds
         if self.is_in( event, x + dx, y + 2, DockImages._tab_scroller_dx,
                                              DockImages._tab_scroller_dy ):
-            if (event.GetX() - (x + dx)) < (DockImages._tab_scroller_dx / 2):
+            if (event.GetX() - (x + dx)) < (old_div(DockImages._tab_scroller_dx, 2)):
                 return SCROLL_LEFT
 
             return SCROLL_RIGHT
@@ -2838,8 +2844,8 @@ class DockRegion ( DockGroup ):
             active = self.active
 
         contents = self.contents
-        for i in (range( active, len( contents ) ) +
-                  range( active - 1, -1, -1 )):
+        for i in (list(range( active, len( contents ))) +
+                  list(range( active - 1, -1, -1))):
             if contents[ i ].visible:
                 self.active = i
                 return
@@ -3108,7 +3114,7 @@ class DockSection ( DockGroup ):
 
         # Allocate the remainder to those parts that didn't request a width.
         if remain > 0:
-            remain = int( avail / remain )
+            remain = int( old_div(avail, remain) )
 
             for i, sz in enumerate( sizes ):
                 if sz < 0:
@@ -3202,7 +3208,7 @@ class DockSection ( DockGroup ):
             # item's current size:
             for i, item in enumerate( contents ):
                 if i < n:
-                    idx = int( round( float( item.width * delta ) / cdx ) )
+                    idx = int( round( old_div(float( item.width * delta ), cdx) ) )
                 else:
                     idx = remaining
                 remaining -= idx
@@ -3239,7 +3245,7 @@ class DockSection ( DockGroup ):
             # item's current size:
             for i, item in enumerate( contents ):
                 if i < n:
-                    idy = int( round( float( item.height * delta ) / cdy ) )
+                    idy = int( round( old_div(float( item.height * delta ), cdy) ) )
                 else:
                     idy = remaining
                 remaining -= idy
@@ -3399,8 +3405,8 @@ class DockSection ( DockGroup ):
         top    = abs( top )
         bottom = abs( bottom )
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = old_div(dx, 3)
+        mdy    = old_div(dy, 3)
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -3565,8 +3571,8 @@ class DockSection ( DockGroup ):
     def dump ( self, indent = 0 ):
         """ Prints the contents of the section.
         """
-        print '%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.is_row, self.width, self.height )
+        print('%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.is_row, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -3966,7 +3972,7 @@ class DockSizer ( wx.PySizer ):
                 extras.append( control )
 
         # Try to resolve all unused saved items:
-        for id, item in map.items():
+        for id, item in list(map.items()):
             # If there is a handler, see if it can resolve it:
             if handler is not None:
                 control = handler.resolve_id( id )

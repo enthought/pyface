@@ -18,10 +18,12 @@
 """
 
 # Standard library imports.
+from future import standard_library
+standard_library.install_aliases()
 import os
 import tempfile
 
-from cStringIO import StringIO
+from io import StringIO
 
 # Major package imports.
 import wx

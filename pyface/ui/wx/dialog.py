@@ -16,6 +16,7 @@
 
 """ Enthought pyface package component
 """
+from __future__ import print_function
 
 # Major package imports.
 import sys
@@ -181,6 +182,6 @@ class Dialog(MDialog, Window):
     def _wx_on_help(self, event):
         """ Called when the 'Help' button is pressed. """
 
-        print 'Heeeeelllllllllllllpppppppppppppppppppp'
+        print('Heeeeelllllllllllllpppppppppppppppppppp')
 
 #### EOF ######################################################################

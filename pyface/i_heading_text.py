@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Instance, Int, Interface, Unicode
 
 # Local imports.

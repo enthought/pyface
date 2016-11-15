@@ -16,7 +16,14 @@ commands to be sent to the interpreter. This particular shell is based on
 wxPython's wxStyledTextCtrl. The latest files are always available at the
 SourceForge project page at http://sourceforge.net/projects/pycrust/.
 Sponsored by Orbtech - Your source for Python programming expertise."""
+from __future__ import print_function
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import chr
+from builtins import range
+from builtins import object
 __author__ = "Patrick K. O'Brien <pobrien@orbtech.com>"
 __cvsid__ = "$Id: shell.py,v 1.2 2003/06/13 17:59:34 dmorrill Exp $"
 __revision__ = "$Revision: 1.2 $"[11:-2]
@@ -63,7 +70,7 @@ else:  # GTK
             }
 
 
-class ShellFacade:
+class ShellFacade(object):
     """Simplified interface to all shell-related functionality.
 
     This is a semi-transparent facade, in that all attributes of other are
@@ -123,15 +130,15 @@ F9                Pop-up window of matching History items.
         if hasattr(self.other, name):
             return getattr(self.other, name)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def __setattr__(self, name, value):
-        if self.__dict__.has_key(name):
+        if name in self.__dict__:
             self.__dict__[name] = value
         elif hasattr(self.other, name):
             return setattr(self.other, name, value)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def _getAttributeNames(self):
         """Return list of magic attributes to extend introspection."""
@@ -276,8 +283,8 @@ class Shell(wxStyledTextCtrl):
 
         This simply sets "close", "exit" and "quit" to a helpful string.
         """
-        import __builtin__
-        __builtin__.close = __builtin__.exit = __builtin__.quit = \
+        import builtins
+        builtins.close = builtins.exit = builtins.quit = \
             'Click on the close button to leave the application.'
 
     def quit(self):
@@ -300,7 +307,7 @@ class Shell(wxStyledTextCtrl):
         if startupScript and os.path.isfile(startupScript):
             startupText = 'Startup script executed: ' + startupScript
             self.push('print %s;execfile(%s)' % \
-                      (`startupText`, `startupScript`))
+                      (repr(startupText), repr(startupScript)))
         else:
             self.push('')
 
@@ -603,10 +610,10 @@ class Shell(wxStyledTextCtrl):
         # to the beginning if we don't find anything.
         if (self.historyIndex <= -1) \
         or (self.historyIndex >= len(self.history)-2):
-            searchOrder = range(len(self.history))
+            searchOrder = list(range(len(self.history)))
         else:
-            searchOrder = range(self.historyIndex+1, len(self.history)) + \
-                          range(self.historyIndex)
+            searchOrder = list(range(self.historyIndex+1, len(self.history))) + \
+                          list(range(self.historyIndex))
         for i in searchOrder:
             command = self.history[i]
             if command[:len(searchText)] == searchText:
@@ -623,7 +630,7 @@ class Shell(wxStyledTextCtrl):
 
         # This method will most likely be replaced by the enclosing app
         # to do something more interesting, like write to a status bar.
-        print text
+        print(text)
 
     def insertLineBreak(self):
         """Insert a new line break."""
@@ -1128,7 +1135,7 @@ ID_FILLING_SHOW_DOC = wxNewId()
 ID_FILLING_SHOW_MODULE = wxNewId()
 
 
-class ShellMenu:
+class ShellMenu(object):
     """Mixin class to add standard menu items."""
 
     def createMenus(self):

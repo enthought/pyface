@@ -1,5 +1,6 @@
 """ An abstract base class for console-type widgets.
 """
+from __future__ import division
 # FIXME: This file and the others in this directory have been ripped, more or
 #        less intact, out of IPython. At some point we should figure out a more
 #        maintainable solution.
@@ -9,6 +10,9 @@
 #-----------------------------------------------------------------------------
 
 # Standard library imports
+from builtins import str
+from builtins import range
+from past.utils import old_div
 import os
 from os.path import commonprefix
 import re
@@ -104,7 +108,7 @@ class ConsoleWidget(QtGui.QWidget):
 
     # The shortcuts defined by this widget. We need to keep track of these to
     # support 'override_shortcuts' above.
-    _shortcuts = set(_ctrl_down_remap.keys() +
+    _shortcuts = set(list(_ctrl_down_remap.keys()) +
                      [ QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O,
                        QtCore.Qt.Key_V ])
 
@@ -650,7 +654,7 @@ class ConsoleWidget(QtGui.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = path, format = "png"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:
@@ -678,7 +682,7 @@ class ConsoleWidget(QtGui.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = None, format = "svg"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:
@@ -1378,7 +1382,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Calculate the number of characters available.
         width = self._control.viewport().width()
         char_width = QtGui.QFontMetrics(self.font).width(' ')
-        displaywidth = max(10, (width / char_width) - 1)
+        displaywidth = max(10, (old_div(width, char_width)) - 1)
 
         # Some degenerate cases.
         size = len(items)
@@ -1655,7 +1659,7 @@ class ConsoleWidget(QtGui.QWidget):
             If set, the text will be interpreted as HTML instead of plain text.
         """
         line_height = QtGui.QFontMetrics(self.font).height()
-        minlines = self._control.viewport().height() / line_height
+        minlines = old_div(self._control.viewport().height(), line_height)
         if self.paging != 'none' and \
                 re.match("(?:[^\n]*\n){%i}" % minlines, text):
             if self.paging == 'custom':
@@ -1830,7 +1834,7 @@ class ConsoleWidget(QtGui.QWidget):
         viewport_height = self._control.viewport().height()
         if isinstance(self._control, QtGui.QPlainTextEdit):
             maximum = max(0, document.lineCount() - 1)
-            step = viewport_height / self._control.fontMetrics().lineSpacing()
+            step = old_div(viewport_height, self._control.fontMetrics().lineSpacing())
         else:
             # QTextEdit does not do line-based layout and blocks will not in
             # general have the same height. Therefore it does not make sense to

@@ -10,8 +10,12 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
-from cStringIO import StringIO
-from cPickle import dumps, load, loads
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from past.builtins import basestring
+from io import StringIO
+from pickle import dumps, load, loads
 
 # System library imports
 import wx

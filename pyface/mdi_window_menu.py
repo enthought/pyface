@@ -16,13 +16,14 @@
 This is the menu that has the tile/cascade actions etc.
 
 """
+from __future__ import absolute_import
 
 
 # Enthought library imports.
 from traits.api import Str
 
 # Local imports.
-from action.api import MenuManager, Separator, WindowAction
+from .action.api import MenuManager, Separator, WindowAction
 
 
 class Cascade(WindowAction):

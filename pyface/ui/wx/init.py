@@ -11,6 +11,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
+from builtins import str
 import wx
 
 

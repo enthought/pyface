@@ -12,6 +12,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A viewer based on a tree control. """
+from __future__ import print_function
 
 
 # Major package imports.
@@ -188,7 +189,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(pid)
 
         else:
-            print '**** pid is None!!! ****'
+            print('**** pid is None!!! ****')
 
         return
 

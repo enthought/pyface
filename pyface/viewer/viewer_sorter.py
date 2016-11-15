@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from past.builtins import cmp
 from traits.api import HasTraits
 
 

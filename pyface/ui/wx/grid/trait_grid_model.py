@@ -17,8 +17,11 @@ must be of the same type. Optionally a user may pass in a list of trait names
 defining which traits will be shown in the columns and in which order. If this
 list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
+from __future__ import print_function
 
 # Enthought library imports
+from builtins import str
+from builtins import range
 from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
      Int, List, Str, Trait, TraitError, Type
 
@@ -104,7 +107,7 @@ class TraitGridModel(GridModel):
 
                 # we only add traits that aren't events, since events
                 # are write-only
-                for name, trait in self.data[0].traits().items():
+                for name, trait in list(self.data[0].traits().items()):
                     if trait.type != 'event':
                         self._auto_columns.append(TraitGridColumn(name = name))
             else:
@@ -234,7 +237,7 @@ class TraitGridModel(GridModel):
             self.data.reverse()
 
         # now fire an event to tell the grid we're sorted
-        print 'firing sort event'
+        print('firing sort event')
         self.column_sorted = GridSortEvent(index = col, reversed = reverse)
 
         return
@@ -386,7 +389,7 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-               formats.has_key(type(value)) and \
+               type(value) in formats and \
                formats[type(value)] is not None:
             try:
                 format = formats[type(value)]

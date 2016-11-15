@@ -14,6 +14,8 @@
 """ Helper functions to automatically generate unique IDs. """
 
 
+from builtins import str
+from builtins import object
 from weakref import WeakKeyDictionary
 
 class _ObjectCounter(object):

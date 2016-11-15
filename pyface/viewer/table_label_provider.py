@@ -15,6 +15,7 @@
 
 
 # Local imports.
+from builtins import str
 from .label_provider import LabelProvider
 
 

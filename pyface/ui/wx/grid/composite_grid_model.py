@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 
 # Enthought library imports.
+from builtins import str
 from traits.api import Dict, List, Trait
 
 # local imports

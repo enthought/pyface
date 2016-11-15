@@ -2,6 +2,7 @@
 
 
 # Standard library imports.
+from builtins import str
 import logging
 
 # Enthought library imports.

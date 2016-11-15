@@ -13,8 +13,10 @@
 #------------------------------------------------------------------------------
 """ A clickable/draggable widget containing an image. """
 from __future__ import absolute_import
+from __future__ import division
 
 # Major package imports.
+from past.utils import old_div
 import wx
 
 # Enthought library imports.
@@ -210,7 +212,7 @@ class ImageWidget(Widget):
         bitmap   = self.bitmap
         bdx      = bitmap.GetWidth()
         bdy      = bitmap.GetHeight()
-        wdc.DrawBitmap( bitmap, (wdx - bdx) / 2, (wdy - bdy) / 2, True )
+        wdc.DrawBitmap( bitmap, old_div((wdx - bdx), 2), old_div((wdy - bdy), 2), True )
 
         pens = [ self._selectedPenLight, self._selectedPenDark ]
         bd   = self._button_down

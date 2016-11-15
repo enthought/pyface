@@ -12,7 +12,9 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A simple progress bar intended to run in the UI thread """
+from __future__ import division
 
+from past.utils import old_div
 import time
 
 from pyface.qt import QtGui, QtCore
@@ -122,14 +124,14 @@ class ProgressDialog(MProgressDialog, Window):
             self.progress_bar.setValue(value)
 
             if (self.max != self.min):
-                percent = (float(value) - self.min)/(self.max - self.min)
+                percent = old_div((float(value) - self.min),(self.max - self.min))
             else:
                 percent = 1.0
 
             if self.show_time and (percent != 0):
                 current_time = time.time()
                 elapsed = current_time - self._start_time
-                estimated = elapsed/percent
+                estimated = old_div(elapsed,percent)
                 remaining = estimated - elapsed
 
                 self._set_time_label(elapsed, self._elapsed_control)
@@ -157,8 +159,8 @@ class ProgressDialog(MProgressDialog, Window):
         self.close()
 
     def _set_time_label(self, value, control):
-        hours = value / 3600
-        minutes = (value % 3600) / 60
+        hours = old_div(value, 3600)
+        minutes = old_div((value % 3600), 60)
         seconds = value % 60
         label = "%1u:%02u:%02u" % (hours, minutes, seconds)
 

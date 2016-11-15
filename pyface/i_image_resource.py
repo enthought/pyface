@@ -10,6 +10,8 @@
 #------------------------------------------------------------------------------
 """ The interface for an image resource. """
 
+from past.builtins import basestring
+from builtins import object
 from collections import Sequence
 
 from pyface.resource_manager import resource_manager

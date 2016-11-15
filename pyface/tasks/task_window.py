@@ -1,4 +1,5 @@
 # Standard library imports.
+from past.builtins import basestring
 import logging
 
 # Enthought library imports.

@@ -1,4 +1,6 @@
+from __future__ import absolute_import
 # Standard library imports
+from builtins import str
 from contextlib import contextmanager
 import logging
 
@@ -11,14 +13,14 @@ import wx
 from pyface.wx.aui import aui
 
 # Local imports.
-from task_pane import TaskPane
+from .task_pane import TaskPane
 
 # Constants.
 AREA_MAP = { 'left'   : aui.AUI_DOCK_LEFT,
              'right'  : aui.AUI_DOCK_RIGHT,
              'top'    : aui.AUI_DOCK_TOP,
              'bottom' : aui.AUI_DOCK_BOTTOM }
-INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
+INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
 # Logging
 logger = logging.getLogger(__name__)

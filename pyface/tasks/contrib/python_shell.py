@@ -41,7 +41,7 @@ class PythonShellPane(TaskPane):
         # bind namespace
         logger.debug('PythonShellPane: binding variables')
         for binding in self.bindings:
-            for name, value in binding.items():
+            for name, value in list(binding.items()):
                 self.editor.bind(name, value)
         
         # execute commands

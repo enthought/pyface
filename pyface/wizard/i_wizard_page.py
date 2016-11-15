@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Bool, Interface, Str, Tuple, Unicode
 
 

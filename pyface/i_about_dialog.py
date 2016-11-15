@@ -14,6 +14,7 @@
 """ The interface for a simple 'About' dialog. """
 
 # Enthought library imports.
+from builtins import object
 from traits.api import Instance, List, Unicode
 
 # Local imports.

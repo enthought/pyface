@@ -15,6 +15,7 @@
 
 
 # Enthought library imports.
+from builtins import str
 from traits.api import HasTraits
 
 

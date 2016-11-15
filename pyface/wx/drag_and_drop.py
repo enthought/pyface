@@ -14,13 +14,14 @@
 """ Drag and drop utilities. """
 
 # Standard library imports.
+from builtins import object
 import inspect
 
 # Major package imports.
 import wx
 
 
-class Clipboard:
+class Clipboard(object):
     """ The clipboard is used when dragging and dropping Python objects. """
 
     # fixme: This obviously only works within a single process!

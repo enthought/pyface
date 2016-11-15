@@ -19,11 +19,13 @@
     DockControl can implement in order to allow themselves to be dragged into
     a different DockWindow.
 """
+from __future__ import print_function
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from builtins import object
 import wx
 
 #-------------------------------------------------------------------------------

@@ -6,8 +6,11 @@
 # LICENSE.txt
 #
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
 import unittest
-from cPickle import dumps
+from pickle import dumps
 
 from pyface.qt import QtCore
 from ..mimedata import PyMimeData, str2bytes

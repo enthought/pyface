@@ -26,6 +26,8 @@ introspect module.
 """
 
 # Import introspect.
+from past.builtins import cmp
+from past.builtins import basestring
 from wx.py import introspect
 
 import types
@@ -58,7 +60,7 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     attrdict = getAllAttributeNames(object)
     # Store the object's dir.
     object_dir = dir(object)
-    for (obj_type_name, technique, count), attrlist in attrdict.items():
+    for (obj_type_name, technique, count), attrlist in list(attrdict.items()):
         # This complexity is necessary to avoid accessing all the
         # attributes of the object.  This is very handy for objects
         # whose attributes are lazily evaluated.
@@ -72,17 +74,17 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     # Remove duplicates from the attribute list.
     for item in attributes:
         dict[item] = None
-    attributes = dict.keys()
+    attributes = list(dict.keys())
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
     attributes = [attribute for attribute in attributes \
                   if isinstance(attribute, basestring)]
     attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
     if not includeSingle:
-        attributes = filter(lambda item: item[0]!='_' \
-                            or item[1]=='_', attributes)
+        attributes = [item for item in attributes if item[0]!='_' \
+                            or item[1]=='_']
     if not includeDouble:
-        attributes = filter(lambda item: item[:2]!='__', attributes)
+        attributes = [item for item in attributes if item[:2]!='__']
     return attributes
 
 
@@ -116,7 +118,7 @@ def getAllAttributeNames(object):
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = object.__dict__.keys()
+        attributes = list(object.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass
@@ -140,9 +142,9 @@ def getAllAttributeNames(object):
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
-        if isinstance(bases, types.TupleType):
+        if isinstance(bases, tuple):
             for base in bases:
-                if type(base) is types.TypeType:
+                if type(base) is type:
                     # Break a circular reference. Happens in Python 2.2.
                     pass
                 else:

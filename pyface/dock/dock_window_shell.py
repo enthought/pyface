@@ -18,11 +18,14 @@
 """ Defines the DockWindowShell class used to house drag and drag DockWindow
     items that are dropped on the desktop or on the DockWindowShell window.
 """
+from __future__ import division
+from __future__ import absolute_import
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from past.utils import old_div
 import wx
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
@@ -39,10 +42,10 @@ from pyface.api import SystemMetrics
 from pyface.image_resource \
     import ImageResource
 
-from dock_window \
+from .dock_window \
     import DockWindow
 
-from dock_sizer \
+from .dock_sizer \
     import DockSizer, DockSection, DockRegion, DockControl, DOCK_RIGHT
 
 #-------------------------------------------------------------------------------
@@ -117,8 +120,8 @@ class DockWindowShell ( HasPrivateTraits ):
         cdx, cdy = shell.GetClientSizeTuple()
         ex_dx    = dx - cdx
         ex_dy    = dy - cdy
-        shell.SetDimensions( x - (ex_dx / 2) - tis.xleft - tc.left,
-                             y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tc.top,
+        shell.SetDimensions( x - (old_div(ex_dx, 2)) - tis.xleft - tc.left,
+                             y - ex_dy + (old_div(ex_dx, 2)) - tdy - tis.xtop - tc.top,
                              dx + ex_dx, dy + ex_dy )
         shell.Show()
 

@@ -1,4 +1,6 @@
+from __future__ import division
 # Standard library imports
+from past.utils import old_div
 import re
 from textwrap import dedent
 from unicodedata import category
@@ -35,8 +37,8 @@ class CallTipWidget(QtGui.QLabel):
         self.setFrameStyle(QtGui.QFrame.NoFrame)
         self.setMargin(1 + self.style().pixelMetric(
                 QtGui.QStyle.PM_ToolTipLabelFrameWidth, None, self))
-        self.setWindowOpacity(self.style().styleHint(
-                QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None) / 255.0)
+        self.setWindowOpacity(old_div(self.style().styleHint(
+                QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None), 255.0))
 
     def eventFilter(self, obj, event):
         """ Reimplemented to hide on certain key presses and on text edit focus

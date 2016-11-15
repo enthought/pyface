@@ -18,7 +18,12 @@
 """
 
 # Standard library imports.
-import __builtin__
+from past.builtins import execfile
+from future import standard_library
+standard_library.install_aliases()
+from past.builtins import basestring
+from builtins import object
+import builtins
 import os
 import sys
 import types
@@ -229,7 +234,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = __builtin__.raw_input
+        self.raw_input = builtins.raw_input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -265,12 +270,12 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        __builtin__.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 
 
-class _NullIO:
+class _NullIO(object):
     """ A portable /dev/null for use with PythonShell.execute_file.
     """
     def tell(self): return 0

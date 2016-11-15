@@ -15,6 +15,7 @@
 
 
 # Standard library imports.
+from builtins import object
 import logging
 
 # Enthought library imports.

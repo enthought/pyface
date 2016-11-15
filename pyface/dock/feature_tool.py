@@ -19,12 +19,13 @@
     implementing the IFeatureTool interface to be dropped onto any compatible
     object.
 """
+from __future__ import absolute_import
 
 #-------------------------------------------------------------------------------
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from dock_window_feature \
+from .dock_window_feature \
     import DockWindowFeature
 
 from pyface.image_resource \

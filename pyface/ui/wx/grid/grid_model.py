@@ -16,6 +16,7 @@
 # Major package imports
 
 # Enthought library imports.
+from builtins import range
 from traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
      Instance, Int, Str, Tuple
 

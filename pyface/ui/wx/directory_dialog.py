@@ -18,6 +18,7 @@
 """
 
 # Major package imports.
+from builtins import str
 import wx
 
 # Enthought library imports.
@@ -59,7 +60,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path = unicode(self.control.GetPath())
+        self.path = str(self.control.GetPath())
 
         # Let the window close as normal.
         super(DirectoryDialog, self).close()

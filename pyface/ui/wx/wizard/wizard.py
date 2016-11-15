@@ -178,7 +178,7 @@ class Wizard(MWizard, Dialog):
     def _on_next(self, event):
         """ Called when the 'Next' button is pressed. """
 
-        self.next()
+        next(self)
 
         return
 

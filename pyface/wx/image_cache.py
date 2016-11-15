@@ -15,10 +15,11 @@
 
 
 # Major package imports.
+from builtins import object
 import wx
 
 
-class ImageCache:
+class ImageCache(object):
     """ An image cache. """
 
     def __init__(self, width, height):

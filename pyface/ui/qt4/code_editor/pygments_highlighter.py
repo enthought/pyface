@@ -9,6 +9,7 @@
 # Description: <Enthought pyface code editor>
 #------------------------------------------------------------------------------
 
+from builtins import str
 from pyface.qt import QtGui
 
 from pygments.lexer import RegexLexer, _TokenType, Text, Error
@@ -93,7 +94,7 @@ def replace_pattern(tokens, new_pattern):
     """ Given a RegexLexer token dictionary 'tokens', replace all patterns that
         match the token specified in 'new_pattern' with 'new_pattern'.
     """
-    for state in tokens.values():
+    for state in list(tokens.values()):
         for index, pattern in enumerate(state):
             if isinstance(pattern, tuple) and pattern[1] == new_pattern[1]:
                 state[index] = new_pattern
@@ -118,7 +119,7 @@ class BlockUserData(QtGui.QTextBlockUserData):
 
     def __init__(self, **kwds):
         QtGui.QTextBlockUserData.__init__(self)
-        for key, value in kwds.iteritems():
+        for key, value in kwds.items():
             setattr(self, key, value)
 
     def __repr__(self):
@@ -147,7 +148,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
     def highlightBlock(self, qstring):
         """ Highlight a block of text.
         """
-        qstring = unicode(qstring)
+        qstring = str(qstring)
         prev_data = self.previous_block_data()
 
         if prev_data is not None:
@@ -186,7 +187,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         if token in self._formats:
             return self._formats[token]
         result = None
-        for key, value in self._style.style_for_token(token) .items():
+        for key, value in list(self._style.style_for_token(token).items()):
             if value:
                 if result is None:
                     result = QtGui.QTextCharFormat()

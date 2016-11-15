@@ -9,9 +9,13 @@
 
 """ Tests for the tabular editor tester. """
 from __future__ import absolute_import
+from __future__ import division
 
+from future import standard_library
+standard_library.install_aliases()
+from past.utils import old_div
 import unittest
-import cStringIO
+import io
 
 from pyface.qt import QtGui
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
@@ -109,7 +113,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         with self.assertRaises(AssertionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
@@ -122,12 +126,12 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     # this error will appear in the console and get recorded
-                    1 / 0
+                    old_div(1, 0)
             finally:
                 tester.close()
 
         with self.assertRaises(ZeroDivisionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)

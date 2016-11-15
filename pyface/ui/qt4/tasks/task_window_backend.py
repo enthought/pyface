@@ -87,7 +87,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._main_window_layout.get_layout(layout)
 
         # Extract the window's corner configuration.
-        for name, corner in CORNER_MAP.iteritems():
+        for name, corner in CORNER_MAP.items():
             area = INVERSE_AREA_MAP[int(self.control.corner(corner))]
             setattr(layout, name + '_corner', area)
 
@@ -109,7 +109,7 @@ class TaskWindowBackend(MTaskWindowBackend):
             TaskLayout.
         """
         # Assign the window's corners to the appropriate dock areas.
-        for name, corner in CORNER_MAP.iteritems():
+        for name, corner in list(CORNER_MAP.items()):
             area = getattr(state.layout, name + '_corner')
             self.control.setCorner(corner, AREA_MAP[area])
 

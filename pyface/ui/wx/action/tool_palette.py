@@ -17,6 +17,7 @@
 """ View of an ActionManager drawn as a rectangle of buttons.
 """
 
+from builtins import str
 import wx
 from pyface.widget import Widget
 
