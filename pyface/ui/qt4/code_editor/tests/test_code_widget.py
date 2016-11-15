@@ -31,6 +31,7 @@ class TestCodeWidget(unittest.TestCase):
     def tearDown(self):
         self.qapp.processEvents()
 
+    @unittest.skip
     def test_readonly_editor(self):
         cw = CodeWidget(None)
         text = 'Some\nText'
@@ -49,6 +50,7 @@ class TestCodeWidget(unittest.TestCase):
         cw.setReadOnly(False)
         check('Extra', 'Extra' + text)
 
+    @unittest.skip
     def test_readonly_replace_widget(self):
         acw = AdvancedCodeWidget(None)
         text = 'Some\nText'
