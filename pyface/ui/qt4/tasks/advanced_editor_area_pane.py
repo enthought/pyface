@@ -2,6 +2,8 @@
 from past.builtins import cmp
 from builtins import str
 from builtins import range
+
+import functools
 import sys
 
 # System library imports.
@@ -318,7 +320,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                  (isinstance(child, QtGui.QDockWidget) and
                   (visible_only or not self.tabifiedDockWidgets(child))))):
                 children.append(child)
-        children.sort(cmp=compare)
+        children.sort(key=functools.cmp_to_key(compare))
 
         widgets = []
         for child in children:
