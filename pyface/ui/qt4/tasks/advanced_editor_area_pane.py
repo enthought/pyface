@@ -311,7 +311,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                  (isinstance(child, QtGui.QDockWidget) and
                   (visible_only or not self.tabifiedDockWidgets(child))))):
                 children.append(child)
-        children.sort(key=lambda x: (x.pos().y(), x.pos().x()))
+        children.sort(key=lambda _child: (_child.pos().y(), _child.pos().x()))
 
         widgets = []
         for child in children:
