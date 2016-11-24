@@ -304,10 +304,6 @@ class EditorAreaWidget(QtGui.QMainWindow):
     def get_dock_widgets_ordered(self, visible_only=False):
         """ Gets all dock widgets in left-to-right, top-to-bottom order.
         """
-        def compare(one, two):
-            y = cmp(one.pos().y(), two.pos().y())
-            return cmp(one.pos().x(), two.pos().x()) if y == 0 else y
-
         children = []
         for child in self.children():
             if (child.isWidgetType() and child.isVisible() and
@@ -315,7 +311,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
                  (isinstance(child, QtGui.QDockWidget) and
                   (visible_only or not self.tabifiedDockWidgets(child))))):
                 children.append(child)
-        children.sort(cmp=compare)
+        children.sort(key=lambda _child: (_child.pos().y(), _child.pos().x()))
 
         widgets = []
         for child in children:
