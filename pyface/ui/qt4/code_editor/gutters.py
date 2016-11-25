@@ -11,10 +11,10 @@
 
 import math
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 
-class GutterWidget(QtGui.QWidget):
+class GutterWidget(QtWidgets.QWidget):
 
     min_width = 5
     background_color = QtGui.QColor(220, 220, 220)

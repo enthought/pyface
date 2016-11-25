@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 
 # Local imports.
 from pyface.action.action_manager import ActionManager
@@ -40,11 +40,11 @@ class MenuBarManager(ActionManager):
 
         # Create the menu bar. Work around disappearing menu bars on OS X
         # (particulary on PySide but also under certain circumstances on PyQt4).
-        if isinstance(parent, QtGui.QMainWindow) and sys.platform == 'darwin':
+        if isinstance(parent, QtWidgets.QMainWindow) and sys.platform == 'darwin':
             parent.menuBar().setParent(None)
             menu_bar = parent.menuBar()
         else:
-            menu_bar = QtGui.QMenuBar(parent)
+            menu_bar = QtWidgets.QMenuBar(parent)
 
         # Every item in every group must be a menu manager.
         for group in self.groups:

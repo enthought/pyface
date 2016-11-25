@@ -13,14 +13,14 @@ from __future__ import absolute_import
 import unittest
 import cStringIO
 
-from pyface.qt import QtGui
+from pyface.qt import QtWidgets
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
-from pyface.util.testing import skip_if_no_traitsui
+from pyface.util.testing import skip_if_no_traitsui, skip_if_pyqt5
 
 
 class MyClass(HasStrictTraits):
@@ -67,6 +67,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertTrue(tester.dialog_was_opened)
 
     @skip_if_no_traitsui
+    @skip_if_pyqt5
     def test_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -84,6 +85,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertTrue(tester.dialog_was_opened)
 
     @skip_if_no_traitsui
+    @skip_if_pyqt5
     def test_dialog_was_not_opened_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.do_not_show_dialog)
@@ -140,7 +142,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QAbstractButton)
+                        tester.has_widget('OK', QtWidgets.QAbstractButton)
                     )
                     self.assertFalse(
                         tester.has_widget(text='I am a virtual button')
@@ -158,10 +160,10 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             try:
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
-                        type_=QtGui.QAbstractButton,
+                        type_=QtWidgets.QAbstractButton,
                         test=lambda x: x.text() == 'OK'
                     )
-                    self.assertIsInstance(widget, QtGui.QPushButton)
+                    self.assertIsInstance(widget, QtWidgets.QPushButton)
             finally:
                 tester.close()
 

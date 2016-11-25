@@ -15,7 +15,7 @@
 from logging import DEBUG
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Any, Bool, Font, Instance, Int, provides
@@ -55,7 +55,7 @@ class SplashScreen(MSplashScreen, Window):
     ###########################################################################
 
     def _create_control(self, parent):
-        splash_screen = QtGui.QSplashScreen(self.image.create_image())
+        splash_screen = QtWidgets.QSplashScreen(self.image.create_image())
         self._qt4_show_message(splash_screen)
 
         return splash_screen

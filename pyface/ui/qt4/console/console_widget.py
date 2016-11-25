@@ -17,7 +17,7 @@ from textwrap import dedent
 from unicodedata import category
 
 # System library imports
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets, QtPrintSupport
 
 #-----------------------------------------------------------------------------
 # Functions
@@ -33,7 +33,7 @@ def is_letter_or_number(char):
 # Classes
 #-----------------------------------------------------------------------------
 
-class ConsoleWidget(QtGui.QWidget):
+class ConsoleWidget(QtWidgets.QWidget):
     """ An abstract base class for console-type widgets. This class has 
         functionality for:
 
@@ -123,13 +123,13 @@ class ConsoleWidget(QtGui.QWidget):
         super(ConsoleWidget, self).__init__(parent)
 
         # Create the layout and underlying text widget.
-        layout = QtGui.QStackedLayout(self)
+        layout = QtWidgets.QStackedLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         self._control = self._create_control()
         self._page_control = None
         self._splitter = None
         if self.paging in ('hsplit', 'vsplit'):
-            self._splitter = QtGui.QSplitter()
+            self._splitter = QtWidgets.QSplitter()
             if self.paging == 'hsplit':
                 self._splitter.setOrientation(QtCore.Qt.Horizontal)
             else:
@@ -170,7 +170,7 @@ class ConsoleWidget(QtGui.QWidget):
         self.reset_font()
 
         # Configure actions.
-        action = QtGui.QAction('Print', None)
+        action = QtWidgets.QAction('Print', None)
         action.setEnabled(True)
         printkey = QtGui.QKeySequence(QtGui.QKeySequence.Print)
         if printkey.matches("Ctrl+P") and sys.platform != 'darwin':
@@ -182,14 +182,14 @@ class ConsoleWidget(QtGui.QWidget):
         self.addAction(action)
         self._print_action = action
 
-        action = QtGui.QAction('Save as HTML/XML', None)
+        action = QtWidgets.QAction('Save as HTML/XML', None)
         action.setEnabled(self.can_export())
         action.setShortcut(QtGui.QKeySequence.Save)
         action.triggered.connect(self.export)
         self.addAction(action)
         self._export_action = action
         
-        action = QtGui.QAction('Select All', None)
+        action = QtWidgets.QAction('Select All', None)
         action.setEnabled(True)
         action.setShortcut(QtGui.QKeySequence.SelectAll)
         action.triggered.connect(self.select_all)
@@ -210,7 +210,7 @@ class ConsoleWidget(QtGui.QWidget):
                 new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
                                             self._ctrl_down_remap[key],
                                             QtCore.Qt.NoModifier)
-                QtGui.QApplication.sendEvent(obj, new_event)
+                QtWidgets.QApplication.sendEvent(obj, new_event)
                 return True
 
             elif obj == self._control:
@@ -231,7 +231,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Manually adjust the scrollbars *after* a resize event is dispatched.
         elif etype == QtCore.QEvent.Resize and not self._filter_resize:
             self._filter_resize = True
-            QtGui.QApplication.sendEvent(obj, event)
+            QtWidgets.QApplication.sendEvent(obj, event)
             self._adjust_scrollbars()
             self._filter_resize = False
             return True
@@ -273,7 +273,7 @@ class ConsoleWidget(QtGui.QWidget):
 
             # Qt is expecting to get something here--drag and drop occurs in its
             # own event loop. Send a DragLeave event to end it.
-            QtGui.QApplication.sendEvent(obj, QtGui.QDragLeaveEvent())
+            QtWidgets.QApplication.sendEvent(obj, QtGui.QDragLeaveEvent())
             return True
 
         return super(ConsoleWidget, self).eventFilter(obj, event)
@@ -290,7 +290,7 @@ class ConsoleWidget(QtGui.QWidget):
         margin = (self._control.frameWidth() +
                   self._control.document().documentMargin()) * 2
         style = self.style()
-        splitwidth = style.pixelMetric(QtGui.QStyle.PM_SplitterWidth)
+        splitwidth = style.pixelMetric(QtWidgets.QStyle.PM_SplitterWidth)
 
         # Note 1: Despite my best efforts to take the various margins into
         # account, the width is still coming out a bit too small, so we include
@@ -298,7 +298,7 @@ class ConsoleWidget(QtGui.QWidget):
         # Note 2: QFontMetrics.maxWidth is not used here or anywhere else due
         # to a Qt bug on certain Mac OS systems where it returns 0.
         width = font_metrics.width(' ') * 81 + margin
-        width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
+        width += style.pixelMetric(QtWidgets.QStyle.PM_ScrollBarExtent)
         if self.paging == 'hsplit':
             width = width * 2 + splitwidth
 
@@ -329,7 +329,7 @@ class ConsoleWidget(QtGui.QWidget):
         """ Returns whether text can be pasted from the clipboard.
         """
         if self._control.textInteractionFlags() & QtCore.Qt.TextEditable:
-            return bool(QtGui.QApplication.clipboard().text())
+            return bool(QtWidgets.QApplication.clipboard().text())
         return False
 
     def can_export(self):
@@ -532,23 +532,23 @@ class ConsoleWidget(QtGui.QWidget):
 
             # Remove any trailing newline, which confuses the GUI and forces the
             # user to backspace.
-            text = QtGui.QApplication.clipboard().text(mode).rstrip()
+            text = QtWidgets.QApplication.clipboard().text(mode).rstrip()
             self._insert_plain_text_into_buffer(cursor, dedent(text))
 
     def print_(self, printer = None):
         """ Print the contents of the ConsoleWidget to the specified QPrinter.
         """
         if (not printer):
-            printer = QtGui.QPrinter()
-            if(QtGui.QPrintDialog(printer).exec_() != QtGui.QDialog.Accepted):
+            printer = QtPrintSupport.QPrinter()
+            if(QtPrintSupport.QPrintDialog(printer).exec_() != QtWidgets.QDialog.Accepted):
                 return
         self._control.print_(printer)
 
     def export(self, parent = None):
         """Export HTML/XML in various modes from one Dialog."""
         parent = parent or None # sometimes parent is False
-        dialog = QtGui.QFileDialog(parent, 'Save Console as...')
-        dialog.setAcceptMode(QtGui.QFileDialog.AcceptSave)
+        dialog = QtWidgets.QFileDialog(parent, 'Save Console as...')
+        dialog.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
         filters = [
             'HTML with PNG figures (*.html *.htm)',
             'XHTML with inline SVG figures (*.xhtml *.xml)'
@@ -574,8 +574,8 @@ class ConsoleWidget(QtGui.QWidget):
             except Exception as e:
                 title = self.window().windowTitle()
                 msg = "Error while saving to: %s\n"%filename+str(e)
-                reply = QtGui.QMessageBox.warning(self, title, msg,
-                    QtGui.QMessageBox.Ok, QtGui.QMessageBox.Ok)
+                reply = QtWidgets.QMessageBox.warning(self, title, msg,
+                    QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         return None
 
     def export_html(self, filename):
@@ -603,22 +603,22 @@ class ConsoleWidget(QtGui.QWidget):
                 inline = True
         elif img_re.search(html):
             # there are images
-            widget = QtGui.QWidget()
-            layout = QtGui.QVBoxLayout(widget)
+            widget = QtWidgets.QWidget()
+            layout = QtWidgets.QVBoxLayout(widget)
             title = self.window().windowTitle()
             msg = "Exporting HTML with PNGs"
             info = "Would you like inline PNGs (single large html file) or "+\
             "external image files?"
-            checkbox = QtGui.QCheckBox("&Don't ask again")
+            checkbox = QtWidgets.QCheckBox("&Don't ask again")
             checkbox.setShortcut('D')
-            ib = QtGui.QPushButton("&Inline", self)
+            ib = QtWidgets.QPushButton("&Inline", self)
             ib.setShortcut('I')
-            eb = QtGui.QPushButton("&External", self)
+            eb = QtWidgets.QPushButton("&External", self)
             eb.setShortcut('E')
-            box = QtGui.QMessageBox(QtGui.QMessageBox.Question, title, msg)
+            box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, title, msg)
             box.setInformativeText(info)
-            box.addButton(ib,QtGui.QMessageBox.NoRole)
-            box.addButton(eb,QtGui.QMessageBox.YesRole)
+            box.addButton(ib,QtWidgets.QMessageBox.NoRole)
+            box.addButton(eb,QtWidgets.QMessageBox.YesRole)
             box.setDefaultButton(ib)
             layout.setSpacing(0)
             layout.addWidget(box)
@@ -768,7 +768,7 @@ class ConsoleWidget(QtGui.QWidget):
         if fallback is not None and font_info.family() != family:
             font = QtGui.QFont(fallback)
 
-        font.setPointSize(QtGui.QApplication.font().pointSize())
+        font.setPointSize(QtWidgets.QApplication.font().pointSize())
         font.setStyleHint(QtGui.QFont.TypeWriter)
         self._set_font(font)
 
@@ -952,7 +952,7 @@ class ConsoleWidget(QtGui.QWidget):
     def _context_menu_make(self, pos):
         """ Creates a context menu for the given QPoint (in widget coordinates).
         """
-        menu = QtGui.QMenu(self)
+        menu = QtWidgets.QMenu(self)
 
         cut_action = menu.addAction('Cut', self.cut)
         cut_action.setEnabled(self.can_cut())
@@ -998,9 +998,9 @@ class ConsoleWidget(QtGui.QWidget):
         """
         # Create the underlying control.
         if self.kind == 'plain':
-            control = QtGui.QPlainTextEdit()
+            control = QtWidgets.QPlainTextEdit()
         elif self.kind == 'rich':
-            control = QtGui.QTextEdit()
+            control = QtWidgets.QTextEdit()
             control.setAcceptRichText(False)
 
         # Install event filters. The filter on the viewport is needed for
@@ -1035,9 +1035,9 @@ class ConsoleWidget(QtGui.QWidget):
         """ Creates and connects the underlying paging widget.
         """
         if self.kind == 'plain':
-            control = QtGui.QPlainTextEdit()
+            control = QtWidgets.QPlainTextEdit()
         elif self.kind == 'rich':
-            control = QtGui.QTextEdit()
+            control = QtWidgets.QTextEdit()
         control.installEventFilter(self)
         control.setReadOnly(True)
         control.setUndoRedoEnabled(False)
@@ -1345,14 +1345,14 @@ class ConsoleWidget(QtGui.QWidget):
             new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
                                         QtCore.Qt.Key_PageDown, 
                                         QtCore.Qt.NoModifier)
-            QtGui.QApplication.sendEvent(self._page_control, new_event)
+            QtWidgets.QApplication.sendEvent(self._page_control, new_event)
             return True
 
         elif key == QtCore.Qt.Key_Backspace:
             new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress,
                                         QtCore.Qt.Key_PageUp, 
                                         QtCore.Qt.NoModifier)
-            QtGui.QApplication.sendEvent(self._page_control, new_event)
+            QtWidgets.QApplication.sendEvent(self._page_control, new_event)
             return True
 
         return False
@@ -1828,7 +1828,7 @@ class ConsoleWidget(QtGui.QWidget):
         document = self._control.document()
         scrollbar = self._control.verticalScrollBar()
         viewport_height = self._control.viewport().height()
-        if isinstance(self._control, QtGui.QPlainTextEdit):
+        if isinstance(self._control, QtWidgets.QPlainTextEdit):
             maximum = max(0, document.lineCount() - 1)
             step = viewport_height / self._control.fontMetrics().lineSpacing()
         else:

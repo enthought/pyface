@@ -34,10 +34,10 @@ class Editor(MEditor):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from pyface.qt import QtCore, QtGui
+        from pyface.qt import QtCore, QtGui, QtWidgets
 
         # By default we create a yellow panel!
-        control = QtGui.QWidget(parent)
+        control = QtWidgets.QWidget(parent)
 
         pal = control.palette()
         pal.setColour(QtGui.QPalette.Window, QtCore.Qt.yellow)

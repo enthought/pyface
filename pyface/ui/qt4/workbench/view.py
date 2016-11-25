@@ -29,9 +29,9 @@ class View(MView):
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
 
-        from pyface.qt import QtGui
+        from pyface.qt import QtGui, QtWidgets
 
-        control = QtGui.QWidget(parent)
+        control = QtWidgets.QWidget(parent)
 
         palette = control.palette()
         palette.setColor(QtGui.QPalette.Window, QtGui.QColor('red'))

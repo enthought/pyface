@@ -11,7 +11,7 @@
 
 import weakref
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtCore, QtWidgets
 
 from .find_widget import FindWidget
 
@@ -23,29 +23,29 @@ class ReplaceWidget(FindWidget):
 
         self.button_size = self.fontMetrics().width(u'Replace All') + 20
 
-        form_layout = QtGui.QFormLayout()
+        form_layout = QtWidgets.QFormLayout()
         form_layout.addRow('Fin&d', self._create_find_control())
         form_layout.addRow('Rep&lace', self._create_replace_control())
 
-        layout = QtGui.QHBoxLayout()
+        layout = QtWidgets.QHBoxLayout()
         layout.addLayout(form_layout)
 
-        close_button = QtGui.QPushButton('Close')
+        close_button = QtWidgets.QPushButton('Close')
         layout.addWidget(close_button, 1, QtCore.Qt.AlignRight)
         close_button.clicked.connect(self.hide)
 
         self.setLayout(layout)
 
     def _create_replace_control(self):
-        control = QtGui.QWidget(self)
+        control = QtWidgets.QWidget(self)
 
-        self.replace_edit = QtGui.QLineEdit()
-        self.replace_button = QtGui.QPushButton('&Replace')
+        self.replace_edit = QtWidgets.QLineEdit()
+        self.replace_button = QtWidgets.QPushButton('&Replace')
         self.replace_button.setFixedWidth(self.button_size)
-        self.replace_all_button = QtGui.QPushButton('Replace &All')
+        self.replace_all_button = QtWidgets.QPushButton('Replace &All')
         self.replace_all_button.setFixedWidth(self.button_size)
 
-        layout = QtGui.QHBoxLayout()
+        layout = QtWidgets.QHBoxLayout()
         layout.addWidget(self.replace_edit)
         layout.addWidget(self.replace_button)
         layout.addWidget(self.replace_all_button)

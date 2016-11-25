@@ -15,7 +15,7 @@
 import os
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Enum, Int, List, provides, Unicode
@@ -100,8 +100,12 @@ class FileDialog(MFileDialog, Dialog):
         self.directory, self.filename = os.path.split(self.path)
 
         # Get the index of the selected filter.
-        self.wildcard_index = self.control.nameFilters().index(
-            self.control.selectedNameFilter())
+        try:
+            self.wildcard_index = self.control.nameFilters().index(
+                self.control.selectedNameFilter())
+        except ValueError as e:
+            # selectedNameFilter() sometimes returns empty string on pyqt5
+            pass
 
         # Let the window close as normal.
         super(FileDialog, self).close()
@@ -132,8 +136,8 @@ class FileDialog(MFileDialog, Dialog):
         if not default_directory:
             default_directory = QtCore.QDir.currentPath()
 
-        dlg = QtGui.QFileDialog(parent, self.title, default_directory)
-        dlg.setViewMode(QtGui.QFileDialog.Detail)
+        dlg = QtWidgets.QFileDialog(parent, self.title, default_directory)
+        dlg.setViewMode(QtWidgets.QFileDialog.Detail)
         dlg.selectFile(default_filename)
         dlg.setNameFilters(filters)
 
@@ -141,14 +145,14 @@ class FileDialog(MFileDialog, Dialog):
             dlg.selectNameFilter(filters[self.wildcard_index])
 
         if self.action == 'open':
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
-            dlg.setFileMode(QtGui.QFileDialog.ExistingFile)
+            dlg.setAcceptMode(QtWidgets.QFileDialog.AcceptOpen)
+            dlg.setFileMode(QtWidgets.QFileDialog.ExistingFile)
         elif self.action == 'open files':
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
-            dlg.setFileMode(QtGui.QFileDialog.ExistingFiles)
+            dlg.setAcceptMode(QtWidgets.QFileDialog.AcceptOpen)
+            dlg.setFileMode(QtWidgets.QFileDialog.ExistingFiles)
         else:
-            dlg.setAcceptMode(QtGui.QFileDialog.AcceptSave)
-            dlg.setFileMode(QtGui.QFileDialog.AnyFile)
+            dlg.setAcceptMode(QtWidgets.QFileDialog.AcceptSave)
+            dlg.setFileMode(QtWidgets.QFileDialog.AnyFile)
 
         return dlg
 

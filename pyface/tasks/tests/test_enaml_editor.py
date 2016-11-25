@@ -1,8 +1,13 @@
+import os
+
 from traits.testing.unittest_tools import unittest
 from traits.etsconfig.api import ETSConfig
 
 if ETSConfig.toolkit not in ['', 'qt4']:
     raise unittest.SkipTest("TestEnamlEditor: Enaml does not support WX")
+
+if os.environ.get('QT_API', None) == 'pyqt5':
+    raise unittest.SkipTest("TestEnamlDockPane: Enaml does not support Qt5")
 
 try:
     from enaml.widgets.api import Label

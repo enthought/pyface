@@ -12,7 +12,7 @@ import contextlib
 import threading
 
 from pyface.gui import GUI
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 from traits.api import HasStrictTraits, Instance
 
 
@@ -36,7 +36,7 @@ def dont_quit_when_last_window_closed(qt_app):
 
 class EventLoopHelper(HasStrictTraits):
 
-    qt_app = Instance(QtGui.QApplication)
+    qt_app = Instance(QtWidgets.QApplication)
 
     gui = Instance(GUI)
 

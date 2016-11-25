@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Instance, List, provides, Unicode
@@ -74,7 +74,7 @@ class AboutDialog(MAboutDialog, Dialog):
     ###########################################################################
 
     def _create_contents(self, parent):
-        label = QtGui.QLabel()
+        label = QtWidgets.QLabel()
 
         if parent.parent() is not None:
             title = parent.parent().windowTitle()
@@ -99,16 +99,16 @@ class AboutDialog(MAboutDialog, Dialog):
         label.setText(_DIALOG_TEXT % (path, additions, py_version, qt_version))
 
         # Create the button.
-        buttons = QtGui.QDialogButtonBox()
+        buttons = QtWidgets.QDialogButtonBox()
 
         if self.ok_label:
-            buttons.addButton(self.ok_label, QtGui.QDialogButtonBox.AcceptRole)
+            buttons.addButton(self.ok_label, QtWidgets.QDialogButtonBox.AcceptRole)
         else:
-            buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            buttons.addButton(QtWidgets.QDialogButtonBox.Ok)
 
-        buttons.connect(buttons, QtCore.SIGNAL('accepted()'), parent, QtCore.SLOT('accept()'))
+        buttons.accepted.connect(parent.accept)
 
-        lay = QtGui.QVBoxLayout()
+        lay = QtWidgets.QVBoxLayout()
         lay.addWidget(label)
         lay.addWidget(buttons)
 

@@ -6,7 +6,7 @@ import unittest
 
 from traits.api import HasTraits, Instance
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtCore, QtWidgets
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
     SplitEditorAreaPane
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
@@ -23,9 +23,9 @@ class ViewWithTabsEditor(Editor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        control = QtGui.QTabWidget()
-        control.addTab(QtGui.QLabel('tab 1'), 'group 1')
-        control.addTab(QtGui.QLabel('tab 2'), 'group 2')
+        control = QtWidgets.QTabWidget()
+        control.addTab(QtWidgets.QLabel('tab 1'), 'group 1')
+        control.addTab(QtWidgets.QLabel('tab 2'), 'group 2')
         self.control = control
 
     def destroy(self):
@@ -56,8 +56,8 @@ class TestEditorAreaWidget(unittest.TestCase):
         """
         root = EditorAreaWidget(editor_area=SplitEditorAreaPane(),
                                 parent=parent)
-        btn0 = QtGui.QPushButton('0')
-        btn1 = QtGui.QPushButton('1')
+        btn0 = QtWidgets.QPushButton('0')
+        btn1 = QtWidgets.QPushButton('1')
         tabwidget = root.tabwidget()
         tabwidget.addTab(btn0, '0')
         tabwidget.addTab(btn1, '1')
@@ -118,8 +118,8 @@ class TestEditorAreaWidget(unittest.TestCase):
         """
         # setup leftchild
         left = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
-        btn0 = QtGui.QPushButton('btn0')
-        btn1 = QtGui.QPushButton('btn1')
+        btn0 = QtWidgets.QPushButton('btn0')
+        btn1 = QtWidgets.QPushButton('btn1')
         tabwidget = left.tabwidget()
         tabwidget.addTab(btn0, '0')
         tabwidget.addTab(btn1, '1')
@@ -127,8 +127,8 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # setup rightchild
         right = EditorAreaWidget(editor_area=left.editor_area, parent=None)
-        btn2 = QtGui.QPushButton('btn2')
-        btn3 = QtGui.QPushButton('btn3')
+        btn2 = QtWidgets.QPushButton('btn2')
+        btn3 = QtWidgets.QPushButton('btn3')
         tabwidget = right.tabwidget()
         tabwidget.addTab(btn2, '2')
         tabwidget.addTab(btn3, '3')
@@ -163,7 +163,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # test
         # has the root now become the leaf?
         self.assertEquals(root.count(), 1)
-        self.assertIsInstance(root.widget(0), QtGui.QTabWidget)
+        self.assertIsInstance(root.widget(0), QtWidgets.QTabWidget)
 
         # how does the combined list look?
         self.assertEquals(root.tabwidget().count(), 4)

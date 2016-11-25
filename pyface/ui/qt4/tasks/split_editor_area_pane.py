@@ -6,7 +6,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
     on_trait_change, Property, provides, Str
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -32,7 +32,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     #### SplitEditorAreaPane interface #####################################
 
     # Currently active tabwidget
-    active_tabwidget = Instance(QtGui.QTabWidget)
+    active_tabwidget = Instance(QtWidgets.QTabWidget)
 
     # list of installed drop handlers
     drop_handlers = List(IDropHandler)
@@ -88,7 +88,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         self.active_tabwidget = self.control.tabwidget()
 
         # handle application level focus changes
-        QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
+        QtWidgets.QApplication.instance().focusChanged.connect(self._focus_changed)
 
         # set key bindings
         self.set_key_bindings()
@@ -98,7 +98,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         # disconnect application level focus change signals first, else it gives
         # weird runtime errors trying to access non-existent objects
-        QtGui.QApplication.instance().focusChanged.disconnect(self._focus_changed)
+        QtWidgets.QApplication.instance().focusChanged.disconnect(self._focus_changed)
 
         for editor in self.editors[:]:
             self.remove_editor(editor)
@@ -260,9 +260,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         else:
             next_seq = 'Ctrl+PgDown'
             prev_seq = 'Ctrl+PgUp'
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
-        shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
+        shortcut = QtWidgets.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
 
         # Add shortcuts for switching to a specific tab.
@@ -271,7 +271,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         mapper.mapped.connect(self._activate_tab)
         for i in xrange(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
-            shortcut = QtGui.QShortcut(sequence, self.control)
+            shortcut = QtWidgets.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
             mapper.setMapping(shortcut, i - 1)
 
@@ -334,7 +334,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             if isinstance(new, DraggableTabWidget):
                 if new.editor_area == self:
                     self.active_tabwidget = new
-            elif isinstance(new, QtGui.QTabBar):
+            elif isinstance(new, QtWidgets.QTabBar):
                 if self.control.isAncestorOf(new):
                     self.active_tabwidget = \
                         self._find_ancestor_draggable_tab_widget(new)
@@ -366,7 +366,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxiliary classes.
 ###############################################################################
 
-class EditorAreaWidget(QtGui.QSplitter):
+class EditorAreaWidget(QtWidgets.QSplitter):
     """ Container widget to hold a QTabWidget which are separated by other
     QTabWidgets via splitters.
 
@@ -472,7 +472,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         (returns None for non-leaf splitters)
         """
         for child in self.children():
-            if isinstance(child, QtGui.QTabWidget):
+            if isinstance(child, QtWidgets.QTabWidget):
                 return child
         return None
 
@@ -638,7 +638,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         sibling.setParent(None)
 
 
-class DraggableTabWidget(QtGui.QTabWidget):
+class DraggableTabWidget(QtWidgets.QTabWidget):
     """ Implements a QTabWidget with event filters for tab drag and drop
     """
 
@@ -704,9 +704,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
         """ Creates the QFrame object to be shown when the current tabwidget is
         empty.
         """
-        frame = QtGui.QFrame(parent=self)
-        frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        layout = QtGui.QVBoxLayout(frame)
+        frame = QtWidgets.QFrame(parent=self)
+        frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        layout = QtWidgets.QVBoxLayout(frame)
 
         # Add new file button and open file button only if the `callbacks` trait
         # of the editor_area has a callable for key `new` and key `open`
@@ -722,19 +722,19 @@ class DraggableTabWidget(QtGui.QTabWidget):
         layout.addStretch()
 
         # generate new file button
-        newfile_btn = QtGui.QPushButton('Create a new file', parent=frame)
+        newfile_btn = QtWidgets.QPushButton('Create a new file', parent=frame)
         newfile_btn.clicked.connect(new_file_action)
         layout.addWidget(newfile_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
-        label = QtGui.QLabel(parent=frame)
+        label = QtWidgets.QLabel(parent=frame)
         label.setText("""<span style='font-size:14px; color:#999999'>
                         or
                         </span>""")
         layout.addWidget(label, alignment=QtCore.Qt.AlignHCenter)
 
         # generate open button
-        open_btn = QtGui.QPushButton('Select files from your computer', parent=frame)
+        open_btn = QtWidgets.QPushButton('Select files from your computer', parent=frame)
         def _open():
             if open_show_dialog:
                 open_dlg = FileDialog(action='open')
@@ -748,7 +748,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         layout.addWidget(open_btn, alignment=QtCore.Qt.AlignHCenter)
 
         # generate label
-        label = QtGui.QLabel(parent=frame)
+        label = QtWidgets.QLabel(parent=frame)
         label.setText("""<span style='font-size:14px; color:#999999'>
                         Tip: You can also drag and drop files/tabs here.
                         </span>""")
@@ -848,7 +848,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         return super(DraggableTabWidget, self).dragLeaveEvent(event)
 
 
-class DraggableTabBar(QtGui.QTabBar):
+class DraggableTabBar(QtWidgets.QTabBar):
     """ Implements a QTabBar with event filters for tab drag
     """
     def __init__(self, editor_area, parent):
@@ -876,7 +876,7 @@ class DraggableTabBar(QtGui.QTabBar):
                 pass
             # has the mouse been dragged for sufficient distance?
             elif ((event.pos() - self.drag_obj.start_pos).manhattanLength()
-                < QtGui.QApplication.startDragDistance()):
+                < QtWidgets.QApplication.startDragDistance()):
                 pass
             # initiate drag
             else:
@@ -924,14 +924,14 @@ class TabDragObject(object):
         tab_rect = tabBar.tabRect(self.from_index)
         size = self.widget.rect().size()
         result_pixmap = QtGui.QPixmap(size)
-        painter = QtGui.QStylePainter(result_pixmap, tabBar)
+        painter = QtWidgets.QStylePainter(result_pixmap, tabBar)
 
         painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
         painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
 
         optTabBase = QtGui.QStyleOptionTabBarBaseV2()
         optTabBase.initFrom(tabBar)
-        painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
+        painter.drawPrimitive(QtWidgets.QStyle.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
         pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)

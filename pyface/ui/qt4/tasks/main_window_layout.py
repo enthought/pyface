@@ -3,7 +3,7 @@ from itertools import combinations
 import logging
 
 # System library imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Any, HasTraits
@@ -50,7 +50,7 @@ class MainWindowLayout(HasTraits):
         for child in self.control.children():
             # Iterate through *visibile* dock widgets. (Inactive tabbed dock
             # widgets are "visible" but have invalid positions.)
-            if isinstance(child, QtGui.QDockWidget) and child.isVisible() and \
+            if isinstance(child, QtWidgets.QDockWidget) and child.isVisible() and \
                    self.control.dockWidgetArea(child) == q_dock_area and \
                    child.x() >= 0 and child.y() >= 0:
                 # Get the list of dock widgets in this tab group in order.
@@ -113,7 +113,7 @@ class MainWindowLayout(HasTraits):
         """
         # Remove all existing dock widgets.
         for child in self.control.children():
-            if isinstance(child, QtGui.QDockWidget):
+            if isinstance(child, QtWidgets.QDockWidget):
                 child.hide()
                 self.control.removeDockWidget(child)
 
@@ -224,7 +224,7 @@ class MainWindowLayout(HasTraits):
         united = one.united(two)
         if splitter:
             sep = self.control.style().pixelMetric(
-                QtGui.QStyle.PM_DockWidgetSeparatorExtent, None, self.control)
+                QtWidgets.QStyle.PM_DockWidgetSeparatorExtent, None, self.control)
             united.adjust(0, 0, -sep, -sep)
 
         if one.x() == two.x() and one.width() == two.width() and \
@@ -243,7 +243,7 @@ class MainWindowLayout(HasTraits):
         """
         dock_geometry = dock_widget.geometry()
         for child in self.control.children():
-            if isinstance(child, QtGui.QTabBar) and child.isVisible():
+            if isinstance(child, QtWidgets.QTabBar) and child.isVisible():
                 geometry = child.geometry()
                 if self._get_division_orientation(dock_geometry, geometry):
                     return child
@@ -286,7 +286,7 @@ class MainWindowLayout(HasTraits):
             return
         QWIDGETSIZE_MAX = (1 << 24) - 1 # Not exposed by Qt bindings.
         for child in self.control.children():
-            if isinstance(child, QtGui.QDockWidget):
+            if isinstance(child, QtWidgets.QDockWidget):
                 child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
                 child.widget().setMinimumSize(0, 0)
                 # QDockWidget somehow manages to set its own

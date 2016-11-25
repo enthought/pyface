@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, Instance, List, Property, provides, Unicode
@@ -71,15 +71,14 @@ class Wizard(MWizard, Dialog):
 
     def _create_control(self, parent):
         control = _Wizard(parent, self)
-        control.setOptions(QtGui.QWizard.NoDefaultButton |
-                           QtGui.QWizard.NoBackButtonOnStartPage)
+        control.setOptions(QtWidgets.QWizard.NoDefaultButton |
+                           QtWidgets.QWizard.NoBackButtonOnStartPage)
         control.setModal(self.style == 'modal')
         control.setWindowTitle(self.title)
 
         # Necessary for 'nonmodal'. See Dialog for more info.
         if self.style == 'nonmodal':
-            QtCore.QObject.connect(control, QtCore.SIGNAL('finished(int)'),
-                                   self._finished_fired)
+            control.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):
             size = QtCore.QSize(*self.size)
@@ -87,12 +86,11 @@ class Wizard(MWizard, Dialog):
             control.resize(size)
 
         if not self.show_cancel:
-            control.setOption(QtGui.QWizard.NoCancelButton)
+            control.setOption(QtWidgets.QWizard.NoCancelButton)
 
         if self.help_id:
-            control.setOption(QtGui.QWizard.HaveHelpButton)
-            QtCore.QObject.connect(control, QtCore.SIGNAL('helpRequested()'),
-                    self._help_requested)
+            control.setOption(QtWidgets.QWizard.HaveHelpButton)
+            control.helpRequested.connect(self._help_requested)
 
         # Add the initial pages.
         for page in self.pages:
@@ -155,21 +153,20 @@ class Wizard(MWizard, Dialog):
         return WizardController()
 
 
-class _Wizard(QtGui.QWizard):
+class _Wizard(QtWidgets.QWizard):
     """ A QWizard sub-class that hooks into the controller to determine the
     next page to show. """
 
     def __init__(self, parent, pyface_wizard):
         """ Initialise the object. """
 
-        QtGui.QWizard.__init__(self, parent)
+        QtWidgets.QWizard.__init__(self, parent)
 
         self._pyface_wizard = pyface_wizard
         self._controller = pyface_wizard.controller
         self._ids = {}
 
-        QtCore.QObject.connect(self, QtCore.SIGNAL('currentIdChanged(int)'),
-                self._update_controller)
+        self.currentIdChanged.connect(self._update_controller)
 
     def addWizardPage(self, page):
         """ Add a page that provides IWizardPage. """

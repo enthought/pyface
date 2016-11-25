@@ -8,7 +8,7 @@ import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
@@ -18,8 +18,8 @@ from .gui_test_assistant import find_qt_widget
 BUTTON_TEXT = {
     OK: 'OK',
     CANCEL: 'Cancel',
-    YES: '&Yes',
-    NO: '&No',
+    YES: 'Yes',
+    NO: 'No',
 }
 
 
@@ -56,7 +56,7 @@ class ModalDialogTester(object):
         self.function = function
         self._assigned = False
         self._result = Undefined
-        self._qt_app = QtGui.QApplication.instance()
+        self._qt_app = QtWidgets.QApplication.instance()
         self._gui = GUI()
         self._event_loop_error = []
         self._helper = EventLoopHelper(qt_app=self._qt_app, gui=self._gui)
@@ -250,16 +250,18 @@ class ModalDialogTester(object):
 
             raise type_(msg.format('\n\n'.join(tracebacks)))
 
-    def click_widget(self, text, type_=QtGui.QPushButton):
+    def click_widget(self, text, type_=QtWidgets.QPushButton):
         """ Execute click on the widget of `type_` with `text`.
 
         """
         control = self.get_dialog_widget()
-        widget = find_qt_widget(
-            control,
-            type_,
-            test=lambda widget: widget.text() == text
-        )
+        def check_text(widget):
+            if issubclass(type_, QtWidgets.QAbstractButton):
+                # Ignore mnemonic keys in buttons
+                return widget.text().replace('&', '') == text.replace('&', '')
+            else:
+                return widget.text() == text
+        widget = find_qt_widget(control, type_, test=check_text)
         widget.click()
 
     def click_button(self, button_id):
@@ -295,7 +297,7 @@ class ModalDialogTester(object):
         # window if this Tester is used for non-modal windows.
         return self._qt_app.activeModalWidget()
 
-    def has_widget(self, text=None, type_=QtGui.QPushButton):
+    def has_widget(self, text=None, type_=QtWidgets.QPushButton):
         """ Return true if there is a widget of `type_` with `text`.
 
         """
@@ -305,7 +307,7 @@ class ModalDialogTester(object):
             test = lambda qwidget: qwidget.text() == text
         return self.find_qt_widget(type_=type_, test=test) is not None
 
-    def find_qt_widget(self, type_=QtGui.QPushButton, test=None):
+    def find_qt_widget(self, type_=QtWidgets.QPushButton, test=None):
         """ Return the widget of `type_` for which `test` returns true.
 
         """

@@ -15,7 +15,7 @@
 
 import time
 
-from pyface.qt import QtGui, QtCore
+from pyface.qt import QtCore, QtWidgets
 
 from traits.api import Bool, Instance, Int, Unicode, provides
 
@@ -31,7 +31,7 @@ class ProgressDialog(MProgressDialog, Window):
     # FIXME: buttons are not set up correctly yet
 
     #: The progress bar widget
-    progress_bar = Instance(QtGui.QProgressBar)
+    progress_bar = Instance(QtWidgets.QProgressBar)
 
     #: The window title
     title = Unicode
@@ -72,16 +72,16 @@ class ProgressDialog(MProgressDialog, Window):
     _user_cancelled = Bool(False)
 
     #: The widget showing the message text
-    _message_control = Instance(QtGui.QLabel)
+    _message_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the time elapsed
-    _elapsed_control = Instance(QtGui.QLabel)
+    _elapsed_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the estimated time to completion
-    _estimated_control = Instance(QtGui.QLabel)
+    _estimated_control = Instance(QtWidgets.QLabel)
 
     #: The widget showing the estimated time remaining
-    _remaining_control = Instance(QtGui.QLabel)
+    _remaining_control = Instance(QtWidgets.QLabel)
 
     #-------------------------------------------------------------------------
     # IWindow Interface
@@ -144,7 +144,7 @@ class ProgressDialog(MProgressDialog, Window):
             if self._user_cancelled:
                 self.close()
 
-        QtGui.QApplication.processEvents()
+        QtWidgets.QApplication.processEvents()
 
         return (not self._user_cancelled, False)
 
@@ -171,31 +171,31 @@ class ProgressDialog(MProgressDialog, Window):
             return
 
         # Create the button.
-        buttons = QtGui.QDialogButtonBox()
+        buttons = QtWidgets.QDialogButtonBox()
 
         if self.can_cancel:
-            buttons.addButton(self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole)
+            buttons.addButton(self.cancel_button_label, QtWidgets.QDialogButtonBox.RejectRole)
         if self.can_ok:
-            buttons.addButton(QtGui.QDialogButtonBox.Ok)
+            buttons.addButton(QtWidgets.QDialogButtonBox.Ok)
 
         # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
 
         if self.can_cancel:
-            buttons.connect(buttons, QtCore.SIGNAL('rejected()'), dialog, QtCore.SLOT('reject()'))
+            buttons.rejected.connect(dialog.reject)
         if self.can_ok:
-            buttons.connect(buttons, QtCore.SIGNAL('accepted()'), dialog, QtCore.SLOT('accept()'))
+            buttons.accepted.connect(dialog.accept)
 
         layout.addWidget(buttons)
 
     def _create_label(self, dialog, layout, text):
 
-        dummy = QtGui.QLabel(text, dialog)
+        dummy = QtWidgets.QLabel(text, dialog)
         dummy.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
 
-        label = QtGui.QLabel("unknown", dialog)
+        label = QtWidgets.QLabel("unknown", dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight)
 
-        sub_layout = QtGui.QHBoxLayout()
+        sub_layout = QtWidgets.QHBoxLayout()
 
         sub_layout.addWidget(dummy)
         sub_layout.addWidget(label)
@@ -206,7 +206,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_gauge(self, dialog, layout):
 
-        self.progress_bar = QtGui.QProgressBar(dialog)
+        self.progress_bar = QtWidgets.QProgressBar(dialog)
         self.progress_bar.setRange(self.min, self.max)
         layout.addWidget(self.progress_bar)
 
@@ -216,7 +216,7 @@ class ProgressDialog(MProgressDialog, Window):
             self.progress_bar.setFormat("%v")
 
     def _create_message(self, dialog, layout):
-        label = QtGui.QLabel(self.message, dialog)
+        label = QtWidgets.QLabel(self.message, dialog)
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         layout.addWidget(label)
         self._message_control = label
@@ -231,7 +231,7 @@ class ProgressDialog(MProgressDialog, Window):
         self._remaining_control = self._create_label(dialog, layout, "Remaining time : ")
 
     def _create_control(self, parent):
-        return QtGui.QDialog(parent)
+        return QtWidgets.QDialog(parent)
 
     def _create(self):
         super(ProgressDialog, self)._create()
@@ -239,7 +239,7 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_contents(self, parent):
         dialog = parent
-        layout  = QtGui.QVBoxLayout(dialog)
+        layout  = QtWidgets.QVBoxLayout(dialog)
         layout.setContentsMargins(self.margin, self.margin,
                                   self.margin, self.margin)
 

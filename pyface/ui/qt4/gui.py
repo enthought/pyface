@@ -15,7 +15,7 @@
 import logging
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, HasTraits, provides, Unicode
@@ -91,9 +91,9 @@ class GUI(MGUI, HasTraits):
 
     def set_busy(busy=True):
         if busy:
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
-            QtGui.QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
 
     set_busy = staticmethod(set_busy)
 
@@ -116,7 +116,7 @@ class GUI(MGUI, HasTraits):
 
     def stop_event_loop(self):
         logger.debug("---------- stopping GUI event loop ----------")
-        QtGui.QApplication.quit()
+        QtWidgets.QApplication.quit()
 
     ###########################################################################
     # Trait handlers.
@@ -131,9 +131,9 @@ class GUI(MGUI, HasTraits):
         """ The busy trait change handler. """
 
         if new:
-            QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+            QtWidgets.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
-            QtGui.QApplication.restoreOverrideCursor()
+            QtWidgets.QApplication.restoreOverrideCursor()
 
 
 class _FutureCall(QtCore.QObject):
@@ -163,14 +163,14 @@ class _FutureCall(QtCore.QObject):
         self._calls_mutex.unlock()
 
         # Move to the main GUI thread.
-        self.moveToThread(QtGui.QApplication.instance().thread())
+        self.moveToThread(QtWidgets.QApplication.instance().thread())
 
         # Post an event to be dispatched on the main GUI thread. Note that
         # we do not call QTimer.singleShot here, which would be simpler, because
         # that only works on QThreads. We want regular Python threads to work.
         event = QtCore.QEvent(self._pyface_event)
-        QtGui.QApplication.postEvent(self, event)
-        QtGui.QApplication.sendPostedEvents()
+        QtWidgets.QApplication.postEvent(self, event)
+        QtWidgets.QApplication.sendPostedEvents()
 
     def event(self, event):
         """ QObject event handler.
@@ -187,6 +187,9 @@ class _FutureCall(QtCore.QObject):
         """
         try:
             self._callable(*self._args, **self._kw)
+        except Exception as e:
+            # Raising an exception in a slot is a fatal error in Qt5
+            logger.info("Exception in slot: %s", e, exc_info=True)
         finally:
             self._finished()
 

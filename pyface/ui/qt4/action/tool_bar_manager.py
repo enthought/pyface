@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, Enum, Instance, Str, Tuple
@@ -137,7 +137,7 @@ class ToolBarManager(ActionManager):
         return lambda visible: separator.setVisible(visible)
 
 
-class _ToolBar(QtGui.QToolBar):
+class _ToolBar(QtWidgets.QToolBar):
     """ The toolkit-specific tool bar implementation. """
 
     ###########################################################################
@@ -147,7 +147,7 @@ class _ToolBar(QtGui.QToolBar):
     def __init__(self, tool_bar_manager, parent):
         """ Constructor. """
 
-        QtGui.QToolBar.__init__(self, parent)
+        QtWidgets.QToolBar.__init__(self, parent)
 
         # Listen for changes to the tool bar manager's enablement and
         # visibility.

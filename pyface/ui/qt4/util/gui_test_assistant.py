@@ -12,7 +12,7 @@ import threading
 
 import mock
 
-from pyface.qt.QtGui import QApplication
+from pyface.qt import QtWidgets
 from pyface.ui.qt4.gui import GUI
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.unittest_tools import _TraitsChangeCollector as \
@@ -27,9 +27,9 @@ class GuiTestAssistant(UnittestTools):
     #### 'TestCase' protocol ##################################################
 
     def setUp(self):
-        qt_app = QApplication.instance()
+        qt_app = QtWidgets.QApplication.instance()
         if qt_app is None:
-            qt_app = QApplication([])
+            qt_app = QtWidgets.QApplication([])
         self.qt_app = qt_app
         self.gui = GUI()
         self.event_loop_helper = EventLoopHelper(

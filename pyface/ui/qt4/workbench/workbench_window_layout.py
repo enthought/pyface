@@ -15,7 +15,7 @@
 import logging
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Instance, on_trait_change
@@ -130,8 +130,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     def close(self):
         # Don't fire signals for editors that have destroyed their controls.
-        QtCore.QObject.disconnect(self._qt4_editor_area,
-                QtCore.SIGNAL('hasFocus'), self._qt4_editor_focus)
+        self._qt4_editor_area.hasFocus.disconnect(self._qt4_editor_focus)
 
         self._qt4_editor_area.clear()
 
@@ -143,19 +142,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def create_initial_layout(self, parent):
         self._qt4_editor_area = editor_area = SplitTabWidget(parent)
 
-        QtCore.QObject.connect(editor_area, QtCore.SIGNAL('hasFocus'),
-                               self._qt4_editor_focus)
+        editor_area.hasFocus.connect(self._qt4_editor_focus)
 
         # We are interested in focus changes but we get them from the editor
         # area rather than qApp to allow the editor area to restrict them when
         # needed.
-        QtCore.QObject.connect(
-            editor_area, QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
-            self._qt4_view_focus_changed)
+        editor_area.focusChanged.connect(self._qt4_view_focus_changed)
 
-        QtCore.QObject.connect(self._qt4_editor_area,
-                QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
-                self._qt4_editor_title_changed)
+        self._qt4_editor_area.tabTextChanged.connect(self._qt4_editor_title_changed)
 
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
@@ -501,13 +495,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         try:
             dw = view._qt4_dock
         except AttributeError:
-            dw = QtGui.QDockWidget(view.name, self.window.control)
+            dw = QtWidgets.QDockWidget(view.name, self.window.control)
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
-            dw.connect(dw.toggleViewAction(), QtCore.SIGNAL('toggled(bool)'),
-                    self._qt4_handle_dock_visibility)
-            dw.connect(dw, QtCore.SIGNAL('visibilityChanged(bool)'),
-                    self._qt4_handle_dock_visibility)
+            dw.toggleViewAction().toggled.connect(self._qt4_handle_dock_visibility)
+            dw.visibilityChanged.connect(self._qt4_handle_dock_visibility)
 
             # Save the dock window.
             view._qt4_dock = dw
@@ -603,7 +595,7 @@ class _Monitor(QtCore.QObject):
         return False
 
 
-class _ViewContainer(QtGui.QMainWindow):
+class _ViewContainer(QtWidgets.QMainWindow):
     """ This class is a container for a view that allows an initial size
     (specified as a tuple) to be set.
     """
@@ -611,7 +603,7 @@ class _ViewContainer(QtGui.QMainWindow):
     def __init__(self, size, main_window):
         """ Initialise the object. """
 
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
 
         # Save the size and main window.
         self._width, self._height = size
@@ -647,6 +639,6 @@ class _ViewContainer(QtGui.QMainWindow):
 
         self._width = self._height = -1
 
-        QtGui.QMainWindow.showEvent(self, e)
+        QtWidgets.QMainWindow.showEvent(self, e)
 
 #### EOF ######################################################################

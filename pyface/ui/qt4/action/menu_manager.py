@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Instance, Unicode
@@ -85,7 +85,7 @@ class MenuManager(ActionManager, ActionManagerItem):
                                  else tool_button.InstantPopup)
 
 
-class _Menu(QtGui.QMenu):
+class _Menu(QtWidgets.QMenu):
     """ The toolkit-specific menu control. """
 
     ###########################################################################
@@ -96,7 +96,7 @@ class _Menu(QtGui.QMenu):
         """ Creates a new tree. """
 
         # Base class constructor.
-        QtGui.QMenu.__init__(self, parent)
+        QtWidgets.QMenu.__init__(self, parent)
 
         # The parent of the menu.
         self._parent = parent
