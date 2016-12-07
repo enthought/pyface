@@ -24,7 +24,7 @@
 #-------------------------------------------------------------------------
 
 
-class IDockUIProvider (object):
+class IDockUIProvider(object):
 
     #-------------------------------------------------------------------------
     #  Returns a Traits UI which a DockWindow can imbed:

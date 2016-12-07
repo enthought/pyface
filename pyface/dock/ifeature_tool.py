@@ -25,7 +25,7 @@
 #-------------------------------------------------------------------------
 
 
-class IFeatureTool (object):
+class IFeatureTool(object):
 
     #-------------------------------------------------------------------------
     #  Returns whether or not the object being dragged (i.e. self) can be

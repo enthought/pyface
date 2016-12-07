@@ -60,7 +60,7 @@ from ifeature_tool \
 #-------------------------------------------------------------------------
 
 
-class DockWindowFeature (HasPrivateTraits):
+class DockWindowFeature(HasPrivateTraits):
     """ Implements "features" on DockWindows.
 
     See "The DockWindowFeature Feature of DockWindows" document (.doc or .pdf)

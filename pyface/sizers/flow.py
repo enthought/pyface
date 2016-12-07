@@ -24,7 +24,7 @@ from pyface.timer.api \
 #-------------------------------------------------------------------------
 
 
-class FlowSizer (wx.PySizer):
+class FlowSizer(wx.PySizer):
 
     #-------------------------------------------------------------------------
     #  Initializes the object:

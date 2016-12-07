@@ -35,7 +35,7 @@ from pyface.image_resource \
 #-------------------------------------------------------------------------
 
 
-class FeatureTool (DockWindowFeature):
+class FeatureTool(DockWindowFeature):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

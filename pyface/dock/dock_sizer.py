@@ -257,7 +257,7 @@ def get_dc(window):
 #-------------------------------------------------------------------------
 
 
-class DockImages (HasPrivateTraits):
+class DockImages(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -349,7 +349,7 @@ DockImages = DockImages()
 #-------------------------------------------------------------------------
 
 
-class DockItem (HasPrivateTraits):
+class DockItem(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -1204,7 +1204,7 @@ class DockItem (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class DockSplitter (DockItem):
+class DockSplitter(DockItem):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -1555,7 +1555,7 @@ class DockSplitter (DockItem):
 #-------------------------------------------------------------------------
 
 
-class DockControl (DockItem):
+class DockControl(DockItem):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -2014,7 +2014,7 @@ class DockControl (DockItem):
 #-------------------------------------------------------------------------
 
 
-class DockGroup (DockItem):
+class DockGroup(DockItem):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -2255,7 +2255,7 @@ class DockGroup (DockItem):
 #-------------------------------------------------------------------------
 
 
-class DockRegion (DockGroup):
+class DockRegion(DockGroup):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -2982,7 +2982,7 @@ class DockRegion (DockGroup):
 #  'DockSection' class:
 #-------------------------------------------------------------------------
 
-class DockSection (DockGroup):
+class DockSection(DockGroup):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -3658,7 +3658,7 @@ class DockSection (DockGroup):
 #-------------------------------------------------------------------------
 
 
-class DockInfo (HasPrivateTraits):
+class DockInfo(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -3795,7 +3795,7 @@ no_dock_info = DockInfo(kind=DOCK_NONE)
 #-------------------------------------------------------------------------
 
 
-class SetStructureHandler (object):
+class SetStructureHandler(object):
 
     #-------------------------------------------------------------------------
     #  Resolves an unresolved DockControl id:
@@ -3822,7 +3822,7 @@ class SetStructureHandler (object):
 #-------------------------------------------------------------------------
 
 
-class DockSizer (wx.PySizer):
+class DockSizer(wx.PySizer):
 
     #-------------------------------------------------------------------------
     #  Initializes the object:

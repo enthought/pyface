@@ -290,7 +290,7 @@ class IPython09Controller(IPythonController):
     def _on_enter(self):
         """ Called when the return key is pressed in a line editing
             buffer.
-            Overridden from the base class implementation (in
+            Overridden from the base class implementation(in
             IPython/frontend/linefrontendbase.py) to include a continuation
             prompt.
         """

@@ -44,7 +44,7 @@ from ifeature_tool \
 #-------------------------------------------------------------------------
 
 
-class FeatureBar (HasPrivateTraits):
+class FeatureBar(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -447,7 +447,7 @@ class FeatureBar (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class FakeEvent (object):
+class FakeEvent(object):
 
     def __init__(self, x, y):
         self.x, self.y = x, y

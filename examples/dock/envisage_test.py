@@ -102,7 +102,7 @@ def create_dock_window(parent, editor):
 #-------------------------------------------------------------------------
 
 
-class EnvisageDock (HasPrivateTraits):
+class EnvisageDock(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

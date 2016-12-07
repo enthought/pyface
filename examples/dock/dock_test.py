@@ -99,7 +99,7 @@ def create_dock_window(parent, editor):
 #-------------------------------------------------------------------------
 
 
-class TestDock (HasPrivateTraits):
+class TestDock(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

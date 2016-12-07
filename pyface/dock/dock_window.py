@@ -121,7 +121,7 @@ disable_features_action = Action(name='Hide All',
 #-------------------------------------------------------------------------
 
 
-class DockWindowHandler (HasPrivateTraits):
+class DockWindowHandler(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Returns whether or not a specified object can be inserted into the view:
@@ -220,7 +220,7 @@ dock_window_handler = DockWindowHandler()
 #-------------------------------------------------------------------------
 
 
-class LayoutName (Handler):
+class LayoutName(Handler):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -265,7 +265,7 @@ class LayoutName (Handler):
 #-------------------------------------------------------------------------
 
 
-class DockWindow (HasPrivateTraits):
+class DockWindow(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -1247,7 +1247,7 @@ class DockWindow (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class FakeEvent (object):
+class FakeEvent(object):
 
     def __init__(self, x, y, object):
         self.x, self.y, self.object = x, y, object
@@ -1263,7 +1263,7 @@ class FakeEvent (object):
 #-------------------------------------------------------------------------
 
 
-class ControlInfo (HasPrivateTraits):
+class ControlInfo(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

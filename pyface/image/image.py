@@ -177,7 +177,7 @@ def join_image_name(volume_name, file_name):
     return '@%s:%s' % (volume_name, file_name)
 
 
-class FastZipFile (HasPrivateTraits):
+class FastZipFile(HasPrivateTraits):
     """ Provides fast access to zip files by keeping the underlying zip file
         open across multiple uses.
     """
@@ -271,7 +271,7 @@ class FastZipFile (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class ImageInfo (HasPrivateTraits):
+class ImageInfo(HasPrivateTraits):
     """ Defines a class that contains information about a specific Traits UI
         image.
     """
@@ -391,7 +391,7 @@ class ImageInfo (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class ImageVolumeInfo (HasPrivateTraits):
+class ImageVolumeInfo(HasPrivateTraits):
 
     #: A general description of the images:
     description = Str('No volume description specified.')
@@ -449,7 +449,7 @@ class ImageVolumeInfo (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class ImageVolume (HasPrivateTraits):
+class ImageVolume(HasPrivateTraits):
 
     #: The canonical name of this volume:
     name = Str
@@ -815,7 +815,7 @@ class ImageVolume (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class ZipFileReference (ResourceReference):
+class ZipFileReference(ResourceReference):
 
     #: The zip file to read;
     zip_file = Instance(FastZipFile)
@@ -883,7 +883,7 @@ class ZipFileReference (ResourceReference):
 #-------------------------------------------------------------------------
 
 
-class ImageLibrary (HasPrivateTraits):
+class ImageLibrary(HasPrivateTraits):
     """ Manages Traits UI image libraries.
     """
 

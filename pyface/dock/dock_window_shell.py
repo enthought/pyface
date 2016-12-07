@@ -57,7 +57,7 @@ FrameIcon = ImageResource('shell.ico')
 #-------------------------------------------------------------------------
 
 
-class DockWindowShell (HasPrivateTraits):
+class DockWindowShell(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

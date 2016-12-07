@@ -30,7 +30,7 @@ from traitsui.menu \
 #-------------------------------------------------------------------------
 
 
-class TestDock (HasPrivateTraits):
+class TestDock(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

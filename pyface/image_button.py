@@ -39,7 +39,7 @@ DisabledTextColor = wx.Colour(128, 128, 128)
 #-------------------------------------------------------------------------
 
 
-class ImageButton (Widget):
+class ImageButton(Widget):
     """ An image and text-based control that can be used as a normal, radio or
         toolbar button.
     """

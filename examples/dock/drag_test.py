@@ -49,7 +49,7 @@ image2 = ImageResource('gear')
 #-------------------------------------------------------------------------
 
 
-class AnEditor (HasPrivateTraits):
+class AnEditor(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -81,7 +81,7 @@ class AnEditor (HasPrivateTraits):
 #-------------------------------------------------------------------------
 
 
-class AView (HasPrivateTraits):
+class AView(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
@@ -176,7 +176,7 @@ def create_dock_window(parent, editor):
 #-------------------------------------------------------------------------
 
 
-class EnvisageDock (HasPrivateTraits):
+class EnvisageDock(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:

@@ -30,7 +30,7 @@ import wx
 #-------------------------------------------------------------------------
 
 
-class DoLaterTimer (wx.Timer):
+class DoLaterTimer(wx.Timer):
 
     # List of currently active timers:
     active_timers = []

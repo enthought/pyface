@@ -31,7 +31,7 @@ import wx
 #-------------------------------------------------------------------------
 
 
-class IDockable (object):
+class IDockable(object):
 
     #-------------------------------------------------------------------------
     #  Should the current DockControl be closed before creating the new one:

@@ -42,7 +42,7 @@ image2 = ImageResource('gear')
 #-------------------------------------------------------------------------
 
 
-class TestDock (HasPrivateTraits):
+class TestDock(HasPrivateTraits):
 
     #-------------------------------------------------------------------------
     #  Trait definitions:
