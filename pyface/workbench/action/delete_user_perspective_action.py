@@ -34,7 +34,7 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # The perspective to delete.

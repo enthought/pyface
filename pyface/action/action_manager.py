@@ -116,11 +116,11 @@ class ActionManager(HasTraits):
             # Otherwise, the item is an action manager item so add it to the
             # current group.
             else:
-##                 # If no group has been created then add one.  This is only
-##                 # relevant when using the 'shorthand' way to define menus.
-##                 if group is None:
-##                     group = Group(id='__first__')
-##                     self.insert(-1, group)
+                ##                 # If no group has been created then add one.  This is only
+                ##                 # relevant when using the 'shorthand' way to define menus.
+                ##                 if group is None:
+                ##                     group = Group(id='__first__')
+                ##                     self.insert(-1, group)
 
                 group.append(arg)
 

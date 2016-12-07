@@ -18,6 +18,7 @@ from wx.lib.agw import aui
 # AGW's library does need some patching for some usability differences desired
 # for pyface but not for the standard wxPython version
 
+
 class PyfaceAuiNotebook(aui.AuiNotebook):
     if wx.version() >= '3.':
         SetPageToolTip = aui.AuiNotebook.SetPageTooltip
@@ -40,7 +41,8 @@ class PyfaceAuiManager(aui.AuiManager):
 
         sash_size = self._art.GetMetric(aui.AUI_DOCKART_SASH_SIZE)
         caption_size = self._art.GetMetric(aui.AUI_DOCKART_CAPTION_SIZE)
-        opposite_size = self.GetOppositeDockTotalSize(docks, dock.dock_direction)
+        opposite_size = self.GetOppositeDockTotalSize(
+            docks, dock.dock_direction)
 
         for tmpDock in docks:
 
@@ -61,14 +63,17 @@ class PyfaceAuiManager(aui.AuiManager):
                     neighbor_docks.append((d.rect.y, d.rect.height))
         neighbor_docks.sort()
 
-        sizer, panes, docks, uiparts = self.LayoutAll(panes, docks, [], True, False)
+        sizer, panes, docks, uiparts = self.LayoutAll(
+            panes, docks, [], True, False)
         client_size = self._frame.GetClientSize()
         sizer.SetDimension(0, 0, client_size.x, client_size.y)
         sizer.Layout()
 
         for part in uiparts:
 
-            part.rect = wx.RectPS(part.sizer_item.GetPosition(), part.sizer_item.GetSize())
+            part.rect = wx.RectPS(
+                part.sizer_item.GetPosition(),
+                part.sizer_item.GetSize())
             if part.type == aui.AuiDockUIPart.typeDock:
                 part.dock.rect = part.rect
 
@@ -242,7 +247,8 @@ class PyfaceAuiManager(aui.AuiManager):
                 oldPixsize = pane.rect.height
                 newPixsize = oldPixsize + newPos.y - self._action_part.rect.y
 
-            totalPixsize, totalProportion = self.GetTotalPixSizeAndProportion(dock)
+            totalPixsize, totalProportion = self.GetTotalPixSizeAndProportion(
+                dock)
             partnerPane = self.GetPartnerPane(dock, pane)
 
             # prevent division by zero
@@ -250,14 +256,14 @@ class PyfaceAuiManager(aui.AuiManager):
                 return
 
             # adjust for the surplus
-            while (oldPixsize > 0 and totalPixsize > 10 and \
-                  oldPixsize*totalProportion/totalPixsize < pane.dock_proportion):
+            while (oldPixsize > 0 and totalPixsize > 10 and oldPixsize *
+                   totalProportion / totalPixsize < pane.dock_proportion):
 
                 totalPixsize -= 1
 
             # calculate the new proportion of the pane
 
-            newProportion = newPixsize*totalProportion/totalPixsize
+            newProportion = newPixsize * totalProportion / totalPixsize
             newProportion = aui.Clip(newProportion, 1, totalProportion)
             deltaProp = newProportion - pane.dock_proportion
 

@@ -55,7 +55,7 @@ class EditorSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control id. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         try:
             # Get the memento for the editor with this Id.

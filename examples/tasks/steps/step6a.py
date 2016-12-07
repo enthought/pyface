@@ -16,11 +16,13 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction, TaskToggleGroup
 from traits.api import on_trait_change, Property, Instance
 
+
 class Pane1(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane1'
     name = 'Pane 1'
+
 
 class Pane2(DockPane):
     #### TaskPane interface ###################################################
@@ -28,11 +30,13 @@ class Pane2(DockPane):
     id = 'steps.pane2'
     name = 'Pane 2'
 
+
 class Pane3(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane3'
     name = 'Pane 3'
+
 
 class Pane4(DockPane):
     #### TaskPane interface ###################################################
@@ -40,11 +44,13 @@ class Pane4(DockPane):
     id = 'steps.pane4'
     name = 'Pane 4'
 
+
 class Pane5(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane5'
     name = 'Pane 5'
+
 
 class Pane6(DockPane):
     #### TaskPane interface ###################################################
@@ -52,11 +58,13 @@ class Pane6(DockPane):
     id = 'steps.pane6'
     name = 'Pane 6'
 
+
 class Pane7(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.pane7'
     name = 'Pane 7'
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -79,10 +87,10 @@ class ExampleTask(Task):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -99,7 +107,7 @@ class ExampleTask(Task):
                     PaneItem('steps.pane4'),
                     PaneItem('steps.pane5'),
                     PaneItem('steps.pane6')),
-                ))
+            ))
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -110,7 +118,7 @@ class ExampleTask(Task):
     def create_dock_panes(self):
         """ Create the file browser and connect to its double click event.
         """
-        return [ Pane1(), Pane2(), Pane3(), Pane4(), Pane5(), Pane6() ]
+        return [Pane1(), Pane2(), Pane3(), Pane4(), Pane5(), Pane6()]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -131,6 +139,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -147,10 +156,10 @@ class SecondTask(ExampleTask):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -167,8 +176,9 @@ class SecondTask(ExampleTask):
                     PaneItem('steps.pane4'),
                     PaneItem('steps.pane5'),
                     PaneItem('steps.pane6')),
-                ))
-            
+            ))
+
+
 def main(argv):
     """ A simple example of using Tasks.
     """

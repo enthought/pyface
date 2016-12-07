@@ -37,7 +37,6 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
     #### 'IWindow' interface ##################################################
 
     position = Property(Tuple)
@@ -50,9 +49,9 @@ class Window(MWindow, Widget):
 
     activated = Event
 
-    closed =  Event
+    closed = Event
 
-    closing =  Event
+    closing = Event
 
     deactivated = Event
 
@@ -100,8 +99,8 @@ class Window(MWindow, Widget):
         # create a basic window control
 
         style = wx.DEFAULT_FRAME_STYLE \
-                | wx.FRAME_NO_WINDOW_MENU \
-                | wx.CLIP_CHILDREN
+            | wx.FRAME_NO_WINDOW_MENU \
+            | wx.CLIP_CHILDREN
 
         control = wx.Frame(
             parent, -1, self.title, style=style, size=self.size,
@@ -200,11 +199,11 @@ class Window(MWindow, Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event
         )
 
         event.Skip()

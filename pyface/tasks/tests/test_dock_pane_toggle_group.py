@@ -37,7 +37,7 @@ class BogusTask(Task):
                     group_factory=DockPaneToggleGroup,
                     id='tests.bogus_task.DockPaneToggleGroup'
                 ),
-                id= 'View', name='&View'
+                id='View', name='&View'
             )
         )
 
@@ -58,6 +58,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
 
         # Fish the dock pane toggle group from the menu bar manager.
         dock_pane_toggle_group = []
+
         def find_doc_pane_toggle(item):
             if item.id == 'tests.bogus_task.DockPaneToggleGroup':
                 dock_pane_toggle_group.append(item)
@@ -67,7 +68,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         self.dock_pane_toggle_group = dock_pane_toggle_group[0]
 
     def get_dock_pane_toggle_action_names(self):
-        names =  [
+        names = [
             action_item.action.name
             for action_item in self.dock_pane_toggle_group.items
         ]

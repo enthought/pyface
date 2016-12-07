@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -13,7 +13,7 @@
 #  Author: David C. Morrill
 #  Date:   10/18/2005
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 """ Pyface 'DockWindow' support.
 
@@ -24,17 +24,17 @@
     separate notebook-like tab within the region.
 """
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  Imports:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 from dock_window \
     import DockWindow, DockWindowHandler
 
 from dock_sizer \
     import DockSizer, DockSection, DockRegion, DockControl, DockStyle, \
-           DOCK_LEFT, DOCK_RIGHT, DOCK_TOP, DOCK_BOTTOM, SetStructureHandler, \
-           add_feature, DockGroup
+    DOCK_LEFT, DOCK_RIGHT, DOCK_TOP, DOCK_BOTTOM, SetStructureHandler, \
+    add_feature, DockGroup
 
 from idockable \
     import IDockable
@@ -50,4 +50,3 @@ from dock_window_shell \
 
 from dock_window_feature \
     import DockWindowFeature
-

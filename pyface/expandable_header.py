@@ -37,7 +37,8 @@ class ExpandableHeader(Widget):
     title = Str('Panel')
 
     # The carat image to show when the panel is collapsed.
-    collapsed_carat_image = Instance(ImageResource, ImageResource('carat_closed'))
+    collapsed_carat_image = Instance(
+        ImageResource, ImageResource('carat_closed'))
     # The carat image to show when the panel is expanded.
     expanded_carat_image = Instance(ImageResource, ImageResource('carat_open'))
     # The backing header image when the mouse is elsewhere
@@ -57,7 +58,6 @@ class ExpandableHeader(Widget):
 
     # The panel has been expanded or collapsed
     panel_expanded = Event
-
 
     _CARAT_X = 4
     _CARAT_Y = 2
@@ -121,7 +121,7 @@ class ExpandableHeader(Widget):
 
         # Create a suitable font.
         self._font = new_font_like(wx.NORMAL_FONT,
-                                   point_size=wx.NORMAL_FONT.GetPointSize()- 1)
+                                   point_size=wx.NORMAL_FONT.GetPointSize() - 1)
 
         height = self._get_preferred_height(parent, self.title, self._font)
         panel.SetSize((-1, height))

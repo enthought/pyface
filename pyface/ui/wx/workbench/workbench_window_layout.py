@@ -34,7 +34,7 @@ from traitsui.dockable_view_element import DockableViewElement
 
 # Mixin class imports.
 from pyface.workbench.i_workbench_window_layout import \
-     MWorkbenchWindowLayout
+    MWorkbenchWindowLayout
 
 # Local imports.
 from .editor_set_structure_handler import EditorSetStructureHandler
@@ -47,10 +47,10 @@ logger = logging.getLogger(__name__)
 
 # Mapping from view position to the appropriate dock window constant.
 _POSITION_MAP = {
-    'top'    : DOCK_TOP,
-    'bottom' : DOCK_BOTTOM,
-    'left'   : DOCK_LEFT,
-    'right'  : DOCK_RIGHT
+    'top': DOCK_TOP,
+    'bottom': DOCK_BOTTOM,
+    'left': DOCK_LEFT,
+    'right': DOCK_RIGHT
 }
 
 
@@ -160,12 +160,12 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Nest the editor dock window in the view dock window.
         editor_dock_window_control = DockControl(
-            id      = self.editor_area_id,
-            name    = 'Editors',
-            control = self._wx_editor_dock_window.control,
-            style   = 'fixed',
-            width   = self.window.editor_area_size[0],
-            height  = self.window.editor_area_size[1],
+            id=self.editor_area_id,
+            name='Editors',
+            control=self._wx_editor_dock_window.control,
+            style='fixed',
+            width=self.window.editor_area_size[0],
+            height=self.window.editor_area_size[1],
         )
 
         view_dock_window_sizer = DockSizer(
@@ -253,7 +253,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             self.editor_area_id, visible_only=False
         )
         return dock_control.visible
-        
+
     #### Methods for saving and restoring the layout ##########################
 
     def get_view_memento(self):
@@ -330,11 +330,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         controls = self._wx_editor_dock_window.get_controls()
         if len(controls) == 0:
             # Get a reference to the empty editor section.
-            sizer   = self._wx_editor_dock_window.control.GetSizer()
+            sizer = self._wx_editor_dock_window.control.GetSizer()
             section = sizer.GetContents()
 
             # Add a region containing the editor dock control.
-            region  = DockRegion(contents=[editor_dock_control])
+            region = DockRegion(contents=[editor_dock_control])
             section.contents = [region]
 
         # Otherwise, add the editor to the same region as the first editor
@@ -377,7 +377,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 self._wx_add_view_relative(dock_control, None, 'left', size)
 
         else:
-            self._wx_add_view_relative(dock_control,relative_to,position,size)
+            self._wx_add_view_relative(
+                dock_control, relative_to, position, size)
 
         return
 
@@ -408,7 +409,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._wx_set_item_size(dock_control, size)
 
         # The parent of a dock control is a dock region.
-        region  = relative_to_item.parent
+        region = relative_to_item.parent
         section = region.parent
         section.add(dock_control, region, _POSITION_MAP[position])
 
@@ -431,7 +432,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Sets the size of a dock control. """
 
         window_width, window_height = self.window.control.GetSize()
-        width,        height        = size
+        width, height = size
 
         if width != -1:
             dock_control.width = int(window_width * width)
@@ -448,14 +449,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Wrap a dock control around it.
         editor_dock_control = DockControl(
-            id        = editor.id,
-            name      = editor.name,
-            closeable = True,
-            control   = editor.control,
-            style     = 'tab',
+            id=editor.id,
+            name=editor.name,
+            closeable=True,
+            control=editor.control,
+            style='tab',
             # fixme: Create a subclass of dock control and give it a proper
             # editor trait!
-            _editor   = editor
+            _editor=editor
         )
 
         # Hook up the 'on_close' and trait change handlers etc.
@@ -480,17 +481,17 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Wrap a dock control around it.
         view_dock_control = DockControl(
-            id        = view.id,
-            name      = view.name,
+            id=view.id,
+            name=view.name,
             # fixme: We would like to make views closeable, but closing via the
             # tab is different than calling show(False, layout=True) on the
             # control! If we use a close handler can we change that?!?
-            closeable = closeable,
-            control   = control,
-            style     = view.style_hint,
+            closeable=closeable,
+            control=control,
+            style=view.style_hint,
             # fixme: Create a subclass of dock control and give it a proper
             # view trait!
-            _view     = view
+            _view=view
         )
 
         # Hook up the 'on_close' and trait change handlers etc.
@@ -548,7 +549,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             return
 
-        self._wx_add_focus_listeners(editor.control,on_set_focus,on_kill_focus)
+        self._wx_add_focus_listeners(
+            editor.control, on_set_focus, on_kill_focus)
 
         return
 
@@ -749,7 +751,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 remove=True
             )
 
-
         if new is not None:
             new.on_trait_change(
                 self._wx_on_editor_area_size_changed, 'editor_area_size',
@@ -767,7 +768,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # We actually resize the region that the editor area is in.
         region = control.parent
-        region.width  = int(new[0] * window_width)
+        region.width = int(new[0] * window_width)
         region.height = int(new[1] * window_height)
         return
 
@@ -811,7 +812,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 self.editor_closed = editor
 
             except:
-                logger.exception('error destroying editor control <%s>',editor)
+                logger.exception(
+                    'error destroying editor control <%s>', editor)
 
 ##         import gc
 ##         gc.collect()

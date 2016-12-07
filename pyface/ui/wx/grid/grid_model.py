@@ -17,9 +17,11 @@
 
 # Enthought library imports.
 from traits.api import Any, Bool, Event, HasPrivateTraits, HasTraits, \
-     Instance, Int, Str, Tuple
+    Instance, Int, Str, Tuple
 
 # The classes below are part of the table specification.
+
+
 class GridRow(HasTraits):
     """ Structure for holding row/column specifications. """
 
@@ -32,6 +34,7 @@ class GridRow(HasTraits):
 # We specify the same info for rows and for columns, but add a GridColumn
 # name for clarity.
 GridColumn = GridRow
+
 
 class GridSortData(HasTraits):
     """ An event that signals a sorting has taken place.
@@ -46,6 +49,7 @@ class GridSortData(HasTraits):
 
 # for backwards compatibility
 GridSortEvent = GridSortData
+
 
 class GridModel(HasPrivateTraits):
     """ Model for grid views. """
@@ -76,10 +80,10 @@ class GridModel(HasPrivateTraits):
     row_sorted = Event
 
     # Event fired when a cell is clicked on:
-    click = Event # = (row, column) that was clicked on
+    click = Event  # = (row, column) that was clicked on
 
     # Event fired when a cell is double-clicked on:
-    dclick = Event # = (row, column) that was double-clicked on
+    dclick = Event  # = (row, column) that was double-clicked on
 
     #########################################################################
     # 'object' interface.
@@ -253,7 +257,6 @@ class GridModel(HasPrivateTraits):
 
         return selection_list
 
-
     # fixme: this context menu stuff is going in here for now, but it
     # seems like this is really more of a view piece than a model piece.
     # this is how the tree control does it, however, so we're duplicating
@@ -277,7 +280,8 @@ class GridModel(HasPrivateTraits):
         Note that subclasses should not override this method, but should
         override the _set_value method instead.
         """
-        #print 'GridModel.set_value row: ', row, ' col: ', col, ' value: ', value
+        # print 'GridModel.set_value row: ', row, ' col: ', col, ' value: ',
+        # value
         rows_appended = self._set_value(row, col, value)
 
         self.fire_content_changed()

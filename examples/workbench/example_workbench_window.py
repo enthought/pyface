@@ -51,16 +51,16 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # The available perspectives.
     perspectives = [
         Perspective(
-            name     = 'Foo',
-            contents = [
+            name='Foo',
+            contents=[
                 PerspectiveItem(id='Black', position='bottom', height=0.1),
                 PerspectiveItem(id='Debug', position='left', width=0.25)
             ]
         ),
 
         Perspective(
-            name     = 'Bar',
-            contents = [
+            name='Bar',
+            contents=[
                 PerspectiveItem(id='Black', position='top'),
                 PerspectiveItem(id='Blue', position='bottom'),
                 PerspectiveItem(id='Green', position='left'),
@@ -117,7 +117,7 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         # allowed!
         tool_bar_managers = [
             ToolBarManager(
-                self._exit_action, show_tool_names = False, name=str(i)
+                self._exit_action, show_tool_names=False, name=str(i)
             )
 
             for i in range(5)

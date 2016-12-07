@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -30,7 +31,6 @@ class Wizard(MWizard, Dialog):
     See the IWizard interface for the API documentation.
 
     """
-
 
     #### 'IWizard' interface ##################################################
 
@@ -92,7 +92,7 @@ class Wizard(MWizard, Dialog):
         if self.help_id:
             control.setOption(QtGui.QWizard.HaveHelpButton)
             QtCore.QObject.connect(control, QtCore.SIGNAL('helpRequested()'),
-                    self._help_requested)
+                                   self._help_requested)
 
         # Add the initial pages.
         for page in self.pages:
@@ -169,7 +169,7 @@ class _Wizard(QtGui.QWizard):
         self._ids = {}
 
         QtCore.QObject.connect(self, QtCore.SIGNAL('currentIdChanged(int)'),
-                self._update_controller)
+                               self._update_controller)
 
     def addWizardPage(self, page):
         """ Add a page that provides IWizardPage. """

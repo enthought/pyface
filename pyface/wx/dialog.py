@@ -43,6 +43,7 @@ class OpenFileDialog(wx.FileDialog):
 
         return
 
+
 class OpenDirDialog(wx.DirDialog):
     """ An open-directory dialog. """
 
@@ -55,6 +56,7 @@ class OpenDirDialog(wx.DirDialog):
         wx.DirDialog.__init__(self, parent, "Open", style=style, **kw)
 
         return
+
 
 class SaveFileAsDialog(wx.FileDialog):
     """ A save-file dialog. """
@@ -85,6 +87,7 @@ def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
 
     return result
 
+
 def yes_no_cancel(parent, message, title=None, default=wx.NO_DEFAULT):
     """ Displays a Yes/No/Cancel dialog. """
 
@@ -99,6 +102,7 @@ def yes_no_cancel(parent, message, title=None, default=wx.NO_DEFAULT):
     dialog.Destroy()
 
     return result
+
 
 def information(parent, message, title=None):
     """ Displays a modal information dialog. """
@@ -115,6 +119,7 @@ def information(parent, message, title=None):
 
     return
 
+
 def warning(parent, message, title=None):
     """ Displays a modal warning dialog. """
 
@@ -130,6 +135,7 @@ def warning(parent, message, title=None):
 
     return
 
+
 def error(parent, message, title=None):
     """ Displays a modal error dialog. """
 
@@ -144,6 +150,7 @@ def error(parent, message, title=None):
     dialog.Destroy()
 
     return
+
 
 def _get_title(title, parent, default):
     """ Get a sensible title for a dialog! """

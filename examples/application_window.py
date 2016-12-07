@@ -36,8 +36,9 @@ class MainWindow(ApplicationWindow):
         # Create an action that exits the application.
         exit_action = Action(name='E&xit', on_perform=self.close)
         self.exit_action = exit_action
-        
-        # Test action to toggle visibility of exit action and some action groups
+
+        # Test action to toggle visibility of exit action and some action
+        # groups
         test_action = Action(name='&Toggle', on_perform=self.toggle)
 
         # Add a menu bar.
@@ -69,7 +70,7 @@ class MainWindow(ApplicationWindow):
         self.status_bar_manager.message = 'Example application window'
 
         return
-    
+
     def toggle(self):
         """ Toggle the visibility of the exit action and of the first 3 groups
         in the first toolbar, which contain only exit actions.

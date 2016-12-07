@@ -31,9 +31,9 @@ from pyface.action.action_event import ActionEvent
 
 
 _STYLE_TO_KIND_MAP = {
-    'push'   : wx.ITEM_NORMAL,
-    'radio'  : wx.ITEM_RADIO,
-    'toggle' : wx.ITEM_CHECK
+    'push': wx.ITEM_NORMAL,
+    'radio': wx.ITEM_RADIO,
+    'toggle': wx.ITEM_CHECK
 }
 
 
@@ -71,9 +71,9 @@ class _MenuItem(HasTraits):
         #
         # N.B. Don't try to use -1 as the Id for the menu item... wx does not
         # ---- like it!
-        action  = item.action
-        label   = action.name
-        kind    = _STYLE_TO_KIND_MAP[action.style]
+        action = item.action
+        label = action.name
+        kind = _STYLE_TO_KIND_MAP[action.style]
         longtip = action.description
 
         if len(action.accelerator) > 0:
@@ -84,7 +84,6 @@ class _MenuItem(HasTraits):
         # helpful!).
         if len(label) == 0:
             label = item.action.__class__.__name__
-
 
         if getattr(action, 'menu_role', False):
             if action.menu_role == "About":
@@ -137,13 +136,13 @@ class _MenuItem(HasTraits):
     def dispose(self):
         action = self.item.action
         action.on_trait_change(self._on_action_enabled_changed, 'enabled',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_visible_changed, 'visible',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_checked_changed, 'checked',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_name_changed, 'name',
-            remove=True)
+                               remove=True)
 
     ###########################################################################
     # Private interface.
@@ -328,8 +327,8 @@ class _Tool(HasTraits):
         self.tool_bar = tool_bar
 
         # Create an appropriate tool depending on the style of the action.
-        action  = self.item.action
-        label   = action.name
+        action = self.item.action
+        label = action.name
 
         # Tool bar tools never have '...' at the end!
         if label.endswith('...'):
@@ -345,14 +344,14 @@ class _Tool(HasTraits):
                 self.tool_bar.GetToolBitmapSize()
             )
             path = action.image.absolute_path
-            bmp  = image_cache.get_bitmap(path)
+            bmp = image_cache.get_bitmap(path)
 
         else:
             from pyface.api import ImageResource
             image = ImageResource('foo')
-            bmp  = image.create_bitmap()
+            bmp = image.create_bitmap()
 
-        kind    = _STYLE_TO_KIND_MAP[action.style]
+        kind = _STYLE_TO_KIND_MAP[action.style]
         tooltip = action.tooltip
         longtip = action.description
 
@@ -364,8 +363,14 @@ class _Tool(HasTraits):
 
         self.control_id = wx.NewId()
         self.control = tool_bar.AddLabelTool(
-            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
-        )
+            self.control_id,
+            label,
+            bmp,
+            wx.NullBitmap,
+            kind,
+            tooltip,
+            longtip,
+            None)
 
         # Set the initial checked state.
         tool_bar.ToggleTool(self.control_id, action.checked)
@@ -546,7 +551,7 @@ class _PaletteTool(HasTraits):
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
-        kind    = action.style
+        kind = action.style
         tooltip = action.tooltip
         longtip = action.description
 
@@ -554,7 +559,8 @@ class _PaletteTool(HasTraits):
             label = ''
 
         # Add the tool to the tool palette.
-        self.tool_id = tool_palette.add_tool(label, bmp, kind, tooltip,longtip)
+        self.tool_id = tool_palette.add_tool(
+            label, bmp, kind, tooltip, longtip)
         tool_palette.toggle_tool(self.tool_id, action.checked)
         tool_palette.enable_tool(self.tool_id, action.enabled)
         tool_palette.on_tool_event(self.tool_id, self._on_tool)

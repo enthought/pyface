@@ -9,6 +9,7 @@ from pyface.ui.qt4.workbench.workbench_window_layout import \
 
 
 class TestWorkbenchWindowLayout(unittest.TestCase):
+
     def test_change_of_active_qt_editor(self):
         # Test error condition for enthought/mayavi#321
 

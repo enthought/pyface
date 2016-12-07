@@ -36,7 +36,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     ISystemMetrics interface for the API documentation.
     """
 
-
     #### 'ISystemMetrics' interface ###########################################
 
     screen_width = Property(Int)
@@ -62,6 +61,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         else:
             color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_MENUBAR).Get()
 
-        return (color[0]/255., color[1]/255., color[2]/255.)
+        return (color[0] / 255., color[1] / 255., color[2] / 255.)
 
 #### EOF ######################################################################

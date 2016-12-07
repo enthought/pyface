@@ -31,21 +31,22 @@ from .table_label_provider import TableLabelProvider
 class TableViewer(ContentViewer):
     """ A viewer for tabular data. """
 
-
     # The content provider provides the actual table data.
     content_provider = Instance(TableContentProvider)
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Instance(TableLabelProvider, factory = TableLabelProvider)
+    label_provider = Instance(TableLabelProvider, factory=TableLabelProvider)
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
-    column_provider=Trait(TableColumnProvider(),Instance(TableColumnProvider))
+    column_provider = Trait(
+        TableColumnProvider(),
+        Instance(TableColumnProvider))
 
     # The colours used to render odd and even numbered rows.
     even_row_background = Color("white")
-    odd_row_background  = Color((245, 245, 255))
+    odd_row_background = Color((245, 245, 255))
 
     # A row has been selected.
     row_selected = Event
@@ -55,7 +56,6 @@ class TableViewer(ContentViewer):
 
     # A drag operation was started on a node.
     row_begin_drag = Event
-
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
@@ -211,10 +211,10 @@ class TableViewer(ContentViewer):
     ###########################################################################
 
     FORMAT_MAP = {
-        'left'   : wx.LIST_FORMAT_LEFT,
-        'right'  : wx.LIST_FORMAT_RIGHT,
-        'center' : wx.LIST_FORMAT_CENTRE,
-        'centre' : wx.LIST_FORMAT_CENTRE
+        'left': wx.LIST_FORMAT_LEFT,
+        'right': wx.LIST_FORMAT_RIGHT,
+        'center': wx.LIST_FORMAT_CENTRE,
+        'centre': wx.LIST_FORMAT_CENTRE
     }
 
     def _create_widget(self, parent):
@@ -247,7 +247,7 @@ class TableViewer(ContentViewer):
         self._elements = []
         if self.input is not None:
             # Filtering...
-            for element in  self.content_provider.get_elements(self.input):
+            for element in self.content_provider.get_elements(self.input):
                 for filter in self.filters:
                     if not filter.select(self, self.input, element):
                         break
@@ -301,8 +301,8 @@ class _Table(wx.ListCtrl):
 
     # Default style.
     STYLE = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES | wx.STATIC_BORDER \
-            | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL | wx.LC_EDIT_LABELS \
-            | wx.CLIP_CHILDREN
+        | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL | wx.LC_EDIT_LABELS \
+        | wx.CLIP_CHILDREN
 
     def __init__(self, parent, image_size, viewer):
         """ Creates a new table viewer.

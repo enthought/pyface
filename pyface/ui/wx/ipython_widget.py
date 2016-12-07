@@ -103,7 +103,6 @@ class IPython09Controller(IPythonController):
 
     banner = property(_get_banner, _set_banner)
 
-
     def __init__(self, *args, **kwargs):
         # This is a hack to avoid the IPython exception hook to trigger
         # on exceptions (https://bugs.launchpad.net/bugs/337105)
@@ -143,7 +142,7 @@ class IPython09Controller(IPythonController):
         """
 
         completion_text = self._get_completion_text(line)
-        suggestion, completions = super(IPython09Controller, self).complete( \
+        suggestion, completions = super(IPython09Controller, self).complete(
             completion_text)
         new_line = line[:-len(completion_text)] + suggestion
         return new_line, completions
@@ -169,8 +168,8 @@ class IPython09Controller(IPythonController):
             # thus want to consider an empty string as a complete
             # statement.
             return True
-        elif ( len(self.input_buffer.split('\n'))>2
-                        and not re.findall(r"\n[\t ]*\n[\t ]*$", string)):
+        elif (len(self.input_buffer.split('\n')) > 2
+              and not re.findall(r"\n[\t ]*\n[\t ]*$", string)):
             return False
         else:
             self.capture_output()
@@ -180,11 +179,12 @@ class IPython09Controller(IPythonController):
                 # This should probably be done in a different place (like
                 # maybe 'prefilter_input' method? For now, this works.
                 clean_string = string.rstrip('\n')
-                if not clean_string.endswith('\\'): clean_string +='\n\n'
+                if not clean_string.endswith('\\'):
+                    clean_string += '\n\n'
                 is_complete = codeop.compile_command(clean_string,
-                            "<string>", "exec")
+                                                     "<string>", "exec")
                 self.release_output()
-            except Exception, e:
+            except Exception as e:
                 # XXX: Hack: return True so that the
                 # code gets executed and the error captured.
                 is_complete = True
@@ -231,7 +231,7 @@ class IPython09Controller(IPythonController):
         """
         self.ClearAll()
         self.new_prompt(self.input_prompt_template.substitute(
-                                number=(self.last_result['number'] + 1)))
+            number=(self.last_result['number'] + 1)))
 
     def continuation_prompt(self):
         """Returns the current continuation prompt.
@@ -241,7 +241,7 @@ class IPython09Controller(IPythonController):
         # This assumes that the prompt is always of the form 'In [#]'.
         n = self.last_result['number']
         promptstr = "In [%d]" % n
-        return ("."*len(promptstr) + ':')
+        return ("." * len(promptstr) + ':')
 
     def _popup_completion(self, create=False):
         """ Updates the popup completion menu if it exists. If create is
@@ -261,11 +261,11 @@ class IPython09Controller(IPythonController):
         # I am patching this here instead of in the IPython module, but at some
         # point, this needs to be merged in.
         if self.debug:
-            print >>sys.__stdout__, "_popup_completion" , self.input_buffer
+            print >>sys.__stdout__, "_popup_completion", self.input_buffer
 
         line = self.input_buffer
         if (self.AutoCompActive() and line and not line[-1] == '.') \
-                    or create==True:
+                or create:
             suggestion, completions = self.complete(line)
             if completions:
                 offset = len(self._get_completion_text(line))
@@ -290,22 +290,22 @@ class IPython09Controller(IPythonController):
     def _on_enter(self):
         """ Called when the return key is pressed in a line editing
             buffer.
-            Overridden from the base class implementation (in
+            Overridden from the base class implementation(in
             IPython/frontend/linefrontendbase.py) to include a continuation
             prompt.
         """
         current_buffer = self.input_buffer
         cleaned_buffer = self.prefilter_input(current_buffer.replace(
-                                            self.continuation_prompt(),
-                                            ''))
+            self.continuation_prompt(),
+            ''))
         if self.is_complete(cleaned_buffer):
             self.execute(cleaned_buffer, raw_string=current_buffer)
         else:
             self.input_buffer = current_buffer + \
-                                self.continuation_prompt() + \
-                                self._get_indent_string(current_buffer.replace(
-                                            self.continuation_prompt(),
-                                            '')[:-1])
+                self.continuation_prompt() + \
+                self._get_indent_string(current_buffer.replace(
+                    self.continuation_prompt(),
+                    '')[:-1])
             if len(current_buffer.split('\n')) == 2:
                 self.input_buffer += '\t\t'
             if current_buffer[:-1].split('\n')[-1].rstrip().endswith(':'):
@@ -317,7 +317,6 @@ class IPythonWidget(Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
-
 
     #### 'IPythonShell' interface #############################################
 
@@ -392,8 +391,8 @@ class IPythonWidget(Widget):
         if isinstance(obj, EnthoughtFile):
             self.control.write(obj.absolute_path)
 
-        elif ( isinstance(obj, list) and len(obj) ==1
-                        and isinstance(obj[0], EnthoughtFile)):
+        elif (isinstance(obj, list) and len(obj) == 1
+              and isinstance(obj[0], EnthoughtFile)):
             self.control.write(obj[0].absolute_path)
 
         else:
@@ -406,9 +405,10 @@ class IPythonWidget(Widget):
                     and isinstance(obj.name, basestring) and len(obj.name) > 0:
                 py_name = python_name(obj.name)
 
-                # Make sure that the name is actually a valid Python identifier.
+                # Make sure that the name is actually a valid Python
+                # identifier.
                 try:
-                    if eval(py_name, {py_name : True}):
+                    if eval(py_name, {py_name: True}):
                         name = py_name
 
                 except:
@@ -435,11 +435,11 @@ class IPythonWidget(Widget):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.AltDown() == 1,
-            control_down = event.ControlDown() == 1,
-            shift_down   = event.ShiftDown() == 1,
-            key_code     = event.GetKeyCode(),
-            event        = event
+            alt_down=event.AltDown() == 1,
+            control_down=event.ControlDown() == 1,
+            shift_down=event.ShiftDown() == 1,
+            key_code=event.GetKeyCode(),
+            event=event
         )
 
         # Give other event handlers a chance.

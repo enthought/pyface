@@ -1,7 +1,7 @@
 # Enthought library imports.
 from pyface.action.api import StatusBarManager
 from traits.api import Callable, HasTraits, Instance, List, Str, \
-     Unicode
+    Unicode
 
 # Local imports.
 from action.schema import MenuBarSchema, ToolBarSchema

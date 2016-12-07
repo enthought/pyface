@@ -47,4 +47,4 @@ class PythonScriptBrowserPane(FileBrowserPane):
 
     #### FileBrowserPane interface ############################################
 
-    filters = [ '*.py' ]
+    filters = ['*.py']

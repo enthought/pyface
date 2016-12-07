@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -64,10 +65,13 @@ class _MenuItem(HasTraits):
 
         if action.image is None:
             self.control = menu.addAction(action.name, self._qt4_on_triggered,
-                    action.accelerator)
+                                          action.accelerator)
         else:
-            self.control = menu.addAction(action.image.create_icon(),
-                    action.name, self._qt4_on_triggered, action.accelerator)
+            self.control = menu.addAction(
+                action.image.create_icon(),
+                action.name,
+                self._qt4_on_triggered,
+                action.accelerator)
         menu.menu_items.append(self)
 
         self.control.setToolTip(action.tooltip)
@@ -115,15 +119,15 @@ class _MenuItem(HasTraits):
     def dispose(self):
         action = self.item.action
         action.on_trait_change(self._on_action_enabled_changed, 'enabled',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_visible_changed, 'visible',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_checked_changed, 'checked',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_name_changed, 'name',
-            remove=True)
+                               remove=True)
         action.on_trait_change(self._on_action_accelerator_changed,
-            'accelerator', remove=True)
+                               'accelerator', remove=True)
 
     ###########################################################################
     # Private interface.
@@ -436,7 +440,7 @@ class _PaletteTool(HasTraits):
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
-        kind    = action.style
+        kind = action.style
         tooltip = action.tooltip
         longtip = action.description
 
@@ -444,7 +448,8 @@ class _PaletteTool(HasTraits):
             label = ''
 
         # Add the tool to the tool palette.
-        self.tool_id = tool_palette.add_tool(label, bmp, kind, tooltip,longtip)
+        self.tool_id = tool_palette.add_tool(
+            label, bmp, kind, tooltip, longtip)
         tool_palette.toggle_tool(self.tool_id, action.checked)
         tool_palette.enable_tool(self.tool_id, action.enabled)
         tool_palette.on_tool_event(self.tool_id, self._on_tool)

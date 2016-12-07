@@ -22,20 +22,19 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
 PythonObjectFormat = wx.CustomDataFormat('PythonObject')
-TextFormat         = wx.DataFormat(wx.DF_TEXT)
-FileFormat         = wx.DataFormat(wx.DF_FILENAME)
+TextFormat = wx.DataFormat(wx.DF_TEXT)
+FileFormat = wx.DataFormat(wx.DF_FILENAME)
 
 # Shortcuts
-cb           = wx.TheClipboard
+cb = wx.TheClipboard
 
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  'data' property methods:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _get_has_data(self):
         result = False
@@ -46,9 +45,9 @@ class Clipboard(BaseClipboard):
             cb.Close()
         return result
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  'object_data' property methods:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _get_object_data(self):
         result = None
@@ -57,8 +56,8 @@ class Clipboard(BaseClipboard):
                 if cb.IsSupported(PythonObjectFormat):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     if cb.GetData(cdo):
-                        file   = StringIO(cdo.GetData())
-                        klass  = load(file)
+                        file = StringIO(cdo.GetData())
+                        klass = load(file)
                         result = load(file)
             finally:
                 cb.Close()
@@ -96,9 +95,9 @@ class Clipboard(BaseClipboard):
                 cb.Close()
         return result
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  'text_data' property methods:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _get_text_data(self):
         result = ''
@@ -119,9 +118,9 @@ class Clipboard(BaseClipboard):
     def _get_has_text_data(self):
         return self._has_this_data(TextFormat)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  'file_data' property methods:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _get_file_data(self):
         result = []
@@ -148,9 +147,9 @@ class Clipboard(BaseClipboard):
     def _get_has_file_data(self):
         return self._has_this_data(FileFormat)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Private helper methods:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _has_this_data(self, format):
         result = False

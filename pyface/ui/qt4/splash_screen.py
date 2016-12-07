@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -33,7 +34,6 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-
     #### 'ISplashScreen' interface ############################################
 
     image = Instance(ImageResource, ImageResource('splash'))
@@ -48,7 +48,7 @@ class SplashScreen(MSplashScreen, Window):
 
     text_font = Any
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
     ###########################################################################
     # Protected 'IWidget' interface.

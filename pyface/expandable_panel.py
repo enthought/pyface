@@ -68,7 +68,7 @@ class ExpandablePanel(Widget):
         """
 
         parent = self.control
-        sizer  = self.control.GetSizer()
+        sizer = self.control.GetSizer()
 
         # Add the heading text.
         header = self._create_header(parent, text=name)
@@ -89,7 +89,7 @@ class ExpandablePanel(Widget):
     def remove_panel(self, name):
         """ Removes a layer and its header from the container."""
 
-        if not self._layers.has_key(name):
+        if name not in self._layers:
             return
 
         sizer = self.control.GetSizer()
@@ -128,7 +128,7 @@ class ExpandablePanel(Widget):
 
         # Add the panel header.
         heading = ExpandableHeader(panel, self,
-                                   title = text)
+                                   title=text)
         sizer.Add(heading.control, 1, wx.EXPAND)
 
         heading.on_trait_change(self._on_button, 'panel_expanded')
@@ -156,5 +156,5 @@ class ExpandablePanel(Widget):
 
         # fixme: Errrr, maybe we can NOT do this!
         w, h = self.control.GetSize()
-        self.control.SetSize((w+1, h+1))
+        self.control.SetSize((w + 1, h + 1))
         self.control.SetSize((w, h))

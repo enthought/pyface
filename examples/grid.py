@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Major package imports.
 import wx
@@ -56,9 +57,11 @@ class MainWindow(SplitApplicationWindow):
             GridColumn(name='Object')]
 
     # The data used to create the TraitGridModel
-    trait_data = [GridRow(name='Bob', index=1, veracity=True, object=Float),
-                  GridRow(name='Sarah', index=45, veracity=True, object=Str),
-                  GridRow(name='Jonas', index=-3, veracity=False, object=direction)]
+    trait_data = [
+        GridRow(
+            name='Bob', index=1, veracity=True, object=Float), GridRow(
+            name='Sarah', index=45, veracity=True, object=Str), GridRow(
+                name='Jonas', index=-3, veracity=False, object=direction)]
 
     trait_col = [TraitGridColumn(name='name', label='Name'),
                  TraitGridColumn(name='index', label='Index', read_only=True),
@@ -76,12 +79,11 @@ class MainWindow(SplitApplicationWindow):
         #                                      rows = self.rows,
         #                                      columns = self.cols)
 
-        self._model = model = TraitGridModel(data = self.trait_data,
-                                             columns = self.trait_col,
-                                             row_name_trait = 'name')
+        self._model = model = TraitGridModel(data=self.trait_data,
+                                             columns=self.trait_col,
+                                             row_name_trait='name')
 
-        self._grid = grid = Grid(parent, model = model)
-
+        self._grid = grid = Grid(parent, model=model)
 
         self._grid.on_trait_change(self._on_grid_anytrait_changed)
 

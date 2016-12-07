@@ -16,6 +16,7 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction, TaskToggleGroup
 from traits.api import on_trait_change, Property, Instance
 
+
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
@@ -30,15 +31,15 @@ class ExampleTask(Task):
 
     editor_area = Instance(IEditorAreaPane)
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
-    
+
     def _menu_bar_default(self):
         return SMenuBar(SMenu(TaskAction(name='New', method='new',
                                          accelerator='Ctrl+N'),
@@ -72,6 +73,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -81,15 +83,15 @@ class SecondTask(ExampleTask):
     id = 'example.second_task'
     name = 'Second Multi-Tab Editor'
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
-    
+
     def _menu_bar_default(self):
         return SMenuBar(SMenu(TaskAction(name='New', method='new',
                                          accelerator='Ctrl+N'),
@@ -101,7 +103,7 @@ class SecondTask(ExampleTask):
                               TaskAction(name='Item 2', method='item2'),
                               id='Task2', name='&Task2'),)
 
-            
+
 def main(argv):
     """ A simple example of using Tasks.
     """

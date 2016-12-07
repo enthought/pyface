@@ -18,6 +18,7 @@ from traits.api import Dict, List, Trait
 # local imports
 from .grid_model import GridModel, GridRow
 
+
 class CompositeGridModel(GridModel):
     """ A CompositeGridModel is a model whose underlying data is
     a collection of other grid models. """
@@ -179,7 +180,6 @@ class CompositeGridModel(GridModel):
 
         return model.get_type(row, new_col)
 
-
     def get_value(self, row, col):
         """ Return the value stored in the table at (row, col). """
         model, new_col = self._resolve_column_index(col)
@@ -213,7 +213,6 @@ class CompositeGridModel(GridModel):
                     break
 
         return coords
-
 
     # fixme: this context menu stuff is going in here for now, but it
     # seems like this is really more of a view piece than a model piece.
@@ -332,7 +331,7 @@ class CompositeGridModel(GridModel):
         index. Returns the target model and the corrected index. """
 
         real_index = index
-        cached = None #self._data_index.get(index)
+        cached = None  # self._data_index.get(index)
         if cached is not None:
             model, col_index = cached
         else:

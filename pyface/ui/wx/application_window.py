@@ -43,7 +43,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-
     #### 'IApplicationWindow' interface #######################################
 
     icon = Instance(ImageResource)
@@ -133,7 +132,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)
-        
+
         # Keep a reference to the AUI Manager in the control because Panes
         # will need to access it in order to lay themselves out
         self.control._aui_manager = self._aui_manager
@@ -151,8 +150,8 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _create_control(self, parent):
 
         style = wx.DEFAULT_FRAME_STYLE \
-                | wx.FRAME_NO_WINDOW_MENU \
-                | wx.CLIP_CHILDREN
+            | wx.FRAME_NO_WINDOW_MENU \
+            | wx.CLIP_CHILDREN
 
         control = wx.Frame(
             parent, -1, self.title, style=style, size=self.size,
@@ -181,7 +180,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._aui_manager.AddPane(tool_bar, info)
 
         return
-    
+
     def _get_tool_par_pane_info(self, tool_bar):
         info = aui.AuiPaneInfo()
         info.Caption(tool_bar.tool_bar_manager.name)

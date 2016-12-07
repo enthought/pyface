@@ -114,7 +114,6 @@ class IImageResource(Interface):
         """
 
 
-
 class MImageResource(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IImageResource interface.
@@ -193,7 +192,7 @@ class MImageResource(object):
 
         if self._ref is None:
             self._ref = resource_manager.locate_image(self.name,
-                    self.search_path, size)
+                                                      self.search_path, size)
 
         return self._ref
 

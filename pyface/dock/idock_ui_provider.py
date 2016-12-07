@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #  Copyright (c) 2006, Enthought, Inc.
 #  All rights reserved.
@@ -13,26 +13,26 @@
 #  Author: David C. Morrill
 #  Date:   06/17/2006
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 """ Defines the IDockUIProvider interface which objects which support being
     dragged and dropped into a DockWindow must implement.
 """
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  'IDockUIProvider' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
-class IDockUIProvider ( object ):
 
-    #---------------------------------------------------------------------------
+class IDockUIProvider(object):
+
+    #-------------------------------------------------------------------------
     #  Returns a Traits UI which a DockWindow can imbed:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def get_dockable_ui ( self, parent ):
+    def get_dockable_ui(self, parent):
         """ Returns a Traits UI which a DockWindow can imbed.
         """
-        return self.edit_traits( parent     = parent,
-                                 kind       = 'subpanel',
-                                 scrollable = True )
-
+        return self.edit_traits(parent=parent,
+                                kind='subpanel',
+                                scrollable=True)

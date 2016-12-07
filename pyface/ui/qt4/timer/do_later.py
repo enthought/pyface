@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -20,9 +21,9 @@ class DoLaterTimer(QtCore.QTimer):
     # List of currently active timers:
     active_timers = []
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Initializes the object:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def __init__(self, interval, callable, args, kw_args):
         QtCore.QTimer.__init__(self)
@@ -30,8 +31,8 @@ class DoLaterTimer(QtCore.QTimer):
         global active_timers
         for timer in self.active_timers:
             if ((timer.callable == callable) and
-                (timer.args     == args)     and
-                (timer.kw_args  == kw_args)):
+                (timer.args == args) and
+                    (timer.kw_args == kw_args)):
                 timer.start(interval)
                 return
 
@@ -45,9 +46,9 @@ class DoLaterTimer(QtCore.QTimer):
         self.setSingleShot(True)
         self.start(interval)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Handles the timer pop event:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def Notify(self):
         global active_timers

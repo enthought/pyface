@@ -32,15 +32,15 @@ from .window import Window
 
 # Map wx dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    wx.ID_OK     : OK,
-    wx.ID_CANCEL : CANCEL,
-    wx.ID_YES    : YES,
-    wx.ID_NO     : NO,
-    wx.ID_CLOSE  : CANCEL,
+    wx.ID_OK: OK,
+    wx.ID_CANCEL: CANCEL,
+    wx.ID_YES: YES,
+    wx.ID_NO: NO,
+    wx.ID_CLOSE: CANCEL,
     # There seems to be a bug in wx.SingleChoiceDialog that allows it to return
     # 0 when it is closed via the window (closing it via the buttons works just
     # fine).
-    0            : CANCEL
+    0: CANCEL
 }
 
 
@@ -49,7 +49,6 @@ class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
-
 
     #### 'IDialog' interface ##################################################
 

@@ -91,10 +91,9 @@ class NodeTree(Tree):
 
         return
 
-    def _node_right_clicked_changed(self, (obj, point)):
+    def _node_right_clicked_changed(self, xxx_todo_changeme):
         """ Called when the right mouse button is clicked on the tree. """
-
-        # Add the node that the right-click occurred on to the selection.
+        (obj, point) = xxx_todo_changeme
         self.select(obj)
 
         # fixme: This is a hack to allow us to attach the node that the
@@ -131,7 +130,7 @@ class NodeTree(Tree):
         """ Perform an action. """
 
         # fixme: We need a more formal event structure!
-        event.widget  = self
+        event.widget = self
         event.context = self._context
 
         # fixme: the 'perform' method without taking an event is deprecated!

@@ -126,7 +126,7 @@ class WizardController(HasTraits):
         # not been set yet), do not set it here. The current page will
         # get set when the wizard calls _show_page.
         if self.current_page is not None and \
-            self.current_page not in self._pages:
+                self.current_page not in self._pages:
             self.current_page = self._pages[0]
         else:
             self._update()
@@ -158,7 +158,10 @@ class WizardController(HasTraits):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(self._on_page_complete, 'complete',remove=True)
+            old.on_trait_change(
+                self._on_page_complete,
+                'complete',
+                remove=True)
 
         if new is not None:
             new.on_trait_change(self._on_page_complete, 'complete')

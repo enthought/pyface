@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -27,6 +28,7 @@ from pyface.util.python_stc import PythonSTC, faces
 # Local imports.
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
@@ -100,7 +102,7 @@ class PythonEditor(Editor):
         """ Selects the specified line.
         """
         start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
+        end = self.control.GetLineEndPosition(lineno)
 
         self.control.SetSelection(start, end)
 
@@ -170,7 +172,7 @@ class PythonEditor(Editor):
         stc.SetIndent(4)
 
         # Line ending mode.
-        stc.SetEOLMode(wx.stc.STC_EOL_LF) # Unix
+        stc.SetEOLMode(wx.stc.STC_EOL_LF)  # Unix
         #self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         #self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
@@ -268,11 +270,11 @@ class PythonEditor(Editor):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event
         )
 
         # Give other event handlers a chance.

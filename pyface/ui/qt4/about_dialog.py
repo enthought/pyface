@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -62,7 +63,6 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-
     #### 'IAboutDialog' interface #############################################
 
     additions = List(Unicode)
@@ -106,7 +106,11 @@ class AboutDialog(MAboutDialog, Dialog):
         else:
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
-        buttons.connect(buttons, QtCore.SIGNAL('accepted()'), parent, QtCore.SLOT('accept()'))
+        buttons.connect(
+            buttons,
+            QtCore.SIGNAL('accepted()'),
+            parent,
+            QtCore.SLOT('accept()'))
 
         lay = QtGui.QVBoxLayout()
         lay.addWidget(label)

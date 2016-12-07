@@ -47,7 +47,6 @@ class GridModel(HasTraits):
     # Fired when the data in the model has changed.
     model_changed = Event
 
-
     def __init__(self, **traits):
         """ Create a new grid model. """
 

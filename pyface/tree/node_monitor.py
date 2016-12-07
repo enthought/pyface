@@ -58,7 +58,6 @@ class NodeMonitor(HasTraits):
     # changes/inserts/removals).
     structure_changed = Event(NodeEvent)
 
-
     ###########################################################################
     # 'NodeMonitor' interface.
     ###########################################################################
@@ -72,7 +71,6 @@ class NodeMonitor(HasTraits):
             self._setup_trait_change_handlers(self.node.obj)
 
         return
-
 
     def stop(self):
         """ Stop listening to changes to the node. """
@@ -127,16 +125,15 @@ class NodeMonitor(HasTraits):
 
         return
 
-
     #### protected methods ####################################################
 
     def _setup_trait_change_handlers(self, obj, remove=False):
         """ Add or remove trait change handlers to/from a node. """
 
         logger.debug('%s trait listeners on (%s) in NodeMonitor (%s)',
-            (remove and 'Removing' or 'Adding'), obj, self)
+                     (remove and 'Removing' or 'Adding'), obj, self)
 
-        pass # derived classes should do something here!
+        pass  # derived classes should do something here!
 
         return
 

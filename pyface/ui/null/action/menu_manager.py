@@ -66,5 +66,4 @@ class MenuManager(ActionManager, ActionManagerItem):
         raise ValueError("Cannot add a menu manager to a toolbar.")
 
 
-
 #### EOF ######################################################################

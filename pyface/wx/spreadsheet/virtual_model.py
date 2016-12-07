@@ -20,11 +20,13 @@ from wx import ALIGN_LEFT, ALIGN_CENTRE, Colour
 
 from .default_renderer import DefaultRenderer
 
+
 class VirtualModel(PyGridTableBase):
     """
     A custom wxGrid Table that expects a user supplied data source.
     THIS CLASS IS NOT LIMITED TO ONLY DISPLAYING LOG DATA!
     """
+
     def __init__(self, data, column_names):
         """data is currently a list of the form
         [(rowname, dictionary),
@@ -37,13 +39,14 @@ class VirtualModel(PyGridTableBase):
         #self.renderers = {"DEFAULT_RENDERER":DefaultRenderer()}
         #self.editors = {}
 
-        # we need to store the row length and col length to see if the table has changed size
+        # we need to store the row length and col length to see if the table
+        # has changed size
         self._rows = self.GetNumberRows()
         self._cols = self.GetNumberCols()
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # Implement/override the methods from PyGridTableBase
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
     def GetNumberCols(self):
         return len(self.colnames)
@@ -79,9 +82,9 @@ class VirtualModel(PyGridTableBase):
         # print 'asked for type of col ', col, ' ' ,res
         return res'''
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # Accessors for the Enthought data model (a dict of dicts)
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
     def get_data_source(self):
         """ The data structure we provide the data in.
         """
@@ -91,9 +94,9 @@ class VirtualModel(PyGridTableBase):
         self._data = source
         return
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # Methods controlling updating and editing of cells in grid
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
     def ResetView(self, grid):
         """
@@ -107,10 +110,10 @@ class VirtualModel(PyGridTableBase):
             (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED),
         ]:
             if new < current:
-                msg = GridTableMessage(self,delmsg,new,current-new)
+                msg = GridTableMessage(self, delmsg, new, current - new)
                 grid.ProcessTableMessage(msg)
             elif new > current:
-                msg = GridTableMessage(self,addmsg,new-current)
+                msg = GridTableMessage(self, addmsg, new - current)
                 grid.ProcessTableMessage(msg)
                 self.UpdateValues(grid)
         grid.EndBatch()
@@ -126,24 +129,22 @@ class VirtualModel(PyGridTableBase):
         grid.AdjustScrollbars()
         grid.ForceRefresh()
 
-
     def UpdateValues(self, grid):
         """Update all displayed values"""
         # This sends an event to the grid table to update all of the values
         msg = GridTableMessage(self, GRIDTABLE_REQUEST_VIEW_GET_VALUES)
         grid.ProcessTableMessage(msg)
 
-    def GetAttr88(self, row, col, someExtraParameter ):
+    def GetAttr88(self, row, col, someExtraParameter):
         print 'Overridden GetAttr ', row, col
         """Part of a workaround to avoid use of attributes, queried by _PropertyGrid's IsCurrentCellReadOnly"""
         #property = self.GetPropertyForCoordinate( row, col )
         #object = self.GetObjectForCoordinate( row, col )
         #if property.ReadOnly( object ):
         attr = GridCellAttr()
-        attr.SetReadOnly( 1 )
+        attr.SetReadOnly(1)
         return attr
         #return None
-
 
     def _updateColAttrs88(self, grid):
         """
@@ -163,7 +164,7 @@ class VirtualModel(PyGridTableBase):
                 # attr.SetReadOnly(False)
                 # attr.SetRenderer(renderer)
             else:
-                renderer = self.renderers["DEFAULT_RENDERER"] # .Clone()
+                renderer = self.renderers["DEFAULT_RENDERER"]  # .Clone()
 
             attr.SetRenderer(renderer)
 
@@ -203,10 +204,9 @@ class VirtualModel(PyGridTableBase):
         # list of column names.  The data will remain but
         # it won't be shown
         deleteCount = 0
-        cols = cols[:]
-        cols.sort()
+        cols = sorted(cols[:])
         for i in cols:
-            self.colnames.pop(i-deleteCount)
+            self.colnames.pop(i - deleteCount)
             # we need to advance the delete count
             # to make sure we delete the right columns
             deleteCount += 1
@@ -224,10 +224,9 @@ class VirtualModel(PyGridTableBase):
         rows hold the row indices
         """
         deleteCount = 0
-        rows = rows[:]
-        rows.sort()
+        rows = sorted(rows[:])
         for i in rows:
-            self._data.pop(i-deleteCount)
+            self._data.pop(i - deleteCount)
             # we need to advance the delete count
             # to make sure we delete the right rows
             deleteCount += 1

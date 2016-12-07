@@ -53,38 +53,37 @@ class UserPerspectiveName(HasTraits):
 
     new_view = View(
         VGroup(
-            VGroup( 'name', 'show_editor_area' ),
-            VGroup( '_',
-                Item( 'new_help',
-                      style = 'readonly' ),
-                show_labels = False
-            )
+            VGroup('name', 'show_editor_area'),
+            VGroup('_',
+                   Item('new_help',
+                        style='readonly'),
+                   show_labels=False
+                   )
         ),
-        title   = 'New User Perspective',
-        id      = 'envisage.workbench.action.'
-                  'new_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
+        title='New User Perspective',
+        id='envisage.workbench.action.'
+        'new_user_perspective_action.UserPerspectiveName',
+        buttons=['OK', 'Cancel'],
+        kind='livemodal',
+        width=300
     )
 
-    save_as_view = View( 'name',
-        title   = 'Save User Perspective As',
-        id      = 'envisage.workbench.action.'
-                  'save_as_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
-    )
+    save_as_view = View('name',
+                        title='Save User Perspective As',
+                        id='envisage.workbench.action.'
+                        'save_as_user_perspective_action.UserPerspectiveName',
+                        buttons=['OK', 'Cancel'],
+                        kind='livemodal',
+                        width=300
+                        )
 
-    rename_view = View( 'name',
-        title   = 'Rename User Perspective',
-        id      = 'envisage.workbench.action.'
-                  'rename_user_perspective_action.UserPerspectiveName',
-        buttons = [ 'OK', 'Cancel' ],
-        kind    = 'livemodal',
-        width   = 300
-    )
+    rename_view = View('name',
+                       title='Rename User Perspective',
+                       id='envisage.workbench.action.'
+                       'rename_user_perspective_action.UserPerspectiveName',
+                       buttons=['OK', 'Cancel'],
+                       kind='livemodal',
+                       width=300
+                       )
 
 #### EOF #####################################################################
-

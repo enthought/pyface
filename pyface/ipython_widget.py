@@ -26,4 +26,4 @@ You need to have ipython >= 0.9 installed to use the ipython widget.''')
 
 
 from .toolkit import toolkit_object
-IPythonWidget= toolkit_object('ipython_widget:IPythonWidget')
+IPythonWidget = toolkit_object('ipython_widget:IPythonWidget')

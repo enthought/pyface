@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -25,12 +26,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted):     OK,
-    int(QtGui.QDialog.Rejected):     CANCEL,
-    int(QtGui.QMessageBox.Ok):       OK,
-    int(QtGui.QMessageBox.Cancel):   CANCEL,
-    int(QtGui.QMessageBox.Yes):      YES,
-    int(QtGui.QMessageBox.No):       NO
+    int(QtGui.QDialog.Accepted): OK,
+    int(QtGui.QDialog.Rejected): CANCEL,
+    int(QtGui.QMessageBox.Ok): OK,
+    int(QtGui.QMessageBox.Cancel): CANCEL,
+    int(QtGui.QMessageBox.Yes): YES,
+    int(QtGui.QMessageBox.No): NO
 }
 
 
@@ -39,7 +40,6 @@ class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
-
 
     #### 'IDialog' interface ##################################################
 
@@ -96,7 +96,9 @@ class Dialog(MDialog, Window):
         # display it but can't actually use it.
         if len(self.help_id) > 0:
             if self.help_label:
-                buttons.addButton(self.help_label, QtGui.QDialogButtonBox.HelpRole)
+                buttons.addButton(
+                    self.help_label,
+                    QtGui.QDialogButtonBox.HelpRole)
             else:
                 buttons.addButton(QtGui.QDialogButtonBox.Help)
 

@@ -36,7 +36,6 @@ class PythonEditor(MPythonEditor, Widget):
     IPythonEditor interface for the API documentation.
     """
 
-
     #### 'IPythonEditor' interface ############################################
 
     dirty = Bool(False)
@@ -138,7 +137,7 @@ class PythonEditor(MPythonEditor, Widget):
         """ Selects the specified line. """
 
         start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
+        end = self.control.GetLineEndPosition(lineno)
 
         self.control.SetSelection(start, end)
 
@@ -188,7 +187,7 @@ class PythonEditor(MPythonEditor, Widget):
         stc.SetIndent(4)
 
         # Line ending mode.
-        stc.SetEOLMode(wx.stc.STC_EOL_LF) # Unix
+        stc.SetEOLMode(wx.stc.STC_EOL_LF)  # Unix
         #self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         #self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
@@ -286,11 +285,11 @@ class PythonEditor(MPythonEditor, Widget):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event
         )
 
         # Give other event handlers a chance.

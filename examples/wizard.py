@@ -75,20 +75,24 @@ if __name__ == '__main__':
     gui = GUI()
 
     wizard = SimpleWizard(
-        parent = None,
-        title  = 'Create something magical',
-        pages  = [
-            SimpleWizardPage(id='foo', color='red',
-                    heading="The Red Page",
-                    subheading="The default color on this page is red."),
-            SimpleWizardPage(id='bar', color='yellow',
-                    heading="The Yellow Page",
-                    subheading="The default color on this page is yellow."),
-            SimpleWizardPage(id='baz', color='green',
-                    heading="The Green Page",
-                    subheading="The default color on this page is green.")
-        ]
-    )
+        parent=None,
+        title='Create something magical',
+        pages=[
+            SimpleWizardPage(
+                id='foo',
+                color='red',
+                heading="The Red Page",
+                subheading="The default color on this page is red."),
+            SimpleWizardPage(
+                id='bar',
+                color='yellow',
+                heading="The Yellow Page",
+                subheading="The default color on this page is yellow."),
+            SimpleWizardPage(
+                id='baz',
+                color='green',
+                heading="The Green Page",
+                subheading="The default color on this page is green.")])
 
     # Create and open the wizard.
     if wizard.open() == OK:

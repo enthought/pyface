@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -30,7 +31,6 @@ class FileDialog(MFileDialog, Dialog):
     """ The toolkit specific implementation of a FileDialog.  See the
     IFileDialog interface for the API documentation.
     """
-
 
     #### 'IFileDialog' interface ##############################################
 
@@ -115,8 +115,9 @@ class FileDialog(MFileDialog, Dialog):
         # and filename, split the path into it directory and filename
         # components.
         if len(self.default_path) != 0 and len(self.default_directory) == 0 \
-            and len(self.default_filename) == 0:
-            default_directory, default_filename = os.path.split(self.default_path)
+                and len(self.default_filename) == 0:
+            default_directory, default_filename = os.path.split(
+                self.default_path)
         else:
             default_directory = self.default_directory
             default_filename = self.default_filename

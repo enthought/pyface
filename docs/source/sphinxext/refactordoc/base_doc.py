@@ -16,6 +16,7 @@ from line_functions import is_empty, get_indent, fix_backspace
 #  Classes
 #------------------------------------------------------------------------------
 
+
 class BaseDoc(object):
     """Base abstract docstring refactoring class.
 
@@ -46,7 +47,7 @@ class BaseDoc(object):
 
     """
 
-    def __init__(self, lines, headers = None, verbose=False):
+    def __init__(self, lines, headers=None, verbose=False):
         """ Initialize the class
 
         The method setups the class attributes and starts parsing the
@@ -91,7 +92,8 @@ class BaseDoc(object):
         while not self.eol:
             header = self.is_section()
             if header:
-                self.remove_if_empty(self.index + 2)  # Remove space after header
+                # Remove space after header
+                self.remove_if_empty(self.index + 2)
                 self._refactor(header)
             else:
                 self.index += 1
@@ -134,7 +136,6 @@ class BaseDoc(object):
         self.insert_lines(descriptions, index)
         self.index += len(descriptions)
         return descriptions
-
 
     def extract_fields(self, indent='', field_type=None):
         """Extract the fields from the docstring
@@ -221,9 +222,8 @@ class BaseDoc(object):
         while (not self.eol):
             peek_0 = self.peek()
             peek_1 = self.peek(1)
-            if (is_empty(peek_0) and (not peek_1.startswith(indent))) \
-                or \
-                ((not is_empty(peek_0)) and (not peek_0.startswith(indent))):
+            if (is_empty(peek_0) and (not peek_1.startswith(indent))) or (
+                    (not is_empty(peek_0)) and (not peek_0.startswith(indent))):
                 break
             else:
                 line = self.read()
@@ -254,7 +254,7 @@ class BaseDoc(object):
         expected_underline1 = re.sub(r'[A-Za-z\\]|\b\s', '-', striped_header)
         expected_underline2 = re.sub(r'[A-Za-z\\]|\b\s', '=', striped_header)
         if ((underline.group().rstrip() == expected_underline1) or
-            (underline.group().rstrip() == expected_underline2)):
+                (underline.group().rstrip() == expected_underline2)):
             return header.strip()
         else:
             return False
@@ -283,7 +283,6 @@ class BaseDoc(object):
             if not is_empty(line):
                 break
             self.index += 1
-
 
     def get_next_paragraph(self):
         """ Get the next paragraph designated by an empty line.
@@ -352,4 +351,3 @@ class BaseDoc(object):
 
         """
         return self._docstring
-

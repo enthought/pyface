@@ -29,29 +29,30 @@ demoText = """\
 
 
 if wx.Platform == '__WXMSW__':
-    faces = { 'times': 'Times New Roman',
-              'mono' : 'Courier New',
-              'helv' : 'Arial',
-              'other': 'Comic Sans MS',
-              'size' : 10,
-              'size2': 8,
-            }
+    faces = {'times': 'Times New Roman',
+             'mono': 'Courier New',
+             'helv': 'Arial',
+             'other': 'Comic Sans MS',
+             'size': 10,
+             'size2': 8,
+             }
 else:
-    faces = { 'times': 'Times',
-              'mono' : 'Courier',
-              'helv' : 'Helvetica',
-              'other': 'new century schoolbook',
-              'size' : 12,
-              'size2': 10,
-            }
+    faces = {'times': 'Times',
+             'mono': 'Courier',
+             'helv': 'Helvetica',
+             'other': 'new century schoolbook',
+             'size': 12,
+             'size2': 10,
+             }
 
 
 #----------------------------------------------------------------------
 
 class PythonSTC(stc.StyledTextCtrl):
+
     def __init__(self, parent, ID):
         stc.StyledTextCtrl.__init__(self, parent, ID,
-                                  style = wx.NO_FULL_REPAINT_ON_RESIZE)
+                                    style=wx.NO_FULL_REPAINT_ON_RESIZE)
 
         self.CmdKeyAssign(ord('B'), stc.STC_SCMOD_CTRL, stc.STC_CMD_ZOOMIN)
         self.CmdKeyAssign(ord('N'), stc.STC_SCMOD_CTRL, stc.STC_CMD_ZOOMOUT)
@@ -61,7 +62,7 @@ class PythonSTC(stc.StyledTextCtrl):
 
         self.SetProperty("fold", "1")
         self.SetProperty("tab.timmy.whinge.level", "1")
-        self.SetMargins(0,0)
+        self.SetMargins(0, 0)
 
         self.SetViewWhiteSpace(False)
         #self.SetBufferedDraw(False)
@@ -81,7 +82,7 @@ class PythonSTC(stc.StyledTextCtrl):
         self.SetMarginType(1, stc.STC_MARGIN_NUMBER)
         self.SetMarginWidth(1, 25)
 
-        if 0: # simple folder marks, like the old version
+        if 0:  # simple folder marks, like the old version
             self.MarkerDefine(stc.STC_MARKNUM_FOLDER,
                               stc.STC_MARK_ARROW, "navy", "navy")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,
@@ -96,27 +97,25 @@ class PythonSTC(stc.StyledTextCtrl):
             self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,
                               stc.STC_MARK_BACKGROUND, "white", "black")
 
-        elif 0: # more involved "outlining" folder marks
+        elif 0:  # more involved "outlining" folder marks
             self.MarkerDefine(stc.STC_MARKNUM_FOLDEREND,
                               stc.STC_MARK_BOXPLUSCONNECTED, "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPENMID,
                               stc.STC_MARK_BOXMINUSCONNECTED,
                               "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDERMIDTAIL,
-                              stc.STC_MARK_TCORNER,  "white", "black")
+                              stc.STC_MARK_TCORNER, "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDERTAIL,
-                              stc.STC_MARK_LCORNER,  "white", "black")
+                              stc.STC_MARK_LCORNER, "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDERSUB,
-                              stc.STC_MARK_VLINE,    "white", "black")
+                              stc.STC_MARK_VLINE, "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDER,
-                              stc.STC_MARK_BOXPLUS,  "white", "black")
+                              stc.STC_MARK_BOXPLUS, "white", "black")
             self.MarkerDefine(stc.STC_MARKNUM_FOLDEROPEN,
                               stc.STC_MARK_BOXMINUS, "white", "black")
 
-
-        stc.EVT_STC_UPDATEUI(self,    ID, self.OnUpdateUI)
+        stc.EVT_STC_UPDATEUI(self, ID, self.OnUpdateUI)
         stc.EVT_STC_MARGINCLICK(self, ID, self.OnMarginClick)
-
 
         # Make some styles,  The lexer defines what each style is used for, we
         # just have to define what each style looks like.  This set is adapted
@@ -147,11 +146,15 @@ class PythonSTC(stc.StyledTextCtrl):
         self.StyleSetSpec(stc.STC_P_NUMBER,
                           "fore:#007F7F,size:%(size)d" % faces)
         # String
-        self.StyleSetSpec(stc.STC_P_STRING,
-                  "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
+        self.StyleSetSpec(
+            stc.STC_P_STRING,
+            "fore:#7F007F,italic,face:%(times)s,size:%(size)d" %
+            faces)
         # Single quoted string
-        self.StyleSetSpec(stc.STC_P_CHARACTER,
-                  "fore:#7F007F,italic,face:%(times)s,size:%(size)d" % faces)
+        self.StyleSetSpec(
+            stc.STC_P_CHARACTER,
+            "fore:#7F007F,italic,face:%(times)s,size:%(size)d" %
+            faces)
         # Keyword
         self.StyleSetSpec(stc.STC_P_WORD,
                           "fore:#00007F,bold,size:%(size)d" % faces)
@@ -177,14 +180,14 @@ class PythonSTC(stc.StyledTextCtrl):
         self.StyleSetSpec(stc.STC_P_COMMENTBLOCK,
                           "fore:#7F7F7F,size:%(size)d" % faces)
         # End of line where string is not closed
-        self.StyleSetSpec(stc.STC_P_STRINGEOL,
-          "fore:#000000,face:%(mono)s,back:#E0C0E0,eol,size:%(size)d" % faces)
-
+        self.StyleSetSpec(
+            stc.STC_P_STRINGEOL,
+            "fore:#000000,face:%(mono)s,back:#E0C0E0,eol,size:%(size)d" %
+            faces)
 
         self.SetCaretForeground("BLUE")
 
         wx.EVT_KEY_DOWN(self, self.OnKeyPressed)
-
 
     def OnKeyPressed(self, event):
         if self.CallTipActive():
@@ -192,7 +195,7 @@ class PythonSTC(stc.StyledTextCtrl):
 
         # KeyCode used to be a method.  Now it is an integer.
         # Handle either case.
-        if type(event.KeyCode) is int:
+        if isinstance(event.KeyCode, int):
             # wx2.8+
             key = event.KeyCode
         else:
@@ -233,7 +236,6 @@ class PythonSTC(stc.StyledTextCtrl):
         else:
             event.Skip()
 
-
     def OnUpdateUI(self, evt):
         # check for matching braces
         braceAtCaret = -1
@@ -247,7 +249,7 @@ class PythonSTC(stc.StyledTextCtrl):
         # check before
         if (charBefore and
             chr(charBefore) in "[]{}()" and
-            styleBefore==stc.STC_P_OPERATOR):
+                styleBefore == stc.STC_P_OPERATOR):
             braceAtCaret = caretPos - 1
 
         # check after
@@ -256,13 +258,13 @@ class PythonSTC(stc.StyledTextCtrl):
             styleAfter = self.GetStyleAt(caretPos)
             if (charAfter and
                 chr(charAfter) in "[]{}()" and
-                styleAfter == stc.STC_P_OPERATOR):
+                    styleAfter == stc.STC_P_OPERATOR):
                 braceAtCaret = caretPos
 
         if braceAtCaret >= 0:
             braceOpposite = self.BraceMatch(braceAtCaret)
 
-        if braceAtCaret != -1  and braceOpposite == -1:
+        if braceAtCaret != -1 and braceOpposite == -1:
             self.BraceBadLight(braceAtCaret)
         else:
             self.BraceHighlight(braceAtCaret, braceOpposite)
@@ -271,7 +273,6 @@ class PythonSTC(stc.StyledTextCtrl):
             #print pt
             #self.Refresh(False)
 
-
     def OnMarginClick(self, evt):
         # fold and unfold as needed
         if evt.GetMargin() == 2:
@@ -279,7 +280,8 @@ class PythonSTC(stc.StyledTextCtrl):
                 self.FoldAll()
             else:
                 lineClicked = self.LineFromPosition(evt.GetPosition())
-                if self.GetFoldLevel(lineClicked) & stc.STC_FOLDLEVELHEADERFLAG:
+                if self.GetFoldLevel(
+                        lineClicked) & stc.STC_FOLDLEVELHEADERFLAG:
                     if evt.GetShift():
                         self.SetFoldExpanded(lineClicked, True)
                         self.Expand(lineClicked, True, True, 1)
@@ -293,7 +295,6 @@ class PythonSTC(stc.StyledTextCtrl):
                     else:
                         self.ToggleFold(lineClicked)
 
-
     def FoldAll(self):
         lineCount = self.GetLineCount()
         expanding = True
@@ -302,7 +303,7 @@ class PythonSTC(stc.StyledTextCtrl):
         for lineNum in range(lineCount):
             if self.GetFoldLevel(lineNum) & stc.STC_FOLDLEVELHEADERFLAG:
                 expanding = not self.GetFoldExpanded(lineNum)
-                break;
+                break
 
         lineNum = 0
         while lineNum < lineCount:
@@ -318,11 +319,9 @@ class PythonSTC(stc.StyledTextCtrl):
                     lastChild = self.GetLastChild(lineNum, -1)
                     self.SetFoldExpanded(lineNum, False)
                     if lastChild > lineNum:
-                        self.HideLines(lineNum+1, lastChild)
+                        self.HideLines(lineNum + 1, lastChild)
 
             lineNum = lineNum + 1
-
-
 
     def Expand(self, line, doExpand, force=False, visLevels=0, level=-1):
         lastChild = self.GetLastChild(line, level)
@@ -346,15 +345,15 @@ class PythonSTC(stc.StyledTextCtrl):
                         self.SetFoldExpanded(line, True)
                     else:
                         self.SetFoldExpanded(line, False)
-                    line = self.Expand(line, doExpand, force, visLevels-1)
+                    line = self.Expand(line, doExpand, force, visLevels - 1)
 
                 else:
                     if doExpand and self.GetFoldExpanded(line):
-                        line = self.Expand(line, True, force, visLevels-1)
+                        line = self.Expand(line, True, force, visLevels - 1)
                     else:
-                        line = self.Expand(line, False, force, visLevels-1)
+                        line = self.Expand(line, False, force, visLevels - 1)
             else:
-                line = line + 1;
+                line = line + 1
 
         return line
 
@@ -363,17 +362,17 @@ class PythonSTC(stc.StyledTextCtrl):
 
 _USE_PANEL = 1
 
+
 def runTest(frame, nb, log):
     if not _USE_PANEL:
         ed = p = stc.PythonSTC(nb, -1)
     else:
-        p = wx.Panel(nb, -1, style = wx.NO_FULL_REPAINT_ON_RESIZE)
+        p = wx.Panel(nb, -1, style=wx.NO_FULL_REPAINT_ON_RESIZE)
         ed = PythonSTC(p, -1)
         s = wx.BoxSizer(wx.HORIZONTAL)
         s.Add(ed, 1, wx.EXPAND)
         p.SetSizer(s)
         p.SetAutoLayout(True)
-
 
     ed.SetText(demoText + open('Main.py').read())
     ed.EmptyUndoBuffer()
@@ -384,7 +383,6 @@ def runTest(frame, nb, log):
     ed.SetMarginWidth(1, 25)
 
     return p
-
 
 
 #----------------------------------------------------------------------
@@ -401,9 +399,9 @@ be helpful.
 
 if __name__ == '__main__':
     # fixme: This has been re-factored into not working.  No run module.
-    import sys,os
+    import sys
+    import os
     import run
     run.main(['', os.path.basename(sys.argv[0])])
 
 #----------------------------------------------------------------------
-

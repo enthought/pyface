@@ -2,7 +2,8 @@
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
+# This software is provided without warranty under the terms of the BSD
+# license.
 
 #
 # Author: Enthought Inc
@@ -10,6 +11,7 @@
 #------------------------------------------------------------------------------
 
 import os
+
 
 def prepare_pyqt4():
     # Set PySide compatible APIs.
@@ -40,5 +42,6 @@ elif qt_api == 'pyqt':
     prepare_pyqt4()
 
 elif qt_api != 'pyside':
-    raise RuntimeError("Invalid Qt API %r, valid values are: 'pyqt' or 'pyside'"
-                       % qt_api)
+    raise RuntimeError(
+        "Invalid Qt API %r, valid values are: 'pyqt' or 'pyside'" %
+        qt_api)

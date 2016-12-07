@@ -27,6 +27,7 @@ from pyface.api import GUI, OK
 from pyface.wizard.api import ChainedWizard, Wizard, WizardPage
 from traits.api import Color, HasTraits, Int, Str
 
+
 class Details(HasTraits):
     """ Some test data. """
 
@@ -74,27 +75,29 @@ if __name__ == '__main__':
     gui = GUI()
 
     wizard = ChainedWizard(
-        parent = None,
-        title  = 'Chained wizard root',
-        pages  = [
-            SimpleWizardPage(id='foo', color='red',
-                    heading="The Red Page",
-                    subheading="The default color on this page is red.")
-        ]
-    )
+        parent=None,
+        title='Chained wizard root',
+        pages=[
+            SimpleWizardPage(
+                id='foo',
+                color='red',
+                heading="The Red Page",
+                subheading="The default color on this page is red.")])
 
     next_wizard = Wizard(
-        parent = None,
-        title  = 'Chained wizard child.',
-        pages  = [
-            SimpleWizardPage(id='bar', color='yellow',
-                    heading="The Yellow Page",
-                    subheading="The default color on this page is yellow."),
-            SimpleWizardPage(id='baz', color='green',
-                    heading="The Green Page",
-                    subheading="The default color on this page is green.")
-        ]
-    )
+        parent=None,
+        title='Chained wizard child.',
+        pages=[
+            SimpleWizardPage(
+                id='bar',
+                color='yellow',
+                heading="The Yellow Page",
+                subheading="The default color on this page is yellow."),
+            SimpleWizardPage(
+                id='baz',
+                color='green',
+                heading="The Green Page",
+                subheading="The default color on this page is green.")])
 
     wizard.next_wizard = next_wizard
 

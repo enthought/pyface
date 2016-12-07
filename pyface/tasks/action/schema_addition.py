@@ -11,7 +11,7 @@ class SchemaAddition(HasTraits):
     id = Str
 
     # A callable to create the item. Should have the following signature:
-    #    callable() -> Action | ActionItem | Group | MenuManager | 
+    #    callable() -> Action | ActionItem | Group | MenuManager |
     #                  GroupSchema | MenuSchema
     # If the result is a schema, it will itself admit of extension by other
     # additions. If not, the result will be fixed.

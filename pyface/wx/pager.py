@@ -22,7 +22,6 @@ from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 class Pager(wxScrolledPanel):
     """ A pager contains a set of pages, but only shows one at a time. """
 
-
     def __init__(self, parent, wxid, **kw):
         """ Creates a new pager. """
 
@@ -31,7 +30,7 @@ class Pager(wxScrolledPanel):
         self.SetupScrolling()
 
         # The pages in the pager!
-        self._pages = {} # { str name : wx.Window page }
+        self._pages = {}  # { str name : wx.Window page }
 
         # The page that is currently displayed.
         self._current_page = None

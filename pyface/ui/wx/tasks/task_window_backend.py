@@ -22,6 +22,7 @@ class AUILayout(TaskLayout):
     """
     perspective = Str
 
+
 class TaskWindowBackend(MTaskWindowBackend):
     """ The toolkit-specific implementation of a TaskWindowBackend.
 
@@ -41,7 +42,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         # No extra control needed for wx (it's all handled by the AUIManager in
         # the ApplicationWindow) but we do need to handle some events here
-        self.window._aui_manager.Bind(aui.EVT_AUI_PANE_CLOSE, self._pane_close_requested)
+        self.window._aui_manager.Bind(
+            aui.EVT_AUI_PANE_CLOSE,
+            self._pane_close_requested)
 
     def destroy(self):
         """ Destroy the backend.
@@ -57,16 +60,16 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Now hide its controls.
         self.window._aui_manager.DetachPane(state.central_pane.control)
         state.central_pane.control.Hide()
-        
+
         for dock_pane in state.dock_panes:
             logger.debug("hiding dock pane %s" % dock_pane.id)
             self.window._aui_manager.DetachPane(dock_pane.control)
             dock_pane.control.Hide()
-        
+
         # Remove any tabbed notebooks left over after all the panes have been
         # removed
         self.window._aui_manager.UpdateNotebook()
-        
+
         # Remove any still-left over stuff (i.e. toolbars)
         for info in self.window._aui_manager.GetAllPanes():
             logger.debug("hiding remaining pane: %s" % info.name)
@@ -79,14 +82,15 @@ class TaskWindowBackend(MTaskWindowBackend):
             specified TaskState.
         """
         # Show the central pane.
-        info = aui.AuiPaneInfo().Caption('Central').Dockable(False).Floatable(False).Name('Central').CentrePane().Maximize()
+        info = aui.AuiPaneInfo().Caption('Central').Dockable(
+            False).Floatable(False).Name('Central').CentrePane().Maximize()
         logger.debug("adding central pane to %s" % self.window)
         self.window._aui_manager.AddPane(state.central_pane.control, info)
         self.window._aui_manager.Update()
 
         # Show the dock panes.
         self._layout_state(state)
-    
+
     def get_toolbars(self, task=None):
         if task is None:
             state = self.window._active_state
@@ -97,7 +101,7 @@ class TaskWindowBackend(MTaskWindowBackend):
             info = self.window._aui_manager.GetPane(tool_bar_manager.id)
             toolbars.append(info)
         return toolbars
-    
+
     def show_toolbars(self, toolbars):
         for info in toolbars:
             info.Show()
@@ -151,7 +155,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         pane = evt.GetPane()
         logger.debug("_pane_close_requested: pane=%s" % pane.name)
         for dock_pane in self.window.dock_panes:
-            logger.debug("_pane_close_requested: checking pane=%s" % dock_pane.pane_name)
+            logger.debug(
+                "_pane_close_requested: checking pane=%s" %
+                dock_pane.pane_name)
             if dock_pane.pane_name == pane.name:
                 logger.debug("_pane_close_requested: FOUND PANE!!!!!!")
                 dock_pane.visible = False
@@ -159,7 +165,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
-            panes = [ self.window.central_pane ] + self.window.dock_panes
+            panes = [self.window.central_pane] + self.window.dock_panes
             for pane in panes:
                 if new and pane.control.isAncestorOf(new):
                     pane.has_focus = True

@@ -23,34 +23,34 @@ class PythonShellPane(TaskPane):
     """
     id = 'pyface.tasks.contrib.python_shell.pane'
     name = 'Python Shell'
-    
+
     editor = Instance(PythonShell)
-    
+
     bindings = List(Dict)
     commands = List(Str)
-    
+
     def create(self, parent):
         """ Create the python shell task pane
-        
+
         This wraps the standard pyface PythonShell
         """
         logger.debug('PythonShellPane: creating python shell pane')
         self.editor = PythonShell(parent)
         self.control = self.editor.control
-        
+
         # bind namespace
         logger.debug('PythonShellPane: binding variables')
         for binding in self.bindings:
             for name, value in binding.items():
                 self.editor.bind(name, value)
-        
+
         # execute commands
         logger.debug('PythonShellPane: executing startup commands')
         for command in self.commands:
             self.editor.execute_command(command)
-               
+
         logger.debug('PythonShellPane: created')
-    
+
     def destroy(self):
         """ Destroy the python shell task pane
         """
@@ -64,33 +64,35 @@ class PythonShellTask(Task):
     """
     A task which provides a simple Python Shell to the user.
     """
-    
+
     # Task Interface
-    
+
     id = 'pyface.tasks.contrib.python_shell'
     name = 'Python Shell'
-    
+
     # The list of bindings for the shell
     bindings = List(Dict)
-    
+
     # The list of commands to run on shell startup
     commands = List(Str)
-    
+
     # the IPythonShell instance that we are interacting with
     pane = Instance(PythonShellPane)
-    
+
     # Task Interface
 
     menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
                                          accelerator='Ctrl+O'),
                               id='File', name='&File'),
                         SMenu(id='View', name='&View'))
-    
+
     def create_central_pane(self):
         """ Create a view pane with a Python shell
         """
         logger.debug("Creating Python shell pane in central pane")
-        self.pane = PythonShellPane(bindings=self.bindings, commands=self.commands)
+        self.pane = PythonShellPane(
+            bindings=self.bindings,
+            commands=self.commands)
         return self.pane
 
     # PythonShellTask API
@@ -104,7 +106,7 @@ class PythonShellTask(Task):
             self._open_file(dialog.path)
 
     # Private API
-    
+
     def _open_file(self, path):
         """ Execute the selected file in the editor's interpreter
         """

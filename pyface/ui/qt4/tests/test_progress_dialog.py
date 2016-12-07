@@ -7,7 +7,8 @@ from pyface.toolkit import toolkit_object
 
 from ..progress_dialog import ProgressDialog
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
@@ -31,7 +32,7 @@ class TestDialog(unittest.TestCase):
 
     def test_show_time(self):
         # test that creation works with show_time
-        self.dialog.show_time =  True
+        self.dialog.show_time = True
         self.dialog._create()
         self.gui.process_events()
         self.assertIsNotNone(self.dialog._elapsed_control)
@@ -41,7 +42,7 @@ class TestDialog(unittest.TestCase):
 
     def test_show_percent(self):
         # test that creation works with show_percent
-        self.dialog.show_percent =  True
+        self.dialog.show_percent = True
         self.dialog._create()
         self.gui.process_events()
         self.assertEqual(self.dialog.progress_bar.format(), "%p%")

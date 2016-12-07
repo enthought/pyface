@@ -16,11 +16,13 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction, TaskToggleGroup
 from traits.api import on_trait_change, Property, Instance
 
+
 class FirstPane(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.first_pane'
     name = 'First Pane'
+
 
 class SecondPane(DockPane):
     #### TaskPane interface ###################################################
@@ -28,11 +30,13 @@ class SecondPane(DockPane):
     id = 'steps.second_pane'
     name = 'Second Pane'
 
+
 class ThirdPane(DockPane):
     #### TaskPane interface ###################################################
 
     id = 'steps.third_pane'
     name = 'Third Pane'
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -55,10 +59,10 @@ class ExampleTask(Task):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -79,7 +83,7 @@ class ExampleTask(Task):
     def create_dock_panes(self):
         """ Create the file browser and connect to its double click event.
         """
-        return [ FirstPane(), SecondPane(), ThirdPane() ]
+        return [FirstPane(), SecondPane(), ThirdPane()]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -100,6 +104,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -116,10 +121,10 @@ class SecondTask(ExampleTask):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -130,6 +135,7 @@ class SecondTask(ExampleTask):
             left=Tabbed(PaneItem('steps.first_pane'),
                         PaneItem('steps.second_pane'),
                         PaneItem('steps.third_pane')))
+
 
 def main(argv):
     """ A simple example of using Tasks.

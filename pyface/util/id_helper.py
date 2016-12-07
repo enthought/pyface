@@ -16,6 +16,7 @@
 
 from weakref import WeakKeyDictionary
 
+
 class _ObjectCounter(object):
     """ Counts objects. """
 

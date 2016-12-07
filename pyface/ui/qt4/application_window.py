@@ -20,7 +20,7 @@ from traits.api import Instance, List, on_trait_change, provides, Unicode
 
 # Local imports.
 from pyface.i_application_window import IApplicationWindow, \
-     MApplicationWindow
+    MApplicationWindow
 from pyface.image_resource import ImageResource
 from .window import Window
 
@@ -30,7 +30,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     """ The toolkit specific implementation of an ApplicationWindow.  See the
     IApplicationWindow interface for the API documentation.
     """
-
 
     #### 'IApplicationWindow' interface #######################################
 

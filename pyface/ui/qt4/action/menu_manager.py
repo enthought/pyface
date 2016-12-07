@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -73,7 +74,12 @@ class MenuManager(ActionManager, ActionManagerItem):
         menu = self.create_menu(parent, controller)
         if self.action:
             tool_action = _Tool(
-                parent, tool_bar, image_cache, self, controller, show_labels).control
+                parent,
+                tool_bar,
+                image_cache,
+                self,
+                controller,
+                show_labels).control
             tool_action.setMenu(menu)
         else:
             tool_action = menu.menuAction()
@@ -132,7 +138,7 @@ class _Menu(QtGui.QMenu):
 
         for item in self.menu_items:
             item.dispose()
-            
+
         self.menu_items = []
 
         super(_Menu, self).clear()
@@ -148,12 +154,12 @@ class _Menu(QtGui.QMenu):
         self.clear()
 
         manager = self._manager
-        parent  = self._parent
+        parent = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
-            previous_non_empty_group = self._add_group(parent, group,
-                    previous_non_empty_group)
+            previous_non_empty_group = self._add_group(
+                parent, group, previous_non_empty_group)
 
         self.setEnabled(manager.enabled)
 

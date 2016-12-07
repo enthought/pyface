@@ -37,7 +37,9 @@ class TestHeadingText(unittest.TestCase):
         # test that image works
         # XXX this image doesn't make sense here, but that's fine
         # XXX this isn't implemented in qt4 backend, but shouldn't fail
-        self.widget = HeadingText(self.window.control, image=ImageResource('core.png'))
+        self.widget = HeadingText(
+            self.window.control,
+            image=ImageResource('core.png'))
         self.gui.process_events()
         self.widget.destroy()
         self.gui.process_events()

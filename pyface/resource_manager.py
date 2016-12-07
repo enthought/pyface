@@ -20,7 +20,8 @@ from pyface.resource.api import ResourceManager
 
 # Import the toolkit specific version.
 from .toolkit import toolkit_object
-PyfaceResourceFactory = toolkit_object('resource_manager:PyfaceResourceFactory')
+PyfaceResourceFactory = toolkit_object(
+    'resource_manager:PyfaceResourceFactory')
 
 
 #: A shared instance.

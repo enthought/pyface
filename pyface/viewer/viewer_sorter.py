@@ -72,8 +72,8 @@ class ViewerSorter(HasTraits):
             # fixme: This is a hack until we decide whethwe we like the
             # JFace(ish) or Swing(ish) models!
             if hasattr(viewer, 'label_provider'):
-              label_a = viewer.label_provider.get_text(viewer, element_a)
-              label_b = viewer.label_provider.get_text(viewer, element_b)
+                label_a = viewer.label_provider.get_text(viewer, element_a)
+                label_b = viewer.label_provider.get_text(viewer, element_b)
 
             else:
                 label_a = viewer.node_model.get_text(viewer, element_a)

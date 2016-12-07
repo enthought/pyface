@@ -110,7 +110,8 @@ class TreeViewer(ContentViewer):
         wx.EVT_TREE_ITEM_COLLAPSING(tree, wxid, self._on_tree_item_collapsing)
         wx.EVT_TREE_ITEM_EXPANDED(tree, wxid, self._on_tree_item_expanded)
         wx.EVT_TREE_ITEM_EXPANDING(tree, wxid, self._on_tree_item_expanding)
-        wx.EVT_TREE_BEGIN_LABEL_EDIT(tree, wxid,self._on_tree_begin_label_edit)
+        wx.EVT_TREE_BEGIN_LABEL_EDIT(
+            tree, wxid, self._on_tree_begin_label_edit)
         wx.EVT_TREE_END_LABEL_EDIT(tree, wxid, self._on_tree_end_label_edit)
         wx.EVT_TREE_BEGIN_DRAG(tree, wxid, self._on_tree_begin_drag)
         wx.EVT_TREE_SEL_CHANGED(tree, wxid, self._on_tree_sel_changed)
@@ -262,10 +263,10 @@ class TreeViewer(ContentViewer):
         # element is the actual item data.
         if pid is None:
             if self.show_root:
-                self.control.SetPyData(wxid,  (False, element))
+                self.control.SetPyData(wxid, (False, element))
 
         else:
-            self.control.SetPyData(wxid,  (False, element))
+            self.control.SetPyData(wxid, (False, element))
 
         # Make sure that we can find the element's Id later.
         self._element_to_id_map[self._get_key(element)] = wxid
@@ -582,7 +583,7 @@ class TreeViewer(ContentViewer):
         # Get the element, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event)
 
-        if point == (0,0):
+        if point == (0, 0):
             # Apply workaround.
             point = self._point_left_clicked
             wxid, flags = self.control.HitTest(point)

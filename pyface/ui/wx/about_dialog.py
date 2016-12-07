@@ -75,7 +75,6 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-
     #### 'IAboutDialog' interface #############################################
 
     additions = List(Unicode)
@@ -98,7 +97,7 @@ class AboutDialog(MAboutDialog, Dialog):
 
         # Load the image to be displayed in the about box.
         image = self.image.create_image()
-        path  = self.image.absolute_path
+        path = self.image.absolute_path
 
         # The additional strings.
         additions = '<br />'.join(self.additions)

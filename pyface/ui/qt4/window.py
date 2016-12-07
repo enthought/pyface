@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -31,7 +32,6 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
     #### 'IWindow' interface ##################################################
 
     position = Property(Tuple)
@@ -46,9 +46,9 @@ class Window(MWindow, Widget):
 
     activated = Event
 
-    closed =  Event
+    closed = Event
 
-    closing =  Event
+    closing = Event
 
     deactivated = Event
 
@@ -162,12 +162,14 @@ class Window(MWindow, Widget):
     def _size_state_changed(self, state):
         control = self.control
         if control is None:
-            return # Nothing to do here
+            return  # Nothing to do here
 
         if state == 'maximized':
-            control.setWindowState(control.windowState() | QtCore.Qt.WindowMaximized)
+            control.setWindowState(
+                control.windowState() | QtCore.Qt.WindowMaximized)
         elif state == 'normal':
-            control.setWindowState(control.windowState() & ~QtCore.Qt.WindowMaximized)
+            control.setWindowState(
+                control.windowState() & ~QtCore.Qt.WindowMaximized)
 
     def _title_changed(self, title):
         """ Static trait change handler. """
@@ -239,14 +241,14 @@ class _EventFilter(QtCore.QObject):
 
             mods = e.modifiers()
             window.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = e)
+                alt_down=((mods & QtCore.Qt.AltModifier) ==
+                          QtCore.Qt.AltModifier),
+                control_down=((mods & QtCore.Qt.ControlModifier) ==
+                              QtCore.Qt.ControlModifier),
+                shift_down=((mods & QtCore.Qt.ShiftModifier) ==
+                            QtCore.Qt.ShiftModifier),
+                key_code=kcode,
+                event=e)
 
         elif typ == QtCore.QEvent.WindowStateChange:
             # set the size_state of the window.

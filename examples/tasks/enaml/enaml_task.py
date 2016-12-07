@@ -19,7 +19,6 @@ class EnamlTask(Task):
     id = 'example.enaml_task'
     name = 'Enaml Demo'
 
-
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
@@ -37,4 +36,3 @@ class EnamlTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         return [DummyDockPane()]
-

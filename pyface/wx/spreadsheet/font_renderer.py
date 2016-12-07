@@ -15,6 +15,7 @@ import wx
 
 from .default_renderer import DefaultRenderer
 
+
 class FontRenderer(DefaultRenderer):
     """Render data in the specified color and font and fontsize.
     """
@@ -23,7 +24,7 @@ class FontRenderer(DefaultRenderer):
         text = grid.model.GetValue(row, col)
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
         return
 
@@ -58,7 +59,7 @@ class FontRenderer(DefaultRenderer):
 
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
-        dc.DrawText(text, rect.x+1, rect.y+1)
+        dc.DrawText(text, rect.x + 1, rect.y + 1)
 
         # Okay, now for the advanced class :)
         # Let's add three dots "..."
@@ -66,18 +67,20 @@ class FontRenderer(DefaultRenderer):
         # when the text is larger than the grid cell
 
         width, height = dc.GetTextExtent(text)
-        if width > rect.width-2:
+        if width > rect.width - 2:
             width, height = dc.GetTextExtent("...")
-            x = rect.x+1 + rect.width-2 - width
-            dc.DrawRectangle(x, rect.y+1, width+1, height)
-            dc.DrawText("...", x, rect.y+1)
+            x = rect.x + 1 + rect.width - 2 - width
+            dc.DrawRectangle(x, rect.y + 1, width + 1, height)
+            dc.DrawText("...", x, rect.y + 1)
 
         dc.DestroyClippingRegion()
         return
 
+
 class FontRendererFactory88:
     """ I don't grok why this Factory (which I copied from the wx demo)
         was ever necessary? """
+
     def __init__(self, color, font, fontsize):
         """
         (color, font, fontsize) -> set of a factory to generate

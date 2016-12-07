@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))

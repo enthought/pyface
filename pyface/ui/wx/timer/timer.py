@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #  Copyright (c) 2006, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Prabhu Ramachandran <prabhu@aero.iitb.ac.in>
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 """A `wx.Timer` subclass that invokes a specified callback periodically.
 """
@@ -22,6 +22,8 @@ import wx
 
 ######################################################################
 # `Timer` class.
+
+
 class Timer(wx.Timer):
     """Simple subclass of wx.Timer that allows the user to have a
     function called periodically.
@@ -56,4 +58,3 @@ class Timer(wx.Timer):
         except:
             self.Stop()
             raise
-

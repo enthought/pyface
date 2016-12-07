@@ -16,6 +16,7 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction, TaskToggleGroup
 from traits.api import on_trait_change, Property, Instance
 
+
 class ExamplePane(DockPane):
     """ A simple file browser pane.
     """
@@ -24,6 +25,7 @@ class ExamplePane(DockPane):
 
     id = 'steps.example_pane'
     name = 'Example Pane'
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -46,10 +48,10 @@ class ExampleTask(Task):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -69,7 +71,7 @@ class ExampleTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         pane = ExamplePane()
-        return [ pane ]
+        return [pane]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -90,6 +92,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -106,10 +109,10 @@ class SecondTask(ExampleTask):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -118,6 +121,7 @@ class SecondTask(ExampleTask):
     def _default_layout_default(self):
         return TaskLayout(
             bottom=PaneItem('steps.example_pane'))
+
 
 def main(argv):
     """ A simple example of using Tasks.

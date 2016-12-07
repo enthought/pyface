@@ -47,6 +47,5 @@ class LayoutItemsTestCase(unittest.TestCase):
             LayoutContainer(*items, items=items)
 
 
-
 if __name__ == '__main__':
     unittest.main()

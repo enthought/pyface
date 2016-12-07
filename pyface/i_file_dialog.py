@@ -69,7 +69,7 @@ class MFileDialog(object):
 
     # FIXME v3: These are referenced elsewhere so maybe should be part of the
     # interface. The format is toolkit specific and so shouldn't be exposed.
-    # The create_wildcard() class method (why isn't it a static method?) should
+    # The create_wildcard() class method(why isn't it a static method?) should
     # be the basis for this - but nothing seems to use it.  For now the PyQt
     # implementation will convert the wx format to its own.  Actually we need
     # the format to be portable between toolkits - so stick with PyQt

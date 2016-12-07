@@ -22,12 +22,13 @@ from wx.grid import PyGridCellRenderer
 from wx.grid import GridCellStringRenderer
 from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
+
 class GridCellImageRenderer(PyGridCellRenderer):
     """ A renderer which will display a cell-specific image in addition to some
         text displayed in the same way the standard string renderer normally
         would. """
 
-    def __init__(self, provider = None):
+    def __init__(self, provider=None):
         """ Build a new PyGridCellImageRenderer.
 
             'provider', if provided, should implement
@@ -115,7 +116,6 @@ class GridCellImageRenderer(PyGridCellRenderer):
         else:
             bmp_size = wx.Size(0, 0)
 
-
         # find the correct text for this cell
         text = self._get_text(grid, row, col)
 
@@ -164,4 +164,3 @@ class GridCellImageRenderer(PyGridCellRenderer):
         return text
 
 #### EOF ######################################################################
-

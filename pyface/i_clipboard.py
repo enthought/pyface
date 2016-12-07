@@ -107,7 +107,7 @@ class BaseClipboard(HasStrictTraits):
         else:
             self.object_data = data
 
-    def _get_data_type ( self ):
+    def _get_data_type(self):
         if self.has_text_data:
             return 'str'
         if self.has_file_data:

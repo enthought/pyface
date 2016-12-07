@@ -12,6 +12,7 @@ from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
 from traits.api import on_trait_change, Property, Instance
 
+
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
@@ -32,10 +33,10 @@ class ExampleTask(Task):
                         SMenu(DockPaneToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -65,6 +66,7 @@ class ExampleTask(Task):
         if self.editor_area is not None:
             return self.editor_area.active_editor
         return None
+
 
 def main(argv):
     """ A simple example of using Tasks.

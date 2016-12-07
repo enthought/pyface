@@ -15,6 +15,7 @@
 # Enthought library imports
 from traits.api import Any, HasTraits
 
+
 class GridCellRenderer(HasTraits):
 
     # The toolkit-specific renderer for this cell.

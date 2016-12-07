@@ -34,7 +34,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     IDirectoryDialog interface for the API documentation.
     """
 
-
     #### 'IDirectoryDialog' interface #########################################
 
     default_path = Unicode
@@ -83,6 +82,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
         # Create the actual dialog.
         return wx.DirDialog(parent, message=message,
-                defaultPath=self.default_path, style=style)
+                            defaultPath=self.default_path, style=style)
 
 #### EOF ######################################################################

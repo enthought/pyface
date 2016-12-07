@@ -11,10 +11,10 @@ from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from .main_window_layout import MainWindowLayout
 
 # Constants.
-CORNER_MAP = { 'top_left'     : QtCore.Qt.TopLeftCorner,
-               'top_right'    : QtCore.Qt.TopRightCorner,
-               'bottom_left'  : QtCore.Qt.BottomLeftCorner,
-               'bottom_right' : QtCore.Qt.BottomRightCorner }
+CORNER_MAP = {'top_left': QtCore.Qt.TopLeftCorner,
+              'top_right': QtCore.Qt.TopRightCorner,
+              'bottom_left': QtCore.Qt.BottomLeftCorner,
+              'bottom_right': QtCore.Qt.BottomRightCorner}
 
 
 class TaskWindowBackend(MTaskWindowBackend):
@@ -136,7 +136,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
-            panes = [ self.window.central_pane ] + self.window.dock_panes
+            panes = [self.window.central_pane] + self.window.dock_panes
             for pane in panes:
                 if new and pane.control.isAncestorOf(new):
                     pane.has_focus = True

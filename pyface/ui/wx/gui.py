@@ -39,7 +39,6 @@ logger = logging.getLogger(__name__)
 @provides(IGUI)
 class GUI(MGUI, HasTraits):
 
-
     #### 'GUI' interface ######################################################
 
     busy = Bool(False)

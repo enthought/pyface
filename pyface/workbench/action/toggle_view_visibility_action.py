@@ -88,8 +88,8 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         """ Refresh the checked state of the action. """
 
         self.checked = self.view is not None \
-          and self.view.window is not None \
-          and self.view.visible
+            and self.view.window is not None \
+            and self.view.visible
 
         return
 

@@ -11,7 +11,8 @@
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
 #------------------------------------------------------------------------------
-import os, wx
+import os
+import wx
 from traits.util.resource import get_path
 
 

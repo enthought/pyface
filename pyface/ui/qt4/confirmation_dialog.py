@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -29,7 +30,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     """ The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
-
 
     #### 'IConfirmationDialog' interface ######################################
 
@@ -104,7 +104,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         # The 'Cancel' button.
         if self.cancel:
             if self.cancel_label:
-                btn = dlg.addButton(self.cancel_label, QtGui.QMessageBox.RejectRole)
+                btn = dlg.addButton(
+                    self.cancel_label,
+                    QtGui.QMessageBox.RejectRole)
             else:
                 btn = dlg.addButton(QtGui.QMessageBox.Cancel)
 

@@ -29,6 +29,7 @@ class Pane1(DockPane):
     id = 'steps.pane1'
     name = 'Pane 1'
 
+
 class Pane2(DockPane):
     #### TaskPane interface ###################################################
 
@@ -39,15 +40,21 @@ class Pane2(DockPane):
 
     # The list of wildcard filters for filenames.
     filters = List(Str)
-    
+
     def create_contents(self, parent):
-        control = wx.GenericDirCtrl(parent, -1, size=(200,-1), style=wx.NO_BORDER)
+        control = wx.GenericDirCtrl(
+            parent, -1, size=(200, -1), style=wx.NO_BORDER)
         control.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.on_selected)
         return control
-    
+
     def on_selected(self, evt):
         selected_file = self.control.GetFilePath()
-        wx.CallAfter(self.task.window.application.load_file, selected_file, self.task, in_current_window=True)
+        wx.CallAfter(
+            self.task.window.application.load_file,
+            selected_file,
+            self.task,
+            in_current_window=True)
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -70,10 +77,10 @@ class ExampleTask(Task):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          image_size=(32, 32)), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -85,7 +92,7 @@ class ExampleTask(Task):
                 HSplitter(
                     PaneItem('steps.pane1'),
                     PaneItem('steps.pane2')),
-                ))
+            ))
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -96,7 +103,7 @@ class ExampleTask(Task):
     def create_dock_panes(self):
         """ Create the file browser and connect to its double click event.
         """
-        return [ Pane1(), Pane2() ]
+        return [Pane1(), Pane2()]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -117,6 +124,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
@@ -133,12 +141,20 @@ class SecondTask(ExampleTask):
                               TaskToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),                           image_size = (32, 32)), ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method='new',
+                tooltip='New file',
+                image=ImageResource('document_new')),
+            TaskAction(
+                method='new',
+                tooltip='New file',
+                image=ImageResource('document_new')),
+            image_size=(
+                32,
+                32)),
+    ]
 
     ###########################################################################
     # 'Task' interface.
@@ -150,8 +166,9 @@ class SecondTask(ExampleTask):
                 HSplitter(
                     PaneItem('steps.pane1'),
                     PaneItem('steps.pane2')),
-                ))
-            
+            ))
+
+
 def main(argv):
     """ A simple example of using Tasks.
     """

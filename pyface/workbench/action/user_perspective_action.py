@@ -53,8 +53,8 @@ class UserPerspectiveAction(WorkbenchAction):
         """ Refresh the enabled state of the action. """
 
         self.enabled = self.window is not None \
-          and self.window.active_perspective is not None \
-          and self._is_user_perspective(self.window.active_perspective)
+            and self.window.active_perspective is not None \
+            and self._is_user_perspective(self.window.active_perspective)
 
         return
 

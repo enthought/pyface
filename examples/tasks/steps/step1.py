@@ -5,6 +5,7 @@ Simple demo of tasks used to develop the wx support for tasks.
 from pyface.api import GUI
 from pyface.tasks.api import Task, TaskWindow, EditorAreaPane
 
+
 class BlankTask(Task):
     """ A task that does nothing
     """
@@ -23,6 +24,7 @@ class BlankTask(Task):
         """
         self.editor_area = EditorAreaPane()
         return self.editor_area
+
 
 def main(argv):
     """ A simple example of using Tasks.

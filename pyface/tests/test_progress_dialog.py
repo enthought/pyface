@@ -7,7 +7,8 @@ from ..gui import GUI
 from ..progress_dialog import ProgressDialog
 from ..toolkit import toolkit_object
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
@@ -29,14 +30,14 @@ class TestDialog(unittest.TestCase):
 
     def test_can_cancel(self):
         # test that creation works with can_cancel
-        self.dialog.can_cancel =  True
+        self.dialog.can_cancel = True
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
 
     def test_show_time(self):
         # test that creation works with show_time
-        self.dialog.show_time =  True
+        self.dialog.show_time = True
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
@@ -44,7 +45,7 @@ class TestDialog(unittest.TestCase):
     @unittest.skip("not implemented in any backend")
     def test_show_percent(self):
         # test that creation works with show_percent
-        self.dialog.show_percent =  True
+        self.dialog.show_percent = True
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()

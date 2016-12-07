@@ -11,6 +11,7 @@ from traits.api import on_trait_change, Property, Instance
 from example_panes import PythonScriptBrowserPane
 from python_editor import PythonEditor
 
+
 class ExampleTask(Task):
     """ A simple task for editing Python code.
     """
@@ -35,16 +36,16 @@ class ExampleTask(Task):
                         SMenu(DockPaneToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           TaskAction(method='open',
-                                      tooltip='Open a file',
-                                      image=ImageResource('document_open')),
-                           TaskAction(method='save',
-                                      tooltip='Save the current file',
-                                      image=ImageResource('document_save')),
-                           image_size = (32, 32), show_tool_names=False), ]
+    tool_bars = [SToolBar(TaskAction(method='new',
+                                     tooltip='New file',
+                                     image=ImageResource('document_new')),
+                          TaskAction(method='open',
+                                     tooltip='Open a file',
+                                     image=ImageResource('document_open')),
+                          TaskAction(method='save',
+                                     tooltip='Save the current file',
+                                     image=ImageResource('document_save')),
+                          image_size=(32, 32), show_tool_names=False), ]
 
     ###########################################################################
     # 'Task' interface.
@@ -73,7 +74,7 @@ class ExampleTask(Task):
         browser = PythonScriptBrowserPane()
         handler = lambda: self._open_file(browser.selected_file)
         browser.on_trait_change(handler, 'activated')
-        return [ browser ]
+        return [browser]
 
     ###########################################################################
     # 'ExampleTask' interface.

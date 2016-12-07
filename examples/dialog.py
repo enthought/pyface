@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
@@ -43,7 +44,7 @@ class MainWindow(ApplicationWindow):
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
                 Action(name='E&xit', on_perform=self._on_exit),
-                name = '&File',
+                name='&File',
             )
         )
 

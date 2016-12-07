@@ -50,7 +50,7 @@ class Group(HasTraits):
     items = Property
 
     #: The action manager that the group belongs to.
-    parent = Any#Instance('pyface.action.ActionManager')
+    parent = Any  # Instance('pyface.action.ActionManager')
 
     #: Does this group require a separator when it is visualized?
     separator = Bool(True)
@@ -58,13 +58,13 @@ class Group(HasTraits):
     #### Private interface ####
 
     #: All of the items in the group.
-    _items = List#(ActionManagerItem)
+    _items = List  # (ActionManagerItem)
 
     ###########################################################################
     # 'object' interface.
     ###########################################################################
 
-    def __init__(self, *items,  **traits):
+    def __init__(self, *items, **traits):
         """ Creates a new menu manager.
 
         Parameters

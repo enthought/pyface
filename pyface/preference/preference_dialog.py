@@ -123,10 +123,10 @@ class PreferenceDialog(SplitDialog):
 
         tree_viewer = TreeViewer(
             parent,
-            input            = self.root,
-            show_images      = False,
-            show_root        = False,
-            content_provider = DefaultTreeContentProvider()
+            input=self.root,
+            show_images=False,
+            show_root=False,
+            content_provider=DefaultTreeContentProvider()
         )
 
         tree_viewer.on_trait_change(self._on_selection_changed, 'selection')
@@ -194,7 +194,7 @@ class PreferenceDialog(SplitDialog):
                 self._button_sizer.Show(self._help, False)
 
             # Show the selected preference page.
-            layered_panel  = self._layered_panel
+            layered_panel = self._layered_panel
             parent = self._layered_panel.control
 
             # If we haven't yet displayed the node's preference page during the

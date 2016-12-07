@@ -1,6 +1,6 @@
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Interface, Instance, \
-     Str, Unicode
+    Str, Unicode
 
 # Local imports.
 from pyface.tasks.task import Task

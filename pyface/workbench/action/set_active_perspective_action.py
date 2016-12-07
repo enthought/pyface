@@ -58,9 +58,9 @@ class SetActivePerspectiveAction(WorkbenchAction):
         """ Refresh the checked state of the action. """
 
         self.checked = self.perspective is not None \
-          and self.window is not None \
-          and self.window.active_perspective is not None \
-          and self.perspective.id is self.window.active_perspective.id
+            and self.window is not None \
+            and self.window.active_perspective is not None \
+            and self.perspective.id is self.window.active_perspective.id
 
         return
 

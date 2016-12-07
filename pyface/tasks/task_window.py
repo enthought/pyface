@@ -367,8 +367,8 @@ class TaskWindow(ApplicationWindow):
             for area in ('top', 'right', 'bottom', 'left'):
                 item = getattr(layout, area)
                 if item:
-                    panes.extend([ self.get_dock_pane(pane_item.id)
-                                   for pane_item in item.iterleaves() ])
+                    panes.extend([self.get_dock_pane(pane_item.id)
+                                  for pane_item in item.iterleaves()])
         return panes
 
     def _get_state(self, id_or_task):
@@ -418,7 +418,7 @@ class TaskWindow(ApplicationWindow):
 
     @on_trait_change('_states[]')
     def _states_updated(self):
-        self.tasks = [ state.task for state in self._states ]
+        self.tasks = [state.task for state in self._states]
 
 
 class TaskState(HasStrictTraits):

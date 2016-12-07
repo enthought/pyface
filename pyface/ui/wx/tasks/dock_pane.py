@@ -14,10 +14,10 @@ from pyface.wx.aui import aui
 from task_pane import TaskPane
 
 # Constants.
-AREA_MAP = { 'left'   : aui.AUI_DOCK_LEFT,
-             'right'  : aui.AUI_DOCK_RIGHT,
-             'top'    : aui.AUI_DOCK_TOP,
-             'bottom' : aui.AUI_DOCK_BOTTOM }
+AREA_MAP = {'left': aui.AUI_DOCK_LEFT,
+            'right': aui.AUI_DOCK_RIGHT,
+            'top': aui.AUI_DOCK_TOP,
+            'bottom': aui.AUI_DOCK_BOTTOM}
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
 
 # Logging
@@ -30,7 +30,7 @@ class DockPane(TaskPane, MDockPane):
 
     See the IDockPane interface for API documentation.
     """
-    
+
     # Keep a reference to the Aui pane name in order to update dock state
     pane_name = Str
 
@@ -65,7 +65,7 @@ class DockPane(TaskPane, MDockPane):
         """
         # wx doesn't need a wrapper control, so the contents become the control
         self.control = self.create_contents(parent)
-        
+
         # hide the pane till the task gets activated, whereupon it will take
         # its visibility from the task state
         self.control.Hide()
@@ -74,7 +74,8 @@ class DockPane(TaskPane, MDockPane):
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
         self.pane_name = self.task.id + ':' + self.id
-        logger.debug("dock_pane.create: %s  HIERARCHY:\n%s" % (self.pane_name, self.get_hierarchy(parent, "    ")))
+        logger.debug("dock_pane.create: %s  HIERARCHY:\n%s" %
+                     (self.pane_name, self.get_hierarchy(parent, "    ")))
 
     def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
@@ -87,25 +88,28 @@ class DockPane(TaskPane, MDockPane):
         self.update_dock_title(info)
         self.update_floating(info)
         self.update_visible(info)
-        
+
         return info
-    
+
     def add_to_manager(self, row=None, pos=None, tabify_pane=None):
         info = self.get_new_info()
         if tabify_pane is not None:
             target = tabify_pane.get_pane_info()
-            logger.debug("dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name))
+            logger.debug(
+                "dock_pane.add_to_manager: Tabify! %s onto %s" %
+                (self.pane_name, target.name))
         else:
             target = None
         if row is not None:
             info.Row(row)
         if pos is not None:
             info.Position(pos)
-        self.task.window._aui_manager.AddPane(self.control, info, target=target)
-    
+        self.task.window._aui_manager.AddPane(
+            self.control, info, target=target)
+
     def validate_traits_from_pane_info(self):
         """ Sync traits from the AUI pane info.
-        
+
         Useful after perspective restore to make sure e.g. visibility state
         is set correctly.
         """
@@ -118,7 +122,7 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
-            
+
             # Some containers (e.g.  TraitsDockPane) will destroy the control
             # before we get here (e.g.  traitsui.ui.UI.finish by way of
             # TraitsDockPane.destroy), so check to see if it's already been
@@ -150,12 +154,13 @@ class DockPane(TaskPane, MDockPane):
     def get_pane_info(self):
         info = self.task.window._aui_manager.GetPane(self.pane_name)
         return info
-    
+
     def commit_layout(self):
         self.task.window._aui_manager.Update()
 
     def commit_if_active(self):
-        # Only attempt to commit the AUI changes if the area if the task is active.
+        # Only attempt to commit the AUI changes if the area if the task is
+        # active.
         main_window = self.task.window.control
         if main_window and self.task == self.task.window.active_task:
             self.commit_layout()
@@ -164,7 +169,9 @@ class DockPane(TaskPane, MDockPane):
 
     def update_dock_area(self, info):
         info.Direction(AREA_MAP[self.dock_area])
-        logger.debug("info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction))
+        logger.debug(
+            "info: dock_area=%s dir=%s" %
+            (self.dock_area, info.dock_direction))
 
     @on_trait_change('dock_area')
     def _set_dock_area(self):
@@ -219,7 +226,8 @@ class DockPane(TaskPane, MDockPane):
 
     @on_trait_change('visible')
     def _set_visible(self):
-        logger.debug("_set_visible %s on pane=%s, control=%s" % (self.visible, self.pane_name, self.control))
+        logger.debug("_set_visible %s on pane=%s, control=%s" %
+                     (self.visible, self.pane_name, self.control))
         if self.control is not None:
             info = self.get_pane_info()
             self.update_visible(info)

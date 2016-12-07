@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #------------------------------------------------------------------------------
 
@@ -115,8 +116,8 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(self._separator_visibility_method(separator),
-                                          'visible')
+                    group.on_trait_change(
+                        self._separator_visibility_method(separator), 'visible')
 
                 previous_non_empty_group = group
 
