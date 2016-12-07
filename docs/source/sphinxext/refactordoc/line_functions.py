@@ -19,6 +19,7 @@ indent_regex = re.compile(r'\s+')
 #  Functions to manage indention
 #------------------------------------------------------------------------------
 
+
 def add_indent(lines, indent=4):
     """ Add spaces to indent a list of lines.
 
@@ -47,11 +48,13 @@ def add_indent(lines, indent=4):
             output.append(indent_str + line)
     return output
 
+
 def remove_indent(lines):
     """ Remove all indentation from the lines.
 
     """
     return [line.lstrip() for line in lines]
+
 
 def get_indent(line):
     """ Return the indent portion of the line.
@@ -67,6 +70,7 @@ def get_indent(line):
 #  Functions to detect line type
 #------------------------------------------------------------------------------
 
+
 def is_empty(line):
     return not line.strip()
 
@@ -74,11 +78,14 @@ def is_empty(line):
 #  Functions to adjust strings
 #------------------------------------------------------------------------------
 
+
 def fix_star(word):
-    return word.replace('*','\*')
+    return word.replace('*', '\*')
+
 
 def fix_backspace(word):
     return word.replace('\\', '\\\\')
+
 
 def replace_at(word, line, index):
     """ Replace the text in-line.
@@ -107,5 +114,3 @@ def replace_at(word, line, index):
     word_length = len(word)
     result = line[:index] + word + line[(index + word_length):]
     return result[:len(line)]
-
-

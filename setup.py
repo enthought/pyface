@@ -131,20 +131,20 @@ if __name__ == "__main__":
           maintainer='ETS Developers',
           maintainer_email='enthought-dev@enthought.com',
           package_data={'': [
-            'image/library/*.zip',
-            'images/*',
-            'action/images/*',
-            'dock/images/*',
-            'tree/images/*',
-            'ui/qt4/images/*',
-            'ui/wx/images/*',
-            'ui/wx/grid/images/*',
+              'image/library/*.zip',
+              'images/*',
+              'action/images/*',
+              'dock/images/*',
+              'tree/images/*',
+              'ui/qt4/images/*',
+              'ui/wx/images/*',
+              'ui/wx/grid/images/*',
           ]},
           packages=find_packages(),
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
           use_2to3=True,
           use_2to3_exclude_fixers=[
-            'lib2to3.fixes.fix_next',  # we have several .next() methods, no iterators
+              'lib2to3.fixes.fix_next',  # we have several .next() methods, no iterators
           ],
-    )
+          )

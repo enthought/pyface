@@ -13,7 +13,7 @@ import re
 from line_functions import add_indent, is_empty, remove_indent, replace_at
 
 
-class Field(collections.namedtuple('Field', ('name','signature','desc'))):
+class Field(collections.namedtuple('Field', ('name', 'signature', 'desc'))):
     """ A docstring field.
 
     The class is based on the nametuple class and represents the logic
@@ -84,7 +84,6 @@ class Field(collections.namedtuple('Field', ('name','signature','desc'))):
         else:
             return cls(arg_name.strip(), arg_type.strip(), [''])
 
-
     def to_rst(self, indent=4):
         """ Outputs field in rst as an itme in a definition list.
 
@@ -114,6 +113,7 @@ class Field(collections.namedtuple('Field', ('name','signature','desc'))):
         lines += add_indent(self.desc, indent)
         return lines
 
+
 class AttributeField(Field):
     """ Field for the argument function docstrings """
 
@@ -137,7 +137,8 @@ class AttributeField(Field):
         lines = []
         _type = self.signature
         annotation = '{0}    :annotation: = {1}'
-        type_str = '' if is_empty(_type) else annotation.format(indent * ' ', _type)
+        type_str = '' if is_empty(
+            _type) else annotation.format(indent * ' ', _type)
         directive = '{0}.. attribute:: {1}'
         lines += [directive.format(indent * ' ', self.name), type_str]
         if type_str != '':
@@ -168,15 +169,18 @@ class ArgumentField(Field):
 
         """
         lines = []
-        name = self.name.replace('*','\*')  # Fix cases like *args and **kwargs
+        # Fix cases like *args and **kwargs
+        name = self.name.replace('*', '\*')
         indent_str = ' ' * indent
-        param_str = '{0}:param {1}: {2}'.format(indent_str, name, self.desc[0].strip())
+        param_str = '{0}:param {1}: {2}'.format(
+            indent_str, name, self.desc[0].strip())
         type_str = '{0}:type {1}: {2}'.format(indent_str, name, self.signature)
         lines.append(param_str)
         lines += self.desc[1:]
         if len(self.signature) > 0:
             lines.append(type_str)
         return lines
+
 
 class ListItemField(Field):
     """ Field that in rst is formated as an item in the list ignoring any
@@ -207,7 +211,7 @@ class ListItemField(Field):
         """
         indent_str = ' ' * indent
         rst_pattern = '{0}{1}**{2}**{3}' if is_empty(self.desc[0]) else \
-                       '{0}{1}**{2}** -- {3}'
+            '{0}{1}**{2}** -- {3}'
         description = '' if is_empty(self.desc[0]) else \
                       ' '.join(remove_indent(self.desc))
         return [rst_pattern.format(indent_str, prefix, self.name, description)]
@@ -215,14 +219,21 @@ class ListItemField(Field):
 
 class ListItemWithTypeField(Field):
     """ Field for the return section of the function docstrings """
+
     def to_rst(self, indent=4, prefix=''):
         indent_str = ' ' * indent
         _type = '' if self.signature == '' else '({0})'.format(self.signature)
         rst_pattern = '{0}{1}**{2}** {3}{4}' if is_empty(self.desc[0]) else \
-                       '{0}{1}**{2}** {3} -- {4}'
+            '{0}{1}**{2}** {3} -- {4}'
         description = '' if is_empty(self.desc[0]) else \
-                    ' '.join(remove_indent(self.desc))
-        return [rst_pattern.format(indent_str, prefix, self.name, _type, description)]
+            ' '.join(remove_indent(self.desc))
+        return [
+            rst_pattern.format(
+                indent_str,
+                prefix,
+                self.name,
+                _type,
+                description)]
 
 
 class FunctionField(Field):
@@ -235,20 +246,21 @@ class FunctionField(Field):
         return match
 
     def to_rst(self, length, first_column, second_column):
-                split_result = re.split('\((.*)\)', self.name)
-                method_name = split_result[0]
-                method_text = ':meth:`{0} <{1}>`'.format(self.name, method_name)
-                summary = ' '.join([line.strip() for line in self.desc])
-                line = ' ' * length
-                line = replace_at(method_text, line, first_column)
-                line = replace_at(summary, line, second_column)
-                return [line]
+        split_result = re.split('\((.*)\)', self.name)
+        method_name = split_result[0]
+        method_text = ':meth:`{0} <{1}>`'.format(self.name, method_name)
+        summary = ' '.join([line.strip() for line in self.desc])
+        line = ' ' * length
+        line = replace_at(method_text, line, first_column)
+        line = replace_at(summary, line, second_column)
+        return [line]
 
 MethodField = FunctionField
 
 #------------------------------------------------------------------------------
 #  Functions to work with fields
 #------------------------------------------------------------------------------
+
 
 def max_name_length(method_fields):
     """ Find the max length of the function name in a list of method fields.
@@ -261,6 +273,7 @@ def max_name_length(method_fields):
     """
     return max([field[0].find('(') for field in method_fields])
 
+
 def max_header_length(fields):
     """ Find the max length of the header in a list of fields.
 
@@ -271,6 +284,7 @@ def max_header_length(fields):
 
     """
     return max([len(field[0]) for field in fields])
+
 
 def max_desc_length(fields):
     """ Find the max length of the description in a list of fields.
