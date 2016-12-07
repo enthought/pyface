@@ -64,8 +64,8 @@ class TaskActionManagerBuilder(HasTraits):
                 else:
                     logger.error('Invalid top-level schema addition: %r. Only '
                                  'ToolBar schemas can be path-less.', schema)
-        return [ self.create_action_manager(schema)
-                 for schema in self._get_ordered_schemas(schemas) ]
+        return [self.create_action_manager(schema)
+                for schema in self._get_ordered_schemas(schemas)]
 
     def prepare_item(self, item, path):
         """ Called immediately after a concrete Pyface item has been created
@@ -171,7 +171,7 @@ class TaskActionManagerBuilder(HasTraits):
 
             # Group items by class.
             class_to_items, ordered_items_class =\
-            self._group_items_by_class(items_with_same_id)
+                self._group_items_by_class(items_with_same_id)
 
             for items_class in ordered_items_class:
                 items_with_same_class = class_to_items[items_class]
@@ -201,13 +201,15 @@ class TaskActionManagerBuilder(HasTraits):
 
         # Determine the order of the items at this path.
         if additions[path]:
-            all_items = self._get_ordered_schemas(schema.items+additions[path])
+            all_items = self._get_ordered_schemas(
+                schema.items + additions[path])
         else:
             all_items = schema.items
 
         unpacked_items = self._unpack_schema_additions(all_items)
 
-        id_to_items, ordered_items_ids = self._group_items_by_id(unpacked_items)
+        id_to_items, ordered_items_ids = self._group_items_by_id(
+            unpacked_items)
 
         merged_items = self._merge_items_with_same_path(id_to_items,
                                                         ordered_items_ids)
@@ -238,9 +240,10 @@ class TaskActionManagerBuilder(HasTraits):
         children = []
         for item in preprocessed_items:
             if isinstance(item, Schema):
-                item = self._create_action_manager_recurse(item,additions,path)
+                item = self._create_action_manager_recurse(
+                    item, additions, path)
             else:
-                item = self.prepare_item(item, path+'/'+item.id)
+                item = self.prepare_item(item, path + '/' + item.id)
 
             if isinstance(item, ActionManager):
                 # Give even non-root action managers a reference to the

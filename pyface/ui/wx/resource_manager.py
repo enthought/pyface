@@ -58,7 +58,8 @@ class PyfaceResourceFactory(ResourceFactory):
         handle = None
         if filename is None:
             # If there is currently no way in wx to create an image from data,
-            # we have write it out to a temporary file and then read it back in:
+            # we have write it out to a temporary file and then read it back
+            # in:
             handle, filename = tempfile.mkstemp()
 
         # Write it out...

@@ -19,7 +19,7 @@ from .composite_grid_model import CompositeGridModel
 from .inverted_grid_model import InvertedGridModel
 from .simple_grid_model import SimpleGridModel, GridRow, GridColumn
 from .trait_grid_model import TraitGridModel, TraitGridColumn, \
-     TraitGridSelection
+    TraitGridSelection
 from .grid_cell_renderer import GridCellRenderer
 
 #### EOF ######################################################################

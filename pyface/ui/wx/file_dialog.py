@@ -37,7 +37,6 @@ class FileDialog(MFileDialog, Dialog):
     IFileDialog interface for the API documentation.
     """
 
-
     #### 'IFileDialog' interface ##############################################
 
     action = Enum('open', 'open files', 'save as')
@@ -74,9 +73,9 @@ class FileDialog(MFileDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path  = unicode(self.control.GetPath())
+        self.path = unicode(self.control.GetPath())
         # Work around wx bug throwing exception on cancel of file dialog
-        if len(self.path)>0:
+        if len(self.path) > 0:
             self.paths = self.control.GetPaths()
         else:
             self.paths = []
@@ -98,8 +97,9 @@ class FileDialog(MFileDialog, Dialog):
         # and filename, split the path into it directory and filename
         # components.
         if len(self.default_path) != 0 and len(self.default_directory) == 0 \
-            and len(self.default_filename) == 0:
-            default_directory, default_filename = os.path.split(self.default_path)
+                and len(self.default_filename) == 0:
+            default_directory, default_filename = os.path.split(
+                self.default_path)
         else:
             default_directory = self.default_directory
             default_filename = self.default_filename
@@ -112,9 +112,13 @@ class FileDialog(MFileDialog, Dialog):
             style = wx.SAVE | wx.OVERWRITE_PROMPT
 
         # Create the actual dialog.
-        dialog = wx.FileDialog(parent, self.title, defaultDir=default_directory,
-                    defaultFile=default_filename, style=style,
-                    wildcard=self.wildcard.rstrip('|'))
+        dialog = wx.FileDialog(
+            parent,
+            self.title,
+            defaultDir=default_directory,
+            defaultFile=default_filename,
+            style=style,
+            wildcard=self.wildcard.rstrip('|'))
 
         dialog.SetFilterIndex(self.wildcard_index)
 

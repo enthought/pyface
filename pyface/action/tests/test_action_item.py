@@ -108,7 +108,8 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         toolbar_manager = ToolBarManager(name='Test')
         image_cache = ImageCache(height=32, width=32)
         menu = toolbar_manager.create_tool_bar(window.control)
-        action_item.add_to_toolbar(window.control, menu, image_cache, None, True)
+        action_item.add_to_toolbar(
+            window.control, menu, image_cache, None, True)
         window.close()
 
     def test_add_to_toolbar_no_label(self):
@@ -118,7 +119,8 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         toolbar_manager = ToolBarManager(name='Test')
         image_cache = ImageCache(height=32, width=32)
         menu = toolbar_manager.create_tool_bar(window.control)
-        action_item.add_to_toolbar(window.control, menu, image_cache, None, False)
+        action_item.add_to_toolbar(
+            window.control, menu, image_cache, None, False)
         window.close()
 
     def test_add_to_toolbar_controller(self):

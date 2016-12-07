@@ -39,11 +39,11 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
         title = "Confirmation"
 
     dialog = ConfirmationDialog(
-        parent  = parent,
-        message = message,
-        cancel  = cancel,
-        default = default,
-        title   = title
+        parent=parent,
+        message=message,
+        cancel=cancel,
+        default=default,
+        title=title
     )
 
     return dialog.open()

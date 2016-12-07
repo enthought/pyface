@@ -29,10 +29,10 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     # 'Action' interface.
     ###########################################################################
 
-    def perform( self, event):
+    def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the new name.

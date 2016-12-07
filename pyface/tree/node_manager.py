@@ -53,7 +53,7 @@ class NodeManager(HasPrivateTraits):
         # nodes that change type dynamically then we will obviously have to
         # re-think this (although we should probably re-think dynamic type
         # changes first ;^).
-        self._node_to_type_map = {} # { Any node : NodeType node_type }
+        self._node_to_type_map = {}  # { Any node : NodeType node_type }
 
         return
 

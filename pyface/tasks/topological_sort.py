@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def before_after_sort(items):
     """ Sort a sequence of items with 'before', 'after', and 'id' attributes.
-        
+
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
 
@@ -75,11 +75,11 @@ def topological_sort(pairs):
         num_parents[child] += 1
 
     # Begin with the parent-less items.
-    result = [ item for item in graph if num_parents[item] == 0 ]
-    
+    result = [item for item in graph if num_parents[item] == 0]
+
     # Descend through graph, removing parents as we go.
     for parent in result:
-        if graph.has_key(parent):
+        if parent in graph:
             for child in graph[parent]:
                 num_parents[child] -= 1
                 if num_parents[child] == 0:

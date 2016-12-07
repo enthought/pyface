@@ -30,11 +30,11 @@ class IDHelperTestCase(unittest.TestCase):
 
         foo = Foo()
 
-        self.assertEqual(object_counter.get_count(Bogus),  0)
+        self.assertEqual(object_counter.get_count(Bogus), 0)
         self.assertEqual(object_counter.next_count(Bogus), 1)
         self.assertEqual(object_counter.next_count(Bogus), 2)
-        self.assertEqual(object_counter.get_count(Bogus),  2)
-        self.assertEqual(object_counter.next_count(foo),  1)
+        self.assertEqual(object_counter.get_count(Bogus), 2)
+        self.assertEqual(object_counter.next_count(foo), 1)
         self.assertEqual(object_counter.next_count(Bogus), 3)
 
     def test_get_unique_id(self):

@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 import wx
 
+
 class ProgressDialog(wx.ProgressDialog):
 
     def __init__(self, *args, **kwds):

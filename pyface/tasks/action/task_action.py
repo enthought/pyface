@@ -120,7 +120,8 @@ class EditorAction(CentralPaneAction):
 
     #### EditorAction interface ###############################################
 
-    # The active editor in the central pane with which the action is associated.
+    # The active editor in the central pane with which the action is
+    # associated.
     active_editor = Property(Instance(Editor),
                              depends_on='central_pane.active_editor')
 

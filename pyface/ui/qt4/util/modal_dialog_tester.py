@@ -51,6 +51,7 @@ class ModalDialogTester(object):
          manager is used from the GuiTestAssistant when necessary.
 
     """
+
     def __init__(self, function):
         #: The command to call that will cause a dialog to open.
         self.function = function

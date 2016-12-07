@@ -29,8 +29,8 @@ class Clipboard:
 
 clipboard = Clipboard()
 clipboard.drop_source = None
-clipboard.source      = None
-clipboard.data        = None
+clipboard.source = None
+clipboard.data = None
 
 
 class FileDropTarget(wx.FileDropTarget):
@@ -120,7 +120,7 @@ class PythonDropSource(wx.DropSource):
                 # with either 0 or 2 args.  If there are 2 args then
                 # we pass the data and drag_result
                 args = inspect.getargspec(self.handler)[0]
-                if len(args)==2:
+                if len(args) == 2:
                     self.handler(clipboard.data, drag_result)
                 else:
                     self.handler()
@@ -153,7 +153,7 @@ class PythonDropTarget(wx.PyDropTarget):
         # Specify the type of data we will accept.
         self.data_object = wx.DataObjectComposite()
         self.data = wx.CustomDataObject(PythonObject)
-        self.data_object.Add(self.data, preferred = True)
+        self.data_object.Add(self.data, preferred=True)
         self.file_data = wx.FileDataObject()
         self.data_object.Add(self.file_data)
         self.SetDataObject(self.data_object)
@@ -183,7 +183,7 @@ class PythonDropTarget(wx.PyDropTarget):
                     for name in names:
                         f = File(name)
                         files.append(f)
-                        bindings.append(Binding(name = name, obj = f))
+                        bindings.append(Binding(name=name, obj=f))
                     clipboard.data = files
                     clipboard.node = bindings
                 except ImportError:

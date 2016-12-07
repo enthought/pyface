@@ -12,11 +12,12 @@ from editor_area_pane import EditorAreaPane
 # 'AdvancedEditorAreaPane' class.
 ###############################################################################
 
+
 @provides(IEditorAreaPane)
 class SplitEditorAreaPane(EditorAreaPane):
     """ The toolkit-specific implementation of an AdvancedEditorAreaPane.
 
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
-    
+
     # No additional functionality over the standard EditorAreaPane in wx yet.

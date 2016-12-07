@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #  Copyright (c) 2006, Enthought, Inc.
 #  All rights reserved.
@@ -13,7 +13,7 @@
 #  Author: David C. Morrill
 #  Date:   07/03/2006
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 """ Implements the DockWindowFeature base class.
 
@@ -27,9 +27,9 @@
     drag and drop operations (depending upon how the feature is implemented).
 """
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  Imports:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 from weakref \
     import ref
@@ -55,11 +55,12 @@ from dock_sizer \
 from ifeature_tool \
     import IFeatureTool
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  'DockWindowFeature' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
-class DockWindowFeature ( HasPrivateTraits ):
+
+class DockWindowFeature (HasPrivateTraits):
     """ Implements "features" on DockWindows.
 
     See "The DockWindowFeature Feature of DockWindows" document (.doc or .pdf)
@@ -72,9 +73,9 @@ class DockWindowFeature ( HasPrivateTraits ):
     component when the feature is activated, or when a new application
     component is added to the DockWindow (and the feature is already active).
     """
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Class variables:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     # A string value that is the user interface name of the feature as it
     # should appear in the DockWindow Features sub-menu (e.g., 'Connect'). An
@@ -92,11 +93,11 @@ class DockWindowFeature ( HasPrivateTraits ):
     # List of weak references to all current instances.
     instances = []
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Trait definitions:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-#-- Public Traits --------------------------------------------------------------
+#-- Public Traits --------------------------------------------------------
 
     # The DockControl instance associated with this feature. Note that features
     # not directly associated with application components, and instead are
@@ -106,9 +107,9 @@ class DockWindowFeature ( HasPrivateTraits ):
     # contained within the same DockWindow, as well as the application
     # component. This trait is automatically set by the DockWindow when the
     # feature instance is created and associated with an application component.
-    dock_control = Instance( DockControl )
+    dock_control = Instance(DockControl)
 
-#-- Public Traits (new defaults can be defined by subclasses) ------------------
+#-- Public Traits (new defaults can be defined by subclasses) ------------
 
     # The image (icon) to display on the feature bar. If **None**, no image
     # is displayed. For images that never change, the value can be declared
@@ -117,7 +118,7 @@ class DockWindowFeature ( HasPrivateTraits ):
     # **ImageResource** object causes the associated image to be updated on the
     # feature bar. Setting the value to **None** removes the image from the
     # feature bar.
-    image = Instance( ImageResource, allow_none = True )
+    image = Instance(ImageResource, allow_none=True)
 
     # The tooltip to display when the pointer hovers over the image. The value
     # can be changed dynamically to reflect changes in the feature's state.
@@ -136,28 +137,28 @@ class DockWindowFeature ( HasPrivateTraits ):
 
     # A boolean value that specifies whether the shift key was being held down
     # when a mouse event occurred.
-    shift_down = Bool( False )
+    shift_down = Bool(False)
 
     # A boolean value that specifies whether the control key was being held down
     # when a mouse event occurred.
-    control_down = Bool( False )
+    control_down = Bool(False)
 
     # A boolean value that specifies whether the alt key was being held down
     # when a mouse event occurred.
-    alt_down = Bool( False )
+    alt_down = Bool(False)
 
-#-- Private Traits -------------------------------------------------------------
+#-- Private Traits -------------------------------------------------------
 
     # The current bitmap to display on the feature bar.
     bitmap = Property
 
-#-- Overridable Public Methods -------------------------------------------------
+#-- Overridable Public Methods -------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Handles the user left clicking on the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def click ( self ):
+    def click(self):
         """ Handles the user left-clicking on a feature image.
 
         This method is designed to be overridden by subclasses. The default
@@ -166,11 +167,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         self.quick_drag()
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Handles the user right clicking on the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def right_click ( self ):
+    def right_click(self):
         """ Handles the user right-clicking on a feature image.
 
         This method is designed to be overridden by subclasses. The default
@@ -180,11 +181,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         self.quick_right_drag()
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user drags the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def drag ( self ):
+    def drag(self):
         """ Returns the object to be dragged when the user drags a feature
         image.
 
@@ -195,12 +196,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user drags the feature image
     #  while holding down the 'Ctrl' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def control_drag ( self ):
+    def control_drag(self):
         """ Returns the object to be dragged when the user drags a feature
         image while pressing the 'Ctrl' key.
 
@@ -211,12 +212,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user drags the feature image
     #  while holding down the 'Shift' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def shift_drag ( self ):
+    def shift_drag(self):
         """ Returns the object to be dragged when the user drags a feature
         image while pressing the 'Shift' key.
 
@@ -228,12 +229,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user drags the feature image
     #  while holding down the 'Alt' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def alt_drag ( self ):
+    def alt_drag(self):
         """ Returns the object to be dragged when the user drags a feature
         image while pressing the 'Alt' key.
 
@@ -245,12 +246,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user right mouse button drags
     #  the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def right_drag ( self ):
+    def right_drag(self):
         """ Returns the object to be dragged when the user right mouse button
         drags a feature image.
 
@@ -261,12 +262,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user right mouse button drags
     #  the feature image while holding down the 'Ctrl' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def control_right_drag ( self ):
+    def control_right_drag(self):
         """ Returns the object to be dragged when the user right mouse button
         drags a feature image while pressing the 'Ctrl' key.
 
@@ -277,12 +278,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user right mouse button drags
     #  the feature image while holding down the 'Shift' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def shift_control_drag ( self ):
+    def shift_control_drag(self):
         """ Returns the object to be dragged when the user right mouse button
         drags a feature image while pressing the 'Shift' key.
 
@@ -294,12 +295,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns the object to be dragged when the user right mouse button drags
     #  the feature image while holding down the 'Alt' key:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def alt_right_drag ( self ):
+    def alt_right_drag(self):
         """ Returns the object to be dragged when the user right mouse button
         drags a feature image while pressing the 'Alt' key.
 
@@ -311,11 +312,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Handles the user dropping a specified object on the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def drop ( self, object ):
+    def drop(self, object):
         """ Handles the user dropping a specified object on a feature image.
 
         Parameters
@@ -337,11 +338,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns whether a specified object can be dropped on the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def can_drop ( self, object ):
+    def can_drop(self, object):
         """ Returns whether a specified object can be dropped on a feature
         image.
 
@@ -369,11 +370,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return False
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Performs any clean-up needed when the feature is being removed:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def dispose ( self ):
+    def dispose(self):
         """ Performs any clean-up needed when the feature is removed from its
         associated application component (for example, when the user disables
         the feature).
@@ -385,13 +386,13 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         pass
 
-#-- Public Methods -------------------------------------------------------------
+#-- Public Methods -------------------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Displays a pop-up menu:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def popup_menu ( self, menu ):
+    def popup_menu(self, menu):
         """ Displays a shortcut menu.
 
         Parameters
@@ -414,14 +415,14 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         window = self.dock_control.control.GetParent()
         wx, wy = window.GetScreenPosition()
-        window.PopupMenuXY( menu.create_menu( window, self ),
-                            self.x - wx - 10, self.y - wy - 10 )
+        window.PopupMenuXY(menu.create_menu(window, self),
+                           self.x - wx - 10, self.y - wy - 10)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Refreshes the display of the feature image:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def refresh ( self ):
+    def refresh(self):
         """ Refreshes the display of the feature image.
 
         Returns
@@ -435,11 +436,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         self.dock_control.feature_changed = True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Disables the feature:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def disable ( self ):
+    def disable(self):
         """ Disables the feature.
 
         Returns
@@ -455,15 +456,15 @@ class DockWindowFeature ( HasPrivateTraits ):
         **dispose()** method is not called).
         """
         self._image = self.image
-        self.image  = None
+        self.image = None
         if self._image is not None:
             self.dock_control.feature_changed = True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Enables the feature:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def enable ( self ):
+    def enable(self):
         """ Enables the feature.
 
         Returns
@@ -476,18 +477,18 @@ class DockWindowFeature ( HasPrivateTraits ):
         associated application component. Enabling a feature restores the
         feature bar icon that the feature displayed at the time it was disabled.
         """
-        self.image  = self._image
+        self.image = self._image
         self._image = None
         if self.image is not None:
             self.dock_control.feature_changed = True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Performs a quick drag and drop operation by displaying a pop-up menu
     #  containing all targets that the feature's xxx_drag() method can be
     #  dropped on. Selecting an item drops the item on the selected target.
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def quick_drag ( self ):
+    def quick_drag(self):
         """ Performs a quick drag and drop operation by displaying a pop-up menu
             containing all targets that the feature's xxx_drag() method can be
             dropped on. Selecting an item drops the item on the selected target.
@@ -504,16 +505,16 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         # If there is an object, pop up the menu:
         if object is not None:
-            self._quick_drag_menu( object )
+            self._quick_drag_menu(object)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Performs a quick drag and drop operation with the right mouse button by
     #  displaying a pop-up menu containing all targets that the feature's
     #  xxx_right_drag() method can be dropped on. Selecting an item drops the
     #  item on the selected target.
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def quick_right_drag ( self ):
+    def quick_right_drag(self):
         """ Performs a quick drag and drop operation with the right mouse button
             by displaying a pop-up menu containing all targets that the
             feature's xxx_right_drag() method can be dropped on. Selecting an
@@ -531,16 +532,16 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         # If there is an object, pop up the menu:
         if object is not None:
-            self._quick_drag_menu( object )
+            self._quick_drag_menu(object)
 
-#-- Overridable Class Methods ---------------------------------------------------
+#-- Overridable Class Methods --------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns a single new feature object or list of new feature objects for a
     #  specified DockControl (or None if the feature does not apply to it):
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def feature_for ( cls, dock_control ):
+    def feature_for(cls, dock_control):
         """ Returns a single new feature object or list of new feature objects
         for a specified DockControl.
 
@@ -572,18 +573,18 @@ class DockWindowFeature ( HasPrivateTraits ):
         **new_feature()** class method to create the feature instances to be
         returned. If it does not, it simply returns **None**.
         """
-        if cls.is_feature_for( dock_control):
-            return cls.new_feature( dock_control )
+        if cls.is_feature_for(dock_control):
+            return cls.new_feature(dock_control)
 
         return None
 
-    feature_for = classmethod( feature_for )
+    feature_for = classmethod(feature_for)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns a new feature instance for a specified DockControl:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def new_feature ( cls, dock_control ):
+    def new_feature(cls, dock_control):
         """ Returns a new feature instance for a specified DockControl.
 
         Parameters
@@ -609,16 +610,16 @@ class DockWindowFeature ( HasPrivateTraits ):
             cls( dock_control=dock_control )
 
         """
-        return cls( dock_control = dock_control )
+        return cls(dock_control=dock_control)
 
-    new_feature = classmethod( new_feature )
+    new_feature = classmethod(new_feature)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns whether or not the DockWindowFeature is a valid feature for a
     #  specified DockControl:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def is_feature_for ( self, dock_control ):
+    def is_feature_for(self, dock_control):
         """ Returns whether this class is a valid feature for the application
         object corresponding to a specified DockControl.
 
@@ -643,219 +644,218 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return True
 
-    is_feature_for = classmethod( is_feature_for )
+    is_feature_for = classmethod(is_feature_for)
 
-#-- Private Methods ------------------------------------------------------------
+#-- Private Methods ------------------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Sets the feature's 'event' traits for a specified mouse 'event':
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def _set_event ( self, event ):
+    def _set_event(self, event):
         """ Sets the feature's 'event' traits for a specified mouse 'event'.
         """
         x, y = event.GetEventObject().GetScreenPosition()
-        self.set( x            = event.GetX() + x,
-                  y            = event.GetY() + y,
-                  shift_down   = event.ShiftDown(),
-                  control_down = event.ControlDown(),
-                  alt_down     = event.AltDown() )
+        self.set(x=event.GetX() + x,
+                 y=event.GetY() + y,
+                 shift_down=event.ShiftDown(),
+                 control_down=event.ControlDown(),
+                 alt_down=event.AltDown())
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Displays the quick drag menu for a specified drag object:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def _quick_drag_menu ( self, object ):
+    def _quick_drag_menu(self, object):
         """ Displays the quick drag menu for a specified drag object.
         """
 
         # Get all the features it could be dropped on:
         feature_lists = []
-        if isinstance( object, IFeatureTool ):
+        if isinstance(object, IFeatureTool):
             msg = 'Apply to'
             for dc in self.dock_control.dock_controls:
                 if (dc.visible and
-                    (object.feature_can_drop_on( dc.object ) or
-                     object.feature_can_drop_on_dock_control( dc ))):
+                    (object.feature_can_drop_on(dc.object) or
+                     object.feature_can_drop_on_dock_control(dc))):
                     from feature_tool import FeatureTool
 
-                    feature_lists.append( [ FeatureTool( dock_control = dc ) ] )
+                    feature_lists.append([FeatureTool(dock_control=dc)])
         else:
             msg = 'Send to'
             for dc in self.dock_control.dock_controls:
                 if dc.visible:
-                    allowed = [ f for f in dc.features
-                                if (f.feature_name != '') and
-                                    f.can_drop( object ) ]
-                    if len( allowed ) > 0:
-                        feature_lists.append( allowed )
+                    allowed = [f for f in dc.features
+                               if (f.feature_name != '') and
+                               f.can_drop(object)]
+                    if len(allowed) > 0:
+                        feature_lists.append(allowed)
 
         # If there are any compatible features:
-        if len( feature_lists ) > 0:
+        if len(feature_lists) > 0:
             # Create the pop-up menu:
             features = []
-            actions  = []
+            actions = []
             for list in feature_lists:
-                if len( list ) > 1:
+                if len(list) > 1:
                     sub_actions = []
                     for feature in list:
-                        sub_actions.append( Action(
-                            name   = '%s Feature' % feature.feature_name,
-                            action = "self._drop_on(%d)" % len( features ) )
+                        sub_actions.append(Action(
+                            name='%s Feature' % feature.feature_name,
+                            action="self._drop_on(%d)" % len(features))
                         )
-                        features.append( feature )
-                    actions.append( Menu(
-                        name = '%s the %s' % ( msg, feature.dock_control.name ),
-                        *sub_actions )
+                        features.append(feature)
+                    actions.append(Menu(
+                        name='%s the %s' % (msg, feature.dock_control.name),
+                        *sub_actions)
                     )
                 else:
-                    actions.append( Action(
-                        name   = '%s %s' % ( msg, list[0].dock_control.name ),
-                        action = "self._drop_on(%d)" % len( features ) )
+                    actions.append(Action(
+                        name='%s %s' % (msg, list[0].dock_control.name),
+                        action="self._drop_on(%d)" % len(features))
                     )
-                    features.append( list[0] )
+                    features.append(list[0])
 
             # Display the pop-up menu:
-            self._object   = object
+            self._object = object
             self._features = features
-            self.popup_menu( Menu( name = 'popup', *actions ) )
+            self.popup_menu(Menu(name='popup', *actions))
             self._object = self._features = None
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Drops the current object on the feature selected by the user (used by
     #  the 'quick_drag' method:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def _drop_on ( self, index ):
+    def _drop_on(self, index):
         """ Drops the current object on the feature selected by the user.
         """
         object = self._object
-        if isinstance( object, IFeatureTool ):
-            dc = self._features[ index ].dock_control
-            object.feature_dropped_on( dc.object )
-            object.feature_dropped_on_dock_control( dc )
+        if isinstance(object, IFeatureTool):
+            dc = self._features[index].dock_control
+            object.feature_dropped_on(dc.object)
+            object.feature_dropped_on_dock_control(dc)
         else:
-            self._features[ index ].drop( object )
+            self._features[index].drop(object)
 
-#-- Public Class Methods -------------------------------------------------------
+#-- Public Class Methods -------------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns a feature object for use with the specified DockControl (or None
     #  if the feature does not apply to the DockControl object):
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def new_feature_for ( cls, dock_control ):
+    def new_feature_for(cls, dock_control):
         """ Returns a feature object for use with the specified DockControl (or
         **None** if the feature does not apply to the DockControl object).
 
         """
-        result = cls.feature_for( dock_control )
+        result = cls.feature_for(dock_control)
         if result is not None:
-            cls.instances = [ aref for aref in cls.instances
-                                   if aref() is not None ]
-            if isinstance( result, DockWindowFeature ):
-                result = [ result ]
-            cls.instances.extend( [ ref( feature ) for feature in result ] )
+            cls.instances = [aref for aref in cls.instances
+                             if aref() is not None]
+            if isinstance(result, DockWindowFeature):
+                result = [result]
+            cls.instances.extend([ref(feature) for feature in result])
 
         return result
 
-    new_feature_for = classmethod( new_feature_for )
+    new_feature_for = classmethod(new_feature_for)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Toggles the feature on/off:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def toggle_feature ( cls, event ):
+    def toggle_feature(cls, event):
         """ Toggles the feature on or off.
         """
         if cls.state == 0:
             cls.state = 1
-            add_feature( cls )
+            add_feature(cls)
             for control in event.window.control.GetChildren():
-                window = getattr( control, 'owner', None )
-                if isinstance( window, DockWindow ):
-                    do_later( window.update_layout )
+                window = getattr(control, 'owner', None)
+                if isinstance(window, DockWindow):
+                    do_later(window.update_layout)
         else:
-            method    = 'disable'
+            method = 'disable'
             cls.state = 3 - cls.state
             if cls.state == 1:
                 method = 'enable'
-            cls.instances = [ aref for aref in cls.instances
-                                   if aref() is not None ]
+            cls.instances = [aref for aref in cls.instances
+                             if aref() is not None]
             for aref in cls.instances:
                 feature = aref()
                 if feature is not None:
-                    getattr( feature, method )()
+                    getattr(feature, method)()
 
-    toggle_feature = classmethod( toggle_feature )
+    toggle_feature = classmethod(toggle_feature)
 
-#-- Event Handlers -------------------------------------------------------------
+#-- Event Handlers -------------------------------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Handles the 'image' trait being changed:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def _image_changed ( self ):
+    def _image_changed(self):
         self._bitmap = None
 
-#-- Property Implementations ---------------------------------------------------
+#-- Property Implementations ---------------------------------------------
 
-    def _get_bitmap ( self ):
+    def _get_bitmap(self):
         if (self._bitmap is None) and (self.image is not None):
             self._bitmap = self.image.create_image().ConvertToBitmap()
 
         return self._bitmap
 
-#-- Pyface menu interface implementation ---------------------------------------
+#-- Pyface menu interface implementation ---------------------------------
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Adds a menu item to the menu bar being constructed:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def add_to_menu ( self, menu_item ):
+    def add_to_menu(self, menu_item):
         """ Adds a menu item to the menu bar being constructed.
         """
         pass
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Adds a tool bar item to the tool bar being constructed:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def add_to_toolbar ( self, toolbar_item ):
+    def add_to_toolbar(self, toolbar_item):
         """ Adds a tool bar item to the tool bar being constructed.
         """
         pass
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns whether the menu action should be defined in the user interface:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def can_add_to_menu ( self, action ):
+    def can_add_to_menu(self, action):
         """ Returns whether the action should be defined in the user interface.
         """
         return True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Returns whether the toolbar action should be defined in the user
     #  interface:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def can_add_to_toolbar ( self, action ):
+    def can_add_to_toolbar(self, action):
         """ Returns whether the toolbar action should be defined in the user
             interface.
         """
         return True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     #  Performs the action described by a specified Action object:
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
-    def perform ( self, action ):
+    def perform(self, action):
         """ Performs the action described by a specified Action object.
         """
         action = action.action
-        if action[ : 5 ] == 'self.':
-            eval( action, globals(), { 'self': self } )
+        if action[: 5] == 'self.':
+            eval(action, globals(), {'self': self})
         else:
-            getattr( self, action )()
-
+            getattr(self, action)()

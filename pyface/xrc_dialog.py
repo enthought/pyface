@@ -57,10 +57,10 @@ class XrcDialog(Dialog):
         """
         Creates the dialog and loads it in from the resource file.
         """
-        classpath = traits.util.resource.get_path( self )
-        path = os.path.join( classpath, self.xrc_file )
+        classpath = traits.util.resource.get_path(self)
+        path = os.path.join(classpath, self.xrc_file)
 
-        self.resource = wx.xrc.XmlResource( path )
+        self.resource = wx.xrc.XmlResource(path)
         return self.resource.LoadDialog(parent, self.id)
 
     def _create_contents(self, dialog):

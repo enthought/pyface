@@ -58,13 +58,13 @@ class WorkbenchWindow(ApplicationWindow):
     editor_area_size = Tuple((100, 100))
 
     # Fired when an editor is about to be opened (or restored).
-    editor_opening = Delegate('layout') # Event(IEditor)
+    editor_opening = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor has been opened (or restored).
     editor_opened = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor is about to be closed.
-    editor_closing = Delegate('layout') # Event(IEditor)
+    editor_closing = Delegate('layout')  # Event(IEditor)
 
     # Fired when an editor has been closed.
     editor_closed = Delegate('layout')  # Event(IEditor)
@@ -289,7 +289,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # This case allows for views that are created and added dynamically
         # (i.e. they were not even known about when the window was created).
-        if not view in self.views:
+        if view not in self.views:
             self.views.append(view)
 
         return
@@ -509,7 +509,9 @@ class WorkbenchWindow(ApplicationWindow):
                 del self._memento.perspective_mementos[id]
 
         # Re-display the active perspective.
-        self._show_perspective(self.active_perspective,self.active_perspective)
+        self._show_perspective(
+            self.active_perspective,
+            self.active_perspective)
 
         return
 

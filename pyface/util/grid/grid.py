@@ -263,7 +263,6 @@ class Grid(wxGrid):
 
         return
 
-
     def ResetView(self, grid):
         """
         (wxGrid) -> Reset the grid view.   Call this to
@@ -279,10 +278,10 @@ class Grid(wxGrid):
             (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED),
         ]:
             if new < current:
-                msg = GridTableMessage(self,delmsg,new,current-new)
+                msg = GridTableMessage(self, delmsg, new, current - new)
                 grid.ProcessTableMessage(msg)
             elif new > current:
-                msg = GridTableMessage(self,addmsg,new-current)
+                msg = GridTableMessage(self, addmsg, new - current)
                 grid.ProcessTableMessage(msg)
                 self.UpdateValues(grid)
         grid.EndBatch()
@@ -299,8 +298,6 @@ class Grid(wxGrid):
         grid.ForceRefresh()
 
         return
-
-
 
     ###########################################################################
     # Protected interface.

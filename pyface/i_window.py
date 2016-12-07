@@ -47,10 +47,10 @@ class IWindow(IWidget):
     activated = Event
 
     #: The window has been closed.
-    closed =  Event
+    closed = Event
 
     #: The window is about to be closed.
-    closing =  Event
+    closing = Event
 
     #: The window has been deactivated.
     deactivated = Event

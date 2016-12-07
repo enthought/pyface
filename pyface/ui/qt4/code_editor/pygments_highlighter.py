@@ -2,7 +2,8 @@
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
+# This software is provided without warranty under the terms of the BSD
+# license.
 
 #
 # Author: Enthought Inc
@@ -34,12 +35,12 @@ def get_tokens_unprocessed(self, text, stack=('root',)):
     else:
         statestack = list(stack)
     statetokens = tokendefs[statestack[-1]]
-    while 1:
+    while True:
         for rexmatch, action, new_state in statetokens:
             m = rexmatch(text, pos)
             if m:
                 if action is not None:
-                    if type(action) is _TokenType:
+                    if isinstance(action, _TokenType):
                         yield pos, action, m.group()
                     else:
                         for item in action(self, m):
@@ -77,7 +78,7 @@ def get_tokens_unprocessed(self, text, stack=('root',)):
                 pos += 1
             except IndexError:
                 break
-    self._saved_state_stack  = list(statestack)
+    self._saved_state_stack = list(statestack)
 
 # Monkeypatch!
 RegexLexer.get_tokens_unprocessed = get_tokens_unprocessed
@@ -100,10 +101,10 @@ def replace_pattern(tokens, new_pattern):
 
 # More monkeypatching!
 comment_start = (r'/\*', Comment.Multiline, 'comment')
-comment_state = [ (r'[^*/]', Comment.Multiline),
-                  (r'/\*', Comment.Multiline, '#push'),
-                  (r'\*/', Comment.Multiline, '#pop'),
-                  (r'[*/]', Comment.Multiline) ]
+comment_state = [(r'[^*/]', Comment.Multiline),
+                 (r'/\*', Comment.Multiline, '#push'),
+                 (r'\*/', Comment.Multiline, '#pop'),
+                 (r'[*/]', Comment.Multiline)]
 replace_pattern(CLexer.tokens, comment_start)
 replace_pattern(CppLexer.tokens, comment_start)
 CLexer.tokens['comment'] = comment_state
@@ -123,8 +124,8 @@ class BlockUserData(QtGui.QTextBlockUserData):
 
     def __repr__(self):
         attrs = ['syntax_stack']
-        kwds = ', '.join([ '%s=%r' % (attr, getattr(self, attr))
-                           for attr in attrs ])
+        kwds = ', '.join(['%s=%r' % (attr, getattr(self, attr))
+                          for attr in attrs])
         return 'BlockUserData(%s)' % kwds
 
 
@@ -229,8 +230,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
 
     def _get_color(self, color):
         qcolor = QtGui.QColor()
-        qcolor.setRgb(int(color[:2],base=16),
+        qcolor.setRgb(int(color[:2], base=16),
                       int(color[2:4], base=16),
                       int(color[4:6], base=16))
         return qcolor
-

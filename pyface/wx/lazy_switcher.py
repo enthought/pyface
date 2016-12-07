@@ -32,7 +32,7 @@ class SwitcherModel(HasTraits):
         """ Creates a new switcher model. """
 
         # The items to display in the switcher control.
-        self.items = [] # (str label, object value)
+        self.items = []  # (str label, object value)
 
         return
 

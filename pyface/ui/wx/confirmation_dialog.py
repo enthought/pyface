@@ -36,7 +36,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-
     #### 'IConfirmationDialog' interface ######################################
 
     cancel = Bool(False)

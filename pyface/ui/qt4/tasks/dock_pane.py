@@ -13,10 +13,10 @@ from .task_pane import TaskPane
 from .util import set_focus
 
 # Constants.
-AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
-             'right'  : QtCore.Qt.RightDockWidgetArea,
-             'top'    : QtCore.Qt.TopDockWidgetArea,
-             'bottom' : QtCore.Qt.BottomDockWidgetArea }
+AREA_MAP = {'left': QtCore.Qt.LeftDockWidgetArea,
+            'right': QtCore.Qt.RightDockWidgetArea,
+            'top': QtCore.Qt.TopDockWidgetArea,
+            'bottom': QtCore.Qt.BottomDockWidgetArea}
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
 
 
@@ -68,8 +68,10 @@ class DockPane(TaskPane, MDockPane):
         # of its widgets
         contents_minsize = contents.minimumSize()
         style = control.style()
-        contents_minsize.setHeight(contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        contents_minsize.setHeight(
+            contents_minsize.height() +
+            style.pixelMetric(
+                style.PM_DockWidgetHandleExtent))
         control.setMinimumSize(contents_minsize)
 
         # Hide the control by default. Otherwise, the widget will visible in its

@@ -15,9 +15,9 @@
 
 
 # Standard results for Ok/Cancel, Yes/No operations etc.
-OK      = 10
-CANCEL  = 20
-YES     = 30
-NO      = 40
+OK = 10
+CANCEL = 20
+YES = 30
+NO = 40
 
 #### EOF ######################################################################

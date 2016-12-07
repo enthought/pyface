@@ -30,7 +30,6 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-
     #### Private interface ####################################################
 
     # The resource manager reference for the image.

@@ -21,6 +21,7 @@ class DummyStrEditor(EnamlEditor):
     def create_component(self):
         return Label(text=self.obj)
 
+
 class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
     ###########################################################################

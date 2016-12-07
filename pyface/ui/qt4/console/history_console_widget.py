@@ -10,9 +10,9 @@ class HistoryConsoleWidget(ConsoleWidget):
         executed and provides a readline-esque interface to this history.
     """
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'object' interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def __init__(self, *args, **kw):
         super(HistoryConsoleWidget, self).__init__(*args, **kw)
@@ -22,9 +22,9 @@ class HistoryConsoleWidget(ConsoleWidget):
         self._history_index = 0
         self._history_prefix = ''
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'ConsoleWidget' public interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def execute(self, source=None, hidden=False, interactive=False):
         """ Reimplemented to the store history.
@@ -47,9 +47,9 @@ class HistoryConsoleWidget(ConsoleWidget):
 
         return executed
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'ConsoleWidget' abstract interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _up_pressed(self):
         """ Called when the up key is pressed. Returns whether to continue
@@ -61,8 +61,10 @@ class HistoryConsoleWidget(ConsoleWidget):
             # Set a search prefix based on the cursor position.
             col = self._get_input_buffer_cursor_column()
             input_buffer = self.input_buffer
-            if self._history_index == len(self._history) or \
-                    (self._history_prefix and col != len(self._history_prefix)):
+            if self._history_index == len(
+                self._history) or (
+                self._history_prefix and col != len(
+                    self._history_prefix)):
                 self._history_index = len(self._history)
                 self._history_prefix = input_buffer[:col]
 
@@ -108,9 +110,9 @@ class HistoryConsoleWidget(ConsoleWidget):
 
         return True
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'HistoryConsoleWidget' public interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def history_previous(self, prefix=''):
         """ If possible, set the input buffer to a previous item in the history.
@@ -152,9 +154,9 @@ class HistoryConsoleWidget(ConsoleWidget):
             history = prefix
         self.input_buffer = history
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'HistoryConsoleWidget' protected interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _set_history(self, history):
         """ Replace the current history with a sequence of history items.

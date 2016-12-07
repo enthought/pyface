@@ -46,7 +46,6 @@ class PythonShell(MPythonShell, Widget):
     IPythonShell interface for the API documentation.
     """
 
-
     #### 'IPythonShell' interface #############################################
 
     command_executed = Event
@@ -100,7 +99,7 @@ class PythonShell(MPythonShell, Widget):
         # Make sure that the running script gets a proper sys.argv as if it
         # were run from a system shell.
         save_argv = sys.argv
-        sys.argv = [ filename ]
+        sys.argv = [filename]
 
         # Make sure that the running script thinks it is the main module
         save_main = sys.modules['__main__']
@@ -171,7 +170,7 @@ class PythonShell(MPythonShell, Widget):
 
             # Make sure that the name is actually a valid Python identifier.
             try:
-                if eval(py_name, {py_name : True}):
+                if eval(py_name, {py_name: True}):
                     name = py_name
 
             except:
@@ -201,19 +200,19 @@ class PythonShell(MPythonShell, Widget):
         if event.AltDown() and event.GetKeyCode() == 317:
             zoom = self.shell.control.GetZoom()
             if zoom != 20:
-                self.control.SetZoom(zoom+1)
+                self.control.SetZoom(zoom + 1)
 
         elif event.AltDown() and event.GetKeyCode() == 319:
             zoom = self.shell.control.GetZoom()
             if zoom != -10:
-                self.control.SetZoom(zoom-1)
+                self.control.SetZoom(zoom - 1)
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.AltDown() == 1,
-            control_down = event.ControlDown() == 1,
-            shift_down   = event.ShiftDown() == 1,
-            key_code     = event.GetKeyCode(),
-            event        = event
+            alt_down=event.AltDown() == 1,
+            control_down=event.ControlDown() == 1,
+            shift_down=event.ShiftDown() == 1,
+            key_code=event.GetKeyCode(),
+            event=event
         )
 
         # Give other event handlers a chance.
@@ -225,14 +224,14 @@ class PyShell(PyShellBase):
     def __init__(self, parent, id=-1, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=wx.CLIP_CHILDREN,
                  introText='', locals=None, InterpClass=None, *args, **kwds):
-        self.handlers=[]
+        self.handlers = []
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
         self.raw_input = __builtin__.raw_input
 
-        super(PyShell,self).__init__(parent, id, pos, size, style, introText,
-                                     locals, InterpClass, *args, **kwds)
+        super(PyShell, self).__init__(parent, id, pos, size, style, introText,
+                                      locals, InterpClass, *args, **kwds)
 
     def hidden_push(self, command):
         """ Send a command to the interpreter for execution without adding
@@ -273,15 +272,25 @@ class PyShell(PyShellBase):
 class _NullIO:
     """ A portable /dev/null for use with PythonShell.execute_file.
     """
+
     def tell(self): return 0
-    def read(self, n = -1): return ""
-    def readline(self, length = None): return ""
+
+    def read(self, n=-1): return ""
+
+    def readline(self, length=None): return ""
+
     def readlines(self): return []
+
     def write(self, s): pass
+
     def writelines(self, list): pass
+
     def isatty(self): return 0
+
     def flush(self): pass
+
     def close(self): pass
-    def seek(self, pos, mode = 0): pass
+
+    def seek(self, pos, mode=0): pass
 
 #### EOF ######################################################################

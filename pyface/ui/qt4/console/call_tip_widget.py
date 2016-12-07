@@ -34,9 +34,9 @@ class CallTipWidget(QtGui.QLabel):
         self.setIndent(1)
         self.setFrameStyle(QtGui.QFrame.NoFrame)
         self.setMargin(1 + self.style().pixelMetric(
-                QtGui.QStyle.PM_ToolTipLabelFrameWidth, None, self))
+            QtGui.QStyle.PM_ToolTipLabelFrameWidth, None, self))
         self.setWindowOpacity(self.style().styleHint(
-                QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None) / 255.0)
+            QtGui.QStyle.SH_ToolTipLabel_Opacity, None, self, None) / 255.0)
 
     def eventFilter(self, obj, event):
         """ Reimplemented to hide on certain key presses and on text edit focus
@@ -134,7 +134,7 @@ class CallTipWidget(QtGui.QLabel):
                 doc = doc[:match.end()] + '\n[Documentation continues...]'
         else:
             doc = ''
-            
+
         if call_line:
             doc = '\n\n'.join([call_line, doc])
         return self.show_tip(doc)
@@ -147,7 +147,7 @@ class CallTipWidget(QtGui.QLabel):
         document = text_edit.document()
         cursor = text_edit.textCursor()
         search_pos = cursor.position() - 1
-        self._start_position, _ = self._find_parenthesis(search_pos, 
+        self._start_position, _ = self._find_parenthesis(search_pos,
                                                          forward=False)
         if self._start_position == -1:
             return False
@@ -155,11 +155,11 @@ class CallTipWidget(QtGui.QLabel):
         # Set the text and resize the widget accordingly.
         self.setText(tip)
         self.resize(self.sizeHint())
-    
+
         # Locate and show the widget. Place the tip below the current line
         # unless it would be off the screen. In that case, place it above
         # the current line.
-        padding = 3 # Distance in pixels between cursor bounds and tip box.
+        padding = 3  # Distance in pixels between cursor bounds and tip box.
         cursor_rect = text_edit.cursorRect(cursor)
         screen_rect = QtGui.QApplication.desktop().screenGeometry(text_edit)
         point = text_edit.mapToGlobal(cursor_rect.bottomRight())
@@ -171,7 +171,7 @@ class CallTipWidget(QtGui.QLabel):
         self.move(point)
         self.show()
         return True
-            
+
     #--------------------------------------------------------------------------
     # Protected interface
     #--------------------------------------------------------------------------
@@ -213,10 +213,10 @@ class CallTipWidget(QtGui.QLabel):
             # If Enter events always came after Leave events, we wouldn't need
             # this check. But on Mac OS, it sometimes happens the other way
             # around when the tooltip is created.
-            QtGui.QApplication.topLevelAt(QtGui.QCursor.pos()) != self):
+                QtGui.QApplication.topLevelAt(QtGui.QCursor.pos()) != self):
             self._hide_timer.start(300, self)
 
-    #------ Signal handlers ----------------------------------------------------
+    #------ Signal handlers --------------------------------------------------
 
     def _cursor_position_changed(self):
         """ Updates the tip based on user cursor movement.

@@ -15,7 +15,8 @@
 
 # paranoid checkin in case Mr Chilver's changes break the distribution code
 
-# todo - it wasn't paranoia - reconcile this with lazy_switcher.py at some point
+# todo - it wasn't paranoia - reconcile this with lazy_switcher.py at some
+# point
 
 # Major package imports.
 import wx
@@ -30,14 +31,14 @@ class SwitcherModel(HasTraits):
 
     __traits__ = {
         # The index of the selected 'page'.
-        'selected' : -1,
+        'selected': -1,
     }
 
     def __init__(self):
         """ Creates a new switcher model. """
 
         # The items to display in the switcher control.
-        self.items = [] # (str label, object value)
+        self.items = []  # (str label, object value)
 
         return
 

@@ -113,32 +113,32 @@ class Tree(Widget):
     #### Events ####
 
     # A right-click occurred on the control (not a node!).
-    control_right_clicked = Event#(Point)
+    control_right_clicked = Event  # (Point)
 
     # A key was pressed while the tree has focus.
     key_pressed = Event(KeyPressedEvent)
 
     # A node has been activated (ie. double-clicked).
-    node_activated = Event#(Any)
+    node_activated = Event  # (Any)
 
     # A drag operation was started on a node.
-    node_begin_drag = Event#(Any)
+    node_begin_drag = Event  # (Any)
 
     # A (non-leaf) node has been collapsed.
-    node_collapsed = Event#(Any)
+    node_collapsed = Event  # (Any)
 
     # A (non-leaf) node has been expanded.
-    node_expanded = Event#(Any)
+    node_expanded = Event  # (Any)
 
     # A left-click occurred on a node.
     #
     # Tuple(node, point).
-    node_left_clicked = Event#(Tuple)
+    node_left_clicked = Event  # (Tuple)
 
     # A right-click occurred on a node.
     #
     # Tuple(node, point)
-    node_right_clicked = Event#(Tuple)
+    node_right_clicked = Event  # (Tuple)
 
     #### Private interface ####################################################
 
@@ -177,7 +177,8 @@ class Tree(Widget):
         wxid = wx.NewId()
 
         # Create the toolkit-specific control.
-        self.control = tree = _Tree(self, parent, wxid,style=self._get_style())
+        self.control = tree = _Tree(
+            self, parent, wxid, style=self._get_style())
 
         # Wire up the wx tree events.
         wx.EVT_CHAR(tree, self._on_char)
@@ -199,7 +200,8 @@ class Tree(Widget):
         wx.EVT_TREE_ITEM_COLLAPSED(tree, wxid, self._on_tree_item_collapsed)
         wx.EVT_TREE_ITEM_EXPANDING(tree, wxid, self._on_tree_item_expanding)
         wx.EVT_TREE_ITEM_EXPANDED(tree, wxid, self._on_tree_item_expanded)
-        wx.EVT_TREE_BEGIN_LABEL_EDIT(tree, wxid,self._on_tree_begin_label_edit)
+        wx.EVT_TREE_BEGIN_LABEL_EDIT(
+            tree, wxid, self._on_tree_begin_label_edit)
         wx.EVT_TREE_END_LABEL_EDIT(tree, wxid, self._on_tree_end_label_edit)
         wx.EVT_TREE_BEGIN_DRAG(tree, wxid, self._on_tree_begin_drag)
         wx.EVT_TREE_SEL_CHANGED(tree, wxid, self._on_tree_sel_changed)
@@ -781,7 +783,7 @@ class Tree(Widget):
             data = None
 
         elif flags & wx.TREE_HITTEST_ONITEMICON \
-             or flags & wx.TREE_HITTEST_ONITEMLABEL:
+                or flags & wx.TREE_HITTEST_ONITEMLABEL:
 
             data = self.control.GetPyData(wxid)
 
@@ -847,9 +849,9 @@ class Tree(Widget):
     def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
 
-        parent   = event.node
+        parent = event.node
         children = event.children
-        index    = event.index
+        index = event.index
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
@@ -896,7 +898,7 @@ class Tree(Widget):
     def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
 
-        parent   = event.node
+        parent = event.node
         children = event.children
 
         # Has the node actually appeared in the tree yet?
@@ -968,10 +970,10 @@ class Tree(Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode
         )
 
         event.Skip()
@@ -1158,7 +1160,7 @@ class Tree(Widget):
         # Making sure the new label is not an empty string
 
         if label is not None and len(label) > 0 and \
-            self.model.can_set_text(node, label):
+                self.model.can_set_text(node, label):
             def end_label_edit():
                 """ Called to complete the label edit. """
 
@@ -1195,7 +1197,7 @@ class Tree(Widget):
         # Get the node, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event, event.GetItem())
 
-        if point == (0,0):
+        if point == (0, 0):
             # Apply workaround for GTK.
             point = self.point_left_clicked
             wxid, flags = self.HitTest(point)

@@ -52,7 +52,7 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).
-    actions = Any#List
+    actions = Any  # List
 
     # The default action for nodes of this type.  The default action is
     # performed when a node is activated (i.e., double-clicked).
@@ -60,7 +60,7 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus for creating new children within nodes
     # of this type (shown in the 'New' menu of the context menu).
-    new_actions = Any#List
+    new_actions = Any  # List
 
     ###########################################################################
     # 'NodeType' interface.
@@ -95,7 +95,7 @@ class NodeType(HasPrivateTraits):
         if new_actions is not None and len(new_actions) > 0:
             sat.append(
                 MenuManager(
-                    name = 'New',
+                    name='New',
                     *new_actions
                 ),
             )

@@ -33,7 +33,6 @@ class SplitWidget(MSplitWidget, HasTraits):
     ISPlitWidget interface for the API documentation.
     """
 
-
     #### 'ISplitWidget' interface #############################################
 
     direction = Enum('vertical', 'vertical', 'horizontal')

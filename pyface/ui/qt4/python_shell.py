@@ -35,16 +35,15 @@ from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
 
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # 'PythonShell' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 @provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
-
 
     #### 'IPythonShell' interface #############################################
 
@@ -106,7 +105,7 @@ class PythonShell(MPythonShell, Widget):
 
             # Make sure that the name is actually a valid Python identifier.
             try:
-                if eval(py_name, {py_name : True}):
+                if eval(py_name, {py_name: True}):
                     name = py_name
             except Exception:
                 pass
@@ -116,9 +115,9 @@ class PythonShell(MPythonShell, Widget):
         self.control._control.setFocus()
 
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # 'PythonWidget' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 class PythonWidget(HistoryConsoleWidget):
     """ A basic in-process Python interpreter.
@@ -202,9 +201,9 @@ class PythonWidget(HistoryConsoleWidget):
         for line in lines:
             self.write(line, refresh=refresh)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'ConsoleWidget' abstract interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _is_complete(self, source, interactive):
         """ Returns whether 'source' can be completely processed and a new
@@ -281,9 +280,9 @@ class PythonWidget(HistoryConsoleWidget):
             self._complete()
         return not complete
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'ConsoleWidget' protected interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _event_filter_console_keypress(self, event):
         """ Reimplemented for smart backspace.
@@ -322,9 +321,9 @@ class PythonWidget(HistoryConsoleWidget):
             space += 4
         cursor.insertText(' ' * space)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'PythonWidget' public interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def execute_file(self, path, hidden=False):
         """ Attempts to execute file with 'path'. If 'hidden', no output is
@@ -344,9 +343,9 @@ class PythonWidget(HistoryConsoleWidget):
         self._append_plain_text(self._get_banner())
         self._show_interpreter_prompt()
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'PythonWidget' protected interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def _call_tip(self):
         """ Shows a call tip, if appropriate, at the current cursor location.
@@ -381,7 +380,7 @@ class PythonWidget(HistoryConsoleWidget):
                     names += __builtin__.__dict__.keys()
                 else:
                     names = dir(symbol)
-                completions = [ n for n in names if n.startswith(leftover) ]
+                completions = [n for n in names if n.startswith(leftover)]
                 if completions:
                     cursor = self._get_cursor()
                     cursor.movePosition(QtGui.QTextCursor.Left,
@@ -437,7 +436,7 @@ class PythonWidget(HistoryConsoleWidget):
         self.flush()
         self._show_prompt('>>> ')
 
-    #------ Signal handlers ----------------------------------------------------
+    #------ Signal handlers --------------------------------------------------
 
     def _document_contents_change(self, position, removed, added):
         """ Called whenever the document's content changes. Display a call tip
@@ -450,9 +449,10 @@ class PythonWidget(HistoryConsoleWidget):
         if position == self._get_cursor().position():
             self._call_tip()
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # 'PythonWidgetHighlighter' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+
 
 class PythonWidgetHighlighter(PygmentsHighlighter):
     """ A PygmentsHighlighter that can be turned on and off and that ignores
@@ -507,9 +507,10 @@ class PythonWidgetHighlighter(PygmentsHighlighter):
         start += self._current_offset
         super(PythonWidgetHighlighter, self).setFormat(start, count, format)
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # 'PyfacePythonWidget' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
+
 
 class PyfacePythonWidget(PythonWidget):
     """ A PythonWidget customized to support the IPythonShell interface.
@@ -527,9 +528,9 @@ class PyfacePythonWidget(PythonWidget):
 
         super(PyfacePythonWidget, self).__init__(*args, **kw)
 
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
     # 'QWidget' interface
-    #---------------------------------------------------------------------------
+    #-------------------------------------------------------------------------
 
     def keyPressEvent(self, event):
         """ Reimplemented to generate Pyface key press events.
@@ -544,21 +545,21 @@ class PyfacePythonWidget(PythonWidget):
 
         mods = event.modifiers()
         self._pyface_widget.key_pressed = KeyPressedEvent(
-            alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                            QtCore.Qt.AltModifier),
-            control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                            QtCore.Qt.ControlModifier),
-            shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                            QtCore.Qt.ShiftModifier),
-            key_code     = kcode,
-            event        = event)
+            alt_down=((mods & QtCore.Qt.AltModifier) ==
+                      QtCore.Qt.AltModifier),
+            control_down=((mods & QtCore.Qt.ControlModifier) ==
+                          QtCore.Qt.ControlModifier),
+            shift_down=((mods & QtCore.Qt.ShiftModifier) ==
+                        QtCore.Qt.ShiftModifier),
+            key_code=kcode,
+            event=event)
 
         super(PyfacePythonWidget, self).keyPressEvent(event)
 
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 # '_DropEventFilter' class:
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 class _DropEventEmitter(QtCore.QObject):
     """ Handle object drops on widget. """

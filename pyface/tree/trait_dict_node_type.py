@@ -30,9 +30,9 @@ class TraitDictNodeType(NodeType):
         """ Returns True if this node type recognizes a node. """
 
         is_type_for = isinstance(node, dict) \
-                      and hasattr(node, 'object') \
-                      and isinstance(node.object, self.klass) \
-                      and node.name == self.trait_name
+            and hasattr(node, 'object') \
+            and isinstance(node.object, self.klass) \
+            and node.name == self.trait_name
 
         return is_type_for
 

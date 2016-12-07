@@ -10,7 +10,9 @@ from ..python_editor import PythonEditor
 from ..window import Window
 
 
-PYTHON_SCRIPT = os.path.join(os.path.dirname(__file__), 'python_shell_script.py')
+PYTHON_SCRIPT = os.path.join(
+    os.path.dirname(__file__),
+    'python_shell_script.py')
 
 
 class TestPythonEditor(unittest.TestCase, UnittestTools):
@@ -34,7 +36,9 @@ class TestPythonEditor(unittest.TestCase, UnittestTools):
 
     def test_show_line_numbers(self):
         # test that destroy works
-        self.widget = PythonEditor(self.window.control, show_line_numbers=False)
+        self.widget = PythonEditor(
+            self.window.control,
+            show_line_numbers=False)
         self.gui.process_events()
         self.widget.show_line_numbers = True
         self.gui.process_events()

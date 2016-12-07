@@ -36,7 +36,6 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-
     #### 'IHeadingText' interface #############################################
 
     level = Int(1)

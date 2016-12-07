@@ -2,7 +2,8 @@
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
+# This software is provided without warranty under the terms of the BSD
+# license.
 
 #
 # Author: Enthought Inc
@@ -33,6 +34,7 @@ class GutterWidget(QtGui.QWidget):
         """
         self.parent().wheelEvent(event)
 
+
 class StatusGutterWidget(GutterWidget):
     """ Draws status markers
     """
@@ -55,19 +57,38 @@ class StatusGutterWidget(GutterWidget):
 
         cw = self.parent()
 
-        pixels_per_block = self.height()/float(cw.blockCount())
+        pixels_per_block = self.height() / float(cw.blockCount())
 
         for line in self.info_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.green)
+            painter.fillRect(
+                QtCore.QRect(
+                    0,
+                    line *
+                    pixels_per_block,
+                    self.width(),
+                    3),
+                QtCore.Qt.green)
 
         for line in self.warn_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.yellow)
+            painter.fillRect(
+                QtCore.QRect(
+                    0,
+                    line *
+                    pixels_per_block,
+                    self.width(),
+                    3),
+                QtCore.Qt.yellow)
 
         for line in self.error_lines:
-            painter.fillRect(QtCore.QRect(0, line*pixels_per_block, self.width(), 3),
-                            QtCore.Qt.red)
+            painter.fillRect(
+                QtCore.QRect(
+                    0,
+                    line *
+                    pixels_per_block,
+                    self.width(),
+                    3),
+                QtCore.Qt.red)
+
 
 class LineNumberWidget(GutterWidget):
     """ Draw line numbers.
@@ -118,4 +139,3 @@ class LineNumberWidget(GutterWidget):
             top = bottom
             bottom = top + int(cw.blockBoundingRect(block).height())
             blocknum += 1
-

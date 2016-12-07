@@ -78,7 +78,8 @@ def _init_toolkit():
                 if logger.getEffectiveLevel() <= logging.INFO:
                     logger.exception(exc)
         else:
-            # Try to import the null toolkit but don't set the ETSConfig toolkit
+            # Try to import the null toolkit but don't set the ETSConfig
+            # toolkit
             try:
                 be = import_toolkit('null')
                 import warnings
@@ -87,8 +88,10 @@ def _init_toolkit():
                 warnings.warn(msg.format(toolkit_name), RuntimeWarning)
             except ImportError as exc:
                 logger.exception(exc)
-                raise ImportError("Unable to import a pyface backend for any "
-                    "of the %s toolkits" % ", ".join(known_toolkits))
+                raise ImportError(
+                    "Unable to import a pyface backend for any "
+                    "of the %s toolkits" %
+                    ", ".join(known_toolkits))
 
     # Save the imported toolkit module.
     global _toolkit_backend
@@ -121,7 +124,9 @@ def toolkit_object(name):
         """
 
         def __init__(self, *args, **kwargs):
-            raise NotImplementedError("the %s pyface backend doesn't implement %s" % (ETSConfig.toolkit, oname))
+            raise NotImplementedError(
+                "the %s pyface backend doesn't implement %s" %
+                (ETSConfig.toolkit, oname))
 
     be_obj = Unimplemented
 
@@ -136,7 +141,7 @@ def toolkit_object(name):
         # is the error while trying to import be_mname or not?
         if all(part not in exc.args[0] for part in mname.split('.')):
                 # something else went wrong - let the exception be raised
-                raise
+            raise
 
         # Ignore *ANY* errors unless a debug ENV variable is set.
         if 'ETS_DEBUG' in os.environ:
@@ -145,9 +150,9 @@ def toolkit_object(name):
             # The idea here is that this only happens when the last entry in
             # the traceback's stack frame mentions the toolkit in question.
             import traceback
-            frames = traceback.extract_tb(sys.exc_traceback)
+            frames = traceback.extract_tb(sys.exc_info()[2])
             filename, lineno, function, text = frames[-1]
-            if not _toolkit_backend in filename:
+            if _toolkit_backend not in filename:
                 raise
 
     return be_obj

@@ -26,7 +26,6 @@ class Widget(MWidget, HasTraits):
     interface for the API documentation.
     """
 
-
     #### 'IWidget' interface ##################################################
 
     control = Any

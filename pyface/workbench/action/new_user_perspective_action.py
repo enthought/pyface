@@ -32,7 +32,7 @@ class NewUserPerspectiveAction(WorkbenchAction):
     def perform(self, event):
         """ Peform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the details of the new perspective.

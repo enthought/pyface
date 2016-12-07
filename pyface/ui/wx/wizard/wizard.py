@@ -33,7 +33,6 @@ class Wizard(MWizard, Dialog):
 
     """
 
-
     #### 'IWizard' interface ##################################################
 
     pages = Property(List(IWizardPage))
@@ -128,7 +127,7 @@ class Wizard(MWizard, Dialog):
         current_page = controller.current_page
 
         is_first_page = controller.is_first_page(current_page)
-        is_last_page  = controller.is_last_page(current_page)
+        is_last_page = controller.is_last_page(current_page)
 
         # 'Next button'.
         if self._next is not None:

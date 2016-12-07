@@ -33,7 +33,6 @@ class ImageCache(MImageCache, HasTraits):
     IImageCache interface for the API documentation.
     """
 
-
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -43,10 +42,10 @@ class ImageCache(MImageCache, HasTraits):
         self._height = height
 
         # The images in the cache!
-        self._images = {} # {filename : wx.Image}
+        self._images = {}  # {filename : wx.Image}
 
         # The images in the cache converted to bitmaps.
-        self._bitmaps = {} # {filename : wx.Bitmap}
+        self._bitmaps = {}  # {filename : wx.Bitmap}
 
         return
 

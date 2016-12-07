@@ -54,7 +54,7 @@ class ViewSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control *id*. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         view = window.get_view_by_id(id)
         if view is not None:

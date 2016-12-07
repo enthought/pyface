@@ -31,6 +31,8 @@ from wx.py import introspect
 import types
 
 # The fixed function.
+
+
 def getAttributeNames(object, includeMagic=1, includeSingle=1,
                       includeDouble=1):
     """Return list of unique attributes, including inherited, for object."""
@@ -41,7 +43,7 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
         special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
                          'func_closure', 'func_code', 'func_defaults',
                          'func_dict', 'func_doc', 'func_globals', 'func_name']
-        attributes += [attr for attr in special_attrs \
+        attributes += [attr for attr in special_attrs
                        if hasattr(object, attr)]
     # For objects that have traits, get all the trait names since
     # these do not show up in dir(object).
@@ -52,8 +54,10 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
             pass
 
     if includeMagic:
-        try: attributes += object._getAttributeNames()
-        except: pass
+        try:
+            attributes += object._getAttributeNames()
+        except:
+            pass
     # Get all attribute names.
     attrdict = getAllAttributeNames(object)
     # Store the object's dir.
@@ -65,8 +69,8 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
         if type(object).__name__ == obj_type_name and technique == 'dir':
             attributes += attrlist
         else:
-            attributes += [attr for attr in attrlist \
-                           if attr not in object_dir and \
+            attributes += [attr for attr in attrlist
+                           if attr not in object_dir and
                            hasattr(object, attr)]
 
     # Remove duplicates from the attribute list.
@@ -75,14 +79,14 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     attributes = dict.keys()
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
-    attributes = [attribute for attribute in attributes \
+    attributes = [attribute for attribute in attributes
                   if isinstance(attribute, basestring)]
     attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
     if not includeSingle:
-        attributes = filter(lambda item: item[0]!='_' \
-                            or item[1]=='_', attributes)
+        attributes = filter(lambda item: item[0] != '_'
+                            or item[1] == '_', attributes)
     if not includeDouble:
-        attributes = filter(lambda item: item[:2]!='__', attributes)
+        attributes = filter(lambda item: item[:2] != '__', attributes)
     return attributes
 
 
@@ -91,6 +95,8 @@ introspect.getAttributeNames = getAttributeNames
 
 # This is also a modified version of the function which does not use
 # str(object).
+
+
 def getAllAttributeNames(object):
     """Return dict of all attributes, including inherited, for an object.
 
@@ -116,8 +122,7 @@ def getAllAttributeNames(object):
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = object.__dict__.keys()
-        attributes.sort()
+        attributes = sorted(object.__dict__.keys())
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
@@ -142,7 +147,7 @@ def getAllAttributeNames(object):
     else:
         if isinstance(bases, types.TupleType):
             for base in bases:
-                if type(base) is types.TypeType:
+                if isinstance(base, types.TypeType):
                     # Break a circular reference. Happens in Python 2.2.
                     pass
                 else:

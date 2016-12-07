@@ -5,7 +5,6 @@ from pyface.tasks.api import Task
 from ..task_window import TaskWindow
 
 
-
 def _task_window_with_named_tasks(*names, **kwargs):
     tasks = [Task(name=name) for name in names]
 

@@ -57,7 +57,6 @@ class MTaskWindowBackend(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
 
-
     #### 'ITaskWindowBackend' interface #######################################
 
     control = DelegatesTo('window')

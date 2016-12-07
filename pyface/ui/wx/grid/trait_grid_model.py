@@ -20,13 +20,15 @@ from that object gets a column."""
 
 # Enthought library imports
 from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
-     Int, List, Str, Trait, TraitError, Type
+    Int, List, Str, Trait, TraitError, Type
 
 # local imports
 from .grid_model import GridColumn, GridModel, GridSortEvent
 from .trait_grid_cell_adapter import TraitGridCellAdapter
 
 # The classes below are part of the table specification.
+
+
 class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
 
@@ -41,7 +43,7 @@ class TraitGridColumn(GridColumn):
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(key_trait = Type, value_trait=Trait('', Str, Callable))
+    formats = Dict(key_trait=Type, value_trait=Trait('', Str, Callable))
 
     # A name to designate the type of this column
     typename = Trait(None, None, Str)
@@ -49,6 +51,7 @@ class TraitGridColumn(GridColumn):
     #       more info than we have available at this point
 
     size = Int(-1)
+
 
 class TraitGridSelection(HasTraits):
     """ Structure for holding specification information. """
@@ -60,6 +63,8 @@ class TraitGridSelection(HasTraits):
     trait_name = Trait(None, None, Str)
 
 # The meat.
+
+
 class TraitGridModel(GridModel):
     """ A TraitGridModel builds a grid from a list of traits objects. Each row
     represents on object, each column one trait from those objects. All the
@@ -69,7 +74,7 @@ class TraitGridModel(GridModel):
     inspected and every trait from that object gets a column."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = List()#HasTraits)
+    data = List()  # HasTraits)
 
     # The column definitions
     columns = Trait(None, None, List(Trait(None, Str, TraitGridColumn)))
@@ -106,7 +111,7 @@ class TraitGridModel(GridModel):
                 # are write-only
                 for name, trait in self.data[0].traits().items():
                     if trait.type != 'event':
-                        self._auto_columns.append(TraitGridColumn(name = name))
+                        self._auto_columns.append(TraitGridColumn(name=name))
             else:
                 self._auto_columns = []
 
@@ -190,8 +195,10 @@ class TraitGridModel(GridModel):
         values = []
         for obj in self.data:
             for col in cols:
-                values.append(TraitGridSelection(obj = obj,
-                                                 trait_name = self.__get_column_name(col)))
+                values.append(
+                    TraitGridSelection(
+                        obj=obj,
+                        trait_name=self.__get_column_name(col)))
 
         return values
 
@@ -209,7 +216,7 @@ class TraitGridModel(GridModel):
             # by default we use cmp to sort on the traits
             sorter = cmp
             if isinstance(column, TraitGridColumn) and \
-                   column.sorter is not None:
+                    column.sorter is not None:
                 sorter = column.sorter
         except IndexError:
             return
@@ -235,10 +242,9 @@ class TraitGridModel(GridModel):
 
         # now fire an event to tell the grid we're sorted
         print 'firing sort event'
-        self.column_sorted = GridSortEvent(index = col, reversed = reverse)
+        self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
         return
-
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -299,7 +305,7 @@ class TraitGridModel(GridModel):
 
         values = []
         for row_index in rows:
-            values.append(TraitGridSelection(obj = self.data[row_index]))
+            values.append(TraitGridSelection(obj=self.data[row_index]))
 
         return values
 
@@ -314,9 +320,9 @@ class TraitGridModel(GridModel):
 
         # print 'TraitGridModel.get_cell_editor row: ', row, ' col: ', col
 
-        obj        = self.data[row]
+        obj = self.data[row]
         trait_name = self.__get_column_name(col)
-        trait      = obj.base_trait(trait_name)
+        trait = obj.base_trait(trait_name)
         if trait is None:
             return None
 
@@ -345,7 +351,7 @@ class TraitGridModel(GridModel):
         obj = self.data[row]
         trait_name = self.__get_column_name(col)
 
-        return TraitGridSelection(obj = obj, trait_name = trait_name)
+        return TraitGridSelection(obj=obj, trait_name=trait_name)
 
     def resolve_selection(self, selection_list):
         """ Returns a list of (row, col) grid-cell coordinates that
@@ -386,8 +392,8 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-               formats.has_key(type(value)) and \
-               formats[type(value)] is not None:
+                type(value) in formats and \
+                formats[type(value)] is not None:
             try:
                 format = formats[type(value)]
                 if callable(format):
@@ -623,7 +629,6 @@ class TraitGridModel(GridModel):
 
         return coldata
 
-
     def __get_column(self, col):
 
         try:
@@ -688,7 +693,7 @@ class TraitGridModel(GridModel):
         if list is not None:
             for item in list:
                 item.on_trait_change(self._on_contained_trait_changed,
-                                     remove = remove)
+                                     remove=remove)
         return
 
     def __manage_column_listeners(self, collist, remove=False):
@@ -697,7 +702,7 @@ class TraitGridModel(GridModel):
             for col in collist:
                 if isinstance(col, TraitGridColumn):
                     col.on_trait_change(self._on_columns_changed,
-                                        remove = remove)
+                                        remove=remove)
 
         return
 

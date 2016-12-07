@@ -9,6 +9,7 @@ from traits.api import Instance
 # local imports
 from .grid_model import GridModel
 
+
 class InvertedGridModel(GridModel):
     """ An adapter model that inverts all of its row/column targets. Use
     this class with the CompositeGridModel to make models with different
@@ -116,7 +117,6 @@ class InvertedGridModel(GridModel):
     def is_cell_editable(self, row, col):
 
         return self.model.is_cell_editable(col, row)
-
 
 
 #### EOF ######################################################################

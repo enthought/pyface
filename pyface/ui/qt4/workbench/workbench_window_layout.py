@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -23,7 +24,7 @@ from traits.api import Instance, on_trait_change
 # Local imports.
 from pyface.message_dialog import error
 from pyface.workbench.i_workbench_window_layout import \
-        MWorkbenchWindowLayout
+    MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget
 
 
@@ -33,18 +34,18 @@ logger = logging.getLogger(__name__)
 
 # For mapping positions relative to the editor area.
 _EDIT_AREA_MAP = {
-    'left':     QtCore.Qt.LeftDockWidgetArea,
-    'right':    QtCore.Qt.RightDockWidgetArea,
-    'top':      QtCore.Qt.TopDockWidgetArea,
-    'bottom':   QtCore.Qt.BottomDockWidgetArea
+    'left': QtCore.Qt.LeftDockWidgetArea,
+    'right': QtCore.Qt.RightDockWidgetArea,
+    'top': QtCore.Qt.TopDockWidgetArea,
+    'bottom': QtCore.Qt.BottomDockWidgetArea
 }
 
 # For mapping positions relative to another view.
 _VIEW_AREA_MAP = {
-    'left':     (QtCore.Qt.Horizontal, True),
-    'right':    (QtCore.Qt.Horizontal, False),
-    'top':      (QtCore.Qt.Vertical, True),
-    'bottom':   (QtCore.Qt.Vertical, False)
+    'left': (QtCore.Qt.Horizontal, True),
+    'right': (QtCore.Qt.Horizontal, False),
+    'top': (QtCore.Qt.Vertical, True),
+    'bottom': (QtCore.Qt.Vertical, False)
 }
 
 
@@ -86,7 +87,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             return None
 
         try:
-            self._qt4_editor_area.addTab(self._qt4_get_editor_control(editor), title)
+            self._qt4_editor_area.addTab(
+                self._qt4_get_editor_control(editor), title)
 
             if editor._loading_on_open:
                 self._qt4_editor_tab_spinner(editor, '', True)
@@ -113,7 +115,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             # Additionally, display an error message to the user.
             error(self.window.control, 'Unable to add view [%s]' % view.id,
-                    'Workbench Plugin Error')
+                  'Workbench Plugin Error')
 
         return view
 
@@ -130,8 +132,10 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     def close(self):
         # Don't fire signals for editors that have destroyed their controls.
-        QtCore.QObject.disconnect(self._qt4_editor_area,
-                QtCore.SIGNAL('hasFocus'), self._qt4_editor_focus)
+        QtCore.QObject.disconnect(
+            self._qt4_editor_area,
+            QtCore.SIGNAL('hasFocus'),
+            self._qt4_editor_focus)
 
         self._qt4_editor_area.clear()
 
@@ -153,9 +157,10 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor_area, QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
             self._qt4_view_focus_changed)
 
-        QtCore.QObject.connect(self._qt4_editor_area,
-                QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
-                self._qt4_editor_title_changed)
+        QtCore.QObject.connect(
+            self._qt4_editor_area,
+            QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'),
+            self._qt4_editor_title_changed)
 
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
@@ -292,7 +297,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, {'geometry' : self.window.control.saveGeometry()})
+        return (0, {'geometry': self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
         if hasattr(memento, 'toolkit_data'):
@@ -322,17 +327,21 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_editor_title_changed(self, control, title):
         """ Handle the title being changed """
         for editor in self.window.editors:
-            if editor.control == control: editor.name = unicode(title)
+            if editor.control == control:
+                editor.name = unicode(title)
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?
         tw, tidx = self._qt4_editor_area._tab_widget(editor.control)
 
-        if new: tw.show_button(tidx)
-        else: tw.hide_button(tidx)
+        if new:
+            tw.show_button(tidx)
+        else:
+            tw.hide_button(tidx)
 
         if not new and not editor == self.window.active_editor:
-            self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
+            self._qt4_editor_area.setTabTextColor(
+                editor.control, QtCore.Qt.red)
 
     @on_trait_change('window:active_editor')
     def _qt4_active_editor_changed(self, old, new):
@@ -357,7 +366,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if old is not None:
             # Handle focus changes from views.
             for view in self.window.views:
-                if view is not focus_part and view.control is not None and view.control.isAncestorOf(old):
+                if view is not focus_part and view.control is not None and view.control.isAncestorOf(
+                        old):
                     view.has_focus = False
                     break
 
@@ -469,7 +479,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 dwa = _EDIT_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.addDockWidget(dwa, dw)
         elif position == 'with':
@@ -481,7 +491,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 orient, swap = _VIEW_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.splitDockWidget(rel_dw, dw, orient)
 
@@ -505,9 +515,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
             dw.connect(dw.toggleViewAction(), QtCore.SIGNAL('toggled(bool)'),
-                    self._qt4_handle_dock_visibility)
+                       self._qt4_handle_dock_visibility)
             dw.connect(dw, QtCore.SIGNAL('visibilityChanged(bool)'),
-                    self._qt4_handle_dock_visibility)
+                       self._qt4_handle_dock_visibility)
 
             # Save the dock window.
             view._qt4_dock = dw
@@ -563,7 +573,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             sender = dw.sender()
             if (sender is dw.toggleViewAction() or
-                sender in dw.children()):
+                    sender in dw.children()):
                 # Toggling the action or pressing the close button on
                 # the view
                 v.visible = checked

@@ -11,7 +11,7 @@ from ..window import Window
 
 
 PYTHON_SCRIPT = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                'python_shell_script.py'))
+                                             'python_shell_script.py'))
 
 
 class TestPythonShell(unittest.TestCase, UnittestTools):
@@ -68,7 +68,8 @@ class TestPythonShell(unittest.TestCase, UnittestTools):
         self.widget = PythonShell(self.window.control)
         self.gui.process_events()
         # XXX inconsistent behaviour between backends
-        #with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        # with self.assertTraitChanges(self.widget, 'command_executed',
+        # count=1):
         self.widget.execute_file(PYTHON_SCRIPT)
         self.gui.process_events()
         self.assertEqual(self.widget.interpreter().locals.get('x'), 1)
@@ -81,7 +82,8 @@ class TestPythonShell(unittest.TestCase, UnittestTools):
         self.widget = PythonShell(self.window.control)
         self.gui.process_events()
         # XXX inconsistent behaviour between backends
-        #with self.assertTraitChanges(self.widget, 'command_executed', count=1):
+        # with self.assertTraitChanges(self.widget, 'command_executed',
+        # count=1):
         self.widget.execute_file(PYTHON_SCRIPT, hidden=False)
         self.gui.process_events()
         self.assertEqual(self.widget.interpreter().locals.get('x'), 1)

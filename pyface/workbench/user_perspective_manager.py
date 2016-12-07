@@ -47,37 +47,37 @@ class UserPerspectiveManager(HasTraits):
 
     #### Properties ###########################################################
 
-    def _get_next_id ( self ):
+    def _get_next_id(self):
         """ Property getter. """
 
         # Get all of the current perspective ids:
         ids = self.id_to_perspective.keys()
 
         # If there are none:
-        if len( ids ) == 0:
+        if len(ids) == 0:
             # Return the starting id:
             return 1
 
         # Else return the current highest id + 1 as the next id:
         ids.sort()
 
-        return int( ids[-1][19:-2] ) + 1
+        return int(ids[-1][19:-2]) + 1
 
-    def _get_id_to_perspective ( self ):
+    def _get_id_to_perspective(self):
         """ Property getter. """
 
         if self._id_to_perspective is None:
             self._id_to_perspective = dic = {}
             try:
-                fh = open( self.file_name, 'r' )
+                fh = open(self.file_name, 'r')
                 for line in fh:
-                    data = line.split( ':', 1 )
-                    if len( data ) == 2:
+                    data = line.split(':', 1)
+                    if len(data) == 2:
                         id, name = data[0].strip(), data[1].strip()
-                        dic[ id ] = Perspective(
-                            id               = id,
-                            name             = name,
-                            show_editor_area = False
+                        dic[id] = Perspective(
+                            id=id,
+                            name=name,
+                            show_editor_area=False
                         )
                 fh.close()
             except:
@@ -85,12 +85,12 @@ class UserPerspectiveManager(HasTraits):
 
         return self._id_to_perspective
 
-    def _get_perspectives ( self ):
+    def _get_perspectives(self):
         """ Property getter. """
 
         return self.id_to_perspective.values()
 
-    def _get_file_name ( self ):
+    def _get_file_name(self):
         """ Property getter. """
 
         return os.path.join(self.state_location, '__user_perspective__')
@@ -101,9 +101,9 @@ class UserPerspectiveManager(HasTraits):
         """ Create a new (and empty) user-defined perspective. """
 
         perspective = Perspective(
-            id               = '__user_perspective_%09d__' % self.next_id,
-            name             = name,
-            show_editor_area = show_editor_area
+            id='__user_perspective_%09d__' % self.next_id,
+            name=name,
+            show_editor_area=show_editor_area
         )
 
         # Add the perspective to the map.
@@ -207,14 +207,14 @@ class UserPerspectiveManager(HasTraits):
         """ Update the persistent file information. """
 
         try:
-            fh = open( self.file_name, 'w' )
-            fh.write( '\n'.join( [ '%s: %s' % ( p.id, p.name )
-                                   for p in self.perspectives ] ) )
+            fh = open(self.file_name, 'w')
+            fh.write('\n'.join(['%s: %s' % (p.id, p.name)
+                                for p in self.perspectives]))
             fh.close()
 
         except:
-            logger.error( "Could not write the user defined perspective "
-                          "definition file: " + self.file_name )
+            logger.error("Could not write the user defined perspective "
+                         "definition file: " + self.file_name)
 
         return
 

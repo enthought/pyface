@@ -187,7 +187,10 @@ class MGUI(object):
     def _default_state_location(self):
         """ Return the default state location. """
 
-        state_location = os.path.join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
+        state_location = os.path.join(
+            ETSConfig.application_home,
+            'pyface',
+            ETSConfig.toolkit)
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)

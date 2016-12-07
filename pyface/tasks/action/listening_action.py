@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 class ListeningAction(Action):
     """ An Action that listens and makes a callback to an object.
     """
-    
+
     #### ListeningAction interface ############################################
-    
+
     # The (extended) name of the method to call. By default, the on_perform
     # function will be called with the event.
     method = Str
@@ -29,7 +29,7 @@ class ListeningAction(Action):
 
     # The object to which the names above apply.
     object = Any
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -112,7 +112,7 @@ class ListeningAction(Action):
     def _enabled_update(self):
         if self.enabled_name:
             if self.object:
-                self.enabled = bool(self._get_attr(self.object, 
+                self.enabled = bool(self._get_attr(self.object,
                                                    self.enabled_name, False))
             else:
                 self.enabled = False
@@ -123,7 +123,7 @@ class ListeningAction(Action):
         if self.visible_name:
             if self.object:
                 self.visible = bool(self._get_attr(self.object,
-                                                    self.visible_name, False))
+                                                   self.visible_name, False))
             else:
                 self.visible = False
         else:

@@ -121,7 +121,6 @@ class MDIApplicationWindow(ApplicationWindow):
     # Private interface.
     ###########################################################################
 
-
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
 
@@ -144,7 +143,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
         # Scale the image (if necessary).
         image = self._image
-        if image.GetWidth() != width or image.GetHeight()!= height:
+        if image.GetWidth() != width or image.GetHeight() != height:
             image = self._image.Copy()
             image.Rescale(width, height)
 

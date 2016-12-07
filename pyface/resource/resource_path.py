@@ -20,7 +20,7 @@ import sys
 from traits.trait_base import get_resource_path
 
 
-def resource_module(level = 2):
+def resource_module(level=2):
     """Return a module reference calculated from the caller's stack.
 
     Note that what we want is the reference to the package containing the
@@ -36,7 +36,7 @@ def resource_module(level = 2):
     return module
 
 
-def resource_path(level = 2):
+def resource_path(level=2):
     """Return a resource path calculated from the caller's stack.
 
     """

@@ -23,9 +23,9 @@ from traits.trait_base import get_resource_path
 
 logger = logging.getLogger(__name__)
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  Images
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 image_resource_cache = {}
 image_bitmap_cache = {}
@@ -34,7 +34,7 @@ image_bitmap_cache = {}
 def convert_image(value, level=3):
     """ Converts a specified value to an ImageResource if possible.
     """
-    if not isinstance( value, basestring ):
+    if not isinstance(value, basestring):
         return value
 
     key = value
@@ -116,9 +116,9 @@ class Image(TraitType):
         return ImageEditor()
 
 
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #  Borders, Margins and Layout
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 class BaseMB(ABCHasStrictTraits):
 
@@ -191,11 +191,12 @@ class HasMargin(TraitType):
     default_value = Margin(0)
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Margin instance, or an integer in the range from -32 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        'a Margin instance, or an integer in the range from -32 to 32 '
+        'or a tuple with 1, 2 or 4 integers in that range that can be '
+        'used to define one')
 
-    def validate (self, object, name, value):
+    def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
         """
         if isinstance(value, int):
@@ -219,7 +220,7 @@ class HasMargin(TraitType):
                 (default_value_type, default_value)
             which describes the default value for this trait.
         """
-        dv  = self.default_value
+        dv = self.default_value
         dvt = self.default_value_type
         if dvt < 0:
             if isinstance(dv, int):
@@ -248,9 +249,10 @@ class HasBorder(HasMargin):
     default_value = Border()
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Border instance, or an integer in the range from 0 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        'a Border instance, or an integer in the range from 0 to 32 '
+        'or a tuple with 1, 2 or 4 integers in that range that can be '
+        'used to define one')
 
 
 #: The position of an image relative to its associated text.

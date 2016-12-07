@@ -1,9 +1,9 @@
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group, \
-     MenuManager, MenuBarManager, ToolBarManager
+    MenuManager, MenuBarManager, ToolBarManager
 from pyface.util.id_helper import get_unique_id
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
-     List, Property, Str, Trait, Tuple, Unicode
+    List, Property, Str, Trait, Tuple, Unicode
 
 # Trait definitions.
 SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
@@ -56,6 +56,7 @@ class ActionSchema(Schema):
     #: Items is overwritten to be empty and read-only to avoid assigning to
     #: it by mistake.
     items = Property()
+
     def _get_items(self):
         return []
 
@@ -147,7 +148,7 @@ class ToolBarSchema(Schema):
 
     def create(self, children):
         traits = dict(id=self.id, name=self.name, image_size=self.image_size,
-                      orientation=self.orientation, 
+                      orientation=self.orientation,
                       show_divider=self.show_divider,
                       show_tool_names=self.show_tool_names)
         return self.tool_bar_manager_factory(*children, **traits)

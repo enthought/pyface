@@ -1,4 +1,4 @@
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -13,7 +13,7 @@
 #  Author: David C. Morrill
 #  Date:   10/18/2005
 #
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 
 """ Pyface 'DockWindow' support.
 
@@ -23,4 +23,3 @@
     sub-region of the DockWindow, in which case each sub-window appears as a
     separate notebook-like tab within the region.
 """
-

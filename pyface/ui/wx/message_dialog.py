@@ -30,9 +30,9 @@ from .dialog import Dialog
 
 # Map the ETS severity to the corresponding wx standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    'information':  wx.ICON_INFORMATION,
-    'warning':      wx.ICON_WARNING,
-    'error':        wx.ICON_ERROR
+    'information': wx.ICON_INFORMATION,
+    'warning': wx.ICON_WARNING,
+    'error': wx.ICON_ERROR
 }
 
 
@@ -41,7 +41,6 @@ class MessageDialog(MMessageDialog, Dialog):
     """ The toolkit specific implementation of a MessageDialog.  See the
     IMessageDialog interface for the API documentation.
     """
-
 
     #### 'IMessageDialog' interface ###########################################
 
@@ -72,7 +71,8 @@ class MessageDialog(MMessageDialog, Dialog):
         else:
             message = self.message
 
-        return wx.MessageDialog(parent, message, self.title,
-                _SEVERITY_TO_ICON_MAP[self.severity] | wx.OK | wx.STAY_ON_TOP)
+        return wx.MessageDialog(
+            parent, message, self.title, _SEVERITY_TO_ICON_MAP[
+                self.severity] | wx.OK | wx.STAY_ON_TOP)
 
 #### EOF ######################################################################

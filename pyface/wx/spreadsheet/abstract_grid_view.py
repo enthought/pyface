@@ -44,7 +44,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
         # fixme: remove this h*ck once the bug is fixed in wx.
         editor = evt.GetEventObject()
         if isinstance(editor, wx._controls.ComboBox) and \
-               evt.GetWindow() is None:
+                evt.GetWindow() is None:
             return
         evt.Skip()
         return
@@ -65,7 +65,7 @@ class AbstractGridView(Grid):
         # We have things set up to edit on a single click - so we have to select
         # an initial cursor location that is off of the screen otherwise a cell
         # will be in edit mode as soon as the grid fires up.
-        self.moveTo = [1000,1]
+        self.moveTo = [1000, 1]
         self.edit = False
 
         # this seems like a busy idle ...
@@ -79,7 +79,6 @@ class AbstractGridView(Grid):
         wx.grid.EVT_GRID_EDITOR_CREATED(self, self._on_editor_created)
 
         return
-
 
     # needed to handle problem in wx 2.6 with combobox cell editors
     def _on_editor_created(self, evt):
@@ -103,7 +102,9 @@ class AbstractGridView(Grid):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
         """
-        self.RegisterDataType("LogData", GridCellFloatRenderer(precision=3), GridCellFloatEditor())
+        self.RegisterDataType(
+            "LogData", GridCellFloatRenderer(
+                precision=3), GridCellFloatEditor())
 
         return
 
@@ -207,7 +208,8 @@ class AbstractGridView(Grid):
 
     def OnRangeSelect(self, evt):
         #if evt.Selecting():
-        #    print "OnRangeSelect: top-left %s, bottom-right %s\n" % (evt.GetTopLeftCoords(), evt.GetBottomRightCoords())
+        # print "OnRangeSelect: top-left %s, bottom-right %s\n" %
+        # (evt.GetTopLeftCoords(), evt.GetBottomRightCoords())
         evt.Skip()
 
     def OnCellChange(self, evt):
@@ -218,19 +220,18 @@ class AbstractGridView(Grid):
         of a spreadsheet. See also self.OnSelectCell().
         """
 
-        if self.edit == True:
+        if self.edit:
             if self.CanEnableCellControl():
                 self.EnableCellEditControl()
             self.edit = False
 
-        if self.moveTo != None:
+        if self.moveTo is not None:
             self.SetGridCursor(self.moveTo[0], self.moveTo[1])
             self.moveTo = None
 
         evt.Skip()
 
     def OnSelectCell(self, evt):
-
         """ Immediately jumps into editing mode, bypassing the usual select mode
         of a spreadsheet. See also self.OnIdle().
         """
@@ -245,4 +246,4 @@ class AbstractGridView(Grid):
 
     def OnEditorCreated(self, evt):
         evt.Skip()
-#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------

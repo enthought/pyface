@@ -9,7 +9,8 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
@@ -182,7 +183,9 @@ class TestConfirm(unittest.TestCase):
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_reject(self):
         # test that cancel works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
+        tester = ModalDialogTester(
+            lambda: confirm(
+                None, "message", cancel=True))
         tester.open_and_run(when_opened=lambda x: x.close(accept=False))
         self.assertEqual(tester.result, CANCEL)
 
@@ -205,7 +208,9 @@ class TestConfirm(unittest.TestCase):
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_cancel(self):
         # test that cancel works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
+        tester = ModalDialogTester(
+            lambda: confirm(
+                None, "message", cancel=True))
         tester.open_and_wait(when_opened=lambda x: x.click_button(CANCEL))
         self.gui.process_events()
         self.assertEqual(tester.result, CANCEL)
@@ -214,14 +219,16 @@ class TestConfirm(unittest.TestCase):
     def test_title(self):
         # test that title works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message",
-                                   title='Title'))
+                                                   title='Title'))
         tester.open_and_run(when_opened=lambda x: x.click_button(NO))
         self.assertEqual(tester.result, NO)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_default_yes(self):
         # test that default works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", default=YES))
+        tester = ModalDialogTester(
+            lambda: confirm(
+                None, "message", default=YES))
         tester.open_and_run(when_opened=lambda x: x.click_button(YES))
         self.assertEqual(tester.result, YES)
 

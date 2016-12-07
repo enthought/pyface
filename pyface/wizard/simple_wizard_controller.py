@@ -18,4 +18,5 @@
 from .wizard_controller import WizardController
 
 
-class SimpleWizardController(WizardController): pass
+class SimpleWizardController(WizardController):
+    pass

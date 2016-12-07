@@ -17,13 +17,13 @@ from .util import set_focus
 # 'EditorAreaPane' class.
 ###############################################################################
 
+
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of a EditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
-
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -178,6 +178,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 # Auxillary classes.
 ###############################################################################
 
+
 class EditorAreaWidget(QtGui.QTabWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
@@ -201,6 +202,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
         active_editor = self.editor_area.active_editor
         if active_editor:
             set_focus(active_editor.control)
+
 
 class EditorAreaDropFilter(QtCore.QObject):
     """ Implements drag and drop support.

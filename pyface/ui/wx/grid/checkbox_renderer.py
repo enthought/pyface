@@ -16,6 +16,7 @@
 from .checkbox_image_renderer import CheckboxImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 
+
 class CheckboxRenderer(GridCellRenderer):
 
     def __init__(self, **traits):

@@ -31,7 +31,6 @@ class WizardPage(MWizardPage, HasTraits):
 
     """
 
-
     #### 'IWizardPage' interface ##############################################
 
     id = Str

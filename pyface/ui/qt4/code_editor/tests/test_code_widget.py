@@ -24,6 +24,7 @@ from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
 
 
 class TestCodeWidget(unittest.TestCase):
+
     @classmethod
     def setupClass(cls):
         cls.qapp = QtGui.QApplication.instance() or QtGui.QApplication([])

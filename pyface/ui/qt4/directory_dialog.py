@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -27,7 +28,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     """ The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
-
 
     #### 'IDirectoryDialog' interface #########################################
 

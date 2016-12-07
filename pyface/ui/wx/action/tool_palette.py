@@ -141,7 +141,6 @@ class ToolPalette(Widget):
 
         return state
 
-
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -152,10 +151,8 @@ class ToolPalette(Widget):
 
         return html_window
 
-
     def _reflow(self):
         """ Reflow the layout. """
-
 
         # Create a bit of html for each tool.
         parts = []
@@ -188,7 +185,8 @@ class ToolPalette(Widget):
         from wx.lib.buttons import GenBitmapToggleButton, GenBitmapButton
 
         if kind == 'radio':
-            button = GenBitmapToggleButton(panel, -1, None, size=self.button_size)
+            button = GenBitmapToggleButton(
+                panel, -1, None, size=self.button_size)
 
         else:
             button = GenBitmapButton(panel, -1, None, size=self.button_size)
@@ -199,7 +197,6 @@ class ToolPalette(Widget):
         button.SetBitmapLabel(bmp)
         button.SetToolTipString(label)
         sizer.Add(button, 0, wx.EXPAND)
-
 
         return
 

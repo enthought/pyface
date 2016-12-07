@@ -295,7 +295,6 @@ class NodeTreeModel(TreeModel):
             self._on_nodes_replaced, 'nodes_replaced', remove=True
         )
 
-
         monitor.on_trait_change(
             self._on_structure_changed, 'structure_changed', remove=True
         )

@@ -87,7 +87,9 @@ class TestImageTrait(unittest.TestCase, UnittestTools):
         self.assertIsInstance(image_class.image, ImageResource)
         self.assertEqual(image_class.image.name, 'dialog-warning.png')
         self.assertIsNone(image_class.image._image_not_found)
-        self.assertEqual(image_class.image._ref.file_name, 'dialog-warning.png')
+        self.assertEqual(
+            image_class.image._ref.file_name,
+            'dialog-warning.png')
         self.assertEqual(image_class.image._ref.volume_name, 'icons')
 
 

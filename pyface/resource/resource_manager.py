@@ -15,7 +15,12 @@ sounds etc.
 """
 
 # Standard library imports.
-import glob, inspect, operator, os, sys, types
+import glob
+import inspect
+import operator
+import os
+import sys
+import types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
@@ -26,6 +31,7 @@ from traits.util.resource import get_path
 # Local imports.
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
+import collections
 
 
 class ResourceManager(HasTraits):
@@ -54,7 +60,7 @@ class ResourceManager(HasTraits):
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
 
-        if not operator.isSequenceType(path):
+        if not isinstance(path, collections.Sequence):
             path = [path]
 
         resource_path = []
@@ -122,9 +128,10 @@ class ResourceManager(HasTraits):
                     for extension in extensions:
                         searchpath = '%s/%s%s' % (path, basename, extension)
                         try:
-                            data = resource_string(dirname.__name__, searchpath)
+                            data = resource_string(
+                                dirname.__name__, searchpath)
                             return ImageReference(self.resource_factory,
-                                data = data)
+                                                  data=data)
                         except IOError:
                             pass
                 else:
@@ -165,15 +172,13 @@ class ResourceManager(HasTraits):
             filepath = dirname
             zippath = ''
             while not is_zipfile(filepath) and \
-                  os.path.splitdrive(filepath)[1].startswith('\\') and \
-                  os.path.splitdrive(filepath)[1].startswith('/'):
+                    os.path.splitdrive(filepath)[1].startswith('\\') and \
+                    os.path.splitdrive(filepath)[1].startswith('/'):
                 filepath, tail = os.path.split(filepath)
                 if zippath != '':
                     zippath = tail + '/' + zippath
                 else:
                     zippath = tail
-
-
 
             # if we found a zipfile, then look inside it for the image!
             if is_zipfile(filepath):
@@ -200,7 +205,7 @@ class ResourceManager(HasTraits):
                             image_data = zip_file.read(path)
                             reference = ImageReference(
                                 self.resource_factory, data=image_data
-                                )
+                            )
 
                             # if there was no exception then return the result
                             return reference

@@ -59,7 +59,7 @@ class ISplashScreen(IWindow):
 
     #: The x, y location where the text will be drawn.
     # FIXME v3: Remove this.
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
 
 class MSplashScreen(object):
