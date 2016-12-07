@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
@@ -51,7 +52,7 @@ class MainWindow(MultiToolbarWindow):
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
                 Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                name='&File',
             )
         )
 
@@ -62,17 +63,17 @@ class MainWindow(MultiToolbarWindow):
 
         self.add_tool_bar(
             ToolBarManager(Action(name='Bar'), orientation='horizontal'),
-            location = 'bottom'
+            location='bottom'
         )
 
         self.add_tool_bar(
             ToolBarManager(Action(name='Baz'), orientation='vertical'),
-            location = 'left'
+            location='left'
         )
 
         self.add_tool_bar(
             ToolBarManager(Action(name='Buz'), orientation='vertical'),
-            location = 'right'
+            location='right'
         )
 
         return

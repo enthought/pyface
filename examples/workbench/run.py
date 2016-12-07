@@ -38,7 +38,8 @@ def main(argv):
     workbench = ExampleWorkbench(state_location=gui.state_location)
 
     # Create some workbench windows.
-    x = 300; y = 300
+    x = 300
+    y = 300
     for i in range(2):
         window = workbench.create_window(position=(x, y), size=(800, 600))
         window.open()
@@ -51,7 +52,8 @@ def main(argv):
             window.edit(wilma)
 
         # Cascade the windows.
-        x += 100; y += 100
+        x += 100
+        y += 100
 
     # Start the GUI event loop.
     gui.start_event_loop()
@@ -60,6 +62,7 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    import sys; main(sys.argv)
+    import sys
+    main(sys.argv)
 
 #### EOF ######################################################################

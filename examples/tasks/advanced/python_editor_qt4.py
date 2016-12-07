@@ -3,7 +3,8 @@
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# However, when used with the GPL version of PyQt the additional terms
+# described in the PyQt GPL exception also apply
 
 #
 # Author: Riverbank Computing Limited
@@ -25,6 +26,7 @@ from pyface.tasks.api import Editor
 # Local imports.
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
+
 
 @provides(IPythonEditor)
 class PythonEditor(Editor):
@@ -165,12 +167,12 @@ class PythonEditorEventFilter(QtCore.QObject):
         """ Reimplemented to trap key presses.
         """
         if self.__editor.control and obj == self.__editor.control and \
-               event.type() == QtCore.QEvent.FocusOut:
+                event.type() == QtCore.QEvent.FocusOut:
             # Hack for Traits UI compatibility.
             self.__editor.control.emit(QtCore.SIGNAL('lostFocus'))
 
         elif self.__editor.control and obj == self.__editor.control.code and \
-               event.type() == QtCore.QEvent.KeyPress:
+                event.type() == QtCore.QEvent.KeyPress:
             # Pyface doesn't seem to be Unicode aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = event.text()
@@ -181,13 +183,13 @@ class PythonEditorEventFilter(QtCore.QObject):
 
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = event)
+                alt_down=((mods & QtCore.Qt.AltModifier) ==
+                          QtCore.Qt.AltModifier),
+                control_down=((mods & QtCore.Qt.ControlModifier) ==
+                              QtCore.Qt.ControlModifier),
+                shift_down=((mods & QtCore.Qt.ShiftModifier) ==
+                            QtCore.Qt.ShiftModifier),
+                key_code=kcode,
+                event=event)
 
         return super(PythonEditorEventFilter, self).eventFilter(obj, event)

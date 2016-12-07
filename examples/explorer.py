@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
@@ -86,10 +87,10 @@ class MainWindow(SplitApplicationWindow):
         """ Creates the panel containing the selected preference page. """
 
         self._rhs = SplitPanel(
-            parent    = parent,
-            lhs       = self._create_file_table,
-            rhs       = self._create_python_shell,
-            direction = 'horizontal'
+            parent=parent,
+            lhs=self._create_file_table,
+            rhs=self._create_python_shell,
+            direction='horizontal'
         )
 
         return self._rhs.control
@@ -103,9 +104,9 @@ class MainWindow(SplitApplicationWindow):
 
         # Common actions.
         highest = Action(name='Highest', style='radio')
-        higher  = Action(name='Higher',  style='radio', checked=True)
-        lower   = Action(name='Lower',   style='radio')
-        lowest  = Action(name='Lowest',  style='radio')
+        higher = Action(name='Higher', style='radio', checked=True)
+        lower = Action(name='Lower', style='radio')
+        lowest = Action(name='Lowest', style='radio')
 
         self._actions = [highest, higher, lower, lowest]
 
@@ -121,7 +122,7 @@ class MainWindow(SplitApplicationWindow):
                 Separator(),
                 Action(name='E&xit', on_perform=self.close),
 
-                name = '&File',
+                name='&File',
             )
         )
 
@@ -149,8 +150,8 @@ class MainWindow(SplitApplicationWindow):
 
         self._tree_viewer = tree_viewer = FileTreeViewer(
             parent,
-            input   = os.path.abspath(os.curdir),
-            filters = [AllowOnlyFolders()]
+            input=os.path.abspath(os.curdir),
+            filters=[AllowOnlyFolders()]
         )
 
         tree_viewer.on_trait_change(self._on_selection_changed, 'selection')
@@ -162,8 +163,8 @@ class MainWindow(SplitApplicationWindow):
 
         self._table_viewer = table_viewer = FileTableViewer(
             parent,
-            sorter             = FileSorter(),
-            odd_row_background = "white"
+            sorter=FileSorter(),
+            odd_row_background="white"
         )
 
         return table_viewer.control

@@ -28,7 +28,7 @@ class MainWindow(ApplicationWindow):
                 Action(name='Start Timer', on_perform=self._start_timer),
                 Action(name='Stop Timer', on_perform=self._stop_timer),
                 Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                name='&File',
             )
         )
 
@@ -48,7 +48,6 @@ class MainWindow(ApplicationWindow):
 
         if self.my_timer is not None:
             self.my_timer.Stop()
-
 
     def _timer_task(self):
         """The method run periodically by the timer."""

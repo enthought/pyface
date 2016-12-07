@@ -13,15 +13,13 @@
 #------------------------------------------------------------------------------
 
 
-
-
-
 import wx
 
 from pyface.api import ApplicationWindow, GUI, ImageResource
 from pyface.action.api import Action, MenuManager, MenuBarManager
 
 from pyface.action.api import ToolPaletteManager
+
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
@@ -40,25 +38,26 @@ class MainWindow(ApplicationWindow):
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
                 Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                name='&File',
             )
         )
 
         return
-
 
     def _create_contents(self, parent):
         """ Creates the window contents. """
 
         actions = []
         for i in range(25):
-            actions.append(Action(name='Foo', style='radio', image=ImageResource('document')))
+            actions.append(
+                Action(
+                    name='Foo',
+                    style='radio',
+                    image=ImageResource('document')))
 
-        tool_palette = ToolPaletteManager( *actions )
+        tool_palette = ToolPaletteManager(*actions)
 
         return tool_palette.create_tool_palette(parent).control
-
-
 
 
 # Application entry point.

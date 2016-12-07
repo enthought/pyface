@@ -58,7 +58,7 @@ class Employee(Person):
     def _phone_default(self):
         return (555, 555, 5555)
 
-    # This method will be called automatically by traits when the 
+    # This method will be called automatically by traits when the
     # employee's phone number changes
     def _phone_changed(self, val):
         print 'received new phone number for %s: %s' % (self.first_name, val)
@@ -66,17 +66,16 @@ class Employee(Person):
 
 if __name__ == '__main__':
     # Create an employee with a boss
-    boss_john = Employer(first_name='John', last_name='Paw', 
+    boss_john = Employer(first_name='John', last_name='Paw',
                          company_name="Packrat's Cats")
-    employee_mary = Employee(first_name='Mary', last_name='Sue', 
+    employee_mary = Employee(first_name='Mary', last_name='Sue',
                              boss=boss_john)
 
     # Import our Enaml EmployeeView
     import enaml
     with enaml.imports():
         from employee_view import EmployeeView
-    
+
     # Create a view and show it.
     view = EmployeeView(employee=employee_mary)
     #view.show()
-

@@ -16,7 +16,7 @@
 
 # Enthought library imports.
 from pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
-        PythonEditor
+    PythonEditor
 from pyface.action.api import Action, Group, MenuManager, MenuBarManager
 
 
@@ -90,7 +90,10 @@ class MainWindow(ApplicationWindow):
             except IOError as e:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
-                dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
+                dlg = FileDialog(
+                    parent=self.control,
+                    action='save as',
+                    wildcard="*.py")
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
 

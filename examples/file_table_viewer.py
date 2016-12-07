@@ -26,7 +26,6 @@ from pyface.viewer.api import TableLabelProvider, TableViewer
 from traits.api import Instance, Str
 
 
-
 class FileTableContentProvider(TableContentProvider):
     """ A table content provider for local file systems. """
 
@@ -131,6 +130,7 @@ class FileTableColumnProvider(TableColumnProvider):
             alignment = 'left'
 
         return alignment
+
 
 class FileTableViewer(TableViewer):
     """ A table viewer for local file systems. """

@@ -15,7 +15,8 @@
 
 
 # Standard library imports.
-import os, sys
+import os
+import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r'..\..\..'))
@@ -43,6 +44,7 @@ HTML = """
 
 PART = """<wxp module="wx" class="Panel"><param name="id" value="%s"><param name="size" value="(50, 50)"></wxp>"""
 
+
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
@@ -60,7 +62,7 @@ class MainWindow(ApplicationWindow):
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
                 Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                name='&File',
             )
         )
 
@@ -89,7 +91,7 @@ class MainWindow(ApplicationWindow):
         # Create the HTML.
         parts = []
         for i in range(N):
-            parts.append(PART % str(wxid+i))
+            parts.append(PART % str(wxid + i))
 
         html = HTML % "".join(parts)
 
@@ -99,7 +101,7 @@ class MainWindow(ApplicationWindow):
 
         # Initialize all embedded wx controls.
         for i in range(N):
-            self._initialize_window(html_window, wxid+i)
+            self._initialize_window(html_window, wxid + i)
 
         sizer.Add(html_window, 1, wx.EXPAND)
 

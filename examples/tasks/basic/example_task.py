@@ -30,12 +30,12 @@ class ExampleTask(Task):
                         SMenu(DockPaneToggleGroup(),
                               id='View', name='&View'))
 
-    tool_bars = [ SToolBar(TaskAction(method='open',
-                                      tooltip='Open a file',
-                                      image=ImageResource('document_open')),
-                           TaskAction(method='save',
-                                      tooltip='Save the current file',
-                                      image=ImageResource('document_save'))) ]
+    tool_bars = [SToolBar(TaskAction(method='open',
+                                     tooltip='Open a file',
+                                     image=ImageResource('document_open')),
+                          TaskAction(method='save',
+                                     tooltip='Save the current file',
+                                     image=ImageResource('document_save')))]
 
     ###########################################################################
     # 'Task' interface.
@@ -62,7 +62,7 @@ class ExampleTask(Task):
         browser = PythonScriptBrowserPane()
         handler = lambda: self._open_file(browser.selected_file)
         browser.on_trait_change(handler, 'activated')
-        return [ browser ]
+        return [browser]
 
     ###########################################################################
     # 'ExampleTask' interface.
