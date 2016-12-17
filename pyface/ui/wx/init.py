@@ -26,5 +26,7 @@ _app = wx.GetApp()
 if _app is None:
     _app = wx.App()
 
-
-#### EOF ######################################################################
+# stop logging to a modal window by default
+# (apps can override by setting a different active target)
+_log = wx.LogStderr()
+wx.Log.SetActiveTarget(_log)
