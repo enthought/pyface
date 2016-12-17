@@ -116,10 +116,6 @@ class TestDialog(unittest.TestCase):
     def test_update_negative(self):
         self.dialog.min = 0
         self.dialog.max = -10
-        self.dialog.open()
-        for i in range(11):
-            result = self.dialog.update(1)
-            self.gui.process_events()
-            self.assertEqual(result, (True, False))
-        self.dialog.close()
+        with self.assertRaises(AttributeError):
+            self.dialog.open()
         self.assertIsNone(self.dialog.control)
