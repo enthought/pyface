@@ -136,6 +136,7 @@ if __name__ == "__main__":
             'action/images/*',
             'dock/images/*',
             'tree/images/*',
+            'tests/images/*',
             'ui/qt4/images/*',
             'ui/wx/images/*',
             'ui/wx/grid/images/*',
