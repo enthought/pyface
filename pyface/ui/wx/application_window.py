@@ -97,7 +97,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
-                tool_bar = tool_bar_manager.create_tool_bar(parent)
+                tool_bar = tool_bar_manager.create_tool_bar(parent, aui=True)
                 self._add_toolbar_to_aui_manager(
                     tool_bar
                 )
@@ -133,7 +133,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         self._aui_manager = PyfaceAuiManager()
         self._aui_manager.SetManagedWindow(self.control)
-        
+
         # Keep a reference to the AUI Manager in the control because Panes
         # will need to access it in order to lay themselves out
         self.control._aui_manager = self._aui_manager
@@ -177,12 +177,12 @@ class ApplicationWindow(MApplicationWindow, Window):
     def _add_toolbar_to_aui_manager(self, tool_bar):
         """ Add a toolbar to the AUI manager. """
 
-        info = self._get_tool_par_pane_info(tool_bar)
+        info = self._get_tool_bar_pane_info(tool_bar)
         self._aui_manager.AddPane(tool_bar, info)
 
         return
-    
-    def _get_tool_par_pane_info(self, tool_bar):
+
+    def _get_tool_bar_pane_info(self, tool_bar):
         info = aui.AuiPaneInfo()
         info.Caption(tool_bar.tool_bar_manager.name)
         info.LeftDockable(False)
@@ -225,7 +225,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             # hidden toolbars and leave gaps in the toolbar dock
             pane.window.Show(False)
             self._aui_manager.DetachPane(pane.window)
-            info = self._get_tool_par_pane_info(pane.window)
+            info = self._get_tool_bar_pane_info(pane.window)
             info.Hide()
             self._aui_manager.AddPane(pane.window, info)
 
