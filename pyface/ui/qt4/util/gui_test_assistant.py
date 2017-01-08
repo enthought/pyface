@@ -196,9 +196,12 @@ class GuiTestAssistant(UnittestTools):
             if recorded_changes == traits:
                 condition.set()
 
-        handlers = {}
-        for trait in traits:
-            handlers[trait] = lambda: set_event(trait)
+        def make_handler(trait):
+            def handler():
+                set_event(trait)
+            return handler
+
+        handlers = {trait: make_handler(trait) for trait in traits}
 
         for trait, handler in handlers.iteritems():
             traits_object.on_trait_change(handler, trait)
