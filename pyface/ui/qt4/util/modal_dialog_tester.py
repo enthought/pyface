@@ -1,5 +1,11 @@
-# (C) Copyright 2014 Enthought, Inc., Austin, TX
+# (C) Copyright 2014-2017 Enthought, Inc., Austin, TX
 # All right reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
 """ A class to facilitate testing components that use TraitsUI or Qt Dialogs.
 
 """
@@ -12,7 +18,7 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
-from .gui_test_assistant import find_qt_widget
+from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
