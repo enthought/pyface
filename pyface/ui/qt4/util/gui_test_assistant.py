@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2015 by Enthought, Inc., Austin, TX
+# Copyright (c) 2013-2017 by Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -12,8 +12,8 @@ import threading
 
 import mock
 
+from pyface.gui import GUI
 from pyface.qt.QtGui import QApplication
-from pyface.ui.qt4.gui import GUI
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.unittest_tools import _TraitsChangeCollector as \
     TraitsChangeCollector
@@ -51,8 +51,13 @@ class GuiTestAssistant(UnittestTools):
     def tearDown(self):
         with self.event_loop_with_timeout(repeat=5):
             self.gui.invoke_later(self.qt_app.closeAllWindows)
-        self.traitsui_raise_patch.stop()
+        self.qt_app.flush()
+        self.qt_app.quit()
         self.pyface_raise_patch.stop()
+        self.traitsui_raise_patch.stop()
+
+        del self.pyface_raise_patch
+        del self.traitsui_raise_patch
         del self.event_loop_helper
         del self.gui
         del self.qt_app
