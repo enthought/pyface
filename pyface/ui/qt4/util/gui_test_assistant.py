@@ -187,6 +187,10 @@ class GuiTestAssistant(UnittestTools):
         traits = set(traits)
         recorded_changes = set()
 
+        # Correctly handle the corner case where there are no traits.
+        if not traits:
+            condition.set()
+
         def set_event(trait):
             recorded_changes.add(trait)
             if recorded_changes == traits:
