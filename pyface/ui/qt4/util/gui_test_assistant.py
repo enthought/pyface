@@ -135,7 +135,7 @@ class GuiTestAssistant(UnittestTools):
         obj : HasTraits
             The HasTraits instance whose trait will change.
         trait : str
-            The extended trait name of trait changes to listen too.
+            The extended trait name of trait changes to listen to.
         condition : callable
             A callable to determine if the stop criteria have been met. This
             should accept no arguments.
