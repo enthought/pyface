@@ -242,7 +242,6 @@ class ModalDialogTester(object):
             self._event_loop_error.append(
                 (sys.exc_info()[0], traceback.format_exc())
             )
-            raise
 
     def assert_no_errors_collected(self):
         """ Assert that the tester has not collected any errors.
