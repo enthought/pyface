@@ -12,8 +12,8 @@ import threading
 
 import mock
 
-from pyface.gui import GUI
 from pyface.qt.QtGui import QApplication
+from pyface.ui.qt4.gui import GUI
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.unittest_tools import _TraitsChangeCollector as \
     TraitsChangeCollector
