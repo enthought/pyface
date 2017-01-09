@@ -19,6 +19,8 @@ import inspect
 # Major package imports.
 import wx
 
+string_type = (str, unicode)
+
 
 class Clipboard:
     """ The clipboard is used when dragging and dropping Python objects. """
@@ -31,6 +33,38 @@ clipboard = Clipboard()
 clipboard.drop_source = None
 clipboard.source      = None
 clipboard.data        = None
+
+
+class FileDropSource(wx.DropSource):
+    """ Represents a draggable file.
+    """
+
+    def __init__(self, source, files):
+        """ Initializes the object.
+        """
+        self.handler = None
+        self.allow_move = True
+
+        # Put the data to be dragged on the clipboard:
+        clipboard.data = files
+        clipboard.source = source
+        clipboard.drop_source = self
+
+        data_object = wx.FileDataObject()
+        if isinstance(files, string_type):
+            files = [files]
+
+        for file in files:
+            data_object.AddFile(file)
+
+        # Create the drop source and begin the drag and drop operation:
+        super(FileDropSource, self).__init__(source)
+        self.SetData(data_object)
+        self.result = self.DoDragDrop(True)
+
+    def on_dropped(self, drag_result):
+        """ Called when the data has been dropped. """
+        return
 
 
 class FileDropTarget(wx.FileDropTarget):
