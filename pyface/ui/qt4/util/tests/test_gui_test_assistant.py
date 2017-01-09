@@ -31,8 +31,6 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
                 obj.eggs = True
 
     def test_event_loop_until_traits_change_with_multiple_traits_success(self):
-        # Regression test for enthought/canopy_data#381.
-
         # event_loop_until_traits_change calls self.fail on timeout.
         obj = ExampleObject()
         with self.event_loop_until_traits_change(obj, 'spam', 'eggs'):
