@@ -34,6 +34,7 @@ from .progress_dialog import ProgressDialog
 from .python_editor import PythonEditor
 from .python_shell import PythonShell
 from .sorter import Sorter
+from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
 from .split_application_window import SplitApplicationWindow
 from .split_dialog import SplitDialog
@@ -58,7 +59,6 @@ if ETSConfig.toolkit == 'wx':
     from .mdi_application_window import MDIApplicationWindow
     from .mdi_window_menu import MDIWindowMenu
     from .multi_toolbar_window import MultiToolbarWindow
-    from .single_choice_dialog import SingleChoiceDialog
 
     # Fix for broken Pycrust introspect module.
     from .util import fix_introspect_bug

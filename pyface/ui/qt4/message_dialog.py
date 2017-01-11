@@ -65,6 +65,11 @@ class MessageDialog(MMessageDialog, Dialog):
                 self.title, self.message, QtGui.QMessageBox.Ok, parent)
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
-        return message_box
 
-#### EOF ######################################################################
+        if self.size != (-1, -1):
+            message_box.resize(*self.size)
+
+        if self.position != (-1, -1):
+            message_box.move(*self.position)
+
+        return message_box

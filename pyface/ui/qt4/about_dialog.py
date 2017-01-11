@@ -106,7 +106,7 @@ class AboutDialog(MAboutDialog, Dialog):
         else:
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
-        buttons.connect(buttons, QtCore.SIGNAL('accepted()'), parent, QtCore.SLOT('accept()'))
+        buttons.accepted.connect(parent.accept)
 
         lay = QtGui.QVBoxLayout()
         lay.addWidget(label)

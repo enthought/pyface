@@ -49,9 +49,7 @@ class SplitTabWidget(QtGui.QSplitter):
 
         self.clear()
 
-        QtCore.QObject.connect(QtGui.QApplication.instance(),
-                QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
-                self._focus_changed)
+        QtGui.QApplication.instance().focusChanged.connect(self._focus_changed)
 
     def clear(self):
         """ Restore the widget to its pristine state. """
@@ -301,8 +299,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 return
 
         if self._repeat_focus_changes:
-            self.emit(QtCore.SIGNAL('focusChanged(QWidget *,QWidget *)'),
-                      old, new)
+            self.focusChanged.emit(old, new)
 
         if new is None:
             return
@@ -324,7 +321,7 @@ class SplitTabWidget(QtGui.QSplitter):
             else:
                 nw = ntw.widget(ntidx)
 
-            self.emit(QtCore.SIGNAL('hasFocus'), nw)
+            self.hasFocus.emit(nw)
 
     def _tab_widget_of(self, target):
         """ Return the tab widget and index of the widget that contains the
@@ -874,8 +871,8 @@ class _DragableTabBar(QtGui.QTabBar):
         # LineEdit to change tab bar title
         te = _IndependentLineEdit("", self)
         te.hide()
-        te.connect(te, QtCore.SIGNAL('editingFinished()'), te, QtCore.SLOT('hide()'))
-        self.connect(te, QtCore.SIGNAL('returnPressed()'), self._setCurrentTabText)
+        te.editingFinished.connect(te.hide)
+        te.returnPressed.connect(self._setCurrentTabText)
         self._title_edit = te
 
     def resizeEvent(self, e):
@@ -979,7 +976,7 @@ class _DragableTabBar(QtGui.QTabBar):
         idx = self.currentIndex()
         text = self._title_edit.text()
         self.setTabText(idx, u'\u25b6'+text)
-        self._root.emit(QtCore.SIGNAL('tabTextChanged(QWidget *, QString)'), self.parent().widget(idx), text)
+        self._root.tabTextChanged.emit(self.parent().widget(idx), text)
 
     def _resize_title_edit_to_current_tab(self):
         idx = self.currentIndex()
