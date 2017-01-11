@@ -137,6 +137,6 @@ class _WizardPage(QtGui.QWizardPage):
     def _on_complete_changed(self):
         """ The trait handler for when the page's completion state changes. """
 
-        self.emit(QtCore.SIGNAL('completeChanged()'))
+        self.completeChanged.emit()
 
 #### EOF ######################################################################
