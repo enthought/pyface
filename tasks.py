@@ -112,16 +112,18 @@ def install(ctx, runtime='3.5', toolkit='null', environment=None):
 
     commands = [
         # create environment with dependencies
-        "edm install -y -e '{environment}' --version '{runtime}' {packages}",
+        'edm install -y -e "{environment}" --version "{runtime}" {packages}',
         # install any source dependencies from github using pip
-        "edm run -e '{environment}' -- pip install -r ci-src-requirements.txt --no-dependencies",
+        'edm run -e "{environment}" -- pip install -r ci-src-requirements.txt --no-dependencies',
         # install the project
-        "edm run -e '{environment}' -- python setup.py install",
+        'edm run -e "{environment}" -- python setup.py install',
     ]
 
     print("Creating environment '{environment}'".format(**parameters))
     for command in commands:
-        ctx.run(command.format(**parameters))
+        full_command = command.format(**parameters)
+        print("Executing '{}'".format(full_command))
+        ctx.run(full_command)
 
     print('Done install')
 
@@ -142,7 +144,7 @@ def test(ctx, runtime='3.5', toolkit='null', environment=None):
 
     commands = [
         # run the main test suite
-        "edm run -e '{environment}' -- coverage run -m nose.core -v pyface --exclude='{exclude}'",
+        'edm run -e "{environment}" -- coverage run -m nose.core -v pyface --exclude="{exclude}"',
     ]
 
     # run tests & coverage
@@ -154,7 +156,9 @@ def test(ctx, runtime='3.5', toolkit='null', environment=None):
     # file doesn't get populated correctly.
     with do_in_tempdir(files=['.coveragerc'], capture_files=['.coverage']):
         for command in commands:
-            ctx.run(command.format(**parameters), env=environ)
+            full_command = command.format(**parameters)
+            print("Executing '{}'".format(full_command))
+            ctx.run(full_command, env=environ)
 
     print('Done test')
 
@@ -164,13 +168,15 @@ def cleanup(ctx, runtime='3.5', toolkit='null', environment=None):
     parameters = _get_parameters(runtime, toolkit, environment)
 
     commands = [
-        "edm run -e '{environment}' -- python setup.py clean",
-        "edm environments remove '{environment}' --purge -y",
+        'edm run -e "{environment}" -- python setup.py clean',
+        'edm environments remove "{environment}" --purge -y',
     ]
 
     print("Cleaning up environment '{environment}'".format(**parameters))
     for command in commands:
-        ctx.run(command.format(**parameters))
+        full_command = command.format(**parameters)
+        print("Executing '{}'".format(full_command))
+        ctx.run(full_command)
 
     print('Done cleanup')
 

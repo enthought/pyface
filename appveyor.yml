@@ -1,18 +1,20 @@
 build: false
 shallow_clone: true
+platform: x64
 
 environment:
 
   global:
     distutils_use_sdk: 1
-    ets_toolkit: "qt4"
 
   matrix:
 
-    - python: "C:/Python27-x64"
+    - python: "2.7"
+      toolkit: "pyside"
       sdkver: "v7.0"
 
-    - python: "C:/Python34-x64"
+    - python: "3.5"
+      toolkit: "pyqt"
       sdkver: "v7.1"
 
 cache:
@@ -21,13 +23,12 @@ cache:
 init:
   - ps: $Env:sdkbin = "C:\Program Files\Microsoft SDKs\Windows\" + $Env:sdkver + "\Bin"
   - ps: $Env:sdkverpath = "C:/Program Files/Microsoft SDKs/Windows/" + $Env:sdkver + "/Setup/WindowsSdkVer.exe"
-  - ps: $Env:path = $Env:python + ";" + $Env:python + "\scripts;" + $Env:sdkbin + ";" + $Env:path
+  - ps: $Env:path = "C:\Enthought\edm;" + $Env:sdkbin + ";" + $Env:path
 
 install:
-  - ps: if ((Test-Path "c:/temp") -eq 0) { mkdir c:/temp }
-  - ps: python -m pip install --upgrade --no-binary wheel pip
-  - ps: pip install --upgrade wheel
-  - ps: pip --version
-  - cmd /v:on /e:on /c ".\appveyor-install.cmd"
+  - cmd: appveyor-bootstrap-edm.cmd setup
+  - ps: edm info
+  - cmd /e:on /v:on /c ".\appveyor-install.cmd"
+
 test_script:
-  - cmd /v:on /e:on /c ".\appveyor-test.cmd"
+  - cmd /e:on /v:on /c ".\appveyor-test.cmd"
