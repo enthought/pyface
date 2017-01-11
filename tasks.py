@@ -121,7 +121,9 @@ def install(ctx, runtime='3.5', toolkit='null', environment=None):
 
     print("Creating environment '{environment}'".format(**parameters))
     for command in commands:
-        ctx.run(command.format(**parameters))
+        full_command = command.format(**parameters)
+        print("Executing '{}'".format(full_command))
+        ctx.run(full_command)
 
     print('Done install')
 
@@ -154,7 +156,9 @@ def test(ctx, runtime='3.5', toolkit='null', environment=None):
     # file doesn't get populated correctly.
     with do_in_tempdir(files=['.coveragerc'], capture_files=['.coverage']):
         for command in commands:
-            ctx.run(command.format(**parameters), env=environ)
+            full_command = command.format(**parameters)
+            print("Executing '{}'".format(full_command))
+            ctx.run(full_command, env=environ)
 
     print('Done test')
 
@@ -170,7 +174,9 @@ def cleanup(ctx, runtime='3.5', toolkit='null', environment=None):
 
     print("Cleaning up environment '{environment}'".format(**parameters))
     for command in commands:
-        ctx.run(command.format(**parameters))
+        full_command = command.format(**parameters)
+        print("Executing '{}'".format(full_command))
+        ctx.run(full_command)
 
     print('Done cleanup')
 
