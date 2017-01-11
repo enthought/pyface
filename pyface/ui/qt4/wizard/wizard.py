@@ -78,8 +78,7 @@ class Wizard(MWizard, Dialog):
 
         # Necessary for 'nonmodal'. See Dialog for more info.
         if self.style == 'nonmodal':
-            QtCore.QObject.connect(control, QtCore.SIGNAL('finished(int)'),
-                                   self._finished_fired)
+            control.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):
             size = QtCore.QSize(*self.size)
@@ -91,8 +90,7 @@ class Wizard(MWizard, Dialog):
 
         if self.help_id:
             control.setOption(QtGui.QWizard.HaveHelpButton)
-            QtCore.QObject.connect(control, QtCore.SIGNAL('helpRequested()'),
-                    self._help_requested)
+            control.helpRequested.connect(self._help_requested)
 
         # Add the initial pages.
         for page in self.pages:
@@ -168,8 +166,7 @@ class _Wizard(QtGui.QWizard):
         self._controller = pyface_wizard.controller
         self._ids = {}
 
-        QtCore.QObject.connect(self, QtCore.SIGNAL('currentIdChanged(int)'),
-                self._update_controller)
+        self.currentIdChanged.connect(self._update_controller)
 
     def addWizardPage(self, page):
         """ Add a page that provides IWizardPage. """
