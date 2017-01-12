@@ -2,25 +2,48 @@
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
+# Copyright (c) 2015-2017, Enthought, Inc.
+# All rights reserved.
+#
 # This software is provided without warranty under the terms of the BSD
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
+# Thanks for using Enthought open source!
+#
 #------------------------------------------------------------------------------
+"""
+This module provides the toolkit object for the current backend toolkit
 
-# Standard library imports.
-import os
-import sys
+When first imported this module will use the 'pyface.toolkit' entry points
+from pkg_resources to load a plugin according to the following strategy:
+
+- if ETSConfig.toolkit is set, try to load a plugin with a matching name.
+  If it succeeds, we are good, and if it fails then we error out.
+- if ETSConfig.toolkit is not set, we try to load the 'qt4' and 'wx' plugins
+  in that order, and on success we consider ourselves good.  The
+  ETSConfig.toolkit gets set appropriately.
+- after that, we try every 'pyface.toolkit' plugin we can find except 'null'
+  in an arbitrary order.  If one succeeds, we consider ourselves good, and
+  set the ETSConfig.toolkit appropriately.
+- after that, try the 'null' plugin.
+- finally, if all else fails, we try to directly import the null backend's
+  toolkit object.
+"""
+
 import logging
 
-# Enthought library imports.
+import pkg_resources
+
 from traits.etsconfig.api import ETSConfig
+
 
 logger = logging.getLogger(__name__)
 
-# This is set to the root part of the module path for the selected backend.
-_toolkit_backend = None
+
+# The toolkit object function.
+toolkit_object = None
 
 
 try:
@@ -49,105 +72,82 @@ except AttributeError:
 
 
 def _init_toolkit():
-    """ Initialise the current toolkit. """
+    """ Initialise a toolkit, if possible. """
 
     def import_toolkit(tk):
-        try:
-            # Try and import the toolkit's pyface backend init module.
-            be = 'pyface.ui.%s.' % tk
-            __import__(be + 'init')
-        except:
-            raise
-        return be
+        plugins = list(pkg_resources.iter_entry_points('pyface.toolkits', tk))
+        if len(plugins) == 0:
+            msg = "no Pyface plugin found for toolkit '{}'"
+            raise RuntimeError(msg.format(tk))
+        elif len(plugins) > 1:
+            msg = ("multiple Pyface plugins found for toolkit '{}': {}")
+            modules = ', '.join(plugin.module_name for plugin in plugins)
+            logger.warning(msg.format(tk, modules))
+
+        while plugins:
+            plugin = plugins.pop(0)
+            try:
+                tk_object = plugin.load()
+                return tk_object
+            except ImportError as exc:
+                logger.exception(exc)
+                msg = "Could not load plugin '{}' from '{}'"
+                logger.warning(msg.format(plugin.name, plugin.module_name))
+        else:
+            # no success
+            raise exc
 
     # Get the toolkit.
     if ETSConfig.toolkit:
-        be = import_toolkit(ETSConfig.toolkit)
-    else:
-        # Toolkits to check for if none is explicitly specified.
-        known_toolkits = ('qt4', 'wx', 'null')
+        return import_toolkit(ETSConfig.toolkit)
 
-        for tk in known_toolkits:
-            try:
-                with provisional_toolkit(tk):
-                    be = import_toolkit(tk)
-                break
-            except ImportError as exc:
-                msg = "Could not import Pyface backend '{0}'"
-                logger.info(msg.format(tk))
-                if logger.getEffectiveLevel() <= logging.INFO:
-                    logger.exception(exc)
-        else:
-            # Try to import the null toolkit but don't set the ETSConfig toolkit
-            try:
-                be = import_toolkit('null')
-                import warnings
-                msg = ("Unable to import the '{0}' backend for pyface; " +
-                       "using the 'null' backend instead.")
-                warnings.warn(msg.format(toolkit_name), RuntimeWarning)
-            except ImportError as exc:
+    # Try known toolkits first.
+    known_toolkits = ('qt4', 'wx')
+    for tk in known_toolkits:
+        try:
+            with provisional_toolkit(tk):
+                return import_toolkit(tk)
+        except RuntimeError as exc:
+            if logger.getEffectiveLevel() <= logging.INFO:
                 logger.exception(exc)
-                raise ImportError("Unable to import a pyface backend for any "
-                    "of the %s toolkits" % ", ".join(known_toolkits))
+            msg = "Could not import Pyface backend '{0}'"
+            logger.info(msg.format(tk))
+        except ImportError:
+            msg = "Could not import Pyface backend '{0}'"
+            logger.info(msg.format(tk))
 
-    # Save the imported toolkit module.
-    global _toolkit_backend
-    _toolkit_backend = be
+    # Try all non-null plugins we can find untill success.
+    for plugin in pkg_resources.iter_entry_points('pyface.toolkits'):
+        if plugin.name == 'null':
+            continue
+        try:
+            with provisional_toolkit(plugin.name):
+                return plugin.load()
+        except ImportError as exc:
+            logger.exception(exc)
+            msg = "Could not load plugin '{}' from '{}'"
+            logger.warning(msg.format(plugin.name, plugin.module_name))
 
-
-# Do this once then disappear.
-_init_toolkit()
-del _init_toolkit
-
-
-def toolkit_object(name):
-    """ Return the toolkit specific object with the given name.
-
-    Parameters
-    ----------
-    name : str
-        The name consists of the relative module path and the object name
-        separated by a colon.
-    """
-
-    mname, oname = name.split(':')
-    be_mname = _toolkit_backend + mname
-
-    class Unimplemented(object):
-        """ An unimplemented toolkit object
-
-        This is returned if an object isn't implemented by the selected
-        toolkit.  It raises an exception if it is ever instantiated.
-        """
-
-        def __init__(self, *args, **kwargs):
-            raise NotImplementedError("the %s pyface backend doesn't implement %s" % (ETSConfig.toolkit, oname))
-
-    be_obj = Unimplemented
+    # Try to import the null toolkit properly
+    try:
+        with provisional_toolkit('null'):
+            return import_toolkit('null')
+    except RuntimeError as exc:
+        if logger.getEffectiveLevel() <= logging.INFO:
+            logger.exception(exc)
+        logger.info("Could not import Pyface backend 'null'")
+    except ImportError:
+        logger.info("Could not import Pyface backend 'null'")
 
     try:
-        __import__(be_mname)
-
-        try:
-            be_obj = getattr(sys.modules[be_mname], oname)
-        except AttributeError:
-            pass
+        from pyface.ui.null.init import toolkit_object
+        return toolkit_object
     except ImportError as exc:
-        # is the error while trying to import be_mname or not?
-        if all(part not in exc.args[0] for part in mname.split('.')):
-                # something else went wrong - let the exception be raised
-                raise
+        logger.exception(exc)
+        raise ImportError("Unable to import a pyface backend for any toolkit")
 
-        # Ignore *ANY* errors unless a debug ENV variable is set.
-        if 'ETS_DEBUG' in os.environ:
+    return None
 
-            # Attempt to only skip errors in importing the backend modules.
-            # The idea here is that this only happens when the last entry in
-            # the traceback's stack frame mentions the toolkit in question.
-            import traceback
-            frames = traceback.extract_tb(sys.exc_traceback)
-            filename, lineno, function, text = frames[-1]
-            if not _toolkit_backend in filename:
-                raise
-
-    return be_obj
+# Do this once then disappear.
+toolkit_object = _init_toolkit()
+del _init_toolkit
