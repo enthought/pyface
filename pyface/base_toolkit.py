@@ -51,13 +51,10 @@ class Toolkit(object):
 
         mname, oname = name.split(':')
 
-        if not mname.startswith('.'):
-            mname = '.' + mname
-
         be_obj = Unimplemented(self._toolkit, name)
 
         try:
-            module = import_module(mname, self._package)
+            module = import_module('.' + mname, self._package)
 
             try:
                 be_obj = getattr(module, oname)
