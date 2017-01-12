@@ -30,7 +30,6 @@ from pyface.dock.api import DOCK_TOP
 from pyface.dock.api import DockControl, DockRegion, DockSection
 from pyface.dock.api import DockSizer
 from traits.api import Delegate
-from traitsui.dockable_view_element import DockableViewElement
 
 # Mixin class imports.
 from pyface.workbench.i_workbench_window_layout import \
@@ -253,7 +252,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             self.editor_area_id, visible_only=False
         )
         return dock_control.visible
-        
+
     #### Methods for saving and restoring the layout ##########################
 
     def get_view_memento(self):
@@ -651,6 +650,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # fixme: Should we roll the traits UI stuff into the default editor.
         if hasattr(editor, 'ui') and editor.ui is not None:
+            from traitsui.dockable_view_element import DockableViewElement
             # This makes the control draggable outside of the main window.
             #editor_dock_control.export = 'pyface.workbench.editor'
             editor_dock_control.dockable = DockableViewElement(
@@ -701,6 +701,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # fixme: Should we roll the traits UI stuff into the default editor.
         if hasattr(view, 'ui') and view.ui is not None:
+            from traitsui.dockable_view_element import DockableViewElement
             # This makes the control draggable outside of the main window.
             #view_dock_control.export = 'pyface.workbench.view'
 
