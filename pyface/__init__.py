@@ -20,6 +20,10 @@ try:
 except ImportError:
     __version__ = 'not-built'
 
-__requires__ = [
-    'pygments', 'traits',
-]
+
+__requires__ = ['traits']
+__extras_require__ = {
+    'wx': ['wxpython>=2.8.10', 'numpy'],
+    'pyqt': ['pyqt>=4.10', 'pygments'],
+    'pyside': ['pyside>=1.2', 'pygments'],
+}
