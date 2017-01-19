@@ -66,6 +66,8 @@ class Toolkit(HasTraits):
                     if not self._package in filename:
                         raise
 
+        toolkit = self.toolkit
+
         class Unimplemented(object):
             """ An unimplemented toolkit object
 
@@ -75,6 +77,6 @@ class Toolkit(HasTraits):
 
             def __init__(self, *args, **kwargs):
                 msg = "the %s pyface backend doesn't implement %s"
-                raise NotImplementedError(msg % (self.toolkit, name))
+                raise NotImplementedError(msg % (toolkit, name))
 
-        return Unimplemented(self.toolkit, name)
+        return Unimplemented
