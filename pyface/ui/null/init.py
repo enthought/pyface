@@ -12,4 +12,4 @@
 
 from pyface.base_toolkit import Toolkit
 
-toolkit_object = Toolkit('null', ['pyface.ui.null'])
+toolkit_object = Toolkit('null', 'pyface.ui.null')

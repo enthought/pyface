@@ -36,4 +36,4 @@ wx.Log.SetActiveTarget(_log)
 
 
 # create the toolkit object
-toolkit_object = Toolkit('wx', ['pyface.ui.wx'])
+toolkit_object = Toolkit('wx', 'pyface.ui.wx')

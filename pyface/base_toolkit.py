@@ -9,7 +9,7 @@ toolkit, but plugin authors are free to use whatever methods they like.
 import os
 import sys
 
-from traits.api import HasTraits, List, Str
+from traits.api import HasTraits, List, ReadOnly, Str
 
 
 class Toolkit(HasTraits):
@@ -21,7 +21,7 @@ class Toolkit(HasTraits):
     """
 
     #: The name of the toolkit
-    toolkit = ReadOnly(Str)
+    toolkit = ReadOnly
 
     #: The packages to look in for widget implementations.
     package = List(Str)
