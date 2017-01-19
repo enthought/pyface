@@ -35,9 +35,8 @@ class TestToolkit(unittest.TestCase):
 
         self.assertEqual(Widget, TestWidget)
 
-    def test_toolkit_object_override(self):
-        # test that the Toolkit class works as expected
-        # note that if this fails many other things will too
+    def test_toolkit_object_overriden(self):
+        # test that the Toolkit class search paths can be overridden
         from pyface.tests.test_new_toolkit.widget import Widget as TestWidget
 
         toolkit_object = pyface.toolkit.toolkit_object
@@ -47,5 +46,18 @@ class TestToolkit(unittest.TestCase):
         try:
             Widget = toolkit_object('widget:Widget')
             self.assertEqual(Widget, TestWidget)
+        finally:
+            toolkit_object.packages = old_packages
+
+    def test_toolkit_object_not_overriden(self):
+        # test that the Toolkit class works when object not overridden
+        toolkit_object = pyface.toolkit.toolkit_object
+        TestWindow = toolkit_object('window:Window')
+
+        old_packages = toolkit_object.packages
+        toolkit_object.packages = ['pyface.tests.test_new_toolkit'] + old_packages
+        try:
+            Window = toolkit_object('window:Window')
+            self.assertEqual(Window, TestWindow)
         finally:
             toolkit_object.packages = old_packages
