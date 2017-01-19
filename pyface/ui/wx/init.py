@@ -1,5 +1,4 @@
 #------------------------------------------------------------------------------
-#
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -10,7 +9,6 @@
 # license included in enthought/LICENSE.txt and may be redistributed only
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-#
 #------------------------------------------------------------------------------
 
 import wx
@@ -38,4 +36,4 @@ wx.Log.SetActiveTarget(_log)
 
 
 # create the toolkit object
-toolkit_object = Toolkit('wx', 'pyface.ui.wx')
+toolkit_object = Toolkit('wx', ['pyface.ui.wx'])

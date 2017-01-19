@@ -9,34 +9,26 @@ toolkit, but plugin authors are free to use whatever methods they like.
 import os
 import sys
 
-
-class Unimplemented(object):
-    """ An unimplemented toolkit object
-
-    This is returned if an object isn't implemented by the selected
-    toolkit.  It raises an exception if it is ever called, ie. used as a
-    toolkit object factory.
-    """
-
-    def __init__(self, toolkit, name):
-        self._toolkit = toolkit
-        self._name = name
-
-    def __call__(self, *args, **kwargs):
-        msg = "the {} pyface backend doesn't implement {}"
-        raise NotImplementedError(msg.format(self._toolkit, self._name))
+from traits.api import HasTraits, List, Str
 
 
-class Toolkit(object):
-    """ A basic toolkit implementation for use by specific toolkits
+class Toolkit(HasTraits):
+    """ A basic toolkit implementation for use by specific toolkits.
 
     This implementation uses pathname mangling to find modules and objects in
-    those modules
+    those modules.  If an object can't be found, the toolkit will return a
+    class that raises NotImplementedError when it is instantiated.
     """
 
-    def __init__(self, toolkit, package):
-        self._toolkit = toolkit
-        self._package = package
+    #: The name of the toolkit
+    toolkit = ReadOnly(Str)
+
+    #: The packages to look in for widget implementations.
+    package = List(Str)
+
+    def __init__(self, toolkit, *packages, **traits):
+        super(Toolkit, self).__init__(toolkit=toolkit, packages=list(packages),
+                                      **traits)
 
     def __call__(self, name):
         """ Return the toolkit specific object with the given name.
@@ -51,30 +43,38 @@ class Toolkit(object):
 
         mname, oname = name.split(':')
 
-        be_obj = Unimplemented(self._toolkit, name)
-
-        try:
-            module = import_module('.' + mname, self._package)
-
+        for package in self.packages:
             try:
-                be_obj = getattr(module, oname)
-            except AttributeError:
-                pass
-        except ImportError as exc:
-            # is the error while trying to import package mname or not?
-            if all(part not in exc.args[0] for part in mname.split('.')):
-                # something else went wrong - let the exception be raised
-                raise
-
-            # Ignore *ANY* errors unless a debug ENV variable is set.
-            if 'ETS_DEBUG' in os.environ:
-                # Attempt to only skip errors in importing the backend modules.
-                # The idea here is that this only happens when the last entry in
-                # the traceback's stack frame mentions the toolkit in question.
-                import traceback
-                frames = traceback.extract_tb(sys.exc_traceback)
-                filename, lineno, function, text = frames[-1]
-                if not self._package in filename:
+                module = import_module('.' + mname, package)
+                obj = getattr(module, oname, None)
+                if obj is not None:
+                    return obj
+            except ImportError as exc:
+                # is the error while trying to import package mname or not?
+                if all(part not in exc.args[0] for part in mname.split('.')):
+                    # something else went wrong - let the exception be raised
                     raise
 
-        return be_obj
+                # Ignore *ANY* errors unless a debug ENV variable is set.
+                if 'ETS_DEBUG' in os.environ:
+                    # Attempt to only skip errors in importing the backend modules.
+                    # The idea here is that this only happens when the last entry in
+                    # the traceback's stack frame mentions the toolkit in question.
+                    import traceback
+                    frames = traceback.extract_tb(sys.exc_traceback)
+                    filename, lineno, function, text = frames[-1]
+                    if not self._package in filename:
+                        raise
+
+        class Unimplemented(object):
+            """ An unimplemented toolkit object
+
+            This is returned if an object isn't implemented by the selected
+            toolkit.  It raises an exception if it is ever instantiated.
+            """
+
+            def __init__(self, *args, **kwargs):
+                msg = "the %s pyface backend doesn't implement %s"
+                raise NotImplementedError(msg % (self.toolkit, name))
+
+        return Unimplemented(self.toolkit, name)
