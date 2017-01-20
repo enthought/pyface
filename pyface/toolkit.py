@@ -42,10 +42,6 @@ from traits.etsconfig.api import ETSConfig
 logger = logging.getLogger(__name__)
 
 
-# The toolkit object function.
-toolkit_object = None
-
-
 try:
     provisional_toolkit = ETSConfig.provisional_toolkit
 except AttributeError:
@@ -80,9 +76,9 @@ def _init_toolkit():
             msg = "no Pyface plugin found for toolkit '{}'"
             raise RuntimeError(msg.format(tk))
         elif len(plugins) > 1:
-            msg = ("multiple Pyface plugins found for toolkit '{}': {}")
+            msg = ("multiple Pyface plugins found for toolkit %r: %s")
             modules = ', '.join(plugin.module_name for plugin in plugins)
-            logger.warning(msg.format(tk, modules))
+            logger.warning(msg, tk, modules)
 
         while plugins:
             plugin = plugins.pop(0)
@@ -91,8 +87,8 @@ def _init_toolkit():
                 return tk_object
             except ImportError as exc:
                 logger.exception(exc)
-                msg = "Could not load plugin '{}' from '{}'"
-                logger.warning(msg.format(plugin.name, plugin.module_name))
+                msg = "Could not load plugin %r from %r"
+                logger.warning(msg, plugin.name, plugin.module_name)
         else:
             # no success
             raise exc
@@ -108,13 +104,10 @@ def _init_toolkit():
             with provisional_toolkit(tk):
                 return import_toolkit(tk)
         except RuntimeError as exc:
-            if logger.getEffectiveLevel() <= logging.INFO:
-                logger.exception(exc)
-            msg = "Could not import Pyface backend '{0}'"
-            logger.info(msg.format(tk))
-        except ImportError:
-            msg = "Could not import Pyface backend '{0}'"
-            logger.info(msg.format(tk))
+            exc_info = logger.getEffectiveLevel() <= logging.INFO
+            level = 'ERROR' if exc_info else 'INFO'
+            msg = "Could not import Pyface backend %r"
+            logger.log(level, msg, tk, excinfo=exc_info)
 
     # Try all non-null plugins we can find untill success.
     for plugin in pkg_resources.iter_entry_points('pyface.toolkits'):
@@ -125,8 +118,8 @@ def _init_toolkit():
                 return plugin.load()
         except ImportError as exc:
             logger.exception(exc)
-            msg = "Could not load plugin '{}' from '{}'"
-            logger.warning(msg.format(plugin.name, plugin.module_name))
+            msg = "Could not load plugin %r from %r"
+            logger.warning(msg, plugin.name, plugin.module_name)
 
     # Try to import the null toolkit properly
     try:
@@ -146,8 +139,11 @@ def _init_toolkit():
         logger.exception(exc)
         raise ImportError("Unable to import a pyface backend for any toolkit")
 
+    # if everything else fails toolkit is None
     return None
 
-# Do this once then disappear.
+# The toolkit object function.
 toolkit_object = _init_toolkit()
+
+# Only allow initialization to happen once.
 del _init_toolkit

@@ -46,9 +46,6 @@ class Toolkit(HasTraits):
         for package in self.packages:
             try:
                 module = import_module('.' + mname, package)
-                obj = getattr(module, oname, None)
-                if obj is not None:
-                    return obj
             except ImportError as exc:
                 # is the error while trying to import package mname or not?
                 if all(part not in exc.args[0] for part in mname.split('.')):
@@ -65,6 +62,10 @@ class Toolkit(HasTraits):
                     filename, lineno, function, text = frames[-1]
                     if not self._package in filename:
                         raise
+            else:
+                obj = getattr(module, oname, None)
+                if obj is not None:
+                    return obj
 
         toolkit = self.toolkit
 
