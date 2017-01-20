@@ -98,8 +98,7 @@ def _init_toolkit():
         return import_toolkit(ETSConfig.toolkit)
 
     # Try known toolkits first.
-    known_toolkits = ('qt4', 'wx')
-    for tk in known_toolkits:
+    for tk in ('qt4', 'wx'):
         try:
             with provisional_toolkit(tk):
                 return import_toolkit(tk)
@@ -109,7 +108,7 @@ def _init_toolkit():
             msg = "Could not import Pyface backend %r"
             logger.log(level, msg, tk, excinfo=exc_info)
 
-    # Try all non-null plugins we can find untill success.
+    # Try all non-null plugins we can find until success.
     for plugin in pkg_resources.iter_entry_points('pyface.toolkits'):
         if plugin.name == 'null':
             continue
@@ -142,8 +141,6 @@ def _init_toolkit():
     # if everything else fails toolkit is None
     return None
 
+
 # The toolkit object function.
 toolkit_object = _init_toolkit()
-
-# Only allow initialization to happen once.
-del _init_toolkit
