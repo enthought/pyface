@@ -1,4 +1,5 @@
-# Copyright (c) 2017, Enthought, Inc.
+#------------------------------------------------------------------------------
+# Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -6,12 +7,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-
-import logging
-
-logger = logging.getLogger(__name__)
-logger.warning(
-    'DEPRECATED: pyface.util.font_helper, use pyface.wx.utils.font_helper instead. '
-    'Will be removed in Pyface 7.')
-
-from pyface.wx.utils.font_helper import *
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
