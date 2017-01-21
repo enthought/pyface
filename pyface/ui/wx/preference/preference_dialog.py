@@ -26,8 +26,8 @@ from pyface.ui.wx.heading_text import HeadingText
 from pyface.ui.wx.layered_panel import LayeredPanel
 from pyface.ui.wx.split_dialog import SplitDialog
 from pyface.ui.wx.viewer.tree_viewer import TreeViewer
-from pyface.util.font_helper import new_font_like
 from pyface.viewer.default_tree_content_provider import DefaultTreeContentProvider
+from pyface.wx.util.font_helper import new_font_like
 
 
 class PreferenceDialog(SplitDialog):

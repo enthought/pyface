@@ -14,4 +14,4 @@ logger.warning(
     'DEPRECATED: pyface.util.font_helper, use pyface.wx.utils.font_helper instead. '
     'Will be removed in Pyface 7.')
 
-from pyface.wx.utils.font_helper import *
+from pyface.wx.util.font_helper import *

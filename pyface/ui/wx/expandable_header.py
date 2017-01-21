@@ -23,9 +23,9 @@ import wx
 from traits.api import Instance, Event, Str, Bool
 
 # local imports
+from pyface.wx.util.font_helper import new_font_like
 from .image_resource import ImageResource
 from .widget import Widget
-from pyface.util.font_helper import new_font_like
 
 
 class ExpandableHeader(Widget):
