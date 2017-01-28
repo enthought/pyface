@@ -1,4 +1,5 @@
-# Copyright (c) 2017, Enthought, Inc.
+#------------------------------------------------------------------------------
+# Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -6,11 +7,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-
-# Note: The MultiToolbarWindow is currently wx-specific
-
-# Import the toolkit specific version.
-from __future__ import absolute_import
-
-from .toolkit import toolkit_object
-MultiToolbarWindow = toolkit_object('multi_toolbar_window:MultiToolbarWindow')
+#
+# Author: Enthought, Inc.
+# Description: <Enthought pyface package component>
+#------------------------------------------------------------------------------
