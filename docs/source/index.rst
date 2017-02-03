@@ -78,4 +78,5 @@ Contents
    :maxdepth: 2
 
    Overview <overview>
+   Toolkits <toolkits>
    API Documentation <api/pyface>

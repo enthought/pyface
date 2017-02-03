@@ -168,6 +168,13 @@ if __name__ == "__main__":
             'ui/wx/grid/images/*',
           ]},
           packages=find_packages(),
+          entry_points = {
+              'pyface.toolkits': [
+                  'qt4 = pyface.ui.qt4.init:toolkit_object',
+                  'wx = pyface.ui.wx.init:toolkit_object',
+                  'null = pyface.ui.null.init:toolkit_object',
+              ],
+          },
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
           use_2to3=True,
