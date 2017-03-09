@@ -89,7 +89,6 @@ dependencies = {
 extra_dependencies = {
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
-    'pyqt5': {'pyqt5'},
     'wx': {'wxpython'},
     'null': set()
 }
@@ -97,7 +96,7 @@ extra_dependencies = {
 environment_vars = {
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
-    'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
+    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null'},
 }
@@ -120,6 +119,9 @@ def install(ctx, runtime='3.5', toolkit='null', environment=None):
         # install the project
         "edm run -e '{environment}' -- python setup.py install",
     ]
+
+    if toolkit == 'pyqt5':
+        commands.append("edm run -e '{environment}' -- pip install pyqt5")
 
     print("Creating environment '{environment}'".format(**parameters))
     for command in commands:
