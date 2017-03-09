@@ -14,7 +14,7 @@
 #
 #------------------------------------------------------------------------------
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtWidgets
 
 from traits.api import Any, List, Str, provides
 
@@ -96,9 +96,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the window. """
-        dialog = QtGui.QInputDialog(parent)
+        dialog = QtWidgets.QInputDialog(parent)
 
-        dialog.setOption(QtGui.QInputDialog.UseListViewForComboBoxItems, True)
+        dialog.setOption(QtWidgets.QInputDialog.UseListViewForComboBoxItems, True)
         dialog.setWindowTitle(self.title)
         dialog.setLabelText(self.message)
 
