@@ -8,7 +8,7 @@
 #------------------------------------------------------------------------------
 
 # Major package imports.
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, Enum, Instance, Str, Tuple

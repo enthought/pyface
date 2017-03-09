@@ -15,7 +15,7 @@
 import os
 
 # Major package imports.
-from pyface.qt import QtGui
+from qtpy import QtGui
 
 # Enthought library imports.
 from traits.api import Any, HasTraits, List, Property, provides

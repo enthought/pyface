@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 """ Wizard example. """
 
-from __future__ import print_function
+
 
 # Standard library imports.
 import os

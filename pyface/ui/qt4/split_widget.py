@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 # Enthought library imports.
 from traits.api import Callable, Enum, Float, HasTraits, provides

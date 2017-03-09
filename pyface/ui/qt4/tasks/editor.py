@@ -3,7 +3,7 @@ from pyface.tasks.i_editor import IEditor, MEditor
 from traits.api import Bool, Property, provides
 
 # System library imports.
-from pyface.qt import QtWidgets
+from qtpy import QtWidgets
 
 
 @provides(IEditor)

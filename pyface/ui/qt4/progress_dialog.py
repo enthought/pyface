@@ -15,7 +15,7 @@
 
 import time
 
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 from traits.api import Bool, Instance, Int, Unicode, provides
 

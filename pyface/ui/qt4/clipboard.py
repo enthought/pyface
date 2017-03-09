@@ -17,7 +17,7 @@ from io import BytesIO
 from cPickle import dumps, load, loads
 
 # System library imports
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 # ETS imports
 from traits.api import provides

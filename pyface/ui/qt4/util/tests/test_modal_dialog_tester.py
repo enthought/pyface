@@ -13,7 +13,7 @@ from __future__ import absolute_import
 import unittest
 import cStringIO
 
-from pyface.qt import QtWidgets
+from qtpy import QtWidgets
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
 

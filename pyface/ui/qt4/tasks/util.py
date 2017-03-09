@@ -1,5 +1,5 @@
 # System library imports.
-from pyface.qt import QtCore
+from qtpy import QtCore
 
 ###############################################################################
 # Functions.

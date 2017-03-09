@@ -4,7 +4,7 @@ import warnings
 import io
 import sys
 
-from pyface.qt import QtCore
+from qtpy import QtCore
 
 
 #-------------------------------------------------------------------------------

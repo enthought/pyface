@@ -15,7 +15,8 @@
 
 import sys
 
-from pyface.qt import QtCore, QtWidgets, qt_api
+from qtpy import QtCore, QtWidgets
+from pyface.qt import qt_api
 from pyface.base_toolkit import Toolkit
 
 if qt_api == 'pyqt':

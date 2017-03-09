@@ -131,7 +131,7 @@ class ExampleTask(Task):
         dirty_editors = dict([(editor.name, editor)
                               for editor in self.editor_area.editors
                               if editor.dirty])
-        if not dirty_editors.keys():
+        if not list(dirty_editors.keys()):
             return True
         message = 'You have unsaved files. Would you like to save them?'
         dialog = ConfirmationDialog(parent=self.window.control,
@@ -141,7 +141,7 @@ class ExampleTask(Task):
         if result == CANCEL:
             return False
         elif result == YES:
-            for name, editor in dirty_editors.items():
+            for name, editor in list(dirty_editors.items()):
                 editor.save(editor.path)
         return True
 

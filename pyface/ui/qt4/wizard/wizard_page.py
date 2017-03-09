@@ -13,7 +13,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtGui, QtWidgets
+from qtpy import QtGui, QtWidgets
 
 # Enthought library imports.
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode

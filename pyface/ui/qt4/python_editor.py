@@ -15,7 +15,7 @@
 import sys
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from qtpy import QtCore, QtGui
 
 # Enthought library imports.
 from traits.api import Bool, Event, provides, Unicode

@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtWidgets
+from qtpy import QtWidgets
 
 # Enthought library imports.
 from traits.api import Enum, provides, Unicode

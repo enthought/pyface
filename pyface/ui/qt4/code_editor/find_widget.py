@@ -11,7 +11,7 @@
 
 import weakref
 
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 
 class FindWidget(QtWidgets.QWidget):

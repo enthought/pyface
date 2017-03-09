@@ -1,6 +1,6 @@
 """Example of using a splash screen (and the use of pyface Timer)."""
 
-from __future__ import print_function
+
 
 import time
 

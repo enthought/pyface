@@ -17,7 +17,7 @@ from textwrap import dedent
 from unicodedata import category
 
 # System library imports
-from pyface.qt import QtCore, QtGui, QtWidgets, QtPrintSupport
+from qtpy import QtCore, QtGui, QtWidgets, QtPrintSupport
 
 #-----------------------------------------------------------------------------
 # Functions

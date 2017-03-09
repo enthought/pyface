@@ -13,7 +13,7 @@ import unittest
 import mock
 
 # System library imports.
-from pyface.qt import QtCore, QtGui, QtWidgets
+from qtpy import QtCore, QtGui, QtWidgets
 from pyface.qt.QtTest import QTest
 
 # Enthought library imports.

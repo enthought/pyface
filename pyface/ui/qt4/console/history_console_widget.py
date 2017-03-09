@@ -1,5 +1,5 @@
 # System library imports
-from pyface.qt import QtGui
+from qtpy import QtGui
 
 # Local imports
 from .console_widget import ConsoleWidget

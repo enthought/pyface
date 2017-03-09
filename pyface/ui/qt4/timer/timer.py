@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore
+from qtpy import QtCore
 
 
 class Timer(QtCore.QTimer):

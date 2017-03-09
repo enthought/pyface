@@ -16,7 +16,7 @@
 from inspect import getargspec
 
 # Major package imports.
-from pyface.qt import QtWidgets
+from qtpy import QtWidgets
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits

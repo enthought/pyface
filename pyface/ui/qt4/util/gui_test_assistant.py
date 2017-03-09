@@ -12,7 +12,7 @@ import threading
 
 import mock
 
-from pyface.qt import QtWidgets
+from qtpy import QtWidgets
 from pyface.ui.qt4.gui import GUI
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.unittest_tools import _TraitsChangeCollector as \

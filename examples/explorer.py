@@ -42,7 +42,7 @@ class ExampleAction(Action):
     def perform(self):
         """ Performs the action. """
 
-        print 'Performing', self.name
+        print('Performing', self.name)
 
         return
 

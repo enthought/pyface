@@ -6,7 +6,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
     on_trait_change, Property, provides, Str
-from pyface.qt import QtCore, QtGui, QtWidgets
+from qtpy import QtCore, QtGui, QtWidgets
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData

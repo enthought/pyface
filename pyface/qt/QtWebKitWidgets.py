@@ -1,10 +1,13 @@
-from . import qt_api
+from qtpy import PYQT4, PYQT5, PYSIDE
 
-if qt_api == 'pyqt':
+if PYQT4:
     from PyQt4.QtWebKit import *
 
-elif qt_api == 'pyqt5':
+elif PYQT5:
     from PyQt5.QtWebKitWidgets import *
     
-else:
+elif PYSIDE:
     from PySide.QtWebKit import *
+
+else:
+    raise ImportError('Unknown qt api')

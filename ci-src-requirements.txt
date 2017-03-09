@@ -1,1 +1,2 @@
 git+http://github.com/enthought/traitsui.git@feature/qt5#egg=pyface
+qtpy

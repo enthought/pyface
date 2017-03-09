@@ -58,7 +58,7 @@ class MainWindow(ApplicationWindow):
 
         parent = self.control
 
-        print choose_one(parent, "Make a choice", ['one', 'two', 'three'])
+        print(choose_one(parent, "Make a choice", ['one', 'two', 'three']))
 
         information(parent, 'Going...')
         warning(parent, 'Going......')

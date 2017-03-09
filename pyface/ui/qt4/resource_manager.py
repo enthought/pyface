@@ -12,7 +12,7 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui, QtSvg
+from qtpy import QtCore, QtGui, QtSvg
 
 # Enthought library imports.
 from pyface.resource.api import ResourceFactory

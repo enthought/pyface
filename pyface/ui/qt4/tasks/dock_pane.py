@@ -6,7 +6,7 @@ from pyface.tasks.i_dock_pane import IDockPane, MDockPane
 from traits.api import Bool, on_trait_change, Property, provides, Tuple
 
 # System library imports.
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 # Local imports.
 from .task_pane import TaskPane

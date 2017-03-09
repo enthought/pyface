@@ -11,7 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-from __future__ import print_function
+
 
 # Standard library imports.
 import os, sys

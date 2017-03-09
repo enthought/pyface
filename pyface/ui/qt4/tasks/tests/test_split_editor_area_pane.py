@@ -6,7 +6,7 @@ import unittest
 
 from traits.api import HasTraits, Instance
 
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
     SplitEditorAreaPane
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \

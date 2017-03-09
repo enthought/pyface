@@ -14,7 +14,7 @@ if sys.version_info[0] > 2:
     unicode = str
 
 # Major library imports.
-from pyface.qt import QtCore, QtGui, QtWidgets, qt_api
+from qtpy import QtCore, QtGui, QtWidgets, PYQT4
 
 from pyface.image_resource import ImageResource
 
@@ -295,7 +295,7 @@ class SplitTabWidget(QtWidgets.QSplitter):
         # It is possible for the C++ layer of this object to be deleted between
         # the time when the focus change signal is emitted and time when the
         # slots are dispatched by the Qt event loop. This may be a bug in PyQt4.
-        if qt_api == 'pyqt':
+        if PYQT4:
             import sip
             if sip.isdeleted(self):
                 return

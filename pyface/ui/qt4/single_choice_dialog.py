@@ -14,7 +14,7 @@
 #
 #------------------------------------------------------------------------------
 
-from pyface.qt import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets
 
 from traits.api import Any, List, Str, provides
 

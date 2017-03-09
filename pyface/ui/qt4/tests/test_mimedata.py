@@ -9,7 +9,7 @@
 import unittest
 from cPickle import dumps
 
-from pyface.qt import QtCore
+from qtpy import QtCore
 from ..mimedata import PyMimeData, str2bytes
 
 

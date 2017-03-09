@@ -11,6 +11,8 @@
 
 import os
 
+from qtpy import API
+
 def prepare_pyqt4():
     # Set PySide compatible APIs.
     import sip
@@ -22,7 +24,9 @@ def prepare_pyqt4():
     sip.setapi('QUrl', 2)
     sip.setapi('QVariant', 2)
 
-qt_api = os.environ.get('QT_API')
+qt_api = API
+if qt_api == 'pyqt4':
+    qt_api = 'pyqt'
 
 if qt_api is None:
     try:

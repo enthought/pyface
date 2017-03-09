@@ -61,7 +61,7 @@ class Employee(Person):
     # This method will be called automatically by traits when the 
     # employee's phone number changes
     def _phone_changed(self, val):
-        print 'received new phone number for %s: %s' % (self.first_name, val)
+        print('received new phone number for %s: %s' % (self.first_name, val))
 
 
 if __name__ == '__main__':
