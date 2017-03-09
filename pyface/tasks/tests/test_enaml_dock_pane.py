@@ -24,6 +24,7 @@ class DummyDockPane(EnamlDockPane):
         return Label(text='test label')
 
 
+@unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlDockPane(GuiTestAssistant, unittest.TestCase):
 
     ###########################################################################

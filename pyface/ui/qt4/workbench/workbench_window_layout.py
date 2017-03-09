@@ -149,8 +149,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # needed.
         editor_area.focusChanged.connect(self._qt4_view_focus_changed)
 
-        self._qt4_editor_area.tabTextChanged.connect(self._qt4_editor_title_changed)
-
+        editor_area.tabTextChanged.connect(self._qt4_editor_title_changed)
         editor_area.new_window_request.connect(self._qt4_new_window_request)
         editor_area.tab_close_request.connect(self._qt4_tab_close_request)
         editor_area.tab_window_changed.connect(self._qt4_tab_window_changed)
@@ -498,7 +497,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             dw = QtWidgets.QDockWidget(view.name, self.window.control)
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
-            dw.toggleViewAction().toggled.connect(self._qt4_handle_dock_visibility)
+            dw.toggleViewAction().toggled.connect(
+                    self._qt4_handle_dock_visibility)
             dw.visibilityChanged.connect(self._qt4_handle_dock_visibility)
 
             # Save the dock window.

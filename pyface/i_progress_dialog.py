@@ -89,6 +89,18 @@ class MProgressDialog(object):
     progress_bar = Any
 
     ###########################################################################
+    # 'IWindow' interface.
+    ###########################################################################
+
+    def open(self):
+        """ Open the dialog """
+        if self.max < self.min:
+            msg = "Dialog min ({}) is greater than dialog max ({})."
+            raise AttributeError(msg.format(self.min, self.max))
+
+        super(MProgressDialog, self).open()
+
+    ###########################################################################
     # 'IProgressDialog' interface.
     ###########################################################################
 

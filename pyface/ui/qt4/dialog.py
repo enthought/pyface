@@ -142,6 +142,9 @@ class Dialog(MDialog, Window):
         if self.size != (-1, -1):
             dlg.resize(*self.size)
 
+        if self.position != (-1, -1):
+            dlg.move(*self.position)
+
         dlg.setWindowTitle(self.title)
 
         return dlg
@@ -155,5 +158,3 @@ class Dialog(MDialog, Window):
 
         self.return_code = _RESULT_MAP[result]
         self.close()
-
-#### EOF ######################################################################

@@ -3,6 +3,8 @@ import os
 from traits.testing.unittest_tools import unittest
 from traits.etsconfig.api import ETSConfig
 
+# Skip tests if Enaml is not installed or we're using the wx backend.
+SKIP_REASON = None
 if ETSConfig.toolkit not in ['', 'qt4']:
     raise unittest.SkipTest("TestEnamlTaskPane: Enaml does not support WX")
 
@@ -24,6 +26,7 @@ class DummyTaskPane(EnamlTaskPane):
         return Label(text='test label')
 
 
+@unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlTaskPane(GuiTestAssistant, unittest.TestCase):
 
     ###########################################################################

@@ -18,9 +18,6 @@ import wx
 from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
-# Enthought library imports
-from traitsui.api import UI, default_handler
-
 # Local imports:
 from combobox_focus_handler import ComboboxFocusHandler
 
@@ -64,6 +61,8 @@ class TraitGridCellAdapter(PyGridCellEditor):
 
     def Create(self, parent, id, evtHandler):
         """ Called to create the control, which must derive from wxControl. """
+        from traitsui.api import UI, default_handler
+
         # If the editor has already been created, ignore the request:
         if hasattr( self, '_control' ):
             return
@@ -269,4 +268,3 @@ class TraitGridCellAdapter(PyGridCellEditor):
             self._editor.dispose()
 
 #### EOF ######################################################################
-

@@ -26,6 +26,7 @@ class DummyStrEditor(EnamlEditor):
     def create_component(self):
         return Label(text=self.obj)
 
+@unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
     ###########################################################################

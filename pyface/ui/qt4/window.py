@@ -257,5 +257,3 @@ class _EventFilter(QtCore.QObject):
                 window.size_state = 'normal'
 
         return False
-
-#### EOF ######################################################################

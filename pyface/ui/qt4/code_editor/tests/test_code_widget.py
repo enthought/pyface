@@ -25,7 +25,7 @@ from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
 
 class TestCodeWidget(unittest.TestCase):
     @classmethod
-    def setupClass(cls):
+    def setUpClass(cls):
         cls.qapp = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])
 
     def tearDown(self):
