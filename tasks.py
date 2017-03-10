@@ -73,8 +73,8 @@ from invoke import task
 
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx', 'null'},
-    '3.5': {'pyqt', 'pyqt5', 'null'},
+    '2.7': {'pyside', 'pyqt', 'wx'},
+    '3.5': {'pyqt', 'pyqt5'},
 }
 
 dependencies = {

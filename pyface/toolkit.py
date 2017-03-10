@@ -80,18 +80,21 @@ def _init_toolkit():
             modules = ', '.join(plugin.module_name for plugin in plugins)
             logger.warning(msg, tk, modules)
 
+        exception = None
         while plugins:
             plugin = plugins.pop(0)
             try:
                 tk_object = plugin.load()
                 return tk_object
             except ImportError as exc:
+                exception = exc
                 logger.exception(exc)
                 msg = "Could not load plugin %r from %r"
                 logger.warning(msg, plugin.name, plugin.module_name)
         else:
             # no success
-            raise exc
+            if exception is not None:
+                raise exception
 
     # Get the toolkit.
     if ETSConfig.toolkit:
