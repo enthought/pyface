@@ -6,7 +6,7 @@ if qt_api == 'pyqt':
 
 elif qt_api == 'pyqt5':
     from PyQt5.QtGui import *
-    from PyQt5.QtWidget import *
+    from PyQt5.QtWidgets import *
     from PyQt5.QtPrintSupport import *
     from PyQt5.QtCore import (
         QAbstractProxyModel, QItemSelection, QItemSelectionModel,
