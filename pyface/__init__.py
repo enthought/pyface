@@ -23,7 +23,7 @@ except ImportError:
 
 __requires__ = ['traits']
 __extras_require__ = {
-    'wx': ['wxpython>=2.8.10', 'numpy', 'expat'],
+    'wx': ['wxpython>=2.8.10', 'numpy'],
     'pyqt': ['pyqt>=4.10', 'pygments'],
     'pyqt5': ['pyqt>=5', 'pygments'],
     'pyside': ['pyside>=1.2', 'pygments'],
