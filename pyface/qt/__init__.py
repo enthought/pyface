@@ -41,10 +41,6 @@ for api_name, module in QtAPIs:
 
 # does our environment give us a preferred API?
 qt_api = os.environ.get('QT_API')
-if qt_api not in {api_name for api_name, module in QtAPIs}:
-    msg = ("Invalid Qt API %r, valid values are: " +
-           "'pyside, 'pyside2, 'pyqt' or 'pyqt5'") % qt_api
-    raise RuntimeError(msg)
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
@@ -57,6 +53,13 @@ if qt_api is None:
             continue
         else:
             raise ImportError('Cannot import PySide2, PySide, PyQt5 or PyQt4')
+
+# otherwise check QT_API value is valid
+elif qt_api not in {api_name for api_name, module in QtAPIs}:
+    msg = ("Invalid Qt API %r, valid values are: " +
+           "'pyside, 'pyside2, 'pyqt' or 'pyqt5'") % qt_api
+    raise RuntimeError(msg)
+
 
 if qt_api == 'pyqt':
     # set the PyQt4 APIs
