@@ -95,6 +95,8 @@ def _init_toolkit():
             # no success
             if exception is not None:
                 raise exception
+            else:
+                raise RuntimeError("No toolkit loaded or exception raised.")
 
     # Get the toolkit.
     if ETSConfig.toolkit:
