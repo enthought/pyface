@@ -40,7 +40,7 @@ class TestAboutDialog(unittest.TestCase):
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
@@ -73,10 +73,10 @@ class TestAboutDialog(unittest.TestCase):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         # test that OK works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 

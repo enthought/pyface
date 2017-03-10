@@ -10,6 +10,7 @@
 
 
 # Enthought library imports.
+from pyface._py2to3 import str_types
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
 
@@ -19,7 +20,7 @@ from traitsui.api import View, Item, VGroup
 def not_empty_string(object, name, value):
     """a not-empty string"""
 
-    if isinstance(value, basestring) and (value.strip() != ''):
+    if isinstance(value, str_types) and (value.strip() != ''):
         return value
 
     raise TraitError

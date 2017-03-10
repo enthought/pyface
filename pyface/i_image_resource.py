@@ -12,6 +12,7 @@
 
 from collections import Sequence
 
+from pyface._py2to3 import str_types
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
 from traits.api import Interface, List, Unicode
@@ -134,7 +135,7 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        if isinstance(search_path, basestring):
+        if isinstance(search_path, str_types):
             _path = [search_path]
         elif isinstance(search_path, Sequence):
             _path = search_path

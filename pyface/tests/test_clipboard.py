@@ -24,20 +24,20 @@ class TestClipboard(unittest.TestCase):
     def test_set_text_data(self):
         self.clipboard.data = 'test'
         self.assertTrue(self.clipboard.has_data)
-        self.assertEquals(self.clipboard.data_type, 'str')
-        self.assertEquals(self.clipboard.data, 'test')
+        self.assertEqual(self.clipboard.data_type, 'str')
+        self.assertEqual(self.clipboard.data, 'test')
         self.assertTrue(self.clipboard.has_text_data)
-        self.assertEquals(self.clipboard.text_data, 'test')
+        self.assertEqual(self.clipboard.text_data, 'test')
         self.assertFalse(self.clipboard.has_file_data)
         self.assertFalse(self.clipboard.has_object_data)
 
     def test_set_text_data_unicode(self):
-        self.clipboard.data = u'test'
+        self.clipboard.data = 'test'
         self.assertTrue(self.clipboard.has_data)
-        self.assertEquals(self.clipboard.data_type, 'str')
-        self.assertEquals(self.clipboard.data, u'test')
+        self.assertEqual(self.clipboard.data_type, 'str')
+        self.assertEqual(self.clipboard.data, 'test')
         self.assertTrue(self.clipboard.has_text_data)
-        self.assertEquals(self.clipboard.text_data, u'test')
+        self.assertEqual(self.clipboard.text_data, 'test')
         self.assertFalse(self.clipboard.has_file_data)
         self.assertFalse(self.clipboard.has_object_data)
 
@@ -45,10 +45,10 @@ class TestClipboard(unittest.TestCase):
     def test_set_file_data(self):
         self.clipboard.data = ['file:///images']
         self.assertTrue(self.clipboard.has_data)
-        self.assertEquals(self.clipboard.data_type, 'file')
-        self.assertEquals(self.clipboard.data, ['/images'])
+        self.assertEqual(self.clipboard.data_type, 'file')
+        self.assertEqual(self.clipboard.data, ['/images'])
         self.assertTrue(self.clipboard.has_file_data)
-        self.assertEquals(self.clipboard.file_data, ['/images'])
+        self.assertEqual(self.clipboard.file_data, ['/images'])
         self.assertFalse(self.clipboard.has_text_data)
         self.assertFalse(self.clipboard.has_object_data)
 
@@ -56,10 +56,10 @@ class TestClipboard(unittest.TestCase):
         data = TestObject(foo='bar', baz=1)
         self.clipboard.data = data
         self.assertTrue(self.clipboard.has_data)
-        self.assertEquals(self.clipboard.data_type, TestObject)
-        self.assertEquals(self.clipboard.data, data)
+        self.assertEqual(self.clipboard.data_type, TestObject)
+        self.assertEqual(self.clipboard.data, data)
         self.assertTrue(self.clipboard.has_object_data)
-        self.assertEquals(self.clipboard.object_type, TestObject)
-        self.assertEquals(self.clipboard.object_data, data)
+        self.assertEqual(self.clipboard.object_type, TestObject)
+        self.assertEqual(self.clipboard.object_data, data)
         self.assertFalse(self.clipboard.has_text_data)
         self.assertFalse(self.clipboard.has_file_data)

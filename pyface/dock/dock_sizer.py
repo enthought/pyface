@@ -26,6 +26,8 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from __future__ import print_function
+
 import wx, sys
 
 from traits.api \
@@ -50,10 +52,10 @@ from pyface.wx.drag_and_drop \
 from pyface.timer.api \
     import do_later, do_after
 
-from idockable \
+from .idockable \
     import IDockable
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 # Define version dependent values:
@@ -1143,8 +1145,8 @@ class DockItem ( HasPrivateTraits ):
 
             if isinstance( object, IFeatureTool ):
                 if (object.feature_can_drop_on( self.object ) or
-                    object.feature_can_drop_on_dock_control( self )):
-                    from feature_tool import FeatureTool
+                        object.feature_can_drop_on_dock_control( self )):
+                    from .feature_tool import FeatureTool
 
                     self.drop_features = [
                         FeatureTool( dock_control = self ) ]
@@ -1826,7 +1828,7 @@ class DockControl ( DockItem ):
     def dump ( self, indent ):
         """ Prints the contents of the control.
         """
-        print ('%sControl( %08X, name = %s, id = %s,\n%s'
+        print('%sControl( %08X, name = %s, id = %s,\n%s'
                           'style = %s, locked = %s,\n%s'
                           'closeable = %s, resizable = %s, visible = %s\n%s'
                           'width = %d, height = %d )' % (
@@ -2805,8 +2807,8 @@ class DockRegion ( DockGroup ):
     def dump ( self, indent ):
         """ Prints the contents of the region.
         """
-        print '%sRegion( %08X, active = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.active, self.width, self.height )
+        print('%sRegion( %08X, active = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.active, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -3565,8 +3567,8 @@ class DockSection ( DockGroup ):
     def dump ( self, indent = 0 ):
         """ Prints the contents of the section.
         """
-        print '%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.is_row, self.width, self.height )
+        print('%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.is_row, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 

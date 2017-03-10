@@ -123,15 +123,15 @@ F9                Pop-up window of matching History items.
         if hasattr(self.other, name):
             return getattr(self.other, name)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def __setattr__(self, name, value):
-        if self.__dict__.has_key(name):
+        if name in self.__dict__:
             self.__dict__[name] = value
         elif hasattr(self.other, name):
             return setattr(self.other, name, value)
         else:
-            raise AttributeError, name
+            raise AttributeError(name)
 
     def _getAttributeNames(self):
         """Return list of magic attributes to extend introspection."""
@@ -276,8 +276,8 @@ class Shell(wxStyledTextCtrl):
 
         This simply sets "close", "exit" and "quit" to a helpful string.
         """
-        import __builtin__
-        __builtin__.close = __builtin__.exit = __builtin__.quit = \
+        from pyface._py2to3 import builtins
+        builtins.close = builtins.exit = builtins.quit = \
             'Click on the close button to leave the application.'
 
     def quit(self):
@@ -299,8 +299,7 @@ class Shell(wxStyledTextCtrl):
         """Execute the user's PYTHONSTARTUP script if they have one."""
         if startupScript and os.path.isfile(startupScript):
             startupText = 'Startup script executed: ' + startupScript
-            self.push('print %s;execfile(%s)' % \
-                      (`startupText`, `startupScript`))
+            self.push('print %r;execfile(%r)' % (startupText, startupScript))
         else:
             self.push('')
 
@@ -605,8 +604,8 @@ class Shell(wxStyledTextCtrl):
         or (self.historyIndex >= len(self.history)-2):
             searchOrder = range(len(self.history))
         else:
-            searchOrder = range(self.historyIndex+1, len(self.history)) + \
-                          range(self.historyIndex)
+            searchOrder = list(range(self.historyIndex+1, len(self.history))) + \
+                          list(range(self.historyIndex))
         for i in searchOrder:
             command = self.history[i]
             if command[:len(searchText)] == searchText:
@@ -623,7 +622,7 @@ class Shell(wxStyledTextCtrl):
 
         # This method will most likely be replaced by the enclosing app
         # to do something more interesting, like write to a status bar.
-        print text
+        print(text)
 
     def insertLineBreak(self):
         """Insert a new line break."""

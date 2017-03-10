@@ -311,7 +311,7 @@ class ModalDialogTester(object):
         if text is None:
             test = None
         else:
-            test = lambda qwidget: qwidget.text() == text
+            test = lambda qwidget: qwidget.text().replace('&', '') == text
         return self.find_qt_widget(type_=type_, test=test) is not None
 
     def find_qt_widget(self, type_=QtWidgets.QPushButton, test=None):

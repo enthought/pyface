@@ -58,31 +58,31 @@ class TestMessageDialog(unittest.TestCase):
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
-        self.dialog.message = u"This is the message"
+        self.dialog.message = "This is the message"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
 
     def test_informative(self):
         # test that creation and destruction works with informative
-        self.dialog.message = u"This is the message"
-        self.dialog.informative = u"This is the additional message"
+        self.dialog.message = "This is the message"
+        self.dialog.informative = "This is the additional message"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
 
     def test_detail(self):
         # test that creation and destruction works with detail
-        self.dialog.message = u"This is the message"
-        self.dialog.informative = u"This is the additional message"
-        self.dialog.detail = u"This is the detail"
+        self.dialog.message = "This is the message"
+        self.dialog.informative = "This is the additional message"
+        self.dialog.detail = "This is the detail"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
@@ -130,10 +130,10 @@ class TestMessageDialog(unittest.TestCase):
     @unittest.skipIf(USING_QT, "Can't change OK label in Qt")
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         # test that OK works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 

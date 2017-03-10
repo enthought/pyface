@@ -58,7 +58,7 @@ class GridModel(HasTraits):
         self._grid_table_base = _GridTableBase(self)
 
         if len(self.columns) == 0 and self.data is not None:
-            print "Building default table column model"
+            print("Building default table column model")
             columns = []
             # Assume data is rectangular and use the length of the first row.
             for i in range(len(self.data[0])):

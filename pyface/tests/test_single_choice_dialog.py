@@ -65,7 +65,7 @@ class TestMessageDialog(unittest.TestCase):
 
     def test_message(self):
         # test that creation and destruction works as expected with message
-        self.dialog.message = u"This is the message"
+        self.dialog.message = "This is the message"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()

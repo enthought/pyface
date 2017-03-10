@@ -20,6 +20,7 @@ import logging
 from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType
 from traits.trait_base import get_resource_path
 
+from pyface._py2to3 import str_types
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ image_bitmap_cache = {}
 def convert_image(value, level=3):
     """ Converts a specified value to an ImageResource if possible.
     """
-    if not isinstance( value, basestring ):
+    if not isinstance( value, str_types ):
         return value
 
     key = value

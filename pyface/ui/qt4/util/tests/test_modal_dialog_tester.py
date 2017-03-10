@@ -11,7 +11,7 @@
 from __future__ import absolute_import
 
 import unittest
-import cStringIO
+import io
 
 from qtpy import QtWidgets
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
@@ -111,7 +111,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         with self.assertRaises(AssertionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
@@ -129,7 +129,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         with self.assertRaises(ZeroDivisionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = io.StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
@@ -150,7 +150,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             finally:
                 tester.close()
 
-        tester.open_and_run(when_opened=check_and_close)
+        tester.open_and_wait(when_opened=check_and_close)
 
     def test_find_widget(self):
         dialog = Dialog()
@@ -161,13 +161,13 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
                         type_=QtWidgets.QAbstractButton,
-                        test=lambda x: x.text() == 'OK'
+                        test=lambda x: x.text().replace('&', '') == 'OK'
                     )
                     self.assertIsInstance(widget, QtWidgets.QPushButton)
             finally:
                 tester.close()
 
-        tester.open_and_run(when_opened=check_and_close)
+        tester.open_and_wait(when_opened=check_and_close)
 
 
 if __name__ == '__main__':

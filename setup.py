@@ -177,8 +177,4 @@ if __name__ == "__main__":
           },
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
-          use_2to3=True,
-          use_2to3_exclude_fixers=[
-            'lib2to3.fixes.fix_next',  # we have several .next() methods, no iterators
-          ],
     )

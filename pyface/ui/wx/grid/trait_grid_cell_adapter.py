@@ -19,7 +19,7 @@ from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Local imports:
-from combobox_focus_handler import ComboboxFocusHandler
+from .combobox_focus_handler import ComboboxFocusHandler
 
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
 

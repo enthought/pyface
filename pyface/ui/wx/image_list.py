@@ -18,6 +18,7 @@ from __future__ import absolute_import
 import wx
 
 # Local imports
+from pyface._py2to3 import str_types
 from .image_resource import ImageResource
 
 
@@ -61,7 +62,7 @@ class ImageList(wx.ImageList):
 
             # If the filename is a string then it is the filename of some kind
             # of image (e.g 'foo.gif', 'image/foo.png' etc).
-            elif isinstance(filename, basestring):
+            elif isinstance(filename, str_types):
                 # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 

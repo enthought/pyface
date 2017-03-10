@@ -31,11 +31,13 @@ from wx.py import introspect
 import types
 
 # The fixed function.
+from pyface._py2to3 import str_types
+
+
 def getAttributeNames(object, includeMagic=1, includeSingle=1,
                       includeDouble=1):
     """Return list of unique attributes, including inherited, for object."""
     attributes = []
-    dict = {}
     if not introspect.hasattrAlwaysReturnsTrue(object):
         # Add some attributes that don't always get picked up.
         special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
@@ -69,20 +71,17 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
                            if attr not in object_dir and \
                            hasattr(object, attr)]
 
-    # Remove duplicates from the attribute list.
-    for item in attributes:
-        dict[item] = None
-    attributes = dict.keys()
+    # Remove duplicates from the attribute list by converting to a set.
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
-    attributes = [attribute for attribute in attributes \
-                  if isinstance(attribute, basestring)]
-    attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
+    attributes = [attribute for attribute in set(attributes) \
+                  if isinstance(attribute, str_types)]
+    attributes.sort(key=str.upper)
     if not includeSingle:
-        attributes = filter(lambda item: item[0]!='_' \
-                            or item[1]=='_', attributes)
+        attributes = [item for item in attributes if item[0]!='_' \
+                            or item[1]=='_']
     if not includeDouble:
-        attributes = filter(lambda item: item[:2]!='__', attributes)
+        attributes = [item for item in attributes if item[:2]!='__']
     return attributes
 
 
@@ -116,7 +115,7 @@ def getAllAttributeNames(object):
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = object.__dict__.keys()
+        attributes = list(object.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass
@@ -140,9 +139,9 @@ def getAllAttributeNames(object):
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
-        if isinstance(bases, types.TupleType):
+        if isinstance(bases, tuple):
             for base in bases:
-                if type(base) is types.TypeType:
+                if type(base) is type:
                     # Break a circular reference. Happens in Python 2.2.
                     pass
                 else:

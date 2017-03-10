@@ -18,6 +18,7 @@ from collections import Sequence
 
 # ETS imports
 from traits.api import HasStrictTraits, Interface, Property
+from pyface._py2to3 import str_types
 
 
 class IClipboard(Interface):
@@ -100,7 +101,7 @@ class BaseClipboard(HasStrictTraits):
         return None
 
     def _set_data(self, data):
-        if isinstance(data, basestring):
+        if isinstance(data, str_types):
             self.text_data = data
         elif isinstance(data, Sequence):
             self.file_data = data

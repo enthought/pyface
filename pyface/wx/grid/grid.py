@@ -251,7 +251,7 @@ class Grid(wxGrid):
     ###########################################################################
 
     def Reset(self):
-        print 'Reset'
+        print('Reset')
         #attr = grid.GridCellAttr()
         #renderer = MyRenderer()
         #attr.SetRenderer(renderer)
@@ -269,7 +269,7 @@ class Grid(wxGrid):
         (wxGrid) -> Reset the grid view.   Call this to
         update the grid if rows and columns have been added or deleted
         """
-        print '*************************VirtualModel.reset_view'
+        print('*************************VirtualModel.reset_view')
 
         grid = self
 

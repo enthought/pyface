@@ -23,6 +23,8 @@ import wx
 from wx.grid import PyGridCellRenderer
 
 #-------------------------------------------------------------------------------
+from pyface._py2to3 import str_types
+
 
 class DefaultRenderer(PyGridCellRenderer):
     """ This renderer provides the default representation of an
@@ -99,7 +101,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """ Adds three dots "..." to indicate the cell is truncated.
         """
         text = grid.model.GetValue(row, col)
-        if not isinstance(text, basestring):
+        if not isinstance(text, str_types):
             msg = 'Problem appending "..." to cell: %d %d' % (row, col)
             raise TypeError(msg)
 

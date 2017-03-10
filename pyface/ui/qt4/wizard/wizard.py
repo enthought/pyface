@@ -10,7 +10,7 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ The base class for all pyface wizards. """
-
+from __future__ import print_function
 
 # Major package imports.
 from qtpy import QtCore, QtWidgets
@@ -110,7 +110,7 @@ class Wizard(MWizard, Dialog):
         """ Called when the 'Help' button is pressed. """
 
         # FIXME: Hook into a help system.
-        print "Show help for", self.help_id
+        print("Show help for", self.help_id)
 
     #### Trait handlers #######################################################
 

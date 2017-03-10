@@ -74,7 +74,7 @@ class FileDialog(MFileDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path  = unicode(self.control.GetPath())
+        self.path  = self.control.GetPath()
         # Work around wx bug throwing exception on cancel of file dialog
         if len(self.path)>0:
             self.paths = self.control.GetPaths()

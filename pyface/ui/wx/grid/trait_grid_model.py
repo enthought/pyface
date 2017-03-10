@@ -234,7 +234,7 @@ class TraitGridModel(GridModel):
             self.data.reverse()
 
         # now fire an event to tell the grid we're sorted
-        print 'firing sort event'
+        print('firing sort event')
         self.column_sorted = GridSortEvent(index = col, reversed = reverse)
 
         return
@@ -386,8 +386,7 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-               formats.has_key(type(value)) and \
-               formats[type(value)] is not None:
+               formats.get(type(value)) is not None:
             try:
                 format = formats[type(value)]
                 if callable(format):

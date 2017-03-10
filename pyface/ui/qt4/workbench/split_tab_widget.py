@@ -10,12 +10,10 @@
 # Standard library imports.
 import sys
 
-if sys.version_info[0] > 2:
-    unicode = str
-
 # Major library imports.
 from qtpy import QtCore, QtGui, QtWidgets, PYQT4
 
+from pyface._py2to3 import text_type
 from pyface.image_resource import ImageResource
 
 
@@ -35,7 +33,7 @@ class SplitTabWidget(QtWidgets.QSplitter):
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
 
-    tabTextChanged = QtCore.Signal(QtWidgets.QWidget, unicode)
+    tabTextChanged = QtCore.Signal(QtWidgets.QWidget, text_type)
     _HS_NONE = -1
     _HS_AFTER_LAST_TAB = -2
     _HS_NORTH = -3
@@ -95,8 +93,8 @@ class SplitTabWidget(QtWidgets.QSplitter):
                 for t in range(ch.count()):
                     # A tab state is a tuple of the widget's object name and
                     # the title.
-                    name = unicode(ch.widget(t).objectName())
-                    title = unicode(ch.tabText(t))
+                    name = str(ch.widget(t).objectName())
+                    title = str(ch.tabText(t))
 
                     tab_states.append((name, title))
 

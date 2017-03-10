@@ -24,7 +24,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from dock_window_feature \
+from .dock_window_feature \
     import DockWindowFeature
 
 from pyface.image_resource \

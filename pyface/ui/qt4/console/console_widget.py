@@ -104,9 +104,9 @@ class ConsoleWidget(QtWidgets.QWidget):
 
     # The shortcuts defined by this widget. We need to keep track of these to
     # support 'override_shortcuts' above.
-    _shortcuts = set(_ctrl_down_remap.keys() +
-                     [ QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O,
-                       QtCore.Qt.Key_V ])
+    _shortcuts = set(_ctrl_down_remap.keys())
+    _shortcuts.update((QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O,
+                       QtCore.Qt.Key_V))
 
     #---------------------------------------------------------------------------
     # 'QObject' interface
@@ -650,7 +650,7 @@ class ConsoleWidget(QtWidgets.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = path, format = "png"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:
@@ -678,7 +678,7 @@ class ConsoleWidget(QtWidgets.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = None, format = "svg"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:

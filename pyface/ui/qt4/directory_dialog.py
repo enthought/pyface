@@ -56,7 +56,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
+            self.path = files[0]
         else:
             self.path = ''
 

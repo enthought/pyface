@@ -8,6 +8,7 @@
 # Thanks for using Enthought open source!
 
 """ Tools for testing. """
+from __future__ import print_function
 
 from contextlib import contextmanager
 import os
@@ -92,12 +93,12 @@ def print_qt_widget_tree(widget, level=0):
     """
     level = level + 4
     if level == 0:
-        print
-    print ' '*level, widget
+        print()
+    print(' '*level, widget)
     for child in widget.children():
         print_qt_widget_tree(child, level=level)
     if level == 0:
-        print
+        print()
 
 
 def find_qt_widget(start, type_, test=None):

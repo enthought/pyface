@@ -18,7 +18,7 @@
 """
 
 # Standard library imports.
-import __builtin__
+from pyface._py2to3 import builtins
 import os
 import sys
 import types
@@ -121,7 +121,7 @@ class PythonShell(MPythonShell, Widget):
                 self.control.clearCommand()
                 self.control.write('# Executing "%s"\n' % path)
 
-            execfile(path, prog_ns, prog_ns)
+            exec(compile(open(path).read(), path, 'exec'), prog_ns, prog_ns)
 
             if not hidden:
                 self.control.prompt()
@@ -166,7 +166,7 @@ class PythonShell(MPythonShell, Widget):
         name = 'dragged'
 
         if hasattr(obj, 'name') \
-           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+                and isinstance(obj.name, str) and len(obj.name) > 0:
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
@@ -229,7 +229,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = __builtin__.raw_input
+        self.raw_input = builtins.raw_input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -265,7 +265,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        __builtin__.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 

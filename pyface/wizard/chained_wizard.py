@@ -39,7 +39,7 @@ class ChainedWizard(Wizard):
     def _controller_default(self):
         """ Provide a default controller. """
 
-        from chained_wizard_controller import ChainedWizardController
+        from .chained_wizard_controller import ChainedWizardController
 
         return ChainedWizardController()
 

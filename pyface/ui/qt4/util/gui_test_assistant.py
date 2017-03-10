@@ -203,14 +203,14 @@ class GuiTestAssistant(UnittestTools):
 
         handlers = {trait: make_handler(trait) for trait in traits}
 
-        for trait, handler in handlers.iteritems():
+        for trait, handler in handlers.items():
             traits_object.on_trait_change(handler, trait)
         try:
             with self.event_loop_until_condition(
                     condition=condition.is_set, timeout=timeout):
                 yield
         finally:
-            for trait, handler in handlers.iteritems():
+            for trait, handler in handlers.items():
                 traits_object.on_trait_change(handler, trait, remove=True)
 
     @contextlib.contextmanager

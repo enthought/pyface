@@ -33,10 +33,10 @@ from traits.api \
 from pyface.wx.drag_and_drop \
     import PythonDropTarget, PythonDropSource
 
-from dock_sizer \
+from .dock_sizer \
     import DockControl, FEATURE_EXTERNAL_DRAG
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 #-------------------------------------------------------------------------------

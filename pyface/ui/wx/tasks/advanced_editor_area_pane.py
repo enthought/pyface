@@ -6,7 +6,7 @@ from traits.api import provides
 
 # Local imports.
 from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane
-from editor_area_pane import EditorAreaPane
+from .editor_area_pane import EditorAreaPane
 
 ###############################################################################
 # 'AdvancedEditorAreaPane' class.

@@ -28,6 +28,8 @@ qt_api = API
 if qt_api == 'pyqt4':
     qt_api = 'pyqt'
 
+os.environ['QT_API'] = qt_api
+
 if qt_api is None:
     try:
         import PySide

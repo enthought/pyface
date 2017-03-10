@@ -28,6 +28,7 @@ from wx.grid import GridTableMessage, \
 from wx import TheClipboard
 
 # Enthought library imports
+from pyface._py2to3 import str_types, xrange
 from pyface.api import Widget
 from pyface.timer.api import do_later
 from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
@@ -736,7 +737,7 @@ class Grid(Widget):
         evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
-            if isinstance(data, basestring):
+            if isinstance(data, str_types):
                 file = abspath(data)
                 if exists(file):
                     FileDropSource(self._grid, file)
@@ -1571,13 +1572,11 @@ class _GridTableBase(PyGridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
-                    label  = ulabel.encode('latin-1')
+                    label += '  \xab'  # Latin1 encoding of <<
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
-                label  = ulabel.encode('latin-1')
+                label += '  \xbb'  # Latin1 encoding of >>
             else:
                 label += '  >>'
 
@@ -1591,13 +1590,11 @@ class _GridTableBase(PyGridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
-                    label  = ulabel.encode('latin-1')
+                    label += '  \xab'  # Latin1 encoding of <<
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
-                label  = ulabel.encode('latin-1')
+                label += '  \xbb'  # Latin1 encoding of >>
             else:
                 label += '  >>'
 
@@ -1770,7 +1767,7 @@ class _GridTableBase(PyGridTableBase):
 
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event:
-        do_later( self._editor_dispose, self._editor_cache.values() )
+        do_later( self._editor_dispose, list(self._editor_cache.values()) )
 
         self._editor_cache   = {}
         self._renderer_cache = {}

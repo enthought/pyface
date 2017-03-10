@@ -43,4 +43,4 @@ class SplashScreenLogHandler(Handler):
         record : logging record instance
             The log record to be displayed.
         """
-        self._splash_screen.text = unicode(record.getMessage()) + u'...'
+        self._splash_screen.text = record.getMessage() + '...'

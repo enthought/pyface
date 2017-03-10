@@ -17,7 +17,7 @@ AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
              'right'  : QtCore.Qt.RightDockWidgetArea,
              'top'    : QtCore.Qt.TopDockWidgetArea,
              'bottom' : QtCore.Qt.BottomDockWidgetArea }
-INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.iteritems())
+INVERSE_AREA_MAP = {int(v): k for k, v in AREA_MAP.items()}
 
 
 @provides(IDockPane)

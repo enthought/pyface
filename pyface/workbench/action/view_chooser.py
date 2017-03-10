@@ -41,7 +41,7 @@ class WorkbenchWindowTreeNode(TreeNode):
         # Collate the window's views into categories.
         categories_by_name = self._get_categories_by_name(object)
 
-        categories = categories_by_name.values()
+        categories = list(categories_by_name.values())
         categories.sort(key=lambda category: category.name)
 
         return categories

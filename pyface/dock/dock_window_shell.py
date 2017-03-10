@@ -39,10 +39,10 @@ from pyface.api import SystemMetrics
 from pyface.image_resource \
     import ImageResource
 
-from dock_window \
+from .dock_window \
     import DockWindow
 
-from dock_sizer \
+from .dock_sizer \
     import DockSizer, DockSection, DockRegion, DockControl, DOCK_RIGHT
 
 #-------------------------------------------------------------------------------

@@ -157,7 +157,7 @@ class Group(HasTraits):
         if isinstance(item, Action):
             item = ActionItem(action=item)
         elif callable(item):
-            name = user_name_for(item.func_name)
+            name = user_name_for(item.__name__)
             item = ActionItem(action=Action(name=name, on_perform=item))
 
         item.parent = self

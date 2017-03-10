@@ -2,6 +2,7 @@
 import logging
 
 # Enthought library imports.
+from pyface._py2to3 import str_types
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.api import ApplicationWindow
 from traits.api import Bool, Callable, HasTraits, HasStrictTraits, Instance, \
@@ -312,7 +313,7 @@ class TaskWindow(ApplicationWindow):
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
-            if isinstance(layout, basestring):
+            if isinstance(layout, str_types):
                 continue
             state = self._get_state(layout.id)
             if state:

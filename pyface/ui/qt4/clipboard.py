@@ -14,13 +14,15 @@
 
 # Standard library imports
 from io import BytesIO
-from cPickle import dumps, load, loads
+from pickle import dumps, load, loads
 
 # System library imports
 from qtpy import QtCore, QtWidgets
 
 # ETS imports
 from traits.api import provides
+
+from pyface._py2to3 import str_types
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Shortcuts
@@ -98,7 +100,7 @@ class Clipboard(BaseClipboard):
             return []
 
     def _set_file_data(self, data):
-        if isinstance(data, basestring):
+        if isinstance(data, str_types):
             data = [data]
         mime_data = QtCore.QMimeData()
         mime_data.setUrls([QtCore.QUrl(path) for path in data])

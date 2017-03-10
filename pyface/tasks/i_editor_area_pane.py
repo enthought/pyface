@@ -174,7 +174,7 @@ class MEditorAreaPane(HasTraits):
     def get_factory(self, obj):
         """ Returns an editor factory suitable for editing an object.
         """
-        for factory, filters in self._factory_map.iteritems():
+        for factory, filters in self._factory_map.items():
             for filter_ in filters:
                 # FIXME: We should swallow exceptions, but silently?
                 try:

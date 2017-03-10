@@ -19,6 +19,9 @@ import wx
 
 
 # fixme: rename to 'CachedImageList'?!?
+from pyface._py2to3 import str_types
+
+
 class ImageList(wx.ImageList):
     """ A cached image list. """
 
@@ -50,7 +53,7 @@ class ImageList(wx.ImageList):
 
         # If the icon is a string then it is the filename of some kind of
         # image (e.g 'foo.gif', 'image/foo.png' etc).
-        if isinstance(filename, basestring):
+        if isinstance(filename, str_types):
             # Try the cache first.
             index = self._cache.get(filename)
             if index is None:

@@ -79,7 +79,7 @@ def topological_sort(pairs):
     
     # Descend through graph, removing parents as we go.
     for parent in result:
-        if graph.has_key(parent):
+        if parent in graph:
             for child in graph[parent]:
                 num_parents[child] -= 1
                 if num_parents[child] == 0:

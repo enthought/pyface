@@ -27,7 +27,7 @@ from traits.api import Tuple
 # Local imports.
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
-from system_metrics import SystemMetrics
+from .system_metrics import SystemMetrics
 from .widget import Widget
 
 

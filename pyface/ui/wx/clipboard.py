@@ -10,14 +10,16 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
-from cStringIO import StringIO
-from cPickle import dumps, load, loads
+from io import BytesIO
+from pickle import dumps, load, loads
 
 # System library imports
 import wx
 
 # ETS imports
 from traits.api import provides
+
+from pyface._py2to3 import str_types
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
@@ -57,7 +59,7 @@ class Clipboard(BaseClipboard):
                 if cb.IsSupported(PythonObjectFormat):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     if cb.GetData(cdo):
-                        file   = StringIO(cdo.GetData())
+                        file   = BytesIO(cdo.GetData())
                         klass  = load(file)
                         result = load(file)
             finally:
@@ -136,7 +138,7 @@ class Clipboard(BaseClipboard):
     def _set_file_data(self, data):
         if cb.Open():
             tfo = wx.FileDataObject()
-            if isinstance(data, basestring):
+            if isinstance(data, str_types):
                 tfo.AddFile(data)
             else:
                 for filename in data:

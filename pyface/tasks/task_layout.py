@@ -1,6 +1,9 @@
 # Standard library imports.
-from cStringIO import StringIO
 import sys
+if sys.version_info < (3,):
+    from cStringIO import StringIO
+else:
+    from io import StringIO
 
 # Enthought library imports.
 from traits.api import Either, Enum, HasStrictTraits, Int, Instance, List, Str
@@ -40,7 +43,7 @@ class LayoutItem(HasStrictTraits):
 
         args = [(None, arg) for arg in self.pargs()]
         traits = []
-        for name, trait in sorted(self.traits().iteritems()):
+        for name, trait in sorted(self.traits().items()):
             if not trait.pretty_skip and not trait.transient:
                 value = getattr(self, name)
                 if trait.default != value:

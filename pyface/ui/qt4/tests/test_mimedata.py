@@ -7,7 +7,7 @@
 #
 
 import unittest
-from cPickle import dumps
+from pickle import dumps
 
 from qtpy import QtCore
 from ..mimedata import PyMimeData, str2bytes

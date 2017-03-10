@@ -188,7 +188,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(pid)
 
         else:
-            print '**** pid is None!!! ****'
+            print('**** pid is None!!! ****')
 
         return
 

@@ -315,7 +315,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_editor_title_changed(self, control, title):
         """ Handle the title being changed """
         for editor in self.window.editors:
-            if editor.control == control: editor.name = unicode(title)
+            if editor.control == control: editor.name = title
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?
@@ -462,7 +462,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 dwa = _EDIT_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.addDockWidget(dwa, dw)
         elif position == 'with':
@@ -474,7 +474,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 orient, swap = _VIEW_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.splitDockWidget(rel_dw, dw, orient)
 

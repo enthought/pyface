@@ -46,13 +46,13 @@ from pyface.timer.api \
 from pyface.image_resource \
     import ImageResource
 
-from dock_window \
+from .dock_window \
     import DockWindow
 
-from dock_sizer \
+from .dock_sizer \
     import DockControl, add_feature
 
-from ifeature_tool \
+from .ifeature_tool \
     import IFeatureTool
 
 #-------------------------------------------------------------------------------
@@ -677,7 +677,7 @@ class DockWindowFeature ( HasPrivateTraits ):
                 if (dc.visible and
                     (object.feature_can_drop_on( dc.object ) or
                      object.feature_can_drop_on_dock_control( dc ))):
-                    from feature_tool import FeatureTool
+                    from .feature_tool import FeatureTool
 
                     feature_lists.append( [ FeatureTool( dock_control = dc ) ] )
         else:

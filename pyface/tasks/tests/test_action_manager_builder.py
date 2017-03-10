@@ -18,7 +18,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
     def setUp(self):
         """ Create some dummy actions to use while testing.
         """
-        for i in xrange(1, 7):
+        for i in range(1, 7):
             action_id = 'action%i' % i
             setattr(self, action_id, Action(id=action_id, name='Action %i'%i))
 
@@ -28,24 +28,24 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         """ Checks that two action managers are (logically) equivalent.
         """
         children1 = children2 = []
-        self.assertEquals(type(first), type(second))
-        self.assertEquals(first.id, second.id)
+        self.assertEqual(type(first), type(second))
+        self.assertEqual(first.id, second.id)
 
         if isinstance(first, ActionItem):
-            self.assertEquals(first.action.name, second.action.name)
+            self.assertEqual(first.action.name, second.action.name)
 
         elif isinstance(first, ActionManager):
             if not isinstance(first, MenuBarManager):
-                self.assertEquals(first.name, second.name)
+                self.assertEqual(first.name, second.name)
             children1, children2 = first.groups, second.groups
 
         elif isinstance(first, Group):
-            self.assertEquals(first.separator, second.separator)
+            self.assertEqual(first.separator, second.separator)
             children1, children2 = first.items, second.items
 
-        self.assertEquals(len(children1), len(children2))
-        for i in xrange(len(children1)):
-            self.assertActionElementsEqual(children1[i], children2[i])
+        self.assertEqual(len(children1), len(children2))
+        for c1, c2 in zip(children1, children2):
+            self.assertActionElementsEqual(c1, c2)
 
     #### Tests ################################################################
 

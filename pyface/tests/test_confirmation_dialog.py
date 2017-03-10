@@ -1,26 +1,30 @@
 from __future__ import absolute_import
 
 import os
+from qtpy import PYQT5
 from traits.testing.unittest_tools import unittest
 
 from ..confirmation_dialog import ConfirmationDialog, confirm
 from ..constant import YES, NO, OK, CANCEL
-from ..gui import GUI
 from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
-is_qt5 = (os.environ.get('QT_API') == 'pyqt5')
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 
 
-@unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
-class TestConfirmationDialog(unittest.TestCase):
+@unittest.skipIf(PYQT5, 'avoid Qt5 segfault')
+class TestConfirmationDialog(GuiTestAssistant, unittest.TestCase):
 
     def setUp(self):
-        self.gui = GUI()
+        super(TestConfirmationDialog, self).setUp()
         self.dialog = ConfirmationDialog()
+
+    def tearDown(self):
+        self.dialog.destroy()
+        super(TestConfirmationDialog, self).tearDown()
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -58,14 +62,14 @@ class TestConfirmationDialog(unittest.TestCase):
 
     def test_create_yes_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
 
     def test_create_no_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.no_label = u"No Way"
+        self.dialog.no_label = "No Way"
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
@@ -135,10 +139,10 @@ class TestConfirmationDialog(unittest.TestCase):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_renamed_yes(self):
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         # test that Yes works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
@@ -152,10 +156,10 @@ class TestConfirmationDialog(unittest.TestCase):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_renamed_no(self):
-        self.dialog.no_label = u"No way"
+        self.dialog.no_label = "No way"
         # test that No works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"No way"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("No way"))
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
@@ -171,10 +175,10 @@ class TestConfirmationDialog(unittest.TestCase):
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_cancel_renamed(self):
         self.dialog.cancel = True
-        self.dialog.cancel_label = u"Back"
+        self.dialog.cancel_label = "Back"
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Back"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Back"))
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
@@ -191,17 +195,14 @@ class TestConfirmationDialog(unittest.TestCase):
         self.assertEqual(self.dialog.return_code, OK)
 
 
-@unittest.skipIf(is_qt5, 'avoid Qt5 segfault')
-class TestConfirm(unittest.TestCase):
-
-    def setUp(self):
-        self.gui = GUI()
+@unittest.skipIf(PYQT5, 'avoid Qt5 segfault')
+class TestConfirm(GuiTestAssistant, unittest.TestCase):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_reject(self):
         # test that cancel works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+        tester.open_and_wait(when_opened=lambda x: x.close(accept=False))
         self.assertEqual(tester.result, CANCEL)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
@@ -233,14 +234,14 @@ class TestConfirm(unittest.TestCase):
         # test that title works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message",
                                    title='Title'))
-        tester.open_and_run(when_opened=lambda x: x.click_button(NO))
+        tester.open_and_wait(when_opened=lambda x: x.click_button(NO))
         self.assertEqual(tester.result, NO)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_default_yes(self):
         # test that default works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message", default=YES))
-        tester.open_and_run(when_opened=lambda x: x.click_button(YES))
+        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
         self.assertEqual(tester.result, YES)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
@@ -248,5 +249,5 @@ class TestConfirm(unittest.TestCase):
         # test that default works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message",
                                                    cancel=True, default=YES))
-        tester.open_and_run(when_opened=lambda x: x.click_button(CANCEL))
+        tester.open_and_wait(when_opened=lambda x: x.click_button(CANCEL))
         self.assertEqual(tester.result, CANCEL)

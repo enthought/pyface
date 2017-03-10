@@ -21,6 +21,7 @@ import sys
 from traits.api import Enum, Unicode, Int
 
 # Local imports.
+from pyface._py2to3 import str_types
 from pyface.i_dialog import IDialog
 
 
@@ -106,7 +107,7 @@ class MFileDialog(object):
             The wildcard patterns for the extension.
         """
 
-        if isinstance(extension, basestring):
+        if isinstance(extension, str_types):
             pattern = extension
 
         else:

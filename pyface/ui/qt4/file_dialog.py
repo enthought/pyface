@@ -21,6 +21,7 @@ from qtpy import QtCore, QtWidgets
 from traits.api import Enum, Int, List, provides, Unicode
 
 # Local imports.
+from pyface._py2to3 import str_types
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from .dialog import Dialog
 
@@ -65,7 +66,7 @@ class FileDialog(MFileDialog, Dialog):
     def create_wildcard(cls, description, extension):
         """ Creates a wildcard for a given extension. """
 
-        if isinstance(extension, basestring):
+        if isinstance(extension, str_types):
             pattern = extension
 
         else:
@@ -90,8 +91,8 @@ class FileDialog(MFileDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
-            self.paths = [unicode(file) for file in files]
+            self.path = files[0]
+            self.paths = list(files)
         else:
             self.path = ''
             self.paths = ['']
