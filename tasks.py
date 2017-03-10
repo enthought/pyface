@@ -91,7 +91,7 @@ extra_dependencies = {
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
     # XXX once pyqt5 is available in EDM, we will want it here
-    'pyqt5': {},
+    'pyqt5': set(),
     # XXX temporary workaround for bug in recent EDM wxpython build on OS X
     'wx': {'wxpython' if sys.platform != 'darwin' else 'wxpython==3.0.2.0-3'},
     'null': set()
