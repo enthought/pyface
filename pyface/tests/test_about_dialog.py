@@ -36,8 +36,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_destroy(self):
         # test that destroy works even when no control
-        with self.delete_widget(self.dialog.control):
-            self.dialog.destroy()
+        self.dialog.destroy()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -105,8 +104,3 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         parent.close()
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
-
-        with self.delete_widget(self.dialog.control):
-            self.dialog.destroy()
-        with self.delete_widget(parent.control):
-            parent.destroy()
