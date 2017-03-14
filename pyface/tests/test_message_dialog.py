@@ -160,8 +160,9 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
 
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-class TestMessageDialogHelpers(unittest.TestCase):
+class TestMessageDialogHelpers(unittest.TestCase, GuiTestAssistant):
 
     def test_information(self):
         self._check_dialog(information)
