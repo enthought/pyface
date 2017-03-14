@@ -22,8 +22,8 @@ from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
-    OK: '&OK' if qt_api == 'pyqt5' else 'OK',
-    CANCEL: '&Cancel' if qt_api == 'pyqt5' else 'Cancel',
+    OK: 'OK',
+    CANCEL: 'Cancel',
     YES: '&Yes',
     NO: '&No',
 }
