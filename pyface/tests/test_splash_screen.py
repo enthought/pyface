@@ -5,13 +5,24 @@ from traits.testing.unittest_tools import unittest, UnittestTools
 from ..gui import GUI
 from ..image_resource import ImageResource
 from ..splash_screen import SplashScreen
+from ..toolkit import toolkit_object
+
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestWindow(unittest.TestCase, UnittestTools):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.window = SplashScreen()
+
+    def tearDown(self):
+        if self.window.control is not None:
+            with self.destroy_widget(self.window.control):
+                self.widnow.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):
         # test that destroy works even when no control
