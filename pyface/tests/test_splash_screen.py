@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import unittest
 
 from ..gui import GUI
 from ..image_resource import ImageResource
@@ -12,7 +12,7 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestWindow(unittest.TestCase, UnittestTools):
+class TestWindow(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)

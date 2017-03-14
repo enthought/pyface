@@ -18,7 +18,7 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        GuiTestAssistant.setUp()
+        GuiTestAssistant.setUp(self)
         self.dialog = Dialog()
 
     def tearDown(self):
