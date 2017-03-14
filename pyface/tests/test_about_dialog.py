@@ -24,7 +24,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
     def tearDown(self):
         if self.dialog.control is not None:
-            with self.destroy_widget(self.dialog.control):
+            with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
         GuiTestAssistant.tearDown(self)
 
@@ -36,7 +36,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_destroy(self):
         # test that destroy works even when no control
-        with self.destroy_widget(self.dialog.control):
+        with self.delete_widget(self.dialog.control):
             self.dialog.destroy()
 
     def test_create_parent(self):
@@ -47,9 +47,9 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
 
-        with self.destroy_widget(self.dialog.control):
+        with self.delete_widget(self.dialog.control):
             self.dialog.destroy()
-        with self.destroy_widget(parent.control):
+        with self.delete_widget(parent.control):
             parent.destroy()
 
     def test_create_ok_renamed(self):
@@ -106,7 +106,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
-        with self.destroy_widget(self.dialog.control):
+        with self.delete_widget(self.dialog.control):
             self.dialog.destroy()
-        with self.destroy_widget(parent.control):
+        with self.delete_widget(parent.control):
             parent.destroy()

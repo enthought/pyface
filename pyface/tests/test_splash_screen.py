@@ -20,7 +20,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
 
     def tearDown(self):
         if self.window.control is not None:
-            with self.destroy_widget(self.window.control):
+            with self.delete_widget(self.window.control):
                 self.widnow.destroy()
         GuiTestAssistant.tearDown(self)
 

@@ -27,10 +27,10 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
 
     def tearDown(self):
         if self.widget.control is not None:
-            with self.destroy_widget(self.widget.control):
+            with self.delete_widget(self.widget.control):
                 self.widget.destroy()
         if self.window.control is not None:
-            with self.destroy_widget(self.window.control):
+            with self.delete_widget(self.window.control):
                 self.window.destroy()
         GuiTestAssistant.tearDown(self)
 

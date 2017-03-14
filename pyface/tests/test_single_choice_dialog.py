@@ -43,7 +43,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def tearDown(self):
         if self.dialog.control is not None:
-            with self.destroy_widget(self.dialog.control):
+            with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
         GuiTestAssistant.tearDown(self)
 
