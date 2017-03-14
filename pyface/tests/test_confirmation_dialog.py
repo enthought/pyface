@@ -198,10 +198,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
 
-class TestConfirm(unittest.TestCase):
-
-    def setUp(self):
-        self.gui = GUI()
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestConfirm(unittest.TestCase, GuiTestAssitant):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_reject(self):
