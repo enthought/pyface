@@ -199,7 +199,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestConfirm(unittest.TestCase, GuiTestAssitant):
+class TestConfirm(unittest.TestCase, GuiTestAssistant):
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_reject(self):
