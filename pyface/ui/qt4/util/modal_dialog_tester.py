@@ -14,7 +14,7 @@ import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
@@ -22,8 +22,8 @@ from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
-    OK: 'OK',
-    CANCEL: 'Cancel',
+    OK: '&OK' if qt_api == 'pyqt5' else 'OK',
+    CANCEL: '&Cancel' if qt_api == 'pyqt5' else 'Cancel',
     YES: '&Yes',
     NO: '&No',
 }
