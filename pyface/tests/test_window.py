@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import unittest
 
 from ..constant import CANCEL, NO, OK, YES
 from ..gui import GUI
@@ -15,7 +15,7 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestWindow(unittest.TestCase, UnittestTools):
+class TestWindow(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
