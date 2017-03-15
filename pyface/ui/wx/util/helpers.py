@@ -35,3 +35,26 @@ def wait_until(condition, timeout, *args, **kwargs):
 
     if heartbeats == 0:
         raise RuntimeError('Timed out waiting for condition')
+
+@contextmanager
+def silence_output(out=None, err=None):
+    """ Re-direct the stderr and stdout streams while in the block. """
+
+    if out is None:
+        out = open(os.devnull, 'w')
+    if err is None:
+        err = open(os.devnull, 'w')
+
+    _old_stderr = sys.stderr
+    _old_stderr.flush()
+
+    _old_stdout = sys.stdout
+    _old_stdout.flush()
+
+    try:
+        sys.stdout = out
+        sys.stderr = err
+        yield
+    finally:
+        sys.stdout = _old_stdout
+        sys.stderr = _old_stderr

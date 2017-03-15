@@ -18,7 +18,7 @@ from traitsui.api import CancelButton, OKButton, View
 
 from ..gui_test_assistant import GuiTestAssistant
 from ..modal_dialog_tester import ModalDialogTester
-from ..helpers import redirect_output
+from ..helpers import silence_output
 
 
 class MyClass(HasStrictTraits):
@@ -86,7 +86,7 @@ class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
 
         with self.assertRaises(AssertionError):
             alt_stderr = cStringIO.StringIO
-            with redirect_output(err=alt_stderr):
+            with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
 
@@ -104,7 +104,7 @@ class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
 
         with self.assertRaises(ZeroDivisionError):
             alt_stderr = cStringIO.StringIO()
-            with redirect_output(err=alt_stderr):
+            with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
