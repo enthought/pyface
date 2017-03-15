@@ -198,65 +198,66 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestConfirm(unittest.TestCase, GuiTestAssistant):
 
-    def setUp(self):
-        GuiTestAssistant.setUp(self)
-
-    def tearDown(self):
-        GuiTestAssistant.tearDown(self)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_reject(self):
-        # test that cancel works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
-        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
-        self.assertEqual(tester.result, CANCEL)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_yes(self):
-        # test that yes works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message"))
-        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
-        self.gui.process_events()
-        self.assertEqual(tester.result, YES)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_no(self):
-        # test that yes works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message"))
-        tester.open_and_wait(when_opened=lambda x: x.click_button(NO))
-        self.gui.process_events()
-        self.assertEqual(tester.result, NO)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_cancel(self):
-        # test that cancel works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
-        tester.open_and_wait(when_opened=lambda x: x.click_button(CANCEL))
-        self.gui.process_events()
-        self.assertEqual(tester.result, CANCEL)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_title(self):
-        # test that title works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message",
-                                   title='Title'))
-        tester.open_and_run(when_opened=lambda x: x.click_button(NO))
-        self.assertEqual(tester.result, NO)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_default_yes(self):
-        # test that default works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message", default=YES))
-        tester.open_and_run(when_opened=lambda x: x.click_button(YES))
-        self.assertEqual(tester.result, YES)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_default_cancel(self):
-        # test that default works as expected
-        tester = ModalDialogTester(lambda: confirm(None, "message",
-                                                   cancel=True, default=YES))
-        tester.open_and_run(when_opened=lambda x: x.click_button(CANCEL))
-        self.assertEqual(tester.result, CANCEL)
+#@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+#class TestConfirm(unittest.TestCase, GuiTestAssistant):
+#
+#    def setUp(self):
+#        GuiTestAssistant.setUp(self)
+#
+#    def tearDown(self):
+#        GuiTestAssistant.tearDown(self)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_reject(self):
+#        # test that cancel works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
+#        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+#        self.assertEqual(tester.result, CANCEL)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_yes(self):
+#        # test that yes works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message"))
+#        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
+#        self.gui.process_events()
+#        self.assertEqual(tester.result, YES)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_no(self):
+#        # test that yes works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message"))
+#        tester.open_and_wait(when_opened=lambda x: x.click_button(NO))
+#        self.gui.process_events()
+#        self.assertEqual(tester.result, NO)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_cancel(self):
+#        # test that cancel works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
+#        tester.open_and_wait(when_opened=lambda x: x.click_button(CANCEL))
+#        self.gui.process_events()
+#        self.assertEqual(tester.result, CANCEL)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_title(self):
+#        # test that title works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message",
+#                                   title='Title'))
+#        tester.open_and_run(when_opened=lambda x: x.click_button(NO))
+#        self.assertEqual(tester.result, NO)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_default_yes(self):
+#        # test that default works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message", default=YES))
+#        tester.open_and_run(when_opened=lambda x: x.click_button(YES))
+#        self.assertEqual(tester.result, YES)
+#
+#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+#    def test_default_cancel(self):
+#        # test that default works as expected
+#        tester = ModalDialogTester(lambda: confirm(None, "message",
+#                                                   cancel=True, default=YES))
+#        tester.open_and_run(when_opened=lambda x: x.click_button(CANCEL))
+#        self.assertEqual(tester.result, CANCEL)
