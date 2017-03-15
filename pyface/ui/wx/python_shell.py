@@ -17,8 +17,10 @@
 """ Enthought pyface package component
 """
 
+from __future__ import absolute_import
+
 # Standard library imports.
-import __builtin__
+import __builtin__ as builtins
 import os
 import sys
 import types
@@ -229,7 +231,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = __builtin__.raw_input
+        self.raw_input = builtins.raw_input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -265,7 +267,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        __builtin__.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 
