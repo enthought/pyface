@@ -132,14 +132,14 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
-#    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-#    def test_yes(self):
-#        # test that Yes works as expected
-#        tester = ModalDialogTester(self.dialog.open)
-#        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
-#        self.assertEqual(tester.result, YES)
-#        self.assertEqual(self.dialog.return_code, YES)
-#
+    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    def test_yes(self):
+        # test that Yes works as expected
+        tester = ModalDialogTester(self.dialog.open)
+        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
+        self.assertEqual(tester.result, YES)
+        self.assertEqual(self.dialog.return_code, YES)
+
 #    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
 #    def test_renamed_yes(self):
 #        self.dialog.yes_label = u"Sure"
