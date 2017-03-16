@@ -16,7 +16,8 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
-USING_QT = ETSConfig.toolkit not in ['', 'wx']
+USING_QT = ETSConfig.toolkit not in ['', 'null', 'wx']
+is_pyqt5 = (ETSConfig.toolkit == 'qt4' and os.environ.get('QT_API') == 'pyqt5')
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
@@ -129,6 +130,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
+    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_ok(self):
         # test that OK works as expected
