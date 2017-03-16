@@ -268,6 +268,9 @@ class ModalDialogTester(object):
             type_,
             test=lambda widget: widget.text() == text
         )
+        if widget is None:
+            # this will only occur if there is some problem with the test
+            raise RuntimeError("Could not find matching child widget.")
         widget.click()
 
     def click_button(self, button_id):
