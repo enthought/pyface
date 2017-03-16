@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import os
+
 from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
@@ -130,7 +132,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
-    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_ok(self):
         # test that OK works as expected
