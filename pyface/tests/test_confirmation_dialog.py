@@ -136,7 +136,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     def test_yes(self):
         # test that Yes works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: self.dialog.close()) #x.click_button(YES))
+        tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
