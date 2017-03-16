@@ -197,6 +197,7 @@ class ModalDialogTester(object):
         finally:
             condition_timer.stop()
             condition_timer.timeout.disconnect(handler)
+            self._dialog_widget = None
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
