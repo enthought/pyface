@@ -38,9 +38,9 @@ for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
         break
-
-# does our environment give us a preferred API?
-qt_api = os.environ.get('QT_API')
+else:
+    # does our environment give us a preferred API?
+    qt_api = os.environ.get('QT_API')
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
