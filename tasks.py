@@ -75,6 +75,7 @@ from invoke import task
 supported_combinations = {
     '2.7': {'pyside', 'pyqt', 'wx'},
     '3.5': {'pyqt', 'pyqt5'},
+    '3.6': {'pyqt', 'pyqt5'},
 }
 
 dependencies = {
@@ -163,7 +164,7 @@ def test(ctx, runtime='3.5', toolkit='null', environment=None):
     # code from a local dir.  We need to ensure a good .coveragerc is in
     # that directory, plus coverage has a bug that means a non-local coverage
     # file doesn't get populated correctly.
-    with do_in_tempdir(files=['.coveragerc'], capture_files=['.coverage']):
+    with do_in_tempdir(files=['.coveragerc'], capture_files=['./.coverage*']):
         for command in commands:
             ctx.run(command.format(**parameters), env=environ)
 
@@ -246,6 +247,7 @@ def do_in_tempdir(files=(), capture_files=()):
 
     # send across any files we need
     for filepath in files:
+        print('copying file to tempdir: {}'.format(filepath))
         copyfile(filepath, path)
 
     os.chdir(path)
@@ -253,8 +255,10 @@ def do_in_tempdir(files=(), capture_files=()):
         yield path
 
         # retrieve any result files we want
-        for filepath in capture_files:
-            copyfile(filepath, old_path)
+        for pattern in capture_files:
+            for filepath in glob.iglob(pattern):
+                print('copying file back: {}'.format(filepath))
+                copyfile(filepath, old_path)
     finally:
         os.chdir(old_path)
         rmtree(path)
