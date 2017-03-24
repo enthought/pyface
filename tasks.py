@@ -66,14 +66,15 @@ how to run commands within an EDM enviornment.
 from contextlib import contextmanager
 import os
 from shutil import rmtree, copy as copyfile
+import sys
 from tempfile import mkdtemp
 
 from invoke import task
 
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx', 'null'},
-    '3.5': {'pyqt', 'null'},
+    '2.7': {'pyside', 'pyqt', 'wx'},
+    '3.5': {'pyqt', 'pyqt5'},
 }
 
 dependencies = {
@@ -89,13 +90,17 @@ dependencies = {
 extra_dependencies = {
     'pyside': {'pyside'},
     'pyqt': {'pyqt'},
-    'wx': {'wxpython'},
+    # XXX once pyqt5 is available in EDM, we will want it here
+    'pyqt5': set(),
+    # XXX temporary workaround for bug in recent EDM wxpython build on OS X
+    'wx': {'wxpython' if sys.platform != 'darwin' else 'wxpython==3.0.2.0-3'},
     'null': set()
 }
 
 environment_vars = {
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
+    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null'},
 }
@@ -118,6 +123,12 @@ def install(ctx, runtime='3.5', toolkit='null', environment=None):
         # install the project
         "edm run -e '{environment}' -- python setup.py install",
     ]
+    if toolkit == 'pyqt5':
+        commands += [
+            # pip install pyqt5, because we don't have in EDM yet
+            # this assumes Qt5 is available, which implies Linux, for now
+            "edm run -e '{environment}' -- pip install pyqt5",
+        ]
 
     print("Creating environment '{environment}'".format(**parameters))
     for command in commands:

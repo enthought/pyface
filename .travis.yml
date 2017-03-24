@@ -6,6 +6,7 @@ matrix:
     - env: RUNTIME=2.7 TOOLKIT=pyside
     - env: RUNTIME=2.7 TOOLKIT=wx
     - env: RUNTIME=3.5 TOOLKIT=pyqt
+    - env: RUNTIME=3.5 TOOLKIT=pyqt5
     - os: osx
       env: RUNTIME=2.7 TOOLKIT=pyqt
     - os: osx
@@ -14,6 +15,8 @@ matrix:
       env: RUNTIME=2.7 TOOLKIT=wx
     - os: osx
       env: RUNTIME=3.5 TOOLKIT=pyqt
+  allow_failures:
+    - env: RUNTIME=3.5 TOOLKIT=pyqt5
 cache:
   directories:
     - $HOME/.cache

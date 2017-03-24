@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import os
+
 from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
@@ -9,18 +11,29 @@ from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object(
-    'util.modal_dialog_tester:ModalDialogTester')
+
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
+ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
-USING_QT = ETSConfig.toolkit not in ['', 'wx']
+USING_QT = ETSConfig.toolkit not in ['', 'null', 'wx']
+is_pyqt5 = (ETSConfig.toolkit == 'qt4' and os.environ.get('QT_API') == 'pyqt5')
 
 
-class TestMessageDialog(unittest.TestCase):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = MessageDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -119,6 +132,7 @@ class TestMessageDialog(unittest.TestCase):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
+    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_ok(self):
         # test that OK works as expected
@@ -150,8 +164,9 @@ class TestMessageDialog(unittest.TestCase):
         self.assertEqual(self.dialog.return_code, OK)
 
 
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-class TestMessageDialogHelpers(unittest.TestCase):
+class TestMessageDialogHelpers(unittest.TestCase, GuiTestAssistant):
 
     def test_information(self):
         self._check_dialog(information)
