@@ -197,6 +197,7 @@ class ModalDialogTester(object):
         finally:
             condition_timer.stop()
             condition_timer.timeout.disconnect(handler)
+            self._dialog_widget = None
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
@@ -267,6 +268,9 @@ class ModalDialogTester(object):
             type_,
             test=lambda widget: widget.text() == text
         )
+        if widget is None:
+            # this will only occur if there is some problem with the test
+            raise RuntimeError("Could not find matching child widget.")
         widget.click()
 
     def click_button(self, button_id):
