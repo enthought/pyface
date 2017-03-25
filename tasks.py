@@ -64,6 +64,7 @@ how to run commands within an EDM enviornment.
 """
 
 from contextlib import contextmanager
+import glob
 import os
 from shutil import rmtree, copy as copyfile
 import sys
