@@ -152,6 +152,7 @@ def test(ctx, runtime='3.5', toolkit='null', environment=None):
 
     environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
+    environ['COVERAGE_FILE'] = ".coverage.{}.{}".format(runtime, toolkit)
 
     commands = [
         # run the main test suite
