@@ -130,7 +130,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     def close(self):
         # Don't fire signals for editors that have destroyed their controls.
-        self._qt4_editor_area.hasFocus.disconnect(self._qt4_editor_focus)
+        self._qt4_editor_area.editor_has_focus.disconnect(self._qt4_editor_focus)
 
         self._qt4_editor_area.clear()
 
@@ -142,12 +142,12 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def create_initial_layout(self, parent):
         self._qt4_editor_area = editor_area = SplitTabWidget(parent)
 
-        editor_area.hasFocus.connect(self._qt4_editor_focus)
+        editor_area.editor_has_focus.connect(self._qt4_editor_focus)
 
         # We are interested in focus changes but we get them from the editor
         # area rather than qApp to allow the editor area to restrict them when
         # needed.
-        editor_area.focusChanged.connect(self._qt4_view_focus_changed)
+        editor_area.focus_changed.connect(self._qt4_view_focus_changed)
 
         editor_area.tabTextChanged.connect(self._qt4_editor_title_changed)
         editor_area.new_window_request.connect(self._qt4_new_window_request)
