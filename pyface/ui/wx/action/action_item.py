@@ -74,7 +74,7 @@ class _MenuItem(HasTraits):
         action  = item.action
         label   = action.name
         kind    = _STYLE_TO_KIND_MAP[action.style]
-        longtip = action.description
+        longtip = action.description or action.tooltip
 
         if len(action.accelerator) > 0:
             label = label + '\t' + action.accelerator

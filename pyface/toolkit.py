@@ -108,7 +108,7 @@ def _init_toolkit():
                 return import_toolkit(tk)
         except RuntimeError as exc:
             exc_info = logger.getEffectiveLevel() <= logging.INFO
-            level = 'ERROR' if exc_info else 'INFO'
+            level = logger.ERROR if exc_info else logging.INFO
             msg = "Could not import Pyface backend %r"
             logger.log(level, msg, tk, excinfo=exc_info)
 
