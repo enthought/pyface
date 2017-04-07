@@ -2,32 +2,30 @@ language: generic
 sudo: false
 matrix:
   include:
-    - env: RUNTIME=2.7 TOOLKIT=pyqt
-    - env: RUNTIME=2.7 TOOLKIT=pyside
-    - env: RUNTIME=2.7 TOOLKIT=wx
-    - env: RUNTIME=3.5 TOOLKIT=pyqt
-    - env: RUNTIME=3.5 TOOLKIT=pyqt5
+    - env: RUNTIME=2.7 TOOLKITS="pyqt pyside wx"
+    - env: RUNTIME=3.5 TOOLKITS=pyqt
+    - env: RUNTIME=3.5 TOOLKITS=pyqt5
+    - env: RUNTIME=3.6 TOOLKITS=pyqt
+    - env: RUNTIME=3.6 TOOLKITS=pyqt5
     - os: osx
-      env: RUNTIME=2.7 TOOLKIT=pyqt
+      env: RUNTIME=2.7 TOOLKITS="pyqt pyside wx"
     - os: osx
-      env: RUNTIME=2.7 TOOLKIT=pyside
-    - os: osx
-      env: RUNTIME=2.7 TOOLKIT=wx
-    - os: osx
-      env: RUNTIME=3.5 TOOLKIT=pyqt
+      env: RUNTIME=3.5 TOOLKITS=pyqt
   allow_failures:
-    - env: RUNTIME=3.5 TOOLKIT=pyqt5
+    - env: RUNTIME=3.5 TOOLKITS=pyqt5
+    - env: RUNTIME=3.6 TOOLKITS=pyqt5
 cache:
   directories:
     - $HOME/.cache
 before_install:
   - export DISPLAY=:99.0; 
   - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then sh -e /etc/init.d/xvfb start; fi
-  - ./travis_ci_bootstrap_edm.sh
 install:
-  - edm run -- invoke install --runtime=${RUNTIME} --toolkit=${TOOLKIT}
+  - ./travis_ci_bootstrap_edm.sh
+  - for toolkit in ${TOOLKITS}; do edm run -- invoke install --runtime=${RUNTIME} --toolkit=${toolkit}; done
 script:
-  - edm run -- invoke test --runtime=${RUNTIME} --toolkit=${TOOLKIT}
+  - for toolkit in ${TOOLKITS}; do edm run -- invoke test --runtime=${RUNTIME} --toolkit=${toolkit}; done
 after_success:
+  - edm run -- coverage combine
   - edm run -- pip install codecov
   - edm run -- codecov
