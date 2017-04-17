@@ -486,7 +486,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """ Assign focus to the active editor, if possible.
         """
         active_editor = self.editor_area.active_editor
-        if active_editor:
+        if active_editor and active_editor.control:
             set_focus(active_editor.control)
 
     ###########################################################################
