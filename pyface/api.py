@@ -34,32 +34,37 @@ from .progress_dialog import ProgressDialog
 from .python_editor import PythonEditor
 from .python_shell import PythonShell
 from .sorter import Sorter
+from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
 from .split_application_window import SplitApplicationWindow
 from .split_dialog import SplitDialog
 from .split_panel import SplitPanel
 from .system_metrics import SystemMetrics
+from .ui_traits import Alignment, Border, HasBorder, HasMargin, Image, Margin
 from .window import Window
 from .widget import Widget
 
 
-###############################################################################
-# This part of the module handles widgets that are still wx specific.  This
-# will all be removed when everything has been ported to PyQt and pyface
-# becomes toolkit agnostic.
-###############################################################################
+# ----------------------------------------------------------------------------
+# Legacy and Wx-specific imports.
+# ----------------------------------------------------------------------------
 
+# These widgets currently only have Wx implementations
+# will return Unimplemented for Qt.
+
+from .expandable_panel import ExpandablePanel
+from .image_widget import ImageWidget
+from .layered_panel import LayeredPanel
+from .mdi_application_window import MDIApplicationWindow
+from .mdi_window_menu import MDIWindowMenu
+from .multi_toolbar_window import MultiToolbarWindow
+
+# This code isn't toolkit widget code, but is wx-specific
 from traits.etsconfig.api import ETSConfig
 if ETSConfig.toolkit == 'wx':
-    from .expandable_panel import ExpandablePanel
-    from .image_widget import ImageWidget
-    from .layered_panel import LayeredPanel
-    from .mdi_application_window import MDIApplicationWindow
-    from .mdi_window_menu import MDIWindowMenu
-    from .multi_toolbar_window import MultiToolbarWindow
-    from .single_choice_dialog import SingleChoiceDialog
 
     # Fix for broken Pycrust introspect module.
+    # XXX move this somewhere better? - CJW 2017
     from .util import fix_introspect_bug
 
 del ETSConfig

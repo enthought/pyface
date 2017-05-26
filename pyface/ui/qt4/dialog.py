@@ -76,8 +76,7 @@ class Dialog(MDialog, Window):
             btn = buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
         btn.setDefault(True)
-        QtCore.QObject.connect(btn, QtCore.SIGNAL('clicked()'),
-                               self.control, QtCore.SLOT('accept()'))
+        btn.clicked.connect(self.control.accept)
 
         # 'Cancel' button.
         if self.cancel_label:
@@ -86,8 +85,7 @@ class Dialog(MDialog, Window):
         else:
             btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
 
-        QtCore.QObject.connect(btn, QtCore.SIGNAL('clicked()'),
-                               self.control, QtCore.SLOT('reject()'))
+        btn.clicked.connect(self.control.reject)
 
         # 'Help' button.
         # FIXME v3: In the original code the only possible hook into the help
@@ -139,11 +137,13 @@ class Dialog(MDialog, Window):
         # Setting return code and firing close events is handled for 'modal' in
         # MDialog's open method. For 'nonmodal', we do it here.
         if self.style == 'nonmodal':
-            QtCore.QObject.connect(dlg, QtCore.SIGNAL('finished(int)'),
-                                   self._finished_fired)
+            dlg.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):
             dlg.resize(*self.size)
+
+        if self.position != (-1, -1):
+            dlg.move(*self.position)
 
         dlg.setWindowTitle(self.title)
 
@@ -158,5 +158,3 @@ class Dialog(MDialog, Window):
 
         self.return_code = _RESULT_MAP[result]
         self.close()
-
-#### EOF ######################################################################

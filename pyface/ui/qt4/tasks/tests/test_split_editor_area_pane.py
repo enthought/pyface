@@ -5,8 +5,6 @@ import tempfile
 import unittest
 
 from traits.api import HasTraits, Instance
-from traitsui.api import Group, UItem, View
-from traitsui.api import Tabbed as TabbedGroup
 
 from pyface.qt import QtGui, QtCore
 from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
@@ -17,34 +15,23 @@ from pyface.util.guisupport import get_app_qt4
 from pyface.ui.qt4.util.testing import event_loop
 
 
-class ViewWithTabs(HasTraits):
-    """ A view with tabs used to confuse the SplitEditorAreaPane. """
-    traits_view = View(
-        TabbedGroup(
-            Group(UItem(label='tab 1')),
-            Group(UItem(label='tab 2')),
-        )
-    )
-
-
 class ViewWithTabsEditor(Editor):
-    """ Test editor, displaying a TraitsUI view with tabs. """
+    """ Test editor, displaying a labels in tabs. """
 
     name = 'Test Editor'
 
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        view = ViewWithTabs()
-        self.ui = view.edit_traits(kind='subpanel', parent=parent)
-        self.control = self.ui.control
+        control = QtGui.QTabWidget()
+        control.addTab(QtGui.QLabel('tab 1'), 'group 1')
+        control.addTab(QtGui.QLabel('tab 2'), 'group 2')
+        self.control = control
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the editor.
         """
         self.control = None
-        self.ui.dispose()
-        self.ui = None
 
 
 class SplitEditorAreaPaneTestTask(Task):

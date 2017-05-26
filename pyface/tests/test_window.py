@@ -1,21 +1,31 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import unittest
 
 from ..constant import CANCEL, NO, OK, YES
 from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestWindow(unittest.TestCase, UnittestTools):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestWindow(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.window = Window()
+
+    def tearDown(self):
+        if self.window.control is not None:
+            with self.delete_widget(self.window.control):
+                self.window.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):
         # test that destroy works even when no control

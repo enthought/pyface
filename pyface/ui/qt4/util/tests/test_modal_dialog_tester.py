@@ -8,23 +8,26 @@
 # Thanks for using Enthought open source!
 
 """ Tests for the tabular editor tester. """
+from __future__ import absolute_import
 
 import unittest
 import cStringIO
 
 from pyface.qt import QtGui
-from pyface.api import MessageDialog, OK, CANCEL
+from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
-from traitsui.api import CancelButton, OKButton, View
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
+from pyface.util.testing import skip_if_no_traitsui
 
 
 class MyClass(HasStrictTraits):
 
     def default_traits_view(self):
+        from traitsui.api import CancelButton, OKButton, View
+
         view = View(
             buttons=[OKButton, CancelButton],
             resizable=False,
@@ -63,6 +66,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
         self.assertTrue(tester.dialog_was_opened)
 
+    @skip_if_no_traitsui
     def test_on_traitsui_dialog(self):
         my_class = MyClass()
         tester = ModalDialogTester(my_class.run)
@@ -78,6 +82,19 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         self.assertTrue(tester.value_assigned())
         self.assertEqual(tester.result, 'rejected')
         self.assertTrue(tester.dialog_was_opened)
+
+    @skip_if_no_traitsui
+    def test_dialog_was_not_opened_on_traitsui_dialog(self):
+        my_class = MyClass()
+        tester = ModalDialogTester(my_class.do_not_show_dialog)
+
+        # it runs okay
+        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
+        self.assertTrue(tester.value_assigned())
+        self.assertEqual(tester.result, True)
+
+        # but no dialog is opened
+        self.assertFalse(tester.dialog_was_opened)
 
     def test_capture_errors_on_failure(self):
         dialog = MessageDialog()
@@ -116,14 +133,14 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
             self.assertIn('ZeroDivisionError', alt_stderr)
 
     def test_has_widget(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.run)
+        dialog = Dialog()
+        tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
                 with tester.capture_error():
                     self.assertTrue(
-                        tester.has_widget('OK', QtGui.QPushButton)
+                        tester.has_widget('OK', QtGui.QAbstractButton)
                     )
                     self.assertFalse(
                         tester.has_widget(text='I am a virtual button')
@@ -134,14 +151,14 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=check_and_close)
 
     def test_find_widget(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.run)
+        dialog = Dialog()
+        tester = ModalDialogTester(dialog.open)
 
         def check_and_close(tester):
             try:
                 with tester.capture_error():
                     widget = tester.find_qt_widget(
-                        type_=QtGui.QPushButton,
+                        type_=QtGui.QAbstractButton,
                         test=lambda x: x.text() == 'OK'
                     )
                     self.assertIsInstance(widget, QtGui.QPushButton)
@@ -149,18 +166,6 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.close()
 
         tester.open_and_run(when_opened=check_and_close)
-
-    def test_dialog_was_not_opened_on_traitsui_dialog(self):
-        my_class = MyClass()
-        tester = ModalDialogTester(my_class.do_not_show_dialog)
-
-        # it runs okay
-        tester.open_and_run(when_opened=lambda x: x.close(accept=True))
-        self.assertTrue(tester.value_assigned())
-        self.assertEqual(tester.result, True)
-
-        # but no dialog is opened
-        self.assertFalse(tester.dialog_was_opened)
 
 
 if __name__ == '__main__':

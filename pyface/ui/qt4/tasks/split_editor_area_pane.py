@@ -7,10 +7,9 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
 from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
     on_trait_change, Property, provides, Str
 from pyface.qt import QtCore, QtGui
-from pyface.action.api import Action, Group
+from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
-from traitsui.api import Menu
-from traitsui.mimedata import PyMimeData
+from pyface.mimedata import PyMimeData
 from pyface.api import FileDialog
 from pyface.constant import OK
 from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
@@ -179,7 +178,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         pos : position (in global coordinates) where the context menu was
         requested
         """
-        menu = Menu()
+        menu = MenuManager()
         splitter = None
 
         splitter = None

@@ -6,16 +6,21 @@ from pyface.gui import GUI
 from pyface.toolkit import toolkit_object
 
 from ..progress_dialog import ProgressDialog
+from ..util.gui_test_assistant import GuiTestAssistant
+from ..util.modal_dialog_tester import ModalDialogTester
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
-
-class TestDialog(unittest.TestCase):
+class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = ProgressDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected

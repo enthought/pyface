@@ -83,7 +83,7 @@ class ToolBarManager(ActionManager):
     #### Trait change handlers ################################################
     #### Methods ##############################################################
 
-    def create_tool_bar(self, parent, controller=None):
+    def create_tool_bar(self, parent, controller=None, aui=False):
         """ Creates a tool bar. """
 
         # If a controller is required it can either be set as a trait on the
@@ -110,7 +110,10 @@ class ToolBarManager(ActionManager):
             style |= wx.TB_NODIVIDER
 
         # Create the control.
-        tool_bar = _ToolBar(self, parent, -1, style=style)
+        if aui:
+            tool_bar = _AuiToolBar(self, parent, -1, style=style)
+        else:
+            tool_bar = _ToolBar(self, parent, -1, style=style)
 
         # fixme: Setting the tool bitmap size seems to be the only way to
         # change the height of the toolbar in wx.
@@ -193,8 +196,53 @@ class ToolBarManager(ActionManager):
         return
 
 
-class _ToolBar(aui.AuiToolBar):
+class _ToolBar(wx.ToolBar):
     """ The toolkit-specific tool bar implementation. """
+
+    ###########################################################################
+    # 'object' interface.
+    ###########################################################################
+
+    def __init__(self, tool_bar_manager, parent, id, style):
+        """ Constructor. """
+
+        wx.ToolBar.__init__(self, parent, -1, style=style)
+
+        # Listen for changes to the tool bar manager's enablement and
+        # visibility.
+        self.tool_bar_manager = tool_bar_manager
+
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_enabled_changed, 'enabled'
+        )
+
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_visible_changed, 'visible'
+        )
+
+        return
+
+    ###########################################################################
+    # Trait change handlers.
+    ###########################################################################
+
+    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+
+        obj.window._wx_enable_tool_bar(self, new)
+
+        return
+
+    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+
+        obj.window._wx_show_tool_bar(self, new)
+
+        return
+
+
+class _AuiToolBar(aui.AuiToolBar):
+    """ The toolkit-specific tool bar implementation for AUI windows. """
 
     ###########################################################################
     # 'object' interface.
@@ -216,19 +264,19 @@ class _ToolBar(aui.AuiToolBar):
         self.tool_bar_manager.on_trait_change(
             self._on_tool_bar_manager_visible_changed, 'visible'
         )
-        
+
         # we need to defer hiding tools until first time Realize is called so
         # we can get the correct order of the toolbar for reinsertion at the
         # correct position
         self.initially_hidden_tool_ids = []
-        
+
         # map of tool ids to a tuple: position in full toolbar and the
         # ToolBarTool itself.  Can't keep a weak reference here because once
         # removed from the toolbar the item would be garbage collected.
         self.tool_map = {}
 
         return
-    
+
     def Realize(self):
         if len(self.tool_map) == 0:
             for pos in range(self.GetToolsCount()):
@@ -240,13 +288,13 @@ class _ToolBar(aui.AuiToolBar):
                 self.RemoveTool(tool_id)
             self.initially_hidden_tool_ids = []
         self.ShowTool = self.ShowToolPostRealize
-    
+
     def ShowTool(self, tool_id, state):
         """Used before realization to flag which need to be initially hidden
         """
         if not state:
             self.initially_hidden_tool_ids.append(tool_id)
-    
+
     def ShowToolPostRealize(self, tool_id, state):
         """Normal ShowTool method, activated after first call to Realize
         """
@@ -261,7 +309,7 @@ class _ToolBar(aui.AuiToolBar):
             self.RemoveTool(tool_id)
             # Update the toolbar in the AUI manager to force toolbar resize
             wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
-        
+
     def InsertToolInOrder(self, tool_id):
         orig_pos, tool = self.tool_map[tool_id]
         for pos in range(self.GetToolsCount()):
@@ -275,7 +323,11 @@ class _ToolBar(aui.AuiToolBar):
 
     ##### Additional convenience functions for the normal AGW AUI toolbar
 
-    AddLabelTool = aui.AuiToolBar.AddTool
+    def AddLabelTool(self, id, label, bitmap, bmpDisabled, kind, shortHelp,
+                     longHelp, clientData):
+        "The full AddTool() function."
+        return self.AddTool(id, label, bitmap, bmpDisabled, kind, shortHelp,
+                            longHelp, clientData, None)
 
     def InsertToolItem(self, pos, tool):
         self._items[pos:pos] = [tool]
@@ -295,7 +347,7 @@ class _ToolBar(aui.AuiToolBar):
         if tool is not None:
             tool.Destroy()
             return True
-        
+
         return False
 
 
@@ -310,12 +362,12 @@ class _ToolBar(aui.AuiToolBar):
         """
 
         idx = self.GetToolIndex(tool_id)
-        
+
         if idx >= 0 and idx < len(self._items):
             self._items.pop(idx)
             self.Realize()
             return True
-        
+
         return False
 
     FindById = aui.AuiToolBar.FindTool

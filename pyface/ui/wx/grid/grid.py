@@ -28,14 +28,13 @@ from wx.grid import GridTableMessage, \
 from wx import TheClipboard
 
 # Enthought library imports
-from pyface.api import Sorter, Widget
+from pyface.api import Widget
 from pyface.timer.api import do_later
 from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
-     List, Trait, Undefined
+     Trait, Undefined
 from pyface.wx.drag_and_drop import PythonDropSource, \
      PythonDropTarget, PythonObject
-from pyface.wx.drag_and_drop import clipboard as enClipboard
-from traitsui.wx.dnd_editor import FileDropSource
+from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
 # local imports
 from .grid_model import GridModel

@@ -21,11 +21,13 @@ from .label_provider import LabelProvider
 from .table_column_provider import TableColumnProvider
 from .table_content_provider import TableContentProvider
 from .table_label_provider import TableLabelProvider
-from .table_viewer import TableViewer
 from .tree_content_provider import TreeContentProvider
 from .tree_label_provider import TreeLabelProvider
 from .tree_item import TreeItem
-from .tree_viewer import TreeViewer
 from .viewer import Viewer
 from .viewer_filter import ViewerFilter
 from .viewer_sorter import ViewerSorter
+
+# these are only implemented in wx at the moment
+from .table_viewer import TableViewer
+from .tree_viewer import TreeViewer

@@ -1,14 +1,24 @@
 from traits.testing.unittest_tools import unittest
 from traits.etsconfig.api import ETSConfig
 
+# Skip tests if Enaml is not installed or we're using the wx backend.
+SKIP_REASON = None
 if ETSConfig.toolkit not in ['', 'qt4']:
-    raise unittest.SkipTest("TestEnamlEditor: Enaml does not support WX")
+    SKIP_REASON = "Enaml does not support WX"
+else:
+    try:
+        from enaml.widgets.api import Label
+        from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
+    except ImportError:
+        SKIP_REASON = "Enaml not installed"
 
-try:
-    from enaml.widgets.api import Label
-    from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
-except ImportError:
-    raise unittest.SkipTest("Enaml not installed")
+if SKIP_REASON is not None:
+    # Dummy class so that the TestEnamlTaskPane class definition below
+    # doesn't fail.
+
+    class GuiTestAssistant(object):
+        pass
+
 
 from traits.api import Str
 from pyface.tasks.api import EnamlEditor
@@ -21,6 +31,7 @@ class DummyStrEditor(EnamlEditor):
     def create_component(self):
         return Label(text=self.obj)
 
+@unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
     ###########################################################################
