@@ -20,7 +20,6 @@ class SimpleApplication(HasStrictTraits):
     # The GUI instance underlying this app.
     gui = Instance(IGUI)
 
-
     # Event fired after the event loop starts.
     application_running = Event
 
