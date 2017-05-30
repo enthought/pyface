@@ -63,6 +63,7 @@ class TestGui(unittest.TestCase):
         timeout_timer.setSingleShot(True)
         timeout_timer.setInterval(10000)  # 10 second timeout
         timeout_timer.timeout.connect(qt_app.quit)
+        timeout_timer.start()
         try:
             application.start()
         finally:
