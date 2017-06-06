@@ -196,7 +196,10 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_title(info)
-            self.commit_if_active()
+
+            # Don't need to refresh everything if only the name is changing
+            info.window.Refresh()
+            info.window.Update()
 
     def update_floating(self, info):
         if self.floating:
