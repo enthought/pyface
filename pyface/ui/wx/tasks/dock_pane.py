@@ -151,14 +151,17 @@ class DockPane(TaskPane, MDockPane):
         info = self.task.window._aui_manager.GetPane(self.pane_name)
         return info
     
-    def commit_layout(self):
-        self.task.window._aui_manager.Update()
+    def commit_layout(self, layout=True):
+        if layout:
+            self.task.window._aui_manager.Update()
+        else:
+            self.task.window._aui_manager.UpdateWithoutLayout()
 
-    def commit_if_active(self):
+    def commit_if_active(self, layout=True):
         # Only attempt to commit the AUI changes if the area if the task is active.
         main_window = self.task.window.control
         if main_window and self.task == self.task.window.active_task:
-            self.commit_layout()
+            self.commit_layout(layout)
         else:
             logger.debug("task not active so not committing...")
 
@@ -196,7 +199,9 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_title(info)
-            self.commit_if_active()
+
+            # Don't need to refresh everything if only the name is changing
+            self.commit_if_active(False)
 
     def update_floating(self, info):
         if self.floating:

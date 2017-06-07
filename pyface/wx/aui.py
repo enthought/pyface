@@ -273,3 +273,21 @@ class PyfaceAuiManager(aui.AuiManager):
             self.Update()
 
         return True
+
+    def UpdateWithoutLayout(self):
+        """If the layout in the AUI manager is not changing, this can be called
+        to refresh all the panes but preventing a big time usage doing a re-
+        layout that isn't necessary.
+        """
+        pane_count = len(self._panes)
+
+        for ii in xrange(pane_count):
+            p = self._panes[ii]
+            if p.window and p.IsShown() and p.IsDocked():
+                p.window.Refresh()
+                p.window.Update()
+
+        if wx.Platform == "__WXMAC__":
+            self._frame.Refresh()
+        else:
+            self.Repaint()
