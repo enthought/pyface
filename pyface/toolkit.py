@@ -82,7 +82,7 @@ def _init_toolkit():
 
         for plugin in plugins:
             try:
-                return plugin.load()
+                tk_object = plugin.load()
             except ImportError as exception:
                 logger.debug(exception, exc_info=True)
                 msg = "Could not load plugin %r from %r"
