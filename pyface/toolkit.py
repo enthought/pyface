@@ -84,7 +84,7 @@ def _init_toolkit():
             try:
                 return plugin.load()
             except ImportError as exception:
-                logger.exception(exception)
+                logger.debug(exception, exc_info=True)
                 msg = "Could not load plugin %r from %r"
                 logger.warning(msg, plugin.name, plugin.module_name)
             else:
@@ -115,8 +115,8 @@ def _init_toolkit():
         try:
             with provisional_toolkit(plugin.name):
                 return plugin.load()
-        except ImportError as exc:
-            logger.exception(exc)
+        except ImportError as exception:
+            logger.debug(exception, exc_info=True)
             msg = "Could not load plugin %r from %r"
             logger.warning(msg, plugin.name, plugin.module_name)
 
