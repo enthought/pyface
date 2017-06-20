@@ -50,6 +50,11 @@ class GuiTestAssistant(UnittestTools):
         self.pyface_raise_patch.start()
 
     def tearDown(self):
+        # Process any tasks that a misbehaving test might have left on the
+        # queue.
+        with self.event_loop_with_timeout(repeat=5):
+            pass
+
         # Some top-level widgets may only be present due to cyclic garbage not
         # having been collected; force a garbage collection before we decide to
         # close windows. This may need several rounds.
