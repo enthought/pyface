@@ -8,6 +8,7 @@
 # Thanks for using Enthought open source!
 
 import contextlib
+import gc
 import threading
 
 import mock
@@ -49,8 +50,17 @@ class GuiTestAssistant(UnittestTools):
         self.pyface_raise_patch.start()
 
     def tearDown(self):
-        with self.event_loop_with_timeout(repeat=5):
-            self.gui.invoke_later(self.qt_app.closeAllWindows)
+        # Some top-level widgets may only be present due to cyclic garbage not
+        # having been collected; force a garbage collection before we decide to
+        # close windows. This may need several rounds.
+        for _ in range(10):
+            if not gc.collect():
+                break
+
+        if len(self.qt_app.topLevelWidgets()) > 0:
+            with self.event_loop_with_timeout(repeat=5):
+                self.gui.invoke_later(self.qt_app.closeAllWindows)
+
         self.qt_app.flush()
         self.pyface_raise_patch.stop()
         self.traitsui_raise_patch.stop()
