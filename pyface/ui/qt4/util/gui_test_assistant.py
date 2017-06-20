@@ -8,6 +8,7 @@
 # Thanks for using Enthought open source!
 
 import contextlib
+import gc
 import threading
 
 import mock
