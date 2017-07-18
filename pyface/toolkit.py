@@ -98,7 +98,7 @@ def _init_toolkit():
         return import_toolkit(ETSConfig.toolkit)
 
     # Try known toolkits first.
-    for tk in ('qt4', 'wx'):
+    for tk in ('ipy', 'qt4', 'wx'):
         try:
             with provisional_toolkit(tk):
                 return import_toolkit(tk)

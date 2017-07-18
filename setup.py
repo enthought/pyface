@@ -170,6 +170,7 @@ if __name__ == "__main__":
           packages=find_packages(),
           entry_points = {
               'pyface.toolkits': [
+                  'ipy = pyface.ui.ipy.init:toolkit_object',
                   'qt4 = pyface.ui.qt4.init:toolkit_object',
                   'wx = pyface.ui.wx.init:toolkit_object',
                   'null = pyface.ui.null.init:toolkit_object',
