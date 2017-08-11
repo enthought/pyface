@@ -32,7 +32,7 @@ class FontRenderer(DefaultRenderer):
         # and colors.  We have to set the clipping region on
         # the grid's DC, otherwise the text will spill over
         # to the next cell
-        dc.SetClippingRect(rect)
+        dc.SetClippingRegion(rect)
 
         # clear the background
         dc.SetBackgroundMode(wx.SOLID)

@@ -68,7 +68,8 @@ class PyfaceAuiManager(aui.AuiManager):
 
         for part in uiparts:
 
-            part.rect = wx.RectPS(part.sizer_item.GetPosition(), part.sizer_item.GetSize())
+            part.rect = wx.Rect(part.sizer_item.GetPosition(),
+                                part.sizer_item.GetSize())
             if part.type == aui.AuiDockUIPart.typeDock:
                 part.dock.rect = part.rect
 

@@ -99,18 +99,18 @@ class FeatureBar ( HasPrivateTraits ):
                                                style = wx.BORDER_NONE )
 
             # Set up the 'erase background' event handler:
-            wx.EVT_ERASE_BACKGROUND( control, self._erase_background )
+            control.Bind(wx.EVT_ERASE_BACKGROUND, self._erase_background)
 
             # Set up the 'paint' event handler:
-            wx.EVT_PAINT( control, self._paint )
+            control.Bind(wx.EVT_PAINT, self._paint)
 
             # Set up mouse event handlers:
-            wx.EVT_LEFT_DOWN(    control, self._left_down )
-            wx.EVT_LEFT_UP(      control, self._left_up )
-            wx.EVT_RIGHT_DOWN(   control, self._right_down )
-            wx.EVT_RIGHT_UP(     control, self._right_up )
-            wx.EVT_MOTION(       control, self._mouse_move )
-            wx.EVT_ENTER_WINDOW( control, self._mouse_enter )
+            control.Bind(wx.EVT_LEFT_DOWN, self._left_down)
+            control.Bind(wx.EVT_LEFT_UP, self._left_up)
+            control.Bind(wx.EVT_RIGHT_DOWN, self._right_down)
+            control.Bind(wx.EVT_RIGHT_UP, self._right_up)
+            control.Bind(wx.EVT_MOTION, self._mouse_move)
+            control.Bind(wx.EVT_ENTER_WINDOW, self._mouse_enter)
 
             control.SetDropTarget( PythonDropTarget( self ) )
 
@@ -150,7 +150,7 @@ class FeatureBar ( HasPrivateTraits ):
         """ Handles repainting the window.
         """
         window = self.control
-        dx, dy = window.GetSizeTuple()
+        dx, dy = window.GetSize().Get()
         dc     = wx.PaintDC( window )
 
         # Draw the feature container:
@@ -272,7 +272,7 @@ class FeatureBar ( HasPrivateTraits ):
             # Check to see if the mouse has left the window, and mark it
             # completed if it has:
             x, y   = event.GetX(), event.GetY()
-            dx, dy = self.control.GetSizeTuple()
+            dx, dy = self.control.GetSize().Get()
             if (x < 0) or (y < 0) or (x >= dx) or (y >= dy):
                 self.control.ReleaseMouse()
                 self._tooltip_feature = None

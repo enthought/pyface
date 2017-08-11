@@ -81,7 +81,7 @@ def get_app_wx(*args, **kwargs):
     if app is None:
         if not kwargs.has_key('redirect'):
             kwargs['redirect'] = False
-        app = wx.PySimpleApp(*args, **kwargs)
+        app = wx.App(*args, **kwargs)
     return app
 
 def is_event_loop_running_wx(app=None):

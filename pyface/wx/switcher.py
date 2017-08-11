@@ -144,7 +144,7 @@ class SwitcherControl(wx.Panel):
                 combo.Append(name, data)
 
         # Listen for changes to the selected item.
-        wx.EVT_COMBOBOX(self, combo.GetId(), self._on_combobox)
+        combo.Bind(wx.EVT_COMBOBOX, self._on_combobox)
 
         # If the model's selected variable has been set ...
         if model.selected != -1:

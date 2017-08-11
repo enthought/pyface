@@ -126,13 +126,13 @@ class ExpandableHeader(Widget):
         height = self._get_preferred_height(parent, self.title, self._font)
         panel.SetSize((-1, height))
 
-        wx.EVT_ERASE_BACKGROUND(panel, self._on_erase_background)
-        wx.EVT_ENTER_WINDOW(panel, self._on_enter_leave)
-        wx.EVT_LEAVE_WINDOW(panel, self._on_enter_leave)
-        wx.EVT_LEFT_DOWN(panel, self._on_down)
-        wx.EVT_RIGHT_DOWN(panel, self._on_down)
+        panel.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
+        panel.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_leave)
+        panel.Bind(wx.EVT_LEAVE_WINDOW, self._on_enter_leave)
+        panel.Bind(wx.EVT_LEFT_DOWN, self._on_down)
+        panel.Bind(wx.EVT_RIGHT_DOWN, self._on_down)
 
-        wx.EVT_BUTTON(panel, remove.GetId(), self._on_remove)
+        panel.Bind(wx.EVT_BUTTON, self._on_remove)
 
         return panel
 

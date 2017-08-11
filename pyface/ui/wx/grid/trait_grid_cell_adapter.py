@@ -15,7 +15,7 @@
 
 # Major package imports
 import wx
-from wx.grid import PyGridCellEditor
+from wx.grid import GridCellEditor as PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Local imports:
@@ -108,13 +108,13 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if self_height > 1.0:
             height = int( self_height )
         elif (self_height >= 0.0) and (grid is not None):
-            height = int( self_height * grid.GetSize()[1] )
+            height = int(self_height * grid.GetSize().Get()[1])
 
         self_width = self._width
         if self_width > 1.0:
             width = int( self_width )
         elif (self_width >= 0.0) and (grid is not None):
-            width = int( self_width * grid.GetSize()[0] )
+            width = int(self_width * grid.GetSize().Get()[0])
 
         self._edit_width, self._edit_height = width, height
 
@@ -167,8 +167,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
             if changed:
                 grid.ForceRefresh()
 
-        self._control.SetDimensions(rect.x + 1, rect.y + 1,
-                                    edit_width, edit_height,
+        self._control.SetSize(rect.x + 1, rect.y + 1, edit_width, edit_height,
                                     SIZE_ALLOW_MINUS_ONE)
 
         if changed:
@@ -205,11 +204,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if isinstance(control, wx.TextCtrl):
             control.SetSelection(-1, -1)
 
-    def EndEdit(self, *args):
-        """ Validate the input data. """
-        return True  # Pass on all data to ApplyEdit
-
-    def ApplyEdit(self, row, col, grid):
+    def EndEdit(self, row, col, grid):
         """ Do anything necessary to complete the editing. """
         self._control.Show(False)
 

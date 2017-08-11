@@ -69,7 +69,7 @@ class ImageList(wx.ImageList):
             # probably related to a MIME type).
             else:
                 # Create a bitmap from the icon.
-                bmp = wx.EmptyBitmap(self._width, self._height)
+                bmp = wx.Bitmap(self._width, self._height)
                 bmp.CopyFromIcon(filename)
 
                 # Turn it into an image so that we can scale it.

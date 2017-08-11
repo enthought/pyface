@@ -68,7 +68,7 @@ class PreferenceDialog(SplitDialog):
         # 'Done' button.
         done = wx.Button(parent, wx.ID_OK, "Done")
         done.SetDefault()
-        wx.EVT_BUTTON(parent, wx.ID_OK, self._wx_on_ok)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, wx.ID_OK)
         sizer.Add(done)
 
         return sizer
@@ -147,12 +147,12 @@ class PreferenceDialog(SplitDialog):
 
         # 'Help' button. Comes first so 'Restore Defaults' doesn't jump around.
         self._help = help = wx.Button(parent, -1, "Help")
-        wx.EVT_BUTTON(parent, help.GetId(), self._on_help)
+        parent.Bind(wx.EVT_BUTTON, self._on_help, help.GetId())
         sizer.Add(help, 0, wx.RIGHT, 5)
 
         # 'Restore Defaults' button.
         restore = wx.Button(parent, -1, "Restore Defaults")
-        wx.EVT_BUTTON(parent, restore.GetId(), self._on_restore_defaults)
+        parent.Bind(wx.EVT_BUTTON, self._on_restore_defaults, restore.GetId())
         sizer.Add(restore)
 
         return sizer

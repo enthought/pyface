@@ -374,7 +374,7 @@ class IPythonWidget(Widget):
         shell = klass(parent, -1, shell=self.interp)
 
         # Listen for key press events.
-        wx.EVT_CHAR(shell, self._wx_on_char)
+        shell.Bind(wx.EVT_CHAR, self._wx_on_char)
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))

@@ -83,7 +83,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # We respond to the FIRST size event to make sure that the split ratio
         # is correct when the splitter is laid out in its parent.
-        wx.EVT_SIZE(splitter, self._on_size)
+        splitter.Bind(wx.EVT_SIZE, self._on_size)
 
         return splitter
 
@@ -139,7 +139,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         """ Called when the frame is resized. """
 
         splitter = event.GetEventObject()
-        width, height = splitter.GetSize()
+        width, height = splitter.GetSize().Get()
 
         # Make sure that the split ratio is correct.
         if self.direction == 'vertical':

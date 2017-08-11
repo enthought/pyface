@@ -66,11 +66,11 @@ class SplashScreen(MSplashScreen, Window):
         # Get the splash screen image.
         image = self.image.create_image()
 
-        splash_screen = wx.SplashScreen(
+        splash_screen = adv.SplashScreen(
             # The bitmap to display on the splash screen.
             image.ConvertToBitmap(),
             # Splash Style.
-            wx.SPLASH_NO_TIMEOUT | wx.SPLASH_CENTRE_ON_SCREEN,
+            adv.SPLASH_NO_TIMEOUT | adv.SPLASH_CENTRE_ON_SCREEN,
             # Timeout in milliseconds (we don't currently timeout!).
             0,
             # The parent of the splash screen.
@@ -91,7 +91,7 @@ class SplashScreen(MSplashScreen, Window):
         )
 
         # This allows us to write status text on the splash screen.
-        wx.EVT_PAINT(splash_screen, self._on_paint)
+        splash_screen.Bind(wx.EVT_PAINT, self._on_paint)
 
         return splash_screen
 
@@ -113,7 +113,7 @@ class SplashScreen(MSplashScreen, Window):
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.
-            window = self.control.GetSplashWindow()
+            window = self.control  #.GetSplashWindow()
 
             dc = wx.PaintDC(window)
 

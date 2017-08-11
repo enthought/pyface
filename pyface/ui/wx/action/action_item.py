@@ -106,7 +106,7 @@ class _MenuItem(HasTraits):
                 # bitmaps, so just ignore the exception if it happens
                 pass
 
-        menu.AppendItem(self.control)
+        menu.Append(self.control)
         menu.menu_items.append(self)
 
         # Set the initial enabled/disabled state of the action.
@@ -119,7 +119,8 @@ class _MenuItem(HasTraits):
         # Wire it up...create an ugly flag since some platforms dont skip the
         # event when we thought they would
         self._skip_menu_event = False
-        wx.EVT_MENU(parent, self.control_id, self._on_menu)
+        #wx.EVT_MENU(parent, self.control_id, self._on_menu)
+        parent.Bind(wx.EVT_MENU, self._on_menu, self.control)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
@@ -363,9 +364,12 @@ class _Tool(HasTraits):
             self.tool_bar.SetSize((-1, 50))
 
         self.control_id = wx.NewId()
-        self.control = tool_bar.AddLabelTool(
-            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
-        )
+        #self.control = tool_bar.AddLabelTool(
+        #    self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
+        #)
+        self.control = tool_bar.AddTool(self.control_id, label, bmp,
+                                        wx.NullBitmap, kind, tooltip, longtip,
+                                        None)
 
         # Set the initial checked state.
         tool_bar.ToggleTool(self.control_id, action.checked)
@@ -382,7 +386,8 @@ class _Tool(HasTraits):
                 self.control_id, action.enabled and action.visible)
 
         # Wire it up.
-        wx.EVT_TOOL(parent, self.control_id, self._on_tool)
+        #wx.EVT_TOOL(parent, self.control_id, self._on_tool)
+        parent.Bind(wx.EVT_TOOL, self._on_tool, self.control)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).

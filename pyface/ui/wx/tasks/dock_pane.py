@@ -117,7 +117,7 @@ class DockPane(TaskPane, MDockPane):
         """
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
-            self.task.window._aui_manager.DetachPane(self.control)
+            #self.task.window._aui_manager.DetachPane(self.control)
             
             # Some containers (e.g.  TraitsDockPane) will destroy the control
             # before we get here (e.g.  traitsui.ui.UI.finish by way of
@@ -142,7 +142,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _get_size(self):
         if self.control is not None:
-            return self.control.GetSizeTuple()
+            return self.control.GetSize().Get()
         return (-1, -1)
 
     #### Trait change handlers ################################################

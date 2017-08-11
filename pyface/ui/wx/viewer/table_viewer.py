@@ -16,6 +16,7 @@
 
 # Major package imports.
 import wx
+from wx.lib.agw import ultimatelistctrl as ULC
 
 # Enthought library imports.
 from traits.api import Color, Event, Instance, Trait
@@ -76,23 +77,20 @@ class TableViewer(ContentViewer):
         wxid = table.GetId()
 
         # Table events.
-        wx.EVT_LIST_ITEM_SELECTED(table, wxid, self._on_item_selected)
-        wx.EVT_LIST_ITEM_ACTIVATED(table, wxid, self._on_item_activated)
-        wx.EVT_LIST_BEGIN_DRAG(table, wxid, self._on_list_begin_drag)
-        wx.EVT_LIST_BEGIN_RDRAG(table, wxid, self._on_list_begin_rdrag)
+        table.Bind(wx.EVT_LIST_ITEM_SELECTED, self._on_item_selected)
+        table.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._on_item_activated)
+        table.Bind(wx.EVT_LIST_BEGIN_DRAG, self._on_list_begin_drag)
+        table.Bind(wx.EVT_LIST_BEGIN_RDRAG, self._on_list_begin_rdrag)
 
-        wx.EVT_LIST_BEGIN_LABEL_EDIT(
-            table, wxid, self._on_list_begin_label_edit
-        )
+        table.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
+                   self._on_list_begin_label_edit)
 
-        wx.EVT_LIST_END_LABEL_EDIT(
-            table, wxid, self._on_list_end_label_edit
-        )
+        table.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._on_list_end_label_edit)
 
         # fixme: Bug[732104] indicates that this event does not get fired
         # in a virtual list control (it *does* get fired in a regular list
         # control 8^().
-        wx.EVT_LIST_ITEM_DESELECTED(table, wxid, self._on_item_deselected)
+        table.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._on_item_deselected)
 
         # Create the widget!
         self._create_widget(parent)
@@ -150,7 +148,7 @@ class TableViewer(ContentViewer):
         """ Called when an item in the list is selected. """
 
         # Get the index of the row that was selected (nice wx interface huh?!).
-        row = event.m_itemIndex
+        row = event.Index
 
         # Trait event notification.
         self.row_selected = row
@@ -171,7 +169,7 @@ class TableViewer(ContentViewer):
         """ Called when an item in the list is activated. """
 
         # Get the index of the row that was activated (nice wx interface!).
-        row = event.m_itemIndex
+        row = event.Index
 
         # Trait event notification.
         self.row_activated = row
@@ -232,7 +230,7 @@ class TableViewer(ContentViewer):
             alignment = self.column_provider.get_alignment(self, index)
             info.m_format = self.FORMAT_MAP.get(alignment, wx.LIST_FORMAT_LEFT)
 
-            self.control.InsertColumnInfo(index, info)
+            self.control.InsertColumn(index, info)  #
 
         # Update the table contents and the column widths.
         self._update_contents()
@@ -295,7 +293,7 @@ class TableViewer(ContentViewer):
         return width
 
 
-class _Table(wx.ListCtrl):
+class _Table(wx.ListCtrl):  #(ULC.UltimateListCtrl):#
     """ The wx control that we use to implement the table viewer. """
 
     # Default style.

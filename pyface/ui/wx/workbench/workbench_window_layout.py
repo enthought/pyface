@@ -429,7 +429,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _wx_set_item_size(self, dock_control, size):
         """ Sets the size of a dock control. """
 
-        window_width, window_height = self.window.control.GetSize()
+        window_width, window_height = self.window.control.GetSize().Get()
         width,        height        = size
 
         if width != -1:
@@ -618,11 +618,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # the passed control is a str object instead of a wx object.
         if on_set_focus is not None:
             #control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
-            wx.EVT_SET_FOCUS(control, on_set_focus)
+            control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
 
         if on_kill_focus is not None:
             #control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
-            wx.EVT_KILL_FOCUS(control, on_kill_focus)
+            control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
 
         for child in control.GetChildren():
             self._wx_add_focus_listeners(child, on_set_focus, on_kill_focus)
@@ -761,7 +761,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _wx_on_editor_area_size_changed(self, new):
         """ Dynamic trait change handler. """
 
-        window_width, window_height = self.window.control.GetSize()
+        window_width, window_height = self.window.control.GetSize().Get()
 
         # Get the dock control that contains the editor dock window.
         control = self._wx_view_dock_window.get_control(self.editor_area_id)

@@ -76,7 +76,10 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
-        panel.SetSize((500, 400))
+        #sizer = wx.BoxSizer(wx.HORIZONTAL)
+        #panel.SetSize((4000, 1400))
+        #sizer.SetSizeHints(panel)
+        #panel.SetSizer(sizer)
         panel.SetBackgroundColour('blue')
 
         return panel

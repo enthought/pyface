@@ -86,11 +86,11 @@ class Window(MWindow, Widget):
     ###########################################################################
 
     def _add_event_listeners(self):
-        wx.EVT_ACTIVATE(self.control, self._wx_on_activate)
-        wx.EVT_CLOSE(self.control, self._wx_on_close)
-        wx.EVT_SIZE(self.control, self._wx_on_control_size)
-        wx.EVT_MOVE(self.control, self._wx_on_control_move)
-        wx.EVT_CHAR(self.control, self._wx_on_char)
+        self.control.Bind(wx.EVT_ACTIVATE, self._wx_on_activate)
+        self.control.Bind(wx.EVT_CLOSE, self._wx_on_close)
+        self.control.Bind(wx.EVT_SIZE, self._wx_on_control_size)
+        self.control.Bind(wx.EVT_MOVE, self._wx_on_control_move)
+        self.control.Bind(wx.EVT_CHAR, self._wx_on_char)
 
     ###########################################################################
     # Protected 'IWidget' interface.
@@ -181,8 +181,12 @@ class Window(MWindow, Widget):
         # call event.GetPosition directly, but that would be wrong.  The pixel
         # reported by that call is the pixel just below the window menu and
         # just right of the Windows-drawn border.
-        self._position = event.GetEventObject().GetPositionTuple()
 
+        try:
+            self._position = event.GetEventObject().GetPosition(
+            ).Get()  #Sizer.GetPosition().Get()
+        except:
+            pass
         event.Skip()
 
     def _wx_on_control_size(self, event):

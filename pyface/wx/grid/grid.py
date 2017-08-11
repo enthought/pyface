@@ -61,19 +61,19 @@ class Grid(wxGrid):
         self.SetTable(model._grid_table_base, True)
         model.on_trait_change(self._on_model_changed, 'model_changed')
 
-        wx.grid.EVT_GRID_CELL_CHANGE(self, self._on_cell_change)
-        wx.grid.EVT_GRID_SELECT_CELL(self, self._on_select_cell)
+        self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self._on_cell_change)
+        self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
 
         # This starts the cell editor on a double-click as well as on a second
         # click.
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(self, self._on_cell_left_dclick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self._on_cell_left_dclick)
 
         # This pops up a context menu.
         #wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self, self._on_cell_right_click)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
-        wx.EVT_KEY_DOWN(self, self._on_key_down)
+        self.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
 
         # Initialize the row and column models.
         self._initialize_rows(model)
@@ -193,7 +193,7 @@ class Grid(wxGrid):
             # Popup a context menu allowing the user to delete the row.
             menu = wx.Menu()
             menu.Append(101, "Delete Row")
-            wx.EVT_MENU(self, 101, self._on_delete_row)
+            self.Bind(wx.EVT_MENU, self._on_delete_row, id=101)
 
             self.PopupMenu(menu, evt.GetPosition())
 

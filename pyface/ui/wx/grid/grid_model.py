@@ -277,8 +277,16 @@ class GridModel(HasPrivateTraits):
         Note that subclasses should not override this method, but should
         override the _set_value method instead.
         """
-        #print 'GridModel.set_value row: ', row, ' col: ', col, ' value: ', value
-        rows_appended = self._set_value(row, col, value)
+        #grids are passing only strings, this is temp workaraound
+        try:
+            val1=int(value)
+        except:
+            try:
+                val1=float(value)
+            except:
+                val1=value
+        rows_appended = self._set_value(row, col, val1)
+        #rows_appended = self._set_value(row, col, value)
 
         self.fire_content_changed()
         return

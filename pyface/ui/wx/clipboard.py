@@ -21,7 +21,7 @@ from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 
 # Data formats
-PythonObjectFormat = wx.CustomDataFormat('PythonObject')
+PythonObjectFormat = wx.DataFormat('PythonObject')
 TextFormat         = wx.DataFormat(wx.DF_TEXT)
 FileFormat         = wx.DataFormat(wx.DF_FILENAME)
 

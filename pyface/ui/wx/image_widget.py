@@ -83,22 +83,21 @@ class ImageWidget(Widget):
         self._button_down = False
 
         # Set up mouse event handlers:
-        wx.EVT_ENTER_WINDOW(self.control, self._on_enter_window)
-        wx.EVT_LEAVE_WINDOW(self.control, self._on_leave_window)
-        wx.EVT_LEFT_DCLICK(self.control, self._on_left_dclick)
-        wx.EVT_LEFT_DOWN(self.control, self._on_left_down)
-        wx.EVT_LEFT_UP(self.control, self._on_left_up)
-        wx.EVT_PAINT(self.control, self._on_paint)
+        self.control.Bind(wx.EVT_ENTER_WINDOW, self._on_enter_window)
+        self.control.Bind(wx.EVT_LEAVE_WINDOW, self._on_leave_window)
+        self.control.Bind(wx.EVT_LEFT_DCLICK, self._on_left_dclick)
+        self.control.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        self.control.Bind(wx.EVT_LEFT_UP, self._on_left_up)
+        self.control.Bind(wx.EVT_PAINT, self._on_paint)
 
         # Pens used to draw the 'selection' marker:
         # ZZZ: Make these class instances when moved to the wx toolkit code.
         self._selectedPenDark = wx.Pen(
-            wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID
-        )
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID)
 
         self._selectedPenLight = wx.Pen(
-            wx.SystemSettings_GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1, wx.SOLID
-        )
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1,
+            wx.SOLID)
 
         return
 
@@ -184,7 +183,7 @@ class ImageWidget(Widget):
             self._button_down = False
 
         if self._selected is not None:
-            wdx, wdy = self.GetClientSizeTuple()
+            wdx, wdy = self.GetClientSize().Get()
             x        = event.GetX()
             y        = event.GetY()
             if (0 <= x < wdx) and (0 <= y < wdy):
@@ -206,7 +205,7 @@ class ImageWidget(Widget):
         """ Called when the widget needs repainting. """
 
         wdc      = wx.PaintDC( self.control )
-        wdx, wdy = self.control.GetClientSizeTuple()
+        wdx, wdy = self.control.GetClientSize().Get()
         bitmap   = self.bitmap
         bdx      = bitmap.GetWidth()
         bdy      = bitmap.GetHeight()

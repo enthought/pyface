@@ -69,7 +69,7 @@ class ImageResource(MImageResource, HasTraits):
             # We have to convert the image to a bitmap first and then create an
             # icon from that.
             bmp = image.ConvertToBitmap()
-            icon = wx.EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(bmp)
 
         return icon

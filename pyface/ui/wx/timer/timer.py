@@ -36,7 +36,7 @@ class Timer(wx.Timer):
         given arguments and keyword args after every `millisecs`
         (milliseconds).
         """
-        wx.Timer.__init__(self, id=wx.NewId())
+        wx.Timer.__init__(self)  #, id=wx.NewId())
         self.callable = callable
         self.args = args
         self.kw_args = kw_args
