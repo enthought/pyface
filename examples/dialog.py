@@ -21,8 +21,8 @@ import os, sys
 sys.path.append(os.path.abspath(r'..\..\..'))
 
 # Enthought library imports.
-from pyface.api import confirm, error, information, warning, YES
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import (ApplicationWindow, GUI, YES, choose_one, confirm,
+                        error, information, warning)
 from pyface.action.api import Action, MenuBarManager, MenuManager
 
 
@@ -58,14 +58,14 @@ class MainWindow(ApplicationWindow):
 
         parent = self.control
 
+        print choose_one(parent, "Make a choice", ['one', 'two', 'three'])
+
         information(parent, 'Going...')
         warning(parent, 'Going......')
         error(parent, 'Gone!')
 
         if confirm(parent, 'Should I exit?') == YES:
             self.close()
-
-        return
 
 
 # Application entry point.
@@ -79,5 +79,3 @@ if __name__ == '__main__':
 
     # Start the GUI event loop!
     gui.start_event_loop()
-
-##### EOF #####################################################################

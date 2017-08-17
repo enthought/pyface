@@ -1,5 +1,4 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2017, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,13 +6,12 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
-from __future__ import absolute_import
 
-from .grid import Grid
-from .grid_column import GridColumn
-from .grid_model import GridModel
-from .grid_row import GridRow
+import logging
+
+logger = logging.getLogger(__name__)
+logger.warning(
+    'DEPRECATED: pyface.util.grid.api, use pyface.wx.grid.api instead. '
+    'Will be removed in Pyface 7.')
+
+from pyface.wx.grid.api import *

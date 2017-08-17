@@ -158,7 +158,8 @@ class Dialog(MDialog, Window):
         if self.resizeable:
             style |= wx.RESIZE_BORDER
 
-        return wx.Dialog(parent, -1, self.title, style=style)
+        return wx.Dialog(parent, -1, self.title, self.position, self.size,
+                         style)
 
     #### wx event handlers ####################################################
 
@@ -180,7 +181,4 @@ class Dialog(MDialog, Window):
 
     def _wx_on_help(self, event):
         """ Called when the 'Help' button is pressed. """
-
-        print 'Heeeeelllllllllllllpppppppppppppppppppp'
-
-#### EOF ######################################################################
+        pass

@@ -9,7 +9,15 @@
 # Description: Qt API selector. Can be used to switch between pyQt and PySide
 #------------------------------------------------------------------------------
 
+import importlib
 import os
+import sys
+
+QtAPIs = [
+    ('pyside', 'PySide'),
+    ('pyqt5', 'PyQt5'),
+    ('pyqt', 'PyQt4'),
+]
 
 def prepare_pyqt4():
     # Set PySide compatible APIs.
@@ -22,23 +30,36 @@ def prepare_pyqt4():
     sip.setapi('QUrl', 2)
     sip.setapi('QVariant', 2)
 
-qt_api = os.environ.get('QT_API')
+qt_api = None
 
+# have we already imported a Qt API?
+for api_name, module in QtAPIs:
+    if module in sys.modules:
+        qt_api = api_name
+        break
+else:
+    # does our environment give us a preferred API?
+    qt_api = os.environ.get('QT_API')
+
+# if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
-    try:
-        import PySide
-        qt_api = 'pyside'
-    except ImportError:
+    for api_name, module in QtAPIs:
         try:
-            prepare_pyqt4()
-            import PyQt4
-            qt_api = 'pyqt'
+            importlib.import_module(module)
+            qt_api = api_name
+            break
         except ImportError:
-            raise ImportError('Cannot import PySide or PyQt4')
+            continue
+        else:
+            raise ImportError('Cannot import PySide, PyQt5 or PyQt4')
 
-elif qt_api == 'pyqt':
+# otherwise check QT_API value is valid
+elif qt_api not in {api_name for api_name, module in QtAPIs}:
+    msg = ("Invalid Qt API %r, valid values are: " +
+           "'pyside, 'pyqt' or 'pyqt5'") % qt_api
+    raise RuntimeError(msg)
+
+
+if qt_api == 'pyqt':
+    # set the PyQt4 APIs
     prepare_pyqt4()
-
-elif qt_api != 'pyside':
-    raise RuntimeError("Invalid Qt API %r, valid values are: 'pyqt' or 'pyside'"
-                       % qt_api)

@@ -16,6 +16,25 @@ IS_RELEASED = False
 VERSION = '%d.%d.%d' % (MAJOR, MINOR, MICRO)
 
 
+def read_module(module, package='pyface'):
+    """ Read a simple .py file from pyface in a safe way.
+
+    It would be simpler to import the file, but that can be problematic in an
+    unknown system, so we exec the file instead and extract the variables.
+
+    This will fail if things get too complex in the file being read, but is
+    sufficient to get version and requirements information.
+    """
+    base_dir = os.path.dirname(__file__)
+    module_name = package + '.' + module
+    path = os.path.join(base_dir, package, module+'.py')
+    with open(path, 'r') as fp:
+        code = compile(fp.read(), module_name, 'exec')
+    context = {}
+    exec(code, context)
+    return context
+
+
 # Return the git revision as a string
 def git_version():
     def _minimal_ext_cmd(cmd):
@@ -70,14 +89,15 @@ if not is_released:
     elif os.path.exists('pyface/_version.py'):
         # must be a source distribution, use existing version file
         try:
-            from pyface._version import git_revision as git_rev
-            from pyface._version import full_version as full_v
+            data = read_module('_version')
+            git_rev = data['git_revision']
+            fullversion = data['full_version']
         except ImportError:
-            raise ImportError("Unable to import git_revision. Try removing "
+            raise ImportError("Unable to read git_revision. Try removing "
                               "pyface/_version.py and the build directory "
                               "before building.")
 
-        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', full_v)
+        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion)
         if match is None:
             dev_num = '0'
         else:
@@ -95,9 +115,14 @@ if not is_released:
                                  git_revision=git_rev,
                                  is_released=IS_RELEASED))
 
+    return fullversion
+
+
 if __name__ == "__main__":
-    write_version_py()
-    from pyface import __version__, __requires__
+    __version__ = write_version_py()
+    data = read_module('__init__')
+    __requires__ = data['__requires__']
+    __extras_require__ = data['__extras_require__']
 
     setup(name='pyface',
           version=__version__,
@@ -115,10 +140,10 @@ if __name__ == "__main__":
               Operating System :: POSIX
               Operating System :: Unix
               Programming Language :: Python
-              Programming Language :: Python :: 2.6
               Programming Language :: Python :: 2.7
               Programming Language :: Python :: 3.4
               Programming Language :: Python :: 3.5
+              Programming Language :: Python :: 3.6
               Topic :: Scientific/Engineering
               Topic :: Software Development
               Topic :: Software Development :: Libraries
@@ -127,19 +152,29 @@ if __name__ == "__main__":
           long_description=open('README.rst').read(),
           download_url=('https://github.com/enthought/pyface'),
           install_requires=__requires__,
+          extras_require=__extras_require__,
           license='BSD',
           maintainer='ETS Developers',
           maintainer_email='enthought-dev@enthought.com',
           package_data={'': [
+            'image/library/*.zip',
             'images/*',
             'action/images/*',
             'dock/images/*',
             'tree/images/*',
+            'tests/images/*',
             'ui/qt4/images/*',
             'ui/wx/images/*',
             'ui/wx/grid/images/*',
           ]},
           packages=find_packages(),
+          entry_points = {
+              'pyface.toolkits': [
+                  'qt4 = pyface.ui.qt4.init:toolkit_object',
+                  'wx = pyface.ui.wx.init:toolkit_object',
+                  'null = pyface.ui.null.init:toolkit_object',
+              ],
+          },
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
           use_2to3=True,

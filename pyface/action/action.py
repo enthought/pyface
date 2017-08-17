@@ -17,7 +17,8 @@
 # Enthought library imports.
 from traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
 from traits.api import Unicode
-from traitsui.ui_traits import Image
+
+from pyface.ui_traits import Image
 
 
 class Action(HasTraits):

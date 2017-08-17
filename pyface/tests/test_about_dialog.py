@@ -8,15 +8,25 @@ from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestAboutDialog(unittest.TestCase):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = AboutDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -35,8 +45,11 @@ class TestAboutDialog(unittest.TestCase):
         parent._create()
         self.dialog._create()
         self.gui.process_events()
-        self.dialog.destroy()
-        parent.destroy()
+
+        with self.delete_widget(self.dialog.control):
+            self.dialog.destroy()
+        with self.delete_widget(parent.control):
+            parent.destroy()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label

@@ -74,7 +74,7 @@ class _MenuItem(HasTraits):
         action  = item.action
         label   = action.name
         kind    = _STYLE_TO_KIND_MAP[action.style]
-        longtip = action.description
+        longtip = action.description or action.tooltip
 
         if len(action.accelerator) > 0:
             label = label + '\t' + action.accelerator
@@ -370,11 +370,16 @@ class _Tool(HasTraits):
         # Set the initial checked state.
         tool_bar.ToggleTool(self.control_id, action.checked)
 
-        # Set the initial enabled/disabled state of the action.
-        tool_bar.EnableTool(self.control_id, action.enabled)
+        if hasattr(tool_bar, 'ShowTool'):
+            # Set the initial enabled/disabled state of the action.
+            tool_bar.EnableTool(self.control_id, action.enabled)
 
-        # Set the initial visibility
-        tool_bar.ShowTool(self.control_id, action.visible)
+            # Set the initial visibility
+            tool_bar.ShowTool(self.control_id, action.visible)
+        else:
+            # Set the initial enabled/disabled state of the action.
+            tool_bar.EnableTool(
+                self.control_id, action.enabled and action.visible)
 
         # Wire it up.
         wx.EVT_TOOL(parent, self.control_id, self._on_tool)
@@ -389,8 +394,6 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-        return
-
     ###########################################################################
     # Private interface.
     ###########################################################################
@@ -400,16 +403,20 @@ class _Tool(HasTraits):
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
 
-        self.tool_bar.EnableTool(self.control_id, self.enabled)
-
-        return
+        if hasattr(self.tool_bar, 'ShowTool'):
+            self.tool_bar.EnableTool(self.control_id, self.enabled)
+        else:
+            self.tool_bar.EnableTool(
+                self.control_id, self.enabled and self.visible)
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
-        self.tool_bar.ShowTool(self.control_id, self.visible)
-
-        return
+        if hasattr(self.tool_bar, 'ShowTool'):
+            self.tool_bar.ShowTool(self.control_id, self.visible)
+        else:
+            self.tool_bar.EnableTool(
+                self.control_id, self.enabled and self.visible)
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
@@ -434,16 +441,20 @@ class _Tool(HasTraits):
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
-        self.tool_bar.EnableTool(self.control_id, action.enabled)
-
-        return
+        if hasattr(self.tool_bar, 'ShowTool'):
+            self.tool_bar.EnableTool(self.control_id, action.enabled)
+        else:
+            self.tool_bar.EnableTool(
+                self.control_id, action.enabled and action.visible)
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
-        self.tool_bar.ShowTool(self.control_id, action.visible)
-
-        return
+        if hasattr(self.tool_bar, 'ShowTool'):
+            self.tool_bar.ShowTool(self.control_id, action.visible)
+        else:
+            self.tool_bar.EnableTool(
+                self.control_id, self.enabled and action.visible)
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """

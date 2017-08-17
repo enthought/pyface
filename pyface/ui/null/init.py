@@ -10,7 +10,6 @@
 """ Initialize this backend.
 """
 
-# There is nothing for us to initialize, but the toolkit switching code depends
-# on the existence of this module.
+from pyface.base_toolkit import Toolkit
 
-#### EOF ######################################################################
+toolkit_object = Toolkit('null', 'pyface.ui.null')

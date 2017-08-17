@@ -26,7 +26,7 @@ from traits.api import Bool, Event, provides, Unicode
 # Local imports.
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
-from pyface.util.python_stc import PythonSTC, faces
+from pyface.wx.python_stc import PythonSTC, faces
 from .widget import Widget
 
 
@@ -96,7 +96,7 @@ class PythonEditor(MPythonEditor, Widget):
         if path is None:
             path = self.path
 
-        f = file(path, 'w')
+        f = open(path, 'w')
         f.write(self.control.GetText())
         f.close()
 

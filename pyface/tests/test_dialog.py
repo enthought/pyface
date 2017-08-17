@@ -7,15 +7,25 @@ from ..constant import OK, CANCEL
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestDialog(unittest.TestCase):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = Dialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -28,8 +38,15 @@ class TestDialog(unittest.TestCase):
         self.dialog.destroy()
 
     def test_size(self):
-        # test that default size works as expected
+        # test that size works as expected
         self.dialog.size = (100, 100)
+        self.dialog._create()
+        self.gui.process_events()
+        self.dialog.destroy()
+
+    def test_position(self):
+        # test that position works as expected
+        self.dialog.position = (100, 100)
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()

@@ -12,88 +12,46 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 """ A dialog that allows the user to chose a single item from a list. """
+
 from __future__ import absolute_import
 
-# Major package imports.
-import wx
-
-# Enthought library imports.
-from traits.api import List, Str, Any
-
-# Local imports.
-from .dialog import Dialog
+from .constant import OK
+from .toolkit import toolkit_object
 
 
-class SingleChoiceDialog(Dialog):
-    """ A dialog that allows the user to chose a single item from a list.
+# Import the toolkit specific version.
+SingleChoiceDialog = toolkit_object('single_choice_dialog:SingleChoiceDialog')
 
-    choices is the list of things to choose from.   If name_attribute is
-    set then we assume it is a list of objects getattr(obj, name_attribute)
-    gives us the string to put in the dialog.  Otherwise we just call str()
-    on the choices to get the strings.
+
+# Convenience functions.
+def choose_one(parent, message, choices, title='Choose', cancel=True):
+    """ Convenience method to show an information message dialog.
+
+    Parameters
+    ----------
+    parent : toolkit control or None
+        The toolkit control that should be the parent of the dialog.
+    message : str
+        The text of the message to display.
+    choices : list
+        List of objects to choose from.
+    title : str
+        The text of the dialog title.
+    cancel : bool
+        Whether or not the dialog can be cancelled.
+
+    Returns
+    -------
+    choice : any
+        The selected object, or None if cancelled.
     """
-
-    choices = List(Any)
-    choice = Any
-    name_attribute = Str
-    caption = Str
-
-    ###########################################################################
-    # 'Window' interface.
-    ###########################################################################
-
-    def close(self):
-        """ Closes the window. """
-
-        # Get the chosen object.
-        if self.control is not None:
-            self.choice = self.choices[self.control.GetSelection()]
-
-        # Let the window close as normal.
-        super(SingleChoiceDialog, self).close()
-
-        return
-
-    ###########################################################################
-    # Protected 'Window' interface.
-    ###########################################################################
-
-    def _create_control(self, parent):
-        """ Create the toolkit-specific control that represents the window. """
-
-        dialog = wx.SingleChoiceDialog(
-            parent,
-            self.title,
-            self.caption,
-            self._get_string_choices(),
-            self.STYLE
-        )
-
-        return dialog
-
-    def _create_contents(self, parent):
-        """ Creates the window contents. """
-
-        # In this case, wx does it all for us in 'wx.SingleChoiceDialog'
-        pass
-
-    ###########################################################################
-    # 'Private' interface.
-    ###########################################################################
-
-    def _get_string_choices(self):
-        """ Returns the list of strings to display in the dialog. """
-
-        if len(self.name_attribute) > 0:
-            # We asssume choices is a list of objects with this attribute
-            choices = [
-                getattr(obj, self.name_attribute) for obj in self.choices
-            ]
-
-        else:
-            # We just convert to strings
-            choices = [str(obj) for obj in self.choices]
-
-        return choices
-
-#### EOF ######################################################################
+    dialog = SingleChoiceDialog(
+        parent=parent, message=message, choices=choices, title=title,
+        cancel=cancel
+    )
+    result = dialog.open()
+    if result == OK:
+        choice = dialog.choice
+    else:
+        choice = None
+    return choice

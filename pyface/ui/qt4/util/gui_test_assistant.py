@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2015 by Enthought, Inc., Austin, TX
+# Copyright (c) 2013-2017 by Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -8,6 +8,7 @@
 # Thanks for using Enthought open source!
 
 import contextlib
+import gc
 import threading
 
 import mock
@@ -49,10 +50,28 @@ class GuiTestAssistant(UnittestTools):
         self.pyface_raise_patch.start()
 
     def tearDown(self):
+        # Process any tasks that a misbehaving test might have left on the
+        # queue.
         with self.event_loop_with_timeout(repeat=5):
-            self.gui.invoke_later(self.qt_app.closeAllWindows)
-        self.traitsui_raise_patch.stop()
+            pass
+
+        # Some top-level widgets may only be present due to cyclic garbage not
+        # having been collected; force a garbage collection before we decide to
+        # close windows. This may need several rounds.
+        for _ in range(10):
+            if not gc.collect():
+                break
+
+        if len(self.qt_app.topLevelWidgets()) > 0:
+            with self.event_loop_with_timeout(repeat=5):
+                self.gui.invoke_later(self.qt_app.closeAllWindows)
+
+        self.qt_app.flush()
         self.pyface_raise_patch.stop()
+        self.traitsui_raise_patch.stop()
+
+        del self.pyface_raise_patch
+        del self.traitsui_raise_patch
         del self.event_loop_helper
         del self.gui
         del self.qt_app
@@ -130,7 +149,7 @@ class GuiTestAssistant(UnittestTools):
         obj : HasTraits
             The HasTraits instance whose trait will change.
         trait : str
-            The extended trait name of trait changes to listen too.
+            The extended trait name of trait changes to listen to.
         condition : callable
             A callable to determine if the stop criteria have been met. This
             should accept no arguments.
@@ -182,14 +201,21 @@ class GuiTestAssistant(UnittestTools):
         traits = set(traits)
         recorded_changes = set()
 
+        # Correctly handle the corner case where there are no traits.
+        if not traits:
+            condition.set()
+
         def set_event(trait):
             recorded_changes.add(trait)
             if recorded_changes == traits:
                 condition.set()
 
-        handlers = {}
-        for trait in traits:
-            handlers[trait] = lambda: set_event(trait)
+        def make_handler(trait):
+            def handler():
+                set_event(trait)
+            return handler
+
+        handlers = {trait: make_handler(trait) for trait in traits}
 
         for trait, handler in handlers.iteritems():
             traits_object.on_trait_change(handler, trait)

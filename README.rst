@@ -5,11 +5,12 @@ pyface: traits-capable windowing framework
 .. image:: https://travis-ci.org/enthought/pyface.svg?branch=master
     :target: https://travis-ci.org/enthought/pyface
 
-.. image:: https://ci.appveyor.com/api/projects/status/7xxghu5phbvml75j/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/itziakos/pyface/branch/master
+.. image:: https://ci.appveyor.com/api/projects/status/68nfb049cdq9wqd1/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/EnthoughtOSS/pyface/branch/master
 
 .. image:: https://codecov.io/github/enthought/pyface/coverage.svg?branch=master
     :target: https://codecov.io/github/enthought/pyface?branch=master
+
 
 The pyface project contains a toolkit-independent GUI abstraction layer,
 which is used to support the "visualization" features of the Traits package.
@@ -44,5 +45,4 @@ Pyface depends on:
 
 * Pygments for syntax highlighting in the Qt code editor widget.
 
-* some widgets may have additional optional dependencies.  For example, the
-  IPython shell widgets require IPython to be installed.
+* some widgets may have additional optional dependencies.

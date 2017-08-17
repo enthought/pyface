@@ -181,9 +181,9 @@ class ProgressDialog(MProgressDialog, Window):
         # TODO: hookup the buttons to our methods, this may involve subclassing from QDialog
 
         if self.can_cancel:
-            buttons.connect(buttons, QtCore.SIGNAL('rejected()'), dialog, QtCore.SLOT('reject()'))
+            buttons.rejected.connect(dialog.reject)
         if self.can_ok:
-            buttons.connect(buttons, QtCore.SIGNAL('accepted()'), dialog, QtCore.SLOT('accept()'))
+            buttons.accepted.connect(dialog.accept)
 
         layout.addWidget(buttons)
 

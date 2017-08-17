@@ -8,15 +8,25 @@ from ..file_dialog import FileDialog
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestFileDialog(unittest.TestCase):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestFileDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = FileDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create_wildcard(self):
         wildcard = FileDialog.create_wildcard('Python', '*.py')
