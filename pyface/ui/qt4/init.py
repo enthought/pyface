@@ -2,20 +2,21 @@
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# Copyright (c) 2017, Enthought, Inc.
+# All rights reserved.
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
+# This software is provided without warranty under the terms of the BSD
+# license.  However, when used with the GPL version of PyQt the additional
+# terms described in the PyQt GPL exception also apply.
+#
+# Author: Riverbank Computing Limited and Enthought developers
 #------------------------------------------------------------------------------
 
 
-# Standard library imports.
 import sys
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui, qt_api
+from pyface.base_toolkit import Toolkit
 
 if qt_api == 'pyqt':
     # Check the version numbers are late enough.
@@ -35,4 +36,6 @@ _app = QtGui.QApplication.instance()
 if _app is None:
     _app = QtGui.QApplication(sys.argv)
 
-#### EOF ######################################################################
+
+# create the toolkit object
+toolkit_object = Toolkit('qt4', 'pyface.ui.qt4')

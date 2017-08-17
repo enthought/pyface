@@ -7,15 +7,25 @@ from ..gui import GUI
 from ..progress_dialog import ProgressDialog
 from ..toolkit import toolkit_object
 
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
-class TestDialog(unittest.TestCase):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = ProgressDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -116,10 +126,6 @@ class TestDialog(unittest.TestCase):
     def test_update_negative(self):
         self.dialog.min = 0
         self.dialog.max = -10
-        self.dialog.open()
-        for i in range(11):
-            result = self.dialog.update(1)
-            self.gui.process_events()
-            self.assertEqual(result, (True, False))
-        self.dialog.close()
+        with self.assertRaises(AttributeError):
+            self.dialog.open()
         self.assertIsNone(self.dialog.control)

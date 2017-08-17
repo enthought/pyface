@@ -1,5 +1,4 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2017, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,25 +6,12 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
-""" A description of a row in a grid. """
 
+import logging
 
-# Enthought library imports.
-from traits.api import HasTraits
+logger = logging.getLogger(__name__)
+logger.warning(
+    'DEPRECATED: pyface.util.grid.grid_row, use pyface.wx.grid.grid_row instead. '
+    'Will be removed in Pyface 7.')
 
-
-class GridRow(HasTraits):
-    """ A description of a row in a grid. """
-
-    def __init__(self, row_data):
-        """ Create a new row. """
-
-        self.__dict__.update(row_data)
-
-        return
-
-#### EOF ######################################################################
+from pyface.wx.grid.grid_row import *

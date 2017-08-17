@@ -170,7 +170,6 @@ class _FutureCall(QtCore.QObject):
         # that only works on QThreads. We want regular Python threads to work.
         event = QtCore.QEvent(self._pyface_event)
         QtGui.QApplication.postEvent(self, event)
-        QtGui.QApplication.sendPostedEvents()
 
     def event(self, event):
         """ QObject event handler.

@@ -62,6 +62,22 @@ class ImageResource(MImageResource, HasTraits):
 
         return QtGui.QIcon(image)
 
+    def image_size(cls, image):
+        """ Get the size of a toolkit image
+
+        Parameters
+        ----------
+        image : toolkit image
+            A toolkit image to compute the size of.
+
+        Returns
+        -------
+        size : tuple
+            The (width, height) tuple giving the size of the image.
+        """
+        size = image.size()
+        return (size.width(), size.height())
+
     ###########################################################################
     # Private interface.
     ###########################################################################

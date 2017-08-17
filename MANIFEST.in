@@ -1,7 +1,7 @@
 include *.txt
 include README.rst
 include MANIFEST.in
-recursive-include pyface *.py *.png *.jpg *.gif *.svg
+recursive-include pyface *.py *.png *.jpg *.gif *.svg *.zip *.txt
 graft docs
 prune docs/build
 recursive-exclude docs *.pyc

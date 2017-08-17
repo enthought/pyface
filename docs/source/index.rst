@@ -52,9 +52,9 @@ The supported values of **ETSConfig.toolkit** are:
 
 * 'qt4': `PyQt <http://riverbankcomputing.co.uk/pyqt/>`_, which provides Python
   bindings for the `Qt <http://trolltech.com/products/qt>`_ framework version 4.
-* 'wx': `wxPython <http://www.wxpython.org>`_, which provides Python bindings 
+* 'wx': `wxPython <http://www.wxpython.org>`_, which provides Python bindings
   for the `wxWidgets <http://wxwidgets.org>`_ toolkit.
-* 'null': A do-nothing toolkit, for situations where neither of the other 
+* 'null': A do-nothing toolkit, for situations where neither of the other
   toolkits is installed, but Traits is needed for non-UI purposes.
 
 The default behavior of Pyface is to search for available toolkit-specific
@@ -65,11 +65,10 @@ order of precedence:
 #. The program can explicitly set **ETSConfig.toolkit**. It must do this before
    importing from any other Enthought Tool Suite component, including
    traits.  For example, at the beginning of a program::
-   
+
        from traits.etsconfig.api import ETSConfig
        ETSConfig.toolkit = 'wx'
 
-#. The user can specify a -toolkit flag on the command line of the program. 
 #. The user can define a value for the ETS_TOOLKIT environment variable.
 
 Contents
@@ -79,4 +78,5 @@ Contents
    :maxdepth: 2
 
    Overview <overview>
+   Toolkits <toolkits>
    API Documentation <api/pyface>

@@ -1,5 +1,11 @@
-# (C) Copyright 2014 Enthought, Inc., Austin, TX
+# (C) Copyright 2014-2017 Enthought, Inc., Austin, TX
 # All right reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
 """ A class to facilitate testing components that use TraitsUI or Qt Dialogs.
 
 """
@@ -8,11 +14,11 @@ import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
-from .gui_test_assistant import find_qt_widget
+from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
@@ -129,6 +135,7 @@ class ModalDialogTester(object):
                 condition=self.value_assigned, timeout=15)
         finally:
             condition_timer.stop()
+            condition_timer.timeout.disconnect(handler)
             self.assert_no_errors_collected()
 
     def open_and_wait(self, when_opened, *args, **kwargs):
@@ -189,6 +196,8 @@ class ModalDialogTester(object):
                 condition=condition, timeout=15)
         finally:
             condition_timer.stop()
+            condition_timer.timeout.disconnect(handler)
+            self._dialog_widget = None
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
@@ -234,7 +243,6 @@ class ModalDialogTester(object):
             self._event_loop_error.append(
                 (sys.exc_info()[0], traceback.format_exc())
             )
-            raise
 
     def assert_no_errors_collected(self):
         """ Assert that the tester has not collected any errors.
@@ -260,6 +268,9 @@ class ModalDialogTester(object):
             type_,
             test=lambda widget: widget.text() == text
         )
+        if widget is None:
+            # this will only occur if there is some problem with the test
+            raise RuntimeError("Could not find matching child widget.")
         widget.click()
 
     def click_button(self, button_id):

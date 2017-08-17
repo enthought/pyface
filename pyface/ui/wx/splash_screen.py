@@ -28,13 +28,10 @@ import wx
 from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
-# Private Enthought library imports.
-# FIXME v3: This should be moved out of pyface.
-from pyface.util.font_helper import new_font_like
-
 # Local imports.
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
+from pyface.wx.util.font_helper import new_font_like
 from .window import Window
 
 

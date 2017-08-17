@@ -6,7 +6,6 @@ import logging
 
 # Enthought library imports.
 from traits.api import Instance, Str
-from traitsui.api import UI
 
 # Local imports.
 from .editor import Editor
@@ -24,7 +23,7 @@ class TraitsUIEditor(Editor):
     # The traits UI that represents the editor.
     #
     # The framework sets this to the value returned by 'create_ui'.
-    ui = Instance(UI)
+    ui = Instance("traitsui.ui.UI")
 
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
