@@ -106,20 +106,6 @@ class TaskWindow(ApplicationWindow):
 
         return self.control is not None
 
-    def close(self):
-        """ Closes the window.
-
-        Overriden to make the 'closing' event vetoable. Returns whether the
-        window was closed.
-        """
-        if self.control is not None:
-            self.closing = event = Vetoable()
-            if not event.veto:
-                self.destroy()
-                self.closed = self
-
-        return self.control is None
-
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
     ###########################################################################

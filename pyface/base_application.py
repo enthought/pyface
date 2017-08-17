@@ -51,7 +51,7 @@ class BaseApplication(HasStrictTraits):
     name = Str('Default Application')
 
     #: Human-readable company name
-    company = Str('Enthought')
+    company = Str
 
     # Infrastructure ----------------------------------------------------------
 
@@ -77,7 +77,7 @@ class BaseApplication(HasStrictTraits):
     application_initialized = Event(ApplicationEvent)
 
     #: Fired when the application is starting. Called immediately before the
-    #: start method is run.
+    #: stop method is run.
     stopping = Event(ApplicationEvent)
 
     #: Upon successful completion of the stop method.
@@ -131,12 +131,20 @@ class BaseApplication(HasStrictTraits):
         return True
 
     def run(self):
-        """ Run the application """
+        """ Run the application
+
+        Return
+        ------
+        status : bool
+            Whether or not the application ran normally
+        """
+        started = stopped = False
 
         # Start up the application.
         self.starting = ApplicationEvent(application=self,
                                          event_type='starting')
         started = self.start()
+
         if started:
             logger.info('---- Application started ----')
             self.started = ApplicationEvent(application=self,
@@ -153,11 +161,7 @@ class BaseApplication(HasStrictTraits):
                                                 event_type='stopped')
                 logger.info('---- Application stopped ----')
 
-                # exit normally
-                sys.exit()
-
-        # exit with an error
-        sys.exit(1)
+        return started and stopped
 
     def exit(self, force=False):
         """ Exits the application.
@@ -284,3 +288,13 @@ class BaseApplication(HasStrictTraits):
         """ Default home comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
         return ETSConfig.application_home
+
+    def _user_data_default(self):
+        """ Default user_data comes from ETSConfig. """
+        from traits.etsconfig.etsconfig import ETSConfig
+        return ETSConfig.user_data
+
+    def _company_default(self):
+        """ Default company comes from ETSConfig. """
+        from traits.etsconfig.etsconfig import ETSConfig
+        return ETSConfig.company

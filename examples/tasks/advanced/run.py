@@ -31,15 +31,18 @@ def create_task_window(application, files=()):
 def main(argv):
     """ A more advanced example of using Tasks. """
     app = TaskApplication(
-        id="MyPyfaceApplication",
+        id="MyTaskApplication",
         name="Python Editor",
         window_size=(800, 600),
     )
+
     # hook up listener to application initialized event
-    app.on_trait_change(
-        lambda event: create_task_window(event.application, files=argv[1:]),
-        "application_initialized"
-    )
+    def app_started(event):
+        create_task_window(event.application, files=argv[1:])
+
+    app.on_trait_change(app_started, "application_initialized")
+
+    # run the application
     app.run()
 
 

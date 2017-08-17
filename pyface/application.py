@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2016 by Enthought, Inc., Austin, TX
+# Copyright (c) 2014-2017 by Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -17,10 +17,11 @@ import logging
 import sys
 from traceback import format_exception, format_exception_only
 
-from traits.api import Instance, List, Tuple, Vetoable
+from traits.api import (
+    Instance, List, ReadOnly, Tuple, Vetoable, on_trait_change
+)
 
 from .base_application import ApplicationEvent, BaseApplication
-from .i_gui import IGUI
 from .i_image_resource import IImageResource
 from .i_splash_screen import ISplashScreen
 from .i_window import IWindow
@@ -45,6 +46,7 @@ class Application(BaseApplication):
     Often you will want to subclass this application, but it can be used as-is
     by hooking a listener to the `application_initialized` event::
 
+        from pyface.api import ApplicationWindow, HeadingText
 
         class MainWindow(ApplicationWindow):
             def _create_contents(self, parent):
@@ -86,7 +88,7 @@ class Application(BaseApplication):
     windows = List(Instance(IWindow))
 
     #: The Pyface GUI instance for the application
-    gui = Instance(IGUI)
+    gui = ReadOnly
 
     # Window lifecycle methods -----------------------------------------------
 
@@ -103,14 +105,10 @@ class Application(BaseApplication):
         # get garbage collected
         self.windows.append(window)
 
-        # set up window listeners
-        # NOTE: 'activated' is not fired on a window when the window first
-        # opens and gets focus. It is only fired when the window comes from
-        # lower in the stack to be the active window.
-        window.on_trait_change(self._on_activate_window, 'activated')
-        window.on_trait_change(self._on_window_closing, 'closing')
-        window.on_trait_change(self._on_window_closed, 'closed')
         window.open()
+
+    def close_window(self, window):
+        """ Close a window that we control """
 
     # -------------------------------------------------------------------------
     # 'BaseApplication' interface
@@ -123,13 +121,15 @@ class Application(BaseApplication):
         their start method, and should call the superclass start() method
         before doing any work themselves.
         """
+        from pyface.gui import GUI
+
         ok = super(Application, self).start()
         if ok:
             # set up logging so messages can be displayed on splash screen
             self._setup_logging()
 
             # create the GUI so that the splash screen comes up first thing
-            self.gui
+            self.gui = GUI(splash_screen=self.splash_screen)
 
         return ok
 
@@ -190,7 +190,11 @@ class Application(BaseApplication):
     # Destruction methods -----------------------------------------------------
 
     def _can_exit(self):
-        """ Check with each window to see if it can be closed """
+        """ Check with each window to see if it can be closed
+
+        The fires closing events for each window, and returns False if any
+        listener vetos.
+        """
         for window in reversed(self.windows):
             window.closing = event = Vetoable()
             if event.veto:
@@ -200,9 +204,10 @@ class Application(BaseApplication):
 
     def _prepare_exit(self):
         """ Close each window """
-        for window in reversed(self.windows):
+        # ensure copy of list, as we modify original list while closing
+        for window in list(reversed(self.windows)):
             window.destroy()
-            window.closed = True
+            window.closed = window
 
     def _exit(self):
         """ Shut down the event loop """
@@ -220,29 +225,27 @@ class Application(BaseApplication):
         By default send logging to a stream and set the log level to info.
         Most applications will want to replace this with something more
         appropriate to their needs.
+
+        This is provided as a basic default so that the class can be used
+        without having to subclass.
         """
         logger = logging.getLogger()
         logger.addHandler(logging.StreamHandler())
-        logger.setLevel(logging.INFO)
 
+    @on_trait_change('windows:activate')
     def _on_activate_window(self, window, trait, old, new):
-        """ Listener that ensures active undo command stack is correct.
+        """ Listener that tracks currently active window.
         """
         self.active_window = window
 
     # Destruction utilities ---------------------------------------------------
 
-    def _on_window_closing(self, window, trait, old, new):
-        """ Custom behavior when the closing of a window is requested."""
-        pass
-
+    @on_trait_change('windows:closed')
     def _on_window_closed(self, window, trait, old, new):
         """ Listener that ensures window handles are released when closed.
         """
-        self.windows.remove(window)
-        window.on_trait_change(self._on_activate_window, 'activated', )
-        window.on_trait_change(self._on_window_closing, 'closing')
-        window.on_trait_change(self._on_window_closed, 'closed')
+        if window in self.windows:
+            self.windows.remove(window)
 
     def _reset_logger(self):
         """ Reset root logger to default WARNING level and remove all handlers.
@@ -250,10 +253,3 @@ class Application(BaseApplication):
         logger = logging.getLogger()
         logger.setLevel(logging.WARNING)
         clear_handlers(logger)
-
-    # Trait initializers ------------------------------------------------------
-
-    def _gui_default(self):
-        from pyface.api import GUI
-
-        return GUI(splash_screen=self.splash_screen)

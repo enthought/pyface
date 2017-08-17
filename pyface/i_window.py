@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from traits.api import Event, Tuple, Unicode
+from traits.api import Event, Tuple, Unicode, Vetoable
 
 # Local imports.
 from pyface.constant import NO
@@ -50,7 +50,7 @@ class IWindow(IWidget):
     closed =  Event
 
     #: The window is about to be closed.
-    closing =  Event
+    closing =  Vetoable
 
     #: The window has been deactivated.
     deactivated = Event
@@ -71,10 +71,40 @@ class IWindow(IWidget):
     ###########################################################################
 
     def open(self):
-        """ Opens the window. """
+        """ Opens the window.
 
-    def close(self):
-        """ Closes the window. """
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the opening of the window.
+
+        If the window is opened, the :py:attr:`opened` event will be fired
+        with the IWindow instance as the event value.
+
+        Returns
+        -------
+        opened : bool
+            Whether or not the window was opened.
+        """
+
+    def close(self, force=False):
+        """ Closes the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the closing of the window.  If :py:obj:`force` is
+        :py:obj:`True` then the window will close no matter what.
+
+        If the window is closed, the closed event will be fired with the window
+        object as the event value.
+
+        Parameters
+        ----------
+        force : bool
+            Whether the window should close despite vetos.
+
+        Returns
+        -------
+        closed : bool
+            Whether or not the window is closed.
+        """
 
     def activate(self):
         """ Activates the window. """
@@ -173,31 +203,57 @@ class MWindow(object):
     ###########################################################################
 
     def open(self):
-        """ Opens the window. """
+        """ Opens the window.
 
-        # Trait notification.
-        self.opening = self
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the opening of the window.
 
-        if self.control is None:
-            self._create()
+        If the window is opened, the :py:attr:`opened` event will be fired
+        with the IWindow instance as the event value.
 
-        self.show(True)
+        Returns
+        -------
+        opened : bool
+            Whether or not the window was opened.
+        """
+        self.opening = event = Vetoable()
+        if not event.veto:
+            # Create the control, if necessary.
+            if self.control is None:
+                self._create()
 
-        # Trait notification.
-        self.opened = self
+            self.show(True)
+            self.opened = self
 
-    def close(self):
-        """ Closes the window. """
+        return self.control is not None
 
+    def close(self, force=False):
+        """ Closes the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the closing of the window.  If :py:obj:`force` is
+        :py:obj:`True` then the window will close no matter what.
+
+        If the window is closed, the closed event will be fired with the window
+        object as the event value.
+
+        Parameters
+        ----------
+        force : bool
+            Whether the window should close despite vetos.
+
+        Returns
+        -------
+        closed : bool
+            Whether or not the window is closed.
+        """
         if self.control is not None:
-            # Trait notification.
-            self.closing = self
+            self.closing = event = Vetoable()
+            if force or not event.veto:
+                self.destroy()
+                self.closed = self
 
-            # Cleanup the toolkit-specific control.
-            self.destroy()
-
-            # Trait notification.
-            self.closed = self
+        return self.control is None
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.

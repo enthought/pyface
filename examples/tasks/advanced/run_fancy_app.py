@@ -8,18 +8,16 @@ Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
-import platform
 import logging
 import os
 
-from traits.api import Directory, Instance, List, Str, Tuple
+from traits.api import Directory, Instance, List
 from pyface.tasks.api import TaskApplication
 from pyface.image_resource import ImageResource
 from pyface.splash_screen import SplashScreen
 
 from example_task import ExampleTask
 
-IS_WINDOWS = platform.system() == 'Windows'
 logger = logging.getLogger()
 
 
@@ -50,15 +48,14 @@ class MyApplication(TaskApplication):
         msg = "Are you sure you want to close the window?"
         return_code = confirm(None, msg)
         if return_code != YES:
-            logger.debug("Window closing even was veto-ed")
+            logger.info("Window closing event was veto-ed")
             new.veto = True
 
     # -------------------------------------------------------------------------
     # MyApplication interface
     # -------------------------------------------------------------------------
 
-    logdir = Str
-
+    #: The path to the log directory.
     logdir_path = Directory
 
     def create_new_task_window(self):
@@ -84,18 +81,6 @@ class MyApplication(TaskApplication):
         logger.addHandler(logging.FileHandler(filepath))
         logger.debug("Log file is at '{}'".format(filepath))
 
-    def _create_close_group(self):
-        """ Create a close group with a 'Quit' menu item """
-        from pyface.action.api import Action
-        from pyface.tasks.action.api import SGroup
-
-        return SGroup(
-            Action(name='Exit' if IS_WINDOWS else 'Quit',
-                   accelerator='Alt+F4' if IS_WINDOWS else 'Ctrl+Q',
-                   on_perform=self.exit),
-            id='QuitGroup', name='Quit',
-        )
-
     # Traits change handlers ------------------------------------------------
 
     def _application_initialized_changed(self, event):
@@ -103,21 +88,6 @@ class MyApplication(TaskApplication):
         self.create_new_task_window()
 
     # Traits default handlers ------------------------------------------------
-
-    def _extra_actions_default(self):
-        """ Extra application-wide menu items
-
-        This adds close group to end of file menu. """
-        from pyface.tasks.action.api import SchemaAddition
-
-        return [
-            SchemaAddition(
-                id='close_group',
-                path='MenuBar/File',
-                absolute_position='last',
-                factory=self._create_close_group,
-            ),
-        ]
 
     def _icon_default(self):
         return ImageResource("python_icon.png")

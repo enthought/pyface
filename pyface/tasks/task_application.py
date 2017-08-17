@@ -14,12 +14,14 @@ the creation of tasks and corresponding windows.
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import logging
+import platform
 
 from traits.api import List, Instance, Property
 
 from pyface.application import Application
 from .task_window import TaskWindow
 
+IS_WINDOWS = platform.system() == 'Windows'
 logger = logging.getLogger(__name__)
 
 
@@ -64,6 +66,18 @@ class TaskApplication(Application):
     # Private interface
     # -------------------------------------------------------------------------
 
+    def _create_close_group(self):
+        """ Create a close group with a 'Quit' menu item """
+        from pyface.action.api import Action
+        from pyface.tasks.action.api import SGroup
+
+        return SGroup(
+            Action(name='Exit' if IS_WINDOWS else 'Quit',
+                   accelerator='Alt+F4' if IS_WINDOWS else 'Ctrl+Q',
+                   on_perform=self.exit),
+            id='QuitGroup', name='Quit',
+        )
+
     # Destruction utilities ---------------------------------------------------
 
     def _on_window_closed(self, window, trait, old, new):
@@ -74,6 +88,21 @@ class TaskApplication(Application):
         super(TaskApplication, self)._on_window_closed(window, trait, old, new)
 
     # Trait initializers and property getters ---------------------------------
+
+    def _extra_actions_default(self):
+        """ Extra application-wide menu items
+
+        This adds close group to end of file menu. """
+        from pyface.tasks.action.api import SchemaAddition
+
+        return [
+            SchemaAddition(
+                id='close_group',
+                path='MenuBar/File',
+                absolute_position='last',
+                factory=self._create_close_group,
+            ),
+        ]
 
     def _get_active_task(self):
         if self.active_window is not None:
