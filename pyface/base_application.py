@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2016 by Enthought, Inc., Austin, TX
+# Copyright (c) 2014-2017 by Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -7,30 +7,76 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-""" Define a base application class to create the event loop, and launch
-the creation of application windows.
+"""
+This module defines the :py:class:`BaseApplication` class for Pyface, Tasks
+and similar applications.  Although the primary use cases are for GUI
+applications, the :py:class:`BaseApplication` class does not have any explicit
+dependency on GUI code, and can be used for CLI or server applications.
+
+Usual usage is to subclass :py:class:`BaseApplication` overriding at least the
+:py:method:`BaseApplication._run` method, but usually the
+:py:method:`BaseApplication.start` and :py:method:`BaseApplication.stop`
+methods as well.
+
+However the class can be used as-is by listening to the
+:py:attr:`BaseApplication.application_initialized` event and performing
+appropriate work there::
+
+    def do_work():
+        print("Hello world")
+
+    app = BaseApplication()
+    app.on_trait_change(do_work, 'application_initialized')
+
 """
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
+
 import os
 import logging
+from logging.handlers import RotatingFileHandler
 import sys
 
-from traits.api import Bool, Directory, Event, HasStrictTraits, Instance, Str
+from traits.api import (
+    Callable, Directory, Event, HasStrictTraits, Instance, List,
+    ReadOnly, Str, Vetoable, VetoableEvent
+)
 
 
 logger = logging.getLogger(__name__)
+
+
+# Parameters for default RotatingFileHandler
+LOG_FILE_MAX_SIZE = 1000000
+LOG_FILE_BACKUPS = 5
+
+# Whether to set up application in debug mode
+DEBUG = False
+
+
+class ApplicationException(Exception):
+    """ Exception subclass for Application-centric exceptions """
+    pass
+
+
+class ApplicationExit(ApplicationException):
+    """ Exception which indicates application should try to exit.
+
+    If no arguments, then assumed to be a normal exit, otherwise the arguments
+    give information about the problem.
+    """
+    pass
 
 
 class ApplicationEvent(HasStrictTraits):
     """ An event associated with an application """
 
     #: The application that the event happened to.
-    application = Instance('BaseApplication')
+    application = ReadOnly
 
     #: The type of application event.
-    event_type = Str
+    event_type = ReadOnly
 
 
 class BaseApplication(HasStrictTraits):
@@ -64,56 +110,37 @@ class BaseApplication(HasStrictTraits):
     #: User data directory (for user files, projects, etc)
     user_data = Directory
 
-    # Application lifecycle events --------------------------------------------
+    #: The logging handlers that we are responsible for.
+    logging_handlers = List(Instance(logging.Handler))
+
+    # Application lifecycle --------------------------------------------------
 
     #: Fired when the application is starting. Called immediately before the
     #: start method is run.
-    starting = Event(ApplicationEvent)
+    starting = Event(Instance(ApplicationEvent))
 
     #: Upon successful completion of the start method.
-    started = Event(ApplicationEvent)
+    started = Event(Instance(ApplicationEvent))
 
     #: Fired after the GUI event loop has been started during the run method.
-    application_initialized = Event(ApplicationEvent)
+    application_initialized = Event(Instance(ApplicationEvent))
 
     #: Fired when the application is starting. Called immediately before the
     #: stop method is run.
-    stopping = Event(ApplicationEvent)
+    exiting = VetoableEvent
+
+    #: Fired when the application is starting. Called immediately before the
+    #: stop method is run.
+    stopping = Event(Instance(ApplicationEvent))
 
     #: Upon successful completion of the stop method.
-    stopped = Event(ApplicationEvent)
+    stopped = Event(Instance(ApplicationEvent))
 
-    # Protected interface -----------------------------------------------------
+    # Private interface ------------------------------------------------------
 
-    #: Flag if the exiting of the application was explicitely requested by user
-    # An 'explicit' exit is when the 'exit' method is called.
-    # An 'implicit' exit is when the user closes the last open window.
-    _explicit_exit = Bool(False)
+    _old_excepthook = Callable
 
     # Application lifecycle methods -------------------------------------------
-
-    def __init__(self, **traits):
-        """ Initialize the application """
-        super(BaseApplication, self).__init__(**traits)
-
-        # perform basic initialization before we can do anything
-        self.init()
-
-    def init(self):
-        """ Perform basic application configuration
-
-        In a full application, this includes setting up the application's home
-        directory, setting up basic logging, handling command-line options and
-        setting user preferences.
-        """
-        logger.info('---- Application configuration ----')
-
-        # install our own exception hook for unhandled exceptions
-        sys.excepthook = self._excepthook
-        logger.debug('Exception hook installed')
-
-        # make sure we have a home directory
-        self._initialize_application_home()
 
     def start(self):
         """ Start the application, setting up things that are required
@@ -138,30 +165,33 @@ class BaseApplication(HasStrictTraits):
         status : bool
             Whether or not the application ran normally
         """
-        started = stopped = False
+        started = run = stopped = False
 
         # Start up the application.
-        self.starting = ApplicationEvent(application=self,
-                                         event_type='starting')
+        self._fire_application_event('starting')
         started = self.start()
-
         if started:
+
             logger.info('---- Application started ----')
-            self.started = ApplicationEvent(application=self,
-                                            event_type='started')
+            self._fire_application_event('started')
 
-            self._run()
+            try:
+                run = self._run()
+            except ApplicationExit as exc:
+                if exc.args == ():
+                    logger.info("---- ApplicationExit raised ----")
+                else:
+                    logger.exception("---- ApplicationExit raised ----")
+                run = (exc.args == ())
+            finally:
+                # Try to shut the application down.
+                self._fire_application_event('stopping')
+                stopped = self.stop()
+                if stopped:
+                    self._fire_application_event('stopped')
+                    logger.info('---- Application stopped ----')
 
-            # We have finished running, so shut the application down.
-            self.stopping = ApplicationEvent(application=self,
-                                             event_type='stopping')
-            stopped = self.stop()
-            if stopped:
-                self.stopped = ApplicationEvent(application=self,
-                                                event_type='stopped')
-                logger.info('---- Application stopped ----')
-
-        return started and stopped
+        return started and run and stopped
 
     def exit(self, force=False):
         """ Exits the application.
@@ -171,57 +201,102 @@ class BaseApplication(HasStrictTraits):
         veto the close event, leaving the application in the state that it was
         before the exit method was called.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         force : bool, optional (default False)
             If set, windows will receive no closing events and will be
             destroyed unconditionally. This can be useful for reliably tearing
             down regression tests, but should be used with caution.
 
-        Returns:
-        --------
-        A boolean indicating whether the application exited.
+        Raises
+        ------
+        ApplicationExit
+            Some subclasses may trigger the exit by raising ApplicationExit.
         """
         logger.info('---- Application exit started ----')
-        self._explicit_exit = True
-        try:
-            if not force:
-                if not self._can_exit():
-                    logger.info('---- Application exit vetoed ----')
-                    return False
-            self._prepare_exit()
-        finally:
-            self._explicit_exit = False
-        self._exit()
-        logger.info('---- Application exit successful ----')
-        return True
+        if force or self._can_exit():
+            try:
+                self._prepare_exit()
+            except Exception:
+                logger.exception("Error preparing for application exit")
+            finally:
+                logger.info('---- Application exit ----')
+                self._exit()
+        else:
+            logger.info('---- Application exit vetoed ----')
+
+    # Initialization utilities -----------------------------------------------
+
+    def setup_logging(self):
+        """ Initialize logger.
+
+        Default behaviour is to log to a rotating file handler whose name is
+        the id of the app.
+        """
+        root_logger = logging.getLogger()
+
+        if DEBUG:
+            handler = logging.StreamHandler()
+            root_logger.setLevel(logging.DEBUG)
+        else:
+            #: set up a rotating file handler
+            log_dir = os.path.join(self.home, 'log')
+            log_file = os.path.join(log_dir, self.id + '.log')
+            if not os.path.exists(log_dir):
+                os.makedirs(log_dir)
+            handler = RotatingFileHandler(
+                log_file, LOG_FILE_MAX_SIZE, LOG_FILE_BACKUPS)
+
+        root_logger.addHandler(handler)
+        self.logging_handlers.append(handler)
+
+    def initialize_application_home(self):
+        """ Set up the home directory for the application
+
+        This is where logs, preference files and other config files will be
+        stored.
+        """
+        if not os.path.exists(self.home):
+            logger.info('Application home directory does not exist, creating')
+            os.makedirs(self.home)
+
+    def install_excepthook(self):
+        """ Install an exception hook to catch unhandled exceptions
+
+        This permits applications to do things like catch and display an error
+        dialog when something unexpectedly goes wrong.
+        """
+        self._old_excepthook = sys.excepthook
+        sys.excepthook = self._excepthook
+        logger.debug('Exception hook installed')
+
+    # Teardown utilities -----------------------------------------------
+
+    def reset_logging(self):
+        """ Reset root logger to default WARNING level and remove handlers.
+        """
+        logger = logging.getLogger()
+        logger.setLevel(logging.WARNING)
+
+        while self.logging_handlers:
+            handler = self.logging_handlers.pop()
+            if hasattr(handler, 'close'):
+                handler.close()
+            logger.removeHandler(handler)
+
+    def reset_excepthook(self):
+        """ Install an exception hook to catch unhandled exceptions
+
+        This permits applications to do things like catch and display an error
+        dialog when something unexpectedly goes wrong.
+        """
+        sys.excepthook = self._old_excepthook
+        self._old_excepthook = None
+        logger.debug('Exception hook reset')
 
     # -------------------------------------------------------------------------
     # Private interface
     # -------------------------------------------------------------------------
-
-    # Initialization methods --------------------------------------------------
-
-    def _initialize_application_home(self):
-        """ Setup the home directory for the application where logs, preference
-        files and other config files will be stored.
-        """
-        from traits.etsconfig.etsconfig import ETSConfig
-
-        if self.id:
-            ETSConfig.application_home = os.path.join(
-                ETSConfig.application_data, self.id)
-            logger.debug('Set application home to {}'.format(
-                repr(ETSConfig.application_home)))
-        else:
-            # use the application home directory as the id
-            self.id = ETSConfig._get_application_dirname()
-            logger.info('Set application id to {}'.format(repr(self.id)))
-
-        # Make sure it exists!
-        if not os.path.exists(ETSConfig.application_home):
-            logger.info('Application home directory does not exist, creating')
-            os.makedirs(ETSConfig.application_home)
 
     # Main method -------------------------------------------------------------
 
@@ -237,7 +312,14 @@ class BaseApplication(HasStrictTraits):
         # event loop (eg. a GUI, Tornado web app, etc.) then the
         # should be fired _after_ the event loop starts using an appropriate
         # callback (eg. gui.set_trait_later).
-        self.application_initialized = ApplicationEvent(application=self)
+        self._fire_application_event('application_initialized')
+        return True
+
+    # Utilities ---------------------------------------------------------------
+
+    def _fire_application_event(self, event_type):
+        event = ApplicationEvent(application=self, event_type=event_type)
+        setattr(self, event_type, event)
 
     # Exception handling ------------------------------------------------------
 
@@ -256,22 +338,30 @@ class BaseApplication(HasStrictTraits):
             # just use standard excepthook in this app
             sys.__excepthook__(type, value, traceback)
             # die, in an error state
-            sys.exit(1)
+            raise SystemExit("Can't log exception in application excepthook.")
 
     # Destruction methods -----------------------------------------------------
 
     def _can_exit(self):
         """ Is exit vetoed by anything?
 
+        The default behaviour is to fire the :py:attr:`exiting` event and check
+        to see if any listeners veto.  Subclasses may wish to override to
+        perform additional checks.
+
         Returns
         -------
         can_exit : bool
             Return True if exit is OK, False if something vetoes the exit.
         """
-        return True
+        self.exiting = event = Vetoable()
+        return not event.veto
 
     def _prepare_exit(self):
-        """ Do any application-level state saving and clean-up """
+        """ Do any application-level state saving and clean-up
+
+        Subclasses should override this method.
+        """
         pass
 
     def _exit(self):
@@ -280,14 +370,19 @@ class BaseApplication(HasStrictTraits):
         This is where application event loops and similar should be shut down.
         """
         # invoke a normal exit from the application
-        sys.exit()
+        raise ApplicationExit()
 
     # Traits defaults ---------------------------------------------------------
+
+    def _id_default(self):
+        """ Use the application's directory as the id """
+        from traits.etsconfig.etsconfig import ETSConfig
+        return ETSConfig._get_application_dirname()
 
     def _home_default(self):
         """ Default home comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
-        return ETSConfig.application_home
+        return os.path.join(ETSConfig.application_data, self.id)
 
     def _user_data_default(self):
         """ Default user_data comes from ETSConfig. """

@@ -16,7 +16,9 @@ from __future__ import (absolute_import, division, print_function,
 import logging
 import platform
 
-from traits.api import List, Instance, Property
+from traits.api import (
+    List, Instance, Property, cached_property, on_trait_change
+)
 
 from pyface.application import Application
 from .task_window import TaskWindow
@@ -42,7 +44,7 @@ class TaskApplication(Application):
     tasks = List("pyface.tasks.task.Task")
 
     #: Currently active Task if any
-    active_task = Property
+    active_task = Property(depends_on='active_window.active_task')
 
     #: Hook to add global schema additions to tasks/windows
     extra_actions = List(Instance(
@@ -66,8 +68,8 @@ class TaskApplication(Application):
     # Private interface
     # -------------------------------------------------------------------------
 
-    def _create_close_group(self):
-        """ Create a close group with a 'Quit' menu item """
+    def _create_exit_group(self):
+        """ Create an exit group with a 'Quit' menu item """
         from pyface.action.api import Action
         from pyface.tasks.action.api import SGroup
 
@@ -75,15 +77,16 @@ class TaskApplication(Application):
             Action(name='Exit' if IS_WINDOWS else 'Quit',
                    accelerator='Alt+F4' if IS_WINDOWS else 'Ctrl+Q',
                    on_perform=self.exit),
-            id='QuitGroup', name='Quit',
+            id='ExitGroup', name='Exit',
         )
 
     # Destruction utilities ---------------------------------------------------
 
+    @on_trait_change('windows:closed')
     def _on_window_closed(self, window, trait, old, new):
         """ Listener that ensures window handles are released when closed.
         """
-        if window.active_task in self.tasks:
+        if getattr(window, 'active_task', None) in self.tasks:
             self.tasks.remove(window.active_task)
         super(TaskApplication, self)._on_window_closed(window, trait, old, new)
 
@@ -100,12 +103,13 @@ class TaskApplication(Application):
                 id='close_group',
                 path='MenuBar/File',
                 absolute_position='last',
-                factory=self._create_close_group,
+                factory=self._create_exit_group,
             ),
         ]
 
+    @cached_property
     def _get_active_task(self):
         if self.active_window is not None:
-            return self.active_window.active_task
+            return getattr(self.active_window, 'active_task', None)
         else:
             return None

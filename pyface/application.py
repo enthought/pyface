@@ -14,27 +14,21 @@ the creation of application windows.
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 import logging
-import sys
 from traceback import format_exception, format_exception_only
 
 from traits.api import (
-    Instance, List, ReadOnly, Tuple, Vetoable, on_trait_change
+    Bool, Instance, List, ReadOnly, Tuple, Undefined, Vetoable, on_trait_change
 )
 
-from .base_application import ApplicationEvent, BaseApplication
+from .base_application import (
+    ApplicationEvent, ApplicationExit, BaseApplication
+)
+from .i_dialog import IDialog
 from .i_image_resource import IImageResource
 from .i_splash_screen import ISplashScreen
 from .i_window import IWindow
 
 logger = logging.getLogger(__name__)
-
-
-def clear_handlers(logger):
-    """ Remove all handlers from the given logger. """
-    for handler in logger.handlers[::-1]:
-        if hasattr(handler, 'close'):
-            handler.close()
-        logger.removeHandler(handler)
 
 
 class Application(BaseApplication):
@@ -44,7 +38,7 @@ class Application(BaseApplication):
     and other common features that we want when creating a GUI application.
 
     Often you will want to subclass this application, but it can be used as-is
-    by hooking a listener to the `application_initialized` event::
+    by hooking a listener to the `initialized` event::
 
         from pyface.api import ApplicationWindow, HeadingText
 
@@ -58,7 +52,7 @@ class Application(BaseApplication):
             window = MainWindow()
             application.on_trait_change(
                 lambda: application.add_window(window),
-                'application_initialized'
+                'initialized'
             )
             application.run()
 
@@ -72,6 +66,9 @@ class Application(BaseApplication):
 
     #: The splash screen for the application. No splash screen by default
     splash_screen = Instance(ISplashScreen)
+
+    #: The about dialog for the application.
+    about_dialog = Instance(IDialog)
 
     #: Icon for the application
     icon = Instance(IImageResource)
@@ -90,6 +87,13 @@ class Application(BaseApplication):
     #: The Pyface GUI instance for the application
     gui = ReadOnly
 
+    # Protected interface -----------------------------------------------------
+
+    #: Flag if the exiting of the application was explicitely requested by user
+    # An 'explicit' exit is when the 'exit' method is called.
+    # An 'implicit' exit is when the user closes the last open window.
+    _explicit_exit = Bool(False)
+
     # Window lifecycle methods -----------------------------------------------
 
     def add_window(self, window):
@@ -107,8 +111,10 @@ class Application(BaseApplication):
 
         window.open()
 
-    def close_window(self, window):
-        """ Close a window that we control """
+    def do_about(self):
+        """ Display the about dialog, if it exists. """
+        if self.about_dialog is not None:
+            self.about_dialog.open()
 
     # -------------------------------------------------------------------------
     # 'BaseApplication' interface
@@ -125,19 +131,10 @@ class Application(BaseApplication):
 
         ok = super(Application, self).start()
         if ok:
-            # set up logging so messages can be displayed on splash screen
-            self._setup_logging()
-
             # create the GUI so that the splash screen comes up first thing
-            self.gui = GUI(splash_screen=self.splash_screen)
+            if self.gui is Undefined:
+                self.gui = GUI(splash_screen=self.splash_screen)
 
-        return ok
-
-    def stop(self):
-        """ Stop the application, cleanly releasing resources, if possible. """
-        ok = super(Application, self).stop()
-        if ok:
-            self._reset_logger()
         return ok
 
     # -------------------------------------------------------------------------
@@ -153,12 +150,13 @@ class Application(BaseApplication):
         # started.  A listener for this event is a good place to do things like
         # opening application windows and other activities where you want the
         # event loop running.
-        self.gui.set_trait_later(
-            self, 'application_initialized',
-            ApplicationEvent(application=self, event_type='initialized'))
+        self.gui.invoke_later(
+            self._fire_application_event, 'application_initialized'
+        )
 
         # start the GUI - script blocks here
         self.gui.start_event_loop()
+        return True
 
     # Exception handling ------------------------------------------------------
 
@@ -178,14 +176,19 @@ class Application(BaseApplication):
         the standard excepthook if that doesn't work.
         """
         try:
-            # try to log the exception, could fail eg. if disk full
-            logger.exception(value)
-            self._unhandled_exception(type, value, traceback)
+            if issubclass(type, ApplicationExit):
+                if value.args:
+                    logger.excpetion("Unhandled ApplicationExit")
+                else:
+                    logger.info("Unhandled ApplicationExit")
+                self._exit()
+            else:
+                # try to log the exception, could fail eg. if disk full
+                logger.exception("Unhandled exception")
+                self._unhandled_exception(type, value, traceback)
         except Exception:
             # something went wrong, use base class excepthook
             super(Application, self)._excepthook(type, value, traceback)
-        finally:
-            sys.exit(1)
 
     # Destruction methods -----------------------------------------------------
 
@@ -195,6 +198,9 @@ class Application(BaseApplication):
         The fires closing events for each window, and returns False if any
         listener vetos.
         """
+        if not super(Application, self)._can_exit():
+            return False
+
         for window in reversed(self.windows):
             window.closing = event = Vetoable()
             if event.veto:
@@ -219,19 +225,6 @@ class Application(BaseApplication):
 
     # Initialization utilities ------------------------------------------------
 
-    def _setup_logging(self):
-        """ Initialize logger.
-
-        By default send logging to a stream and set the log level to info.
-        Most applications will want to replace this with something more
-        appropriate to their needs.
-
-        This is provided as a basic default so that the class can be used
-        without having to subclass.
-        """
-        logger = logging.getLogger()
-        logger.addHandler(logging.StreamHandler())
-
     @on_trait_change('windows:activate')
     def _on_activate_window(self, window, trait, old, new):
         """ Listener that tracks currently active window.
@@ -246,10 +239,3 @@ class Application(BaseApplication):
         """
         if window in self.windows:
             self.windows.remove(window)
-
-    def _reset_logger(self):
-        """ Reset root logger to default WARNING level and remove all handlers.
-        """
-        logger = logging.getLogger()
-        logger.setLevel(logging.WARNING)
-        clear_handlers(logger)
