@@ -70,16 +70,6 @@ class TestingApp(Application):
         if self.veto_close:
             new.veto = True
 
-    # def _run(self):
-    #     super(TestingApp, self)._run()
-    #     if self.do_exit:
-    #         if self.error_exit:
-    #             raise ApplicationExit("error message")
-    #         else:
-    #             self.exit(self.force_exit)
-    #         self.exit_vetoed = True
-    #     return True
-
     def _exiting_fired(self, event):
         event.veto = self.veto_exit
 
