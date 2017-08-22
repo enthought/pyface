@@ -138,6 +138,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # XXX duplicate of Dialog test, not needed?
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: self.dialog.close())
+        self.gui.process_events()
+
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
@@ -147,6 +149,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.cancel = True
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: self.dialog.close())
+        self.gui.process_events()
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
@@ -156,6 +160,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that Yes works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_button(YES))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
@@ -166,6 +172,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that Yes works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
@@ -175,6 +183,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that No works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_button(NO))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
@@ -185,6 +195,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that No works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_widget(u"No way"))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
@@ -195,6 +207,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_button(CANCEL))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
@@ -206,6 +220,8 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Back"))
+        self.gui.process_events()
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
@@ -238,6 +254,7 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         # test that cancel works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message", cancel=True))
         tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+        self.gui.process_events()
         self.assertEqual(tester.result, CANCEL)
 
     @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
@@ -273,6 +290,7 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(lambda: confirm(None, "message",
                                    title='Title'))
         tester.open_and_run(when_opened=lambda x: x.click_button(NO))
+        self.gui.process_events()
         self.assertEqual(tester.result, NO)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
@@ -280,6 +298,7 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         # test that default works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message", default=YES))
         tester.open_and_run(when_opened=lambda x: x.click_button(YES))
+        self.gui.process_events()
         self.assertEqual(tester.result, YES)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
@@ -288,4 +307,5 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(lambda: confirm(None, "message",
                                                    cancel=True, default=YES))
         tester.open_and_run(when_opened=lambda x: x.click_button(CANCEL))
+        self.gui.process_events()
         self.assertEqual(tester.result, CANCEL)

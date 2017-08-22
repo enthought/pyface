@@ -120,7 +120,7 @@ class ModalDialogTester(object):
             else:
                 condition_timer.start()
 
-        # Setup and start the timer to singla the handler every 100 msec.
+        # Setup and start the timer to fire the handler every 100 msec.
         condition_timer.setInterval(100)
         condition_timer.setSingleShot(True)
         condition_timer.timeout.connect(handler)
@@ -180,7 +180,12 @@ class ModalDialogTester(object):
             if self._dialog_widget is None:
                 return False
             else:
-                return self.get_dialog_widget() != self._dialog_widget
+                value = (self.get_dialog_widget() != self._dialog_widget)
+                if value:
+                    # process any pending events so that we have a clean
+                    # even loop before we exit.
+                    self._helper.event_loop()
+                return value
 
         # Setup and start the timer to signal the handler every 100 msec.
         condition_timer.setInterval(100)
@@ -283,7 +288,12 @@ class ModalDialogTester(object):
         """ A value was assigned to the result attribute.
 
         """
-        return self._assigned
+        result = self._assigned
+        if result:
+            # process any pending events so that we have a clean
+            # even loop before we exit.
+            self._helper.event_loop()
+        return result
 
     def dialog_opened(self):
         """ Check that the dialog has opened.
