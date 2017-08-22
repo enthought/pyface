@@ -3,7 +3,6 @@ from __future__ import absolute_import
 from traits.testing.unittest_tools import unittest
 
 from ..constant import CANCEL, NO, OK, YES
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
@@ -25,11 +24,13 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         if self.window.control is not None:
             with self.delete_widget(self.window.control):
                 self.window.destroy()
+        self.window = None
         GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.window.destroy()
+        self.gui.process_events()
 
     def test_open_close(self):
         # test that opening and closing works as expected
@@ -50,6 +51,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.destroy()
+        self.gui.process_events()
 
     def test_activate(self):
         # test that activation works as expected
@@ -58,6 +60,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.activate()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_position(self):
         # test that default position works as expected
@@ -65,6 +68,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_reposition(self):
         # test that changing position works as expected
@@ -73,6 +77,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.position = (100, 100)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_size(self):
         # test that default size works as expected
@@ -80,6 +85,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_resize(self):
         # test that changing size works as expected
@@ -88,6 +94,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.size = (100, 100)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_title(self):
         # test that default title works as expected
@@ -95,6 +102,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_retitle(self):
         # test that changing title works as expected
@@ -103,6 +111,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.title = "Test Title"
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_confirm_reject(self):

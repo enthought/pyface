@@ -47,6 +47,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_activate(self):
         # test that activation works as expected
@@ -55,6 +56,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.activate()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_position(self):
         # test that default position works as expected
@@ -62,6 +64,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_reposition(self):
         # test that changing position works as expected
@@ -70,6 +73,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.position = (100, 100)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_size(self):
         # test that default size works as expected
@@ -77,6 +81,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_resize(self):
         # test that changing size works as expected
@@ -85,6 +90,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.size = (100, 100)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_title(self):
         # test that default title works as expected
@@ -92,6 +98,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.open()
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_retitle(self):
         # test that changing title works as expected
@@ -100,6 +107,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.title = "Test Title"
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_menubar(self):
         # test that menubar gets created as expected
@@ -119,6 +127,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_toolbar(self):
         # test that toolbar gets created as expected
@@ -135,6 +144,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_statusbar(self):
         # test that status bar gets created as expected
@@ -147,6 +157,7 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()
 
     def test_icon(self):
         # test that status bar gets created as expected
@@ -157,3 +168,4 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.close()
+        self.gui.process_events()

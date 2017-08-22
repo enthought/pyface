@@ -25,6 +25,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        self.dialog = None
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -32,10 +33,12 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_size(self):
         # test that size works as expected
@@ -43,6 +46,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_position(self):
         # test that position works as expected
@@ -50,6 +54,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
@@ -57,6 +62,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_cancel_renamed(self):
         # test that creation and destruction works as expected with cancel_label
@@ -64,6 +70,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_help(self):
         # test that creation and destruction works as expected with help
@@ -79,6 +86,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):

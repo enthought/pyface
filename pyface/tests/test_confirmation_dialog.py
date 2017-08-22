@@ -32,6 +32,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        self.dialog = None
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -39,10 +40,12 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_size(self):
         # test that size works as expected
@@ -50,6 +53,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_position(self):
         # test that position works as expected
@@ -57,6 +61,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -67,6 +72,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.gui.process_events()
         self.dialog.destroy()
         parent.destroy()
+        self.gui.process_events()
 
     def test_create_yes_renamed(self):
         # test that creation and destruction works as expected with ok_label
@@ -74,6 +80,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_no_renamed(self):
         # test that creation and destruction works as expected with ok_label
@@ -81,6 +88,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_yes_default(self):
         # test that creation and destruction works as expected with ok_label
@@ -88,6 +96,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_cancel(self):
         # test that creation and destruction works with cancel button
@@ -95,6 +104,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_cancel_renamed(self):
         # test that creation and destruction works with cancel button
@@ -103,6 +113,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_cancel_default(self):
         # test that creation and destruction works as expected with ok_label
@@ -111,6 +122,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_image(self):
         # test that creation and destruction works with a non-standard image
@@ -118,6 +130,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_close(self):

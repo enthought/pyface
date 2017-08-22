@@ -51,7 +51,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         # Set up the bogus task with its window.
         self.task = BogusTask()
 
-        window = TaskWindow()
+        self.window = window = TaskWindow()
         window.add_task(self.task)
 
         self.task_state = window._get_state(self.task)
@@ -65,6 +65,17 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         self.task_state.menu_bar_manager.walk(find_doc_pane_toggle)
 
         self.dock_pane_toggle_group = dock_pane_toggle_group[0]
+
+    def tearDown(self):
+        self.task = None
+        self.task_state = None
+        self.dock_pane_toggle_group = None
+
+        if self.window.control is not None:
+            with self.delete_widget(self.window.control):
+                self.window.destroy()
+        self.window = None
+
 
     def get_dock_pane_toggle_action_names(self):
         names =  [
