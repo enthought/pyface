@@ -84,7 +84,6 @@ class TestApplication(TestCase, UnittestTools):
 
     def setUp(self):
         self.gui = GUI()
-        self.gui.exit_on_last_window_close = False
         self.application_events = []
 
         if toolkit_object.toolkit == 'wx':
@@ -196,6 +195,9 @@ class TestApplication(TestCase, UnittestTools):
         def hard_exit():
             self.gui.stop_event_loop()
             app.exit_vetoed = True
+            for window in app.windows:
+                window.destroy()
+            app.windows = []
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(100, app.exit)
@@ -215,6 +217,9 @@ class TestApplication(TestCase, UnittestTools):
         def hard_exit():
             self.gui.stop_event_loop()
             app.exit_vetoed = True
+            for window in app.windows:
+                window.destroy()
+            app.windows = []
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(100, app.exit)

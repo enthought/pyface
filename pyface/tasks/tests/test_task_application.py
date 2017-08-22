@@ -80,7 +80,6 @@ class TestApplication(TestCase, UnittestTools):
 
     def setUp(self):
         self.gui = GUI()
-        self.gui.exit_on_last_window_close = False
         self.application_events = []
 
         if toolkit_object.toolkit == 'wx':
