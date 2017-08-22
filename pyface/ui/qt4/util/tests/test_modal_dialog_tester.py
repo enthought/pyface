@@ -149,10 +149,9 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     )
             finally:
                 tester.close()
-                self.gui.process_events()
-
 
         tester.open_and_run(when_opened=check_and_close)
+        self.gui.process_events()
 
     def test_find_widget(self):
         dialog = Dialog()
