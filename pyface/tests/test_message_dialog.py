@@ -160,6 +160,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
+        self.gui.process_events()
+
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 

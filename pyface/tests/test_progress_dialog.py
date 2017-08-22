@@ -2,8 +2,6 @@ from __future__ import absolute_import
 
 from traits.testing.unittest_tools import unittest
 
-from ..constant import CANCEL
-from ..gui import GUI
 from ..progress_dialog import ProgressDialog
 from ..toolkit import toolkit_object
 
@@ -15,7 +13,7 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestDialog(unittest.TestCase, GuiTestAssistant):
+class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -32,10 +30,12 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_can_cancel(self):
         # test that creation works with can_cancel
@@ -43,6 +43,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_show_time(self):
         # test that creation works with show_time
@@ -50,6 +51,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     @unittest.skip("not implemented in any backend")
     def test_show_percent(self):
@@ -58,6 +60,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_update(self):
         self.dialog.min = 0

@@ -107,6 +107,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     self.fail()
             finally:
                 tester.close()
+                self.gui.process_events()
 
         with self.assertRaises(AssertionError):
             alt_stderr = cStringIO.StringIO
@@ -125,6 +126,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     1 / 0
             finally:
                 tester.close()
+                self.gui.process_events()
 
         with self.assertRaises(ZeroDivisionError):
             alt_stderr = cStringIO.StringIO
@@ -147,6 +149,8 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     )
             finally:
                 tester.close()
+                self.gui.process_events()
+
 
         tester.open_and_run(when_opened=check_and_close)
 
@@ -164,6 +168,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     self.assertIsInstance(widget, QtGui.QPushButton)
             finally:
                 tester.close()
+                self.gui.process_events()
 
         tester.open_and_run(when_opened=check_and_close)
 

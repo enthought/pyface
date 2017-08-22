@@ -45,6 +45,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        self.dialog = None
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -52,10 +53,12 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_cancel(self):
         # test that creation and destruction works no cancel button
@@ -63,6 +66,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -73,6 +77,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.gui.process_events()
         self.dialog.destroy()
         parent.destroy()
+        self.gui.process_events()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
@@ -80,6 +85,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_choice_strings(self):
         # test that choice strings work using simple strings
@@ -158,6 +164,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
+        self.gui.process_events()
+
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
