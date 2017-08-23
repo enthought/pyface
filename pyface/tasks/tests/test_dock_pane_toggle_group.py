@@ -75,8 +75,8 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         del self.dock_pane_toggle_group
 
         if self.window.control is not None:
-            with self.delete_widget(self.window.control):
-                self.window.destroy()
+            self.window.destroy()
+            self.gui.process_events()
         del self.window
         del self.gui
 

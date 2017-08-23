@@ -12,15 +12,22 @@ from __future__ import absolute_import
 
 import unittest
 import cStringIO
+import platform
+import os
 
-from pyface.qt import QtGui
+from pyface.qt import QtGui, qt_api
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from traits.api import HasStrictTraits
+from traits.etsconfig.api import ETSConfig
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
 from pyface.util.testing import skip_if_no_traitsui
+
+
+is_pyqt5 = qt_api == 'pyqt5'
+is_pyqt4_linux = (qt_api == 'pyqt' and platform.system() == 'Linux')
 
 
 class MyClass(HasStrictTraits):
@@ -134,6 +141,8 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
+    @unittest.skipIf(is_pyqt5, "Has widget tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Has widget tests don't reliably on linux.  Issue #282.")  # noqa
     def test_has_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
@@ -153,6 +162,8 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
         tester.open_and_run(when_opened=check_and_close)
         self.gui.process_events()
 
+    @unittest.skipIf(is_pyqt5, "Find widget tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Find widget tests don't reliably on linux.  Issue #282.")  # noqa
     def test_find_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)

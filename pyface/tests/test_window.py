@@ -169,8 +169,8 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self._check_message_dialog_accept(self.window.information)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
-    @unittest.skipIf(is_pyqt4_linux, "Confirmation dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
+    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Message dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
     def test_information_ok(self):
         self._check_message_dialog_ok(self.window.information)
 
@@ -179,8 +179,8 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self._check_message_dialog_accept(self.window.warning)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
-    @unittest.skipIf(is_pyqt4_linux, "Confirmation dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
+    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Message dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
     def test_warning_ok(self):
         self._check_message_dialog_ok(self.window.warning)
 
@@ -189,8 +189,8 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self._check_message_dialog_accept(self.window.error)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
-    @unittest.skipIf(is_pyqt4_linux, "Confirmation dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
+    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Message dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
     def test_error_ok(self):
         self._check_message_dialog_ok(self.window.error)
 
