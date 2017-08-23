@@ -21,6 +21,7 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         if self.window.control is not None:
             with self.delete_widget(self.window.control):
                 self.window.destroy()
+        del self.window
         GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):

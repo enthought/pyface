@@ -1,14 +1,11 @@
 from __future__ import absolute_import
 
 import platform
-import os
 
-from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
 from ..message_dialog import MessageDialog, information, warning, error
 from ..constant import OK
-from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
@@ -40,7 +37,6 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
-                self.gui.process_events()
         del self.dialog
         GuiTestAssistant.tearDown(self)
 

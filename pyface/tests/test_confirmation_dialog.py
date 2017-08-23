@@ -1,14 +1,11 @@
 from __future__ import absolute_import
 
 import platform
-import os
 
-from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
 from ..confirmation_dialog import ConfirmationDialog, confirm
 from ..constant import YES, NO, OK, CANCEL
-from ..gui import GUI
 from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window

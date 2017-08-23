@@ -23,6 +23,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        del self.dialog
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -70,6 +71,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
             result = self.dialog.update(i)
             self.gui.process_events()
             self.assertEqual(result, (True, False))
+
         self.assertIsNone(self.dialog.control)
 
     @unittest.skip("inconsistent implementations")
@@ -90,6 +92,8 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
             self.assertEqual(result, (True, False))
         self.assertIsNotNone(self.dialog.control)
         self.dialog.close()
+        self.gui.process_events()
+
         self.assertIsNone(self.dialog.control)
 
     def test_change_message(self):
@@ -124,6 +128,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
             self.gui.process_events()
             self.assertEqual(result, (True, False))
         self.dialog.close()
+        self.gui.process_events()
         # XXX not really sure what correct behaviour is here
 
     def test_update_negative(self):
@@ -131,4 +136,6 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.max = -10
         with self.assertRaises(AttributeError):
             self.dialog.open()
+            self.gui.process_events()
+
         self.assertIsNone(self.dialog.control)

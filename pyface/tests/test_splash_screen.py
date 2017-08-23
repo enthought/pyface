@@ -21,12 +21,15 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
     def tearDown(self):
         if self.window.control is not None:
             with self.delete_widget(self.window.control):
-                self.widnow.destroy()
+                self.window.destroy()
+
+        del self.window
         GuiTestAssistant.tearDown(self)
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.window.destroy()
+        self.gui.process_events()
 
     def test_open_close(self):
         # test that opening and closing works as expected
@@ -47,6 +50,7 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.show(False)
         self.gui.process_events()
         self.window.destroy()
+        self.gui.process_events()
 
     def test_image(self):
         # test that images work

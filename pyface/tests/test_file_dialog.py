@@ -26,6 +26,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        del self.dialog
         GuiTestAssistant.tearDown(self)
 
     def test_create_wildcard(self):
@@ -42,16 +43,19 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_close(self):
         # test that close works
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
+        self.gui.process_events()
 
     def test_default_path(self):
         # test that default path works
@@ -59,6 +63,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
+        self.gui.process_events()
 
     def test_default_dir_and_file(self):
         # test that default dir and path works
@@ -67,6 +72,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
+        self.gui.process_events()
 
     def test_open_files(self):
         # test that open files action works
@@ -74,6 +80,7 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
+        self.gui.process_events()
 
     def test_save_as(self):
         # test that open files action works
@@ -81,5 +88,6 @@ class TestFileDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.close()
+        self.gui.process_events()
 
     #XXX would be nice to actually test with an open dialog, but not right now

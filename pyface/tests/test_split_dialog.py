@@ -21,6 +21,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        del self.dialog
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -28,10 +29,12 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_horizontal(self):
         # test that horizontal split works
@@ -39,6 +42,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_ratio(self):
         # test that ratio works
@@ -46,6 +50,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_contents(self):
         # test that contents works
@@ -54,3 +59,4 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()

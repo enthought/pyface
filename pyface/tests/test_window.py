@@ -1,9 +1,7 @@
 from __future__ import absolute_import
 
 import platform
-import os
 
-from traits.etsconfig.api import ETSConfig
 from traits.testing.unittest_tools import unittest
 
 from ..constant import CANCEL, NO, OK, YES
