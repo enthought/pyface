@@ -10,6 +10,7 @@
 
 """
 import contextlib
+import platform
 import sys
 import traceback
 
@@ -22,10 +23,10 @@ from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
-    OK: 'OK',
-    CANCEL: 'Cancel',
-    YES: '&Yes',
-    NO: '&No',
+    OK: u'OK',
+    CANCEL: u'Cancel',
+    YES: u'Yes',
+    NO: u'No',
 }
 
 
@@ -183,7 +184,7 @@ class ModalDialogTester(object):
                 value = (self.get_dialog_widget() != self._dialog_widget)
                 if value:
                     # process any pending events so that we have a clean
-                    # even loop before we exit.
+                    # event loop before we exit.
                     self._helper.event_loop()
                 return value
 
@@ -268,12 +269,21 @@ class ModalDialogTester(object):
     def click_widget(self, text, type_=QtGui.QPushButton):
         """ Execute click on the widget of `type_` with `text`.
 
+        This strips '&' chars from the string, since usage varies from platform
+        to platform.
         """
         control = self.get_dialog_widget()
+
+        def test(widget):
+            # XXX asking for widget.text() causes occasional segfaults on Linux
+            # and pyqt (both 4 and 5).  Not sure why this is happening.
+            # See issue #282
+            return widget.text().replace('&', '') == text
+
         widget = find_qt_widget(
             control,
             type_,
-            test=lambda widget: widget.text() == text
+            test=test
         )
         if widget is None:
             # this will only occur if there is some problem with the test

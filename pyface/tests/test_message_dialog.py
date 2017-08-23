@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import platform
 import os
 
 from traits.etsconfig.api import ETSConfig
@@ -12,14 +13,20 @@ from ..toolkit import toolkit_object
 from ..window import Window
 
 
+is_qt = toolkit_object.toolkit == 'qt4'
+if is_qt:
+    from pyface.qt import qt_api
+
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
-USING_QT = ETSConfig.toolkit not in ['', 'null', 'wx']
-is_pyqt5 = (ETSConfig.toolkit == 'qt4' and os.environ.get('QT_API') == 'pyqt5')
+is_pyqt5 = (is_qt and qt_api == 'pyqt5')
+is_pyqt4_linux = (is_qt and qt_api == 'pyqt' and platform.system() == 'Linux')
+
+USING_QT = is_qt
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
@@ -33,6 +40,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+                self.gui.process_events()
+        del self.dialog
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
@@ -40,10 +49,12 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_size(self):
         # test that size works as expected
@@ -51,6 +62,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_position(self):
         # test that position works as expected
@@ -58,6 +70,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -68,6 +81,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.gui.process_events()
         self.dialog.destroy()
         parent.destroy()
+        self.gui.process_events()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
@@ -75,6 +89,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
@@ -82,6 +97,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_informative(self):
         # test that creation and destruction works with informative
@@ -90,6 +106,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_detail(self):
         # test that creation and destruction works with detail
@@ -99,6 +116,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_warning(self):
         # test that creation and destruction works with warning message
@@ -106,6 +124,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_error(self):
         # test that creation and destruction works with error message
@@ -113,6 +132,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog._create()
         self.gui.process_events()
         self.dialog.destroy()
+        self.gui.process_events()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -132,7 +152,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
-    @unittest.skipIf(is_pyqt5, "Message dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Confirmation dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_ok(self):
         # test that OK works as expected
@@ -151,6 +172,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
+    @unittest.skipIf(is_pyqt5, "Confirmation dialog click tests don't work on pyqt5.")  # noqa
+    @unittest.skipIf(is_pyqt4_linux, "Confirmation dialog click tests don't work reliably on linux.  Issue #282.")  # noqa
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_parent(self):
         # test that lifecycle works with a parent
