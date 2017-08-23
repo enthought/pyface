@@ -1,8 +1,5 @@
 from __future__ import absolute_import
 
-import faulthandler
-faulthandler.enable()
-
 import platform
 import os
 
