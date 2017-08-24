@@ -8,18 +8,16 @@ Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
-import platform
 import logging
 import os
 
-from traits.api import Str, Tuple
+from traits.api import Directory, Instance, List
 from pyface.tasks.api import TaskApplication
 from pyface.image_resource import ImageResource
 from pyface.splash_screen import SplashScreen
 
 from example_task import ExampleTask
 
-IS_WINDOWS = platform.system() == 'Windows'
 logger = logging.getLogger()
 
 
@@ -33,28 +31,32 @@ class MyApplication(TaskApplication):
     # TaskApplication interface
     # -------------------------------------------------------------------------
 
-    app_name = Str("MyPyfaceApplication")
+    id = "MyPyfaceApplication"
 
-    window_size = Tuple((800, 600))
+    name = "Python Editor"
 
+    window_size = (800, 600)
 
-    def start(self):
-        starting = super(MyApplication, self).start()
-        if not starting:
-            return False
+    extra_actions = List(Instance(
+        'pyface.tasks.action.schema_addition.SchemaAddition'
+    ))
 
-        self.create_new_task_window()
-        return True
+    def _on_window_closing(self, window, trait, old, new):
+        """ Ask confirmation when a window is closed. """
+        from pyface.api import confirm, YES
+
+        msg = "Are you sure you want to close the window?"
+        return_code = confirm(None, msg)
+        if return_code != YES:
+            logger.info("Window closing event was veto-ed")
+            new.veto = True
 
     # -------------------------------------------------------------------------
     # MyApplication interface
     # -------------------------------------------------------------------------
 
-    #: Hook to add global schema additions to tasks/windows
-    extra_actions = List(Instance(
-        'pyface.tasks.action.schema_addition.SchemaAddition'
-    ))
-
+    #: The path to the log directory.
+    logdir_path = Directory
 
     def create_new_task_window(self):
         """ Create a new task and open a window for it.
@@ -75,48 +77,23 @@ class MyApplication(TaskApplication):
         logger.addHandler(logging.StreamHandler())
         logger.setLevel(logging.DEBUG)
 
-        filepath = os.path.join(self.logdir_path, self.app_name + ".log")
+        filepath = os.path.join(self.logdir_path, self.id + ".log")
         logger.addHandler(logging.FileHandler(filepath))
         logger.debug("Log file is at '{}'".format(filepath))
 
-    def _on_window_closing(self, window, trait, old, new):
-        """ Ask confirmation when a window is closed. """
-        from pyface.api import confirm, YES
+    # Traits change handlers ------------------------------------------------
 
-        msg = "Are you sure you want to close the window?"
-        return_code = confirm(None, msg)
-        if return_code != YES:
-            logger.debug("Window closing even was veto-ed")
-            new.veto = True
+    def _application_initialized_changed(self, event):
+        """ Wait for event loop to be running before opening task window. """
+        self.create_new_task_window()
 
-    def _extra_actions_default(self):
-        from pyface.tasks.action.api import SchemaAddition
-
-        return [
-            SchemaAddition(
-                id='close_group',
-                path='MenuBar/File',
-                absolute_position='last',
-                factory=self._create_close_group,
-            ),
-        ]
-
-    def _create_close_group(self):
-        from pyface.action.api import Action
-        from pyface.tasks.action.api import SGroup
-
-        return SGroup(
-            Action(name='Exit' if IS_WINDOWS else 'Quit',
-                   accelerator='Alt+F4' if IS_WINDOWS else 'Ctrl+Q',
-                   on_perform=self.exit),
-            id='QuitGroup', name='Quit',
-        )
+    # Traits default handlers ------------------------------------------------
 
     def _icon_default(self):
-        return ImageResource("enthought_icon.png")
+        return ImageResource("python_icon.png")
 
     def _splash_screen_default(self):
-        img = ImageResource("enthought-logo-w-tag.png")
+        img = ImageResource("python_logo.png")
         return SplashScreen(image=img)
 
 
