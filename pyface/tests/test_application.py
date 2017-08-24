@@ -5,15 +5,16 @@ import os
 from shutil import rmtree
 import sys
 from tempfile import mkdtemp
-from unittest import TestCase
+import unittest
 
 from traits.api import Bool
-from traits.testing.unittest_tools import UnittestTools
 
 from ..application import Application
 from ..application_window import ApplicationWindow
-from ..gui import GUI
 from ..toolkit import toolkit_object
+
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
 EVENTS = [
@@ -82,27 +83,19 @@ class TestingApp(Application):
             raise Exception("Exit preparation failed")
 
 
-class TestApplication(TestCase, UnittestTools):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestApplication(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.application_events = []
 
         if toolkit_object.toolkit == 'wx':
             import wx
-            self.gui.process_events()
+            self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
-            self.gui.process_events()
-
-    def tearDown(self):
-        # poor man's clearing of events
-        if toolkit_object.toolkit == 'wx':
-            import wx
-            self.gui.process_events()
-            wx.GetApp().DeletePendingEvents()
-        else:
-            self.gui.process_events()
+            self.event_loop()
 
     def event_listener(self, event):
         self.application_events.append(event)
@@ -200,7 +193,7 @@ class TestApplication(TestCase, UnittestTools):
                 window.destroy()
                 print( window.control)
             app.windows = []
-            self.gui.process_events()
+            self.event_loop()
             self.gui.stop_event_loop()
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
@@ -224,7 +217,7 @@ class TestApplication(TestCase, UnittestTools):
             for window in app.windows:
                 window.destroy()
             app.windows = []
-            self.gui.process_events()
+            self.event_loop()
             self.gui.stop_event_loop()
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
@@ -281,14 +274,15 @@ class TestApplication(TestCase, UnittestTools):
         self.assertEqual(event_order, EVENTS[:1])
         self.assertEqual(app.windows, [])
 
-#     def test_bad_stop(self):
-#         app = TestingApp(stop_cleanly=False)
-#         self.connect_listeners(app)
-#
-#         with self.assertMultiTraitChanges([app], EVENTS[:-1], EVENTS[-1:]):
-#             self.gui.invoke_after(100, app.exit, True)
-#             result = app.run()
-#
-#         self.assertFalse(result)
-#         event_order = [event.event_type for event in self.application_events]
-#         self.assertEqual(event_order, EVENTS[:-1])
+    def test_bad_stop(self):
+        app = TestingApp(stop_cleanly=False)
+        self.connect_listeners(app)
+
+        with self.assertMultiTraitChanges([app], EVENTS[:-1], EVENTS[-1:]):
+            self.gui.invoke_after(100, app.exit, True)
+            result = app.run()
+
+        self.assertFalse(result)
+        event_order = [event.event_type for event in self.application_events]
+        self.assertEqual(event_order, EVENTS[:-1])
+        self.assertEqual(app.windows, [])

@@ -1,15 +1,17 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from unittest import TestCase
+import unittest
 
 from traits.api import Bool
-from traits.testing.unittest_tools import UnittestTools
 
 from pyface.application_window import ApplicationWindow
 from pyface.gui import GUI
 from pyface.toolkit import toolkit_object
 from ..task_application import TaskApplication
+
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
 EVENTS = [
@@ -76,27 +78,19 @@ class TestingApp(TaskApplication):
         super(TestingApp, self)._prepare_exit()
 
 
-class TestApplication(TestCase, UnittestTools):
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestApplication(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.application_events = []
 
         if toolkit_object.toolkit == 'wx':
             import wx
-            self.gui.process_events()
+            self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
-            self.gui.process_events()
-
-    def tearDown(self):
-        # poor man's clearing of events
-        if toolkit_object.toolkit == 'wx':
-            import wx
-            self.gui.process_events()
-            wx.GetApp().DeletePendingEvents()
-        else:
-            self.gui.process_events()
+            self.event_loop()
 
     def event_listener(self, event):
         self.application_events.append(event)
