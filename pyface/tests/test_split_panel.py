@@ -23,36 +23,40 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         if self.widget.control is not None:
             with self.delete_widget(self.widget.control):
                 self.widget.destroy()
+
         if self.window.control is not None:
             with self.delete_widget(self.window.control):
                 self.window.destroy()
+
+        del self.widget
+        del self.window
         GuiTestAssistant.tearDown(self)
 
     def test_lifecycle(self):
         # test that destroy works
         self.widget = SplitPanel(self.window.control)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_horizontal(self):
         # test that horizontal split works
         self.widget = SplitPanel(self.window.control, direction='horizontal')
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_ratio(self):
         # test that ratio works
         self.widget = SplitPanel(self.window.control, ratio=0.25)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_contents(self):
         # test that contents works
         self.widget = SplitPanel(self.window.control, lhs=HeadingText,
                                  rhs=HeadingText)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()

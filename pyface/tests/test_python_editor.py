@@ -31,41 +31,43 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
         if self.window.control is not None:
             with self.delete_widget(self.window.control):
                 self.window.destroy()
+        del self.widget
+        del self.window
         GuiTestAssistant.tearDown(self)
 
     def test_lifecycle(self):
         # test that destroy works
         self.widget = PythonEditor(self.window.control)
-        self.gui.process_events()
+        self.event_loop()
         self.assertFalse(self.widget.dirty)
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_show_line_numbers(self):
         # test that destroy works
         self.widget = PythonEditor(self.window.control, show_line_numbers=False)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.show_line_numbers = True
-        self.gui.process_events()
+        self.event_loop()
         self.widget.show_line_numbers = False
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_load(self):
         # test that destroy works
         self.widget = PythonEditor(self.window.control)
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.widget, 'changed', count=1):
             self.widget.path = PYTHON_SCRIPT
         self.assertFalse(self.widget.dirty)
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_select_line(self):
         # test that destroy works
         self.widget = PythonEditor(self.window.control, path=PYTHON_SCRIPT)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.select_line(3)
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
