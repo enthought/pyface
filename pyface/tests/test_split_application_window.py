@@ -33,11 +33,11 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
                 self.window.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_horizontal_split(self):
         # test that horizontal split works
@@ -45,11 +45,11 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
                 self.window.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_contents(self):
         # test that contents works
@@ -58,11 +58,11 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
                 self.window.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_ratio(self):
         # test that ratio split works
@@ -70,8 +70,8 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
                 self.window.close()
-        self.gui.process_events()
+        self.event_loop()

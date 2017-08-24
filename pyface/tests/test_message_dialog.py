@@ -43,30 +43,30 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_size(self):
         # test that size works as expected
         self.dialog.size = (100, 100)
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_position(self):
         # test that position works as expected
         self.dialog.position = (100, 100)
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -74,35 +74,35 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.parent = parent.control
         parent._create()
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
         parent.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
         self.dialog.ok_label = u"Sure"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
         self.dialog.message = u"This is the message"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_informative(self):
         # test that creation and destruction works with informative
         self.dialog.message = u"This is the message"
         self.dialog.informative = u"This is the additional message"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_detail(self):
         # test that creation and destruction works with detail
@@ -110,25 +110,25 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.informative = u"This is the additional message"
         self.dialog.detail = u"This is the detail"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_warning(self):
         # test that creation and destruction works with warning message
         self.dialog.severity = "warning"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_error(self):
         # test that creation and destruction works with error message
         self.dialog.severity = "error"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -179,7 +179,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
-        self.gui.process_events()
+        self.event_loop()
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)

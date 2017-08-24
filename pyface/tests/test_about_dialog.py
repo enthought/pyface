@@ -32,14 +32,14 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -47,13 +47,13 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.parent = parent.control
         parent._create()
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
 
         with self.delete_widget(self.dialog.control):
             self.dialog.destroy()
         with self.delete_widget(parent.control):
             parent.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -82,7 +82,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
-        self.gui.process_events()
+        self.event_loop()
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)

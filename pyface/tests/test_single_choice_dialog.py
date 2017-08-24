@@ -51,22 +51,22 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_cancel(self):
         # test that creation and destruction works no cancel button
         self.dialog.cancel = False
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -74,18 +74,18 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.parent = parent.control
         parent._create()
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
         parent.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
         self.dialog.message = u"This is the message"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_choice_strings(self):
         # test that choice strings work using simple strings
@@ -170,7 +170,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
-        self.gui.process_events()
+        self.event_loop()
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)

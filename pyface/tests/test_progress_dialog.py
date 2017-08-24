@@ -29,39 +29,39 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_can_cancel(self):
         # test that creation works with can_cancel
         self.dialog.can_cancel =  True
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_show_time(self):
         # test that creation works with show_time
         self.dialog.show_time =  True
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     @unittest.skip("not implemented in any backend")
     def test_show_percent(self):
         # test that creation works with show_percent
         self.dialog.show_percent =  True
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_update(self):
         self.dialog.min = 0
@@ -69,7 +69,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
         for i in range(11):
             result = self.dialog.update(i)
-            self.gui.process_events()
+            self.event_loop()
             self.assertEqual(result, (True, False))
 
         self.assertIsNone(self.dialog.control)
@@ -88,11 +88,11 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
         for i in range(5):
             result = self.dialog.update(i)
-            self.gui.process_events()
+            self.event_loop()
             self.assertEqual(result, (True, False))
         self.assertIsNotNone(self.dialog.control)
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
 
         self.assertIsNone(self.dialog.control)
 
@@ -103,7 +103,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         for i in range(11):
             self.dialog.change_message('Updating {}'.format(i))
             result = self.dialog.update(i)
-            self.gui.process_events()
+            self.event_loop()
             self.assertEqual(result, (True, False))
             self.assertEqual(self.dialog.message, 'Updating {}'.format(i))
         self.assertIsNone(self.dialog.control)
@@ -115,7 +115,7 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
         for i in range(11):
             result = self.dialog.update(i)
-            self.gui.process_events()
+            self.event_loop()
             self.assertEqual(result, (True, False))
         self.assertIsNone(self.dialog.control)
 
@@ -125,10 +125,10 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
         for i in range(10):
             result = self.dialog.update(i)
-            self.gui.process_events()
+            self.event_loop()
             self.assertEqual(result, (True, False))
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
         # XXX not really sure what correct behaviour is here
 
     def test_update_negative(self):
@@ -136,6 +136,6 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.max = -10
         with self.assertRaises(AttributeError):
             self.dialog.open()
-            self.gui.process_events()
+            self.event_loop()
 
         self.assertIsNone(self.dialog.control)

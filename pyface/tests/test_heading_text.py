@@ -35,31 +35,31 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
     def test_lifecycle(self):
         # test that destroy works
         self.widget = HeadingText(self.window.control)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_message(self):
         # test that create works with message
         self.widget = HeadingText(self.window.control, text="Hello")
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_image(self):
         # test that image works
         # XXX this image doesn't make sense here, but that's fine
         # XXX this isn't implemented in qt4 backend, but shouldn't fail
         self.widget = HeadingText(self.window.control, image=ImageResource('core.png'))
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_level(self):
         # test that create works with level
         # XXX this image doesn't make sense here, but that's fine
         # XXX this isn't implemented in qt4 backend, but shouldn't fail
         self.widget = HeadingText(self.window.control, level=2)
-        self.gui.process_events()
+        self.event_loop()
         self.widget.destroy()
-        self.gui.process_events()
+        self.event_loop()

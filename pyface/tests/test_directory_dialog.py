@@ -32,44 +32,44 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_close(self):
         # test that close works
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_default_path(self):
         # test that default path works
         self.dialog.default_path = os.path.join('images', 'core.png')
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_no_new_directory(self):
         # test that block on new directories works
         self.dialog.new_directory = False
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_message(self):
         # test that message setting works
         self.dialog.message = 'Select a directory'
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
 
     #XXX would be nice to actually test with an open dialog, but not right now

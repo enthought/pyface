@@ -40,52 +40,52 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_size(self):
         # test that size works as expected
         self.dialog.size = (100, 100)
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_position(self):
         # test that position works as expected
         self.dialog.position = (100, 100)
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
         self.dialog.ok_label = u"Sure"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_cancel_renamed(self):
         # test that creation and destruction works as expected with cancel_label
         self.dialog.cancel_label = u"I Don't Think So"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_create_help(self):
         # test that creation and destruction works as expected with help
         self.dialog.help_id = "test_help"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
 
     def test_create_help_label(self):
@@ -93,9 +93,9 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.help_id = "test_help"
         self.dialog.help_label = u"Assistance"
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
-        self.gui.process_events()
+        self.event_loop()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -198,9 +198,9 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         # test that closing works as expected
         self.dialog.style = 'nonmodal'
         result = self.dialog.open()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
         self.assertEqual(result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
@@ -210,8 +210,8 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.style = 'nonmodal'
         self.dialog.resizable = False
         result = self.dialog.open()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.close()
-        self.gui.process_events()
+        self.event_loop()
         self.assertEqual(result, OK)
         self.assertEqual(self.dialog.return_code, OK)
