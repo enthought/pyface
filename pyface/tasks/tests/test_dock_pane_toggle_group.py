@@ -5,6 +5,7 @@ import unittest
 from pyface.tasks.action.api import SMenu, SMenuBar, SGroup, \
     DockPaneToggleGroup
 from pyface.tasks.api import DockPane, Task, TaskPane, TaskWindow
+from pyface.gui import GUI
 from traits.api import List
 from traits.etsconfig.api import ETSConfig
 
@@ -48,10 +49,12 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
 
     @unittest.skipIf(USING_WX, "TaskWindowBackend is not implemented in WX")
     def setUp(self):
+        self.gui = GUI()
+
         # Set up the bogus task with its window.
         self.task = BogusTask()
 
-        window = TaskWindow()
+        self.window = window = TaskWindow()
         window.add_task(self.task)
 
         self.task_state = window._get_state(self.task)
@@ -65,6 +68,18 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
         self.task_state.menu_bar_manager.walk(find_doc_pane_toggle)
 
         self.dock_pane_toggle_group = dock_pane_toggle_group[0]
+
+    def tearDown(self):
+        del self.task
+        del self.task_state
+        del self.dock_pane_toggle_group
+
+        if self.window.control is not None:
+            self.window.destroy()
+            self.gui.process_events()
+        del self.window
+        del self.gui
+
 
     def get_dock_pane_toggle_action_names(self):
         names =  [

@@ -33,73 +33,81 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
                 self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
                 self.window.close()
-        self.gui.process_events()
+        self.event_loop()
 
     def test_show(self):
         # test that show and hide works as expected
         self.window._create()
         self.window.show(True)
-        self.gui.process_events()
+        self.event_loop()
         self.window.show(False)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_activate(self):
         # test that activation works as expected
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.activate()
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_position(self):
         # test that default position works as expected
         self.window.position = (100, 100)
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_reposition(self):
         # test that changing position works as expected
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.position = (100, 100)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_size(self):
         # test that default size works as expected
         self.window.size = (100, 100)
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_resize(self):
         # test that changing size works as expected
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.size = (100, 100)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_title(self):
         # test that default title works as expected
         self.window.title = "Test Title"
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_retitle(self):
         # test that changing title works as expected
         self.window.open()
-        self.gui.process_events()
+        self.event_loop()
         self.window.title = "Test Title"
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_menubar(self):
         # test that menubar gets created as expected
@@ -115,10 +123,11 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         )
         self.window._create()
         self.window.show(True)
-        self.gui.process_events()
+        self.event_loop()
         self.window.show(False)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_toolbar(self):
         # test that toolbar gets created as expected
@@ -131,10 +140,11 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         )
         self.window._create()
         self.window.show(True)
-        self.gui.process_events()
+        self.event_loop()
         self.window.show(False)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_statusbar(self):
         # test that status bar gets created as expected
@@ -143,17 +153,19 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         )
         self.window._create()
         self.window.show(True)
-        self.gui.process_events()
+        self.event_loop()
         self.window.show(False)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()
 
     def test_icon(self):
         # test that status bar gets created as expected
         self.window.icon = ImageResource('core')
         self.window._create()
         self.window.show(True)
-        self.gui.process_events()
+        self.event_loop()
         self.window.show(False)
-        self.gui.process_events()
+        self.event_loop()
         self.window.close()
+        self.event_loop()

@@ -26,17 +26,20 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         if self.dialog.control is not None:
             with self.delete_widget(self.dialog.control):
                 self.dialog.destroy()
+        self.dialog = None
         GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
         self.dialog.destroy()
+        self.event_loop()
 
     def test_destroy(self):
         # test that destroy works even when no control
         self.dialog.destroy()
+        self.event_loop()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
@@ -44,19 +47,13 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.parent = parent.control
         parent._create()
         self.dialog._create()
-        self.gui.process_events()
+        self.event_loop()
 
         with self.delete_widget(self.dialog.control):
             self.dialog.destroy()
         with self.delete_widget(parent.control):
             parent.destroy()
-
-    def test_create_ok_renamed(self):
-        # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.destroy()
+        self.event_loop()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -77,23 +74,6 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_ok(self):
-        # test that OK works as expected
-        tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_button(OK))
-        self.assertEqual(tester.result, OK)
-        self.assertEqual(self.dialog.return_code, OK)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
-    def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
-        # test that OK works as expected if renamed
-        tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
-        self.assertEqual(tester.result, OK)
-        self.assertEqual(self.dialog.return_code, OK)
-
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_parent(self):
         # test that lifecycle works with a parent
         parent = Window()
@@ -102,5 +82,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
         parent.close()
+        self.event_loop()
+
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)

@@ -10,6 +10,9 @@ class TestWidget(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.widget = Widget()
 
+    def tearDown(self):
+        del self.widget
+
     def test_create(self):
         # create is not Implemented
         with self.assertRaises(NotImplementedError):
