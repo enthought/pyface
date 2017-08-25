@@ -123,6 +123,27 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         self.window.close()
         self.event_loop()
 
+    def test_show_event(self):
+        self.window.open()
+        self.window.visible = False
+        self.event_loop()
+
+        with self.assertTraitChanges(self.window, 'visible', count=1):
+            self.window.control.show()
+            self.event_loop()
+
+        self.assertTrue(self.window.visible)
+
+    def test_hide_event(self):
+        self.window.open()
+        self.event_loop()
+
+        with self.assertTraitChanges(self.window, 'visible', count=1):
+            self.window.control.hide()
+            self.event_loop()
+
+        self.assertFalse(self.window.visible)
+
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_confirm_reject(self):
         # test that cancel works as expected
