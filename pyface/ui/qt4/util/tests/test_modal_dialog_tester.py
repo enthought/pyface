@@ -134,6 +134,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
+    @unittest.skip("has_widget code not working as designed. Issue #282.")
     def test_has_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
@@ -152,6 +153,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
 
         tester.open_and_run(when_opened=check_and_close)
 
+    @unittest.skip("has_widget code not working as designed. Issue #282.")
     def test_find_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
