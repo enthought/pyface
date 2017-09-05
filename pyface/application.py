@@ -32,13 +32,13 @@ logger = logging.getLogger(__name__)
 
 
 class Application(BaseApplication):
-    """ A basic Pyface application.
+    """ A basic Pyface GUI application.
 
     This handles setting up starting up the GUI, window management, logging,
     and other common features that we want when creating a GUI application.
 
     Often you will want to subclass this application, but it can be used as-is
-    by hooking a listener to the `initialized` event::
+    by hooking a listener to the `application_initialized` event::
 
         from pyface.api import ApplicationWindow, HeadingText
 
@@ -52,7 +52,7 @@ class Application(BaseApplication):
             window = MainWindow()
             application.on_trait_change(
                 lambda: application.add_window(window),
-                'initialized'
+                'application_initialized'
             )
             application.run()
 
