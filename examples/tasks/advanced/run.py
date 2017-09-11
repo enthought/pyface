@@ -8,20 +8,19 @@ Note: Run it with
 $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
-from pyface.tasks.api import TaskApplication
+
+from pyface.api import AboutDialog, ImageResource, SplashScreen
+from pyface.tasks.api import TasksApplication
+from pyface.tasks.task_application import TaskFactory
 
 from example_task import ExampleTask
 
 
-def create_task_window(application, files=()):
-    """ Create a new task and open a window for it. """
-    task = ExampleTask()
-    window = application.create_task_window(task)
-
-    # open files passed in as arguments
+def open_files(window, files=()):
+    """ Open a list of files in the task. """
     for filename in files:
         try:
-            task._open_file(filename)
+            window.active_task._open_file(filename)
         except Exception as exc:
             window.error(
                 message="Can't open '{}'".format(filename),
@@ -30,15 +29,28 @@ def create_task_window(application, files=()):
 
 def main(argv):
     """ A more advanced example of using Tasks. """
-    app = TaskApplication(
-        id="MyTaskApplication",
+    app = TasksApplication(
+        id="PythonEditorApplication",
         name="Python Editor",
         window_size=(800, 600),
+        about_dialog=AboutDialog(
+            image=ImageResource("python_logo.png")
+        ),
+        splash_screen=SplashScreen(
+            image=ImageResource("python_logo.png")
+        ),
+        task_factories=[
+            TaskFactory(
+                id='example.example_task',
+                name='Python Editor',
+                factory=ExampleTask
+            ),
+        ],
     )
 
-    # hook up listener to application initialized event
+    # hook up listener to application initialized event to open files
     def app_started(event):
-        create_task_window(event.application, files=argv[1:])
+        open_files(event.application.windows[0], files=argv[1:])
 
     app.on_trait_change(app_started, "application_initialized")
 

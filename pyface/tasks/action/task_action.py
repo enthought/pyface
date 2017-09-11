@@ -1,9 +1,7 @@
 # Enthought library imports.
+from pyface.action.listening_action import ListeningAction
 from pyface.tasks.api import Editor, Task, TaskPane
-from traits.api import Bool, Instance, Property, Str, cached_property
-
-# Local imports.
-from pyface.tasks.action.listening_action import ListeningAction
+from traits.api import Instance, Property, Str, cached_property
 
 
 class TaskAction(ListeningAction):

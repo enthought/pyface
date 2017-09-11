@@ -62,6 +62,7 @@ class DockPaneToggleAction(Action):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
 
+
 class DockPaneToggleGroup(Group):
     """ A Group for toggling the visibility of a task's dock panes.
     """

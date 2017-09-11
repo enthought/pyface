@@ -21,6 +21,10 @@ from .action_item import ActionItem
 from .action_manager import ActionManager
 from .action_manager_item import ActionManagerItem
 from .group import Group, Separator
+from .gui_application_action import (
+    GUIApplicationAction, AboutAction, CloseAction, ExitAction
+)
+from .listening_action import ListeningAction
 from .menu_manager import MenuManager
 from .menu_bar_manager import MenuBarManager
 from .status_bar_manager import StatusBarManager

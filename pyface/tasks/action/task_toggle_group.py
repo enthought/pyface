@@ -18,9 +18,9 @@ class TaskToggleAction(Action):
     tooltip = Property(Unicode, depends_on='name')
 
     #### 'TaskActivateAction' interface #######################################
-    
+
     task = Instance(Task)
-    
+
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
@@ -73,16 +73,21 @@ class TaskToggleGroup(Group):
 
     # The window that contains the group.
     window = Instance(TaskWindow)
-        
+
     ###########################################################################
     # Private interface.
     ###########################################################################
 
     def _get_items(self):
         items = []
-        for task in self.window.tasks:
-            action = TaskToggleAction(task=task)
-            items.append(ActionItem(action=action))
+        if len(self.window.tasks) > 1:
+            # at least two tasks, so something to toggle
+            items = [
+                ActionItem(
+                    action=TaskToggleAction(task=task),
+                )
+                for task in self.window.tasks
+            ]
         return items
 
     def _rebuild(self):
@@ -92,7 +97,7 @@ class TaskToggleGroup(Group):
 
         # Inform our manager that it needs to be rebuilt.
         self.manager.changed = True
-        
+
     #### Trait initializers ###################################################
 
     def _items_default(self):
@@ -104,6 +109,6 @@ class TaskToggleGroup(Group):
         while isinstance(manager, Group):
             manager = manager.parent
         return manager
-    
+
     def _window_default(self):
         return self.manager.controller.task.window

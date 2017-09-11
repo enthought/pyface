@@ -1,7 +1,7 @@
 # Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem, IEditor, \
     IEditorAreaPane, EditorAreaPane
-from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
+from pyface.tasks.action.api import DockPaneToggleGroup, SGroup, SMenuBar, \
     SMenu, SToolBar, TaskAction
 from pyface.api import ConfirmationDialog, FileDialog, \
     ImageResource, YES, OK, CANCEL
@@ -11,6 +11,7 @@ from traits.api import on_trait_change, Property, Instance
 from example_panes import PythonScriptBrowserPane
 from python_editor import PythonEditor
 
+
 class ExampleTask(Task):
     """ A simple task for editing Python code.
     """
@@ -19,34 +20,65 @@ class ExampleTask(Task):
 
     id = 'example.example_task'
 
-    name = 'Multi-Tab Editor'
+    name = Property(depends_on='active_editor.name')
 
     active_editor = Property(Instance(IEditor),
                              depends_on='editor_area.active_editor')
 
     editor_area = Instance(IEditorAreaPane)
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='New', method='new',
-                                         accelerator='Ctrl+N'),
-                              TaskAction(name='Open...', method='open',
-                                         accelerator='Ctrl+O'),
-                              TaskAction(name='Save', method='save',
-                                         accelerator='Ctrl+S'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            SGroup(
+                TaskAction(name='New', method='new', accelerator='Ctrl+N'),
+                TaskAction(name='Open...', method='open',
+                           accelerator='Ctrl+O'),
+                id="open_group", name="Open"
+            ),
+            SGroup(
+                TaskAction(name='Save', method='save', accelerator='Ctrl+S'),
+                TaskAction(name='Save As...', method='save_as',
+                           accelerator='Ctrl+Shift+S'),
+                id="save_group", name="Save"
+            ),
+            SGroup(id='close_group', name='Close'),
+            id='File', name='&File'
+        ),
+        SMenu(
+            SGroup(
+                TaskAction(name='Undo', accelerator='Ctrl+Z'),
+                TaskAction(name='Redo', accelerator='Ctrl+Shift+Z'),
+                id='undo_group', name='Undo'
+            ),
+            SGroup(
+                TaskAction(name='Cut', accelerator='Ctrl+X'),
+                TaskAction(name='Copy', accelerator='Ctrl+C'),
+                TaskAction(name='Paste', accelerator='Ctrl+V'),
+                id='copy_group', name='Copy'
+            ),
+            id='Edit', name='&Edit'
+        ),
+        SMenu(
+            SGroup(id="TaskToggleGroup"),
+            SGroup(id="DockPaneToggleGroup"),
+            id='View', name='&View'
+        ),
+        SMenu(id='Window', name='&Window'),
+        SMenu(
+            SGroup(id='about_group', name='About'),
+            id='Help', name='&Help'
+        )
+    )
 
-    tool_bars = [SToolBar(TaskAction(method='new',
-                                     tooltip='New file',
-                                     image=ImageResource('document_new')),
-                          TaskAction(method='open',
-                                     tooltip='Open a file',
-                                     image=ImageResource('document_open')),
-                          TaskAction(method='save',
-                                     tooltip='Save the current file',
-                                     image=ImageResource('document_save')),
-                          image_size=(32, 32),
-                          show_tool_names=False),]
+    tool_bars = [SToolBar(
+        TaskAction(method='new', tooltip='New file',
+                   image=ImageResource('document_new')),
+        TaskAction(method='open', tooltip='Open a file',
+                   image=ImageResource('document_open')),
+        TaskAction(method='save', tooltip='Save the current file',
+                   image=ImageResource('document_save')),
+        image_size=(32, 32), show_tool_names=False
+    ),]
 
     ###########################################################################
     # 'Task' interface.
@@ -107,11 +139,24 @@ class ExampleTask(Task):
             # If you are trying to save to a file that doesn't exist, open up a
             # FileDialog with a 'save as' action.
             dialog = FileDialog(parent=self.window.control,
-                                action='save as', wildcard='*.py')
+                                default_path=editor.path, action='save as',
+                                wildcard='*.py')
             if dialog.open() == OK:
                 editor.save(dialog.path)
             else:
                 return False
+        return True
+
+    def save_as(self):
+        editor = self.active_editor
+        dialog = FileDialog(parent=self.window.control,
+                            default_path=editor.path, action='save as',
+                            wildcard='*.py')
+        if dialog.open() == OK:
+            editor.save(dialog.path)
+        else:
+            return False
+
         return True
 
     ###########################################################################
@@ -162,3 +207,9 @@ class ExampleTask(Task):
         if self.editor_area is not None:
             return self.editor_area.active_editor
         return None
+
+    def _get_name(self):
+        if self.active_editor:
+            return u'{} - {}'.format('Python Editor', self.active_editor.name)
+        else:
+            return u'Python Editor'

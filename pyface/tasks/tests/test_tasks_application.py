@@ -6,9 +6,9 @@ import unittest
 from traits.api import Bool
 
 from pyface.application_window import ApplicationWindow
-from pyface.gui import GUI
 from pyface.toolkit import toolkit_object
-from ..task_application import TaskApplication
+
+from ..tasks_application import TasksApplication
 
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
@@ -19,7 +19,7 @@ EVENTS = [
 ]
 
 
-class TestingApp(TaskApplication):
+class TestingApp(TasksApplication):
 
     #: Whether the app should start cleanly.
     start_cleanly = Bool(True)
@@ -52,13 +52,15 @@ class TestingApp(TaskApplication):
     exit_prepared_error = Bool(False)
 
     def start(self):
+        if not self.start_cleanly:
+            return False
         super(TestingApp, self).start()
-        window = ApplicationWindow()
+
+        window = self.windows[0]
         window.on_trait_change(
             lambda event: setattr(event, 'veto', self.veto_close), 'closing'
         )
-        self.add_window(window)
-        return self.start_cleanly
+        return True
 
     def stop(self):
         super(TestingApp, self).stop()
@@ -102,7 +104,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
 
-        app = TaskApplication()
+        app = TasksApplication()
 
         self.assertEqual(app.home, ETSConfig.application_home)
         self.assertEqual(app.user_data, ETSConfig.user_data)
@@ -110,7 +112,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
 
     def test_lifecycle(self):
 
-        app = TaskApplication()
+        app = TasksApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
         app.on_trait_change(lambda: app.add_window(window), 'started')

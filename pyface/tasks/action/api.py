@@ -10,3 +10,4 @@ from .task_action import CentralPaneAction, DockPaneAction, EditorAction, \
 from .task_action_controller import TaskActionController
 from .task_action_manager_builder import TaskActionManagerBuilder
 from .task_toggle_group import TaskToggleGroup
+from .task_window_toggle_group import TaskWindowToggleGroup
