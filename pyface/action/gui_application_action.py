@@ -67,9 +67,15 @@ class ActiveWindowAction(GUIApplicationAction):
             return self.application.active_window
 
 
+class CreateWindowAction(GUIApplicationAction):
+    """ A standard 'New Window' menu action. """
+    name = u'New Window'
+    accelerator = 'Ctrl+N'
+    method = 'create_window'
+
+
 class ExitAction(GUIApplicationAction):
     """ A standard 'Quit' or 'Exit' menu action. """
-    name = u'Exit' if IS_WINDOWS else u'Quit'
     accelerator = 'Alt+F4' if IS_WINDOWS else 'Ctrl+Q'
     method = 'exit'
 
@@ -85,8 +91,8 @@ class AboutAction(GUIApplicationAction):
         return u"About " + self.application.name
 
 
-class CloseAction(ActiveWindowAction):
-    """ A standard 'Close window' menu action.
+class CloseActiveWindowAction(ActiveWindowAction):
+    """ A standard 'Close window' menu action at the application level.
 
     This method closes the active window of the application.
     """

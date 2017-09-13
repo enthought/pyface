@@ -9,7 +9,7 @@ $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
 
-from pyface.api import AboutDialog, ImageResource, SplashScreen
+from pyface.api import ImageResource, SplashScreen
 from pyface.tasks.api import TasksApplication
 from pyface.tasks.task_application import TaskFactory
 
@@ -32,10 +32,6 @@ def main(argv):
     app = TasksApplication(
         id="PythonEditorApplication",
         name="Python Editor",
-        window_size=(800, 600),
-        about_dialog=AboutDialog(
-            image=ImageResource("python_logo.png")
-        ),
         splash_screen=SplashScreen(
             image=ImageResource("python_logo.png")
         ),
@@ -47,6 +43,11 @@ def main(argv):
             ),
         ],
     )
+    app.about_dialog.image = ImageResource("python_logo.png")
+    app.about_dialog.additions += [
+        u"<p>A simple Python editor application that demonstrates the Tasks " +
+        u"framework<br>and the TasksApplication class.</p>"
+    ]
 
     # hook up listener to application initialized event to open files
     def app_started(event):

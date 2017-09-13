@@ -21,9 +21,7 @@ from traits.api import (
     on_trait_change
 )
 
-from .application import (
-    ApplicationEvent, ApplicationExit, Application
-)
+from .application import ApplicationExit, Application
 from .i_dialog import IDialog
 from .i_image_resource import IImageResource
 from .i_splash_screen import ISplashScreen
@@ -33,31 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class GUIApplication(Application):
-    """ A basic Pyface application.
-
-    This handles setting up starting up the GUI, window management, logging,
-    and other common features that we want when creating a GUI application.
-
-    Often you will want to subclass this application, but it can be used as-is
-    by hooking a listener to the `initialized` event::
-
-        from pyface.api import ApplicationWindow, HeadingText
-
-        class MainWindow(ApplicationWindow):
-            def _create_contents(self, parent):
-                self._label = HeadingText(parent, text="Hello World")
-                return self._label.control
-
-        def main():
-            application = GUIApplication(id='hello-world', name='Hello World')
-            window = MainWindow()
-            application.on_trait_change(
-                lambda: application.add_window(window),
-                'initialized'
-            )
-            application.run()
-
-    """
+    """ A basic Pyface GUI application. """
 
     # -------------------------------------------------------------------------
     # 'GUIApplication' interface
@@ -105,10 +79,6 @@ class GUIApplication(Application):
 
         By default uses the :py:attr:`window_factory` to do this.  Subclasses
         can override if they want to do something different or additional.
-
-        Parameters
-        ----------
-
 
         Returns
         -------
@@ -271,13 +241,19 @@ class GUIApplication(Application):
         return ApplicationWindow
 
     def _about_dialog_default(self):
-        """ Default to AboutDialog
-
-        This is almost never the right thing, but allows users to get off the
-        ground with the base class.
-        """
+        """ Default to AboutDialog """
+        from sys import version_info
+        if (version_info.major, version_info.minor) >= (3, 2):
+            from html import escape
+        else:
+            from cgi import escape
         from pyface.about_dialog import AboutDialog
-        return AboutDialog()
+
+        additions = [
+            u"<h1>{}</h1>".format(escape(self.name)),
+            u"Copyright &copy; 2017, {}".format(escape(self.company))
+        ]
+        return AboutDialog(additions=additions)
 
     # Trait listeners --------------------------------------------------------
 

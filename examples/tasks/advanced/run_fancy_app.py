@@ -31,15 +31,11 @@ class MyApplication(TaskApplication):
     # TaskApplication interface
     # -------------------------------------------------------------------------
 
-    id = "MyPyfaceApplication"
+    id = "PythonEditorApplication"
 
     name = "Python Editor"
 
     window_size = (800, 600)
-
-    extra_actions = List(Instance(
-        'pyface.tasks.action.schema_addition.SchemaAddition'
-    ))
 
     def _on_window_closing(self, window, trait, old, new):
         """ Ask confirmation when a window is closed. """
@@ -58,7 +54,7 @@ class MyApplication(TaskApplication):
     #: The path to the log directory.
     logdir_path = Directory
 
-    def create_new_task_window(self):
+    def create_window(self, layout=None):
         """ Create a new task and open a window for it.
 
         Returns
@@ -67,7 +63,8 @@ class MyApplication(TaskApplication):
             Window that was created, containing the newly created task.
         """
         task = ExampleTask()
-        task.extra_actions = self.extra_actions
+        task.extra_actions.extend(self.extra_actions)
+        task.extra_dock_pane_factories.extend(self.extra_dock_pane_factories)
         window = self.create_task_window(task)
         return window
 

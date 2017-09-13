@@ -44,3 +44,10 @@ class WindowAction(ListeningAction):
         # Disconnect listeners to window and dependent properties.
         self.window = None
         super(WindowAction, self).destroy()
+
+
+class CloseWindowAction(WindowAction):
+    """ Close the specified window """
+    name = u'Close'
+    accelerator = 'Ctrl+W'
+    method = 'close'

@@ -33,6 +33,7 @@ appropriate work there::
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+from contextlib import contextmanager
 import os
 import logging
 from logging.handlers import RotatingFileHandler
@@ -260,15 +261,29 @@ class Application(HasStrictTraits):
             logger.info('Application home directory does not exist, creating')
             os.makedirs(self.home)
 
-    def install_excepthook(self):
+    @contextmanager
+    def excepthook(self):
         """ Install an exception hook to catch unhandled exceptions
 
         This permits applications to do things like catch and display an error
         dialog when something unexpectedly goes wrong.
         """
-        self._old_excepthook = sys.excepthook
+        old_excepthook = sys.excepthook
         sys.excepthook = self._excepthook
-        logger.debug('Exception hook installed')
+        try:
+            logger.debug('Exception hook installed')
+            yield
+        finally:
+            sys.excepthook = old_excepthook
+            logger.debug('Exception hook reset')
+
+    @contextmanager
+    def logging(self):
+        self.setup_logging()
+        try:
+            yield
+        finally:
+            self.reset_logging()
 
     # Teardown utilities -----------------------------------------------
 
@@ -283,16 +298,6 @@ class Application(HasStrictTraits):
             if hasattr(handler, 'close'):
                 handler.close()
             logger.removeHandler(handler)
-
-    def reset_excepthook(self):
-        """ Install an exception hook to catch unhandled exceptions
-
-        This permits applications to do things like catch and display an error
-        dialog when something unexpectedly goes wrong.
-        """
-        sys.excepthook = self._old_excepthook
-        self._old_excepthook = None
-        logger.debug('Exception hook reset')
 
     # -------------------------------------------------------------------------
     # Private interface
