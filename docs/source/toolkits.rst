@@ -11,7 +11,7 @@ hooks for other projects to contribute toolkits and have them be discoverable.
 Toolkit Selection
 =================
 
-Pyface uses Traits' :py:module:`traits.etsconfig` to determine the current
+Pyface uses Traits' :py:mod:`traits.etsconfig` to determine the current
 toolkit being used.  Applications can control which toolkit to use in two
 ways:
 
@@ -24,8 +24,8 @@ ways:
     ETSConfig.toolkit = 'qt4'
 
   This must be done _before_ any widget imports in your application, including
-  importing :py:module:`pyface.api`.  Precisely, this must be set before the
-  first import of :py:module:`pyface.toolkit`.
+  importing :py:mod:`pyface.api`.  Precisely, this must be set before the
+  first import of :py:mod:`pyface.toolkit`.
 
 If for some reason Pyface can't load a deliberately specified toolkit, then it
 will raise an exception.
@@ -45,7 +45,7 @@ The selection of the correct backend object is carried out by each toolkit's
 toolkit object.  For all built-in toolkits, this is an instance of the
 :py:class:`pyface.base_toolkit.Toolkit` class, but it is possible that other
 backends may use their own objects.  The toolkit object for the toolkit that
-has been selected can be found as :py:object:`pyface.toolkit.toolkit_object`.
+has been selected can be found as :py:obj:`pyface.toolkit.toolkit_object`.
 
 This is a callable object which expects to be given the an identifier for the
 widget in the form of a relative module name and the object name, separated by
@@ -58,12 +58,12 @@ The API module for the new widget class typically looks something like this::
 The base toolkits use the identifier to select which module to import the
 toolkit object by constructing a full module path from the partial path and
 importing the object.  For example the ``qt4`` backend will look for the
-concrete implementation in :py:module:`pyface.ui.qt4.my_package.my_widget`
+concrete implementation in :py:mod:`pyface.ui.qt4.my_package.my_widget`
 while the ``wx`` backend will look for
-:py:module:`pyface.ui.wx.my_package.my_widget`.
+:py:mod:`pyface.ui.wx.my_package.my_widget`.
 
 If no matching object is found, the toolkit will return a special
-:py:class:`Undefined` class that will raise :py:exception:`NotImplementedError`
+:py:class:`Undefined` class that will raise :py:exc:`NotImplementedError`
 when instantiated.
 
 The basic toolkit implementation provides two other features which may be of
@@ -92,7 +92,7 @@ the third party library, something like this::
     )
 
 The left-hand side is the name of the toolkit, suitable for use with
-:py:object:`ETSConfig`, and the right-hand side is the location of a toolkit
+:py:obj:`ETSConfig`, and the right-hand side is the location of a toolkit
 object which matches the specification above: a callable object which takes
 identifiers as specified and returns concrete implementations.  The easiest
 way to do this is to follow the examples of the current toolkits and use

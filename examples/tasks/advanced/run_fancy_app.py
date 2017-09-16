@@ -11,94 +11,166 @@ as the wx backend is not supported yet for the TaskWindow.
 import logging
 import os
 
-from traits.api import Directory, Instance, List
-from pyface.tasks.api import TaskApplication
-from pyface.image_resource import ImageResource
-from pyface.splash_screen import SplashScreen
+from traits.api import Directory, on_trait_change
+from pyface.api import AboutDialog, ImageResource, SplashScreen
+from pyface.tasks.api import (
+    PaneItem, TaskLayout, TasksApplication, TaskWindowLayout
+)
 
 from example_task import ExampleTask
 
 logger = logging.getLogger()
 
 
-class MyApplication(TaskApplication):
-    """ This application object can subclass TaskApplication and customize
+class MyApplication(TasksApplication):
+    """ This application object can subclass TasksApplication and customize
     any of the Application attributes: name, window size, logging setup, splash
     screen, ...
     """
 
-    # -------------------------------------------------------------------------
-    # TaskApplication interface
-    # -------------------------------------------------------------------------
-
-    id = "PythonEditorApplication"
+    id = "CustomPythonEditorApplication"
 
     name = "Python Editor"
 
-    window_size = (800, 600)
+    icon = ImageResource("python_icon.png")
 
-    def _on_window_closing(self, window, trait, old, new):
-        """ Ask confirmation when a window is closed. """
-        from pyface.api import confirm, YES
-
-        msg = "Are you sure you want to close the window?"
-        return_code = confirm(None, msg)
-        if return_code != YES:
-            logger.info("Window closing event was veto-ed")
-            new.veto = True
+    log_dir = Directory
 
     # -------------------------------------------------------------------------
     # MyApplication interface
     # -------------------------------------------------------------------------
 
-    #: The path to the log directory.
-    logdir_path = Directory
+    def do_new_window(self):
+        self.create_window(layout=self.default_layout[0])
 
-    def create_window(self, layout=None):
-        """ Create a new task and open a window for it.
+    # -------------------------------------------------------------------------
+    # TaskApplication interface
+    # -------------------------------------------------------------------------
 
-        Returns
-        -------
-        window : TaskWindow
-            Window that was created, containing the newly created task.
-        """
-        task = ExampleTask()
+    def create_task(self, id):
+        task = ExampleTask(id=id)
         task.extra_actions.extend(self.extra_actions)
         task.extra_dock_pane_factories.extend(self.extra_dock_pane_factories)
-        window = self.create_task_window(task)
-        return window
+        return task
 
-    def _setup_logging(self):
+    # -------------------------------------------------------------------------
+    # Application interface
+    # -------------------------------------------------------------------------
+
+    def setup_logging(self):
         """ Initialize logger. """
         logger = logging.getLogger()
-        logger.addHandler(logging.StreamHandler())
         logger.setLevel(logging.DEBUG)
 
-        filepath = os.path.join(self.logdir_path, self.id + ".log")
-        logger.addHandler(logging.FileHandler(filepath))
-        logger.debug("Log file is at '{}'".format(filepath))
+        stream_handler = logging.StreamHandler()
+        logger.addHandler(stream_handler)
+
+        log_file = os.path.join(self.log_dir, 'app.log')
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+        file_handler = logging.FileHandler(log_file)
+        logger.addHandler(file_handler)
+        logger.debug("Log file is at '{}'".format(log_file))
+
+        self.logging_handlers += [stream_handler, file_handler]
+
+    # -------------------------------------------------------------------------
+    # Private interface
+    # -------------------------------------------------------------------------
 
     # Traits change handlers ------------------------------------------------
 
     def _application_initialized_changed(self, event):
-        """ Wait for event loop to be running before opening task window. """
-        self.create_new_task_window()
+        """ Wait for event loop to be running before opening files. """
+        import sys
+
+        for filename in sys.argv[1:]:
+            try:
+                self.active_task._open_file(filename)
+            except Exception as exc:
+                print(exc)
+                self.active_window.error(
+                    message="Can't open '{}'".format(filename),
+                )
+
+    @on_trait_change('windows:closing')
+    def _on_window_closing(self, window, trait, old, new):
+        """ Ask confirmation when a window is closed. """
+        from pyface.api import confirm, YES
+
+        if not window.active_task.editor_area.editors:
+            # no open editors, so OK to close
+            return
+
+        msg = "Are you sure you want to close the window?"
+        return_code = confirm(None, msg)
+        if return_code != YES:
+            logger.info("Window closing event was vetoed")
+            new.veto = True
 
     # Traits default handlers ------------------------------------------------
 
-    def _icon_default(self):
-        return ImageResource("python_icon.png")
+    def _log_dir_default(self):
+        """ Directory for log files. """
+        return os.path.join(self.home, 'log')
 
     def _splash_screen_default(self):
+        """ Customized splash screen """
         img = ImageResource("python_logo.png")
         return SplashScreen(image=img)
 
+    def _about_dialog_default(self):
+        """ Customized About dialog """
+        dialog = AboutDialog(
+            image = ImageResource("python_logo.png"),
+            additions = [
+                u"<h1>Python Editor</h1>",
+                u"<p>A simple Python editor application that demonstrates the Tasks " +
+                u"framework<br>and the TasksApplication class.</p>"
+                u"Copyright &copy; 2017, Enthought"
+            ]
+        )
+        return dialog
+
+    def _default_layout_default(self):
+        """ Customized task window layout """
+        layout = TaskWindowLayout(
+            size=(1000, 800),
+            items=[TaskLayout(
+                id='example.example_task',
+                right=PaneItem(id='example.python_script_browser_pane')
+            )]
+        )
+        return [layout]
+
+    def _extra_actions_default(self):
+        """ Extra application-wide menu items"""
+        from pyface.tasks.action.api import SchemaAddition
+        from pyface.action.api import GUIApplicationAction
+
+        extra_actions = super(MyApplication, self)._extra_actions_default()
+
+        extra_actions += [
+            SchemaAddition(
+                id='new_window_action',
+                factory=lambda: GUIApplicationAction(
+                    name='New Window',
+                    accelerator='Ctrl+Shift+N',
+                    application=self,
+                    method='do_new_window',
+                ),
+                before='open',
+                path='MenuBar/File/open_group',
+            ),
+        ]
+        return extra_actions
 
 def main(argv):
     """ A more advanced example of using Tasks.
     """
     app = MyApplication()
-    app.run()
+    with app.logging(), app.excepthook():
+        app.run()
 
 
 if __name__ == '__main__':

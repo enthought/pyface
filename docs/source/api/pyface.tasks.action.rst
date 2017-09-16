@@ -17,14 +17,6 @@ action Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`listening_action` Module
-------------------------------
-
-.. automodule:: pyface.tasks.action.listening_action
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 :mod:`schema` Module
 --------------------
 
@@ -73,3 +65,10 @@ action Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`task_window_toggle_group` Module
+-------------------------------
+
+.. automodule:: pyface.tasks.action.task_window_toggle_group
+    :members:
+    :undoc-members:
+    :show-inheritance:

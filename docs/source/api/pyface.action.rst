@@ -73,6 +73,22 @@ action Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`gui_application_action` Module
+---------------------------
+
+.. automodule:: pyface.action.gui_application_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+:mod:`listening_action` Module
+---------------------------
+
+.. automodule:: pyface.action.listening_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`menu_bar_manager` Module
 ------------------------------
 
@@ -120,4 +136,3 @@ action Package
     :members:
     :undoc-members:
     :show-inheritance:
-

@@ -32,6 +32,7 @@ def main(argv):
     app = TasksApplication(
         id="PythonEditorApplication",
         name="Python Editor",
+        icon=ImageResource("python_icon.png"),
         splash_screen=SplashScreen(
             image=ImageResource("python_logo.png")
         ),
@@ -51,12 +52,13 @@ def main(argv):
 
     # hook up listener to application initialized event to open files
     def app_started(event):
-        open_files(event.application.windows[0], files=argv[1:])
+        open_files(event.application.active_window, files=argv[1:])
 
     app.on_trait_change(app_started, "application_initialized")
 
     # run the application
-    app.run()
+    with app.logging(), app.excepthook():
+        app.run()
 
 
 if __name__ == '__main__':

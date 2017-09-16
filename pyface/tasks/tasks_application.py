@@ -155,23 +155,6 @@ class TasksApplication(GUIApplication):
                 return factory
         return None
 
-    def _create_exit_group(self):
-        """ Create an exit group with a 'Quit' menu item """
-        from pyface.action.gui_application_action import ExitAction
-        from pyface.tasks.action.api import SGroup
-
-        return SGroup(ExitAction(application=self), id='ExitGroup', name='Exit')
-
-    def _create_about_group(self):
-        """ Create an about group with a 'About' menu item """
-        from pyface.action.gui_application_action import AboutAction
-        from pyface.tasks.action.api import SGroup
-
-        return SGroup(
-            AboutAction(application=self),
-            id='AboutGroup', name='About',
-        )
-
     # Destruction utilities ---------------------------------------------------
 
     @on_trait_change('windows:closed')
@@ -207,7 +190,9 @@ class TasksApplication(GUIApplication):
         groups to a Task's set of menus.  Whether or not they actually appear
         depends on whether the appropriate menus are provided by the Task.
         """
-        from pyface.action.api import AboutAction, CloseAction, ExitAction
+        from pyface.action.api import (
+            AboutAction, CloseActiveWindowAction, ExitAction
+        )
         from pyface.tasks.action.api import (
             DockPaneToggleGroup, SchemaAddition, TaskToggleGroup,
             TaskWindowToggleGroup
@@ -216,7 +201,7 @@ class TasksApplication(GUIApplication):
         return [
             SchemaAddition(
                 id='close_action',
-                factory=partial(CloseAction, application=self),
+                factory=partial(CloseActiveWindowAction, application=self),
                 path='MenuBar/File/close_group',
             ),
             SchemaAddition(
