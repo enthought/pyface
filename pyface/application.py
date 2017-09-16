@@ -314,9 +314,9 @@ class Application(HasStrictTraits):
         main application logic is called from.
         """
         # Fire a notification that the app is running.  If the app has an
-        # event loop (eg. a GUI, Tornado web app, etc.) then the
-        # should be fired _after_ the event loop starts using an appropriate
-        # callback (eg. gui.set_trait_later).
+        # event loop (eg. a GUI, Tornado web app, etc.) then this should be
+        # fired _after_ the event loop starts using an appropriate callback
+        # (eg. gui.set_trait_later).
         self._fire_application_event('application_initialized')
         return True
 
