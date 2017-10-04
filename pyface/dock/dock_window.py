@@ -325,7 +325,7 @@ class DockWindow ( HasPrivateTraits ):
             color = self.theme.tab.image_slice.bg_color
         else:
             color = SystemMetrics().dialog_background_color
-            color = wx.Colour(color[0]*255, color[1]*255, color[2]*255)
+            color = wx.Colour(int(color[0]*255), int(color[1]*255), int(color[2]*255))
 
         self.control.SetBackgroundColour( color )
 

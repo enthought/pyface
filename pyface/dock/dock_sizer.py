@@ -798,7 +798,7 @@ class DockItem ( HasPrivateTraits ):
         """ Gets the background color
         """
         color = SystemMetrics().dialog_background_color
-        return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
+        return wx.Colour( int(color[0]*255), int(color[1]*255), int(color[2]*255) )
 
 
     #---------------------------------------------------------------------------
