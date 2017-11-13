@@ -193,7 +193,7 @@ def set_standard_font ( dc ):
     global standard_font
 
     if standard_font is None:
-        standard_font = wx.SystemSettings_GetFont( wx.SYS_DEFAULT_GUI_FONT )
+        standard_font = wx.SystemSettings.GetFont( wx.SYS_DEFAULT_GUI_FONT )
 
     dc.SetFont( standard_font )
 
@@ -794,7 +794,7 @@ class DockItem ( HasPrivateTraits ):
         """ Gets the background color
         """
         color = SystemMetrics().dialog_background_color
-        return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
+        return wx.Colour( int(color[0]*255), int(color[1]*255), int(color[2]*255) )
 
 
     #---------------------------------------------------------------------------
@@ -846,13 +846,13 @@ class DockItem ( HasPrivateTraits ):
             bdc.DrawRectangle(0, 0, dx, dy)
 
             # Draw the left, top, and right side of a rectange around the tab
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             bdc.SetPen(pen)
             bdc.DrawLine(0,dy,0,0) #up
             bdc.DrawLine(0,0,dx,0) #right
             bdc.DrawLine(dx-1,0,dx-1,dy) #down
 
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
             bdc.SetPen(pen)
             bdc.DrawLine(1,dy,1,1)
             bdc.DrawLine(1,1,dx-2,1)
@@ -866,7 +866,7 @@ class DockItem ( HasPrivateTraits ):
             bdc.DrawRectangle(0, 3, dx, dy)
 
             # Draw the left, top, and right side of a rectange around the tab
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             bdc.SetPen(pen)
             bdc.DrawLine(0,dy,0,3)
             bdc.DrawLine(0,3,dx-1,3)
@@ -930,7 +930,7 @@ class DockItem ( HasPrivateTraits ):
 
         self.fill_bg_color( dc, x, y, dx, dy )
 
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x, y, x+dx, y)
         dc.DrawLine(x, y+2, x+dx, y+2)
@@ -947,7 +947,7 @@ class DockItem ( HasPrivateTraits ):
 
         self.fill_bg_color( dc, x, y, dx, dy )
 
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHILIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHILIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x, y, x, y+dy)
         dc.DrawLine(x+2, y, x+2, y+dy)
@@ -1235,7 +1235,7 @@ class DockSplitter ( DockItem ):
         if self.style == 'horizontal':
             # Draw a line the same color as the system button shadow, which
             # should be a darkish color in the users color scheme
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
             dc.DrawLine(x+idx+1,y+dy/2,x+dx-2,y+dy/2)
 
@@ -1248,7 +1248,7 @@ class DockSplitter ( DockItem ):
         else:
             # Draw a line the same color as the system button shadow, which
             # should be a darkish color in the users color scheme
-            pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+            pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
             dc.SetPen(pen)
             dc.DrawLine(x+dx/2,y+idy+1,x+dx/2,y+dy-2)
 
@@ -2943,12 +2943,12 @@ class DockRegion ( DockGroup ):
 
         # Draws a box around the frame containing the tab contents, starting
         # below the tab
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNSHADOW))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNSHADOW))
         dc.SetPen(pen)
         dc.DrawRectangle(x, y+tab_height, dx, dy-tab_height)
 
         # draw highlight
-        pen = wx.Pen(wx.SystemSettings_GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+        pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
         dc.SetPen(pen)
         dc.DrawLine(x+1, y+tab_height+1, x+dx-1, y+tab_height+1)
 
@@ -3822,6 +3822,10 @@ class DockSizer ( wx.PySizer ):
     #  Layout the contents of the sizer based on the sizer's current size and
     #  position:
     #---------------------------------------------------------------------------
+    def GetPositionTuple(self):
+        return tuple(self.GetPosition())
+    def GetSizeTuple(self):
+        return tuple(self.GetSize())
 
     def RecalcSizes ( self ):
         """ Layout the contents of the sizer based on the sizer's current size
