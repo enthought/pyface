@@ -322,8 +322,7 @@ class ActionManager(HasTraits):
         """
         group = self.find_group(self.DEFAULT_GROUP)
         if group is None:
-            group = Group(id=self.DEFAULT_GROUP)
-            group.parent = self
+            group = self._prepare_item(self.DEFAULT_GROUP)
             self._groups.append(group)
 
         return group
