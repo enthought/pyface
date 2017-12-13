@@ -163,7 +163,12 @@ class ActionManager(HasTraits):
         appended to the manager's defualt group.
         """
         item = self._prepare_item(item)
-        group = self._get_target_group(item)
+        if isinstance(item, Group):
+            group = self._groups
+
+        else:
+            group = self._get_default_group()
+
         group.append(item)
         return group
 
@@ -196,7 +201,13 @@ class ActionManager(HasTraits):
         inserted into the manager's defualt group.
         """
         item = self._prepare_item(item)
-        group = self._get_target_group(item)
+
+        if isinstance(item, Group):
+            group = self._groups
+
+        else:
+            group = self._get_default_group()
+
         group.insert(index, item)
         return group
 
@@ -316,24 +327,6 @@ class ActionManager(HasTraits):
             self._groups.append(group)
 
         return group
-
-    def _get_target_group(self, item):
-        """ Return the target group for adding an item.
-
-        Parameters
-        ----------
-        item : Group instance or ActionManagerItem instance
-            The item to append.
-
-        Returns
-        -------
-        group : Group instance
-            The group for an item should belong by default.
-        """
-        if isinstance(item, Group):
-            return self._groups
-
-        return self._get_default_group()
 
     def _prepare_item(self, item):
         """ Prepare an item to be added to this ActionManager.
