@@ -162,8 +162,9 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         appended to the manager's defualt group.
         """
+        item = self._prepare_item(item)
         group = self._get_target_group(item)
-        group.append(self._prepare_item(item))
+        group.append(item)
         return group
 
     def destroy(self):
@@ -194,8 +195,9 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         inserted into the manager's defualt group.
         """
+        item = self._prepare_item(item)
         group = self._get_target_group(item)
-        group.insert(index, self._prepare_item(item))
+        group.insert(index, item)
         return group
 
     def find_group(self, id):
