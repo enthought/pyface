@@ -332,7 +332,7 @@ class ActionManager(HasTraits):
 
         Parameters
         ----------
-        item : Group instance or ActionManagerItem instance
+        item : string, Group instance or ActionManagerItem instance
             The item to be added to this ActionManager
 
         Returns
