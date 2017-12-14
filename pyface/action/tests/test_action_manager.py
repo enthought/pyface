@@ -101,6 +101,20 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         self.assertEqual(action_manager.groups, [default_group, self.group])
         self.assertEqual(default_group.items, [self.action_item])
 
+    def test_append_item_order(self):
+        # Regression test for enthought/pyface#289
+        expected = [
+            self.action_item,
+            ActionItem(action=Action(name="Test2")),
+            ActionItem(action=Action(name="Test3")),
+        ]
+        action_manager = ActionManager()
+        for item in expected:
+            action_manager.append(item)
+
+        default_group = action_manager._get_default_group()
+        self.assertEqual(default_group.items, expected)
+
     def test_destroy(self):
         action_manager = ActionManager(self.group)
         # XXX items doesn't fire a change event.  Should it?
