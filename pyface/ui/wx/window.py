@@ -86,11 +86,12 @@ class Window(MWindow, Widget):
     ###########################################################################
 
     def _add_event_listeners(self):
-        wx.EVT_ACTIVATE(self.control, self._wx_on_activate)
-        wx.EVT_CLOSE(self.control, self._wx_on_close)
-        wx.EVT_SIZE(self.control, self._wx_on_control_size)
-        wx.EVT_MOVE(self.control, self._wx_on_control_move)
-        wx.EVT_CHAR(self.control, self._wx_on_char)
+        self.control.bind(wx.EVT_ACTIVATE, self._wx_on_activate)
+        self.control.bind(wx.EVT_SHOW, self._wx_on_show)
+        self.control.bind(wx.EVT_CLOSE, self._wx_on_close)
+        self.control.bind(wx.EVT_SIZE, self._wx_on_control_size)
+        self.control.bind(wx.EVT_MOVE, self._wx_on_control_move)
+        self.control.bind(wx.EVT_CHAR, self._wx_on_char)
 
     ###########################################################################
     # Protected 'IWidget' interface.
@@ -102,13 +103,15 @@ class Window(MWindow, Widget):
         style = wx.DEFAULT_FRAME_STYLE \
                 | wx.FRAME_NO_WINDOW_MENU \
                 | wx.CLIP_CHILDREN
-
         control = wx.Frame(
             parent, -1, self.title, style=style, size=self.size,
             pos=self.position
         )
-
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
+        control.Enable(self.enabled)
+
+        # XXX starting with self.visible true is generally a bad idea
+        control.Show(self.visible)
 
         return control
 
@@ -163,6 +166,13 @@ class Window(MWindow, Widget):
             self.activated = self
         else:
             self.deactivated = self
+
+        event.Skip()
+
+    def _wx_on_show(self, event):
+        """ Called when the frame is being activated or deactivated. """
+
+        self.visible = event.IsShown()
 
         event.Skip()
 

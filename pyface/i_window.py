@@ -79,15 +79,6 @@ class IWindow(IWidget):
     def activate(self):
         """ Activates the window. """
 
-    def show(self, visible):
-        """ Show or hide the window.
-
-        Parameter
-        ---------
-        visible : bool
-            Visible should be ``True`` if the window should be shown.
-        """
-
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
 
@@ -151,13 +142,6 @@ class IWindow(IWidget):
             Explanatory text to display along with the message.
 
         """
-
-    ###########################################################################
-    # Protected 'IWindow' interface.
-    ###########################################################################
-
-    def _add_event_listeners(self):
-        """ Adds any event listeners required by the window. """
 
 
 class MWindow(object):
@@ -274,16 +258,3 @@ class MWindow(object):
         from message_dialog import error
 
         error(self.control, message, title, detail, informative)
-
-    ###########################################################################
-    # Protected 'IWidget' interface.
-    ###########################################################################
-
-    def _create(self):
-        """ Creates the window's widget hierarchy. """
-
-        # Create the toolkit-specific control.
-        super(MWindow, self)._create()
-
-        # Wire up event any event listeners required by the window.
-        self._add_event_listeners()
