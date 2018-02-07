@@ -86,12 +86,12 @@ class Window(MWindow, Widget):
     ###########################################################################
 
     def _add_event_listeners(self):
-        self.control.bind(wx.EVT_ACTIVATE, self._wx_on_activate)
-        self.control.bind(wx.EVT_SHOW, self._wx_on_show)
-        self.control.bind(wx.EVT_CLOSE, self._wx_on_close)
-        self.control.bind(wx.EVT_SIZE, self._wx_on_control_size)
-        self.control.bind(wx.EVT_MOVE, self._wx_on_control_move)
-        self.control.bind(wx.EVT_CHAR, self._wx_on_char)
+        self.control.Bind(wx.EVT_ACTIVATE, self._wx_on_activate)
+        self.control.Bind(wx.EVT_SHOW, self._wx_on_show)
+        self.control.Bind(wx.EVT_CLOSE, self._wx_on_close)
+        self.control.Bind(wx.EVT_SIZE, self._wx_on_control_size)
+        self.control.Bind(wx.EVT_MOVE, self._wx_on_control_move)
+        self.control.Bind(wx.EVT_CHAR, self._wx_on_char)
 
     ###########################################################################
     # Protected 'IWidget' interface.
