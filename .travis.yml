@@ -14,9 +14,11 @@ cache:
     - $HOME/.cache
 before_install:
   - export DISPLAY=:99.0; 
-  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ ${TRAVIS_OS_NAME} == "linux" ]] ; then sh -e /etc/init.d/xvfb start; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then ./install-edm-linux.sh; export PATH="${HOME}/edm/bin:${PATH}"; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then ./install-edm-osx.sh; export PATH="${PATH}:/usr/local/bin"; fi
+  - edm install -y pip invoke coverage
 install:
-  - ./travis_ci_bootstrap_edm.sh
   - for toolkit in ${TOOLKITS}; do edm run -- invoke install --runtime=${RUNTIME} --toolkit=${toolkit}; done
 script:
   - declare -i RESULT=0
