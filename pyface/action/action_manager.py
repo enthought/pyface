@@ -162,8 +162,15 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         appended to the manager's defualt group.
         """
+        item = self._prepare_item(item)
+        if isinstance(item, Group):
+            group = self._groups
 
-        return self.insert(len(self._groups), item)
+        else:
+            group = self._get_default_group()
+
+        group.append(item)
+        return group
 
     def destroy(self):
         """ Called when the manager is no longer required.
@@ -193,31 +200,15 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         inserted into the manager's defualt group.
         """
-        # 1) The item is a 'Group' instance.
+        item = self._prepare_item(item)
+
         if isinstance(item, Group):
-            group = item
+            group = self._groups
 
-            # Insert the group into the manager.
-            group.parent = self
-            self._groups.insert(index, item)
-
-        # 2) The item is a string.
-        elif isinstance(item, basestring):
-            # Create a group with that Id.
-            group = Group(id=item)
-
-            # Insert the group into the manager.
-            group.parent = self
-            self._groups.insert(index, group)
-
-        # 3) The item is an 'ActionManagerItem' instance.
         else:
-            # Find the default group.
             group = self._get_default_group()
 
-            # Insert the item into the default group.
-            group.insert(index, item)
-
+        group.insert(index, item)
         return group
 
     def find_group(self, id):
@@ -331,10 +322,35 @@ class ActionManager(HasTraits):
         """
         group = self.find_group(self.DEFAULT_GROUP)
         if group is None:
-            group = Group(id=self.DEFAULT_GROUP)
-            self.append(group)
+            group = self._prepare_item(self.DEFAULT_GROUP)
+            self._groups.append(group)
 
         return group
+
+    def _prepare_item(self, item):
+        """ Prepare an item to be added to this ActionManager.
+
+        Parameters
+        ----------
+        item : string, Group instance or ActionManagerItem instance
+            The item to be added to this ActionManager
+
+        Returns
+        -------
+        item : Group or ActionManagerItem
+            Modified item
+        """
+        # 1) The item is a 'Group' instance.
+        if isinstance(item, Group):
+            item.parent = self
+
+        # 2) The item is a string.
+        elif isinstance(item, basestring):
+            # Create a group with that Id.
+            item = Group(id=item)
+            item.parent = self
+
+        return item
 
     def _find_item(self, id):
         """ Find an item with a spcified Id.

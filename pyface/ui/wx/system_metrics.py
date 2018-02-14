@@ -60,7 +60,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
             # wx lies.
             color = wx.Colour(232, 232, 232)
         else:
-            color = wx.SystemSettings_GetColour(wx.SYS_COLOUR_MENUBAR).Get()
+            color = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUBAR).Get()
 
         return (color[0]/255., color[1]/255., color[2]/255.)
 

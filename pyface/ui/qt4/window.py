@@ -74,9 +74,6 @@ class Window(MWindow, Widget):
         self.control.activateWindow()
         self.control.raise_()
 
-    def show(self, visible):
-        self.control.setVisible(visible)
-
     ###########################################################################
     # Protected 'IWindow' interface.
     ###########################################################################
@@ -87,26 +84,30 @@ class Window(MWindow, Widget):
 
         if self.size != (-1, -1):
             control.resize(*self.size)
-
         if self.position != (-1, -1):
             control.move(*self.position)
-
         if self.size_state != 'normal':
             self._size_state_changed(self.size_state)
-
         control.setWindowTitle(self.title)
+        control.setEnabled(self.enabled)
+
+        # XXX starting with visible true is not recommended
+        control.setVisible(self.visible)
 
         return control
 
     def _add_event_listeners(self):
         self._event_filter = _EventFilter(self)
 
+    def _remove_event_listeners(self):
+        self._event_filter = None
+
     ###########################################################################
     # 'IWidget' interface.
     ###########################################################################
 
     def destroy(self):
-        self._event_filter = None
+        self._remove_event_listeners()
 
         if self.control is not None:
             # Avoid problems with recursive calls.
@@ -214,6 +215,9 @@ class _EventFilter(QtCore.QObject):
 
         elif typ == QtCore.QEvent.WindowDeactivate:
             window.deactivated = window
+
+        elif typ in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
+            window.visible = window.control.isVisible()
 
         elif typ == QtCore.QEvent.Resize:
             # Get the new size and set the shadow trait without performing

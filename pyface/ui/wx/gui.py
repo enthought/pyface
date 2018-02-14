@@ -64,7 +64,7 @@ class GUI(MGUI, HasTraits):
     ###########################################################################
 
     def invoke_after(cls, millisecs, callable, *args, **kw):
-        wx.FutureCall(millisecs, callable, *args, **kw)
+        wx.CallLater(millisecs, callable, *args, **kw)
 
     invoke_after = classmethod(invoke_after)
 
@@ -74,7 +74,7 @@ class GUI(MGUI, HasTraits):
     invoke_later = classmethod(invoke_later)
 
     def set_trait_after(cls, millisecs, obj, trait_name, new):
-        wx.FutureCall(millisecs, setattr, obj, trait_name, new)
+        wx.CallLater(millisecs, setattr, obj, trait_name, new)
 
     set_trait_after = classmethod(set_trait_after)
 
