@@ -118,12 +118,9 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         home = os.path.join(dirpath, "test")
         app = GUIApplication(home=home)
 
-        app.setup_logging()
         try:
-            try:
+            with app.logging():
                 self.assertEqual(len(app.logging_handlers), 1)
-            finally:
-                app.reset_logging()
 
             self.assertEqual(len(app.logging_handlers), 0)
         finally:
@@ -133,10 +130,10 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         excepthook = sys.excepthook
         app = GUIApplication()
 
-        app.install_excepthook()
         try:
-            self.assertEqual(sys.excepthook, app._excepthook)
-            app.reset_excepthook()
+            with app.excepthook():
+                self.assertEqual(sys.excepthook, app._excepthook)
+
             self.assertEqual(sys.excepthook, excepthook)
         finally:
             sys.excepthook = excepthook
