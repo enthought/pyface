@@ -94,10 +94,8 @@ supported_combinations = {
 
 dependencies = {
     "numpy",
-    "pandas",
     "pygments",
     "traits",
-    "pip",
     "mock",
     "nose",
     "coverage",
