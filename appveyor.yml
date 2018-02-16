@@ -1,6 +1,5 @@
 build: false
 shallow_clone: false
-skip_branch_with_pr: true
 environment:
 
   global:
