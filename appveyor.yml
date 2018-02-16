@@ -1,5 +1,6 @@
 build: false
 shallow_clone: false
+skip_branch_with_pr: true
 environment:
 
   global:
@@ -20,10 +21,6 @@ matrix:
   allow_failures:
     - RUNTIME: '2.7'
       TOOLKITS: "wx"
-
-branches:
-  only:
-    - master
 
 cache:
   - C:\Users\appveyor\.cache -> appveyor-clean-cache.txt
