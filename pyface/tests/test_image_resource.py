@@ -1,17 +1,18 @@
 from __future__ import absolute_import
 
 import os
+import pkg_resources
 
 from traits.testing.unittest_tools import unittest
 
 import pyface
-import pyface.api
 import pyface.tests
 from ..image_resource import ImageResource
 
 
-SEARCH_PATH = os.path.join(os.path.dirname(pyface.__file__), 'images')
-IMAGE_PATH = os.path.join(os.path.dirname(__file__), 'images', 'core.png')
+SEARCH_PATH = pkg_resources.resource_filename('pyface', 'images')
+IMAGE_DIR = pkg_resources.resource_filename(__name__, 'images')
+IMAGE_PATH = os.path.join(IMAGE_DIR, 'core.png')
 
 
 class TestImageResource(unittest.TestCase):
