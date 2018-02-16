@@ -140,7 +140,7 @@ def install(runtime, toolkit, environment):
         "edm environments create {environment} --force --version={runtime}",
         "edm install -y -e {environment} " + packages,
         "edm run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
-        "edm run -e {environment} -- python setup.py clean",
+        "edm run -e {environment} -- python setup.py clean --all",
         "edm run -e {environment} -- python setup.py install",
     ]
     # pip install pyqt5, because we don't have it in EDM yet
