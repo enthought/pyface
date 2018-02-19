@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import os
+import platform
 import pkg_resources
 
 from traits.testing.unittest_tools import unittest
@@ -8,6 +9,13 @@ from traits.testing.unittest_tools import unittest
 import pyface
 import pyface.tests
 from ..image_resource import ImageResource
+from ..toolkit import toolkit_object
+
+
+is_qt = toolkit_object.toolkit == 'qt4'
+if is_qt:
+    from pyface.qt import qt_api
+is_pyqt4_windows = (is_qt and qt_api == 'pyqt' and platform.system() == 'Windows')
 
 
 SEARCH_PATH = pkg_resources.resource_filename('pyface', 'images')
@@ -76,14 +84,11 @@ class TestImageResource(unittest.TestCase):
         self.assertEqual(image_resource._ref.filename, IMAGE_PATH)
         self.assertEqual(size, (64, 64))
 
+    @unittest.skipIf(is_pyqt4_windows, "QPixmap bug returns (0, 0).  Issue #301.")  # noqa
     def test_image_size_search_path(self):
         image_resource = ImageResource('splash.jpg', [SEARCH_PATH])
         image = image_resource.create_image()
         size = image_resource.image_size(image)
-        print(image_resource._ref.filename)
-        print(os.path.exists(image_resource._ref.filename))
-        print(repr(open(image_resource._ref.filename, 'rb').read(64)))
-        print(image.size().height(), image.size().width())
         self.assertEqual(image_resource.absolute_path,
                          os.path.join(SEARCH_PATH, 'splash.jpg'))
         self.assertEqual(size, (450, 296))
