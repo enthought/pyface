@@ -53,7 +53,7 @@ class MyClass(HasStrictTraits):
         return True
 
 
-@unittest.skipIf(is_pyqt5, "temporary skip for pyqt5 on windows.")
+@unittest.skipIf(is_pyqt5, "ModalDialogTester not working on pyqt5. Issue #302")
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
 
