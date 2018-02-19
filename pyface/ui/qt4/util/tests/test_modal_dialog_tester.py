@@ -12,15 +12,23 @@ from __future__ import absolute_import
 
 import unittest
 import cStringIO
+import platform
 
 from pyface.qt import QtGui
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
+from pyface.toolkit import toolkit_object
 from traits.api import HasStrictTraits
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
 from pyface.util.testing import skip_if_no_traitsui
+
+
+is_qt = toolkit_object.toolkit == 'qt4'
+if is_qt:
+    from pyface.qt import qt_api
+is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 
 
 class MyClass(HasStrictTraits):
@@ -45,6 +53,7 @@ class MyClass(HasStrictTraits):
         return True
 
 
+@unittest.skipIf(is_pyqt5, "ModalDialogTester not working on pyqt5. Issue #302")
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
 
