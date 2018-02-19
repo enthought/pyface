@@ -96,12 +96,6 @@ class Window(MWindow, Widget):
 
         return control
 
-    def _add_event_listeners(self):
-        self._event_filter = _EventFilter(self)
-
-    def _remove_event_listeners(self):
-        self._event_filter = None
-
     ###########################################################################
     # 'IWidget' interface.
     ###########################################################################
@@ -176,18 +170,18 @@ class Window(MWindow, Widget):
         if self.control is not None:
             self.control.setWindowTitle(title)
 
+    def __event_filter_default(self):
+        return WindowEventFilter(self)
 
-class _EventFilter(QtCore.QObject):
+
+class WindowEventFilter(QtCore.QObject):
     """ An internal class that watches for certain events on behalf of the
     Window instance.
     """
 
     def __init__(self, window):
         """ Initialise the event filter. """
-
         QtCore.QObject.__init__(self)
-
-        window.control.installEventFilter(self)
         self._window = window
 
     def eventFilter(self, obj, e):
