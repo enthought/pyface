@@ -10,7 +10,7 @@ environment:
   matrix:
 
     - RUNTIME: '2.7'
-      TOOLKITS: "pyqt pyside"
+      TOOLKITS: "pyqt pyside wx"
     - RUNTIME: '3.5'
       TOOLKITS: "pyqt"
     - RUNTIME: '3.6'
@@ -19,14 +19,10 @@ environment:
       TOOLKITS: "pyqt5"
     - RUNTIME: '3.6'
       TOOLKITS: "pyqt5"
-    - RUNTIME: '2.7'
-      TOOLKITS: "wx"
 
 matrix:
   fast_finish: True
   allow_failures:
-    - RUNTIME: '2.7'
-      TOOLKITS: "wx"
     - RUNTIME: '3.5'
       TOOLKITS: "pyqt5"
     - RUNTIME: '3.6'
