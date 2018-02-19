@@ -54,7 +54,7 @@ class PythonEditor(MPythonEditor, Widget):
 
     def __init__(self, parent, **traits):
         super(PythonEditor, self).__init__(**traits)
-        self.create(parent)
+        self._create(parent)
 
     ###########################################################################
     # 'PythonEditor' interface.

@@ -62,7 +62,7 @@ class PythonShell(MPythonShell, Widget):
         super(PythonShell, self).__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.create(parent)
+        self._create(parent)
 
     #--------------------------------------------------------------------------
     # 'IPythonShell' interface
