@@ -13,5 +13,14 @@ elif qt_api == 'pyqt5':
         QItemSelectionRange, QSortFilterProxyModel, QStringListModel
     )
 
+elif qt_api == 'pyside2':
+    from PySide2.QtGui import *
+    from PySide2.QtWidgets import *
+    from PySide2.QtPrintSupport import *
+    from PySide2.QtCore import (
+        QAbstractProxyModel, QItemSelection, QItemSelectionModel,
+        QItemSelectionRange, QSortFilterProxyModel
+    )
+
 else:
     from PySide.QtGui import *
