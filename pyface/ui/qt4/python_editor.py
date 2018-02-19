@@ -54,7 +54,7 @@ class PythonEditor(MPythonEditor, Widget):
 
     def __init__(self, parent, **traits):
         super(PythonEditor, self).__init__(**traits)
-        self.control = self._create_control(parent)
+        self.create(parent)
 
     ###########################################################################
     # 'PythonEditor' interface.
@@ -97,6 +97,33 @@ class PythonEditor(MPythonEditor, Widget):
                                      QtGui.QTextCursor.KeepAnchor)
 
     ###########################################################################
+    # 'Widget' interface.
+    ###########################################################################
+
+    def _add_event_listeners(self):
+        super(PythonEditor, self)._add_event_listeners()
+        self.control.code.installEventFilter(self._event_filter)
+
+        # Connect signals for text changes.
+        self.control.code.modificationChanged.connect(self._on_dirty_changed)
+        self.control.code.textChanged.connect(self._on_text_changed)
+
+    def _remove_event_listeners(self):
+        if self.control is not None:
+            # Disconnect signals for text changes.
+            self.control.code.modificationChanged.disconnect(
+                self._on_dirty_changed)
+            self.control.code.textChanged.disconnect(self._on_text_changed)
+
+            if self._event_filter is not None:
+                self.control.code.removeEventFilter(self._event_filter)
+
+        super(PythonEditor, self)._remove_event_listeners()
+
+    def __event_filter_default(self):
+        return PythonEditorEventFilter(self, self.control)
+
+    ###########################################################################
     # Trait handlers.
     ###########################################################################
 
@@ -118,15 +145,6 @@ class PythonEditor(MPythonEditor, Widget):
         """
         self.control = control = AdvancedCodeWidget(parent)
         self._show_line_numbers_changed()
-
-        # Install event filter to trap key presses.
-        event_filter = PythonEditorEventFilter(self, self.control)
-        self.control.installEventFilter(event_filter)
-        self.control.code.installEventFilter(event_filter)
-
-        # Connect signals for text changes.
-        control.code.modificationChanged.connect(self._on_dirty_changed)
-        control.code.textChanged.connect(self._on_text_changed)
 
         # Load the editor's contents.
         self.load()

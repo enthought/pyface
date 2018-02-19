@@ -62,13 +62,7 @@ class PythonShell(MPythonShell, Widget):
         super(PythonShell, self).__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # Set up to be notified whenever a Python statement is executed:
-        self.control.executed.connect(self._on_command_executed)
-
-        # Handle dropped objects.
-        _DropEventEmitter(self.control).signal.connect(self._on_obj_drop)
+        self.create(parent)
 
     #--------------------------------------------------------------------------
     # 'IPythonShell' interface
@@ -89,6 +83,24 @@ class PythonShell(MPythonShell, Widget):
 
     def _create_control(self, parent):
         return PyfacePythonWidget(self, parent)
+
+    def _add_event_listeners(self):
+        super(PythonShell, self)._add_event_listeners()
+
+        # Connect signals for events.
+        self.control.executed.connect(self._on_command_executed)
+        self._event_filter.signal.connect(self._on_obj_drop)
+
+    def _remove_event_listeners(self):
+        if self.control is not None:
+            # Disconnect signals for events.
+            self.control.executed.connect(self._on_command_executed)
+            self._event_filter.signal.disconnect(self._on_obj_drop)
+
+        super(PythonShell, self)._remove_event_listeners()
+
+    def __event_filter_default(self):
+        return _DropEventEmitter(self, self.control)
 
     #--------------------------------------------------------------------------
     # 'Private' interface.
