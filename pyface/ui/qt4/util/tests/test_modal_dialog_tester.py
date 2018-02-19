@@ -28,7 +28,7 @@ from pyface.util.testing import skip_if_no_traitsui
 is_qt = toolkit_object.toolkit == 'qt4'
 if is_qt:
     from pyface.qt import qt_api
-is_pyqt5_windows = (is_qt and qt_api == 'pyqt' and platform.system() == 'Windows')
+is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 
 
 class MyClass(HasStrictTraits):
@@ -53,6 +53,7 @@ class MyClass(HasStrictTraits):
         return True
 
 
+@unittest.skipIf(is_pyqt5, "temporary skip for pyqt5 on windows.")
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
 
@@ -123,7 +124,6 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
 
-    @unittest.skipIf(is_pyqt5_windows, "temporary skip for pyqt5 on windows.")
     def test_capture_errors_on_error(self):
         dialog = MessageDialog()
         tester = ModalDialogTester(dialog.open)
