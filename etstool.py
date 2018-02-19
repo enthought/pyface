@@ -172,14 +172,18 @@ def test(runtime, toolkit, environment):
     environ['PYTHONUNBUFFERED'] = "1"
 
     commands = [
-        "edm run -e {environment} -- coverage run -m nose.core -v pyface --exclude={exclude}"]
+        "edm run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
+    ]
 
     # We run in a tempdir to avoid accidentally picking up wrong pyface
     # code from a local dir.  We need to ensure a good .coveragerc is in
     # that directory, plus coverage has a bug that means a non-local coverage
     # file doesn't get populated correctly.
     click.echo("Running tests in '{environment}'".format(**parameters))
-    with do_in_tempdir(files=['.coveragerc'], capture_files=['./.coverage*']):
+    with do_in_tempdir(
+            files=['.coveragerc'],
+            capture_files=[os.path.join('.', '.coverage*')],
+        ):
         os.environ.update(environ)
         execute(commands, parameters)
     click.echo('Done test')
