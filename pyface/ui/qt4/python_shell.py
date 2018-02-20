@@ -59,10 +59,10 @@ class PythonShell(MPythonShell, Widget):
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
     def __init__(self, parent, **traits):
-        super(PythonShell, self).__init__(**traits)
+        super(PythonShell, self).__init__(parent=parent, **traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self._create(parent)
+        self._create()
 
     #--------------------------------------------------------------------------
     # 'IPythonShell' interface
