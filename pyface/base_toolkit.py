@@ -20,15 +20,22 @@ class Toolkit(HasTraits):
     class that raises NotImplementedError when it is instantiated.
     """
 
+    #: The name of the package (eg. pyface)
+    package = ReadOnly
+
     #: The name of the toolkit
     toolkit = ReadOnly
 
     #: The packages to look in for widget implementations.
-    package = List(Str)
+    packages = List(Str)
 
-    def __init__(self, toolkit, *packages, **traits):
-        super(Toolkit, self).__init__(toolkit=toolkit, packages=list(packages),
-                                      **traits)
+    def __init__(self, package, toolkit, *packages, **traits):
+        super(Toolkit, self).__init__(
+            package=package,
+            toolkit=toolkit,
+            packages=list(packages),
+            **traits
+        )
 
     def __call__(self, name):
         """ Return the toolkit specific object with the given name.
@@ -77,7 +84,7 @@ class Toolkit(HasTraits):
             """
 
             def __init__(self, *args, **kwargs):
-                msg = "the %s pyface backend doesn't implement %s"
-                raise NotImplementedError(msg % (toolkit, name))
+                msg = "the %s %s backend doesn't implement %s"
+                raise NotImplementedError(msg % (toolkit, package, name))
 
         return Unimplemented
