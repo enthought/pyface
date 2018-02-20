@@ -100,7 +100,7 @@ class PythonShell(MPythonShell, Widget):
         super(PythonShell, self)._remove_event_listeners()
 
     def __event_filter_default(self):
-        return _DropEventEmitter(self, self.control)
+        return _DropEventEmitter(self.control)
 
     #--------------------------------------------------------------------------
     # 'Private' interface.
