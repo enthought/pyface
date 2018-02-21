@@ -267,8 +267,6 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
         if toolkits is None or plugin.name in toolkits
     ]
     for plugin in sorted(entry_points, key=priorities):
-        if plugin.name not in toolkits:
-            continue
         try:
             with ETSConfig.provisional_toolkit(plugin.name):
                 toolkit = plugin.load()
