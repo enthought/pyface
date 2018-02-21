@@ -14,7 +14,7 @@
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Any, Bool, HasTraits, provides
+from traits.api import Any, Bool, HasTraits, Instance, provides
 
 # Local imports.
 from pyface.i_widget import IWidget, MWidget
@@ -39,6 +39,11 @@ class Widget(MWidget, HasTraits):
 
     #: Whether or not the control is enabled
     enabled = Bool(True)
+
+    # Private interface ----------------------------------------------------
+
+    #: The event filter for the widget.
+    _event_filter = Instance(QtCore.QObject)
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -69,11 +74,20 @@ class Widget(MWidget, HasTraits):
             self.control.setEnabled(enabled)
 
     def destroy(self):
+        self._remove_event_listeners()
         if self.control is not None:
-            self._remove_event_listeners()
             self.control.hide()
             self.control.deleteLater()
             self.control = None
+
+    def _add_event_listeners(self):
+        self.control.installEventFilter(self._event_filter)
+
+    def _remove_event_listeners(self):
+        if self._event_filter is not None:
+            if self.control is not None:
+                self.control.removeEventFilter(self._event_filter)
+            self._event_filter = None
 
     # Trait change handlers --------------------------------------------------
 
@@ -85,6 +99,9 @@ class Widget(MWidget, HasTraits):
         if self.control is not None:
             self.enable(new)
 
+    def __event_filter_default(self):
+        return WidgetEventFilter(self)
+
 
 class WidgetEventFilter(QtCore.QObject):
     """ An internal class that watches for certain events on behalf of the
@@ -94,7 +111,6 @@ class WidgetEventFilter(QtCore.QObject):
     def __init__(self, widget):
         """ Initialise the event filter. """
         QtCore.QObject.__init__(self)
-        widget.control.installEventFilter(self)
         self._widget = widget
 
     def eventFilter(self, obj, event):
