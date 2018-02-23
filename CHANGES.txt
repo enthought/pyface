@@ -1,6 +1,83 @@
 Pyface Changelog
 ================
 
+Release 6.0.0
+=============
+
+This release introduces preliminary support for Qt5 via PyQt5, thanks to the
+work of Gregor Thalhammer which got the ball rolling.  Qt5 support is
+not yet robustly tested in deployed applications, so there may yet be bugs to
+find.  As part of this effort all occurences of old-style signals and slots
+have been removed; and this has greatly improved stability under Qt.
+
+In addition, thanks to the dedicated work of Rob McMullen, we now have Tasks
+support for wxPython.
+
+This release also features a great deal of work at the API level to disentangle
+the two-way dependencies between Pyface and TraitsUI.  This has involved moving
+a number of sub-packages between the two libraries, most notably the zipped
+image resource support and a number of trait definitions.  We have endeavored
+to keep backwards compatibility via stub modules in the original locations,
+but we can't guarantee that there will be no issues with third party code
+caused by the change in locations.  We haven't been able to remove all
+dependencies, but as of this release on the dock and workbench submodules have
+required dependencies on TraitsUI.
+
+Another long-desired feature was the ability to write toolkit backends for
+Pyface and TraitsUI that are not part of the main codebase.  This is now
+possible by contributing new toolkit backends to the "pyface.toolkit"
+pkg_resources entry point in a setup.py.  This work was accompanied by an
+overhaul of the toolkit discovery and loading infrastructure; in particular
+Pyface and TraitsUI now share the same code for performing these searches
+and loading the backends.
+
+Finally, the testing infrastructure has been overhauled to provide a one-stop
+location to run tests in self-contained environments using Enthought's EDM
+package management tool.  Tests can be run from any python environment with the
+"edm" command available and the "click" library installed with the "etstool.py"
+script at the top level of the repository.  In particular::
+
+    python etstool.py test_all
+
+will run all relevant tests for all available toolkits in all supported
+python versions.  The TravisCI and Appveyor continuous integration tools have
+been updated to make use of these facilities as well.
+
+Thanks to Florian Bender, Kit Choi, Mark Dickinson, Simon Jagoe, Robert Kern,
+Rob McMullen, @nprksh, Prabhu Ramachandran, Gregor Thalhammer, Senganal
+Thirunavukkarasu, Ioannis Tziakos, Joris Vankerscharver, and Corran Webster.
+Apologies to any contributors that have been omitted.
+
+Change summary since 5.1.0
+--------------------------
+
+Enhancements
+
+* Tasks support for wxPython (#223, #247)
+* Qt5 Support (#170, #256, #264, #265, #268, #271, #279, #292)
+* Disentangling Pyface and TraitsUI (#221, #250)
+* EDM-based test runner (#243, #296, #298)
+* Improved toolkit selection (#259, #260, #276, #304, #305)
+* Move wxPython-specific code to pyface.wx (#261)
+* Single choice dialog for Qt toolkit (was already in wx toolkit) (#217)
+* Add 'detail' and 'informative' to window dialog helpers (#181)
+* Code coverage reporting (#214)
+* All Pyface widgets now have visible and enabled traits (#284)
+
+Fixes
+
+* Documentation fixes (#220, #231)
+* Testing and CI fixes (#224, #226, #239, #248, #252, #253, #257, #267, #270,
+  #277, #278, #281, #283)
+* Fix bug updating Tasks window titles (#225)
+* Python 3 compatibility fixes (#228)
+* Remove use of cmp in the AdvancedEditorAreaPane (#237)
+* AutoPEP8 of Pyface codebase (#241)
+* Minor WxPython fixes (#230, #269, #275, #294)
+* Don't use sendPostedEvents in Qt GUI.do_trait_later (#273)
+* Fix ordering of items when appending to an ActionManager default group (#290)
+* Explicit life-cycle for Qt event filters on Widgets (#300)
+
 Release 5.1.0
 =============
 
