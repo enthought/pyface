@@ -271,7 +271,7 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
             with ETSConfig.provisional_toolkit(plugin.name):
                 toolkit = plugin.load()
                 return toolkit
-        except (ImportError, AttributeError) as exc:
+        except (ImportError, AttributeError, RuntimeError) as exc:
             msg = "Could not load %s plugin %r from %r"
             logger.info(msg, entry_point, plugin.name, plugin.module_name)
             logger.debug(exc, exc_info=True)
