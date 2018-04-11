@@ -15,5 +15,18 @@ elif qt_api == 'pyqt5':
         QWebEngineView as QWebView,
     )
 
+elif qt_api == 'pyside2':
+    from PyQt5.QtWidgets import *
+    # WebKit is currently in flux in PySide2
+    try:
+        from PySide2.QtWebEngineWidgets import (
+            QWebEngineHistory as QWebHistory,
+            QWebEngineHistoryItem as QWebHistoryItem,
+            QWebEnginePage as QWebPage,
+            QWebEngineView as QWebView
+        )
+    except ImportError:
+        from PySide2.QtWebKitWidgets import *
+
 else:
     from PySide.QtWebKit import *

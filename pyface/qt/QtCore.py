@@ -24,6 +24,11 @@ elif qt_api == 'pyqt5':
     __version__ = QT_VERSION_STR
     __version_info__ = tuple(map(int, QT_VERSION_STR.split('.')))
 
+
+elif qt_api == 'pyside2':
+    from PySide2.QtCore import *
+
+    from PySide2 import __version__, __version_info__
 else:
     try:
         from PySide import __version__, __version_info__
