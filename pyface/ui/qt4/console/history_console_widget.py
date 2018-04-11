@@ -1,4 +1,16 @@
+#  Copyright (c) 2011-18, Enthought, Inc.
+#  All rights reserved.
+#
+#  This software is provided without warranty under the terms of the BSD
+#  license included in enthought/LICENSE.txt and may be redistributed only
+#  under the conditions described in the aforementioned license.  The license
+#  is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+#  Thanks for using Enthought open source!
+#
+#  Author: Enthought, Inc.
 # System library imports
+
 from pyface.qt import QtGui
 
 # Local imports
@@ -156,8 +168,11 @@ class HistoryConsoleWidget(ConsoleWidget):
     # 'HistoryConsoleWidget' protected interface
     #---------------------------------------------------------------------------
 
-    def _set_history(self, history):
+    def _set_history(self, history, history_index=None):
         """ Replace the current history with a sequence of history items.
         """
+        if history_index is None:
+            history_index = len(history)
+
         self._history = list(history)
-        self._history_index = len(self._history)
+        self._history_index = history_index

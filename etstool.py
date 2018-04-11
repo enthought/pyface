@@ -78,6 +78,7 @@ how to run commands within an EDM enviornment.
 
 import glob
 import os
+import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
@@ -88,9 +89,11 @@ import click
 
 supported_combinations = {
     '2.7': {'pyside', 'pyqt', 'wx'},
-    '3.5': {'pyqt', 'pyqt5'},
-    '3.6': {'pyqt', 'pyqt5'},
+    '3.5': {'pyqt', 'pyqt5', 'pyside2'},
+    '3.6': {'pyqt', 'pyqt5', 'pyside2'},
 }
+if platform.system() != 'Windows':
+    supported_combinations['2.7'].add('pyside2')
 
 dependencies = {
     "numpy",
@@ -103,6 +106,8 @@ dependencies = {
 
 extra_dependencies = {
     'pyside': {'pyside'},
+    # XXX once pyside2 is available in EDM, we will want it here
+    'pyside2': set(),
     'pyqt': {'pyqt<4.12'},  # FIXME: build of 4.12-1 appears to be bad
     # XXX once pyqt5 is available in EDM, we will want it here
     'pyqt5': set(),
@@ -112,12 +117,24 @@ extra_dependencies = {
 
 environment_vars = {
     'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
+    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
     'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
     'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
     'wx': {'ETS_TOOLKIT': 'wx'},
     'null': {'ETS_TOOLKIT': 'null'},
 }
 
+# temporary until official pyside2 releases
+pyside2_wheels = {
+    ('Windows', '3.5'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp35-cp35m-win_amd64.whl',
+    ('Windows', '3.6'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp36-cp36m-win_amd64.whl',
+    ('Darwin', '2.7'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp27-cp27m-macosx_10_6_intel.whl',
+    ('Darwin', '3.5'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp35-cp35m-macosx_10_6_intel.whl',
+    ('Darwin', '3.6'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp36-cp36m-macosx_10_6_intel.whl',
+    ('Linux', '2.7'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp27-cp27mu-linux_x86_64.whl',
+    ('Linux', '3.5'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp35-cp35m-linux_x86_64.whl',
+    ('Linux', '3.6'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp36-cp36m-linux_x86_64.whl',
+}
 
 @click.group()
 def cli():
@@ -146,6 +163,11 @@ def install(runtime, toolkit, environment):
     # pip install pyqt5, because we don't have it in EDM yet
     if toolkit == 'pyqt5':
         commands.append("edm run -e {environment} -- pip install pyqt5==5.9.2")
+    if toolkit == 'pyside2':
+        system = platform.system()
+        wheel = pyside2_wheels[(system, runtime)]
+        parameters['wheel'] = wheel
+        commands.append("edm run -e {environment} -- pip install {wheel}")
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -163,7 +185,7 @@ def test(runtime, toolkit, environment):
     parameters = get_parameters(runtime, toolkit, environment)
     if toolkit == 'wx':
         parameters['exclude'] = 'qt'
-    elif toolkit in {'pyqt', 'pyqt5', 'pyside'}:
+    elif toolkit in {'pyqt', 'pyqt5', 'pyside', 'pyside2'}:
         parameters['exclude'] = 'wx'
     else:
         parameters['exclude'] = '(wx|qt)'
