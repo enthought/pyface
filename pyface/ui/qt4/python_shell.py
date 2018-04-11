@@ -1,4 +1,3 @@
-#------------------------------------------------------------------------------
 # Copyright (c) 2011, Enthought, Inc.
 # All rights reserved.
 #
@@ -9,7 +8,7 @@
 # Thanks for using Enthought open source!
 #
 # Author: Evan Patterson
-#------------------------------------------------------------------------------
+
 
 # Standard library imports.
 import __builtin__
@@ -34,10 +33,6 @@ from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
 
-
-#-------------------------------------------------------------------------------
-# 'PythonShell' class:
-#-------------------------------------------------------------------------------
 
 @provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
@@ -76,6 +71,32 @@ class PythonShell(MPythonShell, Widget):
 
     def execute_file(self, path, hidden=True):
         self.control.execute_file(path, hidden=hidden)
+
+    def get_history(self):
+        """ Return the current command history and index.
+
+        Returns
+        -------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        return self.control._history, self.control._history_index
+
+    def set_history(self, history, history_index):
+        """ Replace the current command history and index with new ones.
+
+        Parameters
+        ----------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int
+            The current item in the command history navigation.
+        """
+        if not 0 <= history_index <= len(history):
+            history_index = len(history)
+        self.control._set_history(history, history_index)
 
     #--------------------------------------------------------------------------
     # 'IWidget' interface.
@@ -127,10 +148,6 @@ class PythonShell(MPythonShell, Widget):
         self.control.execute(name)
         self.control._control.setFocus()
 
-
-#-------------------------------------------------------------------------------
-# 'PythonWidget' class:
-#-------------------------------------------------------------------------------
 
 class PythonWidget(HistoryConsoleWidget):
     """ A basic in-process Python interpreter.
@@ -567,10 +584,6 @@ class PyfacePythonWidget(PythonWidget):
 
         super(PyfacePythonWidget, self).keyPressEvent(event)
 
-
-#-------------------------------------------------------------------------------
-# '_DropEventFilter' class:
-#-------------------------------------------------------------------------------
 
 class _DropEventEmitter(QtCore.QObject):
     """ Handle object drops on widget. """
