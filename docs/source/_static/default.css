@@ -14,7 +14,7 @@ body {
 /* :::: LAYOUT :::: */
 
 div.document {
-    background-color: #24326e;
+    background-color: #4289c9;
 }
 
 div.documentwrapper {
@@ -44,7 +44,7 @@ div.sphinxsidebar {
 
 p.logo {
     text-align: center;
-}    
+}
 
 div.clearer {
     clear: both;
