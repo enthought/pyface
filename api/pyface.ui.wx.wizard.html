@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>wizard Package &mdash; pyface 6.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '6.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
+    <link rel="up" title="wx Package" href="pyface.ui.wx.html" >
+    <link rel="next" title="workbench Package" href="pyface.ui.wx.workbench.html" >
+    <link rel="prev" title="timer Package" href="pyface.ui.wx.timer.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface Package</a></li>
+          <li class="active"><a href="pyface.ui.html" >ui Package</a></li>
+          <li class="active"><a href="pyface.ui.wx.html" accesskey="U">wx Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.ui.wx.workbench.html" title="workbench Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.ui.wx.timer.html" title="timer Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="wizard-package">
+<h1>wizard Package<a class="headerlink" href="#wizard-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">wizard</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.ui.wx.wizard"></span></div>
+<div class="section" id="module-pyface.ui.wx.wizard.wizard">
+<span id="wizard-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">wizard</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.wizard.wizard" title="Permalink to this headline">¶</a></h2>
+<p>The base class for all pyface wizards.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.wizard.wizard.Wizard">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.wizard.wizard.</code><code class="descname">Wizard</code><a class="headerlink" href="#pyface.ui.wx.wizard.wizard.Wizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.wizard.html#pyface.wizard.i_wizard.MWizard" title="pyface.wizard.i_wizard.MWizard"><code class="xref py py-class docutils literal"><span class="pre">pyface.wizard.i_wizard.MWizard</span></code></a>, <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.dialog.Dialog" title="pyface.ui.qt4.dialog.Dialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.dialog.Dialog</span></code></a></p>
+<p>The base class for all pyface wizards.</p>
+<p>See the IWizard interface for the API documentation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.ui.wx.wizard.wizard_page">
+<span id="wizard-page-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">wizard_page</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.wizard.wizard_page" title="Permalink to this headline">¶</a></h2>
+<p>A page in a wizard.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.wizard.wizard_page.WizardPage">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.wizard.wizard_page.</code><code class="descname">WizardPage</code><a class="headerlink" href="#pyface.ui.wx.wizard.wizard_page.WizardPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.wizard.html#pyface.wizard.i_wizard_page.MWizardPage" title="pyface.wizard.i_wizard_page.MWizardPage"><code class="xref py py-class docutils literal"><span class="pre">pyface.wizard.i_wizard_page.MWizardPage</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
+<p>The toolkit specific implementation of a WizardPage.</p>
+<p>See the IWizardPage interface for the API documentation.</p>
+<dl class="method">
+<dt id="pyface.ui.wx.wizard.wizard_page.WizardPage.create_page">
+<code class="descname">create_page</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.wx.wizard.wizard_page.WizardPage.create_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the wizard page.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">wizard Package</a><ul>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">wizard</span></code> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.wizard.wizard"><code class="docutils literal"><span class="pre">wizard</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.wizard.wizard_page"><code class="docutils literal"><span class="pre">wizard_page</span></code> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.ui.wx.timer.html"
+                        title="previous chapter">timer Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.ui.wx.workbench.html"
+                        title="next chapter">workbench Package</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.ui.wx.wizard.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2016, Enthought
+      </li>
+      <li>
+      Last updated on Apr 12, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

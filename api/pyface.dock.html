@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>dock Package &mdash; pyface 6.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '6.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="grid Package" href="pyface.grid.html" >
+    <link rel="prev" title="action Package" href="pyface.action.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.grid.html" title="grid Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.html" title="action Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="dock-package">
+<h1>dock Package<a class="headerlink" href="#dock-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.dock"></span><p>Pyface &#8216;DockWindow&#8217; support.</p>
+<p>This package provides a Pyface &#8216;dockable&#8217; window component that allows
+child windows to be reorganized within the DockWindow using drag and drop.
+The component also allows multiple sub-windows to occupy the same
+sub-region of the DockWindow, in which case each sub-window appears as a
+separate notebook-like tab within the region.</p>
+</div>
+<div class="section" id="api-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#api-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dock-sizer-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_sizer</span></code> Module<a class="headerlink" href="#dock-sizer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dock-window-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window</span></code> Module<a class="headerlink" href="#dock-window-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dock-window-feature-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_feature</span></code> Module<a class="headerlink" href="#dock-window-feature-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dock-window-shell-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">dock_window_shell</span></code> Module<a class="headerlink" href="#dock-window-shell-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="feature-bar-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">feature_bar</span></code> Module<a class="headerlink" href="#feature-bar-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="feature-tool-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">feature_tool</span></code> Module<a class="headerlink" href="#feature-tool-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pyface.dock.idock_ui_provider">
+<span id="idock-ui-provider-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">idock_ui_provider</span></code> Module<a class="headerlink" href="#module-pyface.dock.idock_ui_provider" title="Permalink to this headline">¶</a></h2>
+<p>Defines the IDockUIProvider interface which objects which support being
+dragged and dropped into a DockWindow must implement.</p>
+<dl class="class">
+<dt id="pyface.dock.idock_ui_provider.IDockUIProvider">
+<em class="property">class </em><code class="descclassname">pyface.dock.idock_ui_provider.</code><code class="descname">IDockUIProvider</code><a class="headerlink" href="#pyface.dock.idock_ui_provider.IDockUIProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyface.dock.idock_ui_provider.IDockUIProvider.get_dockable_ui">
+<code class="descname">get_dockable_ui</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idock_ui_provider.IDockUIProvider.get_dockable_ui" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Traits UI which a DockWindow can imbed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.dock.idockable">
+<span id="idockable-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">idockable</span></code> Module<a class="headerlink" href="#module-pyface.dock.idockable" title="Permalink to this headline">¶</a></h2>
+<p>Defines the IDockable interface which objects contained in a DockWindow
+DockControl can implement in order to allow themselves to be dragged into
+a different DockWindow.</p>
+<dl class="class">
+<dt id="pyface.dock.idockable.IDockable">
+<em class="property">class </em><code class="descclassname">pyface.dock.idockable.</code><code class="descname">IDockable</code><a class="headerlink" href="#pyface.dock.idockable.IDockable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_should_close">
+<code class="descname">dockable_should_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_should_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the current DockControl be closed before creating the new
+one.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_close">
+<code class="descname">dockable_close</code><span class="sig-paren">(</span><em>dock_control</em>, <em>force</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not it is OK to close the control.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_get_control">
+<code class="descname">dockable_get_control</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_get_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a control that can be docked into a DockWindow.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_init_dockcontrol">
+<code class="descname">dockable_init_dockcontrol</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_init_dockcontrol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the object to override the default DockControl settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_menu">
+<code class="descname">dockable_menu</code><span class="sig-paren">(</span><em>dock_control</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the right-click popup menu for a DockControl (if any).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_dclick">
+<code class="descname">dockable_dclick</code><span class="sig-paren">(</span><em>dock_control</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_dclick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the user double-clicking on the DockControl.
+A result of False indicates the event was not handled; all other
+results indicate that the event was handled successfully.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_tab_activated">
+<code class="descname">dockable_tab_activated</code><span class="sig-paren">(</span><em>dock_control</em>, <em>activated</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_tab_activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a notebook tab being activated or deactivated.</p>
+<p>&#8216;dock_control&#8217; is the control being activated or deactivated.</p>
+<p>If &#8216;activated&#8217; is True, the control is being activated; otherwise
+the control is being deactivated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.idockable.IDockable.dockable_bind">
+<code class="descname">dockable_bind</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.idockable.IDockable.dockable_bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the dockable being bound to a specified DockControl.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.dock.ifeature_tool">
+<span id="ifeature-tool-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">ifeature_tool</span></code> Module<a class="headerlink" href="#module-pyface.dock.ifeature_tool" title="Permalink to this headline">¶</a></h2>
+<p>Defines the IFeatureTool interface which allows objects dragged using the
+DockWindowFeature API to control the drag target and drop events. Useful for
+implementing tools which can be dropped onto compatible view objects.</p>
+<dl class="class">
+<dt id="pyface.dock.ifeature_tool.IFeatureTool">
+<em class="property">class </em><code class="descclassname">pyface.dock.ifeature_tool.</code><code class="descname">IFeatureTool</code><a class="headerlink" href="#pyface.dock.ifeature_tool.IFeatureTool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyface.dock.ifeature_tool.IFeatureTool.feature_can_drop_on">
+<code class="descname">feature_can_drop_on</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.ifeature_tool.IFeatureTool.feature_can_drop_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not the object being dragged (i.e. self) can be
+dropped on the specified target object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.ifeature_tool.IFeatureTool.feature_can_drop_on_dock_control">
+<code class="descname">feature_can_drop_on_dock_control</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.ifeature_tool.IFeatureTool.feature_can_drop_on_dock_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not the object being dragged (i.e. self) can be
+dropped on the specified target object&#8217;s DockControl.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.ifeature_tool.IFeatureTool.feature_dropped_on">
+<code class="descname">feature_dropped_on</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.ifeature_tool.IFeatureTool.feature_dropped_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the dragged object (i.e. self) to handle being dropped on the
+specified target object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.dock.ifeature_tool.IFeatureTool.feature_dropped_on_dock_control">
+<code class="descname">feature_dropped_on_dock_control</code><span class="sig-paren">(</span><em>dock_control</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.dock.ifeature_tool.IFeatureTool.feature_dropped_on_dock_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows the dragged object (i.e. self) to handle being dropped on the
+specified target object&#8217;s DockControl.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">dock Package</a><ul>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">dock</span></code> Package</a></li>
+<li><a class="reference internal" href="#api-module"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-sizer-module"><code class="docutils literal"><span class="pre">dock_sizer</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-module"><code class="docutils literal"><span class="pre">dock_window</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-feature-module"><code class="docutils literal"><span class="pre">dock_window_feature</span></code> Module</a></li>
+<li><a class="reference internal" href="#dock-window-shell-module"><code class="docutils literal"><span class="pre">dock_window_shell</span></code> Module</a></li>
+<li><a class="reference internal" href="#feature-bar-module"><code class="docutils literal"><span class="pre">feature_bar</span></code> Module</a></li>
+<li><a class="reference internal" href="#feature-tool-module"><code class="docutils literal"><span class="pre">feature_tool</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.dock.idock_ui_provider"><code class="docutils literal"><span class="pre">idock_ui_provider</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.dock.idockable"><code class="docutils literal"><span class="pre">idockable</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.dock.ifeature_tool"><code class="docutils literal"><span class="pre">ifeature_tool</span></code> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.action.html"
+                        title="previous chapter">action Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.grid.html"
+                        title="next chapter">grid Package</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.dock.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2016, Enthought
+      </li>
+      <li>
+      Last updated on Apr 12, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

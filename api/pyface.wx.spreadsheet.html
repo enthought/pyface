@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>spreadsheet Package &mdash; pyface 6.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '6.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
+    <link rel="up" title="wx Package" href="pyface.wx.html" >
+    <link rel="next" title="Pyface Changelog" href="../changelog.html" >
+    <link rel="prev" title="wx Package" href="pyface.wx.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" >pyface Package</a></li>
+          <li class="active"><a href="pyface.wx.html" accesskey="U">wx Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../changelog.html" title="Pyface Changelog"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.wx.html" title="wx Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="spreadsheet-package">
+<h1>spreadsheet Package<a class="headerlink" href="#spreadsheet-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">spreadsheet</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.wx.spreadsheet"></span></div>
+<div class="section" id="module-pyface.wx.spreadsheet.abstract_grid_view">
+<span id="abstract-grid-view-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">abstract_grid_view</span></code> Module<a class="headerlink" href="#module-pyface.wx.spreadsheet.abstract_grid_view" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.ComboboxFocusHandler">
+<em class="property">class </em><code class="descclassname">pyface.wx.spreadsheet.abstract_grid_view.</code><code class="descname">ComboboxFocusHandler</code><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.ComboboxFocusHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.ext.autodoc.EvtHandler</span></code></p>
+<p>Workaround for combobox focus problems in wx 2.6.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView">
+<em class="property">class </em><code class="descclassname">pyface.wx.spreadsheet.abstract_grid_view.</code><code class="descname">AbstractGridView</code><span class="sig-paren">(</span><em>parent</em>, <em>ID=-1</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.ext.autodoc.Grid</span></code></p>
+<p>Enthought&#8217;s default spreadsheet view.</p>
+<p>Uses a virtual data source.</p>
+<p>THIS CLASS IS NOT LIMITED TO ONLY DISPLAYING LOG DATA!</p>
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_labels">
+<code class="descname">init_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_labels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_data_types">
+<code class="descname">init_data_types</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_data_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the model says a cell is of a specified type, the grid uses
+the specific renderer and editor set in this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_handlers">
+<code class="descname">init_handlers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.init_handlers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetColLabelsVisible">
+<code class="descname">SetColLabelsVisible</code><span class="sig-paren">(</span><em>show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetColLabelsVisible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This only works if you &#8216;hide&#8217; then &#8216;show&#8217; the labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetRowLabelsVisible">
+<code class="descname">SetRowLabelsVisible</code><span class="sig-paren">(</span><em>show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetRowLabelsVisible" title="Permalink to this definition">¶</a></dt>
+<dd><p>This only works if you &#8216;hide&#8217; then &#8216;show&#8217; the labels.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetTable">
+<code class="descname">SetTable</code><span class="sig-paren">(</span><em>table</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.SetTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some versions of wxPython do not return the correct
+table - hence we store our own copy here - weak ref?
+todo - does this apply to Enthought?</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.GetTable">
+<code class="descname">GetTable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.GetTable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.Reset">
+<code class="descname">Reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.Reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the view based on the data in the table.</p>
+<p>Call this when rows are added or destroyed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellLeftClick">
+<code class="descname">OnCellLeftClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellLeftClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellRightClick">
+<code class="descname">OnCellRightClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellRightClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellLeftDClick">
+<code class="descname">OnCellLeftDClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellLeftDClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellRightDClick">
+<code class="descname">OnCellRightDClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellRightDClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelLeftClick">
+<code class="descname">OnLabelLeftClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelLeftClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelRightClick">
+<code class="descname">OnLabelRightClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelRightClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelLeftDClick">
+<code class="descname">OnLabelLeftDClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelLeftDClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelRightDClick">
+<code class="descname">OnLabelRightDClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnLabelRightDClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnRowSize">
+<code class="descname">OnRowSize</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnRowSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnColSize">
+<code class="descname">OnColSize</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnColSize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnRangeSelect">
+<code class="descname">OnRangeSelect</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnRangeSelect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellChange">
+<code class="descname">OnCellChange</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnCellChange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnIdle">
+<code class="descname">OnIdle</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnIdle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Immediately jumps into editing mode, bypassing the usual select mode
+of a spreadsheet. See also self.OnSelectCell().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnSelectCell">
+<code class="descname">OnSelectCell</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnSelectCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Immediately jumps into editing mode, bypassing the usual select mode
+of a spreadsheet. See also self.OnIdle().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorShown">
+<code class="descname">OnEditorShown</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorShown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorHidden">
+<code class="descname">OnEditorHidden</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorHidden" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorCreated">
+<code class="descname">OnEditorCreated</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.wx.spreadsheet.abstract_grid_view.AbstractGridView.OnEditorCreated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="default-renderer-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">default_renderer</span></code> Module<a class="headerlink" href="#default-renderer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="font-renderer-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">font_renderer</span></code> Module<a class="headerlink" href="#font-renderer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="unit-renderer-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">unit_renderer</span></code> Module<a class="headerlink" href="#unit-renderer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="virtual-model-module">
+<h2><code class="xref py py-mod docutils literal"><span class="pre">virtual_model</span></code> Module<a class="headerlink" href="#virtual-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">spreadsheet Package</a><ul>
+<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">spreadsheet</span></code> Package</a></li>
+<li><a class="reference internal" href="#module-pyface.wx.spreadsheet.abstract_grid_view"><code class="docutils literal"><span class="pre">abstract_grid_view</span></code> Module</a></li>
+<li><a class="reference internal" href="#default-renderer-module"><code class="docutils literal"><span class="pre">default_renderer</span></code> Module</a></li>
+<li><a class="reference internal" href="#font-renderer-module"><code class="docutils literal"><span class="pre">font_renderer</span></code> Module</a></li>
+<li><a class="reference internal" href="#unit-renderer-module"><code class="docutils literal"><span class="pre">unit_renderer</span></code> Module</a></li>
+<li><a class="reference internal" href="#virtual-model-module"><code class="docutils literal"><span class="pre">virtual_model</span></code> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.wx.html"
+                        title="previous chapter">wx Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../changelog.html"
+                        title="next chapter">Pyface Changelog</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/pyface.wx.spreadsheet.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2016, Enthought
+      </li>
+      <li>
+      Last updated on Apr 12, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
