@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Welcome to the Pyface Documentation! &mdash; pyface 5.1.0 documentation</title>
+    <title>Welcome to the Pyface Documentation! &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="#" >
+    <link rel="shortcut icon" href="_static/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="#" >
     <link rel="next" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -98,11 +100,8 @@ is automatically used in the absence of a real backend.</p>
 <p>While all toolkits funtion with Pyface, integration with wxPython is currently
 more complete.  Future development, however, will be more focused on
 supporting Qt.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The default toolkit if none is supplied is <code class="docutils literal"><span class="pre">qt4</span></code>.
-This changed from <code class="docutils literal"><span class="pre">wx</span></code> in Pyface 5.0.</p>
-</div>
+<p>The default toolkit if none is supplied is <code class="docutils literal"><span class="pre">qt4</span></code>. This changed from <code class="docutils literal"><span class="pre">wx</span></code> in
+Pyface 5.0.</p>
 <p>NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt&#8217;s GPL or proprietary licensing will
 likely apply to your code.</p>
@@ -128,12 +127,10 @@ order of precedence:</p>
 <li><p class="first">The program can explicitly set <strong>ETSConfig.toolkit</strong>. It must do this before
 importing from any other Enthought Tool Suite component, including
 traits.  For example, at the beginning of a program:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="kn">import</span> <span class="n">ETSConfig</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
 <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="s1">&#39;wx&#39;</span>
 </pre></div>
 </div>
-</li>
-<li><p class="first">The user can specify a -toolkit flag on the command line of the program.</p>
 </li>
 <li><p class="first">The user can define a value for the ETS_TOOLKIT environment variable.</p>
 </li>
@@ -150,6 +147,12 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#actions">Actions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#application-frameworks">Application Frameworks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="overview.html#pyface-and-traitsui">Pyface and TraitsUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="toolkits.html">Toolkits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="toolkits.html#toolkit-selection">Toolkit Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkits.html#toolkit-objects">Toolkit Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toolkits.html#toolkit-entrypoints">Toolkit Entrypoints</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api/pyface.html">API Documentation</a><ul>
@@ -171,6 +174,16 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="api/pyface.wizard.html">wizard Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pyface.workbench.html">workbench Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pyface.wx.html">wx Package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-0-0">Release 6.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-5-1-0">Release 5.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-5-0-0">Release 5.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-5-2">Release 4.5.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-5-1">Release 4.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-5-0">Release 4.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-4-0">Release 4.4.0</a></li>
 </ul>
 </li>
 </ul>
@@ -205,20 +218,17 @@ traits.  For example, at the beginning of a program:</p>
                         title="next chapter">Overview</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="_sources/index.txt"
+    <a href="_sources/index.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -240,10 +250,10 @@ traits.  For example, at the beginning of a program:</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>

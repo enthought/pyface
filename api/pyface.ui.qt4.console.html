@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>console Package &mdash; pyface 5.1.0 documentation</title>
+    <title>console Package &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
     <link rel="up" title="qt4 Package" href="pyface.ui.qt4.html" >
     <link rel="next" title="tasks Package" href="pyface.ui.qt4.tasks.html" >
     <link rel="prev" title="code_editor Package" href="pyface.ui.qt4.code_editor.html" > 
@@ -46,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface Package</a></li>
           <li class="active"><a href="pyface.ui.html" >ui Package</a></li>
@@ -186,7 +188,7 @@ length.</p>
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer">
 <em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.completion_lexer.</code><code class="descname">CompletionLexer</code><span class="sig-paren">(</span><em>lexer</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.completion_lexer.CompletionLexer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Uses Pygments and some auxillary information to lex code snippets for 
+<p>Uses Pygments and some auxillary information to lex code snippets for
 symbol contexts.</p>
 <dl class="attribute">
 <dt id="pyface.ui.qt4.console.completion_lexer.CompletionLexer.separator_map">
@@ -231,7 +233,7 @@ context (a list of names) for the symbol at cursor position.</p>
 <dt id="pyface.ui.qt4.console.console_widget.ConsoleWidget">
 <em class="property">class </em><code class="descclassname">pyface.ui.qt4.console.console_widget.</code><code class="descname">ConsoleWidget</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.ui.qt4.console.console_widget.ConsoleWidget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">PySide.QtGui.QWidget</span></code></p>
-<p>An abstract base class for console-type widgets. This class has 
+<p>An abstract base class for console-type widgets. This class has
 functionality for:</p>
 <blockquote>
 <div><ul class="simple">
@@ -458,17 +460,17 @@ header).</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>match</strong> (<em>re.SRE_Match</em>) &#8211; A match to an HTML image tag as exported by Qt, with
 match.group(&#8220;Name&#8221;) containing the matched image ID.</li>
-<li><strong>path</strong> (<em>string|None, optional [default None]</em>) &#8211; If not None, specifies a path to which supporting files
+<li><strong>path</strong> (<em>string|None</em><em>, </em><em>optional</em><em> [</em><em>default None</em><em>]</em><em></em>) &#8211; If not None, specifies a path to which supporting files
 may be written (e.g., for linked images).
 If None, all images are to be included inline.</li>
-<li><strong>format</strong> (<em>&quot;png&quot;|&quot;svg&quot;, optional [default &quot;png&quot;]</em>) &#8211; Format for returned or referenced images.</li>
+<li><strong>format</strong> (<em>&quot;png&quot;|&quot;svg&quot;</em><em>, </em><em>optional</em><em> [</em><em>default &quot;png&quot;</em><em>]</em><em></em>) &#8211; Format for returned or referenced images.</li>
+<li><strong>supporting image display should override this</strong> (<em>Subclasses</em>) &#8211; </li>
+<li><strong>method.</strong> &#8211; </li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Subclasses supporting image display should override this
-method.</p>
 </dd></dl>
 
 <dl class="method">
@@ -598,20 +600,17 @@ original search prefix if there is no such item.</p>
                         title="next chapter">tasks Package</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="../_sources/api/pyface.ui.qt4.console.txt"
+    <a href="../_sources/api/pyface.ui.qt4.console.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -633,10 +632,10 @@ original search prefix if there is no such item.</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>

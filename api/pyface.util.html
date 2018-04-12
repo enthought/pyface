@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>util Package &mdash; pyface 5.1.0 documentation</title>
+    <title>util Package &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface Package" href="pyface.html" >
     <link rel="next" title="grid Package" href="pyface.util.grid.html" >
     <link rel="prev" title="workbench Package" href="pyface.ui.wx.workbench.html" > 
@@ -46,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
     </ul>
@@ -111,13 +113,6 @@ introspect module.</p>
 </div>
 <div class="section" id="module-pyface.util.font_helper">
 <span id="font-helper-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">font_helper</span></code> Module<a class="headerlink" href="#module-pyface.util.font_helper" title="Permalink to this headline">¶</a></h2>
-<p>Utility functions for working with wx Fonts.</p>
-<dl class="function">
-<dt id="pyface.util.font_helper.new_font_like">
-<code class="descclassname">pyface.util.font_helper.</code><code class="descname">new_font_like</code><span class="sig-paren">(</span><em>font</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.font_helper.new_font_like" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a new font, like another one, only different.  Maybe.</p>
-</dd></dl>
-
 </div>
 <div class="section" id="module-pyface.util.guisupport">
 <span id="guisupport-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">guisupport</span></code> Module<a class="headerlink" href="#module-pyface.util.guisupport" title="Permalink to this headline">¶</a></h2>
@@ -224,42 +219,6 @@ across sessions.</p>
 </div>
 <div class="section" id="module-pyface.util.python_stc">
 <span id="python-stc-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">python_stc</span></code> Module<a class="headerlink" href="#module-pyface.util.python_stc" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pyface.util.python_stc.PythonSTC">
-<em class="property">class </em><code class="descclassname">pyface.util.python_stc.</code><code class="descname">PythonSTC</code><span class="sig-paren">(</span><em>parent</em>, <em>ID</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">sphinx.ext.autodoc.StyledTextCtrl</span></code></p>
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.OnKeyPressed">
-<code class="descname">OnKeyPressed</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnKeyPressed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.OnUpdateUI">
-<code class="descname">OnUpdateUI</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.OnMarginClick">
-<code class="descname">OnMarginClick</code><span class="sig-paren">(</span><em>evt</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.OnMarginClick" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.FoldAll">
-<code class="descname">FoldAll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.FoldAll" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.util.python_stc.PythonSTC.Expand">
-<code class="descname">Expand</code><span class="sig-paren">(</span><em>line</em>, <em>doExpand</em>, <em>force=False</em>, <em>visLevels=0</em>, <em>level=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.PythonSTC.Expand" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.util.python_stc.runTest">
-<code class="descclassname">pyface.util.python_stc.</code><code class="descname">runTest</code><span class="sig-paren">(</span><em>frame</em>, <em>nb</em>, <em>log</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.python_stc.runTest" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
@@ -314,20 +273,17 @@ across sessions.</p>
                         title="next chapter">grid Package</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="../_sources/api/pyface.util.txt"
+    <a href="../_sources/api/pyface.util.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -349,10 +305,10 @@ across sessions.</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>

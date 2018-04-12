@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>action Package &mdash; pyface 5.1.0 documentation</title>
+    <title>action Package &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface Package" href="pyface.html" >
     <link rel="next" title="dock Package" href="pyface.dock.html" >
     <link rel="prev" title="Abstract Interfaces and Mixins" href="modules.html" > 
@@ -46,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
     </ul>
@@ -212,7 +214,10 @@ unhook trait listeners etc.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>result</strong> (any) &#8211; The result of the action&#8217;s perform method (usually None).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> &#8211; The result of the action&#8217;s perform method (usually None).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">any</p>
 </td>
 </tr>
 </tbody>
@@ -229,7 +234,9 @@ unhook trait listeners etc.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) &#8211; The action to consider.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> (bool) &#8211; <a href="#id2"><span class="problematic" id="id3">``</span></a>True` if the action can be added to a menu/menubar.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> &#8211; <a href="#id2"><span class="problematic" id="id3">``</span></a>True` if the action can be added to a menu/menubar.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -259,7 +266,9 @@ unhook trait listeners etc.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) &#8211; The action to consider.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> (bool) &#8211; <a href="#id4"><span class="problematic" id="id5">``</span></a>True` if the action can be added to a toolbar.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> &#8211; <a href="#id4"><span class="problematic" id="id5">``</span></a>True` if the action can be added to a toolbar.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -346,7 +355,7 @@ required to manipulate the state of a tool via the tool bar 8^(</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<em>toolkit control</em>) &#8211; The parent of the new menu item control.</li>
 <li><strong>menu</strong> (<em>toolkit menu</em>) &#8211; The menu to add the action item to.</li>
-<li><strong>controller</strong> (<em>ActionController instance or None</em>) &#8211; The controller to use.</li>
+<li><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) &#8211; The controller to use.</li>
 </ul>
 </td>
 </tr>
@@ -366,7 +375,7 @@ required to manipulate the state of a tool via the tool bar 8^(</p>
 <li><strong>parent</strong> (<em>toolkit control</em>) &#8211; The parent of the new menu item control.</li>
 <li><strong>tool_bar</strong> (<em>toolkit toolbar</em>) &#8211; The toolbar to add the action item to.</li>
 <li><strong>image_cache</strong> (<em>ImageCache instance</em>) &#8211; The image cache for resized images.</li>
-<li><strong>controller</strong> (<em>ActionController instance or None</em>) &#8211; The controller to use.</li>
+<li><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) &#8211; The controller to use.</li>
 <li><strong>show_labels</strong> (<em>bool</em>) &#8211; Should the toolbar item show a label.</li>
 </ul>
 </td>
@@ -460,7 +469,7 @@ list of items.</p>
 <dl class="attribute">
 <dt id="pyface.action.action_manager.ActionManager.changed">
 <code class="descname">changed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.action.action_manager.ActionManager.changed" title="Permalink to this definition">¶</a></dt>
-<dd><p>fixme: We probably need more granular events than this!</p>
+<dd><p><em>fixme</em> &#8211; We probably need more granular events than this!</p>
 </dd></dl>
 
 <dl class="method">
@@ -471,18 +480,16 @@ list of items.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>string, Group instance or ActionManagerItem instance</em>) &#8211; The item to append.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>string</em><em>, </em><em>Group instance</em><em> or </em><em>ActionManagerItem instance</em>) &#8211; The item to append.</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is a group, the Group is appended to the manager&#8217;s list
+<p class="rubric">Notes</p>
+<p>If the item is a group, the Group is appended to the manager&#8217;s list
 of groups.  It the item is a string, then a group is created with
 the string as the <code class="docutils literal"><span class="pre">id</span></code> and the new group is appended to the list
 of groups.  If the item is an ActionManagerItem then the item is
 appended to the manager&#8217;s defualt group.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -503,20 +510,18 @@ groups.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>index</strong> (<em>int</em>) &#8211; The position at which to insert the object</li>
-<li><strong>item</strong> (<em>string, Group instance or ActionManagerItem instance</em>) &#8211; The item to insert.</li>
+<li><strong>item</strong> (<em>string</em><em>, </em><em>Group instance</em><em> or </em><em>ActionManagerItem instance</em>) &#8211; The item to insert.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is a group, the Group is inserted into the manager&#8217;s list
+<p class="rubric">Notes</p>
+<p>If the item is a group, the Group is inserted into the manager&#8217;s list
 of groups.  It the item is a string, then a group is created with
 the string as the <code class="docutils literal"><span class="pre">id</span></code> and the new group is inserted into the list
 of groups.  If the item is an ActionManagerItem then the item is
 inserted into the manager&#8217;s defualt group.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -529,7 +534,9 @@ inserted into the manager&#8217;s defualt group.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>str</em>) &#8211; The id of the group to find.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>group</strong> (Group instance) &#8211; The group which matches the id, or None if no such group exists.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>group</strong> &#8211; The group which matches the id, or None if no such group exists.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Group instance</td>
 </tr>
 </tbody>
 </table>
@@ -545,7 +552,10 @@ inserted into the manager&#8217;s defualt group.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em>) &#8211; A &#8216;/&#8217; separated list of contribution Ids.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> (ActionManagerItem or None) &#8211; Returns the matching ActionManagerItem, or None if any component of the path is not found.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> &#8211; Returns the matching ActionManagerItem, or None if any component
+of the path is not found.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a> or None</td>
 </tr>
 </tbody>
 </table>
@@ -668,7 +678,7 @@ its group)</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>parent</strong> (<em>toolkit control</em>) &#8211; The parent of the new menu item control.</li>
 <li><strong>menu</strong> (<em>toolkit menu</em>) &#8211; The menu to add the action item to.</li>
-<li><strong>controller</strong> (<em>ActionController instance or None</em>) &#8211; The controller to use.</li>
+<li><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) &#8211; The controller to use.</li>
 </ul>
 </td>
 </tr>
@@ -688,7 +698,7 @@ its group)</p>
 <li><strong>parent</strong> (<em>toolkit control</em>) &#8211; The parent of the new menu item control.</li>
 <li><strong>tool_bar</strong> (<em>toolkit toolbar</em>) &#8211; The toolbar to add the action item to.</li>
 <li><strong>image_cache</strong> (<em>ImageCache instance</em>) &#8211; The image cache for resized images.</li>
-<li><strong>controller</strong> (<em>ActionController instance or None</em>) &#8211; The controller to use.</li>
+<li><strong>controller</strong> (<em>ActionController instance</em><em> or </em><em>None</em>) &#8211; The controller to use.</li>
 <li><strong>show_labels</strong> (<em>bool</em>) &#8211; Should the toolbar item show a label.</li>
 </ul>
 </td>
@@ -759,19 +769,19 @@ manager that the group belongs to).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<em>ActionManagerItem, Action or callable</em>) &#8211; The item to append.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>item</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) &#8211; The item to append.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> (ActionManagerItem) &#8211; The actually inserted item.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> &#8211; The actually inserted item.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is an ActionManagerItem instance it is simply appended.
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply appended.
 If the item is an Action instance, an ActionItem is created for the
 action, and that is appended.  If the item is a callable, then an
 Action is created for the callable, and then that is handled as above.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -798,22 +808,23 @@ group.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>index</strong> (<em>int</em>) &#8211; The position to insert the item.</li>
-<li><strong>item</strong> (<em>ActionManagerItem, Action or callable</em>) &#8211; The item to insert.</li>
+<li><strong>item</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) &#8211; The item to insert.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>item</strong> (ActionManagerItem) &#8211; The actually inserted item.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>item</strong> &#8211; The actually inserted item.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is an ActionManagerItem instance it is simply inserted.
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
 If the item is an Action instance, an ActionItem is created for the
 action, and that is inserted.  If the item is a callable, then an
 Action is created for the callable, and then that is handled as above.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -840,26 +851,23 @@ Action is created for the callable, and then that is handled as above.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>before</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a>) &#8211; The item to insert before.</li>
-<li><strong>item</strong> (<em>ActionManagerItem, Action or callable</em>) &#8211; The item to insert.</li>
+<li><strong>item</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) &#8211; The item to insert.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>index, item</strong> &#8211; The position inserted, and the item actually inserted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int, <a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>index, item <span class="classifier-delimiter">:</span> <span class="classifier">int, ActionManagerItem</span></dt>
-<dd>The position inserted, and the item actually inserted.</dd>
-</dl>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is an ActionManagerItem instance it is simply inserted.
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
 If the item is an Action instance, an ActionItem is created for the
 action, and that is inserted.  If the item is a callable, then an
 Action is created for the callable, and then that is handled as above.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -872,26 +880,23 @@ Action is created for the callable, and then that is handled as above.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>before</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a>) &#8211; The item to insert after.</li>
-<li><strong>item</strong> (<em>ActionManagerItem, Action or callable</em>) &#8211; The item to insert.</li>
+<li><strong>item</strong> (<a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem"><em>ActionManagerItem</em></a><em>, </em><a class="reference internal" href="#pyface.action.action.Action" title="pyface.action.action.Action"><em>Action</em></a><em> or </em><em>callable</em>) &#8211; The item to insert.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>index, item</strong> &#8211; The position inserted, and the item actually inserted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int, <a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></p>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>index, item <span class="classifier-delimiter">:</span> <span class="classifier">int, ActionManagerItem</span></dt>
-<dd>The position inserted, and the item actually inserted.</dd>
-</dl>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If the item is an ActionManagerItem instance it is simply inserted.
+<p class="rubric">Notes</p>
+<p>If the item is an ActionManagerItem instance it is simply inserted.
 If the item is an Action instance, an ActionItem is created for the
 action, and that is inserted.  If the item is a callable, then an
 Action is created for the callable, and then that is handled as above.</p>
-</div>
 </dd></dl>
 
 <dl class="method">
@@ -904,7 +909,9 @@ Action is created for the callable, and then that is handled as above.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>str</em>) &#8211; The id of the item</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> (ActionManagerItem) &#8211; The item with the specified Id, or None if no such item exists.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> &#8211; The item with the specified Id, or None if no such item exists.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyface.action.action_manager_item.ActionManagerItem" title="pyface.action.action_manager_item.ActionManagerItem">ActionManagerItem</a></td>
 </tr>
 </tbody>
 </table>
@@ -919,7 +926,7 @@ Action is created for the callable, and then that is handled as above.</p>
 <p>A convenience class.</p>
 <p>This is only used in &#8216;cheap and cheerful&#8217; applications that create menus
 like:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">file_menu</span> <span class="o">=</span> <span class="n">MenuManager</span><span class="p">(</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">file_menu</span> <span class="o">=</span> <span class="n">MenuManager</span><span class="p">(</span>
     <span class="n">CopyAction</span><span class="p">(),</span>
     <span class="n">Separator</span><span class="p">(),</span>
     <span class="n">ExitAction</span><span class="p">()</span>
@@ -1008,20 +1015,17 @@ like:</p>
                         title="next chapter">dock Package</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="../_sources/api/pyface.action.txt"
+    <a href="../_sources/api/pyface.action.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1043,10 +1047,10 @@ like:</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>

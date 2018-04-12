@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Abstract Interfaces and Mixins &mdash; pyface 5.1.0 documentation</title>
+    <title>Abstract Interfaces and Mixins &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface Package" href="pyface.html" >
     <link rel="next" title="action Package" href="pyface.action.html" >
     <link rel="prev" title="pyface Package" href="pyface.html" > 
@@ -46,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
     </ul>
@@ -388,7 +390,9 @@ to the button the user pressed and this value is also returned.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> (OK or CANCEL) &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
 </tr>
 </tbody>
 </table>
@@ -416,7 +420,9 @@ to the button the user pressed and this value is also returned.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> (OK or CANCEL) &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
 </tr>
 </tbody>
 </table>
@@ -495,7 +501,11 @@ possible via the shape of the cursor or similar indicators.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>can_drop</strong> (bool) &#8211; True if the current drop handler can handle the given drag event occurring on the given target widget.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>can_drop</strong> &#8211; True if the current drop handler can handle the given drag
+event occurring on the given target widget.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>
@@ -691,15 +701,12 @@ run interactively.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>millisecs</strong> (<em>float</em>) &#8211; Delay in milliseconds</li>
 <li><strong>callable</strong> (<em>callable</em>) &#8211; Callable to be called after the delay</li>
+<li><strong>kwargs</strong> (<em>args</em><em>,</em><em></em>) &#8211; Arguments and keyword arguments to be used when calling.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>args, kwargs :</dt>
-<dd>Arguments and keyword arguments to be used when calling.</dd>
-</dl>
 </dd></dl>
 
 <dl class="classmethod">
@@ -710,14 +717,14 @@ run interactively.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callable</strong> (<em>callable</em>) &#8211; Callable to be called after the delay</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callable</strong> (<em>callable</em>) &#8211; Callable to be called after the delay</li>
+<li><strong>kwargs</strong> (<em>args</em><em>,</em><em></em>) &#8211; Arguments and keyword arguments to be used when calling.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<dl class="docutils">
-<dt>args, kwargs :</dt>
-<dd>Arguments and keyword arguments to be used when calling.</dd>
-</dl>
 </dd></dl>
 
 <dl class="classmethod">
@@ -879,7 +886,10 @@ implementations of the IHeadingText interface.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) &#8211; The name of the file containing the image.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> (toolkit image) &#8211; The image referred to in the file, scaled to the cache&#8217;s width and height.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> &#8211; The image referred to in the file, scaled to the cache&#8217;s width
+and height.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
 </tr>
 </tbody>
 </table>
@@ -895,7 +905,10 @@ implementations of the IHeadingText interface.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) &#8211; The name of the file containing the image.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> (toolkit bitmap) &#8211; The image referred to in the file, scaled to the cache&#8217;s width and height, as a bitmap.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> &#8211; The image referred to in the file, scaled to the cache&#8217;s width
+and height, as a bitmap.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit bitmap</td>
 </tr>
 </tbody>
 </table>
@@ -949,10 +962,13 @@ for the image (see the resource manager for more details).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>(int, int) or None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
 default image size.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> (toolkit image) &#8211; The toolkit image corresponding to the resource and the specified size.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
 </tr>
 </tbody>
 </table>
@@ -966,10 +982,13 @@ default image size.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>(int, int) or None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
 default image size.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> (toolkit image) &#8211; The toolkit image corresponding to the resource and the specified size as a bitmap.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size as a bitmap.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
 </tr>
 </tbody>
 </table>
@@ -983,10 +1002,31 @@ default image size.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>(int, int) or None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
 default image size.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> (toolkit image) &#8211; The toolkit image corresponding to the resource and the specified size as an icon.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size as an icon.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_image_resource.IImageResource.image_size">
+<em class="property">classmethod </em><code class="descname">image_size</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource.image_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the size of a toolkit image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<em>toolkit image</em>) &#8211; A toolkit image to compute the size of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>size</strong> &#8211; The (width, height) tuple giving the size of the image.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
 </tr>
 </tbody>
 </table>
@@ -1009,10 +1049,13 @@ implementations of the IImageResource interface.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em>(int, int) or None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
 default image size.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> (toolkit image) &#8211; The toolkit image corresponding to the resource and the specified size.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
 </tr>
 </tbody>
 </table>
@@ -1144,7 +1187,7 @@ in another panel the parent window will be closed.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str or unicode</em>) &#8211; The new message to display.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em><em> or </em><em>unicode</em>) &#8211; The new message to display.</td>
 </tr>
 </tbody>
 </table>
@@ -1164,6 +1207,12 @@ implementations of the IProgressDialog interface.</p>
 <code class="descname">progress_bar</code><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.progress_bar" title="Permalink to this definition">¶</a></dt>
 <dd><p>The progress bar toolkit object</p>
 <p>alias of <code class="xref py py-class docutils literal"><span class="pre">Any</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.MProgressDialog.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the dialog</p>
 </dd></dl>
 
 <dl class="method">
@@ -1190,7 +1239,7 @@ in another panel the parent window will be closed.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str or unicode</em>) &#8211; The new message to display.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em><em> or </em><em>unicode</em>) &#8211; The new message to display.</td>
 </tr>
 </tbody>
 </table>
@@ -1245,7 +1294,7 @@ in another panel the parent window will be closed.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str or None</em>) &#8211; The path to the file to load.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em> or </em><em>None</em>) &#8211; The path to the file to load.</td>
 </tr>
 </tbody>
 </table>
@@ -1259,7 +1308,7 @@ in another panel the parent window will be closed.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str or None</em>) &#8211; The path to the file to save.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em> or </em><em>None</em>) &#8211; The path to the file to save.</td>
 </tr>
 </tbody>
 </table>
@@ -1326,7 +1375,9 @@ implementations of the IPythonEditor interface.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>interpreter</strong> (InteractiveInterpreter instance) &#8211; Returns the InteractiveInterpreter instance.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>interpreter</strong> &#8211; Returns the InteractiveInterpreter instance.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">InteractiveInterpreter instance</td>
 </tr>
 </tbody>
 </table>
@@ -1381,6 +1432,42 @@ a blank line.</li>
 <li><strong>path</strong> (<em>str</em>) &#8211; The path to the Python file to execute.</li>
 <li><strong>hidden</strong> (<em>bool</em>) &#8211; If &#8216;hidden&#8217; is True then nothing is shown in the shell - not even
 a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.get_history">
+<code class="descname">get_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.get_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current command history and index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>history</strong> (<em>list of str</em>) &#8211; The list of commands in the new history.</li>
+<li><strong>history_index</strong> (<em>int from 0 to len(history)</em>) &#8211; The current item in the command history navigation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.set_history">
+<code class="descname">set_history</code><span class="sig-paren">(</span><em>history</em>, <em>history_index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.set_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the current command history and index with new ones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>history</strong> (<em>list of str</em>) &#8211; The list of commands in the new history.</li>
+<li><strong>history_index</strong> (<em>int</em>) &#8211; The current item in the command history navigation.</li>
 </ul>
 </td>
 </tr>
@@ -1600,6 +1687,38 @@ implementations of the ISystemMetrics interface.</p>
 <dd><p>The control&#8217;s optional parent control.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.visible">
+<code class="descname">visible</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the control is visible</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.enabled">
+<code class="descname">enabled</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the control is enabled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.show">
+<code class="descname">show</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show or hide the widget.</p>
+<dl class="docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Visible should be <code class="docutils literal"><span class="pre">True</span></code> if the widget should be shown.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><em>enabled</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the widget.</p>
+<dl class="docutils">
+<dt>enabled <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>The enabled state to set the widget to.</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="pyface.i_widget.IWidget.destroy">
 <code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.destroy" title="Permalink to this definition">¶</a></dt>
@@ -1614,7 +1733,6 @@ implementations of the ISystemMetrics interface.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IWidget interface.</p>
-<p>Implements: _create()</p>
 </dd></dl>
 
 </div>
@@ -1707,17 +1825,6 @@ implementations of the IWidget interface.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyface.i_window.IWindow.show">
-<code class="descname">show</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.show" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show or hide the window.</p>
-<p class="rubric">Parameter</p>
-<dl class="docutils">
-<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
-<dd>Visible should be <code class="docutils literal"><span class="pre">True</span></code> if the window should be shown.</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
 <dt id="pyface.i_window.IWindow.confirm">
 <code class="descname">confirm</code><span class="sig-paren">(</span><em>message</em>, <em>title=None</em>, <em>cancel=False</em>, <em>default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.confirm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show a confirmation dialog.</p>
@@ -1729,7 +1836,7 @@ implementations of the IWidget interface.</p>
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
 <li><strong>cancel</strong> (<em>bool</em>) &#8211; <code class="docutils literal"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</li>
-<li><strong>default</strong> (<em>NO, YES or CANCEL</em>) &#8211; Which button should be the default button.</li>
+<li><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) &#8211; Which button should be the default button.</li>
 </ul>
 </td>
 </tr>
@@ -1739,7 +1846,7 @@ implementations of the IWidget interface.</p>
 
 <dl class="method">
 <dt id="pyface.i_window.IWindow.information">
-<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.information" title="Permalink to this definition">¶</a></dt>
+<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1748,6 +1855,8 @@ implementations of the IWidget interface.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1757,7 +1866,7 @@ implementations of the IWidget interface.</p>
 
 <dl class="method">
 <dt id="pyface.i_window.IWindow.warning">
-<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.warning" title="Permalink to this definition">¶</a></dt>
+<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show a warning message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1766,6 +1875,8 @@ implementations of the IWidget interface.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1775,7 +1886,7 @@ implementations of the IWidget interface.</p>
 
 <dl class="method">
 <dt id="pyface.i_window.IWindow.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an error message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1784,6 +1895,8 @@ implementations of the IWidget interface.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1825,7 +1938,7 @@ Reimplements: _create()</p>
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
 <li><strong>cancel</strong> (<em>bool</em>) &#8211; <code class="docutils literal"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</li>
-<li><strong>default</strong> (<em>NO, YES or CANCEL</em>) &#8211; Which button should be the default button.</li>
+<li><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) &#8211; Which button should be the default button.</li>
 </ul>
 </td>
 </tr>
@@ -1835,7 +1948,7 @@ Reimplements: _create()</p>
 
 <dl class="method">
 <dt id="pyface.i_window.MWindow.information">
-<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.information" title="Permalink to this definition">¶</a></dt>
+<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1844,6 +1957,8 @@ Reimplements: _create()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1853,7 +1968,7 @@ Reimplements: _create()</p>
 
 <dl class="method">
 <dt id="pyface.i_window.MWindow.warning">
-<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.warning" title="Permalink to this definition">¶</a></dt>
+<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show a warning message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1862,6 +1977,8 @@ Reimplements: _create()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1871,7 +1988,7 @@ Reimplements: _create()</p>
 
 <dl class="method">
 <dt id="pyface.i_window.MWindow.error">
-<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an error message dialog.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1880,6 +1997,8 @@ Reimplements: _create()</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
 <li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
 </ul>
 </td>
 </tr>
@@ -1936,20 +2055,17 @@ Reimplements: _create()</p>
                         title="next chapter">action Package</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="../_sources/api/modules.txt"
+    <a href="../_sources/api/modules.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -1971,10 +2087,10 @@ Reimplements: _create()</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>

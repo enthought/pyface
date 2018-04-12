@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>wizard Package &mdash; pyface 5.1.0 documentation</title>
+    <title>wizard Package &mdash; pyface 6.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '5.1.0',
+        VERSION:     '6.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/et.ico">
-    <link rel="top" title="pyface 5.1.0 documentation" href="../index.html" >
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
     <link rel="up" title="wx Package" href="pyface.ui.wx.html" >
     <link rel="next" title="workbench Package" href="pyface.ui.wx.workbench.html" >
     <link rel="prev" title="timer Package" href="pyface.ui.wx.timer.html" > 
@@ -46,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 5.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface Package</a></li>
           <li class="active"><a href="pyface.ui.html" >ui Package</a></li>
@@ -85,8 +87,17 @@
 <div class="section" id="id1">
 <h2><code class="xref py py-mod docutils literal"><span class="pre">wizard</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-pyface.ui.wx.wizard"></span></div>
-<div class="section" id="wizard-module">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">wizard</span></code> Module<a class="headerlink" href="#wizard-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyface.ui.wx.wizard.wizard">
+<span id="wizard-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">wizard</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.wizard.wizard" title="Permalink to this headline">¶</a></h2>
+<p>The base class for all pyface wizards.</p>
+<dl class="class">
+<dt id="pyface.ui.wx.wizard.wizard.Wizard">
+<em class="property">class </em><code class="descclassname">pyface.ui.wx.wizard.wizard.</code><code class="descname">Wizard</code><a class="headerlink" href="#pyface.ui.wx.wizard.wizard.Wizard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyface.wizard.html#pyface.wizard.i_wizard.MWizard" title="pyface.wizard.i_wizard.MWizard"><code class="xref py py-class docutils literal"><span class="pre">pyface.wizard.i_wizard.MWizard</span></code></a>, <a class="reference internal" href="pyface.ui.qt4.html#pyface.ui.qt4.dialog.Dialog" title="pyface.ui.qt4.dialog.Dialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.dialog.Dialog</span></code></a></p>
+<p>The base class for all pyface wizards.</p>
+<p>See the IWizard interface for the API documentation.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyface.ui.wx.wizard.wizard_page">
 <span id="wizard-page-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">wizard_page</span></code> Module<a class="headerlink" href="#module-pyface.ui.wx.wizard.wizard_page" title="Permalink to this headline">¶</a></h2>
@@ -121,7 +132,7 @@
   <ul>
 <li><a class="reference internal" href="#">wizard Package</a><ul>
 <li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">wizard</span></code> Package</a></li>
-<li><a class="reference internal" href="#wizard-module"><code class="docutils literal"><span class="pre">wizard</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.ui.wx.wizard.wizard"><code class="docutils literal"><span class="pre">wizard</span></code> Module</a></li>
 <li><a class="reference internal" href="#module-pyface.ui.wx.wizard.wizard_page"><code class="docutils literal"><span class="pre">wizard_page</span></code> Module</a></li>
 </ul>
 </li>
@@ -135,20 +146,17 @@
                         title="next chapter">workbench Package</a></p>
   <h3>This Page</h3>
   <div>
-    <a href="../_sources/api/pyface.ui.wx.wizard.txt"
+    <a href="../_sources/api/pyface.ui.wx.wizard.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -170,10 +178,10 @@
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 18, 2016.
+      Last updated on Apr 12, 2018.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
       </li>
     </ul>
     </div>
