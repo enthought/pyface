@@ -49,8 +49,8 @@ Rob McMullen, @nprksh, Prabhu Ramachandran, Gregor Thalhammer, Senganal
 Thirunavukkarasu, Ioannis Tziakos, Joris Vankerscharver, and Corran Webster.
 Apologies to any contributors that have been omitted.
 
-Change summary since 5.1.0
---------------------------
+Change summary
+--------------
 
 Enhancements
 
@@ -64,6 +64,9 @@ Enhancements
 * Add 'detail' and 'informative' to window dialog helpers (#181)
 * Code coverage reporting (#214)
 * All Pyface widgets now have visible and enabled traits (#284)
+* Allow "qt" as a synonym for "qt4" (#304)
+* PythonShell widget history exposed via the API (#314)
+* Experimental PySide2 support (#303)
 
 Fixes
 
@@ -78,6 +81,7 @@ Fixes
 * Don't use sendPostedEvents in Qt GUI.do_trait_later (#273)
 * Fix ordering of items when appending to an ActionManager default group (#290)
 * Explicit life-cycle for Qt event filters on Widgets (#300)
+* Fixes to ensure demos and examples work (#308)
 
 Release 5.1.0
 =============
