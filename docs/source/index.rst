@@ -34,8 +34,8 @@ While all toolkits funtion with Pyface, integration with wxPython is currently
 more complete.  Future development, however, will be more focused on
 supporting Qt.
 
-.. warning:: The default toolkit if none is supplied is ``qt4``.
-   This changed from ``wx`` in Pyface 5.0.
+The default toolkit if none is supplied is ``qt4``. This changed from ``wx`` in
+Pyface 5.0.
 
 NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt's GPL or proprietary licensing will
@@ -80,3 +80,4 @@ Contents
    Overview <overview>
    Toolkits <toolkits>
    API Documentation <api/pyface>
+   Change Log <changelog>
