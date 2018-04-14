@@ -23,6 +23,8 @@ matrix:
   allow_failures:
     - RUNTIME: '3.6'
       TOOLKITS: "pyside2"
+    - RUNTIME: '2.7'
+      TOOLKITS: "pyside2"
 
 
 branches:
