@@ -156,10 +156,10 @@ def install(runtime, toolkit, environment):
         "edm run -e {environment} -- python setup.py clean --all",
         "edm run -e {environment} -- python setup.py install",
     ]
-    # pip install pyqt5, because we don't have it in EDM yet
+    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == 'pyqt5':
         commands.append("edm run -e {environment} -- pip install pyqt5==5.9.2")
-    if toolkit == 'pyside2':
+    elif toolkit == 'pyside2':
         system = platform.system()
         wheel = pyside2_wheels[(system, runtime)]
         parameters['wheel'] = wheel
