@@ -88,12 +88,10 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx'},
-    '3.5': {'pyqt', 'pyqt5', 'pyside2'},
+    '2.7': {'pyside', 'pyqt', 'wx', 'pyside2'},
+    '3.5': {'pyqt', 'pyqt5'},
     '3.6': {'pyqt', 'pyqt5', 'pyside2'},
 }
-if platform.system() != 'Windows':
-    supported_combinations['2.7'].add('pyside2')
 
 dependencies = {
     "numpy",
@@ -124,16 +122,14 @@ environment_vars = {
     'null': {'ETS_TOOLKIT': 'null'},
 }
 
-# temporary until official pyside2 releases
+# temporary until pyside2 in pip or EDM
 pyside2_wheels = {
-    ('Windows', '3.5'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp35-cp35m-win_amd64.whl',
-    ('Windows', '3.6'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp36-cp36m-win_amd64.whl',
-    ('Darwin', '2.7'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp27-cp27m-macosx_10_6_intel.whl',
-    ('Darwin', '3.5'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp35-cp35m-macosx_10_6_intel.whl',
-    ('Darwin', '3.6'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp36-cp36m-macosx_10_6_intel.whl',
-    ('Linux', '2.7'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp27-cp27mu-linux_x86_64.whl',
-    ('Linux', '3.5'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp35-cp35m-linux_x86_64.whl',
-    ('Linux', '3.6'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp36-cp36m-linux_x86_64.whl',
+    ('Windows', '2.7'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp27-cp27m-win_amd64.whl',
+    ('Windows', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp36-cp36m-win_amd64.whl',
+    ('Darwin', '2.7'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp27-cp27m-macosx_10_10_intel.whl',
+    ('Darwin', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp36-cp36m-macosx_10_10_intel.whl',
+    ('Linux', '2.7'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp27-cp27mu-linux_x86_64.whl',
+    ('Linux', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp34-cp34m-linux_x86_64.whl',
 }
 
 @click.group()
