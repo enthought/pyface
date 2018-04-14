@@ -129,7 +129,7 @@ pyside2_wheels = {
     ('Darwin', '2.7'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp27-cp27m-macosx_10_10_intel.whl',
     ('Darwin', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp36-cp36m-macosx_10_10_intel.whl',
     ('Linux', '2.7'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp27-cp27mu-linux_x86_64.whl',
-    ('Linux', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.9/latest/pyside2/PySide2-5.9.0a1-5.9.6-cp34-cp34m-linux_x86_64.whl',
+    ('Linux', '3.6'): 'http://download.qt.io/snapshots/ci/pyside/5.11/latest/pyside2/PySide2-5.11.0a1-5.11.0-cp36-cp36m-linux_x86_64.whl',
 }
 
 @click.group()
