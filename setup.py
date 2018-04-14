@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     setup(name='pyface',
           version=__version__,
-          url='https://docs.enthought.com/pyface',
+          url='http://docs.enthought.com/pyface',
           author='David C. Morrill, et al.',
           author_email='dmorrill@enthought.com',
           classifiers=[c.strip() for c in """\
@@ -150,7 +150,7 @@ if __name__ == "__main__":
               """.splitlines() if len(c.split()) > 0],
           description='traits-capable windowing framework',
           long_description=open('README.rst').read(),
-          download_url=('https://github.com/enthought/pyface'),
+          download_url='https://github.com/enthought/pyface',
           install_requires=__requires__,
           extras_require=__extras_require__,
           license='BSD',
