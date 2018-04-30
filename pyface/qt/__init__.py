@@ -66,8 +66,8 @@ if qt_api is None:
             break
         except ImportError:
             continue
-        else:
-            raise ImportError('Cannot import PySide, PySide2, PyQt5 or PyQt4')
+    else:
+        raise ImportError('Cannot import PySide, PySide2, PyQt5 or PyQt4')
 
 # otherwise check QT_API value is valid
 elif qt_api not in {api_name for api_name, module in QtAPIs}:
