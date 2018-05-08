@@ -1017,9 +1017,9 @@ class ImageLibrary ( HasPrivateTraits ):
             volume = ImageVolume()
 
         # Set up the rest of the volume information:
-        volume.set( name        = volume_name,
-                    path        = path,
-                    is_zip_file = False )
+        volume.trait_set( name        = volume_name,
+                          path        = path,
+                          is_zip_file = False )
 
         # Try to bring the volume information up to date if necessary:
         if volume.time_stamp < time_stamp_for( stat( path )[ ST_MTIME ] ):

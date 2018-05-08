@@ -123,7 +123,7 @@ class UserPerspectiveManager(HasTraits):
         clone.id = '__user_perspective_%09d__' % self.next_id
 
         # Set any traits specified as keyword arguments.
-        clone.set(**traits)
+        clone.trait_set(**traits)
 
         # Add the perspective to the map.
         self.id_to_perspective[clone.id] = clone

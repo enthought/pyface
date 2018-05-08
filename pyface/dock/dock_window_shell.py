@@ -89,9 +89,9 @@ class DockWindowShell ( HasPrivateTraits ):
         wx.EVT_CLOSE( shell, self._on_close )
 
         theme = dock_control.theme
-        self._dock_window = dw = DockWindow( shell, auto_close = True,
-                                                    theme      = theme ).set(
-                                                    style      = 'tab' )
+        dw = DockWindow( shell, auto_close = True, theme = theme )
+        dw.trait_set( style = 'tab' )
+        self._dock_window = dw
         sizer = wx.BoxSizer( wx.VERTICAL )
         sizer.Add( dw.control, 1, wx.EXPAND )
         shell.SetSizer( sizer )
@@ -143,7 +143,7 @@ class DockWindowShell ( HasPrivateTraits ):
         # If the DockControl was closed, then reset it to point to the new
         # control:
         if close:
-            dock_control.set( control = control, style = 'tab' )
+            dock_control.trait_set( control = control, style = 'tab' )
         else:
             # Create a DockControl to describe the new control:
             dock_control = DockControl( control   = control,
