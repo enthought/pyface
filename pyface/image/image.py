@@ -119,14 +119,14 @@ ImageInfoTemplate = \
 def read_file ( file_name ):
     """ Returns the contents of the specified *file_name*.
     """
-    with file(file_name, 'rb') as fh:
+    with open(file_name, 'rb') as fh:
         return fh.read()
 
 
 def write_file ( file_name, data ):
     """ Writes the specified data to the specified file.
     """
-    with file( file_name, 'wb' ) as fh:
+    with open( file_name, 'wb' ) as fh:
         fh.write( data )
 
 
