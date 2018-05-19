@@ -12,6 +12,9 @@ elif qt_api == 'pyqt5':
         QAbstractProxyModel, QItemSelection, QItemSelectionModel,
         QItemSelectionRange, QSortFilterProxyModel, QStringListModel
     )
+    QStyleOptionTabV2 = QStyleOptionTab
+    QStyleOptionTabV3 = QStyleOptionTab
+    QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
 
 elif qt_api == 'pyside2':
     from PySide2.QtGui import *
@@ -21,6 +24,9 @@ elif qt_api == 'pyside2':
         QAbstractProxyModel, QItemSelection, QItemSelectionModel,
         QItemSelectionRange, QSortFilterProxyModel
     )
+    QStyleOptionTabV2 = QStyleOptionTab
+    QStyleOptionTabV3 = QStyleOptionTab
+    QStyleOptionTabBarBaseV2 = QStyleOptionTabBarBase
 
 else:
     from PySide.QtGui import *
