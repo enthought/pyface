@@ -2466,7 +2466,7 @@ class DockRegion ( DockGroup ):
     def get_structure ( self ):
         """ Returns a copy of the region 'structure', minus the actual content.
         """
-        return self.clone_traits( [ 'active', 'width', 'height' ] ).set(
+        return self.clone_traits( [ 'active', 'width', 'height' ] ).trait_set(
                  contents = [ item.get_structure() for item in self.contents ] )
 
     #---------------------------------------------------------------------------
@@ -3435,7 +3435,7 @@ class DockSection ( DockGroup ):
                     new_contents = [ new_region, region ]
                 else:
                     new_contents = [ region, new_region ]
-                contents[ i ] = DockSection( is_row   = False ).set(
+                contents[ i ] = DockSection( is_row   = False ).trait_set(
                                              contents = new_contents )
             else:
                 if new_region.parent is self:
@@ -3450,7 +3450,7 @@ class DockSection ( DockGroup ):
                     new_contents = [ new_region, region ]
                 else:
                     new_contents = [ region, new_region ]
-                contents[ i ] = DockSection( is_row   = True ).set(
+                contents[ i ] = DockSection( is_row   = True ).trait_set(
                                              contents = new_contents )
             else:
                 if new_region.parent is self:
@@ -3497,7 +3497,7 @@ class DockSection ( DockGroup ):
     def get_structure ( self ):
         """ Returns a copy of the section 'structure', minus the actual content.
         """
-        return self.clone_traits( [ 'is_row', 'width', 'height' ] ).set(
+        return self.clone_traits( [ 'is_row', 'width', 'height' ] ).trait_set(
                contents  = [ item.get_structure() for item in self.contents  ],
                splitters = [ item.get_structure() for item in self.splitters ] )
 
@@ -3738,8 +3738,8 @@ class DockInfo ( HasPrivateTraits ):
                         ((kind == DOCK_LEFT) or (kind == DOCK_RIGHT)))):
                     if len( section.contents ) > 0:
                         sizer._contents = section = DockSection(
-                                            is_row   = not section.is_row ).set(
-                                            contents = [ section ] )
+                            is_row   = not section.is_row ).trait_set(
+                            contents = [ section ] )
                 if len( section.contents ) > 0:
                     i = 0
                     if (kind == DOCK_RIGHT) or (kind == DOCK_BOTTOM):
@@ -3896,7 +3896,7 @@ class DockSizer ( wx.PySizer ):
                 items.append( DockRegion( contents = [ item ] ) )
             else:
                 raise TypeError
-        return DockSection( is_row = is_row ).set( contents = items )
+        return DockSection( is_row = is_row ).trait_set( contents = items )
 
     #---------------------------------------------------------------------------
     #  Returns a copy of the layout 'structure', minus the actual content
@@ -3954,7 +3954,7 @@ class DockSizer ( wx.PySizer ):
         for control in section.get_controls( False ):
             mapped_control = map.get( control.id )
             if mapped_control is not None:
-                control.set( **mapped_control.get( 'visible', 'locked',
+                control.trait_set( **mapped_control.get( 'visible', 'locked',
                     'closeable', 'resizable', 'width', 'height' ) )
                 if mapped_control.user_name:
                     control.name = mapped_control.name
