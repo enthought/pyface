@@ -655,11 +655,11 @@ class DockWindowFeature ( HasPrivateTraits ):
         """ Sets the feature's 'event' traits for a specified mouse 'event'.
         """
         x, y = event.GetEventObject().GetScreenPosition()
-        self.set( x            = event.GetX() + x,
-                  y            = event.GetY() + y,
-                  shift_down   = event.ShiftDown(),
-                  control_down = event.ControlDown(),
-                  alt_down     = event.AltDown() )
+        self.trait_set( x            = event.GetX() + x,
+                        y            = event.GetY() + y,
+                        shift_down   = event.ShiftDown(),
+                        control_down = event.ControlDown(),
+                        alt_down     = event.AltDown() )
 
     #---------------------------------------------------------------------------
     #  Displays the quick drag menu for a specified drag object:

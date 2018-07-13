@@ -99,3 +99,31 @@ class TestPythonShell(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.widget.interpreter().locals.get('sys'), sys)
         self.widget.destroy()
         self.event_loop()
+
+    def test_get_history(self):
+        # test that executing a command works
+        self.widget = PythonShell(self.window.control)
+        self.event_loop()
+        self.widget.execute_command('x = 1', hidden=False)
+        self.event_loop()
+
+        history, history_index = self.widget.get_history()
+
+        self.assertEqual(history, ['x = 1'])
+        self.assertEqual(history_index, 1)
+
+        self.widget.destroy()
+        self.event_loop()
+
+    def test_set_history(self):
+        # test that executing a command works
+        self.widget = PythonShell(self.window.control)
+
+        self.widget.set_history(['x = 1', 'y = x + 1'], 1)
+        history, history_index = self.widget.get_history()
+
+        self.assertEqual(history, ['x = 1', 'y = x + 1'])
+        self.assertEqual(history_index, 1)
+
+        self.widget.destroy()
+        self.event_loop()

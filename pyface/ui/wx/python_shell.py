@@ -1,6 +1,4 @@
-#------------------------------------------------------------------------------
-#
-#  Copyright (c) 2005, Enthought, Inc.
+#  Copyright (c) 2005-18, Enthought, Inc.
 #  All rights reserved.
 #
 #  This software is provided without warranty under the terms of the BSD
@@ -11,8 +9,6 @@
 #  Thanks for using Enthought open source!
 #
 #  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -45,7 +41,6 @@ class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
-
 
     #### 'IPythonShell' interface #############################################
 
@@ -138,6 +133,33 @@ class PythonShell(MPythonShell, Widget):
         del prog_ns['__file__']
         del prog_ns['__nonzero__']
         self.interpreter().locals.update(prog_ns)
+
+    def get_history(self):
+        """ Return the current command history and index.
+
+        Returns
+        -------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        return self.control.history, self.control.historyIndex
+
+    def set_history(self, history, history_index):
+        """ Replace the current command history and index with new ones.
+
+        Parameters
+        ----------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        if not 0 <= history_index <= len(history):
+            history_index = len(history)
+        self.control.history = list(history)
+        self.control.historyIndex = history_index
 
     ###########################################################################
     # 'IWidget' interface.
@@ -283,5 +305,3 @@ class _NullIO:
     def flush(self): pass
     def close(self): pass
     def seek(self, pos, mode = 0): pass
-
-#### EOF ######################################################################

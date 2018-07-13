@@ -34,11 +34,11 @@ def is_letter_or_number(char):
 #-----------------------------------------------------------------------------
 
 class ConsoleWidget(QtGui.QWidget):
-    """ An abstract base class for console-type widgets. This class has 
+    """ An abstract base class for console-type widgets. This class has
         functionality for:
 
             * Maintaining a prompt and editing region
-            * Providing the traditional Unix-style console keyboard shortcuts 
+            * Providing the traditional Unix-style console keyboard shortcuts
             * Performing tab completion
             * Paging text
 
@@ -188,7 +188,7 @@ class ConsoleWidget(QtGui.QWidget):
         action.triggered.connect(self.export)
         self.addAction(action)
         self._export_action = action
-        
+
         action = QtGui.QAction('Select All', None)
         action.setEnabled(True)
         action.setShortcut(QtGui.QKeySequence.SelectAll)
@@ -207,7 +207,7 @@ class ConsoleWidget(QtGui.QWidget):
             key = event.key()
             if self._control_key_down(event.modifiers()) and \
                     key in self._ctrl_down_remap:
-                new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
+                new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress,
                                             self._ctrl_down_remap[key],
                                             QtCore.Qt.NoModifier)
                 QtGui.QApplication.sendEvent(obj, new_event)
@@ -321,10 +321,10 @@ class ConsoleWidget(QtGui.QWidget):
         """ Returns whether text can be cut to the clipboard.
         """
         cursor = self._control.textCursor()
-        return (cursor.hasSelection() and 
-                self._in_buffer(cursor.anchor()) and 
+        return (cursor.hasSelection() and
+                self._in_buffer(cursor.anchor()) and
                 self._in_buffer(cursor.position()))
-        
+
     def can_paste(self):
         """ Returns whether text can be pasted from the clipboard.
         """
@@ -339,7 +339,7 @@ class ConsoleWidget(QtGui.QWidget):
         return self.kind == "rich"
 
     def clear(self, keep_input=True):
-        """ Clear the console. 
+        """ Clear the console.
 
         Parameters:
         -----------
@@ -374,7 +374,7 @@ class ConsoleWidget(QtGui.QWidget):
         input.
 
         Parameters:
-        -----------     
+        -----------
         source : str, optional
 
             The source to execute. If not specified, the input buffer will be
@@ -416,7 +416,7 @@ class ConsoleWidget(QtGui.QWidget):
                 source += '\n'
         elif not hidden:
             self.input_buffer = source
-            
+
         # Execute the source or show a continuation prompt if it is incomplete.
         complete = self._is_complete(source, interactive)
         if hidden:
@@ -424,7 +424,7 @@ class ConsoleWidget(QtGui.QWidget):
                 self._execute(source, hidden)
             else:
                 error = 'Incomplete noninteractive input: "%s"'
-                raise RuntimeError(error % source)                
+                raise RuntimeError(error % source)
         else:
             if complete:
                 self._append_plain_text('\n')
@@ -443,7 +443,7 @@ class ConsoleWidget(QtGui.QWidget):
 
                 # Perform actual execution.
                 self._execute(source, hidden)
-            
+
             else:
                 # Do this inside an edit block so continuation prompts are
                 # removed seamlessly via undo/redo.
@@ -454,7 +454,7 @@ class ConsoleWidget(QtGui.QWidget):
                 cursor.endEditBlock()
 
                 # Do not do this inside the edit block. It works as expected
-                # when using a QPlainTextEdit control, but does not have an 
+                # when using a QPlainTextEdit control, but does not have an
                 # effect when using a QTextEdit. I believe this is a Qt bug.
                 self._control.moveCursor(QtGui.QTextCursor.End)
 
@@ -574,7 +574,7 @@ class ConsoleWidget(QtGui.QWidget):
             except Exception as e:
                 title = self.window().windowTitle()
                 msg = "Error while saving to: %s\n"%filename+str(e)
-                reply = QtGui.QMessageBox.warning(self, title, msg,
+                QtGui.QMessageBox.warning(self, title, msg,
                     QtGui.QMessageBox.Ok, QtGui.QMessageBox.Ok)
         return None
 
@@ -650,7 +650,7 @@ class ConsoleWidget(QtGui.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = path, format = "png"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:
@@ -678,7 +678,7 @@ class ConsoleWidget(QtGui.QWidget):
             f.write(img_re.sub(
                 lambda x: self.image_tag(x, path = None, format = "svg"),
                 html))
-        except Exception, e:
+        except Exception as e:
             f.close()
             raise e
         else:
@@ -713,7 +713,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         Parameters
         ----------
-        match : re.SRE_Match 
+        match : re.SRE_Match
             A match to an HTML image tag as exported by Qt, with
             match.group("Name") containing the matched image ID.
 
@@ -740,7 +740,7 @@ class ConsoleWidget(QtGui.QWidget):
             if self._get_cursor().blockNumber() < prompt_cursor.blockNumber():
                 self._set_cursor(prompt_cursor)
             self._set_top_cursor(prompt_cursor)
-            
+
     def redo(self):
         """ Redo the last operation. If there is no operation to redo, nothing
             happens.
@@ -927,7 +927,7 @@ class ConsoleWidget(QtGui.QWidget):
         self._cancel_text_completion()
 
         if len(items) == 1:
-            cursor.setPosition(self._control.textCursor().position(), 
+            cursor.setPosition(self._control.textCursor().position(),
                                QtGui.QTextCursor.KeepAnchor)
             cursor.insertText(items[0])
 
@@ -1074,7 +1074,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         elif key in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter):
             intercepted = True
-                
+
             # Special handling when tab completing in text mode.
             self._cancel_text_completion()
 
@@ -1161,7 +1161,7 @@ class ConsoleWidget(QtGui.QWidget):
             if key == QtCore.Qt.Key_B:
                 self._set_cursor(self._get_word_start_cursor(position))
                 intercepted = True
-                
+
             elif key == QtCore.Qt.Key_F:
                 self._set_cursor(self._get_word_end_cursor(position))
                 intercepted = True
@@ -1184,7 +1184,7 @@ class ConsoleWidget(QtGui.QWidget):
             elif key == QtCore.Qt.Key_Greater:
                 self._control.moveCursor(QtGui.QTextCursor.End)
                 intercepted = True
-                
+
             elif key == QtCore.Qt.Key_Less:
                 self._control.setTextCursor(self._get_prompt_cursor())
                 intercepted = True
@@ -1196,7 +1196,7 @@ class ConsoleWidget(QtGui.QWidget):
                 anchormode=QtGui.QTextCursor.KeepAnchor
             else:
                 anchormode=QtGui.QTextCursor.MoveAnchor
-            
+
             if key == QtCore.Qt.Key_Escape:
                 self._keyboard_quit()
                 intercepted = True
@@ -1225,19 +1225,19 @@ class ConsoleWidget(QtGui.QWidget):
                 line, col = cursor.blockNumber(), cursor.columnNumber()
                 if line > self._get_prompt_cursor().blockNumber() and \
                         col == len(self._continuation_prompt):
-                    self._control.moveCursor(QtGui.QTextCursor.PreviousBlock, 
+                    self._control.moveCursor(QtGui.QTextCursor.PreviousBlock,
                                     mode=anchormode)
-                    self._control.moveCursor(QtGui.QTextCursor.EndOfBlock, 
+                    self._control.moveCursor(QtGui.QTextCursor.EndOfBlock,
                                     mode=anchormode)
                     intercepted = True
 
                 # Regular left movement
                 else:
                     intercepted = not self._in_buffer(position - 1)
-                    
+
             elif key == QtCore.Qt.Key_Right:
                 original_block_number = cursor.blockNumber()
-                cursor.movePosition(QtGui.QTextCursor.Right, 
+                cursor.movePosition(QtGui.QTextCursor.Right,
                                 mode=anchormode)
                 if cursor.blockNumber() != original_block_number:
                     cursor.movePosition(QtGui.QTextCursor.Right,
@@ -1313,7 +1313,7 @@ class ConsoleWidget(QtGui.QWidget):
         return intercepted
 
     def _event_filter_page_keypress(self, event):
-        """ Filter key events for the paging widget to create console-like 
+        """ Filter key events for the paging widget to create console-like
             interface.
         """
         key = event.key()
@@ -1323,16 +1323,16 @@ class ConsoleWidget(QtGui.QWidget):
         if ctrl_down:
             if key == QtCore.Qt.Key_O:
                 self._control.setFocus()
-                intercept = True
+                return True
 
         elif alt_down:
             if key == QtCore.Qt.Key_Greater:
                 self._page_control.moveCursor(QtGui.QTextCursor.End)
-                intercepted = True
-                
+                return True
+
             elif key == QtCore.Qt.Key_Less:
                 self._page_control.moveCursor(QtGui.QTextCursor.Start)
-                intercepted = True
+                return True
 
         elif key in (QtCore.Qt.Key_Q, QtCore.Qt.Key_Escape):
             if self._splitter:
@@ -1342,15 +1342,15 @@ class ConsoleWidget(QtGui.QWidget):
             return True
 
         elif key in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return):
-            new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress, 
-                                        QtCore.Qt.Key_PageDown, 
+            new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress,
+                                        QtCore.Qt.Key_PageDown,
                                         QtCore.Qt.NoModifier)
             QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
 
         elif key == QtCore.Qt.Key_Backspace:
             new_event = QtGui.QKeyEvent(QtCore.QEvent.KeyPress,
-                                        QtCore.Qt.Key_PageUp, 
+                                        QtCore.Qt.Key_PageUp,
                                         QtCore.Qt.NoModifier)
             QtGui.QApplication.sendEvent(self._page_control, new_event)
             return True
@@ -1382,7 +1382,7 @@ class ConsoleWidget(QtGui.QWidget):
 
         # Some degenerate cases.
         size = len(items)
-        if size == 0: 
+        if size == 0:
             return '\n'
         elif size == 1:
             return '%s\n' % items[0]
@@ -1403,9 +1403,9 @@ class ConsoleWidget(QtGui.QWidget):
                     colwidth = max(colwidth, len(x))
                 colwidths.append(colwidth)
                 totwidth += colwidth + len(separator)
-                if totwidth > displaywidth: 
+                if totwidth > displaywidth:
                     break
-            if totwidth <= displaywidth: 
+            if totwidth <= displaywidth:
                 break
 
         # The smallest number of rows computed and the max widths for each
@@ -1431,7 +1431,7 @@ class ConsoleWidget(QtGui.QWidget):
         """
         cursor = QtGui.QTextCursor(block)
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
-        cursor.movePosition(QtGui.QTextCursor.EndOfBlock, 
+        cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
                             QtGui.QTextCursor.KeepAnchor)
         return cursor.selection().toPlainText()
 
@@ -1439,7 +1439,7 @@ class ConsoleWidget(QtGui.QWidget):
         """ Convenience method that returns a cursor for the current position.
         """
         return self._control.textCursor()
-                
+
     def _get_end_cursor(self):
         """ Convenience method that returns a cursor for the last character.
         """
@@ -1644,7 +1644,7 @@ class ConsoleWidget(QtGui.QWidget):
             self._cancel_text_completion()
         else:
             self.input_buffer = ''
-        
+
     def _page(self, text, html=False):
         """ Displays text using the pager if it exceeds the height of the
         viewport.
@@ -1690,7 +1690,7 @@ class ConsoleWidget(QtGui.QWidget):
     def _prompt_started(self):
         """ Called immediately after a new prompt is displayed.
         """
-        # Temporarily disable the maximum block count to permit undo/redo and 
+        # Temporarily disable the maximum block count to permit undo/redo and
         # to ensure that the prompt position does not change due to truncation.
         self._control.document().setMaximumBlockCount(0)
         self._control.setUndoRedoEnabled(True)
@@ -1701,7 +1701,7 @@ class ConsoleWidget(QtGui.QWidget):
         self._prompt_started_hook()
 
     def _readline(self, prompt='', callback=None):
-        """ Reads one line of input from the user. 
+        """ Reads one line of input from the user.
 
         Parameters
         ----------
@@ -1757,7 +1757,7 @@ class ConsoleWidget(QtGui.QWidget):
         else:
             self._continuation_prompt = prompt
             self._continuation_prompt_html = None
-            
+
     def _set_cursor(self, cursor):
         """ Convenience method to set the current cursor.
         """
@@ -1787,14 +1787,14 @@ class ConsoleWidget(QtGui.QWidget):
             as plain text, though ANSI color codes will be handled.
 
         newline : bool, optional (default True)
-            If set, a new line will be written before showing the prompt if 
+            If set, a new line will be written before showing the prompt if
             there is not already a newline at the end of the buffer.
         """
         # Insert a preliminary newline, if necessary.
         if newline:
             cursor = self._get_end_cursor()
             if cursor.position() > 0:
-                cursor.movePosition(QtGui.QTextCursor.Left, 
+                cursor.movePosition(QtGui.QTextCursor.Left,
                                     QtGui.QTextCursor.KeepAnchor)
                 if cursor.selection().toPlainText() != '\n':
                     self._append_plain_text('\n')

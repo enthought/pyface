@@ -15,7 +15,6 @@
 
 # Enthought library imports.
 from pyface.api import ApplicationWindow, GUI
-from pyface.ipython_widget import IPythonWidget
 from traits.api import Enum, HasTraits, Instance, Int, Str
 from traitsui.api import View, Item
 
