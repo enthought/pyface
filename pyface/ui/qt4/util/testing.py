@@ -56,7 +56,7 @@ def delete_widget(widget, timeout=1.0):
 
 @contextmanager
 def _convert_none_to_null_handle(stream):
-    """ If 'stream' is not None, provide a temporary handle to /dev/null. """
+    """ If 'stream' is None, provide a temporary handle to /dev/null. """
 
     if stream is None:
         out = open(os.devnull, 'w')
