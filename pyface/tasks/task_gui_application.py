@@ -20,14 +20,14 @@ from traits.api import (
     List, Instance, Property, cached_property, on_trait_change
 )
 
-from pyface.application import Application
+from pyface.gui_application import Application
 from .task_window import TaskWindow
 
 IS_WINDOWS = platform.system() == 'Windows'
 logger = logging.getLogger(__name__)
 
 
-class TaskApplication(Application):
+class TaskGUIApplication(Application):
     """ A base class for Pyface tasks applications.
 
     This handles setting up logging, starting up the GUI, and other common
