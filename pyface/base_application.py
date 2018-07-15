@@ -32,10 +32,8 @@ appropriate work there::
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-
-import os
 import logging
-from logging.handlers import RotatingFileHandler
+import os
 import sys
 
 from traits.api import (
@@ -43,16 +41,7 @@ from traits.api import (
     ReadOnly, Str, Vetoable, VetoableEvent
 )
 
-
 logger = logging.getLogger(__name__)
-
-
-# Parameters for default RotatingFileHandler
-LOG_FILE_MAX_SIZE = 1000000
-LOG_FILE_BACKUPS = 5
-
-# Whether to set up application in debug mode
-DEBUG = False
 
 
 class ApplicationException(Exception):
@@ -110,9 +99,6 @@ class BaseApplication(HasStrictTraits):
     #: User data directory (for user files, projects, etc)
     user_data = Directory
 
-    #: The logging handlers that we are responsible for.
-    logging_handlers = List(Instance(logging.Handler))
-
     # Application lifecycle --------------------------------------------------
 
     #: Fired when the application is starting. Called immediately before the
@@ -165,7 +151,7 @@ class BaseApplication(HasStrictTraits):
         status : bool
             Whether or not the application ran normally
         """
-        started = run = stopped = False
+        run = stopped = False
 
         # Start up the application.
         self._fire_application_event('starting')
@@ -227,29 +213,6 @@ class BaseApplication(HasStrictTraits):
 
     # Initialization utilities -----------------------------------------------
 
-    def setup_logging(self):
-        """ Initialize logger.
-
-        Default behaviour is to log to a rotating file handler whose name is
-        the id of the app.
-        """
-        root_logger = logging.getLogger()
-
-        if DEBUG:
-            handler = logging.StreamHandler()
-            root_logger.setLevel(logging.DEBUG)
-        else:
-            #: set up a rotating file handler
-            log_dir = os.path.join(self.home, 'log')
-            log_file = os.path.join(log_dir, self.id + '.log')
-            if not os.path.exists(log_dir):
-                os.makedirs(log_dir)
-            handler = RotatingFileHandler(
-                log_file, LOG_FILE_MAX_SIZE, LOG_FILE_BACKUPS)
-
-        root_logger.addHandler(handler)
-        self.logging_handlers.append(handler)
-
     def initialize_application_home(self):
         """ Set up the home directory for the application
 
@@ -270,19 +233,7 @@ class BaseApplication(HasStrictTraits):
         sys.excepthook = self._excepthook
         logger.debug('Exception hook installed')
 
-    # Teardown utilities -----------------------------------------------
-
-    def reset_logging(self):
-        """ Reset root logger to default WARNING level and remove handlers.
-        """
-        logger = logging.getLogger()
-        logger.setLevel(logging.WARNING)
-
-        while self.logging_handlers:
-            handler = self.logging_handlers.pop()
-            if hasattr(handler, 'close'):
-                handler.close()
-            logger.removeHandler(handler)
+    # Teardown utilities ------------------------------------------------------
 
     def reset_excepthook(self):
         """ Install an exception hook to catch unhandled exceptions

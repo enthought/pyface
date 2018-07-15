@@ -9,6 +9,7 @@ $ ETS_TOOLKIT='qt4' python run.py
 as the wx backend is not supported yet for the TaskWindow.
 """
 import logging
+from logging.handlers import RotatingFileHandler
 import os
 
 from traits.api import Directory, Instance, List
@@ -19,6 +20,13 @@ from pyface.splash_screen import SplashScreen
 from example_task import ExampleTask
 
 logger = logging.getLogger()
+
+# Parameters for default RotatingFileHandler
+LOG_FILE_MAX_SIZE = 1000000
+LOG_FILE_BACKUPS = 5
+
+# Whether to set up application in debug mode
+DEBUG = False
 
 
 class MyApplication(TaskApplication):
@@ -71,15 +79,23 @@ class MyApplication(TaskApplication):
         window = self.create_task_window(task)
         return window
 
-    def _setup_logging(self):
+    def setup_logging(self):
         """ Initialize logger. """
-        logger = logging.getLogger()
-        logger.addHandler(logging.StreamHandler())
-        logger.setLevel(logging.DEBUG)
+        root_logger = logging.getLogger()
+        root_logger.addHandler(logging.StreamHandler())
+        root_logger.setLevel(logging.DEBUG)
 
         filepath = os.path.join(self.logdir_path, self.id + ".log")
-        logger.addHandler(logging.FileHandler(filepath))
-        logger.debug("Log file is at '{}'".format(filepath))
+        file_handler = logging.RotatingFileHandler(
+            filepath, backupCount=LOG_FILE_BACKUPS, maxBytes=LOG_FILE_MAX_SIZE)
+        root_logger.addHandler(file_handler)
+        root_logger.debug("Log file is at '{}'".format(filepath))
+
+    def reset_logging(self):
+        """ Reset root logger to default WARNING level and remove handlers.
+        """
+        root_logger = logging.getLogger()
+        root_logger.setLevel(logging.WARNING)
 
     # Traits change handlers ------------------------------------------------
 
@@ -96,8 +112,11 @@ class MyApplication(TaskApplication):
         img = ImageResource("python_logo.png")
         return SplashScreen(image=img)
 
+    def _logdir_path_default(self):
+        return os.path.join(self.home, 'log')
 
-def main(argv):
+
+def main():
     """ A more advanced example of using Tasks.
     """
     app = MyApplication()
@@ -105,5 +124,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    import sys
-    main(sys.argv)
+    main()
