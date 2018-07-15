@@ -20,7 +20,7 @@ from traits.api import (
     Bool, Instance, List, ReadOnly, Tuple, Undefined, Vetoable, on_trait_change
 )
 
-from .base_application import (
+from .application import (
     ApplicationEvent, ApplicationExit, BaseApplication
 )
 from .i_dialog import IDialog

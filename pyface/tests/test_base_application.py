@@ -10,7 +10,7 @@ from unittest import TestCase
 from traits.api import Bool
 from traits.testing.unittest_tools import UnittestTools
 
-from ..base_application import ApplicationExit, BaseApplication
+from ..application import ApplicationExit, BaseApplication
 
 
 EVENTS = [

@@ -9,7 +9,7 @@ import unittest
 
 from traits.api import Bool
 
-from ..application import Application
+from ..gui_application import Application
 from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 

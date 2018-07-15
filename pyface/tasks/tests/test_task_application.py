@@ -8,7 +8,7 @@ from traits.api import Bool
 from pyface.application_window import ApplicationWindow
 from pyface.gui import GUI
 from pyface.toolkit import toolkit_object
-from ..task_application import TaskApplication
+from ..task_gui_application import TaskApplication
 
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
