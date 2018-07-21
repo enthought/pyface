@@ -929,16 +929,23 @@ class TabDragObject(object):
         painter.fillRect(result_pixmap.rect(), QtCore.Qt.lightGray)
         painter.setCompositionMode(QtGui.QPainter.CompositionMode_SourceOver)
 
-        optTabBase = QtGui.QStyleOptionTabBarBaseV2()
+        optTabBase = QtGui.QStyleOptionTabBarBase()
         optTabBase.initFrom(tabBar)
         painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
-        pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
+        if QtGui.qt_api=='pyqt5':
+            pixmap1 = tabBar.grab()
+        else: # pyqt4 (grabWidget was removed in pyqt5)
+            pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
+
         painter.drawPixmap(0,0,pixmap1) #tab_rect.topLeft(), pixmap1)
 
         # region of the page widget
-        pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
+        if QtGui.qt_api=='pyqt5':
+            pixmap2 = self.widget.grab()
+        else: # pyqt4 (grabWidget was removed in pyqt5)
+            pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
         painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
 
         # finish painting
