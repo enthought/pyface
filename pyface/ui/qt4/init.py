@@ -38,4 +38,4 @@ if _app is None:
 
 
 # create the toolkit object
-toolkit_object = Toolkit('qt4', 'pyface.ui.qt4')
+toolkit_object = Toolkit('pyface', 'qt4', 'pyface.ui.qt4')

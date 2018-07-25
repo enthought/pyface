@@ -15,7 +15,7 @@
 
 
 # Enthought library imports.
-from traits.api import Any, Interface
+from traits.api import Any, Bool, HasTraits, Interface
 
 
 class IWidget(Interface):
@@ -24,24 +24,46 @@ class IWidget(Interface):
     Pyface widgets delegate to a toolkit specific control.
     """
 
-    #### 'IWidget' interface ##################################################
-
     #: The toolkit specific control that represents the widget.
     control = Any
 
     #: The control's optional parent control.
     parent = Any
 
-    ###########################################################################
+    #: Whether or not the control is visible
+    visible = Bool(True)
+
+    #: Whether or not the control is enabled
+    enabled = Bool(True)
+
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
+
+    def show(self, visible):
+        """ Show or hide the widget.
+
+        Parameter
+        ---------
+        visible : bool
+            Visible should be ``True`` if the widget should be shown.
+        """
+
+    def enable(self, enabled):
+        """ Enable or disable the widget.
+
+        Parameter
+        ---------
+        enabled : bool
+            The enabled state to set the widget to.
+        """
 
     def destroy(self):
         """ Destroy the control if it exists. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
         """ Creates the toolkit specific control.
@@ -65,17 +87,21 @@ class IWidget(Interface):
             A control for the widget.
         """
 
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+
 
 class MWidget(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
-
-    Implements: _create()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
         """ Creates the toolkit specific control.
@@ -84,6 +110,7 @@ class MWidget(object):
         :py:attr:``control`` trait.
         """
         self.control = self._create_control(self.parent)
+        self._add_event_listeners()
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
@@ -100,3 +127,11 @@ class MWidget(object):
             A control for the widget.
         """
         raise NotImplementedError
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        pass
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        pass

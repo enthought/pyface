@@ -80,6 +80,28 @@ class IPythonShell(IWidget):
             a blank line.
         """
 
+    def get_history(self):
+        """ Return the current command history and index.
+
+        Returns
+        -------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+
+    def set_history(self, history, history_index):
+        """ Replace the current command history and index with new ones.
+
+        Parameters
+        ----------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int
+            The current item in the command history navigation.
+        """
+
 
 class MPythonShell(object):
     """ The mixin class that contains common code for toolkit specific

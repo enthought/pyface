@@ -119,14 +119,14 @@ ImageInfoTemplate = \
 def read_file ( file_name ):
     """ Returns the contents of the specified *file_name*.
     """
-    with file(file_name, 'rb') as fh:
+    with open(file_name, 'rb') as fh:
         return fh.read()
 
 
 def write_file ( file_name, data ):
     """ Writes the specified data to the specified file.
     """
-    with file( file_name, 'wb' ) as fh:
+    with open( file_name, 'wb' ) as fh:
         fh.write( data )
 
 
@@ -1017,9 +1017,9 @@ class ImageLibrary ( HasPrivateTraits ):
             volume = ImageVolume()
 
         # Set up the rest of the volume information:
-        volume.set( name        = volume_name,
-                    path        = path,
-                    is_zip_file = False )
+        volume.trait_set( name        = volume_name,
+                          path        = path,
+                          is_zip_file = False )
 
         # Try to bring the volume information up to date if necessary:
         if volume.time_stamp < time_stamp_for( stat( path )[ ST_MTIME ] ):

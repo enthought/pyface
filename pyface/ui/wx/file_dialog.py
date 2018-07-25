@@ -105,11 +105,11 @@ class FileDialog(MFileDialog, Dialog):
             default_filename = self.default_filename
 
         if self.action == 'open':
-            style = wx.OPEN
+            style = wx.FD_OPEN
         elif self.action == 'open files':
-            style = wx.OPEN | wx.MULTIPLE
+            style = wx.FD_OPEN | wx.FD_MULTIPLE
         else:
-            style = wx.SAVE | wx.OVERWRITE_PROMPT
+            style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
 
         # Create the actual dialog.
         dialog = wx.FileDialog(parent, self.title, defaultDir=default_directory,

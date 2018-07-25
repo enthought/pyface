@@ -1,4 +1,3 @@
-#------------------------------------------------------------------------------
 # Copyright (c) 2011, Enthought, Inc.
 # All rights reserved.
 #
@@ -9,7 +8,7 @@
 # Thanks for using Enthought open source!
 #
 # Author: Evan Patterson
-#------------------------------------------------------------------------------
+
 
 # Standard library imports.
 import __builtin__
@@ -35,10 +34,6 @@ from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
 
 
-#-------------------------------------------------------------------------------
-# 'PythonShell' class:
-#-------------------------------------------------------------------------------
-
 @provides(IPythonShell)
 class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
@@ -59,16 +54,10 @@ class PythonShell(MPythonShell, Widget):
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
     def __init__(self, parent, **traits):
-        super(PythonShell, self).__init__(**traits)
+        super(PythonShell, self).__init__(parent=parent, **traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
-
-        # Set up to be notified whenever a Python statement is executed:
-        self.control.executed.connect(self._on_command_executed)
-
-        # Handle dropped objects.
-        _DropEventEmitter(self.control).signal.connect(self._on_obj_drop)
+        self._create()
 
     #--------------------------------------------------------------------------
     # 'IPythonShell' interface
@@ -83,12 +72,56 @@ class PythonShell(MPythonShell, Widget):
     def execute_file(self, path, hidden=True):
         self.control.execute_file(path, hidden=hidden)
 
+    def get_history(self):
+        """ Return the current command history and index.
+
+        Returns
+        -------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        return self.control._history, self.control._history_index
+
+    def set_history(self, history, history_index):
+        """ Replace the current command history and index with new ones.
+
+        Parameters
+        ----------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int
+            The current item in the command history navigation.
+        """
+        if not 0 <= history_index <= len(history):
+            history_index = len(history)
+        self.control._set_history(history, history_index)
+
     #--------------------------------------------------------------------------
     # 'IWidget' interface.
     #--------------------------------------------------------------------------
 
     def _create_control(self, parent):
         return PyfacePythonWidget(self, parent)
+
+    def _add_event_listeners(self):
+        super(PythonShell, self)._add_event_listeners()
+
+        # Connect signals for events.
+        self.control.executed.connect(self._on_command_executed)
+        self._event_filter.signal.connect(self._on_obj_drop)
+
+    def _remove_event_listeners(self):
+        if self.control is not None:
+            # Disconnect signals for events.
+            self.control.executed.connect(self._on_command_executed)
+            self._event_filter.signal.disconnect(self._on_obj_drop)
+
+        super(PythonShell, self)._remove_event_listeners()
+
+    def __event_filter_default(self):
+        return _DropEventEmitter(self.control)
 
     #--------------------------------------------------------------------------
     # 'Private' interface.
@@ -115,10 +148,6 @@ class PythonShell(MPythonShell, Widget):
         self.control.execute(name)
         self.control._control.setFocus()
 
-
-#-------------------------------------------------------------------------------
-# 'PythonWidget' class:
-#-------------------------------------------------------------------------------
 
 class PythonWidget(HistoryConsoleWidget):
     """ A basic in-process Python interpreter.
@@ -555,10 +584,6 @@ class PyfacePythonWidget(PythonWidget):
 
         super(PyfacePythonWidget, self).keyPressEvent(event)
 
-
-#-------------------------------------------------------------------------------
-# '_DropEventFilter' class:
-#-------------------------------------------------------------------------------
 
 class _DropEventEmitter(QtCore.QObject):
     """ Handle object drops on widget. """
