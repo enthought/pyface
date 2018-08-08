@@ -13,7 +13,6 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = ApplicationWindow()
@@ -131,15 +130,46 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_toolbar(self):
         # test that toolbar gets created as expected
-        self.window.tool_bar_manager = ToolBarManager(
-            Action(name="New", image=ImageResource('core')),
-            Action(name="Open", image=ImageResource('core')),
-            Action(name="Save", image=ImageResource('core')),
-            Action(name="Close", image=ImageResource('core')),
-            Action(name="Quit", image=ImageResource('core')),
-        )
+        self.window.tool_bar_managers = [
+            ToolBarManager(
+                Action(name="New", image=ImageResource('core')),
+                Action(name="Open", image=ImageResource('core')),
+                Action(name="Save", image=ImageResource('core')),
+                Action(name="Close", image=ImageResource('core')),
+                Action(name="Quit", image=ImageResource('core')),
+            )
+        ]
         self.window._create()
         self.window.show(True)
+        self.event_loop()
+        self.window.show(False)
+        self.event_loop()
+        self.window.close()
+        self.event_loop()
+
+    def test_toolbar_changed(self):
+        # test that toolbar gets changed as expected
+        self.window.tool_bar_managers = [
+            ToolBarManager(
+                Action(name="New", image=ImageResource('core')),
+                Action(name="Open", image=ImageResource('core')),
+                Action(name="Save", image=ImageResource('core')),
+                Action(name="Close", image=ImageResource('core')),
+                Action(name="Quit", image=ImageResource('core')),
+            )
+        ]
+        self.window._create()
+        self.window.show(True)
+        self.event_loop()
+        self.window.tool_bar_managers = [
+            ToolBarManager(
+                Action(name="New", image=ImageResource('core')),
+                Action(name="Open", image=ImageResource('core')),
+                Action(name="Save", image=ImageResource('core')),
+                Action(name="Close", image=ImageResource('core')),
+                Action(name="Quit", image=ImageResource('core')),
+            )
+        ]
         self.event_loop()
         self.window.show(False)
         self.event_loop()
@@ -153,6 +183,23 @@ class TestApplicationWindow(unittest.TestCase, GuiTestAssistant):
         )
         self.window._create()
         self.window.show(True)
+        self.event_loop()
+        self.window.show(False)
+        self.event_loop()
+        self.window.close()
+        self.event_loop()
+
+    def test_statusbar_changed(self):
+        # test that status bar gets changed as expected
+        self.window.status_bar_manager = StatusBarManager(
+            message="hello world",
+        )
+        self.window._create()
+        self.window.show(True)
+        self.event_loop()
+        self.window.status_bar_manager = StatusBarManager(
+            message="goodbye world",
+        )
         self.event_loop()
         self.window.show(False)
         self.event_loop()

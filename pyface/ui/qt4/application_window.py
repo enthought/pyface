@@ -10,6 +10,8 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
+import sys
+
 # Major package imports.
 from pyface.qt import QtGui
 
@@ -19,8 +21,9 @@ from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, on_trait_change, provides, Unicode
 
 # Local imports.
-from pyface.i_application_window import IApplicationWindow, \
-     MApplicationWindow
+from pyface.i_application_window import (
+    IApplicationWindow, MApplicationWindow
+)
 from pyface.image_resource import ImageResource
 from .window import Window
 
@@ -31,21 +34,26 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-
     #### 'IApplicationWindow' interface #######################################
 
+    #: The icon to display in the application window title bar.
     icon = Instance(ImageResource)
 
+    #: The menu bar manager for the window.
     menu_bar_manager = Instance(MenuBarManager)
 
+    #: The status bar manager for the window.
     status_bar_manager = Instance(StatusBarManager)
 
+    #: DEPRECATED: The tool bar manager for the window.
     tool_bar_manager = Instance(ToolBarManager)
 
+    #: The collection of tool bar managers for the window.
     tool_bar_managers = List(ToolBarManager)
 
     #### 'IWindow' interface ##################################################
 
+    #: The window title.
     title = Unicode("Pyface")
 
     ###########################################################################
@@ -89,10 +97,11 @@ class ApplicationWindow(MApplicationWindow, Window):
             if len(tool_bar.objectName()) == 0:
                 tool_bar.setObjectName(tool_bar_manager.name)
 
-        # Work around bug in Qt on OS X where creating a tool bar with a
-        # QMainWindow parent hides the window. See
-        # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
-        self.control.setVisible(visible)
+        if sys.platform == 'darwin':
+            # Work around bug in Qt on OS X where creating a tool bar with a
+            # QMainWindow parent hides the window. See
+            # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
+            self.control.setVisible(visible)
 
     def _set_window_icon(self):
         if self.icon is None:
@@ -158,8 +167,10 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             self._create_menu_bar(self.control)
 
-    def _status_bar_manager_changed(self):
+    def _status_bar_manager_changed(self, old, new):
         if self.control is not None:
+            if old is not None:
+                old.destroy_status_bar()
             self._create_status_bar(self.control)
 
     @on_trait_change('tool_bar_manager, tool_bar_managers')

@@ -11,10 +11,12 @@ from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from .main_window_layout import MainWindowLayout
 
 # Constants.
-CORNER_MAP = { 'top_left'     : QtCore.Qt.TopLeftCorner,
-               'top_right'    : QtCore.Qt.TopRightCorner,
-               'bottom_left'  : QtCore.Qt.BottomLeftCorner,
-               'bottom_right' : QtCore.Qt.BottomRightCorner }
+CORNER_MAP = {
+    'top_left': QtCore.Qt.TopLeftCorner,
+    'top_right': QtCore.Qt.TopRightCorner,
+    'bottom_left': QtCore.Qt.BottomLeftCorner,
+    'bottom_right': QtCore.Qt.BottomRightCorner
+}
 
 
 class TaskWindowBackend(MTaskWindowBackend):
@@ -34,15 +36,15 @@ class TaskWindowBackend(MTaskWindowBackend):
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
         """
-        QtGui.QApplication.instance().focusChanged.connect(
-            self._focus_changed_signal)
+        app = QtGui.QApplication.instance()
+        app.focusChanged.connect(self._focus_changed_signal)
         return QtGui.QStackedWidget(parent)
 
     def destroy(self):
         """ Destroy the backend.
         """
-        QtGui.QApplication.instance().focusChanged.disconnect(
-            self._focus_changed_signal)
+        app = QtGui.QApplication.instance()
+        app.focusChanged.disconnect(self._focus_changed_signal)
         # signal to layout we don't need it any more
         self._main_window_layout.control = None
 
@@ -69,12 +71,6 @@ class TaskWindowBackend(MTaskWindowBackend):
 
         # Show the dock panes.
         self._layout_state(state)
-
-        # OSX-specific: if there is only a single tool bar, it doesn't matter if
-        # the user can drag it around or not. Therefore, we can combine it with
-        # the title bar, which is idiomatic on the Mac.
-        self.control.setUnifiedTitleAndToolBarOnMac(
-            len(state.tool_bar_managers) <= 1)
 
     #### Methods for saving and restoring the layout ##########################
 
@@ -120,8 +116,8 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Add all panes not assigned an area by the TaskLayout.
         for dock_pane in state.dock_panes:
             if dock_pane.control not in self._main_window_layout.consumed:
-                self.control.addDockWidget(AREA_MAP[dock_pane.dock_area],
-                                           dock_pane.control)
+                dock_area = AREA_MAP[dock_pane.dock_area]
+                self.control.addDockWidget(dock_area, dock_pane.control)
                 # By default, these panes are not visible. However, if a pane
                 # has been explicitly set as visible, honor that setting.
                 if dock_pane.visible:
@@ -136,7 +132,7 @@ class TaskWindowBackend(MTaskWindowBackend):
 
     def _focus_changed_signal(self, old, new):
         if self.window.active_task:
-            panes = [ self.window.central_pane ] + self.window.dock_panes
+            panes = [self.window.central_pane] + self.window.dock_panes
             for pane in panes:
                 if new and pane.control.isAncestorOf(new):
                     pane.has_focus = True

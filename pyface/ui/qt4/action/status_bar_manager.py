@@ -52,6 +52,12 @@ class StatusBarManager(HasTraits):
 
         return self.status_bar
 
+    def destroy_status_bar(self):
+        """ Destroys the status bar. """
+        if self.status_bar is not None:
+            self.status_bar.deleteLater()
+            self.status_bar = None
+
     ###########################################################################
     # Property handlers.
     ###########################################################################
@@ -116,5 +122,6 @@ class StatusBarManager(HasTraits):
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
         self.status_bar.showMessage("  ".join(self.messages))
+
 
 #### EOF ######################################################################
