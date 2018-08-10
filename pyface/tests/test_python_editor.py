@@ -12,13 +12,13 @@ from ..window import Window
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
-
-PYTHON_SCRIPT = os.path.join(os.path.dirname(__file__), 'python_shell_script.py')
+PYTHON_SCRIPT = os.path.join(
+    os.path.dirname(__file__), 'python_shell_script.py'
+)
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
@@ -37,37 +37,47 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
 
     def test_lifecycle(self):
         # test that destroy works
-        self.widget = PythonEditor(self.window.control)
-        self.event_loop()
+        with self.event_loop():
+            self.widget = PythonEditor(self.window.control)
+
         self.assertFalse(self.widget.dirty)
-        self.widget.destroy()
-        self.event_loop()
+
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_show_line_numbers(self):
         # test that destroy works
-        self.widget = PythonEditor(self.window.control, show_line_numbers=False)
-        self.event_loop()
-        self.widget.show_line_numbers = True
-        self.event_loop()
-        self.widget.show_line_numbers = False
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = PythonEditor(
+                self.window.control, show_line_numbers=False
+            )
+        with self.event_loop():
+            self.widget.show_line_numbers = True
+        with self.event_loop():
+            self.widget.show_line_numbers = False
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_load(self):
         # test that destroy works
-        self.widget = PythonEditor(self.window.control)
-        self.event_loop()
+        with self.event_loop():
+            self.widget = PythonEditor(self.window.control)
+
         with self.assertTraitChanges(self.widget, 'changed', count=1):
-            self.widget.path = PYTHON_SCRIPT
+            with self.event_loop():
+                self.widget.path = PYTHON_SCRIPT
         self.assertFalse(self.widget.dirty)
-        self.widget.destroy()
-        self.event_loop()
+
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_select_line(self):
         # test that destroy works
-        self.widget = PythonEditor(self.window.control, path=PYTHON_SCRIPT)
-        self.event_loop()
-        self.widget.select_line(3)
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = PythonEditor(self.window.control, path=PYTHON_SCRIPT)
+
+        with self.event_loop():
+            self.widget.select_line(3)
+
+        with self.event_loop():
+            self.widget.destroy()

@@ -12,7 +12,6 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = SplitApplicationWindow()
@@ -26,30 +25,33 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_destroy(self):
         # test that destroy works even when no control
-        self.window.destroy()
+        with self.event_loop():
+            self.window.destroy()
 
     def test_open_close(self):
         # test that opening and closing works as expected
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_horizontal_split(self):
         # test that horizontal split works
         self.window.direction = 'horizontal'
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_contents(self):
         # test that contents works
@@ -57,21 +59,23 @@ class TestSplitApplicationWindow(unittest.TestCase, GuiTestAssistant):
         self.window.rhs = HeadingText
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_ratio(self):
         # test that ratio split works
         self.window.ratio = 0.25
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
