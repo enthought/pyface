@@ -27,8 +27,6 @@ appropriate work there::
     app = Application()
     app.on_trait_change(do_work, 'application_initialized')
 
-In addition to the
-
 """
 
 from __future__ import (
@@ -36,11 +34,10 @@ from __future__ import (
 )
 import logging
 import os
-import sys
 
 from traits.api import (
-    Callable, Directory, Event, HasStrictTraits, Instance, ReadOnly, Str,
-    Vetoable, VetoableEvent
+    Directory, Event, HasStrictTraits, Instance, ReadOnly, Unicode, Vetoable,
+    VetoableEvent
 )
 
 logger = logging.getLogger(__name__)
@@ -85,15 +82,15 @@ class Application(HasStrictTraits):
     # Branding ----------------------------------------------------------------
 
     #: Human-readable application name
-    name = Str('Default Application')
+    name = Unicode('Pyface Application')
 
     #: Human-readable company name
-    company = Str
+    company = Unicode
 
     # Infrastructure ----------------------------------------------------------
 
-    # The application's globally unique identifier.
-    id = Str
+    #: The application's globally unique identifier.
+    id = Unicode
 
     #: Application home directory (for preferences, logging, etc.)
     home = Directory
@@ -136,7 +133,7 @@ class Application(HasStrictTraits):
 
     def stop(self):
         """ Stop the application, cleanly releasing resources if possible.
-        
+
         Subclasses should call the superclass stop() method after doing any
         work themselves.
         """

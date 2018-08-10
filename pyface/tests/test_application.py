@@ -103,22 +103,6 @@ class TestApplication(TestCase, UnittestTools):
         self.assertEqual(app.user_data, ETSConfig.user_data)
         self.assertEqual(app.company, ETSConfig.company)
 
-    def test_logging_setup(self):
-        dirpath = mkdtemp()
-        home = os.path.join(dirpath, "test")
-        app = Application(home=home)
-
-        app.setup_logging()
-        try:
-            try:
-                self.assertEqual(len(app.logging_handlers), 1)
-            finally:
-                app.reset_logging()
-
-            self.assertEqual(len(app.logging_handlers), 0)
-        finally:
-            rmtree(dirpath)
-
     def test_initialize_application_home(self):
         dirpath = mkdtemp()
         home = os.path.join(dirpath, "test")
