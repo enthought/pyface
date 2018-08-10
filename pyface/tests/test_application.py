@@ -13,7 +13,6 @@ from __future__ import (
 
 import os
 from shutil import rmtree
-import sys
 from tempfile import mkdtemp
 from unittest import TestCase
 

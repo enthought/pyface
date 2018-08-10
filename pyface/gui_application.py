@@ -24,7 +24,8 @@ from __future__ import (
 import logging
 
 from traits.api import (
-    Bool, Callable, Instance, List, ReadOnly, Tuple, Vetoable, on_trait_change
+    Bool, Callable, Instance, List, ReadOnly, Tuple, Undefined, Vetoable,
+    on_trait_change
 )
 
 from .application import Application
@@ -38,12 +39,9 @@ logger = logging.getLogger(__name__)
 
 class GUIApplication(Application):
     """ A basic Pyface GUI application. """
+    # 'GUIApplication' interface ----------------------------------------------
 
-    # -------------------------------------------------------------------------
-    # 'GUIApplication' interface
-    # -------------------------------------------------------------------------
-
-    # Branding ----------------------------------------------------------------
+    # Branding ---------------------------------------------------------------
 
     #: The splash screen for the application. No splash screen by default
     splash_screen = Instance(ISplashScreen)
@@ -54,7 +52,7 @@ class GUIApplication(Application):
     #: Icon for the application
     icon = Instance(IImageResource)
 
-    # Window management -------------------------------------------------------
+    # Window management ------------------------------------------------------
 
     #: The window factory to use when creating a window for the application.
     window_factory = Callable
@@ -71,12 +69,16 @@ class GUIApplication(Application):
     #: The Pyface GUI instance for the application
     gui = ReadOnly
 
-    # Protected interface -----------------------------------------------------
+    # Protected interface ----------------------------------------------------
 
     #: Flag if the exiting of the application was explicitely requested by user
     # An 'explicit' exit is when the 'exit' method is called.
     # An 'implicit' exit is when the user closes the last open window.
     _explicit_exit = Bool(False)
+
+    # -------------------------------------------------------------------------
+    # 'GUIApplication' interface
+    # -------------------------------------------------------------------------
 
     # Window lifecycle methods -----------------------------------------------
 
@@ -109,8 +111,10 @@ class GUIApplication(Application):
         # get garbage collected
         self.windows.append(window)
 
-        window.open()
-        window.activate()
+        # Something might try to veto the opening of the window.
+        opened = window.open()
+        if opened:
+            window.activate()
 
     # Action handlers --------------------------------------------------------
 
@@ -135,7 +139,7 @@ class GUIApplication(Application):
         ok = super(GUIApplication, self).start()
         if ok:
             # create the GUI so that the splash screen comes up first thing
-            if self.gui is None:
+            if self.gui is Undefined:
                 self.gui = GUI(splash_screen=self.splash_screen)
 
             # create the initial windows to show

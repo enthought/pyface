@@ -6,6 +6,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
+
 from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
@@ -15,7 +16,7 @@ from shutil import rmtree
 from tempfile import mkdtemp
 import unittest
 
-from traits.api import Bool
+from traits.api import Bool, on_trait_change
 
 from ..application_window import ApplicationWindow
 from ..gui_application import GUIApplication
@@ -49,8 +50,14 @@ class TestingApp(GUIApplication):
     #: Whether to veto a call to the exit method.
     veto_exit = Bool(False)
 
+    #: Whether to veto a opening a window.
+    veto_open_window = Bool(False)
+
     #: Whether to veto a closing a window.
-    veto_close = Bool(False)
+    veto_close_window = Bool(False)
+
+    #: Whether or not a call to the open a window was vetoed.
+    window_open_vetoed = Bool(False)
 
     #: Whether or not a call to the exit method was vetoed.
     exit_vetoed = Bool(False)
@@ -68,7 +75,8 @@ class TestingApp(GUIApplication):
 
         window = self.windows[0]
         window.on_trait_change(
-            lambda event: setattr(event, 'veto', self.veto_close), 'closing'
+            lambda event: setattr(event, 'veto', self.veto_close_window),
+            'closing'
         )
         return True
 
@@ -77,8 +85,13 @@ class TestingApp(GUIApplication):
         return self.stop_cleanly
 
     def _on_window_closing(self, window, trait, old, new):
-        if self.veto_close:
+        if self.veto_close_window:
             new.veto = True
+
+    def _application_initialized_fired(self):
+        self.window_open_vetoed = (
+            len(self.windows) > 0 and self.windows[0].control is None
+        )
 
     def _exiting_fired(self, event):
         event.veto = self.veto_exit
@@ -88,6 +101,11 @@ class TestingApp(GUIApplication):
         self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
+
+    @on_trait_change('windows:opening')
+    def _on_activate_window(self, event):
+        if self.veto_open_window:
+            event.veto = self.veto_open_window
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
@@ -138,7 +156,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app.on_trait_change(lambda: app.add_window(window), 'started')
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(100, app.exit)
+            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -151,7 +169,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(100, app.exit)
+            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -175,8 +193,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
             self.gui.stop_event_loop()
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(100, app.exit)
-            self.gui.invoke_after(200, hard_exit)
+            self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, hard_exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -186,8 +204,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(event_order, EVENTS)
         self.assertEqual(app.windows, [])
 
-    def test_veto_close(self):
-        app = TestingApp(veto_close=True)
+    def test_veto_open_window(self):
+        app = TestingApp(veto_open_window=True)
         self.connect_listeners(app)
 
         def hard_exit():
@@ -199,8 +217,33 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
             self.gui.stop_event_loop()
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(100, app.exit)
-            self.gui.invoke_after(200, hard_exit)
+            self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, hard_exit)
+            result = app.run()
+
+        self.assertTrue(result)
+        self.assertTrue(app.window_open_vetoed)
+        self.assertFalse(app.exit_vetoed)
+        self.assertTrue(app.exit_prepared)
+        event_order = [event.event_type for event in self.application_events]
+        self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
+
+    def test_veto_close_window(self):
+        app = TestingApp(veto_close_window=True)
+        self.connect_listeners(app)
+
+        def hard_exit():
+            app.exit_vetoed = True
+            for window in app.windows:
+                window.destroy()
+            app.windows = []
+            self.event_loop()
+            self.gui.stop_event_loop()
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, hard_exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -226,11 +269,11 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(app.windows, [])
 
     def test_force_exit_close_veto(self):
-        app = TestingApp(do_exit=True, force_exit=True, veto_close=True)
+        app = TestingApp(do_exit=True, force_exit=True, veto_close_window=True)
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(100, app.exit, True)
+            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
         self.assertTrue(result)
@@ -257,7 +300,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS[:-1], EVENTS[-1:]):
-            self.gui.invoke_after(100, app.exit, True)
+            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
         self.assertFalse(result)
