@@ -1,22 +1,22 @@
-#------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
+# Copyright (c) 2017-18, Enthought, Inc.
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license. However, when used with the GPL version of PyQt the additional
+# terms described in the PyQt GPL exception also apply
 #
 # Author: Riverbank Computing Limited
+# Author: Enhtought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
-
 
 # Major package imports.
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Enum, Event, Property, provides, Unicode
-from traits.api import Tuple
+from traits.api import (
+    Enum, Event, Property, Tuple, Unicode, VetoableEvent, provides
+)
 
 # Local imports.
 from pyface.i_window import IWindow, MWindow
@@ -31,8 +31,7 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -----------------------------------------------------
 
     position = Property(Tuple)
 
@@ -42,41 +41,45 @@ class Window(MWindow, Widget):
 
     title = Unicode
 
-    #### Events #####
+    # Window Events ----------------------------------------------------------
 
-    activated = Event
-
-    closed =  Event
-
-    closing =  Event
-
-    deactivated = Event
-
-    key_pressed = Event(KeyPressedEvent)
-
+    #: The window has been opened.
     opened = Event
 
-    opening = Event
+    #: The window is about to open.
+    opening = VetoableEvent
 
-    #### Private interface ####################################################
+    #: The window has been activated.
+    activated = Event
 
-    # Shadow trait for position.
+    #: The window has been closed.
+    closed = Event
+
+    #: The window is about to be closed.
+    closing = VetoableEvent
+
+    #: The window has been deactivated.
+    deactivated = Event
+
+    # Private interface ------------------------------------------------------
+
+    #: Shadow trait for position.
     _position = Tuple((-1, -1))
 
-    # Shadow trait for size.
+    #: Shadow trait for size.
     _size = Tuple((-1, -1))
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def activate(self):
         self.control.activateWindow()
         self.control.raise_()
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # Protected 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create a default QMainWindow. """
@@ -96,9 +99,9 @@ class Window(MWindow, Widget):
 
         return control
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def destroy(self):
         self._remove_event_listeners()
@@ -118,9 +121,9 @@ class Window(MWindow, Widget):
             super(Window, self).destroy()
             control.close()
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def _get_position(self):
         """ Property getter for position. """
@@ -157,12 +160,16 @@ class Window(MWindow, Widget):
     def _size_state_changed(self, state):
         control = self.control
         if control is None:
-            return # Nothing to do here
+            return  # Nothing to do here
 
         if state == 'maximized':
-            control.setWindowState(control.windowState() | QtCore.Qt.WindowMaximized)
+            control.setWindowState(
+                control.windowState() | QtCore.Qt.WindowMaximized
+            )
         elif state == 'normal':
-            control.setWindowState(control.windowState() & ~QtCore.Qt.WindowMaximized)
+            control.setWindowState(
+                control.windowState() & ~QtCore.Qt.WindowMaximized
+            )
 
     def _title_changed(self, title):
         """ Static trait change handler. """
@@ -237,14 +244,15 @@ class WindowEventFilter(QtCore.QObject):
 
             mods = e.modifiers()
             window.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = e)
+                alt_down=((mods &
+                           QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
+                control_down=((mods & QtCore.Qt.ControlModifier
+                               ) == QtCore.Qt.ControlModifier),
+                shift_down=((mods & QtCore.Qt.ShiftModifier
+                             ) == QtCore.Qt.ShiftModifier),
+                key_code=kcode,
+                event=e
+            )
 
         elif typ == QtCore.QEvent.WindowStateChange:
             # set the size_state of the window.
