@@ -119,18 +119,6 @@ class TestApplication(TestCase, UnittestTools):
         finally:
             rmtree(dirpath)
 
-    def test_excepthook(self):
-        excepthook = sys.excepthook
-        app = Application()
-
-        app.install_excepthook()
-        try:
-            self.assertEqual(sys.excepthook, app._excepthook)
-            app.reset_excepthook()
-            self.assertEqual(sys.excepthook, excepthook)
-        finally:
-            sys.excepthook = excepthook
-
     def test_initialize_application_home(self):
         dirpath = mkdtemp()
         home = os.path.join(dirpath, "test")

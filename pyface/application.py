@@ -124,10 +124,6 @@ class Application(HasStrictTraits):
     #: Upon successful completion of the stop method.
     stopped = Event(Instance(ApplicationEvent))
 
-    # Private interface ------------------------------------------------------
-
-    _old_excepthook = Callable
-
     # Application lifecycle methods -------------------------------------------
 
     def start(self):
@@ -228,28 +224,6 @@ class Application(HasStrictTraits):
             logger.info('Application home directory does not exist, creating')
             os.makedirs(self.home)
 
-    def install_excepthook(self):
-        """ Install an exception hook to catch unhandled exceptions
-
-        This permits applications to do things like catch and display an error
-        dialog when something unexpectedly goes wrong.
-        """
-        self._old_excepthook = sys.excepthook
-        sys.excepthook = self._excepthook
-        logger.debug('Exception hook installed')
-
-    # Teardown utilities ------------------------------------------------------
-
-    def reset_excepthook(self):
-        """ Install an exception hook to catch unhandled exceptions
-
-        This permits applications to do things like catch and display an error
-        dialog when something unexpectedly goes wrong.
-        """
-        sys.excepthook = self._old_excepthook
-        self._old_excepthook = None
-        logger.debug('Exception hook reset')
-
     # -------------------------------------------------------------------------
     # Private interface
     # -------------------------------------------------------------------------
@@ -276,25 +250,6 @@ class Application(HasStrictTraits):
     def _fire_application_event(self, event_type):
         event = ApplicationEvent(application=self, event_type=event_type)
         setattr(self, event_type, event)
-
-    # Exception handling ------------------------------------------------------
-
-    def _excepthook(self, type, value, traceback):
-        """ Handle any exceptions not explicitly caught
-
-        This can be overridden by GUI applications to display an appropriate
-        error dialog, if possible.  Keep in mind that the application can be
-        in an arbitrary state when this is called, so anything provided by the
-        user should fail over to the standard excepthook.
-        """
-        try:
-            # try to log the exception, could fail eg. if disk full
-            logger.exception(value)
-        finally:
-            # just use standard excepthook in this app
-            sys.__excepthook__(type, value, traceback)
-            # die, in an error state
-            raise SystemExit("Can't log exception in application excepthook.")
 
     # Destruction methods -----------------------------------------------------
 
