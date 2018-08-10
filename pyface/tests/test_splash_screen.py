@@ -13,7 +13,6 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestWindow(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = SplashScreen()
@@ -28,53 +27,56 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
 
     def test_destroy(self):
         # test that destroy works even when no control
-        self.window.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.window.destroy()
 
     def test_open_close(self):
         # test that opening and closing works as expected
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_show(self):
         # test that show works as expected
-        self.window._create()
-        self.window.show(True)
-        self.event_loop()
-        self.window.show(False)
-        self.event_loop()
-        self.window.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.window._create()
+        with self.event_loop():
+            self.window.show(True)
+        with self.event_loop():
+            self.window.show(False)
+        with self.event_loop():
+            self.window.destroy()
 
     def test_image(self):
         # test that images work
         self.window.image = ImageResource('core')
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_text(self):
         # test that images work
         self.window.text = "Splash screen"
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()
 
     def test_text_changed(self):
         # test that images work
@@ -82,11 +84,13 @@ class TestWindow(unittest.TestCase, GuiTestAssistant):
         #     - probably the way the test is written.
         with self.assertTraitChanges(self.window, 'opening', count=1):
             with self.assertTraitChanges(self.window, 'opened', count=1):
-                self.window.open()
-        self.event_loop()
-        self.window.text = "Splash screen"
-        self.event_loop()
+                with self.event_loop():
+                    self.window.open()
+
+        with self.event_loop():
+            self.window.text = "Splash screen"
+
         with self.assertTraitChanges(self.window, 'closing', count=1):
             with self.assertTraitChanges(self.window, 'closed', count=1):
-                self.window.close()
-        self.event_loop()
+                with self.event_loop():
+                    self.window.close()

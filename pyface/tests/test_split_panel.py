@@ -13,7 +13,6 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestHeadingText(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.window = Window()
@@ -34,29 +33,32 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
 
     def test_lifecycle(self):
         # test that destroy works
-        self.widget = SplitPanel(self.window.control)
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = SplitPanel(self.window.control)
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_horizontal(self):
         # test that horizontal split works
-        self.widget = SplitPanel(self.window.control, direction='horizontal')
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = SplitPanel(
+                self.window.control, direction='horizontal'
+            )
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_ratio(self):
         # test that ratio works
-        self.widget = SplitPanel(self.window.control, ratio=0.25)
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = SplitPanel(self.window.control, ratio=0.25)
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_contents(self):
         # test that contents works
-        self.widget = SplitPanel(self.window.control, lhs=HeadingText,
-                                 rhs=HeadingText)
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget = SplitPanel(
+                self.window.control, lhs=HeadingText, rhs=HeadingText
+            )
+        with self.event_loop():
+            self.widget.destroy()

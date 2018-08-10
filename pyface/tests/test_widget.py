@@ -10,7 +10,6 @@ no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 
 class ConcreteWidget(Widget):
-
     def _create_control(self, parent):
         if toolkit_object.toolkit == 'wx':
             import wx
@@ -28,7 +27,6 @@ class ConcreteWidget(Widget):
 
 
 class TestWidget(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         self.widget = Widget()
 
@@ -75,7 +73,6 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.widget = ConcreteWidget()
@@ -88,56 +85,56 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def test_lifecycle(self):
-        self.widget._create()
-        self.event_loop()
-        self.widget.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
+        with self.event_loop():
+            self.widget.destroy()
 
     def test_initialize(self):
         self.widget.visible = False
         self.widget.enabled = False
-        self.widget._create()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
 
         self.assertFalse(self.widget.control.isVisible())
         self.assertFalse(self.widget.control.isEnabled())
 
     def test_show(self):
-        self.widget._create()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
 
         with self.assertTraitChanges(self.widget, 'visible', count=1):
-            self.widget.show(False)
-            self.event_loop()
+            with self.event_loop():
+                self.widget.show(False)
 
         self.assertFalse(self.widget.control.isVisible())
 
     def test_visible(self):
-        self.widget._create()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
 
         with self.assertTraitChanges(self.widget, 'visible', count=1):
-            self.widget.visible = False
-            self.event_loop()
+            with self.event_loop():
+                self.widget.visible = False
 
         self.assertFalse(self.widget.control.isVisible())
 
     def test_enable(self):
-        self.widget._create()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
 
         with self.assertTraitChanges(self.widget, 'enabled', count=1):
-            self.widget.enable(False)
-            self.event_loop()
+            with self.event_loop():
+                self.widget.enable(False)
 
         self.assertFalse(self.widget.control.isEnabled())
 
     def test_enabled(self):
-        self.widget._create()
-        self.event_loop()
+        with self.event_loop():
+            self.widget._create()
 
         with self.assertTraitChanges(self.widget, 'enabled', count=1):
-            self.widget.enabled = False
-            self.event_loop()
+            with self.event_loop():
+                self.widget.enabled = False
 
         self.assertFalse(self.widget.control.isEnabled())
