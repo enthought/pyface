@@ -11,13 +11,14 @@ from ..window import Window
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester'
+)
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
 class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
-
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.dialog = AboutDialog()
@@ -31,29 +32,28 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create(self):
         # test that creation and destruction works as expected
-        self.dialog._create()
-        self.event_loop()
-        self.dialog.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_destroy(self):
         # test that destroy works even when no control
-        self.dialog.destroy()
-        self.event_loop()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
         parent = Window()
         self.dialog.parent = parent.control
-        parent._create()
-        self.dialog._create()
-        self.event_loop()
+        with self.event_loop():
+            parent._create()
+            self.dialog._create()
 
-        with self.delete_widget(self.dialog.control):
+        with self.event_loop():
             self.dialog.destroy()
-        with self.delete_widget(parent.control):
+        with self.event_loop():
             parent.destroy()
-        self.event_loop()
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
@@ -81,8 +81,8 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         parent.open()
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
-        parent.close()
-        self.event_loop()
+        with self.event_loop():
+            parent.close()
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
