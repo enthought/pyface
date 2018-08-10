@@ -130,6 +130,13 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.dialog.destroy()
 
+    @unittest.skipIf(
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282."
+    )
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_accept(self):
         # test that accept works as expected
@@ -139,6 +146,13 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
+    @unittest.skipIf(
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282."
+    )
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
     def test_close(self):
         # test that closing works as expected
