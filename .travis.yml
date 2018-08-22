@@ -28,9 +28,6 @@ matrix:
     - env: RUNTIME=2.7 TOOLKITS="pyside2"
     - os: osx
       env: RUNTIME=2.7 TOOLKITS="pyside2"
-    - env: RUNTIME=3.6 TOOLKITS="pyside2"
-    - os: osx
-      env: RUNTIME=3.6 TOOLKITS="pyside2"
 
 branches:
   only:
