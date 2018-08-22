@@ -88,12 +88,10 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx'},
-    '3.5': {'pyqt', 'pyqt5', 'pyside2'},
+    '2.7': {'pyside', 'pyqt', 'wx', 'pyside2'},
+    '3.5': {'pyqt', 'pyqt5'},
     '3.6': {'pyqt', 'pyqt5', 'pyside2'},
 }
-if platform.system() != 'Windows':
-    supported_combinations['2.7'].add('pyside2')
 
 dependencies = {
     "numpy",
@@ -116,25 +114,30 @@ extra_dependencies = {
 }
 
 environment_vars = {
-    'pyside': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside'},
-    'pyside2': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyside2'},
-    'pyqt': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt'},
-    'pyqt5': {'ETS_TOOLKIT': 'qt4', 'QT_API': 'pyqt5'},
-    'wx': {'ETS_TOOLKIT': 'wx'},
-    'null': {'ETS_TOOLKIT': 'null'},
+    'pyside': {
+        'ETS_TOOLKIT': 'qt4',
+        'QT_API': 'pyside'
+    },
+    'pyside2': {
+        'ETS_TOOLKIT': 'qt4',
+        'QT_API': 'pyside2'
+    },
+    'pyqt': {
+        'ETS_TOOLKIT': 'qt4',
+        'QT_API': 'pyqt'
+    },
+    'pyqt5': {
+        'ETS_TOOLKIT': 'qt4',
+        'QT_API': 'pyqt5'
+    },
+    'wx': {
+        'ETS_TOOLKIT': 'wx'
+    },
+    'null': {
+        'ETS_TOOLKIT': 'null'
+    },
 }
 
-# temporary until official pyside2 releases
-pyside2_wheels = {
-    ('Windows', '3.5'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp35-cp35m-win_amd64.whl',
-    ('Windows', '3.6'): 'https://github.com/fredrikaverpil/pyside2-windows/releases/download/2018.02.09/PySide2-5.9-cp36-cp36m-win_amd64.whl',
-    ('Darwin', '2.7'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp27-cp27m-macosx_10_6_intel.whl',
-    ('Darwin', '3.5'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp35-cp35m-macosx_10_6_intel.whl',
-    ('Darwin', '3.6'): 'https://github.com/fredrikaverpil/pyside2-macos/releases/download/2018.02.15/PySide2-5.9-cp36-cp36m-macosx_10_6_intel.whl',
-    ('Linux', '2.7'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp27-cp27mu-linux_x86_64.whl',
-    ('Linux', '3.5'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp35-cp35m-linux_x86_64.whl',
-    ('Linux', '3.6'): 'https://github.com/fredrikaverpil/pyside2-linux/releases/download/2018.02.03/PySide2-5.9-cp36-cp36m-linux_x86_64.whl',
-}
 
 @click.group()
 def cli():
@@ -150,8 +153,7 @@ def install(runtime, toolkit, environment):
 
     """
     parameters = get_parameters(runtime, toolkit, environment)
-    packages = ' '.join(
-        dependencies | extra_dependencies.get(toolkit, set()))
+    packages = ' '.join(dependencies | extra_dependencies.get(toolkit, set()))
     # edm commands to setup the development environment
     commands = [
         "edm environments create {environment} --force --version={runtime}",
@@ -160,14 +162,13 @@ def install(runtime, toolkit, environment):
         "edm run -e {environment} -- python setup.py clean --all",
         "edm run -e {environment} -- python setup.py install",
     ]
-    # pip install pyqt5, because we don't have it in EDM yet
+    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == 'pyqt5':
         commands.append("edm run -e {environment} -- pip install pyqt5==5.9.2")
-    if toolkit == 'pyside2':
-        system = platform.system()
-        wheel = pyside2_wheels[(system, runtime)]
-        parameters['wheel'] = wheel
-        commands.append("edm run -e {environment} -- pip install {wheel}")
+    elif toolkit == 'pyside2':
+        commands.append(
+            "edm run -e {environment} -- pip install pyside2==5.11.1"
+        )
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -203,12 +204,13 @@ def test(runtime, toolkit, environment):
     # file doesn't get populated correctly.
     click.echo("Running tests in '{environment}'".format(**parameters))
     with do_in_tempdir(
-            files=['.coveragerc'],
-            capture_files=[os.path.join('.', '.coverage*')],
-        ):
+        files=['.coveragerc'],
+        capture_files=[os.path.join('.', '.coverage*')],
+    ):
         os.environ.update(environ)
         execute(commands, parameters)
     click.echo('Done test')
+
 
 @cli.command()
 @click.option('--runtime', default='3.6')
@@ -221,7 +223,8 @@ def cleanup(runtime, toolkit, environment):
     parameters = get_parameters(runtime, toolkit, environment)
     commands = [
         "edm run -e {environment} -- python setup.py clean",
-        "edm environments remove {environment} --purge -y"]
+        "edm environments remove {environment} --purge -y"
+    ]
     click.echo("Cleaning up environment '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done cleanup')
@@ -241,6 +244,7 @@ def test_clean(runtime, toolkit):
     finally:
         cleanup(args=args, standalone_mode=False)
 
+
 @cli.command()
 @click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='pyqt')
@@ -250,8 +254,7 @@ def update(runtime, toolkit, environment):
 
     """
     parameters = get_parameters(runtime, toolkit, environment)
-    commands = [
-        "edm run -e {environment} -- python setup.py install"]
+    commands = ["edm run -e {environment} -- python setup.py install"]
     click.echo("Re-installing in  '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done update')
@@ -264,22 +267,34 @@ def test_all():
     """
     for runtime, toolkits in supported_combinations.items():
         for toolkit in toolkits:
-            args = ['--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)]
+            args = [
+                '--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)
+            ]
             test_clean(args, standalone_mode=True)
+
 
 # ----------------------------------------------------------------------------
 # Utility routines
 # ----------------------------------------------------------------------------
 
+
 def get_parameters(runtime, toolkit, environment):
     """ Set up parameters dictionary for format() substitution """
-    parameters = {'runtime': runtime, 'toolkit': toolkit, 'environment': environment}
-    if toolkit not in supported_combinations[runtime] :
-        msg = ("Python {runtime} and toolkit {toolkit} not supported by " +
-               "test environments")
+    parameters = {
+        'runtime': runtime,
+        'toolkit': toolkit,
+        'environment': environment
+    }
+    if toolkit not in supported_combinations[runtime]:
+        msg = (
+            "Python {runtime} and toolkit {toolkit} not supported by " +
+            "test environments"
+        )
         raise RuntimeError(msg.format(**parameters))
     if environment is None:
-        parameters['environment'] = 'pyface-test-{runtime}-{toolkit}'.format(**parameters)
+        parameters['environment'] = 'pyface-test-{runtime}-{toolkit}'.format(
+            **parameters
+        )
     return parameters
 
 
@@ -322,7 +337,9 @@ def execute(commands, parameters):
     for command in commands:
         click.echo("[EXECUTING] {}".format(command.format(**parameters)))
         try:
-            subprocess.check_call([arg.format(**parameters) for arg in command.split()])
+            subprocess.check_call([
+                arg.format(**parameters) for arg in command.split()
+            ])
         except subprocess.CalledProcessError:
             sys.exit(1)
 
