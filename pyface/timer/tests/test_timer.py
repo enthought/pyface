@@ -2,7 +2,7 @@ import time
 from unittest import TestCase, skipIf
 
 from pyface.toolkit import toolkit_object
-from ..i_timer import performance_timer
+from ..i_timer import perf_counter
 from ..timer import CallbackTimer, EventTimer
 
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
@@ -16,7 +16,7 @@ class ConditionHandler(object):
         self.called = False
 
     def callback(self):
-        self.times.append(performance_timer())
+        self.times.append(perf_counter())
         self.count += 1
         self.called = True
 
@@ -114,15 +114,14 @@ class TestEventTimer(TestCase, GuiTestAssistant):
 
         # give feedback in case of failure
         if not all(
-            time < timer._start_time + timer.expire + 0.01
-            for time in handler.times
+            t < timer._start_time + timer.expire + 0.01 for t in handler.times
         ):
             print(handler.times[-1], timer._start_time + timer.expire)
 
         self.assertTrue(
             all(
-                time < timer._start_time + timer.expire + 0.01
-                for time in handler.times
+                t < timer._start_time + timer.expire + 0.01
+                for t in handler.times
             )
         )
 
@@ -215,15 +214,14 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
         # give feedback in case of failure
         if not all(
-            time < timer._start_time + timer.expire + 0.01
-            for time in handler.times
+            t < timer._start_time + timer.expire + 0.01 for t in handler.times
         ):
             print(handler.times[-1], timer._start_time + timer.expire)
 
         self.assertTrue(
             all(
-                time < timer._start_time + timer.expire + 0.01
-                for time in handler.times
+                t < timer._start_time + timer.expire + 0.01
+                for t in handler.times
             )
         )
 

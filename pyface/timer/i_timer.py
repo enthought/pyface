@@ -26,13 +26,13 @@ from traits.api import (
 
 if sys.version_info[:2] < (3, 3):
     if sys.platform == 'win32':
-        performance_timer = time.clock
+        perf_counter = time.clock
         # initialize
         time.clock()
     else:
-        performance_timer = time.time
+        perf_counter = time.time
 else:
-    performance_timer = time.performance_timer
+    perf_counter = time.perf_counter
 
 
 class ITimer(Interface):
@@ -169,7 +169,7 @@ class BaseTimer(HasTraits):
             if self.repeat is not None:
                 self._active_timers.add(self)
             if self.expire is not None:
-                self._start_time = performance_timer()
+                self._start_time = perf_counter()
             self._active = True
             self._start()
 
@@ -187,7 +187,7 @@ class BaseTimer(HasTraits):
         the `_perform` method raises StopIteration.
         """
         if self.expire is not None:
-            if performance_timer() - self._start_time > self.expire:
+            if perf_counter() - self._start_time > self.expire:
                 self.stop()
                 return
 
