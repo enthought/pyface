@@ -2,6 +2,7 @@ import time
 from unittest import TestCase, skipIf
 
 from pyface.toolkit import toolkit_object
+from ..i_timer import performance_timer
 from ..timer import CallbackTimer, EventTimer
 
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
@@ -15,7 +16,7 @@ class ConditionHandler(object):
         self.called = False
 
     def callback(self):
-        self.times.append(time.time())
+        self.times.append(performance_timer())
         self.count += 1
         self.called = True
 
