@@ -99,7 +99,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
         self.assertTrue(all(0.075 <= delta <= 0.125 for delta in deltas))
 
     def test_expire(self):
-        timer = EventTimer(expire=0.1)
+        timer = EventTimer(expire=1.0, interval=0.1)
         handler = ConditionHandler()
         timer.on_trait_change(handler.callback, 'timeout')
 
@@ -111,10 +111,17 @@ class TestEventTimer(TestCase, GuiTestAssistant):
             self.assertFalse(timer.active)
         finally:
             timer.stop()
-        #print(handler.times, timer._start_time + timer.expire)
+
+        # give feedback in case of failure
+        if not all(
+            time < timer._start_time + timer.expire + 0.01
+            for time in handler.times
+        ):
+            print(handler.times[-1], timer._start_time + timer.expire)
+
         self.assertTrue(
             all(
-                time - timer._start_time <= timer.expire
+                time < timer._start_time + timer.expire + 0.01
                 for time in handler.times
             )
         )
@@ -193,7 +200,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
     def test_expire(self):
         handler = ConditionHandler()
-        timer = CallbackTimer(callback=handler.callback, expire=0.1)
+        timer = CallbackTimer(
+            callback=handler.callback, interval=0.1, expire=1.0
+        )
 
         timer.start()
         try:
