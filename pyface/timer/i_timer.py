@@ -16,12 +16,13 @@ This module defines interfaces for toolkit event-loop based timers.  It also
 provides a base implementation that can be easily specialized for a particular
 back-end, and mixins that provide additional capabilities.
 """
+from abc import abstractmethod
 import sys
 import time
 
 from traits.api import (
-    Bool, Callable, Dict, Either, Event, Float, HasTraits, Int, Interface,
-    Property, Range, Tuple, provides
+    ABCHasTraits, Bool, Callable, Dict, Either, Event, Float, HasTraits, Int,
+    Interface, Property, Range, Tuple, provides
 )
 
 if sys.version_info[:2] < (3, 3):
@@ -110,7 +111,7 @@ class ICallbackTimer(ITimer):
 
 
 @provides(ITimer)
-class BaseTimer(HasTraits):
+class BaseTimer(ABCHasTraits):
     """ Base class for timer classes.
 
     This class has a class variable which tracks active timers to prevent
@@ -126,7 +127,7 @@ class BaseTimer(HasTraits):
     # ITimer interface -------------------------------------------------------
 
     #: The interval at which to call the callback in seconds.
-    interval = Range(low=0.0)
+    interval = Range(low=0.0, value=0.05)
 
     #: The number of times to repeat the callback, or None if no limit.
     repeat = Either(None, Int)
@@ -222,6 +223,7 @@ class BaseTimer(HasTraits):
         """
         raise NotImplementedError()
 
+    @abstractmethod
     def _perform(self):
         """ perform the appropriate action.
 
