@@ -94,7 +94,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
             timer.stop()
         self.assertEqual(handler.count, 4)
 
-        expected_times = [0.1 * i + 0.1 for i in range(4)]
+        expected_times = [timer._start_time + 0.1 * i + 0.1 for i in range(4)]
 
         # give feedback in case of failure
         if not all(
@@ -205,7 +205,7 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
             timer.stop()
         self.assertEqual(handler.count, 4)
 
-        expected_times = [0.1 * i + 0.1 for i in range(4)]
+        expected_times = [timer._start_time + 0.1 * i + 0.1 for i in range(4)]
 
         # give feedback in case of failure
         if not all(
