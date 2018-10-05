@@ -93,10 +93,22 @@ class TestEventTimer(TestCase, GuiTestAssistant):
         finally:
             timer.stop()
         self.assertEqual(handler.count, 4)
-        deltas = [
-            t2 - t1 for t1, t2 in zip(handler.times[:-1], handler.times[1:])
-        ]
-        self.assertTrue(all(0.075 <= delta for delta in deltas))
+
+        expected_times = [0.1 * i + 0.1 for i in range(4)]
+
+        # give feedback in case of failure
+        if not all(
+            expected <= actual
+            for expected, actual in zip(expected_times, handler.times)
+        ):
+            print(handler.times)
+
+        self.assertTrue(
+            all(
+                expected <= actual
+                for expected, actual in zip(expected_times, handler.times)
+            )
+        )
 
     def test_expire(self):
         timer = EventTimer(expire=1.0, interval=0.1)
@@ -192,10 +204,22 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
         finally:
             timer.stop()
         self.assertEqual(handler.count, 4)
-        deltas = [
-            t2 - t1 for t1, t2 in zip(handler.times[:-1], handler.times[1:])
-        ]
-        self.assertTrue(all(0.075 <= delta for delta in deltas))
+
+        expected_times = [0.1 * i + 0.1 for i in range(4)]
+
+        # give feedback in case of failure
+        if not all(
+            expected <= actual
+            for expected, actual in zip(expected_times, handler.times)
+        ):
+            print(handler.times)
+
+        self.assertTrue(
+            all(
+                expected <= actual
+                for expected, actual in zip(expected_times, handler.times)
+            )
+        )
 
     def test_expire(self):
         handler = ConditionHandler()
