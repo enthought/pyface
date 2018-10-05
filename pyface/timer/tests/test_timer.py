@@ -96,7 +96,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
         deltas = [
             t2 - t1 for t1, t2 in zip(handler.times[:-1], handler.times[1:])
         ]
-        self.assertTrue(all(0.075 <= delta <= 0.125 for delta in deltas))
+        self.assertTrue(all(0.075 <= delta for delta in deltas))
 
     def test_expire(self):
         timer = EventTimer(expire=1.0, interval=0.1)
