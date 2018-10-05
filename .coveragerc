@@ -6,7 +6,7 @@ omit = */tests/*
 [paths]
 source =
     ./pyface
-    pyface
+    */pyface
 
 [report]
 # Regexes for lines to exclude from consideration
