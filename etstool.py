@@ -265,13 +265,21 @@ def test_all():
     """ Run test_clean across all supported environment combinations.
 
     """
+    error = False
     for runtime, toolkits in supported_combinations.items():
         for toolkit in toolkits:
             args = [
                 '--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)
             ]
-            test_clean(args, standalone_mode=True)
+            try:
+                test_clean(args, standalone_mode=True)
+            except SystemExit as exc:
+                if exc.code not in (None, 0):
+                    error = True
+                    click.echo(str(exc))
 
+    if error:
+        sys.exit(1)
 
 # ----------------------------------------------------------------------------
 # Utility routines
@@ -340,7 +348,8 @@ def execute(commands, parameters):
             subprocess.check_call([
                 arg.format(**parameters) for arg in command.split()
             ])
-        except subprocess.CalledProcessError:
+        except subprocess.CalledProcessError as exc:
+            print(exc)
             sys.exit(1)
 
 
