@@ -19,7 +19,7 @@ environment:
       TOOLKITS: "pyside2"
 
 matrix:
-  fast_finish: True
+  fast_finish: true
   allow_failures:
     - RUNTIME: '3.6'
       TOOLKITS: "pyside2"
