@@ -37,7 +37,7 @@ USING_QT = ETSConfig.toolkit not in ['', 'wx']
 
 
 @unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
-class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
+class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.dialog = SingleChoiceDialog(choices=['red', 'blue', 'green'])
