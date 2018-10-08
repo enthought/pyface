@@ -1,6 +1,4 @@
-#------------------------------------------------------------------------------
-#
-#  Copyright (c) 2005, Enthought, Inc.
+#  Copyright (c) 2005-18, Enthought, Inc.
 #  All rights reserved.
 #
 #  This software is provided without warranty under the terms of the BSD
@@ -9,11 +7,6 @@
 #  is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 #  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
-
 """ Enthought pyface package component
 """
 
@@ -21,8 +14,7 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Any, Event, Property, provides, Unicode
-from traits.api import Tuple
+from traits.api import Event, Property, Tuple, Unicode, VetoableEvent, provides
 
 # Local imports.
 from pyface.i_window import IWindow, MWindow
@@ -37,8 +29,7 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -----------------------------------------------------
 
     position = Property(Tuple)
 
@@ -46,23 +37,32 @@ class Window(MWindow, Widget):
 
     title = Unicode
 
-    #### Events #####
+    # Window Events ----------------------------------------------------------
 
-    activated = Event
-
-    closed =  Event
-
-    closing =  Event
-
-    deactivated = Event
-
-    key_pressed = Event(KeyPressedEvent)
-
+    #: The window has been opened.
     opened = Event
 
-    opening = Event
+    #: The window is about to open.
+    opening = VetoableEvent
 
-    #### Private interface ####################################################
+    #: The window has been activated.
+    activated = Event
+
+    #: The window has been closed.
+    closed = Event
+
+    #: The window is about to be closed.
+    closing = VetoableEvent
+
+    #: The window has been deactivated.
+    deactivated = Event
+
+    #: A key was pressed while the window had focus.
+    # FIXME v3: This smells of a hack. What's so special about key presses?
+    # FIXME v3: Unicode
+    key_pressed = Event(KeyPressedEvent)
+
+    # Private interface ------------------------------------------------------
 
     # Shadow trait for position.
     _position = Tuple((-1, -1))
@@ -70,9 +70,9 @@ class Window(MWindow, Widget):
     # Shadow trait for size.
     _size = Tuple((-1, -1))
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def activate(self):
         self.control.Iconize(False)
@@ -81,9 +81,9 @@ class Window(MWindow, Widget):
     def show(self, visible):
         self.control.Show(visible)
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # Protected 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         self.control.Bind(wx.EVT_ACTIVATE, self._wx_on_activate)
@@ -93,9 +93,9 @@ class Window(MWindow, Widget):
         self.control.Bind(wx.EVT_MOVE, self._wx_on_control_move)
         self.control.Bind(wx.EVT_CHAR, self._wx_on_char)
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # create a basic window control
@@ -104,7 +104,11 @@ class Window(MWindow, Widget):
                 | wx.FRAME_NO_WINDOW_MENU \
                 | wx.CLIP_CHILDREN
         control = wx.Frame(
-            parent, -1, self.title, style=style, size=self.size,
+            parent,
+            -1,
+            self.title,
+            style=style,
+            size=self.size,
             pos=self.position
         )
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
@@ -115,9 +119,9 @@ class Window(MWindow, Widget):
 
         return control
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def _get_position(self):
         """ Property getter for position. """
@@ -157,7 +161,7 @@ class Window(MWindow, Widget):
         if self.control is not None:
             self.control.SetTitle(title)
 
-    #### wx event handlers ####################################################
+    # wx event handlers ------------------------------------------------------
 
     def _wx_on_activate(self, event):
         """ Called when the frame is being activated or deactivated. """
@@ -210,13 +214,11 @@ class Window(MWindow, Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
-            event        = event
+            alt_down=event.m_altDown == 1,
+            control_down=event.m_controlDown == 1,
+            shift_down=event.m_shiftDown == 1,
+            key_code=event.m_keyCode,
+            event=event
         )
 
         event.Skip()
-
-#### EOF ######################################################################

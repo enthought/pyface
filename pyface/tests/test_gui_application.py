@@ -14,19 +14,23 @@ from __future__ import (
 import os
 from shutil import rmtree
 from tempfile import mkdtemp
-from unittest import TestCase
+import unittest
 
-from traits.api import Bool
-from traits.testing.unittest_tools import UnittestTools
+from traits.api import Bool, on_trait_change
 
-from ..application import ApplicationExit, Application
+from ..application_window import ApplicationWindow
+from ..gui_application import GUIApplication
+from ..toolkit import toolkit_object
+
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
 
 EVENTS = [
     'starting', 'started', 'application_initialized', 'stopping', 'stopped'
 ]
 
 
-class TestingApp(Application):
+class TestingApp(GUIApplication):
 
     #: Whether the app should start cleanly.
     start_cleanly = Bool(True)
@@ -46,6 +50,15 @@ class TestingApp(Application):
     #: Whether to veto a call to the exit method.
     veto_exit = Bool(False)
 
+    #: Whether to veto a opening a window.
+    veto_open_window = Bool(False)
+
+    #: Whether to veto a closing a window.
+    veto_close_window = Bool(False)
+
+    #: Whether or not a call to the open a window was vetoed.
+    window_open_vetoed = Bool(False)
+    
     #: Whether or not a call to the exit method was vetoed.
     exit_vetoed = Bool(False)
 
@@ -56,35 +69,60 @@ class TestingApp(Application):
     exit_prepared_error = Bool(False)
 
     def start(self):
+        if not self.start_cleanly:
+            return False
         super(TestingApp, self).start()
-        return self.start_cleanly
+
+        window = self.windows[0]
+        window.on_trait_change(self._on_window_closing, 'closing')
+        return True
 
     def stop(self):
         super(TestingApp, self).stop()
         return self.stop_cleanly
 
-    def _run(self):
-        super(TestingApp, self)._run()
-        if self.do_exit:
-            if self.error_exit:
-                raise ApplicationExit("error message")
-            else:
-                self.exit(self.force_exit)
+    def _on_window_closing(self, window, trait, old, new):
+        if self.veto_close_window and not self.exit_vetoed:
+            new.veto = True
             self.exit_vetoed = True
-        return True
+
+    def _application_initialized_fired(self):
+        self.window_open_vetoed = (
+            len(self.windows) > 0 and self.windows[0].control is None
+        )
 
     def _exiting_fired(self, event):
         event.veto = self.veto_exit
+        self.exit_vetoed = self.veto_exit
 
     def _prepare_exit(self):
-        self.exit_prepared = True
+        super(TestingApp, self)._prepare_exit()
+        if not self.exit_vetoed:
+            self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
 
+    @on_trait_change('windows:opening')
+    def _on_activate_window(self, event):
+        if self.veto_open_window:
+            event.veto = self.veto_open_window
 
-class TestApplication(TestCase, UnittestTools):
+
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
+        GuiTestAssistant.setUp(self)
         self.application_events = []
+
+        if toolkit_object.toolkit == 'wx':
+            import wx
+            self.event_loop()
+            wx.GetApp().DeletePendingEvents()
+        else:
+            self.event_loop()
+
+    def tearDown(self):
+        GuiTestAssistant.tearDown(self)
 
     def event_listener(self, event):
         self.application_events.append(event)
@@ -96,7 +134,7 @@ class TestApplication(TestCase, UnittestTools):
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
 
-        app = Application()
+        app = GUIApplication()
 
         self.assertEqual(app.home, ETSConfig.application_home)
         self.assertEqual(app.user_data, ETSConfig.user_data)
@@ -105,7 +143,7 @@ class TestApplication(TestCase, UnittestTools):
     def test_initialize_application_home(self):
         dirpath = mkdtemp()
         home = os.path.join(dirpath, "test")
-        app = Application(home=home)
+        app = GUIApplication(home=home)
 
         app.initialize_application_home()
         try:
@@ -114,34 +152,27 @@ class TestApplication(TestCase, UnittestTools):
             rmtree(dirpath)
 
     def test_lifecycle(self):
-        app = Application()
+
+        app = GUIApplication()
         self.connect_listeners(app)
+        window = ApplicationWindow()
+        app.on_trait_change(lambda: app.add_window(window), 'started')
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
-
-    def test_exit(self):
-        app = TestingApp(do_exit=True)
-        self.connect_listeners(app)
-
-        with self.assertMultiTraitChanges([app], EVENTS, []):
-            result = app.run()
-
-        self.assertTrue(result)
-        self.assertFalse(app.exit_vetoed)
-        self.assertTrue(app.exit_prepared)
-        event_order = [event.event_type for event in self.application_events]
-        self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
 
     def test_exit_prepare_error(self):
-        app = TestingApp(do_exit=True, exit_prepared_error=True)
+        app = TestingApp(exit_prepared_error=True)
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -149,12 +180,15 @@ class TestApplication(TestCase, UnittestTools):
         self.assertTrue(app.exit_prepared)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
 
     def test_veto_exit(self):
-        app = TestingApp(do_exit=True, veto_exit=True)
+        app = TestingApp(veto_exit=True)
         self.connect_listeners(app)
-
+        
         with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, app.exit, force=True)
             result = app.run()
 
         self.assertTrue(result)
@@ -162,12 +196,46 @@ class TestApplication(TestCase, UnittestTools):
         self.assertFalse(app.exit_prepared)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
+
+    def test_veto_open_window(self):
+        app = TestingApp(veto_open_window=True)
+        self.connect_listeners(app)
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
+            result = app.run()
+
+        self.assertTrue(result)
+        self.assertTrue(app.window_open_vetoed)
+        self.assertFalse(app.exit_vetoed)
+        self.assertTrue(app.exit_prepared)
+        event_order = [event.event_type for event in self.application_events]
+        self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
+
+    def test_veto_close_window(self):
+        app = TestingApp(veto_close_window=True)
+        self.connect_listeners(app)
+
+        with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, app.exit, force=True)
+            result = app.run()
+
+        self.assertTrue(result)
+        self.assertTrue(app.exit_vetoed)
+        self.assertFalse(app.exit_prepared)
+        event_order = [event.event_type for event in self.application_events]
+        self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
 
     def test_force_exit(self):
         app = TestingApp(do_exit=True, force_exit=True, veto_exit=True)
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(100, app.exit, True)
             result = app.run()
 
         self.assertTrue(result)
@@ -175,18 +243,22 @@ class TestApplication(TestCase, UnittestTools):
         self.assertTrue(app.exit_prepared)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
 
-    def test_error_exit(self):
-        app = TestingApp(do_exit=True, error_exit=True)
+    def test_force_exit_close_veto(self):
+        app = TestingApp(do_exit=True, force_exit=True, veto_close_window=True)
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
+            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
-        self.assertFalse(result)
+        self.assertTrue(result)
         self.assertFalse(app.exit_vetoed)
+        self.assertTrue(app.exit_prepared)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS)
+        self.assertEqual(app.windows, [])
 
     def test_bad_start(self):
         app = TestingApp(start_cleanly=False)
@@ -198,14 +270,17 @@ class TestApplication(TestCase, UnittestTools):
         self.assertFalse(result)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS[:1])
+        self.assertEqual(app.windows, [])
 
     def test_bad_stop(self):
         app = TestingApp(stop_cleanly=False)
         self.connect_listeners(app)
 
         with self.assertMultiTraitChanges([app], EVENTS[:-1], EVENTS[-1:]):
+            self.gui.invoke_after(1000, app.exit, True)
             result = app.run()
 
         self.assertFalse(result)
         event_order = [event.event_type for event in self.application_events]
         self.assertEqual(event_order, EVENTS[:-1])
+        self.assertEqual(app.windows, [])
