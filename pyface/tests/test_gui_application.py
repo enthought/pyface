@@ -58,7 +58,7 @@ class TestingApp(GUIApplication):
 
     #: Whether or not a call to the open a window was vetoed.
     window_open_vetoed = Bool(False)
-
+    
     #: Whether or not a call to the exit method was vetoed.
     exit_vetoed = Bool(False)
 
@@ -74,10 +74,7 @@ class TestingApp(GUIApplication):
         super(TestingApp, self).start()
 
         window = self.windows[0]
-        window.on_trait_change(
-            lambda event: setattr(event, 'veto', self.veto_close_window),
-            'closing'
-        )
+        window.on_trait_change(self._on_window_closing, 'closing')
         return True
 
     def stop(self):
@@ -85,8 +82,9 @@ class TestingApp(GUIApplication):
         return self.stop_cleanly
 
     def _on_window_closing(self, window, trait, old, new):
-        if self.veto_close_window:
+        if self.veto_close_window and not self.exit_vetoed:
             new.veto = True
+            self.exit_vetoed = True
 
     def _application_initialized_fired(self):
         self.window_open_vetoed = (
@@ -95,10 +93,12 @@ class TestingApp(GUIApplication):
 
     def _exiting_fired(self, event):
         event.veto = self.veto_exit
+        self.exit_vetoed = self.veto_exit
 
     def _prepare_exit(self):
         super(TestingApp, self)._prepare_exit()
-        self.exit_prepared = True
+        if not self.exit_vetoed:
+            self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
 
@@ -185,9 +185,10 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def test_veto_exit(self):
         app = TestingApp(veto_exit=True)
         self.connect_listeners(app)
-
+        
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, app.exit, force=True)
             result = app.run()
 
         self.assertTrue(result)
@@ -219,6 +220,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
+            self.gui.invoke_after(2000, app.exit, force=True)
             result = app.run()
 
         self.assertTrue(result)
