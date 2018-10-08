@@ -186,18 +186,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(veto_exit=True)
         self.connect_listeners(app)
 
-        def hard_exit():
-            app.exit_vetoed = True
-            for window in app.windows:
-                window.destroy()
-                print(window.control)
-            app.windows = []
-            self.event_loop()
-            self.gui.stop_event_loop()
-
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
-            self.gui.invoke_after(2000, hard_exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -211,17 +201,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(veto_open_window=True)
         self.connect_listeners(app)
 
-        def hard_exit():
-            app.exit_vetoed = True
-            for window in app.windows:
-                window.destroy()
-            app.windows = []
-            self.event_loop()
-            self.gui.stop_event_loop()
-
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
-            self.gui.invoke_after(2000, hard_exit)
             result = app.run()
 
         self.assertTrue(result)
@@ -236,17 +217,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = TestingApp(veto_close_window=True)
         self.connect_listeners(app)
 
-        def hard_exit():
-            app.exit_vetoed = True
-            for window in app.windows:
-                window.destroy()
-            app.windows = []
-            self.event_loop()
-            self.gui.stop_event_loop()
-
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
-            self.gui.invoke_after(2000, hard_exit)
             result = app.run()
 
         self.assertTrue(result)
