@@ -39,6 +39,7 @@ logger = logging.getLogger(__name__)
 
 class GUIApplication(Application):
     """ A basic Pyface GUI application. """
+
     # 'GUIApplication' interface ----------------------------------------------
 
     # Branding ---------------------------------------------------------------
@@ -82,18 +83,23 @@ class GUIApplication(Application):
 
     # Window lifecycle methods -----------------------------------------------
 
-    def create_window(self):
+    def create_window(self, **kwargs):
         """ Create a new application window.
 
         By default uses the :py:attr:`window_factory` to do this.  Subclasses
         can override if they want to do something different or additional.
 
+        Parameters
+        ----------
+        **kwargs : dict
+            Additional keyword arguments to pass to the window factory.
+
         Returns
         -------
-        window : ITaskWindow instance or None
-            The new TaskWindow.
+        window : IWindow instance or None
+            The new IWindow instance.
         """
-        window = self.window_factory()
+        window = self.window_factory(**kwargs)
         self.add_window(window)
         return window
 
@@ -102,7 +108,6 @@ class GUIApplication(Application):
         if window.size == (-1, -1):
             window.size = self.window_size
         if not window.title:
-            print('here', self.name)
             window.title = self.name
         if self.icon:
             window.icon = self.icon

@@ -1,9 +1,18 @@
+# Copyright (c) 2010-18, Enthought, Inc.
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+
 # Enthought library imports.
-from pyface.tasks.api import Editor, Task, TaskPane
 from traits.api import Bool, Instance, Property, Str, cached_property
 
 # Local imports.
-from pyface.tasks.action.listening_action import ListeningAction
+from pyface.tasks.api import Editor, Task, TaskPane
+from pyface.action.listening_action import ListeningAction
 
 
 class TaskAction(ListeningAction):
@@ -121,8 +130,9 @@ class EditorAction(CentralPaneAction):
     #### EditorAction interface ###############################################
 
     # The active editor in the central pane with which the action is associated.
-    active_editor = Property(Instance(Editor),
-                             depends_on='central_pane.active_editor')
+    active_editor = Property(
+        Instance(Editor), depends_on='central_pane.active_editor'
+    )
 
     ###########################################################################
     # Protected interface.
