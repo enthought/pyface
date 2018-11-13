@@ -118,7 +118,6 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         app.on_trait_change(lambda: app.add_window(window), 'started')
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
-            self.gui.invoke_after(10000, self.gui.stop_event_loop)
             self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
