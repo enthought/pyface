@@ -57,9 +57,7 @@ class TestingApp(TasksApplication):
         super(TestingApp, self).start()
 
         window = self.windows[0]
-        window.on_trait_change(
-            lambda event: setattr(event, 'veto', self.veto_close), 'closing'
-        )
+        window.on_trait_change(self._on_window_closing, 'closing')
         return True
 
     def stop(self):
@@ -67,14 +65,17 @@ class TestingApp(TasksApplication):
         return self.stop_cleanly
 
     def _on_window_closing(self, window, trait, old, new):
-        if self.veto_close:
+        if self.veto_close_window and not self.exit_vetoed:
             new.veto = True
+            self.exit_vetoed = True
 
     def _exiting_fired(self, event):
         event.veto = self.veto_exit
+        self.exit_vetoed = self.veto_exit
 
     def _prepare_exit(self):
-        self.exit_prepared = True
+        if not self.exit_vetoed:
+            self.exit_prepared = True
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
         super(TestingApp, self)._prepare_exit()
@@ -118,7 +119,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(10000, self.gui.stop_event_loop)
-            self.gui.invoke_after(100, app.exit)
+            self.gui.invoke_after(1000, app.exit)
             result = app.run()
 
         self.assertTrue(result)
