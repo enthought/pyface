@@ -94,6 +94,9 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         else:
             self.event_loop()
 
+    def tearDown(self):
+        GuiTestAssistant.tearDown(self)
+
     def event_listener(self, event):
         self.application_events.append(event)
 
