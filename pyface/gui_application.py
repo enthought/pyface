@@ -30,11 +30,21 @@ from traits.api import (
 
 from .application import Application
 from .i_dialog import IDialog
-from .i_image_resource import IImageResource
 from .i_splash_screen import ISplashScreen
 from .i_window import IWindow
+from .ui_traits import Image
 
 logger = logging.getLogger(__name__)
+
+
+def default_window_factory(application, **kwargs):
+    """ The default window factory returns an application window.
+
+    This is almost never the right thing, but allows users to get off the
+    ground with the base class.
+    """
+    from pyface.application_window import ApplicationWindow
+    return ApplicationWindow(**kwargs)
 
 
 class GUIApplication(Application):
@@ -50,13 +60,16 @@ class GUIApplication(Application):
     #: The about dialog for the application.
     about_dialog = Instance(IDialog)
 
-    #: Icon for the application
-    icon = Instance(IImageResource)
+    #: Icon for the application (used in window titlebars)
+    icon = Image
+
+    #: Logo of the application (used in splash screens and about dialogs)
+    logo = Image
 
     # Window management ------------------------------------------------------
 
     #: The window factory to use when creating a window for the application.
-    window_factory = Callable
+    window_factory = Callable(default_window_factory)
 
     #: Default window size
     window_size = Tuple((800, 600))
@@ -99,18 +112,19 @@ class GUIApplication(Application):
         window : IWindow instance or None
             The new IWindow instance.
         """
-        window = self.window_factory(**kwargs)
-        self.add_window(window)
-        return window
+        window = self.window_factory(application=self, **kwargs)
 
-    def add_window(self, window):
-        """ Add a new window to the windows we are tracking. """
         if window.size == (-1, -1):
             window.size = self.window_size
         if not window.title:
             window.title = self.name
         if self.icon:
             window.icon = self.icon
+
+        return window
+
+    def add_window(self, window):
+        """ Add a new window to the windows we are tracking. """
 
         # Keep a handle on all windows created so that non-active windows don't
         # get garbage collected
@@ -162,7 +176,8 @@ class GUIApplication(Application):
         By default calls :py:meth:`create_window` once. Subclasses can
         override this method.
         """
-        self.create_window()
+        window = self.create_window()
+        self.add_window(window)
 
     # -------------------------------------------------------------------------
     # 'Application' private interface
@@ -222,10 +237,19 @@ class GUIApplication(Application):
         ground with the base class.
         """
         from pyface.application_window import ApplicationWindow
-        return ApplicationWindow
+        return lambda application, **kwargs: ApplicationWindow(**kwargs)
+
+    def _splash_screen_default(self):
+        """ Default SplashScreen """
+        from pyface.splash_screen import SplashScreen
+
+        dialog = SplashScreen()
+        if self.logo:
+            dialog.image = self.logo
+        return dialog
 
     def _about_dialog_default(self):
-        """ Default to AboutDialog """
+        """ Default AboutDialog """
         from sys import version_info
         if (version_info.major, version_info.minor) >= (3, 2):
             from html import escape
@@ -235,17 +259,32 @@ class GUIApplication(Application):
 
         additions = [
             u"<h1>{}</h1>".format(escape(self.name)),
-            u"Copyright &copy; 2018, {}".format(escape(self.company))
+            u"Copyright &copy; 2018 {}, all rights reserved".format(
+                escape(self.company),
+            ),
+            u"",
         ]
-        return AboutDialog(additions=additions)
+        additions += [escape(line) for line in self.description.split('\n\n')]
+
+        dialog = AboutDialog(additions=additions)
+        if self.logo:
+            dialog.image = self.logo
+        return dialog
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change('windows:activate')
+    @on_trait_change('windows:activated')
     def _on_activate_window(self, window, trait, old, new):
         """ Listener that tracks currently active window.
         """
-        self.active_window = window
+        if window in self.windows:
+            self.active_window = window
+
+    @on_trait_change('windows:deactivated')
+    def _on_deactivate_window(self, window, trait, old, new):
+        """ Listener that tracks currently active window.
+        """
+        self.active_window = None
 
     @on_trait_change('windows:closed')
     def _on_window_closed(self, window, trait, old, new):

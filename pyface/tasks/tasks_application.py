@@ -128,7 +128,7 @@ class TasksApplication(GUIApplication):
         """
         from pyface.tasks.task_window_layout import TaskWindowLayout
 
-        window = super(TasksApplication, self).create_window()
+        window = super(TasksApplication, self).create_window(**kwargs)
 
         if layout is not None:
             for task_id in layout.get_tasks():

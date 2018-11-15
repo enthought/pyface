@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 from .about_dialog import AboutDialog
+from .application import Application
 from .application_window import ApplicationWindow
 from .beep import beep
 from .clipboard import clipboard, Clipboard
@@ -25,6 +26,7 @@ from .directory_dialog import DirectoryDialog
 from .file_dialog import FileDialog
 from .filter import Filter
 from .gui import GUI
+from .gui_application import GUIApplication
 from .heading_text import HeadingText
 from .image_cache import ImageCache
 from .image_resource import ImageResource
@@ -43,7 +45,6 @@ from .system_metrics import SystemMetrics
 from .ui_traits import Alignment, Border, HasBorder, HasMargin, Image, Margin
 from .window import Window
 from .widget import Widget
-
 
 # ----------------------------------------------------------------------------
 # Legacy and Wx-specific imports.

@@ -87,6 +87,9 @@ class Application(HasStrictTraits):
     #: Human-readable company name
     company = Unicode
 
+    #: Human-readable description of the application
+    description = Unicode
+
     # Infrastructure ----------------------------------------------------------
 
     #: The application's globally unique identifier.
@@ -301,3 +304,9 @@ class Application(HasStrictTraits):
         """ Default company comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
         return ETSConfig.company
+
+    def _description_default(self):
+        """ Default description is the docstring of the application class. """
+        from inspect import getdoc
+        text = getdoc(self)
+        return text

@@ -68,7 +68,10 @@ class CreateWindowAction(GUIApplicationAction):
     """ A standard 'New Window' menu action. """
     name = u'New Window'
     accelerator = 'Ctrl+N'
-    method = 'create_window'
+
+    def perform(self, event=None):
+        window = self.application.create_window()
+        self.application.add_window(window)
 
 
 class ExitAction(GUIApplicationAction):
@@ -93,6 +96,6 @@ class CloseActiveWindowAction(ActiveWindowAction):
 
     This method closes the active window of the application.
     """
-    name = u'Close'
+    name = u'Close Window'
     accelerator = 'Ctrl+W'
     method = 'close'

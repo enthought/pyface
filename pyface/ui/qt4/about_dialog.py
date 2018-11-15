@@ -10,8 +10,8 @@
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
-
 # Standard library imports.
+import platform
 import sys
 
 # Major package imports.
@@ -24,7 +24,6 @@ from traits.api import Instance, List, provides, Unicode
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
-
 
 # The HTML displayed in the QLabel.
 _DIALOG_TEXT = '''
@@ -62,7 +61,6 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-
     #### 'IAboutDialog' interface #############################################
 
     additions = List(Unicode)
@@ -92,7 +90,7 @@ class AboutDialog(MAboutDialog, Dialog):
         additions = '<br />'.join(self.additions)
 
         # Get the version numbers.
-        py_version = sys.version[0:sys.version.find("(")]
+        py_version = platform.python_version()
         qt_version = QtCore.__version__
 
         # Set the page contents.
@@ -113,5 +111,3 @@ class AboutDialog(MAboutDialog, Dialog):
         lay.addWidget(buttons)
 
         parent.setLayout(lay)
-
-#### EOF ######################################################################
