@@ -1,0 +1,11 @@
+The icons are mostly derived work from other icons. As such they are
+licensed accordingly to the original license:
+
+Project                 License                   File
+----------------------------------------------------------------------------              
+PSF                     Trademark                 https://www.python.org/community/logos/
+
+Files and orginal authors:
+----------------------------------------------------------------------------
+                    python_icon.png | PSF
+                    python_logo.png | PSF
