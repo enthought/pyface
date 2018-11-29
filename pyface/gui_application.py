@@ -50,7 +50,7 @@ def default_window_factory(application, **kwargs):
 class GUIApplication(Application):
     """ A basic Pyface GUI application. """
 
-    # 'GUIApplication' interface ----------------------------------------------
+    # 'GUIApplication' traits -------------------------------------------------
 
     # Branding ---------------------------------------------------------------
 
@@ -266,7 +266,10 @@ class GUIApplication(Application):
         ]
         additions += [escape(line) for line in self.description.split('\n\n')]
 
-        dialog = AboutDialog(additions=additions)
+        dialog = AboutDialog(
+            title=u"About {}".format(self.name),
+            additions=additions,
+        )
         if self.logo:
             dialog.image = self.logo
         return dialog

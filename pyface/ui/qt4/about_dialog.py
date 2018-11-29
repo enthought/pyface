@@ -74,13 +74,14 @@ class AboutDialog(MAboutDialog, Dialog):
     def _create_contents(self, parent):
         label = QtGui.QLabel()
 
-        if parent.parent() is not None:
-            title = parent.parent().windowTitle()
-        else:
-            title = ""
+        if self.title == "":
+            if parent.parent() is not None:
+                title = parent.parent().windowTitle()
+            else:
+                title = ""
 
-        # Set the title.
-        self.title = "About %s" % title
+            # Set the title.
+            self.title = "About %s" % title
 
         # Load the image to be displayed in the about box.
         image = self.image.create_image()

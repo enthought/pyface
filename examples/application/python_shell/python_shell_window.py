@@ -1,3 +1,20 @@
+# Copyright (c) 2014-18 by Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in enthought/LICENSE.txt and may be redistributed only
+# under the conditions described in the aforementioned license.  The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+# Thanks for using Enthought open source!
+"""
+Example Python Shell Window
+===========================
+
+This is an example of an application window subclass that contains a Pyface
+Python shell.  This can be used stand-alone, but is also suitable for use as
+a window in a GUI application.
+"""
+
 import sys
 import webbrowser
 

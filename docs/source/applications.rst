@@ -204,6 +204,7 @@ While the GUI application window subclass looks like this::
     def main():
         app = GUIApplication(
             name="Python Shell",
+            description="An example application that provides a Python shell.",
             icon='python_icon',
             logo='python_logo',
             window_factory=create_python_shell_window,
@@ -219,3 +220,46 @@ TasksApplication Interface
 ==========================
 
 .. py:currentmodule:: pyface.tasks.tasks_application
+
+The :py:class:`TasksApplication` class works in a similar way to the
+:py:class:`~pyface.gui_application.GUIApplication` class, but instead of the
+supplying a window factory, instead you provide one or more
+:py:class:`TaskFactory` instances which provide information about the
+different Tasks that are available for each window.
+
+In addition the :py:class:`TasksApplication` has traits that hold extra
+application-specific :py:class:`~pyface.actions.action.Action`s via the
+:py:class:`~pyface.tasks.actions.schema_addition.SchemaAddition` mechanism,
+and :py:class:`~pyface.tasks.dock_pane.DockPane` via factories for creating
+the dock panes.
+
+A complete :py:class:`TasksApplication` can be as simple as::
+
+    from pyface.tasks.api import TaskFactory, TasksApplication
+    from python_editor_task import PythonEditorTask
+
+    def main():
+        app = TasksApplication(
+            id="example_python_editor_application",
+            name="Python Editor",
+            description=(
+                "An example Tasks application that provides a Python editor."
+            ),
+            icon='python_icon',
+            logo='python_logo',
+            task_factories=[
+                TaskFactory(
+                    id='example.python_editor_task',
+                    name="Python Editor",
+                    factory=PythonEditorTask
+                )
+            ],
+        )
+
+        # invoke the mainloop
+        app.run()
+
+    if __name__ == '__main__':
+        main()
+
+A more complete version of this can be found in the Pyface examples.

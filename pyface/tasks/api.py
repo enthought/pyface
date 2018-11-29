@@ -23,7 +23,7 @@ from .i_editor import IEditor
 from .i_editor_area_pane import IEditorAreaPane
 from .i_task_pane import ITaskPane
 from .task import Task
-from .tasks_application import TasksApplication
+from .tasks_application import TasksApplication, TaskFactory
 from .task_layout import TaskLayout, PaneItem, Tabbed, Splitter, HSplitter, \
     VSplitter
 from .task_pane import TaskPane

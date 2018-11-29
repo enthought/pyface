@@ -150,11 +150,13 @@ class TasksApplication(GUIApplication):
         """ Create the initial windows to display from the default layout.
         """
         for layout in self.default_layout:
-            self.active_window = self.create_window(layout)
+            window = self.create_window(layout)
+            self.add_window(window)
+            self.active_window = window
 
-    # -------------------------------------------------------------------------
-    # Private interface
-    # -------------------------------------------------------------------------
+        # -------------------------------------------------------------------------
+        # Private interface
+        # -------------------------------------------------------------------------
 
     def _get_task_factory(self, id):
         """ Returns the TaskFactory with the specified ID, or None.
@@ -199,47 +201,57 @@ class TasksApplication(GUIApplication):
         This adds a collection of standard Tasks application menu items and
         groups to a Task's set of menus.  Whether or not they actually appear
         depends on whether the appropriate menus are provided by the Task.
+
+        These default additions assume that the window will hold an editor pane
+        so that Ctrl-N and Ctrl-W will be bound to creating/closing new editors
+        rather than new task windows.
         """
         from pyface.action.api import (
             AboutAction, CloseActiveWindowAction, ExitAction
         )
         from pyface.tasks.action.api import (
-            DockPaneToggleGroup, SchemaAddition, TaskToggleGroup,
+            CreateTaskWindowAction, SchemaAddition, SMenu,
             TaskWindowToggleGroup
         )
 
         return [
             SchemaAddition(
+                factory=CreateTaskWindowAction.factory(
+                    application=self,
+                    accelerator='Ctrl+Shift+N',
+                ),
+                path='MenuBar/File/new_group',
+            ),
+            SchemaAddition(
                 id='close_action',
-                factory=partial(CloseActiveWindowAction, application=self),
+                factory=CloseActiveWindowAction.factory(
+                    application=self,
+                    accelerator='Ctrl+Shift+W',
+                ),
                 path='MenuBar/File/close_group',
             ),
             SchemaAddition(
                 id='exit_action',
-                factory=partial(ExitAction, application=self),
+                factory=ExitAction.factory(application=self),
                 path='MenuBar/File/close_group',
                 absolute_position='last',
             ),
             SchemaAddition(
-                id='TaskToggleGroup',
-                factory=TaskToggleGroup,
-                path='MenuBar/View'
-            ),
-            SchemaAddition(
-                id='DockPaneToggleGroup',
-                factory=DockPaneToggleGroup,
-                path='MenuBar/View',
-                after='TaskToggleGroup',
-            ),
-            SchemaAddition(
-                id='TaskWindowToggleGroup',
-                factory=partial(TaskWindowToggleGroup, application=self),
-                path='MenuBar/Window'
+                #id='Window',
+                factory=lambda: SMenu(
+                    TaskWindowToggleGroup(application=self),
+                    id='Window',
+                    name='&Window',
+                ),
+                path='MenuBar',
+                after="View",
+                before="Help"
             ),
             SchemaAddition(
                 id='about_action',
-                factory=partial(AboutAction, application=self),
-                path='MenuBar/Help/about_group',
+                factory=AboutAction.factory(application=self),
+                path='MenuBar/Help',
+                absolute_position='first',
             ),
         ]
 

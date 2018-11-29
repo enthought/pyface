@@ -19,7 +19,7 @@ class TaskWindowToggleAction(Action):
     # 'Action' interface -----------------------------------------------------
 
     #: The name of the action for the window.
-    name = Property(Unicode, depends_on='window.active_task.name')
+    name = Property(Unicode, depends_on='window.title')
 
     #: The action is a toggle action.
     style = 'toggle'
@@ -42,8 +42,8 @@ class TaskWindowToggleAction(Action):
     # -------------------------------------------------------------------------
 
     def _get_name(self):
-        if self.window.active_task:
-            return self.window.active_task.name
+        if self.window.title:
+            return self.window.title
         return u''
 
     @on_trait_change('window:activated')
@@ -85,7 +85,7 @@ class TaskWindowToggleGroup(Group):
         super(TaskWindowToggleGroup, self).destroy()
         if self.application:
             self.application.on_trait_change(
-                self._rebuild, 'window_opened, window_closed', remove=True
+                self._rebuild, 'windows[]', remove=True
             )
 
     # -------------------------------------------------------------------------
@@ -111,13 +111,8 @@ class TaskWindowToggleGroup(Group):
 
     # Trait initializers -----------------------------------------------------
 
-    def _application_default(self):
-        return self.manager.controller.task.window.application
-
     def _items_default(self):
-        self.application.on_trait_change(
-            self._rebuild, 'window_opened, window_closed'
-        )
+        self.application.on_trait_change(self._rebuild, 'windows[]')
         return self._get_items()
 
     def _manager_default(self):

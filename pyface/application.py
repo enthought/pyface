@@ -75,9 +75,7 @@ class Application(HasStrictTraits):
     not just GUI applications.
     """
 
-    # -------------------------------------------------------------------------
-    # 'Application' interface
-    # -------------------------------------------------------------------------
+    # 'Application' traits ----------------------------------------------------
 
     # Branding ----------------------------------------------------------------
 
@@ -90,7 +88,7 @@ class Application(HasStrictTraits):
     #: Human-readable description of the application
     description = Unicode
 
-    # Infrastructure ----------------------------------------------------------
+    # Infrastructure ---------------------------------------------------------
 
     #: The application's globally unique identifier.
     id = Unicode
@@ -124,7 +122,11 @@ class Application(HasStrictTraits):
     #: Upon successful completion of the stop method.
     stopped = Event(Instance(ApplicationEvent))
 
-    # Application lifecycle methods -------------------------------------------
+    # -------------------------------------------------------------------------
+    # Application interface
+    # -------------------------------------------------------------------------
+
+    # Application lifecycle methods ------------------------------------------
 
     def start(self):
         """ Start the application, setting up things that are required
