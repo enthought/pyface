@@ -12,7 +12,6 @@
 import importlib
 import os
 import sys
-import warnings
 
 QtAPIs = [
     ('pyside', 'PySide'),
