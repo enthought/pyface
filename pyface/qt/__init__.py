@@ -61,6 +61,7 @@ else:
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
+            importlib.import_module(module)
             importlib.import_module('.QtCore', module)
             qt_api = api_name
             break
