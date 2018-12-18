@@ -76,6 +76,8 @@ class Window(MWindow, Widget):
     def activate(self):
         self.control.activateWindow()
         self.control.raise_()
+        # explicitly fire activated trait as signal doesn't create Qt event
+        self.activated = self
 
     # -------------------------------------------------------------------------
     # Protected 'IWindow' interface.

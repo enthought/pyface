@@ -75,9 +75,7 @@ class Application(HasStrictTraits):
     not just GUI applications.
     """
 
-    # -------------------------------------------------------------------------
-    # 'Application' interface
-    # -------------------------------------------------------------------------
+    # 'Application' traits ----------------------------------------------------
 
     # Branding ----------------------------------------------------------------
 
@@ -87,7 +85,10 @@ class Application(HasStrictTraits):
     #: Human-readable company name
     company = Unicode
 
-    # Infrastructure ----------------------------------------------------------
+    #: Human-readable description of the application
+    description = Unicode
+
+    # Infrastructure ---------------------------------------------------------
 
     #: The application's globally unique identifier.
     id = Unicode
@@ -121,7 +122,11 @@ class Application(HasStrictTraits):
     #: Upon successful completion of the stop method.
     stopped = Event(Instance(ApplicationEvent))
 
-    # Application lifecycle methods -------------------------------------------
+    # -------------------------------------------------------------------------
+    # Application interface
+    # -------------------------------------------------------------------------
+
+    # Application lifecycle methods ------------------------------------------
 
     def start(self):
         """ Start the application, setting up things that are required
@@ -301,3 +306,9 @@ class Application(HasStrictTraits):
         """ Default company comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
         return ETSConfig.company
+
+    def _description_default(self):
+        """ Default description is the docstring of the application class. """
+        from inspect import getdoc
+        text = getdoc(self)
+        return text

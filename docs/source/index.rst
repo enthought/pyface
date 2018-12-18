@@ -79,5 +79,6 @@ Contents
 
    Overview <overview>
    Toolkits <toolkits>
+   Pyface Applications <applications>
    API Documentation <api/pyface>
    Change Log <changelog>

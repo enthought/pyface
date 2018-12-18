@@ -13,9 +13,10 @@
 #------------------------------------------------------------------------------
 """ The base class for all actions. """
 
+from functools import partial
 
 # Enthought library imports.
-from traits.api import Bool, Callable, Enum, HasTraits, Instance, Str
+from traits.api import Bool, Callable, Enum, HasTraits, Str
 from traits.api import Unicode
 
 from pyface.ui_traits import Image
@@ -103,3 +104,12 @@ class Action(HasTraits):
         """
         if self.on_perform is not None:
             self.on_perform()
+
+    @classmethod
+    def factory(cls, *args, **kwargs):
+        """ Create a factory for an action with the given arguments.
+
+        This is particularly useful for passing context to Tasks schema
+        additions.
+        """
+        return partial(cls, *args, **kwargs)

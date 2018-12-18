@@ -25,7 +25,7 @@ class TraitsEditor(Editor):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model:
-            return { 'object': self.model, 'editor': self }
+            return {'object': self.model, 'editor': self}
         return super(TraitsEditor, self).trait_context()
 
     ###########################################################################
@@ -42,5 +42,6 @@ class TraitsEditor(Editor):
         """ Destroy the toolkit-specific control that represents the editor.
         """
         self.control = None
-        self.ui.dispose()
+        if self.ui is not None:
+            self.ui.dispose()
         self.ui = None
