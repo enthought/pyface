@@ -1,5 +1,4 @@
-#------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-18, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -10,12 +9,10 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
 """ The abstract interface for all pyface top-level windows. """
 
-
 # Enthought library imports.
-from traits.api import Event, Tuple, Unicode
+from traits.api import Event, Tuple, Unicode, Vetoable, VetoableEvent
 
 # Local imports.
 from pyface.constant import NO
@@ -30,7 +27,7 @@ class IWindow(IWidget):
     (ie. its 'control' trait will be None until it is opened).
     """
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -----------------------------------------------------
 
     #: The position of the window.
     position = Tuple
@@ -41,16 +38,22 @@ class IWindow(IWidget):
     #: The window title.
     title = Unicode
 
-    #### Events #####
+    # Window Events ----------------------------------------------------------
+
+    #: The window has been opened.
+    opened = Event
+
+    #: The window is about to open.
+    opening = VetoableEvent
 
     #: The window has been activated.
     activated = Event
 
     #: The window has been closed.
-    closed =  Event
+    closed = Event
 
     #: The window is about to be closed.
-    closing =  Event
+    closing = VetoableEvent
 
     #: The window has been deactivated.
     deactivated = Event
@@ -60,24 +63,45 @@ class IWindow(IWidget):
     # FIXME v3: Unicode
     key_pressed = Event(KeyPressedEvent)
 
-    #: The window has been opened.
-    opened = Event
-
-    #: The window is about to open.
-    opening = Event
-
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window. """
+        """ Opens the window.
 
-    def close(self):
-        """ Closes the window. """
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the opening of the window.
 
-    def activate(self):
-        """ Activates the window. """
+        If the window is opened, the :py:attr:`opened` event will be fired
+        with the IWindow instance as the event value.
+
+        Returns
+        -------
+        opened : bool
+            Whether or not the window was opened.
+        """
+
+    def close(self, force=False):
+        """ Closes the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the closing of the window.  If :py:obj:`force` is
+        :py:obj:`True` then the window will close no matter what.
+
+        If the window is closed, the closed event will be fired with the window
+        object as the event value.
+
+        Parameters
+        ----------
+        force : bool
+            Whether the window should close despite vetos.
+
+        Returns
+        -------
+        closed : bool
+            Whether or not the window is closed.
+        """
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
@@ -95,7 +119,8 @@ class IWindow(IWidget):
         """
 
     def information(
-            self, message, title='Information', detail='', informative=''):
+        self, message, title='Information', detail='', informative=''
+    ):
         """ Convenience method to show an information message dialog.
 
         Parameters
@@ -152,36 +177,62 @@ class MWindow(object):
     Reimplements: _create()
     """
 
-    ###########################################################################
+    # -------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # -------------------------------------------------------------------------
 
     def open(self):
-        """ Opens the window. """
+        """ Opens the window.
 
-        # Trait notification.
-        self.opening = self
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the opening of the window.
 
-        if self.control is None:
-            self._create()
+        If the window is opened, the :py:attr:`opened` event will be fired
+        with the IWindow instance as the event value.
 
-        self.show(True)
+        Returns
+        -------
+        opened : bool
+            Whether or not the window was opened.
+        """
+        self.opening = event = Vetoable()
+        if not event.veto:
+            # Create the control, if necessary.
+            if self.control is None:
+                self._create()
 
-        # Trait notification.
-        self.opened = self
+            self.show(True)
+            self.opened = self
 
-    def close(self):
-        """ Closes the window. """
+        return self.control is not None and not event.veto
 
+    def close(self, force=False):
+        """ Closes the window.
+
+        This fires the :py:attr:`closing` vetoable event, giving listeners the
+        opportunity to veto the closing of the window.  If :py:obj:`force` is
+        :py:obj:`True` then the window will close no matter what.
+
+        If the window is closed, the closed event will be fired with the window
+        object as the event value.
+
+        Parameters
+        ----------
+        force : bool
+            Whether the window should close despite vetos.
+
+        Returns
+        -------
+        closed : bool
+            Whether or not the window is closed.
+        """
         if self.control is not None:
-            # Trait notification.
-            self.closing = self
+            self.closing = event = Vetoable()
+            if force or not event.veto:
+                self.destroy()
+                self.closed = self
 
-            # Cleanup the toolkit-specific control.
-            self.destroy()
-
-            # Trait notification.
-            self.closed = self
+        return self.control is None
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
@@ -202,7 +253,8 @@ class MWindow(object):
         return confirm(self.control, message, title, cancel, default)
 
     def information(
-            self, message, title='Information', detail='', informative=''):
+        self, message, title='Information', detail='', informative=''
+    ):
         """ Convenience method to show an information message dialog.
 
         Parameters
