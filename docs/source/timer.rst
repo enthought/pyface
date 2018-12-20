@@ -94,7 +94,8 @@ halted via :py:meth:`~pyface.timer.timer.PyfaceTimer.stop` or setting
 application shutting down).
 
 Rather than controlling the active state of the timer explicitly, the number of
-performances can be controlled either via setting the
+invocations of the :py:meth:`~pyface.timer.timer.PyfaceTimer.perfom` method can
+be controlled either via setting the
 :py:attr:`~pyface.timer.timer.PyfaceTimer.repeat` trait to an explicit number
 of times to repeat and/or setting the
 :py:attr:`~pyface.timer.timer.PyfaceTimer.expire` trait to a maximum number of
@@ -110,12 +111,12 @@ times and for no longer than 10 seconds can be started like this:
     timer.start()
 
 :py:class:`~pyface.timer.timer.PyfaceTimer` also provides two convenience class
-methods for creating and starting a timer at in one line.  The above example
+methods for creating and starting a timer in one line.  The above example
 could instead be written as::
 
 .. code-block:: python
 
-    CustomTimer.timer(interval=0.5, repeat=10, expire=10)
+    my_timer = CustomTimer.timer(interval=0.5, repeat=10, expire=10)
     
 For the common case of a "single-shot" timer that is only performed once,
 there is the :py:meth:`~pyface.timer.timer.PyfaceTimer.single_shot` class
@@ -150,7 +151,7 @@ trait, along with an optional tuple of
 
 .. code-block:: python
 
-    from pyface.timer.api import EventTimer
+    from pyface.timer.api import CallbackTimer
     
     def print_time():
         print("The time is {}".format(datetime.datetime.now()))
