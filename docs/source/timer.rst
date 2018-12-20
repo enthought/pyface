@@ -116,7 +116,7 @@ could instead be written as::
 
 .. code-block:: python
 
-    my_timer = CustomTimer.timer(interval=0.5, repeat=10, expire=10)
+    timer = CustomTimer.timer(interval=0.5, repeat=10, expire=10)
     
 For the common case of a "single-shot" timer that is only performed once,
 there is the :py:meth:`~pyface.timer.timer.PyfaceTimer.single_shot` class
