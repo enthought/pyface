@@ -26,12 +26,8 @@ from traits.api import (
 )
 
 if sys.version_info[:2] < (3, 3):
-    if sys.platform == 'win32':
-        perf_counter = time.clock
-        # initialize
-        time.clock()
-    else:
-        perf_counter = time.time
+    import timeit
+    perf_counter = timeit.default_timer
 else:
     perf_counter = time.perf_counter
 
