@@ -1,77 +1,30 @@
-#------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
+# Copyright (c) 2018, Enthought Inc
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
+# This software is provided without warranty under the terms of the BSD
+# license.  However, when used with the GPL version of PyQt the additional
+# terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+from traits.api import Instance
 
-
-# Major package imports.
-from pyface.qt import QtCore
+from pyface.qt.QtCore import QTimer
+from pyface.timer.i_timer import BaseTimer
 
 
-class Timer(QtCore.QTimer):
-    """Simple subclass of QTimer that allows the user to have a function called
-    periodically.  Some code assumes that this is a sub-class of wx.Timer, so
-    we add a few wrapper methods to pretend it is.
+class PyfaceTimer(BaseTimer):
+    """ Abstract base class for Qt toolkit timers. """
 
-    Any exceptions raised in the callable are caught.  If
-    `StopIteration` is raised the timer stops.  If other exceptions are
-    encountered the timer is stopped and the exception re-raised.
-    """
+    #: The QTimer for the PyfaceTimer.
+    _timer = Instance(QTimer, (), allow_none=False)
 
-    def __init__(self, millisecs, callable, *args, **kw_args):
-        """ Initialize instance to invoke the given `callable` with given
-        arguments and keyword args after every `millisecs` (milliseconds).
-        """
-        QtCore.QTimer.__init__(self)
+    def __init__(self, **traits):
+        traits.setdefault('_timer', QTimer())
+        super(PyfaceTimer, self).__init__(**traits)
+        self._timer.timeout.connect(self.perform)
 
-        self.callable = callable
-        self.args = args
-        self.kw_args = kw_args
+    def _start(self):
+        self._timer.start(int(self.interval * 1000))
 
-        self.timeout.connect(self.Notify)
-
-        self._is_active = True
-        self.start(millisecs)
-
-    def Notify(self):
-        """ Call the given callable.  Exceptions raised in the callable are
-        caught.  If `StopIteration` is raised the timer stops.  If other
-        exceptions are encountered the timer is stopped and the exception
-        re-raised.  Note that the name of this method is part of the API
-        because some code expects this to be a wx.Timer sub-class.
-        """
-        try:
-            self.callable(*self.args, **self.kw_args)
-        except StopIteration:
-            self.stop()
-        except:
-            self.stop()
-            raise
-
-    def Start(self, millisecs=None):
-        """ Emulate wx.Timer.
-        """
-        self._is_active = True
-
-        if millisecs is None:
-            self.start()
-        else:
-            self.start(millisecs)
-
-    def Stop(self):
-        """ Emulate wx.Timer.
-        """
-        self._is_active = False
-        self.stop()
-
-    def IsRunning(self):
-        """ Emulate wx.Timer.
-        """
-        return self._is_active
+    def _stop(self):
+        self._timer.stop()

@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    ]
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -46,7 +46,7 @@ copyright = '2008-2016, Enthought'
 # other places throughout the built documents.
 d = {}
 with open(os.path.join('..', '..', 'pyface', '_version.py')) as fp:
-    exec(fp.read(), d)
+    exec (fp.read(), d)
 version = release = d['full_version']
 
 # There are two options for replacing |today|: either, you set today to some
@@ -78,7 +78,6 @@ today_fmt = '%B %d, %Y'
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
-
 
 # Options for HTML output
 # -----------------------
@@ -164,11 +163,12 @@ except ImportError as exc:
     html_style = 'default.css'
 
 # Useful aliases to avoid repeating long URLs.
-extlinks = {'github-examples': (
-    'https://github.com/enthought/pyface/tree/master/examples/%s',
-    'github-examples')
+extlinks = {
+    'github-examples': (
+        'https://github.com/enthought/pyface/tree/master/examples/%s',
+        'github-examples'
+    )
 }
-
 
 # Options for LaTeX output
 # ------------------------
@@ -182,7 +182,10 @@ extlinks = {'github-examples': (
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'TraitsGUI.tex', 'TraitsGUI Documentation', 'Enthought', 'manual'),
+    (
+        'index', 'TraitsGUI.tex', 'TraitsGUI Documentation', 'Enthought',
+        'manual'
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -207,19 +210,21 @@ latex_documents = [
 
 autodoc_member_order = 'bysource'
 
-autodoc_mock_imports = ['wx',
-                        'wx.grid',
-                        'wx.html',
-                        'wx.lib',
-                        'wx.lib.scrolledpanel',
-                        'wx.lib.layoutf',
-                        'wx.lib.mixins',
-                        'wx.lib.mixins.grid',
-                        'wx.lib.wxpTag',
-                        'wx.lib.gridmovers',
-                        'wx.stc',
-                        'wx.py',
-                        'IPython',
-                        'IPython.frontend',
-                        'IPython.frontend.wx',
-                        'IPython.frontend.wx.wx_frontend']
+autodoc_mock_imports = [
+    'wx',
+    'wx.grid',
+    'wx.html',
+    'wx.lib',
+    'wx.lib.scrolledpanel',
+    'wx.lib.layoutf',
+    'wx.lib.mixins',
+    'wx.lib.mixins.grid',
+    'wx.lib.wxpTag',
+    'wx.lib.gridmovers',
+    'wx.stc',
+    'wx.py',
+    'IPython',
+    'IPython.frontend',
+    'IPython.frontend.wx',
+    'IPython.frontend.wx.wx_frontend',
+]

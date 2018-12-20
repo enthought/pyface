@@ -17,6 +17,15 @@ timer Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`i_timer` Module
+-------------------
+
+.. automodule:: pyface.timer.i_timer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 :mod:`timer` Module
 -------------------
 
@@ -24,4 +33,3 @@ timer Package
     :members:
     :undoc-members:
     :show-inheritance:
-
