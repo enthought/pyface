@@ -462,7 +462,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 dwa = _EDIT_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.addDockWidget(dwa, dw)
         elif position == 'with':
@@ -474,7 +474,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             try:
                 orient, swap = _VIEW_AREA_MAP[position]
             except KeyError:
-                raise ValueError, "unknown view position: %s" % position
+                raise ValueError("unknown view position: %s" % position)
 
             mw.splitDockWidget(rel_dw, dw, orient)
 
