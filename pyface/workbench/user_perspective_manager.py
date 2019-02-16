@@ -51,7 +51,7 @@ class UserPerspectiveManager(HasTraits):
         """ Property getter. """
 
         # Get all of the current perspective ids:
-        ids = self.id_to_perspective.keys()
+        ids = list(self.id_to_perspective.keys())
 
         # If there are none:
         if len( ids ) == 0:
@@ -88,7 +88,7 @@ class UserPerspectiveManager(HasTraits):
     def _get_perspectives ( self ):
         """ Property getter. """
 
-        return self.id_to_perspective.values()
+        return list(self.id_to_perspective.values())
 
     def _get_file_name ( self ):
         """ Property getter. """

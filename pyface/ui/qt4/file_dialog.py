@@ -91,8 +91,8 @@ class FileDialog(MFileDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
-            self.paths = [unicode(file) for file in files]
+            self.path = six.text_type(files[0])
+            self.paths = [six.text_type(file) for file in files]
         else:
             self.path = ''
             self.paths = ['']

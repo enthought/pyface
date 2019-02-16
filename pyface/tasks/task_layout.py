@@ -40,7 +40,7 @@ class LayoutItem(HasStrictTraits):
 
         args = [(None, arg) for arg in self.pargs()]
         traits = []
-        for name, trait in sorted(self.traits().iteritems()):
+        for name, trait in sorted(self.traits().items()):
             if not trait.pretty_skip and not trait.transient:
                 value = getattr(self, name)
                 if trait.default != value:

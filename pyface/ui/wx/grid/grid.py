@@ -1572,12 +1572,12 @@ class _GridTableBase(PyGridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1592,12 +1592,12 @@ class _GridTableBase(PyGridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1771,7 +1771,7 @@ class _GridTableBase(PyGridTableBase):
 
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event:
-        do_later( self._editor_dispose, self._editor_cache.values() )
+        do_later( self._editor_dispose, list(self._editor_cache.values()) )
 
         self._editor_cache   = {}
         self._renderer_cache = {}

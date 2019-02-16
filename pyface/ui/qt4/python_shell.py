@@ -407,8 +407,8 @@ class PythonWidget(HistoryConsoleWidget):
             if len(leftover) == 1:
                 leftover = leftover[0]
                 if symbol is None:
-                    names = self.interpreter.locals.keys()
-                    names += six.moves.builtins.__dict__.keys()
+                    names = list(self.interpreter.locals.keys())
+                    names += list(six.moves.builtins.__dict__.keys())
                 else:
                     names = dir(symbol)
                 completions = [ n for n in names if n.startswith(leftover) ]

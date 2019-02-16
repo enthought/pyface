@@ -37,7 +37,7 @@ class MainWindowLayout(HasTraits):
     def get_layout(self, layout, include_sizes=True):
         """ Get the layout by adding sublayouts to the specified DockLayout.
         """
-        for name, q_dock_area in AREA_MAP.iteritems():
+        for name, q_dock_area in AREA_MAP.items():
             sublayout = self.get_layout_for_area(q_dock_area, include_sizes)
             setattr(layout, name, sublayout)
 
@@ -119,7 +119,7 @@ class MainWindowLayout(HasTraits):
 
         # Perform the layout. This will assign fixed sizes to the dock widgets
         # to enforce size constraints specified in the PaneItems.
-        for name, q_dock_area in AREA_MAP.iteritems():
+        for name, q_dock_area in AREA_MAP.items():
             sublayout = getattr(layout, name)
             if sublayout:
                 self.set_layout_for_area(sublayout, q_dock_area,
