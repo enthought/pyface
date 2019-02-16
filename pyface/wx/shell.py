@@ -277,8 +277,8 @@ class Shell(wxStyledTextCtrl):
 
         This simply sets "close", "exit" and "quit" to a helpful string.
         """
-        import __builtin__
-        __builtin__.close = __builtin__.exit = __builtin__.quit = \
+        import six.moves.builtins
+        six.moves.builtins.close = six.moves.builtins.exit = six.moves.builtins.quit = \
             'Click on the close button to leave the application.'
 
     def quit(self):

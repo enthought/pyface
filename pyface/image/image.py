@@ -24,7 +24,7 @@ from platform import system
 from zipfile import is_zipfile, ZipFile, ZIP_DEFLATED
 import datetime
 import time
-from thread import allocate_lock
+from six.moves._thread import allocate_lock
 from threading import Thread
 
 from traits.api import (HasPrivateTraits, Property, Str, Int, List, Dict,

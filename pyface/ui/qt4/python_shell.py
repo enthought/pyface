@@ -11,7 +11,7 @@
 
 
 # Standard library imports.
-import __builtin__
+import six.moves.builtins
 from code import compile_command, InteractiveInterpreter
 from cStringIO import StringIO
 import sys
@@ -408,7 +408,7 @@ class PythonWidget(HistoryConsoleWidget):
                 leftover = leftover[0]
                 if symbol is None:
                     names = self.interpreter.locals.keys()
-                    names += __builtin__.__dict__.keys()
+                    names += six.moves.builtins.__dict__.keys()
                 else:
                     names = dir(symbol)
                 completions = [ n for n in names if n.startswith(leftover) ]
@@ -447,7 +447,7 @@ class PythonWidget(HistoryConsoleWidget):
         base_symbol_string = context[0]
         symbol = self.interpreter.locals.get(base_symbol_string, None)
         if symbol is None:
-            symbol = __builtin__.__dict__.get(base_symbol_string, None)
+            symbol = six.moves.builtins.__dict__.get(base_symbol_string, None)
         if symbol is None:
             return None, context
 

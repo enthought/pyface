@@ -11,7 +11,7 @@
 
 # Standard library imports
 from cStringIO import StringIO
-from cPickle import dumps, load, loads
+from six.moves.cPickle import dumps, load, loads
 
 # System library imports
 import wx

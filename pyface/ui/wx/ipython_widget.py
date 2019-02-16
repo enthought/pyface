@@ -19,7 +19,7 @@
 
 # Standard library imports.
 from __future__ import print_function
-import __builtin__
+import six.moves.builtins
 import codeop
 import re
 import sys
@@ -117,10 +117,10 @@ class IPython09Controller(IPythonController):
         # Suppress all key input, to avoid waiting
         def my_rawinput(x=None):
             return '\n'
-        old_rawinput = __builtin__.raw_input
-        __builtin__.raw_input = my_rawinput
+        old_rawinput = six.moves.builtins.raw_input
+        six.moves.builtins.raw_input = my_rawinput
         IPythonController.__init__(self, *args, **kwargs)
-        __builtin__.raw_input = old_rawinput
+        six.moves.builtins.raw_input = old_rawinput
 
         # XXX: This is bugware for IPython bug:
         # https://bugs.launchpad.net/ipython/+bug/270998
