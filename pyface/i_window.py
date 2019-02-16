@@ -269,7 +269,7 @@ class MWindow(object):
             Explanatory text to display along with the message.
 
         """
-        from message_dialog import information
+        from .message_dialog import information
 
         information(self.control, message, title, detail, informative)
 
@@ -288,7 +288,7 @@ class MWindow(object):
             Explanatory text to display along with the message.
 
         """
-        from message_dialog import warning
+        from .message_dialog import warning
 
         warning(self.control, message, title, detail, informative)
 
@@ -307,6 +307,6 @@ class MWindow(object):
             Explanatory text to display along with the message.
 
         """
-        from message_dialog import error
+        from .message_dialog import error
 
         error(self.control, message, title, detail, informative)
