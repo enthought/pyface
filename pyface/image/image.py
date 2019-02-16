@@ -135,7 +135,7 @@ def get_python_value ( source, name ):
         code string.
     """
     temp = {}
-    exec source.replace( b'\r', b'' ) in globals(), temp
+    exec(source.replace( b'\r', b'' ), globals(), temp)
     return temp[ name ]
 
 
