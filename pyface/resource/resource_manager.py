@@ -55,7 +55,7 @@ class ResourceManager(HasTraits):
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
 
-        if not isinstance(path, collections.abc.Sequence):
+        if not isinstance(path, collections.Sequence):
             path = [path]
 
         resource_path = []
