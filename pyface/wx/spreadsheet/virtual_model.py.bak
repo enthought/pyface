@@ -11,7 +11,6 @@
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
 #------------------------------------------------------------------------------
-from __future__ import print_function
 from wx.grid import Grid, PyGridTableBase, GridCellAttr, GridTableMessage, GridCellFloatRenderer
 from wx.grid import GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED
 from wx.grid import GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED
@@ -65,10 +64,10 @@ class VirtualModel(PyGridTableBase):
         return self._data[row][1].get(self.GetColLabelValue(col), "")
 
     def SetValue(self, row, col, value):
-        print('Setting value %d %d %s' % (row, col, value))
-        print('Before ', self.GetValue(row, col))
+        print 'Setting value %d %d %s' % (row, col, value)
+        print 'Before ', self.GetValue(row, col)
         self._data[row][1][self.GetColLabelValue(col)] = value
-        print('After ', self.GetValue(row, col))
+        print 'After ', self.GetValue(row, col)
 
     ''' def GetTypeName(self, row, col):
         if col == 2 or col == 6:
@@ -135,7 +134,7 @@ class VirtualModel(PyGridTableBase):
         grid.ProcessTableMessage(msg)
 
     def GetAttr88(self, row, col, someExtraParameter ):
-        print('Overridden GetAttr ', row, col)
+        print 'Overridden GetAttr ', row, col
         """Part of a workaround to avoid use of attributes, queried by _PropertyGrid's IsCurrentCellReadOnly"""
         #property = self.GetPropertyForCoordinate( row, col )
         #object = self.GetObjectForCoordinate( row, col )
@@ -188,7 +187,7 @@ class VirtualModel(PyGridTableBase):
         """ Append a tupe containing (name, data)
         """
         name, data = row
-        print('Appending ', name)
+        print 'Appending ', name
         self._data.append(row)
         '''entry = {}
         for name in self.colnames:
@@ -216,7 +215,7 @@ class VirtualModel(PyGridTableBase):
 
     def DeleteRow(self, row):
         name, data = row
-        print('Deleting ', name)
+        print 'Deleting ', name
         self._data.remove(row)
 
     def DeleteRows88(self, rows):
