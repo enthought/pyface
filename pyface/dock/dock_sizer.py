@@ -2838,8 +2838,8 @@ class DockRegion ( DockGroup ):
             active = self.active
 
         contents = self.contents
-        for i in (range( active, len( contents ) ) +
-                  range( active - 1, -1, -1 )):
+        for i in (list(range(active, len(contents))) +
+                  list(range(active - 1, -1, -1))):
             if contents[ i ].visible:
                 self.active = i
                 return

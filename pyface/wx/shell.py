@@ -603,10 +603,10 @@ class Shell(wxStyledTextCtrl):
         # to the beginning if we don't find anything.
         if (self.historyIndex <= -1) \
         or (self.historyIndex >= len(self.history)-2):
-            searchOrder = range(len(self.history))
+            searchOrder = list(range(len(self.history)))
         else:
-            searchOrder = range(self.historyIndex+1, len(self.history)) + \
-                          range(self.historyIndex)
+            searchOrder = list(range(self.historyIndex+1, len(self.history))) + \
+                          list(range(self.historyIndex))
         for i in searchOrder:
             command = self.history[i]
             if command[:len(searchText)] == searchText:

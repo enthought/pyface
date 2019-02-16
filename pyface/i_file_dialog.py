@@ -22,6 +22,7 @@ from traits.api import Enum, Unicode, Int
 
 # Local imports.
 from pyface.i_dialog import IDialog
+import six
 
 
 class IFileDialog(IDialog):
@@ -106,7 +107,7 @@ class MFileDialog(object):
             The wildcard patterns for the extension.
         """
 
-        if isinstance(extension, basestring):
+        if isinstance(extension, six.string_types):
             pattern = extension
 
         else:

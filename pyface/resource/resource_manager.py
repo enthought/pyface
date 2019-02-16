@@ -26,6 +26,7 @@ from traits.util.resource import get_path
 # Local imports.
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
+import six
 
 
 class ResourceManager(HasTraits):
@@ -59,7 +60,7 @@ class ResourceManager(HasTraits):
 
         resource_path = []
         for item in list(path) + self.extra_paths:
-            if isinstance(item, basestring):
+            if isinstance(item, six.string_types):
                 resource_path.append(item)
             elif isinstance(item, types.ModuleType):
                 resource_path.append(item)

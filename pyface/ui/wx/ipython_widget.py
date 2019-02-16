@@ -39,6 +39,7 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
 from .widget import Widget
+import six
 
 # Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split('.')))
@@ -403,7 +404,7 @@ class IPythonWidget(Widget):
             name = 'dragged'
 
             if hasattr(obj, 'name') \
-                    and isinstance(obj.name, basestring) and len(obj.name) > 0:
+                    and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
                 py_name = python_name(obj.name)
 
                 # Make sure that the name is actually a valid Python identifier.

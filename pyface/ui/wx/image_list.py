@@ -19,6 +19,7 @@ import wx
 
 # Local imports
 from .image_resource import ImageResource
+import six
 
 
 # fixme: rename to 'CachedImageList'?!?
@@ -61,7 +62,7 @@ class ImageList(wx.ImageList):
 
             # If the filename is a string then it is the filename of some kind
             # of image (e.g 'foo.gif', 'image/foo.png' etc).
-            elif isinstance(filename, basestring):
+            elif isinstance(filename, six.string_types):
                 # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
