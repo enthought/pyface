@@ -11,7 +11,7 @@
 from __future__ import absolute_import
 
 import unittest
-import cStringIO
+from six.moves import cStringIO as StringIO
 import platform
 
 from pyface.qt import QtGui
@@ -119,7 +119,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 self.gui.process_events()
 
         with self.assertRaises(AssertionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
@@ -138,7 +138,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                 self.gui.process_events()
 
         with self.assertRaises(ZeroDivisionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)

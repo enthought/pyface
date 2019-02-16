@@ -13,7 +13,7 @@
 # Standard library imports.
 import six.moves.builtins
 from code import compile_command, InteractiveInterpreter
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 import sys
 from time import time
 

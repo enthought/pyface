@@ -1,5 +1,5 @@
 # Standard library imports.
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 import sys
 
 # Enthought library imports.
