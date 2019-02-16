@@ -40,8 +40,8 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     if not introspect.hasattrAlwaysReturnsTrue(object):
         # Add some attributes that don't always get picked up.
         special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
-                         'func_closure', 'func_code', 'func_defaults',
-                         'func_dict', 'func_doc', 'func_globals', 'func_name']
+                         '__closure__', '__code__', '___kwdefaults__',
+                         '__doc__', '__globals__']
         attributes += [attr for attr in special_attrs \
                        if hasattr(object, attr)]
     # For objects that have traits, get all the trait names since
