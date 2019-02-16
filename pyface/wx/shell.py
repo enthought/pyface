@@ -301,7 +301,7 @@ class Shell(wxStyledTextCtrl):
         if startupScript and os.path.isfile(startupScript):
             startupText = 'Startup script executed: ' + startupScript
             self.push('print %s;execfile(%s)' % \
-                      (`startupText`, `startupScript`))
+                      ('startupText', 'startupScript'))
         else:
             self.push('')
 

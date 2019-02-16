@@ -91,7 +91,7 @@ class NodeTree(Tree):
 
         return
 
-    def _node_right_clicked_changed(self, (obj, point)):
+    def _node_right_clicked_changed(self, obj, point):
         """ Called when the right mouse button is clicked on the tree. """
 
         # Add the node that the right-click occurred on to the selection.
