@@ -248,7 +248,7 @@ class MWindow(object):
         default : NO, YES or CANCEL
             Which button should be the default button.
         """
-        from confirmation_dialog import confirm
+        from .confirmation_dialog import confirm
 
         return confirm(self.control, message, title, cancel, default)
 
