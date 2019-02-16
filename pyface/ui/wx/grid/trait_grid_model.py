@@ -387,7 +387,7 @@ class TraitGridModel(GridModel):
         formats = self.__get_column_formats(col)
 
         if value is not None and formats is not None and \
-               formats.has_key(type(value)) and \
+               type(value) in formats and \
                formats[type(value)] is not None:
             try:
                 format = formats[type(value)]

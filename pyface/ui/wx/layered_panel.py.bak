@@ -138,7 +138,7 @@ class LayeredPanel(Widget):
     def has_layer(self, name):
         """ Does the panel contain a layer with the specified name? """
 
-        return name in self._layers
+        return self._layers.has_key(name)
 
     ###########################################################################
     # Private interface.
