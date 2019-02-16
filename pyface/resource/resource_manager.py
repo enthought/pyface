@@ -15,7 +15,7 @@ sounds etc.
 """
 
 # Standard library imports.
-import glob, inspect, operator, os, sys, types
+import collections, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
@@ -55,7 +55,7 @@ class ResourceManager(HasTraits):
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
 
-        if not operator.isSequenceType(path):
+        if not isinstance(path, collections.abc.Sequence):
             path = [path]
 
         resource_path = []
