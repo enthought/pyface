@@ -26,8 +26,8 @@ from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
 # Local imports.
-from code_editor.pygments_highlighter import PygmentsHighlighter
-from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
+from .code_editor.pygments_highlighter import PygmentsHighlighter
+from .console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
