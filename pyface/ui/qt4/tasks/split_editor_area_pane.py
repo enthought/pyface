@@ -814,10 +814,15 @@ class DraggableTabWidget(QtGui.QTabWidget):
     def contextMenuEvent(self, event):
         """ To show collapse context menu even on empty tabwidgets
         """
-        global_pos = self.mapToGlobal(event.pos())
-        menu = self.editor_area.get_context_menu(pos=global_pos)
-        qmenu = menu.create_menu(self)
-        qmenu.exec_(global_pos)
+        local_pos = event.pos()
+        if (self.empty_widget is not None or
+                self.tabBar().rect().contains(local_pos)):
+            # Only display if we are in the tab bar region or the whole area if
+            # we are displaying the default empty widget.
+            global_pos = self.mapToGlobal(local_pos)
+            menu = self.editor_area.get_context_menu(pos=global_pos)
+            qmenu = menu.create_menu(self)
+            qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
