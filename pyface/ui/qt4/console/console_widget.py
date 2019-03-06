@@ -104,9 +104,8 @@ class ConsoleWidget(QtGui.QWidget):
 
     # The shortcuts defined by this widget. We need to keep track of these to
     # support 'override_shortcuts' above.
-    _shortcuts = set(list(_ctrl_down_remap.keys()) +
-                     [ QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O,
-                       QtCore.Qt.Key_V ])
+    _shortcuts = set(_ctrl_down_remap.keys()) | set(QtCore.Qt.Key_C,
+        QtCore.Qt.Key_G, QtCore.Qt.Key_O, QtCore.Qt.Key_V)
 
     #---------------------------------------------------------------------------
     # 'QObject' interface

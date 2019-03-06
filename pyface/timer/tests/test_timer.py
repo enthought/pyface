@@ -102,7 +102,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
             expected <= actual
             for expected, actual in zip(expected_times, handler.times)
         ):
-            print((handler.times))
+            print(handler.times)
 
         self.assertTrue(
             all(
@@ -129,7 +129,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
         if not all(
             t < timer._start_time + timer.expire + 0.01 for t in handler.times
         ):
-            print((handler.times[-1], timer._start_time + timer.expire))
+            print(handler.times[-1], timer._start_time + timer.expire)
 
         self.assertTrue(
             all(
@@ -213,7 +213,7 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
             expected <= actual
             for expected, actual in zip(expected_times, handler.times)
         ):
-            print((handler.times))
+            print(handler.times)
 
         self.assertTrue(
             all(
@@ -241,7 +241,7 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
         if not all(
             t < timer._start_time + timer.expire + 0.01 for t in handler.times
         ):
-            print((handler.times[-1], timer._start_time + timer.expire))
+            print(handler.times[-1], timer._start_time + timer.expire)
 
         self.assertTrue(
             all(
