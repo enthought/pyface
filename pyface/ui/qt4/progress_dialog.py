@@ -222,6 +222,12 @@ class ProgressDialog(MProgressDialog, Window):
         self._message_control = label
         return
 
+    def _create_percent(self, dialog, parent_sizer):
+        if not self.show_percent:
+            return
+
+        raise NotImplementedError
+
     def _create_timer(self, dialog, layout):
         if not self.show_time:
             return
