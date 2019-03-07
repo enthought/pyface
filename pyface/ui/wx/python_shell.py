@@ -14,7 +14,7 @@
 """
 
 # Standard library imports.
-import __builtin__
+import six.moves.builtins
 import os
 import sys
 import types
@@ -34,6 +34,7 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
+import six
 
 
 @provides(IPythonShell)
@@ -188,7 +189,7 @@ class PythonShell(MPythonShell, Widget):
         name = 'dragged'
 
         if hasattr(obj, 'name') \
-           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+           and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
@@ -251,7 +252,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = __builtin__.raw_input
+        self.raw_input = six.moves.builtins.raw_input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -287,7 +288,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        __builtin__.raw_input = self.raw_input
+        six.moves.builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 

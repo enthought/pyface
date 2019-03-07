@@ -12,6 +12,7 @@
 # Enthought library imports.
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
+import six
 
 
 #### Trait definitions ########################################################
@@ -19,7 +20,7 @@ from traitsui.api import View, Item, VGroup
 def not_empty_string(object, name, value):
     """a not-empty string"""
 
-    if isinstance(value, basestring) and (value.strip() != ''):
+    if isinstance(value, six.string_types) and (value.strip() != ''):
         return value
 
     raise TraitError

@@ -15,6 +15,7 @@
 
 
 # Major package imports.
+from __future__ import print_function
 import wx
 
 # Enthought library imports.
@@ -188,7 +189,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(pid)
 
         else:
-            print '**** pid is None!!! ****'
+            print('**** pid is None!!! ****')
 
         return
 

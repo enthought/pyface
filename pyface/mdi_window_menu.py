@@ -22,7 +22,7 @@ This is the menu that has the tile/cascade actions etc.
 from traits.api import Str
 
 # Local imports.
-from action.api import MenuManager, Separator, WindowAction
+from .action.api import MenuManager, Separator, WindowAction
 
 
 class Cascade(WindowAction):

@@ -18,7 +18,8 @@
 """
 
 # Standard library imports.
-import __builtin__
+from __future__ import print_function
+import six.moves.builtins
 import codeop
 import re
 import sys
@@ -39,6 +40,7 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 
 # Local imports.
 from .widget import Widget
+import six
 
 # Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split('.')))
@@ -115,10 +117,10 @@ class IPython09Controller(IPythonController):
         # Suppress all key input, to avoid waiting
         def my_rawinput(x=None):
             return '\n'
-        old_rawinput = __builtin__.raw_input
-        __builtin__.raw_input = my_rawinput
+        old_rawinput = six.moves.builtins.raw_input
+        six.moves.builtins.raw_input = my_rawinput
         IPythonController.__init__(self, *args, **kwargs)
-        __builtin__.raw_input = old_rawinput
+        six.moves.builtins.raw_input = old_rawinput
 
         # XXX: This is bugware for IPython bug:
         # https://bugs.launchpad.net/ipython/+bug/270998
@@ -184,7 +186,7 @@ class IPython09Controller(IPythonController):
                 is_complete = codeop.compile_command(clean_string,
                             "<string>", "exec")
                 self.release_output()
-            except Exception, e:
+            except Exception as e:
                 # XXX: Hack: return True so that the
                 # code gets executed and the error captured.
                 is_complete = True
@@ -261,7 +263,7 @@ class IPython09Controller(IPythonController):
         # I am patching this here instead of in the IPython module, but at some
         # point, this needs to be merged in.
         if self.debug:
-            print >>sys.__stdout__, "_popup_completion" , self.input_buffer
+            print("_popup_completion" , self.input_buffer, file=sys.__stdout__)
 
         line = self.input_buffer
         if (self.AutoCompActive() and line and not line[-1] == '.') \
@@ -271,7 +273,7 @@ class IPython09Controller(IPythonController):
                 offset = len(self._get_completion_text(line))
                 self.pop_completion(completions, offset=offset)
                 if self.debug:
-                    print >>sys.__stdout__, completions
+                    print(completions, file=sys.__stdout__)
 
     def _get_completion_text(self, line):
         """ Returns the text to be completed by breaking the line at specified
@@ -403,7 +405,7 @@ class IPythonWidget(Widget):
             name = 'dragged'
 
             if hasattr(obj, 'name') \
-                    and isinstance(obj.name, basestring) and len(obj.name) > 0:
+                    and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
                 py_name = python_name(obj.name)
 
                 # Make sure that the name is actually a valid Python identifier.

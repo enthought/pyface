@@ -26,6 +26,7 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
+from __future__ import print_function
 import wx, sys
 
 from traits.api \
@@ -1826,14 +1827,14 @@ class DockControl ( DockItem ):
     def dump ( self, indent ):
         """ Prints the contents of the control.
         """
-        print ('%sControl( %08X, name = %s, id = %s,\n%s'
+        print(('%sControl( %08X, name = %s, id = %s,\n%s'
                           'style = %s, locked = %s,\n%s'
                           'closeable = %s, resizable = %s, visible = %s\n%s'
                           'width = %d, height = %d )' % (
               ' ' * indent, id( self ), self.name, self.id,
               ' ' * (indent + 9), self.style, self.locked,
               ' ' * (indent + 9), self.closeable, self.resizable, self.visible,
-              ' ' * (indent + 9), self.width, self.height ))
+              ' ' * (indent + 9), self.width, self.height )))
 
     #---------------------------------------------------------------------------
     #  Draws the contents of the control:
@@ -2805,8 +2806,8 @@ class DockRegion ( DockGroup ):
     def dump ( self, indent ):
         """ Prints the contents of the region.
         """
-        print '%sRegion( %08X, active = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.active, self.width, self.height )
+        print('%sRegion( %08X, active = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.active, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 
@@ -2838,8 +2839,8 @@ class DockRegion ( DockGroup ):
             active = self.active
 
         contents = self.contents
-        for i in (range( active, len( contents ) ) +
-                  range( active - 1, -1, -1 )):
+        for i in (list(range(active, len(contents))) +
+                  list(range(active - 1, -1, -1))):
             if contents[ i ].visible:
                 self.active = i
                 return
@@ -3565,8 +3566,8 @@ class DockSection ( DockGroup ):
     def dump ( self, indent = 0 ):
         """ Prints the contents of the section.
         """
-        print '%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
-              ' ' * indent, id( self ), self.is_row, self.width, self.height )
+        print('%sSection( %08X, is_row = %s, width = %d, height = %d )' % (
+              ' ' * indent, id( self ), self.is_row, self.width, self.height ))
         for item in self.contents:
             item.dump( indent + 3 )
 

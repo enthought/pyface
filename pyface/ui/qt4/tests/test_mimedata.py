@@ -7,7 +7,7 @@
 #
 
 import unittest
-from cPickle import dumps
+from six.moves.cPickle import dumps
 
 from pyface.qt import QtCore
 from ..mimedata import PyMimeData, str2bytes

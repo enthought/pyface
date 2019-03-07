@@ -24,7 +24,7 @@ from platform import system
 from zipfile import is_zipfile, ZipFile, ZIP_DEFLATED
 import datetime
 import time
-from thread import allocate_lock
+from six.moves._thread import allocate_lock
 from threading import Thread
 
 from traits.api import (HasPrivateTraits, Property, Str, Int, List, Dict,
@@ -135,7 +135,7 @@ def get_python_value ( source, name ):
         code string.
     """
     temp = {}
-    exec source.replace( b'\r', b'' ) in globals(), temp
+    exec(source.replace( b'\r', b'' ), globals(), temp)
     return temp[ name ]
 
 
@@ -149,7 +149,7 @@ def add_object_prefix ( dict, object, prefix ):
     """ Adds all traits from a specified object to a dictionary with a specified
         name prefix.
     """
-    for name, value in object.trait_get().iteritems():
+    for name, value in object.trait_get().items():
         dict[ prefix + name ] = value
 
 
@@ -359,7 +359,7 @@ class ImageInfo ( HasPrivateTraits ):
                     for name, value in self.trait_get(
                         'name', 'image_name', 'description', 'category',
                         'keywords', 'alignment'
-                    ).iteritems())
+                    ).items())
         data.update(self.trait_get('width', 'height'))
         sides = ['left', 'right', 'top', 'bottom']
         data.update(('b'+name, getattr(self.border, name)) for name in sides)
@@ -694,7 +694,7 @@ class ImageVolume ( HasPrivateTraits ):
                     for name, value in self.trait_get(
                         'description', 'category', 'keywords', 'aliases',
                         'time_stamp'
-                    ).iteritems())
+                    ).items())
         data['info'] = ',\n'.join(info.image_volume_info_code
                                   for info in self.info)
         return (ImageVolumeTemplate % data)
@@ -780,7 +780,7 @@ class ImageVolume ( HasPrivateTraits ):
                     old_image.height = cur_image.height
                     cur_image.volume = None
 
-            images = cur_image_set.values()
+            images = list(cur_image_set.values())
 
         # Set the new time stamp of the volume:
         self.time_stamp = time_stamp
@@ -1119,7 +1119,7 @@ class ImageLibrary ( HasPrivateTraits ):
             volume.keywords = list( keywords )
 
             # Create the final volume info list for the volume:
-            volume.info = info.values()
+            volume.info = list(info.values())
 
             # Write the volume manifest source code to the zip file:
             zf.writestr( 'image_volume.py', volume.image_volume_code )

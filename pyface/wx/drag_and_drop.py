@@ -18,8 +18,7 @@ import inspect
 
 # Major package imports.
 import wx
-
-string_type = (str, unicode)
+import six
 
 
 class Clipboard:
@@ -51,7 +50,7 @@ class FileDropSource(wx.DropSource):
         clipboard.drop_source = self
 
         data_object = wx.FileDataObject()
-        if isinstance(files, string_type):
+        if isinstance(files, six.text_type):
             files = [files]
 
         for file in files:

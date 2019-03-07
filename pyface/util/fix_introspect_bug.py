@@ -29,6 +29,7 @@ introspect module.
 from wx.py import introspect
 
 import types
+import six
 
 # The fixed function.
 def getAttributeNames(object, includeMagic=1, includeSingle=1,
@@ -39,8 +40,8 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     if not introspect.hasattrAlwaysReturnsTrue(object):
         # Add some attributes that don't always get picked up.
         special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
-                         'func_closure', 'func_code', 'func_defaults',
-                         'func_dict', 'func_doc', 'func_globals', 'func_name']
+                         '__closure__', '__code__', '___kwdefaults__',
+                         '__doc__', '__globals__']
         attributes += [attr for attr in special_attrs \
                        if hasattr(object, attr)]
     # For objects that have traits, get all the trait names since
@@ -72,11 +73,11 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     # Remove duplicates from the attribute list.
     for item in attributes:
         dict[item] = None
-    attributes = dict.keys()
+    attributes = list(dict.keys())
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
     attributes = [attribute for attribute in attributes \
-                  if isinstance(attribute, basestring)]
+                  if isinstance(attribute, six.string_types)]
     attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
     if not includeSingle:
         attributes = filter(lambda item: item[0]!='_' \
@@ -116,7 +117,7 @@ def getAllAttributeNames(object):
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = object.__dict__.keys()
+        attributes = list(object.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass

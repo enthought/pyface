@@ -898,7 +898,7 @@ class DockWindow ( HasPrivateTraits ):
         """
         layouts = self._get_layouts()
         if layouts is not None:
-            return layouts.keys()
+            return list(layouts.keys())
 
         return []
 

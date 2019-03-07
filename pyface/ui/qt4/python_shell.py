@@ -11,9 +11,9 @@
 
 
 # Standard library imports.
-import __builtin__
+import six.moves.builtins
 from code import compile_command, InteractiveInterpreter
-from cStringIO import StringIO
+from six.moves import cStringIO as StringIO
 import sys
 from time import time
 
@@ -26,12 +26,13 @@ from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
 # Local imports.
-from code_editor.pygments_highlighter import PygmentsHighlighter
-from console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
+from .code_editor.pygments_highlighter import PygmentsHighlighter
+from .console.api import BracketMatcher, CallTipWidget, CompletionLexer, \
     HistoryConsoleWidget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
+import six
 
 
 @provides(IPythonShell)
@@ -134,7 +135,7 @@ class PythonShell(MPythonShell, Widget):
         name = 'dragged'
 
         if hasattr(obj, 'name') \
-           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+           and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
@@ -406,8 +407,8 @@ class PythonWidget(HistoryConsoleWidget):
             if len(leftover) == 1:
                 leftover = leftover[0]
                 if symbol is None:
-                    names = self.interpreter.locals.keys()
-                    names += __builtin__.__dict__.keys()
+                    names = list(self.interpreter.locals.keys())
+                    names += list(six.moves.builtins.__dict__.keys())
                 else:
                     names = dir(symbol)
                 completions = [ n for n in names if n.startswith(leftover) ]
@@ -446,7 +447,7 @@ class PythonWidget(HistoryConsoleWidget):
         base_symbol_string = context[0]
         symbol = self.interpreter.locals.get(base_symbol_string, None)
         if symbol is None:
-            symbol = __builtin__.__dict__.get(base_symbol_string, None)
+            symbol = six.moves.builtins.__dict__.get(base_symbol_string, None)
         if symbol is None:
             return None, context
 

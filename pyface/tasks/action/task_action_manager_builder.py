@@ -256,5 +256,5 @@ class TaskActionManagerBuilder(HasTraits):
     #### Trait initializers ###################################################
 
     def _controller_default(self):
-        from task_action_controller import TaskActionController
+        from .task_action_controller import TaskActionController
         return TaskActionController(task=self.task)

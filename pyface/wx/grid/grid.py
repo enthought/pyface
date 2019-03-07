@@ -15,6 +15,7 @@
 
 
 # Major package imports.
+from __future__ import print_function
 import wx
 from wx.grid import Grid as wxGrid
 
@@ -251,7 +252,7 @@ class Grid(wxGrid):
     ###########################################################################
 
     def Reset(self):
-        print 'Reset'
+        print('Reset')
         #attr = grid.GridCellAttr()
         #renderer = MyRenderer()
         #attr.SetRenderer(renderer)
@@ -269,7 +270,7 @@ class Grid(wxGrid):
         (wxGrid) -> Reset the grid view.   Call this to
         update the grid if rows and columns have been added or deleted
         """
-        print '*************************VirtualModel.reset_view'
+        print('*************************VirtualModel.reset_view')
 
         grid = self
 

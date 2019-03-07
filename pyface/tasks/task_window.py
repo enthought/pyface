@@ -14,6 +14,7 @@ from pyface.tasks.i_task_pane import ITaskPane
 from pyface.tasks.task import Task, TaskLayout
 from pyface.tasks.task_window_backend import TaskWindowBackend
 from pyface.tasks.task_window_layout import TaskWindowLayout
+import six
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -305,7 +306,7 @@ class TaskWindow(ApplicationWindow):
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
-            if isinstance(layout, basestring):
+            if isinstance(layout, six.string_types):
                 continue
             state = self._get_state(layout.id)
             if state:

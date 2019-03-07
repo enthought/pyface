@@ -49,7 +49,7 @@ class TraitDictNodeType(NodeType):
     def get_children(self, node):
         """ Returns the children of a node. """
 
-        return node.values()
+        return list(node.values())
 
     def get_text(self, node):
         """ Returns the label text for a node. """

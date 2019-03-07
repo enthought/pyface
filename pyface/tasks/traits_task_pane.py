@@ -2,7 +2,7 @@
 from traits.api import HasTraits, Instance
 
 # Local imports.
-from task_pane import TaskPane
+from .task_pane import TaskPane
 
 
 class TraitsTaskPane(TaskPane):

@@ -281,7 +281,7 @@ class PyfaceAuiManager(aui.AuiManager):
         """
         pane_count = len(self._panes)
 
-        for ii in xrange(pane_count):
+        for ii in range(pane_count):
             p = self._panes[ii]
             if p.window and p.IsShown() and p.IsDocked():
                 p.window.Refresh()

@@ -15,12 +15,14 @@
 
 
 # Enthought library imports.
+from __future__ import print_function
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
 # Local imports.
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
+import six
 
 
 class ActionManager(HasTraits):
@@ -102,7 +104,7 @@ class ActionManager(HasTraits):
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
-            if isinstance(arg, basestring):
+            if isinstance(arg, six.string_types):
                 # Create a group with the specified Id.
                 arg = Group(id=arg)
 
@@ -345,7 +347,7 @@ class ActionManager(HasTraits):
             item.parent = self
 
         # 2) The item is a string.
-        elif isinstance(item, basestring):
+        elif isinstance(item, six.string_types):
             # Create a group with that Id.
             item = Group(id=item)
             item.parent = self
@@ -379,7 +381,7 @@ class ActionManager(HasTraits):
 
     def dump(self, indent=''):
         """ Render a manager! """
-        print indent, 'Manager', self.id
+        print(indent, 'Manager', self.id)
         indent += '  '
 
         for group in self._groups:
@@ -387,12 +389,12 @@ class ActionManager(HasTraits):
 
     def render_group(self, group, indent=''):
         """ Render a group! """
-        print indent, 'Group', group.id
+        print(indent, 'Group', group.id)
         indent += '    '
 
         for item in group.items:
             if isinstance(item, Group):
-                print 'Surely, a group cannot contain another group!!!!'
+                print('Surely, a group cannot contain another group!!!!')
                 self.render_group(item, indent)
 
             else:
@@ -405,4 +407,4 @@ class ActionManager(HasTraits):
             item.dump(indent)
 
         else:
-            print indent, 'Item', item.id
+            print(indent, 'Item', item.id)
