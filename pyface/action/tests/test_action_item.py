@@ -2,8 +2,10 @@ from __future__ import absolute_import
 
 from traits.testing.unittest_tools import UnittestTools, unittest
 
-from ...image_cache import ImageCache
-from ...window import Window
+from pyface.image_cache import ImageCache
+from pyface.toolkit import toolkit_object
+from pyface.widget import Widget
+from pyface.window import Window
 from ..action import Action
 from ..action_controller import ActionController
 from ..action_item import ActionItem
@@ -36,6 +38,17 @@ class TestActionItem(unittest.TestCase, UnittestTools):
             self.memo.append('called')
 
         self.action = Action(name='Test', on_perform=perform)
+
+    def control_factory(self, parent, action):
+        if toolkit_object.toolkit == 'wx':
+            import wx
+            control = wx.Control(parent)
+        elif toolkit_object.toolkit == 'qt4':
+            from pyface.qt import QtGui
+            control = QtGui.QWidget(parent)
+        else:
+            control = None
+        return control
 
     def test_default_id(self):
         action_item = ActionItem(action=self.action)
@@ -144,3 +157,19 @@ class TestActionItem(unittest.TestCase, UnittestTools):
         action_item.add_to_toolbar(window.control, menu, image_cache,
                                    controller, True)
         window.close()
+
+    def test_add_to_toolbar_widget(self):
+        self.action.style = "widget"
+        self.action.control_factory = self.control_factory
+
+        window = Window()
+        window.open()
+        action_item = ActionItem(action=self.action)
+        toolbar_manager = ToolBarManager(name='Test')
+        image_cache = ImageCache(height=32, width=32)
+        menu = toolbar_manager.create_tool_bar(window.control)
+
+        try:
+            action_item.add_to_toolbar(window.control, menu, image_cache, None, True)
+        finally:
+            window.close()

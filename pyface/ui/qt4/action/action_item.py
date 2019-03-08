@@ -1,14 +1,14 @@
-#------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
+# Copyright (c) 2019, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# However, when used with the GPL version of PyQt the additional terms described
+# in the PyQt GPL exception also apply.
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+
 """ The PyQt specific implementations the action manager internal classes. """
 
 
@@ -23,6 +23,18 @@ from traits.api import Any, Bool, HasTraits
 
 # Local imports.
 from pyface.action.action_event import ActionEvent
+
+
+class PyfaceWidgetAction(QtGui.QWidgetAction):
+
+    def __init__(self, parent, action):
+        super(PyfaceWidgetAction, self).__init__(parent)
+        self.action = action
+
+    def createWidget(self, parent):
+        widget = self.action.create_control(parent)
+        widget._action = self.action
+        return widget
 
 
 class _MenuItem(HasTraits):
@@ -49,6 +61,9 @@ class _MenuItem(HasTraits):
     # The toolkit control.
     control = Any()
 
+    # The toolkit control id.
+    control_id = None
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -62,7 +77,10 @@ class _MenuItem(HasTraits):
         # FIXME v3: This is a wx'ism and should be hidden in the toolkit code.
         self.control_id = None
 
-        if action.image is None:
+        if action.style == 'widget':
+            self.control = PyfaceWidgetAction(parent, action)
+            menu.addAction(self.control)
+        elif action.image is None:
             self.control = menu.addAction(action.name, self._qt4_on_triggered,
                     action.accelerator)
         else:
@@ -245,6 +263,9 @@ class _Tool(HasTraits):
     # The toolkit control.
     control = Any()
 
+    # The toolkit control id.
+    control_id = None
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -257,10 +278,10 @@ class _Tool(HasTraits):
         self.tool_bar = tool_bar
         action = item.action
 
-        # FIXME v3: This is a wx'ism and should be hidden in the toolkit code.
-        self.control_id = None
-
-        if action.image is None:
+        if action.style == 'widget':
+            widget = action.create_control(tool_bar)
+            self.control = tool_bar.addWidget(widget)
+        elif action.image is None:
             self.control = tool_bar.addAction(action.name)
         else:
             size = tool_bar.iconSize()
@@ -424,6 +445,10 @@ class _PaletteTool(HasTraits):
         action = self.item.action
         label = action.name
 
+        if action.style == "widget":
+            raise NotImplementedError(
+                "Qt does not support widgets in palettes")
+
         # Tool palette tools never have '...' at the end.
         if label.endswith('...'):
             label = label[:-3]
@@ -500,5 +525,3 @@ class _PaletteTool(HasTraits):
         action.perform(action_event)
 
         return
-
-#### EOF ######################################################################
