@@ -69,9 +69,6 @@ class Action(HasTraits):
     #: The action's style.
     style = Enum('push', 'radio', 'toggle', 'widget')
 
-    #: The whether the action has a special role in Mac OS menus.
-    menu_role = Enum(None, 'about', 'preferences', 'quit')
-
     #: A short description of the action used for tooltip text etc.
     tooltip = Unicode
 
@@ -97,7 +94,7 @@ class Action(HasTraits):
         """ Called when creating a "widget" style action.
 
         By default this will call whatever callable is supplied via the
-        'widget_factory' trait which is a callable that should take the parent
+        'control_factory' trait which is a callable that should take the parent
         control and the action as arguments and return an appropriate toolkit
         control.  Some operating systems (Mac OS in particular) may limit what
         widgets can be displayed in menus.
