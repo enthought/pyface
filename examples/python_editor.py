@@ -15,9 +15,65 @@
 
 
 # Enthought library imports.
-from pyface.api import ApplicationWindow, FileDialog, GUI, OK, \
-        PythonEditor
-from pyface.action.api import Action, Group, MenuManager, MenuBarManager
+from traits.api import Constant
+
+from pyface.api import (
+    ApplicationWindow, FileDialog, GUI, OK, PythonEditor
+)
+from pyface.toolkit import toolkit_object
+from pyface.action.api import (
+    Action, ActionEvent, Group, MenuManager, MenuBarManager, ToolBarManager
+)
+
+
+class IntFieldAction(Action):
+    """ A widget action containing an integer textbox
+
+    This shows one way of creating a widget Action by overriding the
+    create_control method and overloading the `perform` methods to pass
+    the entered value to a handler.
+    """
+
+    style = Constant("widget")
+
+    def create_control(self, parent):
+        if toolkit_object.toolkit == 'wx':
+            import wx
+            from wx.lib.intctrl import IntCtrl
+            control = IntCtrl(
+                parent,
+                value=1,
+                style=wx.TE_PROCESS_ENTER
+            )
+
+            def handle_enter(event):
+                value = control.GetValue()
+                action_event = ActionEvent(value=value)
+                self.perform(action_event)
+
+            control.Bind(wx.EVT_TEXT_ENTER, handle_enter)
+
+        elif toolkit_object.toolkit == 'qt4':
+            from pyface.qt import QtGui
+            control = QtGui.QLineEdit(parent)
+            control.setText("1")
+            control.setValidator(QtGui.QIntValidator())
+
+            def handle_enter():
+                value = int(control.text())
+                action_event = ActionEvent(value=value)
+                self.perform(action_event)
+
+            control.returnPressed.connect(handle_enter)
+
+        else:
+            control = None
+
+        return control
+
+    def perform(self, event):
+        if self.on_perform is not None:
+            self.on_perform(event.value)
 
 
 class MainWindow(ApplicationWindow):
@@ -57,6 +113,38 @@ class MainWindow(ApplicationWindow):
                 name='&File')
         )
 
+        # Add a tool bar if we are using qt4 - wx has layout issues
+        if toolkit_object.toolkit == 'qt4':
+            self.tool_bar_manager = ToolBarManager(
+                Group(
+                    Action(
+                        name='Open...',
+                        on_perform=self.on_open_file
+                    ),
+                    Action(
+                        name='Save',
+                        on_perform=self.on_save_file
+                    ),
+                    Action(
+                        name='Close',
+                        on_perform=self.close
+                    ),
+                    id='document_group',
+                ),
+                Group(
+                    Action(
+                        name="Show Line Numbers",
+                        style='toggle',
+                        on_perform=self.on_show_line_numbers,
+                        checked=True,
+                    ),
+                    IntFieldAction(
+                        name="Go to line",
+                        on_perform=self.on_go_to_line,
+                    )
+                )
+            )
+
     ###########################################################################
     # Protected 'IApplication' interface.
     ###########################################################################
@@ -93,6 +181,13 @@ class MainWindow(ApplicationWindow):
                 dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
+
+    def on_show_line_numbers(self):
+        self._editor.show_line_numbers = not self._editor.show_line_numbers
+
+    def on_go_to_line(self, line_number):
+        self._editor.select_line(line_number+1)
+
 
 # Application entry point.
 if __name__ == '__main__':

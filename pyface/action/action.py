@@ -67,10 +67,13 @@ class Action(HasTraits):
     on_perform = Callable
 
     #: The action's style.
-    style = Enum('push', 'radio', 'toggle')
+    style = Enum('push', 'radio', 'toggle', 'widget')
 
     #: A short description of the action used for tooltip text etc.
     tooltip = Unicode
+
+    #: An (optional) callable to create the toolkit control for widget style.
+    control_factory = Callable
 
     ###########################################################################
     # 'Action' interface.
@@ -86,6 +89,32 @@ class Action(HasTraits):
         return self.name
 
     #### Methods ##############################################################
+
+    def create_control(self, parent):
+        """ Called when creating a "widget" style action.
+
+        By default this will call whatever callable is supplied via the
+        'control_factory' trait which is a callable that should take the parent
+        control and the action as arguments and return an appropriate toolkit
+        control.  Some operating systems (Mac OS in particular) may limit what
+        widgets can be displayed in menus.
+
+        This method is only used when the 'style' is "widget" and is ignored by
+        other styles.
+
+        Parameters
+        ----------
+        parent : toolkit control
+            The toolkit control, usually a toolbar.
+
+        Returns
+        -------
+        control : toolkit control
+            A toolkit control or None.
+        """
+        if self.style == 'widget' and self.control_factory is not None:
+            return self.control_factory(parent, self)
+        return None
 
     def destroy(self):
         """ Called when the action is no longer required.
