@@ -10,7 +10,10 @@
 #------------------------------------------------------------------------------
 """ The interface for an image resource. """
 
-from collections import Sequence
+try:
+    from collections.abc import Sequence
+except ImportError:  # Python 3.8 deprecation
+    from collections import Sequence
 
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
