@@ -15,6 +15,7 @@ from .action_event import ActionEvent
 from .action_item import ActionItem
 from .action_manager import ActionManager
 from .action_manager_item import ActionManagerItem
+from .field_action import FieldAction
 from .group import Group, Separator
 from .gui_application_action import (
     AboutAction, CloseActiveWindowAction, CreateWindowAction, ExitAction,
@@ -25,6 +26,7 @@ from .menu_manager import MenuManager
 from .menu_bar_manager import MenuBarManager
 from .status_bar_manager import StatusBarManager
 from .tool_bar_manager import ToolBarManager
+from .traitsui_widget_action import TraitsUIWidgetAction
 from .window_action import CloseWindowAction, WindowAction
 
 # This part of the module handles widgets that are still wx specific.  This
