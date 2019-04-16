@@ -31,7 +31,7 @@ class ISpinField(IField):
     #: The current value of the spinner
     value = Range(low='minimum', high='maximum')
 
-    #: The current value of the spinner
+    #: The bounds of the spinner
     bounds = Tuple(Int, Int)
 
     #: The minimum value

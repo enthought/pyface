@@ -149,9 +149,6 @@ class MainWindow(ApplicationWindow):
     def on_show_line_numbers(self):
         self._editor.show_line_numbers = not self._editor.show_line_numbers
 
-    def on_go_to_line(self, line_number):
-        self._editor.select_line(line_number+1)
-
     def on_style_changed(self, value):
         from pygments.styles import get_style_by_name
 
