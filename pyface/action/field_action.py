@@ -11,6 +11,7 @@ from traits.api import Any, Constant, Dict, Str, Type
 
 from pyface.fields.i_field import IField
 from .action import Action
+from .action_event import ActionEvent
 
 
 class FieldAction(Action):

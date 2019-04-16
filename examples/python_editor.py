@@ -13,7 +13,7 @@
 #------------------------------------------------------------------------------
 """ Python editor example. """
 
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 
 # Enthought library imports.
 from traits.api import (
@@ -101,8 +101,8 @@ class MainWindow(ApplicationWindow):
                         field_type=ComboField,
                         field_defaults={
                             'values': styles,
-                            'value': u'default',
-                            'tooltip': u'Style',
+                            'value': 'default',
+                            'tooltip': 'Style',
                         },
                         on_perform=self.on_style_changed,
                     ),

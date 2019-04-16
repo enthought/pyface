@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2017, Enthought, Inc.
+# Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -13,9 +13,11 @@
 #------------------------------------------------------------------------------
 """ The Qt-specific implementation of the text field class """
 
-from __future__ import print_function, absolute_import
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
-from traits.api import Bool, Enum, Trait, Unicode, provides
+from traits.api import Trait, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
 from pyface.qt.QtGui import QLineEdit
@@ -38,20 +40,8 @@ Echo = Trait(
 class TextField(MTextField, Field):
     """ The Qt-specific implementation of the text field class """
 
-    #: The value held by the field.
-    value = Unicode
-
-    #: Should the text trait be updated on user edits, or when done editing.
-    update_text = Enum('auto', 'editing_finished')
-
-    #: Placeholder text for an empty field.
-    placeholder = Unicode
-
     #: Display typed text, or one of several hidden "password" modes.
     echo = Echo
-
-    #: Whether or not the field is read-only.
-    read_only = Bool
 
     # ------------------------------------------------------------------------
     # IField interface

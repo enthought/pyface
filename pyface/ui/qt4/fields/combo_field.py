@@ -12,13 +12,11 @@
 
 """ The Qt-specific implementation of the combo field class """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
-from six import text_type
-
-from traits.api import (
-    Bool, Callable, Enum, List, Unicode, on_trait_change, provides
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
 )
+
+from traits.api import provides
 
 from pyface.fields.i_combo_field import IComboField, MComboField
 from pyface.qt.QtGui import QComboBox
@@ -27,7 +25,7 @@ from .field import Field
 
 @provides(IComboField)
 class ComboField(MComboField, Field):
-    """ The Qt-specific implementation of the text field class """
+    """ The Qt-specific implementation of the combo field class """
 
     # ------------------------------------------------------------------------
     # IField interface

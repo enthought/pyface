@@ -13,7 +13,11 @@
 #------------------------------------------------------------------------------
 """ The text field interface. """
 
-from traits.api import Bool, Callable, Enum, HasTraits, Unicode
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
+
+from traits.api import Bool, Enum, HasTraits, Unicode
 
 from pyface.fields.i_field import IField
 

@@ -41,8 +41,8 @@ class TraitsUIWidgetAction(Action):
     def create_control(self, parent):
         """ Called when creating a "widget" style action.
 
-        This constructs an IField-based control directly and binds changes to
-        the value to the `value_updated` method.
+        This constructs an TraitsUI subpanel-based control.  It does no binding
+        to the `perform` method.
 
         Parameters
         ----------

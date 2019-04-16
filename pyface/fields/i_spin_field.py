@@ -13,9 +13,13 @@
 #------------------------------------------------------------------------------
 """ The text field interface. """
 
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
+
 from traits.api import HasTraits, Int, Property, Range, Tuple
 
-from pyface.fields.i_field import IField, MField
+from pyface.fields.i_field import IField
 
 
 class ISpinField(IField):
@@ -42,13 +46,13 @@ class MSpinField(HasTraits):
     #: The current value of the spinner
     value = Range(low='minimum', high='maximum')
 
-    #: The current value of the spinner
+    #: The bounds for the spinner
     bounds = Tuple(Int, Int)
 
-    #: The minimum value
+    #: The minimum value for the spinner
     minimum = Property(Int, depends_on='bounds')
 
-    #: The maximum value
+    #: The maximum value for the spinner
     maximum = Property(Int, depends_on='bounds')
 
     # ------------------------------------------------------------------------
@@ -71,7 +75,7 @@ class MSpinField(HasTraits):
     def _get_maximum(self):
         return self.bounds[1]
 
-    def _set_minimum(self, value):
+    def _set_maximum(self, value):
         if value < self.minimum:
             self.bounds = (value, value)
         else:

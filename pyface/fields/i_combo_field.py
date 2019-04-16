@@ -13,11 +13,17 @@
 #------------------------------------------------------------------------------
 """ The text field interface. """
 
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
+
 from six import text_type
 
-from traits.api import Bool, Callable, HasTraits, Enum, List, Unicode, on_trait_change
+from traits.api import (
+    Bool, Callable, HasTraits, Enum, List, Unicode, on_trait_change
+)
 
-from pyface.fields.i_field import IField, MField
+from pyface.fields.i_field import IField
 
 
 class IComboField(IField):

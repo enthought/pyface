@@ -13,9 +13,11 @@
 #------------------------------------------------------------------------------
 """ The Qt-specific implementation of the text field class """
 
-from __future__ import absolute_import, print_function, unicode_literals
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
-from traits.api import Any, Bool, Enum, Instance, Trait, Unicode, provides
+from traits.api import Any, Instance, Unicode, provides
 
 from pyface.qt.QtCore import Qt
 from pyface.fields.i_field import IField, MField
@@ -55,7 +57,7 @@ class Field(MField, Widget):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(Field, self)._add_event_listeners()
-        if self.control is not None and self.context_menu is not None:
+        if self.control is not None:
             self.control.customContextMenuRequested.connect(
                     self._handle_context_menu)
             self.control.contextMenuPolicy(Qt.CustomContextMenu)
@@ -63,7 +65,7 @@ class Field(MField, Widget):
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
-            self.control.customContextMenuRequested.connect(
+            self.control.customContextMenuRequested.disconnect(
                     self._handle_context_menu)
         super(Field, self)._remove_event_listeners()
 

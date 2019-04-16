@@ -12,9 +12,11 @@
 
 """ The Qt-specific implementation of the spin field class """
 
-from __future__ import absolute_import, print_function, unicode_literals
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
-from traits.api import Bool, Enum, Str, Trait, provides
+from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
 from pyface.qt.QtGui import QSpinBox
@@ -23,7 +25,7 @@ from .field import Field
 
 @provides(ISpinField)
 class SpinField(MSpinField, Field):
-    """ The Qt-specific implementation of the text field class """
+    """ The Qt-specific implementation of the spin field class """
 
     # ------------------------------------------------------------------------
     # IField interface
