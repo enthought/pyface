@@ -9,7 +9,6 @@
 
 from traits.api import Constant, HasTraits, Instance
 
-from pyface.fields.i_field import IField
 from .action import Action
 
 
@@ -27,7 +26,7 @@ class TraitsUIWidgetAction(Action):
     # TraitsUIWidgetAction traits -------------------------------------------
 
     #: The underlying traits model to be displayed, or None.
-    object = Instance(HasTraits)
+    model = Instance(HasTraits)
 
     # Action traits ---------------------------------------------------------
 
@@ -54,10 +53,7 @@ class TraitsUIWidgetAction(Action):
         control : toolkit control
             A toolkit control or None.
         """
-        if self.object is not None:
-            ui = self.object.edit_traits(kind='subpanel', parent=parent)
-        else:
-            ui = self.edit_traits(kind='subpanel', parent=parent)
+        ui = self.edit_traits(kind='subpanel', parent=parent)
         control = ui.control
         control._ui = ui
         return control
@@ -69,8 +65,7 @@ class TraitsUIWidgetAction(Action):
     def trait_context(self):
         """ Use the model object for the Traits UI context, if appropriate.
         """
-        if self.object:
-            context = self.model.trait_context()
-            context['action'] = self
+        if self.model is not None:
+            context = {'object': self.model, 'action': self}
             return context
         return super(TraitsUIWidgetAction, self).trait_context()

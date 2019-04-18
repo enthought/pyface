@@ -40,14 +40,112 @@ class ITextField(IField):
     #: Whether or not the field is read-only.
     read_only = Bool
 
-    def _text_edited(self, text):
-        """ Handle a change to the text from user editing
-
-        This is a method suitable for calling from a toolkit event handler.
-        """
-
 
 class MTextField(HasTraits):
     """ The text field mix-in. """
+
     # this currently does nothing
-    pass
+
+    #: The value held by the field.
+    value = Unicode
+
+    #: Should the text trait be updated on user edits, or when done editing.
+    update_text = Enum('auto', 'editing_finished')
+
+    #: Placeholder text for an empty field.
+    placeholder = Unicode
+
+    #: Display typed text, or one of several hidden "password" modes.
+    echo = Enum('normal', 'password')
+
+    #: Whether or not the field is read-only.
+    read_only = Bool
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
+
+    def _initialize_control(self):
+        self._set_control_echo(self.echo)
+        self._set_control_value(self.value)
+        self._set_control_placholder(self.placeholder)
+        self._set_control_read_only(self.read_only)
+
+        super(MTextField, self)._initialize_control()
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super(MTextField, self)._add_event_listeners()
+        if self.control is not None:
+            if self.update_text == 'editing_finished':
+                self._observe_control_editing_finished()
+            else:
+                self._observe_control_value()
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        if self.control is not None:
+            if self.update_text == 'editing_finished':
+                self._observe_control_editing_finished(remove=True)
+            else:
+                self._observe_control_value(remove=True)
+        super(MTextField, self)._remove_event_listeners()
+
+    def _editing_finished(self):
+        if self.control is not None:
+            value = self._get_control_value()
+            self._value_updated(value)
+
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_placeholder(self):
+        """ Toolkit specific method to set the control's placeholder. """
+        raise NotImplementedError
+
+    def _set_control_placeholder(self, placeholder):
+        """ Toolkit specific method to set the control's placeholder. """
+        raise NotImplementedError
+
+    def _get_control_echo(self):
+        """ Toolkit specific method to get the control's echo. """
+        raise NotImplementedError
+
+    def _set_control_echo(self, echo):
+        """ Toolkit specific method to set the control's echo. """
+        raise NotImplementedError
+
+    def _get_control_read_only(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        raise NotImplementedError
+
+    def _set_control_read_only(self, read_only):
+        """ Toolkit specific method to set the control's read_only state. """
+        raise NotImplementedError
+
+    def _observe_control_editing_finished(self, remove=False):
+        """ Change observation of whether editing is finished. """
+        raise NotImplementedError
+
+    # Trait change handlers --------------------------------------------------
+
+    def _placeholder_changed(self):
+        if self.control is not None:
+            self._set_control_placeholder(self.placeholder)
+
+    def _echo_changed(self):
+        if self.control is not None:
+            self._set_control_echo(self.echo)
+
+    def _read_only_changed(self):
+        if self.control is not None:
+            self._set_control_read_only(self.read_only)
+
+    def _update_text_changed(self, new):
+        """ Change how we listen to for updates to text value. """
+        if self.control is not None:
+            if new == 'editing_finished':
+                self._observe_control_value(remove=True)
+                self._observe_control_editing_finished()
+            else:
+                self._observe_control_editing_finished(remove=True)
+                self._observe_control_value()

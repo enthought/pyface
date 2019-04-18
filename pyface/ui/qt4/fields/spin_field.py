@@ -28,15 +28,6 @@ class SpinField(MSpinField, Field):
     """ The Qt-specific implementation of the spin field class """
 
     # ------------------------------------------------------------------------
-    # IField interface
-    # ------------------------------------------------------------------------
-
-    def _initialize_control(self, control):
-        super(SpinField, self)._initialize_control(control)
-        control.setRange(self.minimum, self.maximum)
-        control.setValue(self.value)
-
-    # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
@@ -44,36 +35,27 @@ class SpinField(MSpinField, Field):
         """ Create the toolkit-specific control that represents the widget. """
 
         control = QSpinBox(parent)
-        self._initialize_control(control)
         return control
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super(SpinField, self)._add_event_listeners()
-        if self.control is not None:
-            self.control.valueChanged.connect(self._value_updated)
-
-    def _remove_event_listeners(self, control):
-        """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self.control.valueChanged.disconnect(self._value_updated)
-        super(SpinField, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _handle_update(self):
-        if self.control is not None:
-            value = self.control.value()
-            self._value_updated(value)
+    def _get_control_value(self):
+        return self.control.value()
 
-    # Trait change handlers --------------------------------------------------
+    def _set_control_value(self, value):
+        self.control.setValue(value)
 
-    def _value_changed(self, new):
-        if self.control is not None and self.control.value() != new:
-            self.control.setText(new)
+    def _observe_control_value(self, remove=False):
+        """ Toolkit specific method to change the control value observer. """
+        if remove:
+            self.control.valueChanged[int].disconnect(self._value_updated)
+        else:
+            self.control.valueChanged[int].connect(self._value_updated)
 
-    def _bounds_changed(self, new):
-        if self.control is not None:
-            self.control.setRange(*new)
+    def _get_control_bounds(self):
+        return (self.control.minimum(), self.control.maximum())
+
+    def _set_control_bounds(self, bounds):
+        self.control.setRange(*bounds)

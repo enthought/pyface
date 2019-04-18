@@ -41,54 +41,43 @@ class Field(MField, Widget):
     context_menu = Instance('pyface.action.menu_manager.MenuManager')
 
     # ------------------------------------------------------------------------
-    # IField interface
-    # ------------------------------------------------------------------------
-
-    def _initialize_control(self, control):
-        """ Perform any toolkit-specific initialization for the control. """
-        control.setToolTip(self.tooltip)
-        control.setEnabled(self.enabled)
-        control.setVisible(self.visible)
-
-    # ------------------------------------------------------------------------
     # IWidget interface
     # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(Field, self)._add_event_listeners()
-        if self.control is not None:
-            self.control.customContextMenuRequested.connect(
-                    self._handle_context_menu)
-            self.control.contextMenuPolicy(Qt.CustomContextMenu)
+        if self.control is not None and self.context_menu is not None:
+            self._observe_control_context_menu()
 
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self.control.customContextMenuRequested.disconnect(
-                    self._handle_context_menu)
+        if self.control is not None and self.context_menu is not None:
+            self._observe_control_context_menu(remove=True)
         super(Field, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _handle_context_menu(self, pos):
+    def _get_control_tooltip(self):
+        """ Toolkit specific method to get the control's tooltip. """
+        return self.control.toolTip()
+
+    def _set_control_tooltip(self, tooltip):
+        """ Toolkit specific method to set the control's tooltip. """
+        self.control.setToolTip(tooltip)
+
+    def _observe_control_context_menu(self, remove=False):
+        if remove:
+            self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
+            self.control.customContextMenuRequested.disconnect(
+                self._handle_control_context_menu)
+        else:
+            self.control.customContextMenuRequested.connect(
+                self._handle_control_context_menu)
+            self.control.setContextMenuPolicy(Qt.CustomContextMenu)
+
+    def _handle_control_context_menu(self, pos):
         """ Signal handler for displaying context menu. """
-        if self.control is not None and self.context_menu is not None:
-            menu = self.context_menu.create_menu(self.control)
-            menu.show(pos.x(), pos.y())
-
-    # Trait change handlers --------------------------------------------------
-
-    def _tooltip_changed(self, new):
-        if self.control is not None:
-            self.control.setToolTip(new)
-
-    def _context_menu_changed(self, old, new):
-        if self.control is not None:
-            if new is None:
-                #: we no longer have a context menu
-                self.control.contextMenuPolicy(Qt.DefaultContextMenu)
-            else:
-                self.control.contextMenuPolicy(Qt.CustomContextMenu)
+        self.show_context_menu(pos.x(), pos.y())

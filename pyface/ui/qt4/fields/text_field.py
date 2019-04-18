@@ -17,22 +17,27 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
 
-from traits.api import Trait, provides
+from traits.api import Trait, Unicode, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
 from pyface.qt.QtGui import QLineEdit
 from .field import Field
 
 
+ECHO_TO_QT_ECHO_MODE = {
+    'normal': QLineEdit.Normal,
+    'password': QLineEdit.Password,
+    'none': QLineEdit.NoEcho,
+    'when_editing': QLineEdit.PasswordEchoOnEdit,
+}
+QT_ECHO_MODE_TO_ECHO = {
+    value: key for key, value in ECHO_TO_QT_ECHO_MODE.items()
+}
+
 # mapped trait for Qt line edit echo modes
 Echo = Trait(
     'normal',
-    {
-        'normal': QLineEdit.EchoMode.Normal,
-        'password': QLineEdit.EchoMode.Password,
-        'none': QLineEdit.EchoMode.NoEcho,
-        'when_editing': QLineEdit.EchoMode.PasswordEchoOnEdit,
-    }
+    ECHO_TO_QT_ECHO_MODE,
 )
 
 
@@ -40,19 +45,11 @@ Echo = Trait(
 class TextField(MTextField, Field):
     """ The Qt-specific implementation of the text field class """
 
+    #: Placeholder text for the widget.
+    placeholder = Unicode
+
     #: Display typed text, or one of several hidden "password" modes.
     echo = Echo
-
-    # ------------------------------------------------------------------------
-    # IField interface
-    # ------------------------------------------------------------------------
-
-    def _initialize_control(self, control):
-        super(TextField, self)._initialize_control(control)
-        control.setEchoMode(self.echo_)
-        control.setText(self.value)
-        control.setPlaceholderText(self.placeholder)
-        control.setReadOnly(self.read_only)
 
     # ------------------------------------------------------------------------
     # IWidget interface
@@ -61,59 +58,54 @@ class TextField(MTextField, Field):
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
         control = QLineEdit(parent)
-        self._initialize_control(control)
         return control
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super(TextField, self)._add_event_listeners()
-        if self.control is not None:
-            if self.update_text == 'editing_finished':
-                self.control.editingFinished.connect(self._handle_update)
-            else:
-                self.control.textEdited.connect(self._handle_update)
-
-    def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            if self.update_text == 'editing_finished':
-                self.control.editingFinished.disconnect(self._handle_update)
-            else:
-                self.control.textEdited.disconnect(self._handle_update)
-        super(TextField, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _handle_update(self):
-        if self.control is not None:
-            value = self.control.text()
-            self._value_updated(value)
+    def _get_control_value(self):
+        return self.control.text()
 
-    # Trait change handlers --------------------------------------------------
+    def _set_control_value(self, value):
+        self.control.setText(value)
+        # fire update
+        if self.update_text == 'editing_finished':
+            self.control.editingFinished.emit()
+        else:
+            self.control.textEdited.emit(value)
 
-    def _value_changed(self, new):
-        if self.control is not None and self.control.text() != new:
-            self.control.setText(new)
+    def _observe_control_value(self, remove=False):
+        if remove:
+            self.control.textEdited.disconnect(self._value_updated)
+        else:
+            self.control.textEdited.connect(self._value_updated)
 
-    def _update_text_changed(self, new):
-        if self.control is not None:
-            if new == 'editing_finished':
-                self.control.editingFinished.disconnect(self._handle_update)
-                self.control.textEdited.connect(self._handle_update)
-            else:
-                self.control.textEdited.disconnect(self._handle_update)
-                self.control.editingFinished.connect(self._handle_update)
+    def _get_control_placeholder(self):
+        """ Toolkit specific method to set the control's placeholder. """
+        return self.control.placeholderText()
 
-    def _placeholder_changed(self, new):
-        if self.control is not None:
-            self.control.setPlaceholderText(new)
+    def _set_control_placholder(self, placeholder):
+        """ Toolkit specific method to set the control's placeholder. """
+        self.control.setPlaceholderText(placeholder)
 
-    def _echo_changed(self):
-        if self.control is not None:
-            self.control.setEchoMode(self.echo_)
+    def _get_control_echo(self):
+        return QT_ECHO_MODE_TO_ECHO[self.control.echoMode()]
 
-    def _read_only_changed(self, new):
-        if self.control is not None:
-            self.control.setReadOnly(new)
+    def _set_control_echo(self, echo):
+        self.control.setEchoMode(ECHO_TO_QT_ECHO_MODE[echo])
+
+    def _get_control_read_only(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        return self.control.readOnly()
+
+    def _set_control_read_only(self, read_only):
+        """ Toolkit specific method to set the control's read_only state. """
+        self.control.setReadOnly(read_only)
+
+    def _observe_control_editing_finished(self, remove=False):
+        """ Change observation of whether editing is finished. """
+        if remove:
+            self.control.editingFinished.disconnect(self._editing_finished)
+        else:
+            self.control.editingFinished.connect(self._editing_finished)

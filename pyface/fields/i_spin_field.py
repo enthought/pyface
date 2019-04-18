@@ -11,7 +11,7 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The text field interface. """
+""" The spin field interface. """
 
 from __future__ import (
     absolute_import, division, print_function, unicode_literals
@@ -56,8 +56,45 @@ class MSpinField(HasTraits):
     maximum = Property(Int, depends_on='bounds')
 
     # ------------------------------------------------------------------------
+    # object interface
+    # ------------------------------------------------------------------------
+
+    def __init__(self, **traits):
+        value = traits.pop('value', None)
+        if 'bounds' in traits:
+            traits['value'] = traits['bounds'][0]
+        super(MSpinField, self).__init__(**traits)
+        if value is not None:
+            self.value = value
+
+    # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
+
+    def _initialize_control(self):
+        super(MSpinField, self)._initialize_control()
+        self._set_control_bounds(self.bounds)
+        self._set_control_value(self.value)
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super(MSpinField, self)._add_event_listeners()
+        if self.control is not None:
+            self._observe_control_value()
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        if self.control is not None:
+            self._observe_control_value(remove=True)
+        super(MSpinField, self)._remove_event_listeners()
+
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_bounds(self):
+        raise NotImplementedError()
+
+    def _set_control_bounds(self, bounds):
+        raise NotImplementedError()
 
     # Trait property handlers -----------------------------------------------
 
@@ -82,3 +119,14 @@ class MSpinField(HasTraits):
             self.bounds = (self.minimum, value)
         if value < self.value:
             self.value = value
+
+    # Trait defaults --------------------------------------------------------
+
+    def _value_default(self):
+        return self.bounds[0]
+
+    # Trait change handlers --------------------------------------------------
+
+    def _bounds_changed(self):
+        if self.control is not None:
+            self._set_control_bounds(self.bounds)

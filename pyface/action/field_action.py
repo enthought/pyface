@@ -27,7 +27,7 @@ class FieldAction(Action):
     #: The field to display.
     field_type = Type(IField)
 
-    #: The field to display.
+    #: The default trait values for the field.
     field_defaults = Dict(Str, Any)
 
     def create_control(self, parent):

@@ -19,6 +19,7 @@ from __future__ import (
 from traits.api import provides
 
 from pyface.fields.i_combo_field import IComboField, MComboField
+from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QComboBox
 from .field import Field
 
@@ -31,14 +32,12 @@ class ComboField(MComboField, Field):
     # IField interface
     # ------------------------------------------------------------------------
 
-    def _initialize_control(self, control):
-        super(ComboField, self)._initialize_control(control)
-        self._populate_values(control)
-        control.setInsertPolicy(QComboBox.NoInsert)
-        control.setEditable(self.editable)
-        if self.editable:
-            line_edit = control.lineEdit()
-            line_edit.setText(self.edit_text)
+    def _initialize_control(self):
+        super(ComboField, self)._initialize_control()
+        self._set_control_values(self.values)
+        self._set_control_value(self.value)
+        self.control.setInsertPolicy(QComboBox.NoInsert)
+        self.control.setEditable(False)
 
     # ------------------------------------------------------------------------
     # IWidget interface
@@ -47,66 +46,74 @@ class ComboField(MComboField, Field):
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
         control = QComboBox(parent)
-        self._initialize_control(control)
         return control
-
-    def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        super(ComboField, self)._add_event_listeners()
-        if self.control is not None:
-            self.control.activated.connect(self._index_updated)
-            if self.editable:
-                line_edit = self.control.lineEdit()
-                line_edit.editingFinished.connect(self._text_updated)
-
-    def _remove_event_listeners(self, control):
-        """ Remove toolkit-specific bindings for events """
-        if self.control is not None:
-            self.control.activated.disconnect(self._index_updated)
-            if self.editable:
-                self.control.lineEdit().editingFinished.disconnect(
-                    self._text_updated)
-        super(ComboField, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
-    def _populate_values(self, control=None):
-        if control is None:
-            control = self.control
-        if control is not None:
-            control.clear()
-            for value in self.values:
-                value = self.formatter(value)
-                if isinstance(value, tuple):
-                    image, text = value
-                    icon = image.create_icon()
-                    control.addItem(icon, text)
-                else:
-                    control.addItem(value)
-            self._update_value(control, self.value)
+    def _value_updated(self, value):
+        """ Handle a change to the value from user interaction
 
-    def _update_value(self, control, value):
-        if value in self.values:
-            index = self.values.index(value)
-        else:
-            index = -1
-        control.setCurrentIndex(index)
+        This is a method suitable for calling from a toolkit event handler.
+        """
+        self.value = self._get_control_value()
 
-    def _index_updated(self, index):
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
+        index = self.control.currentIndex()
         if index != -1:
-            self._value_updated(self.values[index])
-            value = self.formatter(self.value)
-            if isinstance(value, tuple):
-                self.edit_text = value[1]
-            else:
-                self.edit_text = value
+            return self.control.itemData(index)
+        else:
+            raise IndexError("no value selected")
 
-    def _text_updated(self):
-        if self.control and self.editable:
-            line_edit = self.control.lineEdit()
-            self.edit_text = line_edit.text()
+    def _get_control_text(self):
+        """ Toolkit specific method to get the control's value. """
+        index = self.control.currentIndex()
+        if index != -1:
+            return self.control.itemData(index, Qt.DisplayRole)
+        else:
+            raise IndexError("no value selected")
+
+    def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
+        index = self.values.index(value)
+        self.control.setCurrentIndex(index)
+        self.control.activated.emit(index)
+
+    def _observe_control_value(self, remove=False):
+        """ Toolkit specific method to change the control value observer. """
+        if remove:
+            self.control.activated.disconnect(self._value_updated)
+        else:
+            self.control.activated.connect(self._value_updated)
+
+    def _get_control_text_values(self):
+        """ Toolkit specific method to get the control's values. """
+        model = self.control.model()
+        values = []
+        for i in range(model.rowCount()):
+            values.append(model.item(i))
+        return values
+
+    def _set_control_values(self, values):
+        """ Toolkit specific method to set the control's values. """
+        current_value = self.value
+        self.control.clear()
+        for value in self.values:
+            item = self.formatter(value)
+            if isinstance(item, tuple):
+                image, text = item
+                icon = image.create_icon()
+                self.control.addItem(icon, text, userData=value)
+            else:
+                self.control.addItem(item, userData=value)
+        if current_value in values:
+            self._set_control_value(current_value)
+        else:
+            self._set_control_value(self.value)
 
     # Trait change handlers --------------------------------------------------
 

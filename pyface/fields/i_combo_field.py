@@ -20,7 +20,7 @@ from __future__ import (
 from six import text_type
 
 from traits.api import (
-    Bool, Callable, HasTraits, Enum, List, Unicode, on_trait_change
+    Callable, HasTraits, Enum, List, on_trait_change
 )
 
 from pyface.fields.i_field import IField
@@ -38,13 +38,6 @@ class IComboField(IField):
     #: The list of available values for the combobox.
     values = List
 
-    #: Whether the text is editable.  This should not be changed after the
-    #: control is created.
-    editable = Bool
-
-    #: The current contents of the text field.
-    edit_text = Unicode
-
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource
     #: and string.
@@ -59,38 +52,36 @@ class MComboField(HasTraits):
     #: The list of available values for the combobox.
     values = List
 
-    #: Whether the text is editable.  This should not be changed after the
-    #: control is created.
-    editable = Bool
-
-    #: The current contents of the text field.
-    edit_text = Unicode
-
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource
     #: and string.
     formatter = Callable(text_type, allow_none=False)
 
-    def _populate_values(self, control=None):
-        raise NotImplementedError()
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super(MComboField, self)._add_event_listeners()
+        if self.control is not None:
+            self._observe_control_value()
 
-    def _update_value(self, control, value):
-        raise NotImplementedError()
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        if self.control is not None:
+            self._observe_control_value(remove=True)
+        super(MComboField, self)._remove_event_listeners()
 
     # Trait change handlers --------------------------------------------------
 
-    def _value_changed(self, value):
-        if self.control is not None:
-            self._update_value(self.control, value)
-
-    @on_trait_change('values[]')
+    @on_trait_change('values[],formatter')
     def _values_changed(self, new):
         if self.control is not None:
-            self._populate_values()
+            self._set_control_values(self.values)
 
-    def _editable_changed(self):
-        if self.control is not None:
-            raise RuntimeError(
-                "Editable state of ComboField cannot be changed while "
-                "control is live."
-            )
+    # Toolkit control interface ---------------------------------------------
+
+    def _get_control_text_values(self):
+        """ Toolkit specific method to get the control's text values. """
+        raise NotImplementedError
+
+    def _set_control_values(self, values):
+        """ Toolkit specific method to set the control's values. """
+        raise NotImplementedError
