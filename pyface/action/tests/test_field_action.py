@@ -6,6 +6,9 @@ from pyface.fields.api import ComboField, SpinField, TextField
 from ..field_action import FieldAction
 
 
+import faulthandler
+faulthandler.enable()
+
 class TestFieldAction(unittest.TestCase):
 
     def test_combo_field_action(self):
@@ -28,10 +31,12 @@ class TestFieldAction(unittest.TestCase):
         )
         parent = None
         control = action.create_control(parent)
+        try:
+            control._field.value = 'b'
 
-        control._field.value = 'b'
-
-        self.assertEqual(memo, ['b'])
+            self.assertEqual(memo, ['b'])
+        finally:
+            control._field.destroy()
 
     def test_text_field_action(self):
         # test whether function is called by updating list
@@ -53,9 +58,12 @@ class TestFieldAction(unittest.TestCase):
         parent = None
         control = action.create_control(parent)
 
-        control._field.value = 'b'
+        try:
+            control._field.value = 'b'
 
-        self.assertEqual(memo, ['b'])
+            self.assertEqual(memo, ['b'])
+        finally:
+            control._field.destroy()
 
     def test_spin_field_action(self):
         # test whether function is called by updating list
@@ -78,6 +86,9 @@ class TestFieldAction(unittest.TestCase):
         parent = None
         control = action.create_control(parent)
 
-        control._field.value = 5
+        try:
+            control._field.value = 5
 
-        self.assertEqual(memo, [5])
+            self.assertEqual(memo, [5])
+        finally:
+            control._field.destroy()

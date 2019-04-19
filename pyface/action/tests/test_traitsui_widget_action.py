@@ -72,7 +72,6 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
         action = ComplexEnumAction(name="Simple", model=model)
         parent = None
         control = action.create_control(parent)
-        print(control._ui._editors)
 
         editor = control._ui.get_editors('value')[0]
 
