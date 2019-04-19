@@ -6,9 +6,6 @@ from pyface.fields.api import ComboField, SpinField, TextField
 from ..field_action import FieldAction
 
 
-import faulthandler
-faulthandler.enable()
-
 class TestFieldAction(unittest.TestCase):
 
     def test_combo_field_action(self):
