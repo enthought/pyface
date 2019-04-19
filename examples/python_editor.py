@@ -15,16 +15,11 @@
 
 from __future__ import print_function, unicode_literals
 
-# Enthought library imports.
-from traits.api import (
-    Any, Constant, Dict, Instance, Str, Type, on_trait_change
-)
-
 from pyface.api import (
     ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 )
 from pyface.action.api import (
-    Action, ActionEvent, FieldAction, Group, MenuManager, MenuBarManager,
+    Action, FieldAction, Group, MenuManager, MenuBarManager,
     ToolBarManager
 )
 from pyface.fields.api import ComboField
