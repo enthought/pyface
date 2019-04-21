@@ -159,8 +159,10 @@ class _FutureCall(QtCore.QObject):
 
         # Save the instance.
         self._calls_mutex.lock()
-        self._calls.append(self)
-        self._calls_mutex.unlock()
+        try:
+            self._calls.append(self)
+        finally:
+            self._calls_mutex.unlock()
 
         # Move to the main GUI thread.
         self.moveToThread(QtGui.QApplication.instance().thread())
@@ -175,8 +177,18 @@ class _FutureCall(QtCore.QObject):
         """ QObject event handler.
         """
         if event.type() == self._pyface_event:
-            # Invoke the callable (puts it at the end of the event queue)
-            QtCore.QTimer.singleShot(self._ms, self._dispatch)
+            if self._ms == 0:
+                # Invoke the callable now
+                try:
+                    self._callable(*self._args, **self._kw)
+                finally:
+                    # We cannot remove from self._calls here. QObjects don't like being
+                    # garbage collected during event handlers (there are tracebacks,
+                    # plus maybe a memory leak, I think).
+                    QtCore.QTimer.singleShot(0, self._finished)
+            else:
+                # Invoke the callable (puts it at the end of the event queue)
+                QtCore.QTimer.singleShot(self._ms, self._dispatch)
             return True
 
         return super(_FutureCall, self).event(event)
@@ -197,5 +209,3 @@ class _FutureCall(QtCore.QObject):
             self._calls.remove(self)
         finally:
             self._calls_mutex.unlock()
-
-#### EOF ######################################################################
