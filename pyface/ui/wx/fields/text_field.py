@@ -11,42 +11,26 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The Qt-specific implementation of the text field class """
+""" The Wx-specific implementation of the text field class """
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
+from __future__ import print_function, absolute_import
 
-from traits.api import Trait, provides
+from contextlib import contextmanager
+
+import wx
+
+from traits.api import Int, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
-from pyface.qt.QtGui import QLineEdit
 from .field import Field
-
-
-ECHO_TO_QT_ECHO_MODE = {
-    'normal': QLineEdit.Normal,
-    'password': QLineEdit.Password,
-    'none': QLineEdit.NoEcho,
-    'when_editing': QLineEdit.PasswordEchoOnEdit,
-}
-QT_ECHO_MODE_TO_ECHO = {
-    value: key for key, value in ECHO_TO_QT_ECHO_MODE.items()
-}
-
-# mapped trait for Qt line edit echo modes
-Echo = Trait(
-    'normal',
-    ECHO_TO_QT_ECHO_MODE,
-)
 
 
 @provides(ITextField)
 class TextField(MTextField, Field):
-    """ The Qt-specific implementation of the text field class """
+    """ The Wx-specific implementation of the text field class """
 
-    #: Display typed text, or one of several hidden "password" modes.
-    echo = Echo
+    #: Zero if not updating, positive if updating.
+    _updating = Int
 
     # ------------------------------------------------------------------------
     # IWidget interface
@@ -54,55 +38,71 @@ class TextField(MTextField, Field):
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
-        control = QLineEdit(parent)
+
+        style = wx.TE_PROCESS_ENTER
+        if self.echo == 'password':
+            style |= wx.TE_PASSWORD
+
+        control = wx.TextCtrl(parent, -1, value=self.value, style=style)
         return control
 
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
+    def _update_value(self, event):
+        # do normal focus event stuff
+        if isinstance(event, wx.FocusEvent):
+            event.Skip()
+        if self.control is not None and self._updating == 0:
+            self.value = self.control.GetValue()
+
+    @contextmanager
+    def _no_update(self):
+        self._updating += 1
+        try:
+            yield
+        finally:
+            self._updating -= 1
+
     def _get_control_value(self):
-        return self.control.text()
+        return self.control.GetValue()
 
     def _set_control_value(self, value):
-        self.control.setText(value)
-        # fire update
-        if self.update_text == 'editing_finished':
-            self.control.editingFinished.emit()
-        else:
-            self.control.textEdited.emit(value)
+        self.control.SetValue(value)
 
     def _observe_control_value(self, remove=False):
         if remove:
-            self.control.textEdited.disconnect(self._update_value)
+            self.control.Unbind(wx.EVT_TEXT, handler=self._update_value)
         else:
-            self.control.textEdited.connect(self._update_value)
+            self.control.Bind(wx.EVT_TEXT, self._update_value)
 
     def _get_control_placeholder(self):
         """ Toolkit specific method to set the control's placeholder. """
-        return self.control.placeholderText()
+        return self.control.GetHint()
 
     def _set_control_placholder(self, placeholder):
         """ Toolkit specific method to set the control's placeholder. """
-        self.control.setPlaceholderText(placeholder)
+        self.control.SetHint(placeholder)
 
     def _get_control_echo(self):
-        return QT_ECHO_MODE_TO_ECHO[self.control.echoMode()]
+        return self.echo
 
     def _set_control_echo(self, echo):
-        self.control.setEchoMode(ECHO_TO_QT_ECHO_MODE[echo])
+        # Can't change echo on Wx after control has been created."
+        pass
 
     def _get_control_read_only(self):
         """ Toolkit specific method to get the control's read_only state. """
-        return self.control.readOnly()
+        return self.control.GetEditable()
 
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
-        self.control.setReadOnly(read_only)
+        self.control.SetEditable(not read_only)
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """
         if remove:
-            self.control.editingFinished.disconnect(self._editing_finished)
+            self.control.Unbind(wx.EVT_TEXT_ENTER, handler=self._update_value)
         else:
-            self.control.editingFinished.connect(self._editing_finished)
+            self.control.Bind(wx.EVT_TEXT_ENTER, self._update_value)

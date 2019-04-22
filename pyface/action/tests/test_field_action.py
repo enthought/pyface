@@ -12,10 +12,20 @@ from __future__ import absolute_import
 from traits.testing.unittest_tools import unittest
 
 from pyface.fields.api import ComboField, SpinField, TextField
+from pyface.window import Window
 from ..field_action import FieldAction
 
 
 class TestFieldAction(unittest.TestCase):
+
+    def setUp(self):
+        self.parent = Window()
+        self.parent._create()
+        self.addCleanup(self._destroy_parent)
+
+    def _destroy_parent(self):
+        self.parent.destroy()
+        self.parent = None
 
     def test_combo_field_action(self):
         # test whether function is called by updating list
@@ -35,8 +45,7 @@ class TestFieldAction(unittest.TestCase):
             },
             on_perform=perform,
         )
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
         try:
             control._field.value = 'b'
 
@@ -61,8 +70,7 @@ class TestFieldAction(unittest.TestCase):
             },
             on_perform=perform,
         )
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
 
         try:
             control._field.value = 'b'
@@ -89,8 +97,7 @@ class TestFieldAction(unittest.TestCase):
             },
             on_perform=perform,
         )
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
 
         try:
             control._field.value = 5

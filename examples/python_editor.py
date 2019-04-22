@@ -134,10 +134,11 @@ class MainWindow(ApplicationWindow):
         if self.control:
             try:
                 self._editor.save()
-            except IOError as e:
+            except IOError:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
-                dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
+                dlg = FileDialog(parent=self.control, action='save as',
+                                 wildcard="*.py")
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
 
@@ -162,7 +163,7 @@ if __name__ == '__main__':
     gui = GUI()
 
     # Create and open the main window.
-    window = MainWindow()
+    window = MainWindow(size=(800, 600))
     window.open()
 
     # Start the GUI event loop!

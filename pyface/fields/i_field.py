@@ -57,11 +57,31 @@ class MField(HasTraits):
     #: An optional context menu for the field.
     context_menu = Instance('pyface.action.menu_manager.MenuManager')
 
-    def show_context_menu(self, x, y):
-        """ Create and show the context menu at a position. """
+    # ------------------------------------------------------------------------
+    # IWidget interface
+    # ------------------------------------------------------------------------
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super(MField, self)._add_event_listeners()
+        self.on_trait_change(self._value_updated, 'value', dispatch='ui')
+        self.on_trait_change(self._tooltip_updated, 'tooltip', dispatch='ui')
+        self.on_trait_change(self._context_menu_updated, 'context_menu',
+                             dispatch='ui')
         if self.control is not None and self.context_menu is not None:
-            menu = self.context_menu.create_menu(self.control)
-            menu.show(x, y)
+            self._observe_control_context_menu()
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        if self.control is not None and self.context_menu is not None:
+            self._observe_control_context_menu(remove=True)
+        self.on_trait_change(self._value_updated, 'value', dispatch='ui',
+                             remove=True)
+        self.on_trait_change(self._tooltip_updated, 'tooltip', dispatch='ui',
+                             remove=True)
+        self.on_trait_change(self._context_menu_updated, 'context_menu',
+                             dispatch='ui', remove=True)
+        super(MField, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # Private interface
@@ -84,12 +104,12 @@ class MField(HasTraits):
         """ Perform any toolkit-specific initialization for the control. """
         self._set_control_tooltip(self.tooltip)
 
-    def _value_updated(self, value):
+    def _update_value(self, value):
         """ Handle a change to the value from user interaction
 
         This is a method suitable for calling from a toolkit event handler.
         """
-        self.value = value
+        self.value = self._get_control_value()
 
     def _get_control(self):
         """ If control is not passed directly, get it from the trait. """
@@ -139,15 +159,15 @@ class MField(HasTraits):
 
     # Trait change handlers -------------------------------------------------
 
-    def _value_changed(self):
+    def _value_updated(self, value):
         if self.control is not None:
-            self._set_control_value(self.value)
+            self._set_control_value(value)
 
-    def _tooltip_changed(self):
+    def _tooltip_updated(self, tooltip):
         if self.control is not None:
-            self._set_control_tooltip(self.tooltip)
+            self._set_control_tooltip(tooltip)
 
-    def _context_menu_changed(self, old, new):
+    def _context_menu_updated(self, old, new):
         if self.control is not None:
             if new is None:
                 self._observe_control_context_menu(remove=True)

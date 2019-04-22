@@ -12,12 +12,28 @@ from __future__ import absolute_import
 from traits.api import Enum, HasTraits
 from traits.testing.unittest_tools import unittest, UnittestTools
 
+from pyface.gui import GUI
+from pyface.toolkit import toolkit
 from pyface.util.testing import has_traitsui
+from pyface.window import Window
 from ..traitsui_widget_action import TraitsUIWidgetAction
 
 
 @unittest.skipIf(not has_traitsui(), "TraitsUI not installed")
 class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
+
+    def setUp(self):
+        self.gui = GUI()
+        self.parent = Window()
+        self.parent._create()
+        self.parent.open()
+        self.addCleanup(self._destroy_parent)
+        self.gui.process_events()
+
+    def _destroy_parent(self):
+        self.parent.destroy()
+        self.gui.process_events()
+        self.parent = None
 
     def create_model(self):
         from traitsui.api import View, Item
@@ -36,13 +52,24 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
             view = View(Item('value'))
 
         action = SimpleEnumAction(name="Simple")
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
+        self.gui.process_events()
 
         editor = control._ui.get_editors('value')[0]
 
         with self.assertTraitChanges(action, 'value', count=1):
-            editor.control.setCurrentIndex(1)
+            if toolkit.toolkit in {'qt', 'qt4'}:
+                editor.control.setCurrentIndex(1)
+                editor.control.activated.emit(1)
+            elif toolkit.toolkit == 'wx':
+                import wx
+                event = wx.CommandEvent(wx.EVT_CHOICE.typeId,
+                                        editor.control.GetId())
+                event.SetString('b')
+                wx.PostEvent(editor.control.GetEventHandler(), event)
+            else:
+                self.skipTest("Unknown toolkit")
+            self.gui.process_events()
 
         self.assertEqual(action.value, 'b')
 
@@ -54,13 +81,24 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
 
         model = self.create_model()
         action = SimpleEnumAction(name="Simple", model=model)
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
+        self.gui.process_events()
 
         editor = control._ui.get_editors('value')[0]
 
         with self.assertTraitChanges(model, 'value', count=1):
-            editor.control.setCurrentIndex(1)
+            if toolkit.toolkit in {'qt', 'qt4'}:
+                editor.control.setCurrentIndex(1)
+                editor.control.activated.emit(1)
+            elif toolkit.toolkit == 'wx':
+                import wx
+                event = wx.CommandEvent(wx.EVT_CHOICE.typeId,
+                                        editor.control.GetId())
+                event.SetString('b')
+                wx.PostEvent(editor.control.GetEventHandler(), event)
+            else:
+                self.skipTest("Unknown toolkit")
+            self.gui.process_events()
 
         self.assertEqual(model.value, 'b')
 
@@ -79,19 +117,40 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
 
         model = self.create_model()
         action = ComplexEnumAction(name="Simple", model=model)
-        parent = None
-        control = action.create_control(parent)
+        control = action.create_control(self.parent.control)
+        self.gui.process_events()
 
         editor = control._ui.get_editors('value')[0]
 
         with self.assertTraitChanges(model, 'value', count=1):
-            editor.control.setCurrentIndex(1)
+            if toolkit.toolkit in {'qt', 'qt4'}:
+                editor.control.setCurrentIndex(1)
+                editor.control.activated.emit(1)
+            elif toolkit.toolkit == 'wx':
+                import wx
+                event = wx.CommandEvent(wx.EVT_CHOICE.typeId,
+                                        editor.control.GetId())
+                event.SetString('b')
+                wx.PostEvent(editor.control.GetEventHandler(), event)
+            else:
+                self.skipTest("Unknown toolkit")
+            self.gui.process_events()
 
         self.assertEqual(model.value, 'b')
 
         editor = control._ui.get_editors('value')[1]
 
         with self.assertTraitChanges(action, 'value', count=1):
-            editor.control.setCurrentIndex(2)
+            if toolkit.toolkit in {'qt', 'qt4'}:
+                editor.control.setCurrentIndex(2)
+                editor.control.activated.emit(2)
+            elif toolkit.toolkit == 'wx':
+                event = wx.CommandEvent(wx.EVT_CHOICE.typeId,
+                                        editor.control.GetId())
+                event.SetString('c')
+                wx.PostEvent(editor.control.GetEventHandler(), event)
+            else:
+                self.skipTest("Unknown toolkit")
+            GUI.process_events()
 
         self.assertEqual(action.value, 'c')

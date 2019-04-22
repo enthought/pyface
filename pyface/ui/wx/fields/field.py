@@ -11,22 +11,21 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
-""" The Qt-specific implementation of the text field class """
+""" The Wx-specific implementation of the text field class """
 
-from __future__ import (
-    absolute_import, division, print_function, unicode_literals
-)
+from __future__ import absolute_import, print_function, unicode_literals
 
-from traits.api import Any, Instance, Unicode, provides
+from traits.api import Any, Bool, Enum, Instance, Trait, Unicode, provides
 
-from pyface.qt.QtCore import Qt
+import wx
+
 from pyface.fields.i_field import IField, MField
-from pyface.ui.qt4.widget import Widget
+from pyface.ui.wx.widget import Widget
 
 
 @provides(IField)
 class Field(MField, Widget):
-    """ The Qt-specific implementation of the field class
+    """ The Wxspecific implementation of the field class
 
     This is an abstract class which is not meant to be instantiated.
     """
@@ -41,29 +40,47 @@ class Field(MField, Widget):
     context_menu = Instance('pyface.action.menu_manager.MenuManager')
 
     # ------------------------------------------------------------------------
+    # IField interface
+    # ------------------------------------------------------------------------
+
+    def _initialize_control(self):
+        """ Perform any toolkit-specific initialization for the control. """
+        self.control.SetToolTipString(self.tooltip)
+        self.control.Enable(self.enabled)
+        self.control.Show(self.visible)
+
+    # ------------------------------------------------------------------------
+    # IWidget interface
+    # ------------------------------------------------------------------------
+
+    def _create(self):
+        super(Field, self)._create()
+        self._add_event_listeners()
+
+    def destroy(self):
+        self._remove_event_listeners()
+        super(Field, self).destroy()
+
+    # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
 
     def _get_control_tooltip(self):
         """ Toolkit specific method to get the control's tooltip. """
-        return self.control.toolTip()
+        return self.control.GetToolTipString()
 
     def _set_control_tooltip(self, tooltip):
         """ Toolkit specific method to set the control's tooltip. """
-        self.control.setToolTip(tooltip)
+        self.control.SetToolTipString(tooltip)
 
     def _observe_control_context_menu(self, remove=False):
         if remove:
-            self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
-            self.control.customContextMenuRequested.disconnect(
-                self._handle_control_context_menu)
+            self.control.Unbind(wx.EVT_CONTEXT_MENU, handler=self._handle_context_menu)
         else:
-            self.control.customContextMenuRequested.connect(
-                self._handle_control_context_menu)
-            self.control.setContextMenuPolicy(Qt.CustomContextMenu)
+            self.control.Bind(wx.EVT_CONTEXT_MENU, self._handle_context_menu)
 
-    def _handle_control_context_menu(self, pos):
+    def _handle_control_context_menu(self, event):
         """ Signal handler for displaying context menu. """
         if self.control is not None and self.context_menu is not None:
             menu = self.context_menu.create_menu(self.control)
-            menu.show(pos.x(), pos.y())
+            self.control.PopupMenu(menu)
