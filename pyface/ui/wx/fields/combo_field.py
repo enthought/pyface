@@ -13,7 +13,9 @@
 #------------------------------------------------------------------------------
 """ The Wx-specific implementation of the combo field class """
 
-from __future__ import print_function, absolute_import
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
 import wx
 

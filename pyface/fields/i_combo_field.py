@@ -19,9 +19,7 @@ from __future__ import (
 
 from six import text_type
 
-from traits.api import (
-    Callable, HasTraits, Enum, List, on_trait_change
-)
+from traits.api import Callable, HasTraits, Enum, List
 
 from pyface.fields.i_field import IField
 
@@ -47,15 +45,29 @@ class IComboField(IField):
 class MComboField(HasTraits):
 
     #: The current text value of the combobox.
-    value = Enum(None, values='values')
+    value = Enum(values='values')
 
     #: The list of available values for the combobox.
-    values = List
+    values = List(minlen=1)
 
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource
     #: and string.
     formatter = Callable(text_type, allow_none=False)
+
+    # ------------------------------------------------------------------------
+    # object interface
+    # ------------------------------------------------------------------------
+
+    def __init__(self, values, **traits):
+        value = traits.pop('value', values[0])
+        traits['values'] = values
+        super(MComboField, self).__init__(**traits)
+        self.value = value
+
+    # ------------------------------------------------------------------------
+    # Private interface
+    # ------------------------------------------------------------------------
 
     def _initialize_control(self):
         super(MComboField, self)._initialize_control()
