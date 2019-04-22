@@ -7,138 +7,54 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
 from traits.testing.unittest_tools import unittest
 
-from pyface.action.api import Action, MenuManager
-from pyface.gui import GUI
-from pyface.toolkit import toolkit
-from pyface.window import Window
 from ..spin_field import SpinField
+from .field_mixin import FieldMixin
 
 
-is_wx = (toolkit.toolkit == 'wx')
-
-
-#@unittest.skipIf(is_wx, "SpinField not supported in Wx")
-class TestSpinField(unittest.TestCase):
+class TestSpinField(unittest.TestCase, FieldMixin):
 
     def setUp(self):
-        self.gui = GUI()
-        self.parent = Window()
-        self.parent._create()
-        self.parent.open()
-        self.addCleanup(self._destroy_parent)
+        FieldMixin.setUp(self)
 
-    def _destroy_parent(self):
-        self.parent.destroy()
-        self.gui.process_events()
-        self.parent = None
+    def _create_widget(self):
+        return SpinField(
+            parent=self.parent.control,
+            value=1,
+            bounds=(0, 100),
+            tooltip='Dummy',
+        )
+
+    # Tests ------------------------------------------------------------------
 
     def test_spin_field(self):
-        widget = SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip='Dummy',
-        )
+        self._create_widget_control()
 
-        widget._create()
-        try:
-            self.gui.process_events()
-            widget.show(True)
-            self.gui.process_events()
-            widget.value = 5
-            self.gui.process_events()
+        self.widget.value = 5
+        self.gui.process_events()
 
-            self.assertEqual(widget._get_control_value(), 5)
-        finally:
-            widget.destroy()
-            self.gui.process_events()
+        self.assertEqual(self.widget._get_control_value(), 5)
 
     def test_spin_field_set(self):
-        widget = SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip='Dummy',
-        )
+        self._create_widget_control()
 
-        widget._create()
-        try:
-            self.gui.process_events()
-            widget.show(True)
-            self.gui.process_events()
-            widget._set_control_value(5)
+        with self.assertTraitChanges(self.widget, 'value', count=1):
+            self.widget._set_control_value(5)
             self.gui.process_events()
 
-            self.assertEqual(widget.value, 5)
-        finally:
-            widget.destroy()
-            self.gui.process_events()
+        self.assertEqual(self.widget.value, 5)
 
     def test_spin_field_bounds(self):
-        widget = SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip='Dummy',
-        )
+        self._create_widget_control()
 
-        widget._create()
-        try:
-            self.gui.process_events()
-            widget.show(True)
-            self.gui.process_events()
+        self.widget.bounds = (10, 50)
+        self.gui.process_events()
 
-            widget.bounds = (10, 50)
-            self.gui.process_events()
-
-            self.assertEqual(widget._get_control_bounds(), (10, 50))
-            self.assertEqual(widget._get_control_value(), 10)
-            self.assertEqual(widget.value, 10)
-        finally:
-            widget.destroy()
-            self.gui.process_events()
-
-    def test_spin_field_tooltip(self):
-        widget = SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip='Dummy',
-        )
-
-        widget._create()
-        try:
-            self.gui.process_events()
-            widget.show(True)
-            self.gui.process_events()
-
-            widget.tooltip = "New tooltip."
-            self.gui.process_events()
-
-            self.assertEqual(widget._get_control_tooltip(), "New tooltip.")
-        finally:
-            widget.destroy()
-            self.gui.process_events()
-
-    def test_spin_field_menu(self):
-        widget = SpinField(
-            parent=self.parent.control,
-            value=1,
-            bounds=(0, 100),
-            tooltip='Dummy',
-        )
-
-        widget._create()
-        try:
-            self.gui.process_events()
-            widget.show(True)
-            self.gui.process_events()
-            widget.menu = MenuManager(Action(name='Test'), name='Test')
-            self.gui.process_events()
-        finally:
-            widget.destroy()
-            self.gui.process_events()
+        self.assertEqual(self.widget._get_control_bounds(), (10, 50))
+        self.assertEqual(self.widget._get_control_value(), 10)
+        self.assertEqual(self.widget.value, 10)

@@ -42,9 +42,11 @@ class SpinField(MSpinField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
         return self.control.value()
 
     def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
         self.control.setValue(value)
 
     def _observe_control_value(self, remove=False):
@@ -55,7 +57,9 @@ class SpinField(MSpinField, Field):
             self.control.valueChanged[int].connect(self._update_value)
 
     def _get_control_bounds(self):
+        """ Toolkit specific method to get the control's bounds. """
         return (self.control.minimum(), self.control.maximum())
 
     def _set_control_bounds(self, bounds):
+        """ Toolkit specific method to set the control's bounds. """
         self.control.setRange(*bounds)

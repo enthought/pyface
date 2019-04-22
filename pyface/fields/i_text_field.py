@@ -49,7 +49,7 @@ class MTextField(HasTraits):
     #: The value held by the field.
     value = Unicode
 
-    #: Should the text trait be updated on user edits, or when done editing.
+    #: Should the value be updated on every keystroke, or when done editing.
     update_text = Enum('auto', 'editing_finished')
 
     #: Placeholder text for an empty field.

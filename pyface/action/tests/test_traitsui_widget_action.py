@@ -7,7 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
 from traits.api import Enum, HasTraits
 from traits.testing.unittest_tools import unittest, UnittestTools

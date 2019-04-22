@@ -62,9 +62,11 @@ class TextField(MTextField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
         return self.control.text()
 
     def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
         self.control.setText(value)
         # fire update
         if self.update_text == 'editing_finished':
@@ -73,6 +75,7 @@ class TextField(MTextField, Field):
             self.control.textEdited.emit(value)
 
     def _observe_control_value(self, remove=False):
+        """ Toolkit specific method to change the control value observer. """
         if remove:
             self.control.textEdited.disconnect(self._update_value)
         else:
@@ -87,9 +90,11 @@ class TextField(MTextField, Field):
         self.control.setPlaceholderText(placeholder)
 
     def _get_control_echo(self):
+        """ Toolkit specific method to get the control's echo. """
         return QT_ECHO_MODE_TO_ECHO[self.control.echoMode()]
 
     def _set_control_echo(self, echo):
+        """ Toolkit specific method to set the control's echo. """
         self.control.setEchoMode(ECHO_TO_QT_ECHO_MODE[echo])
 
     def _get_control_read_only(self):

@@ -15,11 +15,9 @@
 
 from __future__ import print_function, absolute_import
 
-from contextlib import contextmanager
-
 import wx
 
-from traits.api import Int, provides
+from traits.api import provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
 from .field import Field
@@ -28,9 +26,6 @@ from .field import Field
 @provides(ITextField)
 class TextField(MTextField, Field):
     """ The Wx-specific implementation of the text field class """
-
-    #: Zero if not updating, positive if updating.
-    _updating = Int
 
     # ------------------------------------------------------------------------
     # IWidget interface
@@ -54,24 +49,19 @@ class TextField(MTextField, Field):
         # do normal focus event stuff
         if isinstance(event, wx.FocusEvent):
             event.Skip()
-        if self.control is not None and self._updating == 0:
+        if self.control is not None:
             self.value = self.control.GetValue()
 
-    @contextmanager
-    def _no_update(self):
-        self._updating += 1
-        try:
-            yield
-        finally:
-            self._updating -= 1
-
     def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
         return self.control.GetValue()
 
     def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
         self.control.SetValue(value)
 
     def _observe_control_value(self, remove=False):
+        """ Toolkit specific method to change the control value observer. """
         if remove:
             self.control.Unbind(wx.EVT_TEXT, handler=self._update_value)
         else:
@@ -86,9 +76,11 @@ class TextField(MTextField, Field):
         self.control.SetHint(placeholder)
 
     def _get_control_echo(self):
+        """ Toolkit specific method to get the control's echo. """
         return self.echo
 
     def _set_control_echo(self, echo):
+        """ Toolkit specific method to set the control's echo. """
         # Can't change echo on Wx after control has been created."
         pass
 

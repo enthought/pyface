@@ -45,8 +45,6 @@ class ComboField(MComboField, Field):
 
     def _update_value(self, value):
         """ Handle a change to the value from user interaction
-
-        This is a method suitable for calling from a toolkit event handler.
         """
         self.value = self._get_control_value()
 

@@ -43,9 +43,11 @@ class SpinField(MSpinField, Field):
     # ------------------------------------------------------------------------
 
     def _get_control_value(self):
+        """ Toolkit specific method to get the control's value. """
         return self.control.GetValue()
 
     def _set_control_value(self, value):
+        """ Toolkit specific method to set the control's value. """
         self.control.SetValue(value)
         event = wx.SpinEvent(wx.EVT_SPINCTRL.typeId, self.control.GetId())
         event.SetInt(value)
@@ -59,7 +61,9 @@ class SpinField(MSpinField, Field):
             self.control.Bind(wx.EVT_SPINCTRL, self._update_value)
 
     def _get_control_bounds(self):
+        """ Toolkit specific method to get the control's bounds. """
         return (self.control.GetMin(), self.control.GetMax())
 
     def _set_control_bounds(self, bounds):
+        """ Toolkit specific method to set the control's bounds. """
         self.control.SetRange(*bounds)

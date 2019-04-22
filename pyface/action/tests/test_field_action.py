@@ -7,11 +7,14 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
+from __future__ import (
+    absolute_import, division, print_function, unicode_literals
+)
 
 from traits.testing.unittest_tools import unittest
 
 from pyface.fields.api import ComboField, SpinField, TextField
+from pyface.gui import GUI
 from pyface.window import Window
 from ..field_action import FieldAction
 
@@ -19,6 +22,8 @@ from ..field_action import FieldAction
 class TestFieldAction(unittest.TestCase):
 
     def setUp(self):
+        self.gui = GUI()
+
         self.parent = Window()
         self.parent._create()
         self.addCleanup(self._destroy_parent)
@@ -47,7 +52,10 @@ class TestFieldAction(unittest.TestCase):
         )
         control = action.create_control(self.parent.control)
         try:
+            self.gui.process_events()
+
             control._field.value = 'b'
+            self.gui.process_events()
 
             self.assertEqual(memo, ['b'])
         finally:
@@ -73,7 +81,10 @@ class TestFieldAction(unittest.TestCase):
         control = action.create_control(self.parent.control)
 
         try:
+            self.gui.process_events()
+
             control._field.value = 'b'
+            self.gui.process_events()
 
             self.assertEqual(memo, ['b'])
         finally:
@@ -100,7 +111,10 @@ class TestFieldAction(unittest.TestCase):
         control = action.create_control(self.parent.control)
 
         try:
+            self.gui.process_events()
+
             control._field.value = 5
+            self.gui.process_events()
 
             self.assertEqual(memo, [5])
         finally:

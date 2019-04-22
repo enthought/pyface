@@ -95,9 +95,11 @@ class MSpinField(HasTraits):
     # Toolkit control interface ---------------------------------------------
 
     def _get_control_bounds(self):
+        """ Toolkit specific method to get the control's bounds. """
         raise NotImplementedError()
 
     def _set_control_bounds(self, bounds):
+        """ Toolkit specific method to set the control's bounds. """
         raise NotImplementedError()
 
     # Trait property handlers -----------------------------------------------

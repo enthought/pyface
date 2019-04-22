@@ -53,6 +53,7 @@ class Field(MField, Widget):
         self.control.setToolTip(tooltip)
 
     def _observe_control_context_menu(self, remove=False):
+        """ Toolkit specific method to change the control menu observer. """
         if remove:
             self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
             self.control.customContextMenuRequested.disconnect(
