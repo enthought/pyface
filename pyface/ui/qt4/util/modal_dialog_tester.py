@@ -10,11 +10,12 @@
 
 """
 import contextlib
+import platform
 import sys
 import traceback
 
 from pyface.api import GUI, OK, CANCEL, YES, NO
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, qt_api
 from traits.api import Undefined
 
 from .event_loop_helper import EventLoopHelper
@@ -22,10 +23,10 @@ from .testing import find_qt_widget
 
 
 BUTTON_TEXT = {
-    OK: 'OK',
-    CANCEL: 'Cancel',
-    YES: '&Yes',
-    NO: '&No',
+    OK: u'OK',
+    CANCEL: u'Cancel',
+    YES: u'Yes',
+    NO: u'No',
 }
 
 
@@ -120,7 +121,7 @@ class ModalDialogTester(object):
             else:
                 condition_timer.start()
 
-        # Setup and start the timer to singla the handler every 100 msec.
+        # Setup and start the timer to fire the handler every 100 msec.
         condition_timer.setInterval(100)
         condition_timer.setSingleShot(True)
         condition_timer.timeout.connect(handler)
@@ -136,6 +137,7 @@ class ModalDialogTester(object):
         finally:
             condition_timer.stop()
             condition_timer.timeout.disconnect(handler)
+            self._helper.event_loop()
             self.assert_no_errors_collected()
 
     def open_and_wait(self, when_opened, *args, **kwargs):
@@ -179,7 +181,12 @@ class ModalDialogTester(object):
             if self._dialog_widget is None:
                 return False
             else:
-                return self.get_dialog_widget() != self._dialog_widget
+                value = (self.get_dialog_widget() != self._dialog_widget)
+                if value:
+                    # process any pending events so that we have a clean
+                    # event loop before we exit.
+                    self._helper.event_loop()
+                return value
 
         # Setup and start the timer to signal the handler every 100 msec.
         condition_timer.setInterval(100)
@@ -197,6 +204,8 @@ class ModalDialogTester(object):
         finally:
             condition_timer.stop()
             condition_timer.timeout.disconnect(handler)
+            self._dialog_widget = None
+            self._helper.event_loop()
             self.assert_no_errors_collected()
 
     def open(self, *args, **kwargs):
@@ -260,13 +269,25 @@ class ModalDialogTester(object):
     def click_widget(self, text, type_=QtGui.QPushButton):
         """ Execute click on the widget of `type_` with `text`.
 
+        This strips '&' chars from the string, since usage varies from platform
+        to platform.
         """
         control = self.get_dialog_widget()
+
+        def test(widget):
+            # XXX asking for widget.text() causes occasional segfaults on Linux
+            # and pyqt (both 4 and 5).  Not sure why this is happening.
+            # See issue #282
+            return widget.text().replace('&', '') == text
+
         widget = find_qt_widget(
             control,
             type_,
-            test=lambda widget: widget.text() == text
+            test=test
         )
+        if widget is None:
+            # this will only occur if there is some problem with the test
+            raise RuntimeError("Could not find matching child widget.")
         widget.click()
 
     def click_button(self, button_id):
@@ -277,7 +298,12 @@ class ModalDialogTester(object):
         """ A value was assigned to the result attribute.
 
         """
-        return self._assigned
+        result = self._assigned
+        if result:
+            # process any pending events so that we have a clean
+            # even loop before we exit.
+            self._helper.event_loop()
+        return result
 
     def dialog_opened(self):
         """ Check that the dialog has opened.

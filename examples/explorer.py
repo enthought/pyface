@@ -13,6 +13,7 @@
 #------------------------------------------------------------------------------
 """ A file explorer example. """
 
+from __future__ import print_function
 
 # Standard library imports.
 import os, sys
@@ -42,7 +43,7 @@ class ExampleAction(Action):
     def perform(self):
         """ Performs the action. """
 
-        print 'Performing', self.name
+        print('Performing', self.name)
 
         return
 

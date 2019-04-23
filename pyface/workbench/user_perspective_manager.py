@@ -51,7 +51,7 @@ class UserPerspectiveManager(HasTraits):
         """ Property getter. """
 
         # Get all of the current perspective ids:
-        ids = self.id_to_perspective.keys()
+        ids = list(self.id_to_perspective.keys())
 
         # If there are none:
         if len( ids ) == 0:
@@ -88,7 +88,7 @@ class UserPerspectiveManager(HasTraits):
     def _get_perspectives ( self ):
         """ Property getter. """
 
-        return self.id_to_perspective.values()
+        return list(self.id_to_perspective.values())
 
     def _get_file_name ( self ):
         """ Property getter. """
@@ -123,7 +123,7 @@ class UserPerspectiveManager(HasTraits):
         clone.id = '__user_perspective_%09d__' % self.next_id
 
         # Set any traits specified as keyword arguments.
-        clone.set(**traits)
+        clone.trait_set(**traits)
 
         # Add the perspective to the map.
         self.id_to_perspective[clone.id] = clone

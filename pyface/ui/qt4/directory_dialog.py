@@ -20,6 +20,7 @@ from traits.api import Bool, provides, Unicode
 # Local imports.
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from .dialog import Dialog
+import six
 
 
 @provides(IDirectoryDialog)
@@ -56,7 +57,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = unicode(files[0])
+            self.path = six.text_type(files[0])
         else:
             self.path = ''
 
@@ -74,7 +75,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         dlg.setFileMode(QtGui.QFileDialog.DirectoryOnly)
 
         if not self.new_directory:
-            dlg.setReadOnly(True)
+            dlg.setOptions(QtGui.QFileDialog.ReadOnly)
 
         if self.message:
             dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)

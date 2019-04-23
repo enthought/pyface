@@ -18,7 +18,7 @@
 """
 
 # Standard library imports.
-import cPickle
+import six.moves.cPickle
 import logging
 
 # Major package imports.
@@ -259,11 +259,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         structure = self._wx_view_dock_window.get_structure()
 
         # We always return a clone.
-        return cPickle.loads(cPickle.dumps(structure))
+        return six.moves.cPickle.loads(six.moves.cPickle.dumps(structure))
 
     def set_view_memento(self, memento):
         # We always use a clone.
-        memento = cPickle.loads(cPickle.dumps(memento))
+        memento = six.moves.cPickle.loads(six.moves.cPickle.dumps(memento))
 
         # The handler knows how to resolve view Ids when setting the dock
         # window structure.

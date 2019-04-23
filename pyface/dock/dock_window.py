@@ -165,8 +165,9 @@ class DockWindowHandler ( HasPrivateTraits ):
             # If DockControl was closed, then reset it to point to the new
             # control:
             if close:
-                dock_control.set( control = control,
-                                  style   = parent.owner.style )
+                dock_control.trait_set(
+                    control = control,
+                    style   = parent.owner.style)
                 dockable.dockable_init_dockcontrol( dock_control )
                 return dock_control
 
@@ -833,8 +834,8 @@ class DockWindow ( HasPrivateTraits ):
             name = control_info.name.strip()
             if name != '':
                 object.name = name
-            object.set( **control_info.get( 'user_name',
-                                            'style', 'user_style' ) )
+            object.trait_set(**control_info.get('user_name', 'style',
+                                                'user_style'))
             self.update_layout()
 
     #---------------------------------------------------------------------------
@@ -897,7 +898,7 @@ class DockWindow ( HasPrivateTraits ):
         """
         layouts = self._get_layouts()
         if layouts is not None:
-            return layouts.keys()
+            return list(layouts.keys())
 
         return []
 

@@ -15,7 +15,7 @@ sounds etc.
 """
 
 # Standard library imports.
-import glob, inspect, operator, os, sys, types
+import collections, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
@@ -26,6 +26,7 @@ from traits.util.resource import get_path
 # Local imports.
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
+import six
 
 
 class ResourceManager(HasTraits):
@@ -54,12 +55,12 @@ class ResourceManager(HasTraits):
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
 
-        if not operator.isSequenceType(path):
+        if not isinstance(path, collections.Sequence):
             path = [path]
 
         resource_path = []
         for item in list(path) + self.extra_paths:
-            if isinstance(item, basestring):
+            if isinstance(item, six.string_types):
                 resource_path.append(item)
             elif isinstance(item, types.ModuleType):
                 resource_path.append(item)

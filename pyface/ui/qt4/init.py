@@ -15,8 +15,11 @@
 
 import sys
 
+from traits.trait_notifiers import set_ui_handler, ui_handler
+
 from pyface.qt import QtCore, QtGui, qt_api
 from pyface.base_toolkit import Toolkit
+from .gui import GUI
 
 if qt_api == 'pyqt':
     # Check the version numbers are late enough.
@@ -38,4 +41,10 @@ if _app is None:
 
 
 # create the toolkit object
-toolkit_object = Toolkit('qt4', 'pyface.ui.qt4')
+toolkit_object = Toolkit('pyface', 'qt4', 'pyface.ui.qt4')
+
+
+# ensure that Traits has a UI handler appropriate for the toolkit.
+if ui_handler is None:
+    # Tell the traits notification handlers to use this UI handler
+    set_ui_handler(GUI.invoke_later)

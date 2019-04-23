@@ -7,8 +7,8 @@ import subprocess
 
 from setuptools import setup, find_packages
 
-MAJOR = 5
-MINOR = 2
+MAJOR = 6
+MINOR = 1
 MICRO = 0
 
 IS_RELEASED = False
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     setup(name='pyface',
           version=__version__,
-          url='https://docs.enthought.com/pyface',
+          url='http://docs.enthought.com/pyface',
           author='David C. Morrill, et al.',
           author_email='dmorrill@enthought.com',
           classifiers=[c.strip() for c in """\
@@ -150,7 +150,7 @@ if __name__ == "__main__":
               """.splitlines() if len(c.split()) > 0],
           description='traits-capable windowing framework',
           long_description=open('README.rst').read(),
-          download_url=('https://github.com/enthought/pyface'),
+          download_url='https://github.com/enthought/pyface',
           install_requires=__requires__,
           extras_require=__extras_require__,
           license='BSD',
@@ -171,14 +171,11 @@ if __name__ == "__main__":
           entry_points = {
               'pyface.toolkits': [
                   'qt4 = pyface.ui.qt4.init:toolkit_object',
+                  'qt = pyface.ui.qt4.init:toolkit_object',
                   'wx = pyface.ui.wx.init:toolkit_object',
                   'null = pyface.ui.null.init:toolkit_object',
               ],
           },
           platforms=["Windows", "Linux", "Mac OS-X", "Unix", "Solaris"],
           zip_safe=False,
-          use_2to3=True,
-          use_2to3_exclude_fixers=[
-            'lib2to3.fixes.fix_next',  # we have several .next() methods, no iterators
-          ],
     )

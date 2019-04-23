@@ -26,8 +26,8 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'refactordoc',
-    ]
+    'sphinx.ext.napoleon',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -45,8 +45,9 @@ copyright = '2008-2016, Enthought'
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 d = {}
-execfile(os.path.join('..', '..', 'pyface', '__init__.py'), d)
-version = release = d['__version__']
+with open(os.path.join('..', '..', 'pyface', '_version.py')) as fp:
+    exec (fp.read(), d)
+version = release = d['full_version']
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -78,7 +79,6 @@ today_fmt = '%B %d, %Y'
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-
 # Options for HTML output
 # -----------------------
 
@@ -101,7 +101,7 @@ pygments_style = 'sphinx'
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-html_favicon = "et.ico"
+#html_favicon = "favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -158,15 +158,17 @@ except ImportError as exc:
     warnings.warn(RuntimeWarning(msg.format(exc)))
 
     # old defaults
-    html_logo = "e-logo-rev.png"
+    html_logo = "e-logo-rev.jpg"
+    html_favicon = "et.png"
     html_style = 'default.css'
 
 # Useful aliases to avoid repeating long URLs.
-extlinks = {'github-examples': (
-    'https://github.com/enthought/pyface/tree/master/examples/%s',
-    'github-examples')
+extlinks = {
+    'github-examples': (
+        'https://github.com/enthought/pyface/tree/master/examples/%s',
+        'github-examples'
+    )
 }
-
 
 # Options for LaTeX output
 # ------------------------
@@ -180,7 +182,10 @@ extlinks = {'github-examples': (
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'TraitsGUI.tex', 'TraitsGUI Documentation', 'Enthought', 'manual'),
+    (
+        'index', 'TraitsGUI.tex', 'TraitsGUI Documentation', 'Enthought',
+        'manual'
+    ),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -205,19 +210,21 @@ latex_documents = [
 
 autodoc_member_order = 'bysource'
 
-autodoc_mock_imports = ['wx',
-                        'wx.grid',
-                        'wx.html',
-                        'wx.lib',
-                        'wx.lib.scrolledpanel',
-                        'wx.lib.layoutf',
-                        'wx.lib.mixins',
-                        'wx.lib.mixins.grid',
-                        'wx.lib.wxpTag',
-                        'wx.lib.gridmovers',
-                        'wx.stc',
-                        'wx.py',
-                        'IPython',
-                        'IPython.frontend',
-                        'IPython.frontend.wx',
-                        'IPython.frontend.wx.wx_frontend']
+autodoc_mock_imports = [
+    'wx',
+    'wx.grid',
+    'wx.html',
+    'wx.lib',
+    'wx.lib.scrolledpanel',
+    'wx.lib.layoutf',
+    'wx.lib.mixins',
+    'wx.lib.mixins.grid',
+    'wx.lib.wxpTag',
+    'wx.lib.gridmovers',
+    'wx.stc',
+    'wx.py',
+    'IPython',
+    'IPython.frontend',
+    'IPython.frontend.wx',
+    'IPython.frontend.wx.wx_frontend',
+]

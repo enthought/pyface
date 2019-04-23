@@ -350,7 +350,7 @@ class FeatureBar ( HasPrivateTraits ):
             else:
                 # Handle a normal object being dropped:
                 wx, wy = self.control.GetScreenPosition()
-                feature.set( x = wx + x, y = wy + y )
+                feature.trait_set( x = wx + x, y = wy + y )
                 feature.drop( data )
 
             return drag_result

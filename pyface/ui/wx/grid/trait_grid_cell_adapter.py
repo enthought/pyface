@@ -205,7 +205,11 @@ class TraitGridCellAdapter(PyGridCellEditor):
         if isinstance(control, wx.TextCtrl):
             control.SetSelection(-1, -1)
 
-    def EndEdit(self, row, col, grid):
+    def EndEdit(self, *args):
+        """ Validate the input data. """
+        return True  # Pass on all data to ApplyEdit
+
+    def ApplyEdit(self, row, col, grid):
         """ Do anything necessary to complete the editing. """
         self._control.Show(False)
 

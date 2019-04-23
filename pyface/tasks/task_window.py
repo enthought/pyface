@@ -14,6 +14,7 @@ from pyface.tasks.i_task_pane import ITaskPane
 from pyface.tasks.task import Task, TaskLayout
 from pyface.tasks.task_window_backend import TaskWindowBackend
 from pyface.tasks.task_window_layout import TaskWindowLayout
+import six
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -104,21 +105,7 @@ class TaskWindow(ApplicationWindow):
             self.show(True)
             self.opened = self
 
-        return self.control is not None
-
-    def close(self):
-        """ Closes the window.
-
-        Overriden to make the 'closing' event vetoable. Returns whether the
-        window was closed.
-        """
-        if self.control is not None:
-            self.closing = event = Vetoable()
-            if not event.veto:
-                self.destroy()
-                self.closed = self
-
-        return self.control is None
+        return self.control is not None and not event.veto
 
     ###########################################################################
     # Protected 'IApplicationWindow' interface.
@@ -155,15 +142,19 @@ class TaskWindow(ApplicationWindow):
             self._active_state = state
             task.activated()
         elif not state:
-            logger.warn("Cannot activate task %r: task does not belong to the "
-                        "window." % task)
+            logger.warn(
+                "Cannot activate task %r: task does not belong to the "
+                "window." % task
+            )
 
     def add_task(self, task):
         """ Adds a task to the window. The task is not activated.
         """
         if task.window is not None:
-            logger.error("Cannot add task %r: task has already been added "
-                         "to a window!" % task)
+            logger.error(
+                "Cannot add task %r: task has already been added "
+                "to a window!" % task
+            )
             return
 
         task.window = self
@@ -209,8 +200,10 @@ class TaskWindow(ApplicationWindow):
             self._destroy_state(state)
             self._states.remove(state)
         else:
-            logger.warn("Cannot remove task %r: task does not belong to the "
-                        "window." % task)
+            logger.warn(
+                "Cannot remove task %r: task does not belong to the "
+                "window." % task
+            )
 
     def focus_next_pane(self):
         """ Shifts focus to the "next" pane, taking into account the active pane
@@ -290,8 +283,9 @@ class TaskWindow(ApplicationWindow):
     def get_window_layout(self):
         """ Returns a TaskWindowLayout for the current state of the window.
         """
-        result = TaskWindowLayout(position=self.position, size=self.size,
-                                  size_state=self.size_state)
+        result = TaskWindowLayout(
+            position=self.position, size=self.size, size_state=self.size_state
+        )
         for state in self._states:
             if state == self._active_state:
                 result.active_task = state.task.id
@@ -312,14 +306,16 @@ class TaskWindow(ApplicationWindow):
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
-            if isinstance(layout, basestring):
+            if isinstance(layout, six.string_types):
                 continue
             state = self._get_state(layout.id)
             if state:
                 state.layout = layout
             else:
-                logger.warn("Cannot apply layout for task %r: task does not "
-                            "belong to the window." % layout.id)
+                logger.warn(
+                    "Cannot apply layout for task %r: task does not "
+                    "belong to the window." % layout.id
+                )
 
         # Attempt to activate the requested task.
         state = self._get_state(window_layout.get_active_task())
@@ -367,8 +363,10 @@ class TaskWindow(ApplicationWindow):
             for area in ('top', 'right', 'bottom', 'left'):
                 item = getattr(layout, area)
                 if item:
-                    panes.extend([ self.get_dock_pane(pane_item.id)
-                                   for pane_item in item.iterleaves() ])
+                    panes.extend([
+                        self.get_dock_pane(pane_item.id)
+                        for pane_item in item.iterleaves()
+                    ])
         return panes
 
     def _get_state(self, id_or_task):
@@ -418,7 +416,7 @@ class TaskWindow(ApplicationWindow):
 
     @on_trait_change('_states[]')
     def _states_updated(self):
-        self.tasks = [ state.task for state in self._states ]
+        self.tasks = [state.task for state in self._states]
 
 
 class TaskState(HasStrictTraits):

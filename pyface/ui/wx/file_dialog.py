@@ -29,6 +29,7 @@ from traits.api import Enum, Int, List, provides, Unicode
 # Local imports.
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from .dialog import Dialog
+import six
 
 
 @provides(IFileDialog)
@@ -74,7 +75,7 @@ class FileDialog(MFileDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path  = unicode(self.control.GetPath())
+        self.path  = six.text_type(self.control.GetPath())
         # Work around wx bug throwing exception on cancel of file dialog
         if len(self.path)>0:
             self.paths = self.control.GetPaths()
@@ -105,11 +106,11 @@ class FileDialog(MFileDialog, Dialog):
             default_filename = self.default_filename
 
         if self.action == 'open':
-            style = wx.OPEN
+            style = wx.FD_OPEN
         elif self.action == 'open files':
-            style = wx.OPEN | wx.MULTIPLE
+            style = wx.FD_OPEN | wx.FD_MULTIPLE
         else:
-            style = wx.SAVE | wx.OVERWRITE_PROMPT
+            style = wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT
 
         # Create the actual dialog.
         dialog = wx.FileDialog(parent, self.title, defaultDir=default_directory,

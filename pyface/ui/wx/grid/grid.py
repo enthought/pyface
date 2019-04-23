@@ -39,6 +39,7 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 # local imports
 from .grid_model import GridModel
 from .combobox_focus_handler import ComboboxFocusHandler
+import six
 
 # Is this code running on MS Windows?
 is_win32 = (sys.platform == 'win32')
@@ -512,8 +513,8 @@ class Grid(Widget):
 
         font = self.default_label_font
         if font is None:
-            font = wx.SystemSettings_GetFont(wx.SYS_DEFAULT_GUI_FONT)
-            font.SetWeight(wx.BOLD)
+            font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+            font.SetWeight(wx.FONTWEIGHT_BOLD)
 
         self._grid.SetLabelFont(font)
 
@@ -736,7 +737,7 @@ class Grid(Widget):
         evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
-            if isinstance(data, basestring):
+            if isinstance(data, six.string_types):
                 file = abspath(data)
                 if exists(file):
                     FileDropSource(self._grid, file)
@@ -1395,11 +1396,11 @@ class Grid(Widget):
         wdx     = 0.0
         widths  = []
         cached  = getattr( self, '_cached_widths', None )
-        current = [ grid.GetColSize( i ) for i in xrange( n ) ]
+        current = [ grid.GetColSize( i ) for i in range( n ) ]
         if (cached is None) or (len( cached ) != n):
             self._cached_widths = cached = [ None ] * n
 
-        for i in xrange( n ):
+        for i in range( n ):
             cw = cached[i]
             if ((cw is None) or (-cw == current[i]) or
                 # hack: For some reason wx always seems to adjust column 0 by
@@ -1571,12 +1572,12 @@ class _GridTableBase(PyGridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1591,12 +1592,12 @@ class _GridTableBase(PyGridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = unicode(label, 'ascii') + u'  \u00ab'
+                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
                     label  = ulabel.encode('latin-1')
                 else:
                     label += '  <<'
             elif is_win32:
-                ulabel = unicode(label, 'ascii') + u'  \u00bb'
+                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
                 label  = ulabel.encode('latin-1')
             else:
                 label += '  >>'
@@ -1770,7 +1771,7 @@ class _GridTableBase(PyGridTableBase):
 
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event:
-        do_later( self._editor_dispose, self._editor_cache.values() )
+        do_later( self._editor_dispose, list(self._editor_cache.values()) )
 
         self._editor_cache   = {}
         self._renderer_cache = {}

@@ -25,54 +25,76 @@ from ..gui import GUI
 from ..toolkit import toolkit_object
 from ..window import Window
 
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
+GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
+no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+
+ModalDialogTester = toolkit_object(
+    'util.modal_dialog_tester:ModalDialogTester'
+)  # noqa: E501
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 USING_QT = ETSConfig.toolkit not in ['', 'wx']
 
-class TestMessageDialog(unittest.TestCase):
 
+@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = SingleChoiceDialog(choices=['red', 'blue', 'green'])
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        self.dialog = None
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.destroy()
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_destroy(self):
         # test that destroy works even when no control
-        self.dialog.destroy()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_create_cancel(self):
         # test that creation and destruction works no cancel button
         self.dialog.cancel = False
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.destroy()
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_create_parent(self):
         # test that creation and destruction works as expected with a parent
-        parent = Window()
-        self.dialog.parent = parent.control
-        parent._create()
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.destroy()
-        parent.destroy()
+        with self.event_loop():
+            parent = Window()
+            self.dialog.parent = parent.control
+            parent._create()
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
+        with self.event_loop():
+            parent.destroy()
 
     def test_message(self):
         # test that creation and destruction works as expected with message
         self.dialog.message = u"This is the message"
-        self.dialog._create()
-        self.gui.process_events()
-        self.dialog.destroy()
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
 
     def test_choice_strings(self):
         # test that choice strings work using simple strings
-        self.assertEqual(self.dialog._choice_strings(), ['red', 'blue', 'green'])
+        self.assertEqual(
+            self.dialog._choice_strings(), ['red', 'blue', 'green']
+        )
 
     def test_choice_strings_convert(self):
         # test that choice strings work using simple strings
@@ -87,7 +109,9 @@ class TestMessageDialog(unittest.TestCase):
 
         self.dialog.choices = [Item(name) for name in ['red', 'blue', 'green']]
         self.dialog.name_attribute = 'description'
-        self.assertEqual(self.dialog._choice_strings(), ['red', 'blue', 'green'])
+        self.assertEqual(
+            self.dialog._choice_strings(), ['red', 'blue', 'green']
+        )
 
     def test_choice_strings_name_attribute_convert(self):
         # test that choice strings work using attribute name of objects
@@ -125,6 +149,7 @@ class TestMessageDialog(unittest.TestCase):
         # test that accept works as expected
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
         self.assertIsNone(self.dialog.choice)
@@ -133,7 +158,10 @@ class TestMessageDialog(unittest.TestCase):
     def test_close(self):
         # test that closing works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_run(when_opened=lambda x: x.get_dialog_widget().close())
+        tester.open_and_run(
+            when_opened=lambda x: x.get_dialog_widget().close()
+        )
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
         self.assertIsNone(self.dialog.choice)
@@ -146,7 +174,9 @@ class TestMessageDialog(unittest.TestCase):
         parent.open()
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=lambda x: x.close(accept=True))
-        parent.close()
+        with self.event_loop():
+            parent.close()
+
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
@@ -160,6 +190,7 @@ class TestMessageDialog(unittest.TestCase):
 
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=select_green_and_ok)
+
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
         self.assertEqual(self.dialog.choice, 'green')
@@ -174,6 +205,7 @@ class TestMessageDialog(unittest.TestCase):
 
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=select_green_and_cancel)
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
         self.assertIsNone(self.dialog.choice)
@@ -188,6 +220,7 @@ class TestMessageDialog(unittest.TestCase):
 
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_run(when_opened=select_green_and_close)
+
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
         self.assertIsNone(self.dialog.choice)

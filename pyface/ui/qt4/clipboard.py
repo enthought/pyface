@@ -14,7 +14,7 @@
 
 # Standard library imports
 from io import BytesIO
-from cPickle import dumps, load, loads
+from six.moves.cPickle import dumps, load, loads
 
 # System library imports
 from pyface.qt import QtCore, QtGui
@@ -22,6 +22,7 @@ from pyface.qt import QtCore, QtGui
 # ETS imports
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
+import six
 
 # Shortcuts
 cb = QtGui.QApplication.clipboard()
@@ -98,7 +99,7 @@ class Clipboard(BaseClipboard):
             return []
 
     def _set_file_data(self, data):
-        if isinstance(data, basestring):
+        if isinstance(data, six.string_types):
             data = [data]
         mime_data = QtCore.QMimeData()
         mime_data.setUrls([QtCore.QUrl(path) for path in data])

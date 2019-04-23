@@ -1,6 +1,4 @@
-#------------------------------------------------------------------------------
-#
-#  Copyright (c) 2005, Enthought, Inc.
+#  Copyright (c) 2005-18, Enthought, Inc.
 #  All rights reserved.
 #
 #  This software is provided without warranty under the terms of the BSD
@@ -11,8 +9,6 @@
 #  Thanks for using Enthought open source!
 #
 #  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -20,7 +16,7 @@
 from __future__ import absolute_import
 
 # Standard library imports.
-import __builtin__ as builtins
+import six.moves.builtins
 import os
 import sys
 import types
@@ -40,6 +36,7 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
+import six
 
 
 @provides(IPythonShell)
@@ -47,7 +44,6 @@ class PythonShell(MPythonShell, Widget):
     """ The toolkit specific implementation of a PythonShell.  See the
     IPythonShell interface for the API documentation.
     """
-
 
     #### 'IPythonShell' interface #############################################
 
@@ -141,6 +137,33 @@ class PythonShell(MPythonShell, Widget):
         del prog_ns['__nonzero__']
         self.interpreter().locals.update(prog_ns)
 
+    def get_history(self):
+        """ Return the current command history and index.
+
+        Returns
+        -------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        return self.control.history, self.control.historyIndex
+
+    def set_history(self, history, history_index):
+        """ Replace the current command history and index with new ones.
+
+        Parameters
+        ----------
+        history : list of str
+            The list of commands in the new history.
+        history_index : int from 0 to len(history)
+            The current item in the command history navigation.
+        """
+        if not 0 <= history_index <= len(history):
+            history_index = len(history)
+        self.control.history = list(history)
+        self.control.historyIndex = history_index
+
     ###########################################################################
     # 'IWidget' interface.
     ###########################################################################
@@ -168,7 +191,7 @@ class PythonShell(MPythonShell, Widget):
         name = 'dragged'
 
         if hasattr(obj, 'name') \
-           and isinstance(obj.name, basestring) and len(obj.name) > 0:
+           and isinstance(obj.name, six.string_types) and len(obj.name) > 0:
             py_name = python_name(obj.name)
 
             # Make sure that the name is actually a valid Python identifier.
@@ -231,7 +254,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = builtins.raw_input
+        self.raw_input = six.moves.builtins.raw_input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)
@@ -267,7 +290,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        builtins.raw_input = self.raw_input
+        six.moves.builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 
@@ -285,5 +308,3 @@ class _NullIO:
     def flush(self): pass
     def close(self): pass
     def seek(self, pos, mode = 0): pass
-
-#### EOF ######################################################################

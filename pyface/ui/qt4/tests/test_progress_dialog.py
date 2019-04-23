@@ -2,20 +2,21 @@ from __future__ import absolute_import
 
 from traits.testing.unittest_tools import unittest
 
-from pyface.gui import GUI
-from pyface.toolkit import toolkit_object
-
 from ..progress_dialog import ProgressDialog
-
-ModalDialogTester = toolkit_object('util.modal_dialog_tester:ModalDialogTester')
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+from ..util.gui_test_assistant import GuiTestAssistant
 
 
-class TestDialog(unittest.TestCase):
+class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
-        self.gui = GUI()
+        GuiTestAssistant.setUp(self)
         self.dialog = ProgressDialog()
+
+    def tearDown(self):
+        if self.dialog.control is not None:
+            with self.delete_widget(self.dialog.control):
+                self.dialog.destroy()
+        GuiTestAssistant.tearDown(self)
 
     def test_create(self):
         # test that creation and destruction works as expected
@@ -28,6 +29,7 @@ class TestDialog(unittest.TestCase):
         self.assertIsNone(self.dialog._estimated_control)
         self.assertIsNone(self.dialog._remaining_control)
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_show_time(self):
         # test that creation works with show_time
@@ -38,6 +40,7 @@ class TestDialog(unittest.TestCase):
         self.assertIsNotNone(self.dialog._estimated_control)
         self.assertIsNotNone(self.dialog._remaining_control)
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_show_percent(self):
         # test that creation works with show_percent
@@ -46,6 +49,7 @@ class TestDialog(unittest.TestCase):
         self.gui.process_events()
         self.assertEqual(self.dialog.progress_bar.format(), "%p%")
         self.dialog.destroy()
+        self.gui.process_events()
 
     def test_update(self):
         self.dialog.min = 0
@@ -58,6 +62,7 @@ class TestDialog(unittest.TestCase):
             if i < 10:
                 self.assertEqual(self.dialog.progress_bar.value(), i)
         self.assertIsNone(self.dialog.control)
+        self.gui.process_events()
 
     def test_update_no_control(self):
         # note: inconsistent implementation with Wx
@@ -65,6 +70,7 @@ class TestDialog(unittest.TestCase):
         self.dialog.max = 10
         result = self.dialog.update(1)
         self.assertEqual(result, (None, None))
+        self.gui.process_events()
 
     def test_change_message(self):
         self.dialog.min = 0
@@ -79,6 +85,7 @@ class TestDialog(unittest.TestCase):
             self.assertEqual(self.dialog._message_control.text(),
                              'Updating {}'.format(i))
         self.assertIsNone(self.dialog.control)
+        self.gui.process_events()
 
     def test_change_message_trait(self):
         self.dialog.min = 0
@@ -93,6 +100,7 @@ class TestDialog(unittest.TestCase):
             self.assertEqual(self.dialog._message_control.text(),
                              'Updating {}'.format(i))
         self.assertIsNone(self.dialog.control)
+        self.gui.process_events()
 
     def test_update_show_time(self):
         self.dialog.min = 0
@@ -107,3 +115,4 @@ class TestDialog(unittest.TestCase):
             self.assertNotEqual(self.dialog._estimated_control.text(), "")
             self.assertNotEqual(self.dialog._remaining_control.text(), "")
         self.assertIsNone(self.dialog.control)
+        self.gui.process_events()

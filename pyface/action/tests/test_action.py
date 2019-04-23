@@ -39,3 +39,21 @@ class TestAction(unittest.TestCase):
         action = Action(name='Test')
         # does nothing, but shouldn't error
         action.destroy()
+
+    def test_widget_action(self):
+        # test whether function is called by updating list
+        # XXX should really use mock
+        memo = []
+
+        def control_factory(parent, action):
+            memo.append((parent, action))
+
+        action = Action(
+            name="Dummy",
+            style='widget',
+            control_factory=control_factory
+        )
+        parent = None
+        action.create_control(parent)
+
+        self.assertEqual(memo, [(parent, action)])

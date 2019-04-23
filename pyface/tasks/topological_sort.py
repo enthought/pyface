@@ -79,7 +79,7 @@ def topological_sort(pairs):
     
     # Descend through graph, removing parents as we go.
     for parent in result:
-        if graph.has_key(parent):
+        if parent in graph:
             for child in graph[parent]:
                 num_parents[child] -= 1
                 if num_parents[child] == 0:
@@ -89,5 +89,5 @@ def topological_sort(pairs):
     # If there's a cycle, just throw in whatever is left over.
     has_cycle = bool(graph)
     if has_cycle:
-        result.extend(graph.keys())
+        result.extend(list(graph.keys()))
     return result, has_cycle

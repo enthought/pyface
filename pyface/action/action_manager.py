@@ -15,12 +15,14 @@
 
 
 # Enthought library imports.
+from __future__ import print_function
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
 # Local imports.
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
+import six
 
 
 class ActionManager(HasTraits):
@@ -102,7 +104,7 @@ class ActionManager(HasTraits):
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
-            if isinstance(arg, basestring):
+            if isinstance(arg, six.string_types):
                 # Create a group with the specified Id.
                 arg = Group(id=arg)
 
@@ -162,8 +164,15 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         appended to the manager's defualt group.
         """
+        item = self._prepare_item(item)
+        if isinstance(item, Group):
+            group = self._groups
 
-        return self.insert(len(self._groups), item)
+        else:
+            group = self._get_default_group()
+
+        group.append(item)
+        return group
 
     def destroy(self):
         """ Called when the manager is no longer required.
@@ -193,31 +202,15 @@ class ActionManager(HasTraits):
         of groups.  If the item is an ActionManagerItem then the item is
         inserted into the manager's defualt group.
         """
-        # 1) The item is a 'Group' instance.
+        item = self._prepare_item(item)
+
         if isinstance(item, Group):
-            group = item
+            group = self._groups
 
-            # Insert the group into the manager.
-            group.parent = self
-            self._groups.insert(index, item)
-
-        # 2) The item is a string.
-        elif isinstance(item, basestring):
-            # Create a group with that Id.
-            group = Group(id=item)
-
-            # Insert the group into the manager.
-            group.parent = self
-            self._groups.insert(index, group)
-
-        # 3) The item is an 'ActionManagerItem' instance.
         else:
-            # Find the default group.
             group = self._get_default_group()
 
-            # Insert the item into the default group.
-            group.insert(index, item)
-
+        group.insert(index, item)
         return group
 
     def find_group(self, id):
@@ -331,10 +324,35 @@ class ActionManager(HasTraits):
         """
         group = self.find_group(self.DEFAULT_GROUP)
         if group is None:
-            group = Group(id=self.DEFAULT_GROUP)
-            self.append(group)
+            group = self._prepare_item(self.DEFAULT_GROUP)
+            self._groups.append(group)
 
         return group
+
+    def _prepare_item(self, item):
+        """ Prepare an item to be added to this ActionManager.
+
+        Parameters
+        ----------
+        item : string, Group instance or ActionManagerItem instance
+            The item to be added to this ActionManager
+
+        Returns
+        -------
+        item : Group or ActionManagerItem
+            Modified item
+        """
+        # 1) The item is a 'Group' instance.
+        if isinstance(item, Group):
+            item.parent = self
+
+        # 2) The item is a string.
+        elif isinstance(item, six.string_types):
+            # Create a group with that Id.
+            item = Group(id=item)
+            item.parent = self
+
+        return item
 
     def _find_item(self, id):
         """ Find an item with a spcified Id.
@@ -363,7 +381,7 @@ class ActionManager(HasTraits):
 
     def dump(self, indent=''):
         """ Render a manager! """
-        print indent, 'Manager', self.id
+        print(indent, 'Manager', self.id)
         indent += '  '
 
         for group in self._groups:
@@ -371,12 +389,12 @@ class ActionManager(HasTraits):
 
     def render_group(self, group, indent=''):
         """ Render a group! """
-        print indent, 'Group', group.id
+        print(indent, 'Group', group.id)
         indent += '    '
 
         for item in group.items:
             if isinstance(item, Group):
-                print 'Surely, a group cannot contain another group!!!!'
+                print('Surely, a group cannot contain another group!!!!')
                 self.render_group(item, indent)
 
             else:
@@ -389,4 +407,4 @@ class ActionManager(HasTraits):
             item.dump(indent)
 
         else:
-            print indent, 'Item', item.id
+            print(indent, 'Item', item.id)

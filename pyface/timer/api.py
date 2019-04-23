@@ -14,5 +14,6 @@
 
 from __future__ import absolute_import
 
-from .timer import Timer
 from .do_later import do_later, do_after, DoLaterTimer
+from .i_timer import ICallbackTimer, IEventTimer, ITimer
+from .timer import CallbackTimer, EventTimer, Timer

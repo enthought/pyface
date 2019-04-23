@@ -14,10 +14,14 @@
 
 """ The interface for manipulating the toolkit clipboard.
 """
-from collections import Sequence
+try:
+    from collections.abc import Sequence
+except ImportError:  # Python 3.8 deprecation
+    from collections import Sequence
 
 # ETS imports
 from traits.api import HasStrictTraits, Interface, Property
+import six
 
 
 class IClipboard(Interface):
@@ -100,7 +104,7 @@ class BaseClipboard(HasStrictTraits):
         return None
 
     def _set_data(self, data):
-        if isinstance(data, basestring):
+        if isinstance(data, six.string_types):
             self.text_data = data
         elif isinstance(data, Sequence):
             self.file_data = data

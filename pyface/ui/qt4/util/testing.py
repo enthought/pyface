@@ -9,6 +9,7 @@
 
 """ Tools for testing. """
 
+from __future__ import print_function
 from contextlib import contextmanager
 import os
 import sys
@@ -55,27 +56,38 @@ def delete_widget(widget, timeout=1.0):
 
 
 @contextmanager
+def _convert_none_to_null_handle(stream):
+    """ If 'stream' is None, provide a temporary handle to /dev/null. """
+
+    if stream is None:
+        out = open(os.devnull, 'w')
+        try:
+            yield out
+        finally:
+            out.close()
+    else:
+        yield stream
+
+
+@contextmanager
 def silence_output(out=None, err=None):
     """ Re-direct the stderr and stdout streams while in the block. """
 
-    if out is None:
-        out = open(os.devnull, 'w')
-    if err is None:
-        err = open(os.devnull, 'w')
+    with _convert_none_to_null_handle(out) as out:
+        with _convert_none_to_null_handle(err) as err:
+            _old_stderr = sys.stderr
+            _old_stderr.flush()
 
-    _old_stderr = sys.stderr
-    _old_stderr.flush()
+            _old_stdout = sys.stdout
+            _old_stdout.flush()
 
-    _old_stdout = sys.stdout
-    _old_stdout.flush()
-
-    try:
-        sys.stdout = out
-        sys.stderr = err
-        yield
-    finally:
-        sys.stdout = _old_stdout
-        sys.stderr = _old_stderr
+            try:
+                sys.stdout = out
+                sys.stderr = err
+                yield
+            finally:
+                sys.stdout = _old_stdout
+                sys.stderr = _old_stderr
 
 
 def print_qt_widget_tree(widget, level=0):
@@ -92,12 +104,12 @@ def print_qt_widget_tree(widget, level=0):
     """
     level = level + 4
     if level == 0:
-        print
-    print ' '*level, widget
+        print()
+    print(' '*level, widget)
     for child in widget.children():
         print_qt_widget_tree(child, level=level)
     if level == 0:
-        print
+        print()
 
 
 def find_qt_widget(start, type_, test=None):

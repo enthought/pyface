@@ -89,7 +89,7 @@ class ExpandablePanel(Widget):
     def remove_panel(self, name):
         """ Removes a layer and its header from the container."""
 
-        if not self._layers.has_key(name):
+        if name not in self._layers:
             return
 
         sizer = self.control.GetSizer()

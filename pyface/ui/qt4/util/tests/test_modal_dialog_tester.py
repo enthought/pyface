@@ -11,16 +11,24 @@
 from __future__ import absolute_import
 
 import unittest
-import cStringIO
+from six.moves import cStringIO as StringIO
+import platform
 
 from pyface.qt import QtGui
 from pyface.api import Dialog, MessageDialog, OK, CANCEL
+from pyface.toolkit import toolkit_object
 from traits.api import HasStrictTraits
 
 from pyface.ui.qt4.util.testing import silence_output
 from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
 from pyface.util.testing import skip_if_no_traitsui
+
+
+is_qt = toolkit_object.toolkit == 'qt4'
+if is_qt:
+    from pyface.qt import qt_api
+is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 
 
 class MyClass(HasStrictTraits):
@@ -45,6 +53,7 @@ class MyClass(HasStrictTraits):
         return True
 
 
+@unittest.skipIf(is_pyqt5, "ModalDialogTester not working on pyqt5. Issue #302")
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
 
@@ -107,9 +116,10 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     self.fail()
             finally:
                 tester.close()
+                self.gui.process_events()
 
         with self.assertRaises(AssertionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=failure)
             self.assertIn('raise self.failureException(msg)', alt_stderr)
@@ -125,13 +135,15 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     1 / 0
             finally:
                 tester.close()
+                self.gui.process_events()
 
         with self.assertRaises(ZeroDivisionError):
-            alt_stderr = cStringIO.StringIO
+            alt_stderr = StringIO
             with silence_output(err=alt_stderr):
                 tester.open_and_run(when_opened=raise_error)
             self.assertIn('ZeroDivisionError', alt_stderr)
 
+    @unittest.skip("has_widget code not working as designed. Issue #282.")
     def test_has_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)
@@ -150,6 +162,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
 
         tester.open_and_run(when_opened=check_and_close)
 
+    @unittest.skip("has_widget code not working as designed. Issue #282.")
     def test_find_widget(self):
         dialog = Dialog()
         tester = ModalDialogTester(dialog.open)

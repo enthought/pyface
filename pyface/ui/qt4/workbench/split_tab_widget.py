@@ -9,9 +9,7 @@
 
 # Standard library imports.
 import sys
-
-if sys.version_info[0] > 2:
-    unicode = str
+import six
 
 # Major library imports.
 from pyface.qt import QtCore, QtGui, qt_api
@@ -29,11 +27,13 @@ class SplitTabWidget(QtGui.QSplitter):
     new_window_request = QtCore.Signal(QtCore.QPoint, QtGui.QWidget)
     tab_close_request = QtCore.Signal(QtGui.QWidget)
     tab_window_changed = QtCore.Signal(QtGui.QWidget)
+    editor_has_focus = QtCore.Signal(QtGui.QWidget)
+    focus_changed = QtCore.Signal(QtGui.QWidget, QtGui.QWidget)
 
     # The different hotspots of a QTabWidget.  An non-negative value is a tab
     # index and the hotspot is to the left of it.
 
-    tabTextChanged = QtCore.Signal(QtGui.QWidget, unicode)
+    tabTextChanged = QtCore.Signal(QtGui.QWidget, six.text_type)
     _HS_NONE = -1
     _HS_AFTER_LAST_TAB = -2
     _HS_NORTH = -3
@@ -93,8 +93,8 @@ class SplitTabWidget(QtGui.QSplitter):
                 for t in range(ch.count()):
                     # A tab state is a tuple of the widget's object name and
                     # the title.
-                    name = unicode(ch.widget(t).objectName())
-                    title = unicode(ch.tabText(t))
+                    name = six.text_type(ch.widget(t).objectName())
+                    title = six.text_type(ch.tabText(t))
 
                     tab_states.append((name, title))
 
@@ -299,7 +299,7 @@ class SplitTabWidget(QtGui.QSplitter):
                 return
 
         if self._repeat_focus_changes:
-            self.focusChanged.emit(old, new)
+            self.focus_changed.emit(old, new)
 
         if new is None:
             return
@@ -321,7 +321,7 @@ class SplitTabWidget(QtGui.QSplitter):
             else:
                 nw = ntw.widget(ntidx)
 
-            self.hasFocus.emit(nw)
+            self.editor_has_focus.emit(nw)
 
     def _tab_widget_of(self, target):
         """ Return the tab widget and index of the widget that contains the

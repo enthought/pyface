@@ -1,6 +1,4 @@
-#------------------------------------------------------------------------------
-#
-#  Copyright (c) 2005, Enthought, Inc.
+#  Copyright (c) 2005-19, Enthought, Inc.
 #  All rights reserved.
 #
 #  This software is provided without warranty under the terms of the BSD
@@ -11,8 +9,6 @@
 #  Thanks for using Enthought open source!
 #
 #  Author: Enthought, Inc.
-#
-#------------------------------------------------------------------------------
 
 """ The wx specific implementations the action manager internal classes.
 """
@@ -33,7 +29,8 @@ from pyface.action.action_event import ActionEvent
 _STYLE_TO_KIND_MAP = {
     'push'   : wx.ITEM_NORMAL,
     'radio'  : wx.ITEM_RADIO,
-    'toggle' : wx.ITEM_CHECK
+    'toggle' : wx.ITEM_CHECK,
+    'widget' : None,
 }
 
 
@@ -74,7 +71,11 @@ class _MenuItem(HasTraits):
         action  = item.action
         label   = action.name
         kind    = _STYLE_TO_KIND_MAP[action.style]
-        longtip = action.description
+        longtip = action.description or action.tooltip
+
+        if action.style == "widget":
+            raise NotImplementedError(
+                "WxPython does not support widgets in menus")
 
         if len(action.accelerator) > 0:
             label = label + '\t' + action.accelerator
@@ -362,27 +363,32 @@ class _Tool(HasTraits):
         else:
             self.tool_bar.SetSize((-1, 50))
 
-        self.control_id = wx.NewId()
-        self.control = tool_bar.AddLabelTool(
-            self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
-        )
-
-        # Set the initial checked state.
-        tool_bar.ToggleTool(self.control_id, action.checked)
-
-        if hasattr(tool_bar, 'ShowTool'):
-            # Set the initial enabled/disabled state of the action.
-            tool_bar.EnableTool(self.control_id, action.enabled)
-
-            # Set the initial visibility
-            tool_bar.ShowTool(self.control_id, action.visible)
+        if action.style == 'widget':
+            widget = action.create_control(self.tool_bar)
+            self.control = tool_bar.AddControl(widget, label)
+            self.control_id = self.control.GetId()
         else:
-            # Set the initial enabled/disabled state of the action.
-            tool_bar.EnableTool(
-                self.control_id, action.enabled and action.visible)
+            self.control_id = wx.NewId()
+            self.control = tool_bar.AddLabelTool(
+                self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
+            )
 
-        # Wire it up.
-        wx.EVT_TOOL(parent, self.control_id, self._on_tool)
+            # Set the initial checked state.
+            tool_bar.ToggleTool(self.control_id, action.checked)
+
+            if hasattr(tool_bar, 'ShowTool'):
+                # Set the initial enabled/disabled state of the action.
+                tool_bar.EnableTool(self.control_id, action.enabled)
+
+                # Set the initial visibility
+                tool_bar.ShowTool(self.control_id, action.visible)
+            else:
+                # Set the initial enabled/disabled state of the action.
+                tool_bar.EnableTool(
+                    self.control_id, action.enabled and action.visible)
+
+            # Wire it up.
+            wx.EVT_TOOL(parent, self.control_id, self._on_tool)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
@@ -545,6 +551,10 @@ class _PaletteTool(HasTraits):
 
         action = self.item.action
         label = action.name
+
+        if action.style == "widget":
+            raise NotImplementedError(
+                "WxPython does not support widgets in palettes")
 
         # Tool palette tools never have '...' at the end.
         if label.endswith('...'):

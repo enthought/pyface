@@ -45,11 +45,13 @@ class ImageButton ( Widget ):
 
     # Pens used to draw the 'selection' marker:
     _selectedPenDark = wx.Pen(
-        wx.SystemSettings_GetColour( wx.SYS_COLOUR_3DSHADOW ), 1, wx.SOLID
+        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DSHADOW ), 1,
+        wx.PENSTYLE_SOLID
     )
 
     _selectedPenLight = wx.Pen(
-        wx.SystemSettings_GetColour( wx.SYS_COLOUR_3DHIGHLIGHT ), 1, wx.SOLID
+        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DHIGHLIGHT ), 1,
+        wx.PENSTYLE_SOLID
     )
 
     #---------------------------------------------------------------------------
@@ -262,4 +264,3 @@ class ImageButton ( Widget ):
             wdc.SetPen( pens[ 1 - bd ] )
             wdc.DrawLine( wdx - 1, 1, wdx - 1, wdy )
             wdc.DrawLine( 1, wdy - 1, wdx - 1, wdy - 1 )
-

@@ -3,6 +3,7 @@ from traits.api import Either, List, Str, Tuple, Enum
 
 # Local imports.
 from pyface.tasks.task_layout import LayoutContainer, TaskLayout
+import six
 
 
 class TaskWindowLayout(LayoutContainer):
@@ -32,13 +33,13 @@ class TaskWindowLayout(LayoutContainer):
             return self.active_task
         elif self.items:
             first = self.items[0]
-            return first if isinstance(first, basestring) else first.id
+            return first if isinstance(first, six.string_types) else first.id
         return None
 
     def get_tasks(self):
         """ Returns the IDs of the tasks in the layout.
         """
-        return [ (item if isinstance(item, basestring) else item.id)
+        return [ (item if isinstance(item, six.string_types) else item.id)
                  for item in self.items ]
 
     def is_equivalent_to(self, layout):
