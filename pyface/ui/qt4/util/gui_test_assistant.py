@@ -37,9 +37,14 @@ class GuiTestAssistant(UnittestTools):
             qt_app=self.qt_app,
             gui=self.gui
         )
-        self.traitsui_raise_patch = mock.patch(
-            'traitsui.qt4.ui_base._StickyDialog.raise_')
-        self.traitsui_raise_patch.start()
+        try:
+            import traitsui.api
+        except ImportError:
+            self.traitsui_raise_patch = None
+        else:
+            self.traitsui_raise_patch = mock.patch(
+                'traitsui.qt4.ui_base._StickyDialog.raise_')
+            self.traitsui_raise_patch.start()
 
         def new_activate(self):
             self.control.activateWindow()
@@ -68,7 +73,8 @@ class GuiTestAssistant(UnittestTools):
 
         self.qt_app.flush()
         self.pyface_raise_patch.stop()
-        self.traitsui_raise_patch.stop()
+        if self.traitsui_raise_patch is not None:
+            self.traitsui_raise_patch.stop()
 
         del self.pyface_raise_patch
         del self.traitsui_raise_patch
