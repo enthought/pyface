@@ -13,67 +13,17 @@
 #------------------------------------------------------------------------------
 """ Python editor example. """
 
-
-# Enthought library imports.
-from traits.api import Constant
+from __future__ import print_function, unicode_literals
 
 from pyface.api import (
     ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 )
-from pyface.toolkit import toolkit_object
 from pyface.action.api import (
-    Action, ActionEvent, Group, MenuManager, MenuBarManager, ToolBarManager
+    Action, FieldAction, Group, MenuManager, MenuBarManager,
+    ToolBarManager
 )
-
-
-class IntFieldAction(Action):
-    """ A widget action containing an integer textbox
-
-    This shows one way of creating a widget Action by overriding the
-    create_control method and overloading the `perform` methods to pass
-    the entered value to a handler.
-    """
-
-    style = Constant("widget")
-
-    def create_control(self, parent):
-        if toolkit_object.toolkit == 'wx':
-            import wx
-            from wx.lib.intctrl import IntCtrl
-            control = IntCtrl(
-                parent,
-                value=1,
-                style=wx.TE_PROCESS_ENTER
-            )
-
-            def handle_enter(event):
-                value = control.GetValue()
-                action_event = ActionEvent(value=value)
-                self.perform(action_event)
-
-            control.Bind(wx.EVT_TEXT_ENTER, handle_enter)
-
-        elif toolkit_object.toolkit == 'qt4':
-            from pyface.qt import QtGui
-            control = QtGui.QLineEdit(parent)
-            control.setText("1")
-            control.setValidator(QtGui.QIntValidator())
-
-            def handle_enter():
-                value = int(control.text())
-                action_event = ActionEvent(value=value)
-                self.perform(action_event)
-
-            control.returnPressed.connect(handle_enter)
-
-        else:
-            control = None
-
-        return control
-
-    def perform(self, event):
-        if self.on_perform is not None:
-            self.on_perform(event.value)
+from pyface.fields.api import ComboField
+from pyface.toolkit import toolkit_object
 
 
 class MainWindow(ApplicationWindow):
@@ -115,6 +65,9 @@ class MainWindow(ApplicationWindow):
 
         # Add a tool bar if we are using qt4 - wx has layout issues
         if toolkit_object.toolkit == 'qt4':
+            from pygments.styles import STYLE_MAP
+            styles = list(STYLE_MAP)
+
             self.tool_bar_manager = ToolBarManager(
                 Group(
                     Action(
@@ -133,15 +86,21 @@ class MainWindow(ApplicationWindow):
                 ),
                 Group(
                     Action(
-                        name="Show Line Numbers",
+                        name="Lines",
                         style='toggle',
                         on_perform=self.on_show_line_numbers,
                         checked=True,
                     ),
-                    IntFieldAction(
-                        name="Go to line",
-                        on_perform=self.on_go_to_line,
-                    )
+                    FieldAction(
+                        name='Style',
+                        field_type=ComboField,
+                        field_defaults={
+                            'values': styles,
+                            'value': 'default',
+                            'tooltip': 'Style',
+                        },
+                        on_perform=self.on_style_changed,
+                    ),
                 )
             )
 
@@ -164,7 +123,7 @@ class MainWindow(ApplicationWindow):
         """ Open a new file. """
 
         if self.control:
-            dlg = FileDialog(parent=self.control, wildcard="*.py")
+            dlg = FileDialog(parent=self.control, wildcard='*.py')
 
             if dlg.open() == OK:
                 self._editor.path = dlg.path
@@ -175,18 +134,27 @@ class MainWindow(ApplicationWindow):
         if self.control:
             try:
                 self._editor.save()
-            except IOError as e:
+            except IOError:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
-                dlg = FileDialog(parent=self.control, action='save as', wildcard="*.py")
+                dlg = FileDialog(parent=self.control, action='save as',
+                                 wildcard="*.py")
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
 
     def on_show_line_numbers(self):
         self._editor.show_line_numbers = not self._editor.show_line_numbers
 
-    def on_go_to_line(self, line_number):
-        self._editor.select_line(line_number+1)
+    def on_style_changed(self, value):
+        from pygments.styles import get_style_by_name
+
+        # XXX surface this to a proper API on the editor widget
+        # XXX Qt backend only
+        highlighter = self._editor.control.code.highlighter
+        highlighter._style = get_style_by_name(value)
+        highlighter._brushes = {}
+        highlighter._formats = {}
+        highlighter.rehighlight()
 
 
 # Application entry point.
@@ -195,10 +163,8 @@ if __name__ == '__main__':
     gui = GUI()
 
     # Create and open the main window.
-    window = MainWindow()
+    window = MainWindow(size=(800, 600))
     window.open()
 
     # Start the GUI event loop!
     gui.start_event_loop()
-
-##### EOF #####################################################################
