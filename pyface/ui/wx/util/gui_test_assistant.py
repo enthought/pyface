@@ -43,7 +43,8 @@ def find_widget(start, type_, test=None):
 
     """
     if test is None:
-        test = lambda widget: True
+        def test():
+            return True
     if isinstance(start, type_):
         if test(start):
             return start
@@ -97,12 +98,26 @@ class GuiTestAssistant(UnittestTools):
                 wx.WakeUpIdle()
 
         wx.CallLater(50, _cleanup)
-        self.gui_app.MainLoop()
+
+        handler = wx.EvtHandler()
+        kill_timer = wx.Timer(handler)
+        handler.Bind(
+            wx.EVT_TIMER,
+            lambda event: self.gui_app.Exit(),
+            kill_timer
+        )
+        kill_timer.Start(30000, True)
+        try:
+            self.gui_app.MainLoop()
+        finally:
+            kill_timer.Stop()
+
+        del self.event_loop_helper
+        del self.gui_app
+
         if len(titles) > 0:
             raise RuntimeError(
                 'Not all windows closed after test method, {}'.format(titles))
-        del self.event_loop_helper
-        del self.gui_app
 
     @contextlib.contextmanager
     def event_loop(self, repeat=1):

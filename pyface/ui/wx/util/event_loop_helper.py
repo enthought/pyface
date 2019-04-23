@@ -95,7 +95,10 @@ class EventLoopHelper(HasStrictTraits):
             timeout_timer = wx.Timer(self._handler)
             self._handler.Bind(wx.EVT_TIMER, handler, condition_timer)
             self._handler.Bind(
-                wx.EVT_TIMER, lambda event:self.gui_app.Exit(), timeout_timer)
+                wx.EVT_TIMER,
+                lambda event: self.gui_app.Exit(),
+                timeout_timer
+            )
             timeout_timer.Start(int(timeout * 1000), True)
             condition_timer.Start(50)
             try:
@@ -131,14 +134,17 @@ class EventLoopHelper(HasStrictTraits):
         """
         timer = wx.Timer(self._handler)
         self._handler.Bind(
-            wx.EVT_TIMER, lambda event:self.gui_app.Exit(), timer)
+            wx.EVT_TIMER,
+            lambda event: self.gui_app.Exit(),
+            timer
+        )
         yield
         timer.Start(int(timeout * 1000), True)
         self._start_event_loop()
         if not timer.IsRunning():
             # We exited the event loop on timeout
             raise ConditionTimeoutError(
-                'Could not destroy widget before timeout: {!r}'.format(widget))
+                'Could not destroy widget before timeout: {!r}'.format(window))
 
     def _start_event_loop(self):
         app = self.gui_app
