@@ -11,7 +11,7 @@ import contextlib
 import gc
 import threading
 
-import mock
+from six.moves import mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
