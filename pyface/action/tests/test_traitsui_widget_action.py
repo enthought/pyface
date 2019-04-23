@@ -153,6 +153,6 @@ class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
                 wx.PostEvent(editor.control.GetEventHandler(), event)
             else:
                 self.skipTest("Unknown toolkit")
-            GUI.process_events()
+            self.gui.process_events()
 
         self.assertEqual(action.value, 'c')

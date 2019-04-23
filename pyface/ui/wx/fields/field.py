@@ -15,7 +15,7 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-from traits.api import Any, Bool, Enum, Instance, Trait, Unicode, provides
+from traits.api import Any, Instance, Unicode, provides
 
 import wx
 

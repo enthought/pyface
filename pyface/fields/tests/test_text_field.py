@@ -22,10 +22,7 @@ from .field_mixin import FieldMixin
 is_wx = (toolkit.toolkit == 'wx')
 
 
-class TestTextField(unittest.TestCase, FieldMixin):
-
-    def setUp(self):
-        FieldMixin.setUp(self)
+class TestTextField(FieldMixin, unittest.TestCase):
 
     def _create_widget(self):
         return TextField(

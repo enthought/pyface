@@ -20,10 +20,7 @@ from ..combo_field import ComboField
 from .field_mixin import FieldMixin
 
 
-class TestComboField(unittest.TestCase, FieldMixin):
-
-    def setUp(self):
-        FieldMixin.setUp(self)
+class TestComboField(FieldMixin, unittest.TestCase):
 
     def _create_widget(self):
         return ComboField(
