@@ -11,7 +11,11 @@ import contextlib
 import gc
 import threading
 
-from six.moves import mock
+import six
+if six.PY2:
+    import mock
+else:
+    import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
