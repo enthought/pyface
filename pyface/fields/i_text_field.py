@@ -44,8 +44,6 @@ class ITextField(IField):
 class MTextField(HasTraits):
     """ The text field mix-in. """
 
-    # this currently does nothing
-
     #: The value held by the field.
     value = Unicode
 
@@ -68,7 +66,7 @@ class MTextField(HasTraits):
     def _initialize_control(self):
         self._set_control_echo(self.echo)
         self._set_control_value(self.value)
-        self._set_control_placholder(self.placeholder)
+        self._set_control_placeholder(self.placeholder)
         self._set_control_read_only(self.read_only)
 
         super(MTextField, self)._initialize_control()
