@@ -44,8 +44,6 @@ class ITextField(IField):
 class MTextField(HasTraits):
     """ The text field mix-in. """
 
-    # this currently does nothing
-
     #: The value held by the field.
     value = Unicode
 
