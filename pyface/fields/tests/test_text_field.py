@@ -75,7 +75,7 @@ class TestTextField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget._get_control_placeholder(), 'test')
 
     def test_text_field_readonly(self):
-        self.widget.readonly = True
+        self.widget.read_only = True
         self._create_widget_control()
 
         self.gui.process_events()
@@ -87,7 +87,7 @@ class TestTextField(FieldMixin, unittest.TestCase):
     def test_text_field_readonly_change(self):
         self._create_widget_control()
 
-        self.widget.readonly = True
+        self.widget.read_only = True
         self.gui.process_events()
 
         self.assertEqual(self.widget._get_control_read_only(), True)

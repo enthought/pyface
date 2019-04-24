@@ -85,7 +85,7 @@ class TextField(MTextField, Field):
         """ Toolkit specific method to set the control's placeholder. """
         return self.control.placeholderText()
 
-    def _set_control_placholder(self, placeholder):
+    def _set_control_placeholder(self, placeholder):
         """ Toolkit specific method to set the control's placeholder. """
         self.control.setPlaceholderText(placeholder)
 
@@ -99,7 +99,7 @@ class TextField(MTextField, Field):
 
     def _get_control_read_only(self):
         """ Toolkit specific method to get the control's read_only state. """
-        return self.control.readOnly()
+        return self.control.isReadOnly()
 
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
