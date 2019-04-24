@@ -142,7 +142,6 @@ class MTextField(HasTraits):
     # Trait change handlers --------------------------------------------------
 
     def _placeholder_updated(self):
-        print(self.control, self.placeholder)
         if self.control is not None:
             self._set_control_placeholder(self.placeholder)
 
