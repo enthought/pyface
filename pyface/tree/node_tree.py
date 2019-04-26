@@ -15,7 +15,12 @@
 
 
 # Standard library imports.
-import inspect
+import six
+if six.PY2:
+    from inspect import getargspec
+else:
+    # avoid deprecation warning
+    from inspect import getfullargspec as getargspec
 
 # Enthought library imports.
 from pyface.action.api import ActionEvent
@@ -135,7 +140,7 @@ class NodeTree(Tree):
         event.context = self._context
 
         # fixme: the 'perform' method without taking an event is deprecated!
-        args, varargs, varkw, defaults = inspect.getargspec(action.perform)
+        args, varargs, varkw, defaults = getargspec(action.perform)
 
         # If the only argument is 'self' then this is the DEPRECATED
         # interface.
