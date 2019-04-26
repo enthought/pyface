@@ -175,11 +175,11 @@ class _MenuItem(HasTraits):
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it. This is also
             # useful as Traits UI controllers *never* require the event.
-            args, varargs, varkw, dflts = getargspec(self.controller.perform)
+            argspec = getargspec(self.controller.perform)
 
             # If the only arguments are 'self' and 'action' then don't pass
             # the event!
-            if len(args) == 2:
+            if len(argspec.args) == 2:
                 self.controller.perform(action)
 
             else:
@@ -192,10 +192,10 @@ class _MenuItem(HasTraits):
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it.
-            args, varargs, varkw, dflts = getargspec(action.perform)
+            argspec = getargspec(action.perform)
 
             # If the only argument is 'self' then don't pass the event!
-            if len(args) == 1:
+            if len(argspec.argspecargs) == 1:
                 action.perform()
 
             else:
@@ -360,11 +360,11 @@ class _Tool(HasTraits):
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it. This is also
             # useful as Traits UI controllers *never* require the event.
-            args, varargs, varkw, dflts = getargspec(self.controller.perform)
+            argspec = getargspec(self.controller.perform)
 
             # If the only arguments are 'self' and 'action' then don't pass
             # the event!
-            if len(args) == 2:
+            if len(argspec.args) == 2:
                 self.controller.perform(action)
 
             else:
@@ -376,10 +376,10 @@ class _Tool(HasTraits):
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it.
-            args, varargs, varkw, dflts = getargspec(action.perform)
+            argspec = getargspec(action.perform)
 
             # If the only argument is 'self' then don't pass the event!
-            if len(args) == 1:
+            if len(argspec.args) == 1:
                 action.perform()
 
             else:
