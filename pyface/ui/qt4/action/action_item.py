@@ -13,7 +13,12 @@
 
 
 # Standard library imports.
-from inspect import getargspec
+import six
+if six.PY2:
+    from inspect import getargspec
+else:
+    # avoid deprecation warning
+    from inspect import getfullargspec as getargspec
 
 # Major package imports.
 from pyface.qt import QtGui, QtCore
