@@ -20,6 +20,7 @@ QtAPIs = [
     ('pyqt', 'PyQt4'),
 ]
 
+
 def prepare_pyqt4():
     # Set PySide compatible APIs.
     import sip
@@ -45,6 +46,7 @@ def prepare_pyqt4():
         else:
             # don't expect the above on Python 3, so just re-raise
             raise
+
 
 qt_api = None
 
@@ -80,3 +82,7 @@ elif qt_api not in {api_name for api_name, module in QtAPIs}:
 if qt_api == 'pyqt':
     # set the PyQt4 APIs
     prepare_pyqt4()
+
+# useful constants
+is_qt4 = (qt_api in {'pyqt', 'pyside'})
+is_qt5 = (qt_api in {'pyqt5', 'pyside2'})
