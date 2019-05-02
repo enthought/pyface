@@ -54,16 +54,27 @@ qt_api = None
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
+        if qt_api == 'pyqt':
+            # set the PyQt4 APIs
+            # this is a likely place for failure - pyface really wants to be
+            # imported first, before eg. matplotlib
+            prepare_pyqt4()
         break
 else:
     # does our environment give us a preferred API?
     qt_api = os.environ.get('QT_API')
+    if qt_api == 'pyqt':
+        # set the PyQt4 APIs
+        prepare_pyqt4()
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
             importlib.import_module(module)
+            if qt_api == 'pyqt':
+                # set the PyQt4 APIs
+                prepare_pyqt4()
             importlib.import_module('.QtCore', module)
             qt_api = api_name
             break
@@ -77,11 +88,6 @@ elif qt_api not in {api_name for api_name, module in QtAPIs}:
     msg = ("Invalid Qt API %r, valid values are: " +
            "'pyside, 'pyside2', 'pyqt' or 'pyqt5'") % qt_api
     raise RuntimeError(msg)
-
-
-if qt_api == 'pyqt':
-    # set the PyQt4 APIs
-    prepare_pyqt4()
 
 # useful constants
 is_qt4 = (qt_api in {'pyqt', 'pyside'})

@@ -1,75 +1,93 @@
-tasks Package
-=============
+pyface\.ui\.qt4\.tasks package
+==============================
 
-:mod:`advanced_editor_area_pane` Module
----------------------------------------
+Subpackages
+-----------
+
+.. toctree::
+
+    pyface.ui.qt4.tasks.tests
+
+Submodules
+----------
+
+pyface\.ui\.qt4\.tasks\.advanced\_editor\_area\_pane module
+-----------------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.advanced_editor_area_pane
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`dock_pane` Module
------------------------
+pyface\.ui\.qt4\.tasks\.dock\_pane module
+-----------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.dock_pane
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`editor` Module
---------------------
+pyface\.ui\.qt4\.tasks\.editor module
+-------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.editor
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`editor_area_pane` Module
-------------------------------
+pyface\.ui\.qt4\.tasks\.editor\_area\_pane module
+-------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.editor_area_pane
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`main_window_layout` Module
---------------------------------
+pyface\.ui\.qt4\.tasks\.main\_window\_layout module
+---------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.main_window_layout
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`split_editor_area_pane` Module
-------------------------------------
+pyface\.ui\.qt4\.tasks\.split\_editor\_area\_pane module
+--------------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.split_editor_area_pane
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`task_pane` Module
------------------------
+pyface\.ui\.qt4\.tasks\.task\_pane module
+-----------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.task_pane
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`task_window_backend` Module
----------------------------------
+pyface\.ui\.qt4\.tasks\.task\_window\_backend module
+----------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.task_window_backend
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`util` Module
-------------------
+pyface\.ui\.qt4\.tasks\.util module
+-----------------------------------
 
 .. automodule:: pyface.ui.qt4.tasks.util
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.ui.qt4.tasks
+    :members:
+    :undoc-members:
+    :show-inheritance:

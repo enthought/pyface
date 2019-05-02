@@ -1,43 +1,46 @@
-preference Package
-==================
+pyface\.preference package
+==========================
 
-:mod:`preference` Package
--------------------------
+Submodules
+----------
 
-.. automodule:: pyface.preference
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`api` Module
------------------
+pyface\.preference\.api module
+------------------------------
 
 .. automodule:: pyface.preference.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`preference_dialog` Module
--------------------------------
+pyface\.preference\.preference\_dialog module
+---------------------------------------------
 
 .. automodule:: pyface.preference.preference_dialog
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`preference_node` Module
------------------------------
+pyface\.preference\.preference\_node module
+-------------------------------------------
 
 .. automodule:: pyface.preference.preference_node
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`preference_page` Module
------------------------------
+pyface\.preference\.preference\_page module
+-------------------------------------------
 
 .. automodule:: pyface.preference.preference_page
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.preference
+    :members:
+    :undoc-members:
+    :show-inheritance:

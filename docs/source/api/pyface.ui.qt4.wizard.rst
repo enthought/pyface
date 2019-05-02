@@ -1,27 +1,30 @@
-wizard Package
-==============
+pyface\.ui\.qt4\.wizard package
+===============================
 
-:mod:`wizard` Package
----------------------
+Submodules
+----------
 
-.. automodule:: pyface.ui.qt4.wizard
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`wizard` Module
---------------------
+pyface\.ui\.qt4\.wizard\.wizard module
+--------------------------------------
 
 .. automodule:: pyface.ui.qt4.wizard.wizard
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`wizard_page` Module
--------------------------
+pyface\.ui\.qt4\.wizard\.wizard\_page module
+--------------------------------------------
 
 .. automodule:: pyface.ui.qt4.wizard.wizard_page
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.ui.qt4.wizard
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,75 +1,78 @@
-qt Package
-==========
+pyface\.qt package
+==================
 
-:mod:`qt` Package
------------------
+Submodules
+----------
 
-.. automodule:: pyface.qt
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`QtCore` Module
---------------------
+pyface\.qt\.QtCore module
+-------------------------
 
 .. automodule:: pyface.qt.QtCore
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtGui` Module
--------------------
+pyface\.qt\.QtGui module
+------------------------
 
 .. automodule:: pyface.qt.QtGui
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtNetwork` Module
------------------------
+pyface\.qt\.QtNetwork module
+----------------------------
 
 .. automodule:: pyface.qt.QtNetwork
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtOpenGL` Module
-----------------------
+pyface\.qt\.QtOpenGL module
+---------------------------
 
 .. automodule:: pyface.qt.QtOpenGL
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtScript` Module
-----------------------
+pyface\.qt\.QtScript module
+---------------------------
 
 .. automodule:: pyface.qt.QtScript
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtSvg` Module
--------------------
+pyface\.qt\.QtSvg module
+------------------------
 
 .. automodule:: pyface.qt.QtSvg
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtTest` Module
---------------------
+pyface\.qt\.QtTest module
+-------------------------
 
 .. automodule:: pyface.qt.QtTest
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`QtWebKit` Module
-----------------------
+pyface\.qt\.QtWebKit module
+---------------------------
 
 .. automodule:: pyface.qt.QtWebKit
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.qt
+    :members:
+    :undoc-members:
+    :show-inheritance:

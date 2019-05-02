@@ -1,0 +1,7 @@
+pyface\.grid\.grid\_cell\_renderer module
+=========================================
+
+.. automodule:: pyface.grid.grid_cell_renderer
+    :members:
+    :undoc-members:
+    :show-inheritance:

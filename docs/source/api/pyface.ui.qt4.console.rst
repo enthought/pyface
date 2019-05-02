@@ -1,51 +1,62 @@
-console Package
-===============
+pyface\.ui\.qt4\.console package
+================================
 
-:mod:`api` Module
------------------
+Submodules
+----------
+
+pyface\.ui\.qt4\.console\.api module
+------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`bracket_matcher` Module
------------------------------
+pyface\.ui\.qt4\.console\.bracket\_matcher module
+-------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.bracket_matcher
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`call_tip_widget` Module
------------------------------
+pyface\.ui\.qt4\.console\.call\_tip\_widget module
+--------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.call_tip_widget
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`completion_lexer` Module
-------------------------------
+pyface\.ui\.qt4\.console\.completion\_lexer module
+--------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.completion_lexer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`console_widget` Module
-----------------------------
+pyface\.ui\.qt4\.console\.console\_widget module
+------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.console_widget
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`history_console_widget` Module
-------------------------------------
+pyface\.ui\.qt4\.console\.history\_console\_widget module
+---------------------------------------------------------
 
 .. automodule:: pyface.ui.qt4.console.history_console_widget
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.ui.qt4.console
+    :members:
+    :undoc-members:
+    :show-inheritance:

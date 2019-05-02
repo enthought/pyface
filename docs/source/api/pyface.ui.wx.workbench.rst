@@ -1,59 +1,62 @@
-workbench Package
-=================
+pyface\.ui\.wx\.workbench package
+=================================
 
-:mod:`workbench` Package
-------------------------
+Submodules
+----------
 
-.. automodule:: pyface.ui.wx.workbench
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`editor` Module
---------------------
+pyface\.ui\.wx\.workbench\.editor module
+----------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.editor
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`editor_set_structure_handler` Module
-------------------------------------------
+pyface\.ui\.wx\.workbench\.editor\_set\_structure\_handler module
+-----------------------------------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.editor_set_structure_handler
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`view` Module
-------------------
+pyface\.ui\.wx\.workbench\.view module
+--------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.view
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`view_set_structure_handler` Module
-----------------------------------------
+pyface\.ui\.wx\.workbench\.view\_set\_structure\_handler module
+---------------------------------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.view_set_structure_handler
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`workbench_dock_window` Module
------------------------------------
+pyface\.ui\.wx\.workbench\.workbench\_dock\_window module
+---------------------------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.workbench_dock_window
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`workbench_window_layout` Module
--------------------------------------
+pyface\.ui\.wx\.workbench\.workbench\_window\_layout module
+-----------------------------------------------------------
 
 .. automodule:: pyface.ui.wx.workbench.workbench_window_layout
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.ui.wx.workbench
+    :members:
+    :undoc-members:
+    :show-inheritance:

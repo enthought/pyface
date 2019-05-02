@@ -1,5 +1,5 @@
-ui Package
-==========
+pyface\.ui package
+==================
 
 Subpackages
 -----------
@@ -10,3 +10,10 @@ Subpackages
     pyface.ui.qt4
     pyface.ui.wx
 
+Module contents
+---------------
+
+.. automodule:: pyface.ui
+    :members:
+    :undoc-members:
+    :show-inheritance:

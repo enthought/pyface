@@ -1,213 +1,5 @@
-tasks Package
-=============
-
-:mod:`advanced_editor_area_pane` Module
----------------------------------------
-
-.. automodule:: pyface.tasks.advanced_editor_area_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`api` Module
------------------
-
-.. automodule:: pyface.tasks.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`dock_pane` Module
------------------------
-
-.. automodule:: pyface.tasks.dock_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`editor` Module
---------------------
-
-.. automodule:: pyface.tasks.editor
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`editor_area_pane` Module
-------------------------------
-
-.. automodule:: pyface.tasks.editor_area_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`enaml_dock_pane` Module
------------------------------
-
-.. automodule:: pyface.tasks.enaml_dock_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`enaml_editor` Module
---------------------------
-
-.. automodule:: pyface.tasks.enaml_editor
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`enaml_pane` Module
-------------------------
-
-.. automodule:: pyface.tasks.enaml_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`enaml_task_pane` Module
------------------------------
-
-.. automodule:: pyface.tasks.enaml_task_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_advanced_editor_area_pane` Module
------------------------------------------
-
-.. automodule:: pyface.tasks.i_advanced_editor_area_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_dock_pane` Module
--------------------------
-
-.. automodule:: pyface.tasks.i_dock_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_editor` Module
-----------------------
-
-.. automodule:: pyface.tasks.i_editor
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_editor_area_pane` Module
---------------------------------
-
-.. automodule:: pyface.tasks.i_editor_area_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_task_pane` Module
--------------------------
-
-.. automodule:: pyface.tasks.i_task_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`i_task_window_backend` Module
------------------------------------
-
-.. automodule:: pyface.tasks.i_task_window_backend
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`split_editor_area_pane` Module
-------------------------------------
-
-.. automodule:: pyface.tasks.split_editor_area_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task` Module
-------------------
-
-.. automodule:: pyface.tasks.task
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_layout` Module
--------------------------
-
-.. automodule:: pyface.tasks.task_layout
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_pane` Module
------------------------
-
-.. automodule:: pyface.tasks.task_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_window` Module
--------------------------
-
-.. automodule:: pyface.tasks.task_window
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_window_backend` Module
----------------------------------
-
-.. automodule:: pyface.tasks.task_window_backend
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_window_layout` Module
---------------------------------
-
-.. automodule:: pyface.tasks.task_window_layout
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`topological_sort` Module
-------------------------------
-
-.. automodule:: pyface.tasks.topological_sort
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`traits_dock_pane` Module
-------------------------------
-
-.. automodule:: pyface.tasks.traits_dock_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`traits_editor` Module
----------------------------
-
-.. automodule:: pyface.tasks.traits_editor
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`traits_task_pane` Module
-------------------------------
-
-.. automodule:: pyface.tasks.traits_task_pane
-    :members:
-    :undoc-members:
-    :show-inheritance:
+pyface\.tasks package
+=====================
 
 Subpackages
 -----------
@@ -216,4 +8,232 @@ Subpackages
 
     pyface.tasks.action
     pyface.tasks.contrib
+    pyface.tasks.tests
 
+Submodules
+----------
+
+pyface\.tasks\.advanced\_editor\_area\_pane module
+--------------------------------------------------
+
+.. automodule:: pyface.tasks.advanced_editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.api module
+-------------------------
+
+.. automodule:: pyface.tasks.api
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.dock\_pane module
+--------------------------------
+
+.. automodule:: pyface.tasks.dock_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.editor module
+----------------------------
+
+.. automodule:: pyface.tasks.editor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.editor\_area\_pane module
+----------------------------------------
+
+.. automodule:: pyface.tasks.editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.enaml\_dock\_pane module
+---------------------------------------
+
+.. automodule:: pyface.tasks.enaml_dock_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.enaml\_editor module
+-----------------------------------
+
+.. automodule:: pyface.tasks.enaml_editor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.enaml\_pane module
+---------------------------------
+
+.. automodule:: pyface.tasks.enaml_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.enaml\_task\_pane module
+---------------------------------------
+
+.. automodule:: pyface.tasks.enaml_task_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_advanced\_editor\_area\_pane module
+-----------------------------------------------------
+
+.. automodule:: pyface.tasks.i_advanced_editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_dock\_pane module
+-----------------------------------
+
+.. automodule:: pyface.tasks.i_dock_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_editor module
+-------------------------------
+
+.. automodule:: pyface.tasks.i_editor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_editor\_area\_pane module
+-------------------------------------------
+
+.. automodule:: pyface.tasks.i_editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_task\_pane module
+-----------------------------------
+
+.. automodule:: pyface.tasks.i_task_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.i\_task\_window\_backend module
+----------------------------------------------
+
+.. automodule:: pyface.tasks.i_task_window_backend
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.split\_editor\_area\_pane module
+-----------------------------------------------
+
+.. automodule:: pyface.tasks.split_editor_area_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task module
+--------------------------
+
+.. automodule:: pyface.tasks.task
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task\_layout module
+----------------------------------
+
+.. automodule:: pyface.tasks.task_layout
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task\_pane module
+--------------------------------
+
+.. automodule:: pyface.tasks.task_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task\_window module
+----------------------------------
+
+.. automodule:: pyface.tasks.task_window
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task\_window\_backend module
+-------------------------------------------
+
+.. automodule:: pyface.tasks.task_window_backend
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.task\_window\_layout module
+------------------------------------------
+
+.. automodule:: pyface.tasks.task_window_layout
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.tasks\_application module
+----------------------------------------
+
+.. automodule:: pyface.tasks.tasks_application
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.topological\_sort module
+---------------------------------------
+
+.. automodule:: pyface.tasks.topological_sort
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.traits\_dock\_pane module
+----------------------------------------
+
+.. automodule:: pyface.tasks.traits_dock_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.traits\_editor module
+------------------------------------
+
+.. automodule:: pyface.tasks.traits_editor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.tasks\.traits\_task\_pane module
+----------------------------------------
+
+.. automodule:: pyface.tasks.traits_task_pane
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: pyface.tasks
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,27 +1,30 @@
-timer Package
-=============
+pyface\.ui\.wx\.timer package
+=============================
 
-:mod:`timer` Package
---------------------
+Submodules
+----------
 
-.. automodule:: pyface.ui.wx.timer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`do_later` Module
-----------------------
+pyface\.ui\.wx\.timer\.do\_later module
+---------------------------------------
 
 .. automodule:: pyface.ui.wx.timer.do_later
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`timer` Module
--------------------
+pyface\.ui\.wx\.timer\.timer module
+-----------------------------------
 
 .. automodule:: pyface.ui.wx.timer.timer
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.ui.wx.timer
+    :members:
+    :undoc-members:
+    :show-inheritance:

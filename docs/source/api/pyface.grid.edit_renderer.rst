@@ -1,0 +1,7 @@
+pyface\.grid\.edit\_renderer module
+===================================
+
+.. automodule:: pyface.grid.edit_renderer
+    :members:
+    :undoc-members:
+    :show-inheritance:

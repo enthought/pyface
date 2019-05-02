@@ -1,123 +1,165 @@
-action Package
-==============
+pyface\.action package
+======================
 
-:mod:`action` Package
----------------------
+Subpackages
+-----------
 
-.. automodule:: pyface.action
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`action` Module
---------------------
+    pyface.action.tests
+
+Submodules
+----------
+
+pyface\.action\.action module
+-----------------------------
 
 .. automodule:: pyface.action.action
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action_controller` Module
--------------------------------
+pyface\.action\.action\_controller module
+-----------------------------------------
 
 .. automodule:: pyface.action.action_controller
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action_event` Module
---------------------------
+pyface\.action\.action\_event module
+------------------------------------
 
 .. automodule:: pyface.action.action_event
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action_item` Module
--------------------------
+pyface\.action\.action\_item module
+-----------------------------------
 
 .. automodule:: pyface.action.action_item
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action_manager` Module
-----------------------------
+pyface\.action\.action\_manager module
+--------------------------------------
 
 .. automodule:: pyface.action.action_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action_manager_item` Module
----------------------------------
+pyface\.action\.action\_manager\_item module
+--------------------------------------------
 
 .. automodule:: pyface.action.action_manager_item
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`api` Module
------------------
+pyface\.action\.api module
+--------------------------
 
 .. automodule:: pyface.action.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`group` Module
--------------------
+pyface\.action\.field\_action module
+------------------------------------
+
+.. automodule:: pyface.action.field_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.action\.group module
+----------------------------
 
 .. automodule:: pyface.action.group
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`menu_bar_manager` Module
-------------------------------
+pyface\.action\.gui\_application\_action module
+-----------------------------------------------
+
+.. automodule:: pyface.action.gui_application_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.action\.listening\_action module
+----------------------------------------
+
+.. automodule:: pyface.action.listening_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.action\.menu\_bar\_manager module
+-----------------------------------------
 
 .. automodule:: pyface.action.menu_bar_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`menu_manager` Module
---------------------------
+pyface\.action\.menu\_manager module
+------------------------------------
 
 .. automodule:: pyface.action.menu_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`status_bar_manager` Module
---------------------------------
+pyface\.action\.status\_bar\_manager module
+-------------------------------------------
 
 .. automodule:: pyface.action.status_bar_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tool_bar_manager` Module
-------------------------------
+pyface\.action\.tool\_bar\_manager module
+-----------------------------------------
 
 .. automodule:: pyface.action.tool_bar_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tool_palette_manager` Module
-----------------------------------
+pyface\.action\.tool\_palette\_manager module
+---------------------------------------------
 
 .. automodule:: pyface.action.tool_palette_manager
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`window_action` Module
----------------------------
+pyface\.action\.traitsui\_widget\_action module
+-----------------------------------------------
+
+.. automodule:: pyface.action.traitsui_widget_action
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.action\.window\_action module
+-------------------------------------
 
 .. automodule:: pyface.action.window_action
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.action
+    :members:
+    :undoc-members:
+    :show-inheritance:

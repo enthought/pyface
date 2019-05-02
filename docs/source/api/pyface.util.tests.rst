@@ -1,11 +1,22 @@
-tests Package
-=============
+pyface\.util\.tests package
+===========================
 
-:mod:`test_id_helper` Module
-----------------------------
+Submodules
+----------
+
+pyface\.util\.tests\.test\_id\_helper module
+--------------------------------------------
 
 .. automodule:: pyface.util.tests.test_id_helper
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.util.tests
+    :members:
+    :undoc-members:
+    :show-inheritance:

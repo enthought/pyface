@@ -1,0 +1,7 @@
+pyface\.grid\.grid module
+=========================
+
+.. automodule:: pyface.grid.grid
+    :members:
+    :undoc-members:
+    :show-inheritance:

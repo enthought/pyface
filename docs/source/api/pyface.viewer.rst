@@ -1,147 +1,150 @@
-viewer Package
-==============
+pyface\.viewer package
+======================
 
-:mod:`viewer` Package
----------------------
+Submodules
+----------
 
-.. automodule:: pyface.viewer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`api` Module
------------------
+pyface\.viewer\.api module
+--------------------------
 
 .. automodule:: pyface.viewer.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`column_provider` Module
------------------------------
+pyface\.viewer\.column\_provider module
+---------------------------------------
 
 .. automodule:: pyface.viewer.column_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`content_provider` Module
-------------------------------
+pyface\.viewer\.content\_provider module
+----------------------------------------
 
 .. automodule:: pyface.viewer.content_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`content_viewer` Module
-----------------------------
+pyface\.viewer\.content\_viewer module
+--------------------------------------
 
 .. automodule:: pyface.viewer.content_viewer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`default_tree_content_provider` Module
--------------------------------------------
+pyface\.viewer\.default\_tree\_content\_provider module
+-------------------------------------------------------
 
 .. automodule:: pyface.viewer.default_tree_content_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`label_provider` Module
-----------------------------
+pyface\.viewer\.label\_provider module
+--------------------------------------
 
 .. automodule:: pyface.viewer.label_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`table_column_provider` Module
------------------------------------
+pyface\.viewer\.table\_column\_provider module
+----------------------------------------------
 
 .. automodule:: pyface.viewer.table_column_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`table_content_provider` Module
-------------------------------------
+pyface\.viewer\.table\_content\_provider module
+-----------------------------------------------
 
 .. automodule:: pyface.viewer.table_content_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`table_label_provider` Module
-----------------------------------
+pyface\.viewer\.table\_label\_provider module
+---------------------------------------------
 
 .. automodule:: pyface.viewer.table_label_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`table_viewer` Module
---------------------------
+pyface\.viewer\.table\_viewer module
+------------------------------------
 
 .. automodule:: pyface.viewer.table_viewer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tree_content_provider` Module
------------------------------------
+pyface\.viewer\.tree\_content\_provider module
+----------------------------------------------
 
 .. automodule:: pyface.viewer.tree_content_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tree_item` Module
------------------------
+pyface\.viewer\.tree\_item module
+---------------------------------
 
 .. automodule:: pyface.viewer.tree_item
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tree_label_provider` Module
----------------------------------
+pyface\.viewer\.tree\_label\_provider module
+--------------------------------------------
 
 .. automodule:: pyface.viewer.tree_label_provider
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`tree_viewer` Module
--------------------------
+pyface\.viewer\.tree\_viewer module
+-----------------------------------
 
 .. automodule:: pyface.viewer.tree_viewer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`viewer` Module
---------------------
+pyface\.viewer\.viewer module
+-----------------------------
 
 .. automodule:: pyface.viewer.viewer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`viewer_filter` Module
----------------------------
+pyface\.viewer\.viewer\_filter module
+-------------------------------------
 
 .. automodule:: pyface.viewer.viewer_filter
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`viewer_sorter` Module
----------------------------
+pyface\.viewer\.viewer\_sorter module
+-------------------------------------
 
 .. automodule:: pyface.viewer.viewer_sorter
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.viewer
+    :members:
+    :undoc-members:
+    :show-inheritance:

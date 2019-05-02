@@ -1,53 +1,5 @@
-util Package
-============
-
-:mod:`util` Package
--------------------
-
-.. automodule:: pyface.util
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`fix_introspect_bug` Module
---------------------------------
-
-.. automodule:: pyface.util.fix_introspect_bug
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`font_helper` Module
--------------------------
-
-.. automodule:: pyface.util.font_helper
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`guisupport` Module
-------------------------
-
-.. automodule:: pyface.util.guisupport
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`id_helper` Module
------------------------
-
-.. automodule:: pyface.util.id_helper
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`python_stc` Module
-------------------------
-
-.. automodule:: pyface.util.python_stc
-    :members:
-    :undoc-members:
-    :show-inheritance:
+pyface\.util package
+====================
 
 Subpackages
 -----------
@@ -57,3 +9,62 @@ Subpackages
     pyface.util.grid
     pyface.util.tests
 
+Submodules
+----------
+
+pyface\.util\.fix\_introspect\_bug module
+-----------------------------------------
+
+.. automodule:: pyface.util.fix_introspect_bug
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.util\.font\_helper module
+---------------------------------
+
+.. automodule:: pyface.util.font_helper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.util\.guisupport module
+-------------------------------
+
+.. automodule:: pyface.util.guisupport
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.util\.id\_helper module
+-------------------------------
+
+.. automodule:: pyface.util.id_helper
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.util\.python\_stc module
+--------------------------------
+
+.. automodule:: pyface.util.python_stc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyface\.util\.testing module
+----------------------------
+
+.. automodule:: pyface.util.testing
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: pyface.util
+    :members:
+    :undoc-members:
+    :show-inheritance:

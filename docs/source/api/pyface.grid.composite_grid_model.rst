@@ -1,0 +1,7 @@
+pyface\.grid\.composite\_grid\_model module
+===========================================
+
+.. automodule:: pyface.grid.composite_grid_model
+    :members:
+    :undoc-members:
+    :show-inheritance:

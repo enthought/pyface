@@ -1,131 +1,142 @@
-grid Package
-============
+pyface\.grid package
+====================
 
-:mod:`api` Module
------------------
+Submodules
+----------
+
+pyface\.grid\.api module
+------------------------
 
 .. automodule:: pyface.grid.api
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`checkbox_image_renderer` Module
--------------------------------------
+pyface\.grid\.checkbox\_image\_renderer module
+----------------------------------------------
 
 .. automodule:: pyface.grid.checkbox_image_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`checkbox_renderer` Module
--------------------------------
+pyface\.grid\.checkbox\_renderer module
+---------------------------------------
 
 .. automodule:: pyface.grid.checkbox_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`combobox_focus_handler` Module
-------------------------------------
+pyface\.grid\.combobox\_focus\_handler module
+---------------------------------------------
 
 .. automodule:: pyface.grid.combobox_focus_handler
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`composite_grid_model` Module
-----------------------------------
+pyface\.grid\.composite\_grid\_model module
+-------------------------------------------
 
 .. automodule:: pyface.grid.composite_grid_model
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`edit_image_renderer` Module
----------------------------------
+pyface\.grid\.edit\_image\_renderer module
+------------------------------------------
 
 .. automodule:: pyface.grid.edit_image_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`edit_renderer` Module
----------------------------
+pyface\.grid\.edit\_renderer module
+-----------------------------------
 
 .. automodule:: pyface.grid.edit_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`grid` Module
-------------------
+pyface\.grid\.grid module
+-------------------------
 
 .. automodule:: pyface.grid.grid
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`grid_cell_image_renderer` Module
---------------------------------------
+pyface\.grid\.grid\_cell\_image\_renderer module
+------------------------------------------------
 
 .. automodule:: pyface.grid.grid_cell_image_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`grid_cell_renderer` Module
---------------------------------
+pyface\.grid\.grid\_cell\_renderer module
+-----------------------------------------
 
 .. automodule:: pyface.grid.grid_cell_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`grid_model` Module
-------------------------
+pyface\.grid\.grid\_model module
+--------------------------------
 
 .. automodule:: pyface.grid.grid_model
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`inverted_grid_model` Module
----------------------------------
+pyface\.grid\.inverted\_grid\_model module
+------------------------------------------
 
 .. automodule:: pyface.grid.inverted_grid_model
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`mapped_grid_cell_image_renderer` Module
----------------------------------------------
+pyface\.grid\.mapped\_grid\_cell\_image\_renderer module
+--------------------------------------------------------
 
 .. automodule:: pyface.grid.mapped_grid_cell_image_renderer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`simple_grid_model` Module
--------------------------------
+pyface\.grid\.simple\_grid\_model module
+----------------------------------------
 
 .. automodule:: pyface.grid.simple_grid_model
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`trait_grid_cell_adapter` Module
--------------------------------------
+pyface\.grid\.trait\_grid\_cell\_adapter module
+-----------------------------------------------
 
 .. automodule:: pyface.grid.trait_grid_cell_adapter
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`trait_grid_model` Module
-------------------------------
+pyface\.grid\.trait\_grid\_model module
+---------------------------------------
 
 .. automodule:: pyface.grid.trait_grid_model
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: pyface.grid
+    :members:
+    :undoc-members:
+    :show-inheritance:
