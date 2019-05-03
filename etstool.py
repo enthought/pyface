@@ -289,6 +289,9 @@ def update(runtime, toolkit, environment):
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
 def api_docs(runtime, toolkit, environment):
+    """ Autogenerate documentation
+
+    """
     parameters = get_parameters(runtime, toolkit, environment)
     packages = ' '.join(doc_dependencies)
     ignore = ' '.join(doc_ignore)
