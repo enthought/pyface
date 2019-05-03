@@ -50,7 +50,7 @@ Change summary
 
 Enhancements
 
-* Application classes (#334, #355, #345, )
+* Application classes (#334, #355, #345)
 * New API for Timers (#340, #365)
 * Support simple widgets in toolbars (#359, #360, #368)
 * Experimental support of Pyside2 (#318, #335, #358)
