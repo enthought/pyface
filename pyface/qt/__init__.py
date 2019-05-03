@@ -22,7 +22,9 @@ QtAPIs = [
 
 
 def prepare_pyqt4():
-    # Set PySide compatible APIs.
+    """ Set PySide compatible APIs. """
+    # This is not needed for Python 3 and can be removed when we no longer
+    # support Python 2.
     import sip
     try:
         sip.setapi('QDate', 2)
