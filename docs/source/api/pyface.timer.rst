@@ -1,35 +1,25 @@
-timer Package
-=============
+pyface.timer package
+====================
 
-:mod:`api` Module
------------------
-
-.. automodule:: pyface.timer.api
+.. automodule:: pyface.timer
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`do_later` Module
-----------------------
+Subpackages
+-----------
 
-.. automodule:: pyface.timer.do_later
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`i_timer` Module
--------------------
+    pyface.timer.tests
 
-.. automodule:: pyface.timer.i_timer
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Submodules
+----------
 
+.. toctree::
 
-:mod:`timer` Module
--------------------
+   pyface.timer.api
+   pyface.timer.do_later
+   pyface.timer.i_timer
+   pyface.timer.timer
 
-.. automodule:: pyface.timer.timer
-    :members:
-    :undoc-members:
-    :show-inheritance:

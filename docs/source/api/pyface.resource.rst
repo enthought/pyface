@@ -1,51 +1,19 @@
-resource Package
-================
-
-:mod:`resource` Package
------------------------
+pyface.resource package
+=======================
 
 .. automodule:: pyface.resource
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`api` Module
------------------
+Submodules
+----------
 
-.. automodule:: pyface.resource.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`resource_factory` Module
-------------------------------
-
-.. automodule:: pyface.resource.resource_factory
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`resource_manager` Module
-------------------------------
-
-.. automodule:: pyface.resource.resource_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`resource_path` Module
----------------------------
-
-.. automodule:: pyface.resource.resource_path
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`resource_reference` Module
---------------------------------
-
-.. automodule:: pyface.resource.resource_reference
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   pyface.resource.api
+   pyface.resource.resource_factory
+   pyface.resource.resource_manager
+   pyface.resource.resource_path
+   pyface.resource.resource_reference
 

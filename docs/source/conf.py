@@ -27,6 +27,7 @@ sys.path.insert(0, os.path.abspath('./sphinxext'))
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    'traits.util.trait_documenter'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
