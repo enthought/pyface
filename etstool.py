@@ -113,6 +113,19 @@ extra_dependencies = {
     'null': set()
 }
 
+doc_dependencies = {
+    "sphinx",
+}
+
+doc_ignore = {
+    "pyface/wx/*",
+    "pyface/qt/*",
+    "pyface/ui/*",
+    "pyface/dock/*",
+    "pyface/util/fix_introspect_bug.py",
+    "pyface/grid/*",
+}
+
 environment_vars = {
     'pyside': {
         'ETS_TOOLKIT': 'qt4',
@@ -269,6 +282,45 @@ def update(runtime, toolkit, environment):
     click.echo("Re-installing in  '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done update')
+
+
+@cli.command()
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--environment', default=None, help="EDM environment to use")
+def api_docs(runtime, toolkit, environment):
+    parameters = get_parameters(runtime, toolkit, environment)
+    packages = ' '.join(doc_dependencies)
+    ignore = ' '.join(doc_ignore)
+    commands = [
+        "edm install -y -e {environment} " + packages,
+        "edm run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",
+    ]
+    click.echo("Installing documentation tools in  '{environment}'".format(
+        **parameters))
+    execute(commands, parameters)
+    click.echo('Done installing documentation tools')
+
+    click.echo("Regenerating API docs in  '{environment}'".format(**parameters))
+    if os.path.exists('docs/source/api/'):
+        rmtree('docs/source/api/')
+    os.makedirs('docs/source/api/')
+    commands = [
+        "edm run -e {environment} -- sphinx-apidoc -e -M -o docs/source/api pyface " + ignore,
+    ]
+    execute(commands, parameters)
+    click.echo('Done regenrating APU docs')
+
+    os.chdir('docs')
+    commands = [
+        "edm run -e {environment} -- make html",
+    ]
+    click.echo("Building docs in  '{environment}'".format(**parameters))
+    try:
+        execute(commands, parameters)
+    finally:
+        os.chdir('..')
+    click.echo('Done build docs')
 
 
 @cli.command()
