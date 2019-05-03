@@ -145,9 +145,9 @@ def cli():
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
-@click.option('--toolkit', default='pyqt')
-@click.option('--environment', default=None)
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--environment', default=None, help="EDM environment to use")
 def install(runtime, toolkit, environment):
     """ Install project and dependencies into a clean EDM environment.
 
@@ -176,10 +176,12 @@ def install(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
-@click.option('--toolkit', default='pyqt')
-@click.option('--environment', default=None)
-def test(runtime, toolkit, environment):
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--environment', default=None, help="EDM environment to use")
+@click.option('--no-environment-vars', is_flag=True,
+              help="Do not set ETS_TOOLKIT and QT_API")
+def test(runtime, toolkit, environment, no_environment_vars=False):
     """ Run the test suite in a given environment with the specified toolkit.
 
     """
@@ -191,7 +193,10 @@ def test(runtime, toolkit, environment):
     else:
         parameters['exclude'] = '(wx|qt)'
 
-    environ = environment_vars.get(toolkit, {}).copy()
+    if no_environment_vars:
+        environ = {}
+    else:
+        environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
 
     commands = [
@@ -213,9 +218,9 @@ def test(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
-@click.option('--toolkit', default='pyqt')
-@click.option('--environment', default=None)
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--environment', default=None, help="EDM environment to use")
 def cleanup(runtime, toolkit, environment):
     """ Remove a development environment.
 
@@ -231,24 +236,30 @@ def cleanup(runtime, toolkit, environment):
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
-@click.option('--toolkit', default='pyqt')
-def test_clean(runtime, toolkit):
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--no-environment-vars', is_flag=True,
+              help="Do not set ETS_TOOLKIT and QT_API")
+def test_clean(runtime, toolkit, no_environment_vars=False):
     """ Run tests in a clean environment, cleaning up afterwards
 
     """
     args = ['--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)]
+    test_args = args[:]
+    if no_environment_vars:
+        test_args.append('--no-environment-vars')
+
     try:
         install(args=args, standalone_mode=False)
-        test(args=args, standalone_mode=False)
+        test(args=test_args, standalone_mode=False)
     finally:
         cleanup(args=args, standalone_mode=False)
 
 
 @cli.command()
-@click.option('--runtime', default='3.6')
-@click.option('--toolkit', default='pyqt')
-@click.option('--environment', default=None)
+@click.option('--runtime', default='3.6', help="Python version to use")
+@click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
+@click.option('--environment', default=None, help="EDM environment to use")
 def update(runtime, toolkit, environment):
     """ Update/Reinstall package into environment.
 
