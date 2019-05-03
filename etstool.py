@@ -179,7 +179,8 @@ def install(runtime, toolkit, environment):
 @click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='pyqt')
 @click.option('--environment', default=None)
-def test(runtime, toolkit, environment):
+@click.option('--no-environment-vars', is_flag=True)
+def test(runtime, toolkit, environment, no_environment_vars=False):
     """ Run the test suite in a given environment with the specified toolkit.
 
     """
@@ -191,7 +192,10 @@ def test(runtime, toolkit, environment):
     else:
         parameters['exclude'] = '(wx|qt)'
 
-    environ = environment_vars.get(toolkit, {}).copy()
+    if no_environment_vars:
+        environ = {}
+    else:
+        environ = environment_vars.get(toolkit, {}).copy()
     environ['PYTHONUNBUFFERED'] = "1"
 
     commands = [
@@ -233,11 +237,15 @@ def cleanup(runtime, toolkit, environment):
 @cli.command()
 @click.option('--runtime', default='3.6')
 @click.option('--toolkit', default='pyqt')
-def test_clean(runtime, toolkit):
+@click.option('--no-environment-vars', is_flag=True)
+def test_clean(runtime, toolkit, no_environment_vars=False):
     """ Run tests in a clean environment, cleaning up afterwards
 
     """
     args = ['--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)]
+    if no_environment_vars:
+        args.append('--no-environment-vars')
+
     try:
         install(args=args, standalone_mode=False)
         test(args=args, standalone_mode=False)
