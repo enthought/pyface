@@ -305,25 +305,26 @@ def api_docs(runtime, toolkit, environment):
     click.echo('Done installing documentation tools')
 
     click.echo("Regenerating API docs in  '{environment}'".format(**parameters))
-    if os.path.exists('docs/source/api/'):
-        rmtree('docs/source/api/')
-    os.makedirs('docs/source/api/')
+    api_path = os.path.join('docs', 'source', 'api')
+    if os.path.exists(api_path):
+        rmtree(api_path)
+    os.makedirs(api_path)
     commands = [
-        "edm run -e {environment} -- sphinx-apidoc -e -M -o docs/source/api pyface " + ignore,
+        "edm run -e {environment} -- sphinx-apidoc -e -M -o " + api_path + " pyface " + ignore,
     ]
     execute(commands, parameters)
-    click.echo('Done regenrating APU docs')
+    click.echo('Done regenerating API docs')
 
     os.chdir('docs')
     commands = [
         "edm run -e {environment} -- make html",
     ]
-    click.echo("Building docs in  '{environment}'".format(**parameters))
+    click.echo("Building documentation in  '{environment}'".format(**parameters))
     try:
         execute(commands, parameters)
     finally:
         os.chdir('..')
-    click.echo('Done build docs')
+    click.echo('Done building documentation')
 
 
 @cli.command()
