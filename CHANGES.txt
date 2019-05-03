@@ -2,6 +2,76 @@
 Pyface Changelog
 ================
 
+Release 6.1.0
+=============
+
+This release introduces a number of new features and bugfixes.  The most
+prominent of these is a set of Application classes designed to smooth the
+transition between Tasks applications which use only Pyface, and those that
+take advantage of the Envisage plug-in framework.  Developers can now write
+a Pyface TasksApplication and then easily transition to an Envisage
+TasksApplication as the needs of their codebase grows.  This feature has been
+a few years in development, and thanks is due to Jonathan Rocher for helping
+push this through to completion.
+
+This release also includes a complete re-write of the Pyface timer code to
+make it easier to use and to provide a consistent and more Pythonic API
+shared by the different back-ends.  A backwards compatible API is still
+available, but users of the Pyface timer code are encouraged to update to
+the new API.
+
+ToolBars can now embed simple widgets, such as text fields, integer spinners,
+and comboboxes, as well as simple TraitsUI views.  This is provided via a
+new "widget" style for Actions as well as the utility subclasses FieldAction
+and TraitsUIWidgetAction.
+
+Although not visible to most users of Pyface, this release removes the use
+of 2to3 and now uses a unified codebase supported by the six library.  Thanks
+to Rahul Poruri for performing this transformation.  This should help
+significantly with ongoing development work in the coming years.
+
+We also include experimental support for PySide2 (also called "Qt for Python").
+We are running CI tests using the 5.11 release of PySide2 with success on OS X
+and Linux for Python 3, but are experiencing failures with the 5.12 release.
+
+Finally, this release includes a number of bugfixes and minor enhancements
+which should improve the reliability and utility of the codebase.
+
+Thanks to:
+
+Martin Bergtholdt, Mark Dickinson, Robert Kern, Eric Larson, Gregory Lee,
+Eric McDonald, Rahul Poruri, Jonathan Rocher, Hamdi Sahloul, Roger Serwy,
+Brian Teague, Corran Webster, John Wiggins.
+
+Apologies to any contributors that have been omitted.
+
+Change summary
+--------------
+
+Enhancements
+
+* Application classes (#334, #355, #345)
+* New API for Timers (#340, #365)
+* Support simple widgets in toolbars (#359, #360, #368)
+* Experimental support of Pyside2 (#318, #335, #358)
+* Support single codebase for Python 2 and 3 (#322, #351, #369, #370)
+* Support ui dispatch for Traits even if TraitsUI not available (#363)
+
+Fixes
+
+* Fix context menu behaviour (#356)
+* Remove TraitsUI dependency in GuiTestAssistant (#366)
+* Fixes for ProgressDialog (#357)
+* Fixes for toolbar and statusbar life cycles (#332)
+* Fixes for CI (#342)
+* Fix usages of event_loop() in tests (#336)
+* Fix SplitEditorAreaPane tab dragging on Qt5 (#327)
+* Fix resource warnings in test suite from un-closed files (#326)
+* Remove uses of deprecated HasTraits.set() method (#320)
+* Add Qt5 support for deprecated Qt Style options that Mayavi needs (#323)
+* Various fixes around Qt API selection (#319, #344, #347, #371, #376)
+
+
 Release 6.0.0
 =============
 
