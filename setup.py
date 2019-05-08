@@ -91,13 +91,13 @@ if not is_released:
         try:
             data = read_module('_version')
             git_rev = data['git_revision']
-            fullversion = data['full_version']
+            fullversion_source = data['full_version']
         except ImportError:
             raise ImportError("Unable to read git_revision. Try removing "
                               "pyface/_version.py and the build directory "
                               "before building.")
 
-        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion)
+        match = re.match(r'.*?\.dev(?P<dev_num>\d+)', fullversion_source)
         if match is None:
             dev_num = '0'
         else:

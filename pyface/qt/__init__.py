@@ -73,7 +73,7 @@ else:
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
-            if qt_api == 'pyqt':
+            if api_name == 'pyqt':
                 # set the PyQt4 APIs
                 prepare_pyqt4()
             importlib.import_module(module)
