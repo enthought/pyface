@@ -69,7 +69,8 @@ Fixes
 * Fix resource warnings in test suite from un-closed files (#326)
 * Remove uses of deprecated HasTraits.set() method (#320)
 * Add Qt5 support for deprecated Qt Style options that Mayavi needs (#323)
-* Various fixes around Qt API selection (#319, #344, #347, #371, #376)
+* Various fixes around Qt API selection (#319, #344, #347, #371, #376, #381)
+* Fixes for setup.py (#380)
 
 
 Release 6.0.0
