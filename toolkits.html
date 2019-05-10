@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Toolkits &mdash; pyface 6.0.0 documentation</title>
+    <title>Toolkits &mdash; pyface 6.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.0.0',
+        VERSION:     '6.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,14 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico">
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.0.0 documentation" href="index.html" >
-    <link rel="next" title="pyface Package" href="api/pyface.html" >
+    <link rel="top" title="pyface 6.1.0 documentation" href="index.html" >
+    <link rel="next" title="Submodules" href="submodules.html" >
     <link rel="prev" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -47,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 6.0.0 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 6.1.0 documentation</a></li>
 	 
     </ul>
               
@@ -58,7 +59,11 @@
            accesskey="I">index</a>
       </li>
       <li class="active">
-        <a href="api/pyface.html" title="pyface Package"
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="submodules.html" title="Submodules"
            accesskey="N">next</a>
       </li>
       <li class="active">
@@ -83,76 +88,76 @@
 <p>Pyface is intended to provide a common API on top of distinct GUI backends to
 permit the same code to be run on different systems with different GUI
 toolkits and produce similar results.  Pyface comes with three built-in
-backends in the core library&#8212;Qt, WxPython, and a null backend&#8212;but provides
+backends in the core library—Qt, WxPython, and a null backend—but provides
 hooks for other projects to contribute toolkits and have them be discoverable.</p>
 <div class="section" id="toolkit-selection">
 <h2>Toolkit Selection<a class="headerlink" href="#toolkit-selection" title="Permalink to this headline">¶</a></h2>
-<p>Pyface uses Traits&#8217; <code class="xref py py-mod docutils literal"><span class="pre">traits.etsconfig</span></code> to determine the current
+<p>Pyface uses Traits’ <code class="xref py py-mod docutils literal notranslate"><span class="pre">traits.etsconfig</span></code> to determine the current
 toolkit being used.  Applications can control which toolkit to use in two
 ways:</p>
 <ul>
-<li><p class="first">by setting the environment variable <code class="docutils literal"><span class="pre">ETS_TOOLKIT</span></code> to the name of the
+<li><p class="first">by setting the environment variable <code class="docutils literal notranslate"><span class="pre">ETS_TOOLKIT</span></code> to the name of the
 desired toolkit.</p>
 </li>
-<li><p class="first">by importing <code class="xref py py-obj docutils literal"><span class="pre">ETSConfig</span></code> and setting its <code class="xref py py-attr docutils literal"><span class="pre">toolkit</span></code>
+<li><p class="first">by importing <code class="xref py py-obj docutils literal notranslate"><span class="pre">ETSConfig</span></code> and setting its <code class="xref py py-attr docutils literal notranslate"><span class="pre">toolkit</span></code>
 attribute appropriately:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tratis.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tratis.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
 <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="s1">&#39;qt4&#39;</span>
 </pre></div>
 </div>
 <p>This must be done _before_ any widget imports in your application, including
-importing <code class="xref py py-mod docutils literal"><span class="pre">pyface.api</span></code>.  Precisely, this must be set before the
-first import of <code class="xref py py-mod docutils literal"><span class="pre">pyface.toolkit</span></code>.</p>
+importing <a class="reference internal" href="api/pyface.api.html#module-pyface.api" title="pyface.api"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.api</span></code></a>.  Precisely, this must be set before the
+first import of <a class="reference internal" href="api/pyface.toolkit.html#module-pyface.toolkit" title="pyface.toolkit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.toolkit</span></code></a>.</p>
 </li>
 </ul>
-<p>If for some reason Pyface can&#8217;t load a deliberately specified toolkit, then it
+<p>If for some reason Pyface can’t load a deliberately specified toolkit, then it
 will raise an exception.</p>
-<p>If the toolkit is not specified, Pyface will try to load the <code class="docutils literal"><span class="pre">qt4</span></code> or <code class="docutils literal"><span class="pre">wx</span></code>
+<p>If the toolkit is not specified, Pyface will try to load the <code class="docutils literal notranslate"><span class="pre">qt4</span></code> or <code class="docutils literal notranslate"><span class="pre">wx</span></code>
 toolkits, in that order, and then any other toolkits that it knows about
-other than <code class="docutils literal"><span class="pre">null</span></code>.  If all of those fail, then it will try to load the
-<code class="docutils literal"><span class="pre">null</span></code> toolkit.</p>
+other than <code class="docutils literal notranslate"><span class="pre">null</span></code>.  If all of those fail, then it will try to load the
+<code class="docutils literal notranslate"><span class="pre">null</span></code> toolkit.</p>
 <p>Once selected, the toolkit infrastructure is largely transparent to the
 application.</p>
 </div>
 <div class="section" id="toolkit-objects">
 <h2>Toolkit Objects<a class="headerlink" href="#toolkit-objects" title="Permalink to this headline">¶</a></h2>
-<p>The selection of the correct backend object is carried out by each toolkit&#8217;s
+<p>The selection of the correct backend object is carried out by each toolkit’s
 toolkit object.  For all built-in toolkits, this is an instance of the
-<code class="xref py py-class docutils literal"><span class="pre">pyface.base_toolkit.Toolkit</span></code> class, but it is possible that other
+<a class="reference internal" href="api/pyface.base_toolkit.html#pyface.base_toolkit.Toolkit" title="pyface.base_toolkit.Toolkit"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.base_toolkit.Toolkit</span></code></a> class, but it is possible that other
 backends may use their own objects.  The toolkit object for the toolkit that
-has been selected can be found as <code class="xref py py-obj docutils literal"><span class="pre">pyface.toolkit.toolkit_object</span></code>.</p>
+has been selected can be found as <code class="xref py py-obj docutils literal notranslate"><span class="pre">pyface.toolkit.toolkit_object</span></code>.</p>
 <p>This is a callable object which expects to be given the an identifier for the
 widget in the form of a relative module name and the object name, separated by
-a <code class="docutils literal"><span class="pre">':'</span></code>.  This is most often used when creating new widget types for Pyface.
+a <code class="docutils literal notranslate"><span class="pre">':'</span></code>.  This is most often used when creating new widget types for Pyface.
 The API module for the new widget class typically looks something like this:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="k">import</span> <span class="n">toolkit_object</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyface.toolkit</span> <span class="k">import</span> <span class="n">toolkit_object</span>
 <span class="n">MyWidget</span> <span class="o">=</span> <span class="n">toolkit_object</span><span class="p">(</span><span class="s1">&#39;my_package.my_widget:MyWidget&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The base toolkits use the identifier to select which module to import the
 toolkit object by constructing a full module path from the partial path and
-importing the object.  For example the <code class="docutils literal"><span class="pre">qt4</span></code> backend will look for the
-concrete implementation in <code class="xref py py-mod docutils literal"><span class="pre">pyface.ui.qt4.my_package.my_widget</span></code>
-while the <code class="docutils literal"><span class="pre">wx</span></code> backend will look for
-<code class="xref py py-mod docutils literal"><span class="pre">pyface.ui.wx.my_package.my_widget</span></code>.</p>
+importing the object.  For example the <code class="docutils literal notranslate"><span class="pre">qt4</span></code> backend will look for the
+concrete implementation in <code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.ui.qt4.my_package.my_widget</span></code>
+while the <code class="docutils literal notranslate"><span class="pre">wx</span></code> backend will look for
+<code class="xref py py-mod docutils literal notranslate"><span class="pre">pyface.ui.wx.my_package.my_widget</span></code>.</p>
 <p>If no matching object is found, the toolkit will return a special
-<code class="xref py py-class docutils literal"><span class="pre">Undefined</span></code> class that will raise <a href="#id1"><span class="problematic" id="id2">:py:exception:`NotImplementedError`</span></a>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Undefined</span></code> class that will raise <a href="#id1"><span class="problematic" id="id2">:py:exception:`NotImplementedError`</span></a>
 when instantiated.</p>
 <p>The basic toolkit implementation provides two other features which may be of
 use.  It has a trait that gives the name of the toolkit, and it has a list of
 packages that it searches when trying to import a toolkit object.  This
 second trait provides a hook where an application can insert other packages
-into the search path to override the default implementations of a toolkit&#8217;s
+into the search path to override the default implementations of a toolkit’s
 widgets, if needed.</p>
 </div>
 <div class="section" id="toolkit-entrypoints">
 <h2>Toolkit Entrypoints<a class="headerlink" href="#toolkit-entrypoints" title="Permalink to this headline">¶</a></h2>
-<p>Pyface uses the standard <code class="docutils literal"><span class="pre">pkg_resources</span></code> &#8220;entry point&#8221; system to allow other
+<p>Pyface uses the standard <code class="docutils literal notranslate"><span class="pre">pkg_resources</span></code> “entry point” system to allow other
 libraries to contribute new toolkit implementations to Pyface.  The toolkit
 selection process discussed above looks for things contributed to the
-<code class="docutils literal"><span class="pre">pyface.toolkits</span></code> entry point.  These are specified in the <code class="docutils literal"><span class="pre">setup.py</span></code> of
+<code class="docutils literal notranslate"><span class="pre">pyface.toolkits</span></code> entry point.  These are specified in the <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> of
 the third party library, something like this:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
     <span class="c1"># ... a bunch of other standard setup.py stuff</span>
     <span class="n">entry_points</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;pyface.toolkits&#39;</span><span class="p">:</span> <span class="p">[</span>
@@ -163,11 +168,11 @@ the third party library, something like this:</p>
 </pre></div>
 </div>
 <p>The left-hand side is the name of the toolkit, suitable for use with
-<code class="xref py py-obj docutils literal"><span class="pre">ETSConfig</span></code>, and the right-hand side is the location of a toolkit
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">ETSConfig</span></code>, and the right-hand side is the location of a toolkit
 object which matches the specification above: a callable object which takes
 identifiers as specified and returns concrete implementations.  The easiest
 way to do this is to follow the examples of the current toolkits and use
-a <code class="xref py py-class docutils literal"><span class="pre">pyface.base_toolkit.Toolkit</span></code> instance, but this is not required.</p>
+a <a class="reference internal" href="api/pyface.base_toolkit.html#pyface.base_toolkit.Toolkit" title="pyface.base_toolkit.Toolkit"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.base_toolkit.Toolkit</span></code></a> instance, but this is not required.</p>
 </div>
 </div>
 
@@ -180,7 +185,7 @@ a <code class="xref py py-class docutils literal"><span class="pre">pyface.base_
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/img/e-logo.png" alt="Logo">
             </a></p>
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Toolkits</a><ul>
 <li><a class="reference internal" href="#toolkit-selection">Toolkit Selection</a></li>
@@ -194,8 +199,8 @@ a <code class="xref py py-class docutils literal"><span class="pre">pyface.base_
   <p class="topless"><a href="overview.html"
                         title="previous chapter">Overview</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="api/pyface.html"
-                        title="next chapter">pyface Package</a></p>
+  <p class="topless"><a href="submodules.html"
+                        title="next chapter">Submodules</a></p>
   <h3>This Page</h3>
   <div>
     <a href="_sources/toolkits.rst.txt"
@@ -203,12 +208,14 @@ a <code class="xref py py-class docutils literal"><span class="pre">pyface.base_
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -230,10 +237,10 @@ a <code class="xref py py-class docutils literal"><span class="pre">pyface.base_
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 12, 2018.
+      Last updated on May 08, 2019.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
       </li>
     </ul>
     </div>

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>tests Package &mdash; pyface 6.0.0 documentation</title>
+    <title>pyface.tests package &mdash; pyface 6.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.0.0',
+        VERSION:     '6.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,15 +23,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
-    <link rel="up" title="pyface Package" href="pyface.html" >
-    <link rel="next" title="timer Package" href="pyface.timer.html" >
-    <link rel="prev" title="contrib Package" href="pyface.tasks.contrib.html" > 
+    <link rel="top" title="pyface 6.1.0 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.tests.test_new_toolkit package" href="pyface.tests.test_new_toolkit.html" >
+    <link rel="prev" title="pyface.tasks.traits_task_pane module" href="pyface.tasks.traits_task_pane.html" > 
   </head>
   <body>
   <div class="container">
@@ -48,9 +49,9 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.1.0 documentation</a></li>
 	
-          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
               
               
@@ -60,11 +61,15 @@
            accesskey="I">index</a>
       </li>
       <li class="active">
-        <a href="pyface.timer.html" title="timer Package"
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.tests.test_new_toolkit.html" title="pyface.tests.test_new_toolkit package"
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.tasks.contrib.html" title="contrib Package"
+        <a href="pyface.tasks.traits_task_pane.html" title="pyface.tasks.traits_task_pane module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -80,48 +85,60 @@
         <div class="bodywrapper">
           <div class="body" id="spc-section-body">
             
-  <div class="section" id="tests-package">
-<h1>tests Package<a class="headerlink" href="#tests-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyface.tests.test_splash_screen_log_handler">
-<span id="test-splash-screen-log-handler-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">test_splash_screen_log_handler</span></code> Module<a class="headerlink" href="#module-pyface.tests.test_splash_screen_log_handler" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pyface.tests.test_splash_screen_log_handler.DummySplashScreen">
-<em class="property">class </em><code class="descclassname">pyface.tests.test_splash_screen_log_handler.</code><code class="descname">DummySplashScreen</code><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.DummySplashScreen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.tests.test_splash_screen_log_handler.DummyRecord">
-<em class="property">class </em><code class="descclassname">pyface.tests.test_splash_screen_log_handler.</code><code class="descname">DummyRecord</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.DummyRecord" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="pyface.tests.test_splash_screen_log_handler.DummyRecord.getMessage">
-<code class="descname">getMessage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.DummyRecord.getMessage" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler">
-<em class="property">class </em><code class="descclassname">pyface.tests.test_splash_screen_log_handler.</code><code class="descname">TestSplashScreenLogHandler</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">unittest.case.TestCase</span></code></p>
-<dl class="method">
-<dt id="pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.setUp">
-<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.setUp" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.test_unicode_message">
-<code class="descname">test_unicode_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.test_unicode_message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.test_ascii_message">
-<code class="descname">test_ascii_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tests.test_splash_screen_log_handler.TestSplashScreenLogHandler.test_ascii_message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="module-pyface.tests">
+<span id="pyface-tests-package"></span><h1>pyface.tests package<a class="headerlink" href="#module-pyface.tests" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_new_toolkit.html">pyface.tests.test_new_toolkit package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyface.tests.test_new_toolkit.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyface.tests.test_new_toolkit.init.html">pyface.tests.test_new_toolkit.init module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyface.tests.test_new_toolkit.widget.html">pyface.tests.test_new_toolkit.widget module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.python_shell_script.html">pyface.tests.python_shell_script module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_about_dialog.html">pyface.tests.test_about_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_application.html">pyface.tests.test_application module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_application_window.html">pyface.tests.test_application_window module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_base_toolkit.html">pyface.tests.test_base_toolkit module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_beep.html">pyface.tests.test_beep module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_clipboard.html">pyface.tests.test_clipboard module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_confirmation_dialog.html">pyface.tests.test_confirmation_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_dialog.html">pyface.tests.test_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_directory_dialog.html">pyface.tests.test_directory_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_file_dialog.html">pyface.tests.test_file_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_gui_application.html">pyface.tests.test_gui_application module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_heading_text.html">pyface.tests.test_heading_text module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_image_cache.html">pyface.tests.test_image_cache module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_image_resource.html">pyface.tests.test_image_resource module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_message_dialog.html">pyface.tests.test_message_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_progress_dialog.html">pyface.tests.test_progress_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_python_editor.html">pyface.tests.test_python_editor module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_python_shell.html">pyface.tests.test_python_shell module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_resource_manager.html">pyface.tests.test_resource_manager module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_single_choice_dialog.html">pyface.tests.test_single_choice_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_splash_screen.html">pyface.tests.test_splash_screen module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_splash_screen_log_handler.html">pyface.tests.test_splash_screen_log_handler module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_split_application_window.html">pyface.tests.test_split_application_window module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_split_dialog.html">pyface.tests.test_split_dialog module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_split_panel.html">pyface.tests.test_split_panel module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_system_metrics.html">pyface.tests.test_system_metrics module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_toolkit.html">pyface.tests.test_toolkit module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_ui_traits.html">pyface.tests.test_ui_traits module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_widget.html">pyface.tests.test_widget module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.tests.test_window.html">pyface.tests.test_window module</a></li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -134,20 +151,21 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">tests Package</a><ul>
-<li><a class="reference internal" href="#module-pyface.tests.test_splash_screen_log_handler"><code class="docutils literal"><span class="pre">test_splash_screen_log_handler</span></code> Module</a></li>
+<li><a class="reference internal" href="#">pyface.tests package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.tasks.contrib.html"
-                        title="previous chapter">contrib Package</a></p>
+  <p class="topless"><a href="pyface.tasks.traits_task_pane.html"
+                        title="previous chapter">pyface.tasks.traits_task_pane module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.timer.html"
-                        title="next chapter">timer Package</a></p>
+  <p class="topless"><a href="pyface.tests.test_new_toolkit.html"
+                        title="next chapter">pyface.tests.test_new_toolkit package</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.tests.rst.txt"
@@ -155,12 +173,14 @@
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -182,10 +202,10 @@
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 12, 2018.
+      Last updated on May 08, 2019.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
       </li>
     </ul>
     </div>

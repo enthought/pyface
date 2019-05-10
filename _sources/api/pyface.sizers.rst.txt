@@ -1,11 +1,15 @@
-sizers Package
-==============
+pyface.sizers package
+=====================
 
-:mod:`flow` Module
-------------------
-
-.. automodule:: pyface.sizers.flow
+.. automodule:: pyface.sizers
     :members:
     :undoc-members:
     :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   pyface.sizers.flow
 

@@ -1,51 +1,19 @@
-grid Package
-============
-
-:mod:`grid` Package
--------------------
+pyface.util.grid package
+========================
 
 .. automodule:: pyface.util.grid
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`api` Module
------------------
+Submodules
+----------
 
-.. automodule:: pyface.util.grid.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`grid` Module
-------------------
-
-.. automodule:: pyface.util.grid.grid
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`grid_column` Module
--------------------------
-
-.. automodule:: pyface.util.grid.grid_column
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`grid_model` Module
-------------------------
-
-.. automodule:: pyface.util.grid.grid_model
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`grid_row` Module
-----------------------
-
-.. automodule:: pyface.util.grid.grid_row
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   pyface.util.grid.api
+   pyface.util.grid.grid
+   pyface.util.grid.grid_column
+   pyface.util.grid.grid_model
+   pyface.util.grid.grid_row
 

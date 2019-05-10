@@ -1,19 +1,16 @@
-debug Package
-=============
+pyface.workbench.debug package
+==============================
 
-:mod:`api` Module
------------------
-
-.. automodule:: pyface.workbench.debug.api
+.. automodule:: pyface.workbench.debug
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`debug_view` Module
-------------------------
+Submodules
+----------
 
-.. automodule:: pyface.workbench.debug.debug_view
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
+
+   pyface.workbench.debug.api
+   pyface.workbench.debug.debug_view
 

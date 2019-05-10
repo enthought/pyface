@@ -128,17 +128,17 @@ Actions
 
 An immediate desire when building a traditional GUI application is to add
 menus and toolbars to allow basic user interaction via the mouse or keyboard
-shortcuts.  Pyface provides these via :py:class:`.Action` objects.
+shortcuts.  Pyface provides these via :py:class:`~.action.Action` objects.
 
 Actions provide the information needed to display a menu or toolbar item and
 such as the title text, accelerator keys, icon and whether the action has
 "radio" or "toggle" behaviour.  In addition the action needs to supply a
 function to perform when the user activates it.  This is usually done by
-either supplying a callable for the :py:attr:`.Action.on_perform` trait of the
-:py:class:`.Action` or by subclassing and overriding the :py:meth:`.Action.perform`
+either supplying a callable for the :py:attr:`~.action.Action.on_perform` trait of the
+:py:class:`~.action.Action` or by subclassing and overriding the :py:meth:`~.action.Action.perform`
 method.
 
-The :py:attr:`.Action.on_perform` is a callable that should expect no parameters to
+The :py:attr:`~.action.Action.on_perform` is a callable that should expect no parameters to
 be passed to it, so it should have all the context it needs to do what it
 needs.  At its simplest, the action might look something like this::
 
@@ -154,7 +154,7 @@ needs.  At its simplest, the action might look something like this::
         on_perform=hello_world,
     )
 
-The equivalent written as a subclass of :py:class:`.Action` would look like
+The equivalent written as a subclass of :py:class:`~.action.Action` would look like
 this::
 
     from pyface.action.api import Action
@@ -174,8 +174,8 @@ this::
             print 'Hello world!'
 
 Because actions usually require some context, the most common use will be to
-supply a class method as the :py:attr:`.Action.on_perform` callable.  And for toolbar
-actions, you usually want to supply an :py:attr:`.Action.image` trait as well.
+supply a class method as the :py:attr:`~.action.Action.on_perform` callable.  And for toolbar
+actions, you usually want to supply an :py:attr:`~.action.Action.image` trait as well.
 
 Actions can be organized hierarchically into groups within menus and toolbars,
 and a menubar can contain multiple menus.  The following example shows how to
@@ -245,6 +245,27 @@ define a very simple Python editor application with menus::
             self._editor = PythonEditor(parent)
 
             return self._editor.control
+
+Toolbars
+--------
+
+Toolbars work in a similar way to menus, each toolbar having a collection of
+groups of actions.  However in addition to the options available to a menu
+item, a toolbar item can have an :py:class:`~.action.Action` that provides a widget
+to embed in the toolbar.  At its simplest this is done by specifying the
+:py:attr:`~.action.Action.style` to be ``"widget"`` and then providing a
+:py:attr:`~.action.Action.control_factory` callable that returns a toolkit object.
+
+There are two utility subclasses provided to handle common use cases.  The
+:py:class:`~.field_action.FieldAction` class takes a
+:py:class:`~pyface.fields.i_field.IField` class and a dictionary of parameters
+that specify the behaviour, and use this as the factory to create the
+embedded widget.  :py:class:`~.field_action.FieldAction` also overrides the
+:py:attr:`~.field_action.FieldAction.perform` method to pass the new value of the field
+to the :py:class:`~.field_action.FieldAction.on_perform` method.
+
+The second is the :py:class:`~.traitsui_widget_action.TraitsUIWidgetAction`
+class which embeds an arbitrary TraitsUI in the toolbar.
 
 
 Application Frameworks

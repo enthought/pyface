@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>debug Package &mdash; pyface 6.0.0 documentation</title>
+    <title>pyface.workbench.debug package &mdash; pyface 6.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.0.0',
+        VERSION:     '6.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,15 +23,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
-    <link rel="up" title="workbench Package" href="pyface.workbench.html" >
-    <link rel="next" title="wx Package" href="pyface.wx.html" >
-    <link rel="prev" title="action Package" href="pyface.workbench.action.html" > 
+    <link rel="top" title="pyface 6.1.0 documentation" href="../index.html" >
+    <link rel="up" title="pyface.workbench package" href="pyface.workbench.html" >
+    <link rel="next" title="pyface.workbench.debug.api module" href="pyface.workbench.debug.api.html" >
+    <link rel="prev" title="pyface.workbench.action.workbench_action module" href="pyface.workbench.action.workbench_action.html" > 
   </head>
   <body>
   <div class="container">
@@ -48,10 +49,10 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.1.0 documentation</a></li>
 	
-          <li class="active"><a href="pyface.html" >pyface Package</a></li>
-          <li class="active"><a href="pyface.workbench.html" accesskey="U">workbench Package</a></li> 
+          <li class="active"><a href="pyface.html" >pyface package</a></li>
+          <li class="active"><a href="pyface.workbench.html" accesskey="U">pyface.workbench package</a></li> 
     </ul>
               
               
@@ -61,11 +62,15 @@
            accesskey="I">index</a>
       </li>
       <li class="active">
-        <a href="pyface.wx.html" title="wx Package"
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.workbench.debug.api.html" title="pyface.workbench.debug.api module"
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.workbench.action.html" title="action Package"
+        <a href="pyface.workbench.action.workbench_action.html" title="pyface.workbench.action.workbench_action module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -81,41 +86,16 @@
         <div class="bodywrapper">
           <div class="body" id="spc-section-body">
             
-  <div class="section" id="debug-package">
-<h1>debug Package<a class="headerlink" href="#debug-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyface.workbench.debug.api">
-<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.workbench.debug.api" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pyface.workbench.debug">
+<span id="pyface-workbench-debug-package"></span><h1>pyface.workbench.debug package<a class="headerlink" href="#module-pyface.workbench.debug" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.workbench.debug.api.html">pyface.workbench.debug.api module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.workbench.debug.debug_view.html">pyface.workbench.debug.debug_view module</a></li>
+</ul>
 </div>
-<div class="section" id="module-pyface.workbench.debug.debug_view">
-<span id="debug-view-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">debug_view</span></code> Module<a class="headerlink" href="#module-pyface.workbench.debug.debug_view" title="Permalink to this headline">¶</a></h2>
-<p>A view containing a main walter canvas.</p>
-<dl class="class">
-<dt id="pyface.workbench.debug.debug_view.DebugViewModel">
-<em class="property">class </em><code class="descclassname">pyface.workbench.debug.debug_view.</code><code class="descname">DebugViewModel</code><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-<p>The model for the debug view!</p>
-<dl class="method">
-<dt id="pyface.workbench.debug.debug_view.DebugViewModel.refresh">
-<code class="descname">refresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugViewModel.refresh" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refresh the model.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.workbench.debug.debug_view.DebugView">
-<em class="property">class </em><code class="descclassname">pyface.workbench.debug.debug_view.</code><code class="descname">DebugView</code><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="pyface.ui.qt4.workbench.html#pyface.ui.qt4.workbench.view.View" title="pyface.ui.qt4.workbench.view.View"><code class="xref py py-class docutils literal"><span class="pre">pyface.ui.qt4.workbench.view.View</span></code></a></p>
-<p>A view containing a main walter canvas.</p>
-<dl class="method">
-<dt id="pyface.workbench.debug.debug_view.DebugView.create_control">
-<code class="descname">create_control</code><span class="sig-paren">(</span><em>parent</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.workbench.debug.debug_view.DebugView.create_control" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates the toolkit-specific control that represents the view.</p>
-<p>&#8216;parent&#8217; is the toolkit-specific control that is the view&#8217;s parent.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 </div>
 
@@ -128,21 +108,20 @@
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">debug Package</a><ul>
-<li><a class="reference internal" href="#module-pyface.workbench.debug.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.workbench.debug.debug_view"><code class="docutils literal"><span class="pre">debug_view</span></code> Module</a></li>
+<li><a class="reference internal" href="#">pyface.workbench.debug package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.workbench.action.html"
-                        title="previous chapter">action Package</a></p>
+  <p class="topless"><a href="pyface.workbench.action.workbench_action.html"
+                        title="previous chapter">pyface.workbench.action.workbench_action module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.wx.html"
-                        title="next chapter">wx Package</a></p>
+  <p class="topless"><a href="pyface.workbench.debug.api.html"
+                        title="next chapter">pyface.workbench.debug.api module</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.workbench.debug.rst.txt"
@@ -150,12 +129,14 @@
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -177,10 +158,10 @@
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 12, 2018.
+      Last updated on May 08, 2019.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
       </li>
     </ul>
     </div>

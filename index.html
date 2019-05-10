@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Welcome to the Pyface Documentation! &mdash; pyface 6.0.0 documentation</title>
+    <title>Welcome to the Pyface Documentation! &mdash; pyface 6.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.0.0',
+        VERSION:     '6.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/copybutton.js"></script>
     <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="_static/favicon.ico">
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.0.0 documentation" href="#" >
+    <link rel="top" title="pyface 6.1.0 documentation" href="#" >
     <link rel="next" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -55,6 +56,10 @@
            accesskey="I">index</a>
       </li>
       <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
         <a href="overview.html" title="Overview"
            accesskey="N">next</a>
       </li>
@@ -74,13 +79,13 @@
   <div class="section" id="welcome-to-the-pyface-documentation">
 <h1>Welcome to the Pyface Documentation!<a class="headerlink" href="#welcome-to-the-pyface-documentation" title="Permalink to this headline">¶</a></h1>
 <p>Pyface contains a toolkit-independent GUI abstraction layers, used to support
-the &#8220;visualization&#8221; features of the Traits package. Thus, you can write code
+the “visualization” features of the Traits package. Thus, you can write code
 in the abstraction of the PyFace API and the selected toolkit and backend take
 care of the details of displaying them.</p>
 <div class="section" id="pyface">
 <h2>Pyface<a class="headerlink" href="#pyface" title="Permalink to this headline">¶</a></h2>
 <p>Pyface enables programmers to interact with generic GUI objects, such as an
-&#8220;MDI Application Window&#8221;, rather than with raw GUI widgets. (Pyface is named by
+“MDI Application Window”, rather than with raw GUI widgets. (Pyface is named by
 analogy to JFace in Java.) Traits uses Pyface to implement views and editors
 for displaying and editing Traits-based objects.</p>
 </div>
@@ -89,7 +94,7 @@ for displaying and editing Traits-based objects.</p>
 <p>Traits and Pyface define APIs that are independent of any GUI toolkit. However,
 in order to actually produce user interfaces with them, you must install a
 supported Python-based GUI toolkit and the appropriate toolkit-specific backend
-project. Conversely, if you wish to use Traits without a UI, a &#8220;null&#8221; backend
+project. Conversely, if you wish to use Traits without a UI, a “null” backend
 is automatically used in the absence of a real backend.</p>
 <p>Currently, the supported GUI toolkits are</p>
 <ul class="simple">
@@ -100,10 +105,10 @@ is automatically used in the absence of a real backend.</p>
 <p>While all toolkits funtion with Pyface, integration with wxPython is currently
 more complete.  Future development, however, will be more focused on
 supporting Qt.</p>
-<p>The default toolkit if none is supplied is <code class="docutils literal"><span class="pre">qt4</span></code>. This changed from <code class="docutils literal"><span class="pre">wx</span></code> in
+<p>The default toolkit if none is supplied is <code class="docutils literal notranslate"><span class="pre">qt4</span></code>. This changed from <code class="docutils literal notranslate"><span class="pre">wx</span></code> in
 Pyface 5.0.</p>
 <p>NOTE: Although the code in this library is BSD licensed, when the PyQt backend
-is used the more restrictive terms of PyQt&#8217;s GPL or proprietary licensing will
+is used the more restrictive terms of PyQt’s GPL or proprietary licensing will
 likely apply to your code.</p>
 <div class="section" id="toolkit-backend-selection">
 <h3>Toolkit Backend Selection<a class="headerlink" href="#toolkit-backend-selection" title="Permalink to this headline">¶</a></h3>
@@ -112,11 +117,11 @@ likely apply to your code.</p>
 that signifies the GUI toolkit.</p>
 <p>The supported values of <strong>ETSConfig.toolkit</strong> are:</p>
 <ul class="simple">
-<li>&#8216;qt4&#8217;: <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>, which provides Python
+<li>‘qt4’: <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>, which provides Python
 bindings for the <a class="reference external" href="http://trolltech.com/products/qt">Qt</a> framework version 4.</li>
-<li>&#8216;wx&#8217;: <a class="reference external" href="http://www.wxpython.org">wxPython</a>, which provides Python bindings
+<li>‘wx’: <a class="reference external" href="http://www.wxpython.org">wxPython</a>, which provides Python bindings
 for the <a class="reference external" href="http://wxwidgets.org">wxWidgets</a> toolkit.</li>
-<li>&#8216;null&#8217;: A do-nothing toolkit, for situations where neither of the other
+<li>‘null’: A do-nothing toolkit, for situations where neither of the other
 toolkits is installed, but Traits is needed for non-UI purposes.</li>
 </ul>
 <p>The default behavior of Pyface is to search for available toolkit-specific
@@ -127,7 +132,7 @@ order of precedence:</p>
 <li><p class="first">The program can explicitly set <strong>ETSConfig.toolkit</strong>. It must do this before
 importing from any other Enthought Tool Suite component, including
 traits.  For example, at the beginning of a program:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
 <span class="n">ETSConfig</span><span class="o">.</span><span class="n">toolkit</span> <span class="o">=</span> <span class="s1">&#39;wx&#39;</span>
 </pre></div>
 </div>
@@ -155,28 +160,24 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="toolkits.html#toolkit-entrypoints">Toolkit Entrypoints</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="submodules.html">Submodules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fields.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timer.html">Timers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Pyface Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#application-interface">Application Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#guiapplication-interface">GUIApplication Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="applications.html#tasksapplication-interface">TasksApplication Interface</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/pyface.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/modules.html">Abstract Interfaces and Mixins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.action.html">action Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.dock.html">dock Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.grid.html">grid Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.preference.html">preference Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.qt.html">qt Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.resource.html">resource Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.sizers.html">sizers Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.tasks.html">tasks Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.tests.html">tests Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.timer.html">timer Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.tree.html">tree Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.ui.html">ui Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.util.html">util Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.viewer.html">viewer Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.wizard.html">wizard Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.workbench.html">workbench Package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pyface.wx.html">wx Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/pyface.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-1-0">Release 6.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-0-0">Release 6.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-5-1-0">Release 5.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-5-0-0">Release 5.0.0</a></li>
@@ -200,7 +201,7 @@ traits.  For example, at the beginning of a program:</p>
             <p class="logo"><a href="#">
               <img class="logo" src="_static/img/e-logo.png" alt="Logo">
             </a></p>
-  <h3><a href="#">Table Of Contents</a></h3>
+  <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to the Pyface Documentation!</a><ul>
 <li><a class="reference internal" href="#pyface">Pyface</a></li>
@@ -223,12 +224,14 @@ traits.  For example, at the beginning of a program:</p>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -250,10 +253,10 @@ traits.  For example, at the beginning of a program:</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 12, 2018.
+      Last updated on May 08, 2019.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
       </li>
     </ul>
     </div>

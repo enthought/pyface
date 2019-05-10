@@ -1,123 +1,39 @@
-action Package
-==============
-
-:mod:`action` Package
----------------------
+pyface.action package
+=====================
 
 .. automodule:: pyface.action
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`action` Module
---------------------
+Subpackages
+-----------
 
-.. automodule:: pyface.action.action
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`action_controller` Module
--------------------------------
+    pyface.action.tests
 
-.. automodule:: pyface.action.action_controller
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Submodules
+----------
 
-:mod:`action_event` Module
---------------------------
+.. toctree::
 
-.. automodule:: pyface.action.action_event
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`action_item` Module
--------------------------
-
-.. automodule:: pyface.action.action_item
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`action_manager` Module
-----------------------------
-
-.. automodule:: pyface.action.action_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`action_manager_item` Module
----------------------------------
-
-.. automodule:: pyface.action.action_manager_item
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`api` Module
------------------
-
-.. automodule:: pyface.action.api
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`group` Module
--------------------
-
-.. automodule:: pyface.action.group
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`menu_bar_manager` Module
-------------------------------
-
-.. automodule:: pyface.action.menu_bar_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`menu_manager` Module
---------------------------
-
-.. automodule:: pyface.action.menu_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`status_bar_manager` Module
---------------------------------
-
-.. automodule:: pyface.action.status_bar_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`tool_bar_manager` Module
-------------------------------
-
-.. automodule:: pyface.action.tool_bar_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`tool_palette_manager` Module
-----------------------------------
-
-.. automodule:: pyface.action.tool_palette_manager
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`window_action` Module
----------------------------
-
-.. automodule:: pyface.action.window_action
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   pyface.action.action
+   pyface.action.action_controller
+   pyface.action.action_event
+   pyface.action.action_item
+   pyface.action.action_manager
+   pyface.action.action_manager_item
+   pyface.action.api
+   pyface.action.field_action
+   pyface.action.group
+   pyface.action.gui_application_action
+   pyface.action.listening_action
+   pyface.action.menu_bar_manager
+   pyface.action.menu_manager
+   pyface.action.status_bar_manager
+   pyface.action.tool_bar_manager
+   pyface.action.tool_palette_manager
+   pyface.action.traitsui_widget_action
+   pyface.action.window_action
 
