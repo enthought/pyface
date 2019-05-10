@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>resource Package &mdash; pyface 6.0.0 documentation</title>
+    <title>pyface.resource package &mdash; pyface 6.1.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.0.0',
+        VERSION:     '6.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,15 +23,16 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/js/copybutton.js"></script>
     <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
-    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
-    <link rel="up" title="pyface Package" href="pyface.html" >
-    <link rel="next" title="sizers Package" href="pyface.sizers.html" >
-    <link rel="prev" title="qt Package" href="pyface.qt.html" > 
+    <link rel="top" title="pyface 6.1.0 documentation" href="../index.html" >
+    <link rel="up" title="pyface package" href="pyface.html" >
+    <link rel="next" title="pyface.resource.api module" href="pyface.resource.api.html" >
+    <link rel="prev" title="pyface.preference.preference_page module" href="pyface.preference.preference_page.html" > 
   </head>
   <body>
   <div class="container">
@@ -48,9 +49,9 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.1.0 documentation</a></li>
 	
-          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+          <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
               
               
@@ -60,11 +61,15 @@
            accesskey="I">index</a>
       </li>
       <li class="active">
-        <a href="pyface.sizers.html" title="sizers Package"
+        <a href="../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="pyface.resource.api.html" title="pyface.resource.api module"
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.qt.html" title="qt Package"
+        <a href="pyface.preference.preference_page.html" title="pyface.preference.preference_page module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -80,122 +85,21 @@
         <div class="bodywrapper">
           <div class="body" id="spc-section-body">
             
-  <div class="section" id="resource-package">
-<h1>resource Package<a class="headerlink" href="#resource-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id1">
-<h2><code class="xref py py-mod docutils literal"><span class="pre">resource</span></code> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-pyface.resource"></span><p>Support for managing resources such as images and sounds.
+  <div class="section" id="module-pyface.resource">
+<span id="pyface-resource-package"></span><h1>pyface.resource package<a class="headerlink" href="#module-pyface.resource" title="Permalink to this headline">¶</a></h1>
+<p>Support for managing resources such as images and sounds.
 Part of the TraitsGUI project of the Enthought Tool Suite.</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyface.resource.api.html">pyface.resource.api module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.resource.resource_factory.html">pyface.resource.resource_factory module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.resource.resource_manager.html">pyface.resource.resource_manager module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.resource.resource_path.html">pyface.resource.resource_path module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyface.resource.resource_reference.html">pyface.resource.resource_reference module</a></li>
+</ul>
 </div>
-<div class="section" id="module-pyface.resource.api">
-<span id="api-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">api</span></code> Module<a class="headerlink" href="#module-pyface.resource.api" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-pyface.resource.resource_factory">
-<span id="resource-factory-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">resource_factory</span></code> Module<a class="headerlink" href="#module-pyface.resource.resource_factory" title="Permalink to this headline">¶</a></h2>
-<p>Default base-class for resource factories.</p>
-<dl class="class">
-<dt id="pyface.resource.resource_factory.ResourceFactory">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_factory.</code><code class="descname">ResourceFactory</code><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default base-class for resource factories.</p>
-<dl class="method">
-<dt id="pyface.resource.resource_factory.ResourceFactory.image_from_file">
-<code class="descname">image_from_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory.image_from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an image from the data in the specified filename.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.resource.resource_factory.ResourceFactory.image_from_data">
-<code class="descname">image_from_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_factory.ResourceFactory.image_from_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an image from the specified data.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyface.resource.resource_manager">
-<span id="resource-manager-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">resource_manager</span></code> Module<a class="headerlink" href="#module-pyface.resource.resource_manager" title="Permalink to this headline">¶</a></h2>
-<p>The default resource manager.</p>
-<p>A resource manager locates and loads application resources such as images and
-sounds etc.</p>
-<dl class="class">
-<dt id="pyface.resource.resource_manager.ResourceManager">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_manager.</code><code class="descname">ResourceManager</code><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-<p>The default resource manager.</p>
-<p>A resource manager locates and loads application resources such as images
-and sounds etc.</p>
-<dl class="attribute">
-<dt id="pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS">
-<code class="descname">IMAGE_EXTENSIONS</code><em class="property"> = ['.png', '.jpg', '.bmp', '.gif', '.ico']</em><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="pyface.resource.resource_manager.ResourceManager.locate_image">
-<code class="descname">locate_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.locate_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Locates an image.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyface.resource.resource_manager.ResourceManager.load_image">
-<code class="descname">load_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads an image.</p>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyface.resource.resource_path">
-<span id="resource-path-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">resource_path</span></code> Module<a class="headerlink" href="#module-pyface.resource.resource_path" title="Permalink to this headline">¶</a></h2>
-<p>Functions to determine resource locations from the call stack.</p>
-<p>This type of resource location is normally requested from the constructor for
-an object whose resources are relative to the module constructing the object.</p>
-<dl class="function">
-<dt id="pyface.resource.resource_path.resource_module">
-<code class="descclassname">pyface.resource.resource_path.</code><code class="descname">resource_module</code><span class="sig-paren">(</span><em>level=2</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_path.resource_module" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a module reference calculated from the caller&#8217;s stack.</p>
-<p>Note that what we want is the reference to the package containing the
-module in the stack.  This is because we need a directory to search
-for our default resource sub-dirs as children.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyface.resource.resource_path.resource_path">
-<code class="descclassname">pyface.resource.resource_path.</code><code class="descname">resource_path</code><span class="sig-paren">(</span><em>level=2</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_path.resource_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a resource path calculated from the caller&#8217;s stack.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="module-pyface.resource.resource_reference">
-<span id="resource-reference-module"></span><h2><code class="xref py py-mod docutils literal"><span class="pre">resource_reference</span></code> Module<a class="headerlink" href="#module-pyface.resource.resource_reference" title="Permalink to this headline">¶</a></h2>
-<p>Resource references.</p>
-<dl class="class">
-<dt id="pyface.resource.resource_reference.ResourceReference">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_reference.</code><code class="descname">ResourceReference</code><a class="headerlink" href="#pyface.resource.resource_reference.ResourceReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasTraits</span></code></p>
-<p>Abstract base class for resource references.</p>
-<p>Resource references are returned from calls to &#8216;locate_reference&#8217; on the
-resource manager.</p>
-<dl class="method">
-<dt id="pyface.resource.resource_reference.ResourceReference.load">
-<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ResourceReference.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the resource.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="pyface.resource.resource_reference.ImageReference">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_reference.</code><code class="descname">ImageReference</code><span class="sig-paren">(</span><em>resource_factory</em>, <em>filename=None</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#pyface.resource.resource_reference.ResourceReference" title="pyface.resource.resource_reference.ResourceReference"><code class="xref py py-class docutils literal"><span class="pre">pyface.resource.resource_reference.ResourceReference</span></code></a></p>
-<p>A reference to an image resource.</p>
-<dl class="method">
-<dt id="pyface.resource.resource_reference.ImageReference.load">
-<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_reference.ImageReference.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads the resource.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 </div>
 
@@ -208,25 +112,20 @@ resource manager.</p>
             <p class="logo"><a href="../index.html">
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
-  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <h3><a href="../index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">resource Package</a><ul>
-<li><a class="reference internal" href="#id1"><code class="docutils literal"><span class="pre">resource</span></code> Package</a></li>
-<li><a class="reference internal" href="#module-pyface.resource.api"><code class="docutils literal"><span class="pre">api</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.resource.resource_factory"><code class="docutils literal"><span class="pre">resource_factory</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.resource.resource_manager"><code class="docutils literal"><span class="pre">resource_manager</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.resource.resource_path"><code class="docutils literal"><span class="pre">resource_path</span></code> Module</a></li>
-<li><a class="reference internal" href="#module-pyface.resource.resource_reference"><code class="docutils literal"><span class="pre">resource_reference</span></code> Module</a></li>
+<li><a class="reference internal" href="#">pyface.resource package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.qt.html"
-                        title="previous chapter">qt Package</a></p>
+  <p class="topless"><a href="pyface.preference.preference_page.html"
+                        title="previous chapter">pyface.preference.preference_page module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.sizers.html"
-                        title="next chapter">sizers Package</a></p>
+  <p class="topless"><a href="pyface.resource.api.html"
+                        title="next chapter">pyface.resource.api module</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.resource.rst.txt"
@@ -234,12 +133,14 @@ resource manager.</p>
   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -261,10 +162,10 @@ resource manager.</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on Apr 12, 2018.
+      Last updated on May 08, 2019.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
       </li>
     </ul>
     </div>

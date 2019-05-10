@@ -1,75 +1,25 @@
-action Package
-==============
+pyface.tasks.action package
+===========================
 
-:mod:`api` Module
------------------
-
-.. automodule:: pyface.tasks.action.api
+.. automodule:: pyface.tasks.action
     :members:
     :undoc-members:
     :show-inheritance:
 
-:mod:`dock_pane_toggle_group` Module
-------------------------------------
+Submodules
+----------
 
-.. automodule:: pyface.tasks.action.dock_pane_toggle_group
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. toctree::
 
-:mod:`listening_action` Module
-------------------------------
-
-.. automodule:: pyface.tasks.action.listening_action
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`schema` Module
---------------------
-
-.. automodule:: pyface.tasks.action.schema
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`schema_addition` Module
------------------------------
-
-.. automodule:: pyface.tasks.action.schema_addition
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_action` Module
--------------------------
-
-.. automodule:: pyface.tasks.action.task_action
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_action_controller` Module
-------------------------------------
-
-.. automodule:: pyface.tasks.action.task_action_controller
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_action_manager_builder` Module
------------------------------------------
-
-.. automodule:: pyface.tasks.action.task_action_manager_builder
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`task_toggle_group` Module
--------------------------------
-
-.. automodule:: pyface.tasks.action.task_toggle_group
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   pyface.tasks.action.api
+   pyface.tasks.action.dock_pane_toggle_group
+   pyface.tasks.action.listening_action
+   pyface.tasks.action.schema
+   pyface.tasks.action.schema_addition
+   pyface.tasks.action.task_action
+   pyface.tasks.action.task_action_controller
+   pyface.tasks.action.task_action_manager_builder
+   pyface.tasks.action.task_toggle_group
+   pyface.tasks.action.task_window_toggle_group
+   pyface.tasks.action.tasks_application_action
 

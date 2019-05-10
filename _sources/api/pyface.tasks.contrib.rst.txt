@@ -1,11 +1,15 @@
-contrib Package
-===============
+pyface.tasks.contrib package
+============================
 
-:mod:`python_shell` Module
---------------------------
-
-.. automodule:: pyface.tasks.contrib.python_shell
+.. automodule:: pyface.tasks.contrib
     :members:
     :undoc-members:
     :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   pyface.tasks.contrib.python_shell
 

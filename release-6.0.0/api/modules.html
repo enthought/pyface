@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Abstract Interfaces and Mixins &mdash; pyface 6.0.0 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '6.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="../_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico">
+    <link rel="index" title="Index" href="../genindex.html" >
+    <link rel="search" title="Search" href="../search.html" >
+    <link rel="top" title="pyface 6.0.0 documentation" href="../index.html" >
+    <link rel="up" title="pyface Package" href="pyface.html" >
+    <link rel="next" title="action Package" href="pyface.action.html" >
+    <link rel="prev" title="pyface Package" href="pyface.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../index.html">pyface 6.0.0 documentation</a></li>
+	
+          <li class="active"><a href="pyface.html" accesskey="U">pyface Package</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="pyface.action.html" title="action Package"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="pyface.html" title="pyface Package"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="abstract-interfaces-and-mixins">
+<h1>Abstract Interfaces and Mixins<a class="headerlink" href="#abstract-interfaces-and-mixins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyface.i_about_dialog">
+<span id="pyface-i-about-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_about_dialog" title="pyface.i_about_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_about_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_about_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a simple &#8216;About&#8217; dialog.</p>
+<dl class="class">
+<dt id="pyface.i_about_dialog.IAboutDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_about_dialog.</code><code class="descname">IAboutDialog</code><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>The interface for a simple &#8216;About&#8217; dialog.</p>
+<dl class="attribute">
+<dt id="pyface.i_about_dialog.IAboutDialog.additions">
+<code class="descname">additions</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.additions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Additional strings to be added to the dialog.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_about_dialog.IAboutDialog.image">
+<code class="descname">image</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_about_dialog.IAboutDialog.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>The image displayed in the dialog.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_about_dialog.MAboutDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_about_dialog.</code><code class="descname">MAboutDialog</code><a class="headerlink" href="#pyface.i_about_dialog.MAboutDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IAboutDialog interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_clipboard">
+<span id="pyface-i-clipboard-module"></span><h2><a class="reference internal" href="#module-pyface.i_clipboard" title="pyface.i_clipboard"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_clipboard</span></code></a> Module<a class="headerlink" href="#module-pyface.i_clipboard" title="Permalink to this headline">¶</a></h2>
+<p>The interface for manipulating the toolkit clipboard.</p>
+<dl class="class">
+<dt id="pyface.i_clipboard.IClipboard">
+<em class="property">class </em><code class="descclassname">pyface.i_clipboard.</code><code class="descname">IClipboard</code><a class="headerlink" href="#pyface.i_clipboard.IClipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface for manipulating the toolkit clipboard.</p>
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.data_type">
+<code class="descname">data_type</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of data in the clipboard (string)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.data">
+<code class="descname">data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arbitrary Python data stored in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.has_data">
+<code class="descname">has_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.has_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arbitrary Python data is available in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.object_type">
+<code class="descname">object_type</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.object_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the class of object in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.object_data">
+<code class="descname">object_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.object_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python object data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.has_object_data">
+<code class="descname">has_object_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.has_object_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python object data is available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.text_data">
+<code class="descname">text_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.text_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.has_text_data">
+<code class="descname">has_text_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.has_text_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text data is available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.file_data">
+<code class="descname">file_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>File name data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.IClipboard.has_file_data">
+<code class="descname">has_file_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.IClipboard.has_file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>File name data is available</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_clipboard.BaseClipboard">
+<em class="property">class </em><code class="descclassname">pyface.i_clipboard.</code><code class="descname">BaseClipboard</code><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
+<p>An abstract base class that contains common code for toolkit specific
+implementations of IClipboard.</p>
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.data_type">
+<code class="descname">data_type</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.data_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of data in the clipboard (string)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.data">
+<code class="descname">data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arbitrary Python data stored in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.has_data">
+<code class="descname">has_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.has_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arbitrary Python data is available in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.object_type">
+<code class="descname">object_type</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.object_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the class of object in the clipboard</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.object_data">
+<code class="descname">object_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.object_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python object data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.has_object_data">
+<code class="descname">has_object_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.has_object_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python object data is available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.text_data">
+<code class="descname">text_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.text_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.has_text_data">
+<code class="descname">has_text_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.has_text_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text data is available</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.file_data">
+<code class="descname">file_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>File name data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_clipboard.BaseClipboard.has_file_data">
+<code class="descname">has_file_data</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_clipboard.BaseClipboard.has_file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>File name data is available</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_confirmation_dialog">
+<span id="pyface-i-confirmation-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_confirmation_dialog" title="pyface.i_confirmation_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_confirmation_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_confirmation_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a dialog that prompts the user for confirmation.</p>
+<dl class="class">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_confirmation_dialog.</code><code class="descname">IConfirmationDialog</code><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>The interface for a dialog that prompts the user for confirmation.</p>
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.cancel">
+<code class="descname">cancel</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the cancel button be displayed?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.default">
+<code class="descname">default</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default button.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.image">
+<code class="descname">image</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>The image displayed with the message.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.message">
+<code class="descname">message</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message displayed in the body of the dialog (use the inherited
+&#8216;title&#8217; trait to set the title of the dialog itself).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.informative">
+<code class="descname">informative</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.informative" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some informative text to display below the main message</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.detail">
+<code class="descname">detail</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some additional details that can be exposed by the user</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.no_label">
+<code class="descname">no_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.no_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the &#8216;no&#8217; button.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_confirmation_dialog.IConfirmationDialog.yes_label">
+<code class="descname">yes_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_confirmation_dialog.IConfirmationDialog.yes_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the &#8216;yes&#8217; button.  The default is toolkit specific.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_confirmation_dialog.MConfirmationDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_confirmation_dialog.</code><code class="descname">MConfirmationDialog</code><a class="headerlink" href="#pyface.i_confirmation_dialog.MConfirmationDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IConfirmationDialog interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_dialog">
+<span id="pyface-i-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_dialog" title="pyface.i_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The abstract interface for all pyface dialogs.</p>
+<dl class="class">
+<dt id="pyface.i_dialog.IDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_dialog.</code><code class="descname">IDialog</code><a class="headerlink" href="#pyface.i_dialog.IDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_window.IWindow</span></code></a></p>
+<p>The abstract interface for all pyface dialogs.</p>
+<p>Usage: Sub-class this class and either override &#8216;_create_contents&#8217; or
+more simply, just override the two methods that do the real work:-</p>
+<ol class="arabic simple">
+<li>&#8216;_create_dialog_area&#8217; creates the main content of the dialog.</li>
+<li>&#8216;_create_buttons&#8217;     creates the dialog buttons.</li>
+</ol>
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.cancel_label">
+<code class="descname">cancel_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.cancel_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the &#8216;cancel&#8217; button.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.help_id">
+<code class="descname">help_id</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The context sensitive help Id (the &#8216;Help&#8217; button is only shown iff this
+is set).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.help_label">
+<code class="descname">help_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the &#8216;help&#8217; button.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.ok_label">
+<code class="descname">ok_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.ok_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>The label for the &#8216;ok&#8217; button.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.resizeable">
+<code class="descname">resizeable</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.resizeable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the dialog resizeable?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.return_code">
+<code class="descname">return_code</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.return_code" title="Permalink to this definition">¶</a></dt>
+<dd><p>The return code after the window is closed to indicate whether the dialog
+was closed via &#8216;Ok&#8217; or &#8216;Cancel&#8217;).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_dialog.IDialog.style">
+<code class="descname">style</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_dialog.IDialog.style" title="Permalink to this definition">¶</a></dt>
+<dd><p>The dialog style (is it modal or not).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_dialog.IDialog.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.IDialog.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the dialog.</p>
+<p>If the dialog is modal then the dialog&#8217;s event loop is entered and the
+dialog closed afterwards.  The &#8216;return_code&#8217; trait is updated according
+to the button the user pressed and this value is also returned.</p>
+<p>If the dialog is non-modal the return_code trait is set to &#8216;OK&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_dialog.MDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_dialog.</code><code class="descname">MDialog</code><a class="headerlink" href="#pyface.i_dialog.MDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IDialog interface.</p>
+<p>Implements: open()
+Reimplements: _add_event_listeners(), _create()</p>
+<dl class="method">
+<dt id="pyface.i_dialog.MDialog.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.MDialog.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the dialog.</p>
+<p>If the dialog is modal then the dialog&#8217;s event loop is entered and the
+dialog closed afterwards.  The &#8216;return_code&#8217; trait is updated according
+to the button the user pressed and this value is also returned.</p>
+<p>If the dialog is non-modal the return_code trait is set to &#8216;OK&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> &#8211; The value of the <code class="docutils literal"><span class="pre">return_code</span></code> trait.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_directory_dialog">
+<span id="pyface-i-directory-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_directory_dialog" title="pyface.i_directory_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_directory_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_directory_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a dialog that allows the user to browse for a directory.</p>
+<dl class="class">
+<dt id="pyface.i_directory_dialog.IDirectoryDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_directory_dialog.</code><code class="descname">IDirectoryDialog</code><a class="headerlink" href="#pyface.i_directory_dialog.IDirectoryDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>The interface for a dialog that allows the user to browse for a
+directory.</p>
+<dl class="attribute">
+<dt id="pyface.i_directory_dialog.IDirectoryDialog.default_path">
+<code class="descname">default_path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_directory_dialog.IDirectoryDialog.default_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default path.  The default (ie. the default default path) is toolkit
+specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_directory_dialog.IDirectoryDialog.message">
+<code class="descname">message</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_directory_dialog.IDirectoryDialog.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message to display in the dialog.  The default is toolkit specific.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_directory_dialog.IDirectoryDialog.new_directory">
+<code class="descname">new_directory</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_directory_dialog.IDirectoryDialog.new_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>True iff the dialog should include a button that allows the user to
+create a new directory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_directory_dialog.IDirectoryDialog.path">
+<code class="descname">path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_directory_dialog.IDirectoryDialog.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the chosen directory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_directory_dialog.MDirectoryDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_directory_dialog.</code><code class="descname">MDirectoryDialog</code><a class="headerlink" href="#pyface.i_directory_dialog.MDirectoryDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IDirectoryDialog interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_drop_handler">
+<span id="pyface-i-drop-handler-module"></span><h2><a class="reference internal" href="#module-pyface.i_drop_handler" title="pyface.i_drop_handler"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_drop_handler</span></code></a> Module<a class="headerlink" href="#module-pyface.i_drop_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyface.i_drop_handler.IDropHandler">
+<em class="property">class </em><code class="descclassname">pyface.i_drop_handler.</code><code class="descname">IDropHandler</code><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>Interface for a drop event handler, which provides API to check if the
+drop can be handled or not, and then handle it if possible.</p>
+<dl class="method">
+<dt id="pyface.i_drop_handler.IDropHandler.can_handle_drop">
+<code class="descname">can_handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not a drag event can be handled</p>
+<p>This is used to give feedback to the user about whether a drop is
+possible via the shape of the cursor or similar indicators.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>event</strong> (<em>drag event</em>) &#8211; A drag event with information about the object being dragged.</li>
+<li><strong>target</strong> (<em>toolkit widget</em>) &#8211; The widget that would be dropped on.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>can_drop</strong> &#8211; True if the current drop handler can handle the given drag
+event occurring on the given target widget.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_drop_handler.IDropHandler.handle_drop">
+<code class="descname">handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs drop action when drop event occurs on target widget.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event</strong> (<em>drop event</em>) &#8211; A drop event with information about the object being dropped.</li>
+<li><strong>target</strong> (<em>toolkit widget</em>) &#8211; The widget that would be dropped on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_file_dialog">
+<span id="pyface-i-file-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_file_dialog" title="pyface.i_file_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_file_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_file_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a dialog that allows the user to open/save files etc.</p>
+<dl class="class">
+<dt id="pyface.i_file_dialog.IFileDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_file_dialog.</code><code class="descname">IFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>The interface for a dialog that allows the user to open/save files etc.</p>
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.action">
+<code class="descname">action</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.action" title="Permalink to this definition">¶</a></dt>
+<dd><p>The &#8216;action&#8217; that the user is peforming on the directory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.default_directory">
+<code class="descname">default_directory</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default directory.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.default_filename">
+<code class="descname">default_filename</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default filename.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.default_path">
+<code class="descname">default_path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default path (directory and filename) of the chosen file.  This is
+only used when the <em>default_directory</em> and <em>default_filename</em> are not set
+and is equivalent to setting both.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.directory">
+<code class="descname">directory</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>The directory containing the chosen file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.filename">
+<code class="descname">filename</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the chosen file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.path">
+<code class="descname">path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path (directory and filename) of the chosen file.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.wildcard">
+<code class="descname">wildcard</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard" title="Permalink to this definition">¶</a></dt>
+<dd><p>The wildcard used to restrict the set of files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.IFileDialog.wildcard_index">
+<code class="descname">wildcard_index</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>The index of the selected wildcard.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_file_dialog.MFileDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_file_dialog.</code><code class="descname">MFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IFileDialog interface.</p>
+<p>Implements: create_wildcard()</p>
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_PY">
+<code class="descname">WILDCARD_PY</code><em class="property"> = 'Python files (*.py)|*.py|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_PY" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file dialog wildcard for Python files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_TXT">
+<code class="descname">WILDCARD_TXT</code><em class="property"> = 'Text files (*.txt)|*.txt|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_TXT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file dialog wildcard for text files.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_ALL">
+<code class="descname">WILDCARD_ALL</code><em class="property"> = 'All files (*)|*'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_ZIP">
+<code class="descname">WILDCARD_ZIP</code><em class="property"> = 'Zip files (*.zip)|*.zip|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ZIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file dialog wildcard for Zip archives.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_file_dialog.MFileDialog.create_wildcard">
+<em class="property">classmethod </em><code class="descname">create_wildcard</code><span class="sig-paren">(</span><em>description</em>, <em>extension</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.create_wildcard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a wildcard for a given extension.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>description</strong> (<em>str</em>) &#8211; A human-readable description of the pattern.</li>
+<li><strong>extenstion</strong> (<em>list</em>) &#8211; The wildcard patterns for the extension.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_gui">
+<span id="pyface-i-gui-module"></span><h2><a class="reference internal" href="#module-pyface.i_gui" title="pyface.i_gui"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_gui</span></code></a> Module<a class="headerlink" href="#module-pyface.i_gui" title="Permalink to this headline">¶</a></h2>
+<p>The interface of a pyface GUI.</p>
+<dl class="class">
+<dt id="pyface.i_gui.IGUI">
+<em class="property">class </em><code class="descclassname">pyface.i_gui.</code><code class="descname">IGUI</code><span class="sig-paren">(</span><em>splash_screen=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface of a pyface GUI.</p>
+<dl class="attribute">
+<dt id="pyface.i_gui.IGUI.busy">
+<code class="descname">busy</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_gui.IGUI.busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
+displayed)?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_gui.IGUI.started">
+<code class="descname">started</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_gui.IGUI.started" title="Permalink to this definition">¶</a></dt>
+<dd><p>Has the GUI&#8217;s event loop been started?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_gui.IGUI.state_location">
+<code class="descname">state_location</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_gui.IGUI.state_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>A directory on the local file system that we can read and write to at
+will.  This is used to persist layout information etc.  Note that
+individual toolkits will have their own directory.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyface.i_gui.IGUI.allow_interrupt">
+<em class="property">static </em><code class="descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override SIGINT to prevent swallowing KeyboardInterrupt</p>
+<p>Override the SIGINT handler to ensure the process can be
+interrupted. This prevents GUI toolkits from swallowing
+KeyboardInterrupt exceptions.</p>
+<p>Warning: do not call this method if you intend your application to be
+run interactively.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_gui.IGUI.invoke_after">
+<em class="property">classmethod </em><code class="descname">invoke_after</code><span class="sig-paren">(</span><em>millisecs</em>, <em>callable</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a callable after a specific delay in the main GUI thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>millisecs</strong> (<em>float</em>) &#8211; Delay in milliseconds</li>
+<li><strong>callable</strong> (<em>callable</em>) &#8211; Callable to be called after the delay</li>
+<li><strong>kwargs</strong> (<em>args</em><em>,</em><em></em>) &#8211; Arguments and keyword arguments to be used when calling.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_gui.IGUI.invoke_later">
+<em class="property">classmethod </em><code class="descname">invoke_later</code><span class="sig-paren">(</span><em>callable</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_later" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a callable in the main GUI thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callable</strong> (<em>callable</em>) &#8211; Callable to be called after the delay</li>
+<li><strong>kwargs</strong> (<em>args</em><em>,</em><em></em>) &#8211; Arguments and keyword arguments to be used when calling.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_gui.IGUI.set_trait_after">
+<em class="property">classmethod </em><code class="descname">set_trait_after</code><span class="sig-paren">(</span><em>millisecs</em>, <em>obj</em>, <em>trait_name</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_after" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a trait after a specific delay in the main GUI thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>millisecs</strong> (<em>float</em>) &#8211; Delay in milliseconds</li>
+<li><strong>obj</strong> (<em>HasTraits instance</em>) &#8211; Object on which the trait is to be set</li>
+<li><strong>trait_name</strong> (<em>str</em>) &#8211; The name of the trait to set</li>
+<li><strong>new</strong> (<em>any</em>) &#8211; The value to set.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_gui.IGUI.set_trait_later">
+<em class="property">classmethod </em><code class="descname">set_trait_later</code><span class="sig-paren">(</span><em>obj</em>, <em>trait_name</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_later" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a trait in the main GUI thread.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> (<em>HasTraits instance</em>) &#8211; Object on which the trait is to be set</li>
+<li><strong>trait_name</strong> (<em>str</em>) &#8211; The name of the trait to set</li>
+<li><strong>new</strong> (<em>any</em>) &#8211; The value to set.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyface.i_gui.IGUI.process_events">
+<em class="property">static </em><code class="descname">process_events</code><span class="sig-paren">(</span><em>allow_user_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.process_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process any pending GUI events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>allow_user_events</strong> (<em>bool</em>) &#8211; If allow_user_events is <code class="docutils literal"><span class="pre">False</span></code> then user generated events are not
+processed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pyface.i_gui.IGUI.set_busy">
+<em class="property">static </em><code class="descname">set_busy</code><span class="sig-paren">(</span><em>busy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify if the GUI is busy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>busy</strong> (<em>bool</em>) &#8211; If <code class="docutils literal"><span class="pre">True</span></code> is passed, the cursor is set to a &#8216;busy&#8217; cursor.
+Passing <code class="docutils literal"><span class="pre">False</span></code> will reset the cursor to the default.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_gui.IGUI.start_event_loop">
+<code class="descname">start_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.start_event_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the GUI event loop.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_gui.IGUI.stop_event_loop">
+<code class="descname">stop_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.stop_event_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the GUI event loop.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_gui.MGUI">
+<em class="property">class </em><code class="descclassname">pyface.i_gui.</code><code class="descname">MGUI</code><a class="headerlink" href="#pyface.i_gui.MGUI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IGUI interface.</p>
+<p>Implements: _default_state_location()</p>
+<dl class="staticmethod">
+<dt id="pyface.i_gui.MGUI.allow_interrupt">
+<em class="property">static </em><code class="descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.MGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override SIGINT to prevent swallowing KeyboardInterrupt</p>
+<p>Override the SIGINT handler to ensure the process can be
+interrupted. This prevents GUI toolkits from swallowing
+KeyboardInterrupt exceptions.</p>
+<p>Warning: do not call this method if you intend your application to be
+run interactively.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_heading_text">
+<span id="pyface-i-heading-text-module"></span><h2><a class="reference internal" href="#module-pyface.i_heading_text" title="pyface.i_heading_text"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_heading_text</span></code></a> Module<a class="headerlink" href="#module-pyface.i_heading_text" title="Permalink to this headline">¶</a></h2>
+<p>Heading text.</p>
+<dl class="class">
+<dt id="pyface.i_heading_text.IHeadingText">
+<em class="property">class </em><code class="descclassname">pyface.i_heading_text.</code><code class="descname">IHeadingText</code><a class="headerlink" href="#pyface.i_heading_text.IHeadingText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>Heading text.</p>
+<dl class="attribute">
+<dt id="pyface.i_heading_text.IHeadingText.level">
+<code class="descname">level</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_heading_text.IHeadingText.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Heading level.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_heading_text.IHeadingText.text">
+<code class="descname">text</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_heading_text.IHeadingText.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>The heading text.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_heading_text.IHeadingText.image">
+<code class="descname">image</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_heading_text.IHeadingText.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>The background image.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_heading_text.MHeadingText">
+<em class="property">class </em><code class="descclassname">pyface.i_heading_text.</code><code class="descname">MHeadingText</code><a class="headerlink" href="#pyface.i_heading_text.MHeadingText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IHeadingText interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_image_cache">
+<span id="pyface-i-image-cache-module"></span><h2><a class="reference internal" href="#module-pyface.i_image_cache" title="pyface.i_image_cache"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_image_cache</span></code></a> Module<a class="headerlink" href="#module-pyface.i_image_cache" title="Permalink to this headline">¶</a></h2>
+<p>The interface for an image cache.</p>
+<dl class="class">
+<dt id="pyface.i_image_cache.IImageCache">
+<em class="property">class </em><code class="descclassname">pyface.i_image_cache.</code><code class="descname">IImageCache</code><span class="sig-paren">(</span><em>width</em>, <em>height</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_cache.IImageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface for an image cache.</p>
+<dl class="method">
+<dt id="pyface.i_image_cache.IImageCache.get_image">
+<code class="descname">get_image</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_cache.IImageCache.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scaled image specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) &#8211; The name of the file containing the image.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> &#8211; The image referred to in the file, scaled to the cache&#8217;s width
+and height.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_image_cache.IImageCache.get_bitmap">
+<code class="descname">get_bitmap</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_cache.IImageCache.get_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the scaled image specified as a bitmap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) &#8211; The name of the file containing the image.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>scaled</strong> &#8211; The image referred to in the file, scaled to the cache&#8217;s width
+and height, as a bitmap.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit bitmap</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_image_cache.MImageCache">
+<em class="property">class </em><code class="descclassname">pyface.i_image_cache.</code><code class="descname">MImageCache</code><a class="headerlink" href="#pyface.i_image_cache.MImageCache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IImageCache interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pyface-i-image-resource-module">
+<h2><a class="reference internal" href="#module-pyface.i_image_resource" title="pyface.i_image_resource"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_image_resource</span></code></a> Module<a class="headerlink" href="#pyface-i-image-resource-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyface.i_image_resource"></span><p>The interface for an image resource.</p>
+<dl class="class">
+<dt id="pyface.i_image_resource.IImageResource">
+<em class="property">class </em><code class="descclassname">pyface.i_image_resource.</code><code class="descname">IImageResource</code><span class="sig-paren">(</span><em>name</em>, <em>search_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface for an image resource.</p>
+<p>An image resource describes the location of an image and provides a way
+to create a toolkit-specific image on demand.</p>
+<dl class="attribute">
+<dt id="pyface.i_image_resource.IImageResource.absolute_path">
+<code class="descname">absolute_path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_image_resource.IImageResource.absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The absolute path to the image.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_image_resource.IImageResource.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_image_resource.IImageResource.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the image.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_image_resource.IImageResource.search_path">
+<code class="descname">search_path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_image_resource.IImageResource.search_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of directories, classes or instances that will be used to search
+for the image (see the resource manager for more details).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_image_resource.IImageResource.create_image">
+<code class="descname">create_image</code><span class="sig-paren">(</span><em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource.create_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a toolkit specific image for this resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+default image size.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_image_resource.IImageResource.create_bitmap">
+<code class="descname">create_bitmap</code><span class="sig-paren">(</span><em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource.create_bitmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a toolkit specific bitmap for this resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+default image size.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size as a bitmap.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_image_resource.IImageResource.create_icon">
+<code class="descname">create_icon</code><span class="sig-paren">(</span><em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource.create_icon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a toolkit-specific icon for this resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+default image size.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size as an icon.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyface.i_image_resource.IImageResource.image_size">
+<em class="property">classmethod </em><code class="descname">image_size</code><span class="sig-paren">(</span><em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.IImageResource.image_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the size of a toolkit image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>image</strong> (<em>toolkit image</em>) &#8211; A toolkit image to compute the size of.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>size</strong> &#8211; The (width, height) tuple giving the size of the image.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_image_resource.MImageResource">
+<em class="property">class </em><code class="descclassname">pyface.i_image_resource.</code><code class="descname">MImageResource</code><span class="sig-paren">(</span><em>name</em>, <em>search_path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.MImageResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IImageResource interface.</p>
+<p>Implements: __init__(), create_image()</p>
+<dl class="method">
+<dt id="pyface.i_image_resource.MImageResource.create_image">
+<code class="descname">create_image</code><span class="sig-paren">(</span><em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_image_resource.MImageResource.create_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a toolkit specific image for this resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> (<em></em><em>(</em><em>int</em><em>, </em><em>int</em><em>) or </em><em>None</em>) &#8211; The desired size as a width, height tuple, or None if wanting
+default image size.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>image</strong> &#8211; The toolkit image corresponding to the resource and the specified
+size.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">toolkit image</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_message_dialog">
+<span id="pyface-i-message-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_message_dialog" title="pyface.i_message_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_message_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_message_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a dialog that displays a message.</p>
+<dl class="class">
+<dt id="pyface.i_message_dialog.IMessageDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_message_dialog.</code><code class="descname">IMessageDialog</code><a class="headerlink" href="#pyface.i_message_dialog.IMessageDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>The interface for a dialog that displays a message.</p>
+<dl class="attribute">
+<dt id="pyface.i_message_dialog.IMessageDialog.message">
+<code class="descname">message</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_message_dialog.IMessageDialog.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message to display in the dialog.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_message_dialog.IMessageDialog.informative">
+<code class="descname">informative</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_message_dialog.IMessageDialog.informative" title="Permalink to this definition">¶</a></dt>
+<dd><p>More information about the message to be displayed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_message_dialog.IMessageDialog.detail">
+<code class="descname">detail</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_message_dialog.IMessageDialog.detail" title="Permalink to this definition">¶</a></dt>
+<dd><p>More detail about the message to be displayed in the dialog.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_message_dialog.IMessageDialog.severity">
+<code class="descname">severity</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_message_dialog.IMessageDialog.severity" title="Permalink to this definition">¶</a></dt>
+<dd><p>The severity of the message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_message_dialog.MMessageDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_message_dialog.</code><code class="descname">MMessageDialog</code><a class="headerlink" href="#pyface.i_message_dialog.MMessageDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IMessageDialog interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_progress_dialog">
+<span id="pyface-i-progress-dialog-module"></span><h2><a class="reference internal" href="#module-pyface.i_progress_dialog" title="pyface.i_progress_dialog"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_progress_dialog</span></code></a> Module<a class="headerlink" href="#module-pyface.i_progress_dialog" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a dialog that allows the user to open/save files etc.</p>
+<dl class="class">
+<dt id="pyface.i_progress_dialog.IProgressDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_progress_dialog.</code><code class="descname">IProgressDialog</code><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
+<p>A simple progress dialog window which allows itself to be updated</p>
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.message">
+<code class="descname">message</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message to display in the dialog</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.min">
+<code class="descname">min</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>The minimum progress value</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.max">
+<code class="descname">max</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum progress value</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.margin">
+<code class="descname">margin</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>The margin around the progress bar</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.can_cancel">
+<code class="descname">can_cancel</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.can_cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the operation can be cancelled</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.show_time">
+<code class="descname">show_time</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.show_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to show progress times</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.show_percent">
+<code class="descname">show_percent</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.show_percent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to show progress percent</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.IProgressDialog.cancel_button_label">
+<code class="descname">cancel_button_label</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.cancel_button_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Label for the &#8216;cancel&#8217; button</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.IProgressDialog.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the progress bar to the desired value</p>
+<p>If the value is &gt;= the maximum and the progress bar is not contained
+in another panel the parent window will be closed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; The progress value to set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.IProgressDialog.change_message">
+<code class="descname">change_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.IProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the displayed message in the progress dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em><em> or </em><em>unicode</em>) &#8211; The new message to display.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_progress_dialog.MProgressDialog">
+<em class="property">class </em><code class="descclassname">pyface.i_progress_dialog.</code><code class="descname">MProgressDialog</code><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IProgressDialog interface.</p>
+<p>Implements: update()</p>
+<dl class="attribute">
+<dt id="pyface.i_progress_dialog.MProgressDialog.progress_bar">
+<code class="descname">progress_bar</code><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.progress_bar" title="Permalink to this definition">¶</a></dt>
+<dd><p>The progress bar toolkit object</p>
+<p>alias of <code class="xref py py-class docutils literal"><span class="pre">Any</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.MProgressDialog.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the dialog</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.MProgressDialog.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the progress bar to the desired value</p>
+<p>If the value is &gt;= the maximum and the progress bar is not contained
+in another panel the parent window will be closed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; The progress value to set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_progress_dialog.MProgressDialog.change_message">
+<code class="descname">change_message</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_progress_dialog.MProgressDialog.change_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the displayed message in the progress dialog</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>str</em><em> or </em><em>unicode</em>) &#8211; The new message to display.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_python_editor">
+<span id="pyface-i-python-editor-module"></span><h2><a class="reference internal" href="#module-pyface.i_python_editor" title="pyface.i_python_editor"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_python_editor</span></code></a> Module<a class="headerlink" href="#module-pyface.i_python_editor" title="Permalink to this headline">¶</a></h2>
+<p>A widget for editing Python code.</p>
+<dl class="class">
+<dt id="pyface.i_python_editor.IPythonEditor">
+<em class="property">class </em><code class="descclassname">pyface.i_python_editor.</code><code class="descname">IPythonEditor</code><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>A widget for editing Python code.</p>
+<dl class="attribute">
+<dt id="pyface.i_python_editor.IPythonEditor.dirty">
+<code class="descname">dirty</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.dirty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Has the file in the editor been modified?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_python_editor.IPythonEditor.path">
+<code class="descname">path</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pathname of the file being edited.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_python_editor.IPythonEditor.show_line_numbers">
+<code class="descname">show_line_numbers</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.show_line_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should line numbers be shown in the margin?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_python_editor.IPythonEditor.changed">
+<code class="descname">changed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The contents of the editor has changed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_python_editor.IPythonEditor.key_pressed">
+<code class="descname">key_pressed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A key has been pressed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_editor.IPythonEditor.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the contents of the editor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em> or </em><em>None</em>) &#8211; The path to the file to load.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_editor.IPythonEditor.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the contents of the editor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<em>str</em><em> or </em><em>None</em>) &#8211; The path to the file to save.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_editor.IPythonEditor.set_style">
+<code class="descname">set_style</code><span class="sig-paren">(</span><em>n</em>, <em>fore</em>, <em>back</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.set_style" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the foreground and background colors for a particular style and
+set the font and size to default values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_editor.IPythonEditor.select_line">
+<code class="descname">select_line</code><span class="sig-paren">(</span><em>lineno</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_editor.IPythonEditor.select_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects the specified line.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lineno</strong> (<em>int</em>) &#8211; The line number to select.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_python_editor.MPythonEditor">
+<em class="property">class </em><code class="descclassname">pyface.i_python_editor.</code><code class="descname">MPythonEditor</code><a class="headerlink" href="#pyface.i_python_editor.MPythonEditor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IPythonEditor interface.</p>
+<p>Implements: _changed_path()</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_python_shell">
+<span id="pyface-i-python-shell-module"></span><h2><a class="reference internal" href="#module-pyface.i_python_shell" title="pyface.i_python_shell"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_python_shell</span></code></a> Module<a class="headerlink" href="#module-pyface.i_python_shell" title="Permalink to this headline">¶</a></h2>
+<p>The interface for an interactive Python shell.</p>
+<dl class="class">
+<dt id="pyface.i_python_shell.IPythonShell">
+<em class="property">class </em><code class="descclassname">pyface.i_python_shell.</code><code class="descname">IPythonShell</code><a class="headerlink" href="#pyface.i_python_shell.IPythonShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_widget.IWidget</span></code></a></p>
+<p>The interface for an interactive Python shell.</p>
+<dl class="attribute">
+<dt id="pyface.i_python_shell.IPythonShell.command_executed">
+<code class="descname">command_executed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.command_executed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A command has been executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_python_shell.IPythonShell.key_pressed">
+<code class="descname">key_pressed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A key has been pressed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.interpreter">
+<code class="descname">interpreter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.interpreter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the shell&#8217;s interpreter</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>interpreter</strong> &#8211; Returns the InteractiveInterpreter instance.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">InteractiveInterpreter instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.bind">
+<code class="descname">bind</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binds a name to a value in the interpreter&#8217;s namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The python idetifier to bind the value to.</li>
+<li><strong>value</strong> (<em>any</em>) &#8211; The python object to be bound into the interpreter&#8217;s namespace.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.execute_command">
+<code class="descname">execute_command</code><span class="sig-paren">(</span><em>command</em>, <em>hidden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a command in the interpreter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>command</strong> (<em>str</em>) &#8211; A Python command to execute.</li>
+<li><strong>hidden</strong> (<em>bool</em>) &#8211; If &#8216;hidden&#8217; is True then nothing is shown in the shell - not even
+a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.execute_file">
+<code class="descname">execute_file</code><span class="sig-paren">(</span><em>path</em>, <em>hidden=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.execute_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a file in the interpeter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>str</em>) &#8211; The path to the Python file to execute.</li>
+<li><strong>hidden</strong> (<em>bool</em>) &#8211; If &#8216;hidden&#8217; is True then nothing is shown in the shell - not even
+a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.get_history">
+<code class="descname">get_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.get_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current command history and index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>history</strong> (<em>list of str</em>) &#8211; The list of commands in the new history.</li>
+<li><strong>history_index</strong> (<em>int from 0 to len(history)</em>) &#8211; The current item in the command history navigation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_python_shell.IPythonShell.set_history">
+<code class="descname">set_history</code><span class="sig-paren">(</span><em>history</em>, <em>history_index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.IPythonShell.set_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace the current command history and index with new ones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>history</strong> (<em>list of str</em>) &#8211; The list of commands in the new history.</li>
+<li><strong>history_index</strong> (<em>int</em>) &#8211; The current item in the command history navigation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_python_shell.MPythonShell">
+<em class="property">class </em><code class="descclassname">pyface.i_python_shell.</code><code class="descname">MPythonShell</code><a class="headerlink" href="#pyface.i_python_shell.MPythonShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IPythonShell interface.</p>
+<p>Implements: bind(), _on_command_executed()</p>
+<dl class="method">
+<dt id="pyface.i_python_shell.MPythonShell.bind">
+<code class="descname">bind</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_python_shell.MPythonShell.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binds a name to a value in the interpreter&#8217;s namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; The python idetifier to bind the value to.</li>
+<li><strong>value</strong> (<em>any</em>) &#8211; The python object to be bound into the interpreter&#8217;s namespace.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_splash_screen">
+<span id="pyface-i-splash-screen-module"></span><h2><a class="reference internal" href="#module-pyface.i_splash_screen" title="pyface.i_splash_screen"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_splash_screen</span></code></a> Module<a class="headerlink" href="#module-pyface.i_splash_screen" title="Permalink to this headline">¶</a></h2>
+<p>The interface for a splash screen.</p>
+<dl class="class">
+<dt id="pyface.i_splash_screen.ISplashScreen">
+<em class="property">class </em><code class="descclassname">pyface.i_splash_screen.</code><code class="descname">ISplashScreen</code><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_window.IWindow</span></code></a></p>
+<p>The interface for a splash screen.</p>
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.image">
+<code class="descname">image</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>The image to display on the splash screen.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.log_level">
+<code class="descname">log_level</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>If log messages are to be displayed then this is the logging level. See
+the Python documentation for the &#8216;logging&#8217; module for more details.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.show_log_messages">
+<code class="descname">show_log_messages</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.show_log_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should the splash screen display log messages in the splash text?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.text">
+<code class="descname">text</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional text to display on top of the splash image.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.text_color">
+<code class="descname">text_color</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.text_font">
+<code class="descname">text_font</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.text_font" title="Permalink to this definition">¶</a></dt>
+<dd><p>The text font.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_splash_screen.ISplashScreen.text_location">
+<code class="descname">text_location</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_splash_screen.ISplashScreen.text_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>The x, y location where the text will be drawn.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_splash_screen.MSplashScreen">
+<em class="property">class </em><code class="descclassname">pyface.i_splash_screen.</code><code class="descname">MSplashScreen</code><a class="headerlink" href="#pyface.i_splash_screen.MSplashScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the ISplashScreen interface.</p>
+<p>Reimplements: open(), close()</p>
+<dl class="method">
+<dt id="pyface.i_splash_screen.MSplashScreen.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_splash_screen.MSplashScreen.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the toolkit-specific control for the widget.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_splash_screen.MSplashScreen.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_splash_screen.MSplashScreen.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the window.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_split_widget">
+<span id="pyface-i-split-widget-module"></span><h2><a class="reference internal" href="#module-pyface.i_split_widget" title="pyface.i_split_widget"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_split_widget</span></code></a> Module<a class="headerlink" href="#module-pyface.i_split_widget" title="Permalink to this headline">¶</a></h2>
+<p>Mix-in class for split widgets.</p>
+<dl class="class">
+<dt id="pyface.i_split_widget.ISplitWidget">
+<em class="property">class </em><code class="descclassname">pyface.i_split_widget.</code><code class="descname">ISplitWidget</code><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>Mix-in class for split widgets.</p>
+<p>A split widget is one that is split in two either horizontally or
+vertically.</p>
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.direction">
+<code class="descname">direction</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>The direction in which the widget is split.
+Splitting vertically means there will be a left hand panel and a right
+hand panel, splitting horizontally means there will be a top panel and
+a bottom panel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.ratio">
+<code class="descname">ratio</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ratio of the size of the left/top pane to the right/bottom pane.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.lhs">
+<code class="descname">lhs</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.lhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional callable that provides the left hand/top panel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_split_widget.ISplitWidget.rhs">
+<code class="descname">rhs</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_split_widget.ISplitWidget.rhs" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional callable that provides the right hand/bottom panel.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_split_widget.MSplitWidget">
+<em class="property">class </em><code class="descclassname">pyface.i_split_widget.</code><code class="descname">MSplitWidget</code><a class="headerlink" href="#pyface.i_split_widget.MSplitWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the ISplitWidget interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_system_metrics">
+<span id="pyface-i-system-metrics-module"></span><h2><a class="reference internal" href="#module-pyface.i_system_metrics" title="pyface.i_system_metrics"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_system_metrics</span></code></a> Module<a class="headerlink" href="#module-pyface.i_system_metrics" title="Permalink to this headline">¶</a></h2>
+<p>The interface to system metrics (screen width and height etc).</p>
+<dl class="class">
+<dt id="pyface.i_system_metrics.ISystemMetrics">
+<em class="property">class </em><code class="descclassname">pyface.i_system_metrics.</code><code class="descname">ISystemMetrics</code><a class="headerlink" href="#pyface.i_system_metrics.ISystemMetrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The interface to system metrics (screen width and height etc).</p>
+<dl class="attribute">
+<dt id="pyface.i_system_metrics.ISystemMetrics.screen_width">
+<code class="descname">screen_width</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_system_metrics.ISystemMetrics.screen_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the screen in pixels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_system_metrics.ISystemMetrics.screen_height">
+<code class="descname">screen_height</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_system_metrics.ISystemMetrics.screen_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the screen in pixels.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_system_metrics.ISystemMetrics.dialog_background_color">
+<code class="descname">dialog_background_color</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_system_metrics.ISystemMetrics.dialog_background_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color of a standard dialog window as a tuple of RGB values
+between 0.0 and 1.0.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_system_metrics.MSystemMetrics">
+<em class="property">class </em><code class="descclassname">pyface.i_system_metrics.</code><code class="descname">MSystemMetrics</code><a class="headerlink" href="#pyface.i_system_metrics.MSystemMetrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the ISystemMetrics interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_widget">
+<span id="pyface-i-widget-module"></span><h2><a class="reference internal" href="#module-pyface.i_widget" title="pyface.i_widget"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_widget</span></code></a> Module<a class="headerlink" href="#module-pyface.i_widget" title="Permalink to this headline">¶</a></h2>
+<p>The base interface for all pyface widgets.</p>
+<dl class="class">
+<dt id="pyface.i_widget.IWidget">
+<em class="property">class </em><code class="descclassname">pyface.i_widget.</code><code class="descname">IWidget</code><a class="headerlink" href="#pyface.i_widget.IWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">traits.has_traits.Interface</span></code></p>
+<p>The base interface for all pyface widgets.</p>
+<p>Pyface widgets delegate to a toolkit specific control.</p>
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.control">
+<code class="descname">control</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.control" title="Permalink to this definition">¶</a></dt>
+<dd><p>The toolkit specific control that represents the widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.parent">
+<code class="descname">parent</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The control&#8217;s optional parent control.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.visible">
+<code class="descname">visible</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.visible" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the control is visible</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_widget.IWidget.enabled">
+<code class="descname">enabled</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_widget.IWidget.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether or not the control is enabled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.show">
+<code class="descname">show</code><span class="sig-paren">(</span><em>visible</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show or hide the widget.</p>
+<dl class="docutils">
+<dt>visible <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Visible should be <code class="docutils literal"><span class="pre">True</span></code> if the widget should be shown.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><em>enabled</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable or disable the widget.</p>
+<dl class="docutils">
+<dt>enabled <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>The enabled state to set the widget to.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_widget.IWidget.destroy">
+<code class="descname">destroy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_widget.IWidget.destroy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Destroy the control if it exists.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_widget.MWidget">
+<em class="property">class </em><code class="descclassname">pyface.i_widget.</code><code class="descname">MWidget</code><a class="headerlink" href="#pyface.i_widget.MWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWidget interface.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyface.i_window">
+<span id="pyface-i-window-module"></span><h2><a class="reference internal" href="#module-pyface.i_window" title="pyface.i_window"><code class="xref py py-mod docutils literal"><span class="pre">pyface.i_window</span></code></a> Module<a class="headerlink" href="#module-pyface.i_window" title="Permalink to this headline">¶</a></h2>
+<p>The abstract interface for all pyface top-level windows.</p>
+<dl class="class">
+<dt id="pyface.i_window.IWindow">
+<em class="property">class </em><code class="descclassname">pyface.i_window.</code><code class="descname">IWindow</code><a class="headerlink" href="#pyface.i_window.IWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyface.i_widget.IWidget" title="pyface.i_widget.IWidget"><code class="xref py py-class docutils literal"><span class="pre">pyface.i_widget.IWidget</span></code></a></p>
+<p>The abstract interface for all pyface top-level windows.</p>
+<p>A pyface top-level window has no visual representation until it is opened
+(ie. its &#8216;control&#8217; trait will be None until it is opened).</p>
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.position">
+<code class="descname">position</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The position of the window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.size">
+<code class="descname">size</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.title">
+<code class="descname">title</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window title.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.activated">
+<code class="descname">activated</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been activated.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.closed">
+<code class="descname">closed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been closed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.closing">
+<code class="descname">closing</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.closing" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to be closed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.deactivated">
+<code class="descname">deactivated</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.deactivated" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been deactivated.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.key_pressed">
+<code class="descname">key_pressed</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.key_pressed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A key was pressed while the window had focus.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.opened">
+<code class="descname">opened</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window has been opened.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyface.i_window.IWindow.opening">
+<code class="descname">opening</code><em class="property"> = None</em><a class="headerlink" href="#pyface.i_window.IWindow.opening" title="Permalink to this definition">¶</a></dt>
+<dd><p>The window is about to open.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.activate">
+<code class="descname">activate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activates the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.confirm">
+<code class="descname">confirm</code><span class="sig-paren">(</span><em>message</em>, <em>title=None</em>, <em>cancel=False</em>, <em>default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>cancel</strong> (<em>bool</em>) &#8211; <code class="docutils literal"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</li>
+<li><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) &#8211; Which button should be the default button.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.information">
+<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.IWindow.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.IWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyface.i_window.MWindow">
+<em class="property">class </em><code class="descclassname">pyface.i_window.</code><code class="descname">MWindow</code><a class="headerlink" href="#pyface.i_window.MWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The mixin class that contains common code for toolkit specific
+implementations of the IWindow interface.</p>
+<p>Implements: close(), confirm(), open()
+Reimplements: _create()</p>
+<dl class="method">
+<dt id="pyface.i_window.MWindow.open">
+<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.confirm">
+<code class="descname">confirm</code><span class="sig-paren">(</span><em>message</em>, <em>title=None</em>, <em>cancel=False</em>, <em>default=40</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.confirm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a confirmation dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>cancel</strong> (<em>bool</em>) &#8211; <code class="docutils literal"><span class="pre">True</span></code> if the dialog should contain a Cancel button.</li>
+<li><strong>default</strong> (<em>NO</em><em>, </em><em>YES</em><em> or </em><em>CANCEL</em>) &#8211; Which button should be the default button.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.information">
+<code class="descname">information</code><span class="sig-paren">(</span><em>message</em>, <em>title='Information'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an information message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.warning">
+<code class="descname">warning</code><span class="sig-paren">(</span><em>message</em>, <em>title='Warning'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.warning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show a warning message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyface.i_window.MWindow.error">
+<code class="descname">error</code><span class="sig-paren">(</span><em>message</em>, <em>title='Error'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_window.MWindow.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to show an error message dialog.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; The text of the message to display.</li>
+<li><strong>title</strong> (<em>str</em>) &#8211; The text of the dialog title.</li>
+<li><strong>detail</strong> (<em>str</em>) &#8211; Further details about the message.</li>
+<li><strong>informative</strong> (<em>str</em>) &#8211; Explanatory text to display along with the message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Abstract Interfaces and Mixins</a><ul>
+<li><a class="reference internal" href="#module-pyface.i_about_dialog"><code class="docutils literal"><span class="pre">pyface.i_about_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_clipboard"><code class="docutils literal"><span class="pre">pyface.i_clipboard</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_confirmation_dialog"><code class="docutils literal"><span class="pre">pyface.i_confirmation_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_dialog"><code class="docutils literal"><span class="pre">pyface.i_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_directory_dialog"><code class="docutils literal"><span class="pre">pyface.i_directory_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_drop_handler"><code class="docutils literal"><span class="pre">pyface.i_drop_handler</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_file_dialog"><code class="docutils literal"><span class="pre">pyface.i_file_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_gui"><code class="docutils literal"><span class="pre">pyface.i_gui</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_heading_text"><code class="docutils literal"><span class="pre">pyface.i_heading_text</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_image_cache"><code class="docutils literal"><span class="pre">pyface.i_image_cache</span></code> Module</a></li>
+<li><a class="reference internal" href="#pyface-i-image-resource-module"><code class="docutils literal"><span class="pre">pyface.i_image_resource</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_message_dialog"><code class="docutils literal"><span class="pre">pyface.i_message_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_progress_dialog"><code class="docutils literal"><span class="pre">pyface.i_progress_dialog</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_python_editor"><code class="docutils literal"><span class="pre">pyface.i_python_editor</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_python_shell"><code class="docutils literal"><span class="pre">pyface.i_python_shell</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_splash_screen"><code class="docutils literal"><span class="pre">pyface.i_splash_screen</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_split_widget"><code class="docutils literal"><span class="pre">pyface.i_split_widget</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_system_metrics"><code class="docutils literal"><span class="pre">pyface.i_system_metrics</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_widget"><code class="docutils literal"><span class="pre">pyface.i_widget</span></code> Module</a></li>
+<li><a class="reference internal" href="#module-pyface.i_window"><code class="docutils literal"><span class="pre">pyface.i_window</span></code> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyface.html"
+                        title="previous chapter">pyface Package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyface.action.html"
+                        title="next chapter">action Package</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../_sources/api/modules.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2016, Enthought
+      </li>
+      <li>
+      Last updated on Apr 12, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.5.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
