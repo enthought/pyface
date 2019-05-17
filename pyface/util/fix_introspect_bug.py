@@ -78,7 +78,11 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     # e.g. ITK http://www.itk.org/
     attributes = [attribute for attribute in attributes \
                   if isinstance(attribute, six.string_types)]
-    attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
+    if six.PY3:
+        attributes.sort(key=lambda x: x.upper())
+    else:
+        attributes.sort(lambda x, y: cmp(x.upper(), y.upper()))
+        
     if not includeSingle:
         attributes = filter(lambda item: item[0]!='_' \
                             or item[1]=='_', attributes)
