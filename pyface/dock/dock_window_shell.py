@@ -27,23 +27,14 @@ import wx
 
 # Fixme: Hack to force 'image_slice' to be added via Category to Theme class:
 import traitsui.wx
-
-from traits.api \
-    import HasPrivateTraits, Instance
-
-from traitsui.api \
-    import View, Group
+from traits.api import HasPrivateTraits, Instance
+from traitsui.api import View, Group
 
 from pyface.api import SystemMetrics
-
-from pyface.image_resource \
-    import ImageResource
-
-from dock_window \
-    import DockWindow
-
-from dock_sizer \
-    import DockSizer, DockSection, DockRegion, DockControl, DOCK_RIGHT
+from pyface.image_resource import ImageResource
+from .dock_window import DockWindow
+from .dock_sizer import DockSizer, DockSection, DockRegion, DockControl, \
+    DOCK_RIGHT
 
 #-------------------------------------------------------------------------------
 #  Constants:

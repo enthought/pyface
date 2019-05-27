@@ -62,15 +62,10 @@ from pyface.wx.drag_and_drop \
 from pyface.message_dialog \
     import error as warning
 
-from dock_sizer \
-    import DockSizer, DockControl, DockRegion, DockStyle, DockSplitter, \
-           no_dock_info, clear_window, features
-
-from idockable \
-    import IDockable
-
-from idock_ui_provider \
-    import IDockUIProvider
+from .dock_sizer import DockSizer, DockControl, DockRegion, DockStyle, \
+    DockSplitter, no_dock_info, clear_window, features
+from .idockable import IDockable
+from .idock_ui_provider import IDockUIProvider
 
 is_mac = (sys.platform == 'darwin')
 

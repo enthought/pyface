@@ -29,33 +29,19 @@
 from __future__ import print_function
 import wx, sys
 
-from traits.api \
-    import HasPrivateTraits, Instance, Str, Int, List, Enum, Tuple, Any, \
-           Range, Property, Callable, Constant, Event, Undefined, Bool, \
-           cached_property
-
-from traitsui.dock_window_theme \
-    import dock_window_theme
-
-from traitsui.wx.helper \
-    import BufferDC
+from traits.api import HasPrivateTraits, Instance, Str, Int, List, Enum, \
+    Tuple, Any, Range, Property, Callable, Constant, Event, Undefined, Bool, \
+    cached_property
+from traitsui.dock_window_theme import dock_window_theme
+from traitsui.wx.helper import BufferDC
 
 from pyface.api import SystemMetrics
+from pyface.image_resource import ImageResource
+from pyface.wx.drag_and_drop import PythonDropSource
+from pyface.timer.api import do_later, do_after
+from .idockable import IDockable
+from .ifeature_tool import IFeatureTool
 
-from pyface.image_resource \
-    import ImageResource
-
-from pyface.wx.drag_and_drop \
-    import PythonDropSource
-
-from pyface.timer.api \
-    import do_later, do_after
-
-from idockable \
-    import IDockable
-
-from ifeature_tool \
-    import IFeatureTool
 
 # Define version dependent values:
 wx_26  = (wx.__version__[:3] == '2.6')
