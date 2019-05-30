@@ -100,7 +100,6 @@ dependencies = {
     "mock",
     "nose",
     "coverage",
-    "faulthandler",
 }
 
 extra_dependencies = {
