@@ -12,6 +12,7 @@ elif qt_api == 'pyqt5':
             QWebEngineHistoryItem as QWebHistoryItem,
             QWebEnginePage as QWebPage,
             QWebEngineView as QWebView,
+            QWebEngineSettings as QWebSettings,
         )
     except ImportError:
         from PyQt5.QtWebKit import *
@@ -22,7 +23,7 @@ elif qt_api == 'pyside2':
     # WebKit is currently in flux in PySide2
     try:
         from PySide2.QtWebEngineWidgets import (
-            QWebEngineHistory as QWebHistory,
+            #QWebEngineHistory as QWebHistory,
             QWebEngineHistoryItem as QWebHistoryItem,
             QWebEnginePage as QWebPage,
             QWebEngineView as QWebView,
