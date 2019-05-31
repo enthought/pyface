@@ -54,7 +54,7 @@ def do_after(interval, callable, *args, **kwargs):
     interval : float
         The time interval in milliseconds to wait before calling.
     callable : callable
-        The callable to call in 50ms time.
+        The callable to call.
     *args, **kwargs :
         Arguments to be passed through to the callable.
     """
