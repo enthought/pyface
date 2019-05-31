@@ -33,6 +33,7 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
     def test_basic(self):
         handler = ConditionHandler()
+        start_time = perf_counter()
         timer = DoLaterTimer(100, handler.callback, (), {})
 
         try:
@@ -46,7 +47,7 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = timer._start_time + 0.09
+        expected_time = start_time + 0.1
 
         # give feedback in case of failure
         if expected_time > handler.times[0]:
@@ -93,6 +94,7 @@ class TestDoAfter(TestCase, GuiTestAssistant):
 
     def test_basic(self):
         handler = ConditionHandler()
+        start_time = perf_counter()
         timer = do_after(100, handler.callback)
 
         try:
@@ -106,7 +108,7 @@ class TestDoAfter(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = timer._start_time + 0.09
+        expected_time = start_time + 0.1
 
         # give feedback in case of failure
         if expected_time > handler.times[0]:
