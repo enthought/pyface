@@ -24,9 +24,8 @@ class DoLaterTimer(Timer):
     repeat = 1
 
     def __init__(self, interval, callable, args, kw_args):
-        """ Adapt the old DoLaterTimer initializer to the Timer initializer.
-        """
-        super(DoLaterTimer, self).__init__(interval, callable, *args, **kwargs)
+        # Adapt the old DoLaterTimer initializer to the Timer initializer.
+        super(DoLaterTimer, self).__init__(interval, callable, *args, **kw_args)
 
 
 def do_later(callable, *args, **kwargs):
