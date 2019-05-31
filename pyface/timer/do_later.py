@@ -23,6 +23,11 @@ class DoLaterTimer(Timer):
     #: The perform the callback once.
     repeat = 1
 
+    def __init__(self, interval, callable, args, kw_args):
+        """ Adapt the old DoLaterTimer initializer to the Timer initializer.
+        """
+        super(DoLaterTimer, self).__init__(interval, callable, *args, **kwargs)
+
 
 def do_later(callable, *args, **kwargs):
     """ Does something 50 milliseconds from now.
