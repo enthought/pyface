@@ -46,11 +46,11 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = timer._start_time + 0.10
+        expected_time = timer._start_time + 0.09
 
         # give feedback in case of failure
         if expected_time > handler.times[0]:
-            print(handler.times)
+            print(expected_time, handler.times)
 
         self.assertTrue(expected_time <= handler.times[0])
 
@@ -106,10 +106,10 @@ class TestDoAfter(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = timer._start_time + 0.10
+        expected_time = timer._start_time + 0.09
 
         # give feedback in case of failure
         if expected_time > handler.times[0]:
-            print(handler.times)
+            print(expected_time, handler.times)
 
         self.assertTrue(expected_time <= handler.times[0])
