@@ -34,7 +34,8 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
     def test_basic(self):
         handler = ConditionHandler()
         start_time = perf_counter()
-        timer = DoLaterTimer(100, handler.callback, (), {})
+        length = 500
+        timer = DoLaterTimer(length, handler.callback, (), {})
 
         try:
             self.assertTrue(timer.active)
@@ -47,13 +48,15 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = start_time + 0.095
+        # should take no less than 85% of time requested
+        expected_length = (length / 1000.0) * 0.85
+        expected_time = start_time + expected_length
 
-        # should take 0.1 seconds, but give a little slack
         self.assertLessEqual(
             expected_time,
             handler.times[0],
-            "Expected call after 0.095 seconds, took {} seconds)".format(
+            "Expected call after {} seconds, took {} seconds)".format(
+                expected_length,
                 handler.times[0] - start_time
             )
         )
@@ -98,7 +101,8 @@ class TestDoAfter(TestCase, GuiTestAssistant):
     def test_basic(self):
         handler = ConditionHandler()
         start_time = perf_counter()
-        timer = do_after(100, handler.callback)
+        length = 500
+        timer = do_after(length, handler.callback)
 
         try:
             self.assertTrue(timer.active)
@@ -111,13 +115,15 @@ class TestDoAfter(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        # should take 0.1 seconds, but give a little slack
-        expected_time = start_time + 0.095
+        # should take no less than 85% of time requested
+        expected_length = (length / 1000.0) * 0.85
+        expected_time = start_time + expected_length
 
         self.assertLessEqual(
             expected_time,
             handler.times[0],
-            "Expected call after 0.095 seconds, took {} seconds)".format(
+            "Expected call after {} seconds, took {} seconds)".format(
+                expected_length,
                 handler.times[0] - start_time
             )
         )
