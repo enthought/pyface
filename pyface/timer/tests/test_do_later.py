@@ -47,13 +47,16 @@ class TestDoLaterTimer(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = start_time + 0.1
+        expected_time = start_time + 0.095
 
-        # give feedback in case of failure
-        if expected_time > handler.times[0]:
-            print(expected_time, handler.times)
-
-        self.assertTrue(expected_time <= handler.times[0])
+        # should take 0.1 seconds, but give a little slack
+        self.assertLessEqual(
+            expected_time,
+            handler.times[0],
+            "Expected call after 0.095 seconds, took {} seconds)".format(
+                handler.times[0] - start_time
+            )
+        )
 
 
 @skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
@@ -108,10 +111,13 @@ class TestDoAfter(TestCase, GuiTestAssistant):
 
         self.assertEqual(handler.count, 1)
 
-        expected_time = start_time + 0.1
+        # should take 0.1 seconds, but give a little slack
+        expected_time = start_time + 0.095
 
-        # give feedback in case of failure
-        if expected_time > handler.times[0]:
-            print(expected_time, handler.times)
-
-        self.assertTrue(expected_time <= handler.times[0])
+        self.assertLessEqual(
+            expected_time,
+            handler.times[0],
+            "Expected call after 0.095 seconds, took {} seconds)".format(
+                handler.times[0] - start_time
+            )
+        )
