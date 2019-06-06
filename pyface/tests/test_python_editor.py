@@ -2,8 +2,7 @@ from __future__ import absolute_import
 
 import os
 import sys
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..python_editor import PythonEditor
 from ..toolkit import toolkit_object
