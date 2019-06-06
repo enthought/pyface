@@ -11,7 +11,7 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
 
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from pyface.fields.api import ComboField, SpinField, TextField
 from pyface.gui import GUI

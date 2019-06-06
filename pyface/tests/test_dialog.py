@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
 import platform
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..dialog import Dialog
 from ..constant import OK, CANCEL

@@ -11,8 +11,10 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
 
+import unittest
+
 from traits.api import Enum, HasTraits
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import UnittestTools
 
 from pyface.gui import GUI
 from pyface.toolkit import toolkit

@@ -16,8 +16,9 @@
 
 from __future__ import absolute_import
 
+import unittest
+
 from traits.etsconfig.api import ETSConfig
-from traits.testing.unittest_tools import unittest
 
 from ..single_choice_dialog import SingleChoiceDialog
 from ..constant import OK, CANCEL
