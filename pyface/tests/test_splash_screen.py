@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..gui import GUI
 from ..image_resource import ImageResource

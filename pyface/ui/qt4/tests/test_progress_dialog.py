@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..progress_dialog import ProgressDialog
 from ..util.gui_test_assistant import GuiTestAssistant

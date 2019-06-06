@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
 import time
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..action_event import ActionEvent
 
