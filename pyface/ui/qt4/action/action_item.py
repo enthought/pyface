@@ -195,7 +195,7 @@ class _MenuItem(HasTraits):
             argspec = getargspec(action.perform)
 
             # If the only argument is 'self' then don't pass the event!
-            if len(argspec.argspecargs) == 1:
+            if len(argspec.args) == 1:
                 action.perform()
 
             else:
