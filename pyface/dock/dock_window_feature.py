@@ -31,29 +31,16 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from weakref \
-    import ref
+from weakref import ref
 
-from traits.api \
-    import HasPrivateTraits, Instance, Int, Str, Bool, Property
+from traits.api import HasPrivateTraits, Instance, Int, Str, Bool, Property
+from traitsui.menu import Menu, Action
 
-from traitsui.menu \
-    import Menu, Action
-
-from pyface.timer.api \
-    import do_later
-
-from pyface.image_resource \
-    import ImageResource
-
-from dock_window \
-    import DockWindow
-
-from dock_sizer \
-    import DockControl, add_feature
-
-from ifeature_tool \
-    import IFeatureTool
+from pyface.timer.api import do_later
+from pyface.image_resource import ImageResource
+from .dock_window import DockWindow
+from .dock_sizer import DockControl, add_feature
+from .ifeature_tool import IFeatureTool
 
 #-------------------------------------------------------------------------------
 #  'DockWindowFeature' class:
