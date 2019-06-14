@@ -3,8 +3,7 @@ from __future__ import absolute_import
 import os
 import platform
 import pkg_resources
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 import pyface
 import pyface.tests

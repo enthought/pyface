@@ -1,6 +1,5 @@
 import pkg_resources
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 import pyface.toolkit
 

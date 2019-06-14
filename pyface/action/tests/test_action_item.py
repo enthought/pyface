@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
-from traits.testing.unittest_tools import UnittestTools, unittest
+import unittest
+
+from traits.testing.unittest_tools import UnittestTools
 
 from pyface.image_cache import ImageCache
 from pyface.toolkit import toolkit_object

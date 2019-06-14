@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
 import os
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..directory_dialog import DirectoryDialog
 from ..gui import GUI

@@ -11,9 +11,9 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
 
-from six import text_type
+import unittest
 
-from traits.testing.unittest_tools import unittest
+from six import text_type
 
 from pyface.image_resource import ImageResource
 from ..combo_field import ComboField
