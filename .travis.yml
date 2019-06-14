@@ -29,6 +29,7 @@ matrix:
 branches:
   only:
     - master
+    - maint/6.1
 
 cache:
   directories:
