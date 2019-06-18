@@ -19,6 +19,10 @@ import logging
 
 from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType
 from traits.trait_base import get_resource_path
+try:
+    from traits.trait_handlers import CALLABLE_AND_ARGS_DEFAULT_VALUE
+except ImportError:
+    CALLABLE_AND_ARGS_DEFAULT_VALUE = 7
 import six
 
 
@@ -231,8 +235,8 @@ class HasMargin(TraitType):
             if not isinstance(dv, self.klass):
                 return super(HasMargin, self).get_default_value()
 
-            self.default_value_type = dvt = 7
-            dv = (self.klass, (), dv.get())
+            self.default_value_type = dvt = CALLABLE_AND_ARGS_DEFAULT_VALUE
+            dv = (self.klass, (), dv.trait_get())
 
         return (dvt, dv)
 
@@ -246,7 +250,7 @@ class HasBorder(HasMargin):
     klass = Border
 
     # Define the default value for the trait:
-    default_value = Border()
+    default_value = Border(0)
 
     # A description of the type of value this trait accepts:
     info_text = ('a Border instance, or an integer in the range from 0 to 32 '
