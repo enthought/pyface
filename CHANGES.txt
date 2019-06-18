@@ -2,6 +2,29 @@
 Pyface Changelog
 ================
 
+Release 6.1.1
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 6.1.0 release.
+
+Thanks to:
+
+David Baddeley, Christian Brodbeck, Mark Dickinson, Rahul Poruri, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Remove use of deprecated Traits get() method (#403)
+* Fix pyqt5 webkit imports (#396)
+* Remove use of cmp in fix_introspection_bug (#395)
+* Update CI infrastructure (#394, #399)
+* Update unittest imports (#391)
+* Fix bug in argspec usage (#393)
+* Fix regression in DoLaterTimer API (#389)
+
+
 Release 6.1.0
 =============
 
