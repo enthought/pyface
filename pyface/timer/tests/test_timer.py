@@ -52,6 +52,31 @@ class TestEventTimer(TestCase, GuiTestAssistant):
             timer.stop()
         self.assertFalse(timer.active)
 
+    def test_timer_method(self):
+        timer = EventTimer.timer()
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+
+    def test_single_shot_method(self):
+        timer = EventTimer.single_shot()
+        handler = ConditionHandler()
+        timer.on_trait_change(handler.callback, 'timeout')
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: not timer.active
+            )
+            self.assertFalse(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+        self.assertEqual(handler.count, 1)
+
     def test_set_active(self):
         timer = EventTimer()
 
@@ -177,6 +202,33 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
         finally:
             timer.stop()
         self.assertFalse(timer.active)
+
+    def test_timer_method(self):
+        handler = ConditionHandler()
+
+        timer = CallbackTimer.timer(callback=handler.callback)
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+
+    def test_single_shot_method(self):
+        handler = ConditionHandler()
+
+        timer = CallbackTimer.single_shot(callback=handler.callback)
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: not timer.active
+            )
+            self.assertFalse(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+        self.assertEqual(handler.count, 1)
 
     def test_set_active(self):
         handler = ConditionHandler()
