@@ -308,7 +308,7 @@ class TestTimer(TestCase, GuiTestAssistant):
     def test_basic(self):
         handler = ConditionHandler()
 
-        timer = Timer(200, handler.callback)
+        timer = Timer(250, handler.callback)
         try:
             self.assertTrue(timer.IsRunning())
             self.event_loop_helper.event_loop()
@@ -321,7 +321,7 @@ class TestTimer(TestCase, GuiTestAssistant):
     def test_restart(self):
         handler = ConditionHandler()
 
-        timer = Timer(200, handler.callback)
+        timer = Timer(250, handler.callback)
         timer.Stop()
         self.assertFalse(timer.IsRunning())
 
@@ -339,7 +339,7 @@ class TestTimer(TestCase, GuiTestAssistant):
         handler = ConditionHandler()
 
         start_time = perf_counter()
-        timer = Timer(200, handler.callback)
+        timer = Timer(250, handler.callback)
         try:
             self.assertTrue(timer.IsRunning())
             self.event_loop_helper.event_loop_until_condition(
