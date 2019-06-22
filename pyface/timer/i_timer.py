@@ -237,7 +237,7 @@ class BaseTimer(ABCHasTraits):
         return self._active
 
     def _set_active(self, value):
-        if self.value:
+        if value:
             self.start()
         else:
             self.stop()
