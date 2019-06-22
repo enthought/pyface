@@ -440,7 +440,7 @@ class PythonWidget(HistoryConsoleWidget):
         """ Find a python object in the interpeter namespace from a context (a
             list of names).
         """
-        context = map(str, context)
+        context = list(map(str, context))
         if len(context) == 0:
             return None, context
 
