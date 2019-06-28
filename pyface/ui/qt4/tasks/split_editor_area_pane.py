@@ -939,17 +939,17 @@ class TabDragObject(object):
         painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
-        if QtGui.qt_api=='pyqt5':
-            pixmap1 = tabBar.grab()
-        else: # pyqt4 (grabWidget was removed in pyqt5)
+        if QtCore.QT_VERSION >= 0x050000:
+            pixmap1 = tabBar.grab(tab_rect)
+        else:  # Qt4 (grabWidget was removed in Qt5)
             pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
 
-        painter.drawPixmap(0,0,pixmap1) #tab_rect.topLeft(), pixmap1)
+        painter.drawPixmap(0, 0, pixmap1)  # tab_rect.topLeft(), pixmap1)
 
         # region of the page widget
-        if QtGui.qt_api=='pyqt5':
+        if QtCore.QT_VERSION >= 0x050000:
             pixmap2 = self.widget.grab()
-        else: # pyqt4 (grabWidget was removed in pyqt5)
+        else:  # Qt4 (grabWidget was removed in pyqt5)
             pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
         painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
 
