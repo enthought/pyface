@@ -6,7 +6,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
     on_trait_change, Property, provides, Str
-from pyface.qt import QtCore, QtGui
+from pyface.qt import is_qt4, QtCore, QtGui
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -939,18 +939,18 @@ class TabDragObject(object):
         painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
-        if QtCore.__version_info__ >= (5,):
-            pixmap1 = tabBar.grab(tab_rect)
-        else:  # Qt4 (grabWidget was removed in Qt5)
+        if is_qt4:  # grab wasn't introduced until Qt5
             pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
+        else:
+            pixmap1 = tabBar.grab(tab_rect)
 
         painter.drawPixmap(0, 0, pixmap1)  # tab_rect.topLeft(), pixmap1)
 
         # region of the page widget
-        if QtCore.__version_info__ >= (5,):
-            pixmap2 = self.widget.grab()
-        else:  # Qt4 (grabWidget was removed in pyqt5)
+        if is_qt4:
             pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
+        else:
+            pixmap2 = self.widget.grab()
         painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
 
         # finish painting
