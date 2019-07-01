@@ -944,7 +944,7 @@ class TabDragObject(object):
         else:
             pixmap1 = tabBar.grab(tab_rect)
 
-        painter.drawPixmap(0, 0, pixmap1)  # tab_rect.topLeft(), pixmap1)
+        painter.drawPixmap(0, 0, pixmap1)
 
         # region of the page widget
         if is_qt4:
