@@ -28,8 +28,6 @@ from traitsui.menu \
 from pyface.image_resource \
     import ImageResource
 
-from etsdevtools.developer.tools.ui_debugger import UIDebugger
-
 #-------------------------------------------------------------------------------
 #  Constants:
 #-------------------------------------------------------------------------------
@@ -61,7 +59,6 @@ class TestDock ( HasPrivateTraits ):
     button12 = Button
     code1    = Code
     code2    = Code
-    debug    = Instance(UIDebugger)
 
     #---------------------------------------------------------------------------
     #  Traits view definitions:
@@ -78,7 +75,6 @@ class TestDock ( HasPrivateTraits ):
                     HSplit( 'button9',  'button10' ),
                     Group( 'code1@', '|<>', image = image1 ),
                     Group( 'code2@', '|<>', image = image2 ),
-                    Group( 'debug', '|<>' ),
                     Group(  'button11', 'button12' )
             ),
             id = 'dock_window'
