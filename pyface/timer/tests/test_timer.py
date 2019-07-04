@@ -373,14 +373,24 @@ class TestTimer(TestCase, GuiTestAssistant):
     def test_restart(self):
         handler = ConditionHandler()
 
-        timer = Timer(250, handler.callback)
+        timer = Timer(20, handler.callback)
         timer.Stop()
+
+        # Ensure that it is indeed stopped.
         self.assertFalse(timer.IsRunning())
+        count = handler.count
+
+        # Wait to see if the timer has indeed stopped.
+        self.event_loop_helper.event_loop()
+        time.sleep(0.1)
+        self.assertEqual(handler.count, count)
 
         timer.Start()
         try:
             self.assertTrue(timer.IsRunning())
-            self.event_loop_helper.event_loop()
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: handler.count > 0
+            )
             self.assertTrue(timer.IsRunning())
         finally:
             timer.Stop()
