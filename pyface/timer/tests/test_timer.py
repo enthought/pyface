@@ -389,7 +389,7 @@ class TestTimer(TestCase, GuiTestAssistant):
         try:
             self.assertTrue(timer.IsRunning())
             self.event_loop_helper.event_loop_until_condition(
-                lambda: handler.count > 0
+                lambda: handler.count > count
             )
             self.assertTrue(timer.IsRunning())
         finally:
