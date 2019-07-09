@@ -527,6 +527,7 @@ class DockWindowFeature ( HasPrivateTraits ):
     #  specified DockControl (or None if the feature does not apply to it):
     #---------------------------------------------------------------------------
 
+    @classmethod
     def feature_for ( cls, dock_control ):
         """ Returns a single new feature object or list of new feature objects
         for a specified DockControl.
@@ -564,12 +565,11 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         return None
 
-    feature_for = classmethod( feature_for )
-
     #---------------------------------------------------------------------------
     #  Returns a new feature instance for a specified DockControl:
     #---------------------------------------------------------------------------
 
+    @classmethod
     def new_feature ( cls, dock_control ):
         """ Returns a new feature instance for a specified DockControl.
 
@@ -598,13 +598,12 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         return cls( dock_control = dock_control )
 
-    new_feature = classmethod( new_feature )
-
     #---------------------------------------------------------------------------
     #  Returns whether or not the DockWindowFeature is a valid feature for a
     #  specified DockControl:
     #---------------------------------------------------------------------------
 
+    @classmethod
     def is_feature_for ( self, dock_control ):
         """ Returns whether this class is a valid feature for the application
         object corresponding to a specified DockControl.
@@ -629,8 +628,6 @@ class DockWindowFeature ( HasPrivateTraits ):
         returns **True**.
         """
         return True
-
-    is_feature_for = classmethod( is_feature_for )
 
 #-- Private Methods ------------------------------------------------------------
 
@@ -731,6 +728,7 @@ class DockWindowFeature ( HasPrivateTraits ):
     #  if the feature does not apply to the DockControl object):
     #---------------------------------------------------------------------------
 
+    @classmethod
     def new_feature_for ( cls, dock_control ):
         """ Returns a feature object for use with the specified DockControl (or
         **None** if the feature does not apply to the DockControl object).
@@ -746,12 +744,11 @@ class DockWindowFeature ( HasPrivateTraits ):
 
         return result
 
-    new_feature_for = classmethod( new_feature_for )
-
     #---------------------------------------------------------------------------
     #  Toggles the feature on/off:
     #---------------------------------------------------------------------------
 
+    @classmethod
     def toggle_feature ( cls, event ):
         """ Toggles the feature on or off.
         """
@@ -773,8 +770,6 @@ class DockWindowFeature ( HasPrivateTraits ):
                 feature = aref()
                 if feature is not None:
                     getattr( feature, method )()
-
-    toggle_feature = classmethod( toggle_feature )
 
 #-- Event Handlers -------------------------------------------------------------
 
@@ -845,4 +840,3 @@ class DockWindowFeature ( HasPrivateTraits ):
             eval( action, globals(), { 'self': self } )
         else:
             getattr( self, action )()
-

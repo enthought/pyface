@@ -59,26 +59,23 @@ class GUI(MGUI, HasTraits):
     # 'GUI' class interface.
     ###########################################################################
 
+    @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
         _FutureCall(millisecs, callable, *args, **kw)
 
-    invoke_after = classmethod(invoke_after)
-
+    @classmethod
     def invoke_later(cls, callable, *args, **kw):
         _FutureCall(0, callable, *args, **kw)
 
-    invoke_later = classmethod(invoke_later)
-
+    @classmethod
     def set_trait_after(cls, millisecs, obj, trait_name, new):
         _FutureCall(millisecs, setattr, obj, trait_name, new)
 
-    set_trait_after = classmethod(set_trait_after)
-
+    @classmethod
     def set_trait_later(cls, obj, trait_name, new):
         _FutureCall(0, setattr, obj, trait_name, new)
 
-    set_trait_later = classmethod(set_trait_later)
-
+    @staticmethod
     def process_events(allow_user_events=True):
         if allow_user_events:
             events = QtCore.QEventLoop.AllEvents
@@ -87,15 +84,12 @@ class GUI(MGUI, HasTraits):
 
         QtCore.QCoreApplication.processEvents(events)
 
-    process_events = staticmethod(process_events)
-
+    @staticmethod
     def set_busy(busy=True):
         if busy:
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
-
-    set_busy = staticmethod(set_busy)
 
     ###########################################################################
     # 'GUI' interface.
