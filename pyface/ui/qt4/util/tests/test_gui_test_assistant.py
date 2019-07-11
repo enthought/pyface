@@ -1,5 +1,6 @@
 import unittest
 
+from pyface.timer.api import CallbackTimer, do_after
 from pyface.ui.qt4.util.gui_test_assistant import \
     GuiTestAssistant
 from traits.api import Event, HasStrictTraits
@@ -58,3 +59,30 @@ class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):
         # Successful case.
         with self.event_loop_until_traits_change(obj):
             pass
+
+    def test_assert_eventually_true_in_gui_success(self):
+        my_list = []
+
+        timer = CallbackTimer(
+            interval=0.05,
+            callback=my_list.append,
+            args=("bob",),
+            repeat=1,
+        )
+
+        timer.start()
+        try:
+            self.assertEventuallyTrueInGui(lambda: len(my_list) > 0)
+            self.assertEqual(my_list, ["bob"])
+        finally:
+            timer.stop()
+
+    def test_assert_eventually_true_in_gui_already_true(self):
+        my_list = ["bob"]
+        self.assertEventuallyTrueInGui(lambda: len(my_list) > 0)
+
+    def test_assert_eventually_true_in_gui_failure(self):
+        my_list = []
+        with self.assertRaises(AssertionError):
+            self.assertEventuallyTrueInGui(
+                lambda: len(my_list) > 0, timeout=0.1)
