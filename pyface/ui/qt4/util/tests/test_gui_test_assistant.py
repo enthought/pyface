@@ -1,6 +1,6 @@
 import unittest
 
-from pyface.timer.api import CallbackTimer, do_after
+from pyface.timer.api import CallbackTimer
 from pyface.ui.qt4.util.gui_test_assistant import \
     GuiTestAssistant
 from traits.api import Event, HasStrictTraits
