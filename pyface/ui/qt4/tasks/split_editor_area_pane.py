@@ -209,12 +209,12 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         # add collapse action (only show for collapsible splitters)
         if splitter.is_collapsible():
             if splitter is splitter.parent().leftchild:
-                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
                     text = 'Merge with right pane'
                 else:
                     text = 'Merge with bottom pane'
             else:
-                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
                     text = 'Merge with left pane'
                 else:
                     text = 'Merge with top pane'
