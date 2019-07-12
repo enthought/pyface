@@ -308,6 +308,96 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEquals(right_bottom.items[0].id, 1)
         self.assertEquals(right_bottom.items[1].id, 2)
 
+    def test_context_menu_merge_text_left_right_split(self):
+        # Regression test for enthought/pyface#422
+        window = TaskWindow()
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        with event_loop():
+            window.open()
+
+        editor_area_widget = editor_area.control
+        with event_loop():
+            editor_area_widget.split(orientation=QtCore.Qt.Horizontal)
+
+        # Get the tabs.
+        left_tab, right_tab = editor_area_widget.tabwidgets()
+
+        # Check left context menu merge text.
+        left_tab_rect = QtCore.QRect(
+            left_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            left_tab.size(),
+        )
+        left_tab_center = left_tab_rect.center()
+        left_context_menu = editor_area.get_context_menu(left_tab_center)
+        self.assertEqual(
+            left_context_menu.find_item("merge").action.name,
+            "Merge with right pane",
+        )
+
+        # And the right context menu merge text.
+        right_tab_rect = QtCore.QRect(
+            right_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            right_tab.size(),
+        )
+        right_tab_center = right_tab_rect.center()
+        right_context_menu = editor_area.get_context_menu(right_tab_center)
+        self.assertEqual(
+            right_context_menu.find_item("merge").action.name,
+            "Merge with left pane",
+        )
+
+        with event_loop():
+            window.close()
+
+    def test_context_menu_merge_text_top_bottom_split(self):
+        # Regression test for enthought/pyface#422
+        window = TaskWindow()
+
+        task = SplitEditorAreaPaneTestTask()
+        editor_area = task.editor_area
+        window.add_task(task)
+
+        with event_loop():
+            window.open()
+
+        editor_area_widget = editor_area.control
+        with event_loop():
+            editor_area_widget.split(orientation=QtCore.Qt.Vertical)
+
+        # Get the tabs.
+        left_tab, right_tab = editor_area_widget.tabwidgets()
+
+        # Check left context menu merge text.
+        left_tab_rect = QtCore.QRect(
+            left_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            left_tab.size(),
+        )
+        left_tab_center = left_tab_rect.center()
+        left_context_menu = editor_area.get_context_menu(left_tab_center)
+        self.assertEqual(
+            left_context_menu.find_item("merge").action.name,
+            "Merge with bottom pane",
+        )
+
+        # And the right context menu merge text.
+        right_tab_rect = QtCore.QRect(
+            right_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            right_tab.size(),
+        )
+        right_tab_center = right_tab_rect.center()
+        right_context_menu = editor_area.get_context_menu(right_tab_center)
+        self.assertEqual(
+            right_context_menu.find_item("merge").action.name,
+            "Merge with top pane",
+        )
+
+        with event_loop():
+            window.close()
+
     def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
         # Regression test: if an editor contains tabs, a change in focus
         # sets the editor area pane `active_tabwidget` to one of those tabs,
