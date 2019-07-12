@@ -369,29 +369,29 @@ class TestEditorAreaWidget(unittest.TestCase):
             editor_area_widget.split(orientation=QtCore.Qt.Vertical)
 
         # Get the tabs.
-        left_tab, right_tab = editor_area_widget.tabwidgets()
+        top_tab, bottom_tab = editor_area_widget.tabwidgets()
 
-        # Check left context menu merge text.
-        left_tab_rect = QtCore.QRect(
-            left_tab.mapToGlobal(QtCore.QPoint(0, 0)),
-            left_tab.size(),
+        # Check top context menu merge text.
+        top_tab_rect = QtCore.QRect(
+            top_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            top_tab.size(),
         )
-        left_tab_center = left_tab_rect.center()
-        left_context_menu = editor_area.get_context_menu(left_tab_center)
+        top_tab_center = top_tab_rect.center()
+        top_context_menu = editor_area.get_context_menu(top_tab_center)
         self.assertEqual(
-            left_context_menu.find_item("merge").action.name,
+            top_context_menu.find_item("merge").action.name,
             "Merge with bottom pane",
         )
 
-        # And the right context menu merge text.
-        right_tab_rect = QtCore.QRect(
-            right_tab.mapToGlobal(QtCore.QPoint(0, 0)),
-            right_tab.size(),
+        # And the bottom context menu merge text.
+        bottom_tab_rect = QtCore.QRect(
+            bottom_tab.mapToGlobal(QtCore.QPoint(0, 0)),
+            bottom_tab.size(),
         )
-        right_tab_center = right_tab_rect.center()
-        right_context_menu = editor_area.get_context_menu(right_tab_center)
+        bottom_tab_center = bottom_tab_rect.center()
+        bottom_context_menu = editor_area.get_context_menu(bottom_tab_center)
         self.assertEqual(
-            right_context_menu.find_item("merge").action.name,
+            bottom_context_menu.find_item("merge").action.name,
             "Merge with top pane",
         )
 
