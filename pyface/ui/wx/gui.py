@@ -63,41 +63,35 @@ class GUI(MGUI, HasTraits):
     # 'GUI' class interface.
     ###########################################################################
 
+    @classmethod
     def invoke_after(cls, millisecs, callable, *args, **kw):
         wx.CallLater(millisecs, callable, *args, **kw)
 
-    invoke_after = classmethod(invoke_after)
-
+    @classmethod
     def invoke_later(cls, callable, *args, **kw):
         wx.CallAfter(callable, *args, **kw)
 
-    invoke_later = classmethod(invoke_later)
-
+    @classmethod
     def set_trait_after(cls, millisecs, obj, trait_name, new):
         wx.CallLater(millisecs, setattr, obj, trait_name, new)
 
-    set_trait_after = classmethod(set_trait_after)
-
+    @classmethod
     def set_trait_later(cls, obj, trait_name, new):
         wx.CallAfter(setattr, obj, trait_name, new)
 
-    set_trait_later = classmethod(set_trait_later)
-
+    @staticmethod
     def process_events(allow_user_events=True):
         if allow_user_events:
             wx.GetApp().Yield(True)
         else:
             wx.SafeYield()
 
-    process_events = staticmethod(process_events)
-
+    @staticmethod
     def set_busy(busy=True):
         if busy:
             GUI._cursor = wx.BusyCursor()
         else:
             GUI._cursor = None
-
-    set_busy = staticmethod(set_busy)
 
     ###########################################################################
     # 'GUI' interface.
