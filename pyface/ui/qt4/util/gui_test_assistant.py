@@ -170,8 +170,11 @@ class GuiTestAssistant(UnittestTools):
         self.failureException
             If the condition does not become true within the given timeout.
         """
-        with self.event_loop_until_condition(condition, timeout=timeout):
-            pass
+        try:
+            self.event_loop_helper.event_loop_until_condition(
+                condition, timeout=timeout)
+        except ConditionTimeoutError:
+            self.fail("Timed out waiting for condition to become true.")
 
     @contextlib.contextmanager
     def assertTraitChangesInEventLoop(self, obj, trait, condition, count=1,
