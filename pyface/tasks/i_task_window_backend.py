@@ -10,10 +10,10 @@ class ITaskWindowBackend(Interface):
     layout functionality.
     """
 
-    # The root control of the TaskWindow to which the layout belongs.
+    #: The root control of the TaskWindow to which the layout belongs.
     control = Any
 
-    # The TaskWindow to which the layout belongs.
+    #: The TaskWindow to which the layout belongs.
     window = Instance('pyface.tasks.task_window.TaskWindow')
 
     ###########################################################################
