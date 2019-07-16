@@ -7,35 +7,35 @@ class IEditor(Interface):
     """ The base interface for all panes (central and dock) in a Task.
     """
 
-    # The editor's user-visible name.
+    #: The editor's user-visible name.
     name = Unicode
 
-    # The tooltip to show for the editor's tab, if any.
+    #: The tooltip to show for the editor's tab, if any.
     tooltip = Unicode
 
-    # The toolkit-specific control that represents the editor.
+    #: The toolkit-specific control that represents the editor.
     control = Any
 
-    # The object that the editor is editing.
+    #: The object that the editor is editing.
     obj = Any
 
-    # Has the editor's object been modified but not saved?
+    #: Has the editor's object been modified but not saved?
     dirty = Bool
 
-    # The editor area to which the editor belongs.
+    #: The editor area to which the editor belongs.
     editor_area = Instance(
         'pyface.tasks.i_editor_area_pane.IEditorAreaPane')
 
-    # Is the editor active in the editor area?
+    #: Is the editor active in the editor area?
     is_active = Bool
 
-    # Does the editor currently have the focus?
+    #: Does the editor currently have the focus?
     has_focus = Bool
 
-    # Fired when the editor has been requested to close.
+    #: Fired when the editor has been requested to close.
     closing = VetoableEvent
 
-    # Fired when the editor has been closed.
+    #: Fired when the editor has been closed.
     closed = Event
 
     ###########################################################################
