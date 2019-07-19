@@ -16,40 +16,40 @@ from pyface.tasks.api import (
     TasksApplication)
 
 
-class TestDockPane(DockPane):
-    id = "test_dock_pane"
-    name = u"Test dock pane"
+class MyDockPane(DockPane):
+    id = "my_dock_pane"
+    name = u"My dock pane"
 
 
-class TestTask(Task):
-    id = "test_task"
-    name = u"Test task"
+class MyTask(Task):
+    id = "my_task"
+    name = u"My task"
 
     def _default_layout_default(self):
-        return TaskLayout(left=PaneItem("test_dock_pane", width=200))
+        return TaskLayout(left=PaneItem("my_dock_pane", width=200))
 
     def create_central_pane(self):
         return EditorAreaPane()
 
     def create_dock_panes(self):
-        return [TestDockPane()]
+        return [MyDockPane()]
 
 
-class TestApplication(TasksApplication):
-    id = "test_application"
-    name = u"Test application"
+class MyApplication(TasksApplication):
+    id = "my_application"
+    name = u"My application"
 
     def _task_factories_default(self):
         return [
             TaskFactory(
-                id="test_task_factory",
-                name=u"Test task factory",
-                factory=TestTask,
+                id="my_task_factory",
+                name=u"My task factory",
+                factory=MyTask,
             ),
         ]
 
 
-class TestMyDockPane(unittest.TestCase):
+class TestDockPane(unittest.TestCase):
     @unittest.skipUnless(sys.platform == "darwin", "only applicable to macOS")
     def test_dock_windows_visible_on_macos(self):
         # Regression test for enthought/pyface#427: check that dock panes
@@ -68,7 +68,7 @@ class TestMyDockPane(unittest.TestCase):
 
             app.exit()
 
-        app = TestApplication()
+        app = MyApplication()
         app.on_trait_change(check_panes_and_exit, "application_initialized")
         app.run()
 
