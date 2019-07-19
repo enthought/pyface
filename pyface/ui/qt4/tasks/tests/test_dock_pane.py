@@ -30,8 +30,6 @@ class TestTask(Task):
         return TaskLayout(left=PaneItem("test_dock_pane", width=200))
 
     def create_central_pane(self):
-        # self.central_pane = central_pane = EditorAreaPane()
-        # return central_pane
         return EditorAreaPane()
 
     def create_dock_panes(self):
