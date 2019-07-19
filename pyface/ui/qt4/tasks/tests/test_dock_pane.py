@@ -12,9 +12,8 @@ import unittest
 
 from pyface.qt import QtCore
 from pyface.tasks.api import (
-    DockPane, EditorAreaPane, PaneItem, Task, TaskLayout,
-    TaskFactory, TasksApplication,
-)
+    DockPane, EditorAreaPane, PaneItem, Task, TaskFactory, TaskLayout,
+    TasksApplication)
 
 
 class TestDockPane(DockPane):
