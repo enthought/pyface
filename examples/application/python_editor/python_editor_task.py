@@ -232,9 +232,9 @@ class PythonEditorTask(Task):
 
     def save(self):
         """ Save the current file.
-        
+
         If needed, this code prompts for a path.
-        
+
         Returns
         -------
         saved : bool
@@ -279,8 +279,9 @@ class PythonEditorTask(Task):
         """
         browser = PythonBrowserPane()
 
-        def handler():
-            return self.create_editor(browser.selected_file)
+        def handler(path):
+            if os.path.isfile(path):
+                return self.create_editor(path)
 
         browser.on_trait_change(handler, 'activated')
         return [browser]
