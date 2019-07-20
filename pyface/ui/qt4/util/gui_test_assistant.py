@@ -148,6 +148,34 @@ class GuiTestAssistant(UnittestTools):
         except ConditionTimeoutError:
             self.fail('Timed out waiting for condition')
 
+    def assertEventuallyTrueInGui(self, condition, timeout=10.0):
+        """
+        Assert that the given condition becomes true if we run the GUI
+        event loop for long enough.
+
+        This assertion runs the real Qt event loop, polling the condition
+        and returning as soon as the condition becomes true. If the condition
+        does not become true within the given timeout, the assertion fails.
+
+        Parameters
+        ----------
+        condition : callable() -> bool
+            Callable accepting no arguments and returning a bool.
+        timeout : float
+            Maximum length of time to wait for the condition to become
+            true, in seconds.
+
+        Raises
+        ------
+        self.failureException
+            If the condition does not become true within the given timeout.
+        """
+        try:
+            self.event_loop_helper.event_loop_until_condition(
+                condition, timeout=timeout)
+        except ConditionTimeoutError:
+            self.fail("Timed out waiting for condition to become true.")
+
     @contextlib.contextmanager
     def assertTraitChangesInEventLoop(self, obj, trait, condition, count=1,
                                       timeout=10.0):
