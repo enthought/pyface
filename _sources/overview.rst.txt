@@ -58,7 +58,7 @@ the following to generate a platform-independent file dialog::
         """ Ask the user for a Python file to open """
         dialog = FileDialog(action='open', wildcard=FileDialog.WILDCARD_PY)
         result = dialog.open()
-        if result is OK:
+        if result == OK:
             return dialog.path
         else:
             return None

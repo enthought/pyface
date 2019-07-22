@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Overview &mdash; pyface 6.1.0 documentation</title>
+    <title>Overview &mdash; pyface 6.1.2 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
     <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.1.0',
+        VERSION:     '6.1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +28,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.1.0 documentation" href="index.html" >
+    <link rel="top" title="pyface 6.1.2 documentation" href="index.html" >
     <link rel="next" title="Toolkits" href="toolkits.html" >
     <link rel="prev" title="Welcome to the Pyface Documentation!" href="index.html" > 
   </head>
@@ -48,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 6.1.0 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 6.1.2 documentation</a></li>
 	 
     </ul>
               
@@ -133,7 +132,7 @@ the following to generate a platform-independent file dialog:</p>
     <span class="sd">&quot;&quot;&quot; Ask the user for a Python file to open &quot;&quot;&quot;</span>
     <span class="n">dialog</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="n">wildcard</span><span class="o">=</span><span class="n">FileDialog</span><span class="o">.</span><span class="n">WILDCARD_PY</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="n">OK</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">OK</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dialog</span><span class="o">.</span><span class="n">path</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -474,7 +473,7 @@ libraries which can produce a toolkit-specific control.</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on May 08, 2019.
+      Last updated on Jul 22, 2019.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
