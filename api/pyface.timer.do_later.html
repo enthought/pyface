@@ -4,17 +4,16 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.timer.do_later module &mdash; pyface 6.1.0 documentation</title>
+    <title>pyface.timer.do_later module &mdash; pyface 6.1.2 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
     <link rel="stylesheet" href="../_static/enthought.css" type="text/css" >
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" >
-    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.0',
+        VERSION:     '6.1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -29,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.0 documentation" href="../index.html" >
+    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
     <link rel="up" title="pyface.timer package" href="pyface.timer.html" >
     <link rel="next" title="pyface.timer.i_timer module" href="pyface.timer.i_timer.html" >
     <link rel="prev" title="pyface.timer.api module" href="pyface.timer.api.html" > 
@@ -49,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.0 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.timer.html" accesskey="U">pyface.timer package</a></li> 
@@ -90,7 +89,7 @@
 <span id="pyface-timer-do-later-module"></span><h1>pyface.timer.do_later module<a class="headerlink" href="#module-pyface.timer.do_later" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.timer.do_later.DoLaterTimer">
-<em class="property">class </em><code class="descclassname">pyface.timer.do_later.</code><code class="descname">DoLaterTimer</code><span class="sig-paren">(</span><em>millisecs</em>, <em>callable</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyface.timer.do_later.</code><code class="descname">DoLaterTimer</code><span class="sig-paren">(</span><em>interval</em>, <em>callable</em>, <em>args</em>, <em>kw_args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.timer.do_later.DoLaterTimer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.timer.timer.html#pyface.timer.timer.Timer" title="pyface.timer.timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.timer.timer.Timer</span></code></a></p>
 <p>Performs a callback once at a later time.</p>
 <p>This is not used by the <cite>do_later</cite> functions and is only provided for
@@ -132,7 +131,7 @@ backwards compatibility of the API.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>interval</strong> (<em>float</em>) – The time interval in milliseconds to wait before calling.</li>
-<li><strong>callable</strong> (<em>callable</em>) – The callable to call in 50ms time.</li>
+<li><strong>callable</strong> (<em>callable</em>) – The callable to call.</li>
 <li><strong>**kwargs</strong> (<em>*args</em><em>,</em>) – <p>Arguments to be passed through to the callable.</p>
 </li>
 </ul>
@@ -195,7 +194,7 @@ backwards compatibility of the API.</p>
         &copy; Copyright 2008-2016, Enthought
       </li>
       <li>
-      Last updated on May 08, 2019.
+      Last updated on Jul 22, 2019.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
