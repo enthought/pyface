@@ -28,22 +28,22 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         """ Checks that two action managers are (logically) equivalent.
         """
         children1 = children2 = []
-        self.assertEquals(type(first), type(second))
-        self.assertEquals(first.id, second.id)
+        self.assertEqual(type(first), type(second))
+        self.assertEqual(first.id, second.id)
 
         if isinstance(first, ActionItem):
-            self.assertEquals(first.action.name, second.action.name)
+            self.assertEqual(first.action.name, second.action.name)
 
         elif isinstance(first, ActionManager):
             if not isinstance(first, MenuBarManager):
-                self.assertEquals(first.name, second.name)
+                self.assertEqual(first.name, second.name)
             children1, children2 = first.groups, second.groups
 
         elif isinstance(first, Group):
-            self.assertEquals(first.separator, second.separator)
+            self.assertEqual(first.separator, second.separator)
             children1, children2 = first.items, second.items
 
-        self.assertEquals(len(children1), len(children2))
+        self.assertEqual(len(children1), len(children2))
         for i in range(len(children1)):
             self.assertActionElementsEqual(children1[i], children2[i])
 
