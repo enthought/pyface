@@ -382,6 +382,31 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             window.close()
 
+    def test_no_context_menu_if_outside_tabwidgets(self):
+        # Check that the case of a position not in any of the tabwidgets
+        # is handled correctly.
+        window = TaskWindow()
+
+        task = SplitEditorAreaPaneTestTask()
+        window.add_task(task)
+
+        with event_loop():
+            window.open()
+
+        editor_area = task.editor_area
+        editor_area_widget = editor_area.control
+        tab_widget, = editor_area_widget.tabwidgets()
+
+        context_menu_event = QtGui.QContextMenuEvent(
+            QtGui.QContextMenuEvent.Mouse,
+            QtCore.QPoint(-1, -1),
+        )
+
+        tab_widget.contextMenuEvent(context_menu_event)
+
+        with event_loop():
+            window.close()
+
     def test_active_tabwidget_after_editor_containing_tabs_gets_focus(self):
         # Regression test: if an editor contains tabs, a change in focus
         # sets the editor area pane `active_tabwidget` to one of those tabs,
