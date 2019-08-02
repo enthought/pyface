@@ -399,10 +399,14 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         context_menu_event = QtGui.QContextMenuEvent(
             QtGui.QContextMenuEvent.Mouse,
+            # Position relative to the widget, so (-1, -1) should be
+            # reliably outside.
             QtCore.QPoint(-1, -1),
         )
 
-        tab_widget.contextMenuEvent(context_menu_event)
+        # Just exercise the context menu code to make sure it doesn't raise.
+        with event_loop():
+            tab_widget.contextMenuEvent(context_menu_event)
 
         with event_loop():
             window.close()
