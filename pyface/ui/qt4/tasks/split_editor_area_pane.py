@@ -583,7 +583,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         self.addWidget(self.rightchild)
 
         # set equal sizes of splits
-        self.setSizes([orig_size/2,orig_size/2])
+        self.setSizes([orig_size//2, orig_size//2])
 
         # make the rightchild's tabwidget active & show its empty widget
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()
