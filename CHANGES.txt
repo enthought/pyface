@@ -2,6 +2,32 @@
 Pyface Changelog
 ================
 
+Release 6.1.2
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 6.1.1 release.
+
+Thanks to:
+
+Mark Dickinson, Prabhu Ramachandran, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Don't try to open directories in PythonEditorTask (#428)
+* Regression test for split editor area merge messages (#424)
+* Fix some comments that should be Traits doc-comments. (#426)
+* Fix some occurrences of PyFace (should be Pyface) (#420)
+* Use decorator form of classmethod and staticmethod. (#417)
+* Use equality rather than is when checking orientation. (#422)
+* Fix timer issues. (#409, #414, #415)
+* Remove use of etsdevtools in an example file. (#413)
+* Fix a questionable version check. (#411)
+* Fix error during tab completion on shell. (#410)
+
+
 Release 6.1.1
 =============
 
