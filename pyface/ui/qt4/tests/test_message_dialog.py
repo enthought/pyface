@@ -11,6 +11,7 @@
 Qt-specific tests for the MessageDialog
 """
 
+import contextlib
 import unittest
 
 from pyface.api import MessageDialog
@@ -29,18 +30,12 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
             size=(600, 400),
         )
 
-        with self.event_loop():
-            dialog._create()
-
-        try:
+        with self.create_dialog(dialog):
             escape_button = dialog.control.escapeButton()
             ok_button = dialog.control.button(QtGui.QMessageBox.Ok)
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
-        finally:
-            with self.event_loop():
-                dialog.destroy()
 
     def test_escape_button_with_details(self):
         dialog = MessageDialog(
@@ -53,15 +48,22 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
             size=(600, 400),
         )
 
-        with self.event_loop():
-            dialog._create()
-
-        try:
+        with self.create_dialog(dialog):
             escape_button = dialog.control.escapeButton()
             ok_button = dialog.control.button(QtGui.QMessageBox.Ok)
             # It's possible for both the above to be None, so double check.
             self.assertIsNotNone(escape_button)
             self.assertIs(escape_button, ok_button)
+
+    @contextlib.contextmanager
+    def create_dialog(self, dialog):
+        """
+        Create a dialog, then destroy at the end of a with block.
+        """
+        with self.event_loop():
+            dialog._create()
+        try:
+            yield
         finally:
             with self.event_loop():
                 dialog.destroy()
