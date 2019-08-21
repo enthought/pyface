@@ -78,7 +78,6 @@ how to run commands within an EDM enviornment.
 
 import glob
 import os
-import platform
 import subprocess
 import sys
 from shutil import rmtree, copy as copyfile
@@ -151,6 +150,17 @@ environment_vars = {
     },
 }
 
+# Options shared between the various commands.
+edm_option = click.option(
+    "--edm",
+    help=(
+        "Path to the EDM executable to use. The default is to use the first "
+        "EDM found in the path. The EDM executable can also be specified "
+        "by setting the ETSTOOL_EDM variable."
+    ),
+    envvar="ETSTOOL_EDM",
+)
+
 
 @click.group()
 def cli():
@@ -158,29 +168,30 @@ def cli():
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
-def install(runtime, toolkit, environment):
+def install(edm, runtime, toolkit, environment):
     """ Install project and dependencies into a clean EDM environment.
 
     """
-    parameters = get_parameters(runtime, toolkit, environment)
+    parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = ' '.join(dependencies | extra_dependencies.get(toolkit, set()))
     # edm commands to setup the development environment
     commands = [
-        "edm environments create {environment} --force --version={runtime}",
-        "edm install -y -e {environment} " + packages,
-        "edm run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
-        "edm run -e {environment} -- python setup.py clean --all",
-        "edm run -e {environment} -- python setup.py install",
+        "{edm} environments create {environment} --force --version={runtime}",
+        "{edm} install -y -e {environment} " + packages,
+        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- python setup.py clean --all",
+        "{edm} run -e {environment} -- python setup.py install",
     ]
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == 'pyqt5':
-        commands.append("edm run -e {environment} -- pip install pyqt5==5.9.2")
+        commands.append("{edm} run -e {environment} -- pip install pyqt5==5.9.2")
     elif toolkit == 'pyside2':
         commands.append(
-            "edm run -e {environment} -- pip install pyside2==5.11.1"
+            "{edm} run -e {environment} -- pip install pyside2==5.11.1"
         )
 
     click.echo("Creating environment '{environment}'".format(**parameters))
@@ -189,16 +200,17 @@ def install(runtime, toolkit, environment):
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
 @click.option('--no-environment-vars', is_flag=True,
               help="Do not set ETS_TOOLKIT and QT_API")
-def test(runtime, toolkit, environment, no_environment_vars=False):
+def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     """ Run the test suite in a given environment with the specified toolkit.
 
     """
-    parameters = get_parameters(runtime, toolkit, environment)
+    parameters = get_parameters(edm, runtime, toolkit, environment)
     if toolkit == 'wx':
         parameters['exclude'] = 'qt'
     elif toolkit in {'pyqt', 'pyqt5', 'pyside', 'pyside2'}:
@@ -213,7 +225,7 @@ def test(runtime, toolkit, environment, no_environment_vars=False):
     environ['PYTHONUNBUFFERED'] = "1"
 
     commands = [
-        "edm run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
+        "{edm} run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong pyface
@@ -231,17 +243,18 @@ def test(runtime, toolkit, environment, no_environment_vars=False):
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
-def cleanup(runtime, toolkit, environment):
+def cleanup(edm, runtime, toolkit, environment):
     """ Remove a development environment.
 
     """
-    parameters = get_parameters(runtime, toolkit, environment)
+    parameters = get_parameters(edm, runtime, toolkit, environment)
     commands = [
-        "edm run -e {environment} -- python setup.py clean",
-        "edm environments remove {environment} --purge -y"
+        "{edm} run -e {environment} -- python setup.py clean",
+        "{edm} environments remove {environment} --purge -y"
     ]
     click.echo("Cleaning up environment '{environment}'".format(**parameters))
     execute(commands, parameters)
@@ -249,15 +262,22 @@ def cleanup(runtime, toolkit, environment):
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--no-environment-vars', is_flag=True,
               help="Do not set ETS_TOOLKIT and QT_API")
-def test_clean(runtime, toolkit, no_environment_vars=False):
+def test_clean(edm, runtime, toolkit, no_environment_vars=False):
     """ Run tests in a clean environment, cleaning up afterwards
 
     """
-    args = ['--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)]
+    args = [
+        '--toolkit={}'.format(toolkit),
+        '--runtime={}'.format(runtime),
+    ]
+    if edm is not None:
+        args.append('--edm={}'.format(edm))
+
     test_args = args[:]
     if no_environment_vars:
         test_args.append('--no-environment-vars')
@@ -270,34 +290,36 @@ def test_clean(runtime, toolkit, no_environment_vars=False):
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
-def update(runtime, toolkit, environment):
+def update(edm, runtime, toolkit, environment):
     """ Update/Reinstall package into environment.
 
     """
-    parameters = get_parameters(runtime, toolkit, environment)
-    commands = ["edm run -e {environment} -- python setup.py install"]
+    parameters = get_parameters(edm, runtime, toolkit, environment)
+    commands = ["{edm} run -e {environment} -- python setup.py install"]
     click.echo("Re-installing in  '{environment}'".format(**parameters))
     execute(commands, parameters)
     click.echo('Done update')
 
 
 @cli.command()
+@edm_option
 @click.option('--runtime', default='3.6', help="Python version to use")
 @click.option('--toolkit', default='pyqt', help="Toolkit and API to use")
 @click.option('--environment', default=None, help="EDM environment to use")
-def api_docs(runtime, toolkit, environment):
+def api_docs(edm, runtime, toolkit, environment):
     """ Autogenerate documentation
 
     """
-    parameters = get_parameters(runtime, toolkit, environment)
+    parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = ' '.join(doc_dependencies)
     ignore = ' '.join(doc_ignore)
     commands = [
-        "edm install -y -e {environment} " + packages,
-        "edm run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",
+        "{edm} install -y -e {environment} " + packages,
+        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",
     ]
     click.echo("Installing documentation tools in  '{environment}'".format(
         **parameters))
@@ -310,14 +332,14 @@ def api_docs(runtime, toolkit, environment):
         rmtree(api_path)
     os.makedirs(api_path)
     commands = [
-        "edm run -e {environment} -- sphinx-apidoc -e -M -o " + api_path + " pyface " + ignore,
+        "{edm} run -e {environment} -- sphinx-apidoc -e -M -o " + api_path + " pyface " + ignore,
     ]
     execute(commands, parameters)
     click.echo('Done regenerating API docs')
 
     os.chdir('docs')
     commands = [
-        "edm run -e {environment} -- make html",
+        "{edm} run -e {environment} -- make html",
     ]
     click.echo("Building documentation in  '{environment}'".format(**parameters))
     try:
@@ -328,7 +350,8 @@ def api_docs(runtime, toolkit, environment):
 
 
 @cli.command()
-def test_all():
+@edm_option
+def test_all(edm):
     """ Run test_clean across all supported environment combinations.
 
     """
@@ -336,8 +359,12 @@ def test_all():
     for runtime, toolkits in supported_combinations.items():
         for toolkit in toolkits:
             args = [
-                '--toolkit={}'.format(toolkit), '--runtime={}'.format(runtime)
+                '--toolkit={}'.format(toolkit),
+                '--runtime={}'.format(runtime),
             ]
+            if edm is not None:
+                args.append('--edm={}'.format(edm))
+
             try:
                 test_clean(args, standalone_mode=True)
             except SystemExit as exc:
@@ -353,7 +380,7 @@ def test_all():
 # ----------------------------------------------------------------------------
 
 
-def get_parameters(runtime, toolkit, environment):
+def get_parameters(edm, runtime, toolkit, environment):
     """ Set up parameters dictionary for format() substitution """
     parameters = {
         'runtime': runtime,
@@ -370,6 +397,10 @@ def get_parameters(runtime, toolkit, environment):
         parameters['environment'] = 'pyface-test-{runtime}-{toolkit}'.format(
             **parameters
         )
+    if edm is None:
+        edm = locate_edm()
+    parameters["edm"] = edm
+
     return parameters
 
 
@@ -418,6 +449,45 @@ def execute(commands, parameters):
         except subprocess.CalledProcessError as exc:
             print(exc)
             sys.exit(1)
+
+
+def locate_edm():
+    """
+    Locate an EDM executable if it exists, else raise an exception.
+
+    Returns the first EDM executable found on the path. On Windows, if that
+    executable turns out to be the "edm.bat" batch file, replaces it with the
+    executable that it wraps: the batch file adds another level of command-line
+    mangling that interferes with things like specifying version restrictions.
+
+    Returns
+    -------
+    edm : str
+        Path to the EDM executable to use.
+
+    Raises
+    ------
+    click.ClickException
+        If no EDM executable is found in the path.
+    """
+    # Once Python 2 no longer needs to be supported, we should use
+    # shutil.which instead.
+    which_cmd = "where" if sys.platform == "win32" else "which"
+    try:
+        cmd_output = subprocess.check_output([which_cmd, "edm"])
+    except subprocess.CalledProcessError:
+        raise click.ClickException(
+            "This script requires EDM, but no EDM executable was found.")
+
+    # Don't try to be clever; just use the first candidate.
+    edm_candidates = cmd_output.decode("utf-8").splitlines()
+    edm = edm_candidates[0]
+
+    # Resolve edm.bat on Windows.
+    if sys.platform == "win32" and os.path.basename(edm) == "edm.bat":
+        edm = os.path.join(os.path.dirname(edm), "embedded", "edm.exe")
+
+    return edm
 
 
 if __name__ == '__main__':
