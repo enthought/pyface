@@ -74,9 +74,12 @@ class Window(MWindow, Widget):
     # 'IWindow' interface.
     # -------------------------------------------------------------------------
 
-    def activate(self):
+    def activate(self, should_raise=True):
         self.control.Iconize(False)
-        self.control.Raise()
+        if should_raise:
+            self.control.Raise()
+        else:
+            wx.PostEvent(self.control, wx.ActivateEvent(active=True))
 
     def show(self, visible):
         self.control.Show(visible)
