@@ -23,6 +23,8 @@ from logging import DEBUG
 
 # Major package imports.
 import wx
+from wx.adv import SplashScreen as WX_SplashScreen
+from wx.adv import SPLASH_NO_TIMEOUT, SPLASH_CENTRE_ON_SCREEN
 
 # Enthought library imports.
 from traits.api import Any, Bool, Font, Instance, Int, provides
@@ -66,11 +68,11 @@ class SplashScreen(MSplashScreen, Window):
         # Get the splash screen image.
         image = self.image.create_image()
 
-        splash_screen = wx.SplashScreen(
+        splash_screen = WX_SplashScreen(
             # The bitmap to display on the splash screen.
             image.ConvertToBitmap(),
             # Splash Style.
-            wx.SPLASH_NO_TIMEOUT | wx.SPLASH_CENTRE_ON_SCREEN,
+            SPLASH_NO_TIMEOUT | SPLASH_CENTRE_ON_SCREEN,
             # Timeout in milliseconds (we don't currently timeout!).
             0,
             # The parent of the splash screen.
