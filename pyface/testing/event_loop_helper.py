@@ -76,6 +76,7 @@ class EventLoopHelper(HasStrictTraits):
             If the timeout occurs before the condition is True.
         """
         def callback():
+            print('condition', condition, condition())
             if condition():
                 self.gui.stop_event_loop()
 
@@ -117,19 +118,22 @@ class EventLoopHelper(HasStrictTraits):
         ConditionTimeoutError
             If the timeout occurs before the loop is repeated enough times.
         """
+        condition = threading.Event()
+
         def repeat_loop(condition, repeat):
             """ Manually process events repeat times.
             """
             self.gui.process_events()
+            print(repeat, condition.is_set())
             repeat = repeat - 1
             if repeat <= 0:
                 self.gui.invoke_later(condition.set)
+                print(repeat, condition.is_set())
             else:
                 self.gui.invoke_later(
                     repeat_loop, condition=condition, repeat=repeat
                 )
 
-        condition = threading.Event()
         self.gui.invoke_later(repeat_loop, repeat=repeat, condition=condition)
 
         self.event_loop_until_condition(

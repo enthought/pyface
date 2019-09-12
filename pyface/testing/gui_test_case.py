@@ -7,6 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
+from contextlib import contextmanager
 import gc
 import threading
 from unittest import TestCase
@@ -32,6 +33,8 @@ class GuiTestCase(TestCase, UnittestTools):
     # ------------------------------------------------------------------------
     #  'GuiTestTools' protocol
     # ------------------------------------------------------------------------
+
+    # -- New Test "assert" methods ------------------------------------------
 
     def assertEventuallyTrueInGui(self, condition, timeout=10.0):
         """
@@ -60,6 +63,55 @@ class GuiTestCase(TestCase, UnittestTools):
         except ConditionTimeoutError:
             self.fail("Timed out waiting for condition to become true.")
 
+    def assertTraitsChangeInGui(self, object, *traits, **kw):
+        """Run the real application event loop until a change notification for
+        all of the specified traits is received.
+
+        Paramaters
+        ----------
+        object : HasTraits instance
+            The object on which to listen for a trait events
+        traits : one or more str
+            The names of the traits to listen to for events
+        timeout : float, optional, keyword only
+            Number of seconds to run the event loop in the case that the trait
+            change does not occur. Default value is 10.0.
+        """
+        try:
+            self.event_loop_until_traits_change(object, *traits, **kw)
+        except ConditionTimeoutError:
+            self.fail("Timed out waiting for traits to change.")
+
+    def assertTraitValueInGui(self, object, trait, value, timeout=10.0):
+        """
+        Assert that the given trait assumes the specified value if we run the
+        GUI event loop for long enough.
+
+        Parameters
+        ----------
+        object : HasTraits instance
+            The Traits object that holds the trait.
+        trait : str
+            The name of the trait being tested.
+        value : any
+            The value that the trait holds.
+        timeout : float
+            Maximum length of time to wait for the condition to become
+            true, in seconds.
+
+        Raises
+        ------
+        self.failureException
+            If the condition does not become true within the given timeout.
+        """
+        def condition():
+            return getattr(object, trait) == value
+
+        try:
+            self.event_loop_until_trait_value(object, trait, value, timeout)
+        except ConditionTimeoutError:
+            self.fail("Timed out waiting for trait to assume value.")
+
     def assertToolkitControlDestroyedInGui(self, control, timeout=1.0):
         """
         Assert that the given toolkit control is destroyed if we run the GUI
@@ -67,7 +119,7 @@ class GuiTestCase(TestCase, UnittestTools):
 
         Parameters
         ----------
-        controll : toolkit control
+        control : toolkit control
             The toolkit control being watched.
         timeout : float
             Maximum length of time to wait for the control to be destroyed,
@@ -78,13 +130,15 @@ class GuiTestCase(TestCase, UnittestTools):
         self.failureException
             If the control is not destroyed within the given timeout.
         """
-        def condition():
-            is_destroyed(control)
+        if control is None:
+            return
 
         try:
-            self.event_loop_until_condition(condition, timeout)
+            self.event_loop_until_control_destroyed(control, timeout)
         except ConditionTimeoutError:
             self.fail("Timed out waiting for control to be destroyed.")
+
+    # -- Event loop methods -------------------------------------------------
 
     def set_trait_in_event_loop(self, object, trait, value, condition=None,
                                 timeout=10):
@@ -144,7 +198,26 @@ class GuiTestCase(TestCase, UnittestTools):
         ConditionTimeoutError
             If the timeout occurs before the condition is True.
         """
-        self.gui.call_later(callable)
+        self.gui.invoke_later(callable)
+        self.event_loop_until_condition(condition, timeout)
+
+    def event_loop_until_trait_value(self, object, trait, value, timeout=10.0):
+        """Run the real application event loop until a change notification for
+        all of the specified traits is received.
+
+        Paramaters
+        ----------
+        traits_object : HasTraits instance
+            The object on which to listen for a trait events
+        traits : one or more str
+            The names of the traits to listen to for events
+        timeout : float, optional, keyword only
+            Number of seconds to run the event loop in the case that the trait
+            change does not occur. Default value is 10.0.
+        """
+        def condition():
+            return getattr(object, trait) == value
+
         self.event_loop_until_condition(condition, timeout)
 
     def event_loop_until_traits_change(self, object, *traits, **kw):
@@ -191,27 +264,27 @@ class GuiTestCase(TestCase, UnittestTools):
             for trait, handler in handlers.items():
                 object.on_trait_change(handler, trait, remove=True)
 
-    def event_loop_until_widget_destroyed(self, widget, timeout=10.0):
-        """ Delete a widget and run the event loop.
+    def event_loop_until_control_destroyed(self, control, timeout=10.0):
+        """ Run the event loop until a control is destroyed.
 
         This doesn't actually delete the underlying control, just tests
         whether the widget still holds a reference to it.
 
         Parameters
         ----------
-        widget : IWidget
-            The widget to delete.
+        control : toolkit control
+            The widget to ensure is destroyed.
         timeout : float
             The number of seconds to run the event loop in the event that the
-            widget is not deleted.
+            toolkit control is not deleted.
 
         Raises
         ------
         ConditionTimeoutError
-            If the timeout occurs before the widget is deleted.
+            If the timeout occurs before the control is deleted.
         """
         def condition():
-            return widget.control is None
+            return is_destroyed(control)
 
         self.event_loop_until_condition(condition, timeout)
 
@@ -276,11 +349,29 @@ class GuiTestCase(TestCase, UnittestTools):
         ConditionTimeoutError
             If the timeout occurs before the widget is destroyed.
         """
-        def condition():
-            is_destroyed(control)
-
         destroy_later(control)
-        self.event_loop_until_condition(condition, timeout)
+        self.event_loop_until_control_destroyed(control, timeout)
+
+    def destroy_widget(self, widget, timeout=1.0):
+        """ Schedule a Widget for destruction and run the event loop.
+
+        Parameters
+        ----------
+        control : IWidget
+            The widget to destroy.
+        timeout : float
+            The number of seconds to run the event loop in the event that the
+            widget is not destroyed.
+
+        Raises
+        ------
+        ConditionTimeoutError
+            If the timeout occurs before the widget is destroyed.
+        """
+        if widget.control is not None:
+            control = widget.control
+            widget.destroy()
+            self.event_loop_until_control_destroyed(control, timeout)
 
     # ------------------------------------------------------------------------
     #  'TestCase' protocol
@@ -300,10 +391,11 @@ class GuiTestCase(TestCase, UnittestTools):
         wrapped_activate = Window.activate
 
         def new_activate(self, should_raise=True):
-            wrapped_activate(self, False)
+            if self.control is not None:
+                wrapped_activate(self, False)
 
         self.pyface_raise_patch = mock.patch(
-            Window.activate,
+            'pyface.window.Window.activate',
             new_callable=lambda: new_activate)
         self.pyface_raise_patch.start()
 
@@ -329,12 +421,13 @@ class GuiTestCase(TestCase, UnittestTools):
                 break
 
         # ensure any remaining top-level widgets get closed
-        if self.gui.top_level_widgets():
+        if self.gui.top_level_windows():
             self.gui.invoke_later(self.gui.close_all, force=True)
             self.event_loop_helper.event_loop_with_timeout(repeat=5)
 
         # manually process events one last time
         self.gui.process_events()
+        self.gui.clear_pending_events()
 
         # uninstall the Pyface raise patch
         self.pyface_raise_patch.stop()

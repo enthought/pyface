@@ -61,6 +61,11 @@ class Window(MWindow, Widget):
     #: The window has been deactivated.
     deactivated = Event
 
+    # 'IWidget' interface ----------------------------------------------------
+
+    #: Windows should be hidden until explicitly shown.
+    visible = False
+
     # Private interface ------------------------------------------------------
 
     #: Shadow trait for position.

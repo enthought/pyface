@@ -136,7 +136,12 @@ class GUI(MGUI, HasTraits):
         """ Stop the GUI event loop. """
 
         logger.debug("---------- stopping GUI event loop ----------")
+        print('about to stop')
         wx.GetApp().ExitMainLoop()
+        print('stopped')
+
+    def clear_event_queue(self):
+        wx.GetApp().DeletePendingEvents()
 
     def top_level_windows(self):
         return wx.GetTopLevelWindows()

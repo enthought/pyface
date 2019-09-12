@@ -18,7 +18,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Unicode
+from traits.api import Bool, HasTraits, Property, Unicode, provides
 from pyface.util.guisupport import start_event_loop_qt4
 
 # Local imports.
@@ -158,9 +158,9 @@ class GUI(MGUI, HasTraits):
     # Property handlers -----------------------------------------------------
 
     def _get_app(self):
-        app = wx.GetApp()
+        app = QtCore.QCoreApplication.instance()
         if app is None:
-            app = wx.App()
+            app = QtGui.QApplication()
         return app
 
     def _get_quit_on_last_window_close(self):

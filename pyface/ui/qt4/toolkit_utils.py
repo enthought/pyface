@@ -12,7 +12,7 @@
 # Import the toolkit specific version.
 from __future__ import absolute_import
 
-import sip
+from pyface.qt import is_pyqt
 
 
 # ----------------------------------------------------------------------------
@@ -27,8 +27,7 @@ def destroy_later(control):
     control : QObject subclass
         The object that is to be destroyed.
     """
-    if not sip.isdeleted(control):
-        control.destroyLater()
+    control.deleteLater()
 
 
 def is_destroyed(control):
@@ -39,4 +38,9 @@ def is_destroyed(control):
     control : QObject subclass
         The control that is being tested.
     """
-    return sip.isdeleted(control)
+    if is_pyqt:
+        import sip
+        return sip.isdeleted(control)
+    else:
+        import shiboken
+        return not shiboken.isValid(control)
