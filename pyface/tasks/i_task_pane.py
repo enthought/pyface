@@ -10,19 +10,19 @@ class ITaskPane(Interface):
     """ The base interface for all panes (central and dock) in a Task.
     """
 
-    # The pane's identifier, unique within a Task.
+    #: The pane's identifier, unique within a Task.
     id = Str
 
-    # The pane's user-visible name.
+    #: The pane's user-visible name.
     name = Unicode
 
-    # The toolkit-specific control that represents the pane.
+    #: The toolkit-specific control that represents the pane.
     control = Any
 
-    # Does the pane currently have focus?
+    #: Does the pane currently have focus?
     has_focus = Bool
 
-    # The task with which the pane is associated. Set by the framework.
+    #: The task with which the pane is associated. Set by the framework.
     task = Instance(Task)
 
     ###########################################################################

@@ -60,7 +60,7 @@ class ActionSchema(Schema):
         return []
 
     def create(self, children):
-        """ Create the appropriate PyFace Action instance. """
+        """ Create the appropriate Pyface Action instance. """
 
         traits = dict(id=self.id)
         return self.action_factory(**traits)
@@ -147,7 +147,7 @@ class ToolBarSchema(Schema):
 
     def create(self, children):
         traits = dict(id=self.id, name=self.name, image_size=self.image_size,
-                      orientation=self.orientation, 
+                      orientation=self.orientation,
                       show_divider=self.show_divider,
                       show_tool_names=self.show_tool_names)
         return self.tool_bar_manager_factory(*children, **traits)

@@ -123,8 +123,15 @@ class Dialog(MDialog, Window):
         return panel
 
     def _show_modal(self):
-        self.control.setWindowModality(QtCore.Qt.ApplicationModal)
-        retval = self.control.exec_()
+        dialog = self.control
+        dialog.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        # Suppress the context-help button hint, which
+        # results in a non-functional "?" button on Windows.
+        dialog.setWindowFlags(
+            dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
+
+        retval = dialog.exec_()
         return _RESULT_MAP[retval]
 
     ###########################################################################

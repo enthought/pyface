@@ -1,4 +1,5 @@
-from traits.testing.unittest_tools import unittest
+import unittest
+
 from traits.etsconfig.api import ETSConfig
 
 from pyface.base_toolkit import find_toolkit, import_toolkit

@@ -2,8 +2,9 @@ import mock
 import tempfile
 import shutil
 import os
+import unittest
 
-from traits.testing.unittest_tools import unittest, UnittestTools
+from traits.testing.unittest_tools import UnittestTools
 
 from pyface.workbench.perspective import Perspective
 from pyface.workbench.api import Workbench

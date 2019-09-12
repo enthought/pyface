@@ -73,7 +73,7 @@ class IViewTreeNode(TreeNode):
     for adaptation we would have to work out a way for the rest of the
     'TreeNode' code to access the adapter, not the original object. We could,
     of course override every method, but that seems a little, errr, tedious.
-    We could probably do with something like in the PyFace tree where there
+    We could probably do with something like in the Pyface tree where there
     is a method that returns the actual object that we want to manipulate.
 
     """

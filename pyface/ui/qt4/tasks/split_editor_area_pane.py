@@ -6,7 +6,7 @@ from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
     MEditorAreaPane
 from traits.api import Bool, cached_property, Callable, Dict, Instance, List, \
     on_trait_change, Property, provides, Str
-from pyface.qt import QtCore, QtGui
+from pyface.qt import is_qt4, QtCore, QtGui
 from pyface.action.api import Action, Group, MenuManager
 from pyface.tasks.task_layout import PaneItem, Tabbed, Splitter
 from pyface.mimedata import PyMimeData
@@ -173,58 +173,74 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     ##########################################################################
 
     def get_context_menu(self, pos):
-        """ Returns a context menu containing split/collapse actions
+        """ Return a context menu containing split/collapse actions.
 
-        pos : position (in global coordinates) where the context menu was
-        requested
+        Parameters
+        ----------
+        pos : QtCore.QPoint
+            Mouse position in global coordinates for which the context menu was
+            requested.
+
+        Returns
+        -------
+        menu : pyface.action.menu_manager.MenuManager or None
+            Context menu, or None if the given position doesn't correspond
+            to any of the tab widgets.
         """
         menu = MenuManager()
-        splitter = None
 
-        splitter = None
         for tabwidget in self.tabwidgets():
-            # obtain tabwidget's bounding rectangle in global coordinates
-            global_rect = QtCore.QRect(tabwidget.mapToGlobal(QtCore.QPoint(0, 0)),
-                                        tabwidget.size())
-            if global_rect.contains(pos):
+            widget_pos = tabwidget.mapFromGlobal(pos)
+            if tabwidget.rect().contains(widget_pos):
                 splitter = tabwidget.parent()
-
-        # no split/collapse context menu for positions outside any tabwidget
-        # region
-        if not splitter:
-            return
+                break
+        else:
+            # no split/collapse context menu for positions outside any
+            # tabwidget region
+            return None
 
         # add split actions (only show for non-empty tabwidgets)
         if not splitter.is_empty():
-            actions = [Action(id='split_hor', name='Create new pane to the right',
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Horizontal)),
-                       Action(id='split_ver', name='Create new pane to the bottom',
-                       on_perform=lambda : splitter.split(orientation=
-                        QtCore.Qt.Vertical))]
-
-            splitgroup = Group(*actions, id='split')
-            menu.append(splitgroup)
+            split_group = Group(
+                Action(
+                    id='split_hor',
+                    name='Create new pane to the right',
+                    on_perform=lambda: splitter.split(
+                        orientation=QtCore.Qt.Horizontal)
+                ),
+                Action(
+                    id='split_ver',
+                    name='Create new pane below',
+                    on_perform=lambda: splitter.split(
+                        orientation=QtCore.Qt.Vertical)
+                ),
+                id='split',
+            )
+            menu.append(split_group)
 
         # add collapse action (only show for collapsible splitters)
         if splitter.is_collapsible():
             if splitter is splitter.parent().leftchild:
-                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
                     text = 'Merge with right pane'
                 else:
                     text = 'Merge with bottom pane'
             else:
-                if splitter.parent().orientation() is QtCore.Qt.Horizontal:
+                if splitter.parent().orientation() == QtCore.Qt.Horizontal:
                     text = 'Merge with left pane'
                 else:
                     text = 'Merge with top pane'
-            actions = [Action(id='merge', name=text,
-                        on_perform=lambda : splitter.collapse())]
 
-            collapsegroup = Group(*actions, id='collapse')
-            menu.append(collapsegroup)
+            collapse_group = Group(
+                Action(
+                    id='merge',
+                    name=text,
+                    on_perform=lambda: splitter.collapse()
+                ),
+                id='collapse',
+            )
+            menu.append(collapse_group)
 
-        # return QMenu object
         return menu
 
     ###########################################################################
@@ -567,7 +583,7 @@ class EditorAreaWidget(QtGui.QSplitter):
         self.addWidget(self.rightchild)
 
         # set equal sizes of splits
-        self.setSizes([orig_size/2,orig_size/2])
+        self.setSizes([orig_size//2, orig_size//2])
 
         # make the rightchild's tabwidget active & show its empty widget
         self.editor_area.active_tabwidget = self.rightchild.tabwidget()
@@ -813,6 +829,10 @@ class DraggableTabWidget(QtGui.QTabWidget):
 
     def contextMenuEvent(self, event):
         """ To show collapse context menu even on empty tabwidgets
+
+        Parameters
+        ----------
+        event : QtGui.QContextMenuEvent
         """
         local_pos = event.pos()
         if (self.empty_widget is not None or
@@ -821,8 +841,9 @@ class DraggableTabWidget(QtGui.QTabWidget):
             # we are displaying the default empty widget.
             global_pos = self.mapToGlobal(local_pos)
             menu = self.editor_area.get_context_menu(pos=global_pos)
-            qmenu = menu.create_menu(self)
-            qmenu.exec_(global_pos)
+            if menu is not None:
+                qmenu = menu.create_menu(self)
+                qmenu.exec_(global_pos)
 
     def dragEnterEvent(self, event):
         """ Re-implemented to highlight the tabwidget on drag enter
@@ -939,18 +960,18 @@ class TabDragObject(object):
         painter.drawPrimitive(QtGui.QStyle.PE_FrameTabBarBase, optTabBase)
 
         # region of active tab
-        if QtGui.qt_api=='pyqt5':
-            pixmap1 = tabBar.grab()
-        else: # pyqt4 (grabWidget was removed in pyqt5)
+        if is_qt4:  # grab wasn't introduced until Qt5
             pixmap1 = QtGui.QPixmap.grabWidget(tabBar, tab_rect)
+        else:
+            pixmap1 = tabBar.grab(tab_rect)
 
-        painter.drawPixmap(0,0,pixmap1) #tab_rect.topLeft(), pixmap1)
+        painter.drawPixmap(0, 0, pixmap1)
 
         # region of the page widget
-        if QtGui.qt_api=='pyqt5':
-            pixmap2 = self.widget.grab()
-        else: # pyqt4 (grabWidget was removed in pyqt5)
+        if is_qt4:
             pixmap2 = QtGui.QPixmap.grabWidget(self.widget)
+        else:
+            pixmap2 = self.widget.grab()
         painter.drawPixmap(0, tab_rect.height(), size.width(), size.height(), pixmap2)
 
         # finish painting

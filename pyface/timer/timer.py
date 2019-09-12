@@ -50,7 +50,6 @@ class Timer(CallbackTimer):
     def Start(self, millisecs=None):
         """ Alias for `start` to match old API.
         """
-        self._is_active = True
         if millisecs is not None:
             self.interval = millisecs / 1000.0
 
@@ -59,10 +58,9 @@ class Timer(CallbackTimer):
     def Stop(self):
         """ Alias for `stop` to match old API.
         """
-        self._is_active = False
         self.stop()
 
     def IsRunning(self):
         """ Alias for is_running property to match old API.
         """
-        return self.is_running
+        return self._active

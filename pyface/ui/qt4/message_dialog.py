@@ -65,6 +65,7 @@ class MessageDialog(MMessageDialog, Dialog):
                 self.title, self.message, QtGui.QMessageBox.Ok, parent)
         message_box.setInformativeText(self.informative)
         message_box.setDetailedText(self.detail)
+        message_box.setEscapeButton(QtGui.QMessageBox.Ok)
 
         if self.size != (-1, -1):
             message_box.resize(*self.size)

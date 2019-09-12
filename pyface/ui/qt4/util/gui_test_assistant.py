@@ -11,7 +11,11 @@ import contextlib
 import gc
 import threading
 
-import mock
+import six
+if six.PY2:
+    import mock
+else:
+    import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
@@ -37,9 +41,14 @@ class GuiTestAssistant(UnittestTools):
             qt_app=self.qt_app,
             gui=self.gui
         )
-        self.traitsui_raise_patch = mock.patch(
-            'traitsui.qt4.ui_base._StickyDialog.raise_')
-        self.traitsui_raise_patch.start()
+        try:
+            import traitsui.api
+        except ImportError:
+            self.traitsui_raise_patch = None
+        else:
+            self.traitsui_raise_patch = mock.patch(
+                'traitsui.qt4.ui_base._StickyDialog.raise_')
+            self.traitsui_raise_patch.start()
 
         def new_activate(self):
             self.control.activateWindow()
@@ -68,7 +77,8 @@ class GuiTestAssistant(UnittestTools):
 
         self.qt_app.flush()
         self.pyface_raise_patch.stop()
-        self.traitsui_raise_patch.stop()
+        if self.traitsui_raise_patch is not None:
+            self.traitsui_raise_patch.stop()
 
         del self.pyface_raise_patch
         del self.traitsui_raise_patch
@@ -137,6 +147,34 @@ class GuiTestAssistant(UnittestTools):
                 condition, timeout=timeout)
         except ConditionTimeoutError:
             self.fail('Timed out waiting for condition')
+
+    def assertEventuallyTrueInGui(self, condition, timeout=10.0):
+        """
+        Assert that the given condition becomes true if we run the GUI
+        event loop for long enough.
+
+        This assertion runs the real Qt event loop, polling the condition
+        and returning as soon as the condition becomes true. If the condition
+        does not become true within the given timeout, the assertion fails.
+
+        Parameters
+        ----------
+        condition : callable() -> bool
+            Callable accepting no arguments and returning a bool.
+        timeout : float
+            Maximum length of time to wait for the condition to become
+            true, in seconds.
+
+        Raises
+        ------
+        self.failureException
+            If the condition does not become true within the given timeout.
+        """
+        try:
+            self.event_loop_helper.event_loop_until_condition(
+                condition, timeout=timeout)
+        except ConditionTimeoutError:
+            self.fail("Timed out waiting for condition to become true.")
 
     @contextlib.contextmanager
     def assertTraitChangesInEventLoop(self, obj, trait, condition, count=1,

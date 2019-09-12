@@ -1,4 +1,5 @@
-from traits.testing.unittest_tools import unittest
+import unittest
+
 from traits.etsconfig.api import ETSConfig
 
 # Skip tests if Enaml is not installed or we're using the wx backend.

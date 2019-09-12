@@ -103,7 +103,7 @@ class ViewMenuManager(MenuManager):
     def _clear_group(self, group):
         """ Remove all items in a group. """
 
-        # fixme: Fix this API in PyFace so there is only one call!
+        # fixme: Fix this API in Pyface so there is only one call!
         group.destroy()
         group.clear()
 

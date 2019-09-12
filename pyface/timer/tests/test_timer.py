@@ -4,7 +4,7 @@ from unittest import TestCase, skipIf
 
 from pyface.toolkit import toolkit_object
 from ..i_timer import perf_counter
-from ..timer import CallbackTimer, EventTimer
+from ..timer import CallbackTimer, EventTimer, Timer
 
 GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
 no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
@@ -50,6 +50,45 @@ class TestEventTimer(TestCase, GuiTestAssistant):
             self.assertTrue(timer.active)
         finally:
             timer.stop()
+        self.assertFalse(timer.active)
+
+    def test_timer_method(self):
+        timer = EventTimer.timer()
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+
+    def test_single_shot_method(self):
+        timer = EventTimer.single_shot()
+        handler = ConditionHandler()
+        timer.on_trait_change(handler.callback, 'timeout')
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: not timer.active
+            )
+            self.assertFalse(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+        self.assertEqual(handler.count, 1)
+
+    def test_set_active(self):
+        timer = EventTimer()
+
+        self.assertIsNone(timer.repeat)
+        self.assertFalse(timer.active)
+        timer.active = True
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.active = False
         self.assertFalse(timer.active)
 
     def test_timeout_event(self):
@@ -164,6 +203,48 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
             timer.stop()
         self.assertFalse(timer.active)
 
+    def test_timer_method(self):
+        handler = ConditionHandler()
+
+        timer = CallbackTimer.timer(callback=handler.callback)
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+
+    def test_single_shot_method(self):
+        handler = ConditionHandler()
+
+        timer = CallbackTimer.single_shot(callback=handler.callback)
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: not timer.active
+            )
+            self.assertFalse(timer.active)
+        finally:
+            timer.stop()
+        self.assertFalse(timer.active)
+        self.assertEqual(handler.count, 1)
+
+    def test_set_active(self):
+        handler = ConditionHandler()
+        timer = CallbackTimer(callback=handler.callback)
+
+        self.assertIsNone(timer.repeat)
+        self.assertFalse(timer.active)
+        timer.active = True
+        try:
+            self.assertTrue(timer.active)
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.active)
+        finally:
+            timer.active = False
+        self.assertFalse(timer.active)
+
     def test_timeout_event(self):
         handler = ConditionHandler()
         timer = CallbackTimer(callback=handler.callback)
@@ -264,3 +345,85 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
             self.assertFalse(timer.active)
         finally:
             timer.stop()
+
+
+@skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+class TestTimer(TestCase, GuiTestAssistant):
+    """ Test the CallbackTimer. """
+
+    def setUp(self):
+        GuiTestAssistant.setUp(self)
+
+    def tearDown(self):
+        GuiTestAssistant.tearDown(self)
+
+    def test_basic(self):
+        handler = ConditionHandler()
+
+        timer = Timer(250, handler.callback)
+        try:
+            self.assertTrue(timer.IsRunning())
+            self.event_loop_helper.event_loop()
+            self.assertTrue(timer.IsRunning())
+        finally:
+            timer.Stop()
+
+        self.assertFalse(timer.IsRunning())
+
+    def test_restart(self):
+        handler = ConditionHandler()
+
+        timer = Timer(20, handler.callback)
+        timer.Stop()
+
+        # Ensure that it is indeed stopped.
+        self.assertFalse(timer.IsRunning())
+        count = handler.count
+
+        # Wait to see if the timer has indeed stopped.
+        self.event_loop_helper.event_loop()
+        time.sleep(0.1)
+        self.assertEqual(handler.count, count)
+
+        timer.Start()
+        try:
+            self.assertTrue(timer.IsRunning())
+            self.event_loop_helper.event_loop_until_condition(
+                lambda: handler.count > count
+            )
+            self.assertTrue(timer.IsRunning())
+        finally:
+            timer.Stop()
+
+        self.assertFalse(timer.IsRunning())
+
+    def test_repeat(self):
+        handler = ConditionHandler()
+
+        start_time = perf_counter()
+        timer = Timer(250, handler.callback)
+        try:
+            self.assertTrue(timer.IsRunning())
+            self.event_loop_helper.event_loop_until_condition(
+                handler.called_n(4)
+            )
+            self.assertTrue(timer.IsRunning())
+        finally:
+            timer.Stop()
+
+        self.assertFalse(timer.IsRunning())
+
+        self.assertEqual(handler.count, 4)
+
+        expected_times = [start_time + 0.2 * i + 0.2 for i in range(4)]
+
+        self.assertTrue(
+            all(
+                actual >= expected
+                for actual, expected in zip(handler.times, expected_times)
+            ),
+            "Expected calls after {} times, got {})".format(
+                expected_times,
+                handler.times
+            )
+        )

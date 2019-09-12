@@ -19,6 +19,14 @@ import unittest
 
 from traits.api import HasTraits, TraitError
 from traits.testing.unittest_tools import UnittestTools
+try:
+    from traits.trait_handlers import (
+        CALLABLE_AND_ARGS_DEFAULT_VALUE,
+        UNSPECIFIED_DEFAULT_VALUE
+    )
+except ImportError:
+    UNSPECIFIED_DEFAULT_VALUE = -1
+    CALLABLE_AND_ARGS_DEFAULT_VALUE = 7
 
 from ..i_image_resource import IImageResource
 from ..image_resource import ImageResource
@@ -132,6 +140,22 @@ class TestHasMargin(unittest.TestCase, UnittestTools):
         self.assertEqual(margin.bottom, 0)
         self.assertEqual(margin.left, 0)
         self.assertEqual(margin.right, 0)
+
+    def test_unspecified_default(self):
+        trait = HasMargin()
+        trait.default_value_type = UNSPECIFIED_DEFAULT_VALUE
+
+        (dvt, dv) = trait.get_default_value()
+
+        self.assertEqual(dvt, CALLABLE_AND_ARGS_DEFAULT_VALUE)
+        self.assertEqual(
+            dv,
+            (
+                Margin,
+                (),
+                {'top': 0, 'bottom': 0, 'left': 0, 'right': 0},
+            )
+        )
 
     def test_default_int(self):
 
@@ -347,6 +371,22 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
         self.assertEqual(border.bottom, 0)
         self.assertEqual(border.left, 0)
         self.assertEqual(border.right, 0)
+
+    def test_unspecified_default(self):
+        trait = HasBorder()
+        trait.default_value_type = UNSPECIFIED_DEFAULT_VALUE
+
+        (dvt, dv) = trait.get_default_value()
+
+        self.assertEqual(dvt, CALLABLE_AND_ARGS_DEFAULT_VALUE)
+        self.assertEqual(
+            dv,
+            (
+                Border,
+                (),
+                {'top': 0, 'bottom': 0, 'left': 0, 'right': 0},
+            )
+        )
 
     def test_default_int(self):
 

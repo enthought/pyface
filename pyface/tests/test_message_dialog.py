@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
 import platform
-
-from traits.testing.unittest_tools import unittest
+import unittest
 
 from ..message_dialog import MessageDialog, information, warning, error
 from ..constant import OK

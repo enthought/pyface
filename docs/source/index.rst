@@ -4,7 +4,7 @@ Welcome to the Pyface Documentation!
 
 Pyface contains a toolkit-independent GUI abstraction layers, used to support
 the "visualization" features of the Traits package. Thus, you can write code
-in the abstraction of the PyFace API and the selected toolkit and backend take
+in the abstraction of the Pyface API and the selected toolkit and backend take
 care of the details of displaying them.
 
 Pyface

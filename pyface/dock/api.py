@@ -28,26 +28,18 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from dock_window \
-    import DockWindow, DockWindowHandler
+from .dock_window import DockWindow, DockWindowHandler
 
-from dock_sizer \
-    import DockSizer, DockSection, DockRegion, DockControl, DockStyle, \
-           DOCK_LEFT, DOCK_RIGHT, DOCK_TOP, DOCK_BOTTOM, SetStructureHandler, \
-           add_feature, DockGroup
+from .dock_sizer import DockSizer, DockSection, DockRegion, DockControl, \
+    DockStyle, DOCK_LEFT, DOCK_RIGHT, DOCK_TOP, DOCK_BOTTOM, \
+    SetStructureHandler, add_feature, DockGroup
 
-from idockable \
-    import IDockable
+from .idockable import IDockable
 
-from idock_ui_provider \
-    import IDockUIProvider
+from .idock_ui_provider import IDockUIProvider
 
-from ifeature_tool \
-    import IFeatureTool
+from .ifeature_tool import IFeatureTool
 
-from dock_window_shell \
-    import DockWindowShell
+from .dock_window_shell import DockWindowShell
 
-from dock_window_feature \
-    import DockWindowFeature
-
+from .dock_window_feature import DockWindowFeature

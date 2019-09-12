@@ -27,17 +27,11 @@
 
 import wx
 
-from traits.api \
-    import HasPrivateTraits, Instance, Bool, Event, Color
+from traits.api import HasPrivateTraits, Instance, Bool, Event, Color
 
-from pyface.wx.drag_and_drop \
-    import PythonDropTarget, PythonDropSource
-
-from dock_sizer \
-    import DockControl, FEATURE_EXTERNAL_DRAG
-
-from ifeature_tool \
-    import IFeatureTool
+from pyface.wx.drag_and_drop import PythonDropTarget, PythonDropSource
+from .dock_sizer import DockControl, FEATURE_EXTERNAL_DRAG
+from .ifeature_tool import IFeatureTool
 
 #-------------------------------------------------------------------------------
 #  'FeatureBar' class:

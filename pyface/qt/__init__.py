@@ -20,8 +20,11 @@ QtAPIs = [
     ('pyqt', 'PyQt4'),
 ]
 
+
 def prepare_pyqt4():
-    # Set PySide compatible APIs.
+    """ Set PySide compatible APIs. """
+    # This is not needed for Python 3 and can be removed when we no longer
+    # support Python 2.
     import sip
     try:
         sip.setapi('QDate', 2)
@@ -46,21 +49,33 @@ def prepare_pyqt4():
             # don't expect the above on Python 3, so just re-raise
             raise
 
+
 qt_api = None
 
 # have we already imported a Qt API?
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
+        if qt_api == 'pyqt':
+            # set the PyQt4 APIs
+            # this is a likely place for failure - pyface really wants to be
+            # imported first, before eg. matplotlib
+            prepare_pyqt4()
         break
 else:
     # does our environment give us a preferred API?
     qt_api = os.environ.get('QT_API')
+    if qt_api == 'pyqt':
+        # set the PyQt4 APIs
+        prepare_pyqt4()
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
+            if api_name == 'pyqt':
+                # set the PyQt4 APIs
+                prepare_pyqt4()
             importlib.import_module(module)
             importlib.import_module('.QtCore', module)
             qt_api = api_name
@@ -76,7 +91,6 @@ elif qt_api not in {api_name for api_name, module in QtAPIs}:
            "'pyside, 'pyside2', 'pyqt' or 'pyqt5'") % qt_api
     raise RuntimeError(msg)
 
-
-if qt_api == 'pyqt':
-    # set the PyQt4 APIs
-    prepare_pyqt4()
+# useful constants
+is_qt4 = (qt_api in {'pyqt', 'pyside'})
+is_qt5 = (qt_api in {'pyqt5', 'pyside2'})

@@ -24,11 +24,8 @@
 #  Imports:
 #-------------------------------------------------------------------------------
 
-from dock_window_feature \
-    import DockWindowFeature
-
-from pyface.image_resource \
-    import ImageResource
+from pyface.image_resource import ImageResource
+from .dock_window_feature import DockWindowFeature
 
 #-------------------------------------------------------------------------------
 #  'FeatureTool' class:
