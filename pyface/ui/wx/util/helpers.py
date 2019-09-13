@@ -1,5 +1,7 @@
 from contextlib import contextmanager
+import os
 from threading import Timer, Event
+import sys
 
 
 def wait_until(condition, timeout, *args, **kwargs):
