@@ -11,11 +11,11 @@
 import contextlib
 import threading
 
-from traits.api import HasStrictTraits, Instance
+from traits.api import Callable, HasStrictTraits, Instance
 
 from pyface.gui import GUI
 from pyface.i_gui import IGUI
-from pyface.timer.api import CallbackTimer
+from pyface.timer.api import CallbackTimer, EventTimer
 
 
 class ConditionTimeoutError(RuntimeError):
@@ -75,20 +75,14 @@ class EventLoopHelper(HasStrictTraits):
         ConditionTimeoutError
             If the timeout occurs before the condition is True.
         """
-        def callback():
-            print('condition', condition, condition())
-            if condition():
-                self.gui.stop_event_loop()
 
         with self.dont_quit_when_last_window_closed():
             condition_timer = CallbackTimer.timer(
-                callback=callback,
+                stop_condition=condition,
                 interval=0.05,
+                expire=timeout,
             )
-            timeout_timer = CallbackTimer.single_shot(
-                callback=self.gui.stop_event_loop,
-                interval=timeout,
-            )
+            condition_timer.on_trait_change(self._on_stop, 'active')
 
             try:
                 self.gui.start_event_loop()
@@ -96,45 +90,39 @@ class EventLoopHelper(HasStrictTraits):
                     raise ConditionTimeoutError(
                         'Timed out waiting for condition')
             finally:
-                timeout_timer.stop()
+                condition_timer.on_trait_change(
+                    self._on_stop, 'active', remove=True)
                 condition_timer.stop()
 
     def event_loop_with_timeout(self, repeat=2, timeout=10):
-        """ Run the event loop at least repeat times in timeout seconds.
-
-        This runs the real event loop but additionally ensures that all
-        pending events get run at repeat times via gui.process_events.
+        """ Run the event loop for timeout seconds.
 
         Parameters
         ----------
-        repeat : int
-            Number of times to process events. Default is 2.
         timeout: float, optional, keyword only
-            Number of seconds to run the event loop in the case that the trait
-            change does not occur. Default value is 10.0.
-
-        Raises
-        ------
-        ConditionTimeoutError
-            If the timeout occurs before the loop is repeated enough times.
+            Number of seconds to run the event loop. Default value is 10.0.
         """
-        condition = threading.Event()
+        with self.dont_quit_when_last_window_closed():
+            repeat_timer = EventTimer.timer(
+                repeat=repeat,
+                interval=0.05,
+                expire=timeout,
+            )
+            repeat_timer.on_trait_change(self._on_stop, 'active')
 
-        def repeat_loop(condition, repeat):
-            """ Manually process events repeat times.
-            """
-            self.gui.process_events()
-            print(repeat, condition.is_set())
-            repeat = repeat - 1
-            if repeat <= 0:
-                self.gui.invoke_later(condition.set)
-                print(repeat, condition.is_set())
-            else:
-                self.gui.invoke_later(
-                    repeat_loop, condition=condition, repeat=repeat
-                )
+            try:
+                self.gui.start_event_loop()
+                if repeat_timer.repeat > 0:
+                    msg = 'Timed out waiting for repetition, {} remaining'
+                    raise ConditionTimeoutError(
+                        msg.format(repeat_timer.repeat)
+                    )
+            finally:
+                repeat_timer.on_trait_change(
+                    self._on_stop, 'active', remove=True)
+                repeat_timer.stop()
 
-        self.gui.invoke_later(repeat_loop, repeat=repeat, condition=condition)
-
-        self.event_loop_until_condition(
-            condition=condition.is_set, timeout=timeout)
+    def _on_stop(self, active):
+        """ Trait handler that stops event loop. """
+        if not active:
+            self.gui.stop_event_loop()

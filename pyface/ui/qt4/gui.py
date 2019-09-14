@@ -128,6 +128,9 @@ class GUI(MGUI, HasTraits):
         logger.debug("---------- stopping GUI event loop ----------")
         QtGui.QApplication.quit()
 
+    def clear_event_queue(self):
+        self.process_events()
+
     def top_level_windows(self):
         return self.app.topLevelWidgets()
 

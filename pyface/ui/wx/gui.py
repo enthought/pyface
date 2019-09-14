@@ -115,6 +115,9 @@ class GUI(MGUI, HasTraits):
         if self._splash_screen is not None:
             self._splash_screen.close()
 
+        if self.app.IsMainLoopRunning():
+            raise RuntimeError('double call')
+
         # Make sure that we only set the 'started' trait after the main loop
         # has really started.
         self.set_trait_after(10, self, "started", True)
@@ -128,7 +131,7 @@ class GUI(MGUI, HasTraits):
             self.invoke_later(_mac_os_x_hack)
 
         logger.debug("---------- starting GUI event loop ----------")
-        start_event_loop_wx()
+        self.app.MainLoop()
 
         self.started = False
 
@@ -136,12 +139,12 @@ class GUI(MGUI, HasTraits):
         """ Stop the GUI event loop. """
 
         logger.debug("---------- stopping GUI event loop ----------")
-        print('about to stop')
-        wx.GetApp().ExitMainLoop()
-        print('stopped')
+        self.app.ExitMainLoop()
+        # XXX this feels wrong, but seems to be needed in some cases
+        self.process_events(False)
 
     def clear_event_queue(self):
-        wx.GetApp().DeletePendingEvents()
+        self.app.DeletePendingEvents()
 
     def top_level_windows(self):
         return wx.GetTopLevelWindows()
@@ -180,7 +183,7 @@ class GUI(MGUI, HasTraits):
         return app
 
     def _get_quit_on_last_window_close(self):
-        return wx.GetApp().GetExitOnFrameDelete()
+        return self.app.GetExitOnFrameDelete()
 
     def _set_quit_on_last_window_close(self, value):
-        return wx.GetApp().SetExitOnFrameDelete(value)
+        return self.app.SetExitOnFrameDelete(value)

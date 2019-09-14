@@ -68,15 +68,16 @@ class TestWindow(GuiTestCase):
 
     def test_show(self):
         # test that showing works as expected
-        self.window._create()
-
-        self.gui.invoke_later(self.window.show, True)
-        self.assertTraitsChangeInGui(self.window, 'visible')
-        self.assertTrue(self.window.visible)
+        self.window.open()
+        self.event_loop_until_trait_value(self.window, 'visible', True)
 
         self.gui.invoke_later(self.window.show, False)
         self.assertTraitsChangeInGui(self.window, 'visible')
         self.assertFalse(self.window.visible)
+
+        self.gui.invoke_later(self.window.show, True)
+        self.assertTraitsChangeInGui(self.window, 'visible')
+        self.assertTrue(self.window.visible)
 
     def test_activate(self):
         # test that activation works as expected
@@ -85,15 +86,32 @@ class TestWindow(GuiTestCase):
 
         other_window = Window()
         other_window.open()
-        self.event_loop_until_trait_value(other_window, 'visible', True)
+        try:
+            self.event_loop_until_trait_value(other_window, 'visible', True)
 
-        self.gui.invoke_later(self.window.activate)
-        self.assertTraitsChangeInGui(self.window, 'activated')
+            self.gui.invoke_later(self.window.activate)
+            self.assertTraitsChangeInGui(self.window, 'activated')
 
-        self.gui.invoke_later(other_window.activate)
-        self.assertTraitsChangeInGui(other_window, 'activated')
+            self.gui.invoke_later(other_window.activate)
+            self.assertTraitsChangeInGui(self.window, 'deactivated')
+        finally:
+            self.destroy_widget(other_window)
 
-        self.destroy_widget(other_window)
+    @unittest.skipIf(not is_qt, "Cannot test under WxPython")
+    def test_activate_no_raise(self):
+        # test that activation works as expected
+        self.window.open()
+        self.event_loop_until_trait_value(self.window, 'visible', True)
+
+        other_window = Window()
+        other_window.open()
+        try:
+            self.event_loop_until_trait_value(other_window, 'visible', True)
+
+            self.gui.invoke_later(self.window.activate, False)
+            self.assertTraitsChangeInGui(self.window, 'activated')
+        finally:
+            self.destroy_widget(other_window)
 
     def test_position(self):
         # test that default position works as expected
@@ -152,20 +170,21 @@ class TestWindow(GuiTestCase):
     def test_show_event(self):
         self.window.open()
         self.event_loop_until_trait_value(self.window, 'visible', True)
-        self.window.visible = False
+        self.window.show(False)
+        self.event_loop_until_trait_value(self.window, 'visible', False)
 
-        self.gui.invoke_later(self.window.control.show)
+        self.gui.invoke_later(self.window.show, True)
 
-        self.assertTraitsChangeInGui(self.window, 'visible', count=1)
+        self.assertTraitsChangeInGui(self.window, 'visible')
         self.assertTrue(self.window.visible)
 
     def test_hide_event(self):
         self.window.open()
         self.event_loop_until_trait_value(self.window, 'visible', True)
 
-        self.gui.invoke_later(self.window.control.hide)
+        self.gui.invoke_later(self.window.show, False)
 
-        self.assertTraitsChangeInGui(self.window, 'visible', count=1)
+        self.assertTraitsChangeInGui(self.window, 'visible')
         self.assertFalse(self.window.visible)
 
     @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')

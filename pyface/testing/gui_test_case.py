@@ -17,6 +17,7 @@ import six
 from traits.testing.unittest_tools import UnittestTools
 
 from pyface.gui import GUI
+from pyface.timer.timer import CallbackTimer
 from pyface.window import Window
 from pyface.toolkit_utils import destroy_later, is_destroyed
 from .event_loop_helper import ConditionTimeoutError, EventLoopHelper
@@ -27,7 +28,7 @@ else:
     import unittest.mock as mock
 
 
-class GuiTestCase(TestCase, UnittestTools):
+class GuiTestCase(UnittestTools, TestCase):
     """ Base TestCase class for GUI test cases. """
 
     # ------------------------------------------------------------------------
@@ -313,23 +314,7 @@ class GuiTestCase(TestCase, UnittestTools):
         self.event_loop_helper.event_loop_until_condition(condition, timeout)
 
     def event_loop_with_timeout(self, repeat=1, timeout=10):
-        """ Run the event loop at least repeat times in timeout seconds.
-
-        This runs the real event loop but additionally ensures that all
-        pending events get run at repeat times via gui.process_events.
-
-        Parameters
-        ----------
-        repeat : int
-            Number of times to process events. Default is 2.
-        timeout: float, optional, keyword only
-            Number of seconds to run the event loop in the case that the trait
-            change does not occur. Default value is 10.0.
-
-        Raises
-        ------
-        ConditionTimeoutError
-            If the timeout occurs before the loop is repeated enough times.
+        """ Run the event loop for timeout seconds.
         """
         self.event_loop_helper.event_loop_with_timeout(repeat, timeout)
 
@@ -384,20 +369,16 @@ class GuiTestCase(TestCase, UnittestTools):
         self.app = self.gui.app
         self.event_loop_helper = EventLoopHelper(gui=self.gui)
 
-        # Window.activate raises the window to the top by default.
-        # On some OS this also activates the application, potentially
-        # interrupting the user while the tests are running.
-        # We patch the  Window.activate to never raise.
-        wrapped_activate = Window.activate
+        self.gui.quit_on_last_window_close = False
 
-        def new_activate(self, should_raise=True):
-            if self.control is not None:
-                wrapped_activate(self, False)
-
-        self.pyface_raise_patch = mock.patch(
-            'pyface.window.Window.activate',
-            new_callable=lambda: new_activate)
-        self.pyface_raise_patch.start()
+        # clean-up actions (LIFO)
+        self.addCleanup(self._delete_attrs, "gui", "app", "event_loop_helper")
+        self.addCleanup(self._restore_quit_on_last_window_close)
+        self.addCleanup(self.gui.clear_event_queue)
+        self.addCleanup(self.gui.process_events)
+        self.addCleanup(self._close_top_level_windows)
+        self.addCleanup(self._gc_collect)
+        self.addCleanup(self.event_loop_helper.event_loop, 5, False)
 
         super(GuiTestCase, self).setUp()
 
@@ -409,10 +390,10 @@ class GuiTestCase(TestCase, UnittestTools):
         events in the event queue to minimize the likelihood of one test
         interfering with another.
         """
-        # process events to clear out any remaining events left by
-        # misbehaving tests
-        self.event_loop_with_timeout(repeat=5)
 
+        super(GuiTestCase, self).tearDown()
+
+    def _gc_collect(self):
         # Some top-level widgets may only be present due to cyclic garbage not
         # having been collected; force a garbage collection before we decide to
         # close windows. This may need several rounds.
@@ -420,21 +401,26 @@ class GuiTestCase(TestCase, UnittestTools):
             if not gc.collect():
                 break
 
-        # ensure any remaining top-level widgets get closed
+    def _close_top_level_windows(self):
+        # clean
         if self.gui.top_level_windows():
-            self.gui.invoke_later(self.gui.close_all, force=True)
-            self.event_loop_helper.event_loop_with_timeout(repeat=5)
+            def on_stop(active):
+                if not active:
+                    self.gui.stop_event_loop()
 
-        # manually process events one last time
-        self.gui.process_events()
-        self.gui.clear_pending_events()
+            repeat_timer = CallbackTimer(
+                repeat=5,
+                callback=self.gui.close_all,
+                kwargs={'force': True}
+            )
+            repeat_timer.start()
+            self.event_loop_helper.event_loop_with_timeout(timeout=1)
+            del repeat_timer
 
-        # uninstall the Pyface raise patch
-        self.pyface_raise_patch.stop()
+    def _restore_quit_on_last_window_close(self):
+        self.gui.quit_on_last_window_close = True
 
+    def _delete_attrs(self, *attrs):
         # clean up objects to GC any remaining state
-        del self.event_loop_helper
-        del self.app
-        del self.gui
-
-        super(GuiTestCase, self).tearDown()
+        for attr in attrs:
+            delattr(self, attr)
