@@ -20,7 +20,7 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 is_pyqt4_linux = (is_qt and qt_api == 'pyqt' and platform.system() == 'Linux')
-is_pyside_windows = (is_qt and qt_api == 'pyside' and platform.system() == 'Windows')
+is_qt_windows = (is_qt and platform.system() == 'Windows')
 
 
 class TestWindow(GuiTestCase):
@@ -134,7 +134,7 @@ class TestWindow(GuiTestCase):
 
         self.assertTraitValueInGui(self.window, "position", (100, 100))
 
-    @unittest.skipIf(is_pyside_windows, "Sizing problematic on pyside and windows")
+    @unittest.skipIf(is_qt_windows, "Sizing problematic on qt and windows")
     def test_size(self):
         # test that default size works as expected
         self.window.size = (100, 100)
