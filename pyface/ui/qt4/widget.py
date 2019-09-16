@@ -11,13 +11,14 @@
 
 
 # Major package imports.
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, provides
 
 # Local imports.
 from pyface.i_widget import IWidget, MWidget
+from .toolkit_utils import is_destroyed
 
 
 @provides(IWidget)
@@ -76,8 +77,9 @@ class Widget(MWidget, HasTraits):
     def destroy(self):
         self._remove_event_listeners()
         if self.control is not None:
-            self.control.hide()
-            self.control.deleteLater()
+            if not is_destroyed(self.control):
+                self.control.hide()
+                self.control.deleteLater()
             self.control = None
 
     def _add_event_listeners(self):
@@ -85,7 +87,7 @@ class Widget(MWidget, HasTraits):
 
     def _remove_event_listeners(self):
         if self._event_filter is not None:
-            if self.control is not None:
+            if self.control is not None and not is_destroyed(self.control):
                 self.control.removeEventFilter(self._event_filter)
             self._event_filter = None
 
