@@ -20,6 +20,7 @@ no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
 is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 is_pyqt4_linux = (is_qt and qt_api == 'pyqt' and platform.system() == 'Linux')
+is_pyside_windows = (is_qt and qt_api == 'pyside' and platform.system() == 'Windows')
 
 
 class TestWindow(GuiTestCase):
@@ -94,7 +95,7 @@ class TestWindow(GuiTestCase):
             self.gui.invoke_later(self.window.activate)
             self.assertTraitsChangeInGui(self.window, 'activated')
 
-            self.gui.invoke_later(other_window.activate)
+            self.gui.invoke_later(self.window.activate, False)
             self.assertTraitsChangeInGui(self.window, 'deactivated')
         finally:
             self.destroy_widget(other_window)
