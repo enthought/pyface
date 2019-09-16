@@ -18,10 +18,13 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
 
 # Local imports.
-from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from pyface.i_confirmation_dialog import (
+    IConfirmationDialog, MConfirmationDialog
+)
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
 from .dialog import Dialog, _RESULT_MAP
+from .toolkit_utils import is_destroyed
 
 
 @provides(IConfirmationDialog)
@@ -124,7 +127,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     def _show_modal(self):
         self.control.setWindowModality(QtCore.Qt.ApplicationModal)
         retval = self.control.exec_()
-        if self.control is None:
+        if self.control is None or is_destroyed(self.control):
             # dialog window closed
             if self.cancel:
                 # if cancel is available, close is Cancel
