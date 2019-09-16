@@ -9,9 +9,8 @@
 
 
 import contextlib
-import threading
 
-from traits.api import Callable, HasStrictTraits, Instance
+from traits.api import HasStrictTraits, Instance
 
 from pyface.gui import GUI
 from pyface.i_gui import IGUI

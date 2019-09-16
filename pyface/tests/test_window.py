@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import os
 import platform
 import unittest
 
@@ -79,6 +80,7 @@ class TestWindow(GuiTestCase):
         self.assertTraitsChangeInGui(self.window, 'visible')
         self.assertTrue(self.window.visible)
 
+    @unittest.skipIf(not os.environ.get('PYFACE_PATCH_ACTIVATE', False), "Activate is patched.")
     def test_activate(self):
         # test that activation works as expected
         self.window.open()

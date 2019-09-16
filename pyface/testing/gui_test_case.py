@@ -7,8 +7,8 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 
-from contextlib import contextmanager
 import gc
+import os
 import threading
 from unittest import TestCase
 
@@ -369,10 +369,23 @@ class GuiTestCase(UnittestTools, TestCase):
         self.app = self.gui.app
         self.event_loop_helper = EventLoopHelper(gui=self.gui)
 
+        if not os.environ.get('PYFACE_PATCH_ACTIVATE', False):
+            original_activated = Window.activate
+
+            def activate_patch(self, should_raise=True):
+                return original_activated(False)
+
+            self._raise_patch = mock.patch.object(
+                Window, 'activate', activate_patch)
+            self._raise_patch.start()
+        else:
+            self._raise_patch = None
+
         self.gui.quit_on_last_window_close = False
 
         # clean-up actions (LIFO)
         self.addCleanup(self._delete_attrs, "gui", "app", "event_loop_helper")
+        self.addCleanup(self._restore_window_activate)
         self.addCleanup(self._restore_quit_on_last_window_close)
         self.addCleanup(self.gui.clear_event_queue)
         self.addCleanup(self.gui.process_events)
@@ -419,6 +432,10 @@ class GuiTestCase(UnittestTools, TestCase):
 
     def _restore_quit_on_last_window_close(self):
         self.gui.quit_on_last_window_close = True
+
+    def _restore_window_activate(self):
+        if self._raise_patch is not None:
+            self._raise_patch.stop()
 
     def _delete_attrs(self, *attrs):
         # clean up objects to GC any remaining state
