@@ -12,7 +12,7 @@
 # Import the toolkit specific version.
 from __future__ import absolute_import
 
-from pyface.qt import is_pyqt
+from pyface.qt import is_pyqt, qt_api
 
 
 # ----------------------------------------------------------------------------
@@ -41,6 +41,9 @@ def is_destroyed(control):
     if is_pyqt:
         import sip
         return sip.isdeleted(control)
+    elif qt_api == 'pyside2':
+        import shiboken2
+        return not shiboken2.isValid(control)
     else:
         import shiboken
         return not shiboken.isValid(control)
