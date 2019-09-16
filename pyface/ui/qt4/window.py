@@ -126,7 +126,7 @@ class Window(MWindow, Widget):
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
             super(Window, self).destroy()
-            if not is_destroyed(self.control):
+            if not is_destroyed(control):
                 control.close()
 
     # -------------------------------------------------------------------------
