@@ -18,6 +18,10 @@ ModalDialogTester = toolkit_object(
 )
 no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
 
+# XXX Since this is experimenting with new GuiTester API,
+# turn off modal dialog testing
+no_modal_dialog_tester = True
+
 is_pyqt5 = (is_qt and qt_api == 'pyqt5')
 is_pyqt4_linux = (is_qt and qt_api == 'pyqt' and platform.system() == 'Linux')
 is_qt_windows = (is_qt and platform.system() == 'Windows')
