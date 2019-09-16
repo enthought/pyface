@@ -22,6 +22,7 @@ from traits.api import (
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .gui import GUI
+from .toolkit_utils import is_destroyed
 from .widget import Widget
 
 
@@ -125,7 +126,8 @@ class Window(MWindow, Widget):
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
             super(Window, self).destroy()
-            control.close()
+            if not is_destroyed(self.control):
+                control.close()
 
     # -------------------------------------------------------------------------
     # Private interface.
