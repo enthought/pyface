@@ -134,6 +134,7 @@ class TestWindow(GuiTestCase):
 
         self.assertTraitValueInGui(self.window, "position", (100, 100))
 
+    @unittest.skipIf(is_pyside_windows, "Sizing problematic on pyside and windows")
     def test_size(self):
         # test that default size works as expected
         self.window.size = (100, 100)
