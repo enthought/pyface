@@ -100,7 +100,7 @@ class TestWindow(GuiTestCase):
         finally:
             self.destroy_widget(other_window)
 
-    @unittest.skipIf(not is_qt, "Cannot test under WxPython")
+    @unittest.skipIf(not os.environ.get('PYFACE_PATCH_ACTIVATE', False), "Activate is patched.")
     def test_activate_no_raise(self):
         # test that activation works as expected
         self.window.open()
