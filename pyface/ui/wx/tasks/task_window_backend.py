@@ -9,7 +9,7 @@ from pyface.wx.aui import aui
 from traits.api import Instance, List, Str
 
 # Local imports.
-from main_window_layout import MainWindowLayout
+from .main_window_layout import MainWindowLayout
 from pyface.tasks.i_task_window_backend import MTaskWindowBackend
 from pyface.tasks.task_layout import PaneItem, TaskLayout
 
