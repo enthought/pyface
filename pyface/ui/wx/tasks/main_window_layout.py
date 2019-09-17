@@ -6,7 +6,7 @@ import logging
 from traits.api import Any, HasTraits
 
 # Local imports.
-from dock_pane import AREA_MAP, INVERSE_AREA_MAP
+from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import LayoutContainer, PaneItem, Tabbed, \
      Splitter, HSplitter, VSplitter
 
