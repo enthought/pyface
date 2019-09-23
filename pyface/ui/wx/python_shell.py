@@ -62,7 +62,7 @@ class PythonShell(MPythonShell, Widget):
         super(PythonShell, self).__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent)
+        self.control = self._create_control(parent, **traits)
 
         # Set up to be notified whenever a Python statement is executed:
         self.control.handlers.append(self._on_command_executed)
@@ -166,8 +166,8 @@ class PythonShell(MPythonShell, Widget):
     # 'IWidget' interface.
     ###########################################################################
 
-    def _create_control(self, parent):
-        shell = PyShell(parent, -1)
+    def _create_control(self, parent, **kwargs):
+        shell = PyShell(parent, -1, **kwargs)
 
         # Listen for key press events.
         wx.EVT_CHAR(shell, self._wx_on_char)
