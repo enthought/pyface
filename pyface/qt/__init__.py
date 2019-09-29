@@ -25,7 +25,11 @@ def prepare_pyqt4():
     """ Set PySide compatible APIs. """
     # This is not needed for Python 3 and can be removed when we no longer
     # support Python 2.
-    import sip
+    try:
+        # required for PyQt >= 4.12.2
+        from PyQt4 import sip
+    except ImportError:
+        import sip
     try:
         sip.setapi('QDate', 2)
         sip.setapi('QDateTime', 2)
@@ -56,7 +60,7 @@ qt_api = None
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
-        if qt_api == 'pyqt':
+        if qt_api == 'pyqt' and sys.version_info[0] <= 2:
             # set the PyQt4 APIs
             # this is a likely place for failure - pyface really wants to be
             # imported first, before eg. matplotlib
