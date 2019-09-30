@@ -25,7 +25,11 @@ def prepare_pyqt4():
     """ Set PySide compatible APIs. """
     # This is not needed for Python 3 and can be removed when we no longer
     # support Python 2.
-    import sip
+    try:
+        # required for PyQt >= 4.12.2
+        from PyQt4 import sip
+    except ImportError:
+        import sip
     try:
         sip.setapi('QDate', 2)
         sip.setapi('QDateTime', 2)
@@ -35,19 +39,15 @@ def prepare_pyqt4():
         sip.setapi('QUrl', 2)
         sip.setapi('QVariant', 2)
     except ValueError as exc:
-        if sys.version_info[0] <= 2:
-            # most likely caused by something else setting the API version
-            # before us: try to give a better error message to direct the user
-            # how to fix.
-            msg = exc.args[0]
-            msg += (". Pyface expects PyQt API 2 under Python 2. "
-                    "Either import Pyface before any other Qt-using packages, "
-                    "or explicitly set the API before importing any other "
-                    "Qt-using packages.")
-            raise ValueError(msg)
-        else:
-            # don't expect the above on Python 3, so just re-raise
-            raise
+        # most likely caused by something else setting the API version
+        # before us: try to give a better error message to direct the user
+        # how to fix.
+        msg = exc.args[0]
+        msg += (". Pyface expects PyQt API 2 under Python 2. "
+                "Either import Pyface before any other Qt-using packages, "
+                "or explicitly set the API before importing any other "
+                "Qt-using packages.")
+        raise ValueError(msg)
 
 
 qt_api = None
@@ -56,7 +56,7 @@ qt_api = None
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
-        if qt_api == 'pyqt':
+        if qt_api == 'pyqt' and sys.version_info[0] <= 2:
             # set the PyQt4 APIs
             # this is a likely place for failure - pyface really wants to be
             # imported first, before eg. matplotlib
