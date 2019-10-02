@@ -24,7 +24,7 @@ from wx.py.shell import Shell as PyShellBase
 import wx
 
 # Enthought library imports.
-from traits.api import Event, provides
+from traits.api import Event, provides, String
 
 # Private Enthought library imports.
 from traits.util.clean_strings import python_name
@@ -49,6 +49,8 @@ class PythonShell(MPythonShell, Widget):
 
     key_pressed = Event(KeyPressedEvent)
 
+    welcome_message = String
+
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -62,7 +64,7 @@ class PythonShell(MPythonShell, Widget):
         super(PythonShell, self).__init__(**traits)
 
         # Create the toolkit-specific control that represents the widget.
-        self.control = self._create_control(parent, **traits)
+        self.control = self._create_control(parent)
 
         # Set up to be notified whenever a Python statement is executed:
         self.control.handlers.append(self._on_command_executed)
@@ -166,8 +168,8 @@ class PythonShell(MPythonShell, Widget):
     # 'IWidget' interface.
     ###########################################################################
 
-    def _create_control(self, parent, **kwargs):
-        shell = PyShell(parent, -1, **kwargs)
+    def _create_control(self, parent):
+        shell = PyShell(parent, -1, introText=self.welcome_message)
 
         # Listen for key press events.
         wx.EVT_CHAR(shell, self._wx_on_char)
