@@ -47,7 +47,7 @@ class TestImageResource(unittest.TestCase):
         image = image_resource.create_image()
         self.assertIsNotNone(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash'))
+                         os.path.join(SEARCH_PATH, 'splash.png'))
 
     def test_create_image_search_path_string(self):
         image_resource = ImageResource('splash', SEARCH_PATH)
@@ -56,7 +56,7 @@ class TestImageResource(unittest.TestCase):
         image = image_resource.create_image()
         self.assertIsNotNone(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash'))
+                         os.path.join(SEARCH_PATH, 'splash.png'))
 
     def test_create_image_missing(self):
         image_resource = ImageResource('doesnt_exist.png')
@@ -89,5 +89,5 @@ class TestImageResource(unittest.TestCase):
         image = image_resource.create_image()
         size = image_resource.image_size(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash'))
+                         os.path.join(SEARCH_PATH, 'splash.png'))
         self.assertEqual(size, (450, 296))
