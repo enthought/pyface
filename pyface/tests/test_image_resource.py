@@ -41,22 +41,22 @@ class TestImageResource(unittest.TestCase):
         self.assertEqual(image_resource.absolute_path, IMAGE_PATH)
 
     def test_create_image_search_path(self):
-        image_resource = ImageResource('splash.jpg', [SEARCH_PATH])
+        image_resource = ImageResource('splash', [SEARCH_PATH])
         self.assertEqual(image_resource.search_path,
                          [SEARCH_PATH, pyface.tests])
         image = image_resource.create_image()
         self.assertIsNotNone(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash.jpg'))
+                         os.path.join(SEARCH_PATH, 'splash'))
 
     def test_create_image_search_path_string(self):
-        image_resource = ImageResource('splash.jpg', SEARCH_PATH)
+        image_resource = ImageResource('splash', SEARCH_PATH)
         self.assertEqual(image_resource.search_path,
                          [SEARCH_PATH, pyface.tests])
         image = image_resource.create_image()
         self.assertIsNotNone(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash.jpg'))
+                         os.path.join(SEARCH_PATH, 'splash'))
 
     def test_create_image_missing(self):
         image_resource = ImageResource('doesnt_exist.png')
@@ -85,9 +85,9 @@ class TestImageResource(unittest.TestCase):
 
     @unittest.skipIf(is_pyqt4_windows, "QPixmap bug returns (0, 0).  Issue #301.")  # noqa
     def test_image_size_search_path(self):
-        image_resource = ImageResource('splash.jpg', [SEARCH_PATH])
+        image_resource = ImageResource('splash', [SEARCH_PATH])
         image = image_resource.create_image()
         size = image_resource.image_size(image)
         self.assertEqual(image_resource.absolute_path,
-                         os.path.join(SEARCH_PATH, 'splash.jpg'))
+                         os.path.join(SEARCH_PATH, 'splash'))
         self.assertEqual(size, (450, 296))
