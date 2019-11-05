@@ -92,7 +92,7 @@ introspect.getAttributeNames = getAttributeNames
 
 # This is also a modified version of the function which does not use
 # str(object).
-def getAllAttributeNames(object):
+def getAllAttributeNames(obj):
     """Return dict of all attributes, including inherited, for an object.
 
     Recursively walk through a class and all base classes.
@@ -106,18 +106,18 @@ def getAllAttributeNames(object):
     try:
         # This could(?) fail if the type is poorly defined without
         # even a name.
-        key = type(object).__name__
+        key = type(obj).__name__
     except:
         key = 'anonymous'
     # Wake up sleepy objects - a hack for ZODB objects in "ghost" state.
-    wakeupcall = dir(object)
+    wakeupcall = dir(obj)
     del wakeupcall
     # Get attributes available through the normal convention.
-    attributes = dir(object)
+    attributes = dir(obj)
     attrdict[(key, 'dir', len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
-        attributes = list(object.__dict__.keys())
+        attributes = list(obj.__dict__.keys())
         attributes.sort()
     except:  # Must catch all because object might have __getattr__.
         pass
@@ -125,11 +125,11 @@ def getAllAttributeNames(object):
         attrdict[(key, '__dict__', len(attributes))] = attributes
     # For a class instance, get the attributes for the class.
     try:
-        klass = object.__class__
+        klass = obj.__class__
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
-        if klass is object:
+        if klass is obj:
             # Break a circular reference. This happens with extension
             # classes.
             pass
@@ -137,14 +137,14 @@ def getAllAttributeNames(object):
             attrdict.update(getAllAttributeNames(klass))
     # Also get attributes from any and all parent classes.
     try:
-        bases = object.__bases__
+        bases = obj.__bases__
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
-        if isinstance(bases, types.TupleType):
+        if isinstance(bases, tuple):
             for base in bases:
-                if type(base) is types.TypeType:
-                    # Break a circular reference. Happens in Python 2.2.
+                if isinstance(base, (tuple, object)):
+                    # Break a circular reference. Happens in Python 2.2. & 3.6 (prob others)
                     pass
                 else:
                     attrdict.update(getAllAttributeNames(base))
