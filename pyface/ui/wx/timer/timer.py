@@ -12,11 +12,16 @@
 """A `wx.Timer` subclass that invokes a specified callback periodically.
 """
 
+import logging
+
 import wx
 
-from traits.api import Bool, Instance, Property
+from traits.api import Instance
 
 from pyface.timer.i_timer import BaseTimer
+
+
+logger = logging.getLogger(__name__)
 
 
 class CallbackTimer(wx.Timer):
@@ -25,8 +30,11 @@ class CallbackTimer(wx.Timer):
         self.timer = timer
 
     def Notify(self):
-        self.timer.perform()
-        wx.GetApp().Yield(True)
+        try:
+            self.timer.perform()
+        except Exception:
+            self.Stop()
+            logger.exception("Error in timer.peform")
 
 
 class PyfaceTimer(BaseTimer):

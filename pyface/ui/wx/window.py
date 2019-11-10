@@ -74,9 +74,13 @@ class Window(MWindow, Widget):
     # 'IWindow' interface.
     # -------------------------------------------------------------------------
 
-    def activate(self):
+    def activate(self, should_raise=True):
         self.control.Iconize(False)
-        self.control.Raise()
+        if should_raise:
+            self.control.Raise()
+        else:
+            evt = wx.ActivateEvent(active=True)
+            wx.PostEvent(self.control, evt)
 
     def show(self, visible):
         self.control.Show(visible)
@@ -165,7 +169,6 @@ class Window(MWindow, Widget):
 
     def _wx_on_activate(self, event):
         """ Called when the frame is being activated or deactivated. """
-
         if event.GetActive():
             self.activated = self
         else:
@@ -175,7 +178,6 @@ class Window(MWindow, Widget):
 
     def _wx_on_show(self, event):
         """ Called when the frame is being activated or deactivated. """
-
         self.visible = event.IsShown()
 
         event.Skip()

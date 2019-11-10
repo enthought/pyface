@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-19, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -20,7 +20,7 @@ import os
 
 # Enthought library imports.
 from traits.etsconfig.api import ETSConfig
-from traits.api import Bool, Interface, Unicode
+from traits.api import Any, Bool, Interface, Property, Unicode
 
 
 # Logging.
@@ -32,12 +32,18 @@ class IGUI(Interface):
 
     #### 'GUI' interface ######################################################
 
+    #: A reference to the toolkit application singleton.
+    app = Property
+
     #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
     #: displayed)?
     busy = Bool(False)
 
     #: Has the GUI's event loop been started?
     started = Bool(False)
+
+    #: Whether the GUI quits on last window close.
+    quit_on_last_window_close = Property(Bool)
 
     #: A directory on the local file system that we can read and write to at
     #: will.  This is used to persist layout information etc.  Note that
@@ -161,6 +167,19 @@ class IGUI(Interface):
 
     def stop_event_loop(self):
         """ Stop the GUI event loop. """
+
+    def top_level_windows(self):
+        """ Return all top-level windows.
+
+        This does not include windows which are children of other
+        windows.
+        """
+
+    def close_all(self):
+        """ Close all top-level windows.
+
+        This may or may not exit the application, depending on other settings.
+        """
 
 
 class MGUI(object):

@@ -23,8 +23,9 @@ except ImportError:
 
 __requires__ = ['traits']
 __extras_require__ = {
-    'wx': ['wxpython>=2.8.10', 'numpy'],
-    'pyqt': ['pyqt>=4.10', 'pygments'],
-    'pyqt5': ['pyqt>=5', 'pygments'],
-    'pyside': ['pyside>=1.2', 'pygments'],
+    'wx': ['wxpython>=2.8.10,<4.0.0', 'numpy'],
+    'pyqt': ['pyqt4>=4.10', 'pygments'],
+    'pyqt5': ['pyqt5', 'pygments'],
+    'pyside': ['pyside>=1.2', 'pygments', 'shiboken'],
+    'pyside2': ['pyside2', 'pygments', 'shiboken2'],
 }

@@ -18,7 +18,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Unicode
+from traits.api import Bool, HasTraits, Property, Unicode, provides
 from pyface.util.guisupport import start_event_loop_qt4
 
 # Local imports.
@@ -38,10 +38,22 @@ class GUI(MGUI, HasTraits):
 
     #### 'GUI' interface ######################################################
 
+    #: A reference to the toolkit application singleton.
+    app = Property
+
+    #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
+    #: displayed)?
     busy = Bool(False)
 
+    #: Has the GUI's event loop been started?
     started = Bool(False)
 
+    #: Whether the GUI quits on last window close.
+    quit_on_last_window_close = Property(Bool)
+
+    #: A directory on the local file system that we can read and write to at
+    #: will.  This is used to persist layout information etc.  Note that
+    #: individual toolkits will have their own directory.
     state_location = Unicode
 
     ###########################################################################
@@ -77,11 +89,15 @@ class GUI(MGUI, HasTraits):
 
     @staticmethod
     def process_events(allow_user_events=True):
+        # process events posted via postEvent()
+        QtCore.QCoreApplication.sendPostedEvents()
+
         if allow_user_events:
             events = QtCore.QEventLoop.AllEvents
         else:
             events = QtCore.QEventLoop.ExcludeUserInputEvents
 
+        # process events from the window system/OS
         QtCore.QCoreApplication.processEvents(events)
 
     @staticmethod
@@ -112,6 +128,19 @@ class GUI(MGUI, HasTraits):
         logger.debug("---------- stopping GUI event loop ----------")
         QtGui.QApplication.quit()
 
+    def clear_event_queue(self):
+        self.process_events()
+
+    def top_level_windows(self):
+        return self.app.topLevelWidgets()
+
+    def close_all(self, force=False):
+        if force:
+            for window in self.top_level_windows():
+                window.deleteLater()
+        else:
+            self.app.closeAllWindows()
+
     ###########################################################################
     # Trait handlers.
     ###########################################################################
@@ -128,6 +157,20 @@ class GUI(MGUI, HasTraits):
             QtGui.QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         else:
             QtGui.QApplication.restoreOverrideCursor()
+
+    # Property handlers -----------------------------------------------------
+
+    def _get_app(self):
+        app = QtCore.QCoreApplication.instance()
+        if app is None:
+            app = QtGui.QApplication()
+        return app
+
+    def _get_quit_on_last_window_close(self):
+        return self.app.quitOnLastWindowClosed()
+
+    def _set_quit_on_last_window_close(self, value):
+        return self.app.setQuitOnLastWindowClosed(value)
 
 
 class _FutureCall(QtCore.QObject):

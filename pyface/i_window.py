@@ -103,6 +103,16 @@ class IWindow(IWidget):
             Whether or not the window is closed.
         """
 
+    def activate(self, should_raise=True):
+        """ Activate the Window
+
+        Parameters
+        ----------
+        should_raise : bool
+            Whether or not the window should be raised to the front
+            of the z-order as well as being given user focus.
+        """
+
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog.
 

@@ -25,7 +25,7 @@ import sys
 import wx
 
 # Enthought library imports.
-from traits.api import Bool, HasTraits, provides, Unicode
+from traits.api import Bool, HasTraits, Property, provides, Unicode
 from pyface.util.guisupport import start_event_loop_wx
 
 # Local imports.
@@ -42,10 +42,22 @@ class GUI(MGUI, HasTraits):
 
     #### 'GUI' interface ######################################################
 
+    #: A reference to the toolkit application singleton.
+    app = Property
+
+    #: Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
+    #: displayed)?
     busy = Bool(False)
 
+    #: Has the GUI's event loop been started?
     started = Bool(False)
 
+    #: Whether the GUI quits on last window close.
+    quit_on_last_window_close = Property(Bool)
+
+    #: A directory on the local file system that we can read and write to at
+    #: will.  This is used to persist layout information etc.  Note that
+    #: individual toolkits will have their own directory.
     state_location = Unicode
 
     ###########################################################################
@@ -103,12 +115,15 @@ class GUI(MGUI, HasTraits):
         if self._splash_screen is not None:
             self._splash_screen.close()
 
+        if self.app.IsMainLoopRunning():
+            raise RuntimeError('double call')
+
         # Make sure that we only set the 'started' trait after the main loop
         # has really started.
         self.set_trait_after(10, self, "started", True)
 
         # A hack to force menus to appear for applications run on Mac OS X.
-        if sys.platform == 'darwin':
+        if sys.platform == 'darwin' and not self.top_level_windows():
             def _mac_os_x_hack():
                 f = wx.Frame(None, -1)
                 f.Show(True)
@@ -116,7 +131,7 @@ class GUI(MGUI, HasTraits):
             self.invoke_later(_mac_os_x_hack)
 
         logger.debug("---------- starting GUI event loop ----------")
-        start_event_loop_wx()
+        self.app.MainLoop()
 
         self.started = False
 
@@ -124,7 +139,21 @@ class GUI(MGUI, HasTraits):
         """ Stop the GUI event loop. """
 
         logger.debug("---------- stopping GUI event loop ----------")
-        wx.GetApp().ExitMainLoop()
+        self.app.ExitMainLoop()
+        # XXX this feels wrong, but seems to be needed in some cases
+        self.process_events(False)
+
+    def clear_event_queue(self):
+        self.app.DeletePendingEvents()
+
+    def top_level_windows(self):
+        return wx.GetTopLevelWindows()
+
+    def close_all(self, force=False):
+        for window in self.top_level_windows():
+            closed = window.Close(force)
+            if not closed:
+                break
 
     ###########################################################################
     # Trait handlers.
@@ -145,4 +174,16 @@ class GUI(MGUI, HasTraits):
 
         return
 
-#### EOF ######################################################################
+    # Property handlers -----------------------------------------------------
+
+    def _get_app(self):
+        app = wx.GetApp()
+        if app is None:
+            app = wx.App()
+        return app
+
+    def _get_quit_on_last_window_close(self):
+        return self.app.GetExitOnFrameDelete()
+
+    def _set_quit_on_last_window_close(self, value):
+        return self.app.SetExitOnFrameDelete(value)

@@ -22,6 +22,7 @@ from traits.api import (
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .gui import GUI
+from .toolkit_utils import is_destroyed
 from .widget import Widget
 
 
@@ -61,6 +62,11 @@ class Window(MWindow, Widget):
     #: The window has been deactivated.
     deactivated = Event
 
+    # 'IWidget' interface ----------------------------------------------------
+
+    #: Windows should be hidden until explicitly shown.
+    visible = False
+
     # Private interface ------------------------------------------------------
 
     #: Shadow trait for position.
@@ -73,9 +79,10 @@ class Window(MWindow, Widget):
     # 'IWindow' interface.
     # -------------------------------------------------------------------------
 
-    def activate(self):
+    def activate(self, should_raise=True):
         self.control.activateWindow()
-        self.control.raise_()
+        if should_raise:
+            self.control.raise_()
         # explicitly fire activated trait as signal doesn't create Qt event
         self.activated = self
 
@@ -106,8 +113,6 @@ class Window(MWindow, Widget):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        self._remove_event_listeners()
-
         if self.control is not None:
             # Avoid problems with recursive calls.
             # Widget.destroy() sets self.control to None,
@@ -121,7 +126,8 @@ class Window(MWindow, Widget):
             # which can take a long time and may also attempt to recursively
             # destroy the window again.
             super(Window, self).destroy()
-            control.close()
+            if not is_destroyed(control):
+                control.close()
 
     # -------------------------------------------------------------------------
     # Private interface.

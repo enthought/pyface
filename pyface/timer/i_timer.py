@@ -50,6 +50,9 @@ class ITimer(Interface):
     #: The maximum length of time to run in seconds, or None if no limit.
     expire = Either(None, Float)
 
+    #: A callable that returns True if the timer should stop.
+    stop_condition = Callable
+
     #: Whether or not the timer is currently running.
     active = Bool
 
@@ -131,6 +134,9 @@ class BaseTimer(ABCHasTraits):
     #: The maximum length of time to run in seconds, or None if no limit.
     expire = Either(None, Float)
 
+    #: A callable that returns True if the timer should stop.
+    stop_condition = Callable
+
     #: Property that controls the state of the timer.
     active = Property(Bool, depends_on='_active')
 
@@ -183,6 +189,10 @@ class BaseTimer(ABCHasTraits):
         The timer will stop if repeats is not None and less than 1, or if
         the `_perform` method raises StopIteration.
         """
+        if self.stop_condition is not None and self.stop_condition():
+            self.stop()
+            return
+
         if self.expire is not None:
             if perf_counter() - self._start_time > self.expire:
                 self.stop()
@@ -195,13 +205,14 @@ class BaseTimer(ABCHasTraits):
             self._perform()
         except StopIteration:
             self.stop()
-        except:
+            return
+        except BaseException:
             self.stop()
             raise
-        else:
-            if self.repeat is not None and self.repeat <= 0:
-                self.stop()
-                self.repeat = 0
+
+        if self.repeat is not None and self.repeat <= 0:
+            self.stop()
+            self.repeat = 0
 
     # BaseTimer Protected methods
 
