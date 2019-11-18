@@ -199,7 +199,7 @@ class GuiTestAssistant(UnittestTools):
             change does not occur.
         """
         condition_ = lambda: condition(obj)
-        collector = TraitsChangeCollector(obj=obj, trait=trait)
+        collector = TraitsChangeCollector(obj=obj, trait_name=trait)
 
         collector.start_collecting()
         try:
