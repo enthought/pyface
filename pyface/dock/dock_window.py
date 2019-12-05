@@ -36,7 +36,7 @@ import sys
 from pyface.api import SystemMetrics
 
 from traits.api \
-    import HasPrivateTraits, Instance, Tuple, Property, Any, Str, List, false
+    import HasPrivateTraits, Instance, Tuple, Property, Any, Str, List, Bool
 
 from traits.trait_base \
     import traits_home
@@ -274,7 +274,7 @@ class DockWindow ( HasPrivateTraits ):
     handler_args = Tuple
 
     # Close the parent window if the DockWindow becomes empty:
-    auto_close = false
+    auto_close = Bool(False)
 
     # The DockWindow graphical theme style information:
     theme = Instance( DockWindowTheme, allow_none = False )
@@ -1263,14 +1263,14 @@ class ControlInfo ( HasPrivateTraits ):
     name = Str
 
     # Has the user set the name of the control?
-    user_name = false
+    user_name = Bool(False)
     id = Str
 
     # Style of drag bar/tab:
     style = DockStyle
 
     # Has the user set the style for this control:
-    user_style = false
+    user_style = Bool(False)
 
     #---------------------------------------------------------------------------
     #  Traits view definition:
@@ -1286,4 +1286,3 @@ class ControlInfo ( HasPrivateTraits ):
                         title   = 'Edit properties',
                         kind    = 'modal',
                         buttons = [ 'OK', 'Cancel' ] )
-
