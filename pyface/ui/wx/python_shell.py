@@ -293,7 +293,7 @@ class PyShell(PyShellBase):
         super(PyShellBase, self).Destroy()
 
 
-class _NullIO:
+class _NullIO(object):
     """ A portable /dev/null for use with PythonShell.execute_file.
     """
     def tell(self): return 0

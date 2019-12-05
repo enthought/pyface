@@ -27,7 +27,7 @@ import wx
 import six
 
 
-class Clipboard:
+class Clipboard(object):
     """ The clipboard is used when dragging and dropping Python objects. """
 
     # fixme: This obviously only works within a single process!

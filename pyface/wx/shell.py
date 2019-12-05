@@ -64,7 +64,7 @@ else:  # GTK
             }
 
 
-class ShellFacade:
+class ShellFacade(object):
     """Simplified interface to all shell-related functionality.
 
     This is a semi-transparent facade, in that all attributes of other are
@@ -1129,7 +1129,7 @@ ID_FILLING_SHOW_DOC = wxNewId()
 ID_FILLING_SHOW_MODULE = wxNewId()
 
 
-class ShellMenu:
+class ShellMenu(object):
     """Mixin class to add standard menu items."""
 
     def createMenus(self):
