@@ -22,7 +22,7 @@ from __future__ import absolute_import
 import wx
 from numpy import array, fromstring, reshape, ravel, dtype
 
-from traits.api import Str, Range, Enum, Instance, Event, false
+from traits.api import Bool, Str, Range, Enum, Instance, Event
 
 from .widget import Widget
 from .image_resource import ImageResource
@@ -77,7 +77,7 @@ class ImageButton ( Widget ):
     orientation = Enum( 'vertical', 'horizontal' )
 
     # Is the control selected ('radio' or 'checkbox' style)?
-    selected = false
+    selected = Bool(False)
 
     # Fired when a 'button' or 'toolbar' style control is clicked:
     clicked = Event
