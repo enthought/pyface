@@ -14,7 +14,7 @@
 """ Default base-class for resource factories. """
 
 
-class ResourceFactory:
+class ResourceFactory(object):
     """ Default base-class for resource factories. """
 
     ###########################################################################
