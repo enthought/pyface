@@ -12,6 +12,7 @@ from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
 from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
     TaskWindow
 from pyface.util.guisupport import get_app_qt4
+from pyface.ui.qt4.util.gui_test_assistant import GuiTestAssistant
 from pyface.ui.qt4.util.testing import event_loop
 
 
@@ -46,7 +47,7 @@ class SplitEditorAreaPaneTestTask(Task):
         return self.editor_area
 
 
-class TestEditorAreaWidget(unittest.TestCase):
+class TestEditorAreaWidget(GuiTestAssistant, unittest.TestCase):
     """ Tests for the SplitEditorAreaPane class. """
 
     def _setUp_split(self, parent=None):
