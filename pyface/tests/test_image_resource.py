@@ -90,4 +90,4 @@ class TestImageResource(unittest.TestCase):
         size = image_resource.image_size(image)
         self.assertEqual(image_resource.absolute_path,
                          os.path.join(SEARCH_PATH, 'splash.png'))
-        self.assertEqual(size, (464, 222))
+        self.assertEqual(size, (601, 203))
