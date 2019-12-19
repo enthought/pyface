@@ -1,12 +1,13 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
+# Copyright (c) 2019, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 #
-# Author: Riverbank Computing Limited
+# Author: Riverbank Computing Limited; Enthought, Inc.
 # Description: <Enthought pyface package component>
 #------------------------------------------------------------------------------
 
@@ -46,6 +47,9 @@ _DIALOG_TEXT = '''
       Qt %s<br>
       </p>
       <p>
+      %s
+      </p>
+      <p>
       Copyright &copy; 2003-2010 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
@@ -65,6 +69,8 @@ class AboutDialog(MAboutDialog, Dialog):
 
     additions = List(Unicode)
 
+    copyrights = List(Unicode)
+
     image = Instance(ImageResource, ImageResource('about'))
 
     ###########################################################################
@@ -83,19 +89,8 @@ class AboutDialog(MAboutDialog, Dialog):
             # Set the title.
             self.title = "About %s" % title
 
-        # Load the image to be displayed in the about box.
-        image = self.image.create_image()
-        path = self.image.absolute_path
-
-        # The additional strings.
-        additions = '<br />'.join(self.additions)
-
-        # Get the version numbers.
-        py_version = platform.python_version()
-        qt_version = QtCore.__version__
-
         # Set the page contents.
-        label.setText(_DIALOG_TEXT % (path, additions, py_version, qt_version))
+        label.setText(self._create_html())
 
         # Create the button.
         buttons = QtGui.QDialogButtonBox()
@@ -112,3 +107,22 @@ class AboutDialog(MAboutDialog, Dialog):
         lay.addWidget(buttons)
 
         parent.setLayout(lay)
+
+    def _create_html(self):
+        # Load the image to be displayed in the about box.
+        image = self.image.create_image()
+        path = self.image.absolute_path
+
+        # The additional strings.
+        additions = '<br />'.join(self.additions)
+
+        # Get the version numbers.
+        py_version = platform.python_version()
+        qt_version = QtCore.__version__
+
+        # The additional copyright strings.
+        copyrights = "<br />".join(["Copyright (c) %s" % line
+                                    for line in self.copyrights])
+
+        return _DIALOG_TEXT % (path, additions, py_version, qt_version,
+                               copyrights)
