@@ -1,5 +1,5 @@
 #------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# Copyright (c) 2005-2019, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
@@ -28,6 +28,9 @@ class IAboutDialog(IDialog):
 
     #: Additional strings to be added to the dialog.
     additions = List(Unicode)
+
+    #: Additional copyright strings to be added above the standard ones.
+    copyrights = List(Unicode)
 
     #: The image displayed in the dialog.
     image = Instance(ImageResource, ImageResource('about'))
