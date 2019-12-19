@@ -162,7 +162,7 @@ class ActionManager(HasTraits):
         of groups.  It the item is a string, then a group is created with
         the string as the ``id`` and the new group is appended to the list
         of groups.  If the item is an ActionManagerItem then the item is
-        appended to the manager's defualt group.
+        appended to the manager's default group.
         """
         item = self._prepare_item(item)
         if isinstance(item, Group):
