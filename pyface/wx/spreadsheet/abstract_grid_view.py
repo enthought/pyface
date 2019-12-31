@@ -32,7 +32,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
 
     def __init__(self):
         wx.EvtHandler.__init__(self)
-        wx.EVT_KILL_FOCUS(self, self._on_kill_focus)
+        self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
         return
 
     def _on_kill_focus(self, evt):
@@ -69,7 +69,7 @@ class AbstractGridView(Grid):
         self.edit = False
 
         # this seems like a busy idle ...
-        wx.EVT_IDLE(self, self.OnIdle)
+        self.Bind(wx.EVT_IDLE, self.OnIdle)
 
         # Enthought specific display controls ...
         self.init_labels()

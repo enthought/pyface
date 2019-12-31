@@ -77,7 +77,7 @@ class DockWindowShell ( HasPrivateTraits ):
                                                  wx.FRAME_NO_TASKBAR )
         shell.SetIcon( FrameIcon.create_icon() )
         shell.SetBackgroundColour( SystemMetrics().dialog_background_color )
-        wx.EVT_CLOSE( shell, self._on_close )
+        shell.Bind(wx.EVT_CLOSE, self._on_close )
 
         theme = dock_control.theme
         dw = DockWindow( shell, auto_close = True, theme = theme )
@@ -90,8 +90,8 @@ class DockWindowShell ( HasPrivateTraits ):
         if use_mouse:
             x, y = wx.GetMousePosition()
         else:
-            x, y = old_control.GetPositionTuple()
-            x, y = old_control.GetParent().ClientToScreenXY( x, y )
+            x, y = old_control.GetPosition()
+            x, y = old_control.GetParent().ClientToScreen( x, y )
 
         dx, dy = old_control.GetSize()
         tis    = theme.tab.image_slice
@@ -104,11 +104,11 @@ class DockWindowShell ( HasPrivateTraits ):
 
         # Set the correct window size and position, accounting for the tab size
         # and window borders:
-        shell.SetDimensions( x, y, dx, dy )
-        cdx, cdy = shell.GetClientSizeTuple()
+        shell.SetSize( x, y, dx, dy )
+        cdx, cdy = shell.GetClientSize()
         ex_dx    = dx - cdx
         ex_dy    = dy - cdy
-        shell.SetDimensions( x - (ex_dx / 2) - tis.xleft - tc.left,
+        shell.SetSize( x - (ex_dx / 2) - tis.xleft - tc.left,
                              y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tc.top,
                              dx + ex_dx, dy + ex_dy )
         shell.Show()

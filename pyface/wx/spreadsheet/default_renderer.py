@@ -57,7 +57,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """
         # We have to set the clipping region on the grid's DC,
         # otherwise the text will spill over to the next cell
-        dc.SetClippingRect(rect)
+        dc.SetClippingRegion(rect)
 
         # overwrite anything currently in the cell ...
         dc.SetBackgroundMode(wx.SOLID)

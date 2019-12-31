@@ -186,7 +186,7 @@ class ImageWidget(Widget):
             self._button_down = False
 
         if self._selected is not None:
-            wdx, wdy = self.GetClientSizeTuple()
+            wdx, wdy = self.GetClientSize()
             x        = event.GetX()
             y        = event.GetY()
             if (0 <= x < wdx) and (0 <= y < wdy):
@@ -208,7 +208,7 @@ class ImageWidget(Widget):
         """ Called when the widget needs repainting. """
 
         wdc      = wx.PaintDC( self.control )
-        wdx, wdy = self.control.GetClientSizeTuple()
+        wdx, wdy = self.control.GetClientSize()
         bitmap   = self.bitmap
         bdx      = bitmap.GetWidth()
         bdy      = bitmap.GetHeight()

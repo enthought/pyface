@@ -45,7 +45,7 @@ class Field(MField, Widget):
 
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
-        self.control.SetToolTipString(self.tooltip)
+        self.control.SetToolTip(self.tooltip)
         self.control.Enable(self.enabled)
         self.control.Show(self.visible)
 
@@ -67,11 +67,11 @@ class Field(MField, Widget):
 
     def _get_control_tooltip(self):
         """ Toolkit specific method to get the control's tooltip. """
-        return self.control.GetToolTipString()
+        return self.control.GetToolTipText()
 
     def _set_control_tooltip(self, tooltip):
         """ Toolkit specific method to set the control's tooltip. """
-        self.control.SetToolTipString(tooltip)
+        self.control.SetToolTip(tooltip)
 
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer. """

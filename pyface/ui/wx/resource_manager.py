@@ -20,8 +20,7 @@
 # Standard library imports.
 import os
 import tempfile
-
-from six.moves import cStringIO as StringIO
+from io import BytesIO
 
 # Major package imports.
 import wx
@@ -48,12 +47,7 @@ class PyfaceResourceFactory(ResourceFactory):
 
     def image_from_data(self, data, filename=None):
         """ Creates an image from the specified data. """
-        try:
-            return wx.ImageFromStream(StringIO(data))
-        except:
-            # wx.ImageFromStream is only in wx 2.8 or later(?)
-            if filename is Undefined:
-                return None
+        return wx.Image(BytesIO(data))
 
         handle = None
         if filename is None:

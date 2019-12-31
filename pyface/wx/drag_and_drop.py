@@ -96,7 +96,7 @@ class FileDropTarget(wx.FileDropTarget):
 
 
 # The data format for Python objects!
-PythonObject = wx.CustomDataFormat('PythonObject')
+PythonObject = wx.DataFormat('PythonObject')
 
 
 class PythonDropSource(wx.DropSource):
@@ -124,7 +124,7 @@ class PythonDropSource(wx.DropSource):
 
         # Create our own data format and use it in a custom data object.
         data_object = wx.CustomDataObject(PythonObject)
-        data_object.SetData('dummy')
+        data_object.SetData(b'dummy')
 
         # And finally, create the drop source and begin the drag
         # and drop opperation.
@@ -167,7 +167,7 @@ class PythonDropSource(wx.DropSource):
         return
 
 
-class PythonDropTarget(wx.PyDropTarget):
+class PythonDropTarget(wx.DropTarget):
     """ Drop target for Python objects. """
 
     def __init__(self, handler):

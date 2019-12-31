@@ -279,7 +279,7 @@ class ProgressDialog(MProgressDialog, Window):
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(dialog, wx.ID_CANCEL,
                                               self.cancel_button_label)
-            wx.EVT_BUTTON(dialog, wx.ID_CANCEL, self._on_cancel)
+            dialog.Bind(wx.EVT_BUTTON, self._on_cancel, id=wx.ID_CANCEL)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
             button_size = cancel.GetSize()

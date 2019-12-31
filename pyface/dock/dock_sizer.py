@@ -196,7 +196,7 @@ def clear_window ( window ):
     bg_color = SystemMetrics().dialog_background_color
     bg_color = wx.Colour(bg_color[0]*255, bg_color[1]*255, bg_color[2]*255)
 
-    dx, dy = window.GetSizeTuple()
+    dx, dy = window.GetSize()
     dc     = wx.PaintDC( window )
     dc.SetBrush( wx.Brush( bg_color, wx.SOLID ) )
     dc.SetPen( wx.TRANSPARENT_PEN )
@@ -211,14 +211,14 @@ def get_dc ( window ):
     """
     if is_mac:
         dc     = wx.ClientDC( window )
-        x, y   = window.GetPositionTuple()
-        dx, dy = window.GetSizeTuple()
+        x, y   = window.GetPosition()
+        dx, dy = window.GetSize()
         while True:
             window = window.GetParent()
             if window is None:
                 break
-            xw, yw   = window.GetPositionTuple()
-            dxw, dyw = window.GetSizeTuple()
+            xw, yw   = window.GetPosition()
+            dxw, dyw = window.GetSize()
             dx, dy   = min( dx, dxw - x ), min( dy, dyw - y )
             x += xw
             y += yw
@@ -227,7 +227,7 @@ def get_dc ( window ):
 
         return ( dc, 0, 0 )
 
-    x, y = window.ClientToScreenXY( 0, 0 )
+    x, y = window.ClientToScreen( 0, 0 )
     return ( wx.ScreenDC(), x, y )
 
 #-------------------------------------------------------------------------------
@@ -758,7 +758,7 @@ class DockItem ( HasPrivateTraits ):
             dc, x, y = get_dc( window )
             dx, dy   = window.GetSize()
             dc2      = wx.MemoryDC()
-            self._drag_bitmap = wx.EmptyBitmap( dx, dy )
+            self._drag_bitmap = wx.Bitmap( dx, dy )
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
             try:
@@ -811,10 +811,10 @@ class DockItem ( HasPrivateTraits ):
         if state == TabActive:
             pass
         elif state == TabInactive:
-            r,g,b = tab_color.Get()
+            r, g, b, a = tab_color.Get()
             tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
         else:
-            r,g,b = tab_color.Get()
+            r, g, b, a = tab_color.Get()
             tab_color.Set(min(255, r+20), min(255, g+20), min(255, b+20))
 
         self._is_tab   = True
@@ -1604,10 +1604,7 @@ class DockControl ( DockItem ):
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
-            if wx_26:
-                size = self.control.GetBestFittingSize()
-            else:
-                size = self.control.GetEffectiveMinSize()
+            size = self.control.GetEffectiveMinSize()
             dx = size.GetWidth()
             dy = size.GetHeight()
             if self.width < 0:
@@ -1629,17 +1626,17 @@ class DockControl ( DockItem ):
         self.height = dy = max( 0, dy )
         self.bounds = ( x, y, dx, dy )
 
-        # Note: All we really want to do is the 'SetDimensions' call, but the
+        # Note: All we really want to do is the 'SetSize' call, but the
         # other code is needed for Linux/GTK which will not correctly process
-        # the SetDimensions call if the min size is larger than the specified
+        # the SetSize call if the min size is larger than the specified
         # size. So we temporarily set its min size to (0,0), do the
-        # SetDimensions, then restore the original min size. The restore is
+        # SetSize, then restore the original min size. The restore is
         # necessary so that DockWindow itself will correctly draw the 'drag'
         # box when performing a docking maneuver...
         control  = self.control
         min_size = control.GetMinSize()
         control.SetMinSize( wx.Size( 0, 0 ) )
-        control.SetDimensions( x, y, dx, dy )
+        control.SetSize( x, y, dx, dy )
         control.SetMinSize( min_size )
 
     #---------------------------------------------------------------------------
@@ -3659,7 +3656,7 @@ class DockInfo ( HasPrivateTraits ):
             bdc         = wx.MemoryDC()
             bdc2        = wx.MemoryDC()
             bdx, bdy    = bitmap.GetWidth(), bitmap.GetHeight()
-            bitmap2     = wx.EmptyBitmap( bdx, bdy )
+            bitmap2     = wx.Bitmap( bdx, bdy )
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
             bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
@@ -3778,7 +3775,7 @@ class SetStructureHandler ( object ):
 #  'DockSizer' class:
 #-------------------------------------------------------------------------------
 
-class DockSizer ( wx.PySizer ):
+class DockSizer ( wx.Sizer ):
 
     #---------------------------------------------------------------------------
     #  Initializes the object:
@@ -3817,8 +3814,8 @@ class DockSizer ( wx.PySizer ):
         if self._contents is None:
             return
 
-        x,   y = self.GetPositionTuple()
-        dx, dy = self.GetSizeTuple()
+        x,   y = self.GetPosition()
+        dx, dy = self.GetSize()
         self._contents.recalc_sizes( x, y, dx, dy )
 
     #---------------------------------------------------------------------------

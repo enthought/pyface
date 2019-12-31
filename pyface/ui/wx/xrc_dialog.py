@@ -75,15 +75,15 @@ class XrcDialog(Dialog):
         if okbutton is not None:
             # Change the ID and set the handler
             okbutton.SetId(wx.ID_OK)
-            wx.EVT_BUTTON(self.control, okbutton.GetId(), self._on_ok)
+            self.control.Bind(wx.EVT_BUTTON, self._on_ok, id=okbutton.GetId())
         cancelbutton = self.XRCCTRL("CANCEL")
         if cancelbutton is not None:
             # Change the ID and set the handler
             cancelbutton.SetId(wx.ID_CANCEL)
-            wx.EVT_BUTTON(self.control, cancelbutton.GetId(), self._on_cancel)
+            self.control.Bind(wx.EVT_BUTTON, self._on_cancel, id=cancelbutton.GetId())
         helpbutton = self.XRCCTRL("HELP")
         if helpbutton is not None:
-            wx.EVT_BUTTON(self.control, helpbutton.GetId(), self._on_help)
+            self.control.Bind(wx.EVT_BUTTON, self._on_help, id=helpbutton.GetId())
 
         self._add_handlers()
 

@@ -19,7 +19,7 @@ from wx.grid import PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Local imports:
-from combobox_focus_handler import ComboboxFocusHandler
+from .combobox_focus_handler import ComboboxFocusHandler
 
 wx_28 = (float( wx.__version__[:3] ) >= 2.8)
 
@@ -167,7 +167,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
             if changed:
                 grid.ForceRefresh()
 
-        self._control.SetDimensions(rect.x + 1, rect.y + 1,
+        self._control.SetSize(rect.x + 1, rect.y + 1,
                                     edit_width, edit_height,
                                     SIZE_ALLOW_MINUS_ONE)
 

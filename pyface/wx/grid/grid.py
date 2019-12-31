@@ -74,7 +74,7 @@ class Grid(wxGrid):
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
-        wx.EVT_KEY_DOWN(self, self._on_key_down)
+        self.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
 
         # Initialize the row and column models.
         self._initialize_rows(model)
@@ -194,7 +194,7 @@ class Grid(wxGrid):
             # Popup a context menu allowing the user to delete the row.
             menu = wx.Menu()
             menu.Append(101, "Delete Row")
-            wx.EVT_MENU(self, 101, self._on_delete_row)
+            self.Bind(wx.EVT_MENU, self._on_delete_row, id=101)
 
             self.PopupMenu(menu, evt.GetPosition())
 
