@@ -549,7 +549,7 @@ class DockItem ( HasPrivateTraits ):
                     tab_bounds = ( x, y, dx, dy )
                 else:
                     kind       = DOCK_TAB
-                    tab_bounds = ( x - (tdx / 2), y, tdx, dy )
+                    tab_bounds = ( x - (tdx // 2), y, tdx, dy )
             else:
                 if is_control:
                     kind       = DOCK_TABADD
@@ -866,7 +866,7 @@ class DockItem ( HasPrivateTraits ):
         tc           = theme.content
         ox, oy       = theme.label.left, theme.label.top
         y = (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                    text_dy) / 2))
+                    text_dy) // 2))
         x = ox + slice.xleft + tc.left
 
         mode = self.feature_mode
@@ -992,7 +992,7 @@ class DockItem ( HasPrivateTraits ):
             # fixme: x calculation seems to be off by -1...
             return ( x + dx + ox - slice.xright - tc.right - CloseTabSize,
                      y + oy + ((dy + slice.xtop + tc.top - slice.xbottom -
-                                tc.bottom - text_dy) / 2) + 3,
+                                tc.bottom - text_dy) // 2) + 3,
                      CloseTabSize, CloseTabSize )
 
         return ( 0, 0, 0, 0 )
@@ -1055,7 +1055,7 @@ class DockItem ( HasPrivateTraits ):
         tc     = theme.content
         ox, oy = theme.label.left, theme.label.top
         y     += (oy + ((dy + slice.xtop + tc.top - slice.xbottom - tc.bottom -
-                         text_dy) / 2))
+                         text_dy) // 2))
         x     += ox + slice.xleft + tc.left
         result = self.is_in( event, x, y, idx, idy )
 
@@ -1373,7 +1373,7 @@ class DockSplitter ( DockItem ):
                 if ((y == self.bounds[1]) or
                     (y < iy1)             or
                     ((y + dy) > (iy2 + idy2))):
-                    y = (iy1 + iy2 + idy2 - dy) / 2
+                    y = (iy1 + iy2 + idy2 - dy) // 2
             else:
                 self._last_bounds = self.bounds
                 if forward:
@@ -1384,7 +1384,7 @@ class DockSplitter ( DockItem ):
             if ((x == self.bounds[0]) or
                 (x < ix1)             or
                 ((x + dx) > (ix2 + idx2))):
-                x = (ix1 + ix2 + idx2 - dx) / 2
+                x = (ix1 + ix2 + idx2 - dx) // 2
         else:
             self._last_bounds = self.bounds
             if forward:
@@ -1434,10 +1434,10 @@ class DockSplitter ( DockItem ):
             nx, ny, ndx, ndy = bounds
             if is_horizontal:
                 ady = (ndy - 6)
-                ay  = ady / 2
+                ay  = ady // 2
             else:
                 adx = (ndx - 6)
-                ax  = adx / 2
+                ax  = adx // 2
             nx  += ax
             ny  += ay
             ndx -= adx
@@ -1448,10 +1448,10 @@ class DockSplitter ( DockItem ):
             ox, oy, odx, ody = self._bounds
             if is_horizontal:
                 ady = (ody - 6)
-                ay  = ady / 2
+                ay  = ady // 2
             else:
                 adx = (odx - 6)
-                ax  = adx / 2
+                ax  = adx // 2
             ox  += ax
             oy  += ay
             odx -= adx
@@ -2606,8 +2606,8 @@ class DockRegion ( DockGroup ):
         top    = y  - ty
         bottom = ty + dy - 1 - y
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = dx // 3
+        mdy    = dy // 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,
@@ -2804,7 +2804,7 @@ class DockRegion ( DockGroup ):
         x, y, dx, dy = self._tab_clip_bounds
         if self.is_in( event, x + dx, y + 2, DockImages._tab_scroller_dx,
                                              DockImages._tab_scroller_dy ):
-            if (event.GetX() - (x + dx)) < (DockImages._tab_scroller_dx / 2):
+            if (event.GetX() - (x + dx)) < (DockImages._tab_scroller_dx // 2):
                 return SCROLL_LEFT
 
             return SCROLL_RIGHT
@@ -3383,8 +3383,8 @@ class DockSection ( DockGroup ):
         top    = abs( top )
         bottom = abs( bottom )
         choice = min( left, right, top, bottom )
-        mdx    = dx / 3
-        mdy    = dy / 3
+        mdx    = dx // 3
+        mdy    = dy // 3
 
         if choice == left:
             return DockInfo( kind   = DOCK_LEFT,

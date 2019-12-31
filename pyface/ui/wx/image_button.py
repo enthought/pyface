@@ -112,16 +112,16 @@ class ImageButton ( Widget ):
             self._tx = self._ix + idx + spacing
             dx       = idx + tdx + spacing
             dy       = max( idy, tdy )
-            self._iy = hp2 + ((dy - idy) / 2)
-            self._ty = hp2 + ((dy - tdy) / 2)
+            self._iy = hp2 + ((dy - idy) // 2)
+            self._ty = hp2 + ((dy - tdy) // 2)
         else:
             self._iy = hp2
             spacing  = (idy > 0) * (tdy > 0) * 2
             self._ty = self._iy + idy + spacing
             dx       = max( idx, tdx )
             dy       = idy + tdy + spacing
-            self._ix = wp2 + ((dx - idx) / 2)
-            self._tx = wp2 + ((dx - tdx) / 2)
+            self._ix = wp2 + ((dx - idx) // 2)
+            self._tx = wp2 + ((dx - tdx) // 2)
 
         # Create the toolkit-specific control:
         self._dx     = dx + wp2 + wp2
@@ -211,8 +211,8 @@ class ImageButton ( Widget ):
         """
         wdc      = wx.PaintDC( self.control )
         wdx, wdy = self.control.GetClientSize()
-        ox       = (wdx - self._dx) / 2
-        oy       = (wdy - self._dy) / 2
+        ox       = (wdx - self._dx) // 2
+        oy       = (wdy - self._dy) // 2
 
         disabled = (not self.control.IsEnabled())
         if self._image is not None:

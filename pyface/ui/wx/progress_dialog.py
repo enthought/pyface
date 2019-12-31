@@ -259,8 +259,8 @@ class ProgressDialog(MProgressDialog, Window):
         return self.close()
 
     def _set_time_label(self, value, control):
-        hours = value / 3600
-        minutes = (value % 3600) / 60
+        hours = value // 3600
+        minutes = (value % 3600) // 60
         seconds = value % 60
         label = "%u:%02u:%02u" % (hours, minutes, seconds)
 

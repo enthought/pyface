@@ -108,8 +108,8 @@ class DockWindowShell ( HasPrivateTraits ):
         cdx, cdy = shell.GetClientSize()
         ex_dx    = dx - cdx
         ex_dy    = dy - cdy
-        shell.SetSize( x - (ex_dx / 2) - tis.xleft - tc.left,
-                             y - ex_dy + (ex_dx / 2) - tdy - tis.xtop - tc.top,
+        shell.SetSize( x - (ex_dx // 2) - tis.xleft - tc.left,
+                             y - ex_dy + (ex_dx // 2) - tdy - tis.xtop - tc.top,
                              dx + ex_dx, dy + ex_dy )
         shell.Show()
 

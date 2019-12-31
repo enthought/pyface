@@ -212,7 +212,7 @@ class ImageWidget(Widget):
         bitmap   = self.bitmap
         bdx      = bitmap.GetWidth()
         bdy      = bitmap.GetHeight()
-        wdc.DrawBitmap( bitmap, (wdx - bdx) / 2, (wdy - bdy) / 2, True )
+        wdc.DrawBitmap( bitmap, (wdx - bdx) // 2, (wdy - bdy) // 2, True )
 
         pens = [ self._selectedPenLight, self._selectedPenDark ]
         bd   = self._button_down
