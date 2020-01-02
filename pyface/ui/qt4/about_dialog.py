@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
-# Copyright (c) 2019, Enthought, Inc.
+# Copyright (c) 2020, Enthought, Inc.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
@@ -121,7 +121,7 @@ class AboutDialog(MAboutDialog, Dialog):
         qt_version = QtCore.__version__
 
         # The additional copyright strings.
-        copyrights = "<br />".join(["Copyright (c) %s" % line
+        copyrights = "<br />".join(["Copyright &copy; %s" % line
                                     for line in self.copyrights])
 
         return _DIALOG_TEXT % (path, additions, py_version, qt_version,

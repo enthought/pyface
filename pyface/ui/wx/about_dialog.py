@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
 #
-#  Copyright (c) 2005-2019, Enthought, Inc.
+#  Copyright (c) 2005-2020, Enthought, Inc.
 #  All rights reserved.
 #
 #  This software is provided without warranty under the terms of the BSD
@@ -140,7 +140,7 @@ class AboutDialog(MAboutDialog, Dialog):
         wx_version = wx.VERSION_STRING
 
         # The additional copyright strings.
-        copyrights = "<br />".join(["Copyright (c) %s" % line
+        copyrights = "<br />".join(["Copyright &copy; %s" % line
                                     for line in self.copyrights])
 
         # Get the text of the OK button.
