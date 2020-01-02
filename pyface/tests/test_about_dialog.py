@@ -94,5 +94,7 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
         html = self.dialog._create_html()
         self.assertIn("test line 1<br />test line 2<br>",
                       html)
-        self.assertIn("Copyright (c) copyright<br />Copyright (c) copyleft",
-                      html)
+        self.assertIn(
+            "Copyright &copy; copyright<br />Copyright &copy; copyleft",
+            html
+        )
