@@ -9,15 +9,15 @@ environment:
 
   matrix:
     - RUNTIME: '3.6'
-      TOOLKITS: "pyqt pyqt5"
+      TOOLKITS: "pyqt"
     - RUNTIME: '3.6'
-      TOOLKITS: "pyside2"
+      TOOLKITS: "pyside2 pyqt5"
 
 matrix:
   fast_finish: true
   allow_failures:
     - RUNTIME: '3.6'
-      TOOLKITS: "pyside2"
+      TOOLKITS: "pyside2 pyqt5"
 
 
 branches:
