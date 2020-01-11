@@ -87,7 +87,6 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx', 'pyside2'},
     '3.5': {'pyqt', 'pyqt5'},
     '3.6': {'pyqt', 'pyqt5', 'pyside2'},
 }
@@ -107,7 +106,7 @@ extra_dependencies = {
     'pyside2': set(),
     'pyqt': {'pyqt<4.12'},  # FIXME: build 1 of.4-12 appears to be bad
     # XXX once pyqt5 is available in EDM, we will want it here
-    'pyqt5': set(),
+    'pyqt5': {'pyqt5'},
     'wx': {'wxpython'},
     'null': set()
 }
@@ -187,12 +186,11 @@ def install(edm, runtime, toolkit, environment):
         "{edm} run -e {environment} -- python setup.py install",
     ]
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
-    if toolkit == 'pyqt5':
-        commands.append("{edm} run -e {environment} -- pip install pyqt5==5.9.2")
-    elif toolkit == 'pyside2':
-        commands.append(
-            "{edm} run -e {environment} -- pip install pyside2==5.11.1"
-        )
+    if toolkit == 'pyside2':
+        commands.extend([
+            "{edm} run -e {environment} -- pip install shiboken2",
+            "{edm} run -e {environment} -- pip install pyside2"
+        ])
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
