@@ -244,7 +244,7 @@ class PythonEditor(Editor):
         wx.stc.EVT_STC_CHANGE(stc, stc.GetId(), self._on_stc_changed)
 
         # Listen for key press events.
-        wx.EVT_CHAR(stc, self._on_char)
+        stc.Bind(wx.EVT_CHAR, self._on_char)
 
         # Load the editor's contents.
         self.load()
@@ -268,10 +268,10 @@ class PythonEditor(Editor):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.m_altDown == 1,
-            control_down = event.m_controlDown == 1,
-            shift_down   = event.m_shiftDown == 1,
-            key_code     = event.m_keyCode,
+            alt_down     = event.altDown,
+            control_down = event.controlDown,
+            shift_down   = event.shiftDown,
+            key_code     = event.KeyCode,
             event        = event
         )
 

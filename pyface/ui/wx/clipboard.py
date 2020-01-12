@@ -10,7 +10,7 @@
 #------------------------------------------------------------------------------
 
 # Standard library imports
-from six.moves import cStringIO as StringIO
+from io import BytesIO
 from six.moves.cPickle import dumps, load, loads
 
 # System library imports
@@ -22,7 +22,7 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 import six
 
 # Data formats
-PythonObjectFormat = wx.CustomDataFormat('PythonObject')
+PythonObjectFormat = wx.DataFormat('PythonObject')
 TextFormat         = wx.DataFormat(wx.DF_TEXT)
 FileFormat         = wx.DataFormat(wx.DF_FILENAME)
 
@@ -58,7 +58,7 @@ class Clipboard(BaseClipboard):
                 if cb.IsSupported(PythonObjectFormat):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     if cb.GetData(cdo):
-                        file   = StringIO(cdo.GetData())
+                        file   = BytesIO(cdo.GetData())
                         klass  = load(file)
                         result = load(file)
             finally:

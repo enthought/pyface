@@ -95,9 +95,9 @@ class ExpandablePanel(Widget):
         sizer = self.control.GetSizer()
         panel = self._layers[name]
         header = self._headers[name]
-        sizer.Remove(panel)
+        #sizer.Remove(panel)
         panel.Destroy()
-        sizer.Remove(header)
+        #sizer.Remove(header)
         header.Destroy()
 
         sizer.Layout()

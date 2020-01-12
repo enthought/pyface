@@ -195,7 +195,7 @@ class Window(MWindow, Widget):
         # call event.GetPosition directly, but that would be wrong.  The pixel
         # reported by that call is the pixel just below the window menu and
         # just right of the Windows-drawn border.
-        self._position = event.GetEventObject().GetPositionTuple()
+        self._position = tuple(event.GetEventObject().GetPosition())
 
         event.Skip()
 
@@ -214,10 +214,10 @@ class Window(MWindow, Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down=event.m_altDown == 1,
-            control_down=event.m_controlDown == 1,
-            shift_down=event.m_shiftDown == 1,
-            key_code=event.m_keyCode,
+            alt_down=event.altDown,
+            control_down=event.controlDown,
+            shift_down=event.shiftDown,
+            key_code=event.KeyCode,
             event=event
         )
 

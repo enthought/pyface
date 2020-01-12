@@ -401,7 +401,7 @@ class DockWindowFeature ( HasPrivateTraits ):
         """
         window = self.dock_control.control.GetParent()
         wx, wy = window.GetScreenPosition()
-        window.PopupMenuXY( menu.create_menu( window, self ),
+        window.PopupMenu( menu.create_menu( window, self ),
                             self.x - wx - 10, self.y - wy - 10 )
 
     #---------------------------------------------------------------------------

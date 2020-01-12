@@ -81,7 +81,7 @@ class FileTableLabelProvider(TableLabelProvider):
             label = basename(element)
 
         elif column_index == 1:
-            label = str(int(details.st_size) / 1000) + ' KB'
+            label = str(int(details.st_size) // 1000) + ' KB'
 
         else:
             # Format is: mm/dd/yyyy HH:MM AM eg. '12/31/2004 12:00 PM'

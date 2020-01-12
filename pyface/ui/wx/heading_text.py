@@ -82,8 +82,8 @@ class HeadingText(MHeadingText, Widget):
         width, height = self._get_preferred_size(self.text, self._font)
         panel.SetMinSize((width, height))
 
-        wx.EVT_PAINT(panel, self._on_paint_background)
-        wx.EVT_ERASE_BACKGROUND(panel, self._on_erase_background)
+        panel.Bind(wx.EVT_PAINT, self._on_paint_background)
+        panel.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
 
         return panel
 

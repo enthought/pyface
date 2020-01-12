@@ -207,8 +207,8 @@ class Grid(Widget):
         # Enable column and row moving:
         grid_movers.GridColMover(grid)
         grid_movers.GridRowMover(grid)
-        grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move, grid)
-        grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move, grid)
+        grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move)
+        grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move)
 
         smotc = self.model.on_trait_change
         otc   = self.on_trait_change
@@ -264,10 +264,10 @@ class Grid(Widget):
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
-        wx.EVT_KEY_DOWN(grid, self._on_key_down)
+        grid.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
 
         # We handle control resize events to adjust column widths
-        wx.EVT_SIZE(grid, self._on_size)
+        grid.Bind(wx.EVT_SIZE, self._on_size)
 
         # Handle drags:
         self._corner_window = grid.GetGridCornerLabelWindow()
@@ -278,11 +278,11 @@ class Grid(Widget):
         # Handle mouse button state changes:
         self._ignore = False
         for window in ( gw, rw, cw ):
-            wx.EVT_MOTION(    window, self._on_grid_motion )
-            wx.EVT_LEFT_DOWN( window, self._on_left_down )
-            wx.EVT_LEFT_UP(   window, self._on_left_up )
+            window.Bind(wx.EVT_MOTION, self._on_grid_motion )
+            window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+            window.Bind(wx.EVT_LEFT_UP, self._on_left_up)
 
-        wx.EVT_PAINT(self._grid_window, self._on_grid_window_paint)
+        self._grid_window.Bind(wx.EVT_PAINT, self._on_grid_window_paint)
 
         # Initialize the row and column models:
         self.__initialize_rows(self.model)
@@ -298,7 +298,7 @@ class Grid(Widget):
         self.__autosize()
 
         self._edit = False
-        wx.EVT_IDLE(grid, self._on_idle)
+        grid.Bind(wx.EVT_IDLE, self._on_idle)
 
     def dispose(self):
         # Remove all wx handlers:
@@ -315,15 +315,15 @@ class Grid(Widget):
         wx.grid.EVT_GRID_EDITOR_CREATED(    grid, None )
         if is_win32:
             wx.grid.EVT_GRID_EDITOR_HIDDEN( grid, None )
-        wx.EVT_KEY_DOWN(                    grid, None )
-        wx.EVT_SIZE(                        grid, None )
-        wx.EVT_PAINT( self._grid_window, None )
+        grid.Unbind(wx.EVT_KEY_DOWN)
+        grid.Unbind(wx.EVT_SIZE)
+        self._grid_window.Unbind(wx.EVT_PAINT)
 
         for window in ( self._grid_window , self._row_window ,
                         self._col_window ):
-            wx.EVT_MOTION(    window, None )
-            wx.EVT_LEFT_DOWN( window, None )
-            wx.EVT_LEFT_UP(   window, None )
+            window.Unbind(wx.EVT_MOTION)
+            window.Unbind(wx.EVT_LEFT_DOWN)
+            window.Unbind(wx.EVT_LEFT_UP)
 
         otc = self.on_trait_change
         otc(self._on_enable_lines_changed, 'enable_lines',
@@ -887,7 +887,7 @@ class Grid(Widget):
                     # Popup the menu (if an action is selected it will be
                     # performed before before 'PopupMenu' returns).
                     x, y = evt.GetPosition()
-                    self._grid.PopupMenuXY(menu, x - 10, y - 10 )
+                    self._grid.PopupMenu(menu, x - 10, y - 10 )
 
             self.cell_right_clicked = (row, col)
 
@@ -1010,7 +1010,7 @@ class Grid(Widget):
             # build a wxCustomDataObject to notify the system clipboard
             # that some in-process data is available
             data_object = wx.CustomDataObject(PythonObject)
-            data_object.SetData('dummy')
+            data_object.SetData(b'dummy')
             if TheClipboard.Open():
                 TheClipboard.SetData(data_object)
                 TheClipboard.Close()

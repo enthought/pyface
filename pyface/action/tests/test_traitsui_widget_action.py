@@ -24,6 +24,7 @@ from ..traitsui_widget_action import TraitsUIWidgetAction
 
 
 @unittest.skipIf(not has_traitsui(), "TraitsUI not installed")
+@unittest.skipIf(toolkit.toolkit == 'wx', "wxPython not supported")
 class TestTraitsUIWidgetAction(unittest.TestCase, UnittestTools):
 
     def setUp(self):

@@ -112,7 +112,7 @@ class _MenuItem(HasTraits):
                 # bitmaps, so just ignore the exception if it happens
                 pass
 
-        menu.AppendItem(self.control)
+        menu.Append(self.control)
         menu.menu_items.append(self)
 
         # Set the initial enabled/disabled state of the action.
@@ -125,7 +125,7 @@ class _MenuItem(HasTraits):
         # Wire it up...create an ugly flag since some platforms dont skip the
         # event when we thought they would
         self._skip_menu_event = False
-        wx.EVT_MENU(parent, self.control_id, self._on_menu)
+        parent.Bind(wx.EVT_MENU, self._on_menu, id=self.control_id)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
@@ -393,7 +393,7 @@ class _Tool(HasTraits):
                     self.control_id, action.enabled and action.visible)
 
             # Wire it up.
-            wx.EVT_TOOL(parent, self.control_id, self._on_tool)
+            parent.Bind(wx.EVT_TOOL, self._on_tool, id=self.control_id)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).

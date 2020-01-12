@@ -618,11 +618,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # the passed control is a str object instead of a wx object.
         if on_set_focus is not None:
             #control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
-            wx.EVT_SET_FOCUS(control, on_set_focus)
+            control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
 
         if on_kill_focus is not None:
             #control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
-            wx.EVT_KILL_FOCUS(control, on_kill_focus)
+            control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
 
         for child in control.GetChildren():
             self._wx_add_focus_listeners(child, on_set_focus, on_kill_focus)

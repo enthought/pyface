@@ -103,18 +103,18 @@ class TreeViewer(ContentViewer):
         wxid = tree.GetId()
 
         # Wire up the wx tree events.
-        wx.EVT_CHAR(tree, self._on_char)
-        wx.EVT_LEFT_DOWN(tree, self._on_left_down)
-        wx.EVT_RIGHT_DOWN(tree, self._on_right_down)
-        wx.EVT_TREE_ITEM_ACTIVATED(tree, wxid, self._on_tree_item_activated)
-        wx.EVT_TREE_ITEM_COLLAPSED(tree, wxid, self._on_tree_item_collapsed)
-        wx.EVT_TREE_ITEM_COLLAPSING(tree, wxid, self._on_tree_item_collapsing)
-        wx.EVT_TREE_ITEM_EXPANDED(tree, wxid, self._on_tree_item_expanded)
-        wx.EVT_TREE_ITEM_EXPANDING(tree, wxid, self._on_tree_item_expanding)
-        wx.EVT_TREE_BEGIN_LABEL_EDIT(tree, wxid,self._on_tree_begin_label_edit)
-        wx.EVT_TREE_END_LABEL_EDIT(tree, wxid, self._on_tree_end_label_edit)
-        wx.EVT_TREE_BEGIN_DRAG(tree, wxid, self._on_tree_begin_drag)
-        wx.EVT_TREE_SEL_CHANGED(tree, wxid, self._on_tree_sel_changed)
+        tree.Bind(wx.EVT_CHAR, self._on_char)
+        tree.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+        tree.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
+        tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding, id=wxid)
+        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit, id=wxid)
+        tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit, id=wxid)
+        tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag, id=wxid)
+        tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed, id=wxid)
 
         # The image list is a wxPython-ism that caches all images used in the
         # control.
@@ -174,12 +174,12 @@ class TreeViewer(ContentViewer):
             # The item data is a tuple.  The first element indicates whether or
             # not we have already populated the item with its children.  The
             # second element is the actual item data.
-            populated, element = self.control.GetPyData(pid)
+            populated, element = self.control.GetItemData(pid)
 
             # fixme: We should find a cleaner way other than deleting all of
             # the element's children and re-adding them!
             self._delete_children(pid)
-            self.control.SetPyData(pid, (False, element))
+            self.control.SetItemData(pid, (False, element))
 
             # Does the element have any children?
             has_children = self.content_provider.has_children(element)
@@ -263,10 +263,10 @@ class TreeViewer(ContentViewer):
         # element is the actual item data.
         if pid is None:
             if self.show_root:
-                self.control.SetPyData(wxid,  (False, element))
+                self.control.SetItemData(wxid,  (False, element))
 
         else:
-            self.control.SetPyData(wxid,  (False, element))
+            self.control.SetItemData(wxid,  (False, element))
 
         # Make sure that we can find the element's Id later.
         self._element_to_id_map[self._get_key(element)] = wxid
@@ -339,14 +339,14 @@ class TreeViewer(ContentViewer):
 
         wxid, flags = self.control.HitTest(point)
 
-        # Warning: On GTK we have to check the flags before we call 'GetPyData'
+        # Warning: On GTK we have to check the flags before we call 'GetItemData'
         # because if we call it when the hit test returns 'nowhere' it will
         # barf (on Windows it simply returns 'None' 8^()
         if flags & wx.TREE_HITTEST_NOWHERE:
             data = None
 
         else:
-            data = self.control.GetPyData(wxid)
+            data = self.control.GetItemData(wxid)
 
         return data, wxid, flags, point
 
@@ -355,7 +355,7 @@ class TreeViewer(ContentViewer):
 
         elements = []
         for wxid in self.control.GetSelections():
-            data = self.control.GetPyData(wxid)
+            data = self.control.GetItemData(wxid)
             if data is not None:
                 populated, element = data
                 elements.append(element)
@@ -380,9 +380,9 @@ class TreeViewer(ContentViewer):
             self._delete_children(cid)
 
             # Remove the reference to the item's data.
-            populated, element = self.control.GetPyData(cid)
+            populated, element = self.control.GetItemData(cid)
             del self._element_to_id_map[self._get_key(element)]
-            self.control.SetPyData(cid, None)
+            self.control.SetItemData(cid, None)
 
             # Next!
             (cid, cookie) = self.control.GetNextChild(pid, cookie)
@@ -469,7 +469,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple. The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Give the label provider a chance to veto the expansion.
         if self.label_provider.is_expandable(self, element):
@@ -491,7 +491,7 @@ class TreeViewer(ContentViewer):
                         self._add_element(wxid, child)
 
                 # The element is now populated!
-                self.control.SetPyData(wxid, (True, element))
+                self.control.SetItemData(wxid, (True, element))
 
         else:
             event.Veto()
@@ -507,7 +507,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Make sure that the element's 'open' icon is displayed etc.
         self._refresh_element(wxid, element)
@@ -526,7 +526,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Give the label provider a chance to veto the collapse.
         if not self.label_provider.is_collapsible(self, element):
@@ -543,7 +543,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Make sure that the element's 'closed' icon is displayed etc.
         self._refresh_element(wxid, element)
@@ -562,7 +562,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Trait notification.
         self.element_activated = element
@@ -587,7 +587,7 @@ class TreeViewer(ContentViewer):
             # Apply workaround.
             point = self._point_left_clicked
             wxid, flags = self.control.HitTest(point)
-            data = self.control.GetPyData(wxid)
+            data = self.control.GetItemData(wxid)
 
         if data is not None:
             populated, element = data
@@ -605,7 +605,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children.  The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Give the label provider a chance to veto the edit.
         if not self.label_provider.is_editable(self, element):
@@ -621,7 +621,7 @@ class TreeViewer(ContentViewer):
         # The item data is a tuple.  The first element indicates whether or not
         # we have already populated the item with its children. The second
         # element is the actual item data.
-        populated, element = self.control.GetPyData(wxid)
+        populated, element = self.control.GetItemData(wxid)
 
         # Give the label provider a chance to veto the edit.
         label = event.GetLabel()
