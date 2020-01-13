@@ -11,7 +11,7 @@ environment:
     - RUNTIME: '3.6'
       TOOLKITS: "pyqt wx"
     - RUNTIME: '3.6'
-      TOOLKITS: "wx pyside2 pyqt5"
+      TOOLKITS: "pyside2 pyqt5"
 
 matrix:
   fast_finish: true
