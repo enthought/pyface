@@ -30,8 +30,8 @@ from wx import TheClipboard
 # Enthought library imports
 from pyface.api import Widget
 from pyface.timer.api import do_later
-from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
-     Trait, Undefined
+from traits.api import Bool, Enum, Event, Instance, Int, Trait, Undefined
+from traits.api import Color, Font
 from pyface.wx.drag_and_drop import PythonDropSource, \
      PythonDropTarget, PythonObject
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource

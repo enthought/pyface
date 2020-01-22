@@ -27,7 +27,8 @@
 
 import wx
 
-from traits.api import HasPrivateTraits, Instance, Bool, Event, Color
+from traits.api import HasPrivateTraits, Instance, Bool, Event
+from traitsui.api import Color
 
 from pyface.wx.drag_and_drop import PythonDropTarget, PythonDropSource
 from .dock_sizer import DockControl, FEATURE_EXTERNAL_DRAG

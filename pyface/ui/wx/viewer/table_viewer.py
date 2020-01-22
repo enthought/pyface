@@ -18,7 +18,8 @@
 import wx
 
 # Enthought library imports.
-from traits.api import Color, Event, Instance, Trait
+from traits.api import Event, Instance, Trait
+from traitsui.api import Color
 
 # Local imports.
 from pyface.ui.wx.image_list import ImageList
