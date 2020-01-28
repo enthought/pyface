@@ -52,6 +52,10 @@ class EventLoopHelper(HasStrictTraits):
         timeout: float, optional, keyword only
             Number of seconds to run the event loop in the case that the trait
             change does not occur. Default value is 10.0.
+
+        Notes
+        -----
+            `timeout`  is rounded to an integer.
         """
         def repeat_loop(condition, repeat):
             # We sendPostedEvents to ensure that enaml events are processed
@@ -98,6 +102,10 @@ class EventLoopHelper(HasStrictTraits):
         timeout : float
             Number of seconds to run the event loop in the case that the trait
             change does not occur.
+
+        Notes
+        -----
+            `timeout`  is rounded to an integer.
         """
         def handler():
             if condition():
@@ -110,7 +118,7 @@ class EventLoopHelper(HasStrictTraits):
             condition_timer.timeout.connect(handler)
             timeout_timer = QtCore.QTimer()
             timeout_timer.setSingleShot(True)
-            timeout_timer.setInterval(timeout * 1000)
+            timeout_timer.setInterval(round(timeout * 1000))
             timeout_timer.timeout.connect(self.qt_app.quit)
             timeout_timer.start()
             condition_timer.start()
@@ -136,10 +144,14 @@ class EventLoopHelper(HasStrictTraits):
         timeout : float
             Number of seconds to run the event loop in the case that the
             widget is not deleted.
+
+        Notes
+        -----
+            `timeout`  is rounded to an integer.
         """
         timer = QtCore.QTimer()
         timer.setSingleShot(True)
-        timer.setInterval(timeout * 1000)
+        timer.setInterval(round(timeout * 1000))
         timer.timeout.connect(self.qt_app.quit)
         widget.destroyed.connect(self.qt_app.quit)
         yield
