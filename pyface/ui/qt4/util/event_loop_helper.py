@@ -55,7 +55,7 @@ class EventLoopHelper(HasStrictTraits):
 
         Notes
         -----
-            `timeout`  is rounded to an integer.
+            `timeout`  is rounded to an integer number of milliseconds.
         """
         def repeat_loop(condition, repeat):
             # We sendPostedEvents to ensure that enaml events are processed
@@ -105,7 +105,7 @@ class EventLoopHelper(HasStrictTraits):
 
         Notes
         -----
-            `timeout`  is rounded to an integer.
+            `timeout`  is rounded to an integer number of milliseconds.
         """
         def handler():
             if condition():
@@ -147,7 +147,7 @@ class EventLoopHelper(HasStrictTraits):
 
         Notes
         -----
-            `timeout`  is rounded to an integer.
+            `timeout`  is rounded to an integer number of milliseconds.
         """
         timer = QtCore.QTimer()
         timer.setSingleShot(True)
