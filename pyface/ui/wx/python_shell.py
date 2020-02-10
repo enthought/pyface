@@ -13,6 +13,8 @@
 """ Enthought pyface package component
 """
 
+from __future__ import absolute_import
+
 # Standard library imports.
 import six.moves.builtins
 import os
