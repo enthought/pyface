@@ -86,3 +86,15 @@ class TestAboutDialog(unittest.TestCase, GuiTestAssistant):
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
+
+    def test__create_html(self):
+        # test that the html content is properly created
+        self.dialog.additions.extend(["test line 1", "test line 2"])
+        self.dialog.copyrights.extend(["copyright", "copyleft"])
+        html = self.dialog._create_html()
+        self.assertIn("test line 1<br />test line 2<br>",
+                      html)
+        self.assertIn(
+            "Copyright &copy; copyright<br />Copyright &copy; copyleft",
+            html
+        )
