@@ -366,11 +366,11 @@ class TestHasBorder(unittest.TestCase, UnittestTools):
 
     def test_unspecified_default(self):
         trait = HasBorder()
-        trait.default_value_type = UNSPECIFIED_DEFAULT_VALUE
+        trait.default_value_type = DefaultValue.unspecified
 
         (dvt, dv) = trait.get_default_value()
 
-        self.assertEqual(dvt, CALLABLE_AND_ARGS_DEFAULT_VALUE)
+        self.assertEqual(dvt, DefaultValue.callable_and_args)
         self.assertEqual(
             dv,
             (
