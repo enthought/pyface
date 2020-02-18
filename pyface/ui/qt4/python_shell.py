@@ -22,7 +22,7 @@ from pyface.qt import QtCore, QtGui
 from pygments.lexers import PythonLexer
 
 # Enthought library imports.
-from traits.api import Event, provides
+from traits.api import Event, provides, String
 from traits.util.clean_strings import python_name
 
 # Local imports.
@@ -45,6 +45,8 @@ class PythonShell(MPythonShell, Widget):
     #### 'IPythonShell' interface #############################################
 
     command_executed = Event
+
+    welcome_message = String
 
     key_pressed = Event(KeyPressedEvent)
 
@@ -423,7 +425,7 @@ class PythonWidget(HistoryConsoleWidget):
         """
         banner = 'Python %s on %s\nType "help", "copyright", "credits" or ' \
             '"license" for more information.'
-        return banner % (sys.version, sys.platform)
+        return banner % (sys.version, sys.platform) + self.welcome_message
 
     def _get_context(self, cursor=None):
         """ Gets the context for the specified cursor (or the current cursor

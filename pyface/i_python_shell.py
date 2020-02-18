@@ -14,7 +14,7 @@
 """ The interface for an interactive Python shell. """
 
 # Enthought library imports.
-from traits.api import Event
+from traits.api import Event, String
 
 # Local imports.
 from pyface.key_pressed_event import KeyPressedEvent
@@ -31,6 +31,8 @@ class IPythonShell(IWidget):
 
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
+
+    welcome_message = String
 
     ###########################################################################
     # 'IPythonShell' interface.
