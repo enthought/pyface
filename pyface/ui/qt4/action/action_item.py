@@ -336,6 +336,7 @@ class _Tool(HasTraits):
         action.on_trait_change(self._on_action_name_changed, 'name')
         action.on_trait_change(self._on_action_accelerator_changed,
                                'accelerator')
+        action.on_trait_change(self._on_action_image_changed, 'image')
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -434,6 +435,14 @@ class _Tool(HasTraits):
         """ Called when the accelerator trait is changed on an action. """
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
+
+    def _on_action_image_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            size = self.tool_bar.iconSize()
+            self.control.setIcon(
+                action.image.create_icon((size.width(), size.height()))
+            )
 
 
 class _PaletteTool(HasTraits):
