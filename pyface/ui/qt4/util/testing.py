@@ -40,7 +40,7 @@ def delete_widget(widget, timeout=1.0):
 
     timer = QTimer()
     timer.setSingleShot(True)
-    timer.setInterval(timeout*1000)
+    timer.setInterval(round(timeout*1000))
     timer.timeout.connect(app.quit)
     widget.destroyed.connect(app.quit)
 

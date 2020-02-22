@@ -32,7 +32,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
 
     def __init__(self):
         wx.EvtHandler.__init__(self)
-        wx.EVT_KILL_FOCUS(self, self._on_kill_focus)
+        self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
         return
 
     def _on_kill_focus(self, evt):
@@ -69,26 +69,26 @@ class AbstractGridView(Grid):
         self.edit = False
 
         # this seems like a busy idle ...
-        wx.EVT_IDLE(self, self.OnIdle)
+        self.Bind(wx.EVT_IDLE, self.OnIdle)
 
         # Enthought specific display controls ...
         self.init_labels()
         self.init_data_types()
         self.init_handlers()
 
-        wx.grid.EVT_GRID_EDITOR_CREATED(self, self._on_editor_created)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED(self._on_editor_created)
 
         return
 
 
-    # needed to handle problem in wx 2.6 with combobox cell editors
-    def _on_editor_created(self, evt):
+    # # needed to handle problem in wx 2.6 with combobox cell editors
+    # def _on_editor_created(self, evt):
 
-        editor = evt.GetControl()
-        editor.PushEventHandler(ComboboxFocusHandler())
+    #     editor = evt.GetControl()
+    #     editor.PushEventHandler(ComboboxFocusHandler())
 
-        evt.Skip()
-        return
+    #     evt.Skip()
+    #     return
 
     def init_labels(self):
         self.SetLabelFont(wx.Font(self.GetFont().GetPointSize(),
@@ -109,28 +109,26 @@ class AbstractGridView(Grid):
 
     def init_handlers(self):
 
-        wx.grid.EVT_GRID_CELL_LEFT_CLICK(self, self.OnCellLeftClick)
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self, self.OnCellRightClick)
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(self, self.OnCellLeftDClick)
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(self, self.OnCellRightDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK(self.OnCellLeftClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self.OnCellRightClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK(self.OnCellLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(self.OnCellRightDClick)
 
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(self, self.OnLabelLeftClick)
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(self, self.OnLabelRightClick)
-        wx.grid.EVT_GRID_LABEL_LEFT_DCLICK(self, self.OnLabelLeftDClick)
-        wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK(self, self.OnLabelRightDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK(self.OnLabelLeftClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(self.OnLabelRightClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_DCLICK(self.OnLabelLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK(self.OnLabelRightDClick)
 
-        wx.grid.EVT_GRID_ROW_SIZE(self, self.OnRowSize)
-        wx.grid.EVT_GRID_COL_SIZE(self, self.OnColSize)
+        self.Bind(wx.grid.EVT_GRID_ROW_SIZE(self.OnRowSize)
+        self.Bind(wx.grid.EVT_GRID_COL_SIZE(self.OnColSize)
 
-        wx.grid.EVT_GRID_RANGE_SELECT(self, self.OnRangeSelect)
-        wx.grid.EVT_GRID_CELL_CHANGE(self, self.OnCellChange)
-        wx.grid.EVT_GRID_SELECT_CELL(self, self.OnSelectCell)
+        self.Bind(wx.grid.EVT_GRID_RANGE_SELECT(self.OnRangeSelect)
+        self.Bind(wx.grid.EVT_GRID_CELL_CHANGE(self.OnCellChange)
+        self.Bind(wx.grid.EVT_GRID_SELECT_CELL(self.OnSelectCell)
 
-        wx.grid.EVT_GRID_EDITOR_SHOWN(self, self.OnEditorShown)
-        wx.grid.EVT_GRID_EDITOR_HIDDEN(self, self.OnEditorHidden)
-        wx.grid.EVT_GRID_EDITOR_CREATED(self, self.OnEditorCreated)
-
-        return
+        self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN(self.OnEditorShown)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN(self.OnEditorHidden)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED(self.OnEditorCreated)
 
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.

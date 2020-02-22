@@ -23,6 +23,7 @@ from logging import DEBUG
 
 # Major package imports.
 import wx
+import wx.adv
 
 # Enthought library imports.
 from traits.api import Any, Bool, Font, Instance, Int, provides
@@ -66,11 +67,11 @@ class SplashScreen(MSplashScreen, Window):
         # Get the splash screen image.
         image = self.image.create_image()
 
-        splash_screen = wx.SplashScreen(
+        splash_screen = wx.adv.SplashScreen(
             # The bitmap to display on the splash screen.
             image.ConvertToBitmap(),
             # Splash Style.
-            wx.SPLASH_NO_TIMEOUT | wx.SPLASH_CENTRE_ON_SCREEN,
+            wx.adv.SPLASH_NO_TIMEOUT | wx.adv.SPLASH_CENTRE_ON_SCREEN,
             # Timeout in milliseconds (we don't currently timeout!).
             0,
             # The parent of the splash screen.
@@ -91,7 +92,7 @@ class SplashScreen(MSplashScreen, Window):
         )
 
         # This allows us to write status text on the splash screen.
-        wx.EVT_PAINT(splash_screen, self._on_paint)
+        splash_screen.Bind(wx.EVT_PAINT, self._on_paint)
 
         return splash_screen
 

@@ -170,7 +170,7 @@ class PythonShell(MPythonShell, Widget):
         shell = PyShell(parent, -1)
 
         # Listen for key press events.
-        wx.EVT_CHAR(shell, self._wx_on_char)
+        shell.Bind(wx.EVT_CHAR, self._wx_on_char)
 
         # Enable the shell as a drag and drop target.
         shell.SetDropTarget(PythonDropTarget(self))
@@ -252,7 +252,7 @@ class PyShell(PyShellBase):
 
         # save a reference to the original raw_input() function since
         # wx.py.shell dosent reassign it back to the original on destruction
-        self.raw_input = six.moves.builtins.raw_input
+        self.raw_input = input
 
         super(PyShell,self).__init__(parent, id, pos, size, style, introText,
                                      locals, InterpClass, *args, **kwds)

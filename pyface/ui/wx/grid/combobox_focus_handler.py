@@ -39,7 +39,7 @@ class ComboboxFocusHandler(wx.EvtHandler):
         wx.EvtHandler.__init__(self)
 
         self._grid = grid
-        wx.EVT_KEY_DOWN(self, self._on_key)
+        self.Bind(wx.EVT_KEY_DOWN, self._on_key)
 
     def _on_key(self, evt):
         """ Called when a key is pressed. """

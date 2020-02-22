@@ -142,7 +142,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _get_size(self):
         if self.control is not None:
-            return self.control.GetSizeTuple()
+            return self.control.GetSize()
         return (-1, -1)
 
     #### Trait change handlers ################################################

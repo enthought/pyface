@@ -164,7 +164,7 @@ class _Menu(wx.Menu):
         if x is None or y is None:
             self._parent.PopupMenu(self)
         else:
-            self._parent.PopupMenuXY(self, x, y)
+            self._parent.PopupMenu(self, x, y)
 
         return
 

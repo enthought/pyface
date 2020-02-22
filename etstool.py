@@ -87,15 +87,13 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    '2.7': {'pyside', 'pyqt', 'wx', 'pyside2'},
     '3.5': {'pyqt', 'pyqt5'},
-    '3.6': {'pyqt', 'pyqt5', 'pyside2'},
+    '3.6': {'pyqt', 'pyqt5', 'pyside2', 'wx'},
 }
 
 dependencies = {
     "numpy",
     "pygments",
-    "traits",
     "mock",
     "nose",
     "coverage",
@@ -106,9 +104,9 @@ extra_dependencies = {
     # XXX once pyside2 is available in EDM, we will want it here
     'pyside2': set(),
     'pyqt': {'pyqt<4.12'},  # FIXME: build 1 of.4-12 appears to be bad
-    # XXX once pyqt5 is available in EDM, we will want it here
-    'pyqt5': set(),
-    'wx': {'wxpython'},
+    'pyqt5': {'pyqt5'},
+    # XXX once wxPython 4 is available in EDM, we will want it here
+    'wx': set(),
     'null': set()
 }
 
@@ -187,12 +185,21 @@ def install(edm, runtime, toolkit, environment):
         "{edm} run -e {environment} -- python setup.py install",
     ]
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
-    if toolkit == 'pyqt5':
-        commands.append("{edm} run -e {environment} -- pip install pyqt5==5.9.2")
-    elif toolkit == 'pyside2':
-        commands.append(
-            "{edm} run -e {environment} -- pip install pyside2==5.11.1"
-        )
+    if toolkit == 'pyside2':
+        commands.extend([
+            "{edm} run -e {environment} -- pip install shiboken2",
+            "{edm} run -e {environment} -- pip install pyside2"
+        ])
+    elif toolkit == 'wx':
+        if sys.platform != 'linux':
+            commands.append(
+                "{edm} run -e {environment} -- pip install wxPython"
+            )
+        else:
+            # XXX this is mainly for TravisCI workers; need a generic solution
+            commands.append(
+                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04 wxPython"
+            )
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)

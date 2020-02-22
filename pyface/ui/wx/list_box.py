@@ -123,10 +123,10 @@ class ListBox(Widget):
         self.control = wx.ListBox(parent, -1, style = self.STYLE)
 
         # Wire it up!
-        wx.EVT_LISTBOX(self.control, self.control.GetId(),
-                       self._on_item_selected)
-        wx.EVT_LISTBOX_DCLICK(self.control, self.control.GetId(),
-                              self._on_item_activated)
+        self.control.Bind(wx.EVT_LISTBOX, self._on_item_selected,
+                          id=self.control.GetId())
+        self.control.Bind(wx.EVT_LISTBOX_DCLICK, self._on_item_activated,
+                          id=self.control.GetId())
 
         # Populate the list.
         self._populate()

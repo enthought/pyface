@@ -207,8 +207,8 @@ class Grid(Widget):
         # Enable column and row moving:
         grid_movers.GridColMover(grid)
         grid_movers.GridRowMover(grid)
-        grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move, grid)
-        grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move, grid)
+        grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move)
+        grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move)
 
         smotc = self.model.on_trait_change
         otc   = self.on_trait_change
@@ -242,32 +242,31 @@ class Grid(Widget):
 
         # Initialize wx handlers:
         self._notify_select = True
-        wx.grid.EVT_GRID_SELECT_CELL(grid, self._on_select_cell)
-        wx.grid.EVT_GRID_RANGE_SELECT(grid, self._on_range_select)
-        wx.grid.EVT_GRID_COL_SIZE(grid, self._on_col_size)
-        wx.grid.EVT_GRID_ROW_SIZE(grid, self._on_row_size)
+        grid.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
+        grid.Bind(wx.grid.EVT_GRID_RANGE_SELECT, self._on_range_select)
+        grid.Bind(wx.grid.EVT_GRID_COL_SIZE, self._on_col_size)
+        grid.Bind(wx.grid.EVT_GRID_ROW_SIZE, self._on_row_size)
 
         # This starts the cell editor on a double-click as well as on a second
         # click:
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(grid, self._on_cell_left_dclick)
+        grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self._on_cell_left_dclick)
 
         # Notify when cells are clicked on:
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(grid, self._on_cell_right_click)
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(grid, self._on_cell_right_dclick)
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self._on_cell_right_click)
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self._on_cell_right_dclick)
 
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(grid, self._on_label_right_click)
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(grid, self._on_label_left_click)
+        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self._on_label_right_click)
+        grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self._on_label_left_click)
 
-        #wx.grid.EVT_GRID_EDITOR_CREATED(grid, self._on_editor_created)
         if is_win32:
-            wx.grid.EVT_GRID_EDITOR_HIDDEN(grid, self._on_editor_hidden)
+            grid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self._on_editor_hidden)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
-        wx.EVT_KEY_DOWN(grid, self._on_key_down)
+        grid.Bind(wx.EVT_KEY_DOWN, self._on_key_down)
 
         # We handle control resize events to adjust column widths
-        wx.EVT_SIZE(grid, self._on_size)
+        grid.Bind(wx.EVT_SIZE, self._on_size)
 
         # Handle drags:
         self._corner_window = grid.GetGridCornerLabelWindow()
@@ -278,11 +277,11 @@ class Grid(Widget):
         # Handle mouse button state changes:
         self._ignore = False
         for window in ( gw, rw, cw ):
-            wx.EVT_MOTION(    window, self._on_grid_motion )
-            wx.EVT_LEFT_DOWN( window, self._on_left_down )
-            wx.EVT_LEFT_UP(   window, self._on_left_up )
+            window.Bind(wx.EVT_MOTION, self._on_grid_motion )
+            window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
+            window.Bind(wx.EVT_LEFT_UP, self._on_left_up)
 
-        wx.EVT_PAINT(self._grid_window, self._on_grid_window_paint)
+        self._grid_window.Bind(wx.EVT_PAINT, self._on_grid_window_paint)
 
         # Initialize the row and column models:
         self.__initialize_rows(self.model)
@@ -298,32 +297,33 @@ class Grid(Widget):
         self.__autosize()
 
         self._edit = False
-        wx.EVT_IDLE(grid, self._on_idle)
+        grid.Bind(wx.EVT_IDLE, self._on_idle)
 
     def dispose(self):
         # Remove all wx handlers:
         grid = self._grid
-        wx.grid.EVT_GRID_SELECT_CELL(       grid, None )
-        wx.grid.EVT_GRID_RANGE_SELECT(      grid, None )
-        wx.grid.EVT_GRID_COL_SIZE(          grid, None )
-        wx.grid.EVT_GRID_ROW_SIZE(          grid, None )
-        wx.grid.EVT_GRID_CELL_LEFT_DCLICK(  grid, None )
-        wx.grid.EVT_GRID_CELL_RIGHT_CLICK(  grid, None )
-        wx.grid.EVT_GRID_CELL_RIGHT_DCLICK( grid, None )
-        wx.grid.EVT_GRID_LABEL_RIGHT_CLICK( grid, None )
-        wx.grid.EVT_GRID_LABEL_LEFT_CLICK(  grid, None )
-        wx.grid.EVT_GRID_EDITOR_CREATED(    grid, None )
-        if is_win32:
-            wx.grid.EVT_GRID_EDITOR_HIDDEN( grid, None )
-        wx.EVT_KEY_DOWN(                    grid, None )
-        wx.EVT_SIZE(                        grid, None )
-        wx.EVT_PAINT( self._grid_window, None )
+        if grid is not None:
+            grid.Unbind(wx.grid.EVT_GRID_SELECT_CELL)
+            grid.Unbind(wx.grid.EVT_GRID_RANGE_SELECT)
+            grid.Unbind(wx.grid.EVT_GRID_COL_SIZE)
+            grid.Unbind(wx.grid.EVT_GRID_ROW_SIZE)
+            grid.Unbind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK)
+            grid.Unbind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK)
+            grid.Unbind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK)
+            grid.Unbind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK)
+            grid.Unbind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK)
+            grid.Unbind(wx.grid.EVT_GRID_EDITOR_CREATED)
+            if is_win32:
+                grid.Unbind(wx.grid.EVT_GRID_EDITOR_HIDDEN)
+            grid.Unbind(wx.EVT_KEY_DOWN)
+            grid.Unbind(wx.EVT_SIZE)
 
-        for window in ( self._grid_window , self._row_window ,
-                        self._col_window ):
-            wx.EVT_MOTION(    window, None )
-            wx.EVT_LEFT_DOWN( window, None )
-            wx.EVT_LEFT_UP(   window, None )
+        self._grid_window.Unbind(wx.EVT_PAINT)
+
+        for window in (self._grid_window, self._row_window, self._col_window):
+            window.Unbind(wx.EVT_MOTION)
+            window.Unbind(wx.EVT_LEFT_DOWN)
+            window.Unbind(wx.EVT_LEFT_UP)
 
         otc = self.on_trait_change
         otc(self._on_enable_lines_changed, 'enable_lines',
@@ -366,6 +366,7 @@ class Grid(Widget):
         # has been called, leading to headaches and segfaults.
         grid.Destroy()
         self._grid_table_base.dispose()
+        self._grid = None
 
     ###########################################################################
     # Trait event handlers.
@@ -676,15 +677,6 @@ class Grid(Widget):
         """ Called when the grid is resized. """
         self.__autosize()
 
-    # needed to handle problem in wx 2.6 with combobox cell editors
-    def _on_editor_created(self, evt):
-
-        editor = evt.GetControl()
-        if editor is not None:
-            editor.PushEventHandler(ComboboxFocusHandler(self._grid))
-
-        evt.Skip()
-
     def _on_editor_hidden(self, evt):
         # This is a hack to make clicking on a window button while a grid
         # editor is active work correctly under Windows. Normally, when the
@@ -887,7 +879,7 @@ class Grid(Widget):
                     # Popup the menu (if an action is selected it will be
                     # performed before before 'PopupMenu' returns).
                     x, y = evt.GetPosition()
-                    self._grid.PopupMenuXY(menu, x - 10, y - 10 )
+                    self._grid.PopupMenu(menu, x - 10, y - 10 )
 
             self.cell_right_clicked = (row, col)
 
@@ -1010,7 +1002,7 @@ class Grid(Widget):
             # build a wxCustomDataObject to notify the system clipboard
             # that some in-process data is available
             data_object = wx.CustomDataObject(PythonObject)
-            data_object.SetData('dummy')
+            data_object.SetData(b'dummy')
             if TheClipboard.Open():
                 TheClipboard.SetData(data_object)
                 TheClipboard.Close()

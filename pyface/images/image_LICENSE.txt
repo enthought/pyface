@@ -13,7 +13,7 @@ released under a 3 clause BSD license.
 Files and orginal authors:
 ----------------------------------------------------------------------------
 enthought/pyface/images:
-                          about.jpg | Enthought
+                          about.jpg | Python Software Foundation
                      background.jpg | Enthought
                     caret_close.png | Enthought
                      caret_open.png | Enthought
@@ -22,4 +22,4 @@ enthought/pyface/images:
                  panel_gradient.png | Enthought
             panel_gradient_over.png | Enthought
                        question.png | GV
-                         splash.png | Enthought
+                         splash.png | Python Software Foundation

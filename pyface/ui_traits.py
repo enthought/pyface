@@ -17,12 +17,10 @@
 """ Defines common traits used within the pyface library. """
 import logging
 
-from traits.api import ABCHasStrictTraits, Enum, Range, TraitError, TraitType
+from traits.api import (
+    ABCHasStrictTraits, DefaultValue, Enum, Range, TraitError, TraitType
+)
 from traits.trait_base import get_resource_path
-try:
-    from traits.trait_handlers import CALLABLE_AND_ARGS_DEFAULT_VALUE
-except ImportError:
-    CALLABLE_AND_ARGS_DEFAULT_VALUE = 7
 import six
 
 
@@ -235,7 +233,7 @@ class HasMargin(TraitType):
             if not isinstance(dv, self.klass):
                 return super(HasMargin, self).get_default_value()
 
-            self.default_value_type = dvt = CALLABLE_AND_ARGS_DEFAULT_VALUE
+            self.default_value_type = dvt = DefaultValue.callable_and_args
             dv = (self.klass, (), dv.trait_get())
 
         return (dvt, dv)

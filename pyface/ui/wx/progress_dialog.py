@@ -259,8 +259,8 @@ class ProgressDialog(MProgressDialog, Window):
         return self.close()
 
     def _set_time_label(self, value, control):
-        hours = value / 3600
-        minutes = (value % 3600) / 60
+        hours = value // 3600
+        minutes = (value % 3600) // 60
         seconds = value % 60
         label = "%u:%02u:%02u" % (hours, minutes, seconds)
 
@@ -279,7 +279,7 @@ class ProgressDialog(MProgressDialog, Window):
             # 'Cancel' button.
             self._cancel = cancel = wx.Button(dialog, wx.ID_CANCEL,
                                               self.cancel_button_label)
-            wx.EVT_BUTTON(dialog, wx.ID_CANCEL, self._on_cancel)
+            dialog.Bind(wx.EVT_BUTTON, self._on_cancel, id=wx.ID_CANCEL)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
             button_size = cancel.GetSize()

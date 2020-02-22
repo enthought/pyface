@@ -83,7 +83,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # We respond to the FIRST size event to make sure that the split ratio
         # is correct when the splitter is laid out in its parent.
-        wx.EVT_SIZE(splitter, self._on_size)
+        splitter.Bind(wx.EVT_SIZE, self._on_size)
 
         return splitter
 
@@ -152,7 +152,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # Since we only care about the FIRST size event, remove ourselves as
         # a listener.
-        #wx.EVT_SIZE(splitter, None)
+        #splitter.Unbind(wx.EVT_SIZE)
 
         return
 
