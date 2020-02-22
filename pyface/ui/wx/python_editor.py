@@ -188,18 +188,18 @@ class PythonEditor(MPythonEditor, Widget):
         # self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         # self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
         # Global styles for all languages.
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
 
         self.set_style(wx.stc.STC_STYLE_DEFAULT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_CONTROLCHAR, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACELIGHT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACEBAD, "#000000", "#ffffff")
 
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
         # Python styles.
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
 
         # White space
         self.set_style(wx.stc.STC_P_DEFAULT, "#000000", "#ffffff")
@@ -243,9 +243,9 @@ class PythonEditor(MPythonEditor, Widget):
         # End of line where string is not closed
         self.set_style(wx.stc.STC_P_STRINGEOL, "#000000", "#ffffff")
 
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
         # Events.
-        -----------------------------------------#
+        # ------------------------------------------------------------------------
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.

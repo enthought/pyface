@@ -168,9 +168,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         if not self.editors:
             self.active_editor = None
 
-    -------------------------------------------------------------------------#
+    # ------------------------------------------------------------------------
     # 'IAdvancedEditorAreaPane' interface.
-    -------------------------------------------------------------------------#
+    # ------------------------------------------------------------------------
 
     def get_layout(self):
         """ Returns a LayoutItem that reflects the current state of the
@@ -183,9 +183,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.control.set_layout(layout)
 
-    -------------------------------------------------------------------------#
+    # ------------------------------------------------------------------------
     # 'SplitEditorAreaPane' interface.
-    -------------------------------------------------------------------------#
+    # ------------------------------------------------------------------------
 
     def get_context_menu(self, pos):
         """ Return a context menu containing split/collapse actions.
