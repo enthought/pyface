@@ -11,15 +11,6 @@
 """ Abstract base class for all action managers. """
 
 
-from __future__ import print_function
-from traits.api import Bool, Constant, Event, HasTraits, Instance
-from traits.api import List, Property, Str
-
-
-from pyface.action.action_controller import ActionController
-from pyface.action.group import Group
-
-
 class ActionManager(HasTraits):
     """ Abstract base class for all action managers.
 

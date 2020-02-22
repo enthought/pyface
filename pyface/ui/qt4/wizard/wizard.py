@@ -17,17 +17,6 @@
 """ The base class for all pyface wizards. """
 
 
-from __future__ import print_function
-from pyface.qt import QtCore, QtGui
-
-
-from traits.api import Bool, Instance, List, Property, provides, Unicode
-from pyface.api import Dialog
-from pyface.wizard.i_wizard import IWizard, MWizard
-from pyface.wizard.i_wizard_controller import IWizardController
-from pyface.wizard.i_wizard_page import IWizardPage
-
-
 @provides(IWizard)
 class Wizard(MWizard, Dialog):
     """ The base class for all pyface wizards.

@@ -10,14 +10,6 @@
 
 """ The implementation of a shared resource manager. """
 
-from __future__ import absolute_import
-
-
-from pyface.resource.api import ResourceManager
-
-# Import the toolkit specific version.
-from .toolkit import toolkit_object
-
 PyfaceResourceFactory = toolkit_object(
     "resource_manager:PyfaceResourceFactory"
 )

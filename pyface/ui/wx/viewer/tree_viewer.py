@@ -11,20 +11,6 @@
 """ A viewer based on a tree control. """
 
 
-from __future__ import print_function
-import wx
-
-
-from traits.api import Any, Bool, Enum, Event, Instance, List
-
-
-from pyface.ui.wx.image_list import ImageList
-from pyface.viewer.content_viewer import ContentViewer
-from pyface.viewer.tree_content_provider import TreeContentProvider
-from pyface.viewer.tree_label_provider import TreeLabelProvider
-from pyface.wx.drag_and_drop import PythonDropSource
-
-
 class TreeViewer(ContentViewer):
     """ A viewer based on a tree control. """
 

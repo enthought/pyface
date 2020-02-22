@@ -9,18 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-from __future__ import absolute_import
-
-import unittest
-
-from traits.etsconfig.api import ETSConfig
-
-from ..single_choice_dialog import SingleChoiceDialog
-from ..constant import OK, CANCEL
-from ..gui import GUI
-from ..toolkit import toolkit_object
-from ..window import Window
-
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 

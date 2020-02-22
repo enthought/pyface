@@ -7,15 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-from collections.abc import Sequence
-import os
-import unittest
-
-from ..resource_manager import PyfaceResourceFactory
-from ..resource_manager import ResourceManager
-
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
 
 

@@ -9,16 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A cached image list. """
-from __future__ import absolute_import
-
-
-import wx
-
-
-from .image_resource import ImageResource
-
-
-# fixme: rename to 'CachedImageList'?!?
 class ImageList(wx.ImageList):
     """ A cached image list. """
 

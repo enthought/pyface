@@ -8,13 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
-
-from .grid import Grid
-from .grid_model import GridModel, GridSortEvent
-from .composite_grid_model import CompositeGridModel
-from .inverted_grid_model import InvertedGridModel
-from .simple_grid_model import SimpleGridModel, GridRow, GridColumn
 from .trait_grid_model import (
     TraitGridModel,
     TraitGridColumn,

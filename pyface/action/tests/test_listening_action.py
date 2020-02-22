@@ -7,17 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from traits.api import Any, Bool, HasTraits
-from traits.testing.unittest_tools import UnittestTools
-
-from ..listening_action import ListeningAction
-from ..action_event import ActionEvent
-
-
 class WatchedObject(HasTraits):
 
     #: Trait to watch for enabled state

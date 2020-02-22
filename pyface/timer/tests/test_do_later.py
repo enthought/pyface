@@ -7,15 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import print_function
-
-import time
-from unittest import TestCase, skipIf
-
-from pyface.toolkit import toolkit_object
-from ..i_timer import perf_counter
-from ..do_later import DoLaterTimer, do_after, do_later
-
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 

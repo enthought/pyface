@@ -10,28 +10,6 @@
 
 """A dialog that is loaded from an XRC resource file.
 """
-from __future__ import absolute_import
-
-
-import os.path
-
-# Major packages.
-import wx
-import wx.xrc
-
-
-from traits.api import Instance, Str
-import traits.util.resource
-
-
-from .dialog import Dialog
-
-
-# ----------------------------------------------------------------------------
-# class 'XrcDialog'
-# ----------------------------------------------------------------------------
-
-
 class XrcDialog(Dialog):
     """A dialog that is loaded from an XRC resource file.
     """

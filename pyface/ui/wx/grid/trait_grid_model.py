@@ -16,7 +16,6 @@ list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
 
-from __future__ import print_function
 from traits.api import (
     Any,
     Bool,

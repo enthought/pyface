@@ -7,13 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import os
-import unittest
-
-from ..image_cache import ImageCache
-
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
 
 

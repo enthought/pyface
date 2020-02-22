@@ -11,8 +11,4 @@
 
 
 # Import the toolkit specific version.
-from __future__ import absolute_import
-
-from pyface.toolkit import toolkit_object
-
 TableViewer = toolkit_object("viewer.table_viewer:TableViewer")

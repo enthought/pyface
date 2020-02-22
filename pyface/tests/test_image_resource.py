@@ -7,22 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import os
-import platform
-import pkg_resources
-import unittest
-
-import pyface
-import pyface.tests
-from ..image_resource import ImageResource
-from ..toolkit import toolkit_object
-
-
-is_qt = toolkit_object.toolkit == "qt4"
-if is_qt:
-    from pyface.qt import qt_api
 is_pyqt4_windows = (
     is_qt and qt_api == "pyqt" and platform.system() == "Windows"
 )

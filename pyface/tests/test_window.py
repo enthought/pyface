@@ -7,19 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import platform
-import unittest
-
-from ..constant import CANCEL, NO, OK, YES
-from ..toolkit import toolkit_object
-from ..window import Window
-
-is_qt = toolkit_object.toolkit == "qt4"
-if is_qt:
-    from pyface.qt import qt_api
-
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 

@@ -77,13 +77,6 @@ so you don't have to depend on IPython.
 # -----------------------------------------------------------------------------
 
 # Prevent name conflict with local wx package.
-from __future__ import absolute_import
-
-# -----------------------------------------------------------------------------
-# wx
-# -----------------------------------------------------------------------------
-
-
 def get_app_wx(*args, **kwargs):
     """Create a new wx app or return an exiting one."""
     import wx

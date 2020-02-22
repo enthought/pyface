@@ -11,8 +11,4 @@
 # Note: The MultiToolbarWindow is currently wx-specific
 
 # Import the toolkit specific version.
-from __future__ import absolute_import
-
-from .toolkit import toolkit_object
-
 MultiToolbarWindow = toolkit_object("multi_toolbar_window:MultiToolbarWindow")

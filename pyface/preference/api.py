@@ -9,8 +9,3 @@
 # Thanks for using Enthought open source!
 
 
-from __future__ import absolute_import
-
-from .preference_page import PreferencePage
-from .preference_dialog import PreferenceDialog
-from .preference_node import PreferenceNode

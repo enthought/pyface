@@ -13,30 +13,6 @@
 """
 
 
-from __future__ import print_function
-import builtins
-import codeop
-import re
-import sys
-
-
-import IPython
-from IPython.frontend.wx.wx_frontend import WxController
-from IPython.kernel.core.interpreter import Interpreter
-import wx
-
-
-from apptools.io.file import File as EnthoughtFile
-from pyface.i_python_shell import IPythonShell
-from pyface.key_pressed_event import KeyPressedEvent
-from traits.api import Event, Instance, provides, Str
-from traits.util.clean_strings import python_name
-from pyface.wx.drag_and_drop import PythonDropTarget
-
-
-from .widget import Widget
-
-# Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split(".")))
 
 

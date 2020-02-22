@@ -9,19 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A top-level application window that supports multiple toolbars. """
-from __future__ import absolute_import
-
-
-import wx
-
-
-from pyface.action.api import ToolBarManager
-from traits.api import Trait, TraitDict, TraitEnum, TraitList
-
-
-from .application_window import ApplicationWindow
-
-
 class MultiToolbarWindow(ApplicationWindow):
     """ A top-level application window that supports multiple toolbars.
 

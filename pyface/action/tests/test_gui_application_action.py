@@ -7,17 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from traits.testing.unittest_tools import UnittestTools
-
-from pyface.gui_application import GUIApplication
-from ..gui_application_action import GUIApplicationAction
-from ..action_event import ActionEvent
-
-
 class TestAction(unittest.TestCase, UnittestTools):
     def setUp(self):
         self.application = GUIApplication()

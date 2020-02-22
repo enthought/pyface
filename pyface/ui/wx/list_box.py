@@ -8,19 +8,6 @@
 #
 # Thanks for using Enthought open source!
 """ A simple list box widget with a model-view architecture. """
-from __future__ import absolute_import
-
-
-import wx
-
-
-from traits.api import Event, Instance, Int
-
-
-from pyface.list_box_model import ListBoxModel
-from .widget import Widget
-
-
 class ListBox(Widget):
     """ A simple list box widget with a model-view architecture. """
 

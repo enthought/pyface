@@ -10,16 +10,6 @@
 
 """ The Wx-specific implementation of the text field class """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
-from traits.api import Any, Instance, Unicode, provides
-
-import wx
-
-from pyface.fields.i_field import IField, MField
-from pyface.ui.wx.widget import Widget
-
-
 @provides(IField)
 class Field(MField, Widget):
     """ The Wxspecific implementation of the field class

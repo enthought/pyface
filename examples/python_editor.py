@@ -10,9 +10,6 @@
 
 """ Python editor example. """
 
-from __future__ import print_function, unicode_literals
-
-from pyface.api import ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 from pyface.action.api import (
     Action,
     FieldAction,

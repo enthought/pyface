@@ -10,16 +10,6 @@
 
 """ Tools for testing. """
 
-from __future__ import print_function
-from contextlib import contextmanager
-import os
-import sys
-
-from pyface.qt.QtCore import QTimer
-from pyface.util.guisupport import get_app_qt4
-
-
-@contextmanager
 def event_loop():
     """ Post and process the Qt events at the exit of the code block. """
 

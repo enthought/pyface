@@ -7,14 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from ..action import Action
-from ..action_event import ActionEvent
-
-
 class TestAction(unittest.TestCase):
     def test_default_id(self):
         action = Action(name="Test")

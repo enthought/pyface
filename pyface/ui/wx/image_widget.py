@@ -9,18 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A clickable/draggable widget containing an image. """
-from __future__ import absolute_import
-
-
-import wx
-
-
-from traits.api import Any, Bool, Event
-
-
-from .widget import Widget
-
-
 class ImageWidget(Widget):
     """ A clickable/draggable widget containing an image. """
 

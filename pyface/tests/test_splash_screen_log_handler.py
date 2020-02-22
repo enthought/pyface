@@ -7,15 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from traits.api import Any, HasTraits, Unicode
-
-from ..splash_screen_log_handler import SplashScreenLogHandler
-
-
 class DummySplashScreen(HasTraits):
     text = Unicode(u"original")
 

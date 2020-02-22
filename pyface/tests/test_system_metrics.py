@@ -7,13 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from ..system_metrics import SystemMetrics
-
-
 class TestSystemMetrics(unittest.TestCase):
     def setUp(self):
         self.metrics = SystemMetrics()

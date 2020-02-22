@@ -9,19 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A Layered panel. """
-from __future__ import absolute_import
-
-
-import wx
-from wx.lib.scrolledpanel import ScrolledPanel
-
-
-from traits.api import Any, Str, Int
-
-
-from .widget import Widget
-
-
 class LayeredPanel(Widget):
     """ A Layered panel.
 

@@ -7,11 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-import mock
-import unittest
-
-from pyface.ui.qt4.workbench.split_tab_widget import SplitTabWidget
 from pyface.ui.qt4.workbench.workbench_window_layout import (
     WorkbenchWindowLayout,
 )

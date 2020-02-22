@@ -13,21 +13,6 @@
 """ An image and text-based control that can be used as a normal, radio or
     toolbar button.
 """
-from __future__ import absolute_import
-
-import wx
-from numpy import array, frombuffer, reshape, ravel, dtype
-
-from traits.api import Bool, Str, Range, Enum, Instance, Event
-
-from .widget import Widget
-from .image_resource import ImageResource
-
-# -------------------------------------------------------------------------------
-#  Constants:
-# -------------------------------------------------------------------------------
-
-# Text color used when a button is disabled:
 DisabledTextColor = wx.Colour(128, 128, 128)
 
 # -------------------------------------------------------------------------------

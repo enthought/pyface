@@ -12,8 +12,4 @@
 
 
 # Import the toolkit specific version.
-from __future__ import absolute_import
-
-from .toolkit import toolkit_object
-
 Dialog = toolkit_object("dialog:Dialog")

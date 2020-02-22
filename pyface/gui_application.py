@@ -19,12 +19,6 @@ this is most likely to be a subclass of
 
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 import logging
 
 from traits.api import (

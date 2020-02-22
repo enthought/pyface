@@ -7,15 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import os
-import unittest
-
-from ..directory_dialog import DirectoryDialog
-from ..gui import GUI
-from ..toolkit import toolkit_object
-
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 

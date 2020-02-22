@@ -10,18 +10,6 @@
 """
 Qt-specific tests for the Qt GUI implementation.
 """
-from __future__ import absolute_import
-
-import unittest
-
-from traits.api import Event, HasStrictTraits, Instance
-
-from pyface.api import GUI
-from pyface.i_gui import IGUI
-from pyface.qt import QtCore
-from pyface.util.guisupport import get_app_qt4, is_event_loop_running_qt4
-
-
 class SimpleApplication(HasStrictTraits):
     """
     Simple application that attempts to set a trait at start time,

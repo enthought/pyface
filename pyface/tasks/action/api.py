@@ -8,10 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
-
-
-from .dock_pane_toggle_group import DockPaneToggleGroup
 from .schema import (
     ActionSchema,
     GroupSchema,

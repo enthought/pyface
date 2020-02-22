@@ -10,13 +10,6 @@
 
 """ Chained wizard example. """
 
-from __future__ import print_function
-
-
-import os
-import sys
-
-# Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
 

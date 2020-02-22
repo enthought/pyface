@@ -17,13 +17,6 @@ Application class by overriding the `_run` method to perform the desired
 computation.
 """
 
-from __future__ import print_function
-
-import argparse
-from pyface.application import Application
-from traits.api import Str
-
-
 class HelloApplication(Application):
     """ Simple application example that greets a location. """
 

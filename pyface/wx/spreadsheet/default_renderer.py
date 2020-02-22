@@ -8,14 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import print_function
-
-import types
-from string import atof
-import wx
-from wx.grid import PyGridCellRenderer
-
-
 class DefaultRenderer(PyGridCellRenderer):
     """ This renderer provides the default representation of an
     Enthought spreadsheet cell.

@@ -7,14 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from ..progress_dialog import ProgressDialog
-from ..util.gui_test_assistant import GuiTestAssistant
-
-
 class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)

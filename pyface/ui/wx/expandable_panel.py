@@ -9,19 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A Layered panel. """
-from __future__ import absolute_import
-
-
-import wx
-
-from traits.api import Instance
-
-
-from .expandable_header import ExpandableHeader
-from .image_resource import ImageResource
-from .widget import Widget
-
-
 class ExpandablePanel(Widget):
     """ An expandable panel. """
 

@@ -9,12 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ Dialog example. """
-from __future__ import print_function
-
-
-import os, sys
-
-# Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
 

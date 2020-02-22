@@ -7,15 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from ..action import Action
-from ..action_controller import ActionController
-from ..action_event import ActionEvent
-
-
 class TestActionController(unittest.TestCase):
     def setUp(self):
         # test whether function is called by updating list

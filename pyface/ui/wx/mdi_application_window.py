@@ -9,27 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ An MDI top-level application window. """
-from __future__ import absolute_import
-
-
-import wx
-
-
-from traits.api import Bool, Instance, Int, Tuple
-
-
-from .application_window import ApplicationWindow
-from .image_resource import ImageResource
-
-try:
-    # import wx.aui
-    from wx.lib.agw import aui
-
-    AUI = True
-except:
-    AUI = False
-
-
 class MDIApplicationWindow(ApplicationWindow):
     """ An MDI top-level application window.
 

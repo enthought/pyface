@@ -7,24 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from traits.testing.unittest_tools import UnittestTools
-
-from pyface.image_cache import ImageCache
-from pyface.toolkit import toolkit_object
-from pyface.widget import Widget
-from pyface.window import Window
-from ..action import Action
-from ..action_controller import ActionController
-from ..action_item import ActionItem
-from ..menu_manager import MenuManager
-from ..menu_bar_manager import MenuBarManager
-from ..tool_bar_manager import ToolBarManager
-
-
 class FalseActionController(ActionController):
     def can_add_to_menu(self, action):
         """ Returns True if the action can be added to a menu/menubar. """

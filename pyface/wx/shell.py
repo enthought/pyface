@@ -14,30 +14,6 @@ wxPython's wxStyledTextCtrl. The latest files are always available at the
 SourceForge project page at http://sourceforge.net/projects/pycrust/.
 Sponsored by Orbtech - Your source for Python programming expertise."""
 
-from __future__ import print_function
-
-__author__ = "Patrick K. O'Brien <pobrien@orbtech.com>"
-__cvsid__ = "$Id: shell.py,v 1.2 2003/06/13 17:59:34 dmorrill Exp $"
-__revision__ = "$Revision: 1.2 $"[11:-2]
-
-import wx
-import wx.stc
-from wx import *
-from wx.stc import *
-
-wx.StyledTextCtrl = wx.stc.StyledTextCtrl
-import keyword
-import os
-import sys
-from wx.py.pseudo import PseudoFileIn, PseudoFileOut, PseudoFileErr
-from wx.py.version import VERSION
-
-
-from .drag_and_drop import PythonObject
-from .drag_and_drop import clipboard as enClipboard
-
-sys.ps3 = "<-- "  # Input prompt.
-
 NAVKEYS = (WXK_END, WXK_LEFT, WXK_RIGHT, WXK_UP, WXK_DOWN, WXK_PRIOR, WXK_NEXT)
 
 if wxPlatform == "__WXMSW__":

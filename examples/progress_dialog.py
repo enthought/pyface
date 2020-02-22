@@ -1,13 +1,6 @@
 #
 # simple example of its use
 #
-from __future__ import print_function
-
-import time
-from pyface.api import GUI, ApplicationWindow, ProgressDialog
-from pyface.action.api import Action, MenuManager, MenuBarManager
-
-
 def task_func(t):
     progress = ProgressDialog(
         title="progress",

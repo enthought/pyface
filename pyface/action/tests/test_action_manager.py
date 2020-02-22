@@ -7,18 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from __future__ import absolute_import
-
-import unittest
-
-from traits.testing.unittest_tools import UnittestTools
-
-from ..action import Action
-from ..action_item import ActionItem
-from ..action_manager import ActionManager
-from ..group import Group
-
-
 class TestActionItem(unittest.TestCase, UnittestTools):
     def setUp(self):
         # test whether function is called by updating list

@@ -1,15 +1,5 @@
 """Example of using a splash screen (and the use of pyface Timer)."""
 
-from __future__ import print_function
-
-import time
-
-from pyface.timer.api import Timer
-from pyface.api import GUI, ApplicationWindow, ImageResource, SplashScreen
-from pyface.action.api import Action, MenuManager, MenuBarManager
-from traits.api import Any, Int
-
-
 splash_screen = SplashScreen(image=ImageResource("images/splash"))
 
 

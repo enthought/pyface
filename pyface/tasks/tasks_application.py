@@ -11,12 +11,6 @@
 the creation of tasks and corresponding windows.
 """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
 from functools import partial
 import logging
