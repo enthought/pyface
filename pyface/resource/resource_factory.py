@@ -32,4 +32,4 @@ class ResourceFactory(object):
         raise NotImplemented
 
 
-#### EOF ######################################################################
+

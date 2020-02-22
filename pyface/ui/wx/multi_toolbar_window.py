@@ -154,4 +154,4 @@ class MultiToolbarWindow(ApplicationWindow):
         self._tool_bar_locations[tool_bar_manager] = location
 
 
-#### EOF ######################################################################
+

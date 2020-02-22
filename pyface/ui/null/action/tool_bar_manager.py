@@ -78,4 +78,4 @@ class ToolBarManager(ActionManager):
         return None
 
 
-#### EOF ######################################################################
+

@@ -80,4 +80,4 @@ class ImageReference(ResourceReference):
         return image
 
 
-#### EOF ######################################################################
+

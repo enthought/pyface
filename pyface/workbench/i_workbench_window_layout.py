@@ -390,4 +390,4 @@ class MWorkbenchWindowLayout(HasTraits):
         return editor_references
 
 
-#### EOF ######################################################################
+

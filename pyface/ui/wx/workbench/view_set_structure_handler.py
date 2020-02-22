@@ -71,4 +71,4 @@ class ViewSetStructureHandler(SetStructureHandler):
         return control
 
 
-#### EOF ######################################################################
+

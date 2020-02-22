@@ -27,4 +27,4 @@ def wx_to_enable_color(color):
     return tuple(enable_color)
 
 
-#### EOF ######################################################################
+

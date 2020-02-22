@@ -30,4 +30,4 @@ class WorkbenchWindowMemento(HasTraits):
     toolkit_data = Any()
 
 
-#### EOF ######################################################################
+

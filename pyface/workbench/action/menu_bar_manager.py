@@ -34,4 +34,4 @@ class MenuBarManager(BaseMenuBarManager):
         return menu_bar
 
 
-#### EOF ######################################################################
+

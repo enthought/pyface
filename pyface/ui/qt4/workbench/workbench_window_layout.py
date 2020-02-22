@@ -660,4 +660,4 @@ class _ViewContainer(QtGui.QMainWindow):
         QtGui.QMainWindow.showEvent(self, e)
 
 
-#### EOF ######################################################################
+

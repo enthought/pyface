@@ -21,4 +21,4 @@ WorkbenchWindowLayout = toolkit_object(
     "workbench.workbench_window_layout:WorkbenchWindowLayout"
 )
 
-### EOF #######################################################################
+

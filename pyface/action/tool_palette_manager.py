@@ -21,4 +21,4 @@ ToolPaletteManager = toolkit_object(
     "action.tool_palette_manager:ToolPaletteManager"
 )
 
-### EOF #######################################################################
+

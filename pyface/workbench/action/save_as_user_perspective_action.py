@@ -52,4 +52,4 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
         return
 
 
-#### EOF #####################################################################
+

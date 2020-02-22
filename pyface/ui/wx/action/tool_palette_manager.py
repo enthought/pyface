@@ -140,4 +140,4 @@ class ToolPaletteManager(ActionManager):
         return
 
 
-#### EOF ######################################################################
+

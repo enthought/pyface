@@ -35,4 +35,4 @@ class ToolBarManager(pyface.ToolBarManager):
         return tool_bar
 
 
-#### EOF ######################################################################
+

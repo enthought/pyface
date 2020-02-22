@@ -80,4 +80,4 @@ class HeadingText(MHeadingText, Widget):
             self._set_text(new)
 
 
-#### EOF ######################################################################
+

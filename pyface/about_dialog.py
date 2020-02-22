@@ -20,4 +20,4 @@ from .toolkit import toolkit_object
 
 AboutDialog = toolkit_object("about_dialog:AboutDialog")
 
-### EOF #######################################################################
+

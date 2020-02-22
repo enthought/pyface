@@ -25,4 +25,4 @@ from .trait_grid_model import (
 )
 from .grid_cell_renderer import GridCellRenderer
 
-#### EOF ######################################################################
+

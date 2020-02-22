@@ -59,4 +59,4 @@ class TraitDictNodeType(NodeType):
         return self.text
 
 
-##### EOF #####################################################################
+

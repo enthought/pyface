@@ -156,4 +156,4 @@ class HeadingText(MHeadingText, Widget):
         return
 
 
-#### EOF ######################################################################
+

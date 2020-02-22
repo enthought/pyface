@@ -258,4 +258,4 @@ class ApplicationWindow(MApplicationWindow, Window):
         self._set_window_icon()
 
 
-#### EOF ######################################################################
+

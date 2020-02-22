@@ -107,4 +107,4 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         return
 
 
-#### EOF ######################################################################
+

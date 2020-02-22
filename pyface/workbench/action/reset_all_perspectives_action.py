@@ -38,4 +38,4 @@ class ResetAllPerspectivesAction(WorkbenchAction):
         return
 
 
-#### EOF ######################################################################
+

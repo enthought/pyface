@@ -21,4 +21,4 @@ from .toolkit import toolkit_object
 
 SplitWidget = toolkit_object("split_widget:SplitWidget")
 
-#### EOF ######################################################################
+

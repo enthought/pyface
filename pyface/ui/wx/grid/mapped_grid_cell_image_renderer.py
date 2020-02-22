@@ -71,4 +71,4 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
         return model.get_cell_drag_value(row, col)
 
 
-#### EOF ######################################################################
+

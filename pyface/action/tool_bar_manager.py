@@ -19,4 +19,4 @@ from pyface.toolkit import toolkit_object
 
 ToolBarManager = toolkit_object("action.tool_bar_manager:ToolBarManager")
 
-### EOF #######################################################################
+

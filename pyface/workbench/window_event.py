@@ -23,4 +23,4 @@ class VetoableWindowEvent(WindowEvent, Vetoable):
     pass
 
 
-#### EOF ######################################################################
+

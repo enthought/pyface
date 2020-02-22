@@ -384,4 +384,4 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
         return attribute
 
 
-#### EOF ######################################################################
+

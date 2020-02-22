@@ -282,4 +282,4 @@ class _GridTableBase(GridTableBase):
         return self.model.DeleteRows(pos, num_rows)
 
 
-#### EOF ######################################################################
+

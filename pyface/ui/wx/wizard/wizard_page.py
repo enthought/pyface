@@ -90,4 +90,4 @@ class WizardPage(MWizardPage, HasTraits):
         return panel
 
 
-#### EOF ######################################################################
+

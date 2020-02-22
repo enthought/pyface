@@ -31,4 +31,4 @@ class GridColumn(HasTraits):
     readonly = Bool(False)
 
 
-#### EOF ######################################################################
+

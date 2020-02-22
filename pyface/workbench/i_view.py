@@ -138,4 +138,4 @@ class MView(MWorkbenchPart, PerspectiveItem):
         return
 
 
-#### EOF ######################################################################
+

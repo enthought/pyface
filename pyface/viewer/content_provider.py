@@ -38,4 +38,4 @@ class ContentProvider(HasTraits):
         raise NotImplementedError
 
 
-#### EOF ####################################################################
+

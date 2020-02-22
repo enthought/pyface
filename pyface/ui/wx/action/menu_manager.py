@@ -221,4 +221,4 @@ class _Menu(wx.Menu):
         return previous_non_empty_group
 
 
-#### EOF ######################################################################
+

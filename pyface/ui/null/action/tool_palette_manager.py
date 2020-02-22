@@ -64,4 +64,4 @@ class ToolPaletteManager(ActionManager):
         return None
 
 
-#### EOF ######################################################################
+

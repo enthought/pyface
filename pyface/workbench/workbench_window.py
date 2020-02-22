@@ -943,4 +943,4 @@ class WorkbenchWindow(ApplicationWindow):
         return
 
 
-#### EOF ######################################################################
+

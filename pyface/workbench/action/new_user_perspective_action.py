@@ -52,4 +52,4 @@ class NewUserPerspectiveAction(WorkbenchAction):
         return
 
 
-#### EOF #####################################################################
+

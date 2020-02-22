@@ -59,4 +59,4 @@ class TraitListNodeType(NodeType):
         return self.text
 
 
-##### EOF #####################################################################
+

@@ -154,4 +154,4 @@ class WorkbenchDockWindow(DockWindow):
         return
 
 
-#### EOF ######################################################################
+

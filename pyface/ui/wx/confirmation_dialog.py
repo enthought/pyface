@@ -150,4 +150,4 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         self.control.EndModal(wx.ID_NO)
 
 
-#### EOF ######################################################################
+

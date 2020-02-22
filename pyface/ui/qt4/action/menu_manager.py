@@ -235,4 +235,4 @@ class _Menu(QtGui.QMenu):
         return previous_non_empty_group
 
 
-#### EOF ######################################################################
+

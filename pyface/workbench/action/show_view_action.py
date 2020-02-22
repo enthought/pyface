@@ -42,4 +42,4 @@ class ShowViewAction(WorkbenchAction):
         return
 
 
-#### EOF ######################################################################
+

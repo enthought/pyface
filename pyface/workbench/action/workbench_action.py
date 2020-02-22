@@ -18,4 +18,4 @@ class WorkbenchAction(Action):
     window = Instance(WorkbenchWindow)
 
 
-#### EOF ######################################################################
+

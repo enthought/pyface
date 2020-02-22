@@ -61,4 +61,4 @@ class UserPerspectiveAction(WorkbenchAction):
         return
 
 
-#### EOF #####################################################################
+

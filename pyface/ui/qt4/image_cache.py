@@ -76,4 +76,4 @@ class ImageCache(MImageCache, HasTraits):
         return image
 
 
-#### EOF ######################################################################
+

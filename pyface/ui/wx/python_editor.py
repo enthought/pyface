@@ -300,4 +300,4 @@ class PythonEditor(MPythonEditor, Widget):
         return
 
 
-#### EOF ######################################################################
+

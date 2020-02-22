@@ -90,4 +90,4 @@ class DefaultTreeContentProvider(TreeContentProvider):
         return TreeItem(**kw)
 
 
-#### EOF ####################################################################
+

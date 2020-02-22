@@ -39,4 +39,4 @@ class MenuBarManager(ActionManager):
         return None
 
 
-#### EOF ######################################################################
+

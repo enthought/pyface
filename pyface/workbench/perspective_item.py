@@ -54,4 +54,4 @@ class PerspectiveItem(HasTraits):
     style_hint = Enum("tab", "vertical", "horizontal", "fixed")
 
 
-#### EOF ######################################################################
+

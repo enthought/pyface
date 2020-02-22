@@ -243,4 +243,4 @@ class ResourceManager(HasTraits):
         return resource_path
 
 
-#### EOF ######################################################################
+

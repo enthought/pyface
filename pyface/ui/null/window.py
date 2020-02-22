@@ -106,4 +106,4 @@ class Window(MWindow, Widget):
         self.trait_property_changed("size", old, size)
 
 
-#### EOF ######################################################################
+

@@ -21,4 +21,4 @@ from .toolkit import toolkit_object
 
 ImageResource = toolkit_object("image_resource:ImageResource")
 
-#### EOF ######################################################################
+

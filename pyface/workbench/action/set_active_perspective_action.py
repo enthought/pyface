@@ -67,4 +67,4 @@ class SetActivePerspectiveAction(WorkbenchAction):
         return
 
 
-#### EOF ######################################################################
+

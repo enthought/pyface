@@ -85,4 +85,4 @@ class SplashScreen(MSplashScreen, Window):
         control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
 
 
-#### EOF ######################################################################
+

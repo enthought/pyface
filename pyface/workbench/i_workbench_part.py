@@ -122,4 +122,4 @@ class MWorkbenchPart(HasTraits):
         raise NotImplementedError
 
 
-#### EOF ######################################################################
+

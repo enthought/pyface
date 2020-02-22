@@ -107,4 +107,4 @@ class ImageResource(MImageResource, HasTraits):
         return absolute_path
 
 
-#### EOF ######################################################################
+

@@ -98,4 +98,4 @@ class EditorSetStructureHandler(SetStructureHandler):
         return editor_memento
 
 
-#### EOF ######################################################################
+

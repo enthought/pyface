@@ -156,4 +156,4 @@ class SplitWidget(MSplitWidget, HasTraits):
         return
 
 
-#### EOF ######################################################################
+

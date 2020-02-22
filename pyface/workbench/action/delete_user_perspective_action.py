@@ -79,4 +79,4 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
         return window.perspectives[index]
 
 
-#### EOF #####################################################################
+

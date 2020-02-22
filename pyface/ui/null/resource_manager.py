@@ -38,4 +38,4 @@ class PyfaceResourceFactory(ResourceFactory):
         return data
 
 
-#### EOF ######################################################################
+

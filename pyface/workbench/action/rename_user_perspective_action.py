@@ -43,4 +43,4 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
         return
 
 
-#### EOF #####################################################################
+

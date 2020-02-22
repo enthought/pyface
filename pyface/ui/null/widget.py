@@ -40,4 +40,4 @@ class Widget(MWidget, HasTraits):
         self.control = None
 
 
-#### EOF ######################################################################
+

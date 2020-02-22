@@ -327,4 +327,4 @@ class PythonDropTarget(wx.DropTarget):
         return True
 
 
-#### EOF #####################################################################
+

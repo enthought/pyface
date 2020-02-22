@@ -64,4 +64,4 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         return (color[0] / 255.0, color[1] / 255.0, color[2] / 255.0)
 
 
-#### EOF ######################################################################
+

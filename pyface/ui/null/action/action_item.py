@@ -137,4 +137,4 @@ class _PaletteTool(HasTraits):
         self.tool_palette = tool_palette
 
 
-#### EOF ######################################################################
+

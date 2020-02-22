@@ -38,4 +38,4 @@ class ResetActivePerspectiveAction(WorkbenchAction):
         return
 
 
-#### EOF ######################################################################
+

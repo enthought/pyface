@@ -130,4 +130,4 @@ class PerspectiveMenuManager(MenuManager):
         return group
 
 
-#### EOF ######################################################################
+

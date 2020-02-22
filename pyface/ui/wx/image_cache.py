@@ -96,4 +96,4 @@ class ImageCache(MImageCache, HasTraits):
         return bmp
 
 
-#### EOF ######################################################################
+

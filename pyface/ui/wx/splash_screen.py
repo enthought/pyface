@@ -137,4 +137,4 @@ class SplashScreen(MSplashScreen, Window):
         event.Skip()
 
 
-#### EOF ######################################################################
+

@@ -43,4 +43,4 @@ class IEditorManager(Interface):
         """ Restore an editor from a memento and return it. """
 
 
-#### EOF ######################################################################
+

@@ -19,4 +19,4 @@ from pyface.toolkit import toolkit_object
 
 MenuManager = toolkit_object("action.menu_manager:MenuManager")
 
-### EOF #######################################################################
+

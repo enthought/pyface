@@ -71,4 +71,4 @@ class PyfaceResourceFactory(ResourceFactory):
         return image
 
 
-#### EOF ######################################################################
+

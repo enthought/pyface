@@ -837,4 +837,4 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         return True
 
 
-#### EOF ######################################################################
+

@@ -40,4 +40,4 @@ class IPerspective(Interface):
         """ Called when the perspective is shown in a workbench window. """
 
 
-#### EOF ######################################################################
+

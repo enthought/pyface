@@ -41,4 +41,4 @@ class CheckboxImageRenderer(MappedGridCellImageRenderer):
         return
 
 
-#### EOF ######################################################################
+

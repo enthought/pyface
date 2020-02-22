@@ -150,4 +150,4 @@ class MEditor(MWorkbenchPart):
         return CommandStack(undo_manager=self.window.workbench.undo_manager)
 
 
-#### EOF ######################################################################
+

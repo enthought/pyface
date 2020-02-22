@@ -142,4 +142,4 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         return retval
 
 
-#### EOF ######################################################################
+

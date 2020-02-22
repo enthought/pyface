@@ -123,4 +123,4 @@ class StatusBarManager(HasTraits):
         self.status_bar.showMessage("  ".join(self.messages))
 
 
-#### EOF ######################################################################
+

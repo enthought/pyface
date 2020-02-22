@@ -94,4 +94,4 @@ class EditorManager(HasTraits):
         return editor.obj == obj
 
 
-#### EOF ######################################################################
+

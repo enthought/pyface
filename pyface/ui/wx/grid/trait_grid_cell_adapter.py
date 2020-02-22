@@ -296,4 +296,4 @@ class TraitGridCellAdapter(PyGridCellEditor):
             self._editor.dispose()
 
 
-#### EOF ######################################################################
+

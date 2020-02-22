@@ -31,4 +31,4 @@ def new_font_like(font, **kw):
     return wx.Font(point_size, family, style, weight, underline, face_name)
 
 
-### EOF #######################################################################
+

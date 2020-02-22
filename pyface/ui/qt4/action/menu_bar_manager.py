@@ -56,4 +56,4 @@ class MenuBarManager(ActionManager):
         return menu_bar
 
 
-#### EOF ######################################################################
+

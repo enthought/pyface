@@ -21,4 +21,4 @@ from .toolkit import toolkit_object
 
 PythonEditor = toolkit_object("python_editor:PythonEditor")
 
-#### EOF ######################################################################
+

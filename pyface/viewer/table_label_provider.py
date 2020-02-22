@@ -40,4 +40,4 @@ class TableLabelProvider(LabelProvider):
         return "%s column %d" % (str(element), column_index)
 
 
-#### EOF ######################################################################
+
