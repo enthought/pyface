@@ -7,7 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-from six.moves.cPickle import dumps, load, loads, PickleError
+from pickle import dumps, load, loads, PickleError
 import warnings
 import io
 import sys

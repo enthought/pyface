@@ -10,7 +10,7 @@
 """ A workbench. """
 
 
-import six.moves.cPickle
+import pickle
 import logging
 import os
 
@@ -325,7 +325,7 @@ class Workbench(HasTraits):
                 # is a chance that the unpickle will fail. If so then we just
                 # carry on as if there was no memento!
                 f = open(filename, "rb")
-                memento = six.moves.cPickle.load(f)
+                memento = pickle.load(f)
                 f.close()
 
                 # The memento doesn't actually get used until the window is
@@ -342,7 +342,7 @@ class Workbench(HasTraits):
 
         # Save the window layout.
         f = open(os.path.join(self.state_location, "window_memento"), "wb")
-        six.moves.cPickle.dump(window.get_memento(), f)
+        pickle.dump(window.get_memento(), f)
         f.close()
 
         return

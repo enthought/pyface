@@ -14,7 +14,7 @@
 
 
 from io import BytesIO
-from six.moves.cPickle import dumps, load, loads
+from pickle import dumps, load, loads
 
 
 from pyface.qt import QtCore, QtGui
