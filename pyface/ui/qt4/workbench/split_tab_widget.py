@@ -1,5 +1,4 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2008, Riverbank Computing Limited
+# (C) Copyright 2008 Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
