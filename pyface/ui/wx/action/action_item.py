@@ -394,7 +394,7 @@ class _Tool(HasTraits):
                     self.control_id, action.enabled and action.visible)
 
             # Wire it up.
-            parent.Bind(wx.EVT_TOOL, self._on_tool, self.control_id)
+            parent.Bind(wx.EVT_TOOL, self._on_tool, self.control)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).

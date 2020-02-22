@@ -19,7 +19,7 @@ import wx
 import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
-from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
+from wx.grid import GridCellAttr, GridCellBoolRenderer, GridTableBase
 from wx.grid import GridTableMessage, \
      GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED,  \
      GRIDTABLE_NOTIFY_ROWS_INSERTED, GRIDTABLE_NOTIFY_COLS_APPENDED, \
@@ -1532,7 +1532,7 @@ class _GridTableBase(GridTableBase):
         self._renderer_cache = {}
 
     ###########################################################################
-    # 'wxPyGridTableBase' interface.
+    # 'wxGridTableBase' interface.
     ###########################################################################
 
     def GetNumberRows(self):

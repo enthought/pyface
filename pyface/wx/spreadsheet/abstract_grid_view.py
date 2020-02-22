@@ -14,7 +14,7 @@
 from numpy import arange
 
 import wx
-from wx.grid import Grid, PyGridTableBase
+from wx.grid import Grid,
 from wx.grid import PyGridCellRenderer
 from wx.grid import GridCellTextEditor, GridCellStringRenderer
 from wx.grid import GridCellFloatRenderer, GridCellFloatEditor

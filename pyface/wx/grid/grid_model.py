@@ -16,7 +16,7 @@
 # Major package imports.
 from __future__ import print_function
 import wx
-from wx.grid import PyGridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED
+from wx.grid import GridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Trait, Event, List
@@ -69,7 +69,7 @@ class GridModel(HasTraits):
         return
 
     ###########################################################################
-    # 'wxPyGridTableBase' interface.
+    # 'wxGridTableBase' interface.
     ###########################################################################
 
     def GetNumberRows(self):
@@ -190,7 +190,7 @@ class GridModel(HasTraits):
         return True
 
 
-class _GridTableBase(PyGridTableBase):
+class _GridTableBase(GridTableBase):
     """ A model that provides data for a grid. """
 
     ###########################################################################
@@ -201,7 +201,7 @@ class _GridTableBase(PyGridTableBase):
         """ Creates a new table base. """
 
         # Base class constructor.
-        PyGridTableBase.__init__(self)
+        GridTableBase.__init__(self)
 
         # The Pyface model that provides the data.
         self.model = model
@@ -209,7 +209,7 @@ class _GridTableBase(PyGridTableBase):
         return
 
     ###########################################################################
-    # 'wxPyGridTableBase' interface.
+    # 'wxGridTableBase' interface.
     ###########################################################################
 
     def GetNumberRows(self):
