@@ -114,7 +114,8 @@ class AboutDialog(MAboutDialog, Dialog):
         html.SetPage(self._create_html())
 
         # Make the 'OK' button the default button.
-        ok_button = html.FindWindowById(wx.ID_OK)
+        ok_button = parent.FindWindowById(
+            wx.ID_OK)  #html.Window.FindWindowById(wx.ID_OK)
         ok_button.SetDefault()
 
         # Set the height of the HTML window to match the height of the content.
@@ -125,7 +126,7 @@ class AboutDialog(MAboutDialog, Dialog):
         # We add a fudge factor to the height here, although I'm not sure why
         # it should be necessary, the HTML window should report its required
         # size!?!
-        width, height = html.GetSize()
+        width, height = html.GetSize().Get()
         parent.SetClientSize((width, height + 10))
 
     def _create_html(self):

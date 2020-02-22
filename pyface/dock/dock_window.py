@@ -311,7 +311,7 @@ class DockWindow ( HasPrivateTraits ):
         control.Bind(wx.EVT_LEFT_DCLICK, self._left_dclick)
         control.Bind(wx.EVT_RIGHT_DOWN, self._right_down)
         control.Bind(wx.EVT_RIGHT_UP, self.right_up)
-        control.Bind(wx.EVT_MOTION, self._mouse_move )
+        control.Bind(wx.EVT_MOTION, self._mouse_move)
         control.Bind(wx.EVT_LEAVE_WINDOW, self._mouse_leave)
 
         control.SetDropTarget( PythonDropTarget( self ) )
@@ -321,7 +321,7 @@ class DockWindow ( HasPrivateTraits ):
             color = self.theme.tab.image_slice.bg_color
         else:
             color = SystemMetrics().dialog_background_color
-            color = wx.Colour(color[0]*255, color[1]*255, color[2]*255)
+            color = wx.Colour(int(color[0]*255), int(color[1]*255), int(color[2]*255))
 
         self.control.SetBackgroundColour( color )
 
@@ -365,7 +365,7 @@ class DockWindow ( HasPrivateTraits ):
         global cursor_map
 
         if cursor not in cursor_map:
-            cursor_map[ cursor ] = wx.Cursor( cursor )
+            cursor_map[cursor] = wx.Cursor(cursor)
 
         self.control.SetCursor( cursor_map[ cursor ] )
 
@@ -387,15 +387,9 @@ class DockWindow ( HasPrivateTraits ):
     def update_layout ( self ):
         """ Updates the layout of the window.
         """
-        # There are cases where a layout has been scheduled for a DockWindow,
-        # but then the DockWindow is destroyed, which will cause the calls
-        # below to fail. So we catch the 'RuntimeError' exception and
-        # ignore it:
-        try:
+        if self.control:
             self.control.Layout()
             self.control.Refresh()
-        except RuntimeError:
-            pass
 
     #---------------------------------------------------------------------------
     #  Minimizes/Maximizes a specified DockControl:
@@ -513,13 +507,14 @@ class DockWindow ( HasPrivateTraits ):
         sizer = self.sizer
         if sizer is not None:
             try:
-                dx, dy = self.control.GetSize()
+                dx, dy = self.control.GetSize().Get()
                 sizer.SetDimension( 0, 0, dx, dy )
             except:
                 # fixme: This is temporary code to work around a problem in
                 #        ProAVA2 that we are still trying to track down...
                 pass
 
+        event.Skip()
     #---------------------------------------------------------------------------
     #  Handles the left mouse button being pressed:
     #---------------------------------------------------------------------------
@@ -657,8 +652,10 @@ class DockWindow ( HasPrivateTraits ):
                                        edit_action,
                                        name = 'popup' )
 
-                window.PopupMenu( popup_menu.create_menu( window, self ),
-                                    event.GetX() - 10, event.GetY() - 10 )
+                window.PopupMenu(
+                    popup_menu.create_menu(window, self),
+                    event.GetX() - 10, event.GetY() - 10
+                )
                 self._object = None
 
     #---------------------------------------------------------------------------

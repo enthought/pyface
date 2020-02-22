@@ -75,15 +75,16 @@ class XrcDialog(Dialog):
         if okbutton is not None:
             # Change the ID and set the handler
             okbutton.SetId(wx.ID_OK)
-            self.control.Bind(wx.EVT_BUTTON, self._on_ok, id=okbutton.GetId())
+            self.control.Bind(wx.EVT_BUTTON, okbutton.GetId(), self._on_ok)
         cancelbutton = self.XRCCTRL("CANCEL")
         if cancelbutton is not None:
             # Change the ID and set the handler
             cancelbutton.SetId(wx.ID_CANCEL)
-            self.control.Bind(wx.EVT_BUTTON, self._on_cancel, id=cancelbutton.GetId())
+            self.control.Bind(wx.EVT_BUTTON, self._on_cancel,
+                              cancelbutton.GetId())
         helpbutton = self.XRCCTRL("HELP")
         if helpbutton is not None:
-            self.control.Bind(wx.EVT_BUTTON, self._on_help, id=helpbutton.GetId())
+            self.control.Bind(wx.EVT_BUTTON, self._on_help, helpbutton.GetId())
 
         self._add_handlers()
 
@@ -101,7 +102,7 @@ class XrcDialog(Dialog):
         """
         Returns the control with the given name.
         """
-        return self.control.FindWindowById(self.XRCID(name))
+        return self.control.Window.FindWindowById(self.XRCID(name))
 
     def set_validator(self, name, validator):
         """

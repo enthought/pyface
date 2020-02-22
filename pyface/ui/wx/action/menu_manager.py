@@ -74,7 +74,7 @@ class MenuManager(ActionManager, ActionManagerItem):
         sub._id = id
         sub._menu = menu
 
-        menu.AppendMenu(id, self.name, sub)
+        menu.Append(id, self.name, sub)
 
         return
 

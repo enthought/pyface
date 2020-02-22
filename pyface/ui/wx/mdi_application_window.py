@@ -25,7 +25,8 @@ from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
 try:
-    import wx.aui
+    #import wx.aui
+    from wx.lib.agw import aui
     AUI = True
 except:
     AUI = False
@@ -96,8 +97,10 @@ class MDIApplicationWindow(ApplicationWindow):
         # Client window events.
         client_window = self.control.GetClientWindow()
         client_window.Bind(wx.EVT_ERASE_BACKGROUND, self._on_erase_background)
-
-        self._wx_offset = client_window.GetPosition()
+        try:
+            self._wx_offset = client_window.GetPosition().Get()
+        except:
+            self._wx_offset = (0, 0)
 
         if AUI:
             # Let the AUI manager look after the frame.
@@ -159,6 +162,7 @@ class MDIApplicationWindow(ApplicationWindow):
         """ Called when the frame is resized. """
 
         wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
+        event.Skip()
 
         return
 

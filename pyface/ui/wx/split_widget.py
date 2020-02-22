@@ -139,7 +139,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         """ Called when the frame is resized. """
 
         splitter = event.GetEventObject()
-        width, height = splitter.GetSize()
+        width, height = splitter.GetSize().Get()
 
         # Make sure that the split ratio is correct.
         if self.direction == 'vertical':

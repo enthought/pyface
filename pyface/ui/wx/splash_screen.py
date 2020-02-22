@@ -114,7 +114,7 @@ class SplashScreen(MSplashScreen, Window):
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.
-            window = self.control.GetSplashWindow()
+            window = self.control  #.GetSplashWindow()
 
             dc = wx.PaintDC(window)
 

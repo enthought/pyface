@@ -19,7 +19,7 @@ import wx
 import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
-from wx.grid import GridCellAttr, GridCellBoolRenderer, PyGridTableBase
+from wx.grid import GridCellAttr, GridCellBoolRenderer, GridTableBase
 from wx.grid import GridTableMessage, \
      GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED,  \
      GRIDTABLE_NOTIFY_ROWS_INSERTED, GRIDTABLE_NOTIFY_COLS_APPENDED, \
@@ -165,6 +165,9 @@ class Grid(Widget):
         self.control = self._grid = grid = wxGrid(parent, -1)
         grid.grid    = self
 
+        self._moveTo = None
+        self._edit = False
+        grid.Bind(wx.EVT_IDLE, self._on_idle)
         # Set when moving edit cursor:
         grid._no_reset_col = False
         grid._no_reset_row = False
@@ -253,9 +256,11 @@ class Grid(Widget):
 
         # Notify when cells are clicked on:
         grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self._on_cell_right_click)
-        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self._on_cell_right_dclick)
+        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK,
+                  self._on_cell_right_dclick)
 
-        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self._on_label_right_click)
+        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK,
+                  self._on_label_right_click)
         grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self._on_label_left_click)
 
         if is_win32:
@@ -277,7 +282,7 @@ class Grid(Widget):
         # Handle mouse button state changes:
         self._ignore = False
         for window in ( gw, rw, cw ):
-            window.Bind(wx.EVT_MOTION, self._on_grid_motion )
+            window.Bind(wx.EVT_MOTION, self._on_grid_motion)
             window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
             window.Bind(wx.EVT_LEFT_UP, self._on_left_up)
 
@@ -515,7 +520,7 @@ class Grid(Widget):
         font = self.default_label_font
         if font is None:
             font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
-            font.SetWeight(wx.FONTWEIGHT_BOLD)
+            font.SetWeight(wx.BOLD)
 
         self._grid.SetLabelFont(font)
 
@@ -583,11 +588,11 @@ class Grid(Widget):
         # should we allow individual cells to be selected or only rows
         # or only columns
         if self.selection_mode == 'cell':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectCells)
+            self._grid.SetSelectionMode(wxGrid.GridSelectCells)
         elif self.selection_mode == 'rows':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectRows)
+            self._grid.SetSelectionMode(wxGrid.GridSelectRows)
         elif self.selection_mode == 'cols':
-            self._grid.SetSelectionMode(wxGrid.wxGridSelectColumns)
+            self._grid.SetSelectionMode(wxGrid.GridSelectColumns)
 
     def _on_column_label_height_changed(self):
         """ Handle a change to the column_label_height trait. """
@@ -676,6 +681,7 @@ class Grid(Widget):
     def _on_size(self, evt):
         """ Called when the grid is resized. """
         self.__autosize()
+        evt.Skip()
 
     def _on_editor_hidden(self, evt):
         # This is a hack to make clicking on a window button while a grid
@@ -702,8 +708,8 @@ class Grid(Widget):
         # not needed, and disappear as soon as the grid is resized. hopefully
         # we will be able to remove this egregious code on some future version
         # of wx.
-        self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
-        self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
+        #self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
+        #self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
 
         evt.Skip()
 
@@ -739,7 +745,7 @@ class Grid(Widget):
 
     def _on_grid_motion(self, evt):
         if evt.GetEventObject() is self._grid_window:
-            x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition())
+            x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition().Get())
             row  = self._grid.YToRow(y)
             col  = self._grid.XToCol(x)
 
@@ -757,6 +763,7 @@ class Grid(Widget):
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
         row, col = evt.GetRow(), evt.GetCol()
+        self._moveTo = (row,col)
         self.cell_left_clicked = self.model.click = (row, col)
 
         # Try to find a renderer for this cell:
@@ -767,6 +774,7 @@ class Grid(Widget):
         if renderer is not None:
             result = renderer.on_left_click(self, row, col)
 
+        #print("self._grid.GetParent()", self._grid.GetParent().GetParent().GetParent())
         # if the handler didn't tell us to stop further handling then skip
         if not result:
             if (self.selection_mode != '') or (not self.edit_on_first_click):
@@ -878,8 +886,8 @@ class Grid(Widget):
                 if menu.GetMenuItemCount() > 0:
                     # Popup the menu (if an action is selected it will be
                     # performed before before 'PopupMenu' returns).
-                    x, y = evt.GetPosition()
-                    self._grid.PopupMenu(menu, x - 10, y - 10 )
+                    x, y = evt.GetPosition().Get()
+                    self._grid.PopupMenu(menu, x - 10, y - 10)
 
             self.cell_right_clicked = (row, col)
 
@@ -907,7 +915,7 @@ class Grid(Widget):
             if menu.GetMenuItemCount() > 0:
                 # Popup the menu (if an action is selected it will be performed
                 # before before 'PopupMenu' returns).
-                self._grid.PopupMenu(menu, evt.GetPosition())
+                self._grid.PopupMenu(menu, evt.GetPosition().Get())
         elif col >= 0:
             cws = getattr( self, '_cached_widths', None )
             if (cws is not None) and (0 <= col < len( cws )):
@@ -982,30 +990,30 @@ class Grid(Widget):
         # has meaning to the edit control.
         key_code = evt.GetKeyCode()
 
-        if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
-            self._move_to_next_cell(evt.ShiftDown())
+        #if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
+        #    evt.Skip()#self._move_to_next_cell(evt.ShiftDown())
 
-        elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
-            if evt.ShiftDown():
-                # fixme: in a split window the shift tab is being eaten
-                # by tabbing between the splits
-                self._move_to_previous_cell()
+        #elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
+        #    if evt.ShiftDown():
+        #        # fixme: in a split window the shift tab is being eaten
+        #        # by tabbing between the splits
+        #        self._move_to_previous_cell()
 
-            else:
-                self._move_to_next_cell()
+        #    else:
+        #        self._move_to_next_cell()
 
-        elif key_code == ASCII_C:
-            data = self.__get_drag_value()
+        #elif key_code == ASCII_C:
+        #    data = self.__get_drag_value()
             # deposit the data in our singleton clipboard
-            enClipboard.data = data
+        #    enClipboard.data = data
 
             # build a wxCustomDataObject to notify the system clipboard
             # that some in-process data is available
-            data_object = wx.CustomDataObject(PythonObject)
-            data_object.SetData(b'dummy')
-            if TheClipboard.Open():
-                TheClipboard.SetData(data_object)
-                TheClipboard.Close()
+        #    data_object = wx.CustomDataObject(PythonObject)
+        #    data_object.SetData('dummy')
+        #    if TheClipboard.Open():
+        #        TheClipboard.SetData(data_object)
+        #        TheClipboard.Close()
 
         evt.Skip()
 
@@ -1320,7 +1328,7 @@ class Grid(Widget):
         bottom_right = self._grid.GetSelectionBlockBottomRight()
         selection_mode = self._grid.GetSelectionMode()
 
-        if selection_mode == wxGrid.wxGridSelectRows:
+        if selection_mode == wxGrid.GridSelectRows:
             # handle rows differently. figure out which rows were
             # selected. turns out that in this case, wx adds a "block"
             # per row, so we have to cycle over the list returned by
@@ -1338,7 +1346,7 @@ class Grid(Widget):
                 bottom_point = bottom_right[i]
                 for col_index in range(top_point[1], bottom_point[1] + 1):
                     cols.append(col_index)
-        elif selection_mode == wxGrid.wxGridSelectCells:
+        elif selection_mode == wxGrid.GridSelectCells:
             # this is the case where the selection_mode is cell, which also
             # allows complete columns or complete rows to be selected.
 
@@ -1382,7 +1390,7 @@ class Grid(Widget):
 
         grid.BeginBatch()
 
-        dx, dy  = grid.GetClientSize()
+        dx, dy = grid.GetClientSize().Get()
         n       = model.get_column_count()
         pdx     = 0
         wdx     = 0.0
@@ -1400,6 +1408,8 @@ class Grid(Widget):
                 # need to add a little fudge factor just for this column:
                 ((i == 0) and (abs( current[i] + cw ) <= 1))):
                 width = model.get_column_size( i )
+                if width is None:
+                    width = 0.0
                 if width <= 0.0:
                     width = 0.1
                 if width <= 1.0:
@@ -1484,7 +1494,7 @@ class Grid(Widget):
         if first >= 0:
             sb(first, 0, last, 0, True)
 
-class _GridTableBase(PyGridTableBase):
+class _GridTableBase(GridTableBase):
     """ A private adapter for the underlying wx grid implementation. """
 
     ###########################################################################
@@ -1495,7 +1505,7 @@ class _GridTableBase(PyGridTableBase):
         """ Creates a new table base. """
 
         # Base class constructor.
-        PyGridTableBase.__init__(self)
+        GridTableBase.__init__(self)
 
         # The Pyface model that provides the data.
         self.model = model
@@ -1522,7 +1532,7 @@ class _GridTableBase(PyGridTableBase):
         self._renderer_cache = {}
 
     ###########################################################################
-    # 'wxPyGridTableBase' interface.
+    # 'wxGridTableBase' interface.
     ###########################################################################
 
     def GetNumberRows(self):
@@ -1609,7 +1619,7 @@ class _GridTableBase(PyGridTableBase):
         except NotImplementedError:
             pass
 
-        if typename == None:
+        if typename is None:
             typename = GRID_VALUE_STRING
 
         return typename
@@ -1677,7 +1687,7 @@ class _GridTableBase(PyGridTableBase):
                     self._editor_cache[(row, col)] = editor
                     editor._grid_info = (self._grid._grid, row, col)
 
-        if editor is not None:
+        if False:#editor is not None:
             # Note: We have to increment the reference to keep the
             #       underlying code from destroying our object.
             editor.IncRef()
@@ -1773,9 +1783,11 @@ class _GridTableBase(PyGridTableBase):
         for editor in editors:
             editor.dispose()
 
-from wx.grid import PyGridCellEditor
-class DummyGridCellEditor(PyGridCellEditor):
 
+from wx.grid import GridCellEditor
+
+
+class DummyGridCellEditor(GridCellEditor):
     def Show(self, show, attr):
         return
 

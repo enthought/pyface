@@ -155,6 +155,6 @@ class ExpandablePanel(Widget):
         sizer.Layout()
 
         # fixme: Errrr, maybe we can NOT do this!
-        w, h = self.control.GetSize()
+        w, h = self.control.GetSize().Get()
         self.control.SetSize((w+1, h+1))
         self.control.SetSize((w, h))

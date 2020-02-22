@@ -21,7 +21,7 @@ class ProgressDialog(wx.ProgressDialog):
 
     def SetButtonLabel(self, title):
         """ Change the Cancel button label to something else eg Stop."""
-        button = self.FindWindowById(wx.ID_CANCEL)
+        button = self.Window.FindWindowById(wx.ID_CANCEL)
         button.SetLabel(title)
 
         return

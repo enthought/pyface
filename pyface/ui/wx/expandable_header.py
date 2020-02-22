@@ -132,7 +132,7 @@ class ExpandableHeader(Widget):
         panel.Bind(wx.EVT_LEFT_DOWN, self._on_down)
         panel.Bind(wx.EVT_RIGHT_DOWN, self._on_down)
 
-        panel.Bind(wx.EVT_BUTTON, self._on_remove, id=remove.GetId())
+        panel.Bind(wx.EVT_BUTTON, self._on_remove)
 
         return panel
 

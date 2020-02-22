@@ -47,8 +47,8 @@ class DefaultRenderer(PyGridCellRenderer):
         return DefaultRenderer(self.color, self.foundary, self.fontsize)
 
     def Draw(self, grid, attr, dc, rect, row, col, isSelected):
-        self.DrawBackground(grid, attr, dc, rect, row, col, isSelected);
-        self.DrawForeground(grid, attr, dc, rect, row, col, isSelected);
+        self.DrawBackground(grid, attr, dc, rect, row, col, isSelected)
+        self.DrawForeground(grid, attr, dc, rect, row, col, isSelected)
         dc.DestroyClippingRegion()
         return
 
@@ -83,7 +83,7 @@ class DefaultRenderer(PyGridCellRenderer):
         dc.SetFont(self.font)
         dc.DrawText(self.FormatText(text), rect.x+1, rect.y+1)
 
-        self.DrawEllipses(grid, attr, dc, rect, row, col, isSelected);
+        self.DrawEllipses(grid, attr, dc, rect, row, col, isSelected)
         return
 
     def FormatText(self, text):

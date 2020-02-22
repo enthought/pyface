@@ -195,7 +195,7 @@ class ToolPalette(Widget):
 
         self.button_tool_map[button.GetId()] = wxid
         self.tool_id_to_button_map[wxid] = button
-        panel.Bind(wx.EVT_BUTTON, self._on_button, id=button.GetId())
+        panel.Bind(wx.EVT_BUTTON, self._on_button, button)
         button.SetBitmapLabel(bmp)
         button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
