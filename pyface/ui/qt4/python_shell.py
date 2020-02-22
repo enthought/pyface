@@ -11,7 +11,7 @@
 # Author: Evan Patterson
 
 
-import six.moves.builtins
+import builtins
 from code import compile_command, InteractiveInterpreter
 from six.moves import cStringIO as StringIO
 import sys
@@ -417,7 +417,7 @@ class PythonWidget(HistoryConsoleWidget):
                 leftover = leftover[0]
                 if symbol is None:
                     names = list(self.interpreter.locals.keys())
-                    names += list(six.moves.builtins.__dict__.keys())
+                    names += list(builtins.__dict__.keys())
                 else:
                     names = dir(symbol)
                 completions = [n for n in names if n.startswith(leftover)]
@@ -460,7 +460,7 @@ class PythonWidget(HistoryConsoleWidget):
         base_symbol_string = context[0]
         symbol = self.interpreter.locals.get(base_symbol_string, None)
         if symbol is None:
-            symbol = six.moves.builtins.__dict__.get(base_symbol_string, None)
+            symbol = builtins.__dict__.get(base_symbol_string, None)
         if symbol is None:
             return None, context
 

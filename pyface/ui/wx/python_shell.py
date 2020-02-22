@@ -12,7 +12,7 @@
 """
 
 
-import six.moves.builtins
+import builtins
 import os
 import sys
 import types
@@ -308,7 +308,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        six.moves.builtins.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 
