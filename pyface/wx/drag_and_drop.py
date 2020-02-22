@@ -13,11 +13,7 @@
 
 import six
 
-if six.PY2:
-    from inspect import getargspec
-else:
-    # avoid deprecation warning
-    from inspect import getfullargspec as getargspec
+from inspect import getfullargspec
 
 
 import wx
@@ -138,7 +134,7 @@ class PythonDropSource(wx.DropSource):
                 # For backward compatibility we accept handler functions
                 # with either 1 or 3 args, including self.  If there are
                 # 3 args then we pass the data and the drag_result.
-                args = getargspec(self.handler.on_dropped)[0]
+                args = getfullargspec(self.handler.on_dropped)[0]
                 if len(args) == 3:
                     self.handler.on_dropped(clipboard.data, drag_result)
                 else:
@@ -150,7 +146,7 @@ class PythonDropSource(wx.DropSource):
                 # For backward compatibility we accept handler functions
                 # with either 0 or 2 args.  If there are 2 args then
                 # we pass the data and drag_result
-                args = getargspec(self.handler)[0]
+                args = getfullargspec(self.handler)[0]
                 if len(args) == 2:
                     self.handler(clipboard.data, drag_result)
                 else:
