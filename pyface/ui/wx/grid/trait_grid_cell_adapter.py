@@ -34,10 +34,18 @@ def get_control(control):
 
     return None
 
+
 def push_control(control, grid):
     control.PushEventHandler(ComboboxFocusHandler(grid))
     for child_control in control.GetChildren():
         push_control(child_control, grid)
+
+
+def pop_control(control, grid):
+    control.PopEventHandler(ComboboxFocusHandler(grid))
+    for child_control in control.GetChildren():
+        pop_control(child_control, grid)
+
 
 class TraitGridCellAdapter(PyGridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
@@ -268,6 +276,8 @@ class TraitGridCellAdapter(PyGridCellEditor):
                                     self._description, style=self._style)
 
     def dispose(self):
+        grid, _, _ = getattr(self, '_grid_info', (None, None, None))
+        pop_control(self._editor.control, grid)
         if self._editor is not None:
             self._editor.dispose()
 
