@@ -76,19 +76,9 @@ class AbstractGridView(Grid):
         self.init_data_types()
         self.init_handlers()
 
-        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED(self._on_editor_created)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
 
         return
-
-
-    # # needed to handle problem in wx 2.6 with combobox cell editors
-    # def _on_editor_created(self, evt):
-
-    #     editor = evt.GetControl()
-    #     editor.PushEventHandler(ComboboxFocusHandler())
-
-    #     evt.Skip()
-    #     return
 
     def init_labels(self):
         self.SetLabelFont(wx.Font(self.GetFont().GetPointSize(),
@@ -109,26 +99,28 @@ class AbstractGridView(Grid):
 
     def init_handlers(self):
 
-        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK(self.OnCellLeftClick)
-        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self.OnCellRightClick)
-        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK(self.OnCellLeftDClick)
-        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK(self.OnCellRightDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_CLICK, self.OnCellLeftClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self.OnCellRightClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.OnCellLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self.OnCellRightDClick)
 
-        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK(self.OnLabelLeftClick)
-        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK(self.OnLabelRightClick)
-        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_DCLICK(self.OnLabelLeftDClick)
-        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK(self.OnLabelRightDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self.OnLabelLeftClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self.OnLabelRightClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_LEFT_DCLICK, self.OnLabelLeftDClick)
+        self.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_DCLICK, self.OnLabelRightDClick)
 
-        self.Bind(wx.grid.EVT_GRID_ROW_SIZE(self.OnRowSize)
-        self.Bind(wx.grid.EVT_GRID_COL_SIZE(self.OnColSize)
+        self.Bind(wx.grid.EVT_GRID_ROW_SIZE, self.OnRowSize)
+        self.Bind(wx.grid.EVT_GRID_COL_SIZE, self.OnColSize)
 
-        self.Bind(wx.grid.EVT_GRID_RANGE_SELECT(self.OnRangeSelect)
-        self.Bind(wx.grid.EVT_GRID_CELL_CHANGE(self.OnCellChange)
-        self.Bind(wx.grid.EVT_GRID_SELECT_CELL(self.OnSelectCell)
+        self.Bind(wx.grid.EVT_GRID_RANGE_SELECT, self.OnRangeSelect)
+        self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self.OnCellChange)
+        self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self.OnSelectCell)
 
-        self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN(self.OnEditorShown)
-        self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN(self.OnEditorHidden)
-        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED(self.OnEditorCreated)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.OnEditorShown)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnEditorHidden)
+        self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
+
+        return
 
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -221,7 +213,7 @@ class AbstractGridView(Grid):
                 self.EnableCellEditControl()
             self.edit = False
 
-        if self.moveTo != None:
+        if self.moveTo is not None:
             self.SetGridCursor(self.moveTo[0], self.moveTo[1])
             self.moveTo = None
 

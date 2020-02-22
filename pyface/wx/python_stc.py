@@ -114,8 +114,8 @@ class PythonSTC(stc.StyledTextCtrl):
                               stc.STC_MARK_BOXMINUS, "white", "black")
 
 
-        self.Bind(stc.EVT_STC_UPDATEUI, self.OnUpdateUI, id=ID)
-        self.Bind(stc.EVT_STC_MARGINCLICK, self.OnMarginClick, id=ID)
+        self.Bind(stc.EVT_STC_UPDATEUI, self.OnUpdateUI)
+        self.Bind(stc.EVT_STC_MARGINCLICK, self.OnMarginClick)
 
 
         # Make some styles,  The lexer defines what each style is used for, we
@@ -302,7 +302,7 @@ class PythonSTC(stc.StyledTextCtrl):
         for lineNum in range(lineCount):
             if self.GetFoldLevel(lineNum) & stc.STC_FOLDLEVELHEADERFLAG:
                 expanding = not self.GetFoldExpanded(lineNum)
-                break;
+                break
 
         lineNum = 0
         while lineNum < lineCount:
@@ -354,7 +354,7 @@ class PythonSTC(stc.StyledTextCtrl):
                     else:
                         line = self.Expand(line, False, force, visLevels-1)
             else:
-                line = line + 1;
+                line = line + 1
 
         return line
 

@@ -66,31 +66,31 @@ class Wizard(MWizard, Dialog):
 
         # 'Back' button.
         self._back = back = wx.Button(parent, -1, "Back")
-        parent.Bind(wx.EVT_BUTTON, self._on_back, id=back.GetId())
+        parent.Bind(wx.EVT_BUTTON, self._on_back, back)
         sizer.Add(back, 0)
 
         # 'Next' button.
         self._next = next = wx.Button(parent, -1, "Next")
-        parent.Bind(wx.EVT_BUTTON, self._on_next, id=next.GetId())
+        parent.Bind(wx.EVT_BUTTON, self._on_next, next)
         sizer.Add(next, 0, wx.LEFT, 5)
         next.SetDefault()
 
         # 'Finish' button.
         self._finish = finish = wx.Button(parent, wx.ID_OK, "Finish")
         finish.Enable(self.controller.complete)
-        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, id=wx.ID_OK)
+        parent.Bind(wx.EVT_BUTTON, self._wx_on_ok, finish)
         sizer.Add(finish, 0, wx.LEFT, 5)
 
         # 'Cancel' button.
         if self.show_cancel:
             self._cancel = cancel = wx.Button(parent, wx.ID_CANCEL, "Cancel")
-            parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, id=wx.ID_CANCEL)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_cancel, cancel)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
         # 'Help' button.
         if len(self.help_id) > 0:
             help = wx.Button(parent, wx.ID_HELP, "Help")
-            parent.Bind(wx.EVT_BUTTON, self._wx_on_help, id=wx.ID_HELP)
+            parent.Bind(wx.EVT_BUTTON, self._wx_on_help, help)
             sizer.Add(help, 0, wx.LEFT, 10)
 
         return sizer

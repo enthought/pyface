@@ -67,11 +67,19 @@ class SplashScreen(MSplashScreen, Window):
         # Get the splash screen image.
         image = self.image.create_image()
 
+<<<<<<< HEAD
         splash_screen = wx.adv.SplashScreen(
             # The bitmap to display on the splash screen.
             image.ConvertToBitmap(),
             # Splash Style.
             wx.adv.SPLASH_NO_TIMEOUT | wx.adv.SPLASH_CENTRE_ON_SCREEN,
+=======
+        splash_screen = adv.SplashScreen(
+            # The bitmap to display on the splash screen.
+            image.ConvertToBitmap(),
+            # Splash Style.
+            adv.SPLASH_NO_TIMEOUT | adv.SPLASH_CENTRE_ON_SCREEN,
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             # Timeout in milliseconds (we don't currently timeout!).
             0,
             # The parent of the splash screen.
@@ -114,7 +122,7 @@ class SplashScreen(MSplashScreen, Window):
 
         if self.control is not None:
             # Get the window that the splash image is drawn in.
-            window = self.control.GetSplashWindow()
+            window = self.control  #.GetSplashWindow()
 
             dc = wx.PaintDC(window)
 

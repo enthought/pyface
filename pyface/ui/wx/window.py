@@ -195,8 +195,12 @@ class Window(MWindow, Widget):
         # call event.GetPosition directly, but that would be wrong.  The pixel
         # reported by that call is the pixel just below the window menu and
         # just right of the Windows-drawn border.
-        self._position = tuple(event.GetEventObject().GetPosition())
 
+        try:
+            self._position = event.GetEventObject().GetPosition(
+            ).Get()  #Sizer.GetPosition().Get()
+        except:
+            pass
         event.Skip()
 
     def _wx_on_control_size(self, event):

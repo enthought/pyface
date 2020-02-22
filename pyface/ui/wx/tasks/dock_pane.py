@@ -30,7 +30,7 @@ class DockPane(TaskPane, MDockPane):
 
     See the IDockPane interface for API documentation.
     """
-    
+
     # Keep a reference to the Aui pane name in order to update dock state
     pane_name = Str
 
@@ -65,7 +65,7 @@ class DockPane(TaskPane, MDockPane):
         """
         # wx doesn't need a wrapper control, so the contents become the control
         self.control = self.create_contents(parent)
-        
+
         # hide the pane till the task gets activated, whereupon it will take
         # its visibility from the task state
         self.control.Hide()
@@ -87,9 +87,9 @@ class DockPane(TaskPane, MDockPane):
         self.update_dock_title(info)
         self.update_floating(info)
         self.update_visible(info)
-        
+
         return info
-    
+
     def add_to_manager(self, row=None, pos=None, tabify_pane=None):
         info = self.get_new_info()
         if tabify_pane is not None:
@@ -102,10 +102,10 @@ class DockPane(TaskPane, MDockPane):
         if pos is not None:
             info.Position(pos)
         self.task.window._aui_manager.AddPane(self.control, info, target=target)
-    
+
     def validate_traits_from_pane_info(self):
         """ Sync traits from the AUI pane info.
-        
+
         Useful after perspective restore to make sure e.g. visibility state
         is set correctly.
         """
@@ -118,7 +118,7 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
-            
+
             # Some containers (e.g.  TraitsDockPane) will destroy the control
             # before we get here (e.g.  traitsui.ui.UI.finish by way of
             # TraitsDockPane.destroy), so check to see if it's already been
@@ -142,7 +142,7 @@ class DockPane(TaskPane, MDockPane):
 
     def _get_size(self):
         if self.control is not None:
-            return self.control.GetSize()
+            return self.control.GetSize().Get()
         return (-1, -1)
 
     #### Trait change handlers ################################################
@@ -150,7 +150,7 @@ class DockPane(TaskPane, MDockPane):
     def get_pane_info(self):
         info = self.task.window._aui_manager.GetPane(self.pane_name)
         return info
-    
+
     def commit_layout(self, layout=True):
         if layout:
             self.task.window._aui_manager.Update()

@@ -500,7 +500,10 @@ class TraitGridModel(GridModel):
                 # this is the case when an object method is specified
                 value = getattr(row, column.method)()
 
-        return value
+        if value is None:
+            return None
+        else:
+            return str(value)  #value
 
     def _set_data_on_row(self, row, column, value):
         """ Retrieve the data specified by column for this row. Attribute
@@ -618,7 +621,11 @@ class TraitGridModel(GridModel):
         coldata = []
         for row in range(row_count):
             try:
-                coldata.append(self.get_value(row, col))
+                val = self.get_value(row, col)
+                if val is None:
+                    coldata.append(None)
+                else:
+                    coldata.append(val)  #self.get_value(row, col))
             except IndexError:
                 coldata.append(None)
 

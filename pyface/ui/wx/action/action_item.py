@@ -125,7 +125,7 @@ class _MenuItem(HasTraits):
         # Wire it up...create an ugly flag since some platforms dont skip the
         # event when we thought they would
         self._skip_menu_event = False
-        parent.Bind(wx.EVT_MENU, self._on_menu, id=self.control_id)
+        parent.Bind(wx.EVT_MENU, self._on_menu, self.control)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
@@ -374,8 +374,9 @@ class _Tool(HasTraits):
             self.control_id = self.control.GetId()
         else:
             self.control_id = wx.NewId()
-            self.control = tool_bar.AddLabelTool(
-                self.control_id, label, bmp, wx.NullBitmap, kind, tooltip, longtip, None
+            self.control = tool_bar.AddTool(
+                self.control_id, label, bmp, wx.NullBitmap, kind, tooltip,
+                longtip, None
             )
 
             # Set the initial checked state.
@@ -393,7 +394,7 @@ class _Tool(HasTraits):
                     self.control_id, action.enabled and action.visible)
 
             # Wire it up.
-            parent.Bind(wx.EVT_TOOL, self._on_tool, id=self.control_id)
+            parent.Bind(wx.EVT_TOOL, self._on_tool, self.control_id)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).

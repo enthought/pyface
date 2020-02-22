@@ -259,7 +259,7 @@ class PythonEditor(MPythonEditor, Widget):
                             wx.stc.STC_PERFORMED_REDO)
 
         # Listen for changes to the file.
-        stc.Bind(wx.stc.EVT_STC_CHANGE, self._on_stc_changed, id=stc.GetId())
+        stc.Bind(wx.stc.EVT_STC_CHANGE, self._on_stc_changed)
 
         # Listen for key press events.
         stc.Bind(wx.EVT_CHAR, self._on_char)

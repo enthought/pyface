@@ -93,14 +93,11 @@ class ImageWidget(Widget):
         # Pens used to draw the 'selection' marker:
         # ZZZ: Make these class instances when moved to the wx toolkit code.
         self._selectedPenDark = wx.Pen(
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1,
-            wx.PENSTYLE_SOLID
-        )
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID)
 
         self._selectedPenLight = wx.Pen(
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1,
-            wx.PENSTYLE_SOLID
-        )
+            wx.SOLID)
 
         return
 
@@ -186,7 +183,7 @@ class ImageWidget(Widget):
             self._button_down = False
 
         if self._selected is not None:
-            wdx, wdy = self.GetClientSize()
+            wdx, wdy = self.GetClientSize().Get()
             x        = event.GetX()
             y        = event.GetY()
             if (0 <= x < wdx) and (0 <= y < wdy):
@@ -208,7 +205,7 @@ class ImageWidget(Widget):
         """ Called when the widget needs repainting. """
 
         wdc      = wx.PaintDC( self.control )
-        wdx, wdy = self.control.GetClientSize()
+        wdx, wdy = self.control.GetClientSize().Get()
         bitmap   = self.bitmap
         bdx      = bitmap.GetWidth()
         bdy      = bitmap.GetHeight()

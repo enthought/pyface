@@ -304,14 +304,23 @@ class _AuiToolBar(aui.AuiToolBar):
             self.EnableTool(tool_id, True)
             self.Realize()
             # Update the toolbar in the AUI manager to force toolbar resize
-            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+            try:
+                wx.CallAfter(self.tool_bar_manager.controller.task.window.
+                             _aui_manager.Update)
+            except:
+                pass
         elif not state and tool is not None:
             self.RemoveTool(tool_id)
             # Update the toolbar in the AUI manager to force toolbar resize
-            wx.CallAfter(self.tool_bar_manager.controller.task.window._aui_manager.Update)
+            try:
+                wx.CallAfter(self.tool_bar_manager.controller.task.window.
+                             _aui_manager.Update)
+            except:
+                pass
 
     def InsertToolInOrder(self, tool_id):
         orig_pos, tool = self.tool_map[tool_id]
+        pos = -1
         for pos in range(self.GetToolsCount()):
             existing_tool = self.GetToolByPos(pos)
             existing_id = existing_tool.GetId()
@@ -394,15 +403,22 @@ class _AuiToolBar(aui.AuiToolBar):
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.controller.task.window._wx_enable_tool_bar(self, new)
+        try:
+            obj.controller.task.window._wx_enable_tool_bar(self, new)
+        except:
+
+            pass
 
         return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        obj.controller.task.window._wx_show_tool_bar(self, new)
+        try:
+            obj.controller.task.window._wx_show_tool_bar(self, new)
+        except:
 
+            pass
         return
 
 #### EOF ######################################################################

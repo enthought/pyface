@@ -68,7 +68,7 @@ class FlowSizer ( wx.PySizer ):
         """
         horizontal = (self._orient == wx.HORIZONTAL)
         x,   y     = self.GetPosition()
-        dx, dy     = self.GetSize()
+        dx, dy = self.GetSize().Get()
         x0, y0     = x, y
         ex         = x + dx
         ey         = y + dy

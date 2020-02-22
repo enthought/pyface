@@ -106,15 +106,15 @@ class TreeViewer(ContentViewer):
         tree.Bind(wx.EVT_CHAR, self._on_char)
         tree.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
         tree.Bind(wx.EVT_RIGHT_DOWN, self._on_right_down)
-        tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding, id=wxid)
-        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit, id=wxid)
-        tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit, id=wxid)
-        tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag, id=wxid)
-        tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding)
+        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit)
+        tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit)
+        tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag)
+        tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed)
 
         # The image list is a wxPython-ism that caches all images used in the
         # control.
@@ -263,10 +263,10 @@ class TreeViewer(ContentViewer):
         # element is the actual item data.
         if pid is None:
             if self.show_root:
-                self.control.SetItemData(wxid,  (False, element))
+                self.control.SetItemData(wxid, (False, element))
 
         else:
-            self.control.SetItemData(wxid,  (False, element))
+            self.control.SetItemData(wxid, (False, element))
 
         # Make sure that we can find the element's Id later.
         self._element_to_id_map[self._get_key(element)] = wxid

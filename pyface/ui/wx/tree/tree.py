@@ -198,16 +198,15 @@ class Tree(Widget):
         # any child frames that my be created in response to the event to
         # appear *behind* the parent window, which is, errrr, not great ;^)
         tree.Bind(wx.EVT_LEFT_DCLICK, self._on_tree_item_activated)
-        #tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding, id=wxid)
-        tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded, id=wxid)
-        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit, id=wxid)
-        tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit, id=wxid)
-        tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag, id=wxid)
-        tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed, id=wxid)
-        tree.Bind(wx.EVT_TREE_DELETE_ITEM, self._on_tree_delete_item, id=wxid)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self._on_tree_item_collapsing)
+        tree.Bind(wx.EVT_TREE_ITEM_COLLAPSED, self._on_tree_item_collapsed)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDING, self._on_tree_item_expanding)
+        tree.Bind(wx.EVT_TREE_ITEM_EXPANDED, self._on_tree_item_expanded)
+        tree.Bind(wx.EVT_TREE_BEGIN_LABEL_EDIT, self._on_tree_begin_label_edit)
+        tree.Bind(wx.EVT_TREE_END_LABEL_EDIT, self._on_tree_end_label_edit)
+        tree.Bind(wx.EVT_TREE_BEGIN_DRAG, self._on_tree_begin_drag)
+        tree.Bind(wx.EVT_TREE_SEL_CHANGED, self._on_tree_sel_changed)
+        tree.Bind(wx.EVT_TREE_DELETE_ITEM, self._on_tree_delete_item)
 
         # Enable the tree as a drag and drop target.
         self.control.SetDropTarget(PythonDropTarget(self))
@@ -666,9 +665,8 @@ class Tree(Widget):
         text = self._get_text(node)
 
         # Add the node.
-        wxid = self.control.InsertItemBefore(
-            pid, index, text, image_index, image_index
-        )
+        wxid = self.control.Sizer.InsertBefore(pid, index, text, image_index,
+                                               image_index)
 
         # This gives the model a chance to wire up trait handlers etc.
         self.model.add_listener(node)

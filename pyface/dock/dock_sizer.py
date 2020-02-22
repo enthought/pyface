@@ -180,7 +180,11 @@ def set_standard_font ( dc ):
     global standard_font
 
     if standard_font is None:
+<<<<<<< HEAD
         standard_font = wx.SystemSettings.GetFont( wx.SYS_DEFAULT_GUI_FONT )
+=======
+        standard_font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
 
     dc.SetFont( standard_font )
 
@@ -194,9 +198,14 @@ def clear_window ( window ):
     """ Clears a window to the standard background color.
     """
     bg_color = SystemMetrics().dialog_background_color
-    bg_color = wx.Colour(bg_color[0]*255, bg_color[1]*255, bg_color[2]*255)
+    bg_color = wx.Colour(
+        int(bg_color[0] * 255), int(bg_color[1] * 255), int(bg_color[2] * 255))
 
+<<<<<<< HEAD
     dx, dy = window.GetSize()
+=======
+    dx, dy = window.GetSize().Get()
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
     dc     = wx.PaintDC( window )
     dc.SetBrush( wx.Brush( bg_color, wx.SOLID ) )
     dc.SetPen( wx.TRANSPARENT_PEN )
@@ -211,14 +220,24 @@ def get_dc ( window ):
     """
     if is_mac:
         dc     = wx.ClientDC( window )
+<<<<<<< HEAD
         x, y   = window.GetPosition()
         dx, dy = window.GetSize()
+=======
+        x, y = window.GetPosition().Get()
+        dx, dy = window.GetSize().Get()
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
         while True:
             window = window.GetParent()
             if window is None:
                 break
+<<<<<<< HEAD
             xw, yw   = window.GetPosition()
             dxw, dyw = window.GetSize()
+=======
+            xw, yw = window.GetPosition().Get()
+            dxw, dyw = window.GetSize().Get()
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             dx, dy   = min( dx, dxw - x ), min( dy, dyw - y )
             x += xw
             y += yw
@@ -227,7 +246,11 @@ def get_dc ( window ):
 
         return ( dc, 0, 0 )
 
+<<<<<<< HEAD
     x, y = window.ClientToScreen( 0, 0 )
+=======
+    x, y = window.ClientToScreen(0, 0)
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
     return ( wx.ScreenDC(), x, y )
 
 #-------------------------------------------------------------------------------
@@ -519,7 +542,10 @@ class DockItem ( HasPrivateTraits ):
         """ Sets the control's drag bounds.
         """
         bx, by, bdx, bdy = self.bounds
-        self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x, dy )
+        if (bx + bdx - x) > 0:
+            self.drag_bounds = ( x, y, min( x + dx, bx + bdx ) - x, dy )
+        else:
+            self.drag_bounds = (x, y, dx, dy)
 
     #---------------------------------------------------------------------------
     #  Gets the cursor to use when the mouse is over the item:
@@ -756,9 +782,13 @@ class DockItem ( HasPrivateTraits ):
         window = self.control.GetParent()
         if begin:
             dc, x, y = get_dc( window )
-            dx, dy   = window.GetSize()
+            dx, dy = window.GetSize().Get()
             dc2      = wx.MemoryDC()
+<<<<<<< HEAD
             self._drag_bitmap = wx.Bitmap( dx, dy )
+=======
+            self._drag_bitmap = wx.Bitmap(dx, dy)
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             dc2.SelectObject( self._drag_bitmap )
             dc2.Blit( 0, 0, dx, dy, dc, x, y )
             try:
@@ -781,7 +811,7 @@ class DockItem ( HasPrivateTraits ):
         """ Gets the background color
         """
         color = SystemMetrics().dialog_background_color
-        return wx.Colour( color[0]*255, color[1]*255, color[2]*255 )
+        return wx.Colour( int(color[0]*255), int(color[1]*255), int(color[2]*255) )
 
 
     #---------------------------------------------------------------------------
@@ -811,10 +841,17 @@ class DockItem ( HasPrivateTraits ):
         if state == TabActive:
             pass
         elif state == TabInactive:
+<<<<<<< HEAD
             r, g, b, a = tab_color.Get()
             tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
         else:
             r, g, b, a = tab_color.Get()
+=======
+            r, g, b = tab_color.Get()[0:3]
+            tab_color.Set(max(0, r-20), max(0, g-20), max(0, b-20))
+        else:
+            r, g, b = tab_color.Get()[0:3]
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             tab_color.Set(min(255, r+20), min(255, g+20), min(255, b+20))
 
         self._is_tab   = True
@@ -839,7 +876,12 @@ class DockItem ( HasPrivateTraits ):
             bdc.DrawLine(0,0,dx,0) #right
             bdc.DrawLine(dx-1,0,dx-1,dy) #down
 
+<<<<<<< HEAD
             pen = wx.Pen(wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+=======
+            pen = wx.Pen(
+                wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNHIGHLIGHT))
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             bdc.SetPen(pen)
             bdc.DrawLine(1,dy,1,1)
             bdc.DrawLine(1,1,dx-2,1)
@@ -1133,12 +1175,12 @@ class DockItem ( HasPrivateTraits ):
                     object.feature_can_drop_on_dock_control( self )):
                     from feature_tool import FeatureTool
 
-                    self.drop_features = [
-                        FeatureTool( dock_control = self ) ]
+                    self.drop_features = [FeatureTool(dock_control=self)]
             else:
-                self.drop_features = [ f for f in self.features
-                                         if f.can_drop( object ) and
-                                            (f.bitmap is not None) ]
+                    self.drop_features = [
+                    f for f in self.features
+                    if f.can_drop(object) and (f.bitmap is not None)
+                ]
 
             self._feature_mode = self.feature_mode + tag
 
@@ -1327,7 +1369,8 @@ class DockSplitter ( DockItem ):
         """ Handles the mouse moving while the left mouse button is pressed.
         """
         if not self._click_pending:
-            x, y, dx, dy     = self._first_bounds
+            if (self._first_bounds is not None):
+                x, y, dx, dy     = self._first_bounds
             mx, my, mdx, mdy = self._max_bounds
 
             if self.style == 'horizontal':
@@ -1604,7 +1647,14 @@ class DockControl ( DockItem ):
         self.check_features()
         dx, dy = self.width, self.height
         if self.control is not None:
+<<<<<<< HEAD
             size = self.control.GetEffectiveMinSize()
+=======
+            if wx_26:
+                size = self.control.GetEffectiveMinSize()
+            else:
+                size = self.control.GetEffectiveMinSize()
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             dx = size.GetWidth()
             dy = size.GetHeight()
             if self.width < 0:
@@ -1636,7 +1686,11 @@ class DockControl ( DockItem ):
         control  = self.control
         min_size = control.GetMinSize()
         control.SetMinSize( wx.Size( 0, 0 ) )
+<<<<<<< HEAD
         control.SetSize( x, y, dx, dy )
+=======
+        control.SetSize(x, y, dx, dy)
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
         control.SetMinSize( min_size )
 
     #---------------------------------------------------------------------------
@@ -3656,7 +3710,11 @@ class DockInfo ( HasPrivateTraits ):
             bdc         = wx.MemoryDC()
             bdc2        = wx.MemoryDC()
             bdx, bdy    = bitmap.GetWidth(), bitmap.GetHeight()
+<<<<<<< HEAD
             bitmap2     = wx.Bitmap( bdx, bdy )
+=======
+            bitmap2 = wx.Bitmap(bdx, bdy)
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
             bdc.SelectObject(  bitmap )
             bdc2.SelectObject( bitmap2 )
             bdc2.Blit( 0, 0, bdx, bdy, bdc, 0, 0 )
@@ -3775,7 +3833,12 @@ class SetStructureHandler ( object ):
 #  'DockSizer' class:
 #-------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 class DockSizer ( wx.Sizer ):
+=======
+#class DockSizer ( wx.PySizer ):
+class DockSizer(wx.Sizer):
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
 
     #---------------------------------------------------------------------------
     #  Initializes the object:
@@ -3814,8 +3877,13 @@ class DockSizer ( wx.Sizer ):
         if self._contents is None:
             return
 
+<<<<<<< HEAD
         x,   y = self.GetPosition()
         dx, dy = self.GetSize()
+=======
+        x, y = self.GetPosition().Get()
+        dx, dy = self.GetSize().Get()
+>>>>>>> 9c4c915b70b54d04f00e74fc921cd7787157ab0f
         self._contents.recalc_sizes( x, y, dx, dy )
 
     #---------------------------------------------------------------------------

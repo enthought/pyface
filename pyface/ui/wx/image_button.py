@@ -45,14 +45,10 @@ class ImageButton ( Widget ):
 
     # Pens used to draw the 'selection' marker:
     _selectedPenDark = wx.Pen(
-        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DSHADOW ), 1,
-        wx.PENSTYLE_SOLID
-    )
+        wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID)
 
     _selectedPenLight = wx.Pen(
-        wx.SystemSettings.GetColour( wx.SYS_COLOUR_3DHIGHLIGHT ), 1,
-        wx.PENSTYLE_SOLID
-    )
+        wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1, wx.SOLID)
 
     #---------------------------------------------------------------------------
     #  Trait definitions:
@@ -195,7 +191,7 @@ class ImageButton ( Widget ):
         control = self.control
         control.ReleaseMouse()
         self._button_down = False
-        wdx, wdy          = control.GetClientSize()
+        wdx, wdy = control.GetClientSize().Get()
         x, y              = event.GetX(), event.GetY()
         control.Refresh()
         if (0 <= x < wdx) and (0 <= y < wdy):
@@ -210,9 +206,9 @@ class ImageButton ( Widget ):
         """ Called when the widget needs repainting.
         """
         wdc      = wx.PaintDC( self.control )
-        wdx, wdy = self.control.GetClientSize()
-        ox       = (wdx - self._dx) // 2
-        oy       = (wdy - self._dy) // 2
+        wdx, wdy = self.control.GetClientSize().Get()
+        ox       = (wdx - self._dx) / 2
+        oy       = (wdy - self._dy) / 2
 
         disabled = (not self.control.IsEnabled())
         if self._image is not None:
@@ -225,7 +221,7 @@ class ImageButton ( Widget ):
                     g = data[ :, 0 ] + data[ :, 1 ] + data[ :, 2 ]
                     data[ :, 0 ] = data[ :, 1 ] = data[ :, 2 ] = g
                     img.SetData(ravel(data.astype(dtype('uint8'))).tostring())
-                    img.SetMaskColour(0, 0, 0)
+                    img.SetColour(0, 0, 0)
                     self._mono_image = img.ConvertToBitmap()
                     self._img        = None
                 image = self._mono_image
