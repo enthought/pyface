@@ -11,7 +11,6 @@
 """ The interface for an image cache. """
 
 
-# Enthought library imports.
 from traits.api import Interface
 
 

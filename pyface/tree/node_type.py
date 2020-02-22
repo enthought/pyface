@@ -11,7 +11,6 @@
 """ The base class for all node types. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasPrivateTraits, Instance, List
 from pyface.api import ImageResource
 from pyface.action.api import Action, ActionManagerItem, Group

@@ -11,10 +11,9 @@
 """ The interface for all pyface wizard controllers. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Interface, Instance, List
 
-# Local imports.
+
 from .i_wizard_page import IWizardPage
 
 

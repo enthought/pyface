@@ -11,24 +11,24 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import six.moves.builtins
 import os
 import sys
 import types
 
-# Major package imports.
+
 from wx.py.shell import Shell as PyShellBase
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, provides
 
-# Private Enthought library imports.
+
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
-# Local imports.
+
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget

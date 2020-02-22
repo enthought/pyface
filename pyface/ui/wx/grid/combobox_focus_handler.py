@@ -10,7 +10,7 @@
 
 """ Workaround for combobox focus problem in wx 2.6. """
 
-# Major package imports
+
 import wx
 
 # -------------------------------------------------------------------------------

@@ -11,22 +11,21 @@
 # Author: Evan Patterson
 
 
-# Standard library imports.
 import six.moves.builtins
 from code import compile_command, InteractiveInterpreter
 from six.moves import cStringIO as StringIO
 import sys
 from time import time
 
-# System package imports.
+
 from pyface.qt import QtCore, QtGui
 from pygments.lexers import PythonLexer
 
-# Enthought library imports.
+
 from traits.api import Event, provides
 from traits.util.clean_strings import python_name
 
-# Local imports.
+
 from .code_editor.pygments_highlighter import PygmentsHighlighter
 from .console.api import (
     BracketMatcher,

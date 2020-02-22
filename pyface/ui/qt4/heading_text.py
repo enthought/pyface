@@ -12,15 +12,12 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Int, provides, Unicode
 
-# Local imports.
+
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from .widget import Widget
 

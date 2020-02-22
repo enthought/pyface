@@ -10,10 +10,9 @@
 """ An action that deletes a user perspective. """
 
 
-# Enthought library imports.
 from pyface.api import YES
 
-# Local imports.
+
 from .user_perspective_action import UserPerspectiveAction
 
 

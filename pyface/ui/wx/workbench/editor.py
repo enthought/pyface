@@ -12,7 +12,7 @@
 """ Enthought pyface package component
 """
 
-# Local imports.
+
 from pyface.workbench.i_editor import MEditor
 
 

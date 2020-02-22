@@ -10,7 +10,6 @@
 """ The interface for perspective items. """
 
 
-# Enthought library imports.
 from traits.api import Enum, Float, Interface, Str
 
 

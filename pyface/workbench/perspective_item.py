@@ -10,10 +10,9 @@
 """ An item in a Perspective contents list. """
 
 
-# Enthought library imports.
 from traits.api import Enum, Float, HasTraits, provides, Str
 
-# Local imports.
+
 from .i_perspective_item import IPerspectiveItem
 
 

@@ -10,7 +10,6 @@
 """ A UI that allows the user to choose a view. """
 
 
-# Enthought library imports.
 from pyface.workbench.api import IView, WorkbenchWindow
 from traits.api import Any, HasTraits, Instance, List, Str
 from traits.api import TraitError, Undefined

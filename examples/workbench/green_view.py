@@ -1,7 +1,6 @@
 """ A view containing a green panel! """
 
 
-# Local imports.
 from color_view import ColorView
 
 

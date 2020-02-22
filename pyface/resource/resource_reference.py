@@ -11,10 +11,9 @@
 """ Resource references. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasTraits, Instance
 
-# Local imports.
+
 from pyface.resource.resource_factory import ResourceFactory
 
 

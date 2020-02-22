@@ -10,16 +10,15 @@
 # Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Event, provides, Unicode
 
-# Local imports.
+
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.widget import Widget

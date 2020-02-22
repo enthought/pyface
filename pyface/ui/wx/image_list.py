@@ -11,10 +11,10 @@
 """ A cached image list. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Local imports
+
 from .image_resource import ImageResource
 import six
 

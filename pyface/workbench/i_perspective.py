@@ -10,10 +10,9 @@
 """ The perspective interface. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Interface, List, Str, Tuple
 
-# Local imports.
+
 from .perspective_item import PerspectiveItem
 
 

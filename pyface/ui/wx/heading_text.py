@@ -12,13 +12,13 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Instance, Int, provides, Unicode
 
-# Local imports.
+
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from pyface.image_resource import ImageResource
 from pyface.wx.util.font_helper import new_font_like

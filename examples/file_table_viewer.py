@@ -11,12 +11,11 @@
 """ A table viewer for local file systems. """
 
 
-# Standard library imports.
 from os import listdir, stat
 from os.path import basename, isdir, join
 from time import localtime, strftime
 
-# Enthought library imports.
+
 from pyface.api import ImageResource
 from pyface.viewer.api import TableColumnProvider, TableContentProvider
 from pyface.viewer.api import TableLabelProvider, TableViewer

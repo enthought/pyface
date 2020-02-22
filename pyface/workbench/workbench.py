@@ -10,19 +10,18 @@
 """ A workbench. """
 
 
-# Standard library imports.
 import six.moves.cPickle
 import logging
 import os
 
-# Enthought library imports.
+
 from traits.etsconfig.api import ETSConfig
 from pyface.api import NO
 from traits.api import Bool, Callable, Event, HasTraits, provides
 from traits.api import Instance, List, Unicode, Vetoable
 from traits.api import VetoableEvent
 
-# Local imports.
+
 from .i_editor_manager import IEditorManager
 from .i_workbench import IWorkbench
 from .user_perspective_manager import UserPerspectiveManager

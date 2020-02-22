@@ -11,12 +11,11 @@
 """ Abstract base class for all action managers. """
 
 
-# Enthought library imports.
 from __future__ import print_function
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
-# Local imports.
+
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
 import six

@@ -9,10 +9,9 @@
 # Thanks for using Enthought open source!
 
 
-# Enthought library imports.
 from traits.api import Dict, List, Trait
 
-# local imports
+
 from .grid_model import GridModel, GridRow
 
 

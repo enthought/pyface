@@ -11,13 +11,13 @@
 """ A clickable/draggable widget containing an image. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Event
 
-# Local imports.
+
 from .widget import Widget
 
 

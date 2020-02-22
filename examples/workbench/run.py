@@ -1,13 +1,12 @@
 """ Run the workbench example. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from pyface.api import GUI
 
-# Local imports.
+
 from example_workbench import ExampleWorkbench
 from person import Person
 

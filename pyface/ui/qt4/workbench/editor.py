@@ -12,9 +12,6 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Local imports.
 from traits.api import Event, Bool
 from pyface.workbench.i_editor import MEditor
 

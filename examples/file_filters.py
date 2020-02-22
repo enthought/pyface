@@ -11,10 +11,9 @@
 """ Filters for local file system viewers. """
 
 
-# Standard library imports.
 from os.path import isdir
 
-# Enthought library imports.
+
 from pyface.viewer.api import ViewerFilter
 
 

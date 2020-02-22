@@ -15,13 +15,12 @@
 """ The PyQt specific implementation of a menu manager. """
 
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, Unicode
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.action_item import _Tool, Action

@@ -12,10 +12,10 @@
 """ Enthought pyface package component
 """
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, provides
 
-# Local imports.
+
 from pyface.i_widget import IWidget, MWidget
 
 

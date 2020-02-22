@@ -17,7 +17,6 @@ FlexGridSizer layouts).
 """
 
 
-# Major package imports.
 import wx
 
 

@@ -9,8 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
-# Enthought library imports.
 from pyface.resource.api import ResourceFactory
 
 

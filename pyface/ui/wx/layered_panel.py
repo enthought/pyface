@@ -11,14 +11,14 @@
 """ A Layered panel. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-# Enthought library imports.
+
 from traits.api import Any, Str, Int
 
-# Local imports.
+
 from .widget import Widget
 
 

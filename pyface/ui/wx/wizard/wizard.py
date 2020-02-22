@@ -11,10 +11,9 @@
 """ The base class for all pyface wizards. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard

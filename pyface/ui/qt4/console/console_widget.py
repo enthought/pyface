@@ -17,7 +17,7 @@
 # Imports
 # -----------------------------------------------------------------------------
 
-# Standard library imports
+
 import os
 from os.path import commonprefix
 import re
@@ -25,7 +25,7 @@ import sys
 from textwrap import dedent
 from unicodedata import category
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
 # -----------------------------------------------------------------------------

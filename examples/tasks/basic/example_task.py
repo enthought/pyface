@@ -1,4 +1,3 @@
-# Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
@@ -17,7 +16,7 @@ from pyface.api import (
 )
 from traits.api import on_trait_change
 
-# Local imports.
+
 from example_panes import PythonEditorPane, PythonScriptBrowserPane
 
 

@@ -10,11 +10,10 @@
 """ The default perspective menu for a workbench window. """
 
 
-# Enthought library imports.
 from pyface.action.api import Group, MenuManager
 from traits.api import Instance, List, on_trait_change
 
-# Local imports.
+
 from .delete_user_perspective_action import DeleteUserPerspectiveAction
 from .new_user_perspective_action import NewUserPerspectiveAction
 from .rename_user_perspective_action import RenameUserPerspectiveAction

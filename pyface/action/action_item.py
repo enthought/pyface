@@ -11,10 +11,9 @@
 """ An action manager item that represents an actual action. """
 
 
-# Enthought library imports.
 from traits.api import Any, Instance, List, Property, Str, on_trait_change
 
-# Local imports.
+
 from pyface.action.action import Action
 from pyface.action.action_manager_item import ActionManagerItem
 

@@ -11,7 +11,6 @@
 """ A description of a row in a grid. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 

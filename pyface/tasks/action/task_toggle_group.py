@@ -8,11 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.action.api import Action, ActionItem, Group
 from traits.api import Any, List, Instance, Property, Unicode, on_trait_change
 
-# Local imports.
+
 from pyface.tasks.task import Task
 from pyface.tasks.task_window import TaskWindow
 

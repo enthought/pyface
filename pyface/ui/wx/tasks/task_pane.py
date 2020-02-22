@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Enthought library imports.
+
 from pyface.tasks.i_task_pane import ITaskPane, MTaskPane
 from traits.api import provides
 
-# System library imports.
+
 import wx
 
 # Logging

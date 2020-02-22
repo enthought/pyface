@@ -7,7 +7,7 @@ the same menu_bar and tool_bars traits from ExampleTask.  This caused the
 incorrect tying of the controls to SecondTask because the class attributes
 were shared between both classes.
 """
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,

@@ -7,12 +7,12 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports
+
 import re
 from textwrap import dedent
 from unicodedata import category
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
 

@@ -11,7 +11,6 @@
 """ Abstract base class for label providers. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 

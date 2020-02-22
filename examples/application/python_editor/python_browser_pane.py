@@ -1,7 +1,6 @@
-# Standard library imports.
 import os.path
 
-# Enthought library imports.
+
 from pyface.tasks.api import TraitsDockPane
 from traits.api import Event, File, List, Str
 from traitsui.api import View, Item, FileEditor

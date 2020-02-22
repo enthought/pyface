@@ -7,8 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   10/18/2005
--
 
 """ Pyface 'DockSizer' support.
 

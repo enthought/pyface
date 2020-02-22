@@ -10,7 +10,7 @@
 
 """ Python shell example. """
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI, PythonShell
 from pyface.action.api import Action, MenuManager, MenuBarManager
 

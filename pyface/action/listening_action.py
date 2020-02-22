@@ -11,10 +11,10 @@
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.action.action import Action
 from traits.api import Any, Str
 

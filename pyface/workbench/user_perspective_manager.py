@@ -10,11 +10,10 @@
 """ Manages a set of user perspectives. """
 
 
-# Standard library imports.
 import logging
 import os
 
-# Enthought library imports.
+
 from pyface.workbench.api import Perspective
 from traits.api import Any, Dict, HasTraits, Int, List, Property
 from traits.api import Unicode

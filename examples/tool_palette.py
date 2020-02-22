@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
 import wx
 
 from pyface.api import ApplicationWindow, GUI, ImageResource

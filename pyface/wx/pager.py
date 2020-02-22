@@ -11,7 +11,6 @@
 """ A pager contains a set of pages, but only shows one at a time. """
 
 
-# Major package imports.
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 

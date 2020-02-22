@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import unittest
 
-# Enthought library imports.
+
 from pyface.tasks.api import HSplitter, PaneItem, Tabbed, VSplitter
 from ..task_layout import LayoutContainer
 

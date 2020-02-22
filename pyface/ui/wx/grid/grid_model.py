@@ -10,9 +10,7 @@
 
 """ Model for grid views. """
 
-# Major package imports
 
-# Enthought library imports.
 from traits.api import (
     Any,
     Bool,

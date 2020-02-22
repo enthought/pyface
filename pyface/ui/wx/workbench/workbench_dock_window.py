@@ -12,10 +12,10 @@
 """ Base class for workbench dock windows.
 """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.dock.api import DockGroup, DockRegion, DockWindow
 
 

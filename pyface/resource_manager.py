@@ -12,7 +12,7 @@
 
 from __future__ import absolute_import
 
-# Enthought library imports.
+
 from pyface.resource.api import ResourceManager
 
 # Import the toolkit specific version.

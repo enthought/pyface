@@ -11,10 +11,9 @@
 """ The interface for a dialog that prompts for a choice from a list. """
 
 
-# Enthought library imports.
 from traits.api import Any, List, Str
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 
 

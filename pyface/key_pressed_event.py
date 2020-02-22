@@ -10,7 +10,6 @@
 """ The event that is generated when a key is pressed. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Int, Any
 
 

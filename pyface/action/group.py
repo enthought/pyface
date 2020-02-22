@@ -12,12 +12,12 @@
 
 from functools import partial
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Instance, List, Property
 from traits.api import Str
 from traits.trait_base import user_name_for
 
-# Local imports.
+
 from pyface.action.action import Action
 from pyface.action.action_item import ActionItem
 from pyface.action.action_manager_item import ActionManagerItem

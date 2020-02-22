@@ -12,7 +12,7 @@
 # Date: 06/29/09
 # ------------------------------------------------------------------------------
 
-# ETS imports
+
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 

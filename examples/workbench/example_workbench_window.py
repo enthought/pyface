@@ -1,7 +1,6 @@
 """ A simple example of using the workbench window. """
 
 
-# Enthought library imports.
 from pyface.action.api import Action, MenuManager
 from pyface.workbench.api import EditorManager, WorkbenchWindow
 from pyface.workbench.api import Perspective, PerspectiveItem
@@ -10,7 +9,7 @@ from pyface.workbench.action.api import ToolBarManager
 from pyface.workbench.action.api import ViewMenuManager
 from traits.api import Callable, List, Instance
 
-# Local imports.
+
 from black_view import BlackView
 from blue_view import BlueView
 from green_view import GreenView

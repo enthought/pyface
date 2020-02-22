@@ -9,13 +9,13 @@
 # Thanks for using Enthought open source!
 """ The default editor manager. """
 
-# Standard library imports.
+
 import weakref
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance, provides
 
-# Local imports.
+
 from .i_editor_manager import IEditorManager
 from .traits_ui_editor import TraitsUIEditor
 

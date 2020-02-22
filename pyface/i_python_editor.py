@@ -11,10 +11,9 @@
 """ A widget for editing Python code. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Event, Interface, Unicode
 
-# Local imports.
+
 from pyface.key_pressed_event import KeyPressedEvent
 
 

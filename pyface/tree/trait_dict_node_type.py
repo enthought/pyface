@@ -10,10 +10,9 @@
 """ The node type for a trait dictionary. """
 
 
-# Enthought library imports.
 from traits.api import Any, Str
 
-# Local imports.
+
 from .node_type import NodeType
 
 

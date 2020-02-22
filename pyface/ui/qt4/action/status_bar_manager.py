@@ -13,10 +13,10 @@
 
 # ------------------------------------------------------------------------------
 
-# Major package imports.
+
 from pyface.qt import QtGui
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, List, Property, Str, Unicode
 
 

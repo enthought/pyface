@@ -12,17 +12,17 @@
 
 from __future__ import print_function
 
-# Standard library imports.
+
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from traits.api import Float, Str
 
-# Local imports.
+
 from file_tree_viewer import FileTreeViewer
 from file_sorters import FileSorter
 

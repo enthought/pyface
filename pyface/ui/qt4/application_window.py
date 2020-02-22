@@ -18,15 +18,15 @@
 
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtGui
 
-# Enthought library imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, on_trait_change, provides, Unicode
 
-# Local imports.
+
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.image_resource import ImageResource
 from .window import Window

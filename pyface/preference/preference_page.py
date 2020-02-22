@@ -11,7 +11,6 @@
 """ Abstract base class for all preference pages. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 

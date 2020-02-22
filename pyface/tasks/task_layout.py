@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 from six.moves import cStringIO as StringIO
 import sys
 
-# Enthought library imports.
+
 from traits.api import Either, Enum, HasStrictTraits, Int, Instance, List, Str
 
 

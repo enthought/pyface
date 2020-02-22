@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-# Enthought library imports
 from traits.api import Any, HasTraits
 
 

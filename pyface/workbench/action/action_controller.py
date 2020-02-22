@@ -10,7 +10,6 @@
 """ The action controller for workbench menu and tool bars. """
 
 
-# Enthought library imports.
 from pyface.action.api import ActionController
 from pyface.workbench.api import WorkbenchWindow
 from traits.api import HasTraits, Instance

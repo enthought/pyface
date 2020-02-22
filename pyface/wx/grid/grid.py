@@ -11,13 +11,11 @@
 """ A grid (spreadsheet) widget. """
 
 
-# Major package imports.
 from __future__ import print_function
 import wx
 from wx.grid import Grid as wxGrid
 
 
-# Local imports.
 from .grid_model import GridModel
 
 

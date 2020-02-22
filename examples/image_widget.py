@@ -11,18 +11,17 @@
 """ Application window example. """
 
 
-# Standard library imports.
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Major package imports.
+
 import wx
 import wx.html
 import wx.lib.wxpTag
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI, ImageResource, ImageWidget
 from pyface.action.api import Action, MenuManager, MenuBarManager
 

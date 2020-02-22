@@ -10,11 +10,10 @@
 """ The workbench interface. """
 
 
-# Enthought library imports.
 from traits.api import Event, Instance, Interface, List, Str
 from traits.api import provides, VetoableEvent
 
-# Local imports.
+
 from .user_perspective_manager import UserPerspectiveManager
 from .window_event import WindowEvent, VetoableWindowEvent
 from .workbench_window import WorkbenchWindow

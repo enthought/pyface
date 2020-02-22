@@ -7,19 +7,19 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import sys
 import logging
 
-# Enthought library imports.
+
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import on_trait_change, provides
 
-# System library imports.
+
 import wx
 from pyface.wx.aui import aui, PyfaceAuiNotebook
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # Logging

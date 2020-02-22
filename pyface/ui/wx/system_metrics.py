@@ -12,16 +12,16 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import sys
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Int, Property, provides, Tuple
 
-# Local imports.
+
 from pyface.i_system_metrics import ISystemMetrics, MSystemMetrics
 
 

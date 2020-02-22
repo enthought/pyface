@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   11/04/2005
--
+
 
 """ Defines the DockWindowShell class used to house drag and drag DockWindow
     items that are dropped on the desktop or on the DockWindowShell window.

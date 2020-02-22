@@ -10,16 +10,15 @@
 """ A workbench window. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Callable, Constant, Delegate, Event, Instance
 from traits.api import List, Str, Tuple, Unicode, Vetoable, Undefined
 from traits.api import on_trait_change, provides
 
-# Local imports.
+
 from .i_editor import IEditor
 from .i_editor_manager import IEditorManager
 from .i_perspective import IPerspective

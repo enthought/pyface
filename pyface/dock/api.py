@@ -7,8 +7,6 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   10/18/2005
--
 
 """ Pyface 'DockWindow' support.
 
@@ -18,10 +16,6 @@
     sub-region of the DockWindow, in which case each sub-window appears as a
     separate notebook-like tab within the region.
 """
-
-# -------------------------------------------------------------------------------
-#  Imports:
-# -------------------------------------------------------------------------------
 
 from .dock_window import DockWindow, DockWindowHandler
 

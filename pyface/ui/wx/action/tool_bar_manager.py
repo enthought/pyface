@@ -12,13 +12,13 @@
 """ The wx specific implementation of the tool bar manager.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
-# Local imports.
+
 from pyface.wx.aui import aui
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager

@@ -11,7 +11,6 @@
 """ Base class for all sorters. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 

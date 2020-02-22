@@ -11,13 +11,13 @@
 """ Dialog example. """
 from __future__ import print_function
 
-# Standard library imports.
+
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import (
     ApplicationWindow,
     GUI,

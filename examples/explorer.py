@@ -12,20 +12,20 @@
 
 from __future__ import print_function
 
-# Standard library imports.
+
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI, PythonShell, SplashScreen
 from pyface.api import SplitApplicationWindow, SplitPanel
 from pyface.action.api import Action, Group, MenuBarManager, MenuManager
 from pyface.action.api import Separator, StatusBarManager, ToolBarManager
 from traits.api import Float, Str
 
-# Local imports.
+
 from file_filters import AllowOnlyFolders
 from file_sorters import FileSorter
 from file_table_viewer import FileTableViewer

@@ -10,13 +10,12 @@
 """ A view whose content is provided by a traits UI. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Any, Instance, Str
 
-# Local imports.
+
 from .view import View
 
 

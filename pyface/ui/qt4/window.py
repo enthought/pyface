@@ -9,10 +9,10 @@
 #
 # Thanks for using Enthought open source!
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import (
     Enum,
     Event,
@@ -23,7 +23,7 @@ from traits.api import (
     provides,
 )
 
-# Local imports.
+
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .gui import GUI

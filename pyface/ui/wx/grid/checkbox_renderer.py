@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-# local imports
 from .checkbox_image_renderer import CheckboxImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 

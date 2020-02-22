@@ -7,7 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-""
+"""
 Event-loop based timers that perform actions periodically.
 
 Note that if a timer goes out of scope without a reference to being saved,

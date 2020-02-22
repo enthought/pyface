@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Enthought library imports.
+
 from pyface.tasks.i_editor import IEditor, MEditor
 from traits.api import Bool, Property, provides
 
-# System library imports.
+
 from pyface.qt import QtGui
 
 

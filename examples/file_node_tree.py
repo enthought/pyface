@@ -11,11 +11,10 @@
 """ A file system tree. """
 
 
-# Standard library imports.
 from os import listdir
 from os.path import basename, isdir, isfile, join
 
-# Enthought library imports.
+
 from pyface.tree.api import NodeManager, NodeType
 
 

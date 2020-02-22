@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.action.api import Action, ActionItem, Group
 from traits.api import Any, Instance, List, Property, Unicode, on_trait_change
 

@@ -8,10 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, Property, Str, cached_property
 
-# Local imports.
+
 from pyface.tasks.api import Editor, Task, TaskPane
 from pyface.action.listening_action import ListeningAction
 

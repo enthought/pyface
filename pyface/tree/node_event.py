@@ -11,7 +11,6 @@
 """ The event fired by the tree models/node monitors etc. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasTraits, Int, List
 
 

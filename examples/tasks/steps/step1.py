@@ -1,7 +1,7 @@
 """
 Simple demo of tasks used to develop the wx support for tasks.
 """
-# Enthought library imports.
+
 from pyface.api import GUI
 from pyface.tasks.api import Task, TaskWindow, EditorAreaPane
 

@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# System library imports
+
 
 from pyface.qt import QtGui
 
-# Local imports
+
 from .console_widget import ConsoleWidget
 
 

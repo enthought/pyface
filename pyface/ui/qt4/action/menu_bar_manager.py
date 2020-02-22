@@ -14,13 +14,13 @@
 
 """ The PyQt specific implementation of a menu bar manager. """
 
-# Standard library imports.
+
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtGui
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 
 

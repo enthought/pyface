@@ -12,10 +12,9 @@
 """
 
 
-# Enthought library imports.
 from traits.api import Bool, Enum, Instance, Tuple
 
-# Local imports.
+
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 

@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-# ETS imports
 from pyface.image_resource import ImageResource
 
 # Local import

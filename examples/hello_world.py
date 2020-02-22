@@ -10,7 +10,7 @@
 
 """ Hello world example. """
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI, HeadingText
 
 

@@ -10,10 +10,10 @@
 
 """ The interface for an interactive Python shell. """
 
-# Enthought library imports.
+
 from traits.api import Event
 
-# Local imports.
+
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.i_widget import IWidget
 

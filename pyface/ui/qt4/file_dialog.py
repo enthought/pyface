@@ -12,18 +12,15 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Standard library imports.
 import os
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Enum, Int, List, provides, Unicode
 
-# Local imports.
+
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from .dialog import Dialog
 import six

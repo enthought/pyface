@@ -10,13 +10,12 @@
 """ An editor whose content is provided by a traits UI. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Instance, Str
 
-# Local imports.
+
 from .editor import Editor
 
 

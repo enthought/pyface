@@ -12,10 +12,10 @@
 """ The handler used to restore views.
 """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.dock.api import SetStructureHandler
 
 

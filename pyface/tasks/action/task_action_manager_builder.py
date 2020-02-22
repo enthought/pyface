@@ -7,15 +7,15 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 from collections import defaultdict
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import ActionController, ActionManager
 from traits.api import HasTraits, Instance
 
-# Local imports.
+
 from pyface.tasks.task import Task
 from pyface.tasks.topological_sort import before_after_sort
 from pyface.tasks.action.schema import Schema, ToolBarSchema

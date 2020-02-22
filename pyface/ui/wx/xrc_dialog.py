@@ -12,18 +12,18 @@
 """
 from __future__ import absolute_import
 
-# Standard library imports.
+
 import os.path
 
 # Major packages.
 import wx
 import wx.xrc
 
-# Enthought library imports
+
 from traits.api import Instance, Str
 import traits.util.resource
 
-# Local imports.
+
 from .dialog import Dialog
 
 

@@ -16,7 +16,6 @@ in a preference dialog (usually in the form of a tree).
 """
 
 
-# Enthought library imports.
 from pyface.viewer.tree_item import TreeItem
 from traits.api import Str
 

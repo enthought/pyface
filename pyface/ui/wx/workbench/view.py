@@ -12,7 +12,7 @@
 """ Enthought pyface package component
 """
 
-# Enthought library imports.
+
 from traits.api import Bool
 from pyface.workbench.i_view import MView
 

@@ -11,7 +11,6 @@
 """ A panel sized by a sizer. """
 
 
-# Major package imports.
 import wx
 
 

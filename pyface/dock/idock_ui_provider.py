@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   06/17/2006
--
+
 
 """ Defines the IDockUIProvider interface which objects which support being
     dragged and dropped into a DockWindow must implement.

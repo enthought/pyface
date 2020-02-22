@@ -12,9 +12,6 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Enthought library imports.
 from pyface.workbench.i_view import MView
 
 

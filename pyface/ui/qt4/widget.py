@@ -10,13 +10,12 @@
 # Thanks for using Enthought open source!
 
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Instance, provides
 
-# Local imports.
+
 from pyface.i_widget import IWidget, MWidget
 
 

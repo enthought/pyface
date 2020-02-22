@@ -17,11 +17,10 @@
 """ The base class for all pyface wizards. """
 
 
-# Major package imports.
 from __future__ import print_function
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog
 from pyface.wizard.i_wizard import IWizard, MWizard

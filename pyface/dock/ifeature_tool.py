@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   02/07/2007
--
+
 
 """ Defines the IFeatureTool interface which allows objects dragged using the
     DockWindowFeature API to control the drag target and drop events. Useful for

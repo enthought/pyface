@@ -11,10 +11,9 @@
 """ A wizard model that can be chained with other wizards. """
 
 
-# Enthought library imports.
 from traits.api import Instance
 
-# Local imports.
+
 from .i_wizard import IWizard
 from .wizard import Wizard
 

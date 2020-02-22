@@ -11,7 +11,6 @@
 """ Base class for all tree label providers. """
 
 
-# Local imports.
 from .label_provider import LabelProvider
 
 

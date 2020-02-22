@@ -15,7 +15,7 @@ defining which traits will be shown in the columns and in which order. If this
 list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
-# Enthought library imports
+
 from __future__ import print_function
 from traits.api import (
     Any,
@@ -32,7 +32,7 @@ from traits.api import (
     Type,
 )
 
-# local imports
+
 from .grid_model import GridColumn, GridModel, GridSortEvent
 from .trait_grid_cell_adapter import TraitGridCellAdapter
 

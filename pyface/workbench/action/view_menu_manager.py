@@ -10,15 +10,14 @@
 """ The 'View' menu """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import Group, MenuManager
 from traits.api import Any, Bool, Instance, List, Str, Unicode
 from traits.api import on_trait_change
 
-# Local imports.
+
 from .perspective_menu_manager import PerspectiveMenuManager
 from .show_view_action import ShowViewAction
 from .toggle_view_visibility_action import ToggleViewVisibilityAction

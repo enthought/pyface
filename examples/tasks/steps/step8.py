@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 import wx
 
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,

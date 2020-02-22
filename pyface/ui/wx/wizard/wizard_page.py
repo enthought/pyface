@@ -11,10 +11,9 @@
 """ A page in a wizard. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
 from pyface.api import HeadingText
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage

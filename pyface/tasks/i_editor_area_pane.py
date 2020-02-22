@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import (
     Bool,
     Callable,
@@ -23,7 +23,7 @@ from traits.api import (
     Str,
 )
 
-# Local imports.
+
 from pyface.tasks.i_editor import IEditor
 from pyface.tasks.i_task_pane import ITaskPane
 

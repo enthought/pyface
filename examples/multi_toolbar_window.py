@@ -11,7 +11,6 @@
 """ Mulit-tool bar example. """
 
 
-# Standard library imports.
 import os, sys
 
 # Put the Enthought library on the Python path.
@@ -26,7 +25,7 @@ try:
 except:
     pass
 
-# Enthought library imports.
+
 from pyface.api import MultiToolbarWindow, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from pyface.action.api import ToolBarManager

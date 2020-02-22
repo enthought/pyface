@@ -19,7 +19,7 @@ try:
 except ImportError:  # Python 3.8 deprecation
     from collections import Sequence
 
-# ETS imports
+
 from traits.api import HasStrictTraits, Interface, Property
 import six
 

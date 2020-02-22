@@ -11,7 +11,6 @@
 """ Application window example. """
 
 
-# Enthought library imports.
 from pyface.api import ApplicationWindow, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from pyface.action.api import StatusBarManager, ToolBarManager, Group

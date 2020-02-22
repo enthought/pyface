@@ -12,24 +12,24 @@
 """ The wx implementation of the workbench window layout interface.
 """
 
-# Standard library imports.
+
 import six.moves.cPickle
 import logging
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from pyface.dock.api import DOCK_BOTTOM, DOCK_LEFT, DOCK_RIGHT
 from pyface.dock.api import DOCK_TOP
 from pyface.dock.api import DockControl, DockRegion, DockSection
 from pyface.dock.api import DockSizer
 from traits.api import Delegate
 
-# Mixin class imports.
+
 from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 
-# Local imports.
+
 from .editor_set_structure_handler import EditorSetStructureHandler
 from .view_set_structure_handler import ViewSetStructureHandler
 from .workbench_dock_window import WorkbenchDockWindow

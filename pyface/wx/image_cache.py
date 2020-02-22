@@ -11,7 +11,6 @@
 """ An image cache. """
 
 
-# Major package imports.
 import wx
 
 

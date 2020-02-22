@@ -10,7 +10,6 @@
 """ An action that creates a new (and empty) user perspective. """
 
 
-# Local imports.
 from .user_perspective_name import UserPerspectiveName
 from .workbench_action import WorkbenchAction
 

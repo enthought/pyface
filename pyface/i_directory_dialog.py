@@ -12,10 +12,9 @@
 """
 
 
-# Enthought library imports.
 from traits.api import Bool, Unicode
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 
 

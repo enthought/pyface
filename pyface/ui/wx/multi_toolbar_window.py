@@ -11,14 +11,14 @@
 """ A top-level application window that supports multiple toolbars. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports
+
 from pyface.action.api import ToolBarManager
 from traits.api import Trait, TraitDict, TraitEnum, TraitList
 
-# Local imports
+
 from .application_window import ApplicationWindow
 
 

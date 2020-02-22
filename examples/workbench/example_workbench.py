@@ -1,11 +1,10 @@
 """ A simple example of using the workbench. """
 
 
-# Enthought library imports.
 from pyface.api import YES
 from pyface.workbench.api import Workbench
 
-# Local imports.
+
 from example_workbench_window import ExampleWorkbenchWindow
 
 

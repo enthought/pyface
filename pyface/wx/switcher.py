@@ -14,11 +14,11 @@
 
 # todo - it wasn't paranoia - reconcile this with lazy_switcher.py at some point
 
-# Major package imports.
+
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
-# Enthought library imports.
+
 from traits.api import HasTraits
 
 

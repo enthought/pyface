@@ -12,14 +12,14 @@
 
 from __future__ import print_function
 
-# Standard library imports.
+
 import os
 import sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import GUI, OK
 from pyface.wizard.api import SimpleWizard, WizardPage
 from traits.api import Color, HasTraits, Int, Str

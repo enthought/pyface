@@ -11,7 +11,6 @@
 """ Abstract base class for tree content providers. """
 
 
-# Local imports.
 from .content_provider import ContentProvider
 
 

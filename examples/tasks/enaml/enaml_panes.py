@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.tasks.api import EnamlDockPane, EnamlTaskPane
 import traits_enaml
 

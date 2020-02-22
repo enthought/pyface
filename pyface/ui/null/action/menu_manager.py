@@ -12,10 +12,9 @@
 """
 
 
-# Enthought library imports.
 from traits.api import Unicode
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.group import Group

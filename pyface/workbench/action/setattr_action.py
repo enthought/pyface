@@ -10,10 +10,9 @@
 """ An action that sets an attribute. """
 
 
-# Enthought library imports.
 from traits.api import Any, Str
 
-# Local imports.
+
 from .workbench_action import WorkbenchAction
 
 

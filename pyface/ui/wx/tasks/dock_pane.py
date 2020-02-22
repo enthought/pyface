@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports
+
 from contextlib import contextmanager
 import logging
 
-# Enthought library imports.
+
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
 from traits.api import (
     Bool,
@@ -23,11 +23,11 @@ from traits.api import (
     Int,
 )
 
-# System library imports.
+
 import wx
 from pyface.wx.aui import aui
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # Constants.

@@ -10,7 +10,7 @@
 """ Provides bracket matching for Q[Plain]TextEdit widgets.
 """
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
 

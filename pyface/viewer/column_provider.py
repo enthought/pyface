@@ -11,7 +11,6 @@
 """ Base class for all column providers. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits, Int
 
 

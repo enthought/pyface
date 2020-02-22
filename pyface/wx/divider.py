@@ -11,7 +11,6 @@
 """ A thin visual divider. """
 
 
-# Major package imports.
 import wx
 
 

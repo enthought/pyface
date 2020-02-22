@@ -9,14 +9,13 @@
 # Thanks for using Enthought open source!
 
 
-# Standard library imports
 import math
 import sys
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports
+
 from .find_widget import FindWidget
 from .gutters import LineNumberWidget, StatusGutterWidget
 from .replace_widget import ReplaceWidget

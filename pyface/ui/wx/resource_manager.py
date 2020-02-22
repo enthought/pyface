@@ -12,15 +12,15 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import os
 import tempfile
 from io import BytesIO
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from pyface.resource.api import ResourceFactory
 
 from traits.api import Undefined

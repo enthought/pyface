@@ -12,10 +12,10 @@
 # Description: <Enthought pyface package component>
 """ The abstract interface for all pyface top-level windows. """
 
-# Enthought library imports.
+
 from traits.api import Event, Tuple, Unicode, Vetoable, VetoableEvent
 
-# Local imports.
+
 from pyface.constant import NO
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.i_widget import IWidget

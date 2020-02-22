@@ -9,11 +9,9 @@
 # Thanks for using Enthought open source!
 
 
-
-# Enthought library imports.
 from traits.api import Any, HasTraits, provides
 
-# Local imports.
+
 from pyface.i_widget import IWidget, MWidget
 
 

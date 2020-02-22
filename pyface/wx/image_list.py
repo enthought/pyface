@@ -11,7 +11,6 @@
 """ A cached image list. """
 
 
-# Major package imports.
 import wx
 import six
 

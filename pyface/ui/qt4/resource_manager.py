@@ -12,12 +12,9 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Major package imports.
 from pyface.qt import QtCore, QtGui, QtSvg
 
-# Enthought library imports.
+
 from pyface.resource.api import ResourceFactory
 
 

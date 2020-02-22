@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance
 
 

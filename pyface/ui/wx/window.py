@@ -10,13 +10,13 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, Property, Tuple, Unicode, VetoableEvent, provides
 
-# Local imports.
+
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .system_metrics import SystemMetrics

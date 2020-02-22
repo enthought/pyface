@@ -12,14 +12,14 @@
 # Date: 06/26/09
 # ------------------------------------------------------------------------------
 
-# Standard library imports
+
 from io import BytesIO
 from six.moves.cPickle import dumps, load, loads
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
-# ETS imports
+
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 import six

@@ -12,7 +12,6 @@
 """
 
 
-# Local imports.
 from pyface.action.action_manager import ActionManager
 
 

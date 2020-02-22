@@ -7,17 +7,17 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 from itertools import combinations
 import logging
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits
 
-# Local imports.
+
 from pyface.tasks.task_layout import (
     LayoutContainer,
     PaneItem,

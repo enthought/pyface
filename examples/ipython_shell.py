@@ -10,7 +10,7 @@
 
 """ IPython widget example. """
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI
 from pyface.ipython_widget import IPythonWidget
 

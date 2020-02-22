@@ -11,7 +11,6 @@
 """ The base interface for all pyface widgets. """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Interface
 
 

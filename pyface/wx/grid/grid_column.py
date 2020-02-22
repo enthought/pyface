@@ -11,7 +11,6 @@
 """ A description of a column in a grid. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Str
 
 

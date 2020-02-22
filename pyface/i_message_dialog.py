@@ -11,10 +11,9 @@
 """ The interface for a dialog that displays a message. """
 
 
-# Enthought library imports.
 from traits.api import Enum, Unicode
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 
 

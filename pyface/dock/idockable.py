@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   12/14/2005
--
+
 
 """ Defines the IDockable interface which objects contained in a DockWindow
     DockControl can implement in order to allow themselves to be dragged into

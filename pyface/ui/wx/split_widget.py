@@ -12,13 +12,13 @@
 """ Mix-in class for split widgets.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Callable, Enum, Float, HasTraits, provides
 
-# Local imports.
+
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 

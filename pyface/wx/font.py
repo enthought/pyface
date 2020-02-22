@@ -11,7 +11,6 @@
 """ Font utilities. """
 
 
-# Major package imports.
 import wx
 
 

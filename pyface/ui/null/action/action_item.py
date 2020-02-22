@@ -12,7 +12,6 @@
 """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits
 
 

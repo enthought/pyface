@@ -10,10 +10,9 @@
 """ Window events. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits, Instance, Vetoable
 
-# Local imports.
+
 from .workbench_window import WorkbenchWindow
 
 

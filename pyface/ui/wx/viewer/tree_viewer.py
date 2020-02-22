@@ -11,14 +11,13 @@
 """ A viewer based on a tree control. """
 
 
-# Major package imports.
 from __future__ import print_function
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Enum, Event, Instance, List
 
-# Local imports.
+
 from pyface.ui.wx.image_list import ImageList
 from pyface.viewer.content_viewer import ContentViewer
 from pyface.viewer.tree_content_provider import TreeContentProvider

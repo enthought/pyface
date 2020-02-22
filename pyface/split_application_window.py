@@ -11,7 +11,6 @@
 """ A window that is split in two either horizontally or vertically. """
 
 
-# Local imports.
 from pyface.application_window import ApplicationWindow
 from pyface.split_widget import SplitWidget
 

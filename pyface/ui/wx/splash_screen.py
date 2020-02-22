@@ -12,18 +12,18 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 from logging import DEBUG
 
-# Major package imports.
+
 import wx
 import wx.adv
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
-# Local imports.
+
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
 from pyface.wx.util.font_helper import new_font_like

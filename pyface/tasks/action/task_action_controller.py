@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Enthought library imports.
+
 from pyface.action.api import ActionController
 from traits.api import Instance
 
-# Local imports.
+
 from pyface.tasks.task import Task
 from pyface.tasks.action.task_action import TaskAction
 

@@ -10,7 +10,6 @@
 """ The editor manager interface. """
 
 
-# Enthought library imports.
 from traits.api import Instance, Interface
 
 

@@ -12,14 +12,14 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import sys
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Int, provides, Str, Unicode
 
-# Local imports.
+
 from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
 from .window import Window

@@ -11,7 +11,6 @@
 """ A tree control with extensible node types. """
 
 
-# Standard library imports.
 import six
 
 if six.PY2:
@@ -20,11 +19,11 @@ else:
     # avoid deprecation warning
     from inspect import getfullargspec as getargspec
 
-# Enthought library imports.
+
 from pyface.action.api import ActionEvent
 from traits.api import Instance, List, Property
 
-# Local imports.
+
 from .node_manager import NodeManager
 from .node_type import NodeType
 from .node_tree_model import NodeTreeModel

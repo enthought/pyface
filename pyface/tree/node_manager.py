@@ -10,13 +10,13 @@
 
 """ The node manager looks after a collection of node types. """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import HasPrivateTraits, List
 
-# Local imports
+
 from .node_type import NodeType
 
 

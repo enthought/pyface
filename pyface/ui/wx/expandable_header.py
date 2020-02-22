@@ -13,13 +13,13 @@ provides a visual indicator of the current state, a text label, and a
 'remove' button. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Instance, Event, Str, Bool
 
-# local imports
+
 from pyface.wx.util.font_helper import new_font_like
 from .image_resource import ImageResource
 from .widget import Widget

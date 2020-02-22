@@ -10,7 +10,7 @@
 
 """ Drag and drop utilities. """
 
-# Standard library imports.
+
 import six
 
 if six.PY2:
@@ -20,7 +20,6 @@ else:
     from inspect import getfullargspec as getargspec
 
 
-# Major package imports.
 import wx
 import six
 

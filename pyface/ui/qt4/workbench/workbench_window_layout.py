@@ -14,18 +14,15 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Standard library imports.
 import logging
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, on_trait_change
 
-# Local imports.
+
 from pyface.message_dialog import error
 from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget

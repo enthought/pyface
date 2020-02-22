@@ -10,7 +10,6 @@
 """ A Group for toggling the visibility of a task's dock panes. """
 
 
-# Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
 from traits.api import (
     cached_property,
@@ -21,7 +20,7 @@ from traits.api import (
     Unicode,
 )
 
-# Local imports.
+
 from pyface.tasks.i_dock_pane import IDockPane
 
 

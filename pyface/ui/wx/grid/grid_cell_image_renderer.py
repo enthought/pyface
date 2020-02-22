@@ -12,7 +12,7 @@
     text displayed in the same way the standard string renderer normally
     would. """
 
-# Major package imports
+
 import wx
 
 from wx.grid import GridCellRenderer

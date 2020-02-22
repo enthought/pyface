@@ -11,11 +11,10 @@
 """ The interface of a pyface GUI. """
 
 
-# Standard library imports.
 import logging
 import os
 
-# Enthought library imports.
+
 from traits.etsconfig.api import ETSConfig
 from traits.api import Bool, Interface, Unicode
 

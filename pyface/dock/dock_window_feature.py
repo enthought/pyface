@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   07/03/2006
--
+
 
 """ Implements the DockWindowFeature base class.
 

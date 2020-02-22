@@ -12,10 +12,10 @@ this class with the CompositeGridModel to make models with different
 orientations match, or use it to visually flip the data without modifying
 the underlying model's sense of row and column. """
 
-# Enthought library imports
+
 from traits.api import Instance
 
-# local imports
+
 from .grid_model import GridModel
 
 

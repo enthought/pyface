@@ -11,10 +11,9 @@
 """ The abstract interface for all pyface dialogs. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Enum, Int, Str, Unicode
 
-# Local imports.
+
 from pyface.constant import OK
 from pyface.i_window import IWindow
 

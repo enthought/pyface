@@ -11,13 +11,12 @@
 """ The interface for a splash screen. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Instance, Int, Tuple, Unicode
 
-# Local imports.
+
 from pyface.image_resource import ImageResource
 from pyface.splash_screen_log_handler import SplashScreenLogHandler
 from pyface.i_window import IWindow

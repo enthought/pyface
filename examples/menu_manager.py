@@ -10,13 +10,13 @@
 
 from __future__ import print_function
 
-# Standard library imports.
+
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Local imports.
+
 from pyface.action.api import Action
 from pyface.action.api import Group, MenuManager, Separator
 

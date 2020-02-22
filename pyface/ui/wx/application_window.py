@@ -12,14 +12,14 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import sys
 
-# Major package imports.
+
 import wx
 from pyface.wx.aui import aui, PyfaceAuiManager
 
-# Enthought library imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, on_trait_change, provides, Unicode
@@ -27,7 +27,7 @@ from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
 
-# Local imports.
+
 from .window import Window
 
 

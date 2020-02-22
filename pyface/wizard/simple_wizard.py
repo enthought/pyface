@@ -11,7 +11,6 @@
 """ SimpleWizard is deprecated.  Use Wizard instead. """
 
 
-# Local imports.
 from .wizard import Wizard
 
 

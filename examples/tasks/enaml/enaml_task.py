@@ -8,10 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.tasks.api import Task, TaskLayout, PaneItem
 
-# Local imports.
+
 from enaml_panes import DummyTaskPane, DummyDockPane
 
 

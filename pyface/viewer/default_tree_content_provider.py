@@ -11,7 +11,6 @@
 """ The default tree content provider. """
 
 
-# Local imports.
 from .tree_content_provider import TreeContentProvider
 
 

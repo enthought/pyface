@@ -7,17 +7,17 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import sys
 
-# Enthought library imports.
+
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import on_trait_change, provides
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports.
+
 from .task_pane import TaskPane
 from .util import set_focus
 

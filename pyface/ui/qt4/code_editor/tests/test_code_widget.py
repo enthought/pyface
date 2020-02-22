@@ -8,18 +8,15 @@
 #
 # Thanks for using Enthought open source!
 
-# Standard library imports.
+
 import unittest
 import mock
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 from pyface.qt.QtTest import QTest
 
-# Enthought library imports.
 
-
-# Local imports.
 from pyface.ui.qt4.code_editor.code_widget import (
     CodeWidget,
     AdvancedCodeWidget,

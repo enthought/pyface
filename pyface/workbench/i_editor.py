@@ -9,10 +9,10 @@
 # Thanks for using Enthought open source!
 
 """ The interface of a workbench editor. """
-# standard library imports
+
 import uuid
 
-# Enthought library imports.
+
 from traits.api import (
     Any,
     Bool,
@@ -25,7 +25,7 @@ from traits.api import (
 )
 from traits.api import provides
 
-# Local imports.
+
 from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
 
 

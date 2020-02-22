@@ -11,11 +11,10 @@
 """ The interface for all pyface wizards. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Instance, List, Unicode
 from pyface.i_dialog import IDialog
 
-# Local imports.
+
 from .i_wizard_controller import IWizardController
 from .i_wizard_page import IWizardPage
 

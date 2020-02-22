@@ -12,19 +12,16 @@
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 
-
-
-# Standard library imports.
 import logging
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, provides, Unicode
 from pyface.util.guisupport import start_event_loop_qt4
 
-# Local imports.
+
 from pyface.i_gui import IGUI, MGUI
 
 

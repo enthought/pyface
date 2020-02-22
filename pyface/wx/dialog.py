@@ -11,7 +11,6 @@
 """ Dialog utilities. """
 
 
-# Major package imports.
 import wx
 
 # A file dialog wildcard for Python files.

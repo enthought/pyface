@@ -15,10 +15,10 @@
 import wx
 import time
 
-# Enthought library imports
+
 from traits.api import Bool, Enum, Instance, Int, Property, provides, Str
 
-# Local imports
+
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from .widget import Widget
 from .window import Window

@@ -10,13 +10,13 @@
 
 """ A monitor for appearance and structural changes to a node. """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import Any, Event, HasTraits
 
-# Local imports.
+
 from .node_event import NodeEvent
 
 

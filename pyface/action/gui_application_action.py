@@ -14,10 +14,10 @@
 
 import platform
 
-# Enthought library imports.
+
 from traits.api import Instance, Property, cached_property
 
-# Local imports.
+
 from pyface.action.listening_action import ListeningAction
 
 IS_WINDOWS = platform.system() == "Windows"

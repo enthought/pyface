@@ -10,7 +10,6 @@
 """ Object with views for naming or renaming a user perspective. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
 import six

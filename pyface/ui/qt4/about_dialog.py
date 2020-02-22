@@ -10,18 +10,16 @@
 # Thanks for using Enthought open source!
 
 
-
-# Standard library imports.
 import platform
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, List, provides, Unicode
 
-# Local imports.
+
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog

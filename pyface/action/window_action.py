@@ -12,11 +12,11 @@
 # Description: <Enthought pyface package component>
 """ Abstract base class for all window actions. """
 
-# Enthought library imports.
+
 from pyface.window import Window
 from traits.api import Instance, Property
 
-# Local imports.
+
 from pyface.action.listening_action import ListeningAction
 
 

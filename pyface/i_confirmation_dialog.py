@@ -11,10 +11,9 @@
 """ The interface for a dialog that prompts the user for confirmation. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Enum, Instance, Unicode
 
-# Local imports.
+
 from pyface.constant import CANCEL, NO, YES
 from pyface.i_dialog import IDialog
 from pyface.i_image_resource import IImageResource

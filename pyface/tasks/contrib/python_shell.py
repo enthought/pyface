@@ -14,10 +14,10 @@ This task provides a view with a simple Python shell.  This shouldn't be
 confused with a more full-featured shell, such as those provided by IPython.
 """
 
-# Std lib imports
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import Str, List, Dict, Instance
 from pyface.api import PythonShell, FileDialog, OK
 from pyface.tasks.api import Task, TaskPane
@@ -41,7 +41,7 @@ class PythonShellPane(TaskPane):
 
     def create(self, parent):
         """ Create the python shell task pane
-        
+
         This wraps the standard pyface PythonShell
         """
         logger.debug("PythonShellPane: creating python shell pane")

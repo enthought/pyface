@@ -12,20 +12,20 @@
 """ The wx-backend Pyface widget for an embedded IPython shell.
 """
 
-# Standard library imports.
+
 from __future__ import print_function
 import six.moves.builtins
 import codeop
 import re
 import sys
 
-# System library imports
+
 import IPython
 from IPython.frontend.wx.wx_frontend import WxController
 from IPython.kernel.core.interpreter import Interpreter
 import wx
 
-# Enthought library imports.
+
 from apptools.io.file import File as EnthoughtFile
 from pyface.i_python_shell import IPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
@@ -33,7 +33,7 @@ from traits.api import Event, Instance, provides, Str
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
-# Local imports.
+
 from .widget import Widget
 import six
 

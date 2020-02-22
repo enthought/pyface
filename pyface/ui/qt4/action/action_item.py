@@ -12,7 +12,6 @@
 """ The PyQt specific implementations the action manager internal classes. """
 
 
-# Standard library imports.
 import six
 
 if six.PY2:
@@ -21,13 +20,13 @@ else:
     # avoid deprecation warning
     from inspect import getfullargspec as getargspec
 
-# Major package imports.
+
 from pyface.qt import QtGui, QtCore
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits
 
-# Local imports.
+
 from pyface.action.action_event import ActionEvent
 
 

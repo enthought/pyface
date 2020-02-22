@@ -10,7 +10,7 @@
 
 """ A grid control with a model/ui architecture. """
 
-# Major package imports
+
 import sys
 import wx
 import wx.lib.gridmovers as grid_movers
@@ -30,7 +30,7 @@ from wx.grid import (
 )
 from wx import TheClipboard
 
-# Enthought library imports
+
 from pyface.api import Widget
 from pyface.timer.api import do_later
 from traits.api import (
@@ -51,7 +51,7 @@ from pyface.wx.drag_and_drop import (
 )
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
-# local imports
+
 from .grid_model import GridModel
 from .combobox_focus_handler import ComboboxFocusHandler
 import six

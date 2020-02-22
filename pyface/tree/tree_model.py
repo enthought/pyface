@@ -11,10 +11,9 @@
 """ Model for tree views. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasTraits, Event
 
-# Local imports.
+
 from .node_event import NodeEvent
 
 

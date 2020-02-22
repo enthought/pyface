@@ -12,7 +12,7 @@
 
 from functools import partial
 
-# Enthought library imports.
+
 from traits.api import Bool, Callable, Enum, HasTraits, Str
 from traits.api import Unicode
 

@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.api import ApplicationWindow
 from traits.api import (
@@ -26,7 +26,7 @@ from traits.api import (
     on_trait_change,
 )
 
-# Local imports.
+
 from pyface.tasks.action.task_action_manager_builder import (
     TaskActionManagerBuilder,
 )

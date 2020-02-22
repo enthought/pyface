@@ -11,7 +11,7 @@
 """ The wx specific implementations the action manager internal classes.
 """
 
-# Standard libary imports.
+
 import six
 
 if six.PY2:
@@ -20,13 +20,13 @@ else:
     # avoid deprecation warning
     from inspect import getfullargspec as getargspec
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits
 
-# Local imports.
+
 from pyface.action.action_event import ActionEvent
 
 

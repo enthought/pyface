@@ -11,10 +11,9 @@
 """ Heading text. """
 
 
-# Enthought library imports.
 from traits.api import Instance, Int, Interface, Unicode
 
-# Local imports.
+
 from pyface.i_image_resource import IImageResource
 
 

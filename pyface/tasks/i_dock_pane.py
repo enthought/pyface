@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Enthought library imports.
+
 from traits.api import Bool, Enum, HasTraits, Str, Tuple
 
-# Local imports.
+
 from pyface.tasks.i_task_pane import ITaskPane
 
 

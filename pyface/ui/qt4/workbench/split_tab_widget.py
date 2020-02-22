@@ -15,11 +15,11 @@
 
 # ------------------------------------------------------------------------------
 
-# Standard library imports.
+
 import sys
 import six
 
-# Major library imports.
+
 from pyface.qt import QtCore, QtGui, qt_api
 
 from pyface.image_resource import ImageResource

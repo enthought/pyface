@@ -3,7 +3,7 @@
 Create and delete editors in the main notebook area.  Also adds menu and toolbar
 support
 """
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,

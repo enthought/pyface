@@ -7,7 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Local imports.
+
 from pyface.tasks.task_pane import TaskPane
 from pyface.tasks.enaml_pane import EnamlPane
 

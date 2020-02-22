@@ -7,6 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-"" Support for managing resources such as images and sounds.
+
+""" Support for managing resources such as images and sounds.
     Part of the TraitsGUI project of the Enthought Tool Suite.
 """

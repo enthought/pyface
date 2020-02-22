@@ -10,11 +10,10 @@
 """ The menu bar manager for Envisage workbench windows. """
 
 
-# Enthought library imports.
 from pyface.action.api import MenuBarManager as BaseMenuBarManager
 from traits.api import Instance
 
-# Local imports.
+
 from .action_controller import ActionController
 
 

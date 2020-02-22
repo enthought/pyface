@@ -12,13 +12,13 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Enum, provides, Unicode
 
-# Local imports.
+
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
 from .dialog import Dialog
 

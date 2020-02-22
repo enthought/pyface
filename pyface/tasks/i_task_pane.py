@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Interface, Instance, Str, Unicode
 
-# Local imports.
+
 from pyface.tasks.task import Task
 
 

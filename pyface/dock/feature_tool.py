@@ -7,8 +7,7 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-#  Date:   07/04/2006
--
+
 
 """ Implements the FeatureTool feature that allows a dragged object
     implementing the IFeatureTool interface to be dropped onto any compatible

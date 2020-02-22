@@ -10,7 +10,6 @@
 """ An action that renames a user perspective. """
 
 
-# Local imports.
 from .user_perspective_action import UserPerspectiveAction
 from .user_perspective_name import UserPerspectiveName
 

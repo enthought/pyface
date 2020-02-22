@@ -11,7 +11,6 @@
 """ A dialog that is split in two either horizontally or vertically. """
 
 
-# Local imports.
 from pyface.dialog import Dialog
 from pyface.split_widget import SplitWidget
 

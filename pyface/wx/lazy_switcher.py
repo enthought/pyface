@@ -11,11 +11,10 @@
 """ Classes to provide a switcher. """
 
 
-# Major package imports.
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Int
 
 

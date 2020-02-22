@@ -12,18 +12,18 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import logging
 import sys
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, provides, Unicode
 from pyface.util.guisupport import start_event_loop_wx
 
-# Local imports.
+
 from pyface.i_gui import IGUI, MGUI
 
 

@@ -10,7 +10,7 @@
 
 from __future__ import absolute_import
 
-# Local imports.
+
 from .dock_pane_toggle_group import DockPaneToggleGroup
 from .schema import (
     ActionSchema,

@@ -11,11 +11,10 @@
 """ A tree viewer for local file systems. """
 
 
-# Standard library imports.
 from os import listdir
 from os.path import basename, dirname, isdir, join
 
-# Enthought library imports.
+
 from pyface.api import ImageResource
 from pyface.viewer.api import TreeContentProvider, TreeLabelProvider
 from pyface.viewer.api import TreeViewer

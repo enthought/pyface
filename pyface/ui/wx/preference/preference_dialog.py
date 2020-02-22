@@ -11,13 +11,12 @@
 """ The preference dialog. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Dict, Float, Instance, Str
 
-# Local imports.
+
 from pyface.preference.preference_node import PreferenceNode
 from pyface.ui.wx.heading_text import HeadingText
 from pyface.ui.wx.layered_panel import LayeredPanel

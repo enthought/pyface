@@ -11,10 +11,9 @@
 """ The model for a tree control with extensible node types. """
 
 
-# Enthought library imports.
 from traits.api import Dict, Instance
 
-# Local imports.
+
 from .node_manager import NodeManager
 from .tree_model import TreeModel
 

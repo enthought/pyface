@@ -2,7 +2,7 @@
 
 Create and delete task panes
 """
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,

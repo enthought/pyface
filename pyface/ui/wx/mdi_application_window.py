@@ -11,13 +11,13 @@
 """ An MDI top-level application window. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, Int, Tuple
 
-# Local imports.
+
 from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 

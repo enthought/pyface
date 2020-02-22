@@ -8,11 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from pyface.api import GUI
 from pyface.tasks.api import TaskWindow
 
-# Local imports.
+
 from enaml_task import EnamlTask
 
 

@@ -11,14 +11,13 @@
 """ A viewer for tabular data. """
 
 
-# Major package imports.
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
 
-# Enthought library imports.
+
 from traits.api import Color, Event, Instance, Trait
 
-# Local imports.
+
 from pyface.ui.wx.image_list import ImageList
 from pyface.viewer.content_viewer import ContentViewer
 from pyface.viewer.table_column_provider import TableColumnProvider

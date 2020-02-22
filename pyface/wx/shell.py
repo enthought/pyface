@@ -32,7 +32,7 @@ import sys
 from wx.py.pseudo import PseudoFileIn, PseudoFileOut, PseudoFileErr
 from wx.py.version import VERSION
 
-# local imports
+
 from .drag_and_drop import PythonObject
 from .drag_and_drop import clipboard as enClipboard
 

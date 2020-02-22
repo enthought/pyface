@@ -7,17 +7,17 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports
+
 from contextlib import contextmanager
 
-# Enthought library imports.
+
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
 from traits.api import Bool, on_trait_change, Property, provides, Tuple
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports.
+
 from .task_pane import TaskPane
 from .util import set_focus
 

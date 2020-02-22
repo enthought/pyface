@@ -10,10 +10,9 @@
 """ The base class for user perspective actions. """
 
 
-# Enthought library imports.
 from traits.api import on_trait_change
 
-# Local imports.
+
 from .workbench_action import WorkbenchAction
 
 

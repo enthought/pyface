@@ -10,10 +10,9 @@
 """ An action that resets the active perspective. """
 
 
-# Enthought library imports.
 from pyface.api import YES
 
-# Local imports.
+
 from .workbench_action import WorkbenchAction
 
 

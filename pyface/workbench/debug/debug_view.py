@@ -10,7 +10,6 @@
 """ A view containing a main walter canvas. """
 
 
-# Enthought library imports.
 from pyface.workbench.api import View, WorkbenchWindow
 from traits.api import HasTraits, Instance, Str, on_trait_change
 from traitsui.api import View as TraitsView

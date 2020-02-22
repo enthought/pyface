@@ -12,17 +12,17 @@
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import os
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits, List, Property, provides
 from traits.api import Unicode
 
-# Local imports.
+
 from pyface.i_image_resource import IImageResource, MImageResource
 
 

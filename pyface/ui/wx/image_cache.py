@@ -12,13 +12,13 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import HasTraits, provides
 
-# Local imports.
+
 from pyface.i_image_cache import IImageCache, MImageCache
 
 

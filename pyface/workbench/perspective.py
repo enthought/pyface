@@ -10,13 +10,12 @@
 """ The default perspective. """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, List, provides, Str, Tuple
 
-# Local imports.
+
 from .i_perspective import IPerspective
 from .perspective_item import PerspectiveItem
 

@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 """ The model for list boxes. """
 
-# Enthought library imports
+
 from traits.api import Event, HasTraits
 
 

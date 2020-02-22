@@ -10,11 +10,10 @@
 """ The tool bar manager for the Envisage workbench window. """
 
 
-# Enthought library imports.
 import pyface.action.api as pyface
 from traits.api import Instance
 
-# Local imports.
+
 from .action_controller import ActionController
 
 

@@ -11,13 +11,12 @@
 """ Application window example. """
 
 
-# Standard library imports.
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
 

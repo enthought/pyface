@@ -11,7 +11,6 @@
 """ Abstract base class for content providers. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 

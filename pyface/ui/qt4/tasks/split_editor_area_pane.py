@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import sys
 
-# Enthought library imports.
+
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import (
     Bool,
@@ -32,7 +32,7 @@ from pyface.api import FileDialog
 from pyface.constant import OK
 from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # ----------------------------------------------------------------------------

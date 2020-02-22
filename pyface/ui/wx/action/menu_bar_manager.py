@@ -12,10 +12,10 @@
 """ The wx specific implementation of a menu bar manager.
 """
 
-# Major package imports.
+
 import wx
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 
 

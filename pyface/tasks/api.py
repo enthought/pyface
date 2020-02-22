@@ -10,7 +10,7 @@
 
 from __future__ import absolute_import
 
-# Local imports.
+
 from .advanced_editor_area_pane import AdvancedEditorAreaPane
 from .split_editor_area_pane import SplitEditorAreaPane
 from .dock_pane import DockPane

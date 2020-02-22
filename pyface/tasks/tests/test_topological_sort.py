@@ -7,10 +7,10 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Standard library imports.
+
 import unittest
 
-# Local imports.
+
 from traits.api import HasTraits, Int
 from pyface.tasks.topological_sort import before_after_sort, topological_sort
 

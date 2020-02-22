@@ -12,13 +12,13 @@
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, provides, Unicode
 
-# Local imports.
+
 from pyface.i_confirmation_dialog import (
     IConfirmationDialog,
     MConfirmationDialog,

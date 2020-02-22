@@ -9,15 +9,13 @@
 # Thanks for using Enthought open source!
 
 
-
-# Standard library imports.
 import os
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits, List, Property, provides
 from traits.api import Unicode
 
-# Local imports.
+
 from pyface.i_image_resource import IImageResource, MImageResource
 
 

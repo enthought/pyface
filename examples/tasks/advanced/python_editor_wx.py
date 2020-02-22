@@ -9,20 +9,19 @@
 # Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import sys
 from os.path import basename
 
-# Major package imports.
+
 import wx
 import wx.stc
 
-# Enthought library imports.
+
 from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
 from pyface.tasks.api import Editor
 from pyface.wx.python_stc import PythonSTC, faces
 
-# Local imports.
+
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 

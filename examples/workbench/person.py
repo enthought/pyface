@@ -1,7 +1,6 @@
 """ A simple example of some object model. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits, Int, Str
 
 

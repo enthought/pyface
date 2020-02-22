@@ -11,7 +11,6 @@
 """ The interface to system metrics (screen width and height etc). """
 
 
-# Enthought library imports.
 from traits.api import Int, Interface, Tuple
 
 

@@ -11,16 +11,15 @@
 """ Expandable example. """
 
 
-# Standard library imports.
 import os, sys
 
-# Major package imports.
+
 import wx
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.ui.wx.grid.api import (
     Grid,

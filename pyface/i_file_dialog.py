@@ -11,13 +11,12 @@
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 
-# Standard library imports.
 import sys
 
-# Enthought library imports.
+
 from traits.api import Enum, Unicode, Int
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 import six
 

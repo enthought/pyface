@@ -10,7 +10,7 @@
 
 """ A model that provides data for a grid. """
 
-# Major package imports.
+
 from __future__ import print_function
 import wx
 from wx.grid import (
@@ -19,10 +19,10 @@ from wx.grid import (
     GRIDTABLE_NOTIFY_ROWS_APPENDED,
 )
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Trait, Event, List
 
-# Local imports.
+
 from .grid_column import GridColumn
 from .grid_row import GridRow
 

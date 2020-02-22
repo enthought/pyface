@@ -10,7 +10,6 @@
 """ A memento for a workbench window. """
 
 
-# Enthought library imports.
 from traits.api import Any, Dict, HasTraits, Str, Tuple
 
 

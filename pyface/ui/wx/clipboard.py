@@ -8,14 +8,14 @@
 #
 # Thanks for using Enthought open source!
 
-# Standard library imports
+
 from io import BytesIO
 from six.moves.cPickle import dumps, load, loads
 
-# System library imports
+
 import wx
 
-# ETS imports
+
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 import six

@@ -10,10 +10,10 @@
 
 """ The interface of a top-level application window. """
 
-# Enthought library imports.
+
 from traits.api import Instance, List
 
-# Local imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.i_image_resource import IImageResource
 from pyface.i_window import IWindow

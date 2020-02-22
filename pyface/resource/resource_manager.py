@@ -13,16 +13,16 @@ A resource manager locates and loads application resources such as images and
 sounds etc.
 """
 
-# Standard library imports.
+
 import collections, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
 
-# Local imports.
+
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
 import six

@@ -11,10 +11,9 @@
 """ Base class for all table column providers. """
 
 
-# Enthought library imports.
 from traits.api import Int
 
-# Local imports.
+
 from .column_provider import ColumnProvider
 
 

@@ -7,12 +7,12 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# System library imports
+
 from pygments.token import Token, is_token_subtype
 
 
 class CompletionLexer(object):
-    """ Uses Pygments and some auxillary information to lex code snippets for 
+    """ Uses Pygments and some auxillary information to lex code snippets for
         symbol contexts.
     """
 

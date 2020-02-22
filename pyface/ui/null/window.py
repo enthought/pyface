@@ -9,12 +9,10 @@
 # Thanks for using Enthought open source!
 
 
-
-# Enthought library imports.
 from traits.api import Any, Event, Property, provides, Unicode
 from traits.api import Tuple
 
-# Local imports.
+
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget

@@ -1,4 +1,3 @@
-# Enthought library imports.
 from pyface.tasks.api import (
     Task,
     TaskLayout,
@@ -24,7 +23,7 @@ from pyface.api import (
 )
 from traits.api import on_trait_change, Property, Instance
 
-# Local imports.
+
 from example_panes import PythonScriptBrowserPane
 from python_editor import PythonEditor
 

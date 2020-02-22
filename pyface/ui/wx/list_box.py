@@ -10,13 +10,13 @@
 """ A simple list box widget with a model-view architecture. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, Instance, Int
 
-# Local imports.
+
 from pyface.list_box_model import ListBoxModel
 from .widget import Widget
 

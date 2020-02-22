@@ -11,18 +11,17 @@
 """ A tree control with a model/ui architecture. """
 
 
-# Standard library imports.
 import logging
 import os
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Callable, Enum, Event, Instance
 from traits.api import List, Property, Callable, Str, Trait, Tuple
 
-# Local imports.
+
 from pyface.filter import Filter
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.sorter import Sorter
