@@ -54,7 +54,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path = six.text_type(self.control.GetPath())
+        self.path = str(self.control.GetPath())
 
         # Let the window close as normal.
         super(DirectoryDialog, self).close()

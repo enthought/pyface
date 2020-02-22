@@ -53,7 +53,7 @@ class FileDropSource(wx.DropSource):
         clipboard.drop_source = self
 
         data_object = wx.FileDataObject()
-        if isinstance(files, six.text_type):
+        if isinstance(files, str):
             files = [files]
 
         for file in files:

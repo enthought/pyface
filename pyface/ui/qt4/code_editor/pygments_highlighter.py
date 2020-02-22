@@ -154,7 +154,7 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
     def highlightBlock(self, qstring):
         """ Highlight a block of text.
         """
-        qstring = six.text_type(qstring)
+        qstring = str(qstring)
         prev_data = self.previous_block_data()
 
         if prev_data is not None:

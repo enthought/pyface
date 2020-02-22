@@ -1671,12 +1671,12 @@ class _GridTableBase(GridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    ulabel = str(label, "ascii") + u"  \u00ab"
                     label = ulabel.encode("latin-1")
                 else:
                     label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                ulabel = str(label, "ascii") + u"  \u00bb"
                 label = ulabel.encode("latin-1")
             else:
                 label += "  >>"
@@ -1691,12 +1691,12 @@ class _GridTableBase(GridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    ulabel = str(label, "ascii") + u"  \u00ab"
                     label = ulabel.encode("latin-1")
                 else:
                     label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                ulabel = str(label, "ascii") + u"  \u00bb"
                 label = ulabel.encode("latin-1")
             else:
                 label += "  >>"

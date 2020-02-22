@@ -327,7 +327,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Handle the title being changed """
         for editor in self.window.editors:
             if editor.control == control:
-                editor.name = six.text_type(title)
+                editor.name = str(title)
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?

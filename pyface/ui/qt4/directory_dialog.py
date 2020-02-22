@@ -56,7 +56,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = six.text_type(files[0])
+            self.path = str(files[0])
         else:
             self.path = ""
 
