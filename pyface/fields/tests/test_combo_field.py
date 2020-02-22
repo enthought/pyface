@@ -17,7 +17,7 @@ from __future__ import (
 
 import unittest
 
-from six import str
+
 
 from pyface.image_resource import ImageResource
 from ..combo_field import ComboField

@@ -17,7 +17,7 @@ from __future__ import (
     unicode_literals,
 )
 
-from six import str
+
 
 from traits.api import Callable, HasTraits, Enum, List
 
