@@ -13,7 +13,7 @@
 
 import builtins
 from code import compile_command, InteractiveInterpreter
-from six.moves import cStringIO as StringIO
+from io import StringIO
 import sys
 from time import time
 

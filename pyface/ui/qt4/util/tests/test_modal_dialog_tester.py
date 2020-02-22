@@ -12,7 +12,7 @@
 from __future__ import absolute_import
 
 import unittest
-from six.moves import cStringIO as StringIO
+from io import StringIO
 import platform
 
 from pyface.qt import QtGui
