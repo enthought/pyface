@@ -1,29 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Expandable example. """
 
 
-# Standard library imports.
 import os, sys
 
-# Major package imports.
+
 import wx
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from pyface.ui.wx.grid.api import (
     Grid,
@@ -39,7 +35,7 @@ from traits.api import Float, Str
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
-    #### 'SplitApplicationWindow' interface ###################################
+    # 'SplitApplicationWindow' interface -----------------------------------
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
@@ -81,9 +77,9 @@ class MainWindow(SplitApplicationWindow):
         TraitGridColumn(name="object", label="Object"),
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
@@ -113,9 +109,9 @@ class MainWindow(SplitApplicationWindow):
 
         return self._python_shell.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_content(self, parent):
         """ Create some context for an expandable panel. """
@@ -124,7 +120,7 @@ class MainWindow(SplitApplicationWindow):
 
         return tree.control
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_grid_anytrait_changed(self, tree, trait_name, old, new):
         """ Called when any trait on the tree has changed. """
@@ -145,5 +141,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

@@ -1,12 +1,21 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The default editor manager. """
 
-# Standard library imports.
+
 import weakref
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance, provides
 
-# Local imports.
+
 from .i_editor_manager import IEditorManager
 from .traits_ui_editor import TraitsUIEditor
 
@@ -15,14 +24,14 @@ from .traits_ui_editor import TraitsUIEditor
 class EditorManager(HasTraits):
     """ The default editor manager. """
 
-    #### 'IEditorManager' interface ###########################################
+    # 'IEditorManager' interface -------------------------------------------
 
     # The workbench window that the editor manager manages editors for ;^)
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Constructor. """
@@ -34,9 +43,9 @@ class EditorManager(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_editor(self, editor, kind):
         """ Registers an existing editor. """
@@ -84,14 +93,11 @@ class EditorManager(HasTraits):
 
         return None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Protected' 'EditorManager'  interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _is_editing(self, editor, obj, kind):
         """ Return True if the editor is editing the object. """
 
         return editor.obj == obj
-
-
-#### EOF ######################################################################

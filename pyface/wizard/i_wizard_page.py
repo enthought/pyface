@@ -1,27 +1,23 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for a page in a wizard. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Interface, Str, Tuple, Unicode
 
 
 class IWizardPage(Interface):
     """ The interface for a page in a wizard. """
 
-    #### 'IWizardPage' interface ##############################################
+    # 'IWizardPage' interface ---------------------------------------------#
 
     # The unique Id of the page within the wizard.
     id = Str
@@ -45,9 +41,9 @@ class IWizardPage(Interface):
     # The size of the page.
     size = Tuple
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self, parent):
         """ Creates the wizard page. """
@@ -59,9 +55,9 @@ class IWizardPage(Interface):
         dispose of the contents of a page.
         """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
         """ Creates the actual page content. """
@@ -74,9 +70,9 @@ class MWizardPage(object):
     Implements: dispose_page()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def dispose_page(self):
         """ Disposes the wizard page.
@@ -86,6 +82,3 @@ class MWizardPage(object):
         """
 
         pass
-
-
-#### EOF ######################################################################

@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 from .edit_image_renderer import EditImageRenderer
 from .grid_cell_renderer import GridCellRenderer
@@ -25,8 +22,6 @@ class EditRenderer(GridCellRenderer):
         # initialize the renderer, if it hasn't already been initialized
         if self.renderer is None:
             self.renderer = EditImageRenderer()
-
-        return
 
     def on_left_click(self, grid, row, col):
         """ Calls edit_traits on the object represented by the row. """

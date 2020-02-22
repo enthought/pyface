@@ -1,26 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Event, provides, Unicode
 
-# Local imports.
+
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 from pyface.widget import Widget
@@ -33,7 +31,7 @@ class PythonEditor(MPythonEditor, Widget):
     IPythonEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     dirty = Bool(False)
 
@@ -41,23 +39,23 @@ class PythonEditor(MPythonEditor, Widget):
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     changed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         super(PythonEditor, self).__init__(parent=parent, **traits)
         self._create()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self, path=None):
         """ Loads the contents of the editor.
@@ -96,9 +94,9 @@ class PythonEditor(MPythonEditor, Widget):
             QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Widget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         super(PythonEditor, self)._add_event_listeners()
@@ -124,9 +122,9 @@ class PythonEditor(MPythonEditor, Widget):
     def __event_filter_default(self):
         return PythonEditorEventFilter(self, self.control)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _path_changed(self):
         self._changed_path()
@@ -138,9 +136,9 @@ class PythonEditor(MPythonEditor, Widget):
             )
             self.control.code.update_line_number_width()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.

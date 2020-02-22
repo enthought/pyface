@@ -1,19 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Adapter class to make trait editor controls work inside of a grid. """
 
-# Major package imports
+
 import wx
 from wx.grid import GridCellEditor as PyGridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
@@ -206,15 +203,12 @@ class TraitGridCellAdapter(PyGridCellEditor):
             else:
                 self.base_Show(show, attr)
 
-        return
-
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
             base  class version just fills it with background colour from the
             attribute.  In this class the edit control fills the whole cell so
             don't do anything at all in order to reduce flicker.
         """
-        return
 
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
@@ -258,26 +252,22 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Reset the value in the control back to its starting value. """
 
         # fixme: should we be using the undo history here?
-        return
 
     def StartingKey(self, evt):
         """ If the editor is enabled by pressing keys on the grid, this will be
             called to let the editor do something about that first key
             if desired.
         """
-        return
 
     def StartingClick(self):
         """ If the editor is enabled by clicking on the cell, this method
             will be called to allow the editor to simulate the click on the
             control if needed.
         """
-        return
 
     def Destroy(self):
         """ Final cleanup. """
         self._editor.dispose()
-        return
 
     def Clone(self):
         """ Create a new object which is the copy of this one. """
@@ -294,6 +284,3 @@ class TraitGridCellAdapter(PyGridCellEditor):
         pop_control(self._editor.control, grid)
         if self._editor is not None:
             self._editor.dispose()
-
-
-#### EOF ######################################################################

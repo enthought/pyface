@@ -1,7 +1,6 @@
-# Standard library imports.
 import os.path
 
-# Enthought library imports.
+
 from pyface.api import PythonEditor
 from pyface.tasks.api import TaskPane, TraitsDockPane
 from traits.api import Event, File, Instance, List, Str
@@ -12,12 +11,12 @@ class FileBrowserPane(TraitsDockPane):
     """ A simple file browser pane.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "example.file_browser_pane"
     name = "File Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     # Fired when a file is double-clicked.
     activated = Event
@@ -44,12 +43,12 @@ class PythonScriptBrowserPane(FileBrowserPane):
     """ A file browser pane restricted to Python scripts.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "example.python_script_browser_pane"
     name = "Script Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     filters = ["*.py"]
 
@@ -58,18 +57,18 @@ class PythonEditorPane(TaskPane):
     """ A wrapper around the Pyface Python editor.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "example.python_editor_pane"
     name = "Python Editor"
 
-    #### PythonEditorPane interface ###########################################
+    # PythonEditorPane interface -------------------------------------------
 
     editor = Instance(PythonEditor)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         self.editor = PythonEditor(parent)

@@ -1,15 +1,15 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2006 by Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: David C. Morrill <dmorrill@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 """ An action that creates a new (and empty) user perspective. """
 
 
-# Local imports.
 from .user_perspective_name import UserPerspectiveName
 from .workbench_action import WorkbenchAction
 
@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 class NewUserPerspectiveAction(WorkbenchAction):
     """ An action that creates a new (and empty) user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier.
     id = "pyface.workbench.action.new_user_perspective_action"
@@ -25,9 +25,9 @@ class NewUserPerspectiveAction(WorkbenchAction):
     # The action's name.
     name = "New Perspective..."
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Peform the action. """
@@ -50,6 +50,3 @@ class NewUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
-
-
-#### EOF #####################################################################

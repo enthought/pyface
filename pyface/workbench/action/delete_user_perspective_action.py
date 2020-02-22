@@ -1,25 +1,25 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2006 by Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: David C. Morrill <dmorrill@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 """ An action that deletes a user perspective. """
 
 
-# Enthought library imports.
 from pyface.api import YES
 
-# Local imports.
+
 from .user_perspective_action import UserPerspectiveAction
 
 
 class DeleteUserPerspectiveAction(UserPerspectiveAction):
     """ An action that deletes a user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = "pyface.workbench.action.delete_user_perspective_action"
@@ -27,9 +27,9 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Delete Perspective"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """
@@ -63,9 +63,9 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_next_perspective(self, window):
         """ Return the first perspective that is not the active one! """
@@ -77,6 +77,3 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
             index = 0
 
         return window.perspectives[index]
-
-
-#### EOF #####################################################################

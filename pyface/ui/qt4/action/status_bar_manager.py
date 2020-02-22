@@ -1,16 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 # ------------------------------------------------------------------------------
 
-# Major package imports.
+
 from pyface.qt import QtGui
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, List, Property, Str, Unicode
 
 
@@ -32,9 +38,9 @@ class StatusBarManager(HasTraits):
     # Whether the status bar is visible.
     visible = Bool(True)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_status_bar(self, parent):
         """ Creates a status bar. """
@@ -57,9 +63,9 @@ class StatusBarManager(HasTraits):
             self.status_bar.deleteLater()
             self.status_bar = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Property handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_message(self):
 
@@ -81,9 +87,9 @@ class StatusBarManager(HasTraits):
 
         self.trait_property_changed("message", old, value)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _messages_changed(self):
         """ Sets the text displayed on the status bar. """
@@ -109,9 +115,9 @@ class StatusBarManager(HasTraits):
         if self.status_bar is not None:
             self.status_bar.setVisible(self.visible)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _show_messages(self):
         """ Display the list of messages. """
@@ -121,6 +127,3 @@ class StatusBarManager(HasTraits):
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
         self.status_bar.showMessage("  ".join(self.messages))
-
-
-#### EOF ######################################################################

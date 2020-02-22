@@ -1,21 +1,17 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Enthought library imports.
+
 from traits.api import Dict, List, Trait
 
-# local imports
+
 from .grid_model import GridModel, GridRow
 
 
@@ -32,9 +28,9 @@ class CompositeGridModel(GridModel):
     # The cached data indexes.
     _data_index = Dict
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a CompositeGridModel object. """
 
@@ -45,9 +41,9 @@ class CompositeGridModel(GridModel):
 
         return
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def get_column_count(self):
         """ Return the number of columns for this table. """
 
@@ -293,9 +289,9 @@ class CompositeGridModel(GridModel):
 
         return model.get_cell_valignment(row, new_col)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
         """ Implementation method for delete_rows. Should return the
         number of rows that were deleted. """
@@ -322,9 +318,9 @@ class CompositeGridModel(GridModel):
         model._set_value(row, new_col, value)
         return 0
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # private interface
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def _resolve_column_index(self, index):
         """ Resolves a column index into the correct model and adjusted
@@ -356,8 +352,6 @@ class CompositeGridModel(GridModel):
 
         self._data_index.clear()
 
-        return
-
     def _data_items_changed(self):
         """ Called when the members of the data trait have changed.
 
@@ -367,6 +361,3 @@ class CompositeGridModel(GridModel):
         self._data_index.clear()
 
         return
-
-
-#### EOF ####################################################################

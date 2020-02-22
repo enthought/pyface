@@ -1,26 +1,23 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ An MDI top-level application window. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, Int, Tuple
 
-# Local imports.
+
 from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
@@ -44,7 +41,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
     """
 
-    #### 'MDIApplicationWindow' interface #####################################
+    # 'MDIApplicationWindow' interface -------------------------------------
 
     # The workarea background image.
     background_image = Instance(ImageResource, ImageResource("background"))
@@ -58,9 +55,9 @@ class MDIApplicationWindow(ApplicationWindow):
     # UPDATE: wx 2.6.1 does NOT fix this issue.
     _wx_offset = Tuple(Int, Int)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MDIApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_child_window(self, title=None, is_mdi=True, float=True):
         """ Create a child window. """
@@ -76,9 +73,9 @@ class MDIApplicationWindow(ApplicationWindow):
                 style = wx.DEFAULT_FRAME_STYLE
             return wx.Frame(self.control, -1, title, style=style)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create the contents of the MDI window. """
@@ -125,9 +122,9 @@ class MDIApplicationWindow(ApplicationWindow):
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
@@ -144,8 +141,6 @@ class MDIApplicationWindow(ApplicationWindow):
 
             x = x + w
 
-        return
-
     def _scale_background_image(self, dc, width, height):
         """ Scales the background image. """
 
@@ -160,15 +155,13 @@ class MDIApplicationWindow(ApplicationWindow):
 
         return
 
-    ##### wx event handlers ###################################################
+    ## wx event handlers ---------------------------------------------------
 
     def _on_size(self, event):
         """ Called when the frame is resized. """
 
         wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
         event.Skip()
-
-        return
 
     def _on_erase_background(self, event):
         """ Called when the background of the MDI client window is erased. """

@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import HasTraits, provides
 
-# Local imports.
+
 from pyface.i_image_cache import IImageCache, MImageCache
 
 
@@ -33,9 +28,9 @@ class ImageCache(MImageCache, HasTraits):
     IImageCache interface for the API documentation.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, width, height):
         self._width = width
@@ -49,9 +44,9 @@ class ImageCache(MImageCache, HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageCache' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, filename):
         # Try the cache first.
@@ -94,6 +89,3 @@ class ImageCache(MImageCache, HasTraits):
             self._bitmaps[filename] = bmp
 
         return bmp
-
-
-#### EOF ######################################################################

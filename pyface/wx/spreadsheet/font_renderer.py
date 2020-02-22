@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 import wx
 
 from .default_renderer import DefaultRenderer
@@ -25,8 +22,6 @@ class FontRenderer(DefaultRenderer):
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
         dc.DrawText(text, rect.x + 1, rect.y + 1)
-
-        return
 
     def DrawOld(self, grid, attr, dc, rect, row, col, isSelected):
         # Here we draw text in a grid cell using various fonts
@@ -74,7 +69,6 @@ class FontRenderer(DefaultRenderer):
             dc.DrawText("...", x, rect.y + 1)
 
         dc.DestroyClippingRegion()
-        return
 
 
 class FontRendererFactory88(object):

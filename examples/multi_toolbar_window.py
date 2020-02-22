@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Mulit-tool bar example. """
 
 
-# Standard library imports.
 import os, sys
 
 # Put the Enthought library on the Python path.
@@ -29,7 +25,7 @@ try:
 except:
     pass
 
-# Enthought library imports.
+
 from pyface.api import MultiToolbarWindow, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from pyface.action.api import ToolBarManager
@@ -38,9 +34,9 @@ from pyface.action.api import ToolBarManager
 class MainWindow(MultiToolbarWindow):
     """ The main application window. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new application window. """
@@ -89,5 +85,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

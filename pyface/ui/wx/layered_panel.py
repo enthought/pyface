@@ -1,27 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A Layered panel. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-# Enthought library imports.
+
 from traits.api import Any, Str, Int
 
-# Local imports.
+
 from .widget import Widget
 
 
@@ -37,7 +34,7 @@ class LayeredPanel(Widget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    #### "Layered Panel' interface ############################################
+    # "Layered Panel' interface --------------------------------------------
 
     # The toolkit-specific control of the currently displayed layer.
     current_layer = Any
@@ -50,9 +47,9 @@ class LayeredPanel(Widget):
     min_width = Int(0)
     min_height = Int(0)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
@@ -70,9 +67,9 @@ class LayeredPanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'LayeredPanel' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_layer(self, name, layer):
         """ Adds a layer with the specified name.
@@ -140,9 +137,9 @@ class LayeredPanel(Widget):
 
         return name in self._layers
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -162,8 +159,6 @@ class LayeredPanel(Widget):
         sizer.Show(layer, False)
         sizer.Layout()
 
-        return
-
     def _show_layer(self, name, layer):
         """ Shows the specified layer. """
 
@@ -175,6 +170,3 @@ class LayeredPanel(Widget):
         self.current_layer_name = name
 
         return layer
-
-
-#### EOF ######################################################################

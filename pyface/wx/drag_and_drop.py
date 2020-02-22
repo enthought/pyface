@@ -1,19 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Drag and drop utilities. """
 
-# Standard library imports.
+
 import six
 
 if six.PY2:
@@ -23,7 +20,6 @@ else:
     from inspect import getfullargspec as getargspec
 
 
-# Major package imports.
 import wx
 import six
 
@@ -70,7 +66,6 @@ class FileDropSource(wx.DropSource):
 
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
-        return
 
 
 class FileDropTarget(wx.FileDropTarget):
@@ -83,8 +78,6 @@ class FileDropTarget(wx.FileDropTarget):
         wx.FileDropTarget.__init__(self)
 
         self.handler = handler
-
-        return
 
     def OnDropFiles(self, x, y, filenames):
         """ Called when the files have been dropped. """
@@ -137,8 +130,6 @@ class PythonDropSource(wx.DropSource):
             flags = wx.Drag_CopyOnly
         self.result = self.DoDragDrop(flags)
 
-        return
-
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
 
@@ -164,8 +155,6 @@ class PythonDropSource(wx.DropSource):
                     self.handler(clipboard.data, drag_result)
                 else:
                     self.handler()
-
-        return
 
 
 class PythonDropTarget(wx.DropTarget):
@@ -197,8 +186,6 @@ class PythonDropTarget(wx.DropTarget):
         self.file_data = wx.FileDataObject()
         self.data_object.Add(self.file_data)
         self.SetDataObject(self.data_object)
-
-        return
 
     def OnData(self, x, y, default_drag_result):
         """ Called when OnDrop returns True. """
@@ -315,8 +302,6 @@ class PythonDropTarget(wx.DropTarget):
         if hasattr(self.handler, "wx_drag_leave"):
             self.handler.wx_drag_leave(clipboard.data)
 
-        return
-
     def OnDrop(self, x, y):
         """ Called when the user drops a data object on the target.
 
@@ -325,6 +310,3 @@ class PythonDropTarget(wx.DropTarget):
         """
 
         return True
-
-
-#### EOF #####################################################################

@@ -1,26 +1,21 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Base class for workbench dock windows.
 """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.dock.api import DockGroup, DockRegion, DockWindow
 
 
@@ -35,9 +30,9 @@ class WorkbenchDockWindow(DockWindow):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'DockWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _right_up(self, event):
         """ Handles the right mouse button being released.
@@ -49,9 +44,9 @@ class WorkbenchDockWindow(DockWindow):
 
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'WorkbenchDockWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_control(self, id):
         """ Activates the dock control with the specified Id.
@@ -69,8 +64,6 @@ class WorkbenchDockWindow(DockWindow):
         else:
             logger.debug("no control <%s> to activate", id)
 
-        return
-
     def close_control(self, id):
         """ Closes the dock control with the specified Id.
 
@@ -86,8 +79,6 @@ class WorkbenchDockWindow(DockWindow):
 
         else:
             logger.debug("no control <%s> to close", id)
-
-        return
 
     def get_control(self, id, visible_only=True):
         """ Returns the dock control with the specified Id.
@@ -143,8 +134,6 @@ class WorkbenchDockWindow(DockWindow):
             if len(region.contents) > 0:
                 region.contents[0].activate(layout=False)
 
-        return
-
     def set_structure(self, structure, handler=None):
         """ Sets the window structure. """
 
@@ -152,6 +141,3 @@ class WorkbenchDockWindow(DockWindow):
         sizer.SetStructure(self.control.GetParent(), structure, handler)
 
         return
-
-
-#### EOF ######################################################################

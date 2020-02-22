@@ -1,25 +1,21 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Abstract base class for all action managers. """
 
 
-# Enthought library imports.
 from __future__ import print_function
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
-# Local imports.
+
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
 import six
@@ -39,7 +35,7 @@ class ActionManager(HasTraits):
 
     """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     #: The Id of the default group.
     DEFAULT_GROUP = Constant("additions")
@@ -59,19 +55,19 @@ class ActionManager(HasTraits):
     #: Is the action manager visible?
     visible = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     #: fixme: We probably need more granular events than this!
     changed = Event
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     #: All of the contribution groups in the manager.
     _groups = List(Group)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new action manager.
@@ -126,16 +122,16 @@ class ActionManager(HasTraits):
 
                 group.append(arg)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait properties #####################################################
+    # Trait properties -----------------------------------------------------
 
     def _get_groups(self):
         return self._groups[:]
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _enabled_changed(self, trait_name, old, new):
         for group in self._groups:
@@ -145,7 +141,7 @@ class ActionManager(HasTraits):
         for group in self._groups:
             group.visible = new
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, item):
         """ Append an item to the manager.
@@ -308,9 +304,9 @@ class ActionManager(HasTraits):
         else:
             fn(item)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_default_group(self):
         """ Returns the manager's default group.
@@ -375,9 +371,9 @@ class ActionManager(HasTraits):
         else:
             return None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Debugging interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def dump(self, indent=""):
         """ Render a manager! """

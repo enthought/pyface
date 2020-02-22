@@ -1,4 +1,13 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from collections import OrderedDict, defaultdict
 import logging
 
@@ -8,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 def before_after_sort(items):
     """ Sort a sequence of items with 'before', 'after', and 'id' attributes.
-        
+
     The sort is topological. If an item does not specify a 'before' or 'after',
     it is placed after the preceding item.
 

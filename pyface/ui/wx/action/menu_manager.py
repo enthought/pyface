@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ The wx specific implementation of a menu manager.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Unicode, Bool
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.group import Group
@@ -35,7 +30,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     This could be a sub-menu or a context (popup) menu.
     """
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
@@ -44,9 +39,9 @@ class MenuManager(ActionManager, ActionManagerItem):
     # Does the menu require a separator before the menu item name?
     separator = Bool(True)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
         """ Creates a menu representation of the manager. """
@@ -60,9 +55,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         return _Menu(self, parent, controller)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
@@ -76,8 +71,6 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         menu.Append(id, self.name, sub)
 
-        return
-
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
         """ Adds the item to a tool bar. """
 
@@ -87,9 +80,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 class _Menu(wx.Menu):
     """ The toolkit-specific menu control. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
         """ Creates a new tree. """
@@ -118,9 +111,9 @@ class _Menu(wx.Menu):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # '_Menu' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def clear(self):
         """ Clears the items from the menu. """
@@ -134,8 +127,6 @@ class _Menu(wx.Menu):
             item.dispose()
 
         self.menu_items = []
-
-        return
 
     def is_empty(self):
         """ Is the menu empty? """
@@ -156,8 +147,6 @@ class _Menu(wx.Menu):
                 parent, group, previous_non_empty_group
             )
 
-        return
-
     def show(self, x=None, y=None):
         """ Show the menu at the specified location. """
 
@@ -168,9 +157,9 @@ class _Menu(wx.Menu):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
@@ -182,8 +171,6 @@ class _Menu(wx.Menu):
 
         if hasattr(self, "_id"):
             self._menu.Enable(self._id, new)
-
-        return
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
@@ -219,6 +206,3 @@ class _Menu(wx.Menu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
-
-
-#### EOF ######################################################################

@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ An abstract base class for console-type widgets.
 """
 # FIXME: This file and the others in this directory have been ripped, more or
@@ -8,7 +17,7 @@
 # Imports
 # -----------------------------------------------------------------------------
 
-# Standard library imports
+
 import os
 from os.path import commonprefix
 import re
@@ -16,7 +25,7 @@ import sys
 from textwrap import dedent
 from unicodedata import category
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
 # -----------------------------------------------------------------------------
@@ -49,7 +58,7 @@ class ConsoleWidget(QtGui.QWidget):
         convenient to implementors of a console-style widget.
     """
 
-    # ------ Configuration ------------------------------------------------------
+    # Configuration ------------------------------------------------------
 
     # The maximum number of lines of text before truncation. Specifying a
     # non-positive number disables text truncation (not recommended).
@@ -77,7 +86,7 @@ class ConsoleWidget(QtGui.QWidget):
     # priority (when it has focus) over, e.g., window-level menu shortcuts.
     override_shortcuts = False
 
-    # ------ Signals ------------------------------------------------------------
+    # Signals ------------------------------------------------------------
 
     # Signals that indicate ConsoleWidget state.
     copy_available = QtCore.Signal(bool)
@@ -91,7 +100,7 @@ class ConsoleWidget(QtGui.QWidget):
     # Signal emitted when the font is changed.
     font_changed = QtCore.Signal(QtGui.QFont)
 
-    # ------ Protected class variables ------------------------------------------
+    # Protected class variables ------------------------------------------
 
     # When the control key is down, these keys are mapped.
     _ctrl_down_remap = {
@@ -1094,7 +1103,7 @@ class ConsoleWidget(QtGui.QWidget):
         alt_down = event.modifiers() & QtCore.Qt.AltModifier
         shift_down = event.modifiers() & QtCore.Qt.ShiftModifier
 
-        # ------ Special sequences ----------------------------------------------
+        # Special sequences ----------------------------------------------
 
         if event.matches(QtGui.QKeySequence.Copy):
             self.copy()
@@ -1108,7 +1117,7 @@ class ConsoleWidget(QtGui.QWidget):
             self.paste()
             intercepted = True
 
-        # ------ Special modifier logic -----------------------------------------
+        # Special modifier logic -----------------------------------------
 
         elif key in (QtCore.Qt.Key_Return, QtCore.Qt.Key_Enter):
             intercepted = True
@@ -1151,7 +1160,7 @@ class ConsoleWidget(QtGui.QWidget):
                         self._control.moveCursor(QtGui.QTextCursor.End)
                         self._control.setTextCursor(cursor)
 
-        # ------ Control/Cmd modifier -------------------------------------------
+        # Control/Cmd modifier -------------------------------------------
 
         elif ctrl_down:
             if key == QtCore.Qt.Key_G:
@@ -1202,7 +1211,7 @@ class ConsoleWidget(QtGui.QWidget):
                 self.change_font_size(-1)
                 intercepted = True
 
-        # ------ Alt modifier ---------------------------------------------------
+        # Alt modifier ---------------------------------------------------
 
         elif alt_down:
             if key == QtCore.Qt.Key_B:
@@ -1236,7 +1245,7 @@ class ConsoleWidget(QtGui.QWidget):
                 self._control.setTextCursor(self._get_prompt_cursor())
                 intercepted = True
 
-        # ------ No modifiers ---------------------------------------------------
+        # No modifiers ---------------------------------------------------
 
         else:
             if shift_down:
@@ -1905,7 +1914,7 @@ class ConsoleWidget(QtGui.QWidget):
         self._prompt_pos = self._get_end_cursor().position()
         self._prompt_started()
 
-    # ------ Signal handlers ----------------------------------------------------
+    # Signal handlers ----------------------------------------------------
 
     def _adjust_scrollbars(self):
         """ Expands the vertical scrollbar beyond the range set by Qt.

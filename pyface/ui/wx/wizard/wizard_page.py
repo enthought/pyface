@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A page in a wizard. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
 from pyface.api import HeadingText
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
@@ -31,7 +27,7 @@ class WizardPage(MWizardPage, HasTraits):
 
     """
 
-    #### 'IWizardPage' interface ##############################################
+    # 'IWizardPage' interface ---------------------------------------------#
 
     id = Str
 
@@ -47,9 +43,9 @@ class WizardPage(MWizardPage, HasTraits):
 
     size = Tuple
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self, parent):
         """ Creates the wizard page. """
@@ -76,9 +72,9 @@ class WizardPage(MWizardPage, HasTraits):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
         """ Creates the actual page content. """
@@ -88,6 +84,3 @@ class WizardPage(MWizardPage, HasTraits):
         panel.SetBackgroundColour("yellow")
 
         return panel
-
-
-#### EOF ######################################################################

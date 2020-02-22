@@ -1,31 +1,26 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import os
 import tempfile
 from io import BytesIO
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from pyface.resource.api import ResourceFactory
 
 from traits.api import Undefined
@@ -34,9 +29,9 @@ from traits.api import Undefined
 class PyfaceResourceFactory(ResourceFactory):
     """ The implementation of a shared resource manager. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceFactory' toolkit interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """
@@ -69,6 +64,3 @@ class PyfaceResourceFactory(ResourceFactory):
             os.unlink(filename)
 
         return image
-
-
-#### EOF ######################################################################

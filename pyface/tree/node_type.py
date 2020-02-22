@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all node types. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasPrivateTraits, Instance, List
 from pyface.api import ImageResource
 from pyface.action.api import Action, ActionManagerItem, Group
@@ -35,7 +31,7 @@ class NodeType(HasPrivateTraits):
     # expanded.
     OPEN_FOLDER = ImageResource("open_folder")
 
-    #### 'NodeType' interface #################################################
+    # 'NodeType' interface -------------------------------------------------
 
     # The node manager that the type belongs to.
     node_manager = Instance("pyface.tree.node_manager.NodeManager")
@@ -62,11 +58,11 @@ class NodeType(HasPrivateTraits):
     # of this type (shown in the 'New' menu of the context menu).
     new_actions = Any  # List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### These methods are specific to the 'NodeType' interface ###############
+    # These methods are specific to the 'NodeType' interface ---------------
 
     def is_type_for(self, node):
         """ Returns True if a node is deemed to be of this type. """
@@ -150,7 +146,7 @@ class NodeType(HasPrivateTraits):
 
         return None
 
-    #### These methods are exactly the same as the 'TreeModel' interface ######
+    # These methods are exactly the same as the 'TreeModel' interface -----#
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.
@@ -273,6 +269,3 @@ class NodeType(HasPrivateTraits):
         """ Returns True if the node is expandanble, otherwise False. """
 
         return True
-
-
-#### EOF ######################################################################

@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited.
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Riverbank Computing Limited.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Python editor example. """
 
 from __future__ import print_function, unicode_literals
@@ -31,9 +28,9 @@ from pyface.toolkit import toolkit_object
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new application window. """
@@ -97,9 +94,9 @@ class MainWindow(ApplicationWindow):
                 ),
             )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplication' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create the editor. """
@@ -108,9 +105,9 @@ class MainWindow(ApplicationWindow):
 
         return self._editor.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_open_file(self):
         """ Open a new file. """

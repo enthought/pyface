@@ -1,25 +1,34 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import sys
 import logging
 
-# Enthought library imports.
+
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import on_trait_change, provides
 
-# System library imports.
+
 import wx
 from pyface.wx.aui import aui, PyfaceAuiNotebook
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # Logging
 logger = logging.getLogger(__name__)
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'EditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 @provides(IEditorAreaPane)
@@ -36,9 +45,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         | aui.AUI_NB_CLOSE_ON_ACTIVE_TAB
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -62,9 +71,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
         super(EditorAreaPane, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -104,9 +113,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         if not self.editors:
             self.active_editor = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
         """ Return a tab label for an editor.
@@ -126,7 +135,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
                 return editor
         return None
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     @on_trait_change("editors:[dirty, name]")
     def _update_label(self, editor, name, new):
@@ -137,7 +146,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
     def _update_tooltip(self, editor, name, new):
         self.control.SetPageToolTip(editor.control, editor.tooltip)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _close_requested(self, evt):
         index = evt.GetSelection()

@@ -1,27 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A SimpleGridModel simply builds a table from a 2-dimensional
 list/array containing the data. Optionally users can pass in specifications
 for rows and columns. By default these are built off the data itself,
 with row/column labels as the index + 1."""
 
-# Enthought library imports
+
 from pyface.action.api import Action, Group, MenuManager, Separator
 from traits.api import HasTraits, Any, List, Str, Bool, Trait
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 
-# local imports
+
 from .grid_model import GridColumn, GridModel, GridRow
 
 
@@ -40,9 +37,9 @@ class SimpleGridModel(GridModel):
     # The columns in the model.
     columns = Trait(None, None, List(GridColumn))
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a SimpleGridModel object. """
 
@@ -51,9 +48,9 @@ class SimpleGridModel(GridModel):
 
         return
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
@@ -219,9 +216,9 @@ class SimpleGridModel(GridModel):
         False otherwise. """
         return True
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _set_value(self, row, col, value):
         """ Sets the value of the cell at (row, col) to value.
 
@@ -248,9 +245,9 @@ class SimpleGridModel(GridModel):
 
         return num_rows
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __get_data_column(self, col):
         """ Return a 1-d list of data from the column indexed by col. """
@@ -296,6 +293,3 @@ class _CopyAction(Action):
         # clipboard
         value = self._model.get_cell_drag_value(self._row, self._col)
         enClipboard.data = value
-
-
-#### EOF ####################################################################

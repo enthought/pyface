@@ -1,25 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A Layered panel. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
 from traits.api import Instance
 
-# Local imports.
+
 from .expandable_header import ExpandableHeader
 from .image_resource import ImageResource
 from .widget import Widget
@@ -34,9 +31,9 @@ class ExpandablePanel(Widget):
     collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
     expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
@@ -55,9 +52,9 @@ class ExpandablePanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Expandale' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_panel(self, name, layer):
         """ Adds a layer with the specified name.
@@ -104,9 +101,9 @@ class ExpandablePanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -140,7 +137,7 @@ class ExpandablePanel(Widget):
 
         return panel
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_button(self, event):
         """ called when one of the expand/contract buttons is pressed. """

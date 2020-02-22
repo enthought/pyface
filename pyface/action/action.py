@@ -1,21 +1,18 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all actions. """
 
 from functools import partial
 
-# Enthought library imports.
+
 from traits.api import Bool, Callable, Enum, HasTraits, Str
 from traits.api import Unicode
 
@@ -34,7 +31,7 @@ class Action(HasTraits):
 
     """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     #: Keyboard accelerator (by default the action has NO accelerator).
     accelerator = Unicode
@@ -75,11 +72,11 @@ class Action(HasTraits):
     #: An (optional) callable to create the toolkit control for widget style.
     control_factory = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _id_default(self):
         """ Initializes the 'id' trait.
@@ -88,7 +85,7 @@ class Action(HasTraits):
         """
         return self.name
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Called when creating a "widget" style action.

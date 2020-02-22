@@ -1,25 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2016, Enthought Inc
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Enthought Inc
-# Description: <Enthought pyface code editor>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Standard library imports.
+
 import unittest
 import mock
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 from pyface.qt.QtTest import QTest
 
-# Enthought library imports.
 
-
-# Local imports.
 from pyface.ui.qt4.code_editor.code_widget import (
     CodeWidget,
     AdvancedCodeWidget,

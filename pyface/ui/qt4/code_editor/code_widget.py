@@ -1,22 +1,21 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2010, Enthought Inc
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Enthought Inc
-# Description: <Enthought pyface code editor>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Standard library imports
+
 import math
 import sys
 
-# System library imports
+
 from pyface.qt import QtCore, QtGui
 
-# Local imports
+
 from .find_widget import FindWidget
 from .gutters import LineNumberWidget, StatusGutterWidget
 from .replace_widget import ReplaceWidget
@@ -28,9 +27,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
     """ A widget for viewing and editing code.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # CodeWidget interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
     focus_lost = QtCore.Signal()
 
     def __init__(
@@ -373,9 +372,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
         cursor.select(QtGui.QTextCursor.WordUnderCursor)
         return six.text_type(cursor.selectedText())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # QWidget interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # FIXME: This is a quick hack to be able to access the keyPressEvent
     # from the rest editor. This should be changed to work within the traits
@@ -477,9 +476,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
         height = font_metrics.height() * 40
         return QtCore.QSize(width, height)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private methods
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_indent_position(self, line):
         trimmed = line.rstrip()
@@ -548,9 +547,9 @@ class AdvancedCodeWidget(QtGui.QWidget):
         for search & replace
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # AdvancedCodeWidget interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, font=None, lexer=None):
         super(AdvancedCodeWidget, self).__init__(parent)
@@ -762,9 +761,9 @@ class AdvancedCodeWidget(QtGui.QWidget):
     def centerCursor(self):
         self.code.centerCursor()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # QWidget interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def keyPressEvent(self, event):
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
@@ -783,9 +782,9 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
         return super(AdvancedCodeWidget, self).keyPressEvent(event)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private methods
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update_replace_enabled(self):
         selection = self.code.textCursor().selectedText()

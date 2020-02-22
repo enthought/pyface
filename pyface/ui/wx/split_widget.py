@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Mix-in class for split widgets.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Callable, Enum, Float, HasTraits, provides
 
-# Local imports.
+
 from pyface.i_split_widget import ISplitWidget, MSplitWidget
 
 
@@ -33,7 +28,7 @@ class SplitWidget(MSplitWidget, HasTraits):
     ISPlitWidget interface for the API documentation.
     """
 
-    #### 'ISplitWidget' interface #############################################
+    # 'ISplitWidget' interface ---------------------------------------------
 
     direction = Enum("vertical", "vertical", "horizontal")
 
@@ -43,9 +38,9 @@ class SplitWidget(MSplitWidget, HasTraits):
 
     rhs = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -128,11 +123,11 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         return rhs
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_size(self, event):
         """ Called when the frame is resized. """
@@ -154,6 +149,3 @@ class SplitWidget(MSplitWidget, HasTraits):
         # splitter.Unbind(wx.EVT_SIZE)
 
         return
-
-
-#### EOF ######################################################################

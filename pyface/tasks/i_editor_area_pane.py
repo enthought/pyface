@@ -1,7 +1,16 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import (
     Bool,
     Callable,
@@ -14,7 +23,7 @@ from traits.api import (
     Str,
 )
 
-# Local imports.
+
 from pyface.tasks.i_editor import IEditor
 from pyface.tasks.i_task_pane import ITaskPane
 
@@ -31,7 +40,7 @@ class IEditorAreaPane(ITaskPane):
     can be displayed side-by-side.
     """
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
     # The currently active editor.
     active_editor = Instance(IEditor)
@@ -51,9 +60,9 @@ class IEditorAreaPane(ITaskPane):
     # Whether to hide the tab bar when there is only a single editor.
     hide_tab_bar = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -124,7 +133,7 @@ class IEditorAreaPane(ITaskPane):
 
 class MEditorAreaPane(HasTraits):
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
     active_editor = Instance(IEditor)
     editors = List(IEditor)
@@ -132,13 +141,13 @@ class MEditorAreaPane(HasTraits):
     file_dropped = Event(File)
     hide_tab_bar = Bool(False)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _factory_map = Dict(Callable, List(Callable))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_editor(self, obj, factory=None):
         """ Creates an editor for an object.

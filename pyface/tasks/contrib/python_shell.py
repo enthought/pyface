@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """
 Module defining a simple Python shell task.
 
@@ -5,10 +14,10 @@ This task provides a view with a simple Python shell.  This shouldn't be
 confused with a more full-featured shell, such as those provided by IPython.
 """
 
-# Std lib imports
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import Str, List, Dict, Instance
 from pyface.api import PythonShell, FileDialog, OK
 from pyface.tasks.api import Task, TaskPane
@@ -32,7 +41,7 @@ class PythonShellPane(TaskPane):
 
     def create(self, parent):
         """ Create the python shell task pane
-        
+
         This wraps the standard pyface PythonShell
         """
         logger.debug("PythonShellPane: creating python shell pane")

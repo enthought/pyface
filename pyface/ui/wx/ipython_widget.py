@@ -1,36 +1,31 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ The wx-backend Pyface widget for an embedded IPython shell.
 """
 
-# Standard library imports.
+
 from __future__ import print_function
 import six.moves.builtins
 import codeop
 import re
 import sys
 
-# System library imports
+
 import IPython
 from IPython.frontend.wx.wx_frontend import WxController
 from IPython.kernel.core.interpreter import Interpreter
 import wx
 
-# Enthought library imports.
+
 from apptools.io.file import File as EnthoughtFile
 from pyface.i_python_shell import IPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
@@ -38,7 +33,7 @@ from traits.api import Event, Instance, provides, Str
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
-# Local imports.
+
 from .widget import Widget
 import six
 
@@ -335,19 +330,19 @@ class IPythonWidget(Widget):
     IPythonShell interface for the API documentation.
     """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     command_executed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    #### 'IPythonWidget' interface ############################################
+    # 'IPythonWidget' interface --------------------------------------------
 
     interp = Instance(Interpreter, ())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
@@ -360,9 +355,9 @@ class IPythonWidget(Widget):
         # Create the toolkit-specific control that represents the widget.
         self.control = self._create_control(parent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         return self.interp
@@ -375,9 +370,9 @@ class IPythonWidget(Widget):
         self.control.execute_command("%run " + '"%s"' % path, hidden=hidden)
         self.command_executed = True
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # Create the controller based on the version of the installed IPython
@@ -397,9 +392,9 @@ class IPythonWidget(Widget):
 
         return shell
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonDropTarget' handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
         """ Called when a drop occurs on the shell. """
@@ -449,9 +444,9 @@ class IPythonWidget(Widget):
 
         return wx.DragCopy
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
         """ Called whenever a change is made to the text of the document. """

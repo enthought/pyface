@@ -1,19 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A grid control with a model/ui architecture. """
 
-# Major package imports
+
 import sys
 import wx
 import wx.lib.gridmovers as grid_movers
@@ -33,7 +30,7 @@ from wx.grid import (
 )
 from wx import TheClipboard
 
-# Enthought library imports
+
 from pyface.api import Widget
 from pyface.timer.api import do_later
 from traits.api import (
@@ -54,7 +51,7 @@ from pyface.wx.drag_and_drop import (
 )
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
-# local imports
+
 from .grid_model import GridModel
 from .combobox_focus_handler import ComboboxFocusHandler
 import six
@@ -68,7 +65,7 @@ ASCII_C = 67
 class Grid(Widget):
     """ A grid control with a model/ui architecture. """
 
-    #### 'Grid' interface #####################################################
+    # 'Grid' interface -----------------------------------------------------
 
     # The model that provides the data for the grid.
     model = Instance(GridModel, ())
@@ -138,7 +135,7 @@ class Grid(Widget):
     # Allow single-click access to cell-editors?
     edit_on_first_click = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     # A cell has been activated (ie. double-clicked).
     cell_activated = Event
@@ -164,9 +161,9 @@ class Grid(Widget):
     _x_clicked = Int
     _y_clicked = Int
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
     def __init__(self, parent, **traits):
         """ Creates a new grid.
 
@@ -421,9 +418,9 @@ class Grid(Widget):
         self._grid_table_base.dispose()
         self._grid = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_new_model(self):
         """ When we get a new model reinitialize grid match to that model. """
@@ -438,8 +435,6 @@ class Grid(Widget):
             # Note that we don't call AutoSize() here, because autosizing
             # the rows looks like crap.
             self._grid.AutoSizeColumns(False)
-
-        return
 
     def _on_model_content_changed(self):
         """ A notification method called when the data in the underlying
@@ -680,9 +675,9 @@ class Grid(Widget):
         else:
             self._grid.SetRowLabelSize(self.row_label_width)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Grid' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_selection(self):
         """ Return a list of the currently selected objects. """
@@ -731,9 +726,9 @@ class Grid(Widget):
         if self._grid.GetGridCursorRow() in indices:
             self._grid.DisableCellEditControl()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_size(self, evt):
         """ Called when the grid is resized. """
@@ -959,8 +954,6 @@ class Grid(Widget):
             self.cell_right_clicked = (row, col)
 
             evt.Skip()
-
-        return
 
     def _on_label_right_click(self, evt):
         """ Called when a right click occurred on a label. """
@@ -1227,9 +1220,9 @@ class Grid(Widget):
 
             grid.EndBatch()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # PythonDropTarget interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
     def wx_dropped_on(self, x, y, drag_object, drag_result):
 
         # first resolve the x/y coords into a grid row/col
@@ -1276,9 +1269,9 @@ class Grid(Widget):
 
         return result
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __initialize_fonts(self):
         """ Initialize the label fonts. """
@@ -1366,20 +1359,20 @@ class Grid(Widget):
         ###rows, cols = self.__get_selected_rows_and_cols()
         ###
         ###if len(rows) > 0:
-        ###    rows.sort()
-        ###    value = self.model.get_rows_drag_value(rows)
-        ###    if len(rows) == 1 and len(value) == 1:
-        ###        value = value[0]
+        #    rows.sort()
+        #    value = self.model.get_rows_drag_value(rows)
+        #    if len(rows) == 1 and len(value) == 1:
+        #        value = value[0]
         ###elif len(cols) > 0:
-        ###    cols.sort()
-        ###    value = self.model.get_cols_drag_value(cols)
-        ###    if len(cols) == 1 and len(value) == 1:
-        ###        value = value[0]
+        #    cols.sort()
+        #    value = self.model.get_cols_drag_value(cols)
+        #    if len(cols) == 1 and len(value) == 1:
+        #        value = value[0]
         ###else:
-        ###    # our final option -- grab the cell that the cursor is currently in
-        ###    row = self._grid.GetGridCursorRow()
-        ###    col = self._grid.GetGridCursorCol()
-        ###    value = self.model.get_cell_drag_value(row, col)
+        #    # our final option -- grab the cell that the cursor is currently in
+        #    row = self._grid.GetGridCursorRow()
+        #    col = self._grid.GetGridCursorCol()
+        #    value = self.model.get_cell_drag_value(row, col)
         ###
         ###return value
 
@@ -1601,9 +1594,9 @@ class Grid(Widget):
 class _GridTableBase(GridTableBase):
     """ A private adapter for the underlying wx grid implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, model, grid):
         """ Creates a new table base. """
@@ -1635,9 +1628,9 @@ class _GridTableBase(GridTableBase):
             renderer.dispose()
         self._renderer_cache = {}
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'wxGridTableBase' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def GetNumberRows(self):
         """ Return the number of rows in the model. """
@@ -1874,9 +1867,9 @@ class _GridTableBase(GridTableBase):
 
         return result
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
     def _clear_cache(self):
         """ Clean out the editor/renderer cache. """
 
@@ -1886,7 +1879,6 @@ class _GridTableBase(GridTableBase):
 
         self._editor_cache = {}
         self._renderer_cache = {}
-        return
 
     def _editor_dispose(self, editors):
         for editor in editors:
@@ -1899,6 +1891,3 @@ from wx.grid import GridCellEditor
 class DummyGridCellEditor(GridCellEditor):
     def Show(self, show, attr):
         return
-
-
-#### EOF ######################################################################

@@ -1,18 +1,18 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2006 by Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: David C. Morrill <dmorrill@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 """ The base class for user perspective actions. """
 
 
-# Enthought library imports.
 from traits.api import on_trait_change
 
-# Local imports.
+
 from .workbench_action import WorkbenchAction
 
 
@@ -24,9 +24,9 @@ class UserPerspectiveAction(WorkbenchAction):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the action. """
@@ -36,9 +36,9 @@ class UserPerspectiveAction(WorkbenchAction):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _is_user_perspective(self, perspective):
         """ Is the specified perspective a user perspective? """
@@ -59,6 +59,3 @@ class UserPerspectiveAction(WorkbenchAction):
         )
 
         return
-
-
-#### EOF #####################################################################

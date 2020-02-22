@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A generic base-class for items in a tree data structure.
 
 An example:-
@@ -32,14 +29,13 @@ root.append(veg)
 """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, List, Property
 
 
 class TreeItem(HasTraits):
     """ A generic base-class for items in a tree data structure. """
 
-    #### 'TreeItem' interface #################################################
+    # 'TreeItem' interface -------------------------------------------------
 
     # Does this item allow children?
     allows_children = Bool(True)
@@ -56,9 +52,9 @@ class TreeItem(HasTraits):
     # The item's parent.
     parent = Instance("TreeItem")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Returns the informal string representation of the object. """
@@ -71,11 +67,11 @@ class TreeItem(HasTraits):
 
         return s
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     # has_children
     def _get_has_children(self):
@@ -83,7 +79,7 @@ class TreeItem(HasTraits):
 
         return len(self.children) != 0
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, child):
         """ Appends a child to this item.
@@ -142,6 +138,3 @@ class TreeItem(HasTraits):
         self.insert(index + 1, child)
 
         return (index, child)
-
-
-#### EOF ######################################################################

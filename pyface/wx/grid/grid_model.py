@@ -1,19 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A model that provides data for a grid. """
 
-# Major package imports.
+
 from __future__ import print_function
 import wx
 from wx.grid import (
@@ -22,10 +19,10 @@ from wx.grid import (
     GRIDTABLE_NOTIFY_ROWS_APPENDED,
 )
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits, Trait, Event, List
 
-# Local imports.
+
 from .grid_column import GridColumn
 from .grid_row import GridRow
 
@@ -71,9 +68,9 @@ class GridModel(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'wxGridTableBase' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def GetNumberRows(self):
         """ Return the number of rows in the model. """
@@ -128,8 +125,6 @@ class GridModel(HasTraits):
 
             # Trait event notification.
             self.model_changed = message
-
-        return
 
     def GetRowLabelValue(self, row):
         """ Called when the grid needs to display a row label. """
@@ -194,9 +189,9 @@ class GridModel(HasTraits):
 class _GridTableBase(GridTableBase):
     """ A model that provides data for a grid. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, model):
         """ Creates a new table base. """
@@ -209,9 +204,9 @@ class _GridTableBase(GridTableBase):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'wxGridTableBase' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def GetNumberRows(self):
         """ Return the number of rows in the model. """
@@ -280,6 +275,3 @@ class _GridTableBase(GridTableBase):
         """ Called when the view is deleting rows. """
 
         return self.model.DeleteRows(pos, num_rows)
-
-
-#### EOF ######################################################################

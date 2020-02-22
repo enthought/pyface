@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for workbench parts. """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Instance, Interface
 from traits.api import List, provides, Str, Unicode
 
@@ -49,7 +45,7 @@ class IWorkbenchPart(Interface):
     # The framework sets this when the part is created.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part.
@@ -80,7 +76,7 @@ class IWorkbenchPart(Interface):
 class MWorkbenchPart(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IWorkbenchPart' interface ###########################################
+    # 'IWorkbenchPart' interface -------------------------------------------
 
     # The toolkit-specific control that represents the part.
     #
@@ -104,7 +100,7 @@ class MWorkbenchPart(HasTraits):
     # The framework sets this when the part is created.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """
@@ -120,6 +116,3 @@ class MWorkbenchPart(HasTraits):
         """ Set the focus to the appropriate control in the part. """
 
         raise NotImplementedError
-
-
-#### EOF ######################################################################

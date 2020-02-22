@@ -1,15 +1,24 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance
 
 
 class EnamlPane(HasTraits):
     """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'EnamlPane' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     #: The Enaml component defining the contents of the TaskPane.
     component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
@@ -23,9 +32,9 @@ class EnamlPane(HasTraits):
         """
         raise NotImplementedError
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane'/'Editor' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create the toolkit-specific control that represents the editor. """

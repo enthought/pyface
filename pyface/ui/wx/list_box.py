@@ -1,13 +1,22 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ A simple list box widget with a model-view architecture. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, Instance, Int
 
-# Local imports.
+
 from pyface.list_box_model import ListBoxModel
 from .widget import Widget
 
@@ -41,8 +50,6 @@ class ListBox(Widget):
         # Listen for changes to the model.
         self.model.on_trait_change(self._on_model_changed, "list_changed")
 
-        return
-
     def dispose(self):
         self.model.on_trait_change(
             self._on_model_changed, "list_changed", remove=True
@@ -50,9 +57,9 @@ class ListBox(Widget):
         self.model.dispose()
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ListBox' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def refresh(self):
         """ Refreshes the list box. """
@@ -65,9 +72,9 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_item_selected(self, event):
         """ Called when an item in the list is selected. """
@@ -75,8 +82,6 @@ class ListBox(Widget):
         listbox = event.GetEventObject()
 
         self.selection = listbox.GetSelection()
-
-        return
 
     def _on_item_activated(self, event):
         """ Called when an item in the list is activated. """
@@ -89,11 +94,11 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Static ###############################################################
+    # Static ---------------------------------------------------------------
 
     def _selection_changed(self, index):
         """ Called when the selected item is changed. """
@@ -103,7 +108,7 @@ class ListBox(Widget):
 
         return
 
-    #### Dynamic ##############################################################
+    # Dynamic -------------------------------------------------------------#
 
     def _on_model_changed(self, event):
         """ Called when the model has changed. """
@@ -113,9 +118,9 @@ class ListBox(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the widget. """
@@ -135,8 +140,6 @@ class ListBox(Widget):
         # Populate the list.
         self._populate()
 
-        return
-
     def _populate(self):
         """ Populates the list box. """
 
@@ -145,6 +148,3 @@ class ListBox(Widget):
             self.control.Append(label, item)
 
         return
-
-
-#### EOF ######################################################################

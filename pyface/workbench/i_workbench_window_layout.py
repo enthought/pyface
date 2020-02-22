@@ -1,24 +1,20 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The workbench window layout interface. """
 
 
-# Enthought library imports.
 from traits.api import Event, HasTraits, Instance, Interface, Str
 from traits.api import provides
 
-# Local imports.
+
 from .i_editor import IEditor
 from .i_view import IView
 
@@ -39,7 +35,7 @@ class IWorkbenchWindowLayout(Interface):
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Events ####
+    # Events ----
 
     # Fired when an editor is about to be opened (or restored).
     editor_opening = Event(IEditor)
@@ -180,7 +176,7 @@ class IWorkbenchWindowLayout(Interface):
 
         """
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         """ Returns the state of the views.
@@ -215,7 +211,7 @@ class IWorkbenchWindowLayout(Interface):
 class MWorkbenchWindowLayout(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IWorkbenchWindowLayout' interface ###################################
+    # 'IWorkbenchWindowLayout' interface -----------------------------------
 
     # The Id of the editor area.
     # FIXME v3: This is toolkit specific.
@@ -224,7 +220,7 @@ class MWorkbenchWindowLayout(HasTraits):
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Events ####
+    # Events ----
 
     # Fired when an editor is about to be opened (or restored).
     editor_opening = Event(IEditor)
@@ -250,9 +246,9 @@ class MWorkbenchWindowLayout(HasTraits):
     # Fired when a view has been closed (*not* hidden!).
     view_closed = Event(IView)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activate an editor. """
@@ -334,7 +330,7 @@ class MWorkbenchWindowLayout(HasTraits):
 
         raise NotImplementedError
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         """ Returns the state of the views. """
@@ -366,9 +362,9 @@ class MWorkbenchWindowLayout(HasTraits):
         """
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'MWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_editor_references(self):
         """ Returns a reference to every editor. """
@@ -388,6 +384,3 @@ class MWorkbenchWindowLayout(HasTraits):
                 editor_references[editor.id] = editor_reference
 
         return editor_references
-
-
-#### EOF ######################################################################

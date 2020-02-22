@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The model for a tree control with extensible node types. """
 
 
-# Enthought library imports.
 from traits.api import Dict, Instance
 
-# Local imports.
+
 from .node_manager import NodeManager
 from .tree_model import TreeModel
 
@@ -25,19 +21,19 @@ from .tree_model import TreeModel
 class NodeTreeModel(TreeModel):
     """ The model for a tree control with extensible node types. """
 
-    #### 'NodeTreeModel' interface ############################################
+    # 'NodeTreeModel' interface --------------------------------------------
 
     # The node manager looks after all node types.
     node_manager = Instance(NodeManager, ())
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Node monitors.
     _monitors = Dict
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeModel' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.
@@ -111,8 +107,6 @@ class NodeTreeModel(TreeModel):
         node_type = self.node_manager.get_node_type(node)
 
         node_type.drop(node, data)
-
-        return
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node.
@@ -219,8 +213,6 @@ class NodeTreeModel(TreeModel):
             self._start_monitor(monitor)
             self._monitors[self.node_manager.get_key(node)] = monitor
 
-        return
-
     def remove_listener(self, node):
         """ Removes a listener for changes to a node. """
 
@@ -233,9 +225,9 @@ class NodeTreeModel(TreeModel):
 
         return
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeTreeModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_context_menu(self, node):
         """ Returns the context menu for a node. """
@@ -245,9 +237,9 @@ class NodeTreeModel(TreeModel):
 
         return node_type.get_context_menu(node)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Private' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _start_monitor(self, monitor):
         """ Starts a monitor. """
@@ -265,8 +257,6 @@ class NodeTreeModel(TreeModel):
         )
 
         monitor.start()
-
-        return
 
     def _stop_monitor(self, monitor):
         """ Stops a monitor. """
@@ -295,9 +285,9 @@ class NodeTreeModel(TreeModel):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     # fixme: Commented this out as listeners are added and removed by the tree.
     # This caused duplicate monitors to be created for the root node.
@@ -314,35 +304,27 @@ class NodeTreeModel(TreeModel):
 
     ##         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _on_nodes_changed(self, monitor, trait_name, event):
         """ Called when nodes have changed. """
 
         self.nodes_changed = event
 
-        return
-
     def _on_nodes_inserted(self, monitor, trait_name, event):
         """ Called when nodes have been inserted. """
 
         self.nodes_inserted = event
-
-        return
 
     def _on_nodes_removed(self, monitor, trait_name, event):
         """ Called when nodes have been removed. """
 
         self.nodes_removed = event
 
-        return
-
     def _on_nodes_replaced(self, monitor, trait_name, event):
         """ Called when nodes have been replaced. """
 
         self.nodes_replaced = event
-
-        return
 
     def _on_structure_changed(self, monitor, trait_name, event):
         """ Called when the structure of a node has changed drastically. """
@@ -350,6 +332,3 @@ class NodeTreeModel(TreeModel):
         self.structure_changed = event
 
         return
-
-
-#### EOF ######################################################################

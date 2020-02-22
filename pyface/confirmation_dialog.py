@@ -1,21 +1,18 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The implementation of a dialog that prompts the user for confirmation. """
 
 from __future__ import absolute_import
 
-# Local imports.
+
 from .constant import NO
 
 
@@ -53,5 +50,3 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 from .toolkit import toolkit_object
 
 ConfirmationDialog = toolkit_object("confirmation_dialog:ConfirmationDialog")
-
-#### EOF ######################################################################

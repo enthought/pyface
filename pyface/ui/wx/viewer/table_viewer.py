@@ -1,27 +1,23 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A viewer for tabular data. """
 
 
-# Major package imports.
 import wx
 from wx.lib.agw import ultimatelistctrl as ULC
 
-# Enthought library imports.
+
 from traits.api import Color, Event, Instance, Trait
 
-# Local imports.
+
 from pyface.ui.wx.image_list import ImageList
 from pyface.viewer.content_viewer import ContentViewer
 from pyface.viewer.table_column_provider import TableColumnProvider
@@ -103,9 +99,9 @@ class TableViewer(ContentViewer):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TableViewer' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def select_row(self, row):
         """ Select the specified row. """
@@ -127,9 +123,9 @@ class TableViewer(ContentViewer):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_input_changed(self, obj, trait_name, old, new):
         """ Called when the input is changed. """
@@ -142,9 +138,9 @@ class TableViewer(ContentViewer):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_item_selected(self, event):
         """ Called when an item in the list is selected. """
@@ -165,8 +161,6 @@ class TableViewer(ContentViewer):
         # Trait event notification.
         self.row_selected = -1
 
-        return
-
     def _on_item_activated(self, event):
         """ Called when an item in the list is activated. """
 
@@ -176,38 +170,30 @@ class TableViewer(ContentViewer):
         # Trait event notification.
         self.row_activated = row
 
-        return
-
     def _on_list_begin_drag(self, event=None, is_rdrag=False):
         """ Called when a drag operation is starting on a list item. """
 
         # Trait notification.
         self.row_begin_drag = event.GetIndex()
 
-        return
-
     def _on_list_begin_rdrag(self, event=None):
         """ Called when a drag operation is starting on a list item. """
 
         self._on_list_begin_drag(event, True)
-
-        return
 
     def _on_list_begin_label_edit(self, event=None):
         """ Called when a label edit is started. """
 
         event.Veto()
 
-        return
-
     def _on_list_end_label_edit(self, event=None):
         """ Called when a label edit is completed. """
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     FORMAT_MAP = {
         "left": wx.LIST_FORMAT_LEFT,
@@ -238,8 +224,6 @@ class TableViewer(ContentViewer):
         self._update_contents()
         self._update_column_widths()
 
-        return
-
     def _update_contents(self):
         """ Updates the table content. """
 
@@ -261,8 +245,6 @@ class TableViewer(ContentViewer):
         # Setting this causes a refresh!
         self.control.SetItemCount(len(self._elements))
 
-        return
-
     def _update_column_widths(self):
         """ Updates the column widths. """
 
@@ -274,8 +256,6 @@ class TableViewer(ContentViewer):
                 width = self._get_column_width(column)
 
             self.control.SetColumnWidth(column, width)
-
-        return
 
     def _get_column_width(self, column):
         """ Return an appropriate width for the specified column. """
@@ -344,9 +324,9 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Virtual 'ListCtrl' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def OnGetItemText(self, row, column_index):
         """ Returns the text for the specified CELL. """
@@ -382,6 +362,3 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
             attribute = self._odd_row_attribute
 
         return attribute
-
-
-#### EOF ######################################################################

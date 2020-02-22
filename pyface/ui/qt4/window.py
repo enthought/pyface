@@ -1,19 +1,18 @@
-# Copyright (c) 2007, Riverbank Computing Limited
-# Copyright (c) 2017-18, Enthought, Inc.
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license. However, when used with the GPL version of PyQt the additional
-# terms described in the PyQt GPL exception also apply
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Author: Enhtought, Inc.
-# Description: <Enthought pyface package component>
+# Thanks for using Enthought open source!
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import (
     Enum,
     Event,
@@ -24,7 +23,7 @@ from traits.api import (
     provides,
 )
 
-# Local imports.
+
 from pyface.i_window import IWindow, MWindow
 from pyface.key_pressed_event import KeyPressedEvent
 from .gui import GUI

@@ -1,11 +1,19 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The default perspective menu for a workbench window. """
 
 
-# Enthought library imports.
 from pyface.action.api import Group, MenuManager
 from traits.api import Instance, List, on_trait_change
 
-# Local imports.
+
 from .delete_user_perspective_action import DeleteUserPerspectiveAction
 from .new_user_perspective_action import NewUserPerspectiveAction
 from .rename_user_perspective_action import RenameUserPerspectiveAction
@@ -18,7 +26,7 @@ from .set_active_perspective_action import SetActivePerspectiveAction
 class PerspectiveMenuManager(MenuManager):
     """ The default perspective menu for a workbench window. """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     # All of the groups in the manager.
     groups = List(Group)
@@ -26,19 +34,19 @@ class PerspectiveMenuManager(MenuManager):
     # The manager's unique identifier.
     id = "PerspectivesMenu"
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name.
     name = "Perspectives"
 
-    #### 'PerspectiveMenuManager' interface ###################################
+    # 'PerspectiveMenuManager' interface -----------------------------------
 
     # The workbench window that the manager is part of.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _groups_default(self):
         """ Trait initializer. """
@@ -56,9 +64,9 @@ class PerspectiveMenuManager(MenuManager):
 
         return groups
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PerspectiveMenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change("window.perspectives")
     @on_trait_change("window.perspectives_items")
@@ -83,9 +91,9 @@ class PerspectiveMenuManager(MenuManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_perspective_group(self, window):
         """ Create the actions that switch to specific perspectives. """
@@ -128,6 +136,3 @@ class PerspectiveMenuManager(MenuManager):
         )
 
         return group
-
-
-#### EOF ######################################################################

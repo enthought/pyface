@@ -1,26 +1,21 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ A status bar manager realizes itself in a status bar control.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits, List, Property, Str, Unicode
 
 
@@ -36,9 +31,9 @@ class StatusBarManager(HasTraits):
     # The toolkit-specific control that represents the status bar.
     status_bar = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_status_bar(self, parent):
         """ Creates a status bar. """
@@ -63,9 +58,9 @@ class StatusBarManager(HasTraits):
             self.status_bar._pyface_control = None
             self.status_bar = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Property handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_message(self):
         """ Property getter. """
@@ -93,9 +88,9 @@ class StatusBarManager(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _messages_changed(self):
         """ Sets the text displayed on the status bar. """
@@ -103,8 +98,6 @@ class StatusBarManager(HasTraits):
         if self.status_bar is not None:
             for i in range(len(self.messages)):
                 self.status_bar.SetStatusText(self.messages[i], i)
-
-        return
 
     def _messages_items_changed(self):
         """ Sets the text displayed on the status bar. """
@@ -114,6 +107,3 @@ class StatusBarManager(HasTraits):
                 self.status_bar.SetStatusText(self.messages[i], i)
 
         return
-
-
-#### EOF ######################################################################

@@ -1,26 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 
-# Standard library imports.
 import sys
 
-# Enthought library imports.
+
 from traits.api import Enum, Unicode, Int
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 import six
 
@@ -29,7 +25,7 @@ class IFileDialog(IDialog):
     """ The interface for a dialog that allows the user to open/save files etc.
     """
 
-    #### 'IFileDialog' interface ##############################################
+    # 'IFileDialog' interface ---------------------------------------------#
 
     #: The 'action' that the user is peforming on the directory.
     action = Enum("open", "save as")
@@ -91,9 +87,9 @@ class MFileDialog(object):
     #: A file dialog wildcard for Zip archives.
     WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MFileDialog' *CLASS* interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def create_wildcard(cls, description, extension):

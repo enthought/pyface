@@ -1,28 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A header for an entry in a collection of expandables. The header
 provides a visual indicator of the current state, a text label, and a
 'remove' button. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Instance, Event, Str, Bool
 
-# local imports
+
 from pyface.wx.util.font_helper import new_font_like
 from .image_resource import ImageResource
 from .widget import Widget
@@ -55,7 +52,7 @@ class ExpandableHeader(Widget):
     # Represents the current state of the button. True means pressed.
     state = Bool(False)
 
-    #### Events ####
+    # Events ----
 
     # The panel has been expanded or collapsed
     panel_expanded = Event
@@ -65,9 +62,9 @@ class ExpandableHeader(Widget):
     _TEXT_Y = 0
     _TEXT_X_OFFSET = 10
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, container, **traits):
         """ Creates the panel. """
@@ -81,9 +78,9 @@ class ExpandableHeader(Widget):
         self._container = container
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -163,8 +160,6 @@ class ExpandableHeader(Widget):
 
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
-        return
-
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
 
@@ -180,8 +175,6 @@ class ExpandableHeader(Widget):
                 y = y + h
 
             x = x + w
-
-        return
 
     def _draw_title(self, dc):
         """ Draws the text label for the header. """
@@ -207,9 +200,9 @@ class ExpandableHeader(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_erase_background(self, event):
         """ Called when the background of the panel is erased. """
@@ -217,7 +210,6 @@ class ExpandableHeader(Widget):
         # print 'ImageButton._on_erase_background'
         dc = event.GetDC()
         self._draw(dc)
-        return
 
     def _on_enter_leave(self, event):
         """ Called when button is pressed. """

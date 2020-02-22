@@ -1,23 +1,23 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
 
-
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Int, provides, Str, Unicode
 
-# Local imports.
+
 from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
 from .window import Window
@@ -40,7 +40,7 @@ class Dialog(MDialog, Window):
     interface for the API documentation.
     """
 
-    #### 'IDialog' interface ##################################################
+    # 'IDialog' interface -------------------------------------------------#
 
     cancel_label = Unicode
 
@@ -56,13 +56,13 @@ class Dialog(MDialog, Window):
 
     style = Enum("modal", "nonmodal")
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     title = Unicode("Dialog")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         buttons = QtGui.QDialogButtonBox()
@@ -138,9 +138,9 @@ class Dialog(MDialog, Window):
         retval = dialog.exec_()
         return _RESULT_MAP[retval]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         dlg = QtGui.QDialog(parent)
@@ -160,9 +160,9 @@ class Dialog(MDialog, Window):
 
         return dlg
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _finished_fired(self, result):
         """ Called when the dialog is closed (and nonmodal). """

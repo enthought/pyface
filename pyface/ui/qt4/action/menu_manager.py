@@ -1,24 +1,26 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+
 """ The PyQt specific implementation of a menu manager. """
 
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, Unicode
 
-# Local imports.
+
 from pyface.action.action_manager import ActionManager
 from pyface.action.action_manager_item import ActionManagerItem
 from pyface.action.action_item import _Tool, Action
@@ -31,7 +33,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     This could be a sub-menu or a context (popup) menu.
     """
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
@@ -40,9 +42,9 @@ class MenuManager(ActionManager, ActionManagerItem):
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
         """ Creates a menu representation of the manager. """
@@ -56,9 +58,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         return _Menu(self, parent, controller)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
@@ -93,9 +95,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 class _Menu(QtGui.QMenu):
     """ The toolkit-specific menu control. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
         """ Creates a new tree. """
@@ -129,9 +131,9 @@ class _Menu(QtGui.QMenu):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # '_Menu' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def clear(self):
         """ Clears the items from the menu. """
@@ -173,9 +175,9 @@ class _Menu(QtGui.QMenu):
             point = QtCore.QPoint(x, y)
         self.popup(point)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
@@ -187,21 +189,15 @@ class _Menu(QtGui.QMenu):
 
         self.menuAction().setVisible(new)
 
-        return
-
     def _on_name_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.menuAction().setText(new)
 
-        return
-
     def _on_image_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.menuAction().setIcon(new.create_icon())
-
-        return
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
@@ -233,6 +229,3 @@ class _Menu(QtGui.QMenu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
-
-
-#### EOF ######################################################################

@@ -1,32 +1,27 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import os
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Enum, Int, List, provides, Unicode
 
-# Local imports.
+
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from .dialog import Dialog
 import six
@@ -38,7 +33,7 @@ class FileDialog(MFileDialog, Dialog):
     IFileDialog interface for the API documentation.
     """
 
-    #### 'IFileDialog' interface ##############################################
+    # 'IFileDialog' interface ---------------------------------------------#
 
     action = Enum("open", "open files", "save as")
 
@@ -60,17 +55,17 @@ class FileDialog(MFileDialog, Dialog):
 
     wildcard_index = Int(0)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         # In wx this is a canned dialog.
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         # Get the path of the chosen directory.
@@ -89,9 +84,9 @@ class FileDialog(MFileDialog, Dialog):
         # Let the window close as normal.
         super(FileDialog, self).close()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # If the caller provided a default path instead of a default directory
@@ -130,14 +125,11 @@ class FileDialog(MFileDialog, Dialog):
 
         return dialog
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wildcard_default(self):
         """ Return the default wildcard. """
 
         return self.WILDCARD_ALL
-
-
-#### EOF ######################################################################

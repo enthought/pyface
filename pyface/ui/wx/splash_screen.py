@@ -1,34 +1,29 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 from logging import DEBUG
 
-# Major package imports.
+
 import wx
 import wx.adv
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Font, Instance, Int, provides
 from traits.api import Tuple, Unicode
 
-# Local imports.
+
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
 from pyface.image_resource import ImageResource
 from pyface.wx.util.font_helper import new_font_like
@@ -41,7 +36,7 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-    #### 'ISplashScreen' interface ############################################
+    # 'ISplashScreen' interface --------------------------------------------
 
     image = Instance(ImageResource, ImageResource("splash"))
 
@@ -57,9 +52,9 @@ class SplashScreen(MSplashScreen, Window):
 
     text_location = Tuple(5, 5)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # Get the splash screen image.
@@ -94,9 +89,9 @@ class SplashScreen(MSplashScreen, Window):
 
         return splash_screen
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _text_changed(self):
         """ Called when the splash screen text has been changed. """
@@ -135,6 +130,3 @@ class SplashScreen(MSplashScreen, Window):
 
         # Let the normal wx paint handling do its stuff.
         event.Skip()
-
-
-#### EOF ######################################################################

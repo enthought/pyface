@@ -1,7 +1,16 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import unittest
 
-# Enthought library imports.
+
 from pyface.action.api import (
     Action,
     ActionItem,
@@ -24,7 +33,7 @@ from pyface.tasks.api import Task
 
 class ActionManagerBuilderTestCase(unittest.TestCase):
 
-    #### 'TestCase' protocol ##################################################
+    # 'TestCase' protocol -------------------------------------------------#
 
     def setUp(self):
         """ Create some dummy actions to use while testing.
@@ -35,7 +44,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
                 self, action_id, Action(id=action_id, name="Action %i" % i)
             )
 
-    #### 'ActionManagerBuilderTestCase' protocol ##############################
+    # 'ActionManagerBuilderTestCase' protocol -----------------------------#
 
     def assertActionElementsEqual(self, first, second):
         """ Checks that two action managers are (logically) equivalent.
@@ -60,7 +69,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         for i in range(len(children1)):
             self.assertActionElementsEqual(children1[i], children2[i])
 
-    #### Tests ################################################################
+    # Tests ----------------------------------------------------------------
 
     def test_simple_menu_bar(self):
         """ Does constructing a simple menu with no additions work?
@@ -78,7 +87,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         )
         self.assertActionElementsEqual(actual, desired)
 
-    #### Tests about schema additions #########################################
+    # Tests about schema additions -----------------------------------------
 
     def test_additions_menu_bar(self):
         """ Does constructing a menu with a few additions work?
@@ -163,7 +172,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
 
         self.assertActionElementsEqual(actual, desired)
 
-    #### Tests about merging schemas ##########################################
+    # Tests about merging schemas -----------------------------------------#
 
     def test_merging_redundant_items(self):
         """ Menus and groups with matching path are merged together. """
@@ -333,7 +342,7 @@ class ActionManagerBuilderTestCase(unittest.TestCase):
         )
         self.assertActionElementsEqual(actual, desired)
 
-    #### Tests about ordering #################################################
+    # Tests about ordering -------------------------------------------------
 
     def test_absolute_ordering(self):
         """ Does specifying absolute_position work?

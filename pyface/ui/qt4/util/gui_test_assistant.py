@@ -1,10 +1,11 @@
-# Copyright (c) 2013-2017 by Enthought, Inc., Austin, TX
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
 
 import contextlib
@@ -31,7 +32,7 @@ from .event_loop_helper import EventLoopHelper, ConditionTimeoutError
 
 class GuiTestAssistant(UnittestTools):
 
-    #### 'TestCase' protocol ##################################################
+    # 'TestCase' protocol -------------------------------------------------#
 
     def setUp(self):
         qt_app = QApplication.instance()
@@ -89,7 +90,7 @@ class GuiTestAssistant(UnittestTools):
         del self.gui
         del self.qt_app
 
-    #### 'GuiTestAssistant' protocol ##########################################
+    # 'GuiTestAssistant' protocol -----------------------------------------#
 
     @contextlib.contextmanager
     def event_loop(self, repeat=1):

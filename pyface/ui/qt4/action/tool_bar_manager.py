@@ -1,19 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2007 Riverbank Computing Limited
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
 # ------------------------------------------------------------------------------
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
-# Local imports.
+
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -21,7 +27,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -44,14 +50,14 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -65,9 +71,9 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar. """
@@ -102,9 +108,9 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -131,8 +137,6 @@ class ToolBarManager(ActionManager):
                         self.show_tool_names,
                     )
 
-        return
-
     def _separator_visibility_method(self, separator):
         """ Method to return closure to set visibility of group separators. """
         return lambda visible: separator.setVisible(visible)
@@ -141,9 +145,9 @@ class ToolBarManager(ActionManager):
 class _ToolBar(QtGui.QToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent):
         """ Constructor. """
@@ -164,16 +168,14 @@ class _ToolBar(QtGui.QToolBar):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.setEnabled(new)
-
-        return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
@@ -181,6 +183,3 @@ class _ToolBar(QtGui.QToolBar):
         self.setVisible(new)
 
         return
-
-
-#### EOF ######################################################################

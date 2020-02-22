@@ -1,7 +1,6 @@
 """ A simple example of using the workbench window. """
 
 
-# Enthought library imports.
 from pyface.action.api import Action, MenuManager
 from pyface.workbench.api import EditorManager, WorkbenchWindow
 from pyface.workbench.api import Perspective, PerspectiveItem
@@ -10,7 +9,7 @@ from pyface.workbench.action.api import ToolBarManager
 from pyface.workbench.action.api import ViewMenuManager
 from traits.api import Callable, List, Instance
 
-# Local imports.
+
 from black_view import BlackView
 from blue_view import BlueView
 from green_view import GreenView
@@ -22,9 +21,9 @@ from person import Person
 class ExampleEditorManager(EditorManager):
     """ An editor manager that supports the editor memento protocol. """
 
-    #######################################################################
+    # ---------------------------------------------------------------------
     # 'IEditorManager' interface.
-    #######################################################################
+    # ---------------------------------------------------------------------
 
     def get_editor_memento(self, editor):
         """ Return the state of the editor contents. """
@@ -46,7 +45,7 @@ class ExampleEditorManager(EditorManager):
 class ExampleWorkbenchWindow(WorkbenchWindow):
     """ A simple example of using the workbench window. """
 
-    #### 'WorkbenchWindow' interface ##########################################
+    # 'WorkbenchWindow' interface ------------------------------------------
 
     # The available perspectives.
     perspectives = [
@@ -69,14 +68,14 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         ),
     ]
 
-    #### 'ExampleWorkbenchWindow' interface ###################################
+    # 'ExampleWorkbenchWindow' interface -----------------------------------
 
     # The view factories.
     #
     # fixme: This should be part of the standadr 'WorkbenchWindow'!
     view_factories = List(Callable)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The Exit action.
     _exit_action = Instance(Action)
@@ -84,11 +83,11 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
     # The New Person action.
     _new_person_action = Instance(Action)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _editor_manager_default(self):
         """ Trait initializer.
@@ -125,11 +124,11 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
 
         return tool_bar_managers
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'WorkbenchWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _view_factories_default(self):
         """ Trait initializer. """
@@ -146,9 +145,9 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         # reference to its toolkit-specific control etc.).
         return [factory(window=self) for factory in self.view_factories]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __exit_action_default(self):
         """ Trait initializer. """
@@ -168,6 +167,3 @@ class ExampleWorkbenchWindow(WorkbenchWindow):
         self.workbench.edit(Person(name="New", age=100))
 
         return
-
-
-#### EOF ######################################################################

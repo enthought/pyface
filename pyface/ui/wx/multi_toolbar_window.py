@@ -1,27 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A top-level application window that supports multiple toolbars. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports
+
 from pyface.action.api import ToolBarManager
 from traits.api import Trait, TraitDict, TraitEnum, TraitList
 
-# Local imports
+
 from .application_window import ApplicationWindow
 
 
@@ -44,9 +41,9 @@ class MultiToolbarWindow(ApplicationWindow):
         ),
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
     def _create_contents(self, parent):
         panel = super(MultiToolbarWindow, self)._create_contents(parent)
         self._create_trim_widgets(parent)
@@ -66,8 +63,6 @@ class MultiToolbarWindow(ApplicationWindow):
 
         # Add the (optional) tool bars.
         self.sizer = self._create_tool_bars(parent)
-
-        return
 
     def _create_tool_bars(self, parent):
         """ Create the tool bars for this window. """
@@ -140,9 +135,9 @@ class MultiToolbarWindow(ApplicationWindow):
 
         return spacer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Public MultiToolbarWindow interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_tool_bar(self, tool_bar_manager, location="top"):
         """ Add a toolbar in the specified location.
@@ -152,6 +147,3 @@ class MultiToolbarWindow(ApplicationWindow):
 
         self._tool_bar_managers.append(tool_bar_manager)
         self._tool_bar_locations[tool_bar_manager] = location
-
-
-#### EOF ######################################################################

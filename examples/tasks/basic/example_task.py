@@ -1,4 +1,3 @@
-# Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem
 from pyface.tasks.action.api import (
     DockPaneToggleGroup,
@@ -17,7 +16,7 @@ from pyface.api import (
 )
 from traits.api import on_trait_change
 
-# Local imports.
+
 from example_panes import PythonEditorPane, PythonScriptBrowserPane
 
 
@@ -25,7 +24,7 @@ class ExampleTask(Task):
     """ A simple task for editing Python code.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Python Script Editor"
@@ -58,9 +57,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(left=PaneItem("example.python_script_browser_pane"))
@@ -84,9 +83,9 @@ class ExampleTask(Task):
         browser.on_trait_change(handler, "activated")
         return [browser]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Shows a dialog to open a file.
@@ -114,9 +113,9 @@ class ExampleTask(Task):
                 return False
         return True
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _open_file(self, filename):
         """ Opens the file at the specified path in the editor.

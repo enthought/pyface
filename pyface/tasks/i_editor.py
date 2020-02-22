@@ -1,4 +1,13 @@
-# Enthought library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from traits.api import (
     Any,
     Bool,
@@ -48,9 +57,9 @@ class IEditor(Interface):
     #: Fired when the editor has been closed.
     closed = Event
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         """ Close the editor.
@@ -70,7 +79,7 @@ class MEditor(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
 
-    #### 'IEditor' interface ##################################################
+    # 'IEditor' interface -------------------------------------------------#
 
     name = Unicode
     tooltip = Unicode
@@ -85,9 +94,9 @@ class MEditor(HasTraits):
     closing = VetoableEvent
     closed = Event
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         """ Close the editor.
@@ -98,9 +107,9 @@ class MEditor(HasTraits):
                 self.editor_area.remove_editor(self)
                 self.closed = True
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @cached_property
     def _get_is_active(self):

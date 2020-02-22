@@ -1,36 +1,34 @@
-#  Copyright (c) 2005-18, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
+# Thanks for using Enthought open source!
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import six.moves.builtins
 import os
 import sys
 import types
 
-# Major package imports.
+
 from wx.py.shell import Shell as PyShellBase
 import wx
 
-# Enthought library imports.
+
 from traits.api import Event, provides
 
-# Private Enthought library imports.
+
 from traits.util.clean_strings import python_name
 from pyface.wx.drag_and_drop import PythonDropTarget
 
-# Local imports.
+
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
@@ -43,15 +41,15 @@ class PythonShell(MPythonShell, Widget):
     IPythonShell interface for the API documentation.
     """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     command_executed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
@@ -67,9 +65,9 @@ class PythonShell(MPythonShell, Widget):
         # Set up to be notified whenever a Python statement is executed:
         self.control.handlers.append(self._on_command_executed)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         return self.control.interp
@@ -162,9 +160,9 @@ class PythonShell(MPythonShell, Widget):
         self.control.history = list(history)
         self.control.historyIndex = history_index
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         shell = PyShell(parent, -1)
@@ -177,9 +175,9 @@ class PythonShell(MPythonShell, Widget):
 
         return shell
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonDropTarget' handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
         """ Called when a drop occurs on the shell. """
@@ -215,9 +213,9 @@ class PythonShell(MPythonShell, Widget):
         """ Always returns wx.DragCopy to indicate we will be doing a copy."""
         return wx.DragCopy
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
         """ Called whenever a change is made to the text of the document. """

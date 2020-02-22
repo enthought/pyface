@@ -1,11 +1,19 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The workbench interface. """
 
 
-# Enthought library imports.
 from traits.api import Event, Instance, Interface, List, Str
 from traits.api import provides, VetoableEvent
 
-# Local imports.
+
 from .user_perspective_manager import UserPerspectiveManager
 from .window_event import WindowEvent, VetoableWindowEvent
 from .workbench_window import WorkbenchWindow
@@ -14,7 +22,7 @@ from .workbench_window import WorkbenchWindow
 class IWorkbench(Interface):
     """ The workbench interface. """
 
-    #### 'IWorkbench' interface ###############################################
+    # 'IWorkbench' interface -----------------------------------------------
 
     # The active workbench window (the last one to get focus).
     active_window = Instance(WorkbenchWindow)
@@ -35,7 +43,7 @@ class IWorkbench(Interface):
     # All of the workbench windows created by the workbench.
     windows = List(WorkbenchWindow)
 
-    #### Workbench lifecycle events ####
+    # Workbench lifecycle events ----
 
     # Fired when the workbench is about to exit.
     #
@@ -50,7 +58,7 @@ class IWorkbench(Interface):
     # This is fired after the last open window has been closed.
     exited = Event
 
-    #### Window lifecycle events ####
+    # Window lifecycle events ----
 
     # Fired when a workbench window has been created.
     window_created = Event(WindowEvent)
@@ -67,9 +75,9 @@ class IWorkbench(Interface):
     # Fired when a workbench window has been closed.
     window_closed = Event(WindowEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
@@ -101,6 +109,3 @@ class IWorkbench(Interface):
         Returns None if no such editor exists.
 
         """
-
-
-#### EOF ######################################################################

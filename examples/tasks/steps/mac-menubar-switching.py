@@ -7,7 +7,7 @@ the same menu_bar and tool_bars traits from ExampleTask.  This caused the
 incorrect tying of the controls to SecondTask because the class attributes
 were shared between both classes.
 """
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -45,7 +45,7 @@ class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Multi-Tab Editor"
@@ -67,9 +67,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _menu_bar_default(self):
         return SMenuBar(
@@ -92,9 +92,9 @@ class ExampleTask(Task):
         self.editor_area = EditorAreaPane()
         return self.editor_area
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def new(self):
         """ Opens a new empty window
@@ -104,7 +104,7 @@ class ExampleTask(Task):
         self.editor_area.activate_editor(editor)
         self.activated()
 
-    #### Trait property getter/setters ########################################
+    # Trait property getter/setters ----------------------------------------
 
     def _get_active_editor(self):
         if self.editor_area is not None:
@@ -116,7 +116,7 @@ class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.second_task"
     name = "Second Multi-Tab Editor"
@@ -132,9 +132,9 @@ class SecondTask(ExampleTask):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _menu_bar_default(self):
         return SMenuBar(

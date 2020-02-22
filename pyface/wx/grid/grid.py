@@ -1,26 +1,21 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A grid (spreadsheet) widget. """
 
 
-# Major package imports.
 from __future__ import print_function
 import wx
 from wx.grid import Grid as wxGrid
 
 
-# Local imports.
 from .grid_model import GridModel
 
 
@@ -81,8 +76,6 @@ class Grid(wxGrid):
         self._initialize_columns(model)
         self._initialize_fonts()
 
-        return
-
     def _initialize_fonts(self):
         """ Initialize the label fonts. """
 
@@ -90,8 +83,6 @@ class Grid(wxGrid):
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
-
-        return
 
     def _initialize_rows(self, model):
         """ Initialize the row headers. """
@@ -107,8 +98,6 @@ class Grid(wxGrid):
                     attr.SetRenderer(None)
                     attr.SetBackgroundColour("linen")
                     self.SetRowAttr(index, attr)
-
-        return
 
     def _initialize_columns(self, model):
         """ Initialize the column headers. """
@@ -127,9 +116,9 @@ class Grid(wxGrid):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_cell_change(self, evt):
         """ Called when the contents of a cell have been changed. """
@@ -145,8 +134,6 @@ class Grid(wxGrid):
 
         evt.Skip()
 
-        return
-
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
 
@@ -156,8 +143,6 @@ class Grid(wxGrid):
         ##print 'Cell selected at', row, col
 
         evt.Skip()
-
-        return
 
     def _on_cell_left_dclick(self, evt):
         """ Called when the left mouse button was double-clicked.
@@ -173,8 +158,6 @@ class Grid(wxGrid):
 
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
-
-        return
 
     def _on_cell_right_click(self, evt):
         """ Called when a right click occurred in a cell. """
@@ -198,8 +181,6 @@ class Grid(wxGrid):
 
             self.PopupMenu(menu, evt.GetPosition())
 
-        return
-
     def _on_key_down(self, evt):
         """ Called when a key is pressed. """
 
@@ -222,8 +203,6 @@ class Grid(wxGrid):
         else:
             evt.Skip()
 
-        return
-
     def _on_delete_row(self, evt):
         """ Called when the 'Delete Row' context menu item is selected. """
 
@@ -234,9 +213,9 @@ class Grid(wxGrid):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_model_changed(self, message):
         """ Called when the model has changed. """
@@ -247,9 +226,9 @@ class Grid(wxGrid):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Grid' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def Reset(self):
         print("Reset")
@@ -261,8 +240,6 @@ class Grid(wxGrid):
         # self.SetColAttr(0, attr)
 
         self.ForceRefresh()
-
-        return
 
     def ResetView(self, grid):
         """
@@ -310,9 +287,9 @@ class Grid(wxGrid):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _move_to_next_cell(self, expandSelection=False):
         """ Move to the 'next' cell. """
@@ -357,6 +334,3 @@ class Grid(wxGrid):
                 self.MakeCellVisible(newRow, self.GetNumberCols() - 1)
 
         return
-
-
-#### EOF ######################################################################

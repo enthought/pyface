@@ -1,22 +1,21 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2009, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
-# ------------------------------------------------------------------------------
 
-# Standard library imports
+
 from io import BytesIO
 from six.moves.cPickle import dumps, load, loads
 
-# System library imports
+
 import wx
 
-# ETS imports
+
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
 import six

@@ -1,30 +1,26 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Model for tree views. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasTraits, Event
 
-# Local imports.
+
 from .node_event import NodeEvent
 
 
 class TreeModel(HasTraits):
     """ Model for tree views. """
 
-    #### 'TreeModel' interface ################################################
+    # 'TreeModel' interface ------------------------------------------------
 
     # The root of the model.
     root = Any
@@ -46,9 +42,9 @@ class TreeModel(HasTraits):
     # node down.
     structure_changed = Event(NodeEvent)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.
@@ -172,21 +168,15 @@ class TreeModel(HasTraits):
 
         self.nodes_changed = NodeEvent(node=node, children=children)
 
-        return
-
     def fire_nodes_inserted(self, node, children):
         """ Fires the nodes inserted event. """
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
-        return
-
     def fire_nodes_removed(self, parent, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)
-
-        return
 
     def fire_nodes_replaced(self, node, old_children, new_children):
         """ Fires the nodes removed event. """
@@ -195,14 +185,9 @@ class TreeModel(HasTraits):
             node=node, old_children=old_children, children=new_children
         )
 
-        return
-
     def fire_structure_changed(self, node):
         """ Fires the structure changed event. """
 
         self.structure_changed = NodeEvent(node=node)
 
         return
-
-
-#### EOF ####################################################################

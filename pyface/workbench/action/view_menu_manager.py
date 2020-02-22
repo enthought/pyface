@@ -1,15 +1,23 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The 'View' menu """
 
 
-# Standard library imports.
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import Group, MenuManager
 from traits.api import Any, Bool, Instance, List, Str, Unicode
 from traits.api import on_trait_change
 
-# Local imports.
+
 from .perspective_menu_manager import PerspectiveMenuManager
 from .show_view_action import ShowViewAction
 from .toggle_view_visibility_action import ToggleViewVisibilityAction
@@ -26,7 +34,7 @@ class ViewMenuManager(MenuManager):
 
     """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     # All of the groups in the manager.
     groups = List(Group)
@@ -34,13 +42,13 @@ class ViewMenuManager(MenuManager):
     # The manager's unique identifier (if it has one).
     id = Str("View")
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
     name = Unicode("&View")
 
-    #### 'ViewMenuManager' interface ##########################################
+    # 'ViewMenuManager' interface -----------------------------------------#
 
     # Should the perspective menu be shown?
     show_perspective_menu = Bool(True)
@@ -48,14 +56,14 @@ class ViewMenuManager(MenuManager):
     # The workbench window that the menu is part of.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### 'Private' interface ##################################################
+    # 'Private' interface -------------------------------------------------#
 
     # The group containing the view hide/show actions.
     _view_group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _groups_default(self):
         """ Trait initializer. """
@@ -76,9 +84,9 @@ class ViewMenuManager(MenuManager):
 
         return groups
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewMenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change(
         "window.active_perspective,window.active_part,"
@@ -96,9 +104,9 @@ class ViewMenuManager(MenuManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _clear_group(self, group):
         """ Remove all items in a group. """
@@ -106,8 +114,6 @@ class ViewMenuManager(MenuManager):
         # fixme: Fix this API in Pyface so there is only one call!
         group.destroy()
         group.clear()
-
-        return
 
     def _create_other_group(self, window):
         """ Creates a group containing the 'Other...' action. """
@@ -141,6 +147,3 @@ class ViewMenuManager(MenuManager):
                 )
 
         return
-
-
-#### EOF ######################################################################

@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ The wx specific implementation of the tool bar manager.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
-# Local imports.
+
 from pyface.wx.aui import aui
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
@@ -32,7 +27,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -55,14 +50,14 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(False)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -76,12 +71,12 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait change handlers ################################################
-    #### Methods ##############################################################
+    # Trait change handlers ------------------------------------------------
+    # Methods -------------------------------------------------------------#
 
     def create_tool_bar(self, parent, controller=None, aui=False):
         """ Creates a tool bar. """
@@ -132,9 +127,9 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -157,8 +152,6 @@ class ToolBarManager(ActionManager):
                         controller,
                         self.show_tool_names,
                     )
-
-        return
 
     def _wx_set_initial_tool_state(self, tool_bar):
         """ Workaround for the wxPython tool bar bug.
@@ -195,15 +188,13 @@ class ToolBarManager(ActionManager):
                 if not checked and len(group.items) > 0:
                     group.items[0].action.checked = True
 
-        return
-
 
 class _ToolBar(wx.ToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
@@ -224,31 +215,27 @@ class _ToolBar(wx.ToolBar):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         obj.window._wx_enable_tool_bar(self, new)
 
-        return
-
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         obj.window._wx_show_tool_bar(self, new)
 
-        return
-
 
 class _AuiToolBar(aui.AuiToolBar):
     """ The toolkit-specific tool bar implementation for AUI windows. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
@@ -276,8 +263,6 @@ class _AuiToolBar(aui.AuiToolBar):
         # ToolBarTool itself.  Can't keep a weak reference here because once
         # removed from the toolbar the item would be garbage collected.
         self.tool_map = {}
-
-        return
 
     def Realize(self):
         if len(self.tool_map) == 0:
@@ -333,7 +318,7 @@ class _AuiToolBar(aui.AuiToolBar):
                 break
         self.InsertToolItem(pos + 1, tool)
 
-    ##### Additional convenience functions for the normal AGW AUI toolbar
+    ## Additional convenience functions for the normal AGW AUI toolbar
 
     def AddLabelTool(
         self,
@@ -415,9 +400,9 @@ class _AuiToolBar(aui.AuiToolBar):
 
         aui.AuiToolBar.OnSize(self, event)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
@@ -428,8 +413,6 @@ class _AuiToolBar(aui.AuiToolBar):
 
             pass
 
-        return
-
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
@@ -439,6 +422,3 @@ class _AuiToolBar(aui.AuiToolBar):
 
             pass
         return
-
-
-#### EOF ######################################################################

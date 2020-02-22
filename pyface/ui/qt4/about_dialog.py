@@ -1,27 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
-# Copyright (c) 2020, Enthought, Inc.
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited; Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
-# Standard library imports.
+
 import platform
 import sys
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, List, provides, Unicode
 
-# Local imports.
+
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
@@ -65,7 +63,7 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-    #### 'IAboutDialog' interface #############################################
+    # 'IAboutDialog' interface ---------------------------------------------
 
     additions = List(Unicode)
 
@@ -73,9 +71,9 @@ class AboutDialog(MAboutDialog, Dialog):
 
     image = Instance(ImageResource, ImageResource("about"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         label = QtGui.QLabel()

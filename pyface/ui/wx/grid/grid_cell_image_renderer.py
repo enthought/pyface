@@ -1,21 +1,18 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A renderer which will display a cell-specific image in addition to some
     text displayed in the same way the standard string renderer normally
     would. """
 
-# Major package imports
+
 import wx
 
 from wx.grid import GridCellRenderer
@@ -44,9 +41,9 @@ class GridCellImageRenderer(GridCellRenderer):
 
         return
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # GridCellRenderer interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def Draw(self, grid, attr, dc, rect, row, col, isSelected):
         """ Draw the appropriate icon into the specified grid cell. """
 
@@ -104,8 +101,6 @@ class GridCellImageRenderer(GridCellRenderer):
 
         dc.DestroyClippingRegion()
 
-        return
-
     def GetBestSize(self, grid, attr, dc, row, col):
         """ Determine best size for the cell. """
 
@@ -137,9 +132,9 @@ class GridCellImageRenderer(GridCellRenderer):
     def Clone(self):
         return GridCellImageRenderer(self._provider)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridCellIconRenderer' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _get_image(self, grid, row, col):
         """ Returns the correct bmp for the data at row, col. """
         bmp = None
@@ -168,6 +163,3 @@ class GridCellImageRenderer(GridCellRenderer):
             text = grid.GetCellValue(row, col)
 
         return text
-
-
-#### EOF ######################################################################

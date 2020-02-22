@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ A tool bar manager realizes itself in a tool palette control.
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Enum, Instance, Tuple
 
-# Local imports.
+
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 from .tool_palette import ToolPalette
@@ -32,7 +27,7 @@ from .tool_palette import ToolPalette
 class ToolPaletteManager(ActionManager):
     """ A tool bar manager realizes itself in a tool palette bar control. """
 
-    #### 'ToolPaletteManager' interface #######################################
+    # 'ToolPaletteManager' interface ---------------------------------------
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))
@@ -40,14 +35,14 @@ class ToolPaletteManager(ActionManager):
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -61,9 +56,9 @@ class ToolPaletteManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolPaletteManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_palette(self, parent, controller=None):
         """ Creates a tool bar. """
@@ -78,9 +73,9 @@ class ToolPaletteManager(ActionManager):
 
         return tool_palette
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_tools(self, tool_palette, groups):
         """ Adds tools for all items in a list of groups. """
@@ -103,8 +98,6 @@ class ToolPaletteManager(ActionManager):
                     item.control_id = control_id
 
         tool_palette.realize()
-
-        return
 
     def _set_initial_tool_state(self, tool_palette, groups):
         """ Workaround for the wxPython tool bar bug.
@@ -138,6 +131,3 @@ class ToolPaletteManager(ActionManager):
                     group.items[0].action.checked = True
 
         return
-
-
-#### EOF ######################################################################

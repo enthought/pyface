@@ -1,11 +1,13 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-# Enthought product code
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# (C) Copyright 2012 Enthought, Inc., Austin, TX
-# All right reserved.
-#
-# This file is confidential and NOT open source.  Do not distribute.
-#
+# Thanks for using Enthought open source!
+
 """ Test the scripting tools. """
 
 
@@ -16,7 +18,7 @@ from pyface.util.id_helper import get_unique_id, object_counter
 class IDHelperTestCase(unittest.TestCase):
     """ Test the scripting tools. """
 
-    #### Tests ################################################################
+    # Tests ----------------------------------------------------------------
 
     def test_object_counter(self):
 
@@ -50,5 +52,3 @@ class IDHelperTestCase(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-#### EOF ######################################################################

@@ -1,25 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The node manager looks after a collection of node types. """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from traits.api import HasPrivateTraits, List
 
-# Local imports
+
 from .node_type import NodeType
 
 
@@ -30,7 +27,7 @@ logger = logging.getLogger(__name__)
 class NodeManager(HasPrivateTraits):
     """ The node manager looks after a collection of node types. """
 
-    #### 'NodeManager' interface ##########################################
+    # 'NodeManager' interface -----------------------------------------#
 
     # All registered node types.
     node_types = List(NodeType)
@@ -39,9 +36,9 @@ class NodeManager(HasPrivateTraits):
     # tree model, here?!?
     system_actions = List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new tree model. """
@@ -57,9 +54,9 @@ class NodeManager(HasPrivateTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # fixme: This is the only API call that we currently have that manipulates
     # the manager's node types.  Should we make the 'node_types' list
@@ -69,8 +66,6 @@ class NodeManager(HasPrivateTraits):
 
         node_type.node_manager = self
         self.node_types.append(node_type)
-
-        return
 
     def get_node_type(self, node):
         """ Returns the node's type.
@@ -123,9 +118,9 @@ class NodeManager(HasPrivateTraits):
 
         return key
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _node_types_changed(self, new):
         """ Called when the entire list of node types has been changed. """
@@ -134,6 +129,3 @@ class NodeManager(HasPrivateTraits):
             node_type.node_manager = self
 
         return
-
-
-#### EOF ######################################################################

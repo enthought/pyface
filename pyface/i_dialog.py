@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The abstract interface for all pyface dialogs. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Enum, Int, Str, Unicode
 
-# Local imports.
+
 from pyface.constant import OK
 from pyface.i_window import IWindow
 
@@ -32,7 +28,7 @@ class IDialog(IWindow):
     2) '_create_buttons'     creates the dialog buttons.
     """
 
-    #### 'IDialog' interface ##################################################
+    # 'IDialog' interface -------------------------------------------------#
 
     #: The label for the 'cancel' button.  The default is toolkit specific.
     cancel_label = Unicode
@@ -59,9 +55,9 @@ class IDialog(IWindow):
     # get access to the buttons?)
     style = Enum("modal", "nonmodal")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Opens the dialog.
@@ -78,9 +74,9 @@ class IDialog(IWindow):
             The value of the ``return_code`` trait.
         """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         """ Create and return the buttons.
@@ -146,9 +142,9 @@ class MDialog(object):
     Reimplements: _add_event_listeners(), _create()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Opens the dialog.
@@ -177,9 +173,9 @@ class MDialog(object):
 
         return self.return_code
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
         """ Creates the window's widget hierarchy. """
@@ -188,9 +184,9 @@ class MDialog(object):
 
         self._create_contents(self.control)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         """ Adds any event listeners required by the window. """

@@ -1,27 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Classes to provide a switcher. """
 
 # paranoid checkin in case Mr Chilver's changes break the distribution code
 
 # todo - it wasn't paranoia - reconcile this with lazy_switcher.py at some point
 
-# Major package imports.
+
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel as wxScrolledPanel
 
-# Enthought library imports.
+
 from traits.api import HasTraits
 
 
@@ -41,9 +38,9 @@ class SwitcherModel(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'SwitcherModel' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self, parent, index):
         """ Creates a page for the switcher panel. """
@@ -74,9 +71,9 @@ class SwitcherControl(wx.Panel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_selected_changed(self, selected):
         """ Called when the selected item in the model is changed. """
@@ -85,9 +82,9 @@ class SwitcherControl(wx.Panel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_combobox(self, event):
         """ Called when the combo box selection is changed. """
@@ -99,9 +96,9 @@ class SwitcherControl(wx.Panel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
         """ Creates the widget. """
@@ -116,8 +113,6 @@ class SwitcherControl(wx.Panel):
 
         # Resize the panel to match the sizer's minimal size.
         sizer.Fit(self)
-
-        return
 
     def _combo(self, parent, model, label):
         """ Creates the switcher combo box. """
@@ -180,9 +175,9 @@ class SwitcherPanel(wxScrolledPanel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_selected_changed(self, selected):
         """ Called when the selected item in the model is changed. """
@@ -191,9 +186,9 @@ class SwitcherPanel(wxScrolledPanel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
         """ Creates the widget. """
@@ -210,8 +205,6 @@ class SwitcherPanel(wxScrolledPanel):
 
         # Resize the panel to match the sizer's minimal size.
         sizer.Fit(self)
-
-        return
 
     def _show_page(self, index):
         """ Shows the page at the specified index. """
@@ -240,8 +233,6 @@ class SwitcherPanel(wxScrolledPanel):
         # dimension.
         self.sizer.Layout()
 
-        return
-
 
 class Switcher(wx.Panel):
     """ A switcher. """
@@ -259,9 +250,9 @@ class Switcher(wx.Panel):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_widget(self, model, label):
         """ Creates the widget. """
@@ -282,6 +273,3 @@ class Switcher(wx.Panel):
         sizer.Fit(self)
 
         return
-
-
-#### EOF ######################################################################

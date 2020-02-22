@@ -1,18 +1,13 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ View of an ActionManager drawn as a rectangle of buttons.
 """
@@ -54,9 +49,9 @@ class ToolPalette(Widget):
     # Maps a button id to its tool id.
     button_tool_map = Dict
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new tool palette. """
@@ -69,9 +64,9 @@ class ToolPalette(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # ToolPalette interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_tool(self, label, bmp, kind, tooltip, longtip):
         """ Add a tool with the specified properties to the palette.
@@ -101,8 +96,6 @@ class ToolPalette(Widget):
         if button is not None and hasattr(button, "SetToggle"):
             button.SetToggle(checked)
 
-        return
-
     def enable_tool(self, id, enabled):
         """ Enable or disable the tool identified by 'id'. """
 
@@ -110,23 +103,17 @@ class ToolPalette(Widget):
         if button is not None:
             button.SetEnabled(enabled)
 
-        return
-
     def on_tool_event(self, id, callback):
         """ Register a callback for events on the tool identified by 'id'. """
 
         callbacks = self.tool_listeners.setdefault(id, [])
         callbacks.append(callback)
 
-        return
-
     def realize(self):
         """ Realize the control so that it can be displayed. """
 
         self.is_realized = True
         self._reflow()
-
-        return
 
     def get_tool_state(self, id):
         """ Get the toggle state of the tool identified by 'id'. """
@@ -142,9 +129,9 @@ class ToolPalette(Widget):
 
         return state
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
 
@@ -168,8 +155,6 @@ class ToolPalette(Widget):
 
         for param in self.tools:
             self._initialize_tool(param)
-
-        return
 
     def _initialize_tool(self, param):
         """ Initialize the tool palette button. """
@@ -200,8 +185,6 @@ class ToolPalette(Widget):
         button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
 
-        return
-
     def _on_button(self, event):
 
         button_id = event.GetId()
@@ -211,6 +194,3 @@ class ToolPalette(Widget):
                 listener(event)
 
         return
-
-
-#### EOF ######################################################################

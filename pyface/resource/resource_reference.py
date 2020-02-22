@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought resource package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Resource references. """
 
 
-# Enthought library imports.
 from traits.api import Any, HasTraits, Instance
 
-# Local imports.
+
 from pyface.resource.resource_factory import ResourceFactory
 
 
@@ -32,9 +28,9 @@ class ResourceReference(HasTraits):
     # The resource factory that will be used to load the resource.
     resource_factory = Instance(ResourceFactory)  # ReadOnly
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceReference' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self):
         """ Loads the resource. """
@@ -61,9 +57,9 @@ class ImageReference(ResourceReference):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceReference' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self):
         """ Loads the resource. """
@@ -78,6 +74,3 @@ class ImageReference(ResourceReference):
             raise ValueError("Image reference has no filename OR data")
 
         return image
-
-
-#### EOF ######################################################################

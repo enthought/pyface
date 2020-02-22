@@ -1,21 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2008, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2008 Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+
 """ A page in a wizard. """
 
 
-# Major package imports.
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
@@ -28,7 +32,7 @@ class WizardPage(MWizardPage, HasTraits):
 
     """
 
-    #### 'IWizardPage' interface ##############################################
+    # 'IWizardPage' interface ---------------------------------------------#
 
     id = Str
 
@@ -44,9 +48,9 @@ class WizardPage(MWizardPage, HasTraits):
 
     size = Tuple
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self, parent):
         """ Creates the wizard page. """
@@ -84,9 +88,9 @@ class WizardPage(MWizardPage, HasTraits):
 
         return content
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
         """ Creates the actual page content. """
@@ -137,6 +141,3 @@ class _WizardPage(QtGui.QWizardPage):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
-
-
-#### EOF ######################################################################

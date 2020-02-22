@@ -1,28 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
-# is also available online at http://www.enth373ought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The 'null' specific implementations of the action manager internal classes.
 """
 
 
-# Enthought library imports.
 from traits.api import Any, Bool, HasTraits
 
 
 class _MenuItem(HasTraits):
     """ A menu item representation of an action item. """
 
-    #### '_MenuItem' interface ################################################
+    # '_MenuItem' interface ------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -40,9 +36,9 @@ class _MenuItem(HasTraits):
     # a group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
         """ Creates a new menu item for an action item. """
@@ -56,13 +52,11 @@ class _MenuItem(HasTraits):
             self.controller = controller
             controller.add_to_menu(self)
 
-        return
-
 
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
-    #### '_Tool' interface ####################################################
+    # '_Tool' interface ----------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -80,9 +74,9 @@ class _Tool(HasTraits):
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
@@ -114,27 +108,22 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-        return
-
 
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
-    #### '_PaletteTool' interface #############################################
+    # '_PaletteTool' interface ---------------------------------------------
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
         """ Creates a new tool palette tool for an action item. """
 
         self.item = item
         self.tool_palette = tool_palette
-
-
-#### EOF ######################################################################

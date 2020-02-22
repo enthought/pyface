@@ -1,19 +1,27 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ A workbench. """
 
 
-# Standard library imports.
 import six.moves.cPickle
 import logging
 import os
 
-# Enthought library imports.
+
 from traits.etsconfig.api import ETSConfig
 from pyface.api import NO
 from traits.api import Bool, Callable, Event, HasTraits, provides
 from traits.api import Instance, List, Unicode, Vetoable
 from traits.api import VetoableEvent
 
-# Local imports.
+
 from .i_editor_manager import IEditorManager
 from .i_workbench import IWorkbench
 from .user_perspective_manager import UserPerspectiveManager
@@ -34,7 +42,7 @@ class Workbench(HasTraits):
 
     """
 
-    #### 'IWorkbench' interface ###############################################
+    # 'IWorkbench' interface -----------------------------------------------
 
     # The active workbench window (the last one to get focus).
     active_window = Instance(WorkbenchWindow)
@@ -58,7 +66,7 @@ class Workbench(HasTraits):
     # All of the workbench windows created by the workbench.
     windows = List(WorkbenchWindow)
 
-    #### Workbench lifecycle events ###########################################
+    # Workbench lifecycle events -------------------------------------------
 
     # Fired when the workbench is about to exit.
     #
@@ -72,7 +80,7 @@ class Workbench(HasTraits):
     # Fired when the workbench has exited.
     exited = Event
 
-    #### Window lifecycle events ##############################################
+    # Window lifecycle events ---------------------------------------------#
 
     # Fired when a workbench window has been created.
     window_created = Event(WindowEvent)
@@ -89,22 +97,22 @@ class Workbench(HasTraits):
     # Fired when a workbench window has been closed.
     window_closed = Event(WindowEvent)
 
-    #### 'Workbench' interface ################################################
+    # 'Workbench' interface ------------------------------------------------
 
     # The factory that is used to create workbench windows. This is used in
     # the default implementation of 'create_window'. If you override that
     # method then you obviously don't need to set this trait!
     window_factory = Callable
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # An 'explicit' exit is when the the 'exit' method is called.
     # An 'implicit' exit is when the user closes the last open window.
     _explicit_exit = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
@@ -179,7 +187,7 @@ class Workbench(HasTraits):
 
         return exited
 
-    #### Convenience methods on the active window #############################
+    # Convenience methods on the active window -----------------------------
 
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object in the active workbench window. """
@@ -207,7 +215,7 @@ class Workbench(HasTraits):
 
         return self.active_window.get_editor_by_id(id)
 
-    #### Message dialogs ####
+    # Message dialogs ----
 
     def confirm(self, message, title=None, cancel=False, default=NO):
         """ Convenience method to show a confirmation dialog. """
@@ -229,11 +237,11 @@ class Workbench(HasTraits):
 
         return self.active_window.error(message, title)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Workbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _state_location_default(self):
         """ Trait initializer. """
@@ -269,18 +277,18 @@ class Workbench(HasTraits):
 
         return UserPerspectiveManager(state_location=self.state_location)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Workbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
 
         raise NotImplementedError
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _close_all_windows(self):
         """ Closes all open windows.
@@ -329,8 +337,6 @@ class Workbench(HasTraits):
             except:
                 logger.exception("restoring window layout from %s", filename)
 
-        return
-
     def _save_window_layout(self, window):
         """ Save the window layout. """
 
@@ -341,7 +347,7 @@ class Workbench(HasTraits):
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _on_window_activated(self, window, trait_name, event):
         """ Dynamic trait change handler. """
@@ -350,8 +356,6 @@ class Workbench(HasTraits):
 
         self.active_window = window
 
-        return
-
     def _on_window_opening(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
@@ -359,8 +363,6 @@ class Workbench(HasTraits):
         self.window_opening = window_event = VetoableWindowEvent(window=window)
         if window_event.veto:
             event.veto = True
-
-        return
 
     def _on_window_opened(self, window, trait_name, event):
         """ Dynamic trait change handler. """
@@ -376,8 +378,6 @@ class Workbench(HasTraits):
 
         # Event notification.
         self.window_opened = WindowEvent(window=window)
-
-        return
 
     def _on_window_closing(self, window, trait_name, event):
         """ Dynamic trait change handler. """
@@ -403,8 +403,6 @@ class Workbench(HasTraits):
                     # Save the window size, position and layout.
                     self._save_window_layout(window)
 
-        return
-
     def _on_window_closed(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
@@ -419,6 +417,3 @@ class Workbench(HasTraits):
             self.exited = self
 
         return
-
-
-#### EOF ######################################################################

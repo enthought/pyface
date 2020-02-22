@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A cached image list. """
 
 
-# Major package imports.
 import wx
 import six
 
@@ -37,9 +33,9 @@ class ImageList(wx.ImageList):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageList' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def GetIndex(self, filename):
         """ Returns the index of the specified image.
@@ -58,7 +54,7 @@ class ImageList(wx.ImageList):
                 # Load the image from the file and add it to the list.
                 #
                 # N.B 'wx.BITMAP_TYPE_ANY' tells wxPython to attempt to
-                # ---- autodetect the image format.
+                # autodetect the image format.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
                 # We force all images in the cache to be the same size.
@@ -98,9 +94,9 @@ class ImageList(wx.ImageList):
 
         return index
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
@@ -112,6 +108,3 @@ class ImageList(wx.ImageList):
             image.Rescale(self._width, self._height)
 
         return image
-
-
-#### EOF ######################################################################

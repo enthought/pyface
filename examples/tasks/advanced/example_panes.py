@@ -1,7 +1,6 @@
-# Standard library imports.
 import os.path
 
-# Enthought library imports.
+
 from pyface.tasks.api import TraitsDockPane
 from traits.api import Event, File, List, Str
 from traitsui.api import View, Item, FileEditor
@@ -11,12 +10,12 @@ class FileBrowserPane(TraitsDockPane):
     """ A simple file browser pane.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "example.file_browser_pane"
     name = "File Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     # Fired when a file is double-clicked.
     activated = Event
@@ -43,11 +42,11 @@ class PythonScriptBrowserPane(FileBrowserPane):
     """ A file browser pane restricted to Python scripts.
     """
 
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "example.python_script_browser_pane"
     name = "Script Browser"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     filters = ["*.py"]

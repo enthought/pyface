@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 import unittest
 
 try:
@@ -34,8 +43,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
 
         self.model = CompositeGridModel(data=[self.model_1, self.model_2])
 
-        return
-
     def test_get_column_count(self):
 
         column_count_1 = self.model_1.get_column_count()
@@ -45,13 +52,9 @@ class CompositeGridModelTestCase(unittest.TestCase):
             self.model.get_column_count(), column_count_1 + column_count_2
         )
 
-        return
-
     def test_get_row_count(self):
 
         self.assertEqual(self.model.get_row_count(), 2)
-
-        return
 
     def test_get_row_name(self):
 
@@ -60,8 +63,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
         self.assertEqual(self.model.get_row_name(0), "1")
         self.assertEqual(self.model.get_row_name(1), "2")
 
-        return
-
     def test_get_column_name(self):
 
         self.assertEqual(self.model.get_column_name(0), "cfoo")
@@ -69,8 +70,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
         self.assertEqual(self.model.get_column_name(2), "cfoo_2")
         self.assertEqual(self.model.get_column_name(3), "cbar_2")
         self.assertEqual(self.model.get_column_name(4), "cbaz_2")
-
-        return
 
     def test_get_value(self):
 
@@ -84,8 +83,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
         self.assertEqual(self.model.get_value(1, 2), 6)
         self.assertEqual(self.model.get_value(1, 3), 7)
         self.assertEqual(self.model.get_value(1, 4), 8)
-
-        return
 
     def test_is_cell_empty(self):
 
@@ -114,6 +111,3 @@ class CompositeGridModelTestCase(unittest.TestCase):
         )
 
         return
-
-
-#### EOF ######################################################################

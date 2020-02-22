@@ -1,8 +1,17 @@
-# Enthought library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from pyface.action.api import StatusBarManager
 from traits.api import Callable, HasTraits, Instance, List, Str, Unicode
 
-# Local imports.
+
 from .action.schema import MenuBarSchema, ToolBarSchema
 from .action.schema_addition import SchemaAddition
 from pyface.tasks.task_layout import TaskLayout
@@ -33,7 +42,7 @@ class Task(HasTraits):
     # The window to which the task is attached. Set by the framework.
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
-    #### Actions ##############################################################
+    # Actions -------------------------------------------------------------#
 
     # The menu bar for the task.
     menu_bar = Instance(MenuBarSchema)
@@ -48,9 +57,9 @@ class Task(HasTraits):
     # bars and tool bars constructed from the above schemas.
     extra_actions = List(SchemaAddition)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activated(self):
         """ Called after the task has been activated in a TaskWindow.

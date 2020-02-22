@@ -1,29 +1,28 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005-2009, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
+#
 # Thanks for using Enthought open source!
-# ------------------------------------------------------------------------------
 """ The default resource manager.
 
 A resource manager locates and loads application resources such as images and
 sounds etc.
 """
 
-# Standard library imports.
+
 import collections, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
-# Enthought library imports.
+
 from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
 
-# Local imports.
+
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
 import six
@@ -48,9 +47,9 @@ class ResourceManager(HasTraits):
     # a images in the format that they require.
     resource_factory = Instance(ResourceFactory)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
@@ -81,9 +80,9 @@ class ResourceManager(HasTraits):
 
         return image
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _locate_image(self, image_name, resource_path, size):
         """ Attempts to locate an image resource.
@@ -241,6 +240,3 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
-
-
-#### EOF ######################################################################

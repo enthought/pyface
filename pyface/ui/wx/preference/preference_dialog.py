@@ -1,26 +1,22 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005-2015, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The preference dialog. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Dict, Float, Instance, Str
 
-# Local imports.
+
 from pyface.preference.preference_node import PreferenceNode
 from pyface.ui.wx.heading_text import HeadingText
 from pyface.ui.wx.layered_panel import LayeredPanel
@@ -35,22 +31,22 @@ from pyface.wx.util.font_helper import new_font_like
 class PreferenceDialog(SplitDialog):
     """ The preference dialog. """
 
-    #### 'Dialog' interface ###################################################
+    # 'Dialog' interface ---------------------------------------------------
 
     # The dialog title.
     title = Str("Preferences")
 
-    #### 'SplitDialog' interface ##############################################
+    # 'SplitDialog' interface ---------------------------------------------#
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.25)
 
-    #### 'PreferenceDialog' interface #########################################
+    # 'PreferenceDialog' interface -----------------------------------------
 
     # The root of the preference hierarchy.
     root = Instance(PreferenceNode)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The preference pages in the dialog (they are created lazily).
     _pages = Dict
@@ -58,9 +54,9 @@ class PreferenceDialog(SplitDialog):
     # The current visible preference page.
     _current_page = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Dialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         """ Creates the buttons. """
@@ -75,9 +71,9 @@ class PreferenceDialog(SplitDialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the panel containing the preference page tree. """
@@ -123,9 +119,9 @@ class PreferenceDialog(SplitDialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_tree(self, parent):
         """ Creates the preference page tree. """
@@ -163,17 +159,15 @@ class PreferenceDialog(SplitDialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_restore_defaults(self, event):
         """ Called when the 'Restore Defaults' button is pressed. """
 
         page = self._pages[self._layered_panel.current_layer_name]
         page.restore_defaults()
-
-        return
 
     def _on_help(self, event):
         """ Called when the 'Help' button is pressed. """
@@ -183,9 +177,9 @@ class PreferenceDialog(SplitDialog):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_selection_changed(self, selection):
         """ Called when a node in the tree is selected. """
@@ -217,6 +211,3 @@ class PreferenceDialog(SplitDialog):
             self.__title.text = node.name
 
         return
-
-
-#### EOF ######################################################################

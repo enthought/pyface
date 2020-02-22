@@ -1,11 +1,19 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ Manages a set of user perspectives. """
 
 
-# Standard library imports.
 import logging
 import os
 
-# Enthought library imports.
+
 from pyface.workbench.api import Perspective
 from traits.api import Any, Dict, HasTraits, Int, List, Property
 from traits.api import Unicode
@@ -18,7 +26,7 @@ logger = logging.getLogger(__name__)
 class UserPerspectiveManager(HasTraits):
     """ Manages a set of user perspectives. """
 
-    #### 'UserPerspective' interface ##########################################
+    # 'UserPerspective' interface -----------------------------------------#
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
@@ -36,16 +44,16 @@ class UserPerspectiveManager(HasTraits):
     # The name of the user defined perspectives definition file.
     file_name = Property(Unicode)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Shadow trait for the 'id_to_perspective' property.
     _id_to_perspective = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'UserPerspective' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     def _get_next_id(self):
         """ Property getter. """
@@ -93,7 +101,7 @@ class UserPerspectiveManager(HasTraits):
 
         return os.path.join(self.state_location, "__user_perspective__")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_perspective(self, name, show_editor_area=True):
         """ Create a new (and empty) user-defined perspective. """
@@ -143,8 +151,6 @@ class UserPerspectiveManager(HasTraits):
 
         self._update_persistent_data()
 
-        return
-
     def add(self, perspective, name=None):
         """ Add a perspective with an optional name. """
 
@@ -174,8 +180,6 @@ class UserPerspectiveManager(HasTraits):
         # Update the persistent file information:
         self._update_persistent_data()
 
-        return
-
     def remove(self, id):
         """ Remove the user perspective with the specified id.
 
@@ -197,9 +201,9 @@ class UserPerspectiveManager(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update_persistent_data(self):
         """ Update the persistent file information. """
@@ -220,6 +224,3 @@ class UserPerspectiveManager(HasTraits):
             )
 
         return
-
-
-#### EOF ######################################################################

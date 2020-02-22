@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 import wx
 
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -49,19 +49,19 @@ from traits.api import on_trait_change, Property, Instance, Str, List
 
 
 class Pane1(DockPane):
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "steps.pane1"
     name = "Pane 1"
 
 
 class Pane2(DockPane):
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "steps.pane2"
     name = "Pane 2"
 
-    #### FileBrowserPane interface ############################################
+    # FileBrowserPane interface --------------------------------------------
 
     # The list of wildcard filters for filenames.
     filters = List(Str)
@@ -87,7 +87,7 @@ class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Multi-Tab Editor"
@@ -120,9 +120,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(
@@ -142,9 +142,9 @@ class ExampleTask(Task):
         """
         return [Pane1(), Pane2()]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def new(self):
         """ Opens a new empty window
@@ -154,7 +154,7 @@ class ExampleTask(Task):
         self.editor_area.activate_editor(editor)
         self.activated()
 
-    #### Trait property getter/setters ########################################
+    # Trait property getter/setters ----------------------------------------
 
     def _get_active_editor(self):
         if self.editor_area is not None:
@@ -166,7 +166,7 @@ class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.second_task"
     name = "Second Multi-Tab Editor"
@@ -198,9 +198,9 @@ class SecondTask(ExampleTask):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(

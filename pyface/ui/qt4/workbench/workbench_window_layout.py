@@ -1,26 +1,28 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2008, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+# (C) Copyright 2008 Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
 
-
-# Standard library imports.
 import logging
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Instance, on_trait_change
 
-# Local imports.
+
 from pyface.message_dialog import error
 from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget
@@ -55,16 +57,16 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The widget that provides the editor area.  We keep (and use) this
     # separate reference because we can't always assume that it has been set to
     # be the main window's central widget.
     _qt4_editor_area = Instance(SplitTabWidget)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         if editor.control is not None:
@@ -194,7 +196,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view._qt4_dock.show()
         view.visible = True
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         # Get the IDs of the views in the main window.  This information is
@@ -308,9 +310,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def is_editor_area_visible(self):
         return self._qt4_editor_area.isVisible()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_editor_focus(self, new):
         """ Handle an editor getting the focus. """
@@ -658,6 +660,3 @@ class _ViewContainer(QtGui.QMainWindow):
         self._width = self._height = -1
 
         QtGui.QMainWindow.showEvent(self, e)
-
-
-#### EOF ######################################################################

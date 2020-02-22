@@ -1,21 +1,21 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2006 by Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: David C. Morrill <dmorrill@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 """ Object with views for naming or renaming a user perspective. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
 import six
 
 
-#### Trait definitions ########################################################
+# Trait definitions --------------------------------------------------------
 
 
 def not_empty_string(object, name, value):
@@ -34,9 +34,9 @@ NotEmptyString = Trait("", not_empty_string)
 class UserPerspectiveName(HasTraits):
     """ Object with views for naming or renaming a user perspective. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'UserPerspectiveName' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # The name of the new user perspective.
     name = NotEmptyString
@@ -54,7 +54,7 @@ class UserPerspectiveName(HasTraits):
    arrange the views within the perspective."""
     )
 
-    #### Traits views #########################################################
+    # Traits views ---------------------------------------------------------
 
     new_view = View(
         VGroup(
@@ -88,6 +88,3 @@ class UserPerspectiveName(HasTraits):
         kind="livemodal",
         width=300,
     )
-
-
-#### EOF #####################################################################

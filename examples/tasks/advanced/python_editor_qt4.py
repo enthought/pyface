@@ -1,28 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 
-# Standard library imports.
 import sys
 from os.path import basename
 
-# Major package imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
 from pyface.tasks.api import Editor
 
-# Local imports.
+
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 
@@ -33,7 +30,7 @@ class PythonEditor(Editor):
     IPythonEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     obj = Instance(File)
 
@@ -47,7 +44,7 @@ class PythonEditor(Editor):
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     changed = Event
 
@@ -59,9 +56,9 @@ class PythonEditor(Editor):
     def _get_name(self):
         return basename(self.path) or "Untitled"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         self.control = self._create_control(parent)
@@ -103,9 +100,9 @@ class PythonEditor(Editor):
             QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _path_changed(self):
         if self.control is not None:
@@ -118,9 +115,9 @@ class PythonEditor(Editor):
             )
             self.control.code.update_line_number_width()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.

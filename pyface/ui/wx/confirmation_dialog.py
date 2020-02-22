@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Enum, Instance, provides, Unicode
 
-# Local imports.
+
 from pyface.i_confirmation_dialog import (
     IConfirmationDialog,
     MConfirmationDialog,
@@ -39,7 +34,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     cancel = Bool(False)
 
@@ -57,9 +52,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     yes_label = Unicode
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         sizer = wx.StdDialogButtonSizer()
@@ -133,11 +128,11 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_yes(self, event):
         """ Called when the 'Yes' button is pressed. """
@@ -148,6 +143,3 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         """ Called when the 'No' button is pressed. """
 
         self.control.EndModal(wx.ID_NO)
-
-
-#### EOF ######################################################################

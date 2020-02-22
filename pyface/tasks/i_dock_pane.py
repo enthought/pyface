@@ -1,7 +1,16 @@
-# Enthought library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from traits.api import Bool, Enum, HasTraits, Str, Tuple
 
-# Local imports.
+
 from pyface.tasks.i_task_pane import ITaskPane
 
 
@@ -36,9 +45,9 @@ class IDockPane(ITaskPane):
     # Whether the pane is currently visible.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
@@ -57,7 +66,7 @@ class MDockPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     closable = Bool(True)
     dock_area = Enum("left", "right", "top", "bottom")
@@ -69,9 +78,9 @@ class MDockPane(HasTraits):
     caption_visible = Bool(True)
     dock_layer = Bool(0)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def hide(self):
         """ Convenience method to hide the dock pane.

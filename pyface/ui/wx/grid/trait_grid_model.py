@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A TraitGridModel builds a grid from a list of traits objects. Each row
 represents on object, each column one trait from those objects. All the objects
 must be of the same type. Optionally a user may pass in a list of trait names
@@ -18,7 +15,7 @@ defining which traits will be shown in the columns and in which order. If this
 list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
-# Enthought library imports
+
 from __future__ import print_function
 from traits.api import (
     Any,
@@ -35,7 +32,7 @@ from traits.api import (
     Type,
 )
 
-# local imports
+
 from .grid_model import GridColumn, GridModel, GridSortEvent
 from .trait_grid_cell_adapter import TraitGridCellAdapter
 
@@ -99,9 +96,9 @@ class TraitGridModel(GridModel):
     # be a no-argument function.
     row_factory = Trait(None, None, Function)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a TraitGridModel object. """
 
@@ -144,9 +141,9 @@ class TraitGridModel(GridModel):
 
         return
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
@@ -254,8 +251,6 @@ class TraitGridModel(GridModel):
         # now fire an event to tell the grid we're sorted
         print("firing sort event")
         self.column_sorted = GridSortEvent(index=col, reversed=reverse)
-
-        return
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -433,9 +428,9 @@ class TraitGridModel(GridModel):
         False otherwise. """
         return not self.is_column_read_only(col)
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _insert_rows(self, pos, num_rows):
         """ Inserts num_rows at pos and fires an event iff a factory method
         for new rows is defined. Otherwise returns 0. """
@@ -489,9 +484,9 @@ class TraitGridModel(GridModel):
 
         return new_rows
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # protected interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
     def _get_row(self, index):
         """ Return the object that corresponds to the row at index. Override
         this to handle very large data sets. """
@@ -569,8 +564,6 @@ class TraitGridModel(GridModel):
             self.data.insert(pos, data)
             pos += 1
 
-        return
-
     def _delete_rows_from_model(self, pos, num_rows):
         """ Delete the specified rows from the model. Override this method
         to handle very large data sets. """
@@ -578,14 +571,13 @@ class TraitGridModel(GridModel):
 
         return num_rows
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # trait handlers
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_row_name_trait_changed(self, new):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
-        return
 
     def _on_columns_changed(self, object, name, old, new):
         """ Force the grid to refresh when any underlying trait changes. """
@@ -593,7 +585,6 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(self.columns)
         self._auto_columns = self.columns
         self.fire_structure_changed()
-        return
 
     def _on_columns_items_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
@@ -601,12 +592,10 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(event.removed, remove=True)
         self.__manage_column_listeners(event.added)
         self.fire_structure_changed()
-        return
 
     def _on_contained_trait_changed(self, new):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
-        return
 
     def _on_data_changed(self, object, name, old, new):
         """ Force the grid to refresh when the underlying list changes. """
@@ -614,7 +603,6 @@ class TraitGridModel(GridModel):
         self.__manage_data_listeners(old, remove=True)
         self.__manage_data_listeners(self.data)
         self.fire_structure_changed()
-        return
 
     def _on_data_items_changed(self, event):
         """ Force the grid to refresh when the underlying list changes. """
@@ -628,9 +616,9 @@ class TraitGridModel(GridModel):
         self.fire_content_changed()
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __get_data_column(self, col):
         """ Return a 1-d list of data from the column indexed by col. """
@@ -716,7 +704,6 @@ class TraitGridModel(GridModel):
                 item.on_trait_change(
                     self._on_contained_trait_changed, remove=remove
                 )
-        return
 
     def __manage_column_listeners(self, collist, remove=False):
 
@@ -728,6 +715,3 @@ class TraitGridModel(GridModel):
                     )
 
         return
-
-
-#### EOF ####################################################################

@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 from numpy import arange
 
 import wx
@@ -33,7 +30,6 @@ class ComboboxFocusHandler(wx.EvtHandler):
     def __init__(self):
         wx.EvtHandler.__init__(self)
         self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
-        return
 
     def _on_kill_focus(self, evt):
 
@@ -49,7 +45,6 @@ class ComboboxFocusHandler(wx.EvtHandler):
         ):
             return
         evt.Skip()
-        return
 
 
 class AbstractGridView(Grid):
@@ -80,8 +75,6 @@ class AbstractGridView(Grid):
 
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
 
-        return
-
     def init_labels(self):
         self.SetLabelFont(
             wx.Font(
@@ -92,8 +85,6 @@ class AbstractGridView(Grid):
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
-        return
-
     def init_data_types(self):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
@@ -103,8 +94,6 @@ class AbstractGridView(Grid):
             GridCellFloatRenderer(precision=3),
             GridCellFloatEditor(),
         )
-
-        return
 
     def init_handlers(self):
 
@@ -129,8 +118,6 @@ class AbstractGridView(Grid):
         self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnEditorHidden)
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
 
-        return
-
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
         """
@@ -139,7 +126,6 @@ class AbstractGridView(Grid):
             self.SetColLabelSize(0)
         else:
             self.SetColLabelSize(self._default_col_label_size)
-        return
 
     def SetRowLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -149,7 +135,6 @@ class AbstractGridView(Grid):
             self.SetRowLabelSize(0)
         else:
             self.SetRowLabelSize(self._default_row_label_size)
-        return
 
     def SetTable(self, table, *args):
         """ Some versions of wxPython do not return the correct

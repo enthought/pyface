@@ -1,22 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for a dialog that allows the user to open/save files etc. """
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Int, Str
 
-# Local imports.
+
 from pyface.i_dialog import IDialog
 
 
@@ -24,7 +21,7 @@ class IProgressDialog(IDialog):
     """ A simple progress dialog window which allows itself to be updated
     """
 
-    #### 'IProgressDialog' interface ##################################
+    # 'IProgressDialog' interface ---------------------------------#
 
     #: The message to display in the dialog
     message = Str
@@ -50,9 +47,9 @@ class IProgressDialog(IDialog):
     #: Label for the 'cancel' button
     cancel_button_label = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def update(self, value):
         """ Update the progress bar to the desired value
@@ -88,9 +85,9 @@ class MProgressDialog(object):
     # XXX why not the control?
     progress_bar = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Open the dialog """
@@ -100,9 +97,9 @@ class MProgressDialog(object):
 
         super(MProgressDialog, self).open()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def update(self, value):
         """ Update the progress bar to the desired value

@@ -1,10 +1,18 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ An item in a Perspective contents list. """
 
 
-# Enthought library imports.
 from traits.api import Enum, Float, HasTraits, provides, Str
 
-# Local imports.
+
 from .i_perspective_item import IPerspectiveItem
 
 
@@ -52,6 +60,3 @@ class PerspectiveItem(HasTraits):
 
     # The style of the dock control created.
     style_hint = Enum("tab", "vertical", "horizontal", "fixed")
-
-
-#### EOF ######################################################################

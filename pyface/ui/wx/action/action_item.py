@@ -1,19 +1,17 @@
-#  Copyright (c) 2005-19, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
+# Thanks for using Enthought open source!
 
 """ The wx specific implementations the action manager internal classes.
 """
 
-# Standard libary imports.
+
 import six
 
 if six.PY2:
@@ -22,13 +20,13 @@ else:
     # avoid deprecation warning
     from inspect import getfullargspec as getargspec
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits
 
-# Local imports.
+
 from pyface.action.action_event import ActionEvent
 
 
@@ -43,7 +41,7 @@ _STYLE_TO_KIND_MAP = {
 class _MenuItem(HasTraits):
     """ A menu item representation of an action item. """
 
-    #### '_MenuItem' interface ################################################
+    # '_MenuItem' interface ------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -61,9 +59,9 @@ class _MenuItem(HasTraits):
     # a group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
         """ Creates a new menu item for an action item. """
@@ -73,7 +71,7 @@ class _MenuItem(HasTraits):
         # Create an appropriate menu item depending on the style of the action.
         #
         # N.B. Don't try to use -1 as the Id for the menu item... wx does not
-        # ---- like it!
+        # like it!
         action = item.action
         label = action.name
         kind = _STYLE_TO_KIND_MAP[action.style]
@@ -140,8 +138,6 @@ class _MenuItem(HasTraits):
             self.controller = controller
             controller.add_to_menu(self)
 
-        return
-
     def dispose(self):
         action = self.item.action
         action.on_trait_change(
@@ -157,25 +153,21 @@ class _MenuItem(HasTraits):
             self._on_action_name_changed, "name", remove=True
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
 
         self.control.Enable(self.enabled and self.visible)
 
-        return
-
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
         self.control.Enable(self.visible and self.enabled)
-
-        return
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
@@ -198,21 +190,15 @@ class _MenuItem(HasTraits):
 
         self.control.Check(self.checked)
 
-        return
-
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
         self.control.Enable(action.enabled and action.visible)
 
-        return
-
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
         self.control.Enable(action.visible and action.enabled)
-
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
@@ -238,8 +224,6 @@ class _MenuItem(HasTraits):
         self.control.Check(action.checked)
         self._skip_menu_event = False
 
-        return
-
     def _on_action_name_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
 
@@ -247,8 +231,6 @@ class _MenuItem(HasTraits):
         if len(action.accelerator) > 0:
             label = label + "\t" + action.accelerator
         self.control.SetText(label)
-
-        return
 
     def _on_action_image_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
@@ -258,7 +240,7 @@ class _MenuItem(HasTraits):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_menu(self, event):
         """ Called when the menu item is clicked. """
@@ -312,13 +294,11 @@ class _MenuItem(HasTraits):
             else:
                 action.perform(action_event)
 
-        return
-
 
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
-    #### '_Tool' interface ####################################################
+    # '_Tool' interface ----------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -336,9 +316,9 @@ class _Tool(HasTraits):
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
@@ -429,11 +409,11 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
@@ -473,8 +453,6 @@ class _Tool(HasTraits):
 
         self.tool_bar.ToggleTool(self.control_id, self.checked)
 
-        return
-
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
@@ -512,7 +490,7 @@ class _Tool(HasTraits):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_tool(self, event):
         """ Called when the tool bar tool is clicked. """
@@ -560,21 +538,19 @@ class _Tool(HasTraits):
             else:
                 action.perform(action_event)
 
-        return
-
 
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
-    #### '_PaletteTool' interface #############################################
+    # '_PaletteTool' interface ---------------------------------------------
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
         """ Creates a new tool palette tool for an action item. """
@@ -623,18 +599,16 @@ class _PaletteTool(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
-
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
@@ -653,7 +627,7 @@ class _PaletteTool(HasTraits):
 
         return
 
-    #### Tool palette event handlers ##########################################
+    # Tool palette event handlers -----------------------------------------#
 
     def _on_tool(self, event):
         """ Called when the tool palette button is clicked. """
@@ -668,6 +642,3 @@ class _PaletteTool(HasTraits):
         action.perform(action_event)
 
         return
-
-
-#### EOF ######################################################################

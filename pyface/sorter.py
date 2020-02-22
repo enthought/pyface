@@ -1,29 +1,25 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Base class for all sorters. """
 
 
-# Enthought library imports.
 from traits.api import HasTraits
 
 
 class Sorter(HasTraits):
     """ Abstract base class for all sorters. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewerSorter' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def sort(self, widget, parent, nodes):
         """ Sorts a list of nodes IN PLACE.
@@ -105,6 +101,3 @@ class Sorter(HasTraits):
         """
 
         return False
-
-
-#### EOF ######################################################################

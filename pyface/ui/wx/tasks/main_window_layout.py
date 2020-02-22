@@ -1,11 +1,20 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from itertools import combinations
 import logging
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits
 
-# Local imports.
+
 from .dock_pane import AREA_MAP, INVERSE_AREA_MAP
 from pyface.tasks.task_layout import (
     LayoutContainer,
@@ -31,9 +40,9 @@ class MainWindowLayout(HasTraits):
     """ A class for applying declarative layouts to an AUI managed window.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self, layout, window):
         """ Get the layout by adding sublayouts to the specified DockLayout.
@@ -153,9 +162,9 @@ class MainWindowLayout(HasTraits):
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.

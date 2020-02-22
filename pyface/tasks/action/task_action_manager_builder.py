@@ -1,12 +1,21 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from collections import defaultdict
 import logging
 
-# Enthought library imports.
+
 from pyface.action.api import ActionController, ActionManager
 from traits.api import HasTraits, Instance
 
-# Local imports.
+
 from pyface.tasks.task import Task
 from pyface.tasks.topological_sort import before_after_sort
 from pyface.tasks.action.schema import Schema, ToolBarSchema
@@ -27,9 +36,9 @@ class TaskActionManagerBuilder(HasTraits):
     # The Task to build menubars and toolbars for.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskActionManagerBuilder' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_action_manager(self, schema):
         """ Create a manager for the given schema using the task's additions.
@@ -82,9 +91,9 @@ class TaskActionManagerBuilder(HasTraits):
         """
         return item
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_ordered_schemas(self, schemas):
         begin = []
@@ -268,7 +277,7 @@ class TaskActionManagerBuilder(HasTraits):
         # Finally, create the pyface.action instance for this schema.
         return self.prepare_item(schema.create(children), path)
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _controller_default(self):
         from .task_action_controller import TaskActionController

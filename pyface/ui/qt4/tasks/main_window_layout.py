@@ -1,14 +1,23 @@
-# Standard library imports.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from itertools import combinations
 import logging
 
-# System library imports.
+
 from pyface.qt import QtCore, QtGui
 
-# Enthought library imports.
+
 from traits.api import Any, HasTraits
 
-# Local imports.
+
 from pyface.tasks.task_layout import (
     LayoutContainer,
     PaneItem,
@@ -33,14 +42,14 @@ class MainWindowLayout(HasTraits):
     """ A class for applying declarative layouts to a QMainWindow.
     """
 
-    #### 'MainWindowLayout' interface #########################################
+    # 'MainWindowLayout' interface -----------------------------------------
 
     # The QMainWindow control to lay out.
     control = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self, layout, include_sizes=True):
         """ Get the layout by adding sublayouts to the specified DockLayout.
@@ -222,9 +231,9 @@ class MainWindowLayout(HasTraits):
         if _toplevel_call:
             QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.
@@ -236,9 +245,9 @@ class MainWindowLayout(HasTraits):
         """
         raise NotImplementedError
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_division_orientation(self, one, two, splitter=False):
         """ Returns whether there is a division between two visible QWidgets.

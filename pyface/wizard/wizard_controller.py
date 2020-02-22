@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A wizard controller that has a static list of pages. """
 
 
-# Enthought library imports.
 from traits.api import Bool, HasTraits, Instance, List, Property, provides
 
-# Local imports.
+
 from .i_wizard_controller import IWizardController
 from .i_wizard_page import IWizardPage
 
@@ -26,7 +22,7 @@ from .i_wizard_page import IWizardPage
 class WizardController(HasTraits):
     """ A wizard controller that has a static list of pages. """
 
-    #### 'IWizardController' interface ########################################
+    # 'IWizardController' interface ----------------------------------------
 
     # The pages under the control of this controller.
     pages = Property(List(IWizardPage))
@@ -37,14 +33,14 @@ class WizardController(HasTraits):
     # Set if the wizard is complete.
     complete = Bool(False)
 
-    #### Protected 'IWizardController' interface ##############################
+    # Protected 'IWizardController' interface -----------------------------#
 
     # Shadow trait for the 'pages' property.
     _pages = List(IWizardPage)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_first_page(self):
         """ Returns the first page. """
@@ -108,9 +104,9 @@ class WizardController(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'WizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_pages(self):
         """ Returns the pages in the wizard. """
@@ -136,9 +132,9 @@ class WizardController(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update(self):
         """ Checks the completion status of the controller. """
@@ -153,9 +149,9 @@ class WizardController(HasTraits):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _current_page_changed(self, old, new):
         """ Called when the current page is changed. """
@@ -172,7 +168,7 @@ class WizardController(HasTraits):
 
         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _on_page_complete(self, obj, trait_name, old, new):
         """ Called when the current page is complete. """
@@ -180,6 +176,3 @@ class WizardController(HasTraits):
         self._update()
 
         return
-
-
-#### EOF ######################################################################

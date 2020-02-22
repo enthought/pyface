@@ -1,34 +1,31 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A file explorer example. """
 
 from __future__ import print_function
 
-# Standard library imports.
+
 import os, sys
 
 # Put the Enthought library on the Python path.
 sys.path.append(os.path.abspath(r"..\..\.."))
 
-# Enthought library imports.
+
 from pyface.api import ApplicationWindow, GUI, PythonShell, SplashScreen
 from pyface.api import SplitApplicationWindow, SplitPanel
 from pyface.action.api import Action, Group, MenuBarManager, MenuManager
 from pyface.action.api import Separator, StatusBarManager, ToolBarManager
 from traits.api import Float, Str
 
-# Local imports.
+
 from file_filters import AllowOnlyFolders
 from file_sorters import FileSorter
 from file_table_viewer import FileTableViewer
@@ -51,7 +48,7 @@ class ExampleAction(Action):
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
-    #### 'SplitApplicationWindow' interface ###################################
+    # 'SplitApplicationWindow' interface -----------------------------------
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
@@ -59,9 +56,9 @@ class MainWindow(SplitApplicationWindow):
     # The direction in which the panel is split.
     direction = Str("vertical")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new window. """
@@ -74,9 +71,9 @@ class MainWindow(SplitApplicationWindow):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the style. """
@@ -95,9 +92,9 @@ class MainWindow(SplitApplicationWindow):
 
         return self._rhs.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_action_bars(self):
         """ Creates the window's menu, tool and status bars. """
@@ -177,7 +174,7 @@ class MainWindow(SplitApplicationWindow):
 
         return python_shell.control
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_selection_changed(self, selection):
         """ Called when the selection in the tree is changed. """
@@ -200,5 +197,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

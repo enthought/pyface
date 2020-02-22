@@ -7,7 +7,7 @@ the same menu_bar and tool_bars traits from ExampleTask.  This caused the
 incorrect tying of the controls to SecondTask because the class attributes
 were shared between both classes.
 """
-# Enthought library imports.
+
 from pyface.api import (
     GUI,
     ConfirmationDialog,
@@ -41,21 +41,21 @@ from traits.api import on_trait_change, Property, Instance
 
 
 class FirstPane(DockPane):
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "steps.first_pane"
     name = "First Pane"
 
 
 class SecondPane(DockPane):
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "steps.second_pane"
     name = "Second Pane"
 
 
 class ThirdPane(DockPane):
-    #### TaskPane interface ###################################################
+    # TaskPane interface ---------------------------------------------------
 
     id = "steps.third_pane"
     name = "Third Pane"
@@ -65,7 +65,7 @@ class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Multi-Tab Editor"
@@ -98,9 +98,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(
@@ -122,9 +122,9 @@ class ExampleTask(Task):
         """
         return [FirstPane(), SecondPane(), ThirdPane()]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def new(self):
         """ Opens a new empty window
@@ -134,7 +134,7 @@ class ExampleTask(Task):
         self.editor_area.activate_editor(editor)
         self.activated()
 
-    #### Trait property getter/setters ########################################
+    # Trait property getter/setters ----------------------------------------
 
     def _get_active_editor(self):
         if self.editor_area is not None:
@@ -146,7 +146,7 @@ class SecondTask(ExampleTask):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.second_task"
     name = "Second Multi-Tab Editor"
@@ -173,9 +173,9 @@ class SecondTask(ExampleTask):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(

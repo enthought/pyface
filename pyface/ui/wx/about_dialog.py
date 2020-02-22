@@ -1,34 +1,29 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2020, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import sys
 
-# Major package imports.
+
 import wx
 import wx.html
 import wx.lib.wxpTag
 
-# Enthought library imports.
+
 from traits.api import Instance, List, provides, Unicode
 
-# Local imports.
+
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
@@ -78,7 +73,7 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-    #### 'IAboutDialog' interface #############################################
+    # 'IAboutDialog' interface ---------------------------------------------
 
     additions = List(Unicode)
 
@@ -86,9 +81,9 @@ class AboutDialog(MAboutDialog, Dialog):
 
     image = Instance(ImageResource, ImageResource("about"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         if parent.GetParent() is not None:
@@ -159,6 +154,3 @@ class AboutDialog(MAboutDialog, Dialog):
             copyrights,
             ok,
         )
-
-
-### EOF #######################################################################

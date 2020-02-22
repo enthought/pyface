@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A wizard controller that can be chained with others. """
 
 
-# Enthought library imports.
 from traits.api import Instance
 
-# Local imports.
+
 from .i_wizard_controller import IWizardController
 from .wizard_controller import WizardController
 
@@ -25,14 +21,14 @@ from .wizard_controller import WizardController
 class ChainedWizardController(WizardController):
     """ A wizard controller that can be chained with others. """
 
-    #### 'ChainedWizardController' interface ##################################
+    # 'ChainedWizardController' interface ---------------------------------#
 
     # The next chained wizard controller.
     next_controller = Instance(IWizardController)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_next_page(self, page):
         """ Returns the next page. """
@@ -122,9 +118,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ChainedWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_pages(self):
         """ Returns the pages in the wizard. """
@@ -143,9 +139,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update(self):
         """ Checks the completion status of the controller. """
@@ -168,9 +164,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _current_page_changed(self, old, new):
         """ Called when the current page is changed. """
@@ -188,8 +184,6 @@ class ChainedWizardController(WizardController):
 
         self._update()
 
-        return
-
     def _next_controller_changed(self, old, new):
         """ Called when the next controller is changed. """
 
@@ -205,14 +199,12 @@ class ChainedWizardController(WizardController):
 
         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _on_controller_complete(self, obj, trait_name, old, new):
         """ Called when the next controller's complete state changes. """
 
         self._update()
-
-        return
 
     def _on_page_complete(self, obj, trait_name, old, new):
         """ Called when the current page is complete. """
@@ -220,6 +212,3 @@ class ChainedWizardController(WizardController):
         self._update()
 
         return
-
-
-#### EOF ######################################################################

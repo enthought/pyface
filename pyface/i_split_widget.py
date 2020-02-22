@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Mix-in class for split widgets. """
 
 
-# Enthought library imports.
 from traits.api import Callable, Enum, Float, Interface
 
 
@@ -25,7 +21,7 @@ class ISplitWidget(Interface):
     vertically.
     """
 
-    #### 'ISplitWidget' interface #############################################
+    # 'ISplitWidget' interface ---------------------------------------------
 
     #: The direction in which the widget is split.
     #
@@ -43,9 +39,9 @@ class ISplitWidget(Interface):
     #: An optional callable that provides the right hand/bottom panel.
     rhs = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget.

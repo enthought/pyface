@@ -1,29 +1,24 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Instance, Int, provides, Unicode
 
-# Local imports.
+
 from pyface.i_heading_text import IHeadingText, MHeadingText
 from pyface.image_resource import ImageResource
 from pyface.wx.util.font_helper import new_font_like
@@ -36,7 +31,7 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-    #### 'IHeadingText' interface #############################################
+    # 'IHeadingText' interface ---------------------------------------------
 
     level = Int(1)
 
@@ -44,9 +39,9 @@ class HeadingText(MHeadingText, Widget):
 
     image = Instance(ImageResource, ImageResource("heading_level_1"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates the panel. """
@@ -59,9 +54,9 @@ class HeadingText(MHeadingText, Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -113,7 +108,7 @@ class HeadingText(MHeadingText, Widget):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _text_changed(self, new):
         """ Called when the text is changed. """
@@ -123,7 +118,7 @@ class HeadingText(MHeadingText, Widget):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_paint_background(self, event):
         """ Called when the background of the panel is painted. """
@@ -137,8 +132,6 @@ class HeadingText(MHeadingText, Widget):
         # Render the text.
         dc.SetFont(self._font)
         dc.DrawText(self.text, 5, 4)
-
-        return
 
     def _on_erase_background(self, event):
         """ Called when the background of the panel is erased. """
@@ -154,6 +147,3 @@ class HeadingText(MHeadingText, Widget):
         dc.DrawText(self.text, 5, 4)
 
         return
-
-
-#### EOF ######################################################################

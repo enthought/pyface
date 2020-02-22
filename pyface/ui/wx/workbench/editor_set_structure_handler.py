@@ -1,26 +1,21 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ The handler used to restore editors.
 """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.dock.api import SetStructureHandler
 
 
@@ -35,9 +30,9 @@ class EditorSetStructureHandler(SetStructureHandler):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, window_layout, editor_mementos):
         """ Creates a new handler. """
@@ -47,9 +42,9 @@ class EditorSetStructureHandler(SetStructureHandler):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'SetStructureHandler' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def resolve_id(self, id):
         """ Resolves an unresolved dock control id. """
@@ -80,9 +75,9 @@ class EditorSetStructureHandler(SetStructureHandler):
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_editor_memento(self, id):
         """ Return the editor memento for the editor with the specified Id.
@@ -96,6 +91,3 @@ class EditorSetStructureHandler(SetStructureHandler):
             raise ValueError("no editor memento with Id %s" % id)
 
         return editor_memento
-
-
-#### EOF ######################################################################

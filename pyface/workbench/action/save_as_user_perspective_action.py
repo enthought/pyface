@@ -1,15 +1,15 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005-2006 by Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: David C. Morrill <dmorrill@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 """ An action that saves the active perspective as a user perspective. """
 
 
-# Local imports.
 from .user_perspective_name import UserPerspectiveName
 from .workbench_action import WorkbenchAction
 
@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 class SaveAsUserPerspectiveAction(WorkbenchAction):
     """ An action that saves the active perspective as a user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier.
     id = "pyface.workbench.action.save_as_user_perspective_action"
@@ -25,9 +25,9 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Save Perspective As..."
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """
@@ -50,6 +50,3 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
-
-
-#### EOF #####################################################################

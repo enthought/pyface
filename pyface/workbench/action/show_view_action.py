@@ -1,7 +1,15 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ An action that shows a dialog to allow the user to choose a view. """
 
 
-# Local imports.
 from .view_chooser import ViewChooser
 from .workbench_action import WorkbenchAction
 
@@ -9,7 +17,7 @@ from .workbench_action import WorkbenchAction
 class ShowViewAction(WorkbenchAction):
     """ An action that shows a dialog to allow the user to choose a view. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = "pyface.workbench.action.show_view"
@@ -17,9 +25,9 @@ class ShowViewAction(WorkbenchAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Show View"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """
@@ -40,6 +48,3 @@ class ShowViewAction(WorkbenchAction):
             chooser.view.activate()
 
         return
-
-
-#### EOF ######################################################################

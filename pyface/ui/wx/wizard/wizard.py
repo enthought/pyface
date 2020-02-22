@@ -1,23 +1,19 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The base class for all pyface wizards. """
 
 
-# Major package imports.
 import wx
 
-# Enthought library imports.
+
 from traits.api import Bool, Instance, List, Property, provides, Unicode
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard
@@ -33,7 +29,7 @@ class Wizard(MWizard, Dialog):
 
     """
 
-    #### 'IWizard' interface ##################################################
+    # 'IWizard' interface -------------------------------------------------#
 
     pages = Property(List(IWizardPage))
 
@@ -41,13 +37,13 @@ class Wizard(MWizard, Dialog):
 
     show_cancel = Bool(True)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     title = Unicode("Wizard")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog. """
@@ -94,9 +90,9 @@ class Wizard(MWizard, Dialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'MWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _show_page(self, page):
         """ Show the specified page. """
@@ -117,8 +113,6 @@ class Wizard(MWizard, Dialog):
         # 'next_page' on the controller should cause it to set its own current
         # page?
         self.controller.current_page = page
-
-        return
 
     def _update(self):
         """ Enables/disables buttons depending on the state of the wizard. """
@@ -153,7 +147,7 @@ class Wizard(MWizard, Dialog):
 
         return
 
-    #### Trait handlers #######################################################
+    # Trait handlers -------------------------------------------------------
 
     def _controller_default(self):
         """ Provide a default controller. """
@@ -172,14 +166,12 @@ class Wizard(MWizard, Dialog):
 
         self.controller.pages = pages
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_next(self, event):
         """ Called when the 'Next' button is pressed. """
 
         self.next()
-
-        return
 
     def _on_back(self, event):
         """ Called when the 'Back' button is pressed. """
@@ -187,6 +179,3 @@ class Wizard(MWizard, Dialog):
         self.previous()
 
         return
-
-
-#### EOF ######################################################################

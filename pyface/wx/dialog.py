@@ -1,20 +1,16 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought util package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Dialog utilities. """
 
 
-# Major package imports.
 import wx
 
 # A file dialog wildcard for Python files.
@@ -41,8 +37,6 @@ class OpenFileDialog(wx.FileDialog):
         # Base-class constructor.
         wx.FileDialog.__init__(self, parent, "Open", style=style, **kw)
 
-        return
-
 
 class OpenDirDialog(wx.DirDialog):
     """ An open-directory dialog. """
@@ -55,8 +49,6 @@ class OpenDirDialog(wx.DirDialog):
         # Base-class constructor.
         wx.DirDialog.__init__(self, parent, "Open", style=style, **kw)
 
-        return
-
 
 class SaveFileAsDialog(wx.FileDialog):
     """ A save-file dialog. """
@@ -68,8 +60,6 @@ class SaveFileAsDialog(wx.FileDialog):
 
         # Base-class constructor.
         wx.FileDialog.__init__(self, parent, "Save As", style=style, **kw)
-
-        return
 
 
 def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
@@ -117,8 +107,6 @@ def information(parent, message, title=None):
     dialog.ShowModal()
     dialog.Destroy()
 
-    return
-
 
 def warning(parent, message, title=None):
     """ Displays a modal warning dialog. """
@@ -132,8 +120,6 @@ def warning(parent, message, title=None):
 
     dialog.ShowModal()
     dialog.Destroy()
-
-    return
 
 
 def error(parent, message, title=None):
@@ -149,8 +135,6 @@ def error(parent, message, title=None):
     dialog.ShowModal()
     dialog.Destroy()
 
-    return
-
 
 def _get_title(title, parent, default):
     """ Get a sensible title for a dialog! """
@@ -163,6 +147,3 @@ def _get_title(title, parent, default):
             title = default
 
     return title
-
-
-#### EOF ######################################################################

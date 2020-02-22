@@ -1,45 +1,46 @@
-# -----------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  Author: Scott Swarts <swarts@enthought.com>
-#
-# -----------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 """A dialog that is loaded from an XRC resource file.
 """
 from __future__ import absolute_import
 
-# Standard library imports.
+
 import os.path
 
 # Major packages.
 import wx
 import wx.xrc
 
-# Enthought library imports
+
 from traits.api import Instance, Str
 import traits.util.resource
 
-# Local imports.
+
 from .dialog import Dialog
 
 
-##############################################################################
+# ----------------------------------------------------------------------------
 # class 'XrcDialog'
-##############################################################################
+# ----------------------------------------------------------------------------
 
 
 class XrcDialog(Dialog):
     """A dialog that is loaded from an XRC resource file.
     """
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # Traits
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
-    ### 'XrcDialog' interface ############################################
+    # 'XrcDialog' interface --------------------------------------------
 
     # Path to the xrc file relative to the class's module
     xrc_file = Str
@@ -50,9 +51,9 @@ class XrcDialog(Dialog):
     # The resource object
     resource = Instance(wx.xrc.XmlResource)
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'Dialog' interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """
@@ -90,9 +91,9 @@ class XrcDialog(Dialog):
 
         self._add_handlers()
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'XrcDialog' interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def XRCID(self, name):
         """
@@ -112,15 +113,12 @@ class XrcDialog(Dialog):
         """
         self.XRCCTRL(name).SetValidator(validator)
 
-    ##########################################################################
+    # ------------------------------------------------------------------------
     # 'XrcDialog' protected interface
-    ##########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_handlers(self):
         """
         Override to add event handlers.
         """
         return
-
-
-#### EOF ######################################################################

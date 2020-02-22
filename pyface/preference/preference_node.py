@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ Abstract base class for a node in a preference dialog.
 
 A preference node has a label and an image which are used to represent the node
@@ -19,7 +16,6 @@ in a preference dialog (usually in the form of a tree).
 """
 
 
-# Enthought library imports.
 from pyface.viewer.tree_item import TreeItem
 from traits.api import Str
 
@@ -32,7 +28,7 @@ class PreferenceNode(TreeItem):
 
     """
 
-    #### 'PreferenceNode' interface ###########################################
+    # 'PreferenceNode' interface -------------------------------------------
 
     # The node's unique Id.
     id = Str
@@ -46,18 +42,18 @@ class PreferenceNode(TreeItem):
     # The Id of the help topic for the node.
     help_id = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Returns the string representation of the item. """
 
         return self.name
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PreferenceNode' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self):
         """ Creates the preference page for this node. """
@@ -79,6 +75,3 @@ class PreferenceNode(TreeItem):
             node = None
 
         return node
-
-
-#### EOF ######################################################################

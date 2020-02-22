@@ -1,10 +1,18 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 """ The perspective interface. """
 
 
-# Enthought library imports.
 from traits.api import Bool, Interface, List, Str, Tuple
 
-# Local imports.
+
 from .perspective_item import PerspectiveItem
 
 
@@ -31,13 +39,10 @@ class IPerspective(Interface):
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create(self, window):
         """ Create the perspective in a workbench window. """
 
     def show(self, window):
         """ Called when the perspective is shown in a workbench window. """
-
-
-#### EOF ######################################################################

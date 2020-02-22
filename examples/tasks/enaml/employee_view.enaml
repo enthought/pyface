@@ -1,6 +1,6 @@
 #------------------------------------------------------------------------------
-#  Copyright (c) 2013, Enthought, Inc.
-#  All rights reserved.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #------------------------------------------------------------------------------
 from enaml.layout.api import align, vbox
 from enaml.widgets.api import CheckBox, Container, DateSelector, Field, Form, \
@@ -55,7 +55,7 @@ enamldef EmployerForm(Form):
 
 enamldef EmployeeView(Container): main:
     attr employee
-    
+
     constraints = [
         vbox(top_box, bottom_box),
         align('midline', top_form, bottom_form),
@@ -64,8 +64,8 @@ enamldef EmployeeView(Container): main:
         title = "Personal Details"
         EmployeeForm: top_form:
             # We access the employee object through the identifier
-            # 'main' here, because the EmployeeForm also has an 
-            # 'employee' attribute declared, and that would be 
+            # 'main' here, because the EmployeeForm also has an
+            # 'employee' attribute declared, and that would be
             # found first.
             employee = main.employee
     GroupBox: bottom_box:

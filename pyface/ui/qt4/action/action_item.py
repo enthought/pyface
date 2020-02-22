@@ -1,18 +1,17 @@
-# Copyright (c) 2007, Riverbank Computing Limited
-# Copyright (c) 2019, Enthought, Inc.
+# (C) Copyright 2007 Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described
-# in the PyQt GPL exception also apply.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
+# Thanks for using Enthought open source!
 
 """ The PyQt specific implementations the action manager internal classes. """
 
 
-# Standard library imports.
 import six
 
 if six.PY2:
@@ -21,13 +20,13 @@ else:
     # avoid deprecation warning
     from inspect import getfullargspec as getargspec
 
-# Major package imports.
+
 from pyface.qt import QtGui, QtCore
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, HasTraits
 
-# Local imports.
+
 from pyface.action.action_event import ActionEvent
 
 
@@ -45,7 +44,7 @@ class PyfaceWidgetAction(QtGui.QWidgetAction):
 class _MenuItem(HasTraits):
     """ A menu item representation of an action item. """
 
-    #### '_MenuItem' interface ################################################
+    # '_MenuItem' interface ------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -69,9 +68,9 @@ class _MenuItem(HasTraits):
     # The toolkit control id.
     control_id = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
         """ Creates a new menu item for an action item. """
@@ -167,9 +166,9 @@ class _MenuItem(HasTraits):
             self._on_action_tooltip_changed, "tooltip", remove=True
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
@@ -220,7 +219,7 @@ class _MenuItem(HasTraits):
             else:
                 action.perform(action_event)
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
@@ -276,7 +275,7 @@ class _MenuItem(HasTraits):
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
-    #### '_Tool' interface ####################################################
+    # '_Tool' interface ----------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -300,9 +299,9 @@ class _Tool(HasTraits):
     # The toolkit control id.
     control_id = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
@@ -369,9 +368,9 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
@@ -418,7 +417,7 @@ class _Tool(HasTraits):
             else:
                 action.perform(action_event)
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
@@ -477,15 +476,15 @@ class _Tool(HasTraits):
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
-    #### '_PaletteTool' interface #############################################
+    # '_PaletteTool' interface ---------------------------------------------
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
         """ Creates a new tool palette tool for an action item. """
@@ -534,18 +533,16 @@ class _PaletteTool(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
-
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
@@ -564,7 +561,7 @@ class _PaletteTool(HasTraits):
 
         return
 
-    #### Tool palette event handlers ##########################################
+    # Tool palette event handlers -----------------------------------------#
 
     def _on_tool(self, event):
         """ Called when the tool palette button is clicked. """

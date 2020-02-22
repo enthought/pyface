@@ -1,4 +1,3 @@
-# Enthought library imports.
 from pyface.tasks.api import (
     Task,
     TaskLayout,
@@ -24,7 +23,7 @@ from pyface.api import (
 )
 from traits.api import on_trait_change, Property, Instance
 
-# Local imports.
+
 from example_panes import PythonScriptBrowserPane
 from python_editor import PythonEditor
 
@@ -33,7 +32,7 @@ class ExampleTask(Task):
     """ A simple task for editing Python code.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Multi-Tab Editor"
@@ -77,9 +76,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(left=PaneItem("example.python_script_browser_pane"))
@@ -105,9 +104,9 @@ class ExampleTask(Task):
         browser.on_trait_change(handler, "activated")
         return [browser]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def new(self):
         """ Opens a new empty window
@@ -143,9 +142,9 @@ class ExampleTask(Task):
                 return False
         return True
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _open_file(self, filename):
         """ Opens the file at the specified path in the editor.
@@ -184,7 +183,7 @@ class ExampleTask(Task):
                 editor.save(editor.path)
         return True
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     @on_trait_change("window:closing")
     def _prompt_on_close(self, event):
@@ -193,7 +192,7 @@ class ExampleTask(Task):
         close = self._prompt_for_save()
         event.veto = not close
 
-    #### Trait property getter/setters ########################################
+    # Trait property getter/setters ----------------------------------------
 
     def _get_active_editor(self):
         if self.editor_area is not None:

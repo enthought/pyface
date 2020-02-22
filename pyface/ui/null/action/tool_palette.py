@@ -1,16 +1,13 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ View of an ActionManager drawn as a rectangle of buttons. """
 
 from pyface.widget import Widget
@@ -35,9 +32,9 @@ class ToolPalette(Widget):
     # Maps a button id to its tool id.
     button_tool_map = Dict
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new tool palette. """
@@ -50,9 +47,9 @@ class ToolPalette(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # ToolPalette interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_tool(self, label, bmp, kind, tooltip, longtip):
         """ Add a tool with the specified properties to the palette.
@@ -69,19 +66,15 @@ class ToolPalette(Widget):
         if the 'checked' parameter is True; unchecked otherwise.  If the button
         is a standard button, this method is a NOP.
         """
-        return
 
     def enable_tool(self, id, enabled):
         """ Enable or disable the tool identified by 'id'. """
-        return
 
     def on_tool_event(self, id, callback):
         """ Register a callback for events on the tool identified by 'id'. """
-        return
 
     def realize(self):
         """ Realize the control so that it can be displayed. """
-        return
 
     def get_tool_state(self, id):
         """ Get the toggle state of the tool identified by 'id'. """
@@ -89,12 +82,9 @@ class ToolPalette(Widget):
 
         return state
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         return None
-
-
-#### EOF ######################################################################

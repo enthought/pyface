@@ -1,33 +1,30 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ A clickable/draggable widget containing an image. """
 from __future__ import absolute_import
 
-# Major package imports.
+
 import wx
 
-# Enthought library imports.
+
 from traits.api import Any, Bool, Event
 
-# Local imports.
+
 from .widget import Widget
 
 
 class ImageWidget(Widget):
     """ A clickable/draggable widget containing an image. """
 
-    #### 'ImageWidget' interface ##############################################
+    # 'ImageWidget' interface ---------------------------------------------#
 
     # The bitmap.
     bitmap = Any
@@ -35,7 +32,7 @@ class ImageWidget(Widget):
     # Is the widget selected?
     selected = Bool(False)
 
-    #### Events ####
+    # Events ----
 
     # A key was pressed while the tree is in focus.
     key_pressed = Event
@@ -58,13 +55,13 @@ class ImageWidget(Widget):
     # A right-click occurred on a node.
     node_right_clicked = Event
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _selected = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new widget. """
@@ -102,19 +99,17 @@ class ImageWidget(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _bitmap_changed(self, bitmap):
         """ Called when the widget's bitmap is changed. """
 
         if self.control is not None:
             self.control.Refresh()
-
-        return
 
     def _selected_changed(self, selected):
         """ Called when the selected state of the widget is changed. """
@@ -130,7 +125,7 @@ class ImageWidget(Widget):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_enter_window(self, event):
         """ Called when the mouse enters the widget. """
@@ -139,8 +134,6 @@ class ImageWidget(Widget):
             self._mouse_over = True
             self.Refresh()
 
-        return
-
     def _on_leave_window(self, event):
         """ Called when the mouse leaves the widget. """
 
@@ -148,16 +141,12 @@ class ImageWidget(Widget):
             self._mouse_over = False
             self.Refresh()
 
-        return
-
     def _on_left_dclick(self, event):
         """ Called when the left mouse button is double-clicked. """
 
         # print 'left dclick'
 
         event.Skip()
-
-        return
 
     def _on_left_down(self, event=None):
         """ Called when the left mouse button goes down on the widget. """
@@ -170,8 +159,6 @@ class ImageWidget(Widget):
             self.Refresh()
 
         event.Skip()
-
-        return
 
     def _on_left_up(self, event=None):
         """ Called when the left mouse button goes up on the widget. """
@@ -199,8 +186,6 @@ class ImageWidget(Widget):
             self.Refresh()
 
         event.Skip()
-
-        return
 
     def _on_paint(self, event=None):
         """ Called when the widget needs repainting. """
@@ -237,6 +222,3 @@ class ImageWidget(Widget):
             wdc.DrawLine(3, wdy - 3, wdx - 3, wdy - 3)
 
         return
-
-
-#### EOF ######################################################################

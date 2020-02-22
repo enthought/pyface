@@ -1,8 +1,17 @@
-# Standard library imports
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from contextlib import contextmanager
 import logging
 
-# Enthought library imports.
+
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
 from traits.api import (
     Bool,
@@ -14,11 +23,11 @@ from traits.api import (
     Int,
 )
 
-# System library imports.
+
 import wx
 from pyface.wx.aui import aui
 
-# Local imports.
+
 from .task_pane import TaskPane
 
 # Constants.
@@ -51,17 +60,17 @@ class DockPane(TaskPane, MDockPane):
     # number.  This is a way to isolate panes
     dock_layer = Int(0)
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _receiving = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def get_hierarchy(cls, parent, indent=""):
@@ -147,23 +156,23 @@ class DockPane(TaskPane, MDockPane):
                 self.control.Destroy()
             self.control = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         return wx.Window(parent, name=self.task.id + ":" + self.id)
 
-    #### Trait property getters/setters #######################################
+    # Trait property getters/setters ---------------------------------------
 
     def _get_size(self):
         if self.control is not None:
             return self.control.GetSize().Get()
         return (-1, -1)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def get_pane_info(self):
         info = self.task.window._aui_manager.GetPane(self.pane_name)

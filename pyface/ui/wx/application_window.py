@@ -1,30 +1,25 @@
-# ------------------------------------------------------------------------------
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
 #
-#  Copyright (c) 2005, Enthought, Inc.
-#  All rights reserved.
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-#  This software is provided without warranty under the terms of the BSD
-#  license included in enthought/LICENSE.txt and may be redistributed only
-#  under the conditions described in the aforementioned license.  The license
-#  is also available online at http://www.enthought.com/licenses/BSD.txt
-#
-#  Thanks for using Enthought open source!
-#
-#  Author: Enthought, Inc.
-#
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 
 """ Enthought pyface package component
 """
 
-# Standard library imports.
+
 import sys
 
-# Major package imports.
+
 import wx
 from pyface.wx.aui import aui, PyfaceAuiManager
 
-# Enthought library imports.
+
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, on_trait_change, provides, Unicode
@@ -32,7 +27,7 @@ from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
 
-# Local imports.
+
 from .window import Window
 
 
@@ -42,7 +37,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     icon = Instance(ImageResource)
 
@@ -56,7 +51,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # this list instead.
     tool_bar_managers = List(ToolBarManager)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     # fixme: We can't set the default value of the actual 'size' trait here as
     # in the toolkit-specific event handlers for window size and position
@@ -68,9 +63,9 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     title = Unicode("Pyface")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
@@ -92,8 +87,6 @@ class ApplicationWindow(MApplicationWindow, Window):
             status_bar = self.status_bar_manager.create_status_bar(parent)
             self.control.SetStatusBar(status_bar)
 
-        return
-
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
@@ -113,18 +106,18 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _size_default(self):
         """ Trait initialiser. """
 
         return (800, 600)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
 
@@ -144,8 +137,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         # Updating the AUI manager actually commits all of the pane's added
         # to it (this allows batch updates).
         self._aui_manager.Update()
-
-        return
 
     def _create_control(self, parent):
 
@@ -173,17 +164,15 @@ class ApplicationWindow(MApplicationWindow, Window):
             self._aui_manager.UnInit()
         super(ApplicationWindow, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_toolbar_to_aui_manager(self, tool_bar):
         """ Add a toolbar to the AUI manager. """
 
         info = self._get_tool_bar_pane_info(tool_bar)
         self._aui_manager.AddPane(tool_bar, info)
-
-        return
 
     def _get_tool_bar_pane_info(self, tool_bar):
         info = aui.AuiPaneInfo()
@@ -213,8 +202,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         # AUI toolbars cannot be enabled/disabled.
 
-        return
-
     def _wx_show_tool_bar(self, tool_bar, visible):
         """ Hide/Show a tool bar. """
 
@@ -236,7 +223,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _menu_bar_manager_changed(self):
         if self.control is not None:
@@ -256,6 +243,3 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _icon_changed(self):
         self._set_window_icon()
-
-
-#### EOF ######################################################################

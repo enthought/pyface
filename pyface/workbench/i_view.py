@@ -1,27 +1,24 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2005, Enthought, Inc.
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD
-# license included in enthought/LICENSE.txt and may be redistributed only
-# under the conditions described in the aforementioned license.  The license
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
-# Thanks for using Enthought open source!
 #
-# Author: Enthought, Inc.
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
+
 """ The interface for workbench views. """
 
-# Standard library imports.
+
 import logging
 
-# Enthought library imports.
+
 from pyface.api import ImageResource
 from traits.api import Bool, Enum, Float, Instance, List, provides, Str
 from traits.util.camel_case import camel_case_to_words
 
-# Local imports.
+
 from .i_perspective_item import IPerspectiveItem
 from .i_workbench_part import IWorkbenchPart, MWorkbenchPart
 from .perspective_item import PerspectiveItem
@@ -48,9 +45,9 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # Whether the view is visible or not.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IView' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate(self):
         """ Activate the view.
@@ -72,7 +69,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
 class MView(MWorkbenchPart, PerspectiveItem):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IView' interface ####################################################
+    # 'IView' interface ----------------------------------------------------
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
@@ -89,9 +86,9 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # Whether the view is visible or not.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -110,9 +107,9 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
         return name
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IView' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate(self):
         """ Activate the view.
@@ -121,14 +118,10 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
         self.window.activate_view(self)
 
-        return
-
     def hide(self):
         """ Hide the view. """
 
         self.window.hide_view(self)
-
-        return
 
     def show(self):
         """ Show the view. """
@@ -136,6 +129,3 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.show_view(self)
 
         return
-
-
-#### EOF ######################################################################
