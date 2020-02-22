@@ -53,5 +53,3 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 from .toolkit import toolkit_object
 
 ConfirmationDialog = toolkit_object("confirmation_dialog:ConfirmationDialog")
-
-

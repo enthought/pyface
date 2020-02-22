@@ -53,6 +53,3 @@ class LabelProvider(HasTraits):
         """ Can the label text be changed via the viewer? """
 
         return False
-
-
-

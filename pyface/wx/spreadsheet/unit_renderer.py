@@ -29,7 +29,6 @@ class UnitRenderer(DefaultRenderer):
         dc.SetFont(self.font)
         dc.DrawText(text, rect.x + 1, rect.y + 1)
 
-
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
         """ Erases whatever is already in the cell by drawing over it.
         """
@@ -71,7 +70,6 @@ class MultiUnitRenderer(DefaultRenderer):
         text = grid.model.GetValue(row, col)
         dc.SetFont(self.font)
         dc.DrawText(text, rect.x + 1, rect.y + 1)
-
 
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
         """ Erases whatever is already in the cell by drawing over it.

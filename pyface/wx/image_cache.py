@@ -73,6 +73,3 @@ class ImageCache(object):
             image.Rescale(self._width, self._height)
 
         return image
-
-
-

@@ -85,6 +85,3 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         return wx.DirDialog(
             parent, message=message, defaultPath=self.default_path, style=style
         )
-
-
-

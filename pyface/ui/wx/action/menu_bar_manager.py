@@ -50,6 +50,3 @@ class MenuBarManager(ActionManager):
                 menu_bar.Append(menu, item.name)
 
         return menu_bar
-
-
-

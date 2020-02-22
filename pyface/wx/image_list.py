@@ -112,6 +112,3 @@ class ImageList(wx.ImageList):
             image.Rescale(self._width, self._height)
 
         return image
-
-
-

@@ -66,6 +66,3 @@ class ViewerFilter(HasTraits):
         """
 
         return False
-
-
-

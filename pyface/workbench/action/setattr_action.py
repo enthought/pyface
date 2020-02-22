@@ -32,6 +32,3 @@ class SetattrAction(WorkbenchAction):
         setattr(self.obj, self.attribute_name, self.value)
 
         return
-
-
-

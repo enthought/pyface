@@ -20,5 +20,3 @@ from __future__ import absolute_import
 from .toolkit import toolkit_object
 
 SplitWidget = toolkit_object("split_widget:SplitWidget")
-
-

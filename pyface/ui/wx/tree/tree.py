@@ -61,7 +61,6 @@ class _Tree(wx.TreeCtrl):
         # The tree that we are the toolkit-specific delegate for.
         self._tree = tree
 
-
     def Destroy(self):
         """ Destructor. """
 
@@ -257,7 +256,6 @@ class Tree(Widget):
         if wxid is not None:
             self.control.Collapse(wxid)
 
-
     def edit_label(self, node, callback=None):
         """ Edits the label of the specified node.
 
@@ -273,14 +271,12 @@ class Tree(Widget):
             self._label_edit_callback = callback
             self.control.EditLabel(wxid)
 
-
     def expand(self, node):
         """ Expands the specified node. """
 
         wxid = self._get_wxid(node)
         if wxid is not None:
             self.control.Expand(wxid)
-
 
     def expand_all(self):
         """ Expands every node in the tree. """
@@ -291,7 +287,6 @@ class Tree(Widget):
         else:
             for child in self._get_children(self.root):
                 self._expand_item(self._get_wxid(child))
-
 
     def get_parent(self, node):
         """ Returns the parent of a node.
@@ -378,14 +373,12 @@ class Tree(Widget):
 
                 self.control.Expand(pid)
 
-
     def select(self, node):
         """ Selects the specified node. """
 
         wxid = self._get_wxid(node)
         if wxid is not None:
             self.control.SelectItem(wxid)
-
 
     def set_selection(self, list):
         """ Selects the specified list of nodes. """
@@ -462,7 +455,6 @@ class Tree(Widget):
 
         self._node_to_id_map[key] = wxid
 
-
     def _remove_wxid(self, node):
         """ Removes the wxid for the specified node. """
 
@@ -477,7 +469,6 @@ class Tree(Widget):
             # fixme: No, really, this is a serious one... How do we get in this
             # situation.  It came up when using the canvas stuff...
             logger.warn("removing node: %s" % str(node))
-
 
     def _get_style(self):
         """ Returns the wx style flags for creating the tree control. """
@@ -515,7 +506,6 @@ class Tree(Widget):
         model.on_trait_change(self._on_nodes_removed, "nodes_removed")
         model.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
         model.on_trait_change(self._on_structure_changed, "structure_changed")
-
 
     def _remove_model_listeners(self, model):
         """ Removes listeners for model changes. """
@@ -570,7 +560,6 @@ class Tree(Widget):
         tree.Unbind(wx.EVT_TREE_SEL_CHANGED)
         tree.Unbind(wx.EVT_TREE_DELETE_ITEM)
 
-
     def _add_root_node(self, node):
         """ Adds the root node. """
 
@@ -608,7 +597,6 @@ class Tree(Widget):
         if self.show_root:
             self.control.Expand(wxid)
 
-
     def _add_node(self, pid, node):
         """ Adds 'node' as a child of the node identified by 'pid'.
 
@@ -638,7 +626,6 @@ class Tree(Widget):
 
         # Make sure that we can find the node's Id.
         self._set_wxid(node, wxid)
-
 
     def _insert_node(self, pid, node, index):
         """ Inserts 'node' as a child of the node identified by 'pid'.
@@ -672,7 +659,6 @@ class Tree(Widget):
         # Make sure that we can find the node's Id.
         self._set_wxid(node, wxid)
 
-
     def _remove_node(self, wxid, node):
         """ Removes a node from the tree. """
 
@@ -682,7 +668,6 @@ class Tree(Widget):
         # Remove the reference to the item's data.
         self._remove_wxid(node)
         self.control.SetItemData(wxid, None)
-
 
     def _update_node(self, wxid, node):
         """ Updates the image and text of the specified node. """
@@ -695,7 +680,6 @@ class Tree(Widget):
         # Get the tree item text.
         text = self._get_text(node)
         self.control.SetItemText(wxid, text)
-
 
     def _has_children(self, node):
         """ Returns True if a node has children. """
@@ -846,7 +830,6 @@ class Tree(Widget):
             if root is not None:
                 self._add_root_node(root)
 
-
     def _on_nodes_changed(self, event):
         """ Called when nodes have been changed. """
 
@@ -856,7 +839,6 @@ class Tree(Widget):
             cid = self._get_wxid(child)
             if cid is not None:
                 self._update_node(cid, child)
-
 
     def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
@@ -905,7 +887,6 @@ class Tree(Widget):
             if not self.is_expanded(parent):
                 self.expand(parent)
 
-
     def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
 
@@ -923,7 +904,6 @@ class Tree(Widget):
             # Does the node have any children left?
             has_children = self.control.GetChildrenCount(pid) > 0
             self.control.SetItemHasChildren(pid, has_children)
-
 
     def _on_nodes_replaced(self, event):
         """ Called when nodes have been replaced. """
@@ -987,7 +967,6 @@ class Tree(Widget):
 
         event.Skip()
 
-
     def _on_left_down(self, event):
         """ Called when the left mouse button is clicked on the tree. """
 
@@ -1008,7 +987,6 @@ class Tree(Widget):
         # Give other event handlers a chance.
         event.Skip()
 
-
     def _on_right_down(self, event):
         """ Called when the right mouse button is clicked on the tree. """
 
@@ -1027,7 +1005,6 @@ class Tree(Widget):
 
         # Give other event handlers a chance.
         event.Skip()
-
 
     def _on_tree_item_activated(self, event):
         """ Called when a tree item is activated (i.e., double clicked). """
@@ -1050,7 +1027,6 @@ class Tree(Widget):
         # Trait event notiification.
         self.node_activated = node
 
-
     def _on_tree_item_collapsing(self, event):
         """ Called when a tree item is about to collapse. """
 
@@ -1065,7 +1041,6 @@ class Tree(Widget):
         # Give the model a chance to veto the collapse.
         if not self.model.is_collapsible(node):
             event.Veto()
-
 
     def _on_tree_item_collapsed(self, event):
         """ Called when a tree item has been collapsed. """
@@ -1083,7 +1058,6 @@ class Tree(Widget):
 
         # Trait event notification.
         self.node_collapsed = node
-
 
     def _on_tree_item_expanding(self, event):
         """ Called when a tree item is about to expand. """
@@ -1110,7 +1084,6 @@ class Tree(Widget):
         else:
             event.Veto()
 
-
     def _on_tree_item_expanded(self, event):
         """ Called when a tree item has been expanded. """
 
@@ -1128,7 +1101,6 @@ class Tree(Widget):
         # Trait event notification.
         self.node_expanded = node
 
-
     def _on_tree_begin_label_edit(self, event):
         """ Called when the user has started editing an item's label. """
 
@@ -1142,7 +1114,6 @@ class Tree(Widget):
         # Give the model a chance to veto the edit.
         if not self.model.is_editable(node):
             event.Veto()
-
 
     def _on_tree_end_label_edit(self, event):
         """ Called when the user has finished editing am item's label. """
@@ -1192,7 +1163,6 @@ class Tree(Widget):
             # 'edit_label'), then call it).
             if self._label_edit_callback is not None:
                 self._label_edit_callback(self, node, label)
-
 
     def _on_tree_begin_drag(self, event):
         """ Called when a drag operation is starting on a tree item. """
@@ -1247,7 +1217,6 @@ class Tree(Widget):
 
         clipboard.node = None
 
-
     def _on_tree_sel_changed(self, event):
         """ Called when the selection is changed. """
 
@@ -1257,7 +1226,6 @@ class Tree(Widget):
 
             # Trait notification.
             self.selection = self._get_selection()
-
 
     def _on_tree_delete_item(self, event):
         """ Called when a tree item is being been deleted. """
@@ -1285,6 +1253,3 @@ class Tree(Widget):
             self._remove_node(wxid, node)
 
         return
-
-
-

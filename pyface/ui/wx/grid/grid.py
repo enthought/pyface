@@ -439,7 +439,6 @@ class Grid(Widget):
             # the rows looks like crap.
             self._grid.AutoSizeColumns(False)
 
-
     def _on_model_content_changed(self):
         """ A notification method called when the data in the underlying
             model changes. """
@@ -958,7 +957,6 @@ class Grid(Widget):
             self.cell_right_clicked = (row, col)
 
             evt.Skip()
-
 
     def _on_label_right_click(self, evt):
         """ Called when a right click occurred on a label. """
@@ -1896,6 +1894,3 @@ from wx.grid import GridCellEditor
 class DummyGridCellEditor(GridCellEditor):
     def Show(self, show, attr):
         return
-
-
-

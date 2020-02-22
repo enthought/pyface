@@ -1143,7 +1143,6 @@ class Shell(wx.StyledTextCtrl):
             finally:
                 wx.TheClipboard.Close()
 
-
     def PasteAndRun(self):
         """Replace selection with clipboard contents, run commands."""
         if wx.TheClipboard.Open():

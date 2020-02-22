@@ -188,7 +188,6 @@ class ChainedWizardController(WizardController):
 
         self._update()
 
-
     def _next_controller_changed(self, old, new):
         """ Called when the next controller is changed. """
 
@@ -211,13 +210,9 @@ class ChainedWizardController(WizardController):
 
         self._update()
 
-
     def _on_page_complete(self, obj, trait_name, old, new):
         """ Called when the current page is complete. """
 
         self._update()
 
         return
-
-
-

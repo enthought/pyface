@@ -78,7 +78,6 @@ class AbstractGridView(Grid):
 
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
 
-
     def init_labels(self):
         self.SetLabelFont(
             wx.Font(
@@ -89,7 +88,6 @@ class AbstractGridView(Grid):
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
-
     def init_data_types(self):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
@@ -99,7 +97,6 @@ class AbstractGridView(Grid):
             GridCellFloatRenderer(precision=3),
             GridCellFloatEditor(),
         )
-
 
     def init_handlers(self):
 
@@ -123,7 +120,6 @@ class AbstractGridView(Grid):
         self.Bind(wx.grid.EVT_GRID_EDITOR_SHOWN, self.OnEditorShown)
         self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnEditorHidden)
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
-
 
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.

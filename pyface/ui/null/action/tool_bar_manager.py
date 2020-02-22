@@ -76,6 +76,3 @@ class ToolBarManager(ActionManager):
             controller = self.controller
 
         return None
-
-
-

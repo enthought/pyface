@@ -74,6 +74,3 @@ class ImageCache(MImageCache, HasTraits):
             image = image.scaled(self._width, self._height)
 
         return image
-
-
-

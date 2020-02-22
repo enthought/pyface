@@ -658,6 +658,3 @@ class _ViewContainer(QtGui.QMainWindow):
         self._width = self._height = -1
 
         QtGui.QMainWindow.showEvent(self, e)
-
-
-

@@ -96,6 +96,3 @@ class EditorSetStructureHandler(SetStructureHandler):
             raise ValueError("no editor memento with Id %s" % id)
 
         return editor_memento
-
-
-

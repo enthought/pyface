@@ -17,5 +17,3 @@
 from pyface.toolkit import toolkit_object
 
 Wizard = toolkit_object("wizard.wizard:Wizard")
-
-

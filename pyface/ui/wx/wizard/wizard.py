@@ -118,7 +118,6 @@ class Wizard(MWizard, Dialog):
         # page?
         self.controller.current_page = page
 
-
     def _update(self):
         """ Enables/disables buttons depending on the state of the wizard. """
 
@@ -178,13 +177,9 @@ class Wizard(MWizard, Dialog):
 
         self.next()
 
-
     def _on_back(self, event):
         """ Called when the 'Back' button is pressed. """
 
         self.previous()
 
         return
-
-
-

@@ -20,5 +20,3 @@ from pyface.toolkit import toolkit_object
 ToolPaletteManager = toolkit_object(
     "action.tool_palette_manager:ToolPaletteManager"
 )
-
-

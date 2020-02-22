@@ -28,5 +28,3 @@ PyfaceResourceFactory = toolkit_object(
 
 #: A shared instance.
 resource_manager = ResourceManager(resource_factory=PyfaceResourceFactory())
-
-

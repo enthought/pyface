@@ -96,7 +96,6 @@ class Perspective(HasTraits):
         # Activate the first view in every region.
         window.reset_views()
 
-
     def show(self, window):
         """ Called when the perspective is shown in a workbench window.
 
@@ -125,7 +124,6 @@ class Perspective(HasTraits):
 
         for item in contents:
             self._add_perspective_item(window, item)
-
 
     def _add_perspective_item(self, window, item):
         """ Adds a perspective item to a window. """
@@ -160,14 +158,12 @@ class Perspective(HasTraits):
             # developers, then this might be a good place to throw one ;^)
             logger.error("missing view for perspective item <%s>" % item.id)
 
-
     def _add_all(self, window):
         """ Adds *all* of the window's views defined in the window. """
 
         for view in window.views:
             if view.visible:
                 self._add_view(window, view)
-
 
     def _add_view(self, window, view):
         """ Adds a view to a window. """
@@ -186,6 +182,3 @@ class Perspective(HasTraits):
         )
 
         return
-
-
-

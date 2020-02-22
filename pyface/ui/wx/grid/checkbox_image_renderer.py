@@ -39,6 +39,3 @@ class CheckboxImageRenderer(MappedGridCellImageRenderer):
         )
 
         return
-
-
-

@@ -121,6 +121,3 @@ class XrcDialog(Dialog):
         Override to add event handlers.
         """
         return
-
-
-

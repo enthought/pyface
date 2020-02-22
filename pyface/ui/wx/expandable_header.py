@@ -163,7 +163,6 @@ class ExpandableHeader(Widget):
 
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
-
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
 
@@ -179,7 +178,6 @@ class ExpandableHeader(Widget):
                 y = y + h
 
             x = x + w
-
 
     def _draw_title(self, dc):
         """ Draws the text label for the header. """

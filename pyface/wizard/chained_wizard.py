@@ -62,7 +62,6 @@ class ChainedWizard(Wizard):
             # self._create_buttons(self.control)
             self._update()
 
-
     def _controller_changed(self, old, new):
         """ handle the controller being changed. """
 
@@ -73,6 +72,3 @@ class ChainedWizard(Wizard):
             self._update()
 
         return
-
-
-

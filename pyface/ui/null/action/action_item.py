@@ -57,7 +57,6 @@ class _MenuItem(HasTraits):
             controller.add_to_menu(self)
 
 
-
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
@@ -114,7 +113,6 @@ class _Tool(HasTraits):
             controller.add_to_toolbar(self)
 
 
-
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
@@ -133,6 +131,3 @@ class _PaletteTool(HasTraits):
 
         self.item = item
         self.tool_palette = tool_palette
-
-
-

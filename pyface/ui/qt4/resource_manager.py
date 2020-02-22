@@ -49,6 +49,3 @@ class PyfaceResourceFactory(ResourceFactory):
         image.loadFromData(data)
 
         return image
-
-
-

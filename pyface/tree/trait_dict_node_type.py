@@ -57,6 +57,3 @@ class TraitDictNodeType(NodeType):
         """ Returns the label text for a node. """
 
         return self.text
-
-
-

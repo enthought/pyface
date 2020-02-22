@@ -273,6 +273,3 @@ class NodeType(HasPrivateTraits):
         """ Returns True if the node is expandanble, otherwise False. """
 
         return True
-
-
-

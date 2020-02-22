@@ -42,6 +42,3 @@ class Divider(wx.StaticLine):
         self.SetSize((1, 1))
 
         return
-
-
-

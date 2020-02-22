@@ -25,6 +25,3 @@ def wx_to_enable_color(color):
     enable_color[:3] = asarray(color.Get()) / 255.0
 
     return tuple(enable_color)
-
-
-

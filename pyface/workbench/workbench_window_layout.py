@@ -20,5 +20,3 @@ from pyface.toolkit import toolkit_object
 WorkbenchWindowLayout = toolkit_object(
     "workbench.workbench_window_layout:WorkbenchWindowLayout"
 )
-
-

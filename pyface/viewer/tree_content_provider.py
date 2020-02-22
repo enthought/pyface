@@ -64,6 +64,3 @@ class TreeContentProvider(ContentProvider):
         """ Returns True iff the element has children, otherwise False. """
 
         raise NotImplementedError
-
-
-

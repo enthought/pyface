@@ -28,6 +28,3 @@ class WorkbenchWindowMemento(HasTraits):
 
     # Any extra data the toolkit implementation may want to keep.
     toolkit_data = Any()
-
-
-

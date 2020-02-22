@@ -101,6 +101,3 @@ class IWorkbench(Interface):
         Returns None if no such editor exists.
 
         """
-
-
-

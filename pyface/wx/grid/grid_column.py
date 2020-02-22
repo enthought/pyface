@@ -29,6 +29,3 @@ class GridColumn(HasTraits):
 
     # Is the column read-only?
     readonly = Bool(False)
-
-
-

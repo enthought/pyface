@@ -52,6 +52,3 @@ class PerspectiveItem(HasTraits):
 
     # The style of the dock control created.
     style_hint = Enum("tab", "vertical", "horizontal", "fixed")
-
-
-

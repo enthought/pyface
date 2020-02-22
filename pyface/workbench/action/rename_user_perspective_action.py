@@ -41,6 +41,3 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
             manager.rename(window.active_perspective, upn.name.strip())
 
         return
-
-
-

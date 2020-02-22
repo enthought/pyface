@@ -59,6 +59,3 @@ class UserPerspectiveAction(WorkbenchAction):
         )
 
         return
-
-
-

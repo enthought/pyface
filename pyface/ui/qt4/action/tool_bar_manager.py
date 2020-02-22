@@ -131,7 +131,6 @@ class ToolBarManager(ActionManager):
                         self.show_tool_names,
                     )
 
-
     def _separator_visibility_method(self, separator):
         """ Method to return closure to set visibility of group separators. """
         return lambda visible: separator.setVisible(visible)
@@ -172,13 +171,9 @@ class _ToolBar(QtGui.QToolBar):
 
         self.setEnabled(new)
 
-
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.setVisible(new)
 
         return
-
-
-

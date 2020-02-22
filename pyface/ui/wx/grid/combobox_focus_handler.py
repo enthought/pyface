@@ -152,6 +152,3 @@ class ComboboxFocusHandler(wx.EvtHandler):
         grid.MakeCellVisible(row, col)
 
         return True
-
-
-

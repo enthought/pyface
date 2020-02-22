@@ -44,6 +44,3 @@ class GridCellRenderer(HasTraits):
     # Clean-up!
     def dispose(self):
         pass
-
-
-

@@ -69,6 +69,3 @@ class PyfaceResourceFactory(ResourceFactory):
             os.unlink(filename)
 
         return image
-
-
-

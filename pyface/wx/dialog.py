@@ -42,7 +42,6 @@ class OpenFileDialog(wx.FileDialog):
         wx.FileDialog.__init__(self, parent, "Open", style=style, **kw)
 
 
-
 class OpenDirDialog(wx.DirDialog):
     """ An open-directory dialog. """
 
@@ -55,7 +54,6 @@ class OpenDirDialog(wx.DirDialog):
         wx.DirDialog.__init__(self, parent, "Open", style=style, **kw)
 
 
-
 class SaveFileAsDialog(wx.FileDialog):
     """ A save-file dialog. """
 
@@ -66,7 +64,6 @@ class SaveFileAsDialog(wx.FileDialog):
 
         # Base-class constructor.
         wx.FileDialog.__init__(self, parent, "Save As", style=style, **kw)
-
 
 
 def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
@@ -115,7 +112,6 @@ def information(parent, message, title=None):
     dialog.Destroy()
 
 
-
 def warning(parent, message, title=None):
     """ Displays a modal warning dialog. """
 
@@ -128,7 +124,6 @@ def warning(parent, message, title=None):
 
     dialog.ShowModal()
     dialog.Destroy()
-
 
 
 def error(parent, message, title=None):
@@ -145,7 +140,6 @@ def error(parent, message, title=None):
     dialog.Destroy()
 
 
-
 def _get_title(title, parent, default):
     """ Get a sensible title for a dialog! """
 
@@ -157,6 +151,3 @@ def _get_title(title, parent, default):
             title = default
 
     return title
-
-
-

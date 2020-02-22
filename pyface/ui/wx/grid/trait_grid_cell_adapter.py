@@ -206,7 +206,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             else:
                 self.base_Show(show, attr)
 
-
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
             base  class version just fills it with background colour from the
@@ -288,6 +287,3 @@ class TraitGridCellAdapter(PyGridCellEditor):
         pop_control(self._editor.control, grid)
         if self._editor is not None:
             self._editor.dispose()
-
-
-

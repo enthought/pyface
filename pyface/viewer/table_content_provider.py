@@ -33,6 +33,3 @@ class TableContentProvider(ContentProvider):
     # 'TreeContentProvider' and 'TreeLabelProvider'  instead of some
     # combination of the specific and generic viewer classes as in JFace.
     pass
-
-
-

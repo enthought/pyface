@@ -173,7 +173,6 @@ class PreferenceDialog(SplitDialog):
         page = self._pages[self._layered_panel.current_layer_name]
         page.restore_defaults()
 
-
     def _on_help(self, event):
         """ Called when the 'Help' button is pressed. """
 
@@ -216,6 +215,3 @@ class PreferenceDialog(SplitDialog):
             self.__title.text = node.name
 
         return
-
-
-

@@ -63,6 +63,3 @@ class MenuManager(ActionManager, ActionManagerItem):
         """ Adds the item to a tool bar. """
 
         raise ValueError("Cannot add a menu manager to a toolbar.")
-
-
-

@@ -88,6 +88,3 @@ class DefaultTreeContentProvider(TreeContentProvider):
         """ Creates a new item. """
 
         return TreeItem(**kw)
-
-
-

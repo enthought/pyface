@@ -121,6 +121,3 @@ class StatusBarManager(HasTraits):
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
         self.status_bar.showMessage("  ".join(self.messages))
-
-
-

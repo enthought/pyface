@@ -58,6 +58,3 @@ class ContentViewer(Viewer):
 
     # The viewer's filters.
     filters = List(ViewerFilter)
-
-
-

@@ -33,6 +33,3 @@ class ActionController(ActionController):
         event.window = self.window
 
         return action.perform(event)
-
-
-

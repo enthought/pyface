@@ -140,6 +140,3 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         else:
             retval = _RESULT_MAP[retval]
         return retval
-
-
-

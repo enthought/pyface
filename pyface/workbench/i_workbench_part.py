@@ -120,6 +120,3 @@ class MWorkbenchPart(HasTraits):
         """ Set the focus to the appropriate control in the part. """
 
         raise NotImplementedError
-
-
-

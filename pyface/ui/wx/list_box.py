@@ -41,7 +41,6 @@ class ListBox(Widget):
         # Listen for changes to the model.
         self.model.on_trait_change(self._on_model_changed, "list_changed")
 
-
     def dispose(self):
         self.model.on_trait_change(
             self._on_model_changed, "list_changed", remove=True
@@ -74,7 +73,6 @@ class ListBox(Widget):
         listbox = event.GetEventObject()
 
         self.selection = listbox.GetSelection()
-
 
     def _on_item_activated(self, event):
         """ Called when an item in the list is activated. """
@@ -133,7 +131,6 @@ class ListBox(Widget):
         # Populate the list.
         self._populate()
 
-
     def _populate(self):
         """ Populates the list box. """
 
@@ -142,6 +139,3 @@ class ListBox(Widget):
             self.control.Append(label, item)
 
         return
-
-
-

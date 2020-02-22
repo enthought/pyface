@@ -162,7 +162,6 @@ class LayeredPanel(Widget):
         sizer.Show(layer, False)
         sizer.Layout()
 
-
     def _show_layer(self, name, layer):
         """ Shows the specified layer. """
 
@@ -174,6 +173,3 @@ class LayeredPanel(Widget):
         self.current_layer_name = name
 
         return layer
-
-
-

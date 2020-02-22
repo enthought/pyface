@@ -27,6 +27,3 @@ class Viewer(Widget):
     """
 
     pass
-
-
-

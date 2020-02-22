@@ -86,6 +86,3 @@ class MWizardPage(object):
         """
 
         pass
-
-
-

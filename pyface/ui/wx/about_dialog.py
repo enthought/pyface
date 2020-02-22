@@ -159,6 +159,3 @@ class AboutDialog(MAboutDialog, Dialog):
             copyrights,
             ok,
         )
-
-
-

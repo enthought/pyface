@@ -296,6 +296,3 @@ class _CopyAction(Action):
         # clipboard
         value = self._model.get_cell_drag_value(self._row, self._col)
         enClipboard.data = value
-
-
-

@@ -154,6 +154,3 @@ class SplitWidget(MSplitWidget, HasTraits):
         # splitter.Unbind(wx.EVT_SIZE)
 
         return
-
-
-

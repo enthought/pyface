@@ -103,6 +103,3 @@ class TraitsUIView(View):
         )
 
         return ui
-
-
-

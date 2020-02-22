@@ -104,7 +104,6 @@ class ToolPaletteManager(ActionManager):
 
         tool_palette.realize()
 
-
     def _set_initial_tool_state(self, tool_palette, groups):
         """ Workaround for the wxPython tool bar bug.
 
@@ -137,6 +136,3 @@ class ToolPaletteManager(ActionManager):
                     group.items[0].action.checked = True
 
         return
-
-
-

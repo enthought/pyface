@@ -95,7 +95,6 @@ class NodeTree(Tree):
         if default_action is not None:
             self._perform_default_action(default_action, obj)
 
-
     def _node_right_clicked_changed(self, obj_point):
         """ Called when the right mouse button is clicked on the tree. """
 
@@ -167,7 +166,6 @@ class NodeTree(Tree):
 
         action.perform(self._create_action_event(obj))
 
-
     def _popup_menu(self, menu_manager, obj, point):
         """ Popup the menu described by the menu manager. """
 
@@ -183,6 +181,3 @@ class NodeTree(Tree):
             menu_manager.destroy()
 
         return
-
-
-

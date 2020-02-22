@@ -56,6 +56,3 @@ class ColumnProvider(HasTraits):
         """
 
         return "left"
-
-
-

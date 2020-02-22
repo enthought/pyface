@@ -43,7 +43,6 @@ class Cascade(WindowAction):
         self.window.control.Cascade()
 
 
-
 class Tile(WindowAction):
     """ Tiles the windows horizontally. """
 
@@ -60,7 +59,6 @@ class Tile(WindowAction):
         """ Tiles the windows horizontally. """
 
         self.window.control.Tile()
-
 
 
 class ArrangeIcons(WindowAction):
@@ -81,7 +79,6 @@ class ArrangeIcons(WindowAction):
         self.window.control.ArrangeIcons()
 
 
-
 class Next(WindowAction):
     """ Activates the next window. """
 
@@ -100,7 +97,6 @@ class Next(WindowAction):
         self.window.control.ActivateNext()
 
 
-
 class Previous(WindowAction):
     """ Activates the previous window. """
 
@@ -117,7 +113,6 @@ class Previous(WindowAction):
         """ Activates the previous window. """
 
         self.window.control.ActivatePrevious()
-
 
 
 class Close(WindowAction):
@@ -140,7 +135,6 @@ class Close(WindowAction):
             page.Close()
 
 
-
 class CloseAll(WindowAction):
     """ Closes all of the child windows. """
 
@@ -158,7 +152,6 @@ class CloseAll(WindowAction):
 
         for page in self.window.control.GetChildren():
             page.Close()
-
 
 
 class MDIWindowMenu(MenuManager):
@@ -187,6 +180,3 @@ class MDIWindowMenu(MenuManager):
             CloseAll(window=window),
             name="&Window",
         )
-
-
-

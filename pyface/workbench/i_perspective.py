@@ -38,6 +38,3 @@ class IPerspective(Interface):
 
     def show(self, window):
         """ Called when the perspective is shown in a workbench window. """
-
-
-

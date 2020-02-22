@@ -67,7 +67,6 @@ class MultiToolbarWindow(ApplicationWindow):
         # Add the (optional) tool bars.
         self.sizer = self._create_tool_bars(parent)
 
-
     def _create_tool_bars(self, parent):
         """ Create the tool bars for this window. """
 
@@ -151,6 +150,3 @@ class MultiToolbarWindow(ApplicationWindow):
 
         self._tool_bar_managers.append(tool_bar_manager)
         self._tool_bar_locations[tool_bar_manager] = location
-
-
-

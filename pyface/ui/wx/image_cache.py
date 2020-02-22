@@ -94,6 +94,3 @@ class ImageCache(MImageCache, HasTraits):
             self._bitmaps[filename] = bmp
 
         return bmp
-
-
-

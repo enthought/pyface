@@ -329,7 +329,6 @@ class Workbench(HasTraits):
             except:
                 logger.exception("restoring window layout from %s", filename)
 
-
     def _save_window_layout(self, window):
         """ Save the window layout. """
 
@@ -349,7 +348,6 @@ class Workbench(HasTraits):
 
         self.active_window = window
 
-
     def _on_window_opening(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
@@ -357,7 +355,6 @@ class Workbench(HasTraits):
         self.window_opening = window_event = VetoableWindowEvent(window=window)
         if window_event.veto:
             event.veto = True
-
 
     def _on_window_opened(self, window, trait_name, event):
         """ Dynamic trait change handler. """
@@ -373,7 +370,6 @@ class Workbench(HasTraits):
 
         # Event notification.
         self.window_opened = WindowEvent(window=window)
-
 
     def _on_window_closing(self, window, trait_name, event):
         """ Dynamic trait change handler. """
@@ -399,7 +395,6 @@ class Workbench(HasTraits):
                     # Save the window size, position and layout.
                     self._save_window_layout(window)
 
-
     def _on_window_closed(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
@@ -414,6 +409,3 @@ class Workbench(HasTraits):
             self.exited = self
 
         return
-
-
-

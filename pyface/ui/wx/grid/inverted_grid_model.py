@@ -117,6 +117,3 @@ class InvertedGridModel(GridModel):
     def is_cell_editable(self, row, col):
 
         return self.model.is_cell_editable(col, row)
-
-
-

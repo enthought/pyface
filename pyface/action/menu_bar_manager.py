@@ -18,5 +18,3 @@
 from pyface.toolkit import toolkit_object
 
 MenuBarManager = toolkit_object("action.menu_bar_manager:MenuBarManager")
-
-

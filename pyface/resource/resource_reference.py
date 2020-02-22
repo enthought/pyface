@@ -78,6 +78,3 @@ class ImageReference(ResourceReference):
             raise ValueError("Image reference has no filename OR data")
 
         return image
-
-
-

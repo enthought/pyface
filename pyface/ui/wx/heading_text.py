@@ -138,7 +138,6 @@ class HeadingText(MHeadingText, Widget):
         dc.SetFont(self._font)
         dc.DrawText(self.text, 5, 4)
 
-
     def _on_erase_background(self, event):
         """ Called when the background of the panel is erased. """
 
@@ -153,6 +152,3 @@ class HeadingText(MHeadingText, Widget):
         dc.DrawText(self.text, 5, 4)
 
         return
-
-
-

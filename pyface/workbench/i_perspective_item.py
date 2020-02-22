@@ -48,6 +48,3 @@ class IPerspectiveItem(Interface):
 
     # The style of the dock window.
     style_hint = Enum("tab", "horizontal", "vertical", "fixed")
-
-
-

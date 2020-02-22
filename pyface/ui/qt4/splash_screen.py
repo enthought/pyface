@@ -83,6 +83,3 @@ class SplashScreen(MSplashScreen, Window):
             text_color = QtGui.QColor(self.text_color)
 
         control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
-
-
-

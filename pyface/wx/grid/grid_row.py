@@ -27,6 +27,3 @@ class GridRow(HasTraits):
         self.__dict__.update(row_data)
 
         return
-
-
-

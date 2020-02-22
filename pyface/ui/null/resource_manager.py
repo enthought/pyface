@@ -36,6 +36,3 @@ class PyfaceResourceFactory(ResourceFactory):
     def image_from_data(self, data):
         """ Creates an image from the specified data. """
         return data
-
-
-

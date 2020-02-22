@@ -104,6 +104,3 @@ class Window(MWindow, Widget):
         self._size = size
 
         self.trait_property_changed("size", old, size)
-
-
-

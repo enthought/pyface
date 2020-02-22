@@ -180,6 +180,3 @@ class WizardController(HasTraits):
         self._update()
 
         return
-
-
-

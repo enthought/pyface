@@ -144,7 +144,6 @@ class MDIApplicationWindow(ApplicationWindow):
 
             x = x + w
 
-
     def _scale_background_image(self, dc, width, height):
         """ Scales the background image. """
 
@@ -166,7 +165,6 @@ class MDIApplicationWindow(ApplicationWindow):
 
         wx.adv.LayoutAlgorithm().LayoutMDIFrame(self.control)
         event.Skip()
-
 
     def _on_erase_background(self, event):
         """ Called when the background of the MDI client window is erased. """

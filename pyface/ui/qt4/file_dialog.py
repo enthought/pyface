@@ -166,6 +166,3 @@ class FileDialog(MFileDialog, Dialog):
         """ Return the default wildcard. """
 
         return self.WILDCARD_ALL
-
-
-

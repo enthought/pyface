@@ -148,6 +148,3 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         """ Called when the 'No' button is pressed. """
 
         self.control.EndModal(wx.ID_NO)
-
-
-

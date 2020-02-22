@@ -187,6 +187,3 @@ class ViewChooser(HasTraits):
             self.view = None
 
         return
-
-
-

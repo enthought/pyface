@@ -92,6 +92,3 @@ class EditorManager(HasTraits):
         """ Return True if the editor is editing the object. """
 
         return editor.obj == obj
-
-
-

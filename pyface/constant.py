@@ -19,5 +19,3 @@ OK = 10
 CANCEL = 20
 YES = 30
 NO = 40
-
-

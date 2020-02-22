@@ -87,7 +87,6 @@ class PythonEditor(MPythonEditor, Widget):
         self.control.SetText(text)
         self.dirty = False
 
-
     def save(self, path=None):
         """ Saves the contents of the editor. """
 
@@ -99,7 +98,6 @@ class PythonEditor(MPythonEditor, Widget):
         f.close()
 
         self.dirty = False
-
 
     def set_style(self, n, fore, back):
 
@@ -128,7 +126,6 @@ class PythonEditor(MPythonEditor, Widget):
         # StyleSetHotSpot
         # StyleSetSpec --- batch
         # StyleSetVisible
-
 
     def select_line(self, lineno):
         """ Selects the specified line. """
@@ -278,7 +275,6 @@ class PythonEditor(MPythonEditor, Widget):
         # Give other event handlers a chance.
         event.Skip()
 
-
     def _on_char(self, event):
         """ Called whenever a change is made to the text of the document. """
 
@@ -294,6 +290,3 @@ class PythonEditor(MPythonEditor, Widget):
         event.Skip()
 
         return
-
-
-

@@ -88,6 +88,3 @@ class UserPerspectiveName(HasTraits):
         kind="livemodal",
         width=300,
     )
-
-
-

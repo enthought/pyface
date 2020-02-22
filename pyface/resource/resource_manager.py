@@ -241,6 +241,3 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
-
-
-

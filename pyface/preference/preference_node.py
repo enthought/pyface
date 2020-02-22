@@ -79,6 +79,3 @@ class PreferenceNode(TreeItem):
             node = None
 
         return node
-
-
-

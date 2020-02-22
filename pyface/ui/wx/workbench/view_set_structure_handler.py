@@ -69,6 +69,3 @@ class ViewSetStructureHandler(SetStructureHandler):
             control = None
 
         return control
-
-
-

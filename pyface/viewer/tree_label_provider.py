@@ -61,6 +61,3 @@ class TreeLabelProvider(LabelProvider):
         """ Returns True is the node is expandanble, otherwise False. """
 
         return True
-
-
-

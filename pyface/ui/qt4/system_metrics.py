@@ -55,6 +55,3 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         )
 
         return (color.redF(), color.greenF(), color.blueF())
-
-
-

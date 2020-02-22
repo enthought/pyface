@@ -88,6 +88,3 @@ class WizardPage(MWizardPage, HasTraits):
         panel.SetBackgroundColour("yellow")
 
         return panel
-
-
-

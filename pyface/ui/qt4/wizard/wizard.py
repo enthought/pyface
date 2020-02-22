@@ -217,6 +217,3 @@ class _Wizard(QtGui.QWizard):
                 id = -1
 
         return id
-
-
-

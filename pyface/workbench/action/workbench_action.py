@@ -16,6 +16,3 @@ class WorkbenchAction(Action):
     #
     # This is set by the framework.
     window = Instance(WorkbenchWindow)
-
-
-

@@ -128,6 +128,3 @@ class PerspectiveMenuManager(MenuManager):
         )
 
         return group
-
-
-

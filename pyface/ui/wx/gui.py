@@ -145,6 +145,3 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
-
-
-

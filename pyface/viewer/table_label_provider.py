@@ -38,6 +38,3 @@ class TableLabelProvider(LabelProvider):
         """ Returns the label text for an element. """
 
         return "%s column %d" % (str(element), column_index)
-
-
-

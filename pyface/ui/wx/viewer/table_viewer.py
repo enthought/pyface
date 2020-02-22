@@ -165,7 +165,6 @@ class TableViewer(ContentViewer):
         # Trait event notification.
         self.row_selected = -1
 
-
     def _on_item_activated(self, event):
         """ Called when an item in the list is activated. """
 
@@ -175,25 +174,21 @@ class TableViewer(ContentViewer):
         # Trait event notification.
         self.row_activated = row
 
-
     def _on_list_begin_drag(self, event=None, is_rdrag=False):
         """ Called when a drag operation is starting on a list item. """
 
         # Trait notification.
         self.row_begin_drag = event.GetIndex()
 
-
     def _on_list_begin_rdrag(self, event=None):
         """ Called when a drag operation is starting on a list item. """
 
         self._on_list_begin_drag(event, True)
 
-
     def _on_list_begin_label_edit(self, event=None):
         """ Called when a label edit is started. """
 
         event.Veto()
-
 
     def _on_list_end_label_edit(self, event=None):
         """ Called when a label edit is completed. """
@@ -233,7 +228,6 @@ class TableViewer(ContentViewer):
         self._update_contents()
         self._update_column_widths()
 
-
     def _update_contents(self):
         """ Updates the table content. """
 
@@ -255,7 +249,6 @@ class TableViewer(ContentViewer):
         # Setting this causes a refresh!
         self.control.SetItemCount(len(self._elements))
 
-
     def _update_column_widths(self):
         """ Updates the column widths. """
 
@@ -267,7 +260,6 @@ class TableViewer(ContentViewer):
                 width = self._get_column_width(column)
 
             self.control.SetColumnWidth(column, width)
-
 
     def _get_column_width(self, column):
         """ Return an appropriate width for the specified column. """
@@ -374,6 +366,3 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
             attribute = self._odd_row_attribute
 
         return attribute
-
-
-

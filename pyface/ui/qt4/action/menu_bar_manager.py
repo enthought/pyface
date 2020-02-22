@@ -54,6 +54,3 @@ class MenuBarManager(ActionManager):
                 menu_bar.addMenu(menu)
 
         return menu_bar
-
-
-

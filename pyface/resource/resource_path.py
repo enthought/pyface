@@ -41,6 +41,3 @@ def resource_path(level=2):
 
     """
     return get_resource_path(level + 1)
-
-
-

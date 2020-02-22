@@ -137,6 +137,3 @@ class _WizardPage(QtGui.QWizardPage):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
-
-
-

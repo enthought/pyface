@@ -37,6 +37,3 @@ class MenuBarManager(ActionManager):
             controller = self.controller
 
         return None
-
-
-

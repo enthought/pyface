@@ -30,6 +30,3 @@ class ResourceFactory(object):
         """ Creates an image from the specified data. """
 
         raise NotImplemented
-
-
-

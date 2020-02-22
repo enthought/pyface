@@ -18,5 +18,3 @@
 from pyface.toolkit import toolkit_object
 
 View = toolkit_object("workbench.view:View")
-
-

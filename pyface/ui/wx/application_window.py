@@ -92,7 +92,6 @@ class ApplicationWindow(MApplicationWindow, Window):
             status_bar = self.status_bar_manager.create_status_bar(parent)
             self.control.SetStatusBar(status_bar)
 
-
     def _create_tool_bar(self, parent):
         tool_bar_managers = self._get_tool_bar_managers()
         if len(tool_bar_managers) > 0:
@@ -144,7 +143,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         # to it (this allows batch updates).
         self._aui_manager.Update()
 
-
     def _create_control(self, parent):
 
         style = (
@@ -181,7 +179,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         info = self._get_tool_bar_pane_info(tool_bar)
         self._aui_manager.AddPane(tool_bar, info)
 
-
     def _get_tool_bar_pane_info(self, tool_bar):
         info = aui.AuiPaneInfo()
         info.Caption(tool_bar.tool_bar_manager.name)
@@ -209,7 +206,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         """ Enable/Disablea tool bar. """
 
         # AUI toolbars cannot be enabled/disabled.
-
 
     def _wx_show_tool_bar(self, tool_bar, visible):
         """ Hide/Show a tool bar. """
@@ -252,6 +248,3 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _icon_changed(self):
         self._set_window_icon()
-
-
-

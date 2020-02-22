@@ -27,7 +27,6 @@ class CheckboxRenderer(GridCellRenderer):
         if self.renderer is None:
             self.renderer = CheckboxImageRenderer()
 
-
     def on_left_click(self, grid, row, col):
         """ Toggles the value. """
 
@@ -39,6 +38,3 @@ class CheckboxRenderer(GridCellRenderer):
             pass
 
         return True
-
-
-

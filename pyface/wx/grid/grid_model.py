@@ -129,7 +129,6 @@ class GridModel(HasTraits):
             # Trait event notification.
             self.model_changed = message
 
-
     def GetRowLabelValue(self, row):
         """ Called when the grid needs to display a row label. """
 
@@ -279,6 +278,3 @@ class _GridTableBase(GridTableBase):
         """ Called when the view is deleting rows. """
 
         return self.model.DeleteRows(pos, num_rows)
-
-
-

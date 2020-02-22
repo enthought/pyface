@@ -80,6 +80,3 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
             dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)
 
         return dlg
-
-
-

@@ -81,7 +81,6 @@ class Grid(wxGrid):
         self._initialize_columns(model)
         self._initialize_fonts()
 
-
     def _initialize_fonts(self):
         """ Initialize the label fonts. """
 
@@ -89,7 +88,6 @@ class Grid(wxGrid):
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
-
 
     def _initialize_rows(self, model):
         """ Initialize the row headers. """
@@ -105,7 +103,6 @@ class Grid(wxGrid):
                     attr.SetRenderer(None)
                     attr.SetBackgroundColour("linen")
                     self.SetRowAttr(index, attr)
-
 
     def _initialize_columns(self, model):
         """ Initialize the column headers. """
@@ -142,7 +139,6 @@ class Grid(wxGrid):
 
         evt.Skip()
 
-
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
 
@@ -152,7 +148,6 @@ class Grid(wxGrid):
         ##print 'Cell selected at', row, col
 
         evt.Skip()
-
 
     def _on_cell_left_dclick(self, evt):
         """ Called when the left mouse button was double-clicked.
@@ -168,7 +163,6 @@ class Grid(wxGrid):
 
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
-
 
     def _on_cell_right_click(self, evt):
         """ Called when a right click occurred in a cell. """
@@ -192,7 +186,6 @@ class Grid(wxGrid):
 
             self.PopupMenu(menu, evt.GetPosition())
 
-
     def _on_key_down(self, evt):
         """ Called when a key is pressed. """
 
@@ -214,7 +207,6 @@ class Grid(wxGrid):
 
         else:
             evt.Skip()
-
 
     def _on_delete_row(self, evt):
         """ Called when the 'Delete Row' context menu item is selected. """
@@ -253,7 +245,6 @@ class Grid(wxGrid):
         # self.SetColAttr(0, attr)
 
         self.ForceRefresh()
-
 
     def ResetView(self, grid):
         """
@@ -348,6 +339,3 @@ class Grid(wxGrid):
                 self.MakeCellVisible(newRow, self.GetNumberCols() - 1)
 
         return
-
-
-

@@ -53,7 +53,6 @@ def set_font_size(window, size):
         set_font_size(child, size)
 
 
-
 def increase_font_size(window, delta=2):
     """ Recursively increases the font size starting from 'window'. """
 
@@ -74,12 +73,10 @@ def increase_font_size(window, delta=2):
         increase_font_size(child, delta)
 
 
-
 def decrease_font_size(window, delta=2):
     """ Recursively decreases the font size starting from 'window'. """
 
     increase_font_size(window, delta=-2)
-
 
 
 def set_bold_font(window):
@@ -90,6 +87,3 @@ def set_bold_font(window):
     window.SetFont(font)
 
     return
-
-
-

@@ -348,12 +348,10 @@ class GridModel(HasPrivateTraits):
 
         self.content_changed = "changed"
 
-
     def fire_structure_changed(self):
         """ Fires the appearance changed event. """
 
         self.structure_changed = "changed"
-
 
     def delete_rows(self, pos, num_rows):
         """ Removes rows pos through pos + num_rows from the model.
@@ -449,6 +447,3 @@ class GridModel(HasPrivateTraits):
         Returns **True** if successful; **False** otherwise.
         """
         return False
-
-
-

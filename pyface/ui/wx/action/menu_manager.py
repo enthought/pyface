@@ -76,7 +76,6 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         menu.Append(id, self.name, sub)
 
-
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
         """ Adds the item to a tool bar. """
 
@@ -134,7 +133,6 @@ class _Menu(wx.Menu):
 
         self.menu_items = []
 
-
     def is_empty(self):
         """ Is the menu empty? """
 
@@ -153,7 +151,6 @@ class _Menu(wx.Menu):
             previous_non_empty_group = self._add_group(
                 parent, group, previous_non_empty_group
             )
-
 
     def show(self, x=None, y=None):
         """ Show the menu at the specified location. """
@@ -179,7 +176,6 @@ class _Menu(wx.Menu):
 
         if hasattr(self, "_id"):
             self._menu.Enable(self._id, new)
-
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
@@ -215,6 +211,3 @@ class _Menu(wx.Menu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
-
-
-

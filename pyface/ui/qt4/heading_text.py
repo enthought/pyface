@@ -78,6 +78,3 @@ class HeadingText(MHeadingText, Widget):
 
         if self.control is not None:
             self._set_text(new)
-
-
-

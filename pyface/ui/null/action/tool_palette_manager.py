@@ -62,6 +62,3 @@ class ToolPaletteManager(ActionManager):
     def create_tool_palette(self, parent, controller=None):
         """ Creates a tool bar. """
         return None
-
-
-

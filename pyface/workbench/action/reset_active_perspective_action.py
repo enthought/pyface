@@ -36,6 +36,3 @@ class ResetActivePerspectiveAction(WorkbenchAction):
             window.reset_active_perspective()
 
         return
-
-
-

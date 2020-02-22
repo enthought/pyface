@@ -38,6 +38,3 @@ class Widget(MWidget, HasTraits):
 
     def destroy(self):
         self.control = None
-
-
-

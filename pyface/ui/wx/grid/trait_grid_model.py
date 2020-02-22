@@ -255,7 +255,6 @@ class TraitGridModel(GridModel):
         print("firing sort event")
         self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
-
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
         is read-only. """
@@ -568,7 +567,6 @@ class TraitGridModel(GridModel):
             self.data.insert(pos, data)
             pos += 1
 
-
     def _delete_rows_from_model(self, pos, num_rows):
         """ Delete the specified rows from the model. Override this method
         to handle very large data sets. """
@@ -720,6 +718,3 @@ class TraitGridModel(GridModel):
                     )
 
         return
-
-
-

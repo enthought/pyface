@@ -18,5 +18,3 @@
 from pyface.toolkit import toolkit_object
 
 WizardPage = toolkit_object("wizard.wizard_page:WizardPage")
-
-

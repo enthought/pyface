@@ -135,6 +135,3 @@ class SplashScreen(MSplashScreen, Window):
 
         # Let the normal wx paint handling do its stuff.
         event.Skip()
-
-
-

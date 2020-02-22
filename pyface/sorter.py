@@ -105,6 +105,3 @@ class Sorter(HasTraits):
         """
 
         return False
-
-
-

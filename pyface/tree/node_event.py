@@ -33,6 +33,3 @@ class NodeEvent(HasTraits):
 
     # The starting index for nodes that have been inserted.
     index = Int
-
-
-

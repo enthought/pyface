@@ -48,6 +48,3 @@ class Spacer(wx.Panel):
         # self.SetBackgroundColour("brown")
 
         return
-
-
-

@@ -29,7 +29,6 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
         self.image_map = image_map
         self.text_map = text_map
 
-
     def get_image_for_cell(self, grid, row, col):
 
         if self.image_map is None:
@@ -68,6 +67,3 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
 
         # retrieve the unformatted value from the model and return it
         return model.get_cell_drag_value(row, col)
-
-
-

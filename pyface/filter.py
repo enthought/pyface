@@ -66,6 +66,3 @@ class Filter(HasPrivateTraits):
         """
 
         return False
-
-
-

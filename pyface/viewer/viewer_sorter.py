@@ -114,6 +114,3 @@ class ViewerSorter(HasTraits):
         """
 
         return False
-
-
-

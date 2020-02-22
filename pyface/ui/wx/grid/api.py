@@ -24,5 +24,3 @@ from .trait_grid_model import (
     TraitGridSelection,
 )
 from .grid_cell_renderer import GridCellRenderer
-
-

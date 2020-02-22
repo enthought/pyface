@@ -36,6 +36,3 @@ class ResetAllPerspectivesAction(WorkbenchAction):
             window.reset_all_perspectives()
 
         return
-
-
-

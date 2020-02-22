@@ -56,6 +56,3 @@ class IWizardController(Interface):
 
     def dispose_pages(self):
         """ Dispose all the pages. """
-
-
-

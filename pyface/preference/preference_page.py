@@ -40,6 +40,3 @@ class PreferencePage(HasTraits):
         """ Show the help topic for this preference page."""
 
         pass
-
-
-

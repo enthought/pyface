@@ -40,6 +40,3 @@ class ShowViewAction(WorkbenchAction):
             chooser.view.activate()
 
         return
-
-
-

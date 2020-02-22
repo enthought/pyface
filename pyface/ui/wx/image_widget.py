@@ -114,7 +114,6 @@ class ImageWidget(Widget):
         if self.control is not None:
             self.control.Refresh()
 
-
     def _selected_changed(self, selected):
         """ Called when the selected state of the widget is changed. """
 
@@ -138,7 +137,6 @@ class ImageWidget(Widget):
             self._mouse_over = True
             self.Refresh()
 
-
     def _on_leave_window(self, event):
         """ Called when the mouse leaves the widget. """
 
@@ -146,14 +144,12 @@ class ImageWidget(Widget):
             self._mouse_over = False
             self.Refresh()
 
-
     def _on_left_dclick(self, event):
         """ Called when the left mouse button is double-clicked. """
 
         # print 'left dclick'
 
         event.Skip()
-
 
     def _on_left_down(self, event=None):
         """ Called when the left mouse button goes down on the widget. """
@@ -166,7 +162,6 @@ class ImageWidget(Widget):
             self.Refresh()
 
         event.Skip()
-
 
     def _on_left_up(self, event=None):
         """ Called when the left mouse button goes up on the widget. """
@@ -194,7 +189,6 @@ class ImageWidget(Widget):
             self.Refresh()
 
         event.Skip()
-
 
     def _on_paint(self, event=None):
         """ Called when the widget needs repainting. """
@@ -231,6 +225,3 @@ class ImageWidget(Widget):
             wdc.DrawLine(3, wdy - 3, wdx - 3, wdy - 3)
 
         return
-
-
-

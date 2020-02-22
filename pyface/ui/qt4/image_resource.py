@@ -93,6 +93,3 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
-
-
-

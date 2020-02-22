@@ -26,7 +26,6 @@ class FontRenderer(DefaultRenderer):
         dc.SetFont(self.font)
         dc.DrawText(text, rect.x + 1, rect.y + 1)
 
-
     def DrawOld(self, grid, attr, dc, rect, row, col, isSelected):
         # Here we draw text in a grid cell using various fonts
         # and colors.  We have to set the clipping region on

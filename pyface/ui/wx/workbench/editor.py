@@ -51,7 +51,6 @@ class Editor(MEditor):
             self.control.Destroy()
             self.control = None
 
-
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """
 
@@ -59,6 +58,3 @@ class Editor(MEditor):
             self.control.SetFocus()
 
         return
-
-
-

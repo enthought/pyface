@@ -18,16 +18,13 @@ class CompositeGridModelTestCase(unittest.TestCase):
             columns=[GridColumn(label="cfoo"), GridColumn(label="cbar")],
         )
 
-
     def test_get_column_count(self):
 
         self.assertEqual(self.model.get_column_count(), 2)
 
-
     def test_get_row_count(self):
 
         self.assertEqual(self.model.get_row_count(), 2)
-
 
     def test_get_row_name(self):
 
@@ -36,12 +33,10 @@ class CompositeGridModelTestCase(unittest.TestCase):
         self.assertEqual(self.model.get_row_name(0), "foo")
         self.assertEqual(self.model.get_row_name(1), "bar")
 
-
     def test_get_column_name(self):
 
         self.assertEqual(self.model.get_column_name(0), "cfoo")
         self.assertEqual(self.model.get_column_name(1), "cbar")
-
 
     def test_get_value(self):
 
@@ -49,7 +44,6 @@ class CompositeGridModelTestCase(unittest.TestCase):
         self.assertEqual(self.model.get_value(0, 1), 2)
         self.assertEqual(self.model.get_value(1, 0), 3)
         self.assertEqual(self.model.get_value(1, 1), 4)
-
 
     def test_is_cell_empty(self):
 
@@ -68,6 +62,3 @@ class CompositeGridModelTestCase(unittest.TestCase):
         )
 
         return
-
-
-

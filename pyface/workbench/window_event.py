@@ -21,6 +21,3 @@ class VetoableWindowEvent(WindowEvent, Vetoable):
     """ A vetoable window lifecycle event. """
 
     pass
-
-
-

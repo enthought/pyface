@@ -356,7 +356,6 @@ class CompositeGridModel(GridModel):
 
         self._data_index.clear()
 
-
     def _data_items_changed(self):
         """ Called when the members of the data trait have changed.
 
@@ -366,6 +365,3 @@ class CompositeGridModel(GridModel):
         self._data_index.clear()
 
         return
-
-
-

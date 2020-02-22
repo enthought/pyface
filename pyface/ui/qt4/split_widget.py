@@ -99,6 +99,3 @@ class SplitWidget(MSplitWidget, HasTraits):
             rhs = QtGui.QWidget(parent)
 
         return rhs
-
-
-

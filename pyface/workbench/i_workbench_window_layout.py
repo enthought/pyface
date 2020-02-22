@@ -388,6 +388,3 @@ class MWorkbenchWindowLayout(HasTraits):
                 editor_references[editor.id] = editor_reference
 
         return editor_references
-
-
-

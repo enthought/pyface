@@ -77,6 +77,3 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
             index = 0
 
         return window.perspectives[index]
-
-
-

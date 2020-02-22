@@ -26,7 +26,6 @@ class EditRenderer(GridCellRenderer):
         if self.renderer is None:
             self.renderer = EditImageRenderer()
 
-
     def on_left_click(self, grid, row, col):
         """ Calls edit_traits on the object represented by the row. """
 

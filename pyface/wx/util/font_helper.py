@@ -29,6 +29,3 @@ def new_font_like(font, **kw):
     face_name = kw.get("face_name", font.GetFaceName())
 
     return wx.Font(point_size, family, style, weight, underline, face_name)
-
-
-

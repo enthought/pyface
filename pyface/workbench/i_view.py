@@ -121,12 +121,10 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
         self.window.activate_view(self)
 
-
     def hide(self):
         """ Hide the view. """
 
         self.window.hide_view(self)
-
 
     def show(self):
         """ Show the view. """
@@ -134,6 +132,3 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.show_view(self)
 
         return
-
-
-

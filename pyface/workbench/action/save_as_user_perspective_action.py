@@ -50,6 +50,3 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
-
-
-

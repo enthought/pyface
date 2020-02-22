@@ -91,6 +91,3 @@ class ToolPalette(Widget):
 
     def _create_control(self, parent):
         return None
-
-
-
