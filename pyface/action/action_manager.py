@@ -18,7 +18,6 @@ from traits.api import List, Property, Str
 
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
-import six
 
 
 class ActionManager(HasTraits):

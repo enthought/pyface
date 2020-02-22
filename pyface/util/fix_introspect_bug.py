@@ -26,7 +26,6 @@ introspect module.
 from wx.py import introspect
 
 import types
-import six
 
 # The fixed function.
 def getAttributeNames(

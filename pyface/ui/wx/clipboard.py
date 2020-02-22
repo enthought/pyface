@@ -18,7 +18,6 @@ import wx
 
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
-import six
 
 # Data formats
 PythonObjectFormat = wx.DataFormat("PythonObject")

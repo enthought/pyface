@@ -21,7 +21,6 @@ from traits.api import (
     TraitType,
 )
 from traits.trait_base import get_resource_path
-import six
 
 
 logger = logging.getLogger(__name__)

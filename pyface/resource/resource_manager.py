@@ -25,7 +25,6 @@ from traits.util.resource import get_path
 
 from pyface.resource.resource_factory import ResourceFactory
 from pyface.resource.resource_reference import ImageReference
-import six
 
 
 class ResourceManager(HasTraits):

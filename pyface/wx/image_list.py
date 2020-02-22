@@ -12,7 +12,6 @@
 
 
 import wx
-import six
 
 
 # fixme: rename to 'CachedImageList'?!?

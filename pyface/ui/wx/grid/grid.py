@@ -54,7 +54,6 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
 from .grid_model import GridModel
 from .combobox_focus_handler import ComboboxFocusHandler
-import six
 
 # Is this code running on MS Windows?
 is_win32 = sys.platform == "win32"

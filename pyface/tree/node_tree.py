@@ -11,7 +11,6 @@
 """ A tree control with extensible node types. """
 
 
-import six
 
 # avoid deprecation warning
 from inspect import getfullargspec

@@ -11,13 +11,11 @@
 """ Drag and drop utilities. """
 
 
-import six
 
 from inspect import getfullargspec
 
 
 import wx
-import six
 
 
 class Clipboard(object):

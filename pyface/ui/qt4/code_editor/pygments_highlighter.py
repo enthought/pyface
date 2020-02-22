@@ -15,7 +15,6 @@ from pygments.lexer import RegexLexer, _TokenType, Text, Error
 from pygments.lexers import CLexer, CppLexer, PythonLexer, get_lexer_by_name
 from pygments.styles.default import DefaultStyle
 from pygments.token import Comment
-import six
 
 
 def get_tokens_unprocessed(self, text, stack=("root",)):

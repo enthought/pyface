@@ -12,7 +12,6 @@
 """
 
 
-import six
 
 from inspect import getfullargspec
 

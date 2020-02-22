@@ -12,7 +12,6 @@ import contextlib
 import gc
 import threading
 
-import six
 
 import unittest.mock as mock
 

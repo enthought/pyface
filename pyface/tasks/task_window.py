@@ -35,7 +35,6 @@ from pyface.tasks.i_task_pane import ITaskPane
 from pyface.tasks.task import Task, TaskLayout
 from pyface.tasks.task_window_backend import TaskWindowBackend
 from pyface.tasks.task_window_layout import TaskWindowLayout
-import six
 
 # Logging.
 logger = logging.getLogger(__name__)

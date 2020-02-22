@@ -22,7 +22,6 @@ from pyface.qt import QtCore, QtGui
 
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
-import six
 
 # Shortcuts
 cb = QtGui.QApplication.clipboard()

@@ -12,7 +12,6 @@
 
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
-import six
 
 
 # Trait definitions --------------------------------------------------------

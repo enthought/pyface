@@ -35,7 +35,6 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 
 
 from .widget import Widget
-import six
 
 # Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split(".")))

@@ -23,7 +23,6 @@ from traits.api import Enum, Int, List, provides, Unicode
 
 from pyface.i_file_dialog import IFileDialog, MFileDialog
 from .dialog import Dialog
-import six
 
 
 @provides(IFileDialog)

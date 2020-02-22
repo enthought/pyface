@@ -21,7 +21,6 @@ except ImportError:  # Python 3.8 deprecation
 
 
 from traits.api import HasStrictTraits, Interface, Property
-import six
 
 
 class IClipboard(Interface):

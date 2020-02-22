@@ -12,7 +12,6 @@ from traits.api import Either, List, Str, Tuple, Enum
 
 
 from pyface.tasks.task_layout import LayoutContainer, TaskLayout
-import six
 
 
 class TaskWindowLayout(LayoutContainer):

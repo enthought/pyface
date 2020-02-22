@@ -20,7 +20,6 @@ from traits.api import Bool, provides, Unicode
 
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from .dialog import Dialog
-import six
 
 
 @provides(IDirectoryDialog)

@@ -12,7 +12,6 @@
 
 
 from logging import Handler
-import six
 
 
 class SplashScreenLogHandler(Handler):

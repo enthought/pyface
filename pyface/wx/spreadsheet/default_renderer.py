@@ -14,7 +14,6 @@ import types
 from string import atof
 import wx
 from wx.grid import PyGridCellRenderer
-import six
 
 
 class DefaultRenderer(PyGridCellRenderer):

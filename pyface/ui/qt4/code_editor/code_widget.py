@@ -20,7 +20,6 @@ from .find_widget import FindWidget
 from .gutters import LineNumberWidget, StatusGutterWidget
 from .replace_widget import ReplaceWidget
 from .pygments_highlighter import PygmentsHighlighter
-import six
 
 
 class CodeWidget(QtGui.QPlainTextEdit):

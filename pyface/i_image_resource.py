@@ -17,7 +17,6 @@ except ImportError:  # Python 3.8 deprecation
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
 from traits.api import Interface, List, Unicode
-import six
 
 
 class IImageResource(Interface):

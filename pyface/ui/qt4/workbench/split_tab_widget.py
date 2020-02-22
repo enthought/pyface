@@ -17,7 +17,6 @@
 
 
 import sys
-import six
 
 
 from pyface.qt import QtCore, QtGui, qt_api

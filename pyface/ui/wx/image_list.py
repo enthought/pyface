@@ -16,7 +16,6 @@ import wx
 
 
 from .image_resource import ImageResource
-import six
 
 
 # fixme: rename to 'CachedImageList'?!?

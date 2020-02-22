@@ -18,7 +18,6 @@ from traits.api import Enum, Unicode, Int
 
 
 from pyface.i_dialog import IDialog
-import six
 
 
 class IFileDialog(IDialog):
