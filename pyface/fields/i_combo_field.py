@@ -18,7 +18,6 @@ from __future__ import (
 )
 
 
-
 from traits.api import Callable, HasTraits, Enum, List
 
 from pyface.fields.i_field import IField

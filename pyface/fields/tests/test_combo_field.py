@@ -18,7 +18,6 @@ from __future__ import (
 import unittest
 
 
-
 from pyface.image_resource import ImageResource
 from ..combo_field import ComboField
 from .field_mixin import FieldMixin

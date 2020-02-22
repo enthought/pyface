@@ -12,7 +12,6 @@
 """ The PyQt specific implementations the action manager internal classes. """
 
 
-
 from inspect import getfullargspec
 
 

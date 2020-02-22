@@ -48,8 +48,7 @@ class TaskWindowLayout(LayoutContainer):
         """ Returns the IDs of the tasks in the layout.
         """
         return [
-            (item if isinstance(item, str) else item.id)
-            for item in self.items
+            (item if isinstance(item, str) else item.id) for item in self.items
         ]
 
     def is_equivalent_to(self, layout):
