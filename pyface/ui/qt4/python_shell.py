@@ -480,7 +480,7 @@ class PythonWidget(HistoryConsoleWidget):
         self.flush()
         self._show_prompt(">>> ")
 
-    # ------ Signal handlers ----------------------------------------------------
+    # Signal handlers ----------------------------------------------------
 
     def _document_contents_change(self, position, removed, added):
         """ Called whenever the document's content changes. Display a call tip

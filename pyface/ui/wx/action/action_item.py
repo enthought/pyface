@@ -71,7 +71,7 @@ class _MenuItem(HasTraits):
         # Create an appropriate menu item depending on the style of the action.
         #
         # N.B. Don't try to use -1 as the Id for the menu item... wx does not
-        # ---- like it!
+        # like it!
         action = item.action
         label = action.name
         kind = _STYLE_TO_KIND_MAP[action.style]

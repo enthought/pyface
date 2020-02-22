@@ -54,7 +54,7 @@ class ImageList(wx.ImageList):
                 # Load the image from the file and add it to the list.
                 #
                 # N.B 'wx.BITMAP_TYPE_ANY' tells wxPython to attempt to
-                # ---- autodetect the image format.
+                # autodetect the image format.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
                 # We force all images in the cache to be the same size.

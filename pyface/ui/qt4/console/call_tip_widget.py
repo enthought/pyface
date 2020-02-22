@@ -239,7 +239,7 @@ class CallTipWidget(QtGui.QLabel):
         ):
             self._hide_timer.start(300, self)
 
-    # ------ Signal handlers ----------------------------------------------------
+    # Signal handlers ----------------------------------------------------
 
     def _cursor_position_changed(self):
         """ Updates the tip based on user cursor movement.

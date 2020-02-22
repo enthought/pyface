@@ -91,7 +91,7 @@ class BracketMatcher(QtCore.QObject):
         selection.format = self.format
         return selection
 
-    # ------ Signal handlers ----------------------------------------------------
+    # Signal handlers ----------------------------------------------------
 
     def _cursor_position_changed(self):
         """ Updates the document formatting based on the new cursor position.
