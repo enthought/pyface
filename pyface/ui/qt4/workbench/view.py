@@ -48,7 +48,6 @@ class View(MView):
             self.control.deleteLater()
             self.control = None
 
-        return
 
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """

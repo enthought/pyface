@@ -112,7 +112,6 @@ class NodeTreeModel(TreeModel):
 
         node_type.drop(node, data)
 
-        return
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node.
@@ -219,7 +218,6 @@ class NodeTreeModel(TreeModel):
             self._start_monitor(monitor)
             self._monitors[self.node_manager.get_key(node)] = monitor
 
-        return
 
     def remove_listener(self, node):
         """ Removes a listener for changes to a node. """
@@ -266,7 +264,6 @@ class NodeTreeModel(TreeModel):
 
         monitor.start()
 
-        return
 
     def _stop_monitor(self, monitor):
         """ Stops a monitor. """
@@ -321,28 +318,24 @@ class NodeTreeModel(TreeModel):
 
         self.nodes_changed = event
 
-        return
 
     def _on_nodes_inserted(self, monitor, trait_name, event):
         """ Called when nodes have been inserted. """
 
         self.nodes_inserted = event
 
-        return
 
     def _on_nodes_removed(self, monitor, trait_name, event):
         """ Called when nodes have been removed. """
 
         self.nodes_removed = event
 
-        return
 
     def _on_nodes_replaced(self, monitor, trait_name, event):
         """ Called when nodes have been replaced. """
 
         self.nodes_replaced = event
 
-        return
 
     def _on_structure_changed(self, monitor, trait_name, event):
         """ Called when the structure of a node has changed drastically. """

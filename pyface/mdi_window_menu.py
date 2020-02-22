@@ -42,7 +42,6 @@ class Cascade(WindowAction):
 
         self.window.control.Cascade()
 
-        return
 
 
 class Tile(WindowAction):
@@ -62,7 +61,6 @@ class Tile(WindowAction):
 
         self.window.control.Tile()
 
-        return
 
 
 class ArrangeIcons(WindowAction):
@@ -82,7 +80,6 @@ class ArrangeIcons(WindowAction):
 
         self.window.control.ArrangeIcons()
 
-        return
 
 
 class Next(WindowAction):
@@ -102,7 +99,6 @@ class Next(WindowAction):
 
         self.window.control.ActivateNext()
 
-        return
 
 
 class Previous(WindowAction):
@@ -122,7 +118,6 @@ class Previous(WindowAction):
 
         self.window.control.ActivatePrevious()
 
-        return
 
 
 class Close(WindowAction):
@@ -144,7 +139,6 @@ class Close(WindowAction):
         if page is not None:
             page.Close()
 
-        return
 
 
 class CloseAll(WindowAction):
@@ -165,7 +159,6 @@ class CloseAll(WindowAction):
         for page in self.window.control.GetChildren():
             page.Close()
 
-        return
 
 
 class MDIWindowMenu(MenuManager):

@@ -172,21 +172,18 @@ class TreeModel(HasTraits):
 
         self.nodes_changed = NodeEvent(node=node, children=children)
 
-        return
 
     def fire_nodes_inserted(self, node, children):
         """ Fires the nodes inserted event. """
 
         self.nodes_inserted = NodeEvent(node=node, children=children)
 
-        return
 
     def fire_nodes_removed(self, parent, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=node, children=children)
 
-        return
 
     def fire_nodes_replaced(self, node, old_children, new_children):
         """ Fires the nodes removed event. """
@@ -195,7 +192,6 @@ class TreeModel(HasTraits):
             node=node, old_children=old_children, children=new_children
         )
 
-        return
 
     def fire_structure_changed(self, node):
         """ Fires the structure changed event. """

@@ -69,19 +69,15 @@ class ToolPalette(Widget):
         if the 'checked' parameter is True; unchecked otherwise.  If the button
         is a standard button, this method is a NOP.
         """
-        return
 
     def enable_tool(self, id, enabled):
         """ Enable or disable the tool identified by 'id'. """
-        return
 
     def on_tool_event(self, id, callback):
         """ Register a callback for events on the tool identified by 'id'. """
-        return
 
     def realize(self):
         """ Realize the control so that it can be displayed. """
-        return
 
     def get_tool_state(self, id):
         """ Get the toggle state of the tool identified by 'id'. """

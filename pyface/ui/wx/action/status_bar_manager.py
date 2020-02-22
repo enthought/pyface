@@ -104,7 +104,6 @@ class StatusBarManager(HasTraits):
             for i in range(len(self.messages)):
                 self.status_bar.SetStatusText(self.messages[i], i)
 
-        return
 
     def _messages_items_changed(self):
         """ Sets the text displayed on the status bar. """

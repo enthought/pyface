@@ -545,7 +545,6 @@ class _PaletteTool(HasTraits):
 
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """

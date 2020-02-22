@@ -88,7 +88,6 @@ class Pager(wxScrolledPanel):
         self.SetSizer(sizer)
         self.SetAutoLayout(True)
 
-        return
 
     def _hide_page(self, page):
         """ Hides the specified page. """
@@ -96,7 +95,6 @@ class Pager(wxScrolledPanel):
         page.Show(False)
         self._sizer.Remove(page)
 
-        return
 
     def _show_page(self, page):
         """ Shows the specified page. """

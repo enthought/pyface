@@ -58,7 +58,6 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
-        return
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
         """ Adds the item to a tool bar. """

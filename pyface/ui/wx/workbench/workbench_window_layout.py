@@ -139,7 +139,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._wx_editor_dock_window.close()
         self._wx_view_dock_window.close()
 
-        return
 
     def create_initial_layout(self, parent):
         """ Create the initial window layout. """
@@ -189,7 +188,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         )
         dock_control.show(False, layout=True)
 
-        return
 
     def hide_view(self, view):
         """ Hide a view. """
@@ -208,21 +206,18 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         self._wx_view_dock_window.update_layout()
 
-        return
 
     def reset_editors(self):
         """ Activate the first editor in every group. """
 
         self._wx_editor_dock_window.reset_regions()
 
-        return
 
     def reset_views(self):
         """ Activate the first view in every group. """
 
         self._wx_view_dock_window.reset_regions()
 
-        return
 
     def show_editor_area(self):
         """ Show the editor area. """
@@ -232,7 +227,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         )
         dock_control.show(True, layout=True)
 
-        return
 
     def show_view(self, view):
         """ Show a view. """
@@ -244,7 +238,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         dock_control.show(True, layout=True)
         view.visible = True
 
-        return
 
     def is_editor_area_visible(self):
         dock_control = self._wx_view_dock_window.get_control(
@@ -281,7 +274,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             else:
                 view.visible = False
 
-        return
 
     def get_editor_memento(self):
         # Get the layout of the editors.
@@ -348,7 +340,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # resizing the window makes it better!).
         self._wx_editor_dock_window.update_layout()
 
-        return
 
     def _wx_add_view(self, view, position, relative_to, size):
         """ Adds a view. """
@@ -412,7 +403,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         section = region.parent
         section.add(dock_control, region, _POSITION_MAP[position])
 
-        return
 
     def _wx_add_view_with(self, dock_control, with_obj):
         """ Adds a view in the same region as another item. """
@@ -425,7 +415,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # The parent of a dock control is a dock region.
         with_item.parent.add(dock_control)
 
-        return
 
     def _wx_set_item_size(self, dock_control, size):
         """ Sets the size of a dock control. """
@@ -439,7 +428,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if height != -1:
             dock_control.height = int(window_height * height)
 
-        return
 
     def _wx_create_editor_dock_control(self, editor):
         """ Creates a dock control that contains the specified editor. """
@@ -536,7 +524,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # Let the default wx event handling do its thang.
             event.Skip()
 
-            return
 
         def on_kill_focus(event):
             """ Called when the control gets the focus. """
@@ -552,7 +539,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor.control, on_set_focus, on_kill_focus
         )
 
-        return
 
     def _wx_get_view_control(self, view):
         """ Returns a view's toolkit-specific control.
@@ -595,7 +581,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # Let the default wx event handling do its thang.
             event.Skip()
 
-            return
 
         def on_kill_focus(event):
             """ Called when the control gets the focus. """
@@ -609,7 +594,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         self._wx_add_focus_listeners(view.control, on_set_focus, on_kill_focus)
 
-        return
 
     def _wx_add_focus_listeners(self, control, on_set_focus, on_kill_focus):
         """ Recursively adds focus listeners to a control. """
@@ -630,7 +614,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         for child in control.GetChildren():
             self._wx_add_focus_listeners(child, on_set_focus, on_kill_focus)
 
-        return
 
     def _wx_initialize_editor_dock_control(self, editor, editor_dock_control):
         """ Initializes an editor dock control.
@@ -682,7 +665,6 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         editor_dock_control.on_trait_change(on_activated_changed, "activated")
 
-        return
 
     def _wx_initialize_view_dock_control(self, view, view_dock_control):
         """ Initializes a view dock control.

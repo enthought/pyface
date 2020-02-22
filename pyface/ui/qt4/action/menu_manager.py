@@ -187,21 +187,18 @@ class _Menu(QtGui.QMenu):
 
         self.menuAction().setVisible(new)
 
-        return
 
     def _on_name_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.menuAction().setText(new)
 
-        return
 
     def _on_image_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         self.menuAction().setIcon(new.create_icon())
 
-        return
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """

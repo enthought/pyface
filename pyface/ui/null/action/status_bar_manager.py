@@ -74,7 +74,6 @@ class StatusBarManager(HasTraits):
 
     def _messages_changed(self):
         """ Sets the text displayed on the status bar. """
-        return
 
     def _messages_items_changed(self):
         """ Sets the text displayed on the status bar. """

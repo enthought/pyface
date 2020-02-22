@@ -302,7 +302,6 @@ class GridModel(HasPrivateTraits):
         # rows_appended = self._set_value(row, col, value)
 
         self.fire_content_changed()
-        return
 
     def is_cell_read_only(self, row, col):
         """ Returns True if the cell at (row, col) is not editable,
@@ -349,14 +348,12 @@ class GridModel(HasPrivateTraits):
 
         self.content_changed = "changed"
 
-        return
 
     def fire_structure_changed(self):
         """ Fires the appearance changed event. """
 
         self.structure_changed = "changed"
 
-        return
 
     def delete_rows(self, pos, num_rows):
         """ Removes rows pos through pos + num_rows from the model.

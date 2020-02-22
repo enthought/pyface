@@ -107,7 +107,6 @@ class ViewMenuManager(MenuManager):
         group.destroy()
         group.clear()
 
-        return
 
     def _create_other_group(self, window):
         """ Creates a group containing the 'Other...' action. """

@@ -81,7 +81,6 @@ class Grid(wxGrid):
         self._initialize_columns(model)
         self._initialize_fonts()
 
-        return
 
     def _initialize_fonts(self):
         """ Initialize the label fonts. """
@@ -91,7 +90,6 @@ class Grid(wxGrid):
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
-        return
 
     def _initialize_rows(self, model):
         """ Initialize the row headers. """
@@ -108,7 +106,6 @@ class Grid(wxGrid):
                     attr.SetBackgroundColour("linen")
                     self.SetRowAttr(index, attr)
 
-        return
 
     def _initialize_columns(self, model):
         """ Initialize the column headers. """
@@ -145,7 +142,6 @@ class Grid(wxGrid):
 
         evt.Skip()
 
-        return
 
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
@@ -157,7 +153,6 @@ class Grid(wxGrid):
 
         evt.Skip()
 
-        return
 
     def _on_cell_left_dclick(self, evt):
         """ Called when the left mouse button was double-clicked.
@@ -174,7 +169,6 @@ class Grid(wxGrid):
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
 
-        return
 
     def _on_cell_right_click(self, evt):
         """ Called when a right click occurred in a cell. """
@@ -198,7 +192,6 @@ class Grid(wxGrid):
 
             self.PopupMenu(menu, evt.GetPosition())
 
-        return
 
     def _on_key_down(self, evt):
         """ Called when a key is pressed. """
@@ -222,7 +215,6 @@ class Grid(wxGrid):
         else:
             evt.Skip()
 
-        return
 
     def _on_delete_row(self, evt):
         """ Called when the 'Delete Row' context menu item is selected. """
@@ -262,7 +254,6 @@ class Grid(wxGrid):
 
         self.ForceRefresh()
 
-        return
 
     def ResetView(self, grid):
         """

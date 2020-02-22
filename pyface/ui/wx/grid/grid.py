@@ -439,7 +439,6 @@ class Grid(Widget):
             # the rows looks like crap.
             self._grid.AutoSizeColumns(False)
 
-        return
 
     def _on_model_content_changed(self):
         """ A notification method called when the data in the underlying
@@ -960,7 +959,6 @@ class Grid(Widget):
 
             evt.Skip()
 
-        return
 
     def _on_label_right_click(self, evt):
         """ Called when a right click occurred on a label. """
@@ -1886,7 +1884,6 @@ class _GridTableBase(GridTableBase):
 
         self._editor_cache = {}
         self._renderer_cache = {}
-        return
 
     def _editor_dispose(self, editors):
         for editor in editors:

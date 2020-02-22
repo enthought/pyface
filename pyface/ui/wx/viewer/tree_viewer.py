@@ -191,7 +191,6 @@ class TreeViewer(ContentViewer):
         else:
             print("**** pid is None!!! ****")
 
-        return
 
     def update(self, element):
         """ Update the tree starting from the specified element.
@@ -275,7 +274,6 @@ class TreeViewer(ContentViewer):
         if pid is None and self.show_root:
             self.control.Expand(wxid)
 
-        return
 
     def _get_image_index(self, element):
         """ Returns the tree item image index for an element. """
@@ -326,7 +324,6 @@ class TreeViewer(ContentViewer):
         has_children = self.content_provider.has_children(element)
         self.control.SetItemHasChildren(wxid, has_children)
 
-        return
 
     def _unpack_event(self, event):
         """ Unpacks the event to see whether a tree element was involved. """
@@ -406,7 +403,6 @@ class TreeViewer(ContentViewer):
             if self.input is not None:
                 self._add_element(None, self.input)
 
-        return
 
     def _element_begin_drag_changed(self, element):
         """ Called when a drag is started on a element. """
@@ -436,7 +432,6 @@ class TreeViewer(ContentViewer):
         # Give other event handlers a chance.
         event.Skip()
 
-        return
 
     def _on_left_down(self, event):
         """ Called when the left mouse button is clicked on the tree. """
@@ -458,7 +453,6 @@ class TreeViewer(ContentViewer):
         # Give other event handlers a chance.
         event.Skip()
 
-        return
 
     def _on_tree_item_expanding(self, event):
         """ Called when a tree item is about to expand. """
@@ -496,7 +490,6 @@ class TreeViewer(ContentViewer):
         else:
             event.Veto()
 
-        return
 
     def _on_tree_item_expanded(self, event):
         """ Called when a tree item has been expanded. """
@@ -515,7 +508,6 @@ class TreeViewer(ContentViewer):
         # Trait notification.
         self.element_expanded = element
 
-        return
 
     def _on_tree_item_collapsing(self, event):
         """ Called when a tree item is about to collapse. """
@@ -532,7 +524,6 @@ class TreeViewer(ContentViewer):
         if not self.label_provider.is_collapsible(self, element):
             event.Veto()
 
-        return
 
     def _on_tree_item_collapsed(self, event):
         """ Called when a tree item has been collapsed. """
@@ -551,7 +542,6 @@ class TreeViewer(ContentViewer):
         # Trait notification.
         self.element_collapsed = element
 
-        return
 
     def _on_tree_item_activated(self, event):
         """ Called when a tree item is activated (i.e., double clicked). """
@@ -567,7 +557,6 @@ class TreeViewer(ContentViewer):
         # Trait notification.
         self.element_activated = element
 
-        return
 
     def _on_tree_sel_changed(self, event):
         """ Called when the selection is changed. """
@@ -575,7 +564,6 @@ class TreeViewer(ContentViewer):
         # Trait notification.
         self.selection = self._get_selection()
 
-        return
 
     def _on_tree_begin_drag(self, event):
         """ Called when a drag operation is starting on a tree item. """
@@ -595,7 +583,6 @@ class TreeViewer(ContentViewer):
             # Trait notification.
             self.element_begin_drag = element
 
-        return
 
     def _on_tree_begin_label_edit(self, event):
         """ Called when the user has started editing an item's label. """
@@ -611,7 +598,6 @@ class TreeViewer(ContentViewer):
         if not self.label_provider.is_editable(self, element):
             event.Veto()
 
-        return
 
     def _on_tree_end_label_edit(self, event):
         """ Called when the user has finished editing an item's label. """
@@ -628,7 +614,6 @@ class TreeViewer(ContentViewer):
         if not self.label_provider.set_text(self, element, label):
             event.Veto()
 
-        return
 
     def _on_char(self, event):
         """ Called when a key is pressed when the tree has focus. """

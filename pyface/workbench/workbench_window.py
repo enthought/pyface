@@ -258,14 +258,12 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.layout.activate_editor(editor)
 
-        return
 
     def activate_view(self, view):
         """ Activates a view. """
 
         self.layout.activate_view(view)
 
-        return
 
     def add_editor(self, editor, title=None):
         """ Adds an editor.
@@ -280,7 +278,6 @@ class WorkbenchWindow(ApplicationWindow):
         self.layout.add_editor(editor, title)
         self.editors.append(editor)
 
-        return
 
     def add_view(self, view, position=None, relative_to=None, size=(-1, -1)):
         """ Adds a view. """
@@ -292,14 +289,12 @@ class WorkbenchWindow(ApplicationWindow):
         if not view in self.views:
             self.views.append(view)
 
-        return
 
     def close_editor(self, editor):
         """ Closes an editor. """
 
         self.layout.close_editor(editor)
 
-        return
 
     def close_view(self, view):
         """ Closes a view.
@@ -311,7 +306,6 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.hide_view(view)
 
-        return
 
     def create_editor(self, obj, kind=None):
         """ Create an editor for an object.
@@ -329,7 +323,6 @@ class WorkbenchWindow(ApplicationWindow):
             if editor.control is not None:
                 editor.destroy_control()
 
-        return
 
     def destroy_views(self, views):
         """ Destroy a list of views. """
@@ -338,7 +331,6 @@ class WorkbenchWindow(ApplicationWindow):
             if view.control is not None:
                 view.destroy_control()
 
-        return
 
     def edit(self, obj, kind=None, use_existing=True):
         """ Edit an object.
@@ -468,21 +460,18 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.layout.hide_editor_area()
 
-        return
 
     def hide_view(self, view):
         """ Hide a view. """
 
         self.layout.hide_view(view)
 
-        return
 
     def refresh(self):
         """ Refresh the window to reflect any changes. """
 
         self.layout.refresh()
 
-        return
 
     def reset_active_perspective(self):
         """ Reset the active perspective back to its original contents. """
@@ -498,7 +487,6 @@ class WorkbenchWindow(ApplicationWindow):
         # the perspective, its 'create_contents' method will be called again).
         self._show_perspective(perspective, perspective)
 
-        return
 
     def reset_all_perspectives(self):
         """ Reset all perspectives back to their original contents. """
@@ -513,28 +501,24 @@ class WorkbenchWindow(ApplicationWindow):
             self.active_perspective, self.active_perspective
         )
 
-        return
 
     def reset_editors(self):
         """ Activate the first editor in every tab. """
 
         self.layout.reset_editors()
 
-        return
 
     def reset_views(self):
         """ Activate the first view in every tab. """
 
         self.layout.reset_views()
 
-        return
 
     def show_editor_area(self):
         """ Show the editor area. """
 
         self.layout.show_editor_area()
 
-        return
 
     def show_view(self, view):
         """ Show a view. """
@@ -616,7 +600,6 @@ class WorkbenchWindow(ApplicationWindow):
 
         self.add_view(view, item.position, relative_to, size)
 
-        return
 
     def _get_initial_perspective(self, *methods):
         """ Return the initial perspective. """
@@ -732,7 +715,6 @@ class WorkbenchWindow(ApplicationWindow):
             self.layout.is_editor_area_visible(),
         )
 
-        return
 
     def _show_perspective(self, old, new):
         """ Show a perspective. """
@@ -794,7 +776,6 @@ class WorkbenchWindow(ApplicationWindow):
         if old is not None:
             self.refresh()
 
-        return
 
     def _restore_contents(self):
         """ Restore the contents of the window. """
@@ -830,7 +811,6 @@ class WorkbenchWindow(ApplicationWindow):
         if new is not None:
             self._show_perspective(old, new)
 
-        return
 
     def _active_editor_changed(self, old, new):
         """ Static trait change handler. """
@@ -838,7 +818,6 @@ class WorkbenchWindow(ApplicationWindow):
         logger.debug("active editor changed from <%s> to <%s>", old, new)
         self.active_part = new
 
-        return
 
     def _active_part_changed(self, old, new):
         """ Static trait change handler. """
@@ -851,7 +830,6 @@ class WorkbenchWindow(ApplicationWindow):
 
         logger.debug("active part changed from <%s> to <%s>", old, new)
 
-        return
 
     def _active_view_changed(self, old, new):
         """ Static trait change handler. """
@@ -859,7 +837,6 @@ class WorkbenchWindow(ApplicationWindow):
         logger.debug("active view changed from <%s> to <%s>", old, new)
         self.active_part = new
 
-        return
 
     def _views_changed(self, old, new):
         """ Static trait change handler. """
@@ -872,7 +849,6 @@ class WorkbenchWindow(ApplicationWindow):
         for view in new:
             view.window = self
 
-        return
 
     def _views_items_changed(self, event):
         """ Static trait change handler. """

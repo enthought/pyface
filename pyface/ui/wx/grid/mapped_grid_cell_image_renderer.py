@@ -29,7 +29,6 @@ class MappedGridCellImageRenderer(GridCellImageRenderer):
         self.image_map = image_map
         self.text_map = text_map
 
-        return
 
     def get_image_for_cell(self, grid, row, col):
 

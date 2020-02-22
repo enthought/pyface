@@ -129,7 +129,6 @@ class GridModel(HasTraits):
             # Trait event notification.
             self.model_changed = message
 
-        return
 
     def GetRowLabelValue(self, row):
         """ Called when the grid needs to display a row label. """

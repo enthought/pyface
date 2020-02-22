@@ -140,7 +140,6 @@ class _MenuItem(HasTraits):
             self.controller = controller
             controller.add_to_menu(self)
 
-        return
 
     def dispose(self):
         action = self.item.action
@@ -168,14 +167,12 @@ class _MenuItem(HasTraits):
 
         self.control.Enable(self.enabled and self.visible)
 
-        return
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
         self.control.Enable(self.visible and self.enabled)
 
-        return
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
@@ -198,21 +195,18 @@ class _MenuItem(HasTraits):
 
         self.control.Check(self.checked)
 
-        return
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
         self.control.Enable(action.enabled and action.visible)
 
-        return
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
         self.control.Enable(action.visible and action.enabled)
 
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
@@ -238,7 +232,6 @@ class _MenuItem(HasTraits):
         self.control.Check(action.checked)
         self._skip_menu_event = False
 
-        return
 
     def _on_action_name_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
@@ -248,7 +241,6 @@ class _MenuItem(HasTraits):
             label = label + "\t" + action.accelerator
         self.control.SetText(label)
 
-        return
 
     def _on_action_image_changed(self, action, trait_name, old, new):
         """ Called when the name trait is changed on an action. """
@@ -312,7 +304,6 @@ class _MenuItem(HasTraits):
             else:
                 action.perform(action_event)
 
-        return
 
 
 class _Tool(HasTraits):
@@ -473,7 +464,6 @@ class _Tool(HasTraits):
 
         self.tool_bar.ToggleTool(self.control_id, self.checked)
 
-        return
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
@@ -560,7 +550,6 @@ class _Tool(HasTraits):
             else:
                 action.perform(action_event)
 
-        return
 
 
 class _PaletteTool(HasTraits):
@@ -634,7 +623,6 @@ class _PaletteTool(HasTraits):
 
         self.tool_palette.enable_tool(self.tool_id, action.enabled)
 
-        return
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """

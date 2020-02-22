@@ -255,7 +255,6 @@ class TraitGridModel(GridModel):
         print("firing sort event")
         self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
-        return
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -569,7 +568,6 @@ class TraitGridModel(GridModel):
             self.data.insert(pos, data)
             pos += 1
 
-        return
 
     def _delete_rows_from_model(self, pos, num_rows):
         """ Delete the specified rows from the model. Override this method
@@ -585,7 +583,6 @@ class TraitGridModel(GridModel):
     def _on_row_name_trait_changed(self, new):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
-        return
 
     def _on_columns_changed(self, object, name, old, new):
         """ Force the grid to refresh when any underlying trait changes. """
@@ -593,7 +590,6 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(self.columns)
         self._auto_columns = self.columns
         self.fire_structure_changed()
-        return
 
     def _on_columns_items_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
@@ -601,12 +597,10 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(event.removed, remove=True)
         self.__manage_column_listeners(event.added)
         self.fire_structure_changed()
-        return
 
     def _on_contained_trait_changed(self, new):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
-        return
 
     def _on_data_changed(self, object, name, old, new):
         """ Force the grid to refresh when the underlying list changes. """
@@ -614,7 +608,6 @@ class TraitGridModel(GridModel):
         self.__manage_data_listeners(old, remove=True)
         self.__manage_data_listeners(self.data)
         self.fire_structure_changed()
-        return
 
     def _on_data_items_changed(self, event):
         """ Force the grid to refresh when the underlying list changes. """
@@ -716,7 +709,6 @@ class TraitGridModel(GridModel):
                 item.on_trait_change(
                     self._on_contained_trait_changed, remove=remove
                 )
-        return
 
     def __manage_column_listeners(self, collist, remove=False):
 

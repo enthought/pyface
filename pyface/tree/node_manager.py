@@ -70,7 +70,6 @@ class NodeManager(HasPrivateTraits):
         node_type.node_manager = self
         self.node_types.append(node_type)
 
-        return
 
     def get_node_type(self, node):
         """ Returns the node's type.

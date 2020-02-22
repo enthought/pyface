@@ -69,7 +69,6 @@ class WorkbenchDockWindow(DockWindow):
         else:
             logger.debug("no control <%s> to activate", id)
 
-        return
 
     def close_control(self, id):
         """ Closes the dock control with the specified Id.
@@ -87,7 +86,6 @@ class WorkbenchDockWindow(DockWindow):
         else:
             logger.debug("no control <%s> to close", id)
 
-        return
 
     def get_control(self, id, visible_only=True):
         """ Returns the dock control with the specified Id.
@@ -143,7 +141,6 @@ class WorkbenchDockWindow(DockWindow):
             if len(region.contents) > 0:
                 region.contents[0].activate(layout=False)
 
-        return
 
     def set_structure(self, structure, handler=None):
         """ Sets the window structure. """

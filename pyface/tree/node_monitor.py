@@ -70,7 +70,6 @@ class NodeMonitor(HasTraits):
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj)
 
-        return
 
     def stop(self):
         """ Stop listening to changes to the node. """
@@ -78,14 +77,12 @@ class NodeMonitor(HasTraits):
         if self.node.obj is not None:
             self._setup_trait_change_handlers(self.node.obj, remove=True)
 
-        return
 
     def fire_nodes_changed(self, children=[]):
         """ Fires the nodes changed event. """
 
         self.nodes_changed = NodeEvent(node=self.node, children=children)
 
-        return
 
     def fire_nodes_inserted(self, children, index=-1):
         """ Fires the nodes inserted event.
@@ -100,14 +97,12 @@ class NodeMonitor(HasTraits):
             node=self.node, children=children, index=index
         )
 
-        return
 
     def fire_nodes_removed(self, children):
         """ Fires the nodes removed event. """
 
         self.nodes_removed = NodeEvent(node=self.node, children=children)
 
-        return
 
     def fire_nodes_replaced(self, old_children, new_children):
         """ Fires the nodes replaced event. """
@@ -116,7 +111,6 @@ class NodeMonitor(HasTraits):
             node=self.node, old_children=old_children, children=new_children
         )
 
-        return
 
     def fire_structure_changed(self):
         """ Fires the structure changed event. """

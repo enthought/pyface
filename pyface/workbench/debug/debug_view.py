@@ -32,7 +32,6 @@ class DebugViewModel(HasTraits):
         self.active_part = self._get_id(self.window.active_part)
         self.active_view = self._get_id(self.window.active_view)
 
-        return
 
     def _window_changed(self):
         """ Window changed! """

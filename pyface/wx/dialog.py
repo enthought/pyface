@@ -41,7 +41,6 @@ class OpenFileDialog(wx.FileDialog):
         # Base-class constructor.
         wx.FileDialog.__init__(self, parent, "Open", style=style, **kw)
 
-        return
 
 
 class OpenDirDialog(wx.DirDialog):
@@ -55,7 +54,6 @@ class OpenDirDialog(wx.DirDialog):
         # Base-class constructor.
         wx.DirDialog.__init__(self, parent, "Open", style=style, **kw)
 
-        return
 
 
 class SaveFileAsDialog(wx.FileDialog):
@@ -69,7 +67,6 @@ class SaveFileAsDialog(wx.FileDialog):
         # Base-class constructor.
         wx.FileDialog.__init__(self, parent, "Save As", style=style, **kw)
 
-        return
 
 
 def confirmation(parent, message, title=None, default=wx.NO_DEFAULT):
@@ -117,7 +114,6 @@ def information(parent, message, title=None):
     dialog.ShowModal()
     dialog.Destroy()
 
-    return
 
 
 def warning(parent, message, title=None):
@@ -133,7 +129,6 @@ def warning(parent, message, title=None):
     dialog.ShowModal()
     dialog.Destroy()
 
-    return
 
 
 def error(parent, message, title=None):
@@ -149,7 +144,6 @@ def error(parent, message, title=None):
     dialog.ShowModal()
     dialog.Destroy()
 
-    return
 
 
 def _get_title(title, parent, default):

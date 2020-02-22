@@ -206,7 +206,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             else:
                 self.base_Show(show, attr)
 
-        return
 
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
@@ -214,7 +213,6 @@ class TraitGridCellAdapter(PyGridCellEditor):
             attribute.  In this class the edit control fills the whole cell so
             don't do anything at all in order to reduce flicker.
         """
-        return
 
     def BeginEdit(self, row, col, grid):
         """ Make sure the control is ready to edit. """
@@ -258,26 +256,22 @@ class TraitGridCellAdapter(PyGridCellEditor):
         """ Reset the value in the control back to its starting value. """
 
         # fixme: should we be using the undo history here?
-        return
 
     def StartingKey(self, evt):
         """ If the editor is enabled by pressing keys on the grid, this will be
             called to let the editor do something about that first key
             if desired.
         """
-        return
 
     def StartingClick(self):
         """ If the editor is enabled by clicking on the cell, this method
             will be called to allow the editor to simulate the click on the
             control if needed.
         """
-        return
 
     def Destroy(self):
         """ Final cleanup. """
         self._editor.dispose()
-        return
 
     def Clone(self):
         """ Create a new object which is the copy of this one. """

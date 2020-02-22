@@ -46,7 +46,6 @@ class SizedPanel(wx.Panel):
 
         self.sizer.Fit(self)
 
-        return
 
     def Layout(self):
         """ Lays out the sizer without changing the panel geometry. """

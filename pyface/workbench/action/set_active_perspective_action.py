@@ -40,7 +40,6 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
         self.window = None
 
-        return
 
     def perform(self, event):
         """ Perform the action. """

@@ -66,7 +66,6 @@ class Editor(MEditor):
             _control.close()
             _control.deleteLater()
 
-        return
 
     def set_focus(self):
         """ Set the focus to the appropriate control in the part. """

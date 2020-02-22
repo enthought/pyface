@@ -104,7 +104,6 @@ class GridCellImageRenderer(GridCellRenderer):
 
         dc.DestroyClippingRegion()
 
-        return
 
     def GetBestSize(self, grid, attr, dc, row, col):
         """ Determine best size for the cell. """

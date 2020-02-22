@@ -163,7 +163,6 @@ class ExpandableHeader(Widget):
 
         dc.DrawBitmap(bmp, self._CARAT_X, self._CARAT_Y, True)
 
-        return
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
@@ -181,7 +180,6 @@ class ExpandableHeader(Widget):
 
             x = x + w
 
-        return
 
     def _draw_title(self, dc):
         """ Draws the text label for the header. """
@@ -217,7 +215,6 @@ class ExpandableHeader(Widget):
         # print 'ImageButton._on_erase_background'
         dc = event.GetDC()
         self._draw(dc)
-        return
 
     def _on_enter_leave(self, event):
         """ Called when button is pressed. """

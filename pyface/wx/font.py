@@ -52,7 +52,6 @@ def set_font_size(window, size):
     for child in window.GetChildren():
         set_font_size(child, size)
 
-    return
 
 
 def increase_font_size(window, delta=2):
@@ -74,7 +73,6 @@ def increase_font_size(window, delta=2):
     for child in window.GetChildren():
         increase_font_size(child, delta)
 
-    return
 
 
 def decrease_font_size(window, delta=2):
@@ -82,7 +80,6 @@ def decrease_font_size(window, delta=2):
 
     increase_font_size(window, delta=-2)
 
-    return
 
 
 def set_bold_font(window):

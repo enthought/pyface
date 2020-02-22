@@ -70,7 +70,6 @@ class FileDropSource(wx.DropSource):
 
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
-        return
 
 
 class FileDropTarget(wx.FileDropTarget):
@@ -84,7 +83,6 @@ class FileDropTarget(wx.FileDropTarget):
 
         self.handler = handler
 
-        return
 
     def OnDropFiles(self, x, y, filenames):
         """ Called when the files have been dropped. """
@@ -137,7 +135,6 @@ class PythonDropSource(wx.DropSource):
             flags = wx.Drag_CopyOnly
         self.result = self.DoDragDrop(flags)
 
-        return
 
     def on_dropped(self, drag_result):
         """ Called when the data has been dropped. """
@@ -165,7 +162,6 @@ class PythonDropSource(wx.DropSource):
                 else:
                     self.handler()
 
-        return
 
 
 class PythonDropTarget(wx.DropTarget):
@@ -198,7 +194,6 @@ class PythonDropTarget(wx.DropTarget):
         self.data_object.Add(self.file_data)
         self.SetDataObject(self.data_object)
 
-        return
 
     def OnData(self, x, y, default_drag_result):
         """ Called when OnDrop returns True. """
@@ -315,7 +310,6 @@ class PythonDropTarget(wx.DropTarget):
         if hasattr(self.handler, "wx_drag_leave"):
             self.handler.wx_drag_leave(clipboard.data)
 
-        return
 
     def OnDrop(self, x, y):
         """ Called when the user drops a data object on the target.

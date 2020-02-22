@@ -117,7 +117,6 @@ class SwitcherControl(wx.Panel):
         # Resize the panel to match the sizer's minimal size.
         sizer.Fit(self)
 
-        return
 
     def _combo(self, parent, model, label):
         """ Creates the switcher combo box. """
@@ -211,7 +210,6 @@ class SwitcherPanel(wxScrolledPanel):
         # Resize the panel to match the sizer's minimal size.
         sizer.Fit(self)
 
-        return
 
     def _show_page(self, index):
         """ Shows the page at the specified index. """
@@ -240,7 +238,6 @@ class SwitcherPanel(wxScrolledPanel):
         # dimension.
         self.sizer.Layout()
 
-        return
 
 
 class Switcher(wx.Panel):

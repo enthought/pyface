@@ -225,7 +225,6 @@ class ProgressDialog(MProgressDialog, Window):
         label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
         layout.addWidget(label)
         self._message_control = label
-        return
 
     def _create_percent(self, dialog, parent_sizer):
         if not self.show_percent:

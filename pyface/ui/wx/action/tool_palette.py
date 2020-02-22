@@ -101,7 +101,6 @@ class ToolPalette(Widget):
         if button is not None and hasattr(button, "SetToggle"):
             button.SetToggle(checked)
 
-        return
 
     def enable_tool(self, id, enabled):
         """ Enable or disable the tool identified by 'id'. """
@@ -110,7 +109,6 @@ class ToolPalette(Widget):
         if button is not None:
             button.SetEnabled(enabled)
 
-        return
 
     def on_tool_event(self, id, callback):
         """ Register a callback for events on the tool identified by 'id'. """
@@ -118,7 +116,6 @@ class ToolPalette(Widget):
         callbacks = self.tool_listeners.setdefault(id, [])
         callbacks.append(callback)
 
-        return
 
     def realize(self):
         """ Realize the control so that it can be displayed. """
@@ -126,7 +123,6 @@ class ToolPalette(Widget):
         self.is_realized = True
         self._reflow()
 
-        return
 
     def get_tool_state(self, id):
         """ Get the toggle state of the tool identified by 'id'. """
@@ -169,7 +165,6 @@ class ToolPalette(Widget):
         for param in self.tools:
             self._initialize_tool(param)
 
-        return
 
     def _initialize_tool(self, param):
         """ Initialize the tool palette button. """
@@ -200,7 +195,6 @@ class ToolPalette(Widget):
         button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
 
-        return
 
     def _on_button(self, event):
 

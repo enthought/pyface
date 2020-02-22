@@ -158,7 +158,6 @@ class ToolBarManager(ActionManager):
                         self.show_tool_names,
                     )
 
-        return
 
     def _wx_set_initial_tool_state(self, tool_bar):
         """ Workaround for the wxPython tool bar bug.
@@ -195,7 +194,6 @@ class ToolBarManager(ActionManager):
                 if not checked and len(group.items) > 0:
                     group.items[0].action.checked = True
 
-        return
 
 
 class _ToolBar(wx.ToolBar):
@@ -233,14 +231,12 @@ class _ToolBar(wx.ToolBar):
 
         obj.window._wx_enable_tool_bar(self, new)
 
-        return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
         obj.window._wx_show_tool_bar(self, new)
 
-        return
 
 
 class _AuiToolBar(aui.AuiToolBar):
@@ -277,7 +273,6 @@ class _AuiToolBar(aui.AuiToolBar):
         # removed from the toolbar the item would be garbage collected.
         self.tool_map = {}
 
-        return
 
     def Realize(self):
         if len(self.tool_map) == 0:
@@ -428,7 +423,6 @@ class _AuiToolBar(aui.AuiToolBar):
 
             pass
 
-        return
 
     def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """

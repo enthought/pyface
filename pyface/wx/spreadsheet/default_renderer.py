@@ -53,7 +53,6 @@ class DefaultRenderer(PyGridCellRenderer):
         self.DrawBackground(grid, attr, dc, rect, row, col, isSelected)
         self.DrawForeground(grid, attr, dc, rect, row, col, isSelected)
         dc.DestroyClippingRegion()
-        return
 
     def DrawBackground(self, grid, attr, dc, rect, row, col, isSelected):
         """ Erases whatever is already in the cell by drawing over it.
@@ -75,7 +74,6 @@ class DefaultRenderer(PyGridCellRenderer):
             dc.SetBrush(DefaultRenderer.odd_cells)
 
         dc.DrawRectangle(rect.x, rect.y, rect.width, rect.height)
-        return
 
     def DrawForeground(self, grid, attr, dc, rect, row, col, isSelected):
         """ Draws the cell (text) on top of the existing background color.
@@ -87,7 +85,6 @@ class DefaultRenderer(PyGridCellRenderer):
         dc.DrawText(self.FormatText(text), rect.x + 1, rect.y + 1)
 
         self.DrawEllipses(grid, attr, dc, rect, row, col, isSelected)
-        return
 
     def FormatText(self, text):
         """ Formats numbers to 3 decimal places.
@@ -113,7 +110,6 @@ class DefaultRenderer(PyGridCellRenderer):
             x = rect.x + 1 + rect.width - 2 - width
             dc.DrawRectangle(x, rect.y + 1, width + 1, height)
             dc.DrawText("...", x, rect.y + 1)
-        return
 
     def GetBestSize88(self, grid, attr, dc, row, col):
         """ This crashes the app - hmmmm. """

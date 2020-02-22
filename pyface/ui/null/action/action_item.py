@@ -56,7 +56,6 @@ class _MenuItem(HasTraits):
             self.controller = controller
             controller.add_to_menu(self)
 
-        return
 
 
 class _Tool(HasTraits):
@@ -114,7 +113,6 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-        return
 
 
 class _PaletteTool(HasTraits):

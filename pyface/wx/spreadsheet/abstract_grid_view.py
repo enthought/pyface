@@ -33,7 +33,6 @@ class ComboboxFocusHandler(wx.EvtHandler):
     def __init__(self):
         wx.EvtHandler.__init__(self)
         self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
-        return
 
     def _on_kill_focus(self, evt):
 
@@ -49,7 +48,6 @@ class ComboboxFocusHandler(wx.EvtHandler):
         ):
             return
         evt.Skip()
-        return
 
 
 class AbstractGridView(Grid):
@@ -80,7 +78,6 @@ class AbstractGridView(Grid):
 
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
 
-        return
 
     def init_labels(self):
         self.SetLabelFont(
@@ -92,7 +89,6 @@ class AbstractGridView(Grid):
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
 
-        return
 
     def init_data_types(self):
         """ If the model says a cell is of a specified type, the grid uses
@@ -104,7 +100,6 @@ class AbstractGridView(Grid):
             GridCellFloatEditor(),
         )
 
-        return
 
     def init_handlers(self):
 
@@ -129,7 +124,6 @@ class AbstractGridView(Grid):
         self.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self.OnEditorHidden)
         self.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self.OnEditorCreated)
 
-        return
 
     def SetColLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -139,7 +133,6 @@ class AbstractGridView(Grid):
             self.SetColLabelSize(0)
         else:
             self.SetColLabelSize(self._default_col_label_size)
-        return
 
     def SetRowLabelsVisible(self, show=True):
         """ This only works if you 'hide' then 'show' the labels.
@@ -149,7 +142,6 @@ class AbstractGridView(Grid):
             self.SetRowLabelSize(0)
         else:
             self.SetRowLabelSize(self._default_row_label_size)
-        return
 
     def SetTable(self, table, *args):
         """ Some versions of wxPython do not return the correct

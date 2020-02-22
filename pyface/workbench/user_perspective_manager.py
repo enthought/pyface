@@ -143,7 +143,6 @@ class UserPerspectiveManager(HasTraits):
 
         self._update_persistent_data()
 
-        return
 
     def add(self, perspective, name=None):
         """ Add a perspective with an optional name. """
@@ -174,7 +173,6 @@ class UserPerspectiveManager(HasTraits):
         # Update the persistent file information:
         self._update_persistent_data()
 
-        return
 
     def remove(self, id):
         """ Remove the user perspective with the specified id.

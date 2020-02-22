@@ -73,7 +73,6 @@ class MWizard(object):
         page = self.controller.get_next_page(self.controller.current_page)
         self._show_page(page)
 
-        return
 
     def previous(self):
         """ Return to the previous page in the wizard. """
@@ -148,7 +147,6 @@ class MWizard(object):
 
         self._update()
 
-        return
 
     def _on_closed_changed(self):
         """ Called when the wizard is closed. """
