@@ -59,7 +59,7 @@ class ResourceManager(HasTraits):
 
         resource_path = []
         for item in list(path) + self.extra_paths:
-            if isinstance(item, six.string_types):
+            if isinstance(item, str):
                 resource_path.append(item)
             elif isinstance(item, types.ModuleType):
                 resource_path.append(item)

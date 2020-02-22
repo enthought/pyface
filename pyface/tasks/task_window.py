@@ -327,7 +327,7 @@ class TaskWindow(ApplicationWindow):
 
         # Store layouts for the tasks, including the active task.
         for layout in window_layout.items:
-            if isinstance(layout, six.string_types):
+            if isinstance(layout, str):
                 continue
             state = self._get_state(layout.id)
             if state:

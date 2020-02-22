@@ -792,7 +792,7 @@ class Grid(Widget):
         evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
-            if isinstance(data, six.string_types):
+            if isinstance(data, str):
                 file = abspath(data)
                 if exists(file):
                     FileDropSource(self._grid, file)

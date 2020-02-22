@@ -99,7 +99,7 @@ class Clipboard(BaseClipboard):
             return []
 
     def _set_file_data(self, data):
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             data = [data]
         mime_data = QtCore.QMimeData()
         mime_data.setUrls([QtCore.QUrl(path) for path in data])

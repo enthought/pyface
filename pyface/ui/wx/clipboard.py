@@ -137,7 +137,7 @@ class Clipboard(BaseClipboard):
     def _set_file_data(self, data):
         if cb.Open():
             tfo = wx.FileDataObject()
-            if isinstance(data, six.string_types):
+            if isinstance(data, str):
                 tfo.AddFile(data)
             else:
                 for filename in data:

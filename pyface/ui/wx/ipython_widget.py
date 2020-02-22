@@ -418,7 +418,7 @@ class IPythonWidget(Widget):
 
             if (
                 hasattr(obj, "name")
-                and isinstance(obj.name, six.string_types)
+                and isinstance(obj.name, str)
                 and len(obj.name) > 0
             ):
                 py_name = python_name(obj.name)

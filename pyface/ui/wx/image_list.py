@@ -59,7 +59,7 @@ class ImageList(wx.ImageList):
 
             # If the filename is a string then it is the filename of some kind
             # of image (e.g 'foo.gif', 'image/foo.png' etc).
-            elif isinstance(filename, six.string_types):
+            elif isinstance(filename, str):
                 # Load the image from the file.
                 image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 

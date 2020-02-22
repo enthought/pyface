@@ -88,7 +88,7 @@ def getAttributeNames(
     attributes = [
         attribute
         for attribute in attributes
-        if isinstance(attribute, six.string_types)
+        if isinstance(attribute, str)
     ]
     attributes.sort(key=lambda x: x.upper())
     if not includeSingle:

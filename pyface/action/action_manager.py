@@ -100,7 +100,7 @@ class ActionManager(HasTraits):
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
-            if isinstance(arg, six.string_types):
+            if isinstance(arg, str):
                 # Create a group with the specified Id.
                 arg = Group(id=arg)
 
@@ -343,7 +343,7 @@ class ActionManager(HasTraits):
             item.parent = self
 
         # 2) The item is a string.
-        elif isinstance(item, six.string_types):
+        elif isinstance(item, str):
             # Create a group with that Id.
             item = Group(id=item)
             item.parent = self

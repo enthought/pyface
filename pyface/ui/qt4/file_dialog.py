@@ -65,7 +65,7 @@ class FileDialog(MFileDialog, Dialog):
     def create_wildcard(cls, description, extension):
         """ Creates a wildcard for a given extension. """
 
-        if isinstance(extension, six.string_types):
+        if isinstance(extension, str):
             pattern = extension
 
         else:

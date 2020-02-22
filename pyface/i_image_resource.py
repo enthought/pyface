@@ -136,7 +136,7 @@ class MImageResource(object):
     def __init__(self, name, search_path=None):
         self.name = name
 
-        if isinstance(search_path, six.string_types):
+        if isinstance(search_path, str):
             _path = [search_path]
         elif isinstance(search_path, Sequence):
             _path = search_path
