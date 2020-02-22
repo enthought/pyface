@@ -118,6 +118,7 @@ class _Menu(QtGui.QMenu):
         self._manager.on_trait_change(self._on_enabled_changed, 'enabled')
         self._manager.on_trait_change(self._on_visible_changed, 'visible')
         self._manager.on_trait_change(self._on_name_changed, 'name')
+        self._manager.on_trait_change(self._on_image_changed, 'image')
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
@@ -132,7 +133,7 @@ class _Menu(QtGui.QMenu):
 
         for item in self.menu_items:
             item.dispose()
-            
+
         self.menu_items = []
 
         super(_Menu, self).clear()
@@ -186,6 +187,13 @@ class _Menu(QtGui.QMenu):
         """ Dynamic trait change handler. """
 
         self.menuAction().setText(new)
+
+        return
+
+    def _on_image_changed(self, obj, trait_name, old, new):
+        """ Dynamic trait change handler. """
+
+        self.menuAction().setIcon(new.create_icon())
 
         return
 

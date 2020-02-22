@@ -127,6 +127,8 @@ class _MenuItem(HasTraits):
         action.on_trait_change(self._on_action_name_changed, 'name')
         action.on_trait_change(self._on_action_accelerator_changed,
                                'accelerator')
+        action.on_trait_change(self._on_action_image_changed, 'image')
+        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip')
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -147,6 +149,10 @@ class _MenuItem(HasTraits):
             remove=True)
         action.on_trait_change(self._on_action_accelerator_changed,
             'accelerator', remove=True)
+        action.on_trait_change(self._on_action_image_changed, 'image',
+            remove=True)
+        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip',
+            remove=True)
 
     ###########################################################################
     # Private interface.
@@ -243,6 +249,16 @@ class _MenuItem(HasTraits):
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
 
+    def _on_action_image_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            self.control.setIcon(action.image.create_icon())
+
+    def _on_action_tooltip_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            self.control.setToolTip(action.tooltip)
+
 
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
@@ -328,6 +344,8 @@ class _Tool(HasTraits):
         action.on_trait_change(self._on_action_name_changed, 'name')
         action.on_trait_change(self._on_action_accelerator_changed,
                                'accelerator')
+        action.on_trait_change(self._on_action_image_changed, 'image')
+        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip')
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -426,6 +444,19 @@ class _Tool(HasTraits):
         """ Called when the accelerator trait is changed on an action. """
         if self.control is not None:
             self.control.setShortcut(action.accelerator)
+
+    def _on_action_image_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            size = self.tool_bar.iconSize()
+            self.control.setIcon(
+                action.image.create_icon((size.width(), size.height()))
+            )
+
+    def _on_action_tooltip_changed(self, action, trait_name, old, new):
+        """ Called when the accelerator trait is changed on an action. """
+        if self.control is not None:
+            self.control.setToolTip(action.tooltip)
 
 
 class _PaletteTool(HasTraits):

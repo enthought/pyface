@@ -133,6 +133,7 @@ class _MenuItem(HasTraits):
         action.on_trait_change(self._on_action_visible_changed, 'visible')
         action.on_trait_change(self._on_action_checked_changed, 'checked')
         action.on_trait_change(self._on_action_name_changed, 'name')
+        action.on_trait_change(self._on_action_image_changed, 'image')
 
         if controller is not None:
             self.controller = controller
@@ -241,6 +242,14 @@ class _MenuItem(HasTraits):
         if len(action.accelerator) > 0:
             label = label + '\t' + action.accelerator
         self.control.SetText(label)
+
+        return
+
+    def _on_action_image_changed(self, action, trait_name, old, new):
+        """ Called when the name trait is changed on an action. """
+
+        if self.control is not None:
+            self.control.SetIcon(action.image.create_icon())
 
         return
 
