@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A simple progress bar intended to run in the UI thread """
 
 import time
@@ -28,6 +28,7 @@ class ProgressDialog(MProgressDialog, Window):
     """ A simple progress dialog window which allows itself to be updated
 
     """
+
     # FIXME: buttons are not set up correctly yet
 
     #: The progress bar widget
@@ -66,7 +67,7 @@ class ProgressDialog(MProgressDialog, Window):
     dialog_size = Instance(QtCore.QRect)
 
     #: Label for the 'cancel' button
-    cancel_button_label = Unicode('Cancel')
+    cancel_button_label = Unicode("Cancel")
 
     #: Whether or not the dialog was cancelled by the user
     _user_cancelled = Bool(False)
@@ -83,9 +84,9 @@ class ProgressDialog(MProgressDialog, Window):
     #: The widget showing the estimated time remaining
     _remaining_control = Instance(QtGui.QLabel)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # IWindow Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def open(self):
         """ Opens the window. """
@@ -99,9 +100,9 @@ class ProgressDialog(MProgressDialog, Window):
 
         super(ProgressDialog, self).close()
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # IProgressDialog Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def update(self, value):
         """ Update the progress bar to the desired value
@@ -121,15 +122,15 @@ class ProgressDialog(MProgressDialog, Window):
         if self.max > 0:
             self.progress_bar.setValue(value)
 
-            if (self.max != self.min):
-                percent = (float(value) - self.min)/(self.max - self.min)
+            if self.max != self.min:
+                percent = (float(value) - self.min) / (self.max - self.min)
             else:
                 percent = 1.0
 
             if self.show_time and (percent != 0):
                 current_time = time.time()
                 elapsed = current_time - self._start_time
-                estimated = elapsed/percent
+                estimated = elapsed / percent
                 remaining = estimated - elapsed
 
                 self._set_time_label(elapsed, self._elapsed_control)
@@ -148,9 +149,9 @@ class ProgressDialog(MProgressDialog, Window):
 
         return (not self._user_cancelled, False)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def reject(self, event):
         self._user_cancelled = True
@@ -174,7 +175,9 @@ class ProgressDialog(MProgressDialog, Window):
         buttons = QtGui.QDialogButtonBox()
 
         if self.can_cancel:
-            buttons.addButton(self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole)
+            buttons.addButton(
+                self.cancel_button_label, QtGui.QDialogButtonBox.RejectRole
+            )
         if self.can_ok:
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
@@ -193,7 +196,9 @@ class ProgressDialog(MProgressDialog, Window):
         dummy.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
 
         label = QtGui.QLabel("unknown", dialog)
-        label.setAlignment(QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight)
+        label.setAlignment(
+            QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft | QtCore.Qt.AlignRight
+        )
 
         sub_layout = QtGui.QHBoxLayout()
 
@@ -232,9 +237,15 @@ class ProgressDialog(MProgressDialog, Window):
         if not self.show_time:
             return
 
-        self._elapsed_control = self._create_label(dialog, layout, "Elapsed time : ")
-        self._estimated_control = self._create_label(dialog, layout, "Estimated time : ")
-        self._remaining_control = self._create_label(dialog, layout, "Remaining time : ")
+        self._elapsed_control = self._create_label(
+            dialog, layout, "Elapsed time : "
+        )
+        self._estimated_control = self._create_label(
+            dialog, layout, "Estimated time : "
+        )
+        self._remaining_control = self._create_label(
+            dialog, layout, "Remaining time : "
+        )
 
     def _create_control(self, parent):
         return QtGui.QDialog(parent)
@@ -245,9 +256,10 @@ class ProgressDialog(MProgressDialog, Window):
 
     def _create_contents(self, parent):
         dialog = parent
-        layout  = QtGui.QVBoxLayout(dialog)
-        layout.setContentsMargins(self.margin, self.margin,
-                                  self.margin, self.margin)
+        layout = QtGui.QVBoxLayout(dialog)
+        layout.setContentsMargins(
+            self.margin, self.margin, self.margin, self.margin
+        )
 
         # The 'guts' of the dialog.
         self._create_message(dialog, layout)
@@ -259,9 +271,9 @@ class ProgressDialog(MProgressDialog, Window):
 
         parent.setLayout(layout)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Trait change handlers
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def _max_changed(self, new):
         if self.progress_bar is not None:

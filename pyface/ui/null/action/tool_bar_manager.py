@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The 'null' backend specific implementation of the tool bar manager.
 """
 
@@ -32,7 +32,7 @@ class ToolBarManager(ActionManager):
     image_size = Tuple((16, 16))
 
     # The orientation of the toolbar.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
@@ -76,5 +76,6 @@ class ToolBarManager(ActionManager):
             controller = self.controller
 
         return None
+
 
 #### EOF ######################################################################

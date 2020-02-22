@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -30,9 +30,9 @@ from .dialog import Dialog
 
 # Map the ETS severity to the corresponding wx standard icon.
 _SEVERITY_TO_ICON_MAP = {
-    'information':  wx.ICON_INFORMATION,
-    'warning':      wx.ICON_WARNING,
-    'error':        wx.ICON_ERROR
+    "information": wx.ICON_INFORMATION,
+    "warning": wx.ICON_WARNING,
+    "error": wx.ICON_ERROR,
 }
 
 
@@ -42,7 +42,6 @@ class MessageDialog(MMessageDialog, Dialog):
     IMessageDialog interface for the API documentation.
     """
 
-
     #### 'IMessageDialog' interface ###########################################
 
     message = Unicode
@@ -51,7 +50,7 @@ class MessageDialog(MMessageDialog, Dialog):
 
     detail = Unicode
 
-    severity = Enum('information', 'warning', 'error')
+    severity = Enum("information", "warning", "error")
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -68,7 +67,7 @@ class MessageDialog(MMessageDialog, Dialog):
     def _create_control(self, parent):
         # The message.
         if self.informative:
-            message = self.message + '\n\n' + self.informative
+            message = self.message + "\n\n" + self.informative
         else:
             message = self.message
 
@@ -76,8 +75,9 @@ class MessageDialog(MMessageDialog, Dialog):
         if self.resizeable:
             style |= wx.RESIZE_BORDER
 
-        dlg = wx.MessageDialog(parent, message, self.title, style,
-                               self.position)
+        dlg = wx.MessageDialog(
+            parent, message, self.title, style, self.position
+        )
         if self.size != (-1, -1):
             dlg.SetSize(self.size)
 

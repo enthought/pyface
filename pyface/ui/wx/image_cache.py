@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -33,7 +33,6 @@ class ImageCache(MImageCache, HasTraits):
     IImageCache interface for the API documentation.
     """
 
-
     ###########################################################################
     # 'object' interface.
     ###########################################################################
@@ -43,10 +42,10 @@ class ImageCache(MImageCache, HasTraits):
         self._height = height
 
         # The images in the cache!
-        self._images = {} # {filename : wx.Image}
+        self._images = {}  # {filename : wx.Image}
 
         # The images in the cache converted to bitmaps.
-        self._bitmaps = {} # {filename : wx.Bitmap}
+        self._bitmaps = {}  # {filename : wx.Bitmap}
 
         return
 
@@ -66,7 +65,10 @@ class ImageCache(MImageCache, HasTraits):
             image = wx.Image(filename, wx.BITMAP_TYPE_ANY)
 
             # We force all images in the cache to be the same size.
-            if image.GetWidth() != self._width or image.GetHeight() != self._height:
+            if (
+                image.GetWidth() != self._width
+                or image.GetHeight() != self._height
+            ):
                 image.Rescale(self._width, self._height)
 
             # Add the bitmap to the cache!
@@ -92,5 +94,6 @@ class ImageCache(MImageCache, HasTraits):
             self._bitmaps[filename] = bmp
 
         return bmp
+
 
 #### EOF ######################################################################

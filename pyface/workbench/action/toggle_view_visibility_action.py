@@ -15,13 +15,13 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = Delegate('view', modify=True)
+    id = Delegate("view", modify=True)
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = Delegate('view', modify=True)
+    name = Delegate("view", modify=True)
 
     # The action's style.
-    style = 'toggle'
+    style = "toggle"
 
     #### 'ViewAction' interface ###############################################
 
@@ -71,25 +71,27 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     def _add_view_listeners(self, view):
         """ Add listeners for trait events on a view. """
 
-        view.on_trait_change(self._refresh_checked, 'visible')
-        view.on_trait_change(self._refresh_checked, 'window')
+        view.on_trait_change(self._refresh_checked, "visible")
+        view.on_trait_change(self._refresh_checked, "window")
 
         return
 
     def _remove_view_listeners(self, view):
         """ Add listeners for trait events on a view. """
 
-        view.on_trait_change(self._refresh_checked, 'visible', remove=True)
-        view.on_trait_change(self._refresh_checked, 'window', remove=True)
+        view.on_trait_change(self._refresh_checked, "visible", remove=True)
+        view.on_trait_change(self._refresh_checked, "window", remove=True)
 
         return
 
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
-        self.checked = self.view is not None \
-          and self.view.window is not None \
-          and self.view.visible
+        self.checked = (
+            self.view is not None
+            and self.view.window is not None
+            and self.view.visible
+        )
 
         return
 
@@ -103,5 +105,6 @@ class ToggleViewVisibilityAction(WorkbenchAction):
             view.show()
 
         return
+
 
 #### EOF ######################################################################

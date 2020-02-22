@@ -11,7 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.warning(
-    'DEPRECATED: pyface.expandable_header, use pyface.ui.wx.expandable_header instead. '
-    'Will be removed in Pyface 7.')
+    "DEPRECATED: pyface.expandable_header, use pyface.ui.wx.expandable_header instead. "
+    "Will be removed in Pyface 7."
+)
 
 from pyface.ui.wx.expandable_header import *

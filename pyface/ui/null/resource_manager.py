@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Enthought library imports.
@@ -27,7 +27,7 @@ class PyfaceResourceFactory(ResourceFactory):
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """
         # Just return the data as a string for now.
-        f = open(filename, 'rb')
+        f = open(filename, "rb")
         data = f.read()
         f.close()
 
@@ -36,5 +36,6 @@ class PyfaceResourceFactory(ResourceFactory):
     def image_from_data(self, data):
         """ Creates an image from the specified data. """
         return data
+
 
 #### EOF ######################################################################

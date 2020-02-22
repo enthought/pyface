@@ -7,10 +7,18 @@ import unittest
 from traits.api import HasTraits, Instance
 
 from pyface.qt import QtGui, QtCore
-from pyface.tasks.split_editor_area_pane import EditorAreaWidget, \
-    SplitEditorAreaPane
-from pyface.tasks.api import Editor, PaneItem, Splitter, Tabbed, Task, \
-    TaskWindow
+from pyface.tasks.split_editor_area_pane import (
+    EditorAreaWidget,
+    SplitEditorAreaPane,
+)
+from pyface.tasks.api import (
+    Editor,
+    PaneItem,
+    Splitter,
+    Tabbed,
+    Task,
+    TaskWindow,
+)
 from pyface.util.guisupport import get_app_qt4
 from pyface.ui.qt4.util.testing import event_loop
 
@@ -18,14 +26,14 @@ from pyface.ui.qt4.util.testing import event_loop
 class ViewWithTabsEditor(Editor):
     """ Test editor, displaying a labels in tabs. """
 
-    name = 'Test Editor'
+    name = "Test Editor"
 
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
         control = QtGui.QTabWidget()
-        control.addTab(QtGui.QLabel('tab 1'), 'group 1')
-        control.addTab(QtGui.QLabel('tab 2'), 'group 2')
+        control.addTab(QtGui.QLabel("tab 1"), "group 1")
+        control.addTab(QtGui.QLabel("tab 2"), "group 2")
         self.control = control
 
     def destroy(self):
@@ -37,8 +45,8 @@ class ViewWithTabsEditor(Editor):
 class SplitEditorAreaPaneTestTask(Task):
     """ A test task containing a SplitEditorAreaPane. """
 
-    id = 'test_task'
-    name = 'Test Task'
+    id = "test_task"
+    name = "Test Task"
 
     editor_area = Instance(SplitEditorAreaPane, ())
 
@@ -54,13 +62,14 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         parent : parent of the returned root
         """
-        root = EditorAreaWidget(editor_area=SplitEditorAreaPane(),
-                                parent=parent)
-        btn0 = QtGui.QPushButton('0')
-        btn1 = QtGui.QPushButton('1')
+        root = EditorAreaWidget(
+            editor_area=SplitEditorAreaPane(), parent=parent
+        )
+        btn0 = QtGui.QPushButton("0")
+        btn1 = QtGui.QPushButton("1")
         tabwidget = root.tabwidget()
-        tabwidget.addTab(btn0, '0')
-        tabwidget.addTab(btn1, '1')
+        tabwidget.addTab(btn0, "0")
+        tabwidget.addTab(btn1, "1")
         tabwidget.setCurrentIndex(1)
 
         return root
@@ -98,15 +107,18 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # does the right tabwidget contain nothing but the empty widget?
         self.assertEqual(root.rightchild.tabwidget().count(), 1)
-        self.assertEqual(root.rightchild.tabwidget().widget(0),
-                          root.rightchild.tabwidget().empty_widget)
+        self.assertEqual(
+            root.rightchild.tabwidget().widget(0),
+            root.rightchild.tabwidget().empty_widget,
+        )
 
         # do we have an equally sized split?
         self.assertEqual(root.leftchild.width(), root.rightchild.width())
 
         # is the rightchild active?
-        self.assertEqual(root.editor_area.active_tabwidget,
-                          root.rightchild.tabwidget())
+        self.assertEqual(
+            root.editor_area.active_tabwidget, root.rightchild.tabwidget()
+        )
 
     def _setUp_collapse(self, parent=None):
         """ Creates a root, its leftchild and rightchild, so that collapse can
@@ -118,20 +130,20 @@ class TestEditorAreaWidget(unittest.TestCase):
         """
         # setup leftchild
         left = EditorAreaWidget(editor_area=SplitEditorAreaPane(), parent=None)
-        btn0 = QtGui.QPushButton('btn0')
-        btn1 = QtGui.QPushButton('btn1')
+        btn0 = QtGui.QPushButton("btn0")
+        btn1 = QtGui.QPushButton("btn1")
         tabwidget = left.tabwidget()
-        tabwidget.addTab(btn0, '0')
-        tabwidget.addTab(btn1, '1')
+        tabwidget.addTab(btn0, "0")
+        tabwidget.addTab(btn1, "1")
         tabwidget.setCurrentIndex(1)
 
         # setup rightchild
         right = EditorAreaWidget(editor_area=left.editor_area, parent=None)
-        btn2 = QtGui.QPushButton('btn2')
-        btn3 = QtGui.QPushButton('btn3')
+        btn2 = QtGui.QPushButton("btn2")
+        btn3 = QtGui.QPushButton("btn3")
         tabwidget = right.tabwidget()
-        tabwidget.addTab(btn2, '2')
-        tabwidget.addTab(btn3, '3')
+        tabwidget.addTab(btn2, "2")
+        tabwidget.addTab(btn3, "3")
         tabwidget.setCurrentIndex(0)
 
         # setup root
@@ -199,8 +211,9 @@ class TestEditorAreaWidget(unittest.TestCase):
         self.assertEqual(root.rightchild.tabwidget().currentIndex(), 0)
 
         # what is the current active_tabwidget?
-        self.assertEqual(root.editor_area.active_tabwidget,
-                          root.leftchild.tabwidget())
+        self.assertEqual(
+            root.editor_area.active_tabwidget, root.leftchild.tabwidget()
+        )
 
     def test_persistence(self):
         """ Tests whether get_layout/set_layout work correctly by setting a
@@ -210,21 +223,24 @@ class TestEditorAreaWidget(unittest.TestCase):
         # on the rightchild of horizontal split, where the top tabwidget of
         # the vertical split is empty.
         layout = Splitter(
-            Tabbed(PaneItem(id=0, width=600, height=600),
-                   active_tab=0),
-            Splitter(Tabbed(PaneItem(id=-1, width=600, height=300),
-                            active_tab=0),
-                     Tabbed(PaneItem(id=1, width=600, height=300),
-                            PaneItem(id=2, width=600, height=300),
-                            active_tab=0),
-                     orientation='vertical'),
-            orientation='horizontal')
+            Tabbed(PaneItem(id=0, width=600, height=600), active_tab=0),
+            Splitter(
+                Tabbed(PaneItem(id=-1, width=600, height=300), active_tab=0),
+                Tabbed(
+                    PaneItem(id=1, width=600, height=300),
+                    PaneItem(id=2, width=600, height=300),
+                    active_tab=0,
+                ),
+                orientation="vertical",
+            ),
+            orientation="horizontal",
+        )
         # a total of 3 files are needed to give this layout - one on the
         # leftchild of horizontal split, and the other two on the bottom
         # tabwidget of the rightchild's vertical split
-        file0 = open(os.path.join(tempfile.gettempdir(), 'file0'), 'w+b')
-        file1 = open(os.path.join(tempfile.gettempdir(), 'file1'), 'w+b')
-        file2 = open(os.path.join(tempfile.gettempdir(), 'file2'), 'w+b')
+        file0 = open(os.path.join(tempfile.gettempdir(), "file0"), "w+b")
+        file1 = open(os.path.join(tempfile.gettempdir(), "file1"), "w+b")
+        file2 = open(os.path.join(tempfile.gettempdir(), "file2"), "w+b")
 
         # adding the editors
         editor_area = SplitEditorAreaPane()
@@ -235,12 +251,15 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         ######## test tooltips #############
 
-        self.assertEqual(editor_area.active_tabwidget.tabToolTip(0),
-                          "test_tooltip0")
-        self.assertEqual(editor_area.active_tabwidget.tabToolTip(1),
-                          "test_tooltip1")
-        self.assertEqual(editor_area.active_tabwidget.tabToolTip(2),
-                          "test_tooltip2")
+        self.assertEqual(
+            editor_area.active_tabwidget.tabToolTip(0), "test_tooltip0"
+        )
+        self.assertEqual(
+            editor_area.active_tabwidget.tabToolTip(1), "test_tooltip1"
+        )
+        self.assertEqual(
+            editor_area.active_tabwidget.tabToolTip(2), "test_tooltip2"
+        )
 
         ######## test set_layout #############
 
@@ -285,7 +304,7 @@ class TestEditorAreaWidget(unittest.TestCase):
 
         # is the top level a horizontal splitter?
         self.assertIsInstance(layout_new, Splitter)
-        self.assertEqual(layout_new.orientation, 'horizontal')
+        self.assertEqual(layout_new.orientation, "horizontal")
 
         # tests on left child
         left = layout_new.items[0]
@@ -295,7 +314,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # tests on right child
         right = layout_new.items[1]
         self.assertIsInstance(right, Splitter)
-        self.assertEqual(right.orientation, 'vertical')
+        self.assertEqual(right.orientation, "vertical")
 
         # tests on top pane of right child
         right_top = right.items[0]
@@ -401,8 +420,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # reliably outside.
         pos = QtCore.QPoint(-1, -1)
         context_menu_event = QtGui.QContextMenuEvent(
-            QtGui.QContextMenuEvent.Mouse,
-            pos,
+            QtGui.QContextMenuEvent.Mouse, pos
         )
 
         global_pos = editor_area_widget.mapToGlobal(pos)
@@ -444,8 +462,9 @@ class TestEditorAreaWidget(unittest.TestCase):
             editor_area.activate_editor(editor)
 
         # Check that the active tabwidget is the right one.
-        self.assertIs(editor_area.active_tabwidget,
-                      editor_area.control.tabwidget())
+        self.assertIs(
+            editor_area.active_tabwidget, editor_area.control.tabwidget()
+        )
 
         with event_loop():
             window.close()
@@ -488,5 +507,6 @@ class TestEditorAreaWidget(unittest.TestCase):
         with event_loop():
             window.close()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A Layered panel. """
 from __future__ import absolute_import
 
@@ -31,8 +31,8 @@ class ExpandablePanel(Widget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    collapsed_image = Instance(ImageResource, ImageResource('mycarat1'))
-    expanded_image = Instance(ImageResource, ImageResource('mycarat2'))
+    collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
+    expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
 
     ###########################################################################
     # 'object' interface.
@@ -68,7 +68,7 @@ class ExpandablePanel(Widget):
         """
 
         parent = self.control
-        sizer  = self.control.GetSizer()
+        sizer = self.control.GetSizer()
 
         # Add the heading text.
         header = self._create_header(parent, text=name)
@@ -95,9 +95,9 @@ class ExpandablePanel(Widget):
         sizer = self.control.GetSizer()
         panel = self._layers[name]
         header = self._headers[name]
-        #sizer.Remove(panel)
+        # sizer.Remove(panel)
         panel.Destroy()
-        #sizer.Remove(header)
+        # sizer.Remove(header)
         header.Destroy()
 
         sizer.Layout()
@@ -127,11 +127,10 @@ class ExpandablePanel(Widget):
         panel.SetAutoLayout(True)
 
         # Add the panel header.
-        heading = ExpandableHeader(panel, self,
-                                   title = text)
+        heading = ExpandableHeader(panel, self, title=text)
         sizer.Add(heading.control, 1, wx.EXPAND)
 
-        heading.on_trait_change(self._on_button, 'panel_expanded')
+        heading.on_trait_change(self._on_button, "panel_expanded")
 
         # Resize the panel to match the sizer's minimum size.
         sizer.Fit(panel)
@@ -156,5 +155,5 @@ class ExpandablePanel(Widget):
 
         # fixme: Errrr, maybe we can NOT do this!
         w, h = self.control.GetSize().Get()
-        self.control.SetSize((w+1, h+1))
+        self.control.SetSize((w + 1, h + 1))
         self.control.SetSize((w, h))

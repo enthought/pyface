@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The handler used to restore views.
 """
@@ -54,7 +54,7 @@ class ViewSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control *id*. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         view = window.get_view_by_id(id)
         if view is not None:
@@ -65,9 +65,10 @@ class ViewSetStructureHandler(SetStructureHandler):
             control = window_layout._wx_get_view_control(view)
 
         else:
-            logger.warn('could not restore view [%s]', id)
+            logger.warn("could not restore view [%s]", id)
             control = None
 
         return control
+
 
 #### EOF ######################################################################

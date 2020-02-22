@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A file system tree. """
 
 
@@ -28,13 +28,13 @@ class FileTreeModel(TreeModel):
     """ A tree model for local file systems. """
 
     # The image used to represent folders that are NOT expanded.
-    CLOSED_FOLDER = ImageResource('closed_folder')
+    CLOSED_FOLDER = ImageResource("closed_folder")
 
     # The image used to represent folders that ARE expanded.
-    OPEN_FOLDER = ImageResource('open_folder')
+    OPEN_FOLDER = ImageResource("open_folder")
 
     # The image used to represent documents (ie. NON-'folder') nodes.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
     #########################################################################
     # 'TreeModel' interface.
@@ -84,5 +84,6 @@ class FileTree(Tree):
 
     # The model that provides the data for the tree.
     model = Instance(FileTreeModel, ())
+
 
 ##### EOF #####################################################################

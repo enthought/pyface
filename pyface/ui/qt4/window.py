@@ -15,7 +15,13 @@ from pyface.qt import QtCore, QtGui
 
 # Enthought library imports.
 from traits.api import (
-    Enum, Event, Property, Tuple, Unicode, VetoableEvent, provides
+    Enum,
+    Event,
+    Property,
+    Tuple,
+    Unicode,
+    VetoableEvent,
+    provides,
 )
 
 # Local imports.
@@ -37,7 +43,7 @@ class Window(MWindow, Widget):
 
     size = Property(Tuple)
 
-    size_state = Enum('normal', 'maximized')
+    size_state = Enum("normal", "maximized")
 
     title = Unicode
 
@@ -91,7 +97,7 @@ class Window(MWindow, Widget):
             control.resize(*self.size)
         if self.position != (-1, -1):
             control.move(*self.position)
-        if self.size_state != 'normal':
+        if self.size_state != "normal":
             self._size_state_changed(self.size_state)
         control.setWindowTitle(self.title)
         control.setEnabled(self.enabled)
@@ -141,7 +147,7 @@ class Window(MWindow, Widget):
         old = self._position
         self._position = position
 
-        self.trait_property_changed('position', old, position)
+        self.trait_property_changed("position", old, position)
 
     def _get_size(self):
         """ Property getter for size. """
@@ -157,18 +163,18 @@ class Window(MWindow, Widget):
         old = self._size
         self._size = size
 
-        self.trait_property_changed('size', old, size)
+        self.trait_property_changed("size", old, size)
 
     def _size_state_changed(self, state):
         control = self.control
         if control is None:
             return  # Nothing to do here
 
-        if state == 'maximized':
+        if state == "maximized":
             control.setWindowState(
                 control.windowState() | QtCore.Qt.WindowMaximized
             )
-        elif state == 'normal':
+        elif state == "normal":
             control.setWindowState(
                 control.windowState() & ~QtCore.Qt.WindowMaximized
             )
@@ -246,22 +252,26 @@ class WindowEventFilter(QtCore.QObject):
 
             mods = e.modifiers()
             window.key_pressed = KeyPressedEvent(
-                alt_down=((mods &
-                           QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier),
-                control_down=((mods & QtCore.Qt.ControlModifier
-                               ) == QtCore.Qt.ControlModifier),
-                shift_down=((mods & QtCore.Qt.ShiftModifier
-                             ) == QtCore.Qt.ShiftModifier),
+                alt_down=(
+                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                ),
+                control_down=(
+                    (mods & QtCore.Qt.ControlModifier)
+                    == QtCore.Qt.ControlModifier
+                ),
+                shift_down=(
+                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                ),
                 key_code=kcode,
-                event=e
+                event=e,
             )
 
         elif typ == QtCore.QEvent.WindowStateChange:
             # set the size_state of the window.
             state = obj.windowState()
             if state & QtCore.Qt.WindowMaximized:
-                window.size_state = 'maximized'
+                window.size_state = "maximized"
             else:
-                window.size_state = 'normal'
+                window.size_state = "normal"
 
         return False

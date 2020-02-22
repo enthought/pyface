@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The Wx-specific implementation of the text field class """
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -37,7 +37,7 @@ class Field(MField, Widget):
     tooltip = Unicode
 
     #: An optional context menu for the field.
-    context_menu = Instance('pyface.action.menu_manager.MenuManager')
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # IField interface
@@ -76,8 +76,9 @@ class Field(MField, Widget):
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer. """
         if remove:
-            self.control.Unbind(wx.EVT_CONTEXT_MENU,
-                                handler=self._handle_context_menu)
+            self.control.Unbind(
+                wx.EVT_CONTEXT_MENU, handler=self._handle_context_menu
+            )
         else:
             self.control.Bind(wx.EVT_CONTEXT_MENU, self._handle_context_menu)
 

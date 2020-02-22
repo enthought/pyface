@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Chained wizard example. """
 
 from __future__ import print_function
@@ -20,12 +20,13 @@ import os
 import sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # Enthought library imports.
 from pyface.api import GUI, OK
 from pyface.wizard.api import ChainedWizard, Wizard, WizardPage
 from traits.api import Color, HasTraits, Int, Str
+
 
 class Details(HasTraits):
     """ Some test data. """
@@ -50,9 +51,9 @@ class SimpleWizardPage(WizardPage):
         """ Create the wizard page. """
 
         details = Details(color=self.color)
-        details.on_trait_change(self._on_name_changed, 'name')
+        details.on_trait_change(self._on_name_changed, "name")
 
-        return details.edit_traits(parent=parent, kind='subpanel').control
+        return details.edit_traits(parent=parent, kind="subpanel").control
 
     ###########################################################################
     # Private interface.
@@ -69,39 +70,48 @@ class SimpleWizardPage(WizardPage):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
     wizard = ChainedWizard(
-        parent = None,
-        title  = 'Chained wizard root',
-        pages  = [
-            SimpleWizardPage(id='foo', color='red',
-                    heading="The Red Page",
-                    subheading="The default color on this page is red.")
-        ]
+        parent=None,
+        title="Chained wizard root",
+        pages=[
+            SimpleWizardPage(
+                id="foo",
+                color="red",
+                heading="The Red Page",
+                subheading="The default color on this page is red.",
+            )
+        ],
     )
 
     next_wizard = Wizard(
-        parent = None,
-        title  = 'Chained wizard child.',
-        pages  = [
-            SimpleWizardPage(id='bar', color='yellow',
-                    heading="The Yellow Page",
-                    subheading="The default color on this page is yellow."),
-            SimpleWizardPage(id='baz', color='green',
-                    heading="The Green Page",
-                    subheading="The default color on this page is green.")
-        ]
+        parent=None,
+        title="Chained wizard child.",
+        pages=[
+            SimpleWizardPage(
+                id="bar",
+                color="yellow",
+                heading="The Yellow Page",
+                subheading="The default color on this page is yellow.",
+            ),
+            SimpleWizardPage(
+                id="baz",
+                color="green",
+                heading="The Green Page",
+                subheading="The default color on this page is green.",
+            ),
+        ],
     )
 
     wizard.next_wizard = next_wizard
 
     # Open the wizard.
     if wizard.open() == OK:
-        print('Wizard completed successfully')
+        print("Wizard completed successfully")
     else:
-        print('Wizard cancelled')
+        print("Wizard cancelled")
 
 #### EOF ######################################################################

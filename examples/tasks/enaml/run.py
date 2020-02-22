@@ -1,7 +1,7 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2013, Enthought, Inc.
 # All rights reserved.
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Enthought library imports.
 from pyface.api import GUI
@@ -16,9 +16,11 @@ def main(argv):
     """
     # Create the GUI (this does NOT start the GUI event loop).
     from traits.etsconfig.api import ETSConfig
-    ETSConfig.toolkit = 'qt4'
+
+    ETSConfig.toolkit = "qt4"
 
     from enaml.qt.qt_application import QtApplication
+
     app = QtApplication()
 
     gui = GUI()
@@ -35,6 +37,7 @@ def main(argv):
     gui.start_event_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     main(sys.argv)

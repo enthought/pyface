@@ -19,7 +19,7 @@ class IDockPane(ITaskPane):
     closable = Bool(True)
 
     # The dock area in which the pane is currently present.
-    dock_area = Enum('left', 'right', 'top', 'bottom')
+    dock_area = Enum("left", "right", "top", "bottom")
 
     # Whether the pane can be detached from the main window.
     floatable = Bool(True)
@@ -60,7 +60,7 @@ class MDockPane(HasTraits):
     #### 'IDockPane' interface ################################################
 
     closable = Bool(True)
-    dock_area = Enum('left', 'right', 'top', 'bottom')
+    dock_area = Enum("left", "right", "top", "bottom")
     floatable = Bool(True)
     floating = Bool(False)
     movable = Bool(True)

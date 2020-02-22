@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought resource package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Default base-class for resource factories. """
 
 
@@ -30,5 +30,6 @@ class ResourceFactory(object):
         """ Creates an image from the specified data. """
 
         raise NotImplemented
+
 
 #### EOF ######################################################################

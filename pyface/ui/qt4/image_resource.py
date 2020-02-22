@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -30,7 +30,6 @@ class ImageResource(MImageResource, HasTraits):
     """ The toolkit specific implementation of an ImageResource.  See the
     IImageResource interface for the API documentation.
     """
-
 
     #### Private interface ####################################################
 
@@ -94,5 +93,6 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
+
 
 #### EOF ######################################################################

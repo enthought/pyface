@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of an image resource. """
 
 
@@ -18,6 +18,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-ImageResource = toolkit_object('image_resource:ImageResource')
+
+ImageResource = toolkit_object("image_resource:ImageResource")
 
 #### EOF ######################################################################

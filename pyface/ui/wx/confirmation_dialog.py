@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -24,7 +24,10 @@ import wx
 from traits.api import Bool, Enum, Instance, provides, Unicode
 
 # Local imports.
-from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from pyface.i_confirmation_dialog import (
+    IConfirmationDialog,
+    MConfirmationDialog,
+)
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
 from .dialog import Dialog
@@ -35,7 +38,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     """ The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
-
 
     #### 'IConfirmationDialog' interface ######################################
 
@@ -111,7 +113,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The image.
         if self.image is None:
-            image_rc = ImageResource('warning')
+            image_rc = ImageResource("warning")
         else:
             image_rc = self.image
 
@@ -120,7 +122,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         # The message.
         if self.informative:
-            message = self.message + '\n\n' + self.informative
+            message = self.message + "\n\n" + self.informative
         else:
             message = self.message
         message = wx.StaticText(panel, -1, message)
@@ -146,5 +148,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         """ Called when the 'No' button is pressed. """
 
         self.control.EndModal(wx.ID_NO)
+
 
 #### EOF ######################################################################

@@ -40,12 +40,12 @@ class TestAction(unittest.TestCase, UnittestTools):
 
         self.assertIsNone(action.object)
 
-        with self.assertTraitChanges(action, 'object', 1):
+        with self.assertTraitChanges(action, "object", 1):
             action.application = self.application
 
         self.assertEqual(action.object, self.application)
 
-        with self.assertTraitChanges(action, 'object', 1):
+        with self.assertTraitChanges(action, "object", 1):
             action.application = None
 
         self.assertIsNone(action.object)

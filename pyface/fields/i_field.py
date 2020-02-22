@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The text field interface. """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from traits.api import Any, HasTraits, Instance, Unicode
@@ -36,7 +39,7 @@ class IField(IWidget):
     tooltip = Unicode
 
     #: An optional context menu for the field.
-    context_menu = Instance('pyface.action.menu_manager.MenuManager')
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     def show_context_menu(self, x, y):
         """ Create and show the context menu at a position. """
@@ -55,7 +58,7 @@ class MField(HasTraits):
     tooltip = Unicode
 
     #: An optional context menu for the field.
-    context_menu = Instance('pyface.action.menu_manager.MenuManager')
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # IWidget interface
@@ -64,10 +67,11 @@ class MField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MField, self)._add_event_listeners()
-        self.on_trait_change(self._value_updated, 'value', dispatch='ui')
-        self.on_trait_change(self._tooltip_updated, 'tooltip', dispatch='ui')
-        self.on_trait_change(self._context_menu_updated, 'context_menu',
-                             dispatch='ui')
+        self.on_trait_change(self._value_updated, "value", dispatch="ui")
+        self.on_trait_change(self._tooltip_updated, "tooltip", dispatch="ui")
+        self.on_trait_change(
+            self._context_menu_updated, "context_menu", dispatch="ui"
+        )
         if self.control is not None and self.context_menu is not None:
             self._observe_control_context_menu()
 
@@ -75,12 +79,18 @@ class MField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None and self.context_menu is not None:
             self._observe_control_context_menu(remove=True)
-        self.on_trait_change(self._value_updated, 'value', dispatch='ui',
-                             remove=True)
-        self.on_trait_change(self._tooltip_updated, 'tooltip', dispatch='ui',
-                             remove=True)
-        self.on_trait_change(self._context_menu_updated, 'context_menu',
-                             dispatch='ui', remove=True)
+        self.on_trait_change(
+            self._value_updated, "value", dispatch="ui", remove=True
+        )
+        self.on_trait_change(
+            self._tooltip_updated, "tooltip", dispatch="ui", remove=True
+        )
+        self.on_trait_change(
+            self._context_menu_updated,
+            "context_menu",
+            dispatch="ui",
+            remove=True,
+        )
         super(MField, self)._remove_event_listeners()
 
     # ------------------------------------------------------------------------

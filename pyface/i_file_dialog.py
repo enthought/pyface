@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 
@@ -32,7 +32,7 @@ class IFileDialog(IDialog):
     #### 'IFileDialog' interface ##############################################
 
     #: The 'action' that the user is peforming on the directory.
-    action = Enum('open', 'save as')
+    action = Enum("open", "save as")
 
     #: The default directory.
     default_directory = Unicode
@@ -83,7 +83,7 @@ class MFileDialog(object):
     WILDCARD_TXT = "Text files (*.txt)|*.txt|"
 
     #: A file dialog wildcard for all files.
-    if sys.platform == 'win32':
+    if sys.platform == "win32":
         WILDCARD_ALL = "All files (*.*)|*.*|"
     else:
         WILDCARD_ALL = "All files (*)|*"
@@ -111,6 +111,6 @@ class MFileDialog(object):
             pattern = extension
 
         else:
-            pattern = ';'.join(extension)
+            pattern = ";".join(extension)
 
         return "%s (%s)|%s|" % (description, pattern, pattern)

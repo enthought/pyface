@@ -19,13 +19,23 @@ this is most likely to be a subclass of
 """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 import logging
 
 from traits.api import (
-    Bool, Callable, Instance, List, ReadOnly, Tuple, Undefined, Vetoable,
-    on_trait_change
+    Bool,
+    Callable,
+    Instance,
+    List,
+    ReadOnly,
+    Tuple,
+    Undefined,
+    Vetoable,
+    on_trait_change,
 )
 
 from .application import Application
@@ -44,6 +54,7 @@ def default_window_factory(application, **kwargs):
     ground with the base class.
     """
     from pyface.application_window import ApplicationWindow
+
     return ApplicationWindow(**kwargs)
 
 
@@ -192,7 +203,7 @@ class GUIApplication(Application):
         # started.  A listener for this event is a good place to do things
         # where you want the event loop running.
         self.gui.invoke_later(
-            self._fire_application_event, 'application_initialized'
+            self._fire_application_event, "application_initialized"
         )
 
         # start the GUI - script blocks here
@@ -237,6 +248,7 @@ class GUIApplication(Application):
         ground with the base class.
         """
         from pyface.application_window import ApplicationWindow
+
         return lambda application, **kwargs: ApplicationWindow(**kwargs)
 
     def _splash_screen_default(self):
@@ -251,6 +263,7 @@ class GUIApplication(Application):
     def _about_dialog_default(self):
         """ Default AboutDialog """
         from sys import version_info
+
         if (version_info.major, version_info.minor) >= (3, 2):
             from html import escape
         else:
@@ -258,17 +271,16 @@ class GUIApplication(Application):
         from pyface.about_dialog import AboutDialog
 
         additions = [
-            u"<h1>{}</h1>".format(escape(self.name)),
-            u"Copyright &copy; 2018 {}, all rights reserved".format(
-                escape(self.company),
+            "<h1>{}</h1>".format(escape(self.name)),
+            "Copyright &copy; 2018 {}, all rights reserved".format(
+                escape(self.company)
             ),
-            u"",
+            "",
         ]
-        additions += [escape(line) for line in self.description.split('\n\n')]
+        additions += [escape(line) for line in self.description.split("\n\n")]
 
         dialog = AboutDialog(
-            title=u"About {}".format(self.name),
-            additions=additions,
+            title="About {}".format(self.name), additions=additions
         )
         if self.logo:
             dialog.image = self.logo
@@ -276,20 +288,20 @@ class GUIApplication(Application):
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change('windows:activated')
+    @on_trait_change("windows:activated")
     def _on_activate_window(self, window, trait, old, new):
         """ Listener that tracks currently active window.
         """
         if window in self.windows:
             self.active_window = window
 
-    @on_trait_change('windows:deactivated')
+    @on_trait_change("windows:deactivated")
     def _on_deactivate_window(self, window, trait, old, new):
         """ Listener that tracks currently active window.
         """
         self.active_window = None
 
-    @on_trait_change('windows:closed')
+    @on_trait_change("windows:closed")
     def _on_window_closed(self, window, trait, old, new):
         """ Listener that ensures window handles are released when closed.
         """

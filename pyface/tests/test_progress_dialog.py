@@ -5,16 +5,16 @@ import unittest
 from ..progress_dialog import ProgressDialog
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 ModalDialogTester = toolkit_object(
-    'util.modal_dialog_tester:ModalDialogTester'
+    "util.modal_dialog_tester:ModalDialogTester"
 )
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -105,11 +105,11 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         self.dialog.open()
         for i in range(11):
             with self.event_loop():
-                self.dialog.change_message('Updating {}'.format(i))
+                self.dialog.change_message("Updating {}".format(i))
                 result = self.dialog.update(i)
 
             self.assertEqual(result, (True, False))
-            self.assertEqual(self.dialog.message, 'Updating {}'.format(i))
+            self.assertEqual(self.dialog.message, "Updating {}".format(i))
         self.assertIsNone(self.dialog.control)
 
     def test_update_show_time(self):

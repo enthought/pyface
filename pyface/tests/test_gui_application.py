@@ -8,7 +8,10 @@
 # Thanks for using Enthought open source!
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 import os
@@ -22,11 +25,15 @@ from ..application_window import ApplicationWindow
 from ..gui_application import GUIApplication
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 EVENTS = [
-    'starting', 'started', 'application_initialized', 'stopping', 'stopped'
+    "starting",
+    "started",
+    "application_initialized",
+    "stopping",
+    "stopped",
 ]
 
 
@@ -58,7 +65,7 @@ class TestingApp(GUIApplication):
 
     #: Whether or not a call to the open a window was vetoed.
     window_open_vetoed = Bool(False)
-    
+
     #: Whether or not a call to the exit method was vetoed.
     exit_vetoed = Bool(False)
 
@@ -74,7 +81,7 @@ class TestingApp(GUIApplication):
         super(TestingApp, self).start()
 
         window = self.windows[0]
-        window.on_trait_change(self._on_window_closing, 'closing')
+        window.on_trait_change(self._on_window_closing, "closing")
         return True
 
     def stop(self):
@@ -102,20 +109,21 @@ class TestingApp(GUIApplication):
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
 
-    @on_trait_change('windows:opening')
+    @on_trait_change("windows:opening")
     def _on_activate_window(self, event):
         if self.veto_open_window:
             event.veto = self.veto_open_window
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.application_events = []
 
-        if toolkit_object.toolkit == 'wx':
+        if toolkit_object.toolkit == "wx":
             import wx
+
             self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
@@ -156,7 +164,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         app = GUIApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.on_trait_change(lambda: app.add_window(window), 'started')
+        app.on_trait_change(lambda: app.add_window(window), "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
@@ -185,7 +193,7 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
     def test_veto_exit(self):
         app = TestingApp(veto_exit=True)
         self.connect_listeners(app)
-        
+
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)
             self.gui.invoke_after(2000, app.exit, force=True)

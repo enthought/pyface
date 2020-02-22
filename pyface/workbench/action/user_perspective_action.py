@@ -1,11 +1,11 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #  Copyright (c) 2005-2006 by Enthought, Inc.
 #  All rights reserved.
 #
 #  Author: David C. Morrill <dmorrill@enthought.com>
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """ The base class for user perspective actions. """
 
 
@@ -46,16 +46,19 @@ class UserPerspectiveAction(WorkbenchAction):
         # fixme: This seems a bit of a smelly way to make the determinaction!
         id = perspective.id
 
-        return ((id[:19] == '__user_perspective_') and (id[-2:] == '__'))
+        return (id[:19] == "__user_perspective_") and (id[-2:] == "__")
 
-    @on_trait_change('window.active_perspective')
+    @on_trait_change("window.active_perspective")
     def _refresh_enabled(self):
         """ Refresh the enabled state of the action. """
 
-        self.enabled = self.window is not None \
-          and self.window.active_perspective is not None \
-          and self._is_user_perspective(self.window.active_perspective)
+        self.enabled = (
+            self.window is not None
+            and self.window.active_perspective is not None
+            and self._is_user_perspective(self.window.active_perspective)
+        )
 
         return
+
 
 #### EOF #####################################################################

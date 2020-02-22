@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for all pyface wizard controllers. """
 
 
@@ -56,5 +56,6 @@ class IWizardController(Interface):
 
     def dispose_pages(self):
         """ Dispose all the pages. """
+
 
 #### EOF ######################################################################

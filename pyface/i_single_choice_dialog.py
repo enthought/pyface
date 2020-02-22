@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2016, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for a dialog that prompts for a choice from a list. """
 
 
@@ -47,7 +47,7 @@ class MSingleChoiceDialog(object):
     def _choice_strings(self):
         """ Returns the list of strings to display in the dialog. """
         choices = self.choices
-        if self.name_attribute != '':
+        if self.name_attribute != "":
             # choices is a list of objects with this attribute
             choices = [getattr(obj, self.name_attribute) for obj in choices]
 
@@ -56,6 +56,7 @@ class MSingleChoiceDialog(object):
         if len(choices) == 0:
             raise ValueError("SingleChoiceDialog requires at least 1 choice.")
         elif len(choices) != len(set(choices)):
-            raise ValueError("Dialog choices {} contain repeated string value."
-                             % choices)
+            raise ValueError(
+                "Dialog choices {} contain repeated string value." % choices
+            )
         return choices

@@ -18,8 +18,9 @@ from wx.lib.agw import aui
 # AGW's library does need some patching for some usability differences desired
 # for pyface but not for the standard wxPython version
 
+
 class PyfaceAuiNotebook(aui.AuiNotebook):
-    if wx.version() >= '3.':
+    if wx.version() >= "3.":
         SetPageToolTip = aui.AuiNotebook.SetPageTooltip
         GetPageToolTip = aui.AuiNotebook.GetPageTooltip
 
@@ -40,36 +41,52 @@ class PyfaceAuiManager(aui.AuiManager):
 
         sash_size = self._art.GetMetric(aui.AUI_DOCKART_SASH_SIZE)
         caption_size = self._art.GetMetric(aui.AUI_DOCKART_CAPTION_SIZE)
-        opposite_size = self.GetOppositeDockTotalSize(docks, dock.dock_direction)
+        opposite_size = self.GetOppositeDockTotalSize(
+            docks, dock.dock_direction
+        )
 
         for tmpDock in docks:
 
-            if tmpDock.dock_direction == dock.dock_direction and \
-               tmpDock.dock_layer == dock.dock_layer and \
-               tmpDock.dock_row == dock.dock_row:
+            if (
+                tmpDock.dock_direction == dock.dock_direction
+                and tmpDock.dock_layer == dock.dock_layer
+                and tmpDock.dock_row == dock.dock_row
+            ):
 
                 tmpDock.size = 1
                 break
         neighbor_docks = []
-        horizontal = dock.dock_direction == aui.AUI_DOCK_LEFT or dock.dock_direction == aui.AUI_DOCK_RIGHT
-        right_or_down = dock.dock_direction == aui.AUI_DOCK_RIGHT or dock.dock_direction == aui.AUI_DOCK_BOTTOM
+        horizontal = (
+            dock.dock_direction == aui.AUI_DOCK_LEFT
+            or dock.dock_direction == aui.AUI_DOCK_RIGHT
+        )
+        right_or_down = (
+            dock.dock_direction == aui.AUI_DOCK_RIGHT
+            or dock.dock_direction == aui.AUI_DOCK_BOTTOM
+        )
         for d in docks:
-            if d.dock_direction == dock.dock_direction and d.dock_layer == dock.dock_layer:
+            if (
+                d.dock_direction == dock.dock_direction
+                and d.dock_layer == dock.dock_layer
+            ):
                 if horizontal:
                     neighbor_docks.append((d.rect.x, d.rect.width))
                 else:
                     neighbor_docks.append((d.rect.y, d.rect.height))
         neighbor_docks.sort()
 
-        sizer, panes, docks, uiparts = self.LayoutAll(panes, docks, [], True, False)
+        sizer, panes, docks, uiparts = self.LayoutAll(
+            panes, docks, [], True, False
+        )
         client_size = self._frame.GetClientSize()
         sizer.SetDimension(0, 0, client_size.x, client_size.y)
         sizer.Layout()
 
         for part in uiparts:
 
-            part.rect = wx.Rect(part.sizer_item.GetPosition(),
-                                part.sizer_item.GetSize())
+            part.rect = wx.Rect(
+                part.sizer_item.GetPosition(), part.sizer_item.GetSize()
+            )
             if part.type == aui.AuiDockUIPart.typeDock:
                 part.dock.rect = part.rect
 
@@ -77,9 +94,11 @@ class PyfaceAuiManager(aui.AuiManager):
         new_dock = None
 
         for tmpDock in docks:
-            if tmpDock.dock_direction == dock.dock_direction and \
-               tmpDock.dock_layer == dock.dock_layer and \
-               tmpDock.dock_row == dock.dock_row:
+            if (
+                tmpDock.dock_direction == dock.dock_direction
+                and tmpDock.dock_layer == dock.dock_layer
+                and tmpDock.dock_row == dock.dock_row
+            ):
 
                 new_dock = tmpDock
                 break
@@ -138,15 +157,24 @@ class PyfaceAuiManager(aui.AuiManager):
         find the other dock that is going to change size when resizing the
         specified dock.
         """
-        horizontal = dock.dock_direction == aui.AUI_DOCK_LEFT or dock.dock_direction == aui.AUI_DOCK_RIGHT
-        right_or_down = dock.dock_direction == aui.AUI_DOCK_RIGHT or dock.dock_direction == aui.AUI_DOCK_BOTTOM
+        horizontal = (
+            dock.dock_direction == aui.AUI_DOCK_LEFT
+            or dock.dock_direction == aui.AUI_DOCK_RIGHT
+        )
+        right_or_down = (
+            dock.dock_direction == aui.AUI_DOCK_RIGHT
+            or dock.dock_direction == aui.AUI_DOCK_BOTTOM
+        )
         if horizontal:
             pos = point.x
         else:
             pos = point.y
         neighbor_docks = []
         for d in self._docks:
-            if d.dock_direction == dock.dock_direction and d.dock_layer == dock.dock_layer:
+            if (
+                d.dock_direction == dock.dock_direction
+                and d.dock_layer == dock.dock_layer
+            ):
                 if horizontal:
                     neighbor_docks.append((d.rect.x, d.rect.width, d))
                 else:
@@ -213,10 +241,14 @@ class PyfaceAuiManager(aui.AuiManager):
                 new_dock_size = newPos.y - dock.rect.y
 
             elif direction == aui.AUI_DOCK_RIGHT:
-                new_dock_size = dock.rect.x + dock.rect.width - newPos.x - sash_size
+                new_dock_size = (
+                    dock.rect.x + dock.rect.width - newPos.x - sash_size
+                )
 
             elif direction == aui.AUI_DOCK_BOTTOM:
-                new_dock_size = dock.rect.y + dock.rect.height - newPos.y - sash_size
+                new_dock_size = (
+                    dock.rect.y + dock.rect.height - newPos.y - sash_size
+                )
 
             delta = new_dock_size - dock.size
             if delta < -dock.size + sash_size:
@@ -243,7 +275,9 @@ class PyfaceAuiManager(aui.AuiManager):
                 oldPixsize = pane.rect.height
                 newPixsize = oldPixsize + newPos.y - self._action_part.rect.y
 
-            totalPixsize, totalProportion = self.GetTotalPixSizeAndProportion(dock)
+            totalPixsize, totalProportion = self.GetTotalPixSizeAndProportion(
+                dock
+            )
             partnerPane = self.GetPartnerPane(dock, pane)
 
             # prevent division by zero
@@ -251,14 +285,18 @@ class PyfaceAuiManager(aui.AuiManager):
                 return
 
             # adjust for the surplus
-            while (oldPixsize > 0 and totalPixsize > 10 and \
-                  oldPixsize*totalProportion/totalPixsize < pane.dock_proportion):
+            while (
+                oldPixsize > 0
+                and totalPixsize > 10
+                and oldPixsize * totalProportion / totalPixsize
+                < pane.dock_proportion
+            ):
 
                 totalPixsize -= 1
 
             # calculate the new proportion of the pane
 
-            newProportion = newPixsize*totalProportion/totalPixsize
+            newProportion = newPixsize * totalProportion / totalPixsize
             newProportion = aui.Clip(newProportion, 1, totalProportion)
             deltaProp = newProportion - pane.dock_proportion
 

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A viewer for tabular data. """
 
 
@@ -37,15 +37,17 @@ class TableViewer(ContentViewer):
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Instance(TableLabelProvider, factory = TableLabelProvider)
+    label_provider = Instance(TableLabelProvider, factory=TableLabelProvider)
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
-    column_provider=Trait(TableColumnProvider(),Instance(TableColumnProvider))
+    column_provider = Trait(
+        TableColumnProvider(), Instance(TableColumnProvider)
+    )
 
     # The colours used to render odd and even numbered rows.
     even_row_background = Color("white")
-    odd_row_background  = Color((245, 245, 255))
+    odd_row_background = Color((245, 245, 255))
 
     # A row has been selected.
     row_selected = Event
@@ -55,7 +57,6 @@ class TableViewer(ContentViewer):
 
     # A drag operation was started on a node.
     row_begin_drag = Event
-
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
@@ -82,8 +83,9 @@ class TableViewer(ContentViewer):
         table.Bind(wx.EVT_LIST_BEGIN_DRAG, self._on_list_begin_drag)
         table.Bind(wx.EVT_LIST_BEGIN_RDRAG, self._on_list_begin_rdrag)
 
-        table.Bind(wx.EVT_LIST_BEGIN_LABEL_EDIT,
-                   self._on_list_begin_label_edit)
+        table.Bind(
+            wx.EVT_LIST_BEGIN_LABEL_EDIT, self._on_list_begin_label_edit
+        )
 
         table.Bind(wx.EVT_LIST_END_LABEL_EDIT, self._on_list_end_label_edit)
 
@@ -97,7 +99,7 @@ class TableViewer(ContentViewer):
 
         # We use a dynamic handler instead of a static handler here, as we
         # don't want to react if the input is set in the constructor.
-        self.on_trait_change(self._on_input_changed, 'input')
+        self.on_trait_change(self._on_input_changed, "input")
 
         return
 
@@ -208,10 +210,10 @@ class TableViewer(ContentViewer):
     ###########################################################################
 
     FORMAT_MAP = {
-        'left'   : wx.LIST_FORMAT_LEFT,
-        'right'  : wx.LIST_FORMAT_RIGHT,
-        'center' : wx.LIST_FORMAT_CENTRE,
-        'centre' : wx.LIST_FORMAT_CENTRE
+        "left": wx.LIST_FORMAT_LEFT,
+        "right": wx.LIST_FORMAT_RIGHT,
+        "center": wx.LIST_FORMAT_CENTRE,
+        "centre": wx.LIST_FORMAT_CENTRE,
     }
 
     def _create_widget(self, parent):
@@ -244,7 +246,7 @@ class TableViewer(ContentViewer):
         self._elements = []
         if self.input is not None:
             # Filtering...
-            for element in  self.content_provider.get_elements(self.input):
+            for element in self.content_provider.get_elements(self.input):
                 for filter in self.filters:
                     if not filter.select(self, self.input, element):
                         break
@@ -293,13 +295,20 @@ class TableViewer(ContentViewer):
         return width
 
 
-class _Table(wx.ListCtrl):  #(ULC.UltimateListCtrl):#
+class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
     """ The wx control that we use to implement the table viewer. """
 
     # Default style.
-    STYLE = wx.LC_REPORT | wx.LC_HRULES | wx.LC_VRULES | wx.STATIC_BORDER \
-            | wx.LC_SINGLE_SEL | wx.LC_VIRTUAL | wx.LC_EDIT_LABELS \
-            | wx.CLIP_CHILDREN
+    STYLE = (
+        wx.LC_REPORT
+        | wx.LC_HRULES
+        | wx.LC_VRULES
+        | wx.STATIC_BORDER
+        | wx.LC_SINGLE_SEL
+        | wx.LC_VIRTUAL
+        | wx.LC_EDIT_LABELS
+        | wx.CLIP_CHILDREN
+    )
 
     def __init__(self, parent, image_size, viewer):
         """ Creates a new table viewer.
@@ -373,5 +382,6 @@ class _Table(wx.ListCtrl):  #(ULC.UltimateListCtrl):#
             attribute = self._odd_row_attribute
 
         return attribute
+
 
 #### EOF ######################################################################

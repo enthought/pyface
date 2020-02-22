@@ -27,11 +27,11 @@ def before_after_sort(items):
     for item in items:
         # Attempt to use 'before' and 'after' to make pairs.
         new_pairs = []
-        if hasattr(item, 'before') and item.before:
+        if hasattr(item, "before") and item.before:
             parent, child = item, item_map.get(item.before)
             if child:
                 new_pairs.append((parent, child))
-        if hasattr(item, 'after') and item.after:
+        if hasattr(item, "after") and item.after:
             parent, child = item_map.get(item.after), item
             if parent:
                 new_pairs.append((parent, child))
@@ -48,7 +48,7 @@ def before_after_sort(items):
     # Now perform the actual sort.
     result, has_cycle = topological_sort(pairs)
     if has_cycle:
-        logger.warning('Cycle in before/after sort for items %r', items)
+        logger.warning("Cycle in before/after sort for items %r", items)
     return result
 
 
@@ -75,8 +75,8 @@ def topological_sort(pairs):
         num_parents[child] += 1
 
     # Begin with the parent-less items.
-    result = [ item for item in graph if num_parents[item] == 0 ]
-    
+    result = [item for item in graph if num_parents[item] == 0]
+
     # Descend through graph, removing parents as we go.
     for parent in result:
         if parent in graph:

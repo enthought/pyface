@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Enthought library imports.
@@ -34,7 +34,7 @@ class View(MView):
         control = QtGui.QWidget(parent)
 
         palette = control.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('red'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("red"))
         control.setPalette(palette)
         control.setAutoFillBackground(True)
 
@@ -57,5 +57,6 @@ class View(MView):
             self.control.setFocus()
 
         return
+
 
 #### EOF ######################################################################

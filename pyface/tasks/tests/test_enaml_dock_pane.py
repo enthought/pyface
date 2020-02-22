@@ -4,7 +4,7 @@ from traits.etsconfig.api import ETSConfig
 
 # Skip tests if Enaml is not installed or we're using the wx backend.
 SKIP_REASON = None
-if ETSConfig.toolkit not in ['', 'qt4']:
+if ETSConfig.toolkit not in ["", "qt4"]:
     SKIP_REASON = "Enaml does not support WX"
 else:
     try:
@@ -20,13 +20,13 @@ if SKIP_REASON is not None:
     class GuiTestAssistant(object):
         pass
 
+
 from pyface.tasks.api import EnamlDockPane, Task
 
 
 class DummyDockPane(EnamlDockPane):
-
     def create_component(self):
-        return Label(text='test label')
+        return Label(text="test label")
 
 
 @unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
@@ -38,7 +38,7 @@ class TestEnamlDockPane(GuiTestAssistant, unittest.TestCase):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
-        self.dock_pane = DummyDockPane(task=Task(id='dummy_task'))
+        self.dock_pane = DummyDockPane(task=Task(id="dummy_task"))
         with self.event_loop():
             self.dock_pane.create(None)
 

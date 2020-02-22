@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,12 +10,13 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A status bar manager realizes itself in a status bar control. """
 
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
-StatusBarManager = toolkit_object('action.status_bar_manager:StatusBarManager')
+
+StatusBarManager = toolkit_object("action.status_bar_manager:StatusBarManager")
 
 ### EOF #######################################################################

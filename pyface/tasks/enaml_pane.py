@@ -12,7 +12,7 @@ class EnamlPane(HasTraits):
     ###########################################################################
 
     #: The Enaml component defining the contents of the TaskPane.
-    component = Instance('enaml.widgets.toolkit_object.ToolkitObject')
+    component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
 
     def create_component(self):
         """ Return an Enaml component defining the contents of the pane.

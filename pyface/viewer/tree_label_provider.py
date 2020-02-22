@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Base class for all tree label providers. """
 
 
@@ -61,5 +61,6 @@ class TreeLabelProvider(LabelProvider):
         """ Returns True is the node is expandanble, otherwise False. """
 
         return True
+
 
 #### EOF ######################################################################

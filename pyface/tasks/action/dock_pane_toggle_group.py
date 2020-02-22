@@ -3,8 +3,14 @@
 
 # Enthought library imports.
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import cached_property, Instance, List, on_trait_change, \
-    Property, Unicode
+from traits.api import (
+    cached_property,
+    Instance,
+    List,
+    on_trait_change,
+    Property,
+    Unicode,
+)
 
 # Local imports.
 from pyface.tasks.i_dock_pane import IDockPane
@@ -20,9 +26,9 @@ class DockPaneToggleAction(Action):
 
     #### 'Action' interface ###################################################
 
-    name = Property(Unicode, depends_on='dock_pane.name')
-    style = 'toggle'
-    tooltip = Property(Unicode, depends_on='name')
+    name = Property(Unicode, depends_on="dock_pane.name")
+    style = "toggle"
+    tooltip = Property(Unicode, depends_on="name")
 
     ###########################################################################
     # 'Action' interface.
@@ -46,21 +52,22 @@ class DockPaneToggleAction(Action):
 
     def _get_name(self):
         if self.dock_pane is None:
-            return 'UNDEFINED'
+            return "UNDEFINED"
         return self.dock_pane.name
 
     def _get_tooltip(self):
-        return u'Toggles the visibility of the %s pane.' % self.name
+        return u"Toggles the visibility of the %s pane." % self.name
 
-    @on_trait_change('dock_pane.visible')
+    @on_trait_change("dock_pane.visible")
     def _update_checked(self):
         if self.dock_pane:
             self.checked = self.dock_pane.visible
 
-    @on_trait_change('dock_pane.closable')
+    @on_trait_change("dock_pane.closable")
     def _update_visible(self):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
+
 
 class DockPaneToggleGroup(Group):
     """ A Group for toggling the visibility of a task's dock panes.
@@ -68,13 +75,13 @@ class DockPaneToggleGroup(Group):
 
     #### 'Group' interface ####################################################
 
-    id = 'DockPaneToggleGroup'
+    id = "DockPaneToggleGroup"
 
     items = List
 
     #### 'DockPaneToggleGroup' interface ######################################
 
-    task = Property(depends_on='parent.controller')
+    task = Property(depends_on="parent.controller")
 
     @cached_property
     def _get_task(self):
@@ -85,7 +92,7 @@ class DockPaneToggleGroup(Group):
 
         return manager.controller.task
 
-    dock_panes = Property(depends_on='task.window._states.dock_panes')
+    dock_panes = Property(depends_on="task.window._states.dock_panes")
 
     @cached_property
     def _get_dock_panes(self):
@@ -104,7 +111,7 @@ class DockPaneToggleGroup(Group):
 
     #### Private interface ####################################################
 
-    @on_trait_change('dock_panes[]')
+    @on_trait_change("dock_panes[]")
     def _dock_panes_updated(self):
         """Recreate the group items when dock panes have been added/removed.
         """

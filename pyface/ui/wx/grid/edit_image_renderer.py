@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # ETS imports
 from pyface.image_resource import ImageResource
@@ -18,8 +18,9 @@ from pyface.image_resource import ImageResource
 # Local import
 from .grid_cell_image_renderer import GridCellImageRenderer
 
+
 class EditImageRenderer(GridCellImageRenderer):
-    image = ImageResource('table_edit')
+    image = ImageResource("table_edit")
 
     def __init__(self, **kw):
         super(EditImageRenderer, self).__init__(self, **kw)
@@ -32,7 +33,7 @@ class EditImageRenderer(GridCellImageRenderer):
 
         obj = grid.GetTable().model.get_rows_drag_value([row])[0]
 
-        if (not hasattr(obj, 'editable')) or obj.editable:
+        if (not hasattr(obj, "editable")) or obj.editable:
             return self.image
         return None
 

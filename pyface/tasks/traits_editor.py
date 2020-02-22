@@ -15,7 +15,7 @@ class TraitsEditor(Editor):
     model = Instance(HasTraits)
 
     # The UI object associated with the Traits view, if it has been constructed.
-    ui = Instance('traitsui.ui.UI')
+    ui = Instance("traitsui.ui.UI")
 
     ###########################################################################
     # 'HasTraits' interface.
@@ -25,7 +25,7 @@ class TraitsEditor(Editor):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model:
-            return {'object': self.model, 'editor': self}
+            return {"object": self.model, "editor": self}
         return super(TraitsEditor, self).trait_context()
 
     ###########################################################################
@@ -35,7 +35,7 @@ class TraitsEditor(Editor):
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.
         """
-        self.ui = self.edit_traits(kind='subpanel', parent=parent)
+        self.ui = self.edit_traits(kind="subpanel", parent=parent)
         self.control = self.ui.control
 
     def destroy(self):

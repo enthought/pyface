@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for workbench views. """
 
 # Standard library imports.
@@ -39,7 +39,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
 
     # The category that the view belongs to (this can used to group views when
     # they are displayed to the user).
-    category = Str('General')
+    category = Str("General")
 
     # An image used to represent the view to the user (shown in the view tab
     # and in the view chooser etc).
@@ -71,6 +71,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
 @provides(IView)
 class MView(MWorkbenchPart, PerspectiveItem):
     """ Mixin containing common code for toolkit-specific implementations. """
+
     #### 'IView' interface ####################################################
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
@@ -79,7 +80,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
     # The category that the view belongs to (this can be used to group views
     # when they are displayed to the user).
-    category = Str('General')
+    category = Str("General")
 
     # An image used to represent the view to the user (shown in the view tab
     # and in the view chooser etc).
@@ -95,8 +96,8 @@ class MView(MWorkbenchPart, PerspectiveItem):
     def _id_default(self):
         """ Trait initializer. """
 
-        id = '%s.%s' % (type(self).__module__, type(self).__name__)
-        logger.warn('view %s has no Id - using <%s>' % (self, id))
+        id = "%s.%s" % (type(self).__module__, type(self).__name__)
+        logger.warn("view %s has no Id - using <%s>" % (self, id))
 
         # If no Id is specified then use the name.
         return id
@@ -105,7 +106,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         """ Trait initializer. """
 
         name = camel_case_to_words(type(self).__name__)
-        logger.warn('view %s has no name - using <%s>' % (self, name))
+        logger.warn("view %s has no name - using <%s>" % (self, name))
 
         return name
 
@@ -135,5 +136,6 @@ class MView(MWorkbenchPart, PerspectiveItem):
         self.window.show_view(self)
 
         return
+
 
 #### EOF ######################################################################

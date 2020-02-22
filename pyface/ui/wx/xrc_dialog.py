@@ -1,11 +1,11 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
 #
 #  Author: Scott Swarts <swarts@enthought.com>
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 """A dialog that is loaded from an XRC resource file.
 """
@@ -29,6 +29,7 @@ from .dialog import Dialog
 ##############################################################################
 # class 'XrcDialog'
 ##############################################################################
+
 
 class XrcDialog(Dialog):
     """A dialog that is loaded from an XRC resource file.
@@ -57,10 +58,10 @@ class XrcDialog(Dialog):
         """
         Creates the dialog and loads it in from the resource file.
         """
-        classpath = traits.util.resource.get_path( self )
-        path = os.path.join( classpath, self.xrc_file )
+        classpath = traits.util.resource.get_path(self)
+        path = os.path.join(classpath, self.xrc_file)
 
-        self.resource = wx.xrc.XmlResource( path )
+        self.resource = wx.xrc.XmlResource(path)
         return self.resource.LoadDialog(parent, self.id)
 
     def _create_contents(self, dialog):
@@ -80,8 +81,9 @@ class XrcDialog(Dialog):
         if cancelbutton is not None:
             # Change the ID and set the handler
             cancelbutton.SetId(wx.ID_CANCEL)
-            self.control.Bind(wx.EVT_BUTTON, self._on_cancel,
-                              cancelbutton.GetId())
+            self.control.Bind(
+                wx.EVT_BUTTON, self._on_cancel, cancelbutton.GetId()
+            )
         helpbutton = self.XRCCTRL("HELP")
         if helpbutton is not None:
             self.control.Bind(wx.EVT_BUTTON, self._on_help, helpbutton.GetId())
@@ -119,5 +121,6 @@ class XrcDialog(Dialog):
         Override to add event handlers.
         """
         return
+
 
 #### EOF ######################################################################

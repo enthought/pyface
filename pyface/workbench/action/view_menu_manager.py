@@ -32,13 +32,13 @@ class ViewMenuManager(MenuManager):
     groups = List(Group)
 
     # The manager's unique identifier (if it has one).
-    id = Str('View')
+    id = Str("View")
 
     #### 'MenuManager' interface ##############################################
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode('&View')
+    name = Unicode("&View")
 
     #### 'ViewMenuManager' interface ##########################################
 
@@ -46,7 +46,7 @@ class ViewMenuManager(MenuManager):
     show_perspective_menu = Bool(True)
 
     # The workbench window that the menu is part of.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     #### 'Private' interface ##################################################
 
@@ -81,13 +81,13 @@ class ViewMenuManager(MenuManager):
     ###########################################################################
 
     @on_trait_change(
-        'window.active_perspective,window.active_part,'
-        'window.views,window.views_items'
+        "window.active_perspective,window.active_part,"
+        "window.views,window.views_items"
     )
     def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
-        logger.debug('refreshing view menu')
+        logger.debug("refreshing view menu")
 
         if self._view_group is not None:
             self._clear_group(self._view_group)
@@ -113,7 +113,7 @@ class ViewMenuManager(MenuManager):
         """ Creates a group containing the 'Other...' action. """
 
         group = Group()
-        group.append(ShowViewAction(name='Other...', window=window))
+        group.append(ShowViewAction(name="Other...", window=window))
 
         return group
 
@@ -141,5 +141,6 @@ class ViewMenuManager(MenuManager):
                 )
 
         return
+
 
 #### EOF ######################################################################

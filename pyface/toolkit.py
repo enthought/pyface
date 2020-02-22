@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -12,7 +12,7 @@
 #
 # Thanks for using Enthought open source!
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """
 This module provides the toolkit object for the current backend toolkit
 
@@ -24,4 +24,4 @@ from .base_toolkit import find_toolkit
 
 
 # The toolkit function.
-toolkit = toolkit_object = find_toolkit('pyface.toolkits')
+toolkit = toolkit_object = find_toolkit("pyface.toolkits")

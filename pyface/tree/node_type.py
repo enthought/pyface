@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The base class for all node types. """
 
 
@@ -25,20 +25,20 @@ class NodeType(HasPrivateTraits):
     """ The base class for all node types. """
 
     # The default image used to represent nodes that DO NOT allow children.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
     # The default image used to represent nodes that allow children and are NOT
     # expanded.
-    CLOSED_FOLDER = ImageResource('closed_folder')
+    CLOSED_FOLDER = ImageResource("closed_folder")
 
     # The default image used to represent nodes that allow children and ARE
     # expanded.
-    OPEN_FOLDER = ImageResource('open_folder')
+    OPEN_FOLDER = ImageResource("open_folder")
 
     #### 'NodeType' interface #################################################
 
     # The node manager that the type belongs to.
-    node_manager = Instance('pyface.tree.node_manager.NodeManager')
+    node_manager = Instance("pyface.tree.node_manager.NodeManager")
 
     # The image used to represent nodes that DO NOT allow children.
     image = Instance(ImageResource)
@@ -52,7 +52,7 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).
-    actions = Any#List
+    actions = Any  # List
 
     # The default action for nodes of this type.  The default action is
     # performed when a node is activated (i.e., double-clicked).
@@ -60,7 +60,7 @@ class NodeType(HasPrivateTraits):
 
     # The default actions/groups/menus for creating new children within nodes
     # of this type (shown in the 'New' menu of the context menu).
-    new_actions = Any#List
+    new_actions = Any  # List
 
     ###########################################################################
     # 'NodeType' interface.
@@ -86,19 +86,14 @@ class NodeType(HasPrivateTraits):
     def get_context_menu(self, node):
         """ Returns the context menu for a node. """
 
-        sat = Group(id='SystemActionsTop')
-        nsa = Group(id='NodeSpecificActions')
-        sab = Group(id='SystemActionsBottom')
+        sat = Group(id="SystemActionsTop")
+        nsa = Group(id="NodeSpecificActions")
+        sab = Group(id="SystemActionsBottom")
 
         # The 'New' menu.
         new_actions = self.get_new_actions(node)
         if new_actions is not None and len(new_actions) > 0:
-            sat.append(
-                MenuManager(
-                    name = 'New',
-                    *new_actions
-                ),
-            )
+            sat.append(MenuManager(name="New", *new_actions))
 
         # Node-specific actions.
         actions = self.get_actions(node)
@@ -201,15 +196,15 @@ class NodeType(HasPrivateTraits):
 
         if self.allows_children(node):
             if expanded:
-                order = ['open_image', 'closed_image', 'image']
+                order = ["open_image", "closed_image", "image"]
                 default = self.OPEN_FOLDER
 
             else:
-                order = ['closed_image', 'open_image', 'image']
+                order = ["closed_image", "open_image", "image"]
                 default = self.CLOSED_FOLDER
 
         else:
-            order = ['image', 'open_image', 'closed_image']
+            order = ["image", "open_image", "closed_image"]
             default = self.DOCUMENT
 
         # Use the search order to look for a trait that is NOT None.
@@ -278,5 +273,6 @@ class NodeType(HasPrivateTraits):
         """ Returns True if the node is expandanble, otherwise False. """
 
         return True
+
 
 #### EOF ######################################################################

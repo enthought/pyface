@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -27,7 +27,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     ISystemMetrics interface for the API documentation.
     """
 
-
     #### 'ISystemMetrics' interface ###########################################
 
     screen_width = Property(Int)
@@ -44,10 +43,16 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         return QtGui.QApplication.instance().desktop().screenGeometry().width()
 
     def _get_screen_height(self):
-        return QtGui.QApplication.instance().desktop().screenGeometry().height()
+        return (
+            QtGui.QApplication.instance().desktop().screenGeometry().height()
+        )
 
     def _get_dialog_background_color(self):
-        color = QtGui.QApplication.instance().palette().color(QtGui.QPalette.Window)
+        color = (
+            QtGui.QApplication.instance()
+            .palette()
+            .color(QtGui.QPalette.Window)
+        )
 
         return (color.redF(), color.greenF(), color.blueF())
 

@@ -4,7 +4,15 @@ import logging
 
 # Enthought library imports.
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, on_trait_change, Property, provides, Tuple, Str, Int
+from traits.api import (
+    Bool,
+    on_trait_change,
+    Property,
+    provides,
+    Tuple,
+    Str,
+    Int,
+)
 
 # System library imports.
 import wx
@@ -14,10 +22,12 @@ from pyface.wx.aui import aui
 from .task_pane import TaskPane
 
 # Constants.
-AREA_MAP = { 'left'   : aui.AUI_DOCK_LEFT,
-             'right'  : aui.AUI_DOCK_RIGHT,
-             'top'    : aui.AUI_DOCK_TOP,
-             'bottom' : aui.AUI_DOCK_BOTTOM }
+AREA_MAP = {
+    "left": aui.AUI_DOCK_LEFT,
+    "right": aui.AUI_DOCK_RIGHT,
+    "top": aui.AUI_DOCK_TOP,
+    "bottom": aui.AUI_DOCK_BOTTOM,
+}
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
 # Logging
@@ -73,8 +83,11 @@ class DockPane(TaskPane, MDockPane):
         # Set the widget's object name. This important for AUI Manager state
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
-        self.pane_name = self.task.id + ':' + self.id
-        logger.debug("dock_pane.create: %s  HIERARCHY:\n%s" % (self.pane_name, self.get_hierarchy(parent, "    ")))
+        self.pane_name = self.task.id + ":" + self.id
+        logger.debug(
+            "dock_pane.create: %s  HIERARCHY:\n%s"
+            % (self.pane_name, self.get_hierarchy(parent, "    "))
+        )
 
     def get_new_info(self):
         info = aui.AuiPaneInfo().Name(self.pane_name).DestroyOnClose(False)
@@ -94,14 +107,19 @@ class DockPane(TaskPane, MDockPane):
         info = self.get_new_info()
         if tabify_pane is not None:
             target = tabify_pane.get_pane_info()
-            logger.debug("dock_pane.add_to_manager: Tabify! %s onto %s" % (self.pane_name, target.name))
+            logger.debug(
+                "dock_pane.add_to_manager: Tabify! %s onto %s"
+                % (self.pane_name, target.name)
+            )
         else:
             target = None
         if row is not None:
             info.Row(row)
         if pos is not None:
             info.Position(pos)
-        self.task.window._aui_manager.AddPane(self.control, info, target=target)
+        self.task.window._aui_manager.AddPane(
+            self.control, info, target=target
+        )
 
     def validate_traits_from_pane_info(self):
         """ Sync traits from the AUI pane info.
@@ -136,7 +154,7 @@ class DockPane(TaskPane, MDockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        return wx.Window(parent, name=self.task.id + ':' + self.id)
+        return wx.Window(parent, name=self.task.id + ":" + self.id)
 
     #### Trait property getters/setters #######################################
 
@@ -167,9 +185,11 @@ class DockPane(TaskPane, MDockPane):
 
     def update_dock_area(self, info):
         info.Direction(AREA_MAP[self.dock_area])
-        logger.debug("info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction))
+        logger.debug(
+            "info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction)
+        )
 
-    @on_trait_change('dock_area')
+    @on_trait_change("dock_area")
     def _set_dock_area(self):
         logger.debug("trait change: dock_area")
         if self.control is not None:
@@ -184,7 +204,7 @@ class DockPane(TaskPane, MDockPane):
         info.CaptionVisible(self.caption_visible)
         info.Layer(self.dock_layer)
 
-    @on_trait_change('closable,floatable,movable,caption_visible,dock_layer')
+    @on_trait_change("closable,floatable,movable,caption_visible,dock_layer")
     def _set_dock_features(self):
         if self.control is not None:
             info = self.get_pane_info()
@@ -194,7 +214,7 @@ class DockPane(TaskPane, MDockPane):
     def update_dock_title(self, info):
         info.Caption(self.name)
 
-    @on_trait_change('name')
+    @on_trait_change("name")
     def _set_dock_title(self):
         if self.control is not None:
             info = self.get_pane_info()
@@ -209,7 +229,7 @@ class DockPane(TaskPane, MDockPane):
         else:
             info.Dock()
 
-    @on_trait_change('floating')
+    @on_trait_change("floating")
     def _set_floating(self):
         if self.control is not None:
             info = self.get_pane_info()
@@ -222,9 +242,12 @@ class DockPane(TaskPane, MDockPane):
         else:
             info.Hide()
 
-    @on_trait_change('visible')
+    @on_trait_change("visible")
     def _set_visible(self):
-        logger.debug("_set_visible %s on pane=%s, control=%s" % (self.visible, self.pane_name, self.control))
+        logger.debug(
+            "_set_visible %s on pane=%s, control=%s"
+            % (self.visible, self.pane_name, self.control)
+        )
         if self.control is not None:
             info = self.get_pane_info()
             self.update_visible(info)

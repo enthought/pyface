@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -35,7 +35,6 @@ class PythonEditor(MPythonEditor, Widget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
-
 
     #### 'IPythonEditor' interface ############################################
 
@@ -78,12 +77,12 @@ class PythonEditor(MPythonEditor, Widget):
 
         # We will have no path for a new script.
         if len(path) > 0:
-            f = open(self.path, 'r')
+            f = open(self.path, "r")
             text = f.read()
             f.close()
 
         else:
-            text = ''
+            text = ""
 
         self.control.SetText(text)
         self.dirty = False
@@ -96,7 +95,7 @@ class PythonEditor(MPythonEditor, Widget):
         if path is None:
             path = self.path
 
-        f = open(path, 'w')
+        f = open(path, "w")
         f.write(self.control.GetText())
         f.close()
 
@@ -107,30 +106,30 @@ class PythonEditor(MPythonEditor, Widget):
     def set_style(self, n, fore, back):
 
         self.control.StyleSetForeground(n, fore)
-        #self.StyleSetBackground(n, '#c0c0c0')
-        #self.StyleSetBackground(n, '#ffffff')
+        # self.StyleSetBackground(n, '#c0c0c0')
+        # self.StyleSetBackground(n, '#ffffff')
         self.control.StyleSetBackground(n, back)
         self.control.StyleSetFaceName(n, "courier new")
-        self.control.StyleSetSize(n, faces['size'])
+        self.control.StyleSetSize(n, faces["size"])
 
-        #self.StyleSetForeground(n, "#f0f0f0")
+        # self.StyleSetForeground(n, "#f0f0f0")
         ##self.StyleSetBackground(n, "#000000")
-        #self.StyleSetFaceName(n, "courier new")
-        #self.StyleSetSize(n, 20)
-        #self.StyleSetUnderline(n, 1)
-        #self.StyleSetItalic(n, 1)
-        #self.StyleSetBold(n, 1)
-        #StyleClearAll
-        #StyleResetDefault
-        #StyleSetCase
-        #StyleSetChangeable
-        #StyleSetCharacterSet
-        #StyleSetEOLFilled
-        #StyleSetFont
-        #StyleSetFontAttr
-        #StyleSetHotSpot
-        #StyleSetSpec --- batch
-        #StyleSetVisible
+        # self.StyleSetFaceName(n, "courier new")
+        # self.StyleSetSize(n, 20)
+        # self.StyleSetUnderline(n, 1)
+        # self.StyleSetItalic(n, 1)
+        # self.StyleSetBold(n, 1)
+        # StyleClearAll
+        # StyleResetDefault
+        # StyleSetCase
+        # StyleSetChangeable
+        # StyleSetCharacterSet
+        # StyleSetEOLFilled
+        # StyleSetFont
+        # StyleSetFontAttr
+        # StyleSetHotSpot
+        # StyleSetSpec --- batch
+        # StyleSetVisible
 
         return
 
@@ -138,7 +137,7 @@ class PythonEditor(MPythonEditor, Widget):
         """ Selects the specified line. """
 
         start = self.control.PositionFromLine(lineno)
-        end   = self.control.GetLineEndPosition(lineno)
+        end = self.control.GetLineEndPosition(lineno)
 
         self.control.SetSelection(start, end)
 
@@ -188,9 +187,9 @@ class PythonEditor(MPythonEditor, Widget):
         stc.SetIndent(4)
 
         # Line ending mode.
-        stc.SetEOLMode(wx.stc.STC_EOL_LF) # Unix
-        #self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
-        #self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
+        stc.SetEOLMode(wx.stc.STC_EOL_LF)  # Unix
+        # self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
+        # self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
         ##########################################
         # Global styles for all languages.
@@ -253,10 +252,12 @@ class PythonEditor(MPythonEditor, Widget):
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.
-        stc.SetModEventMask(wx.stc.STC_MOD_INSERTTEXT |
-                            wx.stc.STC_MOD_DELETETEXT |
-                            wx.stc.STC_PERFORMED_UNDO |
-                            wx.stc.STC_PERFORMED_REDO)
+        stc.SetModEventMask(
+            wx.stc.STC_MOD_INSERTTEXT
+            | wx.stc.STC_MOD_DELETETEXT
+            | wx.stc.STC_PERFORMED_UNDO
+            | wx.stc.STC_PERFORMED_REDO
+        )
 
         # Listen for changes to the file.
         stc.Bind(wx.stc.EVT_STC_CHANGE, self._on_stc_changed)
@@ -286,16 +287,17 @@ class PythonEditor(MPythonEditor, Widget):
         """ Called whenever a change is made to the text of the document. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.altDown,
-            control_down = event.controlDown,
-            shift_down   = event.shiftDown,
-            key_code     = event.KeyCode,
-            event        = event
+            alt_down=event.altDown,
+            control_down=event.controlDown,
+            shift_down=event.shiftDown,
+            key_code=event.KeyCode,
+            event=event,
         )
 
         # Give other event handlers a chance.
         event.Skip()
 
         return
+
 
 #### EOF ######################################################################

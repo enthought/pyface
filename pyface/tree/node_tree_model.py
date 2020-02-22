@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The model for a tree control with extensible node types. """
 
 
@@ -252,24 +252,16 @@ class NodeTreeModel(TreeModel):
     def _start_monitor(self, monitor):
         """ Starts a monitor. """
 
-        monitor.on_trait_change(
-            self._on_nodes_changed, 'nodes_changed'
-        )
+        monitor.on_trait_change(self._on_nodes_changed, "nodes_changed")
+
+        monitor.on_trait_change(self._on_nodes_inserted, "nodes_inserted")
+
+        monitor.on_trait_change(self._on_nodes_removed, "nodes_removed")
+
+        monitor.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
 
         monitor.on_trait_change(
-            self._on_nodes_inserted, 'nodes_inserted'
-        )
-
-        monitor.on_trait_change(
-            self._on_nodes_removed, 'nodes_removed'
-        )
-
-        monitor.on_trait_change(
-            self._on_nodes_replaced, 'nodes_replaced'
-        )
-
-        monitor.on_trait_change(
-            self._on_structure_changed, 'structure_changed'
+            self._on_structure_changed, "structure_changed"
         )
 
         monitor.start()
@@ -280,24 +272,23 @@ class NodeTreeModel(TreeModel):
         """ Stops a monitor. """
 
         monitor.on_trait_change(
-            self._on_nodes_changed, 'nodes_changed', remove=True
+            self._on_nodes_changed, "nodes_changed", remove=True
         )
 
         monitor.on_trait_change(
-            self._on_nodes_inserted, 'nodes_inserted', remove=True
+            self._on_nodes_inserted, "nodes_inserted", remove=True
         )
 
         monitor.on_trait_change(
-            self._on_nodes_removed, 'nodes_removed', remove=True
+            self._on_nodes_removed, "nodes_removed", remove=True
         )
 
         monitor.on_trait_change(
-            self._on_nodes_replaced, 'nodes_replaced', remove=True
+            self._on_nodes_replaced, "nodes_replaced", remove=True
         )
 
-
         monitor.on_trait_change(
-            self._on_structure_changed, 'structure_changed', remove=True
+            self._on_structure_changed, "structure_changed", remove=True
         )
 
         monitor.stop()
@@ -310,18 +301,18 @@ class NodeTreeModel(TreeModel):
 
     # fixme: Commented this out as listeners are added and removed by the tree.
     # This caused duplicate monitors to be created for the root node.
-##     def _root_changed(self, old, new):
-##         """ Called when the root of the model has been changed. """
+    ##     def _root_changed(self, old, new):
+    ##         """ Called when the root of the model has been changed. """
 
-##         if old is not None:
-##             # Remove a listener for structure/appearance changes
-##             self.remove_listener(old)
+    ##         if old is not None:
+    ##             # Remove a listener for structure/appearance changes
+    ##             self.remove_listener(old)
 
-##         if new is not None:
-##             # Wire up a listener for structure/appearance changes
-##             self.add_listener(new)
+    ##         if new is not None:
+    ##             # Wire up a listener for structure/appearance changes
+    ##             self.add_listener(new)
 
-##         return
+    ##         return
 
     #### Dynamic ####
 
@@ -359,5 +350,6 @@ class NodeTreeModel(TreeModel):
         self.structure_changed = event
 
         return
+
 
 #### EOF ######################################################################

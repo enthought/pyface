@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2013, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Reusable MVC-based components for Traits-based applications.
     Part of the TraitsGUI project of the Enthought Tool Suite.
 """
@@ -18,13 +18,13 @@
 try:
     from pyface._version import full_version as __version__
 except ImportError:
-    __version__ = 'not-built'
+    __version__ = "not-built"
 
 
-__requires__ = ['traits']
+__requires__ = ["traits"]
 __extras_require__ = {
-    'wx': ['wxpython>=4', 'numpy'],
-    'pyqt': ['pyqt>=4.10', 'pygments'],
-    'pyqt5': ['pyqt>=5', 'pygments'],
-    'pyside': ['pyside>=1.2', 'pygments'],
+    "wx": ["wxpython>=4", "numpy"],
+    "pyqt": ["pyqt>=4.10", "pygments"],
+    "pyqt5": ["pyqt>=5", "pygments"],
+    "pyside": ["pyside>=1.2", "pygments"],
 }

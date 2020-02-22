@@ -11,7 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.warning(
-    'DEPRECATED: pyface.xrc_dialog, use pyface.ui.wx.xrc_dialog instead. '
-    'Will be removed in Pyface 7.')
+    "DEPRECATED: pyface.xrc_dialog, use pyface.ui.wx.xrc_dialog instead. "
+    "Will be removed in Pyface 7."
+)
 
 from pyface.ui.wx.xrc_dialog import *

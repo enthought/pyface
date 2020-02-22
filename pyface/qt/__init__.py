@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
 #
@@ -7,17 +7,17 @@
 #
 # Author: Enthought Inc
 # Description: Qt API selector. Can be used to switch between pyQt and PySide
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 import importlib
 import os
 import sys
 
 QtAPIs = [
-    ('pyside', 'PySide'),
-    ('pyside2', 'PySide2'),
-    ('pyqt5', 'PyQt5'),
-    ('pyqt', 'PyQt4'),
+    ("pyside", "PySide"),
+    ("pyside2", "PySide2"),
+    ("pyqt5", "PyQt5"),
+    ("pyqt", "PyQt4"),
 ]
 
 
@@ -31,22 +31,24 @@ def prepare_pyqt4():
     except ImportError:
         import sip
     try:
-        sip.setapi('QDate', 2)
-        sip.setapi('QDateTime', 2)
-        sip.setapi('QString', 2)
-        sip.setapi('QTextStream', 2)
-        sip.setapi('QTime', 2)
-        sip.setapi('QUrl', 2)
-        sip.setapi('QVariant', 2)
+        sip.setapi("QDate", 2)
+        sip.setapi("QDateTime", 2)
+        sip.setapi("QString", 2)
+        sip.setapi("QTextStream", 2)
+        sip.setapi("QTime", 2)
+        sip.setapi("QUrl", 2)
+        sip.setapi("QVariant", 2)
     except ValueError as exc:
         # most likely caused by something else setting the API version
         # before us: try to give a better error message to direct the user
         # how to fix.
         msg = exc.args[0]
-        msg += (". Pyface expects PyQt API 2 under Python 2. "
-                "Either import Pyface before any other Qt-using packages, "
-                "or explicitly set the API before importing any other "
-                "Qt-using packages.")
+        msg += (
+            ". Pyface expects PyQt API 2 under Python 2. "
+            "Either import Pyface before any other Qt-using packages, "
+            "or explicitly set the API before importing any other "
+            "Qt-using packages."
+        )
         raise ValueError(msg)
 
 
@@ -56,7 +58,7 @@ qt_api = None
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
-        if qt_api == 'pyqt' and sys.version_info[0] <= 2:
+        if qt_api == "pyqt" and sys.version_info[0] <= 2:
             # set the PyQt4 APIs
             # this is a likely place for failure - pyface really wants to be
             # imported first, before eg. matplotlib
@@ -64,8 +66,8 @@ for api_name, module in QtAPIs:
         break
 else:
     # does our environment give us a preferred API?
-    qt_api = os.environ.get('QT_API')
-    if qt_api == 'pyqt':
+    qt_api = os.environ.get("QT_API")
+    if qt_api == "pyqt":
         # set the PyQt4 APIs
         prepare_pyqt4()
 
@@ -73,24 +75,26 @@ else:
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
-            if api_name == 'pyqt':
+            if api_name == "pyqt":
                 # set the PyQt4 APIs
                 prepare_pyqt4()
             importlib.import_module(module)
-            importlib.import_module('.QtCore', module)
+            importlib.import_module(".QtCore", module)
             qt_api = api_name
             break
         except ImportError:
             continue
     else:
-        raise ImportError('Cannot import PySide, PySide2, PyQt5 or PyQt4')
+        raise ImportError("Cannot import PySide, PySide2, PyQt5 or PyQt4")
 
 # otherwise check QT_API value is valid
 elif qt_api not in {api_name for api_name, module in QtAPIs}:
-    msg = ("Invalid Qt API %r, valid values are: " +
-           "'pyside, 'pyside2', 'pyqt' or 'pyqt5'") % qt_api
+    msg = (
+        "Invalid Qt API %r, valid values are: "
+        + "'pyside, 'pyside2', 'pyqt' or 'pyqt5'"
+    ) % qt_api
     raise RuntimeError(msg)
 
 # useful constants
-is_qt4 = (qt_api in {'pyqt', 'pyside'})
-is_qt5 = (qt_api in {'pyqt5', 'pyside2'})
+is_qt4 = qt_api in {"pyqt", "pyside"}
+is_qt5 = qt_api in {"pyqt5", "pyside2"}

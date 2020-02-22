@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A tree control with a model/ui architecture. """
 
 
@@ -87,7 +87,7 @@ class Tree(Widget):
     # 'appearance' - only on when lines look good,
     # 'on' - always on, 'off' - always off
     # NOTE: on and off are ignored in favor of show_lines for now
-    lines_mode = Enum('appearance', 'on', 'off')
+    lines_mode = Enum("appearance", "on", "off")
 
     # The model that provides the data for the tree.
     model = Instance(TreeModel, ())
@@ -100,7 +100,7 @@ class Tree(Widget):
     selection = List
 
     # Selection mode.
-    selection_mode = Enum('single', 'extended')
+    selection_mode = Enum("single", "extended")
 
     # Should an image be shown for each node?
     show_images = Bool(True)
@@ -117,32 +117,32 @@ class Tree(Widget):
     #### Events ####
 
     # A right-click occurred on the control (not a node!).
-    control_right_clicked = Event#(Point)
+    control_right_clicked = Event  # (Point)
 
     # A key was pressed while the tree has focus.
     key_pressed = Event(KeyPressedEvent)
 
     # A node has been activated (ie. double-clicked).
-    node_activated = Event#(Any)
+    node_activated = Event  # (Any)
 
     # A drag operation was started on a node.
-    node_begin_drag = Event#(Any)
+    node_begin_drag = Event  # (Any)
 
     # A (non-leaf) node has been collapsed.
-    node_collapsed = Event#(Any)
+    node_collapsed = Event  # (Any)
 
     # A (non-leaf) node has been expanded.
-    node_expanded = Event#(Any)
+    node_expanded = Event  # (Any)
 
     # A left-click occurred on a node.
     #
     # Tuple(node, point).
-    node_left_clicked = Event#(Tuple)
+    node_left_clicked = Event  # (Tuple)
 
     # A right-click occurred on a node.
     #
     # Tuple(node, point)
-    node_right_clicked = Event#(Tuple)
+    node_right_clicked = Event  # (Tuple)
 
     #### Private interface ####################################################
 
@@ -150,7 +150,7 @@ class Tree(Widget):
     #
     # fixme: This turns out to be kinda useful... Should 'Widget' have a name
     # trait?
-    _name = Str('Anonymous tree')
+    _name = Str("Anonymous tree")
 
     # An optional callback to detect the end of a label edit.  This is
     # useful because the callback will be invoked even if the node label was
@@ -181,7 +181,9 @@ class Tree(Widget):
         wxid = wx.NewId()
 
         # Create the toolkit-specific control.
-        self.control = tree = _Tree(self, parent, wxid,style=self._get_style())
+        self.control = tree = _Tree(
+            self, parent, wxid, style=self._get_style()
+        )
 
         # Wire up the wx tree events.
         tree.Bind(wx.EVT_CHAR, self._on_char)
@@ -394,7 +396,7 @@ class Tree(Widget):
 
     def set_selection(self, list):
         """ Selects the specified list of nodes. """
-        logger.debug('Setting selection to [%s] within Tree [%s]', list, self)
+        logger.debug("Setting selection to [%s] within Tree [%s]", list, self)
 
         # Update the control to reflect the target list by unselecting
         # everything and then selecting each item in the list.  During this
@@ -405,7 +407,7 @@ class Tree(Widget):
             try:
                 self.select(node)
             except:
-                logger.exception('Unable to select node [%s]', node)
+                logger.exception("Unable to select node [%s]", node)
 
         self._ignore_selection_events = False
 
@@ -482,7 +484,7 @@ class Tree(Widget):
         except KeyError:
             # fixme: No, really, this is a serious one... How do we get in this
             # situation.  It came up when using the canvas stuff...
-            logger.warn('removing node: %s' % str(node))
+            logger.warn("removing node: %s" % str(node))
 
         return
 
@@ -495,7 +497,7 @@ class Tree(Widget):
         # Turn lines off for appearance on *nix.
         # ...for now, show_lines determines if lines are on or off, but
         # eventually lines_mode may eliminate the need for show_lines
-        if self.lines_mode == 'appearance' and os.name == 'posix':
+        if self.lines_mode == "appearance" and os.name == "posix":
             self.show_lines = False
 
         if not self.show_lines:
@@ -507,7 +509,7 @@ class Tree(Widget):
             # image on non-leaf nodes at the root level 8^()
             style = style | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT
 
-        if self.selection_mode != 'single':
+        if self.selection_mode != "single":
             style = style | wx.TR_MULTIPLE | wx.TR_EXTENDED
 
         return style
@@ -516,12 +518,12 @@ class Tree(Widget):
         """ Adds listeners for model changes. """
 
         # Listen for changes to the model.
-        model.on_trait_change(self._on_root_changed, 'root')
-        model.on_trait_change(self._on_nodes_changed, 'nodes_changed')
-        model.on_trait_change(self._on_nodes_inserted, 'nodes_inserted')
-        model.on_trait_change(self._on_nodes_removed, 'nodes_removed')
-        model.on_trait_change(self._on_nodes_replaced, 'nodes_replaced')
-        model.on_trait_change(self._on_structure_changed, 'structure_changed')
+        model.on_trait_change(self._on_root_changed, "root")
+        model.on_trait_change(self._on_nodes_changed, "nodes_changed")
+        model.on_trait_change(self._on_nodes_inserted, "nodes_inserted")
+        model.on_trait_change(self._on_nodes_removed, "nodes_removed")
+        model.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
+        model.on_trait_change(self._on_structure_changed, "structure_changed")
 
         return
 
@@ -529,28 +531,26 @@ class Tree(Widget):
         """ Removes listeners for model changes. """
 
         # Unhook the model event listeners.
+        model.on_trait_change(self._on_root_changed, "root", remove=True)
+
         model.on_trait_change(
-            self._on_root_changed, 'root', remove=True
+            self._on_nodes_changed, "nodes_changed", remove=True
         )
 
         model.on_trait_change(
-            self._on_nodes_changed, 'nodes_changed', remove=True
+            self._on_nodes_inserted, "nodes_inserted", remove=True
         )
 
         model.on_trait_change(
-            self._on_nodes_inserted, 'nodes_inserted', remove=True
+            self._on_nodes_removed, "nodes_removed", remove=True
         )
 
         model.on_trait_change(
-            self._on_nodes_removed, 'nodes_removed', remove=True
+            self._on_nodes_replaced, "nodes_replaced", remove=True
         )
 
         model.on_trait_change(
-            self._on_nodes_replaced, 'nodes_replaced', remove=True
-        )
-
-        model.on_trait_change(
-            self._on_structure_changed, 'structure_changed', remove=True
+            self._on_structure_changed, "structure_changed", remove=True
         )
 
         # unwire the wx tree events.
@@ -569,7 +569,7 @@ class Tree(Widget):
         # any child frames that my be created in response to the event to
         # appear *behind* the parent window, which is, errrr, not great ;^)
         tree.Unbind(wx.EVT_LEFT_DCLICK)
-        #tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
+        # tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
         tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSING)
         tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSED)
         tree.Unbind(wx.EVT_TREE_ITEM_EXPANDING)
@@ -665,8 +665,9 @@ class Tree(Widget):
         text = self._get_text(node)
 
         # Add the node.
-        wxid = self.control.Sizer.InsertBefore(pid, index, text, image_index,
-                                               image_index)
+        wxid = self.control.Sizer.InsertBefore(
+            pid, index, text, image_index, image_index
+        )
 
         # This gives the model a chance to wire up trait handlers etc.
         self.model.add_listener(node)
@@ -781,7 +782,7 @@ class Tree(Widget):
 
         text = self.model.get_text(node)
         if text is None:
-            text = ''
+            text = ""
 
         return text
 
@@ -809,8 +810,10 @@ class Tree(Widget):
         if flags & wx.TREE_HITTEST_NOWHERE:
             data = None
 
-        elif flags & wx.TREE_HITTEST_ONITEMICON \
-             or flags & wx.TREE_HITTEST_ONITEMLABEL:
+        elif (
+            flags & wx.TREE_HITTEST_ONITEMICON
+            or flags & wx.TREE_HITTEST_ONITEMLABEL
+        ):
 
             data = self.control.GetItemData(wxid)
 
@@ -876,9 +879,9 @@ class Tree(Widget):
     def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
 
-        parent   = event.node
+        parent = event.node
         children = event.children
-        index    = event.index
+        index = event.index
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
@@ -925,7 +928,7 @@ class Tree(Widget):
     def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
 
-        parent   = event.node
+        parent = event.node
         children = event.children
 
         # Has the node actually appeared in the tree yet?
@@ -997,10 +1000,10 @@ class Tree(Widget):
         """ Called when a key is pressed when the tree has focus. """
 
         self.key_pressed = KeyPressedEvent(
-            alt_down     = event.altDown,
-            control_down = event.controlDown,
-            shift_down   = event.shiftDown,
-            key_code     = event.keyCode
+            alt_down=event.altDown,
+            control_down=event.controlDown,
+            shift_down=event.shiftDown,
+            key_code=event.keyCode,
         )
 
         event.Skip()
@@ -1056,8 +1059,8 @@ class Tree(Widget):
         # fixme: See the comment where the events are wired up for more
         # information.
 
-##         # Which item was activated?
-##         wxid = event.GetItem()
+        ##         # Which item was activated?
+        ##         wxid = event.GetItem()
 
         # Which item was activated.
         point = event.GetPosition()
@@ -1186,8 +1189,12 @@ class Tree(Widget):
 
         # Making sure the new label is not an empty string
 
-        if label is not None and len(label) > 0 and \
-            self.model.can_set_text(node, label):
+        if (
+            label is not None
+            and len(label) > 0
+            and self.model.can_set_text(node, label)
+        ):
+
             def end_label_edit():
                 """ Called to complete the label edit. """
 
@@ -1224,7 +1231,7 @@ class Tree(Widget):
         # Get the node, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event, event.GetItem())
 
-        if point == (0,0):
+        if point == (0, 0):
             # Apply workaround for GTK.
             point = self.point_left_clicked
             wxid, flags = self.HitTest(point)
@@ -1243,6 +1250,7 @@ class Tree(Widget):
                 # be dragged and our drag and drop mechanism should allow
                 # extendable ways to extract the actual data.
                 from pyface.wx.drag_and_drop import clipboard
+
                 clipboard.node = [node]
 
                 # Make sure that the tree selection is updated before we start
@@ -1267,6 +1275,7 @@ class Tree(Widget):
         """ Callback invoked when a drag/drop operation has completed. """
 
         from pyface.wx.drag_and_drop import clipboard
+
         clipboard.node = None
 
         return
@@ -1309,5 +1318,6 @@ class Tree(Widget):
             self._remove_node(wxid, node)
 
         return
+
 
 #### EOF ######################################################################

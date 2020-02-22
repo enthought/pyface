@@ -15,6 +15,7 @@
 
 # Standard libary imports.
 import six
+
 if six.PY2:
     from inspect import getargspec
 else:
@@ -32,10 +33,10 @@ from pyface.action.action_event import ActionEvent
 
 
 _STYLE_TO_KIND_MAP = {
-    'push'   : wx.ITEM_NORMAL,
-    'radio'  : wx.ITEM_RADIO,
-    'toggle' : wx.ITEM_CHECK,
-    'widget' : None,
+    "push": wx.ITEM_NORMAL,
+    "radio": wx.ITEM_RADIO,
+    "toggle": wx.ITEM_CHECK,
+    "widget": None,
 }
 
 
@@ -73,17 +74,18 @@ class _MenuItem(HasTraits):
         #
         # N.B. Don't try to use -1 as the Id for the menu item... wx does not
         # ---- like it!
-        action  = item.action
-        label   = action.name
-        kind    = _STYLE_TO_KIND_MAP[action.style]
+        action = item.action
+        label = action.name
+        kind = _STYLE_TO_KIND_MAP[action.style]
         longtip = action.description or action.tooltip
 
         if action.style == "widget":
             raise NotImplementedError(
-                "WxPython does not support widgets in menus")
+                "WxPython does not support widgets in menus"
+            )
 
         if len(action.accelerator) > 0:
-            label = label + '\t' + action.accelerator
+            label = label + "\t" + action.accelerator
 
         # This just helps with debugging when people forget to specify a name
         # for their action (without this wx just barfs which is not very
@@ -91,8 +93,7 @@ class _MenuItem(HasTraits):
         if len(label) == 0:
             label = item.action.__class__.__name__
 
-
-        if getattr(action, 'menu_role', False):
+        if getattr(action, "menu_role", False):
             if action.menu_role == "About":
                 self.control_id = wx.ID_ABOUT
             elif action.menu_role == "Preferences":
@@ -119,7 +120,7 @@ class _MenuItem(HasTraits):
         self.control.Enable(action.enabled and action.visible)
 
         # Set the initial checked state.
-        if action.style in ['radio', 'toggle']:
+        if action.style in ["radio", "toggle"]:
             self.control.Check(action.checked)
 
         # Wire it up...create an ugly flag since some platforms dont skip the
@@ -129,11 +130,11 @@ class _MenuItem(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_visible_changed, 'visible')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
-        action.on_trait_change(self._on_action_name_changed, 'name')
-        action.on_trait_change(self._on_action_image_changed, 'image')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_visible_changed, "visible")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.on_trait_change(self._on_action_name_changed, "name")
+        action.on_trait_change(self._on_action_image_changed, "image")
 
         if controller is not None:
             self.controller = controller
@@ -143,14 +144,18 @@ class _MenuItem(HasTraits):
 
     def dispose(self):
         action = self.item.action
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled',
-            remove=True)
-        action.on_trait_change(self._on_action_visible_changed, 'visible',
-            remove=True)
-        action.on_trait_change(self._on_action_checked_changed, 'checked',
-            remove=True)
-        action.on_trait_change(self._on_action_name_changed, 'name',
-            remove=True)
+        action.on_trait_change(
+            self._on_action_enabled_changed, "enabled", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_visible_changed, "visible", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_checked_changed, "checked", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_name_changed, "name", remove=True
+        )
 
     ###########################################################################
     # Private interface.
@@ -175,12 +180,12 @@ class _MenuItem(HasTraits):
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
 
-        if self.item.action.style == 'radio':
+        if self.item.action.style == "radio":
             # fixme: Not sure why this is even here, we had to guard it to
             # make it work? Must take a look at svn blame!
             # FIXME v3: Note that menu_checked() doesn't seem to exist, so we
             # comment it out and do the following instead.
-            #if self.group is not None:
+            # if self.group is not None:
             #    self.group.menu_checked(self)
 
             # If we're turning this one on, then we need to turn all the others
@@ -212,12 +217,12 @@ class _MenuItem(HasTraits):
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
 
-        if self.item.action.style == 'radio':
+        if self.item.action.style == "radio":
             # fixme: Not sure why this is even here, we had to guard it to
             # make it work? Must take a look at svn blame!
             # FIXME v3: Note that menu_checked() doesn't seem to exist, so we
             # comment it out and do the following instead.
-            #if self.group is not None:
+            # if self.group is not None:
             #    self.group.menu_checked(self)
 
             # If we're turning this one on, then we need to turn all the others
@@ -240,7 +245,7 @@ class _MenuItem(HasTraits):
 
         label = action.name
         if len(action.accelerator) > 0:
-            label = label + '\t' + action.accelerator
+            label = label + "\t" + action.accelerator
         self.control.SetText(label)
 
         return
@@ -265,7 +270,7 @@ class _MenuItem(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = action.style in ['radio', 'toggle']
+        is_checkable = action.style in ["radio", "toggle"]
 
         # Perform the action!
         if self.controller is not None:
@@ -335,23 +340,24 @@ class _Tool(HasTraits):
     # 'object' interface.
     ###########################################################################
 
-    def __init__(self, parent, tool_bar, image_cache, item, controller,
-                 show_labels):
+    def __init__(
+        self, parent, tool_bar, image_cache, item, controller, show_labels
+    ):
         """ Creates a new tool bar tool for an action item. """
 
         self.item = item
         self.tool_bar = tool_bar
 
         # Create an appropriate tool depending on the style of the action.
-        action  = self.item.action
-        label   = action.name
+        action = self.item.action
+        label = action.name
 
         # Tool bar tools never have '...' at the end!
-        if label.endswith('...'):
+        if label.endswith("..."):
             label = label[:-3]
 
         # And they never contain shortcuts.
-        label = label.replace('&', '')
+        label = label.replace("&", "")
 
         # If the action has an image then convert it to a bitmap (as required
         # by the toolbar).
@@ -360,38 +366,45 @@ class _Tool(HasTraits):
                 self.tool_bar.GetToolBitmapSize()
             )
             path = action.image.absolute_path
-            bmp  = image_cache.get_bitmap(path)
+            bmp = image_cache.get_bitmap(path)
 
         else:
             from pyface.api import ImageResource
-            image = ImageResource('foo')
-            bmp  = image.create_bitmap()
 
-        kind    = _STYLE_TO_KIND_MAP[action.style]
+            image = ImageResource("foo")
+            bmp = image.create_bitmap()
+
+        kind = _STYLE_TO_KIND_MAP[action.style]
         tooltip = action.tooltip
         longtip = action.description
 
         if not show_labels:
-            label = ''
+            label = ""
 
         else:
             self.tool_bar.SetSize((-1, 50))
 
-        if action.style == 'widget':
+        if action.style == "widget":
             widget = action.create_control(self.tool_bar)
             self.control = tool_bar.AddControl(widget, label)
             self.control_id = self.control.GetId()
         else:
             self.control_id = wx.NewId()
             self.control = tool_bar.AddTool(
-                self.control_id, label, bmp, wx.NullBitmap, kind, tooltip,
-                longtip, None
+                self.control_id,
+                label,
+                bmp,
+                wx.NullBitmap,
+                kind,
+                tooltip,
+                longtip,
+                None,
             )
 
             # Set the initial checked state.
             tool_bar.ToggleTool(self.control_id, action.checked)
 
-            if hasattr(tool_bar, 'ShowTool'):
+            if hasattr(tool_bar, "ShowTool"):
                 # Set the initial enabled/disabled state of the action.
                 tool_bar.EnableTool(self.control_id, action.enabled)
 
@@ -400,16 +413,17 @@ class _Tool(HasTraits):
             else:
                 # Set the initial enabled/disabled state of the action.
                 tool_bar.EnableTool(
-                    self.control_id, action.enabled and action.visible)
+                    self.control_id, action.enabled and action.visible
+                )
 
             # Wire it up.
             parent.Bind(wx.EVT_TOOL, self._on_tool, self.control)
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_visible_changed, 'visible')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_visible_changed, "visible")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
 
         if controller is not None:
             self.controller = controller
@@ -424,28 +438,30 @@ class _Tool(HasTraits):
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
 
-        if hasattr(self.tool_bar, 'ShowTool'):
+        if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.EnableTool(self.control_id, self.enabled)
         else:
             self.tool_bar.EnableTool(
-                self.control_id, self.enabled and self.visible)
+                self.control_id, self.enabled and self.visible
+            )
 
     def _visible_changed(self):
         """ Called when our 'visible' trait is changed. """
 
-        if hasattr(self.tool_bar, 'ShowTool'):
+        if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.ShowTool(self.control_id, self.visible)
         else:
             self.tool_bar.EnableTool(
-                self.control_id, self.enabled and self.visible)
+                self.control_id, self.enabled and self.visible
+            )
 
     def _checked_changed(self):
         """ Called when our 'checked' trait is changed. """
 
-        if self.item.action.style == 'radio':
+        if self.item.action.style == "radio":
             # FIXME v3: Note that toolbar_checked() doesn't seem to exist, so
             # we comment it out and do the following instead.
-            #self.group.toolbar_checked(self)
+            # self.group.toolbar_checked(self)
 
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
@@ -462,25 +478,27 @@ class _Tool(HasTraits):
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
 
-        if hasattr(self.tool_bar, 'ShowTool'):
+        if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.EnableTool(self.control_id, action.enabled)
         else:
             self.tool_bar.EnableTool(
-                self.control_id, action.enabled and action.visible)
+                self.control_id, action.enabled and action.visible
+            )
 
     def _on_action_visible_changed(self, action, trait_name, old, new):
         """ Called when the visible trait is changed on an action. """
 
-        if hasattr(self.tool_bar, 'ShowTool'):
+        if hasattr(self.tool_bar, "ShowTool"):
             self.tool_bar.ShowTool(self.control_id, action.visible)
         else:
             self.tool_bar.EnableTool(
-                self.control_id, self.enabled and action.visible)
+                self.control_id, self.enabled and action.visible
+            )
 
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
 
-        if action.style == 'radio':
+        if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
@@ -502,7 +520,7 @@ class _Tool(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = (action.style == 'radio' or action.style == 'check')
+        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         if self.controller is not None:
@@ -569,36 +587,39 @@ class _PaletteTool(HasTraits):
 
         if action.style == "widget":
             raise NotImplementedError(
-                "WxPython does not support widgets in palettes")
+                "WxPython does not support widgets in palettes"
+            )
 
         # Tool palette tools never have '...' at the end.
-        if label.endswith('...'):
+        if label.endswith("..."):
             label = label[:-3]
 
         # And they never contain shortcuts.
-        label = label.replace('&', '')
+        label = label.replace("&", "")
 
         image = action.image.create_image()
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
-        kind    = action.style
+        kind = action.style
         tooltip = action.tooltip
         longtip = action.description
 
         if not show_labels:
-            label = ''
+            label = ""
 
         # Add the tool to the tool palette.
-        self.tool_id = tool_palette.add_tool(label, bmp, kind, tooltip,longtip)
+        self.tool_id = tool_palette.add_tool(
+            label, bmp, kind, tooltip, longtip
+        )
         tool_palette.toggle_tool(self.tool_id, action.checked)
         tool_palette.enable_tool(self.tool_id, action.enabled)
         tool_palette.on_tool_event(self.tool_id, self._on_tool)
 
         # Listen to the trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
 
         return
 
@@ -618,7 +639,7 @@ class _PaletteTool(HasTraits):
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
 
-        if action.style == 'radio':
+        if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
@@ -640,12 +661,13 @@ class _PaletteTool(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = (action.style == 'radio' or action.style == 'check')
+        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         action.checked = self.tool_palette.get_tool_state(self.tool_id) == 1
         action.perform(action_event)
 
         return
+
 
 #### EOF ######################################################################

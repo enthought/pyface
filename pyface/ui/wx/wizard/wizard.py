@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The base class for all pyface wizards. """
 
 
@@ -33,7 +33,6 @@ class Wizard(MWizard, Dialog):
 
     """
 
-
     #### 'IWizard' interface ##################################################
 
     pages = Property(List(IWizardPage))
@@ -44,7 +43,7 @@ class Wizard(MWizard, Dialog):
 
     #### 'IWindow' interface ##################################################
 
-    title = Unicode('Wizard')
+    title = Unicode("Wizard")
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -128,7 +127,7 @@ class Wizard(MWizard, Dialog):
         current_page = controller.current_page
 
         is_first_page = controller.is_first_page(current_page)
-        is_last_page  = controller.is_last_page(current_page)
+        is_last_page = controller.is_last_page(current_page)
 
         # 'Next button'.
         if self._next is not None:
@@ -188,5 +187,6 @@ class Wizard(MWizard, Dialog):
         self.previous()
 
         return
+
 
 #### EOF ######################################################################

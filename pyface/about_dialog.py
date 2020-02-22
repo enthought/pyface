@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,13 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a simple 'About' dialog. """
 
 from __future__ import absolute_import
 
 # Import the toolkit specific version.
 from .toolkit import toolkit_object
-AboutDialog = toolkit_object('about_dialog:AboutDialog')
+
+AboutDialog = toolkit_object("about_dialog:AboutDialog")
 
 ### EOF #######################################################################

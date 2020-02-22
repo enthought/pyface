@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A clickable/draggable widget containing an image. """
 from __future__ import absolute_import
 
@@ -66,7 +66,7 @@ class ImageWidget(Widget):
     # 'object' interface.
     ###########################################################################
 
-    def __init__ (self, parent, **traits):
+    def __init__(self, parent, **traits):
         """ Creates a new widget. """
 
         # Base class constructors.
@@ -77,9 +77,9 @@ class ImageWidget(Widget):
 
         # Create the toolkit-specific control.
         self.control = wx.Window(parent, -1, size=size)
-        self.control.__tag__ = 'hack'
+        self.control.__tag__ = "hack"
 
-        self._mouse_over  = False
+        self._mouse_over = False
         self._button_down = False
 
         # Set up mouse event handlers:
@@ -93,11 +93,12 @@ class ImageWidget(Widget):
         # Pens used to draw the 'selection' marker:
         # ZZZ: Make these class instances when moved to the wx toolkit code.
         self._selectedPenDark = wx.Pen(
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID)
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DSHADOW), 1, wx.SOLID
+        )
 
         self._selectedPenLight = wx.Pen(
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1,
-            wx.SOLID)
+            wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DHIGHLIGHT), 1, wx.SOLID
+        )
 
         return
 
@@ -120,10 +121,10 @@ class ImageWidget(Widget):
 
         if selected:
             for control in self.GetParent().GetChildren():
-                if hasattr(control, '__tag__'):
+                if hasattr(control, "__tag__"):
                     if control.Selected():
-                      control.Selected(False)
-                      break
+                        control.Selected(False)
+                        break
 
                 self.Refresh()
 
@@ -152,16 +153,16 @@ class ImageWidget(Widget):
     def _on_left_dclick(self, event):
         """ Called when the left mouse button is double-clicked. """
 
-        #print 'left dclick'
+        # print 'left dclick'
 
         event.Skip()
 
         return
 
-    def _on_left_down ( self, event = None ):
+    def _on_left_down(self, event=None):
         """ Called when the left mouse button goes down on the widget. """
 
-        #print 'left down'
+        # print 'left down'
 
         if self._selected is not None:
             self.CaptureMouse()
@@ -172,10 +173,10 @@ class ImageWidget(Widget):
 
         return
 
-    def _on_left_up ( self, event = None ):
+    def _on_left_up(self, event=None):
         """ Called when the left mouse button goes up on the widget. """
 
-        #print 'left up'
+        # print 'left up'
 
         need_refresh = self._button_down
         if need_refresh:
@@ -184,11 +185,11 @@ class ImageWidget(Widget):
 
         if self._selected is not None:
             wdx, wdy = self.GetClientSize().Get()
-            x        = event.GetX()
-            y        = event.GetY()
+            x = event.GetX()
+            y = event.GetY()
             if (0 <= x < wdx) and (0 <= y < wdy):
                 if self._selected != -1:
-                    self.Selected( True )
+                    self.Selected(True)
                 elif need_refresh:
                     self.Refresh()
 
@@ -201,40 +202,41 @@ class ImageWidget(Widget):
 
         return
 
-    def _on_paint ( self, event = None ):
+    def _on_paint(self, event=None):
         """ Called when the widget needs repainting. """
 
-        wdc      = wx.PaintDC( self.control )
+        wdc = wx.PaintDC(self.control)
         wdx, wdy = self.control.GetClientSize().Get()
-        bitmap   = self.bitmap
-        bdx      = bitmap.GetWidth()
-        bdy      = bitmap.GetHeight()
-        wdc.DrawBitmap( bitmap, (wdx - bdx) // 2, (wdy - bdy) // 2, True )
+        bitmap = self.bitmap
+        bdx = bitmap.GetWidth()
+        bdy = bitmap.GetHeight()
+        wdc.DrawBitmap(bitmap, (wdx - bdx) // 2, (wdy - bdy) // 2, True)
 
-        pens = [ self._selectedPenLight, self._selectedPenDark ]
-        bd   = self._button_down
+        pens = [self._selectedPenLight, self._selectedPenDark]
+        bd = self._button_down
         if self._mouse_over:
-            wdc.SetBrush( wx.TRANSPARENT_BRUSH )
-            wdc.SetPen( pens[ bd ] )
-            wdc.DrawLine( 0, 0, wdx, 0 )
-            wdc.DrawLine( 0, 1, 0, wdy )
-            wdc.SetPen( pens[ 1 - bd ] )
-            wdc.DrawLine( wdx - 1, 1, wdx - 1, wdy )
-            wdc.DrawLine( 1, wdy - 1, wdx - 1, wdy - 1 )
+            wdc.SetBrush(wx.TRANSPARENT_BRUSH)
+            wdc.SetPen(pens[bd])
+            wdc.DrawLine(0, 0, wdx, 0)
+            wdc.DrawLine(0, 1, 0, wdy)
+            wdc.SetPen(pens[1 - bd])
+            wdc.DrawLine(wdx - 1, 1, wdx - 1, wdy)
+            wdc.DrawLine(1, wdy - 1, wdx - 1, wdy - 1)
 
         if self._selected == True:
-            wdc.SetBrush( wx.TRANSPARENT_BRUSH )
-            wdc.SetPen( pens[ bd ] )
-            wdc.DrawLine( 1, 1, wdx - 1, 1 )
-            wdc.DrawLine( 1, 1, 1, wdy - 1 )
-            wdc.DrawLine( 2, 2, wdx - 2, 2 )
-            wdc.DrawLine( 2, 2, 2, wdy - 2 )
-            wdc.SetPen( pens[ 1 - bd ] )
-            wdc.DrawLine( wdx - 2, 2, wdx - 2, wdy - 1 )
-            wdc.DrawLine( 2, wdy - 2, wdx - 2, wdy - 2 )
-            wdc.DrawLine( wdx - 3, 3, wdx - 3, wdy - 2 )
-            wdc.DrawLine( 3, wdy - 3, wdx - 3, wdy - 3 )
+            wdc.SetBrush(wx.TRANSPARENT_BRUSH)
+            wdc.SetPen(pens[bd])
+            wdc.DrawLine(1, 1, wdx - 1, 1)
+            wdc.DrawLine(1, 1, 1, wdy - 1)
+            wdc.DrawLine(2, 2, wdx - 2, 2)
+            wdc.DrawLine(2, 2, 2, wdy - 2)
+            wdc.SetPen(pens[1 - bd])
+            wdc.DrawLine(wdx - 2, 2, wdx - 2, wdy - 1)
+            wdc.DrawLine(2, wdy - 2, wdx - 2, wdy - 2)
+            wdc.DrawLine(wdx - 3, 3, wdx - 3, wdy - 2)
+            wdc.DrawLine(3, wdy - 3, wdx - 3, wdy - 3)
 
         return
+
 
 #### EOF ######################################################################

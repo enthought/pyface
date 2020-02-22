@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2019, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The text field interface. """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from six import text_type
@@ -31,7 +34,7 @@ class IComboField(IField):
     """
 
     #: The current value of the combobox.
-    value = Enum(values='values')
+    value = Enum(values="values")
 
     #: The list of available values for the combobox.
     values = List
@@ -45,7 +48,7 @@ class IComboField(IField):
 class MComboField(HasTraits):
 
     #: The current text value of the combobox.
-    value = Enum(values='values')
+    value = Enum(values="values")
 
     #: The list of available values for the combobox.
     values = List(minlen=1)
@@ -60,8 +63,8 @@ class MComboField(HasTraits):
     # ------------------------------------------------------------------------
 
     def __init__(self, values, **traits):
-        value = traits.pop('value', values[0])
-        traits['values'] = values
+        value = traits.pop("value", values[0])
+        traits["values"] = values
         super(MComboField, self).__init__(**traits)
         self.value = value
 
@@ -77,8 +80,9 @@ class MComboField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MComboField, self)._add_event_listeners()
-        self.on_trait_change(self._values_updated, 'values[],formatter',
-                             dispatch='ui')
+        self.on_trait_change(
+            self._values_updated, "values[],formatter", dispatch="ui"
+        )
         if self.control is not None:
             self._observe_control_value()
 
@@ -86,8 +90,12 @@ class MComboField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
             self._observe_control_value(remove=True)
-        self.on_trait_change(self._values_updated, 'values[],formatter',
-                             dispatch='ui', remove=True)
+        self.on_trait_change(
+            self._values_updated,
+            "values[],formatter",
+            dispatch="ui",
+            remove=True,
+        )
         super(MComboField, self)._remove_event_listeners()
 
     # Toolkit control interface ---------------------------------------------

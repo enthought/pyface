@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2008, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The base class for all pyface wizards. """
 
 
@@ -32,7 +32,6 @@ class Wizard(MWizard, Dialog):
 
     """
 
-
     #### 'IWizard' interface ##################################################
 
     pages = Property(List(IWizardPage))
@@ -43,7 +42,7 @@ class Wizard(MWizard, Dialog):
 
     #### 'IWindow' interface ##################################################
 
-    title = Unicode('Wizard')
+    title = Unicode("Wizard")
 
     ###########################################################################
     # 'IWizard' interface.
@@ -72,13 +71,15 @@ class Wizard(MWizard, Dialog):
 
     def _create_control(self, parent):
         control = _Wizard(parent, self)
-        control.setOptions(QtGui.QWizard.NoDefaultButton |
-                           QtGui.QWizard.NoBackButtonOnStartPage)
-        control.setModal(self.style == 'modal')
+        control.setOptions(
+            QtGui.QWizard.NoDefaultButton
+            | QtGui.QWizard.NoBackButtonOnStartPage
+        )
+        control.setModal(self.style == "modal")
         control.setWindowTitle(self.title)
 
         # Necessary for 'nonmodal'. See Dialog for more info.
-        if self.style == 'nonmodal':
+        if self.style == "nonmodal":
             control.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):
@@ -216,5 +217,6 @@ class _Wizard(QtGui.QWizard):
                 id = -1
 
         return id
+
 
 #### EOF ######################################################################

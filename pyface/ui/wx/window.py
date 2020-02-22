@@ -100,16 +100,16 @@ class Window(MWindow, Widget):
     def _create_control(self, parent):
         # create a basic window control
 
-        style = wx.DEFAULT_FRAME_STYLE \
-                | wx.FRAME_NO_WINDOW_MENU \
-                | wx.CLIP_CHILDREN
+        style = (
+            wx.DEFAULT_FRAME_STYLE | wx.FRAME_NO_WINDOW_MENU | wx.CLIP_CHILDREN
+        )
         control = wx.Frame(
             parent,
             -1,
             self.title,
             style=style,
             size=self.size,
-            pos=self.position
+            pos=self.position,
         )
         control.SetBackgroundColour(SystemMetrics().dialog_background_color)
         control.Enable(self.enabled)
@@ -137,7 +137,7 @@ class Window(MWindow, Widget):
         old = self._position
         self._position = position
 
-        self.trait_property_changed('position', old, position)
+        self.trait_property_changed("position", old, position)
 
     def _get_size(self):
         """ Property getter for size. """
@@ -153,7 +153,7 @@ class Window(MWindow, Widget):
         old = self._size
         self._size = size
 
-        self.trait_property_changed('size', old, size)
+        self.trait_property_changed("size", old, size)
 
     def _title_changed(self, title):
         """ Static trait change handler. """
@@ -197,8 +197,9 @@ class Window(MWindow, Widget):
         # just right of the Windows-drawn border.
 
         try:
-            self._position = event.GetEventObject().GetPosition(
-            ).Get()  #Sizer.GetPosition().Get()
+            self._position = (
+                event.GetEventObject().GetPosition().Get()
+            )  # Sizer.GetPosition().Get()
         except:
             pass
         event.Skip()
@@ -222,7 +223,7 @@ class Window(MWindow, Widget):
             control_down=event.controlDown,
             shift_down=event.shiftDown,
             key_code=event.KeyCode,
-            event=event
+            event=event,
         )
 
         event.Skip()

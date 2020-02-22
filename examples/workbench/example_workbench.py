@@ -25,9 +25,10 @@ class ExampleWorkbench(Workbench):
     def _exiting_changed(self, event):
         """ Called when the workbench is exiting. """
 
-        if self.confirm('Ok to exit?') != YES:
+        if self.confirm("Ok to exit?") != YES:
             event.veto = True
 
         return
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A panel used as a spacer.
 
 It is in a separate class so that you can set the background color in a
@@ -45,8 +45,9 @@ class Spacer(wx.Panel):
     def _create_widget(self):
         """ Create the widget! """
 
-        #self.SetBackgroundColour("brown")
+        # self.SetBackgroundColour("brown")
 
         return
+
 
 #### EOF ######################################################################

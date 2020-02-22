@@ -21,12 +21,25 @@ import sys
 import time
 
 from traits.api import (
-    ABCHasTraits, Bool, Callable, Dict, Either, Event, Float, HasTraits, Int,
-    Interface, Property, Range, Tuple, provides
+    ABCHasTraits,
+    Bool,
+    Callable,
+    Dict,
+    Either,
+    Event,
+    Float,
+    HasTraits,
+    Int,
+    Interface,
+    Property,
+    Range,
+    Tuple,
+    provides,
 )
 
 if sys.version_info[:2] < (3, 3):
     import timeit
+
     perf_counter = timeit.default_timer
 else:
     perf_counter = time.perf_counter
@@ -132,7 +145,7 @@ class BaseTimer(ABCHasTraits):
     expire = Either(None, Float)
 
     #: Property that controls the state of the timer.
-    active = Property(Bool, depends_on='_active')
+    active = Property(Bool, depends_on="_active")
 
     # Private interface ------------------------------------------------------
 

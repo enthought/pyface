@@ -11,7 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.warning(
-    'DEPRECATED: pyface.util.python_stc, use pyface.wx.python_stc instead. '
-    'Will be removed in Pyface 7.')
+    "DEPRECATED: pyface.util.python_stc, use pyface.wx.python_stc instead. "
+    "Will be removed in Pyface 7."
+)
 
 from pyface.wx.python_stc import *

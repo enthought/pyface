@@ -15,7 +15,7 @@ class MenuBarManager(BaseMenuBarManager):
     #### 'MenuBarManager' interface ###########################################
 
     # The workbench window that we are the menu bar manager for.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     ###########################################################################
     # 'MenuBarManager' interface.
@@ -32,5 +32,6 @@ class MenuBarManager(BaseMenuBarManager):
         )
 
         return menu_bar
+
 
 #### EOF ######################################################################

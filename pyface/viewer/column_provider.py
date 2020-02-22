@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Base class for all column providers. """
 
 
@@ -35,7 +35,7 @@ class ColumnProvider(HasTraits):
     def get_label(self, viewer, column_index):
         """ Returns the label for a column. """
 
-        return 'Column %d' % column_index
+        return "Column %d" % column_index
 
     def get_width(self, viewer, column_index):
         """ Returns the width of a column.
@@ -55,6 +55,7 @@ class ColumnProvider(HasTraits):
 
         """
 
-        return 'left'
+        return "left"
+
 
 #### EOF ######################################################################

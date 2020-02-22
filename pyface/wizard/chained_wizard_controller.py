@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A wizard controller that can be chained with others. """
 
 
@@ -67,7 +67,9 @@ class ChainedWizardController(WizardController):
                     previous_page = self._pages[-1]
 
                 else:
-                    previous_page = self.next_controller.get_previous_page(page)
+                    previous_page = self.next_controller.get_previous_page(
+                        page
+                    )
 
             else:
                 previous_page = None
@@ -175,11 +177,11 @@ class ChainedWizardController(WizardController):
 
         if old is not None:
             old.on_trait_change(
-                self._on_page_complete, 'complete',remove=True
+                self._on_page_complete, "complete", remove=True
             )
 
         if new is not None:
-            new.on_trait_change(self._on_page_complete, 'complete')
+            new.on_trait_change(self._on_page_complete, "complete")
 
         if self.next_controller is not None:
             self.next_controller.current_page = new
@@ -193,13 +195,11 @@ class ChainedWizardController(WizardController):
 
         if old is not None:
             old.on_trait_change(
-                self._on_controller_complete, 'complete', remove=True
+                self._on_controller_complete, "complete", remove=True
             )
 
         if new is not None:
-            new.on_trait_change(
-                self._on_controller_complete, 'complete'
-            )
+            new.on_trait_change(self._on_controller_complete, "complete")
 
         self._update()
 
@@ -220,5 +220,6 @@ class ChainedWizardController(WizardController):
         self._update()
 
         return
+
 
 #### EOF ######################################################################

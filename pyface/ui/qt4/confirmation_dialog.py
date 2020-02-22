@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -18,7 +18,10 @@ from pyface.qt import QtCore, QtGui
 from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
 
 # Local imports.
-from pyface.i_confirmation_dialog import IConfirmationDialog, MConfirmationDialog
+from pyface.i_confirmation_dialog import (
+    IConfirmationDialog,
+    MConfirmationDialog,
+)
 from pyface.constant import CANCEL, YES, NO
 from pyface.image_resource import ImageResource
 from .dialog import Dialog, _RESULT_MAP
@@ -29,7 +32,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     """ The toolkit specific implementation of a ConfirmationDialog.  See the
     IConfirmationDialog interface for the API documentation.
     """
-
 
     #### 'IConfirmationDialog' interface ######################################
 
@@ -110,7 +112,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         # The 'Cancel' button.
         if self.cancel:
             if self.cancel_label:
-                btn = dlg.addButton(self.cancel_label, QtGui.QMessageBox.RejectRole)
+                btn = dlg.addButton(
+                    self.cancel_label, QtGui.QMessageBox.RejectRole
+                )
             else:
                 btn = dlg.addButton(QtGui.QMessageBox.Cancel)
 
@@ -136,5 +140,6 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
         else:
             retval = _RESULT_MAP[retval]
         return retval
+
 
 #### EOF ######################################################################

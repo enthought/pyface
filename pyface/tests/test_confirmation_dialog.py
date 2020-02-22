@@ -9,23 +9,23 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-is_qt = toolkit_object.toolkit == 'qt4'
+is_qt = toolkit_object.toolkit == "qt4"
 if is_qt:
     from pyface.qt import qt_api
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 ModalDialogTester = toolkit_object(
-    'util.modal_dialog_tester:ModalDialogTester'
+    "util.modal_dialog_tester:ModalDialogTester"
 )
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
-is_pyqt5 = (is_qt and qt_api == 'pyqt5')
-is_pyqt4_linux = (is_qt and qt_api == 'pyqt' and platform.system() == 'Linux')
+is_pyqt5 = is_qt and qt_api == "pyqt5"
+is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -131,13 +131,13 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_image(self):
         # test that creation and destruction works with a non-standard image
-        self.dialog.image = ImageResource('core')
+        self.dialog.image = ImageResource("core")
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
             self.dialog.destroy()
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_close(self):
         # test that closing works as expected
         # XXX duplicate of Dialog test, not needed?
@@ -147,7 +147,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_close_with_cancel(self):
         # test that closing works as expected
         self.dialog.cancel = True
@@ -162,9 +162,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_yes(self):
         # test that Yes works as expected
         tester = ModalDialogTester(self.dialog.open)
@@ -178,9 +178,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_yes(self):
         self.dialog.yes_label = u"Sure"
         # test that Yes works as expected if renamed
@@ -195,9 +195,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_no(self):
         # test that No works as expected
         tester = ModalDialogTester(self.dialog.open)
@@ -211,9 +211,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_no(self):
         self.dialog.no_label = u"No way"
         # test that No works as expected if renamed
@@ -228,9 +228,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
         self.dialog.cancel = True
         # test that Cancel works as expected
@@ -245,9 +245,9 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel_renamed(self):
         self.dialog.cancel = True
         self.dialog.cancel_label = u"Back"
@@ -258,7 +258,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_parent(self):
         # test that lifecycle works with a parent
         parent = Window()
@@ -274,7 +274,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestConfirm(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -282,7 +282,7 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     def tearDown(self):
         GuiTestAssistant.tearDown(self)
 
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_reject(self):
         # test that cancel works as expected
         tester = ModalDialogTester(
@@ -297,9 +297,9 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_yes(self):
         # test that yes works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message"))
@@ -312,9 +312,9 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_no(self):
         # test that yes works as expected
         tester = ModalDialogTester(lambda: confirm(None, "message"))
@@ -327,9 +327,9 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
         # test that cancel works as expected
         tester = ModalDialogTester(
@@ -344,13 +344,13 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_title(self):
         # test that title works as expected
         tester = ModalDialogTester(
-            lambda: confirm(None, "message", title='Title')
+            lambda: confirm(None, "message", title="Title")
         )
         tester.open_and_run(when_opened=lambda x: x.click_button(NO))
 
@@ -361,9 +361,9 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_default_yes(self):
         # test that default works as expected
         tester = ModalDialogTester(
@@ -378,9 +378,9 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
     )  # noqa
     @unittest.skipIf(
         is_pyqt4_linux,
-        "Confirmation dialog click tests don't work reliably on linux.  Issue #282."
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
-    @unittest.skipIf(no_modal_dialog_tester, 'ModalDialogTester unavailable')
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_default_cancel(self):
         # test that default works as expected
         tester = ModalDialogTester(

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A TraitGridModel builds a grid from a list of traits objects. Each row
 represents on object, each column one trait from those objects. All the objects
 must be of the same type. Optionally a user may pass in a list of trait names
@@ -20,8 +20,20 @@ from that object gets a column."""
 
 # Enthought library imports
 from __future__ import print_function
-from traits.api import Any, Bool, Callable, Dict, Function, HasTraits, \
-     Int, List, Str, Trait, TraitError, Type
+from traits.api import (
+    Any,
+    Bool,
+    Callable,
+    Dict,
+    Function,
+    HasTraits,
+    Int,
+    List,
+    Str,
+    Trait,
+    TraitError,
+    Type,
+)
 
 # local imports
 from .grid_model import GridColumn, GridModel, GridSortEvent
@@ -42,7 +54,7 @@ class TraitGridColumn(GridColumn):
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(key_trait = Type, value_trait=Trait('', Str, Callable))
+    formats = Dict(key_trait=Type, value_trait=Trait("", Str, Callable))
 
     # A name to designate the type of this column
     typename = Trait(None, None, Str)
@@ -50,6 +62,7 @@ class TraitGridColumn(GridColumn):
     #       more info than we have available at this point
 
     size = Int(-1)
+
 
 class TraitGridSelection(HasTraits):
     """ Structure for holding specification information. """
@@ -59,6 +72,7 @@ class TraitGridSelection(HasTraits):
 
     # The specific trait selected on the object
     trait_name = Trait(None, None, Str)
+
 
 # The meat.
 class TraitGridModel(GridModel):
@@ -70,7 +84,7 @@ class TraitGridModel(GridModel):
     inspected and every trait from that object gets a column."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = List()#HasTraits)
+    data = List()  # HasTraits)
 
     # The column definitions
     columns = Trait(None, None, List(Trait(None, Str, TraitGridColumn)))
@@ -106,29 +120,27 @@ class TraitGridModel(GridModel):
                 # we only add traits that aren't events, since events
                 # are write-only
                 for name, trait in self.data[0].traits().items():
-                    if trait.type != 'event':
-                        self._auto_columns.append(TraitGridColumn(name = name))
+                    if trait.type != "event":
+                        self._auto_columns.append(TraitGridColumn(name=name))
             else:
                 self._auto_columns = []
 
         # attach trait handlers to the list object
-        self.on_trait_event(self._on_data_changed, 'data')
-        self.on_trait_event(self._on_data_items_changed, 'data_items')
+        self.on_trait_event(self._on_data_changed, "data")
+        self.on_trait_event(self._on_data_items_changed, "data_items")
 
         # attach appropriate trait handlers to objects in the list
         self.__manage_data_listeners(self.data)
 
         # attach a listener to the column definitions so we refresh when
         # they change
-        self.on_trait_change(self._on_columns_changed,
-                             'columns')
-        self.on_trait_event(self._on_columns_items_changed,
-                            'columns_items')
+        self.on_trait_change(self._on_columns_changed, "columns")
+        self.on_trait_event(self._on_columns_items_changed, "columns_items")
         # attach listeners to the column definitions themselves
         self.__manage_column_listeners(self.columns)
 
         # attach a listener to the row_name_trait
-        self.on_trait_change(self._on_row_name_trait_changed, 'row_name_trait')
+        self.on_trait_change(self._on_row_name_trait_changed, "row_name_trait")
 
         return
 
@@ -153,7 +165,7 @@ class TraitGridModel(GridModel):
                 else:
                     name = col.name
         except IndexError:
-            name = ''
+            name = ""
 
         return name
 
@@ -191,8 +203,11 @@ class TraitGridModel(GridModel):
         values = []
         for obj in self.data:
             for col in cols:
-                values.append(TraitGridSelection(obj = obj,
-                                                 trait_name = self.__get_column_name(col)))
+                values.append(
+                    TraitGridSelection(
+                        obj=obj, trait_name=self.__get_column_name(col)
+                    )
+                )
 
         return values
 
@@ -209,8 +224,10 @@ class TraitGridModel(GridModel):
             name = self.__get_column_name(col)
             # by default we use cmp to sort on the traits
             sorter = cmp
-            if isinstance(column, TraitGridColumn) and \
-                   column.sorter is not None:
+            if (
+                isinstance(column, TraitGridColumn)
+                and column.sorter is not None
+            ):
                 sorter = column.sorter
         except IndexError:
             return
@@ -235,11 +252,10 @@ class TraitGridModel(GridModel):
             self.data.reverse()
 
         # now fire an event to tell the grid we're sorted
-        print('firing sort event')
-        self.column_sorted = GridSortEvent(index = col, reversed = reverse)
+        print("firing sort event")
+        self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
         return
-
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -300,7 +316,7 @@ class TraitGridModel(GridModel):
 
         values = []
         for row_index in rows:
-            values.append(TraitGridSelection(obj = self.data[row_index]))
+            values.append(TraitGridSelection(obj=self.data[row_index]))
 
         return values
 
@@ -315,15 +331,15 @@ class TraitGridModel(GridModel):
 
         # print 'TraitGridModel.get_cell_editor row: ', row, ' col: ', col
 
-        obj        = self.data[row]
+        obj = self.data[row]
         trait_name = self.__get_column_name(col)
-        trait      = obj.base_trait(trait_name)
+        trait = obj.base_trait(trait_name)
         if trait is None:
             return None
 
         factory = trait.get_editor()
 
-        return TraitGridCellAdapter(factory, obj, trait_name, '')
+        return TraitGridCellAdapter(factory, obj, trait_name, "")
 
     def get_cell_drag_value(self, row, col):
         """ Return the value to use when the specified cell is dragged or
@@ -346,7 +362,7 @@ class TraitGridModel(GridModel):
         obj = self.data[row]
         trait_name = self.__get_column_name(col)
 
-        return TraitGridSelection(obj = obj, trait_name = trait_name)
+        return TraitGridSelection(obj=obj, trait_name=trait_name)
 
     def resolve_selection(self, selection_list):
         """ Returns a list of (row, col) grid-cell coordinates that
@@ -386,9 +402,12 @@ class TraitGridModel(GridModel):
         value = self.get_cell_drag_value(row, col)
         formats = self.__get_column_formats(col)
 
-        if value is not None and formats is not None and \
-               type(value) in formats and \
-               formats[type(value)] is not None:
+        if (
+            value is not None
+            and formats is not None
+            and type(value) in formats
+            and formats[type(value)] is not None
+        ):
             try:
                 format = formats[type(value)]
                 if callable(format):
@@ -428,7 +447,7 @@ class TraitGridModel(GridModel):
                 new_data.append(self.row_factory())
 
             count = self._insert_rows_into_model(pos, new_data)
-            self.rows_added = ('added', pos, new_data)
+            self.rows_added = ("added", pos, new_data)
 
         return count
 
@@ -446,7 +465,7 @@ class TraitGridModel(GridModel):
         Raises a ValueError if the value is vetoed or the cell at
         (row, col) does not exist. """
 
-        #print 'TraitGridModel._set_value: new: ', value
+        # print 'TraitGridModel._set_value: new: ', value
 
         new_rows = 0
         # find the column indexed by col
@@ -503,7 +522,7 @@ class TraitGridModel(GridModel):
         if value is None:
             return None
         else:
-            return str(value)  #value
+            return str(value)  # value
 
     def _set_data_on_row(self, row, column, value):
         """ Retrieve the data specified by column for this row. Attribute
@@ -519,9 +538,9 @@ class TraitGridModel(GridModel):
                     # sometimes the underlying grid gives us 0/1 instead
                     # of True/False. do some conversion here to make that
                     # case worl.
-                    #if type(getattr(row, column)) == bool and \
+                    # if type(getattr(row, column)) == bool and \
                     #       type(value) != bool:
-                        # convert the value to a boolean
+                    # convert the value to a boolean
                     #    value = bool(value)
 
                     setattr(row, column, value)
@@ -530,9 +549,9 @@ class TraitGridModel(GridModel):
                 # sometimes the underlying grid gives us 0/1 instead
                 # of True/False. do some conversion here to make that
                 # case worl.
-                #if type(getattr(row, column.name)) == bool and \
+                # if type(getattr(row, column.name)) == bool and \
                 #       type(value) != bool:
-                    # convert the value to a boolean
+                # convert the value to a boolean
                 #    value = bool(value)
                 setattr(row, column.name, value)
                 success = True
@@ -625,12 +644,11 @@ class TraitGridModel(GridModel):
                 if val is None:
                     coldata.append(None)
                 else:
-                    coldata.append(val)  #self.get_value(row, col))
+                    coldata.append(val)  # self.get_value(row, col))
             except IndexError:
                 coldata.append(None)
 
         return coldata
-
 
     def __get_column(self, col):
 
@@ -695,8 +713,9 @@ class TraitGridModel(GridModel):
         # attach appropriate trait handlers to objects in the list
         if list is not None:
             for item in list:
-                item.on_trait_change(self._on_contained_trait_changed,
-                                     remove = remove)
+                item.on_trait_change(
+                    self._on_contained_trait_changed, remove=remove
+                )
         return
 
     def __manage_column_listeners(self, collist, remove=False):
@@ -704,9 +723,11 @@ class TraitGridModel(GridModel):
         if collist is not None:
             for col in collist:
                 if isinstance(col, TraitGridColumn):
-                    col.on_trait_change(self._on_columns_changed,
-                                        remove = remove)
+                    col.on_trait_change(
+                        self._on_columns_changed, remove=remove
+                    )
 
         return
+
 
 #### EOF ####################################################################

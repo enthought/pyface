@@ -15,4 +15,4 @@
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
-ComboField = toolkit_object('fields.combo_field:ComboField')
+ComboField = toolkit_object("fields.combo_field:ComboField")

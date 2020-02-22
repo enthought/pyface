@@ -14,7 +14,7 @@ from person import Person
 
 # Log to stderr.
 logger = logging.getLogger()
-logger.addHandler(logging.StreamHandler(open('example_workbench.log', 'w')))
+logger.addHandler(logging.StreamHandler(open("example_workbench.log", "w")))
 logger.setLevel(logging.DEBUG)
 
 
@@ -25,8 +25,8 @@ def main(argv):
     gui = GUI()
 
     # Create some objects to edit.
-    fred = Person(name='fred', age=42)
-    wilma = Person(name='wilma', age=35)
+    fred = Person(name="fred", age=42)
+    wilma = Person(name="wilma", age=35)
 
     # Create the workbench.
     #
@@ -38,20 +38,22 @@ def main(argv):
     workbench = ExampleWorkbench(state_location=gui.state_location)
 
     # Create some workbench windows.
-    x = 300; y = 300
+    x = 300
+    y = 300
     for i in range(2):
         window = workbench.create_window(position=(x, y), size=(800, 600))
         window.open()
 
         # Edit the objects if they weren't restored from a previous session.
-        if window.get_editor_by_id('fred') is None:
+        if window.get_editor_by_id("fred") is None:
             window.edit(fred)
 
-        if window.get_editor_by_id('wilma') is None:
+        if window.get_editor_by_id("wilma") is None:
             window.edit(wilma)
 
         # Cascade the windows.
-        x += 100; y += 100
+        x += 100
+        y += 100
 
     # Start the GUI event loop.
     gui.start_event_loop()
@@ -59,7 +61,9 @@ def main(argv):
     return
 
 
-if __name__ == '__main__':
-    import sys; main(sys.argv)
+if __name__ == "__main__":
+    import sys
+
+    main(sys.argv)
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited.
 # All rights reserved.
 #
@@ -10,17 +10,19 @@
 #
 # Author: Riverbank Computing Limited.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Python editor example. """
 
 from __future__ import print_function, unicode_literals
 
-from pyface.api import (
-    ApplicationWindow, FileDialog, GUI, OK, PythonEditor
-)
+from pyface.api import ApplicationWindow, FileDialog, GUI, OK, PythonEditor
 from pyface.action.api import (
-    Action, FieldAction, Group, MenuManager, MenuBarManager,
-    ToolBarManager
+    Action,
+    FieldAction,
+    Group,
+    MenuManager,
+    MenuBarManager,
+    ToolBarManager,
 )
 from pyface.fields.api import ComboField
 from pyface.toolkit import toolkit_object
@@ -44,64 +46,55 @@ class MainWindow(ApplicationWindow):
             MenuManager(
                 Group(
                     Action(
-                        name='&Open...',
-                        accelerator='Ctrl+O',
-                        on_perform=self.on_open_file
+                        name="&Open...",
+                        accelerator="Ctrl+O",
+                        on_perform=self.on_open_file,
                     ),
                     Action(
-                        name='&Save',
-                        accelerator='Ctrl+S',
-                        on_perform=self.on_save_file
+                        name="&Save",
+                        accelerator="Ctrl+S",
+                        on_perform=self.on_save_file,
                     ),
-                    id='document_group',
+                    id="document_group",
                 ),
                 Action(
-                    name='&Close',
-                    accelerator='Ctrl+W',
-                    on_perform=self.close
+                    name="&Close", accelerator="Ctrl+W", on_perform=self.close
                 ),
-                name='&File')
+                name="&File",
+            )
         )
 
         # Add a tool bar if we are using qt4 - wx has layout issues
-        if toolkit_object.toolkit == 'qt4':
+        if toolkit_object.toolkit == "qt4":
             from pygments.styles import STYLE_MAP
+
             styles = list(STYLE_MAP)
 
             self.tool_bar_manager = ToolBarManager(
                 Group(
-                    Action(
-                        name='Open...',
-                        on_perform=self.on_open_file
-                    ),
-                    Action(
-                        name='Save',
-                        on_perform=self.on_save_file
-                    ),
-                    Action(
-                        name='Close',
-                        on_perform=self.close
-                    ),
-                    id='document_group',
+                    Action(name="Open...", on_perform=self.on_open_file),
+                    Action(name="Save", on_perform=self.on_save_file),
+                    Action(name="Close", on_perform=self.close),
+                    id="document_group",
                 ),
                 Group(
                     Action(
                         name="Lines",
-                        style='toggle',
+                        style="toggle",
                         on_perform=self.on_show_line_numbers,
                         checked=True,
                     ),
                     FieldAction(
-                        name='Style',
+                        name="Style",
                         field_type=ComboField,
                         field_defaults={
-                            'values': styles,
-                            'value': 'default',
-                            'tooltip': 'Style',
+                            "values": styles,
+                            "value": "default",
+                            "tooltip": "Style",
                         },
                         on_perform=self.on_style_changed,
                     ),
-                )
+                ),
             )
 
     ###########################################################################
@@ -123,7 +116,7 @@ class MainWindow(ApplicationWindow):
         """ Open a new file. """
 
         if self.control:
-            dlg = FileDialog(parent=self.control, wildcard='*.py')
+            dlg = FileDialog(parent=self.control, wildcard="*.py")
 
             if dlg.open() == OK:
                 self._editor.path = dlg.path
@@ -137,8 +130,9 @@ class MainWindow(ApplicationWindow):
             except IOError:
                 # If you are trying to save to a file that doesn't exist,
                 # open up a FileDialog with a 'save as' action.
-                dlg = FileDialog(parent=self.control, action='save as',
-                                 wildcard="*.py")
+                dlg = FileDialog(
+                    parent=self.control, action="save as", wildcard="*.py"
+                )
                 if dlg.open() == OK:
                     self._editor.save(dlg.path)
 
@@ -158,7 +152,7 @@ class MainWindow(ApplicationWindow):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI.
     gui = GUI()
 

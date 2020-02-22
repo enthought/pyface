@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Evan Patterson
 # Date: 06/26/09
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The interface for manipulating the toolkit clipboard.
 """
@@ -19,7 +19,8 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-Clipboard = toolkit_object('clipboard:Clipboard')
+
+Clipboard = toolkit_object("clipboard:Clipboard")
 
 # Create a singleton clipboard object for convenience
 clipboard = Clipboard()

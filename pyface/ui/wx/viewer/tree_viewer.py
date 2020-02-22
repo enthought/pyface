@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A viewer based on a tree control. """
 
 
@@ -45,7 +45,7 @@ class TreeViewer(ContentViewer):
     label_provider = Instance(TreeLabelProvider, ())
 
     # Selection mode (must be either of 'single' or 'extended').
-    selection_mode = Enum('single', 'extended')
+    selection_mode = Enum("single", "extended")
 
     # The currently selected elements.
     selection = List
@@ -189,7 +189,7 @@ class TreeViewer(ContentViewer):
             self.control.Expand(pid)
 
         else:
-            print('**** pid is None!!! ****')
+            print("**** pid is None!!! ****")
 
         return
 
@@ -224,7 +224,7 @@ class TreeViewer(ContentViewer):
         if not self.show_root:
             style = style | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT
 
-        if self.selection_mode != 'single':
+        if self.selection_mode != "single":
             style = style | wx.TR_MULTIPLE | wx.TR_EXTENDED
 
         return style
@@ -306,7 +306,7 @@ class TreeViewer(ContentViewer):
 
         text = self.label_provider.get_text(self, element)
         if text is None:
-            text = ''
+            text = ""
 
         return text
 
@@ -583,7 +583,7 @@ class TreeViewer(ContentViewer):
         # Get the element, its id and the point where the event occurred.
         data, wxid, flags, point = self._unpack_event(event)
 
-        if point == (0,0):
+        if point == (0, 0):
             # Apply workaround.
             point = self._point_left_clicked
             wxid, flags = self.control.HitTest(point)
@@ -637,5 +637,6 @@ class TreeViewer(ContentViewer):
         self.key_pressed = event.GetKeyCode()
 
         return
+
 
 #### EOF ######################################################################

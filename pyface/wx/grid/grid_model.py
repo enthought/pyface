@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,13 +10,17 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A model that provides data for a grid. """
 
 # Major package imports.
 from __future__ import print_function
 import wx
-from wx.grid import GridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED
+from wx.grid import (
+    GridTableBase,
+    GridTableMessage,
+    GRIDTABLE_NOTIFY_ROWS_APPENDED,
+)
 
 # Enthought library imports.
 from traits.api import Any, Bool, HasTraits, Trait, Event, List
@@ -47,7 +51,6 @@ class GridModel(HasTraits):
 
     # Fired when the data in the model has changed.
     model_changed = Event
-
 
     def __init__(self, **traits):
         """ Create a new grid model. """
@@ -103,7 +106,7 @@ class GridModel(HasTraits):
         except IndexError:
             pass
 
-        return ''
+        return ""
 
     def SetValue(self, row, col, value):
         """ Set the value at the specified row and column. """
@@ -121,9 +124,7 @@ class GridModel(HasTraits):
             # Tell the grid that we've added a row.
             #
             # N.B wxGridTableMessage(table, whatWeDid, howMany)
-            message = GridTableMessage(
-                self, GRIDTABLE_NOTIFY_ROWS_APPENDED, 1
-            )
+            message = GridTableMessage(self, GRIDTABLE_NOTIFY_ROWS_APPENDED, 1)
 
             # Trait event notification.
             self.model_changed = message
@@ -173,7 +174,7 @@ class GridModel(HasTraits):
     def DeleteRows(self, pos, num_rows):
         """ Called when the view is deleting rows. """
 
-        del self.data[pos:pos + num_rows]
+        del self.data[pos : pos + num_rows]
 
         # Tell the grid that we've deleted some rows.
         #
@@ -279,5 +280,6 @@ class _GridTableBase(GridTableBase):
         """ Called when the view is deleting rows. """
 
         return self.model.DeleteRows(pos, num_rows)
+
 
 #### EOF ######################################################################

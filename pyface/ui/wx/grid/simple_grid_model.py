@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A SimpleGridModel simply builds a table from a 2-dimensional
 list/array containing the data. Optionally users can pass in specifications
 for rows and columns. By default these are built off the data itself,
@@ -23,6 +23,7 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard
 
 # local imports
 from .grid_model import GridColumn, GridModel, GridRow
+
 
 class SimpleGridModel(GridModel):
     """ A SimpleGridModel simply builds a table from a 2-dimensional
@@ -76,7 +77,7 @@ class SimpleGridModel(GridModel):
             try:
                 name = self.columns[index].label
             except IndexError:
-                name = ''
+                name = ""
         else:
             # otherwise return the index plus 1
             name = str(index + 1)
@@ -185,7 +186,7 @@ class SimpleGridModel(GridModel):
         except IndexError:
             pass
 
-        return ''
+        return ""
 
     def is_cell_empty(self, row, col):
         """ Returns True if the cell at (row, col) has a None value,
@@ -208,11 +209,8 @@ class SimpleGridModel(GridModel):
         context menu for this cell."""
 
         context_menu = MenuManager(
-            Group(
-                _CopyAction(self, row, col, name='Copy'),
-                id = 'Group'
-                )
-            )
+            Group(_CopyAction(self, row, col, name="Copy"), id="Group")
+        )
 
         return context_menu
 
@@ -282,9 +280,9 @@ class SimpleGridModel(GridModel):
 
         return rowdata
 
+
 # Private class
 class _CopyAction(Action):
-
     def __init__(self, model, row, col, **kw):
 
         super(_CopyAction, self).__init__(**kw)

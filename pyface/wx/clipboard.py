@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -8,12 +8,13 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 import logging
 
 logger = logging.getLogger()
-logger.warning('DEPRECATED: pyface.wx.clipboard, use pyface.api instead.')
+logger.warning("DEPRECATED: pyface.wx.clipboard, use pyface.api instead.")
 
 from pyface.ui.wx.clipboard import Clipboard
+
 clipboard = Clipboard()

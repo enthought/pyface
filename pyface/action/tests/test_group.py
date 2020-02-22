@@ -10,18 +10,17 @@ from ..group import Group
 
 
 class TestActionItem(unittest.TestCase, UnittestTools):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock
         self.memo = []
 
         def perform():
-            self.memo.append('called')
+            self.memo.append("called")
 
         self.perform = perform
 
-        self.action = Action(name='Test', on_perform=perform)
+        self.action = Action(name="Test", on_perform=perform)
         self.action_item = ActionItem(action=self.action)
 
     def test_init_action_item(self):
@@ -48,7 +47,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_append(self):
         group = Group(self.action_item)
-        action_item2 = ActionItem(action=Action(name='Action 2'))
+        action_item2 = ActionItem(action=Action(name="Action 2"))
         # XXX items doesn't fire a change event.  Should it?
         group.append(action_item2)
         self.assertEqual(group.items, [self.action_item, action_item2])
@@ -56,7 +55,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_append_action(self):
         group = Group(self.action_item)
-        action2 = Action(name='Action 2')
+        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.append(action2)
         self.assertEqual(len(group.items), 2)
@@ -66,7 +65,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_append_callable(self):
         group = Group(self.action_item)
-        action2 = Action(name='Action 2')
+        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.append(self.perform)
         self.assertEqual(len(group.items), 2)
@@ -92,7 +91,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert(self):
         group = Group(self.action_item)
-        action_item2 = ActionItem(action=Action(name='Action 2'))
+        action_item2 = ActionItem(action=Action(name="Action 2"))
         # XXX items doesn't fire a change event.  Should it?
         group.insert(1, action_item2)
         self.assertEqual(group.items, [self.action_item, action_item2])
@@ -100,7 +99,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_action(self):
         group = Group(self.action_item)
-        action2 = Action(name='Action 2')
+        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.insert(1, action2)
         self.assertEqual(len(group.items), 2)
@@ -110,7 +109,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_callable(self):
         group = Group(self.action_item)
-        action2 = Action(name='Action 2')
+        action2 = Action(name="Action 2")
         # XXX items doesn't fire a change event.  Should it?
         group.insert(1, self.perform)
         self.assertEqual(len(group.items), 2)
@@ -121,7 +120,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_at_start(self):
         group = Group(self.action_item)
-        action_item2 = ActionItem(action=Action(name='Action 2'))
+        action_item2 = ActionItem(action=Action(name="Action 2"))
         # XXX items doesn't fire a change event.  Should it?
         group.insert(0, action_item2)
         self.assertEqual(group.items, [action_item2, self.action_item])
@@ -141,7 +140,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_before(self):
         group = Group(self.action_item)
-        action_item2 = ActionItem(action=Action(name='Action 2'))
+        action_item2 = ActionItem(action=Action(name="Action 2"))
         # XXX items doesn't fire a change event.  Should it?
         group.insert_before(self.action_item, action_item2)
         self.assertEqual(group.items, [action_item2, self.action_item])
@@ -149,7 +148,7 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_insert_after(self):
         group = Group(self.action_item)
-        action_item2 = ActionItem(action=Action(name='Action 2'))
+        action_item2 = ActionItem(action=Action(name="Action 2"))
         # XXX items doesn't fire a change event.  Should it?
         group.insert_after(self.action_item, action_item2)
         self.assertEqual(group.items, [self.action_item, action_item2])
@@ -157,12 +156,12 @@ class TestActionItem(unittest.TestCase, UnittestTools):
 
     def test_find(self):
         group = Group(self.action_item)
-        item = group.find('Test')
+        item = group.find("Test")
         self.assertEqual(item, self.action_item)
 
     def test_find_missing(self):
         group = Group(self.action_item)
-        item = group.find('Not here')
+        item = group.find("Not here")
         self.assertIsNone(item)
 
     def test_enabled_changed(self):

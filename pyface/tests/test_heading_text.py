@@ -7,11 +7,11 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestHeadingText(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -51,7 +51,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         # XXX this isn't implemented in qt4 backend, but shouldn't fail
         with self.event_loop():
             self.widget = HeadingText(
-                self.window.control, image=ImageResource('core.png')
+                self.window.control, image=ImageResource("core.png")
             )
         with self.event_loop():
             self.widget.destroy()

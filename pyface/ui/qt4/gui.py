@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -34,7 +34,6 @@ class GUI(MGUI, HasTraits):
     """ The toolkit specific implementation of a GUI.  See the IGUI interface
     for the API documentation.
     """
-
 
     #### 'GUI' interface ######################################################
 

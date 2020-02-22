@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A page in a wizard. """
 
 
@@ -30,7 +30,6 @@ class WizardPage(MWizardPage, HasTraits):
     See the IWizardPage interface for the API documentation.
 
     """
-
 
     #### 'IWizardPage' interface ##############################################
 
@@ -86,8 +85,9 @@ class WizardPage(MWizardPage, HasTraits):
 
         # Dummy implementation - override!
         panel = wx.Panel(parent, -1, style=wx.CLIP_CHILDREN)
-        panel.SetBackgroundColour('yellow')
+        panel.SetBackgroundColour("yellow")
 
         return panel
+
 
 #### EOF ######################################################################

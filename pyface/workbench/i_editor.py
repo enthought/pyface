@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,14 +10,22 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface of a workbench editor. """
 # standard library imports
 import uuid
 
 # Enthought library imports.
-from traits.api import Any, Bool, Event, VetoableEvent, Vetoable, \
-    HasTraits, Instance, Interface
+from traits.api import (
+    Any,
+    Bool,
+    Event,
+    VetoableEvent,
+    Vetoable,
+    HasTraits,
+    Instance,
+    Interface,
+)
 from traits.api import provides
 
 # Local imports.
@@ -28,7 +36,7 @@ class IEditor(IWorkbenchPart):
     """ The interface of a workbench editor. """
 
     # The optional command stack.
-    command_stack = Instance('apptools.undo.api.ICommandStack')
+    command_stack = Instance("apptools.undo.api.ICommandStack")
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -62,10 +70,11 @@ class IEditor(IWorkbenchPart):
 @provides(IEditor)
 class MEditor(MWorkbenchPart):
     """ Mixin containing common code for toolkit-specific implementations. """
+
     #### 'IEditor' interface ##################################################
 
     # The optional command stack.
-    command_stack = Instance('apptools.undo.api.ICommandStack')
+    command_stack = Instance("apptools.undo.api.ICommandStack")
 
     # Is the object that the editor is editing 'dirty' i.e., has it been
     # modified but not saved?
@@ -97,7 +106,7 @@ class MEditor(MWorkbenchPart):
     def __str__(self):
         """ Return an informal string representation of the object. """
 
-        return 'Editor(%s)' % self.id
+        return "Editor(%s)" % self.id
 
     ###########################################################################
     # 'IWorkbenchPart' interface.

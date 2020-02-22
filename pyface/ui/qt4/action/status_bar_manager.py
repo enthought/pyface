@@ -1,18 +1,17 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Major package imports.
 from pyface.qt import QtGui
 
 # Enthought library imports.
-from traits.api import Any, Bool, HasTraits, List, Property, Str, \
-    Unicode
+from traits.api import Any, Bool, HasTraits, List, Property, Str, Unicode
 
 
 class StatusBarManager(HasTraits):
@@ -67,7 +66,7 @@ class StatusBarManager(HasTraits):
         if len(self.messages) > 0:
             message = self.messages[0]
         else:
-            message = ''
+            message = ""
 
         return message
 
@@ -77,10 +76,10 @@ class StatusBarManager(HasTraits):
             old = self.messages[0]
             self.messages[0] = value
         else:
-            old = ''
+            old = ""
             self.messages.append(old)
 
-        self.trait_property_changed('message', old, value)
+        self.trait_property_changed("message", old, value)
 
     ###########################################################################
     # Trait event handlers.

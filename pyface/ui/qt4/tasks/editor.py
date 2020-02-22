@@ -13,7 +13,6 @@ class Editor(MEditor):
     See the IEditor interface for API documentation.
     """
 
-
     #### 'IEditor' interface ##################################################
 
     has_focus = Property(Bool)

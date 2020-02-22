@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for table content providers. """
 
 
@@ -33,5 +33,6 @@ class TableContentProvider(ContentProvider):
     # 'TreeContentProvider' and 'TreeLabelProvider'  instead of some
     # combination of the specific and generic viewer classes as in JFace.
     pass
+
 
 #### EOF ####################################################################

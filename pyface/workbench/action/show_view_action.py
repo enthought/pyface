@@ -12,10 +12,10 @@ class ShowViewAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'pyface.workbench.action.show_view'
+    id = "pyface.workbench.action.show_view"
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = 'Show View'
+    name = "Show View"
 
     ###########################################################################
     # 'Action' interface.
@@ -26,7 +26,7 @@ class ShowViewAction(WorkbenchAction):
 
         chooser = ViewChooser(window=self.window)
 
-        ui = chooser.edit_traits(parent=self.window.control, kind='livemodal')
+        ui = chooser.edit_traits(parent=self.window.control, kind="livemodal")
 
         # If the user closes the dialog by using the window manager's close button
         # (e.g. the little [x] in the top corner), ui.result is True, but chooser.view
@@ -40,5 +40,6 @@ class ShowViewAction(WorkbenchAction):
             chooser.view.activate()
 
         return
+
 
 #### EOF ######################################################################

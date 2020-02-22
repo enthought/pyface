@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A renderer which will display a cell-specific image in addition to some
     text displayed in the same way the standard string renderer normally
     would. """
@@ -22,12 +22,13 @@ from wx.grid import GridCellRenderer
 from wx.grid import GridCellStringRenderer
 from wx import SOLID, Brush, Rect, TRANSPARENT_PEN
 
+
 class GridCellImageRenderer(GridCellRenderer):
     """ A renderer which will display a cell-specific image in addition to some
         text displayed in the same way the standard string renderer normally
         would. """
 
-    def __init__(self, provider = None):
+    def __init__(self, provider=None):
         """ Build a new PyGridCellImageRenderer.
 
             'provider', if provided, should implement
@@ -92,13 +93,14 @@ class GridCellImageRenderer(GridCellRenderer):
             dc.DrawBitmap(bmp, x, y, 1)
             x += bmp.GetWidth()
 
-        if text is not None and text != '':
+        if text is not None and text != "":
             width = rect.x + rect.width - x
             height = rect.y + rect.height - y
             # draw any text that should be included
             new_rect = Rect(x, y, width, height)
-            self._string_renderer.Draw(grid, attr, dc, new_rect,
-                                       row, col, isSelected)
+            self._string_renderer.Draw(
+                grid, attr, dc, new_rect, row, col, isSelected
+            )
 
         dc.DestroyClippingRegion()
 
@@ -115,18 +117,20 @@ class GridCellImageRenderer(GridCellRenderer):
         else:
             bmp_size = wx.Size(0, 0)
 
-
         # find the correct text for this cell
         text = self._get_text(grid, row, col)
 
         if text is not None:
-            text_size = self._string_renderer.GetBestSize(grid, attr, dc,
-                                                          row, col)
+            text_size = self._string_renderer.GetBestSize(
+                grid, attr, dc, row, col
+            )
         else:
             text_size = wx.Size(0, 0)
 
-        result = wx.Size(bmp_size.width + text_size.width,
-                         max(bmp_size.height, text_size.height))
+        result = wx.Size(
+            bmp_size.width + text_size.width,
+            max(bmp_size.height, text_size.height),
+        )
 
         return result
 
@@ -139,8 +143,9 @@ class GridCellImageRenderer(GridCellRenderer):
     def _get_image(self, grid, row, col):
         """ Returns the correct bmp for the data at row, col. """
         bmp = None
-        if self._provider is not None and \
-           hasattr(self._provider, 'get_image_for_cell'):
+        if self._provider is not None and hasattr(
+            self._provider, "get_image_for_cell"
+        ):
             # get the image from the specified provider
             img = self._provider.get_image_for_cell(grid, row, col)
             if img is not None:
@@ -154,8 +159,9 @@ class GridCellImageRenderer(GridCellRenderer):
         """ Returns the correct text for the data at row, col. """
 
         text = None
-        if self._provider is not None and \
-           hasattr(self._provider, 'get_text_for_cell'):
+        if self._provider is not None and hasattr(
+            self._provider, "get_text_for_cell"
+        ):
             # get the image from the specified provider
             text = self._provider.get_text_for_cell(grid, row, col)
         else:
@@ -163,5 +169,5 @@ class GridCellImageRenderer(GridCellRenderer):
 
         return text
 
-#### EOF ######################################################################
 
+#### EOF ######################################################################

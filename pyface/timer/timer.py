@@ -13,7 +13,7 @@ never fire).
 from pyface.toolkit import toolkit_object
 from pyface.timer.i_timer import MCallbackTimer, MEventTimer
 
-PyfaceTimer = toolkit_object('timer.timer:PyfaceTimer')
+PyfaceTimer = toolkit_object("timer.timer:PyfaceTimer")
 
 
 class EventTimer(MEventTimer, PyfaceTimer):
@@ -35,10 +35,7 @@ class Timer(CallbackTimer):
         """
         interval = millisecs / 1000.0
         super(Timer, self).__init__(
-            interval=interval,
-            callback=callable,
-            args=args,
-            kwargs=kwargs,
+            interval=interval, callback=callable, args=args, kwargs=kwargs
         )
         self.start()
 

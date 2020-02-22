@@ -18,8 +18,11 @@ from .action_manager_item import ActionManagerItem
 from .field_action import FieldAction
 from .group import Group, Separator
 from .gui_application_action import (
-    AboutAction, CloseActiveWindowAction, CreateWindowAction, ExitAction,
-    GUIApplicationAction
+    AboutAction,
+    CloseActiveWindowAction,
+    CreateWindowAction,
+    ExitAction,
+    GUIApplicationAction,
 )
 from .listening_action import ListeningAction
 from .menu_manager import MenuManager
@@ -34,5 +37,6 @@ from .window_action import CloseWindowAction, WindowAction
 # becomes toolkit agnostic.
 
 from traits.etsconfig.api import ETSConfig
-if ETSConfig.toolkit == 'wx':
+
+if ETSConfig.toolkit == "wx":
     from .tool_palette_manager import ToolPaletteManager

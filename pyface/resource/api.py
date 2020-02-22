@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2015, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,9 +10,9 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought resource package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 from __future__ import absolute_import
 
 from .resource_factory import ResourceFactory
 from .resource_manager import ResourceManager
-from .resource_path    import resource_path
+from .resource_path import resource_path

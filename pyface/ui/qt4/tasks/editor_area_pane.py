@@ -2,8 +2,7 @@
 import sys
 
 # Enthought library imports.
-from pyface.tasks.i_editor_area_pane import IEditorAreaPane, \
-    MEditorAreaPane
+from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import on_trait_change, provides
 
 # System library imports.
@@ -17,13 +16,13 @@ from .util import set_focus
 # 'EditorAreaPane' class.
 ###############################################################################
 
+
 @provides(IEditorAreaPane)
 class EditorAreaPane(TaskPane, MEditorAreaPane):
     """ The toolkit-specific implementation of a EditorAreaPane.
 
     See the IEditorAreaPane interface for API documentation.
     """
-
 
     ###########################################################################
     # 'TaskPane' interface.
@@ -44,19 +43,19 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         control.tabCloseRequested.connect(self._close_requested)
 
         # Add shortcuts for scrolling through tabs.
-        if sys.platform == 'darwin':
-            next_seq = 'Ctrl+}'
-            prev_seq = 'Ctrl+{'
+        if sys.platform == "darwin":
+            next_seq = "Ctrl+}"
+            prev_seq = "Ctrl+{"
         else:
-            next_seq = 'Ctrl+PgDown'
-            prev_seq = 'Ctrl+PgUp'
+            next_seq = "Ctrl+PgDown"
+            prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
 
         # Add shortcuts for switching to a specific tab.
-        mod = 'Ctrl+' if sys.platform == 'darwin' else 'Alt+'
+        mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self.control.setCurrentIndex)
         for i in range(1, 10):
@@ -120,7 +119,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         """
         label = editor.name
         if editor.dirty:
-            label = '*' + label
+            label = "*" + label
         return label
 
     def _get_editor_with_control(self, control):
@@ -143,12 +142,12 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     #### Trait change handlers ################################################
 
-    @on_trait_change('editors:[dirty, name]')
+    @on_trait_change("editors:[dirty, name]")
     def _update_label(self, editor, name, new):
         index = self.control.indexOf(editor.control)
         self.control.setTabText(index, self._get_label(editor))
 
-    @on_trait_change('editors:tooltip')
+    @on_trait_change("editors:tooltip")
     def _update_tooltip(self, editor, name, new):
         index = self.control.indexOf(editor.control)
         self.control.setTabToolTip(index, editor.tooltip)
@@ -168,15 +167,17 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             control = self.control.widget(index)
             self.active_editor = self._get_editor_with_control(control)
 
-    @on_trait_change('hide_tab_bar')
+    @on_trait_change("hide_tab_bar")
     def _update_tab_bar(self):
         if self.control is not None:
             visible = self.control.count() > 1 if self.hide_tab_bar else True
             self.control.tabBar().setVisible(visible)
 
+
 ###############################################################################
 # Auxillary classes.
 ###############################################################################
+
 
 class EditorAreaWidget(QtGui.QTabWidget):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
@@ -201,6 +202,7 @@ class EditorAreaWidget(QtGui.QTabWidget):
         active_editor = self.editor_area.active_editor
         if active_editor:
             set_focus(active_editor.control)
+
 
 class EditorAreaDropFilter(QtCore.QObject):
     """ Implements drag and drop support.

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The Qt-specific implementation of the text field class """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from traits.api import Trait, provides
@@ -25,20 +28,17 @@ from .field import Field
 
 
 ECHO_TO_QT_ECHO_MODE = {
-    'normal': QLineEdit.Normal,
-    'password': QLineEdit.Password,
-    'none': QLineEdit.NoEcho,
-    'when_editing': QLineEdit.PasswordEchoOnEdit,
+    "normal": QLineEdit.Normal,
+    "password": QLineEdit.Password,
+    "none": QLineEdit.NoEcho,
+    "when_editing": QLineEdit.PasswordEchoOnEdit,
 }
 QT_ECHO_MODE_TO_ECHO = {
     value: key for key, value in ECHO_TO_QT_ECHO_MODE.items()
 }
 
 # mapped trait for Qt line edit echo modes
-Echo = Trait(
-    'normal',
-    ECHO_TO_QT_ECHO_MODE,
-)
+Echo = Trait("normal", ECHO_TO_QT_ECHO_MODE)
 
 
 @provides(ITextField)
@@ -69,7 +69,7 @@ class TextField(MTextField, Field):
         """ Toolkit specific method to set the control's value. """
         self.control.setText(value)
         # fire update
-        if self.update_text == 'editing_finished':
+        if self.update_text == "editing_finished":
             self.control.editingFinished.emit()
         else:
             self.control.textEdited.emit(value)

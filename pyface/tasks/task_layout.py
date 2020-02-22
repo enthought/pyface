@@ -34,7 +34,7 @@ class LayoutItem(HasStrictTraits):
     def pstream(self, stream, indent=0, multiline=False):
         """ Pretty-formats the layout item to a stream.
         """
-        call = self.__class__.__name__ + '('
+        call = self.__class__.__name__ + "("
         indent += len(call)
         stream.write(call)
 
@@ -52,19 +52,19 @@ class LayoutItem(HasStrictTraits):
             arg_indent = indent
             if name:
                 arg_indent += len(name) + 1
-                stream.write(name + '=')
+                stream.write(name + "=")
             if isinstance(value, LayoutItem):
                 value.pstream(stream, arg_indent, multiline)
             else:
                 stream.write(repr(value))
             if i < len(args) - 1:
-                stream.write(',')
+                stream.write(",")
                 if multiline:
-                    stream.write('\n' + indent * ' ')
+                    stream.write("\n" + indent * " ")
                 else:
-                    stream.write(' ')
+                    stream.write(" ")
 
-        stream.write(')')
+        stream.write(")")
 
 
 class LayoutContainer(LayoutItem):
@@ -76,12 +76,12 @@ class LayoutContainer(LayoutItem):
     def __init__(self, *items, **traits):
         # Items may either be specified as a positional arg or a kwarg.
         if items:
-            if 'items' in traits:
+            if "items" in traits:
                 raise ValueError(
                     "Received 'items' as positional and keyword argument."
                 )
             else:
-                traits['items'] = list(items)
+                traits["items"] = list(items)
         super(LayoutContainer, self).__init__(**traits)
 
     def iterleaves(self):
@@ -99,7 +99,7 @@ class PaneItem(LayoutItem):
 
     # The ID of the item. If the item refers to a TaskPane, this is the ID of
     # that TaskPane.
-    id = Either(Str, Int, default='', pretty_skip=True)
+    id = Either(Str, Int, default="", pretty_skip=True)
 
     # The width of the pane in pixels. If not specified, the pane will be sized
     # according to its size hint.
@@ -109,7 +109,7 @@ class PaneItem(LayoutItem):
     # sized according to its size hint.
     height = Int(-1)
 
-    def __init__(self, id='', **traits):
+    def __init__(self, id="", **traits):
         super(PaneItem, self).__init__(**traits)
         self.id = id
 
@@ -127,7 +127,7 @@ class Tabbed(LayoutContainer):
 
     # The ID of the TaskPane which is active in layout. If not specified, the
     # first pane is active.
-    active_tab = Either(Str, Int, default='')
+    active_tab = Either(Str, Int, default="")
 
 
 class Splitter(LayoutContainer):
@@ -135,26 +135,30 @@ class Splitter(LayoutContainer):
     """
 
     # The orientation of the splitter.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # The sub-items of the splitter, which are PaneItems, Tabbed layouts, and
     # other Splitters.
-    items = List(Either(
-        PaneItem,
-        Tabbed,
-        Instance('pyface.tasks.task_layout.Splitter')), pretty_skip=True)
+    items = List(
+        Either(
+            PaneItem, Tabbed, Instance("pyface.tasks.task_layout.Splitter")
+        ),
+        pretty_skip=True,
+    )
 
 
 class HSplitter(Splitter):
     """ A convenience class for horizontal splitters.
     """
-    orientation = Str('horizontal')
+
+    orientation = Str("horizontal")
 
 
 class VSplitter(Splitter):
     """ A convenience class for vertical splitters.
     """
-    orientation = Str('vertical')
+
+    orientation = Str("vertical")
 
 
 class DockLayout(LayoutItem):
@@ -170,10 +174,10 @@ class DockLayout(LayoutItem):
     # Assignments of dock areas to the window's corners. By default, the top
     # and bottom dock areas extend into both of the top and both of the bottom
     # corners, respectively.
-    top_left_corner = Enum('top', 'left')
-    top_right_corner = Enum('top', 'right')
-    bottom_left_corner = Enum('bottom', 'left')
-    bottom_right_corner = Enum('bottom', 'right')
+    top_left_corner = Enum("top", "left")
+    top_right_corner = Enum("top", "right")
+    bottom_left_corner = Enum("bottom", "left")
+    bottom_right_corner = Enum("bottom", "right")
 
 
 class TaskLayout(DockLayout):

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Mix-in class for split widgets. """
 
 
@@ -28,10 +28,9 @@ class SplitWidget(MSplitWidget, HasTraits):
     ISPlitWidget interface for the API documentation.
     """
 
-
     #### 'ISplitWidget' interface #############################################
 
-    direction = Enum('vertical', 'vertical', 'horizontal')
+    direction = Enum("vertical", "vertical", "horizontal")
 
     ratio = Float(0.5)
 
@@ -49,7 +48,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         splitter = QtGui.QSplitter(parent)
 
         # Yes, this is correct.
-        if self.direction == 'horizontal':
+        if self.direction == "horizontal":
             splitter.setOrientation(QtCore.Qt.Vertical)
 
         # Only because the wx implementation does the same.
@@ -62,12 +61,14 @@ class SplitWidget(MSplitWidget, HasTraits):
         splitter.addWidget(self._create_rhs(splitter))
 
         # Set the initial splitter position.
-        if self.direction == 'horizontal':
+        if self.direction == "horizontal":
             pos = splitter.sizeHint().height()
         else:
             pos = splitter.sizeHint().width()
 
-        splitter.setSizes([int(pos * self.ratio), int(pos * (1.0 - self.ratio))])
+        splitter.setSizes(
+            [int(pos * self.ratio), int(pos * (1.0 - self.ratio))]
+        )
 
         return splitter
 
@@ -98,5 +99,6 @@ class SplitWidget(MSplitWidget, HasTraits):
             rhs = QtGui.QWidget(parent)
 
         return rhs
+
 
 #### EOF ######################################################################

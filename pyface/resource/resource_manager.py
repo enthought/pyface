@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -7,7 +7,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The default resource manager.
 
 A resource manager locates and loads application resources such as images and
@@ -37,7 +37,7 @@ class ResourceManager(HasTraits):
     """
 
     # Allowed extensions for image resources.
-    IMAGE_EXTENSIONS = ['.png', '.jpg', '.bmp', '.gif', '.ico']
+    IMAGE_EXTENSIONS = [".png", ".jpg", ".bmp", ".gif", ".ico"]
 
     # A list of additional search paths. These paths are fallbacks, and hence
     # have lower priority than the paths provided by resource objects.
@@ -103,15 +103,15 @@ class ResourceManager(HasTraits):
         # Otherwise, we will search for common image suffixes.
         else:
             extensions = self.IMAGE_EXTENSIONS
-            pattern = image_name + '.*'
+            pattern = image_name + ".*"
 
         # Try the 'images' sub-directory first (since that is commonly
         # where we put them!).  If the image is not found there then look
         # in the directory itself.
         if size is None:
-            subdirs = ['images', '']
+            subdirs = ["images", ""]
         else:
-            subdirs = ['images/%dx%d' % (size[0], size[1]), 'images', '']
+            subdirs = ["images/%dx%d" % (size[0], size[1]), "images", ""]
 
         for dirname in resource_path:
 
@@ -119,13 +119,17 @@ class ResourceManager(HasTraits):
             # to try and find the image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
                 from pkg_resources import resource_string
+
                 for path in subdirs:
                     for extension in extensions:
-                        searchpath = '%s/%s%s' % (path, basename, extension)
+                        searchpath = "%s/%s%s" % (path, basename, extension)
                         try:
-                            data = resource_string(dirname.__name__, searchpath)
-                            return ImageReference(self.resource_factory,
-                                data = data)
+                            data = resource_string(
+                                dirname.__name__, searchpath
+                            )
+                            return ImageReference(
+                                self.resource_factory, data=data
+                            )
                         except IOError:
                             pass
                 else:
@@ -144,9 +148,9 @@ class ResourceManager(HasTraits):
                         return reference
 
             # Is there an 'images' zip file in the directory?
-            zip_filename = join(dirname, 'images.zip')
+            zip_filename = join(dirname, "images.zip")
             if os.path.isfile(zip_filename):
-                zip_file = ZipFile(zip_filename, 'r')
+                zip_file = ZipFile(zip_filename, "r")
                 # Try the image name itself, and then the image name with
                 # common images suffixes.
                 for extension in extensions:
@@ -164,36 +168,36 @@ class ResourceManager(HasTraits):
             # is this a path within a zip file?
             # first, find the zip file in the path
             filepath = dirname
-            zippath = ''
-            while not is_zipfile(filepath) and \
-                  os.path.splitdrive(filepath)[1].startswith('\\') and \
-                  os.path.splitdrive(filepath)[1].startswith('/'):
+            zippath = ""
+            while (
+                not is_zipfile(filepath)
+                and os.path.splitdrive(filepath)[1].startswith("\\")
+                and os.path.splitdrive(filepath)[1].startswith("/")
+            ):
                 filepath, tail = os.path.split(filepath)
-                if zippath != '':
-                    zippath = tail + '/' + zippath
+                if zippath != "":
+                    zippath = tail + "/" + zippath
                 else:
                     zippath = tail
-
-
 
             # if we found a zipfile, then look inside it for the image!
             if is_zipfile(filepath):
 
                 zip_file = ZipFile(filepath)
-                for subpath in ['images', '']:
+                for subpath in ["images", ""]:
                     for extension in extensions:
                         try:
                             # this is a little messy. since zip files don't
                             # recognize a leading slash, we have to be very
                             # particular about how we build this path when
                             # there are empty strings
-                            if zippath != '':
-                                path = zippath + '/'
+                            if zippath != "":
+                                path = zippath + "/"
                             else:
-                                path = ''
+                                path = ""
 
-                            if subpath != '':
-                                path = path + subpath + '/'
+                            if subpath != "":
+                                path = path + subpath + "/"
 
                             path = path + basename + extension
                             # now that we have the path we can attempt to load
@@ -201,7 +205,7 @@ class ResourceManager(HasTraits):
                             image_data = zip_file.read(path)
                             reference = ImageReference(
                                 self.resource_factory, data=image_data
-                                )
+                            )
 
                             # if there was no exception then return the result
                             return reference
@@ -214,7 +218,7 @@ class ResourceManager(HasTraits):
     def _get_resource_path(self, object):
         """ Returns the resource path for an object. """
 
-        if hasattr(object, 'resource_path'):
+        if hasattr(object, "resource_path"):
             resource_path = object.resource_path
 
         else:
@@ -237,5 +241,6 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
+
 
 #### EOF ######################################################################

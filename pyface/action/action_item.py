@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ An action manager item that represents an actual action. """
 
 
@@ -23,9 +23,10 @@ from pyface.action.action_manager_item import ActionManagerItem
 
 # Import the toolkit specific versions of the internal classes.
 from pyface.toolkit import toolkit_object
-_MenuItem = toolkit_object('action.action_item:_MenuItem')
-_Tool = toolkit_object('action.action_item:_Tool')
-_PaletteTool = toolkit_object('action.action_item:_PaletteTool')
+
+_MenuItem = toolkit_object("action.action_item:_MenuItem")
+_Tool = toolkit_object("action.action_item:_Tool")
+_PaletteTool = toolkit_object("action.action_item:_PaletteTool")
 
 
 class ActionItem(ActionManagerItem):
@@ -75,10 +76,10 @@ class ActionItem(ActionManagerItem):
     def _visible_changed(self, trait_name, old, new):
         self.action.visible = new
 
-    @on_trait_change('_wrappers.control')
+    @on_trait_change("_wrappers.control")
     def _on_destroy(self, object, name, old, new):
         """ Handle the destruction of the wrapper. """
-        if name == 'control' and new is None:
+        if name == "control" and new is None:
             self._wrappers.remove(object)
 
     ###########################################################################
@@ -107,8 +108,9 @@ class ActionItem(ActionManagerItem):
 
             self._wrappers.append(wrapper)
 
-    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
-                       show_labels=True):
+    def add_to_toolbar(
+        self, parent, tool_bar, image_cache, controller, show_labels=True
+    ):
         """ Adds the item to a tool bar.
 
         Parameters

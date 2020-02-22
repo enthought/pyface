@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Expandable example. """
 
 
@@ -21,7 +21,7 @@ import os, sys
 import wx
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # Enthought library imports.
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
@@ -41,7 +41,7 @@ class MainWindow(SplitApplicationWindow):
     ratio = Float(0.3)
 
     # The direction in which the window is split.
-    direction = Str('vertical')
+    direction = Str("vertical")
 
     ###########################################################################
     # Protected 'SplitApplicationWindow' interface.
@@ -54,7 +54,7 @@ class MainWindow(SplitApplicationWindow):
 
         for i in range(10):
             panel = self._create_content(expandable.control)
-            expandable.add_panel('Panel %d' % i, panel)
+            expandable.add_panel("Panel %d" % i, panel)
 
         return expandable.control
 
@@ -64,8 +64,8 @@ class MainWindow(SplitApplicationWindow):
         widget = self._expandable
 
         self._python_shell = PythonShell(parent)
-        self._python_shell.bind('widget', widget)
-        self._python_shell.bind('w', widget)
+        self._python_shell.bind("widget", widget)
+        self._python_shell.bind("w", widget)
 
         return self._python_shell.control
 
@@ -82,7 +82,7 @@ class MainWindow(SplitApplicationWindow):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

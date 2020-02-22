@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A group of action manager items. """
 
 from functools import partial
@@ -51,7 +51,7 @@ class Group(HasTraits):
     items = Property
 
     #: The action manager that the group belongs to.
-    parent = Any  #Instance('pyface.action.ActionManager')
+    parent = Any  # Instance('pyface.action.ActionManager')
 
     #: Does this group require a separator when it is visualized?
     separator = Bool(True)
@@ -59,7 +59,7 @@ class Group(HasTraits):
     #### Private interface ####
 
     #: All of the items in the group.
-    _items = List  #(ActionManagerItem)
+    _items = List  # (ActionManagerItem)
 
     ###########################################################################
     # 'object' interface.
@@ -274,4 +274,5 @@ class Separator(Group):
 
     Hopefully, 'Separator' is more readable than 'Group'...
     """
+
     pass

@@ -1,15 +1,38 @@
 # Enthought library imports.
-from pyface.action.api import Action, ActionItem, Group, \
-     MenuManager, MenuBarManager, ToolBarManager
+from pyface.action.api import (
+    Action,
+    ActionItem,
+    Group,
+    MenuManager,
+    MenuBarManager,
+    ToolBarManager,
+)
 from pyface.util.id_helper import get_unique_id
-from traits.api import Bool, Callable, Enum, HasTraits, Instance, \
-     List, Property, Str, Trait, Tuple, Unicode
+from traits.api import (
+    Bool,
+    Callable,
+    Enum,
+    HasTraits,
+    Instance,
+    List,
+    Property,
+    Str,
+    Trait,
+    Tuple,
+    Unicode,
+)
 
 # Trait definitions.
-SubSchema = Trait(None, Action, ActionItem, Group, MenuManager,
-                  Instance('pyface.tasks.action.schema.GroupSchema'),
-                  Instance('pyface.tasks.action.schema.MenuSchema'),
-                  Instance('pyface.tasks.action.schema.Schema'))
+SubSchema = Trait(
+    None,
+    Action,
+    ActionItem,
+    Group,
+    MenuManager,
+    Instance("pyface.tasks.action.schema.GroupSchema"),
+    Instance("pyface.tasks.action.schema.MenuSchema"),
+    Instance("pyface.tasks.action.schema.Schema"),
+)
 
 
 class Schema(HasTraits):
@@ -56,6 +79,7 @@ class ActionSchema(Schema):
     #: Items is overwritten to be empty and read-only to avoid assigning to
     #: it by mistake.
     items = Property()
+
     def _get_items(self):
         return []
 
@@ -100,7 +124,7 @@ class MenuSchema(Schema):
     def create(self, children):
         traits = dict(id=self.id, name=self.name, separator=self.separator)
         if self.action:
-            traits['action'] = self.action
+            traits["action"] = self.action
         return self.menu_manager_factory(*children, **traits)
 
 
@@ -109,7 +133,7 @@ class MenuBarSchema(Schema):
     """
 
     # Assign a default ID for menu bar schemas.
-    id = 'MenuBar'
+    id = "MenuBar"
 
     # A factory for instantiating a pyface MenuBarManager.
     menu_bar_manager_factory = Callable(MenuBarManager)
@@ -124,17 +148,17 @@ class ToolBarSchema(Schema):
     """
 
     # Assign a default ID for tool bar schemas.
-    id = 'ToolBar'
+    id = "ToolBar"
 
     # The tool bar's user visible name. Note that this name may not be used on
     # all platforms.
-    name = Unicode('Tool Bar')
+    name = Unicode("Tool Bar")
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))
 
     # The orientation of the toolbar.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # Should we display the horizontal divider?
     show_divider = Bool(True)
@@ -146,10 +170,14 @@ class ToolBarSchema(Schema):
     tool_bar_manager_factory = Callable(ToolBarManager)
 
     def create(self, children):
-        traits = dict(id=self.id, name=self.name, image_size=self.image_size,
-                      orientation=self.orientation,
-                      show_divider=self.show_divider,
-                      show_tool_names=self.show_tool_names)
+        traits = dict(
+            id=self.id,
+            name=self.name,
+            image_size=self.image_size,
+            orientation=self.orientation,
+            show_divider=self.show_divider,
+            show_tool_names=self.show_tool_names,
+        )
         return self.tool_bar_manager_factory(*children, **traits)
 
 

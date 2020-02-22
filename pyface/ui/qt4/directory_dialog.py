@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -28,7 +28,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     """ The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
-
 
     #### 'IDirectoryDialog' interface #########################################
 
@@ -59,7 +58,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         if files:
             self.path = six.text_type(files[0])
         else:
-            self.path = ''
+            self.path = ""
 
         # Let the window close as normal.
         super(DirectoryDialog, self).close()
@@ -81,5 +80,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
             dlg.setLabelText(QtGui.QFileDialog.LookIn, self.message)
 
         return dlg
+
 
 #### EOF ######################################################################

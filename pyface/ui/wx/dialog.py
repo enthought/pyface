@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -32,15 +32,15 @@ from .window import Window
 
 # Map wx dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    wx.ID_OK     : OK,
-    wx.ID_CANCEL : CANCEL,
-    wx.ID_YES    : YES,
-    wx.ID_NO     : NO,
-    wx.ID_CLOSE  : CANCEL,
+    wx.ID_OK: OK,
+    wx.ID_CANCEL: CANCEL,
+    wx.ID_YES: YES,
+    wx.ID_NO: NO,
+    wx.ID_CLOSE: CANCEL,
     # There seems to be a bug in wx.SingleChoiceDialog that allows it to return
     # 0 when it is closed via the window (closing it via the buttons works just
     # fine).
-    0            : CANCEL
+    0: CANCEL,
 }
 
 
@@ -49,7 +49,6 @@ class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
-
 
     #### 'IDialog' interface ##################################################
 
@@ -65,7 +64,7 @@ class Dialog(MDialog, Window):
 
     return_code = Int(OK)
 
-    style = Enum('modal', 'nonmodal')
+    style = Enum("modal", "nonmodal")
 
     #### 'IWindow' interface ##################################################
 
@@ -142,7 +141,7 @@ class Dialog(MDialog, Window):
         return panel
 
     def _show_modal(self):
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             # Calling Show(False) is needed on the Mac for the modal dialog
             # to show up at all.
             self.control.Show(False)
@@ -158,8 +157,9 @@ class Dialog(MDialog, Window):
         if self.resizeable:
             style |= wx.RESIZE_BORDER
 
-        return wx.Dialog(parent, -1, self.title, self.position, self.size,
-                         style)
+        return wx.Dialog(
+            parent, -1, self.title, self.position, self.size, style
+        )
 
     #### wx event handlers ####################################################
 

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for workbench parts. """
 
 
@@ -47,7 +47,7 @@ class IWorkbenchPart(Interface):
     # The workbench window that the part is in.
     #
     # The framework sets this when the part is created.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     #### Methods ##############################################################
 
@@ -79,6 +79,7 @@ class IWorkbenchPart(Interface):
 @provides(IWorkbenchPart)
 class MWorkbenchPart(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
+
     #### 'IWorkbenchPart' interface ###########################################
 
     # The toolkit-specific control that represents the part.
@@ -101,7 +102,7 @@ class MWorkbenchPart(HasTraits):
     # The workbench window that the part is in.
     #
     # The framework sets this when the part is created.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     #### Methods ##############################################################
 
@@ -119,5 +120,6 @@ class MWorkbenchPart(HasTraits):
         """ Set the focus to the appropriate control in the part. """
 
         raise NotImplementedError
+
 
 #### EOF ######################################################################

@@ -14,8 +14,8 @@ class FileBrowserPane(TraitsDockPane):
 
     #### TaskPane interface ###################################################
 
-    id = 'example.file_browser_pane'
-    name = 'File Browser'
+    id = "example.file_browser_pane"
+    name = "File Browser"
 
     #### FileBrowserPane interface ############################################
 
@@ -26,15 +26,18 @@ class FileBrowserPane(TraitsDockPane):
     filters = List(Str)
 
     # The currently selected file.
-    selected_file = File(os.path.expanduser('~'))
+    selected_file = File(os.path.expanduser("~"))
 
     # The view used to construct the dock pane's widget.
-    view = View(Item('selected_file',
-                     editor=FileEditor(dclick_name='activated',
-                                       filter_name='filters'),
-                     style='custom',
-                     show_label=False),
-                resizable=True)
+    view = View(
+        Item(
+            "selected_file",
+            editor=FileEditor(dclick_name="activated", filter_name="filters"),
+            style="custom",
+            show_label=False,
+        ),
+        resizable=True,
+    )
 
 
 class PythonScriptBrowserPane(FileBrowserPane):
@@ -43,12 +46,12 @@ class PythonScriptBrowserPane(FileBrowserPane):
 
     #### TaskPane interface ###################################################
 
-    id = 'example.python_script_browser_pane'
-    name = 'Script Browser'
+    id = "example.python_script_browser_pane"
+    name = "Script Browser"
 
     #### FileBrowserPane interface ############################################
 
-    filters = [ '*.py' ]
+    filters = ["*.py"]
 
 
 class PythonEditorPane(TaskPane):
@@ -57,8 +60,8 @@ class PythonEditorPane(TaskPane):
 
     #### TaskPane interface ###################################################
 
-    id = 'example.python_editor_pane'
-    name = 'Python Editor'
+    id = "example.python_editor_pane"
+    name = "Python Editor"
 
     #### PythonEditorPane interface ###########################################
 

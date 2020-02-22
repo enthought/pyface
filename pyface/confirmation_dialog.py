@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a dialog that prompts the user for confirmation. """
 
 from __future__ import absolute_import
@@ -39,11 +39,11 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
         title = "Confirmation"
 
     dialog = ConfirmationDialog(
-        parent  = parent,
-        message = message,
-        cancel  = cancel,
-        default = default,
-        title   = title
+        parent=parent,
+        message=message,
+        cancel=cancel,
+        default=default,
+        title=title,
     )
 
     return dialog.open()
@@ -51,6 +51,7 @@ def confirm(parent, message, title=None, cancel=False, default=NO):
 
 # Import the toolkit specific version.
 from .toolkit import toolkit_object
-ConfirmationDialog = toolkit_object('confirmation_dialog:ConfirmationDialog')
+
+ConfirmationDialog = toolkit_object("confirmation_dialog:ConfirmationDialog")
 
 #### EOF ######################################################################

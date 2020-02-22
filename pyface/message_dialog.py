@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,15 +10,16 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a dialog that displays a message. """
 
 from __future__ import absolute_import
 
 
 # Convenience functions.
-def information(parent, message, title='Information',
-                detail='', informative=''):
+def information(
+    parent, message, title="Information", detail="", informative=""
+):
     """ Convenience method to show an information message dialog.
 
     Parameters
@@ -37,13 +38,17 @@ def information(parent, message, title='Information',
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title,
-        severity='information', detail=detail, informative=informative
+        parent=parent,
+        message=message,
+        title=title,
+        severity="information",
+        detail=detail,
+        informative=informative,
     )
     dialog.open()
 
 
-def warning(parent, message, title='Warning', detail='', informative=''):
+def warning(parent, message, title="Warning", detail="", informative=""):
     """ Convenience function to show a warning message dialog.
 
     Parameters
@@ -62,13 +67,17 @@ def warning(parent, message, title='Warning', detail='', informative=''):
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title,
-        severity='warning', detail=detail, informative=informative
+        parent=parent,
+        message=message,
+        title=title,
+        severity="warning",
+        detail=detail,
+        informative=informative,
     )
     dialog.open()
 
 
-def error(parent, message, title='Error', detail='', informative=''):
+def error(parent, message, title="Error", detail="", informative=""):
     """ Convenience function to show an error message dialog.
 
     Parameters
@@ -87,14 +96,19 @@ def error(parent, message, title='Error', detail='', informative=''):
 
     """
     dialog = MessageDialog(
-        parent=parent, message=message, title=title, severity='error',
-        detail=detail, informative=informative
+        parent=parent,
+        message=message,
+        title=title,
+        severity="error",
+        detail=detail,
+        informative=informative,
     )
     dialog.open()
 
 
 # Import the toolkit specific version.
 from .toolkit import toolkit_object
-MessageDialog = toolkit_object('message_dialog:MessageDialog')
+
+MessageDialog = toolkit_object("message_dialog:MessageDialog")
 
 #### EOF ######################################################################

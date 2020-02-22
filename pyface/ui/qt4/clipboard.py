@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Evan Patterson
 # Date: 06/26/09
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Standard library imports
 from io import BytesIO
@@ -34,16 +34,16 @@ PYTHON_TYPE = "python/object"
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_has_data(self):
         return self.has_object_data or self.has_text_data or self.has_file_data
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'object_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_object_data(self):
         obj = None
@@ -64,7 +64,7 @@ class Clipboard(BaseClipboard):
         return cb.mimeData().hasFormat(PYTHON_TYPE)
 
     def _get_object_type(self):
-        result = ''
+        result = ""
         mime_data = cb.mimeData()
         if mime_data.hasFormat(PYTHON_TYPE):
             try:
@@ -74,9 +74,9 @@ class Clipboard(BaseClipboard):
                 pass
         return result
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'text_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_text_data(self):
         return cb.text()
@@ -87,9 +87,9 @@ class Clipboard(BaseClipboard):
     def _get_has_text_data(self):
         return cb.mimeData().hasText()
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'file_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_file_data(self):
         mime_data = cb.mimeData()
@@ -105,5 +105,5 @@ class Clipboard(BaseClipboard):
         mime_data.setUrls([QtCore.QUrl(path) for path in data])
         cb.setMimeData(mime_data)
 
-    def _get_has_file_data (self):
+    def _get_has_file_data(self):
         return cb.mimeData().hasUrls()

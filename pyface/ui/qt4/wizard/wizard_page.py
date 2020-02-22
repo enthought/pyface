@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2008, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A page in a wizard. """
 
 
@@ -27,7 +27,6 @@ class WizardPage(MWizardPage, HasTraits):
     See the IWizardPage interface for the API documentation.
 
     """
-
 
     #### 'IWizardPage' interface ##############################################
 
@@ -96,7 +95,7 @@ class WizardPage(MWizardPage, HasTraits):
         control = QtGui.QWidget(parent)
 
         palette = control.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('yellow'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("yellow"))
         control.setPalette(palette)
         control.setAutoFillBackground(True)
 
@@ -114,7 +113,7 @@ class _WizardPage(QtGui.QWizardPage):
 
         self.pyface_wizard = None
 
-        page.on_trait_change(self._on_complete_changed, 'complete')
+        page.on_trait_change(self._on_complete_changed, "complete")
         self._page = page
 
     def initializePage(self):
@@ -138,5 +137,6 @@ class _WizardPage(QtGui.QWizardPage):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
+
 
 #### EOF ######################################################################

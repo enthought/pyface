@@ -8,15 +8,15 @@ from ..python_editor import PythonEditor
 from ..toolkit import toolkit_object
 from ..window import Window
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 PYTHON_SCRIPT = os.path.join(
-    os.path.dirname(__file__), 'python_shell_script.py'
+    os.path.dirname(__file__), "python_shell_script.py"
 )
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -62,7 +62,7 @@ class TestPythonEditor(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.widget = PythonEditor(self.window.control)
 
-        with self.assertTraitChanges(self.widget, 'changed', count=1):
+        with self.assertTraitChanges(self.widget, "changed", count=1):
             with self.event_loop():
                 self.widget.path = PYTHON_SCRIPT
         self.assertFalse(self.widget.dirty)

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,10 +10,10 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The text field widget. """
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
-TextField = toolkit_object('fields.text_field:TextField')
+TextField = toolkit_object("fields.text_field:TextField")

@@ -8,9 +8,11 @@ class CompletionLexer(object):
     """
 
     # Maps Lexer names to a list of possible name separators
-    separator_map = { 'C' : [ '.', '->' ],
-                      'C++' : [ '.', '->', '::' ],
-                      'Python' : [ '.' ] }
+    separator_map = {
+        "C": [".", "->"],
+        "C++": [".", "->", "::"],
+        "Python": ["."],
+    }
 
     def __init__(self, lexer):
         """ Create a CompletionLexer using the specified Pygments lexer.
@@ -27,11 +29,14 @@ class CompletionLexer(object):
 
         # Pygments often tacks on a newline when none is specified in the input.
         # Remove this newline.
-        if reversed_tokens and reversed_tokens[0][1].endswith('\n') and \
-                not string.endswith('\n'):
+        if (
+            reversed_tokens
+            and reversed_tokens[0][1].endswith("\n")
+            and not string.endswith("\n")
+        ):
             reversed_tokens.pop(0)
-        
-        current_op = ''
+
+        current_op = ""
         for token, text in reversed_tokens:
 
             if is_token_subtype(token, Token.Name):
@@ -39,14 +44,14 @@ class CompletionLexer(object):
                 # Handle a trailing separator, e.g 'foo.bar.'
                 if current_op in self._name_separators:
                     if not context:
-                        context.insert(0, '')
+                        context.insert(0, "")
 
                 # Handle non-separator operators and punction.
                 elif current_op:
                     break
 
                 context.insert(0, text)
-                current_op = ''
+                current_op = ""
 
             # Pygments doesn't understand that, e.g., '->' is a single operator
             # in C++. This is why we have to build up an operator from
@@ -66,9 +71,8 @@ class CompletionLexer(object):
     def set_lexer(self, lexer, name_separators=None):
         self._lexer = lexer
         if name_separators is None:
-            self._name_separators = self.separator_map.get(lexer.name, ['.'])
+            self._name_separators = self.separator_map.get(lexer.name, ["."])
         else:
             self._name_separators = list(name_separators)
 
     lexer = property(get_lexer, set_lexer)
-    

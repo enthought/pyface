@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2006, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,10 +10,11 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Enthought library imports
 from traits.api import Any, HasTraits
+
 
 class GridCellRenderer(HasTraits):
 
@@ -43,5 +44,6 @@ class GridCellRenderer(HasTraits):
     # Clean-up!
     def dispose(self):
         pass
+
 
 #### EOF ######################################################################

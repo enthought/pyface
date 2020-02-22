@@ -23,7 +23,7 @@ class IPerspectiveItem(Interface):
     # If the position is specified as 'with' you must specify a 'relative_to'
     # item other than the editor area (i.e., you cannot position a view 'with'
     # the editor area).
-    position = Enum('left', 'top', 'bottom', 'right', 'with')
+    position = Enum("left", "top", "bottom", "right", "with")
 
     # The Id of the view to position relative to. If this is not specified
     # (or if no view exists with this Id) then the view will be placed relative
@@ -47,6 +47,7 @@ class IPerspectiveItem(Interface):
     height = Float(-1)
 
     # The style of the dock window.
-    style_hint = Enum('tab', 'horizontal', 'vertical', 'fixed')
+    style_hint = Enum("tab", "horizontal", "vertical", "fixed")
+
 
 #### EOF ######################################################################

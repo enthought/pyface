@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ An MDI top-level application window. """
 from __future__ import absolute_import
 
@@ -25,8 +25,9 @@ from .application_window import ApplicationWindow
 from .image_resource import ImageResource
 
 try:
-    #import wx.aui
+    # import wx.aui
     from wx.lib.agw import aui
+
     AUI = True
 except:
     AUI = False
@@ -46,7 +47,7 @@ class MDIApplicationWindow(ApplicationWindow):
     #### 'MDIApplicationWindow' interface #####################################
 
     # The workarea background image.
-    background_image = Instance(ImageResource, ImageResource('background'))
+    background_image = Instance(ImageResource, ImageResource("background"))
 
     # Should we tile the workarea  background image?  The alternative is to
     # scale it.  Be warned that scaling the image allows for 'pretty' images,
@@ -114,8 +115,12 @@ class MDIApplicationWindow(ApplicationWindow):
         """ Create the toolkit-specific control that represents the window. """
 
         control = wx.MDIParentFrame(
-            parent, -1, self.title, style=wx.DEFAULT_FRAME_STYLE,
-            size=self.size, pos=self.position
+            parent,
+            -1,
+            self.title,
+            style=wx.DEFAULT_FRAME_STYLE,
+            size=self.size,
+            pos=self.position,
         )
 
         return control
@@ -123,7 +128,6 @@ class MDIApplicationWindow(ApplicationWindow):
     ###########################################################################
     # Private interface.
     ###########################################################################
-
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
@@ -147,7 +151,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
         # Scale the image (if necessary).
         image = self._image
-        if image.GetWidth() != width or image.GetHeight()!= height:
+        if image.GetWidth() != width or image.GetHeight() != height:
             image = self._image.Copy()
             image.Rescale(width, height)
 

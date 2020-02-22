@@ -15,16 +15,16 @@ class SetActivePerspectiveAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # Is the action enabled?
-    enabled = Delegate('perspective')
+    enabled = Delegate("perspective")
 
     # The action's unique identifier (may be None).
-    id = Delegate('perspective')
+    id = Delegate("perspective")
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = Delegate('perspective')
+    name = Delegate("perspective")
 
     # The action's style.
-    style = 'radio'
+    style = "radio"
 
     #### 'SetActivePerspectiveAction' interface ###############################
 
@@ -53,15 +53,18 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # Private interface.
     ###########################################################################
 
-    @on_trait_change('perspective,window.active_perspective')
+    @on_trait_change("perspective,window.active_perspective")
     def _refresh_checked(self):
         """ Refresh the checked state of the action. """
 
-        self.checked = self.perspective is not None \
-          and self.window is not None \
-          and self.window.active_perspective is not None \
-          and self.perspective.id is self.window.active_perspective.id
+        self.checked = (
+            self.perspective is not None
+            and self.window is not None
+            and self.window.active_perspective is not None
+            and self.perspective.id is self.window.active_perspective.id
+        )
 
         return
+
 
 #### EOF ######################################################################

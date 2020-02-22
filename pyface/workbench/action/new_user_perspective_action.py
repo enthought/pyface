@@ -1,11 +1,11 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #  Copyright (c) 2005-2006 by Enthought, Inc.
 #  All rights reserved.
 #
 #  Author: David C. Morrill <dmorrill@enthought.com>
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """ An action that creates a new (and empty) user perspective. """
 
 
@@ -20,10 +20,10 @@ class NewUserPerspectiveAction(WorkbenchAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier.
-    id = 'pyface.workbench.action.new_user_perspective_action'
+    id = "pyface.workbench.action.new_user_perspective_action"
 
     # The action's name.
-    name = 'New Perspective...'
+    name = "New Perspective..."
 
     ###########################################################################
     # 'Action' interface.
@@ -32,12 +32,12 @@ class NewUserPerspectiveAction(WorkbenchAction):
     def perform(self, event):
         """ Peform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the details of the new perspective.
-        upn = UserPerspectiveName(name='User Perspective %d' % manager.next_id)
-        if upn.edit_traits(view='new_view').result:
+        upn = UserPerspectiveName(name="User Perspective %d" % manager.next_id)
+        if upn.edit_traits(view="new_view").result:
             # Create a new (and empty) user perspective.
             perspective = manager.create_perspective(
                 upn.name.strip(), upn.show_editor_area
@@ -50,5 +50,6 @@ class NewUserPerspectiveAction(WorkbenchAction):
             window.active_perspective = perspective
 
         return
+
 
 #### EOF #####################################################################

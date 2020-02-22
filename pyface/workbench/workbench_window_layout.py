@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a workbench window layout. """
 
 
@@ -18,7 +18,7 @@
 from pyface.toolkit import toolkit_object
 
 WorkbenchWindowLayout = toolkit_object(
-    'workbench.workbench_window_layout:WorkbenchWindowLayout'
+    "workbench.workbench_window_layout:WorkbenchWindowLayout"
 )
 
 ### EOF #######################################################################

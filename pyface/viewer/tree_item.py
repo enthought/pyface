@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A generic base-class for items in a tree data structure.
 
 An example:-
@@ -45,7 +45,7 @@ class TreeItem(HasTraits):
     allows_children = Bool(True)
 
     # The item's children.
-    children = List(Instance('TreeItem'))
+    children = List(Instance("TreeItem"))
 
     # Arbitrary data associated with the item.
     data = Any
@@ -54,7 +54,7 @@ class TreeItem(HasTraits):
     has_children = Property(Bool)
 
     # The item's parent.
-    parent = Instance('TreeItem')
+    parent = Instance("TreeItem")
 
     ###########################################################################
     # 'object' interface.
@@ -64,7 +64,7 @@ class TreeItem(HasTraits):
         """ Returns the informal string representation of the object. """
 
         if self.data is None:
-            s = ''
+            s = ""
 
         else:
             s = str(self.data)
@@ -142,5 +142,6 @@ class TreeItem(HasTraits):
         self.insert(index + 1, child)
 
         return (index, child)
+
 
 #### EOF ######################################################################

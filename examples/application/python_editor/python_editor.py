@@ -22,10 +22,21 @@ from io import open
 
 from pyface.tasks.api import TraitsEditor
 from traits.api import (
-    Bool, File, HasStrictTraits, Int, Property, Unicode, cached_property
+    Bool,
+    File,
+    HasStrictTraits,
+    Int,
+    Property,
+    Unicode,
+    cached_property,
 )
 from traitsui.api import (
-    CodeEditor, Item, OKCancelButtons, RangeEditor, UndoHistory, View
+    CodeEditor,
+    Item,
+    OKCancelButtons,
+    RangeEditor,
+    UndoHistory,
+    View,
 )
 
 
@@ -41,8 +52,8 @@ class LineNumberDialog(HasStrictTraits):
     traits_view = View(
         Item(
             "line",
-            label=u'Line Number:',
-            editor=RangeEditor(low=1, high_name='max_line', mode='spinner'),
+            label=u"Line Number:",
+            editor=RangeEditor(low=1, high_name="max_line", mode="spinner"),
         ),
         buttons=OKCancelButtons,
     )
@@ -55,10 +66,10 @@ class PythonEditor(TraitsEditor):
     code = Unicode
 
     #: Whether or not undo operation is possible.
-    can_undo = Property(Bool, depends_on='ui.history.undoable')
+    can_undo = Property(Bool, depends_on="ui.history.undoable")
 
     #: Whether or not redo operation is possible.
-    can_redo = Property(Bool, depends_on='ui.history.redoable')
+    can_redo = Property(Bool, depends_on="ui.history.redoable")
 
     #: The current cursor line.
     line = Int(1)
@@ -70,7 +81,7 @@ class PythonEditor(TraitsEditor):
     selection = Unicode
 
     #: The length of the currently selected text.
-    selection_length = Property(Int, depends_on='selection')
+    selection_length = Property(Int, depends_on="selection")
 
     #: The start of the currently selected text, if any.
     selection_start = Int
@@ -87,12 +98,12 @@ class PythonEditor(TraitsEditor):
     obj = File
 
     #: The editor's user-visible name.
-    name = Property(Unicode, depends_on='obj')
+    name = Property(Unicode, depends_on="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Unicode, depends_on='obj')
+    tooltip = Property(Unicode, depends_on="obj")
 
-    dirty = Property(Bool, depends_on=['obj', '_last_save', 'ui.history.now'])
+    dirty = Property(Bool, depends_on=["obj", "_last_save", "ui.history.now"])
 
     # -------------------------------------------------------------------------
     # PythonTextEditor interface
@@ -154,7 +165,7 @@ class PythonEditor(TraitsEditor):
         """ Ask the use for a line number and jump to that line. """
         max_line = len(self.code.splitlines()) + 1
         dialog = LineNumberDialog(max_line=max_line, line=self.line)
-        ui = dialog.edit_traits(kind='livemodal')
+        ui = dialog.edit_traits(kind="livemodal")
         if ui.result:
             self.column = 1
             self.line = dialog.line
@@ -186,7 +197,7 @@ class PythonEditor(TraitsEditor):
         This is True if there is no file path, or history is not at last
         save point.
         """
-        return self.obj == '' or self._last_save != self.ui.history.now
+        return self.obj == "" or self._last_save != self.ui.history.now
 
     def _get_can_undo(self):
         """ Whether or not undo operations can be performed.
@@ -230,14 +241,14 @@ class PythonEditor(TraitsEditor):
 
     traits_view = View(
         Item(
-            'code',
+            "code",
             show_label=False,
             editor=CodeEditor(
-                selected_text='selection',
-                selected_start_pos='selection_start',
-                selected_end_pos='selection_end',
-                line='line',
-                column='column',
-            )
-        ),
+                selected_text="selection",
+                selected_start_pos="selection_start",
+                selected_end_pos="selection_end",
+                line="line",
+                column="column",
+            ),
+        )
     )

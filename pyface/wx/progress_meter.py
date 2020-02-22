@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,11 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 import wx
 
-class ProgressDialog(wx.ProgressDialog):
 
+class ProgressDialog(wx.ProgressDialog):
     def __init__(self, *args, **kwds):
 
         wx.ProgressDialog.__init__(self, *args, **kwds)

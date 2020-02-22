@@ -12,6 +12,7 @@ import gc
 import threading
 
 import six
+
 if six.PY2:
     import mock
 else:
@@ -20,8 +21,9 @@ else:
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
 from traits.testing.unittest_tools import UnittestTools
-from traits.testing.unittest_tools import _TraitsChangeCollector as \
-    TraitsChangeCollector
+from traits.testing.unittest_tools import (
+    _TraitsChangeCollector as TraitsChangeCollector,
+)
 
 from .testing import find_qt_widget, print_qt_widget_tree
 from .event_loop_helper import EventLoopHelper, ConditionTimeoutError
@@ -38,8 +40,7 @@ class GuiTestAssistant(UnittestTools):
         self.qt_app = qt_app
         self.gui = GUI()
         self.event_loop_helper = EventLoopHelper(
-            qt_app=self.qt_app,
-            gui=self.gui
+            qt_app=self.qt_app, gui=self.gui
         )
         try:
             import traitsui.api
@@ -47,15 +48,17 @@ class GuiTestAssistant(UnittestTools):
             self.traitsui_raise_patch = None
         else:
             self.traitsui_raise_patch = mock.patch(
-                'traitsui.qt4.ui_base._StickyDialog.raise_')
+                "traitsui.qt4.ui_base._StickyDialog.raise_"
+            )
             self.traitsui_raise_patch.start()
 
         def new_activate(self):
             self.control.activateWindow()
 
         self.pyface_raise_patch = mock.patch(
-            'pyface.ui.qt4.window.Window.activate',
-            new_callable=lambda: new_activate)
+            "pyface.ui.qt4.window.Window.activate",
+            new_callable=lambda: new_activate,
+        )
         self.pyface_raise_patch.start()
 
     def tearDown(self):
@@ -121,8 +124,9 @@ class GuiTestAssistant(UnittestTools):
             with self.event_loop_helper.delete_widget(widget, timeout=timeout):
                 yield
         except ConditionTimeoutError:
-            self.fail('Could not destroy widget before timeout: {!r}'.format(
-                widget))
+            self.fail(
+                "Could not destroy widget before timeout: {!r}".format(widget)
+            )
 
     @contextlib.contextmanager
     def event_loop_until_condition(self, condition, timeout=10.0):
@@ -144,9 +148,10 @@ class GuiTestAssistant(UnittestTools):
         try:
             yield
             self.event_loop_helper.event_loop_until_condition(
-                condition, timeout=timeout)
+                condition, timeout=timeout
+            )
         except ConditionTimeoutError:
-            self.fail('Timed out waiting for condition')
+            self.fail("Timed out waiting for condition")
 
     def assertEventuallyTrueInGui(self, condition, timeout=10.0):
         """
@@ -172,13 +177,15 @@ class GuiTestAssistant(UnittestTools):
         """
         try:
             self.event_loop_helper.event_loop_until_condition(
-                condition, timeout=timeout)
+                condition, timeout=timeout
+            )
         except ConditionTimeoutError:
             self.fail("Timed out waiting for condition to become true.")
 
     @contextlib.contextmanager
-    def assertTraitChangesInEventLoop(self, obj, trait, condition, count=1,
-                                      timeout=10.0):
+    def assertTraitChangesInEventLoop(
+        self, obj, trait, condition, count=1, timeout=10.0
+    ):
         """Runs the real Qt event loop, collecting trait change events until
         the provided condition evaluates to True.
 
@@ -206,14 +213,18 @@ class GuiTestAssistant(UnittestTools):
             try:
                 yield collector
                 self.event_loop_helper.event_loop_until_condition(
-                    condition_, timeout=timeout)
+                    condition_, timeout=timeout
+                )
             except ConditionTimeoutError:
                 actual_event_count = collector.event_count
-                msg = ("Expected {} event on {} to be fired at least {} "
-                       "times, but the event was only fired {} times "
-                       "before timeout ({} seconds).")
+                msg = (
+                    "Expected {} event on {} to be fired at least {} "
+                    "times, but the event was only fired {} times "
+                    "before timeout ({} seconds)."
+                )
                 msg = msg.format(
-                    trait, obj, count, actual_event_count, timeout)
+                    trait, obj, count, actual_event_count, timeout
+                )
                 self.fail(msg)
         finally:
             collector.stop_collecting()
@@ -233,7 +244,7 @@ class GuiTestAssistant(UnittestTools):
             Number of seconds to run the event loop in the case that the trait
             change does not occur. Default value is 10.0.
         """
-        timeout = kw.pop('timeout', 10.0)
+        timeout = kw.pop("timeout", 10.0)
         condition = threading.Event()
 
         traits = set(traits)
@@ -251,6 +262,7 @@ class GuiTestAssistant(UnittestTools):
         def make_handler(trait):
             def handler():
                 set_event(trait)
+
             return handler
 
         handlers = {trait: make_handler(trait) for trait in traits}
@@ -259,7 +271,8 @@ class GuiTestAssistant(UnittestTools):
             traits_object.on_trait_change(handler, trait)
         try:
             with self.event_loop_until_condition(
-                    condition=condition.is_set, timeout=timeout):
+                condition=condition.is_set, timeout=timeout
+            ):
                 yield
         finally:
             for trait, handler in handlers.items():
@@ -284,7 +297,8 @@ class GuiTestAssistant(UnittestTools):
         """
         yield
         self.event_loop_helper.event_loop_with_timeout(
-            repeat=repeat, timeout=timeout)
+            repeat=repeat, timeout=timeout
+        )
 
     def find_qt_widget(self, start, type_, test=None):
         """Recursively walks the Qt widget tree from Qt widget `start` until it

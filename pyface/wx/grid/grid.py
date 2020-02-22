@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A grid (spreadsheet) widget. """
 
 
@@ -60,7 +60,7 @@ class Grid(wxGrid):
         #
         # fixme: We should create a default model if one is not supplied.
         self.SetTable(model._grid_table_base, True)
-        model.on_trait_change(self._on_model_changed, 'model_changed')
+        model.on_trait_change(self._on_model_changed, "model_changed")
 
         self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self._on_cell_change)
         self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)
@@ -70,7 +70,7 @@ class Grid(wxGrid):
         self.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self._on_cell_left_dclick)
 
         # This pops up a context menu.
-        #wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self, self._on_cell_right_click)
+        # wx.grid.EVT_GRID_CELL_RIGHT_CLICK(self, self._on_cell_right_click)
 
         # We handle key presses to change the behavior of the <Enter> and
         # <Tab> keys to make manual data entry smoother.
@@ -105,7 +105,7 @@ class Grid(wxGrid):
                     attr = wx.grid.GridCellAttr()
                     attr.SetReadOnly()
                     attr.SetRenderer(None)
-                    attr.SetBackgroundColour('linen')
+                    attr.SetBackgroundColour("linen")
                     self.SetRowAttr(index, attr)
 
         return
@@ -122,7 +122,7 @@ class Grid(wxGrid):
                     attr = wx.grid.GridCellAttr()
                     attr.SetReadOnly()
                     attr.SetRenderer(None)
-                    attr.SetBackgroundColour('linen')
+                    attr.SetBackgroundColour("linen")
                     self.SetColAttr(index, attr)
 
         return
@@ -252,38 +252,47 @@ class Grid(wxGrid):
     ###########################################################################
 
     def Reset(self):
-        print('Reset')
-        #attr = grid.GridCellAttr()
-        #renderer = MyRenderer()
-        #attr.SetRenderer(renderer)
+        print("Reset")
+        # attr = grid.GridCellAttr()
+        # renderer = MyRenderer()
+        # attr.SetRenderer(renderer)
 
-        #self.SetColSize(0, 50)
-        #self.SetColAttr(0, attr)
+        # self.SetColSize(0, 50)
+        # self.SetColAttr(0, attr)
 
         self.ForceRefresh()
 
         return
-
 
     def ResetView(self, grid):
         """
         (wxGrid) -> Reset the grid view.   Call this to
         update the grid if rows and columns have been added or deleted
         """
-        print('*************************VirtualModel.reset_view')
+        print("*************************VirtualModel.reset_view")
 
         grid = self
 
         grid.BeginBatch()
         for current, new, delmsg, addmsg in [
-            (self._rows, self.GetNumberRows(), GRIDTABLE_NOTIFY_ROWS_DELETED, GRIDTABLE_NOTIFY_ROWS_APPENDED),
-            (self._cols, self.GetNumberCols(), GRIDTABLE_NOTIFY_COLS_DELETED, GRIDTABLE_NOTIFY_COLS_APPENDED),
+            (
+                self._rows,
+                self.GetNumberRows(),
+                GRIDTABLE_NOTIFY_ROWS_DELETED,
+                GRIDTABLE_NOTIFY_ROWS_APPENDED,
+            ),
+            (
+                self._cols,
+                self.GetNumberCols(),
+                GRIDTABLE_NOTIFY_COLS_DELETED,
+                GRIDTABLE_NOTIFY_COLS_APPENDED,
+            ),
         ]:
             if new < current:
-                msg = GridTableMessage(self,delmsg,new,current-new)
+                msg = GridTableMessage(self, delmsg, new, current - new)
                 grid.ProcessTableMessage(msg)
             elif new > current:
-                msg = GridTableMessage(self,addmsg,new-current)
+                msg = GridTableMessage(self, addmsg, new - current)
                 grid.ProcessTableMessage(msg)
                 self.UpdateValues(grid)
         grid.EndBatch()
@@ -300,8 +309,6 @@ class Grid(wxGrid):
         grid.ForceRefresh()
 
         return
-
-
 
     ###########################################################################
     # Protected interface.
@@ -350,5 +357,6 @@ class Grid(wxGrid):
                 self.MakeCellVisible(newRow, self.GetNumberCols() - 1)
 
         return
+
 
 #### EOF ######################################################################

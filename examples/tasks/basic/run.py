@@ -32,6 +32,7 @@ def main(argv):
     gui.start_event_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     main(sys.argv)

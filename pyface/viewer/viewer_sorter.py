@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for all viewer sorters. """
 
 
@@ -71,9 +71,9 @@ class ViewerSorter(HasTraits):
             #
             # fixme: This is a hack until we decide whethwe we like the
             # JFace(ish) or Swing(ish) models!
-            if hasattr(viewer, 'label_provider'):
-              label_a = viewer.label_provider.get_text(viewer, element_a)
-              label_b = viewer.label_provider.get_text(viewer, element_b)
+            if hasattr(viewer, "label_provider"):
+                label_a = viewer.label_provider.get_text(viewer, element_a)
+                label_b = viewer.label_provider.get_text(viewer, element_b)
 
             else:
                 label_a = viewer.node_model.get_text(viewer, element_a)
@@ -114,5 +114,6 @@ class ViewerSorter(HasTraits):
         """
 
         return False
+
 
 #### EOF ######################################################################

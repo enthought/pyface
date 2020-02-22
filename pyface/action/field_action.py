@@ -48,7 +48,7 @@ class FieldAction(Action):
         """
         field = self.field_type(parent=parent, **self.field_defaults)
         field._create()
-        field.on_trait_change(self.value_updated, 'value')
+        field.on_trait_change(self.value_updated, "value")
         field.control._field = field
         return field.control
 

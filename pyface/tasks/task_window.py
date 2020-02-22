@@ -4,11 +4,23 @@ import logging
 # Enthought library imports.
 from pyface.action.api import MenuBarManager, StatusBarManager, ToolBarManager
 from pyface.api import ApplicationWindow
-from traits.api import Bool, Callable, HasTraits, HasStrictTraits, Instance, \
-    List, Property, Unicode, Vetoable, on_trait_change
+from traits.api import (
+    Bool,
+    Callable,
+    HasTraits,
+    HasStrictTraits,
+    Instance,
+    List,
+    Property,
+    Unicode,
+    Vetoable,
+    on_trait_change,
+)
 
 # Local imports.
-from pyface.tasks.action.task_action_manager_builder import TaskActionManagerBuilder
+from pyface.tasks.action.task_action_manager_builder import (
+    TaskActionManagerBuilder,
+)
 from pyface.tasks.i_dock_pane import IDockPane
 from pyface.tasks.i_task_pane import ITaskPane
 from pyface.tasks.task import Task, TaskLayout
@@ -30,7 +42,7 @@ class TaskWindow(ApplicationWindow):
     #### IWindow interface ####################################################
 
     # Unless a title is specifically assigned, delegate to the active task.
-    title = Property(Unicode, depends_on=['active_task.name', '_title'])
+    title = Property(Unicode, depends_on=["active_task.name", "_title"])
 
     #### TaskWindow interface ################################################
 
@@ -59,8 +71,8 @@ class TaskWindow(ApplicationWindow):
 
     #### Protected traits #####################################################
 
-    _active_state = Instance('pyface.tasks.task_window.TaskState')
-    _states = List(Instance('pyface.tasks.task_window.TaskState'))
+    _active_state = Instance("pyface.tasks.task_window.TaskState")
+    _states = List(Instance("pyface.tasks.task_window.TaskState"))
     _title = Unicode
     _window_backend = Instance(TaskWindowBackend)
 
@@ -360,13 +372,15 @@ class TaskWindow(ApplicationWindow):
         if self._active_state:
             layout = self.get_layout()
             panes.append(self.central_pane)
-            for area in ('top', 'right', 'bottom', 'left'):
+            for area in ("top", "right", "bottom", "left"):
                 item = getattr(layout, area)
                 if item:
-                    panes.extend([
-                        self.get_dock_pane(pane_item.id)
-                        for pane_item in item.iterleaves()
-                    ])
+                    panes.extend(
+                        [
+                            self.get_dock_pane(pane_item.id)
+                            for pane_item in item.iterleaves()
+                        ]
+                    )
         return panes
 
     def _get_state(self, id_or_task):
@@ -409,12 +423,12 @@ class TaskWindow(ApplicationWindow):
             self.status_bar_manager = state.status_bar_manager
             self.tool_bar_managers = state.tool_bar_managers
 
-    @on_trait_change('central_pane.has_focus, dock_panes.has_focus')
+    @on_trait_change("central_pane.has_focus, dock_panes.has_focus")
     def _focus_updated(self, obj, name, old, new):
-        if name == 'has_focus' and new:
+        if name == "has_focus" and new:
             self.active_pane = obj
 
-    @on_trait_change('_states[]')
+    @on_trait_change("_states[]")
     def _states_updated(self):
         self.tasks = [state.task for state in self._states]
 

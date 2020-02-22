@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2008, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of an IPython shell. """
 
 from __future__ import absolute_import
@@ -19,11 +19,14 @@ from __future__ import absolute_import
 try:
     import IPython.frontend
 except ImportError:
-    raise ImportError('''
+    raise ImportError(
+        """
 ________________________________________________________________________________
 Could not load the Wx frontend for ipython.
-You need to have ipython >= 0.9 installed to use the ipython widget.''')
+You need to have ipython >= 0.9 installed to use the ipython widget."""
+    )
 
 
 from .toolkit import toolkit_object
-IPythonWidget= toolkit_object('ipython_widget:IPythonWidget')
+
+IPythonWidget = toolkit_object("ipython_widget:IPythonWidget")

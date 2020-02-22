@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005-2020, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -34,7 +34,7 @@ from pyface.image_resource import ImageResource
 from .dialog import Dialog
 
 
-_DIALOG_TEXT = '''
+_DIALOG_TEXT = """
 <html>
   <body>
     <center>
@@ -69,7 +69,7 @@ _DIALOG_TEXT = '''
   </center>
   </body>
 </html>
-'''
+"""
 
 
 @provides(IAboutDialog)
@@ -78,14 +78,13 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-
     #### 'IAboutDialog' interface #############################################
 
     additions = List(Unicode)
 
     copyrights = List(Unicode)
 
-    image = Instance(ImageResource, ImageResource('about'))
+    image = Instance(ImageResource, ImageResource("about"))
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -115,7 +114,8 @@ class AboutDialog(MAboutDialog, Dialog):
 
         # Make the 'OK' button the default button.
         ok_button = parent.FindWindowById(
-            wx.ID_OK)  #html.Window.FindWindowById(wx.ID_OK)
+            wx.ID_OK
+        )  # html.Window.FindWindowById(wx.ID_OK)
         ok_button.SetDefault()
 
         # Set the height of the HTML window to match the height of the content.
@@ -134,15 +134,16 @@ class AboutDialog(MAboutDialog, Dialog):
         path = self.image.absolute_path
 
         # The additional strings.
-        additions = '<br />'.join(self.additions)
+        additions = "<br />".join(self.additions)
 
         # Get the version numbers.
-        py_version = sys.version[0:sys.version.find("(")]
+        py_version = sys.version[0 : sys.version.find("(")]
         wx_version = wx.VERSION_STRING
 
         # The additional copyright strings.
-        copyrights = "<br />".join(["Copyright &copy; %s" % line
-                                    for line in self.copyrights])
+        copyrights = "<br />".join(
+            ["Copyright &copy; %s" % line for line in self.copyrights]
+        )
 
         # Get the text of the OK button.
         if self.ok_label is None:
@@ -150,7 +151,14 @@ class AboutDialog(MAboutDialog, Dialog):
         else:
             ok = self.ok_label
 
-        return _DIALOG_TEXT % (path, additions, py_version, wx_version,
-                               copyrights, ok)
+        return _DIALOG_TEXT % (
+            path,
+            additions,
+            py_version,
+            wx_version,
+            copyrights,
+            ok,
+        )
+
 
 ### EOF #######################################################################

@@ -4,13 +4,34 @@ Create and delete editors in the main notebook area.  Also adds menu and toolbar
 support
 """
 # Enthought library imports.
-from pyface.api import GUI, ConfirmationDialog, FileDialog, \
-    ImageResource, YES, OK, CANCEL
-from pyface.tasks.api import Task, TaskWindow, TaskLayout, PaneItem, IEditor, \
-    IEditorAreaPane, EditorAreaPane, Editor
-from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
-    SMenu, SToolBar, TaskAction
+from pyface.api import (
+    GUI,
+    ConfirmationDialog,
+    FileDialog,
+    ImageResource,
+    YES,
+    OK,
+    CANCEL,
+)
+from pyface.tasks.api import (
+    Task,
+    TaskWindow,
+    TaskLayout,
+    PaneItem,
+    IEditor,
+    IEditorAreaPane,
+    EditorAreaPane,
+    Editor,
+)
+from pyface.tasks.action.api import (
+    DockPaneToggleGroup,
+    SMenuBar,
+    SMenu,
+    SToolBar,
+    TaskAction,
+)
 from traits.api import on_trait_change, Property, Instance
+
 
 class ExampleTask(Task):
     """ A simple task for opening a blank editor.
@@ -18,24 +39,34 @@ class ExampleTask(Task):
 
     #### Task interface #######################################################
 
-    id = 'example.example_task'
-    name = 'Multi-Tab Editor'
+    id = "example.example_task"
+    name = "Multi-Tab Editor"
 
-    active_editor = Property(Instance(IEditor),
-                             depends_on='editor_area.active_editor')
+    active_editor = Property(
+        Instance(IEditor), depends_on="editor_area.active_editor"
+    )
 
     editor_area = Instance(IEditorAreaPane)
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='New', method='new',
-                                         accelerator='Ctrl+N'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(name="New", method="new", accelerator="Ctrl+N"),
+            id="File",
+            name="&File",
+        ),
+        SMenu(DockPaneToggleGroup(), id="View", name="&View"),
+    )
 
-    tool_bars = [ SToolBar(TaskAction(method='new',
-                                      tooltip='New file',
-                                      image=ImageResource('document_new')),
-                           image_size = (32, 32)), ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method="new",
+                tooltip="New file",
+                image=ImageResource("document_new"),
+            ),
+            image_size=(32, 32),
+        )
+    ]
 
     ###########################################################################
     # 'Task' interface.
@@ -66,6 +97,7 @@ class ExampleTask(Task):
             return self.editor_area.active_editor
         return None
 
+
 def main(argv):
     """ A simple example of using Tasks.
     """
@@ -84,6 +116,7 @@ def main(argv):
     gui.start_event_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     main(sys.argv)

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2010, Enthought Inc
 # All rights reserved.
 #
@@ -7,7 +7,7 @@
 #
 # Author: Enthought Inc
 # Description: <Enthought pyface code editor>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Standard library imports
 import math
@@ -33,8 +33,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
     ###########################################################################
     focus_lost = QtCore.Signal()
 
-    def __init__(self, parent, should_highlight_current_line=True, font=None,
-                 lexer=None):
+    def __init__(
+        self, parent, should_highlight_current_line=True, font=None, lexer=None
+    ):
         super(CodeWidget, self).__init__(parent)
 
         self.highlighter = PygmentsHighlighter(self.document(), lexer)
@@ -44,15 +45,15 @@ class CodeWidget(QtGui.QPlainTextEdit):
         if font is None:
             # Set a decent fixed width font for this platform.
             font = QtGui.QFont()
-            if sys.platform == 'win32':
+            if sys.platform == "win32":
                 # Prefer Consolas, but fall back to Courier if necessary.
-                font.setFamily('Consolas')
+                font.setFamily("Consolas")
                 if not font.exactMatch():
-                    font.setFamily('Courier')
-            elif sys.platform == 'darwin':
-                font.setFamily('Monaco')
+                    font.setFamily("Courier")
+            elif sys.platform == "darwin":
+                font.setFamily("Monaco")
             else:
-                font.setFamily('Monospace')
+                font.setFamily("Monospace")
             font.setStyleHint(QtGui.QFont.TypeWriter)
         self.set_font(font)
 
@@ -70,8 +71,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
         self.tabs_as_spaces = True
         self.tab_width = 4
 
-        self.indent_character = ':'
-        self.comment_character = '#'
+        self.indent_character = ":"
+        self.comment_character = "#"
 
         # Set up gutter widget and current line highlighting
         self.blockCountChanged.connect(self.update_line_number_width)
@@ -86,8 +87,12 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         # Key bindings
         self.indent_key = QtGui.QKeySequence(QtCore.Qt.Key_Tab)
-        self.unindent_key = QtGui.QKeySequence(QtCore.Qt.SHIFT + QtCore.Qt.Key_Backtab)
-        self.comment_key = QtGui.QKeySequence(QtCore.Qt.CTRL + QtCore.Qt.Key_Slash)
+        self.unindent_key = QtGui.QKeySequence(
+            QtCore.Qt.SHIFT + QtCore.Qt.Key_Backtab
+        )
+        self.comment_key = QtGui.QKeySequence(
+            QtCore.Qt.CTRL + QtCore.Qt.Key_Slash
+        )
         self.backspace_key = QtGui.QKeySequence(QtCore.Qt.Key_Backspace)
 
     def lines(self):
@@ -153,7 +158,8 @@ class CodeWidget(QtGui.QPlainTextEdit):
         if dy:
             self.line_number_widget.scroll(0, dy)
         self.line_number_widget.update(
-            0, rect.y(), self.line_number_widget.width(), rect.height())
+            0, rect.y(), self.line_number_widget.width(), rect.height()
+        )
         if rect.contains(self.viewport().rect()):
             self.update_line_number_width()
 
@@ -176,15 +182,16 @@ class CodeWidget(QtGui.QPlainTextEdit):
             selection = QtGui.QTextEdit.ExtraSelection()
             selection.format.setBackground(self.line_highlight_color)
             selection.format.setProperty(
-                QtGui.QTextFormat.FullWidthSelection, True)
+                QtGui.QTextFormat.FullWidthSelection, True
+            )
             selection.cursor = self.textCursor()
             selection.cursor.clearSelection()
             self.setExtraSelections([selection])
 
     def autoindent_newline(self):
-        tab = '\t'
+        tab = "\t"
         if self.tabs_as_spaces:
-            tab = ' '*self.tab_width
+            tab = " " * self.tab_width
 
         cursor = self.textCursor()
         text = cursor.block().text()
@@ -245,7 +252,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
             cursor.beginEditBlock()
 
             removed = self.line_unindent(cursor)
-            position = max(position-removed, 0)
+            position = max(position - removed, 0)
 
             cursor.endEditBlock()
             cursor.setPosition(position)
@@ -293,8 +300,10 @@ class CodeWidget(QtGui.QPlainTextEdit):
             comment = True
             for block in sel_blocks:
                 text = block.text()
-                if len(text) > indent_pos and \
-                        text[indent_pos] == self.comment_character:
+                if (
+                    len(text) > indent_pos
+                    and text[indent_pos] == self.comment_character
+                ):
                     # Already commented.
                     comment = False
                     break
@@ -306,7 +315,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
                 cursor.setPosition(block.position())
                 if comment:
                     if block.length() < indent_pos:
-                        cursor.insertText(' ' * indent_pos)
+                        cursor.insertText(" " * indent_pos)
                     self.line_comment(cursor, indent_pos)
                 else:
                     self.line_uncomment(cursor, indent_pos)
@@ -315,23 +324,25 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
     def line_comment(self, cursor, position):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
-        cursor.movePosition(QtGui.QTextCursor.Right,
-                            QtGui.QTextCursor.MoveAnchor, position)
+        cursor.movePosition(
+            QtGui.QTextCursor.Right, QtGui.QTextCursor.MoveAnchor, position
+        )
         cursor.insertText(self.comment_character)
 
     def line_uncomment(self, cursor, position=0):
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         text = cursor.block().text()
-        new_text = text[:position] + text[position+1:]
-        cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
-                            QtGui.QTextCursor.KeepAnchor)
+        new_text = text[:position] + text[position + 1 :]
+        cursor.movePosition(
+            QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+        )
         cursor.removeSelectedText()
         cursor.insertText(new_text)
 
     def line_indent(self, cursor):
-        tab = '\t'
+        tab = "\t"
         if self.tabs_as_spaces:
-            tab = '    '
+            tab = "    "
 
         cursor.insertText(tab)
 
@@ -339,15 +350,16 @@ class CodeWidget(QtGui.QPlainTextEdit):
         """ Unindents the cursor's line. Returns the number of characters
             removed.
         """
-        tab = '\t'
+        tab = "\t"
         if self.tabs_as_spaces:
-            tab = '    '
+            tab = "    "
 
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
         if cursor.block().text().startswith(tab):
-            new_text = cursor.block().text()[len(tab):]
-            cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
-                                QtGui.QTextCursor.KeepAnchor)
+            new_text = cursor.block().text()[len(tab) :]
+            cursor.movePosition(
+                QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+            )
             cursor.removeSelectedText()
             cursor.insertText(new_text)
             return len(tab)
@@ -377,7 +389,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
 
         key_sequence = QtGui.QKeySequence(event.key() + int(event.modifiers()))
 
-        self.keyPressEvent_action(event) # FIXME: see above
+        self.keyPressEvent_action(event)  # FIXME: see above
 
         # If the cursor is in the middle of the first line, pressing the "up"
         # key causes the cursor to go to the start of the first line, i.e. the
@@ -395,8 +407,9 @@ class CodeWidget(QtGui.QPlainTextEdit):
                 self.setTextCursor(cursor)
                 event.accept()
 
-        elif self.auto_indent and \
-                key_sequence.matches(QtGui.QKeySequence(QtCore.Qt.Key_Return)):
+        elif self.auto_indent and key_sequence.matches(
+            QtGui.QKeySequence(QtCore.Qt.Key_Return)
+        ):
             event.accept()
             return self.autoindent_newline()
         elif key_sequence.matches(self.indent_key):
@@ -408,9 +421,12 @@ class CodeWidget(QtGui.QPlainTextEdit):
         elif key_sequence.matches(self.comment_key):
             event.accept()
             return self.block_comment()
-        elif self.auto_indent and self.smart_backspace and \
-                key_sequence.matches(self.backspace_key) and \
-                self._backspace_should_unindent():
+        elif (
+            self.auto_indent
+            and self.smart_backspace
+            and key_sequence.matches(self.backspace_key)
+            and self._backspace_should_unindent()
+        ):
             event.accept()
             return self.block_unindent()
 
@@ -419,29 +435,42 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def resizeEvent(self, event):
         QtGui.QPlainTextEdit.resizeEvent(self, event)
         contents = self.contentsRect()
-        self.line_number_widget.setGeometry(QtCore.QRect(contents.left(),
-            contents.top(), self.line_number_widget.digits_width(),
-            contents.height()))
+        self.line_number_widget.setGeometry(
+            QtCore.QRect(
+                contents.left(),
+                contents.top(),
+                self.line_number_widget.digits_width(),
+                contents.height(),
+            )
+        )
 
         # use the viewport width to determine the right edge. This allows for
         # the propper placement w/ and w/o the scrollbar
-        right_pos = self.viewport().width() + self.line_number_widget.width() + 1\
-                    - self.status_widget.sizeHint().width()
-        self.status_widget.setGeometry(QtCore.QRect(right_pos,
-            contents.top(), self.status_widget.sizeHint().width(),
-            contents.height()))
+        right_pos = (
+            self.viewport().width()
+            + self.line_number_widget.width()
+            + 1
+            - self.status_widget.sizeHint().width()
+        )
+        self.status_widget.setGeometry(
+            QtCore.QRect(
+                right_pos,
+                contents.top(),
+                self.status_widget.sizeHint().width(),
+                contents.height(),
+            )
+        )
 
     def focusOutEvent(self, event):
         QtGui.QPlainTextEdit.focusOutEvent(self, event)
         self.focus_lost.emit()
-
 
     def sizeHint(self):
         # Suggest a size that is 80 characters wide and 40 lines tall.
         style = self.style()
         opt = QtGui.QStyleOptionHeader()
         font_metrics = QtGui.QFontMetrics(self.document().defaultFont())
-        width = font_metrics.width(' ') * 80
+        width = font_metrics.width(" ") * 80
         width += self.line_number_widget.sizeHint().width()
         width += self.status_widget.sizeHint().width()
         width += style.pixelMetric(QtGui.QStyle.PM_ScrollBarExtent, opt, self)
@@ -467,10 +496,14 @@ class CodeWidget(QtGui.QPlainTextEdit):
         cursor.clearSelection()
         cursor.setPosition(selected_blocks[0].position())
         cursor.movePosition(QtGui.QTextCursor.StartOfBlock)
-        cursor.movePosition(QtGui.QTextCursor.NextBlock,
-                            QtGui.QTextCursor.KeepAnchor, len(selected_blocks))
-        cursor.movePosition(QtGui.QTextCursor.EndOfBlock,
-                            QtGui.QTextCursor.KeepAnchor)
+        cursor.movePosition(
+            QtGui.QTextCursor.NextBlock,
+            QtGui.QTextCursor.KeepAnchor,
+            len(selected_blocks),
+        )
+        cursor.movePosition(
+            QtGui.QTextCursor.EndOfBlock, QtGui.QTextCursor.KeepAnchor
+        )
 
         self.setTextCursor(cursor)
 
@@ -541,7 +574,8 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
         self.replace.line_edit.returnPressed.connect(self.find_next)
         self.replace.line_edit.textChanged.connect(
-            self._update_replace_all_enabled)
+            self._update_replace_all_enabled
+        )
         self.replace.next_button.clicked.connect(self.find_next)
         self.replace.prev_button.clicked.connect(self.find_prev)
         self.replace.replace_button.clicked.connect(self.replace_next)
@@ -589,9 +623,10 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.replace.hide()
         self.find.show()
         self.find.setFocus()
-        if (self.active_find_widget == self.replace or
-            (not self.active_find_widget and
-             self.previous_find_widget == self.replace)):
+        if self.active_find_widget == self.replace or (
+            not self.active_find_widget
+            and self.previous_find_widget == self.replace
+        ):
             self.find.line_edit.setText(self.replace.line_edit.text())
         self.find.line_edit.selectAll()
         self.active_find_widget = self.find
@@ -600,14 +635,15 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.find.hide()
         self.replace.show()
         self.replace.setFocus()
-        if (self.active_find_widget == self.find or
-            (not self.active_find_widget and
-             self.previous_find_widget == self.find)):
+        if self.active_find_widget == self.find or (
+            not self.active_find_widget
+            and self.previous_find_widget == self.find
+        ):
             self.replace.line_edit.setText(self.find.line_edit.text())
         self.replace.line_edit.selectAll()
         self.active_find_widget = self.replace
 
-    def find_in_document(self, search_text, direction='forward', replace=None):
+    def find_in_document(self, search_text, direction="forward", replace=None):
         """ Finds the next occurance of the desired text and optionally
             replaces it. If 'replace' is None, a regular search will
             be executed, otherwise it will replace the occurance with
@@ -628,13 +664,15 @@ class AdvancedCodeWidget(QtGui.QWidget):
             flags |= QtGui.QTextDocument.FindCaseSensitively
         if self.active_find_widget.word_action.isChecked():
             flags |= QtGui.QTextDocument.FindWholeWords
-        if direction == 'backward':
+        if direction == "backward":
             flags |= QtGui.QTextDocument.FindBackward
 
         find_cursor = document.find(search_text, self.code.textCursor(), flags)
         if find_cursor.isNull() and wrap:
-            if direction == 'backward':
-                find_cursor = document.find(search_text, document.characterCount()-1, flags)
+            if direction == "backward":
+                find_cursor = document.find(
+                    search_text, document.characterCount() - 1, flags
+                )
             else:
                 find_cursor = document.find(search_text, 0, flags)
 
@@ -645,15 +683,21 @@ class AdvancedCodeWidget(QtGui.QWidget):
                 find_cursor.insertText(replace)
                 find_cursor.endEditBlock()
                 find_cursor.movePosition(
-                    QtGui.QTextCursor.Left, QtGui.QTextCursor.MoveAnchor,len(replace))
+                    QtGui.QTextCursor.Left,
+                    QtGui.QTextCursor.MoveAnchor,
+                    len(replace),
+                )
                 find_cursor.movePosition(
-                    QtGui.QTextCursor.Right, QtGui.QTextCursor.KeepAnchor,len(replace))
+                    QtGui.QTextCursor.Right,
+                    QtGui.QTextCursor.KeepAnchor,
+                    len(replace),
+                )
                 self.code.setTextCursor(find_cursor)
             else:
                 self.code.setTextCursor(find_cursor)
             return find_cursor
         else:
-            #else not found: beep or indicate?
+            # else not found: beep or indicate?
             return None
 
     def find_next(self):
@@ -670,8 +714,9 @@ class AdvancedCodeWidget(QtGui.QWidget):
         if not self.active_find_widget:
             self.enable_find()
         search_text = six.text_type(self.active_find_widget.line_edit.text())
-        cursor = self.find_in_document(search_text=search_text,
-                                       direction='backward')
+        cursor = self.find_in_document(
+            search_text=search_text, direction="backward"
+        )
         if cursor:
             return 1
         return 0
@@ -696,8 +741,12 @@ class AdvancedCodeWidget(QtGui.QWidget):
         count = 0
         cursor = self.code.textCursor()
         cursor.beginEditBlock()
-        while self.find_in_document(search_text=search_text,
-                                    replace=replace_text) != None:
+        while (
+            self.find_in_document(
+                search_text=search_text, replace=replace_text
+            )
+            != None
+        ):
             count += 1
         cursor.endEditBlock()
         return count
@@ -747,12 +796,14 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.replace.replace_all_button.setEnabled(len(text))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     def set_trace():
         from PyQt4.QtCore import pyqtRemoveInputHook
+
         pyqtRemoveInputHook()
         import pdb
+
         pdb.Pdb().set_trace(sys._getframe().f_back)
 
     import sys
@@ -761,10 +812,10 @@ if __name__ == '__main__':
     window = AdvancedCodeWidget(None)
 
     if len(sys.argv) > 1:
-        f = open(sys.argv[1], 'r')
+        f = open(sys.argv[1], "r")
         window.code.setPlainText(f.read())
 
-    window.code.set_info_lines([3,4,8])
+    window.code.set_info_lines([3, 4, 8])
 
     window.resize(640, 640)
     window.show()

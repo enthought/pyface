@@ -24,7 +24,7 @@ class WindowAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on='window')
+    object = Property(depends_on="window")
 
     # 'WindowAction' interface -----------------------------------------------
 
@@ -46,6 +46,7 @@ class WindowAction(ListeningAction):
 
 class CloseWindowAction(WindowAction):
     """ Close the specified window """
-    name = u'Close'
-    accelerator = 'Ctrl+W'
-    method = 'close'
+
+    name = u"Close"
+    accelerator = "Ctrl+W"
+    method = "close"

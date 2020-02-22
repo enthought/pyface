@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -56,7 +56,7 @@ class PyfaceResourceFactory(ResourceFactory):
             handle, filename = tempfile.mkstemp()
 
         # Write it out...
-        tf = open(filename, 'wb')
+        tf = open(filename, "wb")
         tf.write(data)
         tf.close()
 
@@ -69,5 +69,6 @@ class PyfaceResourceFactory(ResourceFactory):
             os.unlink(filename)
 
         return image
+
 
 #### EOF ######################################################################

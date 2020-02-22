@@ -8,16 +8,15 @@ from ..action_event import ActionEvent
 
 
 class TestActionController(unittest.TestCase):
-
     def setUp(self):
         # test whether function is called by updating list
         # XXX should really use mock
         self.memo = []
 
         def perform():
-            self.memo.append('called')
+            self.memo.append("called")
 
-        self.action = Action(name='Test', on_perform=perform)
+        self.action = Action(name="Test", on_perform=perform)
         self.action_controller = ActionController()
 
     def test_perform(self):
@@ -25,10 +24,10 @@ class TestActionController(unittest.TestCase):
         # XXX should really use mock
         event = ActionEvent()
         self.action_controller.perform(self.action, event)
-        self.assertEqual(self.memo, ['called'])
+        self.assertEqual(self.memo, ["called"])
 
     def test_perform_none(self):
-        action = Action(name='Test')
+        action = Action(name="Test")
         event = ActionEvent()
         # does nothing, but shouldn't error
         self.action_controller.perform(action, event)

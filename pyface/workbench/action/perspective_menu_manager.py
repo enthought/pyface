@@ -24,17 +24,17 @@ class PerspectiveMenuManager(MenuManager):
     groups = List(Group)
 
     # The manager's unique identifier.
-    id = 'PerspectivesMenu'
+    id = "PerspectivesMenu"
 
     #### 'MenuManager' interface ##############################################
 
     # The menu manager's name.
-    name = 'Perspectives'
+    name = "Perspectives"
 
     #### 'PerspectiveMenuManager' interface ###################################
 
     # The workbench window that the manager is part of.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     ###########################################################################
     # 'ActionManager' interface.
@@ -47,14 +47,11 @@ class PerspectiveMenuManager(MenuManager):
             # Create a group containing the actions that switch to specific
             # perspectives.
             self._create_perspective_group(self.window),
-
             # Create a group containing the user perspective create/save/rename
             # /delete actions.
             self._create_user_perspective_group(self.window),
-
             # Create a group containing the reset actions.
-            self._create_reset_perspective_group(self.window)
-
+            self._create_reset_perspective_group(self.window),
         ]
 
         return groups
@@ -63,8 +60,8 @@ class PerspectiveMenuManager(MenuManager):
     # 'PerspectiveMenuManager' interface.
     ###########################################################################
 
-    @on_trait_change('window.perspectives')
-    @on_trait_change('window.perspectives_items')
+    @on_trait_change("window.perspectives")
+    @on_trait_change("window.perspectives_items")
     def rebuild(self):
         """ Rebuild the menu.
 
@@ -79,7 +76,7 @@ class PerspectiveMenuManager(MenuManager):
 
         # Resetting the trait allows the initializer to run again (which will
         # happen just as soon as we fire the 'changed' event).
-        self.reset_traits(['groups'])
+        self.reset_traits(["groups"])
 
         # Let the associated menu know that we have changed.
         self.changed = True
@@ -96,7 +93,7 @@ class PerspectiveMenuManager(MenuManager):
         # fixme: Not sure if alphabetic sorting is appropriate in all cases,
         # but it will do for now!
         perspectives = window.perspectives[:]
-        perspectives.sort(key=lambda x:x.name)
+        perspectives.sort(key=lambda x: x.name)
 
         # For each perspective, create an action that sets the active
         # perspective to it.
@@ -117,7 +114,7 @@ class PerspectiveMenuManager(MenuManager):
             NewUserPerspectiveAction(window=window),
             SaveAsUserPerspectiveAction(window=window),
             RenameUserPerspectiveAction(window=window),
-            DeleteUserPerspectiveAction(window=window)
+            DeleteUserPerspectiveAction(window=window),
         )
 
         return group
@@ -127,9 +124,10 @@ class PerspectiveMenuManager(MenuManager):
 
         group = Group(
             ResetActivePerspectiveAction(window=window),
-            ResetAllPerspectivesAction(window=window)
+            ResetAllPerspectivesAction(window=window),
         )
 
         return group
+
 
 #### EOF ######################################################################

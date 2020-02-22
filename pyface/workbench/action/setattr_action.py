@@ -33,4 +33,5 @@ class SetattrAction(WorkbenchAction):
 
         return
 
+
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Application window example. """
 
 
@@ -18,7 +18,7 @@
 import os, sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # Major package imports.
 import wx
@@ -43,6 +43,7 @@ HTML = """
 
 PART = """<wxp module="wx" class="Panel"><param name="id" value="%s"><param name="size" value="(50, 50)"></wxp>"""
 
+
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
@@ -59,8 +60,7 @@ class MainWindow(ApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                Action(name="E&xit", on_perform=self.close), name="&File"
             )
         )
 
@@ -89,7 +89,7 @@ class MainWindow(ApplicationWindow):
         # Create the HTML.
         parts = []
         for i in range(N):
-            parts.append(PART % str(wxid+i))
+            parts.append(PART % str(wxid + i))
 
         html = HTML % "".join(parts)
 
@@ -99,7 +99,7 @@ class MainWindow(ApplicationWindow):
 
         # Initialize all embedded wx controls.
         for i in range(N):
-            self._initialize_window(html_window, wxid+i)
+            self._initialize_window(html_window, wxid + i)
 
         sizer.Add(html_window, 1, wx.EXPAND)
 
@@ -120,14 +120,14 @@ class MainWindow(ApplicationWindow):
         window.SetSizer(sizer)
         window.SetAutoLayout(True)
 
-        window.SetBackgroundColour('white')
+        window.SetBackgroundColour("white")
         window.SetWindowStyleFlag(wx.CLIP_CHILDREN)
         window.Refresh()
-        image = ImageResource('closed_folder_24x24')
+        image = ImageResource("closed_folder_24x24")
         bitmap = image.create_image().ConvertToBitmap()
 
         image_widget = ImageWidget(window, bitmap=bitmap)
-        image_widget.control.SetBackgroundColour('white')
+        image_widget.control.SetBackgroundColour("white")
         sizer.Add(image_widget.control, 0, wx.EXPAND)
 
         text = wx.StaticText(window, -1, "Blah", style=wx.ALIGN_CENTRE)
@@ -140,7 +140,7 @@ class MainWindow(ApplicationWindow):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

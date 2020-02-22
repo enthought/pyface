@@ -13,10 +13,12 @@ from .task_pane import TaskPane
 from .util import set_focus
 
 # Constants.
-AREA_MAP = { 'left'   : QtCore.Qt.LeftDockWidgetArea,
-             'right'  : QtCore.Qt.RightDockWidgetArea,
-             'top'    : QtCore.Qt.TopDockWidgetArea,
-             'bottom' : QtCore.Qt.BottomDockWidgetArea }
+AREA_MAP = {
+    "left": QtCore.Qt.LeftDockWidgetArea,
+    "right": QtCore.Qt.RightDockWidgetArea,
+    "top": QtCore.Qt.TopDockWidgetArea,
+    "bottom": QtCore.Qt.BottomDockWidgetArea,
+}
 INVERSE_AREA_MAP = dict((int(v), k) for k, v in AREA_MAP.items())
 
 
@@ -47,7 +49,7 @@ class DockPane(TaskPane, MDockPane):
         # Set the widget's object name. This important for QMainWindow state
         # saving. Use the task ID and the pane ID to avoid collisions when a
         # pane is present in multiple tasks attached to the same window.
-        control.setObjectName(self.task.id + ':' + self.id)
+        control.setObjectName(self.task.id + ":" + self.id)
 
         # Configure the dock widget according to the DockPane settings.
         self._set_dock_features()
@@ -68,8 +70,10 @@ class DockPane(TaskPane, MDockPane):
         # of its widgets
         contents_minsize = contents.minimumSize()
         style = control.style()
-        contents_minsize.setHeight(contents_minsize.height()
-            + style.pixelMetric(style.PM_DockWidgetHandleExtent))
+        contents_minsize.setHeight(
+            contents_minsize.height()
+            + style.pixelMetric(style.PM_DockWidgetHandleExtent)
+        )
         control.setMinimumSize(contents_minsize)
 
         # Hide the control by default. Otherwise, the widget will visible in its
@@ -114,7 +118,7 @@ class DockPane(TaskPane, MDockPane):
 
     #### Trait change handlers ################################################
 
-    @on_trait_change('dock_area')
+    @on_trait_change("dock_area")
     def _set_dock_area(self):
         if self.control is not None and not self._receiving:
             # Only attempt to adjust the area if the task is active.
@@ -122,10 +126,11 @@ class DockPane(TaskPane, MDockPane):
             if main_window and self.task == self.task.window.active_task:
                 # Qt will automatically remove the dock widget from its previous
                 # area, if it had one.
-                main_window.addDockWidget(AREA_MAP[self.dock_area],
-                                          self.control)
+                main_window.addDockWidget(
+                    AREA_MAP[self.dock_area], self.control
+                )
 
-    @on_trait_change('closable,floatable,movable')
+    @on_trait_change("closable,floatable,movable")
     def _set_dock_features(self):
         if self.control is not None:
             features = QtGui.QDockWidget.NoDockWidgetFeatures
@@ -137,17 +142,17 @@ class DockPane(TaskPane, MDockPane):
                 features |= QtGui.QDockWidget.DockWidgetMovable
             self.control.setFeatures(features)
 
-    @on_trait_change('name')
+    @on_trait_change("name")
     def _set_dock_title(self):
         if self.control is not None:
             self.control.setWindowTitle(self.name)
 
-    @on_trait_change('floating')
+    @on_trait_change("floating")
     def _set_floating(self):
         if self.control is not None and not self._receiving:
             self.control.setFloating(self.floating)
 
-    @on_trait_change('visible')
+    @on_trait_change("visible")
     def _set_visible(self):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)

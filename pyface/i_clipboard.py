@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Evan Patterson
 # Date: 06/26/09
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The interface for manipulating the toolkit clipboard.
 """
@@ -111,11 +111,11 @@ class BaseClipboard(HasStrictTraits):
         else:
             self.object_data = data
 
-    def _get_data_type ( self ):
+    def _get_data_type(self):
         if self.has_text_data:
-            return 'str'
+            return "str"
         if self.has_file_data:
-            return 'file'
+            return "file"
         if self.has_object_data:
             return self.object_type
-        return ''
+        return ""

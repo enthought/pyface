@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The PyQt specific implementation of a menu bar manager. """
 
 # Standard library imports.
@@ -40,7 +40,7 @@ class MenuBarManager(ActionManager):
 
         # Create the menu bar. Work around disappearing menu bars on OS X
         # (particulary on PySide but also under certain circumstances on PyQt4).
-        if isinstance(parent, QtGui.QMainWindow) and sys.platform == 'darwin':
+        if isinstance(parent, QtGui.QMainWindow) and sys.platform == "darwin":
             parent.menuBar().setParent(None)
             menu_bar = parent.menuBar()
         else:
@@ -54,5 +54,6 @@ class MenuBarManager(ActionManager):
                 menu_bar.addMenu(menu)
 
         return menu_bar
+
 
 #### EOF ######################################################################

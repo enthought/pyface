@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ A simple progress bar intended to run in the UI thread
 """
@@ -28,6 +28,7 @@ from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from .widget import Widget
 from .window import Window
 
+
 class ProgressBar(Widget):
     """ A simple progress bar dialog intended to run in the UI thread """
 
@@ -38,13 +39,19 @@ class ProgressBar(Widget):
     control = Instance(wx.Gauge)
 
     #: The orientation of the progress bar.
-    direction = Enum('horizontal', 'horizontal', 'vertical')
+    direction = Enum("horizontal", "horizontal", "vertical")
 
     #: The maximum value for the progress bar.
     _max = Int
 
-    def __init__(self, parent, minimum=0, maximum=100, direction='horizontal',
-                 size=(200, -1)):
+    def __init__(
+        self,
+        parent,
+        minimum=0,
+        maximum=100,
+        direction="horizontal",
+        size=(200, -1),
+    ):
         """
         Constructs a progress bar which can be put into a panel, or optionaly,
         its own window
@@ -116,7 +123,7 @@ class ProgressDialog(MProgressDialog, Window):
     dialog_size = Instance(wx.Size)
 
     # Label for the 'cancel' button
-    cancel_button_label = Str('Cancel')
+    cancel_button_label = Str("Cancel")
 
     #: The widget showing the message text
     _message_control = Instance(wx.StaticText)
@@ -131,18 +138,18 @@ class ProgressDialog(MProgressDialog, Window):
     _remaining_control = Instance(wx.StaticText)
 
     def __init__(self, *args, **kw):
-        if 'message' in kw:
-            self._message_text = kw.pop('message')
+        if "message" in kw:
+            self._message_text = kw.pop("message")
 
         # initialize the start time in case some tries updating
         # before open() is called
         self._start_time = 0
 
-        super(ProgressDialog, self).__init__( *args, **kw)
+        super(ProgressDialog, self).__init__(*args, **kw)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # IWindow Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def open(self):
         """ Opens the window. """
@@ -161,9 +168,9 @@ class ProgressDialog(MProgressDialog, Window):
 
         super(ProgressDialog, self).close()
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # IProgressDialog Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def change_message(self, value):
         """ Change the displayed message in the progress dialog
@@ -181,7 +188,9 @@ class ProgressDialog(MProgressDialog, Window):
             self._message_control.Update()
 
             msg_control_size = self._message_control.GetSize()
-            self.dialog_size.x = max(self.dialog_size.x, msg_control_size.x + 2*self.margin)
+            self.dialog_size.x = max(
+                self.dialog_size.x, msg_control_size.x + 2 * self.margin
+            )
             if self.control is not None:
                 self.control.SetClientSize(self.dialog_size)
 
@@ -218,20 +227,17 @@ class ProgressDialog(MProgressDialog, Window):
             self.control.Raise()
 
         if self.max > 0:
-            percent = (float(value) - self.min)/(self.max - self.min)
+            percent = (float(value) - self.min) / (self.max - self.min)
 
             if self.show_time and (percent != 0):
                 current_time = time.time()
                 elapsed = current_time - self._start_time
-                estimated = elapsed/percent
+                estimated = elapsed / percent
                 remaining = estimated - elapsed
 
-                self._set_time_label(elapsed,
-                                 self._elapsed_control)
-                self._set_time_label(estimated,
-                                 self._estimated_control)
-                self._set_time_label(remaining,
-                                 self._remaining_control)
+                self._set_time_label(elapsed, self._elapsed_control)
+                self._set_time_label(estimated, self._estimated_control)
+                self._set_time_label(remaining, self._remaining_control)
 
             if self.show_percent:
                 self._percent_control = "%3f" % ((percent * 100) % 1)
@@ -246,9 +252,9 @@ class ProgressDialog(MProgressDialog, Window):
 
         return (not self._user_cancelled, False)
 
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # Private Interface
-    #-------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
 
     def _on_cancel(self, event):
         self._user_cancelled = True
@@ -277,14 +283,17 @@ class ProgressDialog(MProgressDialog, Window):
 
         if self.can_cancel == True:
             # 'Cancel' button.
-            self._cancel = cancel = wx.Button(dialog, wx.ID_CANCEL,
-                                              self.cancel_button_label)
+            self._cancel = cancel = wx.Button(
+                dialog, wx.ID_CANCEL, self.cancel_button_label
+            )
             dialog.Bind(wx.EVT_BUTTON, self._on_cancel, id=wx.ID_CANCEL)
             sizer.Add(cancel, 0, wx.LEFT, 10)
 
             button_size = cancel.GetSize()
-            self.dialog_size.x = max(self.dialog_size.x, button_size.x + 2*self.margin)
-            self.dialog_size.y += button_size.y + 2*self.margin
+            self.dialog_size.x = max(
+                self.dialog_size.x, button_size.x + 2 * self.margin
+            )
+            self.dialog_size.y += button_size.y + 2 * self.margin
 
             parent_sizer.Add(sizer, 0, wx.ALIGN_RIGHT | wx.ALL, self.margin)
 
@@ -295,27 +304,38 @@ class ProgressDialog(MProgressDialog, Window):
 
         local_sizer.Add(dummy, 1, wx.ALIGN_LEFT)
         local_sizer.Add(label, 1, wx.ALIGN_LEFT | wx.ALIGN_RIGHT, self.margin)
-        parent_sizer.Add(local_sizer, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.TOP, self.margin)
+        parent_sizer.Add(
+            local_sizer, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.TOP, self.margin
+        )
 
         return label
 
     def _create_gauge(self, dialog, parent_sizer):
         self.progress_bar = ProgressBar(dialog, self.min, self.max)
-        parent_sizer.Add(self.progress_bar.control, 0, wx.CENTER | wx.ALL, self.margin)
+        parent_sizer.Add(
+            self.progress_bar.control, 0, wx.CENTER | wx.ALL, self.margin
+        )
 
         horiz_spacer = 50
 
         progress_bar_size = self.progress_bar.control.GetSize()
-        self.dialog_size.x = max(self.dialog_size.x, progress_bar_size.x + 2*self.margin + horiz_spacer)
-        self.dialog_size.y += progress_bar_size.y + 2*self.margin
+        self.dialog_size.x = max(
+            self.dialog_size.x,
+            progress_bar_size.x + 2 * self.margin + horiz_spacer,
+        )
+        self.dialog_size.y += progress_bar_size.y + 2 * self.margin
 
     def _create_message(self, dialog, parent_sizer):
         self._message_control = wx.StaticText(dialog, -1, self.message)
-        parent_sizer.Add(self._message_control, 0, wx.LEFT | wx.TOP, self.margin)
+        parent_sizer.Add(
+            self._message_control, 0, wx.LEFT | wx.TOP, self.margin
+        )
 
         msg_control_size = self._message_control.GetSize()
-        self.dialog_size.x = max(self.dialog_size.x, msg_control_size.x + 2*self.margin)
-        self.dialog_size.y += msg_control_size.y + 2*self.margin
+        self.dialog_size.x = max(
+            self.dialog_size.x, msg_control_size.x + 2 * self.margin
+        )
+        self.dialog_size.y += msg_control_size.y + 2 * self.margin
 
     def _create_percent(self, dialog, parent_sizer):
         if not self.show_percent:
@@ -327,9 +347,15 @@ class ProgressDialog(MProgressDialog, Window):
         if not self.show_time:
             return
 
-        self._elapsed_control = self._create_label(dialog, parent_sizer, "Elapsed time : ")
-        self._estimated_control = self._create_label(dialog, parent_sizer, "Estimated time : ")
-        self._remaining_control = self._create_label(dialog, parent_sizer, "Remaining time : ")
+        self._elapsed_control = self._create_label(
+            dialog, parent_sizer, "Elapsed time : "
+        )
+        self._estimated_control = self._create_label(
+            dialog, parent_sizer, "Estimated time : "
+        )
+        self._remaining_control = self._create_label(
+            dialog, parent_sizer, "Remaining time : "
+        )
 
         elapsed_size = self._elapsed_control.GetSize()
         estimated_size = self._estimated_control.GetSize()
@@ -339,8 +365,10 @@ class ProgressDialog(MProgressDialog, Window):
         timer_size.x = max(elapsed_size.x, estimated_size.x, remaining_size.x)
         timer_size.y = elapsed_size.y + estimated_size.y + remaining_size.y
 
-        self.dialog_size.x = max(self.dialog_size.x, timer_size.x + 2*self.margin)
-        self.dialog_size.y += timer_size.y + 2*self.margin
+        self.dialog_size.x = max(
+            self.dialog_size.x, timer_size.x + 2 * self.margin
+        )
+        self.dialog_size.y += timer_size.y + 2 * self.margin
 
     def _create_control(self, parent):
         """ Creates the window contents.
@@ -349,10 +377,18 @@ class ProgressDialog(MProgressDialog, Window):
         just create an empty panel.
 
         """
-        style = wx.DEFAULT_FRAME_STYLE | wx.FRAME_NO_WINDOW_MENU | wx.CLIP_CHILDREN
+        style = (
+            wx.DEFAULT_FRAME_STYLE | wx.FRAME_NO_WINDOW_MENU | wx.CLIP_CHILDREN
+        )
 
-        dialog = wx.Frame(parent, -1, self.title, style=style, size=self.size,
-                pos=self.position)
+        dialog = wx.Frame(
+            parent,
+            -1,
+            self.title,
+            style=style,
+            size=self.size,
+            pos=self.position,
+        )
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         dialog.SetSizer(sizer)

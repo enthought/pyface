@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 from __future__ import absolute_import
 
 from .grid import Grid
@@ -18,8 +18,11 @@ from .grid_model import GridModel, GridSortEvent
 from .composite_grid_model import CompositeGridModel
 from .inverted_grid_model import InvertedGridModel
 from .simple_grid_model import SimpleGridModel, GridRow, GridColumn
-from .trait_grid_model import TraitGridModel, TraitGridColumn, \
-     TraitGridSelection
+from .trait_grid_model import (
+    TraitGridModel,
+    TraitGridColumn,
+    TraitGridSelection,
+)
 from .grid_cell_renderer import GridCellRenderer
 
 #### EOF ######################################################################

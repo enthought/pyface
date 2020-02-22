@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,10 +10,10 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 from __future__ import print_function
 
@@ -23,25 +23,28 @@ import wx
 from wx.grid import PyGridCellRenderer
 import six
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+
 
 class DefaultRenderer(PyGridCellRenderer):
     """ This renderer provides the default representation of an
     Enthought spreadsheet cell.
     """
 
-    selected_cells = wx.Brush(wx.Colour(255,255,200), wx.SOLID)
+    selected_cells = wx.Brush(wx.Colour(255, 255, 200), wx.SOLID)
     normal_cells = wx.Brush("white", wx.SOLID)
-    odd_cells = wx.Brush(wx.Colour(240,240,240), wx.SOLID)
-    error_cells = wx.Brush(wx.Colour(255,122,122), wx.SOLID)
-    warn_cells = wx.Brush(wx.Colour(255,242,0), wx.SOLID)
+    odd_cells = wx.Brush(wx.Colour(240, 240, 240), wx.SOLID)
+    error_cells = wx.Brush(wx.Colour(255, 122, 122), wx.SOLID)
+    warn_cells = wx.Brush(wx.Colour(255, 242, 0), wx.SOLID)
 
     def __init__(self, color="black", font="ARIAL", fontsize=8):
         PyGridCellRenderer.__init__(self)
         self.color = color
         self.foundary = font
         self.fontsize = fontsize
-        self.font = wx.Font(fontsize, wx.DEFAULT, wx.NORMAL, wx.NORMAL,0, font)
+        self.font = wx.Font(
+            fontsize, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, font
+        )
 
     def Clone(self):
         return DefaultRenderer(self.color, self.foundary, self.fontsize)
@@ -66,7 +69,7 @@ class DefaultRenderer(PyGridCellRenderer):
 
         if isSelected:
             dc.SetBrush(DefaultRenderer.selected_cells)
-        elif row%2:
+        elif row % 2:
             dc.SetBrush(DefaultRenderer.normal_cells)
         else:
             dc.SetBrush(DefaultRenderer.odd_cells)
@@ -81,7 +84,7 @@ class DefaultRenderer(PyGridCellRenderer):
         text = grid.model.GetValue(row, col)
         dc.SetTextForeground(self.color)
         dc.SetFont(self.font)
-        dc.DrawText(self.FormatText(text), rect.x+1, rect.y+1)
+        dc.DrawText(self.FormatText(text), rect.x + 1, rect.y + 1)
 
         self.DrawEllipses(grid, attr, dc, rect, row, col, isSelected)
         return
@@ -90,7 +93,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """ Formats numbers to 3 decimal places.
         """
         try:
-            text = '%0.3f' % atof(text)
+            text = "%0.3f" % atof(text)
         except:
             pass
 
@@ -105,16 +108,18 @@ class DefaultRenderer(PyGridCellRenderer):
             raise TypeError(msg)
 
         width, height = dc.GetTextExtent(text)
-        if width > rect.width-2:
+        if width > rect.width - 2:
             width, height = dc.GetTextExtent("...")
-            x = rect.x+1 + rect.width-2 - width
-            dc.DrawRectangle(x, rect.y+1, width+1, height)
-            dc.DrawText("...", x, rect.y+1)
+            x = rect.x + 1 + rect.width - 2 - width
+            dc.DrawRectangle(x, rect.y + 1, width + 1, height)
+            dc.DrawText("...", x, rect.y + 1)
         return
 
     def GetBestSize88(self, grid, attr, dc, row, col):
         """ This crashes the app - hmmmm. """
         size = PyGridCellRenderer.GetBestSize(self, grid, attr, dc, row, col)
-        print('-----------------------------', size)
+        print("-----------------------------", size)
         return size
-#-------------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------------

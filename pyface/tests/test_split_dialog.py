@@ -6,11 +6,11 @@ from ..heading_text import HeadingText
 from ..split_dialog import SplitDialog
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -37,7 +37,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_horizontal(self):
         # test that horizontal split works
-        self.dialog.direction = 'horizontal'
+        self.dialog.direction = "horizontal"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():

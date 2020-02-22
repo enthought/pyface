@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -25,12 +25,12 @@ from .window import Window
 
 # Map PyQt dialog related constants to the pyface equivalents.
 _RESULT_MAP = {
-    int(QtGui.QDialog.Accepted):     OK,
-    int(QtGui.QDialog.Rejected):     CANCEL,
-    int(QtGui.QMessageBox.Ok):       OK,
-    int(QtGui.QMessageBox.Cancel):   CANCEL,
-    int(QtGui.QMessageBox.Yes):      YES,
-    int(QtGui.QMessageBox.No):       NO
+    int(QtGui.QDialog.Accepted): OK,
+    int(QtGui.QDialog.Rejected): CANCEL,
+    int(QtGui.QMessageBox.Ok): OK,
+    int(QtGui.QMessageBox.Cancel): CANCEL,
+    int(QtGui.QMessageBox.Yes): YES,
+    int(QtGui.QMessageBox.No): NO,
 }
 
 
@@ -39,7 +39,6 @@ class Dialog(MDialog, Window):
     """ The toolkit specific implementation of a Dialog.  See the IDialog
     interface for the API documentation.
     """
-
 
     #### 'IDialog' interface ##################################################
 
@@ -55,7 +54,7 @@ class Dialog(MDialog, Window):
 
     return_code = Int(OK)
 
-    style = Enum('modal', 'nonmodal')
+    style = Enum("modal", "nonmodal")
 
     #### 'IWindow' interface ##################################################
 
@@ -70,8 +69,9 @@ class Dialog(MDialog, Window):
 
         # 'OK' button.
         if self.ok_label:
-            btn = buttons.addButton(self.ok_label,
-                                    QtGui.QDialogButtonBox.AcceptRole)
+            btn = buttons.addButton(
+                self.ok_label, QtGui.QDialogButtonBox.AcceptRole
+            )
         else:
             btn = buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
@@ -80,8 +80,9 @@ class Dialog(MDialog, Window):
 
         # 'Cancel' button.
         if self.cancel_label:
-            btn = buttons.addButton(self.cancel_label,
-                                    QtGui.QDialogButtonBox.RejectRole)
+            btn = buttons.addButton(
+                self.cancel_label, QtGui.QDialogButtonBox.RejectRole
+            )
         else:
             btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
 
@@ -94,7 +95,9 @@ class Dialog(MDialog, Window):
         # display it but can't actually use it.
         if len(self.help_id) > 0:
             if self.help_label:
-                buttons.addButton(self.help_label, QtGui.QDialogButtonBox.HelpRole)
+                buttons.addButton(
+                    self.help_label, QtGui.QDialogButtonBox.HelpRole
+                )
             else:
                 buttons.addButton(QtGui.QDialogButtonBox.Help)
 
@@ -116,7 +119,7 @@ class Dialog(MDialog, Window):
         panel.setMinimumSize(QtCore.QSize(100, 200))
 
         palette = panel.palette()
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('red'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("red"))
         panel.setPalette(palette)
         panel.setAutoFillBackground(True)
 
@@ -129,7 +132,8 @@ class Dialog(MDialog, Window):
         # Suppress the context-help button hint, which
         # results in a non-functional "?" button on Windows.
         dialog.setWindowFlags(
-            dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint)
+            dialog.windowFlags() & ~QtCore.Qt.WindowContextHelpButtonHint
+        )
 
         retval = dialog.exec_()
         return _RESULT_MAP[retval]
@@ -143,7 +147,7 @@ class Dialog(MDialog, Window):
 
         # Setting return code and firing close events is handled for 'modal' in
         # MDialog's open method. For 'nonmodal', we do it here.
-        if self.style == 'nonmodal':
+        if self.style == "nonmodal":
             dlg.finished.connect(self._finished_fired)
 
         if self.size != (-1, -1):

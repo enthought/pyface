@@ -14,6 +14,7 @@
 
 # Standard library imports.
 import six
+
 if six.PY2:
     from inspect import getargspec
 else:
@@ -31,7 +32,6 @@ from pyface.action.action_event import ActionEvent
 
 
 class PyfaceWidgetAction(QtGui.QWidgetAction):
-
     def __init__(self, parent, action):
         super(PyfaceWidgetAction, self).__init__(parent)
         self.action = action
@@ -82,15 +82,20 @@ class _MenuItem(HasTraits):
         # FIXME v3: This is a wx'ism and should be hidden in the toolkit code.
         self.control_id = None
 
-        if action.style == 'widget':
+        if action.style == "widget":
             self.control = PyfaceWidgetAction(parent, action)
             menu.addAction(self.control)
         elif action.image is None:
-            self.control = menu.addAction(action.name, self._qt4_on_triggered,
-                    action.accelerator)
+            self.control = menu.addAction(
+                action.name, self._qt4_on_triggered, action.accelerator
+            )
         else:
-            self.control = menu.addAction(action.image.create_icon(),
-                    action.name, self._qt4_on_triggered, action.accelerator)
+            self.control = menu.addAction(
+                action.image.create_icon(),
+                action.name,
+                self._qt4_on_triggered,
+                action.accelerator,
+            )
         menu.menu_items.append(self)
 
         self.control.setToolTip(action.tooltip)
@@ -98,16 +103,16 @@ class _MenuItem(HasTraits):
         self.control.setEnabled(action.enabled)
         self.control.setVisible(action.visible)
 
-        if getattr(action, 'menu_role', False):
+        if getattr(action, "menu_role", False):
             if action.menu_role == "About":
                 self.control.setMenuRole(QtGui.QAction.AboutRole)
             elif action.menu_role == "Preferences":
                 self.control.setMenuRole(QtGui.QAction.PreferencesRole)
 
-        if action.style == 'toggle':
+        if action.style == "toggle":
             self.control.setCheckable(True)
             self.control.setChecked(action.checked)
-        elif action.style == 'radio':
+        elif action.style == "radio":
             # Create an action group if it hasn't already been done.
             try:
                 ag = item.parent._qt4_ag
@@ -121,14 +126,15 @@ class _MenuItem(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_visible_changed, 'visible')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
-        action.on_trait_change(self._on_action_name_changed, 'name')
-        action.on_trait_change(self._on_action_accelerator_changed,
-                               'accelerator')
-        action.on_trait_change(self._on_action_image_changed, 'image')
-        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_visible_changed, "visible")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.on_trait_change(self._on_action_name_changed, "name")
+        action.on_trait_change(
+            self._on_action_accelerator_changed, "accelerator"
+        )
+        action.on_trait_change(self._on_action_image_changed, "image")
+        action.on_trait_change(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -139,20 +145,27 @@ class _MenuItem(HasTraits):
 
     def dispose(self):
         action = self.item.action
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled',
-            remove=True)
-        action.on_trait_change(self._on_action_visible_changed, 'visible',
-            remove=True)
-        action.on_trait_change(self._on_action_checked_changed, 'checked',
-            remove=True)
-        action.on_trait_change(self._on_action_name_changed, 'name',
-            remove=True)
-        action.on_trait_change(self._on_action_accelerator_changed,
-            'accelerator', remove=True)
-        action.on_trait_change(self._on_action_image_changed, 'image',
-            remove=True)
-        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip',
-            remove=True)
+        action.on_trait_change(
+            self._on_action_enabled_changed, "enabled", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_visible_changed, "visible", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_checked_changed, "checked", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_name_changed, "name", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_accelerator_changed, "accelerator", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_image_changed, "image", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_tooltip_changed, "tooltip", remove=True
+        )
 
     ###########################################################################
     # Private interface.
@@ -170,7 +183,7 @@ class _MenuItem(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = action.style in ['radio', 'toggle']
+        is_checkable = action.style in ["radio", "toggle"]
 
         # Perform the action!
         if self.controller is not None:
@@ -291,15 +304,16 @@ class _Tool(HasTraits):
     # 'object' interface.
     ###########################################################################
 
-    def __init__(self, parent, tool_bar, image_cache, item, controller,
-                 show_labels):
+    def __init__(
+        self, parent, tool_bar, image_cache, item, controller, show_labels
+    ):
         """ Creates a new tool bar tool for an action item. """
 
         self.item = item
         self.tool_bar = tool_bar
         action = item.action
 
-        if action.style == 'widget':
+        if action.style == "widget":
             widget = action.create_control(tool_bar)
             self.control = tool_bar.addWidget(widget)
         elif action.image is None:
@@ -316,10 +330,10 @@ class _Tool(HasTraits):
         self.control.setEnabled(action.enabled)
         self.control.setVisible(action.visible)
 
-        if action.style == 'toggle':
+        if action.style == "toggle":
             self.control.setCheckable(True)
             self.control.setChecked(action.checked)
-        elif action.style == 'radio':
+        elif action.style == "radio":
             # Create an action group if it hasn't already been done.
             try:
                 ag = item.parent._qt4_ag
@@ -338,14 +352,15 @@ class _Tool(HasTraits):
 
         # Listen for trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_visible_changed, 'visible')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
-        action.on_trait_change(self._on_action_name_changed, 'name')
-        action.on_trait_change(self._on_action_accelerator_changed,
-                               'accelerator')
-        action.on_trait_change(self._on_action_image_changed, 'image')
-        action.on_trait_change(self._on_action_tooltip_changed, 'tooltip')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_visible_changed, "visible")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
+        action.on_trait_change(self._on_action_name_changed, "name")
+        action.on_trait_change(
+            self._on_action_accelerator_changed, "accelerator"
+        )
+        action.on_trait_change(self._on_action_image_changed, "image")
+        action.on_trait_change(self._on_action_tooltip_changed, "tooltip")
 
         # Detect if the control is destroyed.
         self.control.destroyed.connect(self._qt4_on_destroyed)
@@ -483,36 +498,39 @@ class _PaletteTool(HasTraits):
 
         if action.style == "widget":
             raise NotImplementedError(
-                "Qt does not support widgets in palettes")
+                "Qt does not support widgets in palettes"
+            )
 
         # Tool palette tools never have '...' at the end.
-        if label.endswith('...'):
+        if label.endswith("..."):
             label = label[:-3]
 
         # And they never contain shortcuts.
-        label = label.replace('&', '')
+        label = label.replace("&", "")
 
         image = action.image.create_image()
         path = action.image.absolute_path
         bmp = image_cache.get_bitmap(path)
 
-        kind    = action.style
+        kind = action.style
         tooltip = action.tooltip
         longtip = action.description
 
         if not show_labels:
-            label = ''
+            label = ""
 
         # Add the tool to the tool palette.
-        self.tool_id = tool_palette.add_tool(label, bmp, kind, tooltip,longtip)
+        self.tool_id = tool_palette.add_tool(
+            label, bmp, kind, tooltip, longtip
+        )
         tool_palette.toggle_tool(self.tool_id, action.checked)
         tool_palette.enable_tool(self.tool_id, action.enabled)
         tool_palette.on_tool_event(self.tool_id, self._on_tool)
 
         # Listen to the trait changes on the action (so that we can update its
         # enabled/disabled/checked state etc).
-        action.on_trait_change(self._on_action_enabled_changed, 'enabled')
-        action.on_trait_change(self._on_action_checked_changed, 'checked')
+        action.on_trait_change(self._on_action_enabled_changed, "enabled")
+        action.on_trait_change(self._on_action_checked_changed, "checked")
 
         return
 
@@ -532,7 +550,7 @@ class _PaletteTool(HasTraits):
     def _on_action_checked_changed(self, action, trait_name, old, new):
         """ Called when the checked trait is changed on an action. """
 
-        if action.style == 'radio':
+        if action.style == "radio":
             # If we're turning this one on, then we need to turn all the others
             # off.  But if we're turning this one off, don't worry about the
             # others.
@@ -554,7 +572,7 @@ class _PaletteTool(HasTraits):
         action = self.item.action
         action_event = ActionEvent()
 
-        is_checkable = (action.style == 'radio' or action.style == 'check')
+        is_checkable = action.style == "radio" or action.style == "check"
 
         # Perform the action!
         action.checked = self.tool_palette.get_tool_state(self.tool_id) == 1

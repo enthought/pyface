@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Enthought library imports.
@@ -29,7 +29,6 @@ class Window(MWindow, Widget):
     interface for the API documentation.
     """
 
-
     #### 'IWindow' interface ##################################################
 
     position = Property(Tuple)
@@ -42,9 +41,9 @@ class Window(MWindow, Widget):
 
     activated = Event
 
-    closed =  Event
+    closed = Event
 
-    closing =  Event
+    closing = Event
 
     deactivated = Event
 
@@ -91,7 +90,7 @@ class Window(MWindow, Widget):
         old = self._position
         self._position = position
 
-        self.trait_property_changed('position', old, position)
+        self.trait_property_changed("position", old, position)
 
     def _get_size(self):
         """ Property getter for size. """
@@ -104,6 +103,7 @@ class Window(MWindow, Widget):
         old = self._size
         self._size = size
 
-        self.trait_property_changed('size', old, size)
+        self.trait_property_changed("size", old, size)
+
 
 #### EOF ######################################################################

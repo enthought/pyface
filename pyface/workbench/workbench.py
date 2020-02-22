@@ -33,6 +33,7 @@ class Workbench(HasTraits):
     any number of workbench windows.
 
     """
+
     #### 'IWorkbench' interface ###############################################
 
     # The active workbench window (the last one to get focus).
@@ -42,14 +43,14 @@ class Workbench(HasTraits):
     editor_manager = Instance(IEditorManager)
 
     # The optional application scripting manager.
-    script_manager = Instance('apptools.appscripting.api.IScriptManager')
+    script_manager = Instance("apptools.appscripting.api.IScriptManager")
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
     state_location = Unicode
 
     # The optional undo manager.
-    undo_manager = Instance('apptools.undo.api.IUndoManager')
+    undo_manager = Instance("apptools.undo.api.IUndoManager")
 
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
@@ -122,11 +123,11 @@ class Workbench(HasTraits):
         # NOTE: 'activated' is not fired on a window when the window first
         # opens and gets focus. It is only fired when the window comes from
         # lower in the stack to be the active window.
-        window.on_trait_change(self._on_window_activated, 'activated')
-        window.on_trait_change(self._on_window_opening, 'opening')
-        window.on_trait_change(self._on_window_opened, 'opened')
-        window.on_trait_change(self._on_window_closing, 'closing')
-        window.on_trait_change(self._on_window_closed, 'closed')
+        window.on_trait_change(self._on_window_activated, "activated")
+        window.on_trait_change(self._on_window_opening, "opening")
+        window.on_trait_change(self._on_window_opened, "opened")
+        window.on_trait_change(self._on_window_closing, "closing")
+        window.on_trait_change(self._on_window_closed, "closed")
 
         # Event notification.
         self.window_created = WindowEvent(window=window)
@@ -146,7 +147,7 @@ class Workbench(HasTraits):
 
         """
 
-        logger.debug('**** exiting the workbench ****')
+        logger.debug("**** exiting the workbench ****")
 
         # Event notification.
         self.exiting = event = Vetoable()
@@ -174,7 +175,7 @@ class Workbench(HasTraits):
             exited = False
 
         if not exited:
-            logger.debug('**** exit of the workbench vetoed ****')
+            logger.debug("**** exit of the workbench vetoed ****")
 
         return exited
 
@@ -213,17 +214,17 @@ class Workbench(HasTraits):
 
         return self.active_window.confirm(message, title, cancel, default)
 
-    def information(self, message, title='Information'):
+    def information(self, message, title="Information"):
         """ Convenience method to show an information message dialog. """
 
         return self.active_window.information(message, title)
 
-    def warning(self, message, title='Warning'):
+    def warning(self, message, title="Warning"):
         """ Convenience method to show a warning message dialog. """
 
         return self.active_window.warning(message, title)
 
-    def error(self, message, title='Error'):
+    def error(self, message, title="Error"):
         """ Convenience method to show an error message dialog. """
 
         return self.active_window.error(message, title)
@@ -240,15 +241,15 @@ class Workbench(HasTraits):
         # It would be preferable to base this on GUI.state_location.
         state_location = os.path.join(
             ETSConfig.application_home,
-            'pyface',
-            'workbench',
-            ETSConfig.toolkit
+            "pyface",
+            "workbench",
+            ETSConfig.toolkit,
         )
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)
 
-        logger.debug('workbench state location is %s', state_location)
+        logger.debug("workbench state location is %s", state_location)
 
         return state_location
 
@@ -309,13 +310,13 @@ class Workbench(HasTraits):
     def _restore_window_layout(self, window):
         """ Restore the window layout. """
 
-        filename = os.path.join(self.state_location, 'window_memento')
+        filename = os.path.join(self.state_location, "window_memento")
         if os.path.exists(filename):
             try:
                 # If the memento class itself has been modified then there
                 # is a chance that the unpickle will fail. If so then we just
                 # carry on as if there was no memento!
-                f = open(filename, 'rb')
+                f = open(filename, "rb")
                 memento = six.moves.cPickle.load(f)
                 f.close()
 
@@ -326,7 +327,7 @@ class Workbench(HasTraits):
             # If *anything* goes wrong then simply log the error and carry on
             # with no memento!
             except:
-                logger.exception('restoring window layout from %s', filename)
+                logger.exception("restoring window layout from %s", filename)
 
         return
 
@@ -334,7 +335,7 @@ class Workbench(HasTraits):
         """ Save the window layout. """
 
         # Save the window layout.
-        f = open(os.path.join(self.state_location, 'window_memento'), 'wb')
+        f = open(os.path.join(self.state_location, "window_memento"), "wb")
         six.moves.cPickle.dump(window.get_memento(), f)
         f.close()
 
@@ -345,7 +346,7 @@ class Workbench(HasTraits):
     def _on_window_activated(self, window, trait_name, event):
         """ Dynamic trait change handler. """
 
-        logger.debug('window %s activated', window)
+        logger.debug("window %s activated", window)
 
         self.active_window = window
 
@@ -418,5 +419,6 @@ class Workbench(HasTraits):
             self.exited = self
 
         return
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -42,7 +42,6 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-
     #### 'IApplicationWindow' interface #######################################
 
     icon = Instance(ImageResource)
@@ -65,7 +64,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # that by doing that traits never knows that the trait has been set and
     # hence always returns the default value! Using a trait initializer method
     # seems to work however (e.g. 'def _size_default'). Hmmmm....
-##     size = (800, 600)
+    ##     size = (800, 600)
 
     title = Unicode("Pyface")
 
@@ -75,11 +74,11 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
-        #sizer = wx.BoxSizer(wx.HORIZONTAL)
-        #panel.SetSize((4000, 1400))
-        #sizer.SetSizeHints(panel)
-        #panel.SetSizer(sizer)
-        panel.SetBackgroundColour('blue')
+        # sizer = wx.BoxSizer(wx.HORIZONTAL)
+        # panel.SetSize((4000, 1400))
+        # sizer.SetSizeHints(panel)
+        # panel.SetSizer(sizer)
+        panel.SetBackgroundColour("blue")
 
         return panel
 
@@ -100,14 +99,12 @@ class ApplicationWindow(MApplicationWindow, Window):
         if len(tool_bar_managers) > 0:
             for tool_bar_manager in reversed(tool_bar_managers):
                 tool_bar = tool_bar_manager.create_tool_bar(parent, aui=True)
-                self._add_toolbar_to_aui_manager(
-                    tool_bar
-                )
+                self._add_toolbar_to_aui_manager(tool_bar)
             self._aui_manager.Update()
 
     def _set_window_icon(self):
         if self.icon is None:
-            icon = ImageResource('application.ico')
+            icon = ImageResource("application.ico")
         else:
             icon = self.icon
 
@@ -152,13 +149,17 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_control(self, parent):
 
-        style = wx.DEFAULT_FRAME_STYLE \
-                | wx.FRAME_NO_WINDOW_MENU \
-                | wx.CLIP_CHILDREN
+        style = (
+            wx.DEFAULT_FRAME_STYLE | wx.FRAME_NO_WINDOW_MENU | wx.CLIP_CHILDREN
+        )
 
         control = wx.Frame(
-            parent, -1, self.title, style=style, size=self.size,
-            pos=self.position
+            parent,
+            -1,
+            self.title,
+            style=style,
+            size=self.size,
+            pos=self.position,
         )
 
         # Mac/Win needs this, otherwise background color is black
@@ -248,12 +249,13 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.remove_status_bar(self.control)
             self._create_status_bar(self.control)
 
-    @on_trait_change('tool_bar_manager, tool_bar_managers')
+    @on_trait_change("tool_bar_manager, tool_bar_managers")
     def _update_tool_bar_managers(self):
         if self.control is not None:
             self._create_tool_bar(self.control)
 
     def _icon_changed(self):
         self._set_window_icon()
+
 
 #### EOF ######################################################################

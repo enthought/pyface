@@ -53,7 +53,7 @@ class TraitsUIWidgetAction(Action):
         control : toolkit control
             A toolkit control or None.
         """
-        ui = self.edit_traits(kind='subpanel', parent=parent)
+        ui = self.edit_traits(kind="subpanel", parent=parent)
         control = ui.control
         control._ui = ui
         return control
@@ -66,6 +66,6 @@ class TraitsUIWidgetAction(Action):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model is not None:
-            context = {'object': self.model, 'action': self}
+            context = {"object": self.model, "action": self}
             return context
         return super(TraitsUIWidgetAction, self).trait_context()

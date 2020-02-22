@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -26,6 +26,7 @@ from pyface.tasks.api import Editor
 from i_python_editor import IPythonEditor
 from pyface.key_pressed_event import KeyPressedEvent
 
+
 @provides(IPythonEditor)
 class PythonEditor(Editor):
     """ The toolkit specific implementation of a PythonEditor.  See the
@@ -40,9 +41,9 @@ class PythonEditor(Editor):
 
     dirty = Bool(False)
 
-    name = Property(Unicode, depends_on='path')
+    name = Property(Unicode, depends_on="path")
 
-    tooltip = Property(Unicode, depends_on='path')
+    tooltip = Property(Unicode, depends_on="path")
 
     show_line_numbers = Bool(True)
 
@@ -56,7 +57,7 @@ class PythonEditor(Editor):
         return self.path
 
     def _get_name(self):
-        return basename(self.path) or 'Untitled'
+        return basename(self.path) or "Untitled"
 
     ###########################################################################
     # 'PythonEditor' interface.
@@ -73,11 +74,11 @@ class PythonEditor(Editor):
 
         # We will have no path for a new script.
         if len(path) > 0:
-            f = open(self.path, 'r')
+            f = open(self.path, "r")
             text = f.read()
             f.close()
         else:
-            text = ''
+            text = ""
 
         self.control.code.setPlainText(text)
         self.dirty = False
@@ -88,7 +89,7 @@ class PythonEditor(Editor):
         if path is None:
             path = self.path
 
-        f = open(path, 'w')
+        f = open(path, "w")
         f.write(self.control.code.toPlainText())
         f.close()
 
@@ -98,8 +99,9 @@ class PythonEditor(Editor):
         """ Selects the specified line.
         """
         self.control.code.set_line_column(lineno, 0)
-        self.control.code.moveCursor(QtGui.QTextCursor.EndOfLine,
-                                     QtGui.QTextCursor.KeepAnchor)
+        self.control.code.moveCursor(
+            QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
+        )
 
     ###########################################################################
     # Trait handlers.
@@ -112,7 +114,8 @@ class PythonEditor(Editor):
     def _show_line_numbers_changed(self):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
-                self.show_line_numbers)
+                self.show_line_numbers
+            )
             self.control.code.update_line_number_width()
 
     ###########################################################################
@@ -123,6 +126,7 @@ class PythonEditor(Editor):
         """ Creates the toolkit-specific control for the widget.
         """
         from pyface.ui.qt4.code_editor.code_widget import AdvancedCodeWidget
+
         self.control = control = AdvancedCodeWidget(parent)
         self._show_line_numbers_changed()
 
@@ -164,13 +168,19 @@ class PythonEditorEventFilter(QtCore.QObject):
     def eventFilter(self, obj, event):
         """ Reimplemented to trap key presses.
         """
-        if self.__editor.control and obj == self.__editor.control and \
-               event.type() == QtCore.QEvent.FocusOut:
+        if (
+            self.__editor.control
+            and obj == self.__editor.control
+            and event.type() == QtCore.QEvent.FocusOut
+        ):
             # Hack for Traits UI compatibility.
             self.__editor.control.lostFocus.emit()
 
-        elif self.__editor.control and obj == self.__editor.control.code and \
-               event.type() == QtCore.QEvent.KeyPress:
+        elif (
+            self.__editor.control
+            and obj == self.__editor.control.code
+            and event.type() == QtCore.QEvent.KeyPress
+        ):
             # Pyface doesn't seem to be Unicode aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = event.text()
@@ -181,13 +191,18 @@ class PythonEditorEventFilter(QtCore.QObject):
 
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = event)
+                alt_down=(
+                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                ),
+                control_down=(
+                    (mods & QtCore.Qt.ControlModifier)
+                    == QtCore.Qt.ControlModifier
+                ),
+                shift_down=(
+                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                ),
+                key_code=kcode,
+                event=event,
+            )
 
         return super(PythonEditorEventFilter, self).eventFilter(obj, event)

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The node manager looks after a collection of node types. """
 
 # Standard library imports.
@@ -53,7 +53,7 @@ class NodeManager(HasPrivateTraits):
         # nodes that change type dynamically then we will obviously have to
         # re-think this (although we should probably re-think dynamic type
         # changes first ;^).
-        self._node_to_type_map = {} # { Any node : NodeType node_type }
+        self._node_to_type_map = {}  # { Any node : NodeType node_type }
 
         return
 
@@ -101,7 +101,7 @@ class NodeManager(HasPrivateTraits):
                 node_type = None
 
         if node_type is None:
-            logger.warn('no node type for %s' % str(node))
+            logger.warn("no node type for %s" % str(node))
 
         return node_type
 
@@ -134,5 +134,6 @@ class NodeManager(HasPrivateTraits):
             node_type.node_manager = self
 
         return
+
 
 #### EOF ######################################################################

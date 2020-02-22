@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought resource package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Resource references. """
 
 
@@ -30,7 +30,7 @@ class ResourceReference(HasTraits):
     """
 
     # The resource factory that will be used to load the resource.
-    resource_factory = Instance(ResourceFactory) # ReadOnly
+    resource_factory = Instance(ResourceFactory)  # ReadOnly
 
     ###########################################################################
     # 'ResourceReference' interface.
@@ -46,12 +46,11 @@ class ImageReference(ResourceReference):
     """ A reference to an image resource. """
 
     # Iff the image was found in a file then this is the name of that file.
-    filename = Any # ReadOnly
+    filename = Any  # ReadOnly
 
     # Iff the image was found in a zip file then this is the image data that
     # was read from the zip file.
-    data = Any # ReadOnly
-
+    data = Any  # ReadOnly
 
     def __init__(self, resource_factory, filename=None, data=None):
         """ Creates a new image reference. """
@@ -79,5 +78,6 @@ class ImageReference(ResourceReference):
             raise ValueError("Image reference has no filename OR data")
 
         return image
+
 
 #### EOF ######################################################################

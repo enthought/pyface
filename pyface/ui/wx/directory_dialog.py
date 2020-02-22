@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -34,7 +34,6 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     """ The toolkit specific implementation of a DirectoryDialog.  See the
     IDirectoryDialog interface for the API documentation.
     """
-
 
     #### 'IDirectoryDialog' interface #########################################
 
@@ -83,7 +82,9 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
             message = "Choose a directory"
 
         # Create the actual dialog.
-        return wx.DirDialog(parent, message=message,
-                defaultPath=self.default_path, style=style)
+        return wx.DirDialog(
+            parent, message=message, defaultPath=self.default_path, style=style
+        )
+
 
 #### EOF ######################################################################

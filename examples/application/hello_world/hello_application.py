@@ -50,8 +50,8 @@ def main():
 
     parser = argparse.ArgumentParser(description=app.description)
     parser.add_argument(
-        'location',
-        nargs='?',
+        "location",
+        nargs="?",
         default=app.location,
         help="the location to greet",
     )
@@ -60,5 +60,5 @@ def main():
     app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -57,6 +57,7 @@ class EventLoopHelper(HasStrictTraits):
         -----
             `timeout` is rounded to the nearest millisecond.
         """
+
         def repeat_loop(condition, repeat):
             # We sendPostedEvents to ensure that enaml events are processed
             self.qt_app.sendPostedEvents()
@@ -71,7 +72,8 @@ class EventLoopHelper(HasStrictTraits):
         condition = threading.Event()
         self.gui.invoke_later(repeat_loop, repeat=repeat, condition=condition)
         self.event_loop_until_condition(
-            condition=condition.is_set, timeout=timeout)
+            condition=condition.is_set, timeout=timeout
+        )
 
     def event_loop(self, repeat=1):
         """Emulates an event loop `repeat` times with
@@ -107,6 +109,7 @@ class EventLoopHelper(HasStrictTraits):
         -----
             `timeout` is rounded to the nearest millisecond.
         """
+
         def handler():
             if condition():
                 self.qt_app.quit()
@@ -126,7 +129,8 @@ class EventLoopHelper(HasStrictTraits):
                 self.qt_app.exec_()
                 if not condition():
                     raise ConditionTimeoutError(
-                        'Timed out waiting for condition')
+                        "Timed out waiting for condition"
+                    )
             finally:
                 timeout_timer.stop()
                 condition_timer.stop()
@@ -160,4 +164,5 @@ class EventLoopHelper(HasStrictTraits):
         if not timer.isActive():
             # We exited the event loop on timeout
             raise ConditionTimeoutError(
-                'Could not destroy widget before timeout: {!r}'.format(widget))
+                "Could not destroy widget before timeout: {!r}".format(widget)
+            )

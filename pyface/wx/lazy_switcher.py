@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Classes to provide a switcher. """
 
 
@@ -32,7 +32,7 @@ class SwitcherModel(HasTraits):
         """ Creates a new switcher model. """
 
         # The items to display in the switcher control.
-        self.items = [] # (str label, object value)
+        self.items = []  # (str label, object value)
 
         return
 
@@ -65,7 +65,7 @@ class SwitcherControl(wx.Panel):
         self._create_widget(model, label)
 
         # Listen for when the selected item in the model is changed.
-        model.on_trait_change(self._on_selected_changed, 'selected')
+        model.on_trait_change(self._on_selected_changed, "selected")
 
         return
 
@@ -126,9 +126,7 @@ class SwitcherControl(wx.Panel):
 
         # Combo.
         self.combo = combo = wx.ComboBox(
-            parent,
-            -1,
-            style=wx.CB_DROPDOWN | wx.CB_READONLY
+            parent, -1, style=wx.CB_DROPDOWN | wx.CB_READONLY
         )
         sizer.Add(combo, 1, wx.EXPAND | wx.ALIGN_CENTER | wx.ALL, 5)
 
@@ -173,7 +171,7 @@ class SwitcherPanel(wxScrolledPanel):
         self._create_widget(model, label)
 
         # Listen for when the selected item in the model is changed.
-        #model.on_trait_change(self._on_selected_changed, 'selected')
+        # model.on_trait_change(self._on_selected_changed, 'selected')
 
         return
 
@@ -211,7 +209,7 @@ class SwitcherPanel(wxScrolledPanel):
         self.SetAutoLayout(True)
         ##self.SetBackgroundColour('red')
 
-        #if model.selected != -1:
+        # if model.selected != -1:
         #    self._show_page(model.selected)
 
         # Nothing to add here as we add the panel contents lazily!
@@ -240,7 +238,7 @@ class SwitcherPanel(wxScrolledPanel):
             # Add it to the cache!
             self._page_cache[index] = page
 
-        #if self.current is not None:
+        # if self.current is not None:
         #    page.SetSize(current_size)
 
         # Display the page.
@@ -252,8 +250,8 @@ class SwitcherPanel(wxScrolledPanel):
         # Force a new layout of the sizer's children but KEEPING the current
         # dimension.
         self.sizer.Layout()
-        #self.sizer.Fit(self)
-        #self.SetupScrolling()
+        # self.sizer.Fit(self)
+        # self.SetupScrolling()
 
         return
 
@@ -298,5 +296,6 @@ class Switcher(wx.Panel):
         sizer.Fit(self)
 
         return
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2019, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,10 +10,10 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The spin field widget. """
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
 
-SpinField = toolkit_object('fields.spin_field:SpinField')
+SpinField = toolkit_object("fields.spin_field:SpinField")

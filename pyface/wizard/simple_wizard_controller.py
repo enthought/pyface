@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ SimpleWizardController is deprecated.  Use WizardController instead. """
 
 
@@ -18,4 +18,5 @@
 from .wizard_controller import WizardController
 
 
-class SimpleWizardController(WizardController): pass
+class SimpleWizardController(WizardController):
+    pass

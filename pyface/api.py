@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 from __future__ import absolute_import
 
@@ -62,7 +62,8 @@ from .multi_toolbar_window import MultiToolbarWindow
 
 # This code isn't toolkit widget code, but is wx-specific
 from traits.etsconfig.api import ETSConfig
-if ETSConfig.toolkit == 'wx':
+
+if ETSConfig.toolkit == "wx":
 
     # Fix for broken Pycrust introspect module.
     # XXX move this somewhere better? - CJW 2017

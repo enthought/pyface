@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The handler used to restore editors.
 """
@@ -55,7 +55,7 @@ class EditorSetStructureHandler(SetStructureHandler):
         """ Resolves an unresolved dock control id. """
 
         window_layout = self.window_layout
-        window        = window_layout.window
+        window = window_layout.window
 
         try:
             # Get the memento for the editor with this Id.
@@ -75,7 +75,7 @@ class EditorSetStructureHandler(SetStructureHandler):
             window.editors.append(editor)
 
         except:
-            logger.warn('could not restore editor [%s]', id)
+            logger.warn("could not restore editor [%s]", id)
             control = None
 
         return control
@@ -93,8 +93,9 @@ class EditorSetStructureHandler(SetStructureHandler):
 
         editor_memento = self.editor_mementos.get(id)
         if editor_memento is None:
-            raise ValueError('no editor memento with Id %s' % id)
+            raise ValueError("no editor memento with Id %s" % id)
 
         return editor_memento
+
 
 #### EOF ######################################################################
