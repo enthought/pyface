@@ -20,7 +20,7 @@
 from __future__ import absolute_import
 
 import wx
-from numpy import array, fromstring, reshape, ravel, dtype
+from numpy import array, frombuffer, reshape, ravel, dtype
 
 from traits.api import Bool, Str, Range, Enum, Instance, Event
 
@@ -220,7 +220,7 @@ class ImageButton ( Widget ):
             if disabled:
                 if self._mono_image is None:
                     img  = self._img
-                    data = reshape(fromstring(img.GetData(), dtype('uint8')),
+                    data = reshape(frombuffer(img.GetData(), dtype('uint8')),
                                    (-1, 3)) * array([[ 0.297, 0.589, 0.114 ]])
                     g = data[ :, 0 ] + data[ :, 1 ] + data[ :, 2 ]
                     data[ :, 0 ] = data[ :, 1 ] = data[ :, 2 ] = g
