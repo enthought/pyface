@@ -11,7 +11,6 @@
 """ A grid (spreadsheet) widget. """
 
 
-from __future__ import print_function
 import wx
 from wx.grid import Grid as wxGrid
 

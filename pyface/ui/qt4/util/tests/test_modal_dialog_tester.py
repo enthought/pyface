@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 """ Tests for the tabular editor tester. """
-from __future__ import absolute_import
+
 
 import unittest
 from io import StringIO

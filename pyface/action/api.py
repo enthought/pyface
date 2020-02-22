@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
 
 from .action import Action
 from .action_controller import ActionController

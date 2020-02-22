@@ -10,7 +10,7 @@
 
 """ Tools for testing. """
 
-from __future__ import print_function
+
 from contextlib import contextmanager
 import os
 import sys

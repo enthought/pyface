@@ -10,7 +10,6 @@
 
 """A dialog that is loaded from an XRC resource file.
 """
-from __future__ import absolute_import
 
 
 import os.path

@@ -10,7 +10,7 @@
 """
 Qt-specific tests for the Qt GUI implementation.
 """
-from __future__ import absolute_import
+
 
 import unittest
 

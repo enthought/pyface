@@ -14,7 +14,6 @@ wxPython's wxStyledTextCtrl. The latest files are always available at the
 SourceForge project page at http://sourceforge.net/projects/pycrust/.
 Sponsored by Orbtech - Your source for Python programming expertise."""
 
-from __future__ import print_function
 
 __author__ = "Patrick K. O'Brien <pobrien@orbtech.com>"
 __cvsid__ = "$Id: shell.py,v 1.2 2003/06/13 17:59:34 dmorrill Exp $"

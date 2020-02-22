@@ -17,7 +17,6 @@
 """ The base class for all pyface wizards. """
 
 
-from __future__ import print_function
 from pyface.qt import QtCore, QtGui
 
 

@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A cached image list. """
-from __future__ import absolute_import
 
 
 import wx

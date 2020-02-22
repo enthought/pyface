@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ An MDI top-level application window. """
-from __future__ import absolute_import
 
 
 import wx

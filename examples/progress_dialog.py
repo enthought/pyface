@@ -1,7 +1,7 @@
 #
 # simple example of its use
 #
-from __future__ import print_function
+
 
 import time
 from pyface.api import GUI, ApplicationWindow, ProgressDialog

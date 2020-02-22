@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import print_function
+
 from wx.grid import (
     Grid,
     PyGridTableBase,

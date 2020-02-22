@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ Dialog example. """
-from __future__ import print_function
 
 
 import os, sys

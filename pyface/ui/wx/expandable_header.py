@@ -11,7 +11,6 @@
 """ A header for an entry in a collection of expandables. The header
 provides a visual indicator of the current state, a text label, and a
 'remove' button. """
-from __future__ import absolute_import
 
 
 import wx

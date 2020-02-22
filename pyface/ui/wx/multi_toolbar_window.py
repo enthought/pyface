@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A top-level application window that supports multiple toolbars. """
-from __future__ import absolute_import
 
 
 import wx

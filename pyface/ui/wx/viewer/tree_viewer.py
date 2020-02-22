@@ -11,7 +11,6 @@
 """ A viewer based on a tree control. """
 
 
-from __future__ import print_function
 import wx
 
 
