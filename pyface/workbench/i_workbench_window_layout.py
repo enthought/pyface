@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The workbench window layout interface. """
 
 
@@ -37,7 +37,7 @@ class IWorkbenchWindowLayout(Interface):
     editor_area_id = Str
 
     # The workbench window that this is the layout for.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     #### Events ####
 
@@ -214,6 +214,7 @@ class IWorkbenchWindowLayout(Interface):
 @provides(IWorkbenchWindowLayout)
 class MWorkbenchWindowLayout(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
+
     #### 'IWorkbenchWindowLayout' interface ###################################
 
     # The Id of the editor area.
@@ -221,7 +222,7 @@ class MWorkbenchWindowLayout(HasTraits):
     editor_area_id = Str
 
     # The workbench window that this is the layout for.
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     #### Events ####
 
@@ -387,5 +388,6 @@ class MWorkbenchWindowLayout(HasTraits):
                 editor_references[editor.id] = editor_reference
 
         return editor_references
+
 
 #### EOF ######################################################################

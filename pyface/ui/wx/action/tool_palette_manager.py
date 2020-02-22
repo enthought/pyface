@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ A tool bar manager realizes itself in a tool palette control.
 """
@@ -89,18 +89,16 @@ class ToolPaletteManager(ActionManager):
         for group in self.groups:
             if len(group.items) > 0:
                 # Is a separator required?
-## FIXME : Does the palette need the notion of a separator?
-##                 if previous_non_empty_group is not None and group.separator:
-##                     tool_bar.AddSeparator()
-##
-##                 previous_non_empty_group = group
+                ## FIXME : Does the palette need the notion of a separator?
+                ##                 if previous_non_empty_group is not None and group.separator:
+                ##                     tool_bar.AddSeparator()
+                ##
+                ##                 previous_non_empty_group = group
 
                 # Create a tool bar tool for each item in the group.
                 for item in group.items:
                     control_id = item.add_to_palette(
-                        tool_palette,
-                        self._image_cache,
-                        self.show_tool_names
+                        tool_palette, self._image_cache, self.show_tool_names
                     )
                     item.control_id = control_id
 
@@ -121,8 +119,10 @@ class ToolPaletteManager(ActionManager):
             for item in group.items:
                 # If the group is a radio group,  set the initial checked state
                 # of every tool in it.
-                if item.action.style == 'radio':
-                    tool_palette.toggle_tool(item.control_id, item.action.checked)
+                if item.action.style == "radio":
+                    tool_palette.toggle_tool(
+                        item.control_id, item.action.checked
+                    )
                     checked = checked or item.action.checked
 
                 # Every item in a radio group MUST be 'radio' style, so we
@@ -138,5 +138,6 @@ class ToolPaletteManager(ActionManager):
                     group.items[0].action.checked = True
 
         return
+
 
 #### EOF ######################################################################

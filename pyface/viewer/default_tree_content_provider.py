@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The default tree content provider. """
 
 
@@ -55,7 +55,7 @@ class DefaultTreeContentProvider(TreeContentProvider):
         index, child = parent.insert_before(before, child)
 
         # Trait notification.
-        #self.items_inserted(parent, [index], [child])
+        # self.items_inserted(parent, [index], [child])
 
         return (index, child)
 
@@ -65,7 +65,7 @@ class DefaultTreeContentProvider(TreeContentProvider):
         parent.insert(index, child)
 
         # Trait notification.
-        #self.items_inserted(parent, [index], [child])
+        # self.items_inserted(parent, [index], [child])
 
         return child
 
@@ -76,7 +76,7 @@ class DefaultTreeContentProvider(TreeContentProvider):
         parent.remove(child)
 
         # Trait notification.
-        #self.items_removed(parent, [index], [child])
+        # self.items_removed(parent, [index], [child])
 
         return child
 
@@ -88,5 +88,6 @@ class DefaultTreeContentProvider(TreeContentProvider):
         """ Creates a new item. """
 
         return TreeItem(**kw)
+
 
 #### EOF ####################################################################

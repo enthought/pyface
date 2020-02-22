@@ -23,13 +23,13 @@ class TaskToggleAction(Action):
     #### 'Action' interface ###################################################
 
     #: The user-visible name of the action, matches the task name.
-    name = Property(Unicode, depends_on='task.name')
+    name = Property(Unicode, depends_on="task.name")
 
     #: The action is a toggle menu item.
-    style = 'toggle'
+    style = "toggle"
 
     #: The tooltip to display for the menu item.
-    tooltip = Property(Unicode, depends_on='name')
+    tooltip = Property(Unicode, depends_on="name")
 
     #### 'TaskActivateAction' interface #######################################
 
@@ -57,13 +57,13 @@ class TaskToggleAction(Action):
 
     def _get_name(self):
         if self.task is None:
-            return 'UNDEFINED'
+            return "UNDEFINED"
         return self.task.name
 
     def _get_tooltip(self):
-        return u'Switch to the %s task.' % self.name
+        return u"Switch to the %s task." % self.name
 
-    @on_trait_change('task.window.active_task')
+    @on_trait_change("task.window.active_task")
     def _update_checked(self):
         if self.task:
             window = self.task.window
@@ -78,7 +78,7 @@ class TaskToggleGroup(Group):
 
     #### 'ActionManager' interface ############################################
 
-    id = 'TaskToggleGroup'
+    id = "TaskToggleGroup"
     items = List
 
     #### 'TaskChangeMenuManager' interface ####################################
@@ -98,9 +98,8 @@ class TaskToggleGroup(Group):
         if len(self.window.tasks) > 1:
             # at least two tasks, so something to toggle
             items = [
-                ActionItem(
-                    action=TaskToggleAction(task=task),
-                ) for task in self.window.tasks
+                ActionItem(action=TaskToggleAction(task=task))
+                for task in self.window.tasks
             ]
         return items
 
@@ -115,7 +114,7 @@ class TaskToggleGroup(Group):
     #### Trait initializers ###################################################
 
     def _items_default(self):
-        self.window.on_trait_change(self._rebuild, 'tasks[]')
+        self.window.on_trait_change(self._rebuild, "tasks[]")
         return self._get_items()
 
     def _manager_default(self):

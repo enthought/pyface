@@ -64,7 +64,7 @@ class TraitsUIEditor(Editor):
 
         # Give the traits UI a chance to clean itself up.
         if self.ui is not None:
-            logger.debug('disposing traits UI for editor [%s]', self)
+            logger.debug("disposing traits UI for editor [%s]", self)
             self.ui.dispose()
             self.ui = None
 
@@ -83,9 +83,10 @@ class TraitsUIEditor(Editor):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel'
+            parent=parent, view=self.view, kind="subpanel"
         )
 
         return ui
+
 
 #### EOF ######################################################################

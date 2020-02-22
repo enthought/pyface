@@ -25,4 +25,5 @@ class KeyPressedEvent(HasTraits):
     #: The original toolkit specific event.
     event = Any
 
+
 #### EOF ######################################################################

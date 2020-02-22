@@ -7,11 +7,11 @@ from ..split_panel import SplitPanel
 from ..toolkit import toolkit_object
 from ..window import Window
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestHeadingText(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -42,7 +42,7 @@ class TestHeadingText(unittest.TestCase, GuiTestAssistant):
         # test that horizontal split works
         with self.event_loop():
             self.widget = SplitPanel(
-                self.window.control, direction='horizontal'
+                self.window.control, direction="horizontal"
             )
         with self.event_loop():
             self.widget.destroy()

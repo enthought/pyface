@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The wx implementation of the workbench window layout interface.
 """
@@ -32,8 +32,7 @@ from pyface.dock.api import DockSizer
 from traits.api import Delegate
 
 # Mixin class imports.
-from pyface.workbench.i_workbench_window_layout import \
-     MWorkbenchWindowLayout
+from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 
 # Local imports.
 from .editor_set_structure_handler import EditorSetStructureHandler
@@ -46,10 +45,10 @@ logger = logging.getLogger(__name__)
 
 # Mapping from view position to the appropriate dock window constant.
 _POSITION_MAP = {
-    'top'    : DOCK_TOP,
-    'bottom' : DOCK_BOTTOM,
-    'left'   : DOCK_LEFT,
-    'right'  : DOCK_RIGHT
+    "top": DOCK_TOP,
+    "bottom": DOCK_BOTTOM,
+    "left": DOCK_LEFT,
+    "right": DOCK_RIGHT,
 }
 
 
@@ -62,7 +61,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     #### 'IWorkbenchWindowLayout' interface ###################################
 
-    editor_area_id = Delegate('window')
+    editor_area_id = Delegate("window")
 
     ###########################################################################
     # 'IWorkbenchWindowLayout' interface.
@@ -95,7 +94,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             self._wx_add_editor(editor, title)
 
         except Exception:
-            logger.exception('error creating editor control <%s>', editor.id)
+            logger.exception("error creating editor control <%s>", editor.id)
 
         return editor
 
@@ -107,7 +106,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view.visible = True
 
         except Exception:
-            logger.exception('error creating view control <%s>', view.id)
+            logger.exception("error creating view control <%s>", view.id)
 
             # Even though we caught the exception, it sometimes happens that
             # the view's control has been created as a child of the application
@@ -116,7 +115,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view.destroy_control()
 
             # Additionally, display an error message to the user.
-            self.window.error('Unable to add view %s' % view.id)
+            self.window.error("Unable to add view %s" % view.id)
 
         return view
 
@@ -159,12 +158,12 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Nest the editor dock window in the view dock window.
         editor_dock_window_control = DockControl(
-            id      = self.editor_area_id,
-            name    = 'Editors',
-            control = self._wx_editor_dock_window.control,
-            style   = 'fixed',
-            width   = self.window.editor_area_size[0],
-            height  = self.window.editor_area_size[1],
+            id=self.editor_area_id,
+            name="Editors",
+            control=self._wx_editor_dock_window.control,
+            style="fixed",
+            width=self.window.editor_area_size[0],
+            height=self.window.editor_area_size[1],
         )
 
         view_dock_window_sizer = DockSizer(
@@ -329,11 +328,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         controls = self._wx_editor_dock_window.get_controls()
         if len(controls) == 0:
             # Get a reference to the empty editor section.
-            sizer   = self._wx_editor_dock_window.control.GetSizer()
+            sizer = self._wx_editor_dock_window.control.GetSizer()
             section = sizer.GetContents()
 
             # Add a region containing the editor dock control.
-            region  = DockRegion(contents=[editor_dock_control])
+            region = DockRegion(contents=[editor_dock_control])
             section.contents = [region]
 
         # Otherwise, add the editor to the same region as the first editor
@@ -362,7 +361,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # Create a dock control that contains the view.
         dock_control = self._wx_create_view_dock_control(view)
 
-        if position == 'with':
+        if position == "with":
             # Does the item we are supposed to be positioned 'with' actual
             # exist?
             with_item = self._wx_view_dock_window.get_control(relative_to.id)
@@ -373,10 +372,12 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             # Otherwise, just fall back to the 'left' of the editor area.
             else:
-                self._wx_add_view_relative(dock_control, None, 'left', size)
+                self._wx_add_view_relative(dock_control, None, "left", size)
 
         else:
-            self._wx_add_view_relative(dock_control,relative_to,position,size)
+            self._wx_add_view_relative(
+                dock_control, relative_to, position, size
+            )
 
         return
 
@@ -407,7 +408,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._wx_set_item_size(dock_control, size)
 
         # The parent of a dock control is a dock region.
-        region  = relative_to_item.parent
+        region = relative_to_item.parent
         section = region.parent
         section.add(dock_control, region, _POSITION_MAP[position])
 
@@ -419,7 +420,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # Find the item that we are adding the view 'with'.
         with_item = self._wx_view_dock_window.get_control(with_obj.id)
         if with_item is None:
-            raise ValueError('Cannot find item %s' % with_obj)
+            raise ValueError("Cannot find item %s" % with_obj)
 
         # The parent of a dock control is a dock region.
         with_item.parent.add(dock_control)
@@ -430,7 +431,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Sets the size of a dock control. """
 
         window_width, window_height = self.window.control.GetSize().Get()
-        width,        height        = size
+        width, height = size
 
         if width != -1:
             dock_control.width = int(window_width * width)
@@ -447,14 +448,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Wrap a dock control around it.
         editor_dock_control = DockControl(
-            id        = editor.id,
-            name      = editor.name,
-            closeable = True,
-            control   = editor.control,
-            style     = 'tab',
+            id=editor.id,
+            name=editor.name,
+            closeable=True,
+            control=editor.control,
+            style="tab",
             # fixme: Create a subclass of dock control and give it a proper
             # editor trait!
-            _editor   = editor
+            _editor=editor,
         )
 
         # Hook up the 'on_close' and trait change handlers etc.
@@ -479,17 +480,17 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # Wrap a dock control around it.
         view_dock_control = DockControl(
-            id        = view.id,
-            name      = view.name,
+            id=view.id,
+            name=view.name,
             # fixme: We would like to make views closeable, but closing via the
             # tab is different than calling show(False, layout=True) on the
             # control! If we use a close handler can we change that?!?
-            closeable = closeable,
-            control   = control,
-            style     = view.style_hint,
+            closeable=closeable,
+            control=control,
+            style=view.style_hint,
             # fixme: Create a subclass of dock control and give it a proper
             # view trait!
-            _view     = view
+            _view=view,
         )
 
         # Hook up the 'on_close' and trait change handlers etc.
@@ -547,7 +548,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             return
 
-        self._wx_add_focus_listeners(editor.control,on_set_focus,on_kill_focus)
+        self._wx_add_focus_listeners(
+            editor.control, on_set_focus, on_kill_focus
+        )
 
         return
 
@@ -617,11 +620,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         # register event handlers.  The exception messages complain that
         # the passed control is a str object instead of a wx object.
         if on_set_focus is not None:
-            #control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
+            # control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
             control.Bind(wx.EVT_SET_FOCUS, on_set_focus)
 
         if on_kill_focus is not None:
-            #control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
+            # control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
             control.Bind(wx.EVT_KILL_FOCUS, on_kill_focus)
 
         for child in control.GetChildren():
@@ -649,10 +652,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         editor_dock_control.set_name(editor.name)
 
         # fixme: Should we roll the traits UI stuff into the default editor.
-        if hasattr(editor, 'ui') and editor.ui is not None:
+        if hasattr(editor, "ui") and editor.ui is not None:
             from traitsui.dockable_view_element import DockableViewElement
+
             # This makes the control draggable outside of the main window.
-            #editor_dock_control.export = 'pyface.workbench.editor'
+            # editor_dock_control.export = 'pyface.workbench.editor'
             editor_dock_control.dockable = DockableViewElement(
                 should_close=True, ui=editor.ui
             )
@@ -663,20 +667,20 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor_dock_control.id = editor.id
             return
 
-        editor.on_trait_change(on_id_changed, 'id')
+        editor.on_trait_change(on_id_changed, "id")
 
         def on_name_changed(editor, trait_name, old, new):
             editor_dock_control.set_name(editor.name)
             return
 
-        editor.on_trait_change(on_name_changed, 'name')
+        editor.on_trait_change(on_name_changed, "name")
 
         def on_activated_changed(editor_dock_control, trait_name, old, new):
             if editor_dock_control._editor is not None:
                 editor_dock_control._editor.set_focus()
             return
 
-        editor_dock_control.on_trait_change(on_activated_changed, 'activated')
+        editor_dock_control.on_trait_change(on_activated_changed, "activated")
 
         return
 
@@ -700,10 +704,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view_dock_control.set_name(view.name)
 
         # fixme: Should we roll the traits UI stuff into the default editor.
-        if hasattr(view, 'ui') and view.ui is not None:
+        if hasattr(view, "ui") and view.ui is not None:
             from traitsui.dockable_view_element import DockableViewElement
+
             # This makes the control draggable outside of the main window.
-            #view_dock_control.export = 'pyface.workbench.view'
+            # view_dock_control.export = 'pyface.workbench.view'
 
             # If the ui's 'view' trait has an 'export' field set, pass that on
             # to the dock control. This makes the control detachable from the
@@ -720,20 +725,20 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view_dock_control.id = view.id
             return
 
-        view.on_trait_change(on_id_changed, 'id')
+        view.on_trait_change(on_id_changed, "id")
 
         def on_name_changed(view, trait_name, old, new):
             view_dock_control.set_name(view.name)
             return
 
-        view.on_trait_change(on_name_changed, 'name')
+        view.on_trait_change(on_name_changed, "name")
 
         def on_activated_changed(view_dock_control, trait_name, old, new):
             if view_dock_control._view is not None:
                 view_dock_control._view.set_focus()
             return
 
-        view_dock_control.on_trait_change(on_activated_changed, 'activated')
+        view_dock_control.on_trait_change(on_activated_changed, "activated")
 
         return
 
@@ -746,14 +751,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         if old is not None:
             old.on_trait_change(
-                self._wx_on_editor_area_size_changed, 'editor_area_size',
-                remove=True
+                self._wx_on_editor_area_size_changed,
+                "editor_area_size",
+                remove=True,
             )
-
 
         if new is not None:
             new.on_trait_change(
-                self._wx_on_editor_area_size_changed, 'editor_area_size',
+                self._wx_on_editor_area_size_changed, "editor_area_size"
             )
 
     #### Dynamic ####
@@ -768,7 +773,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         # We actually resize the region that the editor area is in.
         region = control.parent
-        region.width  = int(new[0] * window_width)
+        region.width = int(new[0] * window_width)
         region.height = int(new[1] * window_height)
         return
 
@@ -780,7 +785,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         view = self.window.get_view_by_id(dock_control.id)
         if view is not None:
-            logger.debug('workbench destroying view control <%s>', view)
+            logger.debug("workbench destroying view control <%s>", view)
             try:
                 view.visible = False
 
@@ -789,7 +794,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 self.view_closed = view
 
             except:
-                logger.exception('error destroying view control <%s>', view)
+                logger.exception("error destroying view control <%s>", view)
 
         return True
 
@@ -799,11 +804,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         dock_control._editor = None
         editor = self.window.get_editor_by_id(dock_control.id)
 
-##         import weakref
-##         editor_ref = weakref.ref(editor)
+        ##         import weakref
+        ##         editor_ref = weakref.ref(editor)
 
         if editor is not None:
-            logger.debug('workbench destroying editor control <%s>', editor)
+            logger.debug("workbench destroying editor control <%s>", editor)
             try:
                 # fixme: We would like this event to be vetoable, but it isn't
                 # just yet (we will need to modify the dock window package).
@@ -812,21 +817,24 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 self.editor_closed = editor
 
             except:
-                logger.exception('error destroying editor control <%s>',editor)
+                logger.exception(
+                    "error destroying editor control <%s>", editor
+                )
 
-##         import gc
-##         gc.collect()
+        ##         import gc
+        ##         gc.collect()
 
-##         print 'Editor references', len(gc.get_referrers(editor))
-##         for r in gc.get_referrers(editor):
-##             print '********************************************'
-##             print type(r), id(r), r
+        ##         print 'Editor references', len(gc.get_referrers(editor))
+        ##         for r in gc.get_referrers(editor):
+        ##             print '********************************************'
+        ##             print type(r), id(r), r
 
-##         del editor
-##         gc.collect()
+        ##         del editor
+        ##         gc.collect()
 
-##         print 'Is editor gone?', editor_ref() is None, 'ref', editor_ref()
+        ##         print 'Is editor gone?', editor_ref() is None, 'ref', editor_ref()
 
         return True
+
 
 #### EOF ######################################################################

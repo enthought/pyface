@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Base class for workbench dock windows.
 """
@@ -25,6 +25,7 @@ from pyface.dock.api import DockGroup, DockRegion, DockWindow
 
 
 logger = logging.getLogger(__name__)
+
 
 class WorkbenchDockWindow(DockWindow):
     """ Base class for workbench dock windows.
@@ -62,11 +63,11 @@ class WorkbenchDockWindow(DockWindow):
 
         control = self.get_control(id)
         if control is not None:
-            logger.debug('activating control <%s>', id)
+            logger.debug("activating control <%s>", id)
             control.activate()
 
         else:
-            logger.debug('no control <%s> to activate', id)
+            logger.debug("no control <%s> to activate", id)
 
         return
 
@@ -80,11 +81,11 @@ class WorkbenchDockWindow(DockWindow):
 
         control = self.get_control(id)
         if control is not None:
-            logger.debug('closing control <%s>', id)
+            logger.debug("closing control <%s>", id)
             control.close()
 
         else:
-            logger.debug('no control <%s> to close', id)
+            logger.debug("no control <%s> to close", id)
 
         return
 
@@ -107,7 +108,7 @@ class WorkbenchDockWindow(DockWindow):
     def get_controls(self, visible_only=True):
         """ Returns all of the dock controls in the window. """
 
-        sizer   = self.control.GetSizer()
+        sizer = self.control.GetSizer()
         section = sizer.GetContents()
 
         return section.get_controls(visible_only=visible_only)
@@ -135,7 +136,7 @@ class WorkbenchDockWindow(DockWindow):
     def reset_regions(self):
         """ Activates the first dock control in every region. """
 
-        sizer   = self.control.GetSizer()
+        sizer = self.control.GetSizer()
         section = sizer.GetContents()
 
         for region in self.get_regions(section):
@@ -151,5 +152,6 @@ class WorkbenchDockWindow(DockWindow):
         sizer.SetStructure(self.control.GetParent(), structure, handler)
 
         return
+
 
 #### EOF ######################################################################

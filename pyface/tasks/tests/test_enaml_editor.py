@@ -4,7 +4,7 @@ from traits.etsconfig.api import ETSConfig
 
 # Skip tests if Enaml is not installed or we're using the wx backend.
 SKIP_REASON = None
-if ETSConfig.toolkit not in ['', 'qt4']:
+if ETSConfig.toolkit not in ["", "qt4"]:
     SKIP_REASON = "Enaml does not support WX"
 else:
     try:
@@ -32,6 +32,7 @@ class DummyStrEditor(EnamlEditor):
     def create_component(self):
         return Label(text=self.obj)
 
+
 @unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
@@ -41,7 +42,7 @@ class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
-        self.obj = 'test message'
+        self.obj = "test message"
         self.editor = DummyStrEditor(obj=self.obj)
         with self.event_loop():
             self.editor.create(None)

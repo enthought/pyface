@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Mulit-tool bar example. """
 
 
@@ -18,13 +18,14 @@
 import os, sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # FIXME: This is a hack to disable the AUI module which causes the example to
 # not layout correctly.
 try:
     import wx
-    sys.modules['wx.aui'] = None
+
+    sys.modules["wx.aui"] = None
 except:
     pass
 
@@ -50,36 +51,35 @@ class MainWindow(MultiToolbarWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                Action(name="E&xit", on_perform=self.close), name="&File"
             )
         )
 
         # Add a menu bar at each location.
         self.add_tool_bar(
-            ToolBarManager(Action(name='Foo'), orientation='horizontal')
+            ToolBarManager(Action(name="Foo"), orientation="horizontal")
         )
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Bar'), orientation='horizontal'),
-            location = 'bottom'
+            ToolBarManager(Action(name="Bar"), orientation="horizontal"),
+            location="bottom",
         )
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Baz'), orientation='vertical'),
-            location = 'left'
+            ToolBarManager(Action(name="Baz"), orientation="vertical"),
+            location="left",
         )
 
         self.add_tool_bar(
-            ToolBarManager(Action(name='Buz'), orientation='vertical'),
-            location = 'right'
+            ToolBarManager(Action(name="Buz"), orientation="vertical"),
+            location="right",
         )
 
         return
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

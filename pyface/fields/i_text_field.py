@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The text field interface. """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from traits.api import Bool, Enum, HasTraits, Unicode
@@ -29,13 +32,13 @@ class ITextField(IField):
     value = Unicode
 
     #: Should the text trait be updated on user edits, or when done editing.
-    update_text = Enum('auto', 'editing_finished')
+    update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
     placeholder = Unicode
 
     #: Display typed text, or one of several hidden "password" modes.
-    echo = Enum('normal', 'password')
+    echo = Enum("normal", "password")
 
     #: Whether or not the field is read-only.
     read_only = Bool
@@ -48,13 +51,13 @@ class MTextField(HasTraits):
     value = Unicode
 
     #: Should the value be updated on every keystroke, or when done editing.
-    update_text = Enum('auto', 'editing_finished')
+    update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
     placeholder = Unicode
 
     #: Display typed text, or one of several hidden "password" modes.
-    echo = Enum('normal', 'password')
+    echo = Enum("normal", "password")
 
     #: Whether or not the field is read-only.
     read_only = Bool
@@ -74,15 +77,18 @@ class MTextField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MTextField, self)._add_event_listeners()
-        self.on_trait_change(self._update_text_updated, 'update_text',
-                             dispatch='ui')
-        self.on_trait_change(self._placeholder_updated, 'placeholder',
-                             dispatch='ui')
-        self.on_trait_change(self._echo_updated, 'echo', dispatch='ui')
-        self.on_trait_change(self._read_only_updated, 'read_only',
-                             dispatch='ui')
+        self.on_trait_change(
+            self._update_text_updated, "update_text", dispatch="ui"
+        )
+        self.on_trait_change(
+            self._placeholder_updated, "placeholder", dispatch="ui"
+        )
+        self.on_trait_change(self._echo_updated, "echo", dispatch="ui")
+        self.on_trait_change(
+            self._read_only_updated, "read_only", dispatch="ui"
+        )
         if self.control is not None:
-            if self.update_text == 'editing_finished':
+            if self.update_text == "editing_finished":
                 self._observe_control_editing_finished()
             else:
                 self._observe_control_value()
@@ -90,18 +96,28 @@ class MTextField(HasTraits):
     def _remove_event_listeners(self):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
-            if self.update_text == 'editing_finished':
+            if self.update_text == "editing_finished":
                 self._observe_control_editing_finished(remove=True)
             else:
                 self._observe_control_value(remove=True)
-        self.on_trait_change(self._update_text_updated, 'update_text',
-                             dispatch='ui', remove=True)
-        self.on_trait_change(self._placeholder_updated, 'placeholder',
-                             dispatch='ui', remove=True)
-        self.on_trait_change(self._echo_updated, 'echo', dispatch='ui',
-                             remove=True)
-        self.on_trait_change(self._read_only_updated, 'read_only',
-                             dispatch='ui', remove=True)
+        self.on_trait_change(
+            self._update_text_updated,
+            "update_text",
+            dispatch="ui",
+            remove=True,
+        )
+        self.on_trait_change(
+            self._placeholder_updated,
+            "placeholder",
+            dispatch="ui",
+            remove=True,
+        )
+        self.on_trait_change(
+            self._echo_updated, "echo", dispatch="ui", remove=True
+        )
+        self.on_trait_change(
+            self._read_only_updated, "read_only", dispatch="ui", remove=True
+        )
         super(MTextField, self)._remove_event_listeners()
 
     def _editing_finished(self):
@@ -156,7 +172,7 @@ class MTextField(HasTraits):
     def _update_text_updated(self, new):
         """ Change how we listen to for updates to text value. """
         if self.control is not None:
-            if new == 'editing_finished':
+            if new == "editing_finished":
                 self._observe_control_value(remove=True)
                 self._observe_control_editing_finished()
             else:

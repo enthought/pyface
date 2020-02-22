@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2016, Enthought Inc
 # All rights reserved.
 #
@@ -6,7 +6,7 @@
 #
 # Author: Enthought Inc
 # Description: <Enthought pyface code editor>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Standard library imports.
 import unittest
@@ -20,7 +20,10 @@ from pyface.qt.QtTest import QTest
 
 
 # Local imports.
-from pyface.ui.qt4.code_editor.code_widget import CodeWidget, AdvancedCodeWidget
+from pyface.ui.qt4.code_editor.code_widget import (
+    CodeWidget,
+    AdvancedCodeWidget,
+)
 
 
 class TestCodeWidget(unittest.TestCase):
@@ -33,7 +36,7 @@ class TestCodeWidget(unittest.TestCase):
 
     def test_readonly_editor(self):
         cw = CodeWidget(None)
-        text = 'Some\nText'
+        text = "Some\nText"
         cw.setPlainText(text)
 
         def check(typed, expected):
@@ -44,23 +47,24 @@ class TestCodeWidget(unittest.TestCase):
             self.assertEqual(cw.toPlainText(), expected)
 
         cw.setReadOnly(True)
-        check('More', text)
+        check("More", text)
 
         cw.setReadOnly(False)
-        check('Extra', 'Extra' + text)
+        check("Extra", "Extra" + text)
 
     def test_readonly_replace_widget(self):
         acw = AdvancedCodeWidget(None)
-        text = 'Some\nText'
+        text = "Some\nText"
         acw.code.setPlainText(text)
         acw.show()
 
         # On some platforms, Find/Replace do not have default keybindings
-        FindKey = QtGui.QKeySequence('Ctrl+F')
-        ReplaceKey = QtGui.QKeySequence('Ctrl+H')
-        patcher_find = mock.patch('pyface.qt.QtGui.QKeySequence.Find', FindKey)
-        patcher_replace = mock.patch('pyface.qt.QtGui.QKeySequence.Replace',
-                                     ReplaceKey)
+        FindKey = QtGui.QKeySequence("Ctrl+F")
+        ReplaceKey = QtGui.QKeySequence("Ctrl+H")
+        patcher_find = mock.patch("pyface.qt.QtGui.QKeySequence.Find", FindKey)
+        patcher_replace = mock.patch(
+            "pyface.qt.QtGui.QKeySequence.Replace", ReplaceKey
+        )
         patcher_find.start()
         patcher_replace.start()
         self.addCleanup(patcher_find.stop)
@@ -76,7 +80,8 @@ class TestCodeWidget(unittest.TestCase):
                 return False
             key = QtCore.Qt.Key(first_key & ~QtCore.Qt.KeyboardModifierMask)
             modifier = QtCore.Qt.KeyboardModifier(
-                first_key & QtCore.Qt.KeyboardModifierMask)
+                first_key & QtCore.Qt.KeyboardModifierMask
+            )
             QTest.keyClick(widget, key, modifier)
             return True
 
@@ -101,5 +106,5 @@ class TestCodeWidget(unittest.TestCase):
         self.assertFalse(acw.replace.isVisible())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

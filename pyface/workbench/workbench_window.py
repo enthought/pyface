@@ -40,7 +40,7 @@ class WorkbenchWindow(ApplicationWindow):
     selection = List
 
     # The workbench that the window belongs to.
-    workbench = Instance('pyface.workbench.api.IWorkbench')
+    workbench = Instance("pyface.workbench.api.IWorkbench")
 
     #### Editors #######################
 
@@ -51,23 +51,23 @@ class WorkbenchWindow(ApplicationWindow):
     editors = List(IEditor)
 
     # The Id of the editor area.
-    editor_area_id = Constant('pyface.workbench.editors')
+    editor_area_id = Constant("pyface.workbench.editors")
 
     # The (initial) size of the editor area (the user is free to resize it of
     # course).
     editor_area_size = Tuple((100, 100))
 
     # Fired when an editor is about to be opened (or restored).
-    editor_opening = Delegate('layout') # Event(IEditor)
+    editor_opening = Delegate("layout")  # Event(IEditor)
 
     # Fired when an editor has been opened (or restored).
-    editor_opened = Delegate('layout')  # Event(IEditor)
+    editor_opened = Delegate("layout")  # Event(IEditor)
 
     # Fired when an editor is about to be closed.
-    editor_closing = Delegate('layout') # Event(IEditor)
+    editor_closing = Delegate("layout")  # Event(IEditor)
 
     # Fired when an editor has been closed.
-    editor_closed = Delegate('layout')  # Event(IEditor)
+    editor_closed = Delegate("layout")  # Event(IEditor)
 
     #### Views #########################
 
@@ -135,7 +135,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('window %s opening', self)
+        logger.debug("window %s opening", self)
 
         # Trait notification.
         self.opening = event = Vetoable()
@@ -148,10 +148,10 @@ class WorkbenchWindow(ApplicationWindow):
             # Trait notification.
             self.opened = self
 
-            logger.debug('window %s opened', self)
+            logger.debug("window %s opened", self)
 
         else:
-            logger.debug('window %s open was vetoed', self)
+            logger.debug("window %s open was vetoed", self)
 
         # fixme: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
@@ -168,7 +168,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         """
 
-        logger.debug('window %s closing', self)
+        logger.debug("window %s closing", self)
 
         if self.control is not None:
             # Trait notification.
@@ -193,13 +193,13 @@ class WorkbenchWindow(ApplicationWindow):
                 # Trait notification.
                 self.closed = self
 
-                logger.debug('window %s closed', self)
+                logger.debug("window %s closed", self)
 
             else:
-                logger.debug('window %s close was vetoed', self)
+                logger.debug("window %s close was vetoed", self)
 
         else:
-            logger.debug('window %s is not open', self)
+            logger.debug("window %s is not open", self)
 
         # FIXME v3: This is not actually part of the Pyface 'Window' API (but
         # maybe it should be). We return this to indicate whether the window
@@ -370,7 +370,7 @@ class WorkbenchWindow(ApplicationWindow):
         editor = self.create_editor(obj, kind)
 
         if editor is None:
-            logger.warn('no editor for object %s', obj)
+            logger.warn("no editor for object %s", obj)
 
         self.add_editor(editor)
         self.activate_editor(editor)
@@ -505,11 +505,13 @@ class WorkbenchWindow(ApplicationWindow):
 
         # Remove all perspective mementos (except user perspectives).
         for id in self._memento.perspective_mementos.keys():
-            if not id.startswith('__user_perspective'):
+            if not id.startswith("__user_perspective"):
                 del self._memento.perspective_mementos[id]
 
         # Re-display the active perspective.
-        self._show_perspective(self.active_perspective,self.active_perspective)
+        self._show_perspective(
+            self.active_perspective, self.active_perspective
+        )
 
         return
 
@@ -569,7 +571,7 @@ class WorkbenchWindow(ApplicationWindow):
         self._memento.perspective_mementos[self.active_perspective.id] = (
             self.layout.get_view_memento(),
             self.active_view and self.active_view.id or None,
-            self.layout.is_editor_area_visible()
+            self.layout.is_editor_area_visible(),
         )
 
         # The layout of the editor area.
@@ -623,14 +625,12 @@ class WorkbenchWindow(ApplicationWindow):
             # If a default perspective was specified then we prefer that over
             # any other perspective.
             self._get_default_perspective,
-
             # If there was no default perspective then try the perspective that
             # was active the last time the application was run.
             self._get_previous_perspective,
-
             # If there was no previous perspective, then try the first one that
             # we know about.
-            self._get_first_perspective
+            self._get_first_perspective,
         ]
 
         for method in methods:
@@ -640,7 +640,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # If we have no known perspectives, make a new blank one up.
         else:
-            logger.warn('no known perspectives - creating a new one')
+            logger.warn("no known perspectives - creating a new one")
             perspective = Perspective()
 
         return perspective
@@ -658,7 +658,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn('default perspective %s no longer available', id)
+                logger.warn("default perspective %s no longer available", id)
 
         else:
             perspective = None
@@ -678,7 +678,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn('previous perspective %s no longer available', id)
+                logger.warn("previous perspective %s no longer available", id)
 
         else:
             perspective = None
@@ -729,7 +729,7 @@ class WorkbenchWindow(ApplicationWindow):
         self._memento.perspective_mementos[perspective.id] = (
             self.layout.get_view_memento(),
             self.active_view and self.active_view.id or None,
-            self.layout.is_editor_area_visible()
+            self.layout.is_editor_area_visible(),
         )
 
         return
@@ -820,7 +820,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_perspective_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active perspective changed from <%s> to <%s>', old, new)
+        logger.debug("active perspective changed from <%s> to <%s>", old, new)
 
         # Hide the old perspective...
         if old is not None:
@@ -835,7 +835,7 @@ class WorkbenchWindow(ApplicationWindow):
     def _active_editor_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active editor changed from <%s> to <%s>', old, new)
+        logger.debug("active editor changed from <%s> to <%s>", old, new)
         self.active_part = new
 
         return
@@ -849,14 +849,14 @@ class WorkbenchWindow(ApplicationWindow):
         else:
             self.selection = new.selection
 
-        logger.debug('active part changed from <%s> to <%s>', old, new)
+        logger.debug("active part changed from <%s> to <%s>", old, new)
 
         return
 
     def _active_view_changed(self, old, new):
         """ Static trait change handler. """
 
-        logger.debug('active view changed from <%s> to <%s>', old, new)
+        logger.debug("active view changed from <%s> to <%s>", old, new)
         self.active_part = new
 
         return
@@ -889,7 +889,7 @@ class WorkbenchWindow(ApplicationWindow):
 
     #### Dynamic ####
 
-    @on_trait_change('layout.editor_closed')
+    @on_trait_change("layout.editor_closed")
     def _on_editor_closed(self, editor):
         """ Dynamic trait change handler. """
 
@@ -913,33 +913,34 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    @on_trait_change('editors.has_focus')
+    @on_trait_change("editors.has_focus")
     def _on_editor_has_focus_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        if trait_name == 'has_focus' and new:
+        if trait_name == "has_focus" and new:
             self.active_editor = obj
 
         return
 
-    @on_trait_change('views.has_focus')
+    @on_trait_change("views.has_focus")
     def _has_focus_changed_for_view(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        if trait_name == 'has_focus' and new:
+        if trait_name == "has_focus" and new:
             self.active_view = obj
 
         return
 
-    @on_trait_change('views.visible')
+    @on_trait_change("views.visible")
     def _visible_changed_for_view(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        if trait_name == 'visible':
+        if trait_name == "visible":
             if not new:
                 if obj is self.active_view:
                     self.active_view = None
 
         return
+
 
 #### EOF ######################################################################

@@ -1,11 +1,11 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #  Copyright (c) 2005-2006 by Enthought, Inc.
 #  All rights reserved.
 #
 #  Author: David C. Morrill <dmorrill@enthought.com>
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """ An action that deletes a user perspective. """
 
 
@@ -22,10 +22,10 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'pyface.workbench.action.delete_user_perspective_action'
+    id = "pyface.workbench.action.delete_user_perspective_action"
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = 'Delete Perspective'
+    name = "Delete Perspective"
 
     ###########################################################################
     # 'Action' interface.
@@ -34,17 +34,19 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # The perspective to delete.
         perspective = window.active_perspective
 
         # Make sure that the user isn't having second thoughts!
-        message = 'Are you sure you want to delete the "%s" perspective?' % \
-                  perspective.name
+        message = (
+            'Are you sure you want to delete the "%s" perspective?'
+            % perspective.name
+        )
 
-        answer = window.confirm(message, title='Confirm Delete')
+        answer = window.confirm(message, title="Confirm Delete")
         if answer == YES:
             # Set the active perspective to be the first remaining perspective.
             #
@@ -75,5 +77,6 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
             index = 0
 
         return window.perspectives[index]
+
 
 #### EOF #####################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The PyQt specific implementation of a menu manager. """
 
 
@@ -67,13 +67,15 @@ class MenuManager(ActionManager, ActionManagerItem):
         submenu.menuAction().setText(self.name)
         menu.addMenu(submenu)
 
-    def add_to_toolbar(self, parent, tool_bar, image_cache, controller,
-                       show_labels=True):
+    def add_to_toolbar(
+        self, parent, tool_bar, image_cache, controller, show_labels=True
+    ):
         """ Adds the item to a tool bar. """
         menu = self.create_menu(parent, controller)
         if self.action:
             tool_action = _Tool(
-                parent, tool_bar, image_cache, self, controller, show_labels).control
+                parent, tool_bar, image_cache, self, controller, show_labels
+            ).control
             tool_action.setMenu(menu)
         else:
             tool_action = menu.menuAction()
@@ -81,8 +83,11 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         tool_action.setText(self.name)
         tool_button = tool_bar.widgetForAction(tool_action)
-        tool_button.setPopupMode(tool_button.MenuButtonPopup if self.action
-                                 else tool_button.InstantPopup)
+        tool_button.setPopupMode(
+            tool_button.MenuButtonPopup
+            if self.action
+            else tool_button.InstantPopup
+        )
 
 
 class _Menu(QtGui.QMenu):
@@ -114,11 +119,11 @@ class _Menu(QtGui.QMenu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.on_trait_change(self.refresh, 'changed')
-        self._manager.on_trait_change(self._on_enabled_changed, 'enabled')
-        self._manager.on_trait_change(self._on_visible_changed, 'visible')
-        self._manager.on_trait_change(self._on_name_changed, 'name')
-        self._manager.on_trait_change(self._on_image_changed, 'image')
+        self._manager.on_trait_change(self.refresh, "changed")
+        self._manager.on_trait_change(self._on_enabled_changed, "enabled")
+        self._manager.on_trait_change(self._on_visible_changed, "visible")
+        self._manager.on_trait_change(self._on_name_changed, "name")
+        self._manager.on_trait_change(self._on_image_changed, "image")
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
@@ -149,12 +154,13 @@ class _Menu(QtGui.QMenu):
         self.clear()
 
         manager = self._manager
-        parent  = self._parent
+        parent = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
-            previous_non_empty_group = self._add_group(parent, group,
-                    previous_non_empty_group)
+            previous_non_empty_group = self._add_group(
+                parent, group, previous_non_empty_group
+            )
 
         self.setEnabled(manager.enabled)
 
@@ -212,9 +218,11 @@ class _Menu(QtGui.QMenu):
                     if len(item.items) > 0:
                         self._add_group(parent, item, previous_non_empty_group)
 
-                        if previous_non_empty_group is not None \
-                           and previous_non_empty_group.separator \
-                           and item.separator:
+                        if (
+                            previous_non_empty_group is not None
+                            and previous_non_empty_group.separator
+                            and item.separator
+                        ):
                             self.addSeparator()
 
                         previous_non_empty_group = item
@@ -225,5 +233,6 @@ class _Menu(QtGui.QMenu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A tree viewer for local file systems. """
 
 
@@ -63,13 +63,13 @@ class FileTreeLabelProvider(TreeLabelProvider):
     """ A tree label provider for local file systems. """
 
     # The image used to represent folders that are NOT expanded.
-    CLOSED_FOLDER = ImageResource('closed_folder')
+    CLOSED_FOLDER = ImageResource("closed_folder")
 
     # The image used to represent folders that ARE expanded.
-    OPEN_FOLDER = ImageResource('open_folder')
+    OPEN_FOLDER = ImageResource("open_folder")
 
     # The image used to represent documents (ie. NON-'folder') elements.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
     ###########################################################################
     # 'TreeLabelProvider' interface.
@@ -110,5 +110,6 @@ class FileTreeViewer(TreeViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTreeLabelProvider, ())
+
 
 ##### EOF #####################################################################

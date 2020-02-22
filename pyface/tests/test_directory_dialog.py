@@ -7,16 +7,16 @@ from ..directory_dialog import DirectoryDialog
 from ..gui import GUI
 from ..toolkit import toolkit_object
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 ModalDialogTester = toolkit_object(
-    'util.modal_dialog_tester:ModalDialogTester'
+    "util.modal_dialog_tester:ModalDialogTester"
 )
-no_modal_dialog_tester = (ModalDialogTester.__name__ == 'Unimplemented')
+no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -50,7 +50,7 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_default_path(self):
         # test that default path works
-        self.dialog.default_path = os.path.join('images', 'core.png')
+        self.dialog.default_path = os.path.join("images", "core.png")
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -66,10 +66,10 @@ class TestDirectoryDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_message(self):
         # test that message setting works
-        self.dialog.message = 'Select a directory'
+        self.dialog.message = "Select a directory"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
             self.dialog.close()
 
-    #XXX would be nice to actually test with an open dialog, but not right now
+    # XXX would be nice to actually test with an open dialog, but not right now

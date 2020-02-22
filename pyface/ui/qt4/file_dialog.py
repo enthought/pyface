@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -32,10 +32,9 @@ class FileDialog(MFileDialog, Dialog):
     IFileDialog interface for the API documentation.
     """
 
-
     #### 'IFileDialog' interface ##############################################
 
-    action = Enum('open', 'open files', 'save as')
+    action = Enum("open", "open files", "save as")
 
     default_directory = Unicode
 
@@ -70,7 +69,7 @@ class FileDialog(MFileDialog, Dialog):
             pattern = extension
 
         else:
-            pattern = ' '.join(extension)
+            pattern = " ".join(extension)
 
         return "%s (%s)|%s|" % (description, pattern, pattern)
 
@@ -94,15 +93,16 @@ class FileDialog(MFileDialog, Dialog):
             self.path = six.text_type(files[0])
             self.paths = [six.text_type(file) for file in files]
         else:
-            self.path = ''
-            self.paths = ['']
+            self.path = ""
+            self.paths = [""]
 
         # Extract the directory and filename.
         self.directory, self.filename = os.path.split(self.path)
 
         # Get the index of the selected filter.
         self.wildcard_index = self.control.nameFilters().index(
-            self.control.selectedNameFilter())
+            self.control.selectedNameFilter()
+        )
 
         # Let the window close as normal.
         super(FileDialog, self).close()
@@ -115,18 +115,23 @@ class FileDialog(MFileDialog, Dialog):
         # If the caller provided a default path instead of a default directory
         # and filename, split the path into it directory and filename
         # components.
-        if len(self.default_path) != 0 and len(self.default_directory) == 0 \
-            and len(self.default_filename) == 0:
-            default_directory, default_filename = os.path.split(self.default_path)
+        if (
+            len(self.default_path) != 0
+            and len(self.default_directory) == 0
+            and len(self.default_filename) == 0
+        ):
+            default_directory, default_filename = os.path.split(
+                self.default_path
+            )
         else:
             default_directory = self.default_directory
             default_filename = self.default_filename
 
         # Convert the filter.
         filters = []
-        for filter_list in self.wildcard.split('|')[::2]:
+        for filter_list in self.wildcard.split("|")[::2]:
             # Qt uses spaces instead of semicolons for extension separators
-            filter_list = filter_list.replace(';', ' ')
+            filter_list = filter_list.replace(";", " ")
             filters.append(filter_list)
 
         # Set the default directory.
@@ -141,10 +146,10 @@ class FileDialog(MFileDialog, Dialog):
         if self.wildcard_index < len(filters):
             dlg.selectNameFilter(filters[self.wildcard_index])
 
-        if self.action == 'open':
+        if self.action == "open":
             dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
             dlg.setFileMode(QtGui.QFileDialog.ExistingFile)
-        elif self.action == 'open files':
+        elif self.action == "open files":
             dlg.setAcceptMode(QtGui.QFileDialog.AcceptOpen)
             dlg.setFileMode(QtGui.QFileDialog.ExistingFiles)
         else:
@@ -161,5 +166,6 @@ class FileDialog(MFileDialog, Dialog):
         """ Return the default wildcard. """
 
         return self.WILDCARD_ALL
+
 
 #### EOF ######################################################################

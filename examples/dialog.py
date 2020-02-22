@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Dialog example. """
 from __future__ import print_function
 
@@ -18,11 +18,19 @@ from __future__ import print_function
 import os, sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # Enthought library imports.
-from pyface.api import (ApplicationWindow, GUI, YES, choose_one, confirm,
-                        error, information, warning)
+from pyface.api import (
+    ApplicationWindow,
+    GUI,
+    YES,
+    choose_one,
+    confirm,
+    error,
+    information,
+    warning,
+)
 from pyface.action.api import Action, MenuBarManager, MenuManager
 
 
@@ -42,8 +50,7 @@ class MainWindow(ApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self._on_exit),
-                name = '&File',
+                Action(name="E&xit", on_perform=self._on_exit), name="&File"
             )
         )
 
@@ -58,18 +65,18 @@ class MainWindow(ApplicationWindow):
 
         parent = self.control
 
-        print(choose_one(parent, "Make a choice", ['one', 'two', 'three']))
+        print(choose_one(parent, "Make a choice", ["one", "two", "three"]))
 
-        information(parent, 'Going...')
-        warning(parent, 'Going......')
-        error(parent, 'Gone!')
+        information(parent, "Going...")
+        warning(parent, "Going......")
+        error(parent, "Gone!")
 
-        if confirm(parent, 'Should I exit?') == YES:
+        if confirm(parent, "Should I exit?") == YES:
             self.close()
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Prabhu Ramachandran <prabhu_r@users.sf.net>
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """This module adds a fix for wx.py's introspect module.
 
 In order to do code-completion, the function
@@ -32,29 +32,39 @@ import types
 import six
 
 # The fixed function.
-def getAttributeNames(object, includeMagic=1, includeSingle=1,
-                      includeDouble=1):
+def getAttributeNames(
+    object, includeMagic=1, includeSingle=1, includeDouble=1
+):
     """Return list of unique attributes, including inherited, for object."""
     attributes = []
     dict = {}
     if not introspect.hasattrAlwaysReturnsTrue(object):
         # Add some attributes that don't always get picked up.
-        special_attrs = ['__bases__', '__class__', '__dict__', '__name__',
-                         '__closure__', '__code__', '___kwdefaults__',
-                         '__doc__', '__globals__']
-        attributes += [attr for attr in special_attrs \
-                       if hasattr(object, attr)]
+        special_attrs = [
+            "__bases__",
+            "__class__",
+            "__dict__",
+            "__name__",
+            "__closure__",
+            "__code__",
+            "___kwdefaults__",
+            "__doc__",
+            "__globals__",
+        ]
+        attributes += [attr for attr in special_attrs if hasattr(object, attr)]
     # For objects that have traits, get all the trait names since
     # these do not show up in dir(object).
-    if hasattr(object, 'trait_names'):
+    if hasattr(object, "trait_names"):
         try:
             attributes += object.trait_names()
         except TypeError:
             pass
 
     if includeMagic:
-        try: attributes += object._getAttributeNames()
-        except: pass
+        try:
+            attributes += object._getAttributeNames()
+        except:
+            pass
     # Get all attribute names.
     attrdict = getAllAttributeNames(object)
     # Store the object's dir.
@@ -63,12 +73,14 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
         # This complexity is necessary to avoid accessing all the
         # attributes of the object.  This is very handy for objects
         # whose attributes are lazily evaluated.
-        if type(object).__name__ == obj_type_name and technique == 'dir':
+        if type(object).__name__ == obj_type_name and technique == "dir":
             attributes += attrlist
         else:
-            attributes += [attr for attr in attrlist \
-                           if attr not in object_dir and \
-                           hasattr(object, attr)]
+            attributes += [
+                attr
+                for attr in attrlist
+                if attr not in object_dir and hasattr(object, attr)
+            ]
 
     # Remove duplicates from the attribute list.
     for item in attributes:
@@ -76,14 +88,18 @@ def getAttributeNames(object, includeMagic=1, includeSingle=1,
     attributes = list(dict.keys())
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
-    attributes = [attribute for attribute in attributes \
-                  if isinstance(attribute, six.string_types)]
+    attributes = [
+        attribute
+        for attribute in attributes
+        if isinstance(attribute, six.string_types)
+    ]
     attributes.sort(key=lambda x: x.upper())
     if not includeSingle:
-        attributes = filter(lambda item: item[0]!='_' \
-                            or item[1]=='_', attributes)
+        attributes = filter(
+            lambda item: item[0] != "_" or item[1] == "_", attributes
+        )
     if not includeDouble:
-        attributes = filter(lambda item: item[:2]!='__', attributes)
+        attributes = filter(lambda item: item[:2] != "__", attributes)
     return attributes
 
 
@@ -108,13 +124,13 @@ def getAllAttributeNames(obj):
         # even a name.
         key = type(obj).__name__
     except:
-        key = 'anonymous'
+        key = "anonymous"
     # Wake up sleepy objects - a hack for ZODB objects in "ghost" state.
     wakeupcall = dir(obj)
     del wakeupcall
     # Get attributes available through the normal convention.
     attributes = dir(obj)
-    attrdict[(key, 'dir', len(attributes))] = attributes
+    attrdict[(key, "dir", len(attributes))] = attributes
     # Get attributes from the object's dictionary, if it has one.
     try:
         attributes = list(obj.__dict__.keys())
@@ -122,7 +138,7 @@ def getAllAttributeNames(obj):
     except:  # Must catch all because object might have __getattr__.
         pass
     else:
-        attrdict[(key, '__dict__', len(attributes))] = attributes
+        attrdict[(key, "__dict__", len(attributes))] = attributes
     # For a class instance, get the attributes for the class.
     try:
         klass = obj.__class__

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of an interactive Python shell. """
 
 
@@ -18,6 +18,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-PythonShell = toolkit_object('python_shell:PythonShell')
+
+PythonShell = toolkit_object("python_shell:PythonShell")
 
 #### EOF ######################################################################

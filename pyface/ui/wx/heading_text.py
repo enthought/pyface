@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -36,14 +36,13 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-
     #### 'IHeadingText' interface #############################################
 
     level = Int(1)
 
-    text = Unicode('Default')
+    text = Unicode("Default")
 
-    image = Instance(ImageResource, ImageResource('heading_level_1'))
+    image = Instance(ImageResource, ImageResource("heading_level_1"))
 
     ###########################################################################
     # 'object' interface.
@@ -155,5 +154,6 @@ class HeadingText(MHeadingText, Widget):
         dc.DrawText(self.text, 5, 4)
 
         return
+
 
 #### EOF ######################################################################

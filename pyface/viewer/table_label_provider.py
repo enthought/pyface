@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Base class for all table label providers. """
 
 
@@ -37,6 +37,7 @@ class TableLabelProvider(LabelProvider):
     def get_text(self, viewer, element, column_index=0):
         """ Returns the label text for an element. """
 
-        return '%s column %d' % (str(element), column_index)
+        return "%s column %d" % (str(element), column_index)
+
 
 #### EOF ######################################################################

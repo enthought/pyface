@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A table viewer for local file systems. """
 
 
@@ -24,7 +24,6 @@ from pyface.api import ImageResource
 from pyface.viewer.api import TableColumnProvider, TableContentProvider
 from pyface.viewer.api import TableLabelProvider, TableViewer
 from traits.api import Instance, Str
-
 
 
 class FileTableContentProvider(TableContentProvider):
@@ -52,10 +51,10 @@ class FileTableLabelProvider(TableLabelProvider):
     """ A table label provider for local file systems. """
 
     # The icon used to represent 'folder' elements.
-    FOLDER = ImageResource('closed_folder')
+    FOLDER = ImageResource("closed_folder")
 
     # The icon used to represent 'document' elements.
-    DOCUMENT = ImageResource('document')
+    DOCUMENT = ImageResource("document")
 
     ###########################################################################
     # 'TableLabelProvider' interface.
@@ -81,11 +80,11 @@ class FileTableLabelProvider(TableLabelProvider):
             label = basename(element)
 
         elif column_index == 1:
-            label = str(int(details.st_size) // 1000) + ' KB'
+            label = str(int(details.st_size) // 1000) + " KB"
 
         else:
             # Format is: mm/dd/yyyy HH:MM AM eg. '12/31/2004 12:00 PM'
-            label = strftime('%m/%d/%Y %I:%M %p', localtime(details.st_mtime))
+            label = strftime("%m/%d/%Y %I:%M %p", localtime(details.st_mtime))
 
         return label
 
@@ -101,7 +100,7 @@ class FileTableColumnProvider(TableColumnProvider):
         """ Creates a new column provider. """
 
         # Column labels.
-        self._column_labels = ['Name', 'Size', 'Date Modified']
+        self._column_labels = ["Name", "Size", "Date Modified"]
 
         # The number of columns.
         self.column_count = len(self._column_labels)
@@ -125,12 +124,13 @@ class FileTableColumnProvider(TableColumnProvider):
         """
 
         if column_index == 1:
-            alignment = 'right'
+            alignment = "right"
 
         else:
-            alignment = 'left'
+            alignment = "left"
 
         return alignment
+
 
 class FileTableViewer(TableViewer):
     """ A table viewer for local file systems. """
@@ -146,5 +146,6 @@ class FileTableViewer(TableViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTableLabelProvider, ())
+
 
 ##### EOF #####################################################################

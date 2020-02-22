@@ -22,9 +22,9 @@ class HistoryConsoleWidget(ConsoleWidget):
         executed and provides a readline-esque interface to this history.
     """
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # 'object' interface
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def __init__(self, *args, **kw):
         super(HistoryConsoleWidget, self).__init__(*args, **kw)
@@ -32,11 +32,11 @@ class HistoryConsoleWidget(ConsoleWidget):
         # HistoryConsoleWidget protected variables.
         self._history = []
         self._history_index = 0
-        self._history_prefix = ''
+        self._history_prefix = ""
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # 'ConsoleWidget' public interface
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def execute(self, source=None, hidden=False, interactive=False):
         """ Reimplemented to the store history.
@@ -45,7 +45,8 @@ class HistoryConsoleWidget(ConsoleWidget):
             history = self.input_buffer if source is None else source
 
         executed = super(HistoryConsoleWidget, self).execute(
-            source, hidden, interactive)
+            source, hidden, interactive
+        )
 
         if executed and not hidden:
             # Save the command unless it was an empty string or was identical
@@ -59,9 +60,9 @@ class HistoryConsoleWidget(ConsoleWidget):
 
         return executed
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # 'ConsoleWidget' abstract interface
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _up_pressed(self):
         """ Called when the up key is pressed. Returns whether to continue
@@ -73,8 +74,9 @@ class HistoryConsoleWidget(ConsoleWidget):
             # Set a search prefix based on the cursor position.
             col = self._get_input_buffer_cursor_column()
             input_buffer = self.input_buffer
-            if self._history_index == len(self._history) or \
-                    (self._history_prefix and col != len(self._history_prefix)):
+            if self._history_index == len(self._history) or (
+                self._history_prefix and col != len(self._history_prefix)
+            ):
                 self._history_index = len(self._history)
                 self._history_prefix = input_buffer[:col]
 
@@ -86,8 +88,9 @@ class HistoryConsoleWidget(ConsoleWidget):
             # search.
             cursor = self._get_prompt_cursor()
             if self._history_prefix:
-                cursor.movePosition(QtGui.QTextCursor.Right,
-                                    n=len(self._history_prefix))
+                cursor.movePosition(
+                    QtGui.QTextCursor.Right, n=len(self._history_prefix)
+                )
             else:
                 cursor.movePosition(QtGui.QTextCursor.EndOfLine)
             self._set_cursor(cursor)
@@ -112,19 +115,20 @@ class HistoryConsoleWidget(ConsoleWidget):
             # input buffer is set.)
             if self._history_prefix:
                 cursor = self._get_prompt_cursor()
-                cursor.movePosition(QtGui.QTextCursor.Right,
-                                    n=len(self._history_prefix))
+                cursor.movePosition(
+                    QtGui.QTextCursor.Right, n=len(self._history_prefix)
+                )
                 self._set_cursor(cursor)
 
             return False
 
         return True
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # 'HistoryConsoleWidget' public interface
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
-    def history_previous(self, prefix=''):
+    def history_previous(self, prefix=""):
         """ If possible, set the input buffer to a previous item in the history.
 
         Parameters:
@@ -145,7 +149,7 @@ class HistoryConsoleWidget(ConsoleWidget):
             self._history_index = index
             self.input_buffer = history
 
-    def history_next(self, prefix=''):
+    def history_next(self, prefix=""):
         """ Set the input buffer to a subsequent item in the history, or to the
         original search prefix if there is no such item.
 
@@ -164,9 +168,9 @@ class HistoryConsoleWidget(ConsoleWidget):
             history = prefix
         self.input_buffer = history
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     # 'HistoryConsoleWidget' protected interface
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _set_history(self, history, history_index=None):
         """ Replace the current history with a sequence of history items.

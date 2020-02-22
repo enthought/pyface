@@ -1,11 +1,11 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
 # This software is provided without warranty under the terms of the BSD license.
 # However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Major package imports.
 from pyface.qt import QtCore, QtGui
@@ -33,10 +33,10 @@ class ToolBarManager(ActionManager):
     image_size = Tuple((16, 16))
 
     # The toolbar name (used to distinguish multiple toolbars).
-    name = Str('ToolBar')
+    name = Str("ToolBar")
 
     # The orientation of the toolbar.
-    orientation = Enum('horizontal', 'vertical')
+    orientation = Enum("horizontal", "vertical")
 
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
@@ -87,7 +87,7 @@ class ToolBarManager(ActionManager):
         if self.show_tool_names:
             tool_bar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 
-        if self.orientation == 'horizontal':
+        if self.orientation == "horizontal":
             tool_bar.setOrientation(QtCore.Qt.Horizontal)
         else:
             tool_bar.setOrientation(QtCore.Qt.Vertical)
@@ -115,8 +115,9 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(self._separator_visibility_method(separator),
-                                          'visible')
+                    group.on_trait_change(
+                        self._separator_visibility_method(separator), "visible"
+                    )
 
                 previous_non_empty_group = group
 
@@ -127,7 +128,7 @@ class ToolBarManager(ActionManager):
                         tool_bar,
                         self._image_cache,
                         controller,
-                        self.show_tool_names
+                        self.show_tool_names,
                     )
 
         return
@@ -154,11 +155,11 @@ class _ToolBar(QtGui.QToolBar):
         self.tool_bar_manager = tool_bar_manager
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_enabled_changed, 'enabled'
+            self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
         self.tool_bar_manager.on_trait_change(
-            self._on_tool_bar_manager_visible_changed, 'visible'
+            self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         return
@@ -180,5 +181,6 @@ class _ToolBar(QtGui.QToolBar):
         self.setVisible(new)
 
         return
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ A status bar manager realizes itself in a status bar control.
 """
@@ -74,7 +74,7 @@ class StatusBarManager(HasTraits):
             message = self.messages[0]
 
         else:
-            message = ''
+            message = ""
 
         return message
 
@@ -86,10 +86,10 @@ class StatusBarManager(HasTraits):
             self.messages[0] = value
 
         else:
-            old = ''
+            old = ""
             self.messages.append(value)
 
-        self.trait_property_changed('message', old, value)
+        self.trait_property_changed("message", old, value)
 
         return
 
@@ -114,5 +114,6 @@ class StatusBarManager(HasTraits):
                 self.status_bar.SetStatusText(self.messages[i], i)
 
         return
+
 
 #### EOF ######################################################################

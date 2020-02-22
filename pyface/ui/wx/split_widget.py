@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Mix-in class for split widgets.
 """
@@ -33,10 +33,9 @@ class SplitWidget(MSplitWidget, HasTraits):
     ISPlitWidget interface for the API documentation.
     """
 
-
     #### 'ISplitWidget' interface #############################################
 
-    direction = Enum('vertical', 'vertical', 'horizontal')
+    direction = Enum("vertical", "vertical", "horizontal")
 
     ratio = Float(0.5)
 
@@ -75,7 +74,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         #
         # fixme: Notice that on the initial split, we DON'T specify the split
         # ratio.  If we do then sadly, wx won't let us move the sash 8^()
-        if self.direction == 'vertical':
+        if self.direction == "vertical":
             splitter.SplitVertically(lhs, rhs)
 
         else:
@@ -92,7 +91,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
-            if hasattr(wx, 'WindowPtr'):
+            if hasattr(wx, "WindowPtr"):
                 if not isinstance(lhs, (wx.Window, wx.WindowPtr)):
                     lhs = lhs.control
             else:
@@ -113,7 +112,7 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
-            if hasattr(wx, 'WindowPtr'):
+            if hasattr(wx, "WindowPtr"):
                 if not isinstance(rhs, (wx.Window, wx.WindowPtr)):
                     rhs = rhs.control
             else:
@@ -142,7 +141,7 @@ class SplitWidget(MSplitWidget, HasTraits):
         width, height = splitter.GetSize().Get()
 
         # Make sure that the split ratio is correct.
-        if self.direction == 'vertical':
+        if self.direction == "vertical":
             position = int(width * self.ratio)
 
         else:
@@ -152,8 +151,9 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         # Since we only care about the FIRST size event, remove ourselves as
         # a listener.
-        #splitter.Unbind(wx.EVT_SIZE)
+        # splitter.Unbind(wx.EVT_SIZE)
 
         return
+
 
 #### EOF ######################################################################

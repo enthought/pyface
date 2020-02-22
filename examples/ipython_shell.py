@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2009, Enthought, Inc.
 #  All rights reserved.
@@ -10,7 +10,7 @@
 #
 #  Thanks for using Enthought open source!
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ IPython widget example. """
 
 # Enthought library imports.
@@ -27,7 +27,7 @@ class MainWindow(ApplicationWindow):
     size = (640, 480)
 
     # The window title.
-    title = 'IPython'
+    title = "IPython"
 
     ###########################################################################
     # Protected 'IApplication' interface.
@@ -42,7 +42,7 @@ class MainWindow(ApplicationWindow):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI.
     gui = GUI()
 

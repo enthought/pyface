@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A cached image list. """
 
 
@@ -33,7 +33,7 @@ class ImageList(wx.ImageList):
         self._height = height
 
         # Cache of the indexes of the images in the list!
-        self._cache = {} # {filename : index}
+        self._cache = {}  # {filename : index}
 
         return
 
@@ -76,12 +76,12 @@ class ImageList(wx.ImageList):
         # Otherwise the icon is *actually* an icon (in our case, probably
         # related to a MIME type).
         else:
-            #image = filename
-            #self._scale(image)
-            #bmp = image.ConvertToBitmap()
-            #index = self.Add(bmp)
+            # image = filename
+            # self._scale(image)
+            # bmp = image.ConvertToBitmap()
+            # index = self.Add(bmp)
 
-            #return index
+            # return index
 
             icon = filename
 
@@ -105,9 +105,13 @@ class ImageList(wx.ImageList):
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
 
-        if image.GetWidth() != self._width or image.GetHeight()!= self._height:
+        if (
+            image.GetWidth() != self._width
+            or image.GetHeight() != self._height
+        ):
             image.Rescale(self._width, self._height)
 
         return image
+
 
 #### EOF ######################################################################

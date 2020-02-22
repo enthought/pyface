@@ -29,10 +29,12 @@ class TraitListNodeType(NodeType):
     def is_type_for(self, node):
         """ Returns True if this node type recognizes a node. """
 
-        is_type_for = isinstance(node, list) \
-                      and hasattr(node, 'object') \
-                      and isinstance(node.object, self.klass) \
-                      and node.name == self.trait_name
+        is_type_for = (
+            isinstance(node, list)
+            and hasattr(node, "object")
+            and isinstance(node.object, self.klass)
+            and node.name == self.trait_name
+        )
 
         return is_type_for
 
@@ -55,5 +57,6 @@ class TraitListNodeType(NodeType):
         """ Returns the label text for a node. """
 
         return self.text
+
 
 ##### EOF #####################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,12 +10,13 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A tree control with extensible node types. """
 
 
 # Standard library imports.
 import six
+
 if six.PY2:
     from inspect import getargspec
 else:
@@ -137,7 +138,7 @@ class NodeTree(Tree):
         """ Perform an action. """
 
         # fixme: We need a more formal event structure!
-        event.widget  = self
+        event.widget = self
         event.context = self._context
 
         # fixme: the 'perform' method without taking an event is deprecated!
@@ -184,5 +185,6 @@ class NodeTree(Tree):
             menu_manager.destroy()
 
         return
+
 
 #### EOF ######################################################################

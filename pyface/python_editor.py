@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A widget for editing Python code. """
 
 
@@ -18,6 +18,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-PythonEditor = toolkit_object('python_editor:PythonEditor')
+
+PythonEditor = toolkit_object("python_editor:PythonEditor")
 
 #### EOF ######################################################################

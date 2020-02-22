@@ -33,27 +33,23 @@ def main():
         description=(
             "An example Tasks application that provides a Python editor."
         ),
-        icon='python_icon',
-        logo='python_logo',
+        icon="python_icon",
+        logo="python_logo",
         task_factories=[
             TaskFactory(
-                id='example.python_editor_task',
+                id="example.python_editor_task",
                 name="Python Editor",
-                factory=PythonEditorTask
+                factory=PythonEditorTask,
             )
         ],
     )
 
     # get file names from arguments
     parser = argparse.ArgumentParser(description=app.description)
-    parser.add_argument(
-        'files',
-        nargs='*',
-        help="the files to open",
-    )
+    parser.add_argument("files", nargs="*", help="the files to open")
     namespace = parser.parse_args()
     if len(namespace.files) == 0:
-        namespace.files.append(u'')
+        namespace.files.append(u"")
 
     # set up callback to open files once app is up and running
     def open_files():
@@ -61,11 +57,11 @@ def main():
         for path in namespace.files:
             app.active_task.create_editor(path)
 
-    app.on_trait_change(open_files, 'application_initialized')
+    app.on_trait_change(open_files, "application_initialized")
 
     # invoke the mainloop
     app.run()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

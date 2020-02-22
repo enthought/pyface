@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,13 +10,13 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 from .edit_image_renderer import EditImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 
-class EditRenderer(GridCellRenderer):
 
+class EditRenderer(GridCellRenderer):
     def __init__(self, **traits):
 
         # base-class constructor
@@ -36,5 +36,5 @@ class EditRenderer(GridCellRenderer):
         # allow editting if the obj does not have an editable trait
         # or if the editable trait is True
 
-        if (not hasattr(obj, 'editable')) or obj.editable:
-            obj.edit_traits(kind='live')
+        if (not hasattr(obj, "editable")) or obj.editable:
+            obj.edit_traits(kind="live")

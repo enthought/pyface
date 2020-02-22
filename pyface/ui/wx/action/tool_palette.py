@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ View of an ActionManager drawn as a rectangle of buttons.
 """
@@ -21,6 +21,7 @@ import wx
 from pyface.widget import Widget
 
 from traits.api import Bool, Dict, Int, List, Tuple
+
 # HTML templates.
 # FIXME : Not quite the right color.
 HTML = """
@@ -97,7 +98,7 @@ class ToolPalette(Widget):
         """
 
         button = self.tool_id_to_button_map.get(id, None)
-        if button is not None and hasattr(button, 'SetToggle'):
+        if button is not None and hasattr(button, "SetToggle"):
             button.SetToggle(checked)
 
         return
@@ -131,7 +132,7 @@ class ToolPalette(Widget):
         """ Get the toggle state of the tool identified by 'id'. """
 
         button = self.tool_id_to_button_map.get(id, None)
-        if hasattr(button, 'GetToggle'):
+        if hasattr(button, "GetToggle"):
             if button.GetToggle():
                 state = 1
             else:
@@ -140,7 +141,6 @@ class ToolPalette(Widget):
             state = 0
 
         return state
-
 
     ###########################################################################
     # Private interface.
@@ -152,10 +152,8 @@ class ToolPalette(Widget):
 
         return html_window
 
-
     def _reflow(self):
         """ Reflow the layout. """
-
 
         # Create a bit of html for each tool.
         parts = []
@@ -163,7 +161,7 @@ class ToolPalette(Widget):
             parts.append(PART % (str(param[0]), self.button_size))
 
         # Create the entire html page.
-        html = HTML % ''.join(parts)
+        html = HTML % "".join(parts)
 
         # Set the HTML on the widget.  This will create all of the buttons.
         self.control.SetPage(html)
@@ -187,8 +185,10 @@ class ToolPalette(Widget):
 
         from wx.lib.buttons import GenBitmapToggleButton, GenBitmapButton
 
-        if kind == 'radio':
-            button = GenBitmapToggleButton(panel, -1, None, size=self.button_size)
+        if kind == "radio":
+            button = GenBitmapToggleButton(
+                panel, -1, None, size=self.button_size
+            )
 
         else:
             button = GenBitmapButton(panel, -1, None, size=self.button_size)
@@ -199,7 +199,6 @@ class ToolPalette(Widget):
         button.SetBitmapLabel(bmp)
         button.SetToolTip(label)
         sizer.Add(button, 0, wx.EXPAND)
-
 
         return
 
@@ -212,5 +211,6 @@ class ToolPalette(Widget):
                 listener(event)
 
         return
+
 
 #### EOF ######################################################################

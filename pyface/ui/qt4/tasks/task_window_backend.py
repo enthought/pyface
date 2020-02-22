@@ -12,10 +12,10 @@ from .main_window_layout import MainWindowLayout
 
 # Constants.
 CORNER_MAP = {
-    'top_left': QtCore.Qt.TopLeftCorner,
-    'top_right': QtCore.Qt.TopRightCorner,
-    'bottom_left': QtCore.Qt.BottomLeftCorner,
-    'bottom_right': QtCore.Qt.BottomRightCorner
+    "top_left": QtCore.Qt.TopLeftCorner,
+    "top_right": QtCore.Qt.TopRightCorner,
+    "bottom_left": QtCore.Qt.BottomLeftCorner,
+    "bottom_right": QtCore.Qt.BottomRightCorner,
 }
 
 
@@ -85,7 +85,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         # Extract the window's corner configuration.
         for name, corner in CORNER_MAP.items():
             area = INVERSE_AREA_MAP[int(self.control.corner(corner))]
-            setattr(layout, name + '_corner', area)
+            setattr(layout, name + "_corner", area)
 
         return layout
 
@@ -106,7 +106,7 @@ class TaskWindowBackend(MTaskWindowBackend):
         """
         # Assign the window's corners to the appropriate dock areas.
         for name, corner in CORNER_MAP.items():
-            area = getattr(state.layout, name + '_corner')
+            area = getattr(state.layout, name + "_corner")
             self.control.setCorner(corner, AREA_MAP[area])
 
         # Add all panes in the TaskLayout.
@@ -147,7 +147,7 @@ class TaskWindowLayout(MainWindowLayout):
     #### 'TaskWindowLayout' interface #########################################
 
     consumed = List
-    state = Instance('pyface.tasks.task_window.TaskState')
+    state = Instance("pyface.tasks.task_window.TaskState")
 
     ###########################################################################
     # 'MainWindowLayout' interface.

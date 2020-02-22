@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A wizard controller that has a static list of pages. """
 
 
@@ -25,6 +25,7 @@ from .i_wizard_page import IWizardPage
 @provides(IWizardController)
 class WizardController(HasTraits):
     """ A wizard controller that has a static list of pages. """
+
     #### 'IWizardController' interface ########################################
 
     # The pages under the control of this controller.
@@ -125,8 +126,10 @@ class WizardController(HasTraits):
         # If the current page is None (i.e., the current page has
         # not been set yet), do not set it here. The current page will
         # get set when the wizard calls _show_page.
-        if self.current_page is not None and \
-            self.current_page not in self._pages:
+        if (
+            self.current_page is not None
+            and self.current_page not in self._pages
+        ):
             self.current_page = self._pages[0]
         else:
             self._update()
@@ -158,10 +161,12 @@ class WizardController(HasTraits):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(self._on_page_complete, 'complete',remove=True)
+            old.on_trait_change(
+                self._on_page_complete, "complete", remove=True
+            )
 
         if new is not None:
-            new.on_trait_change(self._on_page_complete, 'complete')
+            new.on_trait_change(self._on_page_complete, "complete")
 
         self._update()
 
@@ -175,5 +180,6 @@ class WizardController(HasTraits):
         self._update()
 
         return
+
 
 #### EOF ######################################################################

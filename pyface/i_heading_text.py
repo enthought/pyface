@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Heading text. """
 
 
@@ -33,7 +33,7 @@ class IHeadingText(Interface):
     level = Int(1)
 
     #: The heading text.
-    text = Unicode('Default')
+    text = Unicode("Default")
 
     #: The background image.
     image = Instance(IImageResource)

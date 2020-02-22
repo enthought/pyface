@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -36,7 +36,6 @@ class ImageResource(MImageResource, HasTraits):
     """ The toolkit specific implementation of an ImageResource.  See the
     IImageResource interface for the API documentation.
     """
-
 
     #### Private interface ####################################################
 
@@ -106,5 +105,6 @@ class ImageResource(MImageResource, HasTraits):
             absolute_path = self._get_image_not_found().absolute_path
 
         return absolute_path
+
 
 #### EOF ######################################################################

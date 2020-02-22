@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for a splash screen. """
 
 
@@ -32,7 +32,7 @@ class ISplashScreen(IWindow):
     #### 'ISplashScreen' interface ############################################
 
     #: The image to display on the splash screen.
-    image = Instance(ImageResource, ImageResource('splash'))
+    image = Instance(ImageResource, ImageResource("splash"))
 
     #: If log messages are to be displayed then this is the logging level. See
     #: the Python documentation for the 'logging' module for more details.
@@ -48,18 +48,18 @@ class ISplashScreen(IWindow):
     # FIXME v3: When TraitsUI supports PyQt then change this to 'Color',
     # (unless that needs the toolkit to be selected too soon, in which case it
     # may need to stay as Any - or Str?)
-    #text_color = WxColor('black')
+    # text_color = WxColor('black')
     text_color = Any
 
     #: The text font.
     # FIXME v3: When TraitsUI supports PyQt then change this back to
     # 'Font(None)' with the actual default being toolkit specific.
-    #text_font = Font(None)
+    # text_font = Font(None)
     text_font = Any
 
     #: The x, y location where the text will be drawn.
     # FIXME v3: Remove this.
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
 
 class MSplashScreen(object):

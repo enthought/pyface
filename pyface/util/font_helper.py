@@ -11,7 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.warning(
-    'DEPRECATED: pyface.util.font_helper, use pyface.wx.utils.font_helper instead. '
-    'Will be removed in Pyface 7.')
+    "DEPRECATED: pyface.util.font_helper, use pyface.wx.utils.font_helper instead. "
+    "Will be removed in Pyface 7."
+)
 
 from pyface.wx.util.font_helper import *

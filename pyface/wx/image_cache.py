@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ An image cache. """
 
 
@@ -28,7 +28,7 @@ class ImageCache(object):
         self._height = height
 
         # The images in the cache!
-        self._images = {} # {filename : bitmap}
+        self._images = {}  # {filename : bitmap}
 
         return
 
@@ -66,9 +66,13 @@ class ImageCache(object):
     def _scale(self, image):
         """ Scales the specified image (if necessary). """
 
-        if image.GetWidth() != self._width or image.GetHeight()!= self._height:
+        if (
+            image.GetWidth() != self._width
+            or image.GetHeight() != self._height
+        ):
             image.Rescale(self._width, self._height)
 
         return image
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -36,7 +36,6 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     ISystemMetrics interface for the API documentation.
     """
 
-
     #### 'ISystemMetrics' interface ###########################################
 
     screen_width = Property(Int)
@@ -56,12 +55,13 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         return wx.SystemSettings.GetMetric(wx.SYS_SCREEN_Y)
 
     def _get_dialog_background_color(self):
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             # wx lies.
             color = wx.Colour(232, 232, 232)
         else:
             color = wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENUBAR).Get()
 
-        return (color[0]/255., color[1]/255., color[2]/255.)
+        return (color[0] / 255.0, color[1] / 255.0, color[2] / 255.0)
+
 
 #### EOF ######################################################################

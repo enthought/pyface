@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -28,12 +28,11 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-
     #### 'IHeadingText' interface #############################################
 
     level = Int(1)
 
-    text = Unicode('Default')
+    text = Unicode("Default")
 
     ###########################################################################
     # 'object' interface.
@@ -60,8 +59,9 @@ class HeadingText(MHeadingText, Widget):
 
         self.control.setFrameShape(QtGui.QFrame.StyledPanel)
         self.control.setFrameShadow(QtGui.QFrame.Raised)
-        self.control.setSizePolicy(QtGui.QSizePolicy.Preferred,
-                                   QtGui.QSizePolicy.Fixed)
+        self.control.setSizePolicy(
+            QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed
+        )
 
     def _set_text(self, text):
         """ Set the text on the toolkit specific widget. """
@@ -78,5 +78,6 @@ class HeadingText(MHeadingText, Widget):
 
         if self.control is not None:
             self._set_text(new)
+
 
 #### EOF ######################################################################

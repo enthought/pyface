@@ -17,27 +17,27 @@ class PythonBrowserPane(TraitsDockPane):
     activated = Event
 
     # The list of wildcard filters for filenames.
-    filters = List(Str, ['*.py'])
+    filters = List(Str, ["*.py"])
 
     # The currently selected file.
-    selected_file = File(os.path.expanduser('~'))
+    selected_file = File(os.path.expanduser("~"))
 
     # TaskPane interface -----------------------------------------------------
 
-    id = 'example.python_browser_pane'
-    name = 'File Browser'
+    id = "example.python_browser_pane"
+    name = "File Browser"
 
     # The view used to construct the dock pane's widget.
     view = View(
         Item(
-            'selected_file',
+            "selected_file",
             editor=FileEditor(
-                dclick_name='activated',
-                filter_name='filters',
-                root_path=os.path.expanduser('~'),
+                dclick_name="activated",
+                filter_name="filters",
+                root_path=os.path.expanduser("~"),
             ),
-            style='custom',
-            show_label=False
+            style="custom",
+            show_label=False,
         ),
         resizable=True,
     )

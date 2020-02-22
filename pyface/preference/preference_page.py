@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for all preference pages. """
 
 
@@ -40,5 +40,6 @@ class PreferencePage(HasTraits):
         """ Show the help topic for this preference page."""
 
         pass
+
 
 #### EOF ######################################################################

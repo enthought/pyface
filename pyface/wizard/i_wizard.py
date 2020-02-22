@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for all pyface wizards. """
 
 
@@ -41,7 +41,7 @@ class IWizard(IDialog):
     #### 'IWindow' interface ##################################################
 
     # The dialog title.
-    title = Unicode('Wizard')
+    title = Unicode("Wizard")
 
     ###########################################################################
     # 'IWizard' interface.
@@ -127,10 +127,10 @@ class MWizard(object):
     def _initialize_controller(self, controller):
         """ Initializes the wizard controller. """
 
-        controller.on_trait_change(self._update, 'complete')
+        controller.on_trait_change(self._update, "complete")
 
         controller.on_trait_change(
-            self._on_current_page_changed, 'current_page'
+            self._on_current_page_changed, "current_page"
         )
 
         return
@@ -141,10 +141,10 @@ class MWizard(object):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(self._update, 'complete', remove=True)
+            old.on_trait_change(self._update, "complete", remove=True)
 
         if new is not None:
-            new.on_trait_change(self._update, 'complete')
+            new.on_trait_change(self._update, "complete")
 
         self._update()
 
@@ -156,5 +156,6 @@ class MWizard(object):
         self.controller.dispose_pages()
 
         return
+
 
 #### EOF ######################################################################

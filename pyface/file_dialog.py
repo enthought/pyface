@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a dialog that allows the user to open/save files etc.
 """
 
@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-FileDialog = toolkit_object('file_dialog:FileDialog')
+
+FileDialog = toolkit_object("file_dialog:FileDialog")
 
 #### EOF ######################################################################

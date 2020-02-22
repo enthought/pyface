@@ -2,8 +2,17 @@
 import logging
 
 # Enthought library imports.
-from traits.api import Bool, Callable, Dict, Event, File, HasTraits, Instance, \
-    List, Str
+from traits.api import (
+    Bool,
+    Callable,
+    Dict,
+    Event,
+    File,
+    HasTraits,
+    Instance,
+    List,
+    Str,
+)
 
 # Local imports.
 from pyface.tasks.i_editor import IEditor
@@ -155,7 +164,7 @@ class MEditorAreaPane(HasTraits):
         # If not, create an editor for it.
         editor = self.create_editor(obj, factory)
         if editor is None:
-            logger.warn('Cannot create editor for obj %r', obj)
+            logger.warn("Cannot create editor for obj %r", obj)
 
         else:
             self.add_editor(editor)

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -32,7 +32,6 @@ class PythonEditor(MPythonEditor, Widget):
     """ The toolkit specific implementation of a PythonEditor.  See the
     IPythonEditor interface for the API documentation.
     """
-
 
     #### 'IPythonEditor' interface ############################################
 
@@ -68,11 +67,11 @@ class PythonEditor(MPythonEditor, Widget):
 
         # We will have no path for a new script.
         if len(path) > 0:
-            f = open(self.path, 'r')
+            f = open(self.path, "r")
             text = f.read()
             f.close()
         else:
-            text = ''
+            text = ""
 
         self.control.code.setPlainText(text)
         self.dirty = False
@@ -83,7 +82,7 @@ class PythonEditor(MPythonEditor, Widget):
         if path is None:
             path = self.path
 
-        f = open(path, 'w')
+        f = open(path, "w")
         f.write(self.control.code.toPlainText())
         f.close()
 
@@ -93,8 +92,9 @@ class PythonEditor(MPythonEditor, Widget):
         """ Selects the specified line.
         """
         self.control.code.set_line_column(lineno, 0)
-        self.control.code.moveCursor(QtGui.QTextCursor.EndOfLine,
-                                     QtGui.QTextCursor.KeepAnchor)
+        self.control.code.moveCursor(
+            QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
+        )
 
     ###########################################################################
     # 'Widget' interface.
@@ -112,7 +112,8 @@ class PythonEditor(MPythonEditor, Widget):
         if self.control is not None:
             # Disconnect signals for text changes.
             self.control.code.modificationChanged.disconnect(
-                self._on_dirty_changed)
+                self._on_dirty_changed
+            )
             self.control.code.textChanged.disconnect(self._on_text_changed)
 
             if self._event_filter is not None:
@@ -133,7 +134,8 @@ class PythonEditor(MPythonEditor, Widget):
     def _show_line_numbers_changed(self):
         if self.control is not None:
             self.control.code.line_number_widget.setVisible(
-                self.show_line_numbers)
+                self.show_line_numbers
+            )
             self.control.code.update_line_number_width()
 
     ###########################################################################
@@ -175,13 +177,19 @@ class PythonEditorEventFilter(QtCore.QObject):
     def eventFilter(self, obj, event):
         """ Reimplemented to trap key presses.
         """
-        if self.__editor.control and obj == self.__editor.control and \
-               event.type() == QtCore.QEvent.FocusOut:
+        if (
+            self.__editor.control
+            and obj == self.__editor.control
+            and event.type() == QtCore.QEvent.FocusOut
+        ):
             # Hack for Traits UI compatibility.
             self.__editor.control.lostFocus.emit()
 
-        elif self.__editor.control and obj == self.__editor.control.code and \
-               event.type() == QtCore.QEvent.KeyPress:
+        elif (
+            self.__editor.control
+            and obj == self.__editor.control.code
+            and event.type() == QtCore.QEvent.KeyPress
+        ):
             # Pyface doesn't seem to be Unicode aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = event.text()
@@ -192,13 +200,18 @@ class PythonEditorEventFilter(QtCore.QObject):
 
             mods = event.modifiers()
             self.key_pressed = KeyPressedEvent(
-                alt_down     = ((mods & QtCore.Qt.AltModifier) ==
-                                QtCore.Qt.AltModifier),
-                control_down = ((mods & QtCore.Qt.ControlModifier) ==
-                                QtCore.Qt.ControlModifier),
-                shift_down   = ((mods & QtCore.Qt.ShiftModifier) ==
-                                QtCore.Qt.ShiftModifier),
-                key_code     = kcode,
-                event        = event)
+                alt_down=(
+                    (mods & QtCore.Qt.AltModifier) == QtCore.Qt.AltModifier
+                ),
+                control_down=(
+                    (mods & QtCore.Qt.ControlModifier)
+                    == QtCore.Qt.ControlModifier
+                ),
+                shift_down=(
+                    (mods & QtCore.Qt.ShiftModifier) == QtCore.Qt.ShiftModifier
+                ),
+                key_code=kcode,
+                event=event,
+            )
 
         return super(PythonEditorEventFilter, self).eventFilter(obj, event)

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The 'null' backend specific implementation of a menu bar manager.
 """
 
@@ -37,5 +37,6 @@ class MenuBarManager(ActionManager):
             controller = self.controller
 
         return None
+
 
 #### EOF ######################################################################

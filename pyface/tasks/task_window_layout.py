@@ -23,7 +23,7 @@ class TaskWindowLayout(LayoutContainer):
     # The size of the window.
     size = Tuple(800, 600)
 
-    size_state = Enum('normal', 'maximized')
+    size_state = Enum("normal", "maximized")
 
     def get_active_task(self):
         """ Returns the ID of the active task in the layout, or None if there is
@@ -39,12 +39,15 @@ class TaskWindowLayout(LayoutContainer):
     def get_tasks(self):
         """ Returns the IDs of the tasks in the layout.
         """
-        return [ (item if isinstance(item, six.string_types) else item.id)
-                 for item in self.items ]
+        return [
+            (item if isinstance(item, six.string_types) else item.id)
+            for item in self.items
+        ]
 
     def is_equivalent_to(self, layout):
         """ Returns whether two layouts are equivalent, i.e. whether they
             contain the same tasks.
         """
-        return isinstance(layout, TaskWindowLayout) and \
-            set(self.get_tasks()) == set(layout.get_tasks())
+        return isinstance(layout, TaskWindowLayout) and set(
+            self.get_tasks()
+        ) == set(layout.get_tasks())

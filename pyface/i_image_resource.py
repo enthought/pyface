@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2009 by Enthought, Inc.
 # All rights reserved.
 #
@@ -7,7 +7,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for an image resource. """
 
 try:
@@ -118,7 +118,6 @@ class IImageResource(Interface):
         """
 
 
-
 class MImageResource(object):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IImageResource interface.
@@ -196,8 +195,9 @@ class MImageResource(object):
         """
 
         if self._ref is None:
-            self._ref = resource_manager.locate_image(self.name,
-                    self.search_path, size)
+            self._ref = resource_manager.locate_image(
+                self.name, self.search_path, size
+            )
 
         return self._ref
 
@@ -233,6 +233,6 @@ class MImageResource(object):
         if cls._image_not_found is None:
             from pyface.image_resource import ImageResource
 
-            cls._image_not_found = ImageResource('image_not_found')
+            cls._image_not_found = ImageResource("image_not_found")
 
         return cls._image_not_found

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The 'null' backend specific implementation of a menu manager.
 """
 
@@ -64,7 +64,6 @@ class MenuManager(ActionManager, ActionManagerItem):
         """ Adds the item to a tool bar. """
 
         raise ValueError("Cannot add a menu manager to a toolbar.")
-
 
 
 #### EOF ######################################################################

@@ -1,6 +1,12 @@
 # Enthought library imports.
-from traits.api import Any, DelegatesTo, HasTraits, Instance, Interface, \
-    provides
+from traits.api import (
+    Any,
+    DelegatesTo,
+    HasTraits,
+    Instance,
+    Interface,
+    provides,
+)
 
 
 class ITaskWindowBackend(Interface):
@@ -14,7 +20,7 @@ class ITaskWindowBackend(Interface):
     control = Any
 
     #: The TaskWindow to which the layout belongs.
-    window = Instance('pyface.tasks.task_window.TaskWindow')
+    window = Instance("pyface.tasks.task_window.TaskWindow")
 
     ###########################################################################
     # 'ITaskWindowBackend' interface.
@@ -57,11 +63,10 @@ class MTaskWindowBackend(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
 
-
     #### 'ITaskWindowBackend' interface #######################################
 
-    control = DelegatesTo('window')
-    window = Instance('pyface.tasks.task_window.TaskWindow')
+    control = DelegatesTo("window")
+    window = Instance("pyface.tasks.task_window.TaskWindow")
 
     ###########################################################################
     # 'ITaskWindowBackend' interface.

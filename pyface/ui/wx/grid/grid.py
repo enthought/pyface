@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A grid control with a model/ui architecture. """
 
 # Major package imports
@@ -20,20 +20,38 @@ import wx.lib.gridmovers as grid_movers
 from os.path import abspath, exists
 from wx.grid import Grid as wxGrid
 from wx.grid import GridCellAttr, GridCellBoolRenderer, GridTableBase
-from wx.grid import GridTableMessage, \
-     GRIDTABLE_NOTIFY_ROWS_APPENDED, GRIDTABLE_NOTIFY_ROWS_DELETED,  \
-     GRIDTABLE_NOTIFY_ROWS_INSERTED, GRIDTABLE_NOTIFY_COLS_APPENDED, \
-     GRIDTABLE_NOTIFY_COLS_DELETED,  GRIDTABLE_NOTIFY_COLS_INSERTED, \
-     GRIDTABLE_REQUEST_VIEW_GET_VALUES, GRID_VALUE_STRING
+from wx.grid import (
+    GridTableMessage,
+    GRIDTABLE_NOTIFY_ROWS_APPENDED,
+    GRIDTABLE_NOTIFY_ROWS_DELETED,
+    GRIDTABLE_NOTIFY_ROWS_INSERTED,
+    GRIDTABLE_NOTIFY_COLS_APPENDED,
+    GRIDTABLE_NOTIFY_COLS_DELETED,
+    GRIDTABLE_NOTIFY_COLS_INSERTED,
+    GRIDTABLE_REQUEST_VIEW_GET_VALUES,
+    GRID_VALUE_STRING,
+)
 from wx import TheClipboard
 
 # Enthought library imports
 from pyface.api import Widget
 from pyface.timer.api import do_later
-from traits.api import Bool, Color, Enum, Event, Font, Instance, Int, \
-     Trait, Undefined
-from pyface.wx.drag_and_drop import PythonDropSource, \
-     PythonDropTarget, PythonObject
+from traits.api import (
+    Bool,
+    Color,
+    Enum,
+    Event,
+    Font,
+    Instance,
+    Int,
+    Trait,
+    Undefined,
+)
+from pyface.wx.drag_and_drop import (
+    PythonDropSource,
+    PythonDropTarget,
+    PythonObject,
+)
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
 # local imports
@@ -42,9 +60,10 @@ from .combobox_focus_handler import ComboboxFocusHandler
 import six
 
 # Is this code running on MS Windows?
-is_win32 = (sys.platform == 'win32')
+is_win32 = sys.platform == "win32"
 
 ASCII_C = 67
+
 
 class Grid(Widget):
     """ A grid control with a model/ui architecture. """
@@ -91,7 +110,7 @@ class Grid(Widget):
     default_cell_bg_color = Color("white")
 
     # The default background color to use for read-only cells
-    #default_cell_read_only_color = Trait(Color("linen"), None, Color)
+    # default_cell_read_only_color = Trait(Color("linen"), None, Color)
     default_cell_read_only_color = Color(wx.Colour(248, 247, 241))
 
     # Should the grid be read-only? If this is set to false, individual
@@ -99,7 +118,7 @@ class Grid(Widget):
     read_only = Bool(False)
 
     # Selection mode.
-    selection_mode = Enum('cell', 'rows', 'cols', '')
+    selection_mode = Enum("cell", "rows", "cols", "")
 
     # Sort data when a column header is clicked?
     allow_column_sort = Bool(True)
@@ -163,7 +182,7 @@ class Grid(Widget):
 
         # Create the toolkit-specific control.
         self.control = self._grid = grid = wxGrid(parent, -1)
-        grid.grid    = self
+        grid.grid = self
 
         self._moveTo = None
         self._edit = False
@@ -214,34 +233,38 @@ class Grid(Widget):
         grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move)
 
         smotc = self.model.on_trait_change
-        otc   = self.on_trait_change
-        smotc(self._on_model_content_changed, 'content_changed')
-        smotc(self._on_model_structure_changed, 'structure_changed')
-        smotc(self._on_row_sort, 'row_sorted')
-        smotc(self._on_column_sort, 'column_sorted')
-        otc(self._on_new_model, 'model')
+        otc = self.on_trait_change
+        smotc(self._on_model_content_changed, "content_changed")
+        smotc(self._on_model_structure_changed, "structure_changed")
+        smotc(self._on_row_sort, "row_sorted")
+        smotc(self._on_column_sort, "column_sorted")
+        otc(self._on_new_model, "model")
 
         # hook up style trait handlers - note that we have to use
         # dynamic notification hook-ups because these handlers should
         # not be called until after the control object is initialized.
         # static trait notifiers get called when the object inits.
-        otc(self._on_enable_lines_changed, 'enable_lines')
-        otc(self._on_grid_line_color_changed, 'grid_line_color')
-        otc(self._on_default_label_font_changed, 'default_label_font')
-        otc(self._on_default_label_bg_color_changed, 'default_label_bg_color')
-        otc(self._on_default_label_text_color_changed,
-            'default_label_text_color')
-        otc(self._on_selection_bg_color_changed, 'selection_bg_color')
-        otc(self._on_selection_text_color_changed, 'selection_text_color')
-        otc(self._on_default_cell_font_changed, 'default_cell_font')
-        otc(self._on_default_cell_text_color_changed, 'default_cell_text_color')
-        otc(self._on_default_cell_bg_color_changed, 'default_cell_bg_color')
-        otc(self._on_read_only_changed, 'read_only_changed')
-        otc(self._on_selection_mode_changed, 'selection_mode')
-        otc(self._on_column_label_height_changed, 'column_label_height')
-        otc(self._on_row_label_width_changed, 'row_label_width')
-        otc(self._on_show_column_headers_changed, 'show_column_headers')
-        otc(self._on_show_row_headers_changed, 'show_row_headers')
+        otc(self._on_enable_lines_changed, "enable_lines")
+        otc(self._on_grid_line_color_changed, "grid_line_color")
+        otc(self._on_default_label_font_changed, "default_label_font")
+        otc(self._on_default_label_bg_color_changed, "default_label_bg_color")
+        otc(
+            self._on_default_label_text_color_changed,
+            "default_label_text_color",
+        )
+        otc(self._on_selection_bg_color_changed, "selection_bg_color")
+        otc(self._on_selection_text_color_changed, "selection_text_color")
+        otc(self._on_default_cell_font_changed, "default_cell_font")
+        otc(
+            self._on_default_cell_text_color_changed, "default_cell_text_color"
+        )
+        otc(self._on_default_cell_bg_color_changed, "default_cell_bg_color")
+        otc(self._on_read_only_changed, "read_only_changed")
+        otc(self._on_selection_mode_changed, "selection_mode")
+        otc(self._on_column_label_height_changed, "column_label_height")
+        otc(self._on_row_label_width_changed, "row_label_width")
+        otc(self._on_show_column_headers_changed, "show_column_headers")
+        otc(self._on_show_row_headers_changed, "show_row_headers")
 
         # Initialize wx handlers:
         self._notify_select = True
@@ -256,11 +279,13 @@ class Grid(Widget):
 
         # Notify when cells are clicked on:
         grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_CLICK, self._on_cell_right_click)
-        grid.Bind(wx.grid.EVT_GRID_CELL_RIGHT_DCLICK,
-                  self._on_cell_right_dclick)
+        grid.Bind(
+            wx.grid.EVT_GRID_CELL_RIGHT_DCLICK, self._on_cell_right_dclick
+        )
 
-        grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK,
-                  self._on_label_right_click)
+        grid.Bind(
+            wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self._on_label_right_click
+        )
         grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self._on_label_left_click)
 
         if is_win32:
@@ -275,13 +300,13 @@ class Grid(Widget):
 
         # Handle drags:
         self._corner_window = grid.GetGridCornerLabelWindow()
-        self._grid_window   = gw = grid.GetGridWindow()
-        self._row_window    = rw = grid.GetGridRowLabelWindow()
-        self._col_window    = cw = grid.GetGridColLabelWindow()
+        self._grid_window = gw = grid.GetGridWindow()
+        self._row_window = rw = grid.GetGridRowLabelWindow()
+        self._col_window = cw = grid.GetGridColLabelWindow()
 
         # Handle mouse button state changes:
         self._ignore = False
-        for window in ( gw, rw, cw ):
+        for window in (gw, rw, cw):
             window.Bind(wx.EVT_MOTION, self._on_grid_motion)
             window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
             window.Bind(wx.EVT_LEFT_UP, self._on_left_up)
@@ -331,39 +356,62 @@ class Grid(Widget):
             window.Unbind(wx.EVT_LEFT_UP)
 
         otc = self.on_trait_change
-        otc(self._on_enable_lines_changed, 'enable_lines',
-            remove = True)
-        otc(self._on_grid_line_color_changed, 'grid_line_color',
-            remove = True)
-        otc(self._on_default_label_font_changed, 'default_label_font',
-            remove = True)
-        otc(self._on_default_label_bg_color_changed, 'default_label_bg_color',
-            remove = True)
-        otc(self._on_default_label_text_color_changed,
-            'default_label_text_color',
-            remove = True)
-        otc(self._on_selection_bg_color_changed, 'selection_bg_color',
-            remove = True)
-        otc(self._on_selection_text_color_changed, 'selection_text_color',
-            remove = True)
-        otc(self._on_default_cell_font_changed, 'default_cell_font',
-            remove = True)
-        otc(self._on_default_cell_text_color_changed, 'default_cell_text_color',
-            remove = True)
-        otc(self._on_default_cell_bg_color_changed, 'default_cell_bg_color',
-            remove = True)
-        otc(self._on_read_only_changed, 'read_only_changed',
-            remove = True)
-        otc(self._on_selection_mode_changed, 'selection_mode',
-            remove = True)
-        otc(self._on_column_label_height_changed, 'column_label_height',
-            remove = True)
-        otc(self._on_row_label_width_changed, 'row_label_width',
-            remove = True)
-        otc(self._on_show_column_headers_changed, 'show_column_headers',
-            remove = True)
-        otc(self._on_show_row_headers_changed, 'show_row_headers',
-            remove = True)
+        otc(self._on_enable_lines_changed, "enable_lines", remove=True)
+        otc(self._on_grid_line_color_changed, "grid_line_color", remove=True)
+        otc(
+            self._on_default_label_font_changed,
+            "default_label_font",
+            remove=True,
+        )
+        otc(
+            self._on_default_label_bg_color_changed,
+            "default_label_bg_color",
+            remove=True,
+        )
+        otc(
+            self._on_default_label_text_color_changed,
+            "default_label_text_color",
+            remove=True,
+        )
+        otc(
+            self._on_selection_bg_color_changed,
+            "selection_bg_color",
+            remove=True,
+        )
+        otc(
+            self._on_selection_text_color_changed,
+            "selection_text_color",
+            remove=True,
+        )
+        otc(
+            self._on_default_cell_font_changed,
+            "default_cell_font",
+            remove=True,
+        )
+        otc(
+            self._on_default_cell_text_color_changed,
+            "default_cell_text_color",
+            remove=True,
+        )
+        otc(
+            self._on_default_cell_bg_color_changed,
+            "default_cell_bg_color",
+            remove=True,
+        )
+        otc(self._on_read_only_changed, "read_only_changed", remove=True)
+        otc(self._on_selection_mode_changed, "selection_mode", remove=True)
+        otc(
+            self._on_column_label_height_changed,
+            "column_label_height",
+            remove=True,
+        )
+        otc(self._on_row_label_width_changed, "row_label_width", remove=True)
+        otc(
+            self._on_show_column_headers_changed,
+            "show_column_headers",
+            remove=True,
+        )
+        otc(self._on_show_row_headers_changed, "show_row_headers", remove=True)
 
         # It seems that the grid must be destroyed before disposing of
         # _grid_table_base: otherwise, the grid can apparently generate an
@@ -405,7 +453,7 @@ class Grid(Widget):
 
         # Disable any active editors in order to prevent a wx crash bug:
         self._edit = False
-        grid       = self._grid
+        grid = self._grid
 
         # Make sure any current active editor has been disabled:
         grid.DisableCellEditControl()
@@ -416,46 +464,55 @@ class Grid(Widget):
         should_autosize = False
 
         # First check to see if rows have been added or deleted:
-        row_count       = self.model.get_row_count()
-        delta           = row_count - self._row_count
+        row_count = self.model.get_row_count()
+        delta = row_count - self._row_count
         self._row_count = row_count
 
         if delta > 0:
             # Rows were added:
-            msg = GridTableMessage(self._grid_table_base,
-                                   GRIDTABLE_NOTIFY_ROWS_APPENDED, delta)
+            msg = GridTableMessage(
+                self._grid_table_base, GRIDTABLE_NOTIFY_ROWS_APPENDED, delta
+            )
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
             # Rows were deleted:
-            msg = GridTableMessage(self._grid_table_base,
-                                   GRIDTABLE_NOTIFY_ROWS_DELETED,
-                                   row_count, -delta)
+            msg = GridTableMessage(
+                self._grid_table_base,
+                GRIDTABLE_NOTIFY_ROWS_DELETED,
+                row_count,
+                -delta,
+            )
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
         # Now check for column changes:
-        col_count       = self.model.get_column_count()
-        delta           = col_count - self._col_count
+        col_count = self.model.get_column_count()
+        delta = col_count - self._col_count
         self._col_count = col_count
 
         if delta > 0:
             # Columns were added:
-            msg = GridTableMessage(self._grid_table_base,
-                                   GRIDTABLE_NOTIFY_COLS_APPENDED, delta)
+            msg = GridTableMessage(
+                self._grid_table_base, GRIDTABLE_NOTIFY_COLS_APPENDED, delta
+            )
             grid.ProcessTableMessage(msg)
             should_autosize = True
         elif delta < 0:
             # Columns were deleted:
-            msg = GridTableMessage(self._grid_table_base,
-                                   GRIDTABLE_NOTIFY_COLS_DELETED,
-                                   col_count, -delta)
+            msg = GridTableMessage(
+                self._grid_table_base,
+                GRIDTABLE_NOTIFY_COLS_DELETED,
+                col_count,
+                -delta,
+            )
             grid.ProcessTableMessage(msg)
             should_autosize = True
 
         # Finally make sure we update for any new values in the table:
-        msg = GridTableMessage(self._grid_table_base,
-                               GRIDTABLE_REQUEST_VIEW_GET_VALUES)
+        msg = GridTableMessage(
+            self._grid_table_base, GRIDTABLE_REQUEST_VIEW_GET_VALUES
+        )
         grid.ProcessTableMessage(msg)
 
         if should_autosize:
@@ -587,11 +644,11 @@ class Grid(Widget):
 
         # should we allow individual cells to be selected or only rows
         # or only columns
-        if self.selection_mode == 'cell':
+        if self.selection_mode == "cell":
             self._grid.SetSelectionMode(wxGrid.GridSelectCells)
-        elif self.selection_mode == 'rows':
+        elif self.selection_mode == "rows":
             self._grid.SetSelectionMode(wxGrid.GridSelectRows)
-        elif self.selection_mode == 'cols':
+        elif self.selection_mode == "cols":
             self._grid.SetSelectionMode(wxGrid.GridSelectColumns)
 
     def _on_column_label_height_changed(self):
@@ -653,11 +710,11 @@ class Grid(Widget):
         grid.ClearSelection()
 
         mode = self.selection_mode
-        if mode == 'rows':
+        if mode == "rows":
             self._select_rows(cells)
-        elif mode != '':
+        elif mode != "":
             for selection in cells:
-                row, col = max( 0, selection[0] ), max( 0, selection[1] )
+                row, col = max(0, selection[0]), max(0, selection[1])
                 grid.SelectBlock(row, col, row, col, True)
 
         grid.EndBatch()
@@ -697,9 +754,13 @@ class Grid(Widget):
         # Windows.
         control = wx.FindWindowAtPointer()
         if isinstance(control, wx.Button):
-            do_later(wx.PostEvent, control,
-                     wx.CommandEvent(wx.wxEVT_COMMAND_BUTTON_CLICKED,
-                                     control.GetId()))
+            do_later(
+                wx.PostEvent,
+                control,
+                wx.CommandEvent(
+                    wx.wxEVT_COMMAND_BUTTON_CLICKED, control.GetId()
+                ),
+            )
 
     def _on_grid_window_paint(self, evt):
 
@@ -708,22 +769,23 @@ class Grid(Widget):
         # not needed, and disappear as soon as the grid is resized. hopefully
         # we will be able to remove this egregious code on some future version
         # of wx.
-        #self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
-        #self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
+        # self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
+        # self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
 
         evt.Skip()
 
-    def _on_left_down ( self, evt ):
+    def _on_left_down(self, evt):
         """ Called when the left mouse button is pressed.
         """
-        grid            = self._grid
+        grid = self._grid
         self._x_clicked = evt.GetX()
         self._y_clicked = evt.GetY()
-        self._ignore = ((grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) or
-                        (grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND))
+        self._ignore = (grid.XToEdgeOfCol(evt.GetX()) != wx.NOT_FOUND) or (
+            grid.YToEdgeOfRow(evt.GetY()) != wx.NOT_FOUND
+        )
         evt.Skip()
 
-    def _on_left_up ( self, evt ):
+    def _on_left_up(self, evt):
         """ Called when the left mouse button is released.
         """
         self._ignore = False
@@ -746,8 +808,8 @@ class Grid(Widget):
     def _on_grid_motion(self, evt):
         if evt.GetEventObject() is self._grid_window:
             x, y = self._grid.CalcUnscrolledPosition(evt.GetPosition().Get())
-            row  = self._grid.YToRow(y)
-            col  = self._grid.XToCol(x)
+            row = self._grid.YToRow(y)
+            col = self._grid.XToCol(x)
 
             # Notify the model that the mouse has moved into the cell at row,col,
             # only if the row and col are valid.
@@ -763,7 +825,7 @@ class Grid(Widget):
     def _on_select_cell(self, evt):
         """ Called when the user has moved to another cell. """
         row, col = evt.GetRow(), evt.GetCol()
-        self._moveTo = (row,col)
+        self._moveTo = (row, col)
         self.cell_left_clicked = self.model.click = (row, col)
 
         # Try to find a renderer for this cell:
@@ -774,10 +836,10 @@ class Grid(Widget):
         if renderer is not None:
             result = renderer.on_left_click(self, row, col)
 
-        #print("self._grid.GetParent()", self._grid.GetParent().GetParent().GetParent())
+        # print("self._grid.GetParent()", self._grid.GetParent().GetParent().GetParent())
         # if the handler didn't tell us to stop further handling then skip
         if not result:
-            if (self.selection_mode != '') or (not self.edit_on_first_click):
+            if (self.selection_mode != "") or (not self.edit_on_first_click):
                 self._grid.SelectBlock(row, col, row, col, evt.ControlDown())
 
             self._edit = True
@@ -785,9 +847,14 @@ class Grid(Widget):
 
     def _on_range_select(self, evt):
         if evt.Selecting():
-            if (self.selection_mode == 'cell') and evt.ControlDown():
-                self._grid.SelectBlock(evt.GetTopRow(), evt.GetLeftCol(),
-                                    evt.GetBottomRow(), evt.GetRightCol(), True)
+            if (self.selection_mode == "cell") and evt.ControlDown():
+                self._grid.SelectBlock(
+                    evt.GetTopRow(),
+                    evt.GetLeftCol(),
+                    evt.GetBottomRow(),
+                    evt.GetRightCol(),
+                    True,
+                )
 
         if self._notify_select:
             self.__fire_selection_changed()
@@ -827,7 +894,7 @@ class Grid(Widget):
 
         """
         row, col = evt.GetRow(), evt.GetCol()
-        data     = self.model.get_value(row, col)
+        data = self.model.get_value(row, col)
         self.cell_activated = data
 
         # Tell the model that a cell was double-clicked on:
@@ -879,7 +946,7 @@ class Grid(Widget):
             # get the underlying menu object
             if menu_manager is not None:
                 controller = None
-                if type( menu_manager ) is tuple:
+                if type(menu_manager) is tuple:
                     menu_manager, controller = menu_manager
                 menu = menu_manager.create_menu(self._grid, controller)
                 # if it has anything in it pop it up
@@ -917,9 +984,9 @@ class Grid(Widget):
                 # before before 'PopupMenu' returns).
                 self._grid.PopupMenu(menu, evt.GetPosition().Get())
         elif col >= 0:
-            cws = getattr( self, '_cached_widths', None )
-            if (cws is not None) and (0 <= col < len( cws )):
-                cws[ col ] = None
+            cws = getattr(self, "_cached_widths", None)
+            if (cws is not None) and (0 <= col < len(cws)):
+                cws[col] = None
                 self.__autosize()
 
         evt.Skip()
@@ -932,10 +999,10 @@ class Grid(Widget):
         # A row value of -1 means this click happened on a column.
         # vice versa, a col value of -1 means a row click.
         if (row == -1) and self.allow_column_sort and evt.ControlDown():
-            self._column_sort( col )
+            self._column_sort(col)
 
         elif (col == -1) and self.allow_row_sort and evt.ControlDown():
-            self._row_sort( row )
+            self._row_sort(row)
 
         evt.Skip()
 
@@ -990,10 +1057,10 @@ class Grid(Widget):
         # has meaning to the edit control.
         key_code = evt.GetKeyCode()
 
-        #if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
+        # if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
         #    evt.Skip()#self._move_to_next_cell(evt.ShiftDown())
 
-        #elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
+        # elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
         #    if evt.ShiftDown():
         #        # fixme: in a split window the shift tab is being eaten
         #        # by tabbing between the splits
@@ -1002,13 +1069,13 @@ class Grid(Widget):
         #    else:
         #        self._move_to_next_cell()
 
-        #elif key_code == ASCII_C:
+        # elif key_code == ASCII_C:
         #    data = self.__get_drag_value()
-            # deposit the data in our singleton clipboard
+        # deposit the data in our singleton clipboard
         #    enClipboard.data = data
 
-            # build a wxCustomDataObject to notify the system clipboard
-            # that some in-process data is available
+        # build a wxCustomDataObject to notify the system clipboard
+        # that some in-process data is available
         #    data_object = wx.CustomDataObject(PythonObject)
         #    data_object.SetData('dummy')
         #    if TheClipboard.Open():
@@ -1056,10 +1123,12 @@ class Grid(Widget):
             # Move to the last column in the previous row.
             newRow = self._grid.GetGridCursorRow() - 1
             if newRow >= 0:
-                self._grid.SetGridCursor(newRow,
-                                           self._grid.GetNumberCols() - 1)
-                self._grid.MakeCellVisible(newRow,
-                                             self._grid.GetNumberCols() - 1)
+                self._grid.SetGridCursor(
+                    newRow, self._grid.GetNumberCols() - 1
+                )
+                self._grid.MakeCellVisible(
+                    newRow, self._grid.GetNumberCols() - 1
+                )
 
     def _refresh(self):
         self._grid.GetParent().Layout()
@@ -1079,23 +1148,35 @@ class Grid(Widget):
         if self.model._move_column(frm, to):
 
             # Modify the grid:
-            grid   = self._grid
-            cols   = grid.GetNumberCols()
-            widths = [ grid.GetColSize(i) for i in range( cols ) ]
-            width  = widths[frm]
+            grid = self._grid
+            cols = grid.GetNumberCols()
+            widths = [grid.GetColSize(i) for i in range(cols)]
+            width = widths[frm]
             del widths[frm]
-            to -= (frm < to)
-            widths.insert( to, width )
+            to -= frm < to
+            widths.insert(to, width)
 
             grid.BeginBatch()
 
-            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
-                GRIDTABLE_NOTIFY_COLS_DELETED, frm, 1 ) )
+            grid.ProcessTableMessage(
+                GridTableMessage(
+                    self._grid_table_base,
+                    GRIDTABLE_NOTIFY_COLS_DELETED,
+                    frm,
+                    1,
+                )
+            )
 
-            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
-                GRIDTABLE_NOTIFY_COLS_INSERTED, to, 1 ) )
+            grid.ProcessTableMessage(
+                GridTableMessage(
+                    self._grid_table_base,
+                    GRIDTABLE_NOTIFY_COLS_INSERTED,
+                    to,
+                    1,
+                )
+            )
 
-            [ grid.SetColSize(i, widths[i]) for i in range(min(frm, to), cols) ]
+            [grid.SetColSize(i, widths[i]) for i in range(min(frm, to), cols)]
 
             grid.EndBatch()
 
@@ -1114,30 +1195,42 @@ class Grid(Widget):
         if self.model._move_row(frm, to):
 
             # Notify the grid:
-            grid    = self._grid
-            rows    = grid.GetNumberRows()
-            heights = [ grid.GetRowSize(i) for i in range( rows ) ]
-            height  = heights[frm]
+            grid = self._grid
+            rows = grid.GetNumberRows()
+            heights = [grid.GetRowSize(i) for i in range(rows)]
+            height = heights[frm]
             del heights[frm]
-            to -= (frm < to)
-            heights.insert( to, height )
+            to -= frm < to
+            heights.insert(to, height)
 
             grid.BeginBatch()
 
-            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
-                GRIDTABLE_NOTIFY_ROWS_DELETED, frm, 1 ) )
+            grid.ProcessTableMessage(
+                GridTableMessage(
+                    self._grid_table_base,
+                    GRIDTABLE_NOTIFY_ROWS_DELETED,
+                    frm,
+                    1,
+                )
+            )
 
-            grid.ProcessTableMessage( GridTableMessage( self._grid_table_base,
-                GRIDTABLE_NOTIFY_ROWS_INSERTED, to, 1 ) )
+            grid.ProcessTableMessage(
+                GridTableMessage(
+                    self._grid_table_base,
+                    GRIDTABLE_NOTIFY_ROWS_INSERTED,
+                    to,
+                    1,
+                )
+            )
 
-            [ grid.SetRowSize(i, heights[i]) for i in range(min(frm, to), rows)]
+            [grid.SetRowSize(i, heights[i]) for i in range(min(frm, to), rows)]
 
             grid.EndBatch()
 
     ###########################################################################
     # PythonDropTarget interface.
     ###########################################################################
-    def wx_dropped_on ( self, x, y, drag_object, drag_result ):
+    def wx_dropped_on(self, x, y, drag_object, drag_result):
 
         # first resolve the x/y coords into a grid row/col
         row, col = self.__resolve_grid_coords(x, y)
@@ -1145,8 +1238,9 @@ class Grid(Widget):
         result = wx.DragNone
         if row != -1 and col != -1:
             # now ask the model if the target cell can accept this object
-            valid_target = self.model.is_valid_cell_value(row, col,
-                                                          drag_object)
+            valid_target = self.model.is_valid_cell_value(
+                row, col, drag_object
+            )
             # if this is a valid target then attempt to set the value
             if valid_target:
                 # find the data
@@ -1154,8 +1248,10 @@ class Grid(Widget):
                 # sometimes a 'node' attribute on the clipboard gets set
                 # to a binding. if this happens we want to use it, otherwise
                 # we want to just use the drag_object passed to us
-                if hasattr(enClipboard, 'node') and \
-                   enClipboard.node is not None:
+                if (
+                    hasattr(enClipboard, "node")
+                    and enClipboard.node is not None
+                ):
                     data = enClipboard.node
 
                 # now make sure the value gets set in the model
@@ -1164,7 +1260,7 @@ class Grid(Widget):
 
         return result
 
-    def wx_drag_over ( self, x, y, drag_object, drag_result ):
+    def wx_drag_over(self, x, y, drag_object, drag_result):
 
         # first resolve the x/y coords into a grid row/col
         row, col = self.__resolve_grid_coords(x, y)
@@ -1172,8 +1268,9 @@ class Grid(Widget):
         result = wx.DragNone
         if row != -1 and col != -1:
             # now ask the model if the target cell can accept this object
-            valid_target = self.model.is_valid_cell_value(row, col,
-                                                          drag_object)
+            valid_target = self.model.is_valid_cell_value(
+                row, col, drag_object
+            )
             if valid_target:
                 result = drag_result
 
@@ -1202,8 +1299,8 @@ class Grid(Widget):
             if model.is_row_read_only(row):
                 attr = wx.grid.GridCellAttr()
                 attr.SetReadOnly()
-                #attr.SetRenderer(None)
-                #attr.SetBackgroundColour('linen')
+                # attr.SetRenderer(None)
+                # attr.SetBackgroundColour('linen')
                 self._grid.SetRowAttr(row, attr)
 
     def __initialize_columns(self, model):
@@ -1214,8 +1311,8 @@ class Grid(Widget):
             if model.is_column_read_only(column):
                 attr = wx.grid.GridCellAttr()
                 attr.SetReadOnly()
-                #attr.SetRenderer(None)
-                #attr.SetBackgroundColour('linen')
+                # attr.SetRenderer(None)
+                # attr.SetBackgroundColour('linen')
                 self._grid.SetColAttr(column, attr)
 
     def __initialize_counts(self, model):
@@ -1236,8 +1333,8 @@ class Grid(Widget):
 
         self._current_sorted_col = None
         self._current_sorted_row = None
-        self._col_sort_reversed  = False
-        self._row_sort_reversed  = False
+        self._col_sort_reversed = False
+        self._row_sort_reversed = False
 
     def __initialize_style_settings(self, event=None):
 
@@ -1262,8 +1359,9 @@ class Grid(Widget):
         # version in the code for now just in case. If anyone sees this comment
         # after 1/1/2009, it should be safe to delete this comment and the
         # commented out code below...
-        return self.model.get_cell_drag_value(self._grid.GetGridCursorRow(),
-                                              self._grid.GetGridCursorCol())
+        return self.model.get_cell_drag_value(
+            self._grid.GetGridCursorRow(), self._grid.GetGridCursorCol()
+        )
 
         ###rows, cols = self.__get_selected_rows_and_cols()
         ###
@@ -1358,10 +1456,12 @@ class Grid(Widget):
                 top_point = top_left[i]
                 bottom_point = bottom_right[i]
                 # precalculate whether this is a row or column select
-                row_select = top_point[1] == 0 and \
-                             bottom_point[1] == col_size - 1
-                col_select = top_point[0] == 0 and \
-                             bottom_point[0] == row_size - 1
+                row_select = (
+                    top_point[1] == 0 and bottom_point[1] == col_size - 1
+                )
+                col_select = (
+                    top_point[0] == 0 and bottom_point[0] == row_size - 1
+                )
 
                 if row_select:
                     for row_index in range(top_point[0], bottom_point[0] + 1):
@@ -1370,8 +1470,7 @@ class Grid(Widget):
                     for col_index in range(top_point[1], bottom_point[1] + 1):
                         cols.append(top_point[0])
 
-        return ( rows, cols )
-
+        return (rows, cols)
 
     def __fire_selection_changed(self):
         self.selection_changed = True
@@ -1380,7 +1479,7 @@ class Grid(Widget):
         """ Autosize the grid with appropriate flags. """
 
         model = self.model
-        grid  = self._grid
+        grid = self._grid
         if grid is not None and self.autosize:
             grid.AutoSizeColumns(False)
             grid.AutoSizeRows(False)
@@ -1391,23 +1490,27 @@ class Grid(Widget):
         grid.BeginBatch()
 
         dx, dy = grid.GetClientSize().Get()
-        n       = model.get_column_count()
-        pdx     = 0
-        wdx     = 0.0
-        widths  = []
-        cached  = getattr( self, '_cached_widths', None )
-        current = [ grid.GetColSize( i ) for i in range( n ) ]
-        if (cached is None) or (len( cached ) != n):
-            self._cached_widths = cached = [ None ] * n
+        n = model.get_column_count()
+        pdx = 0
+        wdx = 0.0
+        widths = []
+        cached = getattr(self, "_cached_widths", None)
+        current = [grid.GetColSize(i) for i in range(n)]
+        if (cached is None) or (len(cached) != n):
+            self._cached_widths = cached = [None] * n
 
-        for i in range( n ):
+        for i in range(n):
             cw = cached[i]
-            if ((cw is None) or (-cw == current[i]) or
+            if (
+                (cw is None)
+                or (-cw == current[i])
+                or
                 # hack: For some reason wx always seems to adjust column 0 by
                 # 1 pixel from what we set it to (at least on Windows), so we
                 # need to add a little fudge factor just for this column:
-                ((i == 0) and (abs( current[i] + cw ) <= 1))):
-                width = model.get_column_size( i )
+                ((i == 0) and (abs(current[i] + cw) <= 1))
+            ):
+                width = model.get_column_size(i)
                 if width is None:
                     width = 0.0
                 if width <= 0.0:
@@ -1416,32 +1519,32 @@ class Grid(Widget):
                     wdx += width
                     cached[i] = -1
                 else:
-                    width = int( width )
-                    pdx  += width
+                    width = int(width)
+                    pdx += width
                     if cw is None:
                         cached[i] = width
             else:
                 cached[i] = width = current[i]
                 pdx += width
 
-            widths.append( width )
+            widths.append(width)
 
         # The '-1' below adjusts for an off by 1 error in the way the wx.Grid
         # control determines whether or not it needs a horizontal scroll bar:
-        adx = max( 0, dx - pdx - 1 )
+        adx = max(0, dx - pdx - 1)
 
-        for i in range( n ):
+        for i in range(n):
             width = cached[i]
             if width < 0:
                 width = widths[i]
                 if width <= 1.0:
-                    w         = max( 30, int( round( (adx * width) / wdx ) ) )
-                    wdx      -= width
-                    width     = w
-                    adx      -= width
+                    w = max(30, int(round((adx * width) / wdx)))
+                    wdx -= width
+                    width = w
+                    adx -= width
                     cached[i] = -w
 
-            grid.SetColSize( i, width )
+            grid.SetColSize(i, width)
 
         grid.AdjustScrollbars()
         grid.EndBatch()
@@ -1464,7 +1567,7 @@ class Grid(Widget):
         if self.show_column_headers:
             y = y - self._grid.GetGridColLabelWindow().GetRect().height
 
-        return ( self._grid.YToRow(y), self._grid.XToCol(x) )
+        return (self._grid.YToRow(y), self._grid.XToCol(x))
 
     def _select_rows(self, cells):
         """ Selects all of the rows specified by a list of (row,column) pairs.
@@ -1476,7 +1579,7 @@ class Grid(Widget):
         sb = self._grid.SelectBlock
 
         # Extract the rows and sort them:
-        rows = [ row for row, column in cells ]
+        rows = [row for row, column in cells]
         rows.sort()
 
         # Now find contiguous ranges of rows, and select the current range
@@ -1493,6 +1596,7 @@ class Grid(Widget):
         # Handle the last pending range of lines to be selected:
         if first >= 0:
             sb(first, 0, last, 0, True)
+
 
 class _GridTableBase(GridTableBase):
     """ A private adapter for the underlying wx grid implementation. """
@@ -1517,7 +1621,7 @@ class _GridTableBase(GridTableBase):
         self._col_count = -1
 
         # caches for editors and renderers
-        self._editor_cache   = {}
+        self._editor_cache = {}
         self._renderer_cache = {}
 
     def dispose(self):
@@ -1574,15 +1678,15 @@ class _GridTableBase(GridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
-                    label  = ulabel.encode('latin-1')
+                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    label = ulabel.encode("latin-1")
                 else:
-                    label += '  <<'
+                    label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
-                label  = ulabel.encode('latin-1')
+                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                label = ulabel.encode("latin-1")
             else:
-                label += '  >>'
+                label += "  >>"
 
         return label
 
@@ -1594,15 +1698,15 @@ class _GridTableBase(GridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, 'ascii') + u'  \u00ab'
-                    label  = ulabel.encode('latin-1')
+                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    label = ulabel.encode("latin-1")
                 else:
-                    label += '  <<'
+                    label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, 'ascii') + u'  \u00bb'
-                label  = ulabel.encode('latin-1')
+                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                label = ulabel.encode("latin-1")
             else:
-                label += '  >>'
+                label += "  >>"
 
         return label
 
@@ -1687,7 +1791,7 @@ class _GridTableBase(GridTableBase):
                     self._editor_cache[(row, col)] = editor
                     editor._grid_info = (self._grid._grid, row, col)
 
-        if False:#editor is not None:
+        if False:  # editor is not None:
             # Note: We have to increment the reference to keep the
             #       underlying code from destroying our object.
             editor.IncRef()
@@ -1705,14 +1809,19 @@ class _GridTableBase(GridTableBase):
         # look to see if this cell is editable
         read_only = False
         if row < rows and col < cols:
-            read_only = self.model.is_cell_read_only(row, col) or \
-                        self.model.is_row_read_only(row) or \
-                        self.model.is_column_read_only(col)
+            read_only = (
+                self.model.is_cell_read_only(row, col)
+                or self.model.is_row_read_only(row)
+                or self.model.is_column_read_only(col)
+            )
 
         result.SetReadOnly(read_only)
-        if read_only :
+        if read_only:
             read_only_color = self._grid.default_cell_read_only_color
-            if read_only_color is not None and read_only_color is not Undefined:
+            if (
+                read_only_color is not None
+                and read_only_color is not Undefined
+            ):
                 result.SetBackgroundColour(read_only_color)
 
         # check to see if colors or fonts are specified for this cell
@@ -1747,16 +1856,16 @@ class _GridTableBase(GridTableBase):
             halignment = self.model.get_cell_halignment(row, col)
             valignment = self.model.get_cell_valignment(row, col)
         if halignment is not None and valignment is not None:
-            if halignment == 'center':
+            if halignment == "center":
                 h = wx.ALIGN_CENTRE
-            elif halignment == 'right':
+            elif halignment == "right":
                 h = wx.ALIGN_RIGHT
             else:
                 h = wx.ALIGN_LEFT
 
-            if valignment == 'top':
+            if valignment == "top":
                 v = wx.ALIGN_TOP
-            elif valignment == 'bottom':
+            elif valignment == "bottom":
                 v = wx.ALIGN_BOTTOM
             else:
                 v = wx.ALIGN_CENTRE
@@ -1773,9 +1882,9 @@ class _GridTableBase(GridTableBase):
 
         # Dispose of the editors in the cache after a brief delay, so as
         # to allow completion of the current event:
-        do_later( self._editor_dispose, list(self._editor_cache.values()) )
+        do_later(self._editor_dispose, list(self._editor_cache.values()))
 
-        self._editor_cache   = {}
+        self._editor_cache = {}
         self._renderer_cache = {}
         return
 
@@ -1790,5 +1899,6 @@ from wx.grid import GridCellEditor
 class DummyGridCellEditor(GridCellEditor):
     def Show(self, show, attr):
         return
+
 
 #### EOF ######################################################################

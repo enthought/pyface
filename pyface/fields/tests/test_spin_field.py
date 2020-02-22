@@ -8,7 +8,10 @@
 # Thanks for using Enthought open source!
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 import unittest
@@ -18,13 +21,12 @@ from .field_mixin import FieldMixin
 
 
 class TestSpinField(FieldMixin, unittest.TestCase):
-
     def _create_widget(self):
         return SpinField(
             parent=self.parent.control,
             value=1,
             bounds=(0, 100),
-            tooltip='Dummy',
+            tooltip="Dummy",
         )
 
     # Tests ------------------------------------------------------------------
@@ -40,7 +42,7 @@ class TestSpinField(FieldMixin, unittest.TestCase):
     def test_spin_field_set(self):
         self._create_widget_control()
 
-        with self.assertTraitChanges(self.widget, 'value', count=1):
+        with self.assertTraitChanges(self.widget, "value", count=1):
             self.widget._set_control_value(5)
             self.gui.process_events()
 

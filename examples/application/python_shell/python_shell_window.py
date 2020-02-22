@@ -19,23 +19,34 @@ import sys
 import webbrowser
 
 from pyface.api import (
-    ApplicationWindow, FileDialog, ImageResource, OK, PythonShell, error
+    ApplicationWindow,
+    FileDialog,
+    ImageResource,
+    OK,
+    PythonShell,
+    error,
 )
 from pyface.action.api import (
-    Action, CloseWindowAction, Group, MenuBarManager, MenuManager,
-    StatusBarManager, WindowAction
+    Action,
+    CloseWindowAction,
+    Group,
+    MenuBarManager,
+    MenuManager,
+    StatusBarManager,
+    WindowAction,
 )
 from traits.api import Instance, Unicode
 
-PYTHON_DOCS = 'https://docs.python.org/{}.{}'.format(*sys.version_info[:2])
+PYTHON_DOCS = "https://docs.python.org/{}.{}".format(*sys.version_info[:2])
 
 
 class RunFileAction(WindowAction):
     """ Action that calls the do_run_file method of a PythonShellWindow """
-    name = 'Run File...'
-    accelerator = 'Ctrl+R'
-    method = 'do_run_file'
-    window = Instance('PythonShellWindow')
+
+    name = "Run File..."
+    accelerator = "Ctrl+R"
+    method = "do_run_file"
+    window = Instance("PythonShellWindow")
 
 
 class OpenURLAction(Action):
@@ -62,7 +73,7 @@ class PythonShellWindow(ApplicationWindow):
     icon = ImageResource("python_icon")
 
     #: The Python shell widget to use.
-    shell = Instance('pyface.i_python_shell.IPythonShell')
+    shell = Instance("pyface.i_python_shell.IPythonShell")
 
     def do_run_file(self):
         """ Run a file selected by the user. """
@@ -79,32 +90,26 @@ class PythonShellWindow(ApplicationWindow):
     def _menu_bar_manager_default(self):
         menu_bar = MenuBarManager(
             MenuManager(
-                Group(
-                    CloseWindowAction(window=self),
-                    id='close_group',
-                ),
-                name='&File',
-                id='File',
+                Group(CloseWindowAction(window=self), id="close_group"),
+                name="&File",
+                id="File",
             ),
             MenuManager(
-                Group(
-                    RunFileAction(window=self),
-                    id='run_group',
-                ),
-                name='&Run',
-                id='Run',
+                Group(RunFileAction(window=self), id="run_group"),
+                name="&Run",
+                id="Run",
             ),
             MenuManager(
                 Group(
                     OpenURLAction(
-                        name='Python Documentation',
-                        id='python_docs',
+                        name="Python Documentation",
+                        id="python_docs",
                         url=PYTHON_DOCS,
                     ),
                     id="documentation_group",
                 ),
-                name='&Help',
-                id='Help',
+                name="&Help",
+                id="Help",
             ),
         )
         return menu_bar
@@ -113,8 +118,9 @@ class PythonShellWindow(ApplicationWindow):
         return StatusBarManager()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from pyface.api import GUI
+
     window = PythonShellWindow()
     window.open()
     GUI().start_event_loop()

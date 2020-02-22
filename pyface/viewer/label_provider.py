@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for label providers. """
 
 
@@ -53,5 +53,6 @@ class LabelProvider(HasTraits):
         """ Can the label text be changed via the viewer? """
 
         return False
+
 
 #### EOF ######################################################################

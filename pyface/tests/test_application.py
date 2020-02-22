@@ -8,7 +8,10 @@
 # Thanks for using Enthought open source!
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 import os
@@ -22,7 +25,11 @@ from traits.testing.unittest_tools import UnittestTools
 from ..application import ApplicationExit, Application
 
 EVENTS = [
-    'starting', 'started', 'application_initialized', 'stopping', 'stopped'
+    "starting",
+    "started",
+    "application_initialized",
+    "stopping",
+    "stopped",
 ]
 
 

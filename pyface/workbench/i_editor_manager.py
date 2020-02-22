@@ -9,7 +9,7 @@ class IEditorManager(Interface):
     """ The editor manager interface. """
 
     # The workbench window that the editor manager manages editors for ;^)
-    window = Instance('pyface.workbench.api.WorkbenchWindow')
+    window = Instance("pyface.workbench.api.WorkbenchWindow")
 
     def add_editor(self, editor, kind):
         """ Registers an existing editor. """
@@ -41,5 +41,6 @@ class IEditorManager(Interface):
 
     def set_editor_memento(self, memento):
         """ Restore an editor from a memento and return it. """
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for all action manager items. """
 
 
@@ -36,7 +36,7 @@ class ActionManagerItem(HasTraits):
     id = Str
 
     #: The group the item belongs to.
-    parent = Instance('pyface.action.api.Group')
+    parent = Instance("pyface.action.api.Group")
 
     #: Is the item enabled?
     enabled = Bool(True)

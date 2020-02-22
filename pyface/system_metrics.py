@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of access to system metrics (screen width and height
 etc).
 """
@@ -20,6 +20,7 @@ etc).
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-SystemMetrics = toolkit_object('system_metrics:SystemMetrics')
+
+SystemMetrics = toolkit_object("system_metrics:SystemMetrics")
 
 #### EOF ######################################################################

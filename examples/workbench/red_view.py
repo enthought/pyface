@@ -11,10 +11,11 @@ class RedView(ColorView):
     #### 'IView' interface ####################################################
 
     # The view's name.
-    name = 'Red'
+    name = "Red"
 
     # The default position of the view relative to the item specified in the
     # 'relative_to' trait.
-    position = 'right'
+    position = "right"
+
 
 #### EOF ######################################################################

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The Wx-specific implementation of the text field class """
 
 from __future__ import print_function, absolute_import
@@ -35,7 +35,7 @@ class TextField(MTextField, Field):
         """ Create the toolkit-specific control that represents the widget. """
 
         style = wx.TE_PROCESS_ENTER
-        if self.echo == 'password':
+        if self.echo == "password":
             style |= wx.TE_PASSWORD
 
         control = wx.TextCtrl(parent, -1, value=self.value, style=style)

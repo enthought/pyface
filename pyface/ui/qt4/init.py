@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 # terms described in the PyQt GPL exception also apply.
 #
 # Author: Riverbank Computing Limited and Enthought developers
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 import sys
@@ -21,7 +21,7 @@ from pyface.qt import QtCore, QtGui, qt_api
 from pyface.base_toolkit import Toolkit
 from .gui import GUI
 
-if qt_api == 'pyqt':
+if qt_api == "pyqt":
     # Check the version numbers are late enough.
     if QtCore.QT_VERSION < 0x040200:
         raise RuntimeError(
@@ -41,7 +41,7 @@ if _app is None:
 
 
 # create the toolkit object
-toolkit_object = Toolkit('pyface', 'qt4', 'pyface.ui.qt4')
+toolkit_object = Toolkit("pyface", "qt4", "pyface.ui.qt4")
 
 
 # ensure that Traits has a UI handler appropriate for the toolkit.

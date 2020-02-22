@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2009, Enthought, Inc.
 # All rights reserved.
 #
@@ -7,7 +7,7 @@
 # under the conditions described in the aforementioned license.  The license
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 # Thanks for using Enthought open source!
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Standard library imports
 from io import BytesIO
@@ -22,34 +22,35 @@ from pyface.i_clipboard import IClipboard, BaseClipboard
 import six
 
 # Data formats
-PythonObjectFormat = wx.DataFormat('PythonObject')
-TextFormat         = wx.DataFormat(wx.DF_TEXT)
-FileFormat         = wx.DataFormat(wx.DF_FILENAME)
+PythonObjectFormat = wx.DataFormat("PythonObject")
+TextFormat = wx.DataFormat(wx.DF_TEXT)
+FileFormat = wx.DataFormat(wx.DF_FILENAME)
 
 # Shortcuts
-cb           = wx.TheClipboard
+cb = wx.TheClipboard
 
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
 
-
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_has_data(self):
         result = False
         if cb.Open():
-            result = (cb.IsSupported(TextFormat) or
-                      cb.IsSupported(FileFormat) or
-                      cb.IsSupported(PythonObjectFormat))
+            result = (
+                cb.IsSupported(TextFormat)
+                or cb.IsSupported(FileFormat)
+                or cb.IsSupported(PythonObjectFormat)
+            )
             cb.Close()
         return result
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'object_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_object_data(self):
         result = None
@@ -58,8 +59,8 @@ class Clipboard(BaseClipboard):
                 if cb.IsSupported(PythonObjectFormat):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     if cb.GetData(cdo):
-                        file   = BytesIO(cdo.GetData())
-                        klass  = load(file)
+                        file = BytesIO(cdo.GetData())
+                        klass = load(file)
                         result = load(file)
             finally:
                 cb.Close()
@@ -72,7 +73,7 @@ class Clipboard(BaseClipboard):
                 cdo.SetData(dumps(data.__class__) + dumps(data))
                 # fixme: There seem to be cases where the '-1' value creates
                 # pickles that can't be unpickled (e.g. some TraitDictObject's)
-                #cdo.SetData(dumps(data, -1))
+                # cdo.SetData(dumps(data, -1))
                 cb.SetData(cdo)
             finally:
                 cb.Close()
@@ -82,7 +83,7 @@ class Clipboard(BaseClipboard):
         return self._has_this_data(PythonObjectFormat)
 
     def _get_object_type(self):
-        result = ''
+        result = ""
         if cb.Open():
             try:
                 if cb.IsSupported(PythonObjectFormat):
@@ -97,12 +98,12 @@ class Clipboard(BaseClipboard):
                 cb.Close()
         return result
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'text_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_text_data(self):
-        result = ''
+        result = ""
         if cb.Open():
             if cb.IsSupported(TextFormat):
                 tdo = wx.TextDataObject()
@@ -120,9 +121,9 @@ class Clipboard(BaseClipboard):
     def _get_has_text_data(self):
         return self._has_this_data(TextFormat)
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  'file_data' property methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _get_file_data(self):
         result = []
@@ -149,9 +150,9 @@ class Clipboard(BaseClipboard):
     def _get_has_file_data(self):
         return self._has_this_data(FileFormat)
 
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
     #  Private helper methods:
-    #---------------------------------------------------------------------------
+    # ---------------------------------------------------------------------------
 
     def _has_this_data(self, format):
         result = False

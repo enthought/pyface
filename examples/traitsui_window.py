@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2009, Enthought, Inc.
 #  All rights reserved.
@@ -10,7 +10,7 @@
 #
 #  Thanks for using Enthought open source!
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ IPython widget example. """
 
 # Enthought library imports.
@@ -29,13 +29,13 @@ class Person(HasTraits):
     age = Int(18)
 
     #: the gender of the person
-    gender = Enum('female', 'male')
+    gender = Enum("female", "male")
 
     # a default traits view
     view = View(
-        Item('name', resizable=True),
-        Item('age', resizable=True),
-        Item('gender', resizable=True),
+        Item("name", resizable=True),
+        Item("age", resizable=True),
+        Item("gender", resizable=True),
         resizable=True,
     )
 
@@ -49,7 +49,7 @@ class MainWindow(ApplicationWindow):
     size = (320, 240)
 
     # The window title.
-    title = 'TraitsUI Person'
+    title = "TraitsUI Person"
 
     # The traits object to display
     person = Instance(Person, ())
@@ -60,12 +60,12 @@ class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
         """ Create the editor. """
-        self._ui = self.person.edit_traits(kind='panel', parent=parent)
+        self._ui = self.person.edit_traits(kind="panel", parent=parent)
         return self._ui.control
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI.
     gui = GUI()
 

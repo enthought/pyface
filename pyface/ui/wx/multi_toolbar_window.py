@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A top-level application window that supports multiple toolbars. """
 from __future__ import absolute_import
 
@@ -37,10 +37,12 @@ class MultiToolbarWindow(ApplicationWindow):
     _tool_bar_managers = Trait([], TraitList(Trait(ToolBarManager)))
 
     # Map of toolbar to screen location.
-    _tool_bar_locations = Trait({},
-                                TraitDict(Trait(ToolBarManager),
-                                          TraitEnum('top', 'bottom',
-                                                    'left', 'right')))
+    _tool_bar_locations = Trait(
+        {},
+        TraitDict(
+            Trait(ToolBarManager), TraitEnum("top", "bottom", "left", "right")
+        ),
+    )
 
     ###########################################################################
     # Protected 'Window' interface.
@@ -79,8 +81,9 @@ class MultiToolbarWindow(ApplicationWindow):
 
             for tool_bar_manager in self._tool_bar_managers:
                 location = self._tool_bar_locations[tool_bar_manager]
-                sizer = self._create_tool_bar(parent, sizer, tool_bar_manager,
-                                              location)
+                sizer = self._create_tool_bar(
+                    parent, sizer, tool_bar_manager, location
+                )
 
             return sizer
 
@@ -99,12 +102,12 @@ class MultiToolbarWindow(ApplicationWindow):
 
         tool_bar = tool_bar_manager.create_tool_bar(parent)
 
-        if location == 'top':
+        if location == "top":
             child_sizer = wx.BoxSizer(wx.VERTICAL)
             child_sizer.Add(tool_bar, 0, wx.ALL | wx.ALIGN_LEFT | wx.EXPAND)
             sizer.Add(child_sizer, 1, wx.ALL | wx.EXPAND)
 
-        if location == 'bottom':
+        if location == "bottom":
             toolbar_sizer = wx.BoxSizer(wx.VERTICAL)
 
             # Add the placeholder for the content before adding the toolbar.
@@ -114,12 +117,12 @@ class MultiToolbarWindow(ApplicationWindow):
             toolbar_sizer.Add(tool_bar, 0, wx.ALL | wx.ALIGN_TOP | wx.EXPAND)
             sizer.Add(toolbar_sizer, 1, wx.ALL | wx.EXPAND)
 
-        if location == 'left':
+        if location == "left":
             child_sizer = wx.BoxSizer(wx.HORIZONTAL)
             child_sizer.Add(tool_bar, 0, wx.ALL | wx.ALIGN_TOP | wx.EXPAND)
             sizer.Add(child_sizer, 1, wx.ALL | wx.EXPAND)
 
-        if location == 'right':
+        if location == "right":
             toolbar_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
             # Add the placeholder for the content before adding the toolbar.
@@ -141,7 +144,7 @@ class MultiToolbarWindow(ApplicationWindow):
     # Public MultiToolbarWindow interface
     ###########################################################################
 
-    def add_tool_bar(self, tool_bar_manager, location='top'):
+    def add_tool_bar(self, tool_bar_manager, location="top"):
         """ Add a toolbar in the specified location.
 
         Valid locations are 'top', 'bottom', 'left', and 'right'
@@ -149,5 +152,6 @@ class MultiToolbarWindow(ApplicationWindow):
 
         self._tool_bar_managers.append(tool_bar_manager)
         self._tool_bar_locations[tool_bar_manager] = location
+
 
 #### EOF ######################################################################

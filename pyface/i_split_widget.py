@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Mix-in class for split widgets. """
 
 
@@ -32,7 +32,7 @@ class ISplitWidget(Interface):
     #: Splitting vertically means there will be a left hand panel and a right
     #: hand panel, splitting horizontally means there will be a top panel and
     #: a bottom panel.
-    direction = Enum('vertical', 'vertical', 'horizontal')
+    direction = Enum("vertical", "vertical", "horizontal")
 
     #: The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.5)

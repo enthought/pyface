@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2015, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A log handler that emits records to a splash screen. """
 
 
@@ -44,4 +44,4 @@ class SplashScreenLogHandler(Handler):
         record : logging record instance
             The log record to be displayed.
         """
-        self._splash_screen.text = six.text_type(record.getMessage()) + u'...'
+        self._splash_screen.text = six.text_type(record.getMessage()) + u"..."

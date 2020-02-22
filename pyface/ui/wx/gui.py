@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Enthought pyface package component
 """
@@ -38,7 +38,6 @@ logger = logging.getLogger(__name__)
 
 @provides(IGUI)
 class GUI(MGUI, HasTraits):
-
 
     #### 'GUI' interface ######################################################
 
@@ -108,11 +107,13 @@ class GUI(MGUI, HasTraits):
         self.set_trait_after(10, self, "started", True)
 
         # A hack to force menus to appear for applications run on Mac OS X.
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
+
             def _mac_os_x_hack():
                 f = wx.Frame(None, -1)
                 f.Show(True)
                 f.Close()
+
             self.invoke_later(_mac_os_x_hack)
 
         logger.debug("---------- starting GUI event loop ----------")
@@ -144,5 +145,6 @@ class GUI(MGUI, HasTraits):
             del self._wx_cursor
 
         return
+
 
 #### EOF ######################################################################

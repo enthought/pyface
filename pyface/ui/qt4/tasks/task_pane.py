@@ -16,7 +16,6 @@ class TaskPane(MTaskPane):
     See the ITaskPane interface for API documentation.
     """
 
-
     ###########################################################################
     # 'ITaskPane' interface.
     ###########################################################################

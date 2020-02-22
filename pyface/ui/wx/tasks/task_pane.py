@@ -7,6 +7,7 @@ import wx
 
 # Logging
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -16,7 +17,6 @@ class TaskPane(MTaskPane):
 
     See the ITaskPane interface for API documentation.
     """
-
 
     ###########################################################################
     # 'ITaskPane' interface.
@@ -34,7 +34,7 @@ class TaskPane(MTaskPane):
         if self.control is not None:
             logger.debug("Destroying %s" % self.control)
             self.task.window._aui_manager.DetachPane(self.control)
-            
+
             self.control.Hide()
             self.control.Destroy()
             self.control = None

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A dialog that allows the user to chose a single item from a list. """
 
 from __future__ import absolute_import
@@ -20,11 +20,11 @@ from .toolkit import toolkit_object
 
 
 # Import the toolkit specific version.
-SingleChoiceDialog = toolkit_object('single_choice_dialog:SingleChoiceDialog')
+SingleChoiceDialog = toolkit_object("single_choice_dialog:SingleChoiceDialog")
 
 
 # Convenience functions.
-def choose_one(parent, message, choices, title='Choose', cancel=True):
+def choose_one(parent, message, choices, title="Choose", cancel=True):
     """ Convenience method to show an information message dialog.
 
     Parameters
@@ -46,8 +46,11 @@ def choose_one(parent, message, choices, title='Choose', cancel=True):
         The selected object, or None if cancelled.
     """
     dialog = SingleChoiceDialog(
-        parent=parent, message=message, choices=choices, title=title,
-        cancel=cancel
+        parent=parent,
+        message=message,
+        choices=choices,
+        title=title,
+        cancel=cancel,
     )
     result = dialog.open()
     if result == OK:

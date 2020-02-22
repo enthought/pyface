@@ -5,14 +5,15 @@ Simple demo of tasks used to develop the wx support for tasks.
 from pyface.api import GUI
 from pyface.tasks.api import Task, TaskWindow, EditorAreaPane
 
+
 class BlankTask(Task):
     """ A task that does nothing
     """
 
     #### Task interface #######################################################
 
-    id = 'example.blank_task'
-    name = 'Blank'
+    id = "example.blank_task"
+    name = "Blank"
 
     ###########################################################################
     # 'Task' interface.
@@ -23,6 +24,7 @@ class BlankTask(Task):
         """
         self.editor_area = EditorAreaPane()
         return self.editor_area
+
 
 def main(argv):
     """ A simple example of using Tasks.
@@ -42,6 +44,7 @@ def main(argv):
     gui.start_event_loop()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys
+
     main(sys.argv)

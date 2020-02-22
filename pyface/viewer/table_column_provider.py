@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Base class for all table column providers. """
 
 
@@ -36,5 +36,6 @@ class TableColumnProvider(ColumnProvider):
     # 'TreeContentProvider' and 'TreeLabelProvider'  instead of some
     # combination of the specific and generic viewer classes as in JFace.
     pass
+
 
 #### EOF ######################################################################

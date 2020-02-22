@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Major package imports.
@@ -30,7 +30,7 @@ class PyfaceResourceFactory(ResourceFactory):
 
         # Although QPixmap can load SVG directly, it does not respect the
         # default size, so we use a QSvgRenderer to get the default size.
-        if filename.endswith(('.svg', '.SVG')):
+        if filename.endswith((".svg", ".SVG")):
             renderer = QtSvg.QSvgRenderer(filename)
             pixmap = QtGui.QPixmap(renderer.defaultSize())
             pixmap.fill(QtCore.Qt.transparent)
@@ -49,5 +49,6 @@ class PyfaceResourceFactory(ResourceFactory):
         image.loadFromData(data)
 
         return image
+
 
 #### EOF ######################################################################

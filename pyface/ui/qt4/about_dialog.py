@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # Copyright (c) 2020, Enthought, Inc.
 # All rights reserved.
@@ -9,7 +9,7 @@
 #
 # Author: Riverbank Computing Limited; Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # Standard library imports.
 import platform
@@ -27,7 +27,7 @@ from pyface.image_resource import ImageResource
 from .dialog import Dialog
 
 # The HTML displayed in the QLabel.
-_DIALOG_TEXT = '''
+_DIALOG_TEXT = """
 <html>
   <body>
     <center>
@@ -56,7 +56,7 @@ _DIALOG_TEXT = '''
   </center>
   </body>
 </html>
-'''
+"""
 
 
 @provides(IAboutDialog)
@@ -71,7 +71,7 @@ class AboutDialog(MAboutDialog, Dialog):
 
     copyrights = List(Unicode)
 
-    image = Instance(ImageResource, ImageResource('about'))
+    image = Instance(ImageResource, ImageResource("about"))
 
     ###########################################################################
     # Protected 'IDialog' interface.
@@ -114,15 +114,21 @@ class AboutDialog(MAboutDialog, Dialog):
         path = self.image.absolute_path
 
         # The additional strings.
-        additions = '<br />'.join(self.additions)
+        additions = "<br />".join(self.additions)
 
         # Get the version numbers.
         py_version = platform.python_version()
         qt_version = QtCore.__version__
 
         # The additional copyright strings.
-        copyrights = "<br />".join(["Copyright &copy; %s" % line
-                                    for line in self.copyrights])
+        copyrights = "<br />".join(
+            ["Copyright &copy; %s" % line for line in self.copyrights]
+        )
 
-        return _DIALOG_TEXT % (path, additions, py_version, qt_version,
-                               copyrights)
+        return _DIALOG_TEXT % (
+            path,
+            additions,
+            py_version,
+            qt_version,
+            copyrights,
+        )

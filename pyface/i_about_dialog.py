@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005-2020, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for a simple 'About' dialog. """
 
 # Enthought library imports.
@@ -33,7 +33,7 @@ class IAboutDialog(IDialog):
     copyrights = List(Unicode)
 
     #: The image displayed in the dialog.
-    image = Instance(ImageResource, ImageResource('about'))
+    image = Instance(ImageResource, ImageResource("about"))
 
 
 class MAboutDialog(object):

@@ -13,11 +13,12 @@ class TasksApplicationAction(GUIApplicationAction):
 
 class CreateTaskWindowAction(TasksApplicationAction):
     """ A standard 'New Window' menu action. """
-    name = u'New Window'
-    accelerator = 'Ctrl+N'
+
+    name = u"New Window"
+    accelerator = "Ctrl+N"
 
     #: The task window wayout to use when creating the new window.
-    layout = Instance('pyface.tasks.task_window_layout.TaskWindowLayout')
+    layout = Instance("pyface.tasks.task_window_layout.TaskWindowLayout")
 
     def perform(self, event=None):
         window = self.application.create_window(layout=self.layout)

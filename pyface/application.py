@@ -30,14 +30,23 @@ appropriate work there::
 """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 import logging
 import os
 
 from traits.api import (
-    Directory, Event, HasStrictTraits, Instance, ReadOnly, Unicode, Vetoable,
-    VetoableEvent
+    Directory,
+    Event,
+    HasStrictTraits,
+    Instance,
+    ReadOnly,
+    Unicode,
+    Vetoable,
+    VetoableEvent,
 )
 
 logger = logging.getLogger(__name__)
@@ -45,6 +54,7 @@ logger = logging.getLogger(__name__)
 
 class ApplicationException(Exception):
     """ Exception subclass for Application-centric exceptions """
+
     pass
 
 
@@ -54,6 +64,7 @@ class ApplicationExit(ApplicationException):
     If no arguments, then assumed to be a normal exit, otherwise the arguments
     give information about the problem.
     """
+
     pass
 
 
@@ -80,7 +91,7 @@ class Application(HasStrictTraits):
     # Branding ----------------------------------------------------------------
 
     #: Human-readable application name
-    name = Unicode('Pyface Application')
+    name = Unicode("Pyface Application")
 
     #: Human-readable company name
     company = Unicode
@@ -155,13 +166,13 @@ class Application(HasStrictTraits):
         run = stopped = False
 
         # Start up the application.
-        logger.info('---- Application starting ----')
-        self._fire_application_event('starting')
+        logger.info("---- Application starting ----")
+        self._fire_application_event("starting")
         started = self.start()
         if started:
 
-            logger.info('---- Application started ----')
-            self._fire_application_event('started')
+            logger.info("---- Application started ----")
+            self._fire_application_event("started")
 
             try:
                 run = self._run()
@@ -170,15 +181,15 @@ class Application(HasStrictTraits):
                     logger.info("---- ApplicationExit raised ----")
                 else:
                     logger.exception("---- ApplicationExit raised ----")
-                run = (exc.args == ())
+                run = exc.args == ()
             finally:
                 # Try to shut the application down.
-                logger.info('---- Application stopping ----')
-                self._fire_application_event('stopping')
+                logger.info("---- Application stopping ----")
+                self._fire_application_event("stopping")
                 stopped = self.stop()
                 if stopped:
-                    self._fire_application_event('stopped')
-                    logger.info('---- Application stopped ----')
+                    self._fire_application_event("stopped")
+                    logger.info("---- Application stopped ----")
 
         return started and run and stopped
 
@@ -202,17 +213,17 @@ class Application(HasStrictTraits):
         ApplicationExit
             Some subclasses may trigger the exit by raising ApplicationExit.
         """
-        logger.info('---- Application exit started ----')
+        logger.info("---- Application exit started ----")
         if force or self._can_exit():
             try:
                 self._prepare_exit()
             except Exception:
                 logger.exception("Error preparing for application exit")
             finally:
-                logger.info('---- Application exit ----')
+                logger.info("---- Application exit ----")
                 self._exit()
         else:
-            logger.info('---- Application exit vetoed ----')
+            logger.info("---- Application exit vetoed ----")
 
     # Initialization utilities -----------------------------------------------
 
@@ -223,7 +234,7 @@ class Application(HasStrictTraits):
         stored.
         """
         if not os.path.exists(self.home):
-            logger.info('Application home directory does not exist, creating')
+            logger.info("Application home directory does not exist, creating")
             os.makedirs(self.home)
 
     # -------------------------------------------------------------------------
@@ -244,7 +255,7 @@ class Application(HasStrictTraits):
         # event loop (eg. a GUI, Tornado web app, etc.) then this should be
         # fired _after_ the event loop starts using an appropriate callback
         # (eg. gui.set_trait_later).
-        self._fire_application_event('application_initialized')
+        self._fire_application_event("application_initialized")
         return True
 
     # Utilities ---------------------------------------------------------------
@@ -290,25 +301,30 @@ class Application(HasStrictTraits):
     def _id_default(self):
         """ Use the application's directory as the id """
         from traits.etsconfig.etsconfig import ETSConfig
+
         return ETSConfig._get_application_dirname()
 
     def _home_default(self):
         """ Default home comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
+
         return os.path.join(ETSConfig.application_data, self.id)
 
     def _user_data_default(self):
         """ Default user_data comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
+
         return ETSConfig.user_data
 
     def _company_default(self):
         """ Default company comes from ETSConfig. """
         from traits.etsconfig.etsconfig import ETSConfig
+
         return ETSConfig.company
 
     def _description_default(self):
         """ Default description is the docstring of the application class. """
         from inspect import getdoc
+
         text = getdoc(self)
         return text

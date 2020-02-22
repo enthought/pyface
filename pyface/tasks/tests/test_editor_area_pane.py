@@ -5,11 +5,10 @@ import unittest
 from traits.etsconfig.api import ETSConfig
 from pyface.tasks.api import Editor, EditorAreaPane
 
-USING_WX = ETSConfig.toolkit not in ['', 'qt4']
+USING_WX = ETSConfig.toolkit not in ["", "qt4"]
 
 
 class EditorAreaPaneTestCase(unittest.TestCase):
-
     @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
     def test_create_editor(self):
         """ Does creating an editor work?
@@ -25,11 +24,11 @@ class EditorAreaPaneTestCase(unittest.TestCase):
         area = EditorAreaPane()
         area.register_factory(Editor, lambda obj: isinstance(obj, int))
         self.assertEqual(area.get_factory(0), Editor)
-        self.assertEqual(area.get_factory('foo'), None)
+        self.assertEqual(area.get_factory("foo"), None)
 
         area.unregister_factory(Editor)
         self.assertEqual(area.get_factory(0), None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

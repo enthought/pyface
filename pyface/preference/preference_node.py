@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for a node in a preference dialog.
 
 A preference node has a label and an image which are used to represent the node
@@ -79,5 +79,6 @@ class PreferenceNode(TreeItem):
             node = None
 
         return node
+
 
 #### EOF ######################################################################

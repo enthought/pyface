@@ -22,24 +22,44 @@ import sys
 import webbrowser
 
 from pyface.api import (
-    CANCEL, ConfirmationDialog, FileDialog, ImageResource, OK, YES, error
+    CANCEL,
+    ConfirmationDialog,
+    FileDialog,
+    ImageResource,
+    OK,
+    YES,
+    error,
 )
 from pyface.action.api import Action, StatusBarManager
 from pyface.tasks.api import (
-    EditorAreaPane, IEditor, IEditorAreaPane, PaneItem, Task, TaskLayout
+    EditorAreaPane,
+    IEditor,
+    IEditorAreaPane,
+    PaneItem,
+    Task,
+    TaskLayout,
 )
 from pyface.tasks.action.api import (
-    DockPaneToggleGroup, EditorAction, SGroup, SMenu, SMenuBar, SToolBar,
-    TaskAction
+    DockPaneToggleGroup,
+    EditorAction,
+    SGroup,
+    SMenu,
+    SMenuBar,
+    SToolBar,
+    TaskAction,
 )
 from traits.api import (
-    Instance, Property, Unicode, cached_property, on_trait_change
+    Instance,
+    Property,
+    Unicode,
+    cached_property,
+    on_trait_change,
 )
 
 from python_browser_pane import PythonBrowserPane
 from python_editor import PythonEditor
 
-PYTHON_DOCS = 'https://docs.python.org/{}.{}'.format(*sys.version_info[:2])
+PYTHON_DOCS = "https://docs.python.org/{}.{}".format(*sys.version_info[:2])
 
 
 class OpenURLAction(Action):
@@ -63,14 +83,14 @@ class PythonEditorTask(Task):
     # 'Task' traits -----------------------------------------------------------
 
     #: The unique id of the task.
-    id = 'example.python_editor_task'
+    id = "example.python_editor_task"
 
     #: The human-readable name of the task.
     name = u"Python Editor"
 
     #: The currently active editor in the editor area, if any.
     active_editor = Property(
-        Instance(IEditor), depends_on='editor_area.active_editor'
+        Instance(IEditor), depends_on="editor_area.active_editor"
     )
 
     #: The editor area for this task.
@@ -80,108 +100,104 @@ class PythonEditorTask(Task):
     menu_bar = SMenuBar(
         SMenu(
             SGroup(
-                TaskAction(name='New', method='new', accelerator='Ctrl+N'),
-                id='new_group',
+                TaskAction(name="New", method="new", accelerator="Ctrl+N"),
+                id="new_group",
             ),
             SGroup(
                 TaskAction(
-                    name='Open...', method='open', accelerator='Ctrl+O'
+                    name="Open...", method="open", accelerator="Ctrl+O"
                 ),
-                id='open_group',
+                id="open_group",
             ),
             SGroup(
                 TaskAction(
-                    name='Save',
-                    method='save',
-                    accelerator='Ctrl+S',
-                    enabled_name='active_editor.dirty'
+                    name="Save",
+                    method="save",
+                    accelerator="Ctrl+S",
+                    enabled_name="active_editor.dirty",
                 ),
                 TaskAction(
-                    name='Save As...',
-                    method='save_as',
-                    accelerator='Ctrl+Shift+S'
+                    name="Save As...",
+                    method="save_as",
+                    accelerator="Ctrl+Shift+S",
                 ),
-                id='save_group',
+                id="save_group",
             ),
             SGroup(
                 TaskAction(
-                    name='Close Editor',
-                    method='close_editor',
-                    accelerator='Ctrl+W',
+                    name="Close Editor",
+                    method="close_editor",
+                    accelerator="Ctrl+W",
                 ),
-                id='close_group',
+                id="close_group",
             ),
-            id='File',
-            name='&File',
+            id="File",
+            name="&File",
         ),
         SMenu(
             SGroup(
                 EditorAction(
-                    name='Undo',
-                    method='undo',
-                    enabled_name='can_undo',
-                    accelerator='Ctrl+Z',
+                    name="Undo",
+                    method="undo",
+                    enabled_name="can_undo",
+                    accelerator="Ctrl+Z",
                 ),
                 EditorAction(
-                    name='Redo',
-                    method='redo',
-                    enabled_name='can_redo',
-                    accelerator='Ctrl+Shift+Z',
+                    name="Redo",
+                    method="redo",
+                    enabled_name="can_redo",
+                    accelerator="Ctrl+Shift+Z",
                 ),
-                id='undo_group',
+                id="undo_group",
             ),
             SGroup(
                 EditorAction(
-                    name='Go to Line...',
-                    method='go_to_line',
-                    accelerator='Ctrl+G',
+                    name="Go to Line...",
+                    method="go_to_line",
+                    accelerator="Ctrl+G",
                 ),
-                id='search_group',
+                id="search_group",
             ),
-            id='Edit',
-            name='&Edit',
+            id="Edit",
+            name="&Edit",
         ),
-        SMenu(
-            DockPaneToggleGroup(),
-            id='View',
-            name='&View',
-        ),
+        SMenu(DockPaneToggleGroup(), id="View", name="&View"),
         SMenu(
             SGroup(
                 OpenURLAction(
-                    name='Python Documentation',
-                    id='python_docs',
+                    name="Python Documentation",
+                    id="python_docs",
                     url=PYTHON_DOCS,
                 ),
                 id="documentation_group",
             ),
-            id='Help',
-            name='&Help',
-        )
+            id="Help",
+            name="&Help",
+        ),
     )
 
     #: The tool bars for the task.
     tool_bars = [
         SToolBar(
             TaskAction(
-                method='new',
-                tooltip='New file',
-                image=ImageResource('document_new'),
+                method="new",
+                tooltip="New file",
+                image=ImageResource("document_new"),
             ),
             TaskAction(
-                method='open',
-                tooltip='Open a file',
-                image=ImageResource('document_open')
+                method="open",
+                tooltip="Open a file",
+                image=ImageResource("document_open"),
             ),
             TaskAction(
-                method='save',
-                tooltip='Save the current file',
-                image=ImageResource('document_save'),
-                enabled_name='active_editor.dirty'
+                method="save",
+                tooltip="Save the current file",
+                image=ImageResource("document_save"),
+                enabled_name="active_editor.dirty",
             ),
             image_size=(16, 16),
-            show_tool_names=False
-        ),
+            show_tool_names=False,
+        )
     ]
 
     #: The status bar for the window when this task is active.
@@ -191,7 +207,7 @@ class PythonEditorTask(Task):
     # 'PythonEditorTask' interface.
     # -------------------------------------------------------------------------
 
-    def create_editor(self, path=''):
+    def create_editor(self, path=""):
         """ Create a new editor in the editor pane.
 
         Parameters
@@ -201,11 +217,9 @@ class PythonEditorTask(Task):
         """
         if path:
             path = os.path.abspath(path)
-        use_existing = (path != '')
+        use_existing = path != ""
         self.editor_area.edit(
-            path,
-            factory=PythonEditor,
-            use_existing=use_existing,
+            path, factory=PythonEditor, use_existing=use_existing
         )
         if path:
             self.active_editor.load()
@@ -226,7 +240,7 @@ class PythonEditorTask(Task):
     def open(self):
         """ Shows a dialog to open a Python file.
         """
-        dialog = FileDialog(parent=self.window.control, wildcard='*.py')
+        dialog = FileDialog(parent=self.window.control, wildcard="*.py")
         if dialog.open() == OK:
             self.create_editor(dialog.path)
 
@@ -247,9 +261,7 @@ class PythonEditorTask(Task):
             # If you are trying to save to a file that doesn't exist, open up a
             # FileDialog with a 'save as' action.
             dialog = FileDialog(
-                parent=self.window.control,
-                action='save as',
-                wildcard='*.py',
+                parent=self.window.control, action="save as", wildcard="*.py"
             )
             if dialog.open() == OK:
                 editor.save(dialog.path)
@@ -265,7 +277,7 @@ class PythonEditorTask(Task):
         """ The default layout with the browser pane on the left.
         """
         return TaskLayout(
-            left=PaneItem('example.python_browser_pane', width=200)
+            left=PaneItem("example.python_browser_pane", width=200)
         )
 
     def create_central_pane(self):
@@ -283,7 +295,7 @@ class PythonEditorTask(Task):
             if os.path.isfile(path):
                 return self.create_editor(path)
 
-        browser.on_trait_change(handler, 'activated')
+        browser.on_trait_change(handler, "activated")
         return [browser]
 
     # -------------------------------------------------------------------------
@@ -302,13 +314,13 @@ class PythonEditorTask(Task):
         if not dirty_editors:
             return True
 
-        message = 'You have unsaved files. Would you like to save them?'
+        message = "You have unsaved files. Would you like to save them?"
         dialog = ConfirmationDialog(
             parent=self.window.control,
             message=message,
             cancel=True,
             default=CANCEL,
-            title='Save Changes?'
+            title="Save Changes?",
         )
         result = dialog.open()
         if result == CANCEL:
@@ -320,14 +332,14 @@ class PythonEditorTask(Task):
 
     # Trait change handlers --------------------------------------------------
 
-    @on_trait_change('window:closing')
+    @on_trait_change("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
         event.veto = not close
 
-    @on_trait_change('active_editor.name')
+    @on_trait_change("active_editor.name")
     def _change_title(self):
         """ Update the window title when the active editor changes.
         """
@@ -337,7 +349,7 @@ class PythonEditorTask(Task):
             else:
                 self.window.title = self.name
 
-    @on_trait_change('active_editor.[line,column,selection_length]')
+    @on_trait_change("active_editor.[line,column,selection_length]")
     def _update_status(self):
         if self.active_editor is not None:
             editor = self.active_editor

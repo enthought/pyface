@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 import sys
 
@@ -21,9 +21,7 @@ from pyface.action.api import ToolBarManager
 from traits.api import Instance, List, on_trait_change, provides, Unicode
 
 # Local imports.
-from pyface.i_application_window import (
-    IApplicationWindow, MApplicationWindow
-)
+from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.image_resource import ImageResource
 from .window import Window
 
@@ -64,7 +62,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         panel = QtGui.QWidget(parent)
 
         palette = QtGui.QPalette(panel.palette())
-        palette.setColor(QtGui.QPalette.Window, QtGui.QColor('blue'))
+        palette.setColor(QtGui.QPalette.Window, QtGui.QColor("blue"))
         panel.setPalette(palette)
         panel.setAutoFillBackground(True)
 
@@ -97,7 +95,7 @@ class ApplicationWindow(MApplicationWindow, Window):
             if len(tool_bar.objectName()) == 0:
                 tool_bar.setObjectName(tool_bar_manager.name)
 
-        if sys.platform == 'darwin':
+        if sys.platform == "darwin":
             # Work around bug in Qt on OS X where creating a tool bar with a
             # QMainWindow parent hides the window. See
             # http://bugreports.qt.nokia.com/browse/QTBUG-5069 for more info.
@@ -105,7 +103,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _set_window_icon(self):
         if self.icon is None:
-            icon = ImageResource('application.png')
+            icon = ImageResource("application.png")
         else:
             icon = self.icon
         if self.control is not None:
@@ -134,7 +132,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_control(self, parent):
         control = super(ApplicationWindow, self)._create_control(parent)
-        control.setObjectName('ApplicationWindow')
+        control.setObjectName("ApplicationWindow")
 
         control.setAnimated(False)
         control.setDockNestingEnabled(True)
@@ -173,7 +171,7 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.destroy_status_bar()
             self._create_status_bar(self.control)
 
-    @on_trait_change('tool_bar_manager, tool_bar_managers')
+    @on_trait_change("tool_bar_manager, tool_bar_managers")
     def _update_tool_bar_managers(self):
         if self.control is not None:
             # Remove the old toolbars.

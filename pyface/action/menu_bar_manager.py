@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,12 +10,13 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A menu bar manager realizes itself in errr, a menu bar control. """
 
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
-MenuBarManager = toolkit_object('action.menu_bar_manager:MenuBarManager')
+
+MenuBarManager = toolkit_object("action.menu_bar_manager:MenuBarManager")
 
 #### EOF ######################################################################

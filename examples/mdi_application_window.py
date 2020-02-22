@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Application window example. """
 
 
@@ -18,7 +18,7 @@
 import os, sys
 
 # Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r'..\..\..'))
+sys.path.append(os.path.abspath(r"..\..\.."))
 
 # Enthought library imports.
 from pyface.api import MDIApplicationWindow, MDIWindowMenu, GUI
@@ -41,11 +41,9 @@ class MainWindow(MDIApplicationWindow):
         # Add a menu bar.
         self.menu_bar_manager = MenuBarManager(
             MenuManager(
-                Action(name='E&xit', on_perform=self.close),
-                name = '&File',
+                Action(name="E&xit", on_perform=self.close), name="&File"
             ),
-
-            MDIWindowMenu(self)
+            MDIWindowMenu(self),
         )
 
         # Set the size of the window
@@ -55,7 +53,7 @@ class MainWindow(MDIApplicationWindow):
 
 
 # Application entry point.
-if __name__ == '__main__':
+if __name__ == "__main__":
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

@@ -13,4 +13,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-MDIApplicationWindow = toolkit_object('mdi_application_window:MDIApplicationWindow')
+
+MDIApplicationWindow = toolkit_object(
+    "mdi_application_window:MDIApplicationWindow"
+)

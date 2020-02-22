@@ -19,11 +19,12 @@ logger = logging.getLogger(__name__)
 @provides(IPerspective)
 class Perspective(HasTraits):
     """ The default perspective. """
+
     # The ID of the default perspective.
-    DEFAULT_ID = 'pyface.workbench.default'
+    DEFAULT_ID = "pyface.workbench.default"
 
     # The name of the default perspective.
-    DEFAULT_NAME = 'Default'
+    DEFAULT_NAME = "Default"
 
     #### 'IPerspective' interface #############################################
 
@@ -54,7 +55,7 @@ class Perspective(HasTraits):
     def __str__(self):
         """ Return an informal string representation of the object. """
 
-        return 'Perspective(%s)' % self.id
+        return "Perspective(%s)" % self.id
 
     ###########################################################################
     # 'Perspective' interface.
@@ -159,7 +160,7 @@ class Perspective(HasTraits):
             # fixme: This is worth keeping an eye on though. If we end up with
             # a strict mode that throws exceptions early and often for
             # developers, then this might be a good place to throw one ;^)
-            logger.error('missing view for perspective item <%s>' % item.id)
+            logger.error("missing view for perspective item <%s>" % item.id)
 
         return
 
@@ -189,5 +190,6 @@ class Perspective(HasTraits):
         )
 
         return
+
 
 #### EOF ######################################################################

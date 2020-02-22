@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a dialog that allows the user to browse for a
 directory.
 """
@@ -20,6 +20,7 @@ directory.
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-DirectoryDialog = toolkit_object('directory_dialog:DirectoryDialog')
+
+DirectoryDialog = toolkit_object("directory_dialog:DirectoryDialog")
 
 #### EOF ######################################################################

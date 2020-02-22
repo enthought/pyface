@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2008, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -22,8 +22,7 @@ from traits.api import Instance, on_trait_change
 
 # Local imports.
 from pyface.message_dialog import error
-from pyface.workbench.i_workbench_window_layout import \
-        MWorkbenchWindowLayout
+from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget
 import six
 
@@ -34,18 +33,18 @@ logger = logging.getLogger(__name__)
 
 # For mapping positions relative to the editor area.
 _EDIT_AREA_MAP = {
-    'left':     QtCore.Qt.LeftDockWidgetArea,
-    'right':    QtCore.Qt.RightDockWidgetArea,
-    'top':      QtCore.Qt.TopDockWidgetArea,
-    'bottom':   QtCore.Qt.BottomDockWidgetArea
+    "left": QtCore.Qt.LeftDockWidgetArea,
+    "right": QtCore.Qt.RightDockWidgetArea,
+    "top": QtCore.Qt.TopDockWidgetArea,
+    "bottom": QtCore.Qt.BottomDockWidgetArea,
 }
 
 # For mapping positions relative to another view.
 _VIEW_AREA_MAP = {
-    'left':     (QtCore.Qt.Horizontal, True),
-    'right':    (QtCore.Qt.Horizontal, False),
-    'top':      (QtCore.Qt.Vertical, True),
-    'bottom':   (QtCore.Qt.Vertical, False)
+    "left": (QtCore.Qt.Horizontal, True),
+    "right": (QtCore.Qt.Horizontal, False),
+    "top": (QtCore.Qt.Vertical, True),
+    "bottom": (QtCore.Qt.Vertical, False),
 }
 
 
@@ -87,12 +86,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             return None
 
         try:
-            self._qt4_editor_area.addTab(self._qt4_get_editor_control(editor), title)
+            self._qt4_editor_area.addTab(
+                self._qt4_get_editor_control(editor), title
+            )
 
             if editor._loading_on_open:
-                self._qt4_editor_tab_spinner(editor, '', True)
+                self._qt4_editor_tab_spinner(editor, "", True)
         except Exception:
-            logger.exception('error creating editor control [%s]', editor.id)
+            logger.exception("error creating editor control [%s]", editor.id)
 
         return editor
 
@@ -104,7 +105,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             self._qt4_add_view(view, position, relative_to, size)
             view.visible = True
         except Exception:
-            logger.exception('error creating view control [%s]', view.id)
+            logger.exception("error creating view control [%s]", view.id)
 
             # Even though we caught the exception, it sometimes happens that
             # the view's control has been created as a child of the application
@@ -113,8 +114,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             view.destroy_control()
 
             # Additionally, display an error message to the user.
-            error(self.window.control, 'Unable to add view [%s]' % view.id,
-                    'Workbench Plugin Error')
+            error(
+                self.window.control,
+                "Unable to add view [%s]" % view.id,
+                "Workbench Plugin Error",
+            )
 
         return view
 
@@ -131,7 +135,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     def close(self):
         # Don't fire signals for editors that have destroyed their controls.
-        self._qt4_editor_area.editor_has_focus.disconnect(self._qt4_editor_focus)
+        self._qt4_editor_area.editor_has_focus.disconnect(
+            self._qt4_editor_focus
+        )
 
         self._qt4_editor_area.clear()
 
@@ -158,7 +164,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         return editor_area
 
     def contains_view(self, view):
-        return hasattr(view, '_qt4_dock')
+        return hasattr(view, "_qt4_dock")
 
     def hide_editor_area(self):
         self._qt4_editor_area.hide()
@@ -229,14 +235,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                     self._qt4_create_view_dock_widget(v).setVisible(False)
 
                     if v in dock_views:
-                        delattr(v, '_qt4_gone')
+                        delattr(v, "_qt4_gone")
 
                     break
 
         # Remove any remain unused dock widgets.
         for v in dock_views:
             try:
-                delattr(v, '_qt4_gone')
+                delattr(v, "_qt4_gone")
             except AttributeError:
                 pass
             else:
@@ -273,7 +279,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
             # Create the restored editor.
             editor = self.window.editor_manager.set_editor_memento(
-                editor_memento)
+                editor_memento
+            )
             if editor is None:
                 return None
 
@@ -286,15 +293,15 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         self._qt4_editor_area.restoreState(editor_layout, resolve_id)
 
     def get_toolkit_memento(self):
-        return (0, {'geometry' : self.window.control.saveGeometry()})
+        return (0, {"geometry": self.window.control.saveGeometry()})
 
     def set_toolkit_memento(self, memento):
-        if hasattr(memento, 'toolkit_data'):
+        if hasattr(memento, "toolkit_data"):
             data = memento.toolkit_data
             if isinstance(data, tuple) and len(data) == 2:
                 version, datadict = data
                 if version == 0:
-                    geometry = datadict.pop('geometry', None)
+                    geometry = datadict.pop("geometry", None)
                     if geometry is not None:
                         self.window.control.restoreGeometry(geometry)
 
@@ -310,25 +317,31 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         for editor in self.window.editors:
             control = editor.control
-            editor.has_focus = control is new or \
-                (control is not None and new in control.children())
+            editor.has_focus = control is new or (
+                control is not None and new in control.children()
+            )
 
     def _qt4_editor_title_changed(self, control, title):
         """ Handle the title being changed """
         for editor in self.window.editors:
-            if editor.control == control: editor.name = six.text_type(title)
+            if editor.control == control:
+                editor.name = six.text_type(title)
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?
         tw, tidx = self._qt4_editor_area._tab_widget(editor.control)
 
-        if new: tw.show_button(tidx)
-        else: tw.hide_button(tidx)
+        if new:
+            tw.show_button(tidx)
+        else:
+            tw.hide_button(tidx)
 
         if not new and not editor == self.window.active_editor:
-            self._qt4_editor_area.setTabTextColor(editor.control, QtCore.Qt.red)
+            self._qt4_editor_area.setTabTextColor(
+                editor.control, QtCore.Qt.red
+            )
 
-    @on_trait_change('window:active_editor')
+    @on_trait_change("window:active_editor")
     def _qt4_active_editor_changed(self, old, new):
         """ Handle change of active editor """
         # Reset tab title to foreground color
@@ -351,7 +364,11 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if old is not None:
             # Handle focus changes from views.
             for view in self.window.views:
-                if view is not focus_part and view.control is not None and view.control.isAncestorOf(old):
+                if (
+                    view is not focus_part
+                    and view.control is not None
+                    and view.control.isAncestorOf(old)
+                ):
                     view.has_focus = False
                     break
 
@@ -424,14 +441,14 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor.control = editor.create_control(self.window.control)
             editor.control.setObjectName(editor.id)
 
-            editor.on_trait_change(self._qt4_editor_tab_spinner, '_loading')
+            editor.on_trait_change(self._qt4_editor_tab_spinner, "_loading")
 
             self.editor_opened = editor
 
         def on_name_changed(editor, trait_name, old, new):
             self._qt4_editor_area.setWidgetTitle(editor.control, editor.name)
 
-        editor.on_trait_change(on_name_changed, 'name')
+        editor.on_trait_change(on_name_changed, "name")
 
         self._qt4_monitor(editor.control)
 
@@ -456,8 +473,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if rel_dw is None:
             # If we are trying to add a view with a non-existent item, then
             # just default to the left of the editor area.
-            if position == 'with':
-                position = 'left'
+            if position == "with":
+                position = "left"
 
             # Position the view relative to the editor area.
             try:
@@ -466,7 +483,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 raise ValueError("unknown view position: %s" % position)
 
             mw.addDockWidget(dwa, dw)
-        elif position == 'with':
+        elif position == "with":
             # FIXME v3: The Qt documentation says that the second should be
             # placed above the first, but it always seems to be underneath (ie.
             # hidden) which is not what the user is expecting.
@@ -499,7 +516,8 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             dw.setWidget(_ViewContainer(size, self.window.control))
             dw.setObjectName(view.id)
             dw.toggleViewAction().toggled.connect(
-                self._qt4_handle_dock_visibility)
+                self._qt4_handle_dock_visibility
+            )
             dw.visibilityChanged.connect(self._qt4_handle_dock_visibility)
 
             # Save the dock window.
@@ -508,7 +526,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             def on_name_changed():
                 view._qt4_dock.setWindowTitle(view.name)
 
-            view.on_trait_change(on_name_changed, 'name')
+            view.on_trait_change(on_name_changed, "name")
 
         # Make sure the view control exists.
         if view.control is None:
@@ -519,7 +537,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 view.control = view.create_control(dw.widget())
             except:
                 # Tidy up if the view couldn't be created.
-                delattr(view, '_qt4_dock')
+                delattr(view, "_qt4_dock")
                 self.window.control.removeDockWidget(dw)
                 dw.deleteLater()
                 del dw
@@ -538,7 +556,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         if view.control is not None:
             view.control.setParent(None)
 
-        delattr(view, '_qt4_dock')
+        delattr(view, "_qt4_dock")
 
         # Delete the dock (and the view container).
         self.window.control.removeDockWidget(dw)
@@ -555,8 +573,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 continue
 
             sender = dw.sender()
-            if (sender is dw.toggleViewAction() or
-                sender in dw.children()):
+            if sender is dw.toggleViewAction() or sender in dw.children():
                 # Toggling the action or pressing the close button on
                 # the view
                 v.visible = checked
@@ -641,5 +658,6 @@ class _ViewContainer(QtGui.QMainWindow):
         self._width = self._height = -1
 
         QtGui.QMainWindow.showEvent(self, e)
+
 
 #### EOF ######################################################################

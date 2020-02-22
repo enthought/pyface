@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface of a pyface GUI. """
 
 
@@ -182,16 +182,19 @@ class MGUI(object):
         run interactively.
         """
         import signal
+
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     def _default_state_location(self):
         """ Return the default state location. """
 
-        state_location = os.path.join(ETSConfig.application_home, 'pyface', ETSConfig.toolkit)
+        state_location = os.path.join(
+            ETSConfig.application_home, "pyface", ETSConfig.toolkit
+        )
 
         if not os.path.exists(state_location):
             os.makedirs(state_location)
 
-        logger.debug('GUI state location is <%s>', state_location)
+        logger.debug("GUI state location is <%s>", state_location)
 
         return state_location

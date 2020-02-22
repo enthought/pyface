@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A simple progress dialog window which allows itself to be updated
 """
 
@@ -19,6 +19,7 @@
 from __future__ import absolute_import
 
 from .toolkit import toolkit_object
-ProgressDialog = toolkit_object('progress_dialog:ProgressDialog')
+
+ProgressDialog = toolkit_object("progress_dialog:ProgressDialog")
 
 #### EOF ######################################################################

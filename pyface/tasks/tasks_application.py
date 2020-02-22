@@ -11,15 +11,25 @@ the creation of tasks and corresponding windows.
 """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from functools import partial
 import logging
 
 from traits.api import (
-    Callable, HasStrictTraits, List, Instance, Property, Str, Unicode,
-    cached_property, on_trait_change
+    Callable,
+    HasStrictTraits,
+    List,
+    Instance,
+    Property,
+    Str,
+    Unicode,
+    cached_property,
+    on_trait_change,
 )
 
 from pyface.gui_application import GUIApplication
@@ -67,7 +77,7 @@ class TasksApplication(GUIApplication):
     tasks = List(Instance("pyface.tasks.task.Task"))
 
     #: Currently active Task if any.
-    active_task = Property(depends_on='active_window.active_task')
+    active_task = Property(depends_on="active_window.active_task")
 
     #: List of all application task factories.
     task_factories = List()
@@ -75,12 +85,12 @@ class TasksApplication(GUIApplication):
     #: The default layout for the application. If not specified, a single
     #: window will be created with the first available task factory.
     default_layout = List(
-        Instance('pyface.tasks.task_window_layout.TaskWindowLayout')
+        Instance("pyface.tasks.task_window_layout.TaskWindowLayout")
     )
 
     #: Hook to add global schema additions to tasks/windows
     extra_actions = List(
-        Instance('pyface.tasks.action.schema_addition.SchemaAddition')
+        Instance("pyface.tasks.action.schema_addition.SchemaAddition")
     )
 
     #: Hook to add global dock pane additions to tasks/windows
@@ -136,7 +146,7 @@ class TasksApplication(GUIApplication):
                 if task is not None:
                     window.add_task(task)
                 else:
-                    msg = 'Missing factory for task with ID %r'
+                    msg = "Missing factory for task with ID %r"
                     logger.error(msg, task_id)
         else:
             # Create an empty layout to set default size and position only
@@ -168,14 +178,15 @@ class TasksApplication(GUIApplication):
 
     # Destruction utilities ---------------------------------------------------
 
-    @on_trait_change('windows:closed')
+    @on_trait_change("windows:closed")
     def _on_window_closed(self, window, trait, old, new):
         """ Listener that ensures window handles are released when closed.
         """
-        if getattr(window, 'active_task', None) in self.tasks:
+        if getattr(window, "active_task", None) in self.tasks:
             self.tasks.remove(window.active_task)
-        super(TasksApplication,
-              self)._on_window_closed(window, trait, old, new)
+        super(TasksApplication, self)._on_window_closed(
+            window, trait, old, new
+        )
 
     # Trait initializers and property getters ---------------------------------
 
@@ -186,10 +197,12 @@ class TasksApplication(GUIApplication):
         from the Task and the TaskWindow is just a shell.
         """
         from pyface.tasks.task_window import TaskWindow
+
         return TaskWindow
 
     def _default_layout_default(self):
         from pyface.tasks.task_window_layout import TaskWindowLayout
+
         window_layout = TaskWindowLayout()
         if self.task_factories:
             window_layout.items = [self.task_factories[0].id]
@@ -207,57 +220,59 @@ class TasksApplication(GUIApplication):
         rather than new task windows.
         """
         from pyface.action.api import (
-            AboutAction, CloseActiveWindowAction, ExitAction
+            AboutAction,
+            CloseActiveWindowAction,
+            ExitAction,
         )
         from pyface.tasks.action.api import (
-            CreateTaskWindowAction, SchemaAddition, SMenu,
-            TaskWindowToggleGroup
+            CreateTaskWindowAction,
+            SchemaAddition,
+            SMenu,
+            TaskWindowToggleGroup,
         )
 
         return [
             SchemaAddition(
                 factory=CreateTaskWindowAction.factory(
-                    application=self,
-                    accelerator='Ctrl+Shift+N',
+                    application=self, accelerator="Ctrl+Shift+N"
                 ),
-                path='MenuBar/File/new_group',
+                path="MenuBar/File/new_group",
             ),
             SchemaAddition(
-                id='close_action',
+                id="close_action",
                 factory=CloseActiveWindowAction.factory(
-                    application=self,
-                    accelerator='Ctrl+Shift+W',
+                    application=self, accelerator="Ctrl+Shift+W"
                 ),
-                path='MenuBar/File/close_group',
+                path="MenuBar/File/close_group",
             ),
             SchemaAddition(
-                id='exit_action',
+                id="exit_action",
                 factory=ExitAction.factory(application=self),
-                path='MenuBar/File/close_group',
-                absolute_position='last',
+                path="MenuBar/File/close_group",
+                absolute_position="last",
             ),
             SchemaAddition(
-                #id='Window',
+                # id='Window',
                 factory=lambda: SMenu(
                     TaskWindowToggleGroup(application=self),
-                    id='Window',
-                    name='&Window',
+                    id="Window",
+                    name="&Window",
                 ),
-                path='MenuBar',
+                path="MenuBar",
                 after="View",
-                before="Help"
+                before="Help",
             ),
             SchemaAddition(
-                id='about_action',
+                id="about_action",
                 factory=AboutAction.factory(application=self),
-                path='MenuBar/Help',
-                absolute_position='first',
+                path="MenuBar/Help",
+                absolute_position="first",
             ),
         ]
 
     @cached_property
     def _get_active_task(self):
         if self.active_window is not None:
-            return getattr(self.active_window, 'active_task', None)
+            return getattr(self.active_window, "active_task", None)
         else:
             return None

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2005, Enthought, Inc.
 #  All rights reserved.
@@ -12,7 +12,7 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ The wx specific implementation of a menu manager.
 """
@@ -67,7 +67,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
 
-        id  = wx.NewId()
+        id = wx.NewId()
         sub = self.create_menu(parent, controller)
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
@@ -113,8 +113,8 @@ class _Menu(wx.Menu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.on_trait_change(self.refresh, 'changed')
-        self._manager.on_trait_change(self._on_enabled_changed, 'enabled')
+        self._manager.on_trait_change(self.refresh, "changed")
+        self._manager.on_trait_change(self._on_enabled_changed, "enabled")
 
         return
 
@@ -148,7 +148,7 @@ class _Menu(wx.Menu):
         self.clear()
 
         manager = self._manager
-        parent  = self._parent
+        parent = self._parent
 
         previous_non_empty_group = None
         for group in manager.groups:
@@ -180,7 +180,7 @@ class _Menu(wx.Menu):
         # We cannot currently (AFAIK) disable menus on the menu bar. Hence
         # we don't give them an '_id'...
 
-        if hasattr(self, '_id'):
+        if hasattr(self, "_id"):
             self._menu.Enable(self._id, new)
 
         return
@@ -200,9 +200,11 @@ class _Menu(wx.Menu):
                     if len(item.items) > 0:
                         self._add_group(parent, item, previous_non_empty_group)
 
-                        if previous_non_empty_group is not None \
-                           and previous_non_empty_group.separator \
-                           and item.separator:
+                        if (
+                            previous_non_empty_group is not None
+                            and previous_non_empty_group.separator
+                            and item.separator
+                        ):
                             self.AppendSeparator()
 
                         previous_non_empty_group = item
@@ -217,5 +219,6 @@ class _Menu(wx.Menu):
             previous_non_empty_group = group
 
         return previous_non_empty_group
+
 
 #### EOF ######################################################################

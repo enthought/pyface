@@ -68,7 +68,7 @@ class ListeningAction(Action):
         stored in the :py:attr:`method` trait.  If the method is empty, then
         this follows the usual Action method resolution.
         """
-        if self.method != '':
+        if self.method != "":
             method = self._get_attr(self.object, self.method)
             if method:
                 method()
@@ -82,7 +82,7 @@ class ListeningAction(Action):
     def _get_attr(self, obj, name, default=None):
         """ Perform an extended look up of a dotted name. """
         try:
-            for attr in name.split('.'):
+            for attr in name.split("."):
                 # Perform the access in the Trait name style: if the object is
                 # None, assume it simply hasn't been initialized and don't show
                 # the warning.
@@ -116,9 +116,9 @@ class ListeningAction(Action):
         self._visible_update()
 
     def _object_changed(self, old, new):
-        for kind in ('enabled', 'visible'):
-            method = getattr(self, '_%s_update' % kind)
-            name = getattr(self, '%s_name' % kind)
+        for kind in ("enabled", "visible"):
+            method = getattr(self, "_%s_update" % kind)
+            name = getattr(self, "%s_name" % kind)
             if name:
                 if old:
                     old.on_trait_change(method, name, remove=True)

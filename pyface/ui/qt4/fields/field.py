@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2017-19, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The Qt-specific implementation of the text field class """
 
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 from traits.api import Any, Instance, Unicode, provides
@@ -38,7 +41,7 @@ class Field(MField, Widget):
     tooltip = Unicode
 
     #: An optional context menu for the field.
-    context_menu = Instance('pyface.action.menu_manager.MenuManager')
+    context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
     # ------------------------------------------------------------------------
     # Private interface
@@ -57,10 +60,12 @@ class Field(MField, Widget):
         if remove:
             self.control.setContextMenuPolicy(Qt.DefaultContextMenu)
             self.control.customContextMenuRequested.disconnect(
-                self._handle_control_context_menu)
+                self._handle_control_context_menu
+            )
         else:
             self.control.customContextMenuRequested.connect(
-                self._handle_control_context_menu)
+                self._handle_control_context_menu
+            )
             self.control.setContextMenuPolicy(Qt.CustomContextMenu)
 
     def _handle_control_context_menu(self, pos):

@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for all action managers. """
 
 
@@ -42,7 +42,7 @@ class ActionManager(HasTraits):
     #### 'ActionManager' interface ############################################
 
     #: The Id of the default group.
-    DEFAULT_GROUP = Constant('additions')
+    DEFAULT_GROUP = Constant("additions")
 
     #: The action controller (if any) used to control how actions are performed.
     controller = Instance(ActionController)
@@ -118,11 +118,11 @@ class ActionManager(HasTraits):
             # Otherwise, the item is an action manager item so add it to the
             # current group.
             else:
-##                 # If no group has been created then add one.  This is only
-##                 # relevant when using the 'shorthand' way to define menus.
-##                 if group is None:
-##                     group = Group(id='__first__')
-##                     self.insert(-1, group)
+                ##                 # If no group has been created then add one.  This is only
+                ##                 # relevant when using the 'shorthand' way to define menus.
+                ##                 if group is None:
+                ##                     group = Group(id='__first__')
+                ##                     self.insert(-1, group)
 
                 group.append(arg)
 
@@ -246,14 +246,14 @@ class ActionManager(HasTraits):
             Returns the matching ActionManagerItem, or None if any component
             of the path is not found.
         """
-        components = path.split('/')
+        components = path.split("/")
 
         # If there is only one component, then the path is just an Id so look
         # it up in this manager.
         if len(components) > 0:
             item = self._find_item(components[0])
             if len(components) > 1 and item is not None:
-                item = item.find_item('/'.join(components[1:]))
+                item = item.find_item("/".join(components[1:]))
         else:
             item = None
 
@@ -303,7 +303,7 @@ class ActionManager(HasTraits):
         fn : callable
             A callable to apply to the tree of items and subgroups.
         """
-        if hasattr(item, 'groups'):
+        if hasattr(item, "groups"):
             item.walk(fn)
         else:
             fn(item)
@@ -379,32 +379,32 @@ class ActionManager(HasTraits):
     # Debugging interface.
     ###########################################################################
 
-    def dump(self, indent=''):
+    def dump(self, indent=""):
         """ Render a manager! """
-        print(indent, 'Manager', self.id)
-        indent += '  '
+        print(indent, "Manager", self.id)
+        indent += "  "
 
         for group in self._groups:
             self.render_group(group, indent)
 
-    def render_group(self, group, indent=''):
+    def render_group(self, group, indent=""):
         """ Render a group! """
-        print(indent, 'Group', group.id)
-        indent += '    '
+        print(indent, "Group", group.id)
+        indent += "    "
 
         for item in group.items:
             if isinstance(item, Group):
-                print('Surely, a group cannot contain another group!!!!')
+                print("Surely, a group cannot contain another group!!!!")
                 self.render_group(item, indent)
 
             else:
                 self.render_item(item, indent)
 
-    def render_item(self, item, indent=''):
+    def render_item(self, item, indent=""):
         """ Render an item! """
 
-        if hasattr(item, 'groups'):
+        if hasattr(item, "groups"):
             item.dump(indent)
 
         else:
-            print(indent, 'Item', item.id)
+            print(indent, "Item", item.id)

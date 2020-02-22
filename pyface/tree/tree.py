@@ -13,4 +13,5 @@
 from __future__ import absolute_import
 
 from pyface.toolkit import toolkit_object
-Tree = toolkit_object('tree.tree:Tree')
+
+Tree = toolkit_object("tree.tree:Tree")

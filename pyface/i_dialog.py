@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The abstract interface for all pyface dialogs. """
 
 
@@ -57,7 +57,7 @@ class IDialog(IWindow):
     #: The dialog style (is it modal or not).
     # FIXME v3: It doesn't seem possible to use non-modal dialogs.  (How do you
     # get access to the buttons?)
-    style = Enum('modal', 'nonmodal')
+    style = Enum("modal", "nonmodal")
 
     ###########################################################################
     # 'IDialog' interface.
@@ -167,7 +167,7 @@ class MDialog(object):
         if self.control is None:
             self._create()
 
-        if self.style == 'modal':
+        if self.style == "modal":
             self.return_code = self._show_modal()
             self.close()
 

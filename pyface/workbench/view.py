@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,12 +10,13 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The implementation of a workbench view. """
 
 
 # Import the toolkit specific version.
 from pyface.toolkit import toolkit_object
-View = toolkit_object('workbench.view:View')
+
+View = toolkit_object("workbench.view:View")
 
 ### EOF #######################################################################

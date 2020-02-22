@@ -11,7 +11,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.warning(
-    'DEPRECATED: pyface.image_button, use pyface.ui.wx.image_button instead. '
-    'Will be removed in Pyface 7.')
+    "DEPRECATED: pyface.image_button, use pyface.ui.wx.image_button instead. "
+    "Will be removed in Pyface 7."
+)
 
 from pyface.ui.wx.image_button import *

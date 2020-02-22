@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Enthought library imports.
@@ -26,7 +26,6 @@ class Widget(MWidget, HasTraits):
     interface for the API documentation.
     """
 
-
     #### 'IWidget' interface ##################################################
 
     control = Any
@@ -39,5 +38,6 @@ class Widget(MWidget, HasTraits):
 
     def destroy(self):
         self.control = None
+
 
 #### EOF ######################################################################

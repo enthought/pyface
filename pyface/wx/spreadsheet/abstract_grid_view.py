@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,11 +10,11 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought util package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 from numpy import arange
 
 import wx
-from wx.grid import Grid,
+from wx.grid import Grid
 from wx.grid import PyGridCellRenderer
 from wx.grid import GridCellTextEditor, GridCellStringRenderer
 from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
@@ -43,8 +43,10 @@ class ComboboxFocusHandler(wx.EvtHandler):
         # some other problem down the road, but it seems to work for now.
         # fixme: remove this h*ck once the bug is fixed in wx.
         editor = evt.GetEventObject()
-        if isinstance(editor, wx._controls.ComboBox) and \
-               evt.GetWindow() is None:
+        if (
+            isinstance(editor, wx._controls.ComboBox)
+            and evt.GetWindow() is None
+        ):
             return
         evt.Skip()
         return
@@ -65,7 +67,7 @@ class AbstractGridView(Grid):
         # We have things set up to edit on a single click - so we have to select
         # an initial cursor location that is off of the screen otherwise a cell
         # will be in edit mode as soon as the grid fires up.
-        self.moveTo = [1000,1]
+        self.moveTo = [1000, 1]
         self.edit = False
 
         # this seems like a busy idle ...
@@ -81,8 +83,11 @@ class AbstractGridView(Grid):
         return
 
     def init_labels(self):
-        self.SetLabelFont(wx.Font(self.GetFont().GetPointSize(),
-                                  wx.SWISS, wx.NORMAL, wx.BOLD))
+        self.SetLabelFont(
+            wx.Font(
+                self.GetFont().GetPointSize(), wx.SWISS, wx.NORMAL, wx.BOLD
+            )
+        )
         self.SetGridLineColour("blue")
         self.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self.SetRowLabelAlignment(wx.ALIGN_LEFT, wx.ALIGN_CENTRE)
@@ -93,7 +98,11 @@ class AbstractGridView(Grid):
         """ If the model says a cell is of a specified type, the grid uses
         the specific renderer and editor set in this method.
         """
-        self.RegisterDataType("LogData", GridCellFloatRenderer(precision=3), GridCellFloatEditor())
+        self.RegisterDataType(
+            "LogData",
+            GridCellFloatRenderer(precision=3),
+            GridCellFloatEditor(),
+        )
 
         return
 
@@ -166,7 +175,7 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnCellRightClick(self, evt):
-        #print self.GetDefaultRendererForCell(evt.GetRow(), evt.GetCol())
+        # print self.GetDefaultRendererForCell(evt.GetRow(), evt.GetCol())
         evt.Skip()
 
     def OnCellLeftDClick(self, evt):
@@ -196,7 +205,7 @@ class AbstractGridView(Grid):
         evt.Skip()
 
     def OnRangeSelect(self, evt):
-        #if evt.Selecting():
+        # if evt.Selecting():
         #    print "OnRangeSelect: top-left %s, bottom-right %s\n" % (evt.GetTopLeftCoords(), evt.GetBottomRightCoords())
         evt.Skip()
 
@@ -235,4 +244,6 @@ class AbstractGridView(Grid):
 
     def OnEditorCreated(self, evt):
         evt.Skip()
-#-------------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------------

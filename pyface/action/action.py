@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The base class for all actions. """
 
 from functools import partial
@@ -67,7 +67,7 @@ class Action(HasTraits):
     on_perform = Callable
 
     #: The action's style.
-    style = Enum('push', 'radio', 'toggle', 'widget')
+    style = Enum("push", "radio", "toggle", "widget")
 
     #: A short description of the action used for tooltip text etc.
     tooltip = Unicode
@@ -112,7 +112,7 @@ class Action(HasTraits):
         control : toolkit control
             A toolkit control or None.
         """
-        if self.style == 'widget' and self.control_factory is not None:
+        if self.style == "widget" and self.control_factory is not None:
             return self.control_factory(parent, self)
         return None
 

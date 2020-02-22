@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2016, Enthought, Inc.
 #  All rights reserved.
@@ -12,14 +12,17 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 from pyface.qt import QtCore, QtGui
 
 from traits.api import Any, List, Str, provides
 
 from pyface.constant import CANCEL
-from pyface.i_single_choice_dialog import ISingleChoiceDialog, MSingleChoiceDialog
+from pyface.i_single_choice_dialog import (
+    ISingleChoiceDialog,
+    MSingleChoiceDialog,
+)
 from .dialog import Dialog, _RESULT_MAP
 
 
@@ -47,7 +50,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
 
     def set_dialog_choice(self, choice):
         if self.control is not None:
-            if self.name_attribute != '':
+            if self.name_attribute != "":
                 choice = getattr(choice, self.name_attribute)
             self.control.setTextValue(str(choice))
 

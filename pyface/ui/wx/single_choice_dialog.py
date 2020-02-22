@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2016, Enthought, Inc.
 #  All rights reserved.
@@ -12,14 +12,17 @@
 #
 #  Author: Enthought, Inc.
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A dialog that allows the user to chose a single item from a list. """
 
 import wx
 
 from traits.api import Any, Bool, List, Str, provides
 
-from pyface.i_single_choice_dialog import ISingleChoiceDialog, MSingleChoiceDialog
+from pyface.i_single_choice_dialog import (
+    ISingleChoiceDialog,
+    MSingleChoiceDialog,
+)
 from .dialog import Dialog
 
 
@@ -86,7 +89,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
             self.title,
             self._choice_strings(),
             style,
-            self.position
+            self.position,
         )
 
         if self.size != (-1, -1):

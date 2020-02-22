@@ -27,7 +27,7 @@ class TraitsUIView(View):
     # The traits UI that represents the view.
     #
     # The framework sets this to the value returned by 'create_ui'.
-    ui = Instance('traitsui.ui.UI')
+    ui = Instance("traitsui.ui.UI")
 
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
@@ -68,7 +68,7 @@ class TraitsUIView(View):
 
         # Give the traits UI a chance to clean itself up.
         if self.ui is not None:
-            logger.debug('disposing traits UI for view [%s]', self)
+            logger.debug("disposing traits UI for view [%s]", self)
             self.ui.dispose()
             self.ui = None
             # Break reference to the control, so the view is created afresh
@@ -99,9 +99,10 @@ class TraitsUIView(View):
         """
 
         ui = self.obj.edit_traits(
-            parent=parent, view=self.view, kind='subpanel'
+            parent=parent, view=self.view, kind="subpanel"
         )
 
         return ui
+
 
 #### EOF ######################################################################

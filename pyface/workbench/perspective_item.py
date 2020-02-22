@@ -11,6 +11,7 @@ from .i_perspective_item import IPerspectiveItem
 @provides(IPerspectiveItem)
 class PerspectiveItem(HasTraits):
     """ An item in a Perspective contents list. """
+
     # The Id of the view to display in the perspective.
     id = Str
 
@@ -26,7 +27,7 @@ class PerspectiveItem(HasTraits):
     # If the position is specified as 'with' you must specify a 'relative_to'
     # item other than the editor area (i.e., you cannot position a view 'with'
     # the editor area).
-    position = Enum('left', 'top', 'bottom', 'right', 'with')
+    position = Enum("left", "top", "bottom", "right", "with")
 
     # The Id of the view to position relative to. If this is not specified
     # (or if no view exists with this Id) then the view will be placed relative
@@ -50,6 +51,7 @@ class PerspectiveItem(HasTraits):
     height = Float(-1)
 
     # The style of the dock control created.
-    style_hint = Enum('tab', 'vertical', 'horizontal', 'fixed')
+    style_hint = Enum("tab", "vertical", "horizontal", "fixed")
+
 
 #### EOF ######################################################################

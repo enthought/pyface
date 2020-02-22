@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2007, Riverbank Computing Limited
 # All rights reserved.
 #
@@ -8,7 +8,7 @@
 #
 # Author: Riverbank Computing Limited
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 # Standard library imports.
@@ -33,10 +33,9 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-
     #### 'ISplashScreen' interface ############################################
 
-    image = Instance(ImageResource, ImageResource('splash'))
+    image = Instance(ImageResource, ImageResource("splash"))
 
     log_level = Int(DEBUG)
 
@@ -48,7 +47,7 @@ class SplashScreen(MSplashScreen, Window):
 
     text_font = Any
 
-    text_location  = Tuple(5, 5)
+    text_location = Tuple(5, 5)
 
     ###########################################################################
     # Protected 'IWidget' interface.
@@ -84,5 +83,6 @@ class SplashScreen(MSplashScreen, Window):
             text_color = QtGui.QColor(self.text_color)
 
         control.showMessage(self.text, QtCore.Qt.AlignLeft, text_color)
+
 
 #### EOF ######################################################################

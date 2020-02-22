@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ View of an ActionManager drawn as a rectangle of buttons. """
 
 from pyface.widget import Widget
@@ -88,7 +88,6 @@ class ToolPalette(Widget):
         state = 0
 
         return state
-
 
     ###########################################################################
     # Private interface.

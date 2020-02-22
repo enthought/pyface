@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 #
 #  Copyright (c) 2016, Enthought, Inc.
 #  All rights reserved.
@@ -12,13 +12,18 @@
 #
 #  Author: Enthought Developers
 #
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 """ Defines common traits used within the pyface library. """
 import logging
 
 from traits.api import (
-    ABCHasStrictTraits, DefaultValue, Enum, Range, TraitError, TraitType
+    ABCHasStrictTraits,
+    DefaultValue,
+    Enum,
+    Range,
+    TraitError,
+    TraitType,
 )
 from traits.trait_base import get_resource_path
 import six
@@ -26,9 +31,9 @@ import six
 
 logger = logging.getLogger(__name__)
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #  Images
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 
 image_resource_cache = {}
 image_bitmap_cache = {}
@@ -37,20 +42,21 @@ image_bitmap_cache = {}
 def convert_image(value, level=3):
     """ Converts a specified value to an ImageResource if possible.
     """
-    if not isinstance( value, six.string_types ):
+    if not isinstance(value, six.string_types):
         return value
 
     key = value
-    is_pyface_image = value.startswith('@')
+    is_pyface_image = value.startswith("@")
     if not is_pyface_image:
         search_path = get_resource_path(level)
-        key = '%s[%s]' % (value, search_path)
+        key = "%s[%s]" % (value, search_path)
 
     result = image_resource_cache.get(key)
     if result is None:
         if is_pyface_image:
             try:
                 from .image.image import ImageLibrary
+
                 result = ImageLibrary.image_resource(value)
             except Exception as exc:
                 logger.error("Can't load image resource '%s'." % value)
@@ -58,6 +64,7 @@ def convert_image(value, level=3):
                 result = None
         else:
             from pyface.image_resource import ImageResource
+
             result = ImageResource(value, search_path=[search_path])
 
         image_resource_cache[key] = result
@@ -70,8 +77,9 @@ def convert_bitmap(image_resource):
     """
     bitmap = image_bitmap_cache.get(image_resource)
     if (bitmap is None) and (image_resource is not None):
-        image_bitmap_cache[image_resource] = bitmap = \
-            image_resource.create_bitmap()
+        image_bitmap_cache[
+            image_resource
+        ] = bitmap = image_resource.create_bitmap()
 
     return bitmap
 
@@ -85,7 +93,7 @@ class Image(TraitType):
     default_value = None
 
     # A description of the type of value this trait accepts:
-    info_text = 'an ImageResource or string that can be used to define one'
+    info_text = "an ImageResource or string that can be used to define one"
 
     def __init__(self, value=None, **metadata):
         """ Creates an Image trait.
@@ -116,15 +124,16 @@ class Image(TraitType):
         """ Returns the default UI editor for the trait.
         """
         from traitsui.editors.api import ImageEditor
+
         return ImageEditor()
 
 
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
 #  Borders, Margins and Layout
-#-------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------
+
 
 class BaseMB(ABCHasStrictTraits):
-
     def __init__(self, *args, **traits):
         """ Map posiitonal arguments to traits.
 
@@ -144,10 +153,12 @@ class BaseMB(ABCHasStrictTraits):
             elif n == 4:
                 left, right, top, bottom = args
             else:
-                raise TraitError('0, 1, 2 or 4 arguments expected, but %d '
-                                 'specified' % n)
-            traits.update({'left': left, 'right': right,
-                           'top': top, 'bottom': bottom})
+                raise TraitError(
+                    "0, 1, 2 or 4 arguments expected, but %d " "specified" % n
+                )
+            traits.update(
+                {"left": left, "right": right, "top": top, "bottom": bottom}
+            )
 
         super(BaseMB, self).__init__(**traits)
 
@@ -194,11 +205,13 @@ class HasMargin(TraitType):
     default_value = Margin(0)
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Margin instance, or an integer in the range from -32 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        "a Margin instance, or an integer in the range from -32 to 32 "
+        "or a tuple with 1, 2 or 4 integers in that range that can be "
+        "used to define one"
+    )
 
-    def validate (self, object, name, value):
+    def validate(self, object, name, value):
         """ Validates that a specified value is valid for this trait.
         """
         if isinstance(value, int):
@@ -222,7 +235,7 @@ class HasMargin(TraitType):
                 (default_value_type, default_value)
             which describes the default value for this trait.
         """
-        dv  = self.default_value
+        dv = self.default_value
         dvt = self.default_value_type
         if dvt < 0:
             if isinstance(dv, int):
@@ -251,13 +264,15 @@ class HasBorder(HasMargin):
     default_value = Border(0)
 
     # A description of the type of value this trait accepts:
-    info_text = ('a Border instance, or an integer in the range from 0 to 32 '
-                 'or a tuple with 1, 2 or 4 integers in that range that can be '
-                 'used to define one')
+    info_text = (
+        "a Border instance, or an integer in the range from 0 to 32 "
+        "or a tuple with 1, 2 or 4 integers in that range that can be "
+        "used to define one"
+    )
 
 
 #: The position of an image relative to its associated text.
-Position = Enum('left', 'right', 'above', 'below')
+Position = Enum("left", "right", "above", "below")
 
 #: The alignment of text within a control.
-Alignment = Enum('default', 'left', 'center', 'right')
+Alignment = Enum("default", "left", "center", "right")

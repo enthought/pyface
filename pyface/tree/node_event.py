@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The event fired by the tree models/node monitors etc. """
 
 
@@ -33,5 +33,6 @@ class NodeEvent(HasTraits):
 
     # The starting index for nodes that have been inserted.
     index = Int
+
 
 #### EOF ######################################################################

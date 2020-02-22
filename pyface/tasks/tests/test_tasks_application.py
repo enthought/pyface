@@ -1,5 +1,8 @@
 from __future__ import (
-    absolute_import, division, print_function, unicode_literals
+    absolute_import,
+    division,
+    print_function,
+    unicode_literals,
 )
 
 import unittest
@@ -11,11 +14,15 @@ from pyface.toolkit import toolkit_object
 
 from ..tasks_application import TasksApplication
 
-GuiTestAssistant = toolkit_object('util.gui_test_assistant:GuiTestAssistant')
-no_gui_test_assistant = (GuiTestAssistant.__name__ == 'Unimplemented')
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 EVENTS = [
-    'starting', 'started', 'application_initialized', 'stopping', 'stopped'
+    "starting",
+    "started",
+    "application_initialized",
+    "stopping",
+    "stopped",
 ]
 
 
@@ -57,7 +64,7 @@ class TestingApp(TasksApplication):
         super(TestingApp, self).start()
 
         window = self.windows[0]
-        window.on_trait_change(self._on_window_closing, 'closing')
+        window.on_trait_change(self._on_window_closing, "closing")
         return True
 
     def stop(self):
@@ -81,14 +88,15 @@ class TestingApp(TasksApplication):
         super(TestingApp, self)._prepare_exit()
 
 
-@unittest.skipIf(no_gui_test_assistant, 'No GuiTestAssistant')
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestApplication(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
         self.application_events = []
 
-        if toolkit_object.toolkit == 'wx':
+        if toolkit_object.toolkit == "wx":
             import wx
+
             self.event_loop()
             wx.GetApp().DeletePendingEvents()
         else:
@@ -118,7 +126,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         app = TasksApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.on_trait_change(lambda: app.add_window(window), 'started')
+        app.on_trait_change(lambda: app.add_window(window), "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)

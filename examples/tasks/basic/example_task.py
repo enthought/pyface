@@ -1,9 +1,20 @@
 # Enthought library imports.
 from pyface.tasks.api import Task, TaskLayout, PaneItem
-from pyface.tasks.action.api import DockPaneToggleGroup, SMenuBar, \
-    SMenu, SToolBar, TaskAction
-from pyface.api import ConfirmationDialog, FileDialog, \
-    ImageResource, YES, OK, CANCEL
+from pyface.tasks.action.api import (
+    DockPaneToggleGroup,
+    SMenuBar,
+    SMenu,
+    SToolBar,
+    TaskAction,
+)
+from pyface.api import (
+    ConfirmationDialog,
+    FileDialog,
+    ImageResource,
+    YES,
+    OK,
+    CANCEL,
+)
 from traits.api import on_trait_change
 
 # Local imports.
@@ -16,40 +27,49 @@ class ExampleTask(Task):
 
     #### Task interface #######################################################
 
-    id = 'example.example_task'
-    name = 'Python Script Editor'
+    id = "example.example_task"
+    name = "Python Script Editor"
 
-    #default_layout = TaskLayout(
+    # default_layout = TaskLayout(
     #    left=PaneItem('example.python_script_browser_pane'))
 
-    menu_bar = SMenuBar(SMenu(TaskAction(name='Open...', method='open',
-                                         accelerator='Ctrl+O'),
-                              TaskAction(name='Save', method='save',
-                                         accelerator='Ctrl+S'),
-                              id='File', name='&File'),
-                        SMenu(DockPaneToggleGroup(),
-                              id='View', name='&View'))
+    menu_bar = SMenuBar(
+        SMenu(
+            TaskAction(name="Open...", method="open", accelerator="Ctrl+O"),
+            TaskAction(name="Save", method="save", accelerator="Ctrl+S"),
+            id="File",
+            name="&File",
+        ),
+        SMenu(DockPaneToggleGroup(), id="View", name="&View"),
+    )
 
-    tool_bars = [ SToolBar(TaskAction(method='open',
-                                      tooltip='Open a file',
-                                      image=ImageResource('document_open')),
-                           TaskAction(method='save',
-                                      tooltip='Save the current file',
-                                      image=ImageResource('document_save'))) ]
+    tool_bars = [
+        SToolBar(
+            TaskAction(
+                method="open",
+                tooltip="Open a file",
+                image=ImageResource("document_open"),
+            ),
+            TaskAction(
+                method="save",
+                tooltip="Save the current file",
+                image=ImageResource("document_save"),
+            ),
+        )
+    ]
 
     ###########################################################################
     # 'Task' interface.
     ###########################################################################
 
     def _default_layout_default(self):
-        return TaskLayout(
-            left=PaneItem('example.python_script_browser_pane'))
+        return TaskLayout(left=PaneItem("example.python_script_browser_pane"))
 
     def activated(self):
         """ Overriden to set the window's title.
         """
         filename = self.window.central_pane.editor.path
-        self.window.title = filename if filename else 'Untitled'
+        self.window.title = filename if filename else "Untitled"
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -61,8 +81,8 @@ class ExampleTask(Task):
         """
         browser = PythonScriptBrowserPane()
         handler = lambda: self._open_file(browser.selected_file)
-        browser.on_trait_change(handler, 'activated')
-        return [ browser ]
+        browser.on_trait_change(handler, "activated")
+        return [browser]
 
     ###########################################################################
     # 'ExampleTask' interface.
@@ -71,7 +91,7 @@ class ExampleTask(Task):
     def open(self):
         """ Shows a dialog to open a file.
         """
-        dialog = FileDialog(parent=self.window.control, wildcard='*.py')
+        dialog = FileDialog(parent=self.window.control, wildcard="*.py")
         if dialog.open() == OK:
             self._open_file(dialog.path)
 
@@ -85,8 +105,9 @@ class ExampleTask(Task):
         except IOError:
             # If you are trying to save to a file that doesn't exist, open up a
             # FileDialog with a 'save as' action.
-            dialog = FileDialog(parent=self.window.control,
-                                action='save as', wildcard='*.py')
+            dialog = FileDialog(
+                parent=self.window.control, action="save as", wildcard="*.py"
+            )
             if dialog.open() == OK:
                 editor.save(dialog.path)
             else:
@@ -109,11 +130,17 @@ class ExampleTask(Task):
             was cancelled.
         """
         if self.window.central_pane.editor.dirty:
-            message = 'The current file has unsaved changes. ' \
-                      'Do you want to save your changes?'
-            dialog = ConfirmationDialog(parent=self.window.control,
-                                        message=message, cancel=True,
-                                        default=CANCEL, title='Save Changes?')
+            message = (
+                "The current file has unsaved changes. "
+                "Do you want to save your changes?"
+            )
+            dialog = ConfirmationDialog(
+                parent=self.window.control,
+                message=message,
+                cancel=True,
+                default=CANCEL,
+                title="Save Changes?",
+            )
             result = dialog.open()
             if result == CANCEL:
                 return False
@@ -122,7 +149,7 @@ class ExampleTask(Task):
                     return self._prompt_for_save()
         return True
 
-    @on_trait_change('window:closing')
+    @on_trait_change("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """

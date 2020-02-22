@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ A status bar manager realizes itself in a status bar control. """
 
 
@@ -51,7 +51,7 @@ class StatusBarManager(HasTraits):
         if len(self.messages) > 0:
             message = self.messages[0]
         else:
-            message = ''
+            message = ""
 
         return message
 
@@ -61,10 +61,10 @@ class StatusBarManager(HasTraits):
             old = self.messages[0]
             self.messages[0] = value
         else:
-            old = ''
+            old = ""
             self.messages.append(old)
 
-        self.trait_property_changed('message', old, value)
+        self.trait_property_changed("message", old, value)
 
         return
 
@@ -79,5 +79,6 @@ class StatusBarManager(HasTraits):
     def _messages_items_changed(self):
         """ Sets the text displayed on the status bar. """
         return
+
 
 #### EOF ######################################################################

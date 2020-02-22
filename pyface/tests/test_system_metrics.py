@@ -6,7 +6,6 @@ from ..system_metrics import SystemMetrics
 
 
 class TestSystemMetrics(unittest.TestCase):
-
     def setUp(self):
         self.metrics = SystemMetrics()
 

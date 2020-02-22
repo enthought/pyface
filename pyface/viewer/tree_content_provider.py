@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ Abstract base class for tree content providers. """
 
 
@@ -64,5 +64,6 @@ class TreeContentProvider(ContentProvider):
         """ Returns True iff the element has children, otherwise False. """
 
         raise NotImplementedError
+
 
 #### EOF ####################################################################

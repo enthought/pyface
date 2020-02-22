@@ -15,7 +15,7 @@ class TraitsDockPane(DockPane):
     model = Instance(HasTraits)
 
     # The UI object associated with the Traits view, if it has been constructed.
-    ui = Instance('traitsui.ui.UI')
+    ui = Instance("traitsui.ui.UI")
 
     ###########################################################################
     # 'HasTraits' interface.
@@ -25,7 +25,7 @@ class TraitsDockPane(DockPane):
         """ Use the model object for the Traits UI context, if appropriate.
         """
         if self.model:
-            return { 'object': self.model, 'pane': self }
+            return {"object": self.model, "pane": self}
         return super(TraitsDockPane, self).trait_context()
 
     ###########################################################################
@@ -49,5 +49,5 @@ class TraitsDockPane(DockPane):
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
-        self.ui = self.edit_traits(kind='subpanel', parent=parent)
+        self.ui = self.edit_traits(kind="subpanel", parent=parent)
         return self.ui.control

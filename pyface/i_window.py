@@ -119,7 +119,7 @@ class IWindow(IWidget):
         """
 
     def information(
-        self, message, title='Information', detail='', informative=''
+        self, message, title="Information", detail="", informative=""
     ):
         """ Convenience method to show an information message dialog.
 
@@ -136,7 +136,7 @@ class IWindow(IWidget):
 
         """
 
-    def warning(self, message, title='Warning', detail='', informative=''):
+    def warning(self, message, title="Warning", detail="", informative=""):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -152,7 +152,7 @@ class IWindow(IWidget):
 
         """
 
-    def error(self, message, title='Error', detail='', informative=''):
+    def error(self, message, title="Error", detail="", informative=""):
         """ Convenience method to show an error message dialog.
 
         Parameters
@@ -253,7 +253,7 @@ class MWindow(object):
         return confirm(self.control, message, title, cancel, default)
 
     def information(
-        self, message, title='Information', detail='', informative=''
+        self, message, title="Information", detail="", informative=""
     ):
         """ Convenience method to show an information message dialog.
 
@@ -273,7 +273,7 @@ class MWindow(object):
 
         information(self.control, message, title, detail, informative)
 
-    def warning(self, message, title='Warning', detail='', informative=''):
+    def warning(self, message, title="Warning", detail="", informative=""):
         """ Convenience method to show a warning message dialog.
 
         Parameters
@@ -292,7 +292,7 @@ class MWindow(object):
 
         warning(self.control, message, title, detail, informative)
 
-    def error(self, message, title='Error', detail='', informative=''):
+    def error(self, message, title="Error", detail="", informative=""):
         """ Convenience method to show an error message dialog.
 
         Parameters

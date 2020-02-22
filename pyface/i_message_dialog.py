@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2005, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,7 +10,7 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 """ The interface for a dialog that displays a message. """
 
 
@@ -36,7 +36,7 @@ class IMessageDialog(IDialog):
     detail = Unicode
 
     #: The severity of the message.
-    severity = Enum('information', 'warning', 'error')
+    severity = Enum("information", "warning", "error")
 
 
 class MMessageDialog(object):

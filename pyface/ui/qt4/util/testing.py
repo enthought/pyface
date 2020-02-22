@@ -40,7 +40,7 @@ def delete_widget(widget, timeout=1.0):
 
     timer = QTimer()
     timer.setSingleShot(True)
-    timer.setInterval(round(timeout*1000))
+    timer.setInterval(round(timeout * 1000))
     timer.timeout.connect(app.quit)
     widget.destroyed.connect(app.quit)
 
@@ -51,7 +51,7 @@ def delete_widget(widget, timeout=1.0):
 
     if not timer.isActive():
         # We exited the event loop on timeout.
-        msg = 'Could not destroy widget before timeout: {!r}'
+        msg = "Could not destroy widget before timeout: {!r}"
         raise AssertionError(msg.format(widget))
 
 
@@ -60,7 +60,7 @@ def _convert_none_to_null_handle(stream):
     """ If 'stream' is None, provide a temporary handle to /dev/null. """
 
     if stream is None:
-        out = open(os.devnull, 'w')
+        out = open(os.devnull, "w")
         try:
             yield out
         finally:
@@ -105,7 +105,7 @@ def print_qt_widget_tree(widget, level=0):
     level = level + 4
     if level == 0:
         print()
-    print(' '*level, widget)
+    print(" " * level, widget)
     for child in widget.children():
         print_qt_widget_tree(child, level=level)
     if level == 0:

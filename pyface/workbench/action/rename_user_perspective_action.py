@@ -1,11 +1,11 @@
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 #
 #  Copyright (c) 2005-2006 by Enthought, Inc.
 #  All rights reserved.
 #
 #  Author: David C. Morrill <dmorrill@enthought.com>
 #
-#-----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 """ An action that renames a user perspective. """
 
 
@@ -20,26 +20,27 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     #### 'Action' interface ###################################################
 
     # The action's unique identifier (may be None).
-    id = 'pyface.workbench.action.rename_user_perspective_action'
+    id = "pyface.workbench.action.rename_user_perspective_action"
 
     # The action's name (displayed on menus/tool bar tools etc).
-    name = 'Rename Perspective...'
+    name = "Rename Perspective..."
 
     ###########################################################################
     # 'Action' interface.
     ###########################################################################
 
-    def perform( self, event):
+    def perform(self, event):
         """ Perform the action. """
 
-        window  = event.window
+        window = event.window
         manager = window.workbench.user_perspective_manager
 
         # Get the new name.
         upn = UserPerspectiveName(name=window.active_perspective.name)
-        if upn.edit_traits(view='rename_view').result:
+        if upn.edit_traits(view="rename_view").result:
             manager.rename(window.active_perspective, upn.name.strip())
 
         return
+
 
 #### EOF #####################################################################

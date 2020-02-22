@@ -11,10 +11,11 @@ class BlueView(ColorView):
     #### 'IView' interface ####################################################
 
     # The view's name.
-    name = 'Blue'
+    name = "Blue"
 
     # The default position of the view relative to the item specified in the
     # 'relative_to' trait.
-    position = 'bottom'
+    position = "bottom"
+
 
 #### EOF ######################################################################

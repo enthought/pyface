@@ -1,4 +1,4 @@
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Copyright (c) 2006, Enthought, Inc.
 # All rights reserved.
 #
@@ -10,14 +10,14 @@
 #
 # Author: Enthought, Inc.
 # Description: <Enthought pyface package component>
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 # local imports
 from .checkbox_image_renderer import CheckboxImageRenderer
 from .grid_cell_renderer import GridCellRenderer
 
-class CheckboxRenderer(GridCellRenderer):
 
+class CheckboxRenderer(GridCellRenderer):
     def __init__(self, **traits):
 
         # base-class constructor
@@ -40,5 +40,6 @@ class CheckboxRenderer(GridCellRenderer):
             pass
 
         return True
+
 
 #### EOF ######################################################################

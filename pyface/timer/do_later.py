@@ -25,7 +25,9 @@ class DoLaterTimer(Timer):
 
     def __init__(self, interval, callable, args, kw_args):
         # Adapt the old DoLaterTimer initializer to the Timer initializer.
-        super(DoLaterTimer, self).__init__(interval, callable, *args, **kw_args)
+        super(DoLaterTimer, self).__init__(
+            interval, callable, *args, **kw_args
+        )
 
 
 def do_later(callable, *args, **kwargs):
@@ -39,10 +41,7 @@ def do_later(callable, *args, **kwargs):
         Arguments to be passed through to the callable.
     """
     return CallbackTimer.single_shot(
-        interval=0.05,
-        callback=callable,
-        args=args,
-        kwargs=kwargs,
+        interval=0.05, callback=callable, args=args, kwargs=kwargs
     )
 
 
@@ -59,8 +58,5 @@ def do_after(interval, callable, *args, **kwargs):
         Arguments to be passed through to the callable.
     """
     return CallbackTimer.single_shot(
-        interval=interval / 1000.0,
-        callback=callable,
-        args=args,
-        kwargs=kwargs,
+        interval=interval / 1000.0, callback=callable, args=args, kwargs=kwargs
     )

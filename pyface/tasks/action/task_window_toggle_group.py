@@ -19,15 +19,15 @@ class TaskWindowToggleAction(Action):
     # 'Action' interface -----------------------------------------------------
 
     #: The name of the action for the window.
-    name = Property(Unicode, depends_on='window.title')
+    name = Property(Unicode, depends_on="window.title")
 
     #: The action is a toggle action.
-    style = 'toggle'
+    style = "toggle"
 
     # 'TaskWindowToggleAction' interface -------------------------------------
 
     # The window to use for this action.
-    window = Instance('pyface.tasks.task_window.TaskWindow')
+    window = Instance("pyface.tasks.task_window.TaskWindow")
 
     # -------------------------------------------------------------------------
     # 'Action' interface.
@@ -44,13 +44,13 @@ class TaskWindowToggleAction(Action):
     def _get_name(self):
         if self.window.title:
             return self.window.title
-        return u''
+        return u""
 
-    @on_trait_change('window:activated')
+    @on_trait_change("window:activated")
     def _window_activated(self):
         self.checked = True
 
-    @on_trait_change('window:deactivated')
+    @on_trait_change("window:deactivated")
     def _window_deactivated(self):
         self.checked = False
 
@@ -62,7 +62,7 @@ class TaskWindowToggleGroup(Group):
     # 'Group' interface ------------------------------------------------------
 
     #: The id of the action group.
-    id = 'TaskWindowToggleGroup'
+    id = "TaskWindowToggleGroup"
 
     #: The actions in the action group
     items = List
@@ -70,7 +70,7 @@ class TaskWindowToggleGroup(Group):
     # 'TaskWindowToggleGroup' interface --------------------------------------
 
     #: The application that contains the group.
-    application = Instance('pyface.tasks.tasks_application.TasksApplication')
+    application = Instance("pyface.tasks.tasks_application.TasksApplication")
 
     #: The ActionManager to which the group belongs.
     manager = Any
@@ -85,7 +85,7 @@ class TaskWindowToggleGroup(Group):
         super(TaskWindowToggleGroup, self).destroy()
         if self.application:
             self.application.on_trait_change(
-                self._rebuild, 'windows[]', remove=True
+                self._rebuild, "windows[]", remove=True
             )
 
     # -------------------------------------------------------------------------
@@ -112,7 +112,7 @@ class TaskWindowToggleGroup(Group):
     # Trait initializers -----------------------------------------------------
 
     def _items_default(self):
-        self.application.on_trait_change(self._rebuild, 'windows[]')
+        self.application.on_trait_change(self._rebuild, "windows[]")
         return self._get_items()
 
     def _manager_default(self):
