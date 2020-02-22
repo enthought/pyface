@@ -36,9 +36,9 @@ class FileTreeModel(TreeModel):
     # The image used to represent documents (ie. NON-'folder') nodes.
     DOCUMENT = ImageResource("document")
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeModel' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_children(self, node):
         """ Returns the children of a node. """
@@ -80,10 +80,7 @@ class FileTreeModel(TreeModel):
 class FileTree(Tree):
     """ A file system tree. """
 
-    #### 'Tree' interface #####################################################
+    # 'Tree' interface -----------------------------------------------------
 
     # The model that provides the data for the tree.
     model = Instance(FileTreeModel, ())
-
-
-##### EOF #####################################################################

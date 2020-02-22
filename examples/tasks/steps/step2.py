@@ -37,7 +37,7 @@ class ExampleTask(Task):
     """ A simple task for opening a blank editor.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.example_task"
     name = "Multi-Tab Editor"
@@ -68,9 +68,9 @@ class ExampleTask(Task):
         )
     ]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_central_pane(self):
         """ Create the central pane: the script editor.
@@ -78,9 +78,9 @@ class ExampleTask(Task):
         self.editor_area = EditorAreaPane()
         return self.editor_area
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ExampleTask' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def new(self):
         """ Opens a new empty window
@@ -90,7 +90,7 @@ class ExampleTask(Task):
         self.editor_area.activate_editor(editor)
         self.activated()
 
-    #### Trait property getter/setters ########################################
+    # Trait property getter/setters ----------------------------------------
 
     def _get_active_editor(self):
         if self.editor_area is not None:

@@ -34,6 +34,3 @@ class AllowOnlyFolders(ViewerFilter):
         """
 
         return isdir(element)
-
-
-#### EOF ######################################################################

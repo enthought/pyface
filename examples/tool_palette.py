@@ -24,9 +24,9 @@ from pyface.action.api import ToolPaletteManager
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new application window. """

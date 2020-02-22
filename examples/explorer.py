@@ -51,7 +51,7 @@ class ExampleAction(Action):
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
-    #### 'SplitApplicationWindow' interface ###################################
+    # 'SplitApplicationWindow' interface -----------------------------------
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
@@ -59,9 +59,9 @@ class MainWindow(SplitApplicationWindow):
     # The direction in which the panel is split.
     direction = Str("vertical")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new window. """
@@ -74,9 +74,9 @@ class MainWindow(SplitApplicationWindow):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the style. """
@@ -95,9 +95,9 @@ class MainWindow(SplitApplicationWindow):
 
         return self._rhs.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_action_bars(self):
         """ Creates the window's menu, tool and status bars. """
@@ -177,7 +177,7 @@ class MainWindow(SplitApplicationWindow):
 
         return python_shell.control
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_selection_changed(self, selection):
         """ Called when the selection in the tree is changed. """
@@ -200,5 +200,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

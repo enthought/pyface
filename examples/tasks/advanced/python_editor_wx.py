@@ -1,14 +1,12 @@
-# ------------------------------------------------------------------------------
-# Copyright (c) 2007, Riverbank Computing Limited
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
 # All rights reserved.
 #
-# This software is provided without warranty under the terms of the BSD license.
-# However, when used with the GPL version of PyQt the additional terms described in the PyQt GPL exception also apply
-
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
 #
-# Author: Riverbank Computing Limited
-# Description: <Enthought pyface package component>
-# ------------------------------------------------------------------------------
+# Thanks for using Enthought open source!
 
 
 # Standard library imports.
@@ -35,7 +33,7 @@ class PythonEditor(Editor):
     IStyledTextEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     obj = Instance(File)
 
@@ -49,7 +47,7 @@ class PythonEditor(Editor):
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     changed = Event
 
@@ -61,9 +59,9 @@ class PythonEditor(Editor):
     def _get_name(self):
         return basename(self.path) or "Untitled"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         self.control = self._create_control(parent)
@@ -113,9 +111,9 @@ class PythonEditor(Editor):
         self.control.StyleSetFaceName(n, "courier new")
         self.control.StyleSetSize(n, faces["size"])
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _path_changed(self):
         if self.control is not None:
@@ -130,9 +128,9 @@ class PythonEditor(Editor):
             else:
                 c.SetMarginWidth(1, 4)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.
@@ -176,18 +174,18 @@ class PythonEditor(Editor):
         # self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         # self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
-        ##########################################
+        # ----------------------------------------
         # Global styles for all languages.
-        ##########################################
+        # ----------------------------------------
 
         self.set_style(wx.stc.STC_STYLE_DEFAULT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_CONTROLCHAR, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACELIGHT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACEBAD, "#000000", "#ffffff")
 
-        ##########################################
+        # ----------------------------------------
         # Python styles.
-        ##########################################
+        # ----------------------------------------
 
         # White space
         self.set_style(wx.stc.STC_P_DEFAULT, "#000000", "#ffffff")
@@ -231,9 +229,9 @@ class PythonEditor(Editor):
         # End of line where string is not closed
         self.set_style(wx.stc.STC_P_STRINGEOL, "#000000", "#ffffff")
 
-        ##########################################
+        # ----------------------------------------
         # Events.
-        ##########################################
+        # ----------------------------------------
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.
@@ -255,7 +253,7 @@ class PythonEditor(Editor):
 
         return stc
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
         """ Called whenever a change is made to the text of the document. """

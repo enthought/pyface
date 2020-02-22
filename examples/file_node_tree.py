@@ -25,9 +25,9 @@ from pyface.tree.api import NodeManager, NodeType
 class FileNode(NodeType):
     """ Node type for files. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def is_type_for(self, node):
         """ Returns True if this node type recognizes a node. """
@@ -48,9 +48,9 @@ class FileNode(NodeType):
 class FolderNode(NodeType):
     """ Node type for folders. """
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def is_type_for(self, node):
         """ Returns True if this node type recognizes a node. """
@@ -82,5 +82,3 @@ class FolderNode(NodeType):
 node_manager = NodeManager()
 node_manager.add_node_type(FileNode())
 node_manager.add_node_type(FolderNode())
-
-##### EOF #####################################################################

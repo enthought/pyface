@@ -35,7 +35,7 @@ from file_tree import FileTree
 class MainWindow(SplitApplicationWindow):
     """ The main application window. """
 
-    #### 'SplitApplicationWindow' interface ###################################
+    # 'SplitApplicationWindow' interface -----------------------------------
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.3)
@@ -43,9 +43,9 @@ class MainWindow(SplitApplicationWindow):
     # The direction in which the window is split.
     direction = Str("vertical")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the left hand side or top depending on the split. """
@@ -69,9 +69,9 @@ class MainWindow(SplitApplicationWindow):
 
         return self._python_shell.control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_content(self, parent):
         """ Create some context for an expandable panel. """
@@ -92,5 +92,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

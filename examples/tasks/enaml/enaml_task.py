@@ -14,14 +14,14 @@ class EnamlTask(Task):
     """ A simple task for demonstrating the use of Enaml in Tasks.
     """
 
-    #### Task interface #######################################################
+    # Task interface -------------------------------------------------------
 
     id = "example.enaml_task"
     name = "Enaml Demo"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _default_layout_default(self):
         return TaskLayout(left=PaneItem("example.dummy_dock_pane"))

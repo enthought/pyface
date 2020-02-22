@@ -21,7 +21,7 @@ from pyface.action.api import Action, MenuManager, MenuBarManager
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface --------------------------------------------------
 
     # The size of the window.
     size = (640, 480)
@@ -29,9 +29,9 @@ class MainWindow(ApplicationWindow):
     # The window title.
     title = "Python"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplication' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create the editor. """
@@ -52,5 +52,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop!
     gui.start_event_loop()
-
-##### EOF #####################################################################

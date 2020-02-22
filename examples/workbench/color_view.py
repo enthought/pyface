@@ -9,16 +9,16 @@ from pyface.workbench.api import View
 class ColorView(View):
     """ A view containing a colored panel! """
 
-    #### 'IView' interface ####################################################
+    # 'IView' interface ----------------------------------------------------
 
     # The category that the view belongs to.
     category = "Color"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -29,7 +29,7 @@ class ColorView(View):
         # name and class name.
         return self.name
 
-    #### Methods ##############################################################
+    # Methods --------------------------------------------------------------
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the view.
@@ -46,9 +46,9 @@ class ColorView(View):
 
         return method(parent, color)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_create_control(self, parent, color):
         """ Create a wx version of the control. """
@@ -73,6 +73,3 @@ class ColorView(View):
         widget.setAutoFillBackground(True)
 
         return widget
-
-
-#### EOF ######################################################################

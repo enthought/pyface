@@ -43,6 +43,3 @@ class FileSorter(ViewerSorter):
             category = 1
 
         return category
-
-
-#### EOF ######################################################################

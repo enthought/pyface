@@ -38,9 +38,9 @@ from pyface.action.api import ToolBarManager
 class MainWindow(MultiToolbarWindow):
     """ The main application window. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new application window. """
@@ -89,5 +89,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop.
     gui.start_event_loop()
-
-##### EOF #####################################################################

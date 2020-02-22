@@ -43,7 +43,7 @@ class Person(HasTraits):
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface --------------------------------------------------
 
     # The size of the window.
     size = (320, 240)
@@ -54,9 +54,9 @@ class MainWindow(ApplicationWindow):
     # The traits object to display
     person = Instance(Person, ())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplication' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create the editor. """
@@ -75,5 +75,3 @@ if __name__ == "__main__":
 
     # Start the GUI event loop!
     gui.start_event_loop()
-
-##### EOF #####################################################################

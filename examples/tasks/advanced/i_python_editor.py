@@ -25,7 +25,7 @@ from pyface.key_pressed_event import KeyPressedEvent
 class IPythonEditor(IEditor):
     """ A widget for editing Python code. """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     # Object being editor is a file
     obj = Instance(File)
@@ -36,7 +36,7 @@ class IPythonEditor(IEditor):
     # Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     # The contents of the editor has changed.
     changed = Event
@@ -44,9 +44,9 @@ class IPythonEditor(IEditor):
     # A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self, path=None):
         """ Loads the contents of the editor. """

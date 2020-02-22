@@ -28,9 +28,9 @@ from traits.api import Instance
 class FileTreeContentProvider(TreeContentProvider):
     """ A tree content provider for local file systems. """
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_parent(self, element):
         """ Returns the parent of an element. """
@@ -71,9 +71,9 @@ class FileTreeLabelProvider(TreeLabelProvider):
     # The image used to represent documents (ie. NON-'folder') elements.
     DOCUMENT = ImageResource("document")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeLabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element):
         """ Returns the filename of the label image for an element. """
@@ -102,7 +102,7 @@ class FileTreeLabelProvider(TreeLabelProvider):
 class FileTreeViewer(TreeViewer):
     """ A tree viewer for local file systems. """
 
-    #### 'TreeViewer' interface ###############################################
+    # 'TreeViewer' interface -----------------------------------------------
 
     # The content provider provides the actual tree data.
     content_provider = Instance(FileTreeContentProvider, ())
@@ -110,6 +110,3 @@ class FileTreeViewer(TreeViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTreeLabelProvider, ())
-
-
-##### EOF #####################################################################

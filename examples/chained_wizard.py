@@ -38,14 +38,14 @@ class Details(HasTraits):
 class SimpleWizardPage(WizardPage):
     """ A simple wizard page. """
 
-    #### 'SimpleWizardPage' interface #########################################
+    # 'SimpleWizardPage' interface -----------------------------------------
 
     # The page color.
     color = Color
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
         """ Create the wizard page. """
@@ -55,11 +55,11 @@ class SimpleWizardPage(WizardPage):
 
         return details.edit_traits(parent=parent, kind="subpanel").control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_name_changed(self, new):
         """ Called when the name has been changed. """
@@ -113,5 +113,3 @@ if __name__ == "__main__":
         print("Wizard completed successfully")
     else:
         print("Wizard cancelled")
-
-#### EOF ######################################################################

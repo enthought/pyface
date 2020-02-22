@@ -29,9 +29,9 @@ from traits.api import Instance, Str
 class FileTableContentProvider(TableContentProvider):
     """ A table content provider for local file systems. """
 
-    #########################################################################
+    # ------------------------------------------------------------------------
     # 'TableContentProvider' interface.
-    #########################################################################
+    # ------------------------------------------------------------------------
 
     def get_elements(self, element):
         """ Returns the label for an element. """
@@ -56,9 +56,9 @@ class FileTableLabelProvider(TableLabelProvider):
     # The icon used to represent 'document' elements.
     DOCUMENT = ImageResource("document")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TableLabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element, column_index=0):
         """ Returns the filename of the label image for an element. """
@@ -92,9 +92,9 @@ class FileTableLabelProvider(TableLabelProvider):
 class FileTableColumnProvider(TableColumnProvider):
     """ A table column provider for local file systems. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self):
         """ Creates a new column provider. """
@@ -107,9 +107,9 @@ class FileTableColumnProvider(TableColumnProvider):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TableColumnProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_label(self, viewer, column_index):
         """ Returns the label for a column. """
@@ -135,7 +135,7 @@ class FileTableColumnProvider(TableColumnProvider):
 class FileTableViewer(TableViewer):
     """ A table viewer for local file systems. """
 
-    #### 'TableViewer' interface ##############################################
+    # 'TableViewer' interface ----------------------------------------------
 
     # The column provider.
     column_provider = Instance(FileTableColumnProvider, ())
@@ -146,6 +146,3 @@ class FileTableViewer(TableViewer):
     # The label provider provides, err, the labels for the items in the tree
     # (a label can have text and/or an image).
     label_provider = Instance(FileTableLabelProvider, ())
-
-
-##### EOF #####################################################################

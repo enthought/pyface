@@ -8,7 +8,7 @@ from color_view import ColorView
 class YellowView(ColorView):
     """ A view containing a yellow panel! """
 
-    #### 'IView' interface ####################################################
+    # 'IView' interface ----------------------------------------------------
 
     # The view's name.
     name = "Yellow"
@@ -21,6 +21,3 @@ class YellowView(ColorView):
     # specified (or if no view exists with this Id) then the view will be
     # placed relative to the editor area.
     relative_to = "Green"
-
-
-#### EOF ######################################################################
