@@ -21,9 +21,9 @@ from traits.api import HasTraits
 class ContentProvider(HasTraits):
     """ Abstract base class for content providers. """
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'ContentProvider' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_elements(self, element):
         """ Returns a list of the elements to display in a viewer.

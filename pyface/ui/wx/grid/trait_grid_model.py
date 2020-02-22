@@ -99,9 +99,9 @@ class TraitGridModel(GridModel):
     # be a no-argument function.
     row_factory = Trait(None, None, Function)
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a TraitGridModel object. """
 
@@ -144,9 +144,9 @@ class TraitGridModel(GridModel):
 
         return
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'GridModel' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
@@ -432,9 +432,9 @@ class TraitGridModel(GridModel):
         False otherwise. """
         return not self.is_column_read_only(col)
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     def _insert_rows(self, pos, num_rows):
         """ Inserts num_rows at pos and fires an event iff a factory method
         for new rows is defined. Otherwise returns 0. """
@@ -488,9 +488,9 @@ class TraitGridModel(GridModel):
 
         return new_rows
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # protected interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     def _get_row(self, index):
         """ Return the object that corresponds to the row at index. Override
         this to handle very large data sets. """

@@ -46,9 +46,9 @@ class TreeModel(HasTraits):
     # node down.
     structure_changed = Event(NodeEvent)
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'TreeModel' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.

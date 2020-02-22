@@ -21,9 +21,9 @@ from .tree_content_provider import TreeContentProvider
 class DefaultTreeContentProvider(TreeContentProvider):
     """ The default tree content provider. """
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'TreeContentProvider' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def get_parent(self, item):
         """ Returns the parent of an item. """
@@ -40,9 +40,9 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         return item.has_children
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # 'DefaultTreeContentProvider' interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def append(self, parent, child):
         """ Appends 'child' to the 'parent' item. """
@@ -80,9 +80,9 @@ class DefaultTreeContentProvider(TreeContentProvider):
 
         return child
 
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
     # Protected interface.
-    -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------
 
     def _create_item(self, **kw):
         """ Creates a new item. """
