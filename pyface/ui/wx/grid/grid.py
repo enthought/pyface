@@ -258,7 +258,6 @@ class Grid(Widget):
         grid.Bind(wx.grid.EVT_GRID_LABEL_RIGHT_CLICK, self._on_label_right_click)
         grid.Bind(wx.grid.EVT_GRID_LABEL_LEFT_CLICK, self._on_label_left_click)
 
-        #grid.Bind(wx.grid.EVT_GRID_EDITOR_CREATED, self._on_editor_created)
         if is_win32:
             grid.Bind(wx.grid.EVT_GRID_EDITOR_HIDDEN, self._on_editor_hidden)
 
@@ -677,15 +676,6 @@ class Grid(Widget):
     def _on_size(self, evt):
         """ Called when the grid is resized. """
         self.__autosize()
-
-    # # needed to handle problem in wx 2.6 with combobox cell editors
-    # def _on_editor_created(self, evt):
-
-    #     editor = evt.GetControl()
-    #     if editor is not None:
-    #         editor.PushEventHandler(ComboboxFocusHandler(self._grid))
-
-    #     evt.Skip()
 
     def _on_editor_hidden(self, evt):
         # This is a hack to make clicking on a window button while a grid
