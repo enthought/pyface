@@ -15,9 +15,6 @@
     and the notebook tabs and dragbars associated with the DockWindow.
 """
 
-# -------------------------------------------------------------------------------
-#  Imports:
-# -------------------------------------------------------------------------------
 
 from __future__ import print_function
 import wx, sys

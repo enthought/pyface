@@ -21,9 +21,6 @@
     drag and drop operations (depending upon how the feature is implemented).
 """
 
-# -------------------------------------------------------------------------------
-#  Imports:
-# -------------------------------------------------------------------------------
 
 from weakref import ref
 
