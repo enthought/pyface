@@ -25,9 +25,9 @@ class TableLabelProvider(LabelProvider):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TableLabelProvider' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_image(self, viewer, element, column_index=0):
         """ Returns the filename of the label image for an element. """

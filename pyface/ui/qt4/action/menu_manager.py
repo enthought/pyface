@@ -31,7 +31,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     This could be a sub-menu or a context (popup) menu.
     """
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
@@ -40,9 +40,9 @@ class MenuManager(ActionManager, ActionManagerItem):
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
         """ Creates a menu representation of the manager. """
@@ -56,9 +56,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         return _Menu(self, parent, controller)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
@@ -93,9 +93,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 class _Menu(QtGui.QMenu):
     """ The toolkit-specific menu control. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, manager, parent, controller):
         """ Creates a new tree. """
@@ -129,9 +129,9 @@ class _Menu(QtGui.QMenu):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # '_Menu' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def clear(self):
         """ Clears the items from the menu. """
@@ -173,9 +173,9 @@ class _Menu(QtGui.QMenu):
             point = QtCore.QPoint(x, y)
         self.popup(point)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """

@@ -55,7 +55,7 @@ class ExpandableHeader(Widget):
     # Represents the current state of the button. True means pressed.
     state = Bool(False)
 
-    #### Events ####
+    # Events ----
 
     # The panel has been expanded or collapsed
     panel_expanded = Event
@@ -65,9 +65,9 @@ class ExpandableHeader(Widget):
     _TEXT_Y = 0
     _TEXT_X_OFFSET = 10
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, container, **traits):
         """ Creates the panel. """
@@ -81,9 +81,9 @@ class ExpandableHeader(Widget):
         self._container = container
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -207,9 +207,9 @@ class ExpandableHeader(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_erase_background(self, event):
         """ Called when the background of the panel is erased. """

@@ -22,9 +22,9 @@ from pyface.split_widget import SplitWidget
 class SplitDialog(Dialog, SplitWidget):
     """ A dialog that is split in two either horizontally or vertically. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Dialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog.

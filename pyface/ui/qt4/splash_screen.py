@@ -33,7 +33,7 @@ class SplashScreen(MSplashScreen, Window):
     ISplashScreen interface for the API documentation.
     """
 
-    #### 'ISplashScreen' interface ############################################
+    # 'ISplashScreen' interface --------------------------------------------
 
     image = Instance(ImageResource, ImageResource("splash"))
 
@@ -49,9 +49,9 @@ class SplashScreen(MSplashScreen, Window):
 
     text_location = Tuple(5, 5)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         splash_screen = QtGui.QSplashScreen(self.image.create_image())
@@ -59,9 +59,9 @@ class SplashScreen(MSplashScreen, Window):
 
         return splash_screen
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _text_changed(self):
         """ Called when the splash screen text has been changed. """

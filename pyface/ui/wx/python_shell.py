@@ -43,15 +43,15 @@ class PythonShell(MPythonShell, Widget):
     IPythonShell interface for the API documentation.
     """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     command_executed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # FIXME v3: Either make this API consistent with other Widget sub-classes
     # or make it a sub-class of HasTraits.
@@ -67,9 +67,9 @@ class PythonShell(MPythonShell, Widget):
         # Set up to be notified whenever a Python statement is executed:
         self.control.handlers.append(self._on_command_executed)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         return self.control.interp
@@ -162,9 +162,9 @@ class PythonShell(MPythonShell, Widget):
         self.control.history = list(history)
         self.control.historyIndex = history_index
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         shell = PyShell(parent, -1)
@@ -177,9 +177,9 @@ class PythonShell(MPythonShell, Widget):
 
         return shell
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonDropTarget' handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_drop(self, x, y, obj, default_drag_result):
         """ Called when a drop occurs on the shell. """
@@ -215,9 +215,9 @@ class PythonShell(MPythonShell, Widget):
         """ Always returns wx.DragCopy to indicate we will be doing a copy."""
         return wx.DragCopy
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private handler interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_on_char(self, event):
         """ Called whenever a change is made to the text of the document. """

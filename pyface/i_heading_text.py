@@ -24,7 +24,7 @@ from pyface.i_image_resource import IImageResource
 class IHeadingText(Interface):
     """ Heading text. """
 
-    #### 'IHeadingText' interface #############################################
+    # 'IHeadingText' interface ---------------------------------------------
 
     #: Heading level.
     #

@@ -36,7 +36,7 @@ class PythonEditor(MPythonEditor, Widget):
     IPythonEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     dirty = Bool(False)
 
@@ -44,15 +44,15 @@ class PythonEditor(MPythonEditor, Widget):
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     changed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new pager. """
@@ -65,9 +65,9 @@ class PythonEditor(MPythonEditor, Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self, path=None):
         """ Loads the contents of the editor. """
@@ -143,9 +143,9 @@ class PythonEditor(MPythonEditor, Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _path_changed(self):
         """ Handle a change to path. """
@@ -154,9 +154,9 @@ class PythonEditor(MPythonEditor, Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget. """
@@ -191,18 +191,18 @@ class PythonEditor(MPythonEditor, Widget):
         # self.SetEOLMode(wx.stc.STC_EOL_CR) # Apple Mac
         # self.SetEOLMode(wx.stc.STC_EOL_CRLF) # Windows
 
-        ##########################################
+        -----------------------------------------#
         # Global styles for all languages.
-        ##########################################
+        -----------------------------------------#
 
         self.set_style(wx.stc.STC_STYLE_DEFAULT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_CONTROLCHAR, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACELIGHT, "#000000", "#ffffff")
         self.set_style(wx.stc.STC_STYLE_BRACEBAD, "#000000", "#ffffff")
 
-        ##########################################
+        -----------------------------------------#
         # Python styles.
-        ##########################################
+        -----------------------------------------#
 
         # White space
         self.set_style(wx.stc.STC_P_DEFAULT, "#000000", "#ffffff")
@@ -246,9 +246,9 @@ class PythonEditor(MPythonEditor, Widget):
         # End of line where string is not closed
         self.set_style(wx.stc.STC_P_STRINGEOL, "#000000", "#ffffff")
 
-        ##########################################
+        -----------------------------------------#
         # Events.
-        ##########################################
+        -----------------------------------------#
 
         # By default, the will fire EVT_STC_CHANGE evented for all mask values
         # (STC_MODEVENTMASKALL). This generates too many events.
@@ -270,7 +270,7 @@ class PythonEditor(MPythonEditor, Widget):
 
         return stc
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
         """ Called whenever a change is made to the text of the document. """

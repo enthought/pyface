@@ -21,9 +21,9 @@ from traits.api import HasPrivateTraits
 class Filter(HasPrivateTraits):
     """ Abstract base class for all filters. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Filter' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def filter(self, widget, parent, nodes):
         """ Filters a list of nodes.

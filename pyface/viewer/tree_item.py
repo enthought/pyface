@@ -39,7 +39,7 @@ from traits.api import Any, Bool, HasTraits, Instance, List, Property
 class TreeItem(HasTraits):
     """ A generic base-class for items in a tree data structure. """
 
-    #### 'TreeItem' interface #################################################
+    # 'TreeItem' interface -------------------------------------------------
 
     # Does this item allow children?
     allows_children = Bool(True)
@@ -56,9 +56,9 @@ class TreeItem(HasTraits):
     # The item's parent.
     parent = Instance("TreeItem")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Returns the informal string representation of the object. """
@@ -71,11 +71,11 @@ class TreeItem(HasTraits):
 
         return s
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     # has_children
     def _get_has_children(self):
@@ -83,7 +83,7 @@ class TreeItem(HasTraits):
 
         return len(self.children) != 0
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, child):
         """ Appends a child to this item.

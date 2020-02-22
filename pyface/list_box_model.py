@@ -12,7 +12,7 @@ class ListModelEvent(object):
 class ListBoxModel(HasTraits):
     """ The model for list boxes. """
 
-    #### Events ####
+    # Events ----
 
     #: Fired when the contents of the list have changed.
     list_changed = Event

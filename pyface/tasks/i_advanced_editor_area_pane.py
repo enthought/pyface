@@ -9,9 +9,9 @@ class IAdvancedEditorAreaPane(IEditorAreaPane):
     """ A splitable central pane that contains tabbed editors.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IAdvancedEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self):
         """ Returns a LayoutItem that reflects the current state of the editors.

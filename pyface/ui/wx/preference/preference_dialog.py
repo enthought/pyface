@@ -35,22 +35,22 @@ from pyface.wx.util.font_helper import new_font_like
 class PreferenceDialog(SplitDialog):
     """ The preference dialog. """
 
-    #### 'Dialog' interface ###################################################
+    # 'Dialog' interface ---------------------------------------------------
 
     # The dialog title.
     title = Str("Preferences")
 
-    #### 'SplitDialog' interface ##############################################
+    # 'SplitDialog' interface ---------------------------------------------#
 
     # The ratio of the size of the left/top pane to the right/bottom pane.
     ratio = Float(0.25)
 
-    #### 'PreferenceDialog' interface #########################################
+    # 'PreferenceDialog' interface -----------------------------------------
 
     # The root of the preference hierarchy.
     root = Instance(PreferenceNode)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The preference pages in the dialog (they are created lazily).
     _pages = Dict
@@ -58,9 +58,9 @@ class PreferenceDialog(SplitDialog):
     # The current visible preference page.
     _current_page = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Dialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         """ Creates the buttons. """
@@ -75,9 +75,9 @@ class PreferenceDialog(SplitDialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'SplitDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_lhs(self, parent):
         """ Creates the panel containing the preference page tree. """
@@ -123,9 +123,9 @@ class PreferenceDialog(SplitDialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_tree(self, parent):
         """ Creates the preference page tree. """
@@ -163,9 +163,9 @@ class PreferenceDialog(SplitDialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # wx event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_restore_defaults(self, event):
         """ Called when the 'Restore Defaults' button is pressed. """
@@ -183,9 +183,9 @@ class PreferenceDialog(SplitDialog):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_selection_changed(self, selection):
         """ Called when a node in the tree is selected. """

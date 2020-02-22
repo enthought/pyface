@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class TraitsUIView(View):
     """ A view whose content is provided by a traits UI. """
 
-    #### 'TraitsUIView' interface #############################################
+    # 'TraitsUIView' interface ---------------------------------------------
 
     # The object that we povide a traits UI of (this defaults to the view
     # iteself ie. 'self').
@@ -33,18 +33,18 @@ class TraitsUIView(View):
     # the default traits UI view is used).
     view = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _name_default(self):
         """ Trait initializer. """
 
         return str(self.obj)
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the editor.
@@ -77,18 +77,18 @@ class TraitsUIView(View):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TraitsUIView' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _obj_default(self):
         """ Trait initializer. """
 
         return self
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_ui(self, parent):
         """ Creates the traits UI that represents the editor.

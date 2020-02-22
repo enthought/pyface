@@ -20,19 +20,19 @@ class DockPaneToggleAction(Action):
     """ An Action for toggling the visibility of a dock pane.
     """
 
-    #### 'DockPaneToggleAction' interface #####################################
+    # 'DockPaneToggleAction' interface -------------------------------------
 
     dock_pane = Instance(IDockPane)
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     name = Property(Unicode, depends_on="dock_pane.name")
     style = "toggle"
     tooltip = Property(Unicode, depends_on="name")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         super(DockPaneToggleAction, self).destroy()
@@ -46,9 +46,9 @@ class DockPaneToggleAction(Action):
         if self.dock_pane:
             self.dock_pane.visible = not self.dock_pane.visible
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_name(self):
         if self.dock_pane is None:
@@ -73,13 +73,13 @@ class DockPaneToggleGroup(Group):
     """ A Group for toggling the visibility of a task's dock panes.
     """
 
-    #### 'Group' interface ####################################################
+    # 'Group' interface ----------------------------------------------------
 
     id = "DockPaneToggleGroup"
 
     items = List
 
-    #### 'DockPaneToggleGroup' interface ######################################
+    # 'DockPaneToggleGroup' interface -------------------------------------#
 
     task = Property(depends_on="parent.controller")
 
@@ -109,7 +109,7 @@ class DockPaneToggleGroup(Group):
             manager = manager.parent
         return manager
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     @on_trait_change("dock_panes[]")
     def _dock_panes_updated(self):

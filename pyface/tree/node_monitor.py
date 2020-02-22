@@ -30,12 +30,12 @@ logger = logging.getLogger(__name__)
 class NodeMonitor(HasTraits):
     """ A monitor for appearance and structural changes to a node. """
 
-    #### 'NodeMonitor' interface ##############################################
+    # 'NodeMonitor' interface ---------------------------------------------#
 
     # The node that we are monitoring.
     node = Any
 
-    #### Events ####
+    # Events ----
 
     # Fired when child nodes in the node that we are monitoring have changed in
     # some way that affects their appearance but NOT their structure.
@@ -58,11 +58,11 @@ class NodeMonitor(HasTraits):
     # changes/inserts/removals).
     structure_changed = Event(NodeEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeMonitor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### public methods #######################################################
+    # public methods -------------------------------------------------------
 
     def start(self):
         """ Start listening to changes to the node. """
@@ -125,7 +125,7 @@ class NodeMonitor(HasTraits):
 
         return
 
-    #### protected methods ####################################################
+    # protected methods ----------------------------------------------------
 
     def _setup_trait_change_handlers(self, obj, remove=False):
         """ Add or remove trait change handlers to/from a node. """

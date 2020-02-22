@@ -35,7 +35,7 @@ class Group(HasTraits):
 
     """
 
-    #### 'Group' interface ####
+    # 'Group' interface ----
 
     #: Is the group enabled?
     enabled = Bool(True)
@@ -56,14 +56,14 @@ class Group(HasTraits):
     #: Does this group require a separator when it is visualized?
     separator = Bool(True)
 
-    #### Private interface ####
+    # Private interface ----
 
     #: All of the items in the group.
     _items = List  # (ActionManagerItem)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *items, **traits):
         """ Creates a new menu manager.
@@ -80,22 +80,22 @@ class Group(HasTraits):
         for item in items:
             self.append(item)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Group' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait Properties #####################################################
+    # Trait Properties -----------------------------------------------------
 
     def _get_items(self):
         return self._items[:]
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _enabled_changed(self, trait_name, old, new):
         for item in self.items:
             item.enabled = new
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, item):
         """ Appends an item to the group.

@@ -48,9 +48,9 @@ class _Tree(wx.TreeCtrl):
 
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tree, parent, wxid, style):
         """ Creates a new tree. """
@@ -78,7 +78,7 @@ class Tree(Widget):
     # The default tree style.
     STYLE = wx.TR_EDIT_LABELS | wx.TR_HAS_BUTTONS | wx.CLIP_CHILDREN
 
-    #### 'Tree' interface #####################################################
+    # 'Tree' interface -----------------------------------------------------
 
     # The tree's filters (empty if no filtering is required).
     filters = List(Filter)
@@ -114,7 +114,7 @@ class Tree(Widget):
     # The tree's sorter (None if no sorting is required).
     sorter = Instance(Sorter)
 
-    #### Events ####
+    # Events ----
 
     # A right-click occurred on the control (not a node!).
     control_right_clicked = Event  # (Point)
@@ -144,7 +144,7 @@ class Tree(Widget):
     # Tuple(node, point)
     node_right_clicked = Event  # (Tuple)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # A name to distinguish the tree for debugging!
     #
@@ -160,9 +160,9 @@ class Tree(Widget):
     # Flag for allowing selection events to be ignored
     _ignore_selection_events = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new tree.
@@ -231,11 +231,11 @@ class Tree(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Tree' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     def _get_root(self):
         """ Returns the root node of the tree. """
@@ -249,7 +249,7 @@ class Tree(Widget):
 
         return
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def collapse(self, node):
         """ Collapses the specified node. """
@@ -414,9 +414,9 @@ class Tree(Widget):
         # Update our selection to reflect the final selection state.
         self.selection = self._get_selection()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonDropTarget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def on_drag_over(self, x, y, obj, default_drag_result):
         """ Called when a node is dragged over the tree. """
@@ -443,9 +443,9 @@ class Tree(Widget):
 
         return default_drag_result
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_wxid(self, node):
         """ Returns the wxid for the specified node.
@@ -847,7 +847,7 @@ class Tree(Widget):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_root_changed(self, root):
         """ Called when the root of the model has changed. """
@@ -994,7 +994,7 @@ class Tree(Widget):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_char(self, event):
         """ Called when a key is pressed when the tree has focus. """

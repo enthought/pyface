@@ -24,7 +24,7 @@ class IProgressDialog(IDialog):
     """ A simple progress dialog window which allows itself to be updated
     """
 
-    #### 'IProgressDialog' interface ##################################
+    # 'IProgressDialog' interface ---------------------------------#
 
     #: The message to display in the dialog
     message = Str
@@ -50,9 +50,9 @@ class IProgressDialog(IDialog):
     #: Label for the 'cancel' button
     cancel_button_label = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def update(self, value):
         """ Update the progress bar to the desired value
@@ -88,9 +88,9 @@ class MProgressDialog(object):
     # XXX why not the control?
     progress_bar = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Open the dialog """
@@ -100,9 +100,9 @@ class MProgressDialog(object):
 
         super(MProgressDialog, self).open()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def update(self, value):
         """ Update the progress bar to the desired value

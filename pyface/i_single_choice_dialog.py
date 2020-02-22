@@ -24,7 +24,7 @@ from pyface.i_dialog import IDialog
 class ISingleChoiceDialog(IDialog):
     """ The interface for a dialog that prompts for a choice from a list. """
 
-    #### 'ISingleChoiceDialog' interface ######################################
+    # 'ISingleChoiceDialog' interface -------------------------------------#
 
     #: List of objects to choose from.
     choices = List(Any)

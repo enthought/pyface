@@ -7,9 +7,9 @@ from traits.api import HasTraits, Instance
 class EnamlPane(HasTraits):
     """ Base class defining common code for EnamlTaskPane and EnamlEditor. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'EnamlPane' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     #: The Enaml component defining the contents of the TaskPane.
     component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
@@ -23,9 +23,9 @@ class EnamlPane(HasTraits):
         """
         raise NotImplementedError
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane'/'Editor' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create the toolkit-specific control that represents the editor. """

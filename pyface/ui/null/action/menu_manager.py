@@ -30,15 +30,15 @@ class MenuManager(ActionManager, ActionManagerItem):
     This could be a sub-menu or a context (popup) menu.
     """
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
     name = Unicode
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu(self, parent, controller=None):
         """ Creates a menu representation of the manager. """
@@ -52,9 +52,9 @@ class MenuManager(ActionManager, ActionManagerItem):
 
         return None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """

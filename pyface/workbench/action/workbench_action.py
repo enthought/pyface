@@ -10,7 +10,7 @@ from traits.api import Instance
 class WorkbenchAction(Action):
     """ Abstract base class for all workbench actions. """
 
-    #### 'WorkbenchAction' interface ##########################################
+    # 'WorkbenchAction' interface -----------------------------------------#
 
     # The workbench window that the action is in.
     #

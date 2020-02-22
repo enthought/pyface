@@ -31,12 +31,12 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
     _ref = Any
 
-    #### 'ImageResource' interface ############################################
+    # 'ImageResource' interface --------------------------------------------
 
     absolute_path = Property(Unicode)
 
@@ -44,9 +44,9 @@ class ImageResource(MImageResource, HasTraits):
 
     search_path = List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # Qt doesn't specifically require bitmaps anywhere so just use images.
     create_bitmap = MImageResource.create_image
@@ -77,9 +77,9 @@ class ImageResource(MImageResource, HasTraits):
         size = image.size()
         return (size.width(), size.height())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_absolute_path(self):
         # FIXME: This doesn't quite work the new notion of image size. We

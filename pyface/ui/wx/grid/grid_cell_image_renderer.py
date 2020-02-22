@@ -44,9 +44,9 @@ class GridCellImageRenderer(GridCellRenderer):
 
         return
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # GridCellRenderer interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def Draw(self, grid, attr, dc, rect, row, col, isSelected):
         """ Draw the appropriate icon into the specified grid cell. """
 
@@ -137,9 +137,9 @@ class GridCellImageRenderer(GridCellRenderer):
     def Clone(self):
         return GridCellImageRenderer(self._provider)
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # protected 'GridCellIconRenderer' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def _get_image(self, grid, row, col):
         """ Returns the correct bmp for the data at row, col. """
         bmp = None

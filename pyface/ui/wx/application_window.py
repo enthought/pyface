@@ -42,7 +42,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     icon = Instance(ImageResource)
 
@@ -56,7 +56,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # this list instead.
     tool_bar_managers = List(ToolBarManager)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     # fixme: We can't set the default value of the actual 'size' trait here as
     # in the toolkit-specific event handlers for window size and position
@@ -68,9 +68,9 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     title = Unicode("Pyface")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
@@ -113,18 +113,18 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _size_default(self):
         """ Trait initialiser. """
 
         return (800, 600)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
 
@@ -173,9 +173,9 @@ class ApplicationWindow(MApplicationWindow, Window):
             self._aui_manager.UnInit()
         super(ApplicationWindow, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_toolbar_to_aui_manager(self, tool_bar):
         """ Add a toolbar to the AUI manager. """
@@ -236,7 +236,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _menu_bar_manager_changed(self):
         if self.control is not None:

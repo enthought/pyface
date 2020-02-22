@@ -31,7 +31,7 @@ class IPerspective(Interface):
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create(self, window):
         """ Create the perspective in a workbench window. """

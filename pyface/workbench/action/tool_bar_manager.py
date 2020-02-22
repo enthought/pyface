@@ -12,14 +12,14 @@ from .action_controller import ActionController
 class ToolBarManager(pyface.ToolBarManager):
     """ The tool bar manager for the Envisage workbench window. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # The workbench window that we are the tool bar manager for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar representation of the manager. """

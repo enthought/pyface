@@ -29,7 +29,7 @@ from pyface.i_window import IWindow
 class ISplashScreen(IWindow):
     """ The interface for a splash screen. """
 
-    #### 'ISplashScreen' interface ############################################
+    # 'ISplashScreen' interface --------------------------------------------
 
     #: The image to display on the splash screen.
     image = Instance(ImageResource, ImageResource("splash"))
@@ -69,9 +69,9 @@ class MSplashScreen(object):
     Reimplements: open(), close()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Creates the toolkit-specific control for the widget. """

@@ -32,9 +32,9 @@ class DummyDockPane(EnamlDockPane):
 @unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlDockPane(GuiTestAssistant, unittest.TestCase):
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TestCase' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -49,9 +49,9 @@ class TestEnamlDockPane(GuiTestAssistant, unittest.TestCase):
         del self.dock_pane
         GuiTestAssistant.tearDown(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Tests
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def test_creation(self):
         self.assertIsInstance(self.dock_pane.component, Label)

@@ -15,9 +15,9 @@ from .main_window_layout import MainWindowLayout, PaneItem
 from .task_pane import TaskPane
 from .util import set_focus
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'AdvancedEditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 @provides(IAdvancedEditorAreaPane)
@@ -27,13 +27,13 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
     See the IAdvancedEditorAreaPane interface for API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _main_window_layout = Instance(MainWindowLayout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -78,9 +78,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
         super(AdvancedEditorAreaPane, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -109,9 +109,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         if not self.editors:
             self.active_editor = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IAdvancedEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self):
         """ Returns a LayoutItem that reflects the current state of the editors.
@@ -128,9 +128,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
                 layout, QtCore.Qt.LeftDockWidgetArea
             )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _activate_tab(self, index):
         """ Activates the tab with the specified index, if there is one.
@@ -165,12 +165,12 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             label = "*" + label
         return label
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def __main_window_layout_default(self):
         return EditorAreaMainWindowLayout(editor_area=self)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     @on_trait_change("editors:[dirty, name]")
     def _update_label(self, editor, name, new):
@@ -181,9 +181,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         editor.control.parent().update_tooltip()
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # Auxillary classes.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 class EditorAreaMainWindowLayout(MainWindowLayout):
@@ -192,17 +192,17 @@ class EditorAreaMainWindowLayout(MainWindowLayout):
     Used for getting and setting layouts for the pane.
     """
 
-    #### 'MainWindowLayout' interface #########################################
+    # 'MainWindowLayout' interface -----------------------------------------
 
     control = DelegatesTo("editor_area")
 
-    #### 'TaskWindowLayout' interface #########################################
+    # 'TaskWindowLayout' interface -----------------------------------------
 
     editor_area = Instance(AdvancedEditorAreaPane)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.
@@ -226,9 +226,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
     """ An auxillary widget for implementing AdvancedEditorAreaPane.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'EditorAreaWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, editor_area, parent=None):
         super(EditorAreaWidget, self).__init__(parent)
@@ -402,9 +402,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
             elif len(self.tabifiedDockWidgets(widget)) == 1:
                 widget.set_title_bar(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Event handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def childEvent(self, event):
         """ Reimplemented to gain access to the tab bars as they are created.
@@ -529,9 +529,9 @@ class EditorAreaWidget(QtGui.QMainWindow):
         if active_editor:
             set_focus(active_editor.control)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Signal handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _focus_changed(self, old, new):
         """ Handle an application-level focus change.

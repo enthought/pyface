@@ -33,7 +33,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     cancel = Bool(False)
 
@@ -58,17 +58,17 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     # exec_() returning QDialog.Rejected.
     _button_result_map = Dict()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         # In PyQt this is a canned dialog.
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         dlg = QtGui.QMessageBox(parent)

@@ -27,9 +27,9 @@ class Editor(MEditor):
     _loading = Event(Bool)
     _loading_on_open = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """

@@ -59,13 +59,13 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     """
 
-    #### 'IWorkbenchWindowLayout' interface ###################################
+    # 'IWorkbenchWindowLayout' interface -----------------------------------
 
     editor_area_id = Delegate("window")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activate an editor. """
@@ -252,7 +252,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         )
         return dock_control.visible
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         structure = self._wx_view_dock_window.get_structure()
@@ -313,9 +313,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_add_editor(self, editor, title):
         """ Adds an editor. """
@@ -742,9 +742,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _window_changed(self, old, new):
         """ Static trait change handler. """
@@ -761,7 +761,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 self._wx_on_editor_area_size_changed, "editor_area_size"
             )
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _wx_on_editor_area_size_changed(self, new):
         """ Dynamic trait change handler. """
@@ -777,7 +777,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         region.height = int(new[1] * window_height)
         return
 
-    #### Dock window handlers #################################################
+    # Dock window handlers -------------------------------------------------
 
     # fixme: Should these just fire events that the window listens to?
     def _wx_on_view_closed(self, dock_control, force):

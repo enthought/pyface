@@ -36,9 +36,9 @@ class IDockPane(ITaskPane):
     # Whether the pane is currently visible.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
@@ -57,7 +57,7 @@ class MDockPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     closable = Bool(True)
     dock_area = Enum("left", "right", "top", "bottom")
@@ -69,9 +69,9 @@ class MDockPane(HasTraits):
     caption_visible = Bool(True)
     dock_layer = Bool(0)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def hide(self):
         """ Convenience method to hide the dock pane.

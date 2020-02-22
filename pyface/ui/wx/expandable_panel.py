@@ -34,9 +34,9 @@ class ExpandablePanel(Widget):
     collapsed_image = Instance(ImageResource, ImageResource("mycarat1"))
     expanded_image = Instance(ImageResource, ImageResource("mycarat2"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
@@ -55,9 +55,9 @@ class ExpandablePanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Expandale' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_panel(self, name, layer):
         """ Adds a layer with the specified name.
@@ -104,9 +104,9 @@ class ExpandablePanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -140,7 +140,7 @@ class ExpandablePanel(Widget):
 
         return panel
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_button(self, event):
         """ called when one of the expand/contract buttons is pressed. """

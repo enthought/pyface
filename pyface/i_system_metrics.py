@@ -21,7 +21,7 @@ from traits.api import Int, Interface, Tuple
 class ISystemMetrics(Interface):
     """ The interface to system metrics (screen width and height etc). """
 
-    #### 'ISystemMetrics' interface ###########################################
+    # 'ISystemMetrics' interface -------------------------------------------
 
     #: The width of the screen in pixels.
     screen_width = Int

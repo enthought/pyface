@@ -25,14 +25,14 @@ from .wizard_controller import WizardController
 class ChainedWizardController(WizardController):
     """ A wizard controller that can be chained with others. """
 
-    #### 'ChainedWizardController' interface ##################################
+    # 'ChainedWizardController' interface ---------------------------------#
 
     # The next chained wizard controller.
     next_controller = Instance(IWizardController)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_next_page(self, page):
         """ Returns the next page. """
@@ -122,9 +122,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ChainedWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_pages(self):
         """ Returns the pages in the wizard. """
@@ -143,9 +143,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update(self):
         """ Checks the completion status of the controller. """
@@ -168,9 +168,9 @@ class ChainedWizardController(WizardController):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _current_page_changed(self, old, new):
         """ Called when the current page is changed. """
@@ -205,7 +205,7 @@ class ChainedWizardController(WizardController):
 
         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _on_controller_complete(self, obj, trait_name, old, new):
         """ Called when the next controller's complete state changes. """

@@ -18,7 +18,7 @@ from .set_active_perspective_action import SetActivePerspectiveAction
 class PerspectiveMenuManager(MenuManager):
     """ The default perspective menu for a workbench window. """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     # All of the groups in the manager.
     groups = List(Group)
@@ -26,19 +26,19 @@ class PerspectiveMenuManager(MenuManager):
     # The manager's unique identifier.
     id = "PerspectivesMenu"
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name.
     name = "Perspectives"
 
-    #### 'PerspectiveMenuManager' interface ###################################
+    # 'PerspectiveMenuManager' interface -----------------------------------
 
     # The workbench window that the manager is part of.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _groups_default(self):
         """ Trait initializer. """
@@ -56,9 +56,9 @@ class PerspectiveMenuManager(MenuManager):
 
         return groups
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PerspectiveMenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change("window.perspectives")
     @on_trait_change("window.perspectives_items")
@@ -83,9 +83,9 @@ class PerspectiveMenuManager(MenuManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_perspective_group(self, window):
         """ Create the actions that switch to specific perspectives. """

@@ -27,7 +27,7 @@ class SystemMetrics(MSystemMetrics, HasTraits):
     ISystemMetrics interface for the API documentation.
     """
 
-    #### 'ISystemMetrics' interface ###########################################
+    # 'ISystemMetrics' interface -------------------------------------------
 
     screen_width = Property(Int)
 
@@ -35,9 +35,9 @@ class SystemMetrics(MSystemMetrics, HasTraits):
 
     dialog_background_color = Property(Tuple)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_screen_width(self):
         return QtGui.QApplication.instance().desktop().screenGeometry().width()

@@ -17,14 +17,14 @@ class ActionController(ActionController):
 
     """
 
-    #### 'ActionController' interface #########################################
+    # 'ActionController' interface -----------------------------------------
 
     # The workbench window that this is the controller for.
     window = Instance(WorkbenchWindow)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, action, event):
         """ Control an action invocation. """

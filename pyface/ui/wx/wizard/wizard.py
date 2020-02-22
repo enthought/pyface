@@ -33,7 +33,7 @@ class Wizard(MWizard, Dialog):
 
     """
 
-    #### 'IWizard' interface ##################################################
+    # 'IWizard' interface -------------------------------------------------#
 
     pages = Property(List(IWizardPage))
 
@@ -41,13 +41,13 @@ class Wizard(MWizard, Dialog):
 
     show_cancel = Bool(True)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     title = Unicode("Wizard")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_dialog_area(self, parent):
         """ Creates the main content of the dialog. """
@@ -94,9 +94,9 @@ class Wizard(MWizard, Dialog):
 
         return sizer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'MWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _show_page(self, page):
         """ Show the specified page. """
@@ -153,7 +153,7 @@ class Wizard(MWizard, Dialog):
 
         return
 
-    #### Trait handlers #######################################################
+    # Trait handlers -------------------------------------------------------
 
     def _controller_default(self):
         """ Provide a default controller. """
@@ -172,7 +172,7 @@ class Wizard(MWizard, Dialog):
 
         self.controller.pages = pages
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_next(self, event):
         """ Called when the 'Next' button is pressed. """

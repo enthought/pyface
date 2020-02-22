@@ -48,9 +48,9 @@ class IView(IWorkbenchPart, IPerspectiveItem):
     # Whether the view is visible or not.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IView' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate(self):
         """ Activate the view.
@@ -72,7 +72,7 @@ class IView(IWorkbenchPart, IPerspectiveItem):
 class MView(MWorkbenchPart, PerspectiveItem):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IView' interface ####################################################
+    # 'IView' interface ----------------------------------------------------
 
     # Is the view busy? (i.e., should the busy cursor (often an hourglass) be
     # displayed?).
@@ -89,9 +89,9 @@ class MView(MWorkbenchPart, PerspectiveItem):
     # Whether the view is visible or not.
     visible = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -110,9 +110,9 @@ class MView(MWorkbenchPart, PerspectiveItem):
 
         return name
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IView' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate(self):
         """ Activate the view.

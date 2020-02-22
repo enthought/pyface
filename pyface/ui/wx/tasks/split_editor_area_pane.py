@@ -8,9 +8,9 @@ from traits.api import provides
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane
 from .editor_area_pane import EditorAreaPane
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'AdvancedEditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 @provides(IEditorAreaPane)

@@ -249,7 +249,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         editor_area.add_editor(Editor(obj=file1, tooltip="test_tooltip1"))
         editor_area.add_editor(Editor(obj=file2, tooltip="test_tooltip2"))
 
-        ######## test tooltips #############
+        ----- test tooltips -------------
 
         self.assertEqual(
             editor_area.active_tabwidget.tabToolTip(0), "test_tooltip0"
@@ -261,7 +261,7 @@ class TestEditorAreaWidget(unittest.TestCase):
             editor_area.active_tabwidget.tabToolTip(2), "test_tooltip2"
         )
 
-        ######## test set_layout #############
+        ----- test set_layout -------------
 
         # set the layout
         editor_area.set_layout(layout)
@@ -297,7 +297,7 @@ class TestEditorAreaWidget(unittest.TestCase):
         # file1 tab is active?
         self.assertEqual(right_bottom.tabwidget().currentIndex(), 0)
 
-        ######### test get_layout #############
+        -----# test get_layout -------------
 
         # obtain layout
         layout_new = editor_area.get_layout()

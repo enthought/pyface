@@ -78,7 +78,7 @@ class AboutDialog(MAboutDialog, Dialog):
     IAboutDialog interface for the API documentation.
     """
 
-    #### 'IAboutDialog' interface #############################################
+    # 'IAboutDialog' interface ---------------------------------------------
 
     additions = List(Unicode)
 
@@ -86,9 +86,9 @@ class AboutDialog(MAboutDialog, Dialog):
 
     image = Instance(ImageResource, ImageResource("about"))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         if parent.GetParent() is not None:

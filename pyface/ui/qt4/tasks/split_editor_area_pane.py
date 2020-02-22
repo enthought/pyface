@@ -26,9 +26,9 @@ from pyface.drop_handler import IDropHandler, BaseDropHandler, FileDropHandler
 # Local imports.
 from .task_pane import TaskPane
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # 'SplitEditorAreaPane' class.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 @provides(IEditorAreaPane)
@@ -38,7 +38,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     See the IEditorAreaPane interface for API documentation.
     """
 
-    #### SplitEditorAreaPane interface #####################################
+    # SplitEditorAreaPane interface -------------------------------------
 
     # Currently active tabwidget
     active_tabwidget = Instance(QtGui.QTabWidget)
@@ -58,7 +58,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     # The constructor of the empty widget which comes up when one creates a split
     create_empty_widget = Callable
 
-    #### Private interface ###################################################
+    # Private interface ---------------------------------------------------
 
     _private_drop_handlers = List(IDropHandler)
     _all_drop_handlers = Property(
@@ -88,9 +88,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     def _create_empty_widget_default(self):
         return lambda: self.active_tabwidget.create_empty_widget()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -120,9 +120,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
         super(SplitEditorAreaPane, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -168,9 +168,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         if not self.editors:
             self.active_editor = None
 
-    ##########################################################################
+    -------------------------------------------------------------------------#
     # 'IAdvancedEditorAreaPane' interface.
-    ##########################################################################
+    -------------------------------------------------------------------------#
 
     def get_layout(self):
         """ Returns a LayoutItem that reflects the current state of the
@@ -183,9 +183,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         self.control.set_layout(layout)
 
-    ##########################################################################
+    -------------------------------------------------------------------------#
     # 'SplitEditorAreaPane' interface.
-    ##########################################################################
+    -------------------------------------------------------------------------#
 
     def get_context_menu(self, pos):
         """ Return a context menu containing split/collapse actions.
@@ -260,9 +260,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
         return menu
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_label(self, editor):
         """ Return a tab label for an editor.
@@ -341,7 +341,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         """
         return self.control.tabwidgets()
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     @on_trait_change("editors:[dirty, name]")
     def _update_label(self, editor, name, new):
@@ -353,7 +353,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         index = self.active_tabwidget.indexOf(editor.control)
         self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _find_ancestor_draggable_tab_widget(self, control):
         """ Find the draggable tab widget to which a widget belongs. """
@@ -401,9 +401,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         self.active_editor = active_editor
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # Auxiliary classes.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 class EditorAreaWidget(QtGui.QSplitter):
@@ -839,7 +839,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
                 names.append(editor.name)
         return names
 
-    ###### Signal handlers ####################################################
+    # Signal handlers ----------------------------------------------------
 
     def _close_requested(self, index):
         """ Re-implemented to close the editor when it's tab is closed
@@ -879,7 +879,7 @@ class DraggableTabWidget(QtGui.QTabWidget):
         if not self.count() and not self.empty_widget:
             self.show_empty_widget()
 
-    ##### Event handlers ######################################################
+    ## Event handlers -----------------------------------------------------#
 
     def contextMenuEvent(self, event):
         """ To show collapse context menu even on empty tabwidgets
@@ -1049,9 +1049,9 @@ class TabDragObject(object):
         )
 
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # Default drop handlers.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 class TabDropHandler(BaseDropHandler):

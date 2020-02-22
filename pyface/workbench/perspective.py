@@ -26,7 +26,7 @@ class Perspective(HasTraits):
     # The name of the default perspective.
     DEFAULT_NAME = "Default"
 
-    #### 'IPerspective' interface #############################################
+    # 'IPerspective' interface ---------------------------------------------
 
     # The perspective's unique identifier (unique within a workbench window).
     id = Str(DEFAULT_ID)
@@ -48,20 +48,20 @@ class Perspective(HasTraits):
     # Should the editor area be shown in this perspective?
     show_editor_area = Bool(True)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Return an informal string representation of the object. """
 
         return "Perspective(%s)" % self.id
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Perspective' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -69,7 +69,7 @@ class Perspective(HasTraits):
         # If no Id is specified then use the name.
         return self.name
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create(self, window):
         """ Create the perspective in a workbench window.
@@ -109,9 +109,9 @@ class Perspective(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_contents(self, window, contents):
         """ Adds the specified contents. """

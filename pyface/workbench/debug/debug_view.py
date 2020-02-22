@@ -10,7 +10,7 @@ from traitsui.api import View as TraitsView
 class DebugViewModel(HasTraits):
     """ The model for the debug view! """
 
-    #### 'Model' interface ####################################################
+    # 'Model' interface ----------------------------------------------------
 
     active_editor = Str
     active_part = Str
@@ -18,9 +18,9 @@ class DebugViewModel(HasTraits):
 
     window = Instance(WorkbenchWindow)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Model' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change(
         "window.active_editor", "window.active_part", "window.active_view"
@@ -41,9 +41,9 @@ class DebugViewModel(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_id(self, obj):
         """ Return the Id of an object. """
@@ -60,19 +60,19 @@ class DebugViewModel(HasTraits):
 class DebugView(View):
     """ A view containing a main walter canvas. """
 
-    #### 'IWorkbenchPart' interface ###########################################
+    # 'IWorkbenchPart' interface -------------------------------------------
 
     # The part's name (displayed to the user).
     name = "Debug"
 
-    #### 'DebugView' interface ################################################
+    # 'DebugView' interface ------------------------------------------------
 
     # The model for the debug view!
     model = Instance(DebugViewModel)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the view.

@@ -17,7 +17,7 @@ from .user_perspective_name import UserPerspectiveName
 class RenameUserPerspectiveAction(UserPerspectiveAction):
     """ An action that renames a user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = "pyface.workbench.action.rename_user_perspective_action"
@@ -25,9 +25,9 @@ class RenameUserPerspectiveAction(UserPerspectiveAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Rename Perspective..."
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """

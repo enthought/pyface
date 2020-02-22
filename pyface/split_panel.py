@@ -22,9 +22,9 @@ from pyface.widget import Widget
 class SplitPanel(Widget, SplitWidget):
     """ A panel that is split in two either horizontally or vertically. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new panel. """

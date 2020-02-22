@@ -22,7 +22,7 @@ from traits.api import Any, Bool, HasTraits
 class _MenuItem(HasTraits):
     """ A menu item representation of an action item. """
 
-    #### '_MenuItem' interface ################################################
+    # '_MenuItem' interface ------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -40,9 +40,9 @@ class _MenuItem(HasTraits):
     # a group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
         """ Creates a new menu item for an action item. """
@@ -62,7 +62,7 @@ class _MenuItem(HasTraits):
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
-    #### '_Tool' interface ####################################################
+    # '_Tool' interface ----------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -80,9 +80,9 @@ class _Tool(HasTraits):
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
@@ -120,15 +120,15 @@ class _Tool(HasTraits):
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
-    #### '_PaletteTool' interface #############################################
+    # '_PaletteTool' interface ---------------------------------------------
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
         """ Creates a new tool palette tool for an action item. """

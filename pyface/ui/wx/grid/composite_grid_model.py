@@ -32,9 +32,9 @@ class CompositeGridModel(GridModel):
     # The cached data indexes.
     _data_index = Dict
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a CompositeGridModel object. """
 
@@ -45,9 +45,9 @@ class CompositeGridModel(GridModel):
 
         return
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def get_column_count(self):
         """ Return the number of columns for this table. """
 
@@ -293,9 +293,9 @@ class CompositeGridModel(GridModel):
 
         return model.get_cell_valignment(row, new_col)
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
         """ Implementation method for delete_rows. Should return the
         number of rows that were deleted. """
@@ -322,9 +322,9 @@ class CompositeGridModel(GridModel):
         model._set_value(row, new_col, value)
         return 0
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # private interface
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def _resolve_column_index(self, index):
         """ Resolves a column index into the correct model and adjusted

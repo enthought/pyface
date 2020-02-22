@@ -33,7 +33,7 @@ class Task(HasTraits):
     # The window to which the task is attached. Set by the framework.
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
-    #### Actions ##############################################################
+    # Actions -------------------------------------------------------------#
 
     # The menu bar for the task.
     menu_bar = Instance(MenuBarSchema)
@@ -48,9 +48,9 @@ class Task(HasTraits):
     # bars and tool bars constructed from the above schemas.
     extra_actions = List(SchemaAddition)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Task' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activated(self):
         """ Called after the task has been activated in a TaskWindow.

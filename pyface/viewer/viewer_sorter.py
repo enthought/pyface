@@ -21,9 +21,9 @@ from traits.api import HasTraits
 class ViewerSorter(HasTraits):
     """ Abstract base class for all viewer sorters. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewerSorter' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def sort(self, viewer, parent, elements):
         """ Sorts a list of elements IN PLACE.

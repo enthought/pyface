@@ -44,9 +44,9 @@ class MultiToolbarWindow(ApplicationWindow):
         ),
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
     def _create_contents(self, parent):
         panel = super(MultiToolbarWindow, self)._create_contents(parent)
         self._create_trim_widgets(parent)
@@ -140,9 +140,9 @@ class MultiToolbarWindow(ApplicationWindow):
 
         return spacer
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Public MultiToolbarWindow interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_tool_bar(self, tool_bar_manager, location="top"):
         """ Add a toolbar in the specified location.

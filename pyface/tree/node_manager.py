@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 class NodeManager(HasPrivateTraits):
     """ The node manager looks after a collection of node types. """
 
-    #### 'NodeManager' interface ##########################################
+    # 'NodeManager' interface -----------------------------------------#
 
     # All registered node types.
     node_types = List(NodeType)
@@ -39,9 +39,9 @@ class NodeManager(HasPrivateTraits):
     # tree model, here?!?
     system_actions = List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Creates a new tree model. """
@@ -57,9 +57,9 @@ class NodeManager(HasPrivateTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # fixme: This is the only API call that we currently have that manipulates
     # the manager's node types.  Should we make the 'node_types' list
@@ -123,9 +123,9 @@ class NodeManager(HasPrivateTraits):
 
         return key
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _node_types_changed(self, new):
         """ Called when the entire list of node types has been changed. """

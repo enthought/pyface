@@ -15,14 +15,14 @@ class TaskActionController(ActionController):
     can be added to action events. Currently, we attach a reference to the Task.
     """
 
-    #### TaskActionController interface #######################################
+    # TaskActionController interface ---------------------------------------
 
     # The task that this is the controller for.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, action, event):
         """ Control an action invocation.

@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 class NewUserPerspectiveAction(WorkbenchAction):
     """ An action that creates a new (and empty) user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier.
     id = "pyface.workbench.action.new_user_perspective_action"
@@ -25,9 +25,9 @@ class NewUserPerspectiveAction(WorkbenchAction):
     # The action's name.
     name = "New Perspective..."
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Peform the action. """

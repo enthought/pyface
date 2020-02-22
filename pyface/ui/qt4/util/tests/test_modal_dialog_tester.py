@@ -59,7 +59,7 @@ class MyClass(HasStrictTraits):
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
 
-    #### Tests ################################################################
+    # Tests ----------------------------------------------------------------
 
     def test_on_message_dialog(self):
         dialog = MessageDialog()

@@ -7,7 +7,7 @@ class BaseDropHandler(HasTraits):
     """ Basic drop handler
     """
 
-    ### BaseDropHandler interface #############################################
+    # BaseDropHandler interface ---------------------------------------------
 
     #: Returns True if the current drop handler can handle the given drag event
     #: occurring on the given target widget.
@@ -16,7 +16,7 @@ class BaseDropHandler(HasTraits):
     #: Performs drop action when drop event occurs on target widget.
     on_handle = Callable
 
-    ### IDropHandler interface ################################################
+    # IDropHandler interface ------------------------------------------------
 
     def can_handle_drop(self, event, target):
         return self.on_can_handle(event, target)
@@ -30,7 +30,7 @@ class FileDropHandler(HasTraits):
     """ Class to handle backward compatible file drop events
     """
 
-    ### FileDropHandler interface #############################################
+    # FileDropHandler interface ---------------------------------------------
 
     #: supported extensions
     extensions = List(Str)
@@ -38,7 +38,7 @@ class FileDropHandler(HasTraits):
     #: Called when file is opened. Takes single argument: path of file
     open_file = Callable
 
-    ### IDropHandler interface ################################################
+    # IDropHandler interface ------------------------------------------------
 
     def can_handle_drop(self, event, target):
         """ Does the drop event contails file data with matching extensions """

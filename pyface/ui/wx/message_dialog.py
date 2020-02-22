@@ -42,7 +42,7 @@ class MessageDialog(MMessageDialog, Dialog):
     IMessageDialog interface for the API documentation.
     """
 
-    #### 'IMessageDialog' interface ###########################################
+    # 'IMessageDialog' interface -------------------------------------------
 
     message = Unicode
 
@@ -52,17 +52,17 @@ class MessageDialog(MMessageDialog, Dialog):
 
     severity = Enum("information", "warning", "error")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         # In wx this is a canned dialog.
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         # The message.

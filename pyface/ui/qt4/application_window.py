@@ -32,7 +32,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     IApplicationWindow interface for the API documentation.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     #: The icon to display in the application window title bar.
     icon = Instance(ImageResource)
@@ -49,14 +49,14 @@ class ApplicationWindow(MApplicationWindow, Window):
     #: The collection of tool bar managers for the window.
     tool_bar_managers = List(ToolBarManager)
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     #: The window title.
     title = Unicode("Pyface")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         panel = QtGui.QWidget(parent)
@@ -109,18 +109,18 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             self.control.setWindowIcon(icon.create_icon())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _size_default(self):
         """ Trait initialiser. """
 
         return (800, 600)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create(self):
         super(ApplicationWindow, self)._create()
@@ -139,9 +139,9 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_tool_bar_managers(self):
         """ Return all tool bar managers specified for the window. """
@@ -155,7 +155,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
         return tool_bar_managers
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     # QMainWindow takes ownership of the menu bar and the status bar upon
     # assignment. For this reason, it is unnecessary to delete the old controls

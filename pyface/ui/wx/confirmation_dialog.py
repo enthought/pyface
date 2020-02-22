@@ -39,7 +39,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
     IConfirmationDialog interface for the API documentation.
     """
 
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     cancel = Bool(False)
 
@@ -57,9 +57,9 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     yes_label = Unicode
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         sizer = wx.StdDialogButtonSizer()
@@ -133,11 +133,11 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
         return panel
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_yes(self, event):
         """ Called when the 'Yes' button is pressed. """

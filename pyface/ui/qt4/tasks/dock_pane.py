@@ -29,17 +29,17 @@ class DockPane(TaskPane, MDockPane):
     See the IDockPane interface for API documentation.
     """
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _receiving = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the dock widget that contains the pane contents.
@@ -86,18 +86,18 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None:
             set_focus(self.control.widget())
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         return QtGui.QWidget(parent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @contextmanager
     def _signal_context(self):
@@ -109,14 +109,14 @@ class DockPane(TaskPane, MDockPane):
         yield
         self._receiving = original
 
-    #### Trait property getters/setters #######################################
+    # Trait property getters/setters ---------------------------------------
 
     def _get_size(self):
         if self.control is not None:
             return (self.control.width(), self.control.height())
         return (-1, -1)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     @on_trait_change("dock_area")
     def _set_dock_area(self):
@@ -157,7 +157,7 @@ class DockPane(TaskPane, MDockPane):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _receive_dock_area(self, area):
         with self._signal_context():

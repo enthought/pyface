@@ -12,7 +12,7 @@ from .workbench_action import WorkbenchAction
 class SetActivePerspectiveAction(WorkbenchAction):
     """ An action that sets the active perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # Is the action enabled?
     enabled = Delegate("perspective")
@@ -26,14 +26,14 @@ class SetActivePerspectiveAction(WorkbenchAction):
     # The action's style.
     style = "radio"
 
-    #### 'SetActivePerspectiveAction' interface ###############################
+    # 'SetActivePerspectiveAction' interface -------------------------------
 
     # The perspective that we set the active perspective to.
     perspective = Instance(IPerspective)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the action. """
@@ -49,9 +49,9 @@ class SetActivePerspectiveAction(WorkbenchAction):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change("perspective,window.active_perspective")
     def _refresh_checked(self):

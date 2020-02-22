@@ -26,14 +26,14 @@ class WorkbenchWindowTreeNode(TreeNode):
 
     """
 
-    #### 'TreeNode' interface #################################################
+    # 'TreeNode' interface -------------------------------------------------
 
     # List of object classes that the node applies to.
     node_for = [WorkbenchWindow]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeNode' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_children(self, object):
         """ Get the object's children. """
@@ -46,9 +46,9 @@ class WorkbenchWindowTreeNode(TreeNode):
 
         return categories
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_categories_by_name(self, window):
         """ Return a dictionary containing all categories keyed by name. """
@@ -119,7 +119,7 @@ class ViewChooser(HasTraits):
     # The selected view (None if the selected item is not a view).
     view = Instance(IView)
 
-    #### Traits UI views ######################################################
+    # Traits UI views -----------------------------------------------------#
 
     traits_ui_view = View(
         Item(
@@ -171,9 +171,9 @@ class ViewChooser(HasTraits):
         height=0.4,
     )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewChooser' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _selected_changed(self, old, new):
         """ Static trait change handler. """

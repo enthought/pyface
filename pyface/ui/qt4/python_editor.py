@@ -33,7 +33,7 @@ class PythonEditor(MPythonEditor, Widget):
     IPythonEditor interface for the API documentation.
     """
 
-    #### 'IPythonEditor' interface ############################################
+    # 'IPythonEditor' interface --------------------------------------------
 
     dirty = Bool(False)
 
@@ -41,23 +41,23 @@ class PythonEditor(MPythonEditor, Widget):
 
     show_line_numbers = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     changed = Event
 
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         super(PythonEditor, self).__init__(parent=parent, **traits)
         self._create()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PythonEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def load(self, path=None):
         """ Loads the contents of the editor.
@@ -96,9 +96,9 @@ class PythonEditor(MPythonEditor, Widget):
             QtGui.QTextCursor.EndOfLine, QtGui.QTextCursor.KeepAnchor
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Widget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_event_listeners(self):
         super(PythonEditor, self)._add_event_listeners()
@@ -124,9 +124,9 @@ class PythonEditor(MPythonEditor, Widget):
     def __event_filter_default(self):
         return PythonEditorEventFilter(self, self.control)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _path_changed(self):
         self._changed_path()
@@ -138,9 +138,9 @@ class PythonEditor(MPythonEditor, Widget):
             )
             self.control.code.update_line_number_width()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Creates the toolkit-specific control for the widget.

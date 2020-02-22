@@ -48,9 +48,9 @@ class ResourceManager(HasTraits):
     # a images in the format that they require.
     resource_factory = Instance(ResourceFactory)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def locate_image(self, image_name, path, size=None):
         """ Locates an image. """
@@ -81,9 +81,9 @@ class ResourceManager(HasTraits):
 
         return image
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _locate_image(self, image_name, resource_path, size):
         """ Attempts to locate an image resource.

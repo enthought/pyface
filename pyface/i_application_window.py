@@ -35,7 +35,7 @@ class IApplicationWindow(IWindow):
     :py:meth:`._create_contents` method.
     """
 
-    #### 'IApplicationWindow' interface #######################################
+    # 'IApplicationWindow' interface ---------------------------------------
 
     #: The window icon.  The default is toolkit specific.
     icon = Instance(IImageResource)
@@ -53,9 +53,9 @@ class IApplicationWindow(IWindow):
     #: list instead of the single ToolBarManager instance above.
     tool_bar_managers = List(ToolBarManager)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create and return the window's contents.
@@ -119,9 +119,9 @@ class MApplicationWindow(object):
     Implements: destroy(), _create_trim_widgets()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the control if it exists. """
@@ -136,9 +136,9 @@ class MApplicationWindow(object):
 
         super(MApplicationWindow, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_trim_widgets(self, parent):
         """ Creates the 'trim' widgets (the widgets around the window).

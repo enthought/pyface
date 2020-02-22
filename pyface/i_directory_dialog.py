@@ -27,7 +27,7 @@ class IDirectoryDialog(IDialog):
     directory.
     """
 
-    #### 'IDirectoryDialog' interface #########################################
+    # 'IDirectoryDialog' interface -----------------------------------------
 
     #: The default path.  The default (ie. the default default path) is toolkit
     #: specific.

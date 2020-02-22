@@ -51,17 +51,17 @@ class DockPane(TaskPane, MDockPane):
     # number.  This is a way to isolate panes
     dock_layer = Int(0)
 
-    #### 'IDockPane' interface ################################################
+    # 'IDockPane' interface ------------------------------------------------
 
     size = Property(Tuple)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _receiving = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def get_hierarchy(cls, parent, indent=""):
@@ -147,23 +147,23 @@ class DockPane(TaskPane, MDockPane):
                 self.control.Destroy()
             self.control = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the toolkit-specific contents of the dock pane.
         """
         return wx.Window(parent, name=self.task.id + ":" + self.id)
 
-    #### Trait property getters/setters #######################################
+    # Trait property getters/setters ---------------------------------------
 
     def _get_size(self):
         if self.control is not None:
             return self.control.GetSize().Get()
         return (-1, -1)
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def get_pane_info(self):
         info = self.task.window._aui_manager.GetPane(self.pane_name)

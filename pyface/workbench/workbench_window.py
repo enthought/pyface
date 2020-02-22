@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 class WorkbenchWindow(ApplicationWindow):
     """ A workbench window. """
 
-    #### 'IWorkbenchWindow' interface #########################################
+    # 'IWorkbenchWindow' interface -----------------------------------------
 
     # The view or editor that currently has the focus.
     active_part = Instance(IWorkbenchPart)
@@ -42,7 +42,7 @@ class WorkbenchWindow(ApplicationWindow):
     # The workbench that the window belongs to.
     workbench = Instance("pyface.workbench.api.IWorkbench")
 
-    #### Editors #######################
+    # Editors -----------------------
 
     # The active editor.
     active_editor = Instance(IEditor)
@@ -69,7 +69,7 @@ class WorkbenchWindow(ApplicationWindow):
     # Fired when an editor has been closed.
     editor_closed = Delegate("layout")  # Event(IEditor)
 
-    #### Views #########################
+    # Views -------------------------
 
     # The active view.
     active_view = Instance(IView)
@@ -81,7 +81,7 @@ class WorkbenchWindow(ApplicationWindow):
     # its toolkit-specific control etc.
     views = List(IView)
 
-    #### Perspectives ##################
+    # Perspectives -----------------#
 
     # The active perspective.
     active_perspective = Instance(IPerspective)
@@ -109,21 +109,21 @@ class WorkbenchWindow(ApplicationWindow):
     #
     default_perspective_id = Str
 
-    #### 'WorkbenchWindow' interface ##########################################
+    # 'WorkbenchWindow' interface -----------------------------------------#
 
     # The window layout is responsible for creating and managing the internal
     # structure of the window (i.e., it knows how to add and remove views and
     # editors etc).
     layout = Instance(WorkbenchWindowLayout)
 
-    #### 'Private' interface ##################################################
+    # 'Private' interface -------------------------------------------------#
 
     # The state of the window suitable for pickling etc.
     _memento = Instance(WorkbenchWindowMemento)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Open the window.
@@ -206,9 +206,9 @@ class WorkbenchWindow(ApplicationWindow):
         # actually closed.
         return self.control is None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create and return the window contents. """
@@ -233,11 +233,11 @@ class WorkbenchWindow(ApplicationWindow):
 
         return contents
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'WorkbenchWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _editor_manager_default(self):
         """ Trait initializer. """
@@ -251,7 +251,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         return WorkbenchWindowLayout(window=self)
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def activate_editor(self, editor):
         """ Activates an editor. """
@@ -555,7 +555,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_memento(self):
         """ Return the state of the window suitable for pickling etc. """
@@ -594,9 +594,9 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _add_view_in_default_position(self, view):
         """ Adds a view in its 'default' position. """
@@ -813,9 +813,9 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _active_perspective_changed(self, old, new):
         """ Static trait change handler. """
@@ -887,7 +887,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     @on_trait_change("layout.editor_closed")
     def _on_editor_closed(self, editor):

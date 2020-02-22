@@ -49,7 +49,7 @@ class IWorkbenchPart(Interface):
     # The framework sets this when the part is created.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part.
@@ -80,7 +80,7 @@ class IWorkbenchPart(Interface):
 class MWorkbenchPart(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IWorkbenchPart' interface ###########################################
+    # 'IWorkbenchPart' interface -------------------------------------------
 
     # The toolkit-specific control that represents the part.
     #
@@ -104,7 +104,7 @@ class MWorkbenchPart(HasTraits):
     # The framework sets this when the part is created.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """

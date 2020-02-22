@@ -55,16 +55,16 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
 
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The widget that provides the editor area.  We keep (and use) this
     # separate reference because we can't always assume that it has been set to
     # be the main window's central widget.
     _qt4_editor_area = Instance(SplitTabWidget)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         if editor.control is not None:
@@ -194,7 +194,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         view._qt4_dock.show()
         view.visible = True
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         # Get the IDs of the views in the main window.  This information is
@@ -308,9 +308,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def is_editor_area_visible(self):
         return self._qt4_editor_area.isVisible()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_editor_focus(self, new):
         """ Handle an editor getting the focus. """

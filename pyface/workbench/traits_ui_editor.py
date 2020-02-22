@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class TraitsUIEditor(Editor):
     """ An editor whose content is provided by a traits UI. """
 
-    #### 'TraitsUIEditor' interface ###########################################
+    # 'TraitsUIEditor' interface -------------------------------------------
 
     # The traits UI that represents the editor.
     #
@@ -29,18 +29,18 @@ class TraitsUIEditor(Editor):
     # the default traits UI view is used).
     view = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _name_default(self):
         """ Trait initializer. """
 
         return str(self.obj)
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control that represents the editor.
@@ -70,9 +70,9 @@ class TraitsUIEditor(Editor):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TraitsUIEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_ui(self, parent):
         """ Creates the traits UI that represents the editor.

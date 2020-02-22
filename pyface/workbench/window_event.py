@@ -11,7 +11,7 @@ from .workbench_window import WorkbenchWindow
 class WindowEvent(HasTraits):
     """ A window lifecycle event. """
 
-    #### 'WindowEvent' interface ##############################################
+    # 'WindowEvent' interface ---------------------------------------------#
 
     # The window that the event occurred on.
     window = Instance(WorkbenchWindow)

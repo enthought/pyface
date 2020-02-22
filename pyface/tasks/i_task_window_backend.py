@@ -22,9 +22,9 @@ class ITaskWindowBackend(Interface):
     #: The TaskWindow to which the layout belongs.
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskWindowBackend' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents. (See IWindow.)
@@ -46,7 +46,7 @@ class ITaskWindowBackend(Interface):
             specified TaskState.
         """
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
@@ -63,14 +63,14 @@ class MTaskWindowBackend(HasTraits):
     """ Mixin containing common coe for toolkit-specific implementations.
     """
 
-    #### 'ITaskWindowBackend' interface #######################################
+    # 'ITaskWindowBackend' interface ---------------------------------------
 
     control = DelegatesTo("window")
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskWindowBackend' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         raise NotImplementedError

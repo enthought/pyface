@@ -8,9 +8,9 @@ from pyface.tasks.dock_pane import DockPane
 class EnamlDockPane(DockPane):
     """ Create a Dock pane for Enaml Components. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'EnamlDockPane' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     #: The Enaml component defining the contents of the DockPane.
     component = Instance("enaml.widgets.toolkit_object.ToolkitObject")
@@ -24,9 +24,9 @@ class EnamlDockPane(DockPane):
         """
         raise NotImplementedError
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IDockPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Return the toolkit-specific control that represents the pane. """
@@ -45,9 +45,9 @@ class EnamlDockPane(DockPane):
 
         return contents
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane. """

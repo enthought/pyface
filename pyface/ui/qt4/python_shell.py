@@ -45,7 +45,7 @@ class PythonShell(MPythonShell, Widget):
     IPythonShell interface for the API documentation.
     """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     command_executed = Event
 

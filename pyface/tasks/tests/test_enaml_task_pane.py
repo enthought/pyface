@@ -32,9 +32,9 @@ class DummyTaskPane(EnamlTaskPane):
 @unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlTaskPane(GuiTestAssistant, unittest.TestCase):
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TestCase' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -49,9 +49,9 @@ class TestEnamlTaskPane(GuiTestAssistant, unittest.TestCase):
         del self.task_pane
         GuiTestAssistant.tearDown(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Tests
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def test_creation(self):
         self.assertIsInstance(self.task_pane.component, Label)

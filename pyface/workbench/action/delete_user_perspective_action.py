@@ -19,7 +19,7 @@ from .user_perspective_action import UserPerspectiveAction
 class DeleteUserPerspectiveAction(UserPerspectiveAction):
     """ An action that deletes a user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = "pyface.workbench.action.delete_user_perspective_action"
@@ -27,9 +27,9 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Delete Perspective"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """
@@ -63,9 +63,9 @@ class DeleteUserPerspectiveAction(UserPerspectiveAction):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_next_perspective(self, window):
         """ Return the first perspective that is not the active one! """

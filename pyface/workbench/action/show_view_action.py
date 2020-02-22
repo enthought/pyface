@@ -9,7 +9,7 @@ from .workbench_action import WorkbenchAction
 class ShowViewAction(WorkbenchAction):
     """ An action that shows a dialog to allow the user to choose a view. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = "pyface.workbench.action.show_view"
@@ -17,9 +17,9 @@ class ShowViewAction(WorkbenchAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Show View"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """

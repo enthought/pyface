@@ -30,12 +30,12 @@ class ImageResource(MImageResource, HasTraits):
     IImageResource interface for the API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
     _ref = Any
 
-    #### 'ImageResource' interface ############################################
+    # 'ImageResource' interface --------------------------------------------
 
     absolute_path = Property(Unicode)
 
@@ -43,9 +43,9 @@ class ImageResource(MImageResource, HasTraits):
 
     search_path = List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_bitmap(self, size=None):
         return self.create_image(size)
@@ -53,9 +53,9 @@ class ImageResource(MImageResource, HasTraits):
     def create_icon(self, size=None):
         return self.create_image(size)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_absolute_path(self):
         # FIXME: This doesn't quite work with the new notion of image size. We

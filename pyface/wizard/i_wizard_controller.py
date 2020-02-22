@@ -24,7 +24,7 @@ from .i_wizard_page import IWizardPage
 class IWizardController(Interface):
     """ The interface for all pyface wizard controllers. """
 
-    #### 'IWizardController' interface ########################################
+    # 'IWizardController' interface ----------------------------------------
 
     # The pages under the control of this controller.
     pages = List(IWizardPage)
@@ -35,9 +35,9 @@ class IWizardController(Interface):
     # Set if the wizard complete.
     complete = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_first_page(self):
         """ Returns the first page in the model. """

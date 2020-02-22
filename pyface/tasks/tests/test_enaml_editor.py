@@ -36,9 +36,9 @@ class DummyStrEditor(EnamlEditor):
 @unittest.skipIf(SKIP_REASON is not None, SKIP_REASON)
 class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TestCase' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
@@ -54,9 +54,9 @@ class TestEnamlEditor(GuiTestAssistant, unittest.TestCase):
         del self.editor
         GuiTestAssistant.tearDown(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Tests
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def test_creation(self):
         self.assertIsInstance(self.editor.component, Label)

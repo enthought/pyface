@@ -37,7 +37,7 @@ class LayeredPanel(Widget):
     # The default style.
     STYLE = wx.CLIP_CHILDREN
 
-    #### "Layered Panel' interface ############################################
+    # "Layered Panel' interface --------------------------------------------
 
     # The toolkit-specific control of the currently displayed layer.
     current_layer = Any
@@ -50,9 +50,9 @@ class LayeredPanel(Widget):
     min_width = Int(0)
     min_height = Int(0)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new LayeredPanel. """
@@ -70,9 +70,9 @@ class LayeredPanel(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'LayeredPanel' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_layer(self, name, layer):
         """ Adds a layer with the specified name.
@@ -140,9 +140,9 @@ class LayeredPanel(Widget):
 
         return name in self._layers
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """

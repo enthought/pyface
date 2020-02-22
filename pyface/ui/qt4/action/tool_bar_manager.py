@@ -21,7 +21,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -44,14 +44,14 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -65,9 +65,9 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar. """
@@ -102,9 +102,9 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _qt4_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -141,9 +141,9 @@ class ToolBarManager(ActionManager):
 class _ToolBar(QtGui.QToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent):
         """ Constructor. """
@@ -164,9 +164,9 @@ class _ToolBar(QtGui.QToolBar):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """

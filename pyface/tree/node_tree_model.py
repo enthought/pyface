@@ -25,19 +25,19 @@ from .tree_model import TreeModel
 class NodeTreeModel(TreeModel):
     """ The model for a tree control with extensible node types. """
 
-    #### 'NodeTreeModel' interface ############################################
+    # 'NodeTreeModel' interface --------------------------------------------
 
     # The node manager looks after all node types.
     node_manager = Instance(NodeManager, ())
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Node monitors.
     _monitors = Dict
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeModel' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.
@@ -233,9 +233,9 @@ class NodeTreeModel(TreeModel):
 
         return
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'NodeTreeModel' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def get_context_menu(self, node):
         """ Returns the context menu for a node. """
@@ -245,9 +245,9 @@ class NodeTreeModel(TreeModel):
 
         return node_type.get_context_menu(node)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Private' interface
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _start_monitor(self, monitor):
         """ Starts a monitor. """
@@ -295,9 +295,9 @@ class NodeTreeModel(TreeModel):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     # fixme: Commented this out as listeners are added and removed by the tree.
     # This caused duplicate monitors to be created for the root node.
@@ -314,7 +314,7 @@ class NodeTreeModel(TreeModel):
 
     ##         return
 
-    #### Dynamic ####
+    # Dynamic ----
 
     def _on_nodes_changed(self, monitor, trait_name, event):
         """ Called when nodes have changed. """

@@ -27,9 +27,9 @@ class TaskActionManagerBuilder(HasTraits):
     # The Task to build menubars and toolbars for.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskActionManagerBuilder' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_action_manager(self, schema):
         """ Create a manager for the given schema using the task's additions.
@@ -82,9 +82,9 @@ class TaskActionManagerBuilder(HasTraits):
         """
         return item
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_ordered_schemas(self, schemas):
         begin = []
@@ -268,7 +268,7 @@ class TaskActionManagerBuilder(HasTraits):
         # Finally, create the pyface.action instance for this schema.
         return self.prepare_item(schema.create(children), path)
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def _controller_default(self):
         from .task_action_controller import TaskActionController

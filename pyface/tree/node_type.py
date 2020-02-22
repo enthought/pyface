@@ -35,7 +35,7 @@ class NodeType(HasPrivateTraits):
     # expanded.
     OPEN_FOLDER = ImageResource("open_folder")
 
-    #### 'NodeType' interface #################################################
+    # 'NodeType' interface -------------------------------------------------
 
     # The node manager that the type belongs to.
     node_manager = Instance("pyface.tree.node_manager.NodeManager")
@@ -62,11 +62,11 @@ class NodeType(HasPrivateTraits):
     # of this type (shown in the 'New' menu of the context menu).
     new_actions = Any  # List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### These methods are specific to the 'NodeType' interface ###############
+    # These methods are specific to the 'NodeType' interface ---------------
 
     def is_type_for(self, node):
         """ Returns True if a node is deemed to be of this type. """
@@ -150,7 +150,7 @@ class NodeType(HasPrivateTraits):
 
         return None
 
-    #### These methods are exactly the same as the 'TreeModel' interface ######
+    # These methods are exactly the same as the 'TreeModel' interface -----#
 
     def has_children(self, node):
         """ Returns True if a node has children, otherwise False.

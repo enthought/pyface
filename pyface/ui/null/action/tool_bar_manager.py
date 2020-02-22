@@ -26,7 +26,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))
@@ -40,14 +40,14 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -61,9 +61,9 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_bar(self, parent, controller=None):
         """ Creates a tool bar. """

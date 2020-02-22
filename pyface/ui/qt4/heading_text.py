@@ -28,15 +28,15 @@ class HeadingText(MHeadingText, Widget):
     IHeadingText interface for the API documentation.
     """
 
-    #### 'IHeadingText' interface #############################################
+    # 'IHeadingText' interface ---------------------------------------------
 
     level = Int(1)
 
     text = Unicode("Default")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates the panel. """
@@ -47,9 +47,9 @@ class HeadingText(MHeadingText, Widget):
         # Create the toolkit-specific control that represents the widget.
         self._create_control(parent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -71,7 +71,7 @@ class HeadingText(MHeadingText, Widget):
 
         self.control.setText(text)
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _text_changed(self, new):
         """ Called when the text is changed. """

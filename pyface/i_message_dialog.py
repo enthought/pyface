@@ -24,7 +24,7 @@ from pyface.i_dialog import IDialog
 class IMessageDialog(IDialog):
     """ The interface for a dialog that displays a message. """
 
-    #### 'IMessageDialog' interface ###########################################
+    # 'IMessageDialog' interface -------------------------------------------
 
     #: The message to display in the dialog.
     message = Unicode

@@ -15,7 +15,7 @@ from traitsui.api import View, Item, VGroup
 import six
 
 
-#### Trait definitions ########################################################
+# Trait definitions --------------------------------------------------------
 
 
 def not_empty_string(object, name, value):
@@ -34,9 +34,9 @@ NotEmptyString = Trait("", not_empty_string)
 class UserPerspectiveName(HasTraits):
     """ Object with views for naming or renaming a user perspective. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'UserPerspectiveName' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     # The name of the new user perspective.
     name = NotEmptyString
@@ -54,7 +54,7 @@ class UserPerspectiveName(HasTraits):
    arrange the views within the perspective."""
     )
 
-    #### Traits views #########################################################
+    # Traits views ---------------------------------------------------------
 
     new_view = View(
         VGroup(

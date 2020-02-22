@@ -34,7 +34,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     is ignored, and the list of displayed strings must be unique.
     """
 
-    #### 'ISingleChoiceDialog' interface ######################################
+    # 'ISingleChoiceDialog' interface -------------------------------------#
 
     #: List of objects to choose from.
     choices = List(Any)
@@ -54,9 +54,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
                 choice = getattr(choice, self.name_attribute)
             self.control.setTextValue(str(choice))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Creates the window contents. """
@@ -73,9 +73,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
             retval = _RESULT_MAP[retval]
         return retval
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         """ Closes the window. """
@@ -93,9 +93,9 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
         # Let the window close as normal.
         super(SingleChoiceDialog, self).close()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the toolkit-specific control that represents the window. """

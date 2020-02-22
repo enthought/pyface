@@ -34,9 +34,9 @@ from traits.api import Undefined
 class PyfaceResourceFactory(ResourceFactory):
     """ The implementation of a shared resource manager. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceFactory' toolkit interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """

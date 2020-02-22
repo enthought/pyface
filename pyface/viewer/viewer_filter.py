@@ -21,9 +21,9 @@ from traits.api import HasTraits
 class ViewerFilter(HasTraits):
     """ Abstract base class for all viewer filters. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewerFilter' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def filter(self, viewer, parent, elements):
         """ Filters a list of elements.

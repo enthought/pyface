@@ -8,7 +8,7 @@ from traits.api import Bool, HasTraits, Int, Any
 class KeyPressedEvent(HasTraits):
     """ The event that is generated when a key is pressed. """
 
-    #### 'KeyPressedEvent' interface ##########################################
+    # 'KeyPressedEvent' interface -----------------------------------------#
 
     #: Is the alt key down?
     alt_down = Bool

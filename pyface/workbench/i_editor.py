@@ -47,7 +47,7 @@ class IEditor(IWorkbenchPart):
     # The framework sets this when the editor is created.
     obj = Any
 
-    #### Editor Lifecycle Events ##############################################
+    # Editor Lifecycle Events ---------------------------------------------#
 
     # Fired when the editor is closing.
     closing = VetoableEvent
@@ -55,7 +55,7 @@ class IEditor(IWorkbenchPart):
     # Fired when the editor is closed.
     closed = Event
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def close(self):
         """ Close the editor.
@@ -71,7 +71,7 @@ class IEditor(IWorkbenchPart):
 class MEditor(MWorkbenchPart):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IEditor' interface ##################################################
+    # 'IEditor' interface -------------------------------------------------#
 
     # The optional command stack.
     command_stack = Instance("apptools.undo.api.ICommandStack")
@@ -85,7 +85,7 @@ class MEditor(MWorkbenchPart):
     # The framework sets this when the editor is created.
     obj = Any
 
-    #### Editor Lifecycle Events ##############################################
+    # Editor Lifecycle Events ---------------------------------------------#
 
     # Fired when the editor is opening.
     opening = VetoableEvent
@@ -99,18 +99,18 @@ class MEditor(MWorkbenchPart):
     # Fired when the editor is closed.
     closed = Event
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __str__(self):
         """ Return an informal string representation of the object. """
 
         return "Editor(%s)" % self.id
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _id_default(self):
         """ Trait initializer. """
@@ -120,9 +120,9 @@ class MEditor(MWorkbenchPart):
         # collisions between the ids of editors.
         return uuid.uuid4().hex
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         """ Close the editor. """
@@ -136,7 +136,7 @@ class MEditor(MWorkbenchPart):
 
         return
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _command_stack_default(self):
         """ Trait initializer. """

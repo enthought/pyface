@@ -24,9 +24,9 @@ class ITaskPane(Interface):
     #: The task with which the pane is associated. Set by the framework.
     task = Instance(Task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the
@@ -46,7 +46,7 @@ class MTaskPane(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations.
     """
 
-    #### 'ITaskPane' interface ################################################
+    # 'ITaskPane' interface ------------------------------------------------
 
     id = Str
     name = Unicode

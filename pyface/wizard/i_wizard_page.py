@@ -21,7 +21,7 @@ from traits.api import Bool, Interface, Str, Tuple, Unicode
 class IWizardPage(Interface):
     """ The interface for a page in a wizard. """
 
-    #### 'IWizardPage' interface ##############################################
+    # 'IWizardPage' interface ---------------------------------------------#
 
     # The unique Id of the page within the wizard.
     id = Str
@@ -45,9 +45,9 @@ class IWizardPage(Interface):
     # The size of the page.
     size = Tuple
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_page(self, parent):
         """ Creates the wizard page. """
@@ -59,9 +59,9 @@ class IWizardPage(Interface):
         dispose of the contents of a page.
         """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_page_content(self, parent):
         """ Creates the actual page content. """
@@ -74,9 +74,9 @@ class MWizardPage(object):
     Implements: dispose_page()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWizardPage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def dispose_page(self):
         """ Disposes the wizard page.

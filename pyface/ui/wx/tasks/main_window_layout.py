@@ -31,9 +31,9 @@ class MainWindowLayout(HasTraits):
     """ A class for applying declarative layouts to an AUI managed window.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def get_layout(self, layout, window):
         """ Get the layout by adding sublayouts to the specified DockLayout.
@@ -153,9 +153,9 @@ class MainWindowLayout(HasTraits):
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.

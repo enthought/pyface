@@ -43,7 +43,7 @@ _STYLE_TO_KIND_MAP = {
 class _MenuItem(HasTraits):
     """ A menu item representation of an action item. """
 
-    #### '_MenuItem' interface ################################################
+    # '_MenuItem' interface ------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -61,9 +61,9 @@ class _MenuItem(HasTraits):
     # a group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, menu, item, controller):
         """ Creates a new menu item for an action item. """
@@ -157,11 +157,11 @@ class _MenuItem(HasTraits):
             self._on_action_name_changed, "name", remove=True
         )
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
@@ -258,7 +258,7 @@ class _MenuItem(HasTraits):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_menu(self, event):
         """ Called when the menu item is clicked. """
@@ -318,7 +318,7 @@ class _MenuItem(HasTraits):
 class _Tool(HasTraits):
     """ A tool bar tool representation of an action item. """
 
-    #### '_Tool' interface ####################################################
+    # '_Tool' interface ----------------------------------------------------
 
     # Is the item checked?
     checked = Bool(False)
@@ -336,9 +336,9 @@ class _Tool(HasTraits):
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(
         self, parent, tool_bar, image_cache, item, controller, show_labels
@@ -429,11 +429,11 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _enabled_changed(self):
         """ Called when our 'enabled' trait is changed. """
@@ -512,7 +512,7 @@ class _Tool(HasTraits):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_tool(self, event):
         """ Called when the tool bar tool is clicked. """
@@ -566,15 +566,15 @@ class _Tool(HasTraits):
 class _PaletteTool(HasTraits):
     """ A tool palette representation of an action item. """
 
-    #### '_PaletteTool' interface #############################################
+    # '_PaletteTool' interface ---------------------------------------------
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
     group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_palette, image_cache, item, show_labels):
         """ Creates a new tool palette tool for an action item. """
@@ -623,11 +623,11 @@ class _PaletteTool(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _on_action_enabled_changed(self, action, trait_name, old, new):
         """ Called when the enabled trait is changed on an action. """
@@ -653,7 +653,7 @@ class _PaletteTool(HasTraits):
 
         return
 
-    #### Tool palette event handlers ##########################################
+    # Tool palette event handlers -----------------------------------------#
 
     def _on_tool(self, event):
         """ Called when the tool palette button is clicked. """

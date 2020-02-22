@@ -50,7 +50,7 @@ class Dialog(MDialog, Window):
     interface for the API documentation.
     """
 
-    #### 'IDialog' interface ##################################################
+    # 'IDialog' interface -------------------------------------------------#
 
     cancel_label = Unicode
 
@@ -66,13 +66,13 @@ class Dialog(MDialog, Window):
 
     style = Enum("modal", "nonmodal")
 
-    #### 'IWindow' interface ##################################################
+    # 'IWindow' interface -------------------------------------------------#
 
     title = Unicode("Dialog")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_buttons(self, parent):
         sizer = wx.StdDialogButtonSizer()
@@ -147,9 +147,9 @@ class Dialog(MDialog, Window):
             self.control.Show(False)
         return _RESULT_MAP[self.control.ShowModal()]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         style = wx.DEFAULT_DIALOG_STYLE | wx.CLIP_CHILDREN
@@ -161,7 +161,7 @@ class Dialog(MDialog, Window):
             parent, -1, self.title, self.position, self.size, style
         )
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _wx_on_ok(self, event):
         """ Called when the 'OK' button is pressed. """

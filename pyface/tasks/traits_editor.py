@@ -9,7 +9,7 @@ class TraitsEditor(Editor):
     """ An Editor that displays a Traits UI View.
     """
 
-    #### TraitsEditor interface ###############################################
+    # TraitsEditor interface -----------------------------------------------
 
     # The model object to view. If not specified, the editor is used instead.
     model = Instance(HasTraits)
@@ -17,9 +17,9 @@ class TraitsEditor(Editor):
     # The UI object associated with the Traits view, if it has been constructed.
     ui = Instance("traitsui.ui.UI")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'HasTraits' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def trait_context(self):
         """ Use the model object for the Traits UI context, if appropriate.
@@ -28,9 +28,9 @@ class TraitsEditor(Editor):
             return {"object": self.model, "editor": self}
         return super(TraitsEditor, self).trait_context()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditor' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific contents of the editor.

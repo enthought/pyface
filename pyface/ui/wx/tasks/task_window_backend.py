@@ -30,13 +30,13 @@ class TaskWindowBackend(MTaskWindowBackend):
     See the ITaskWindowBackend interface for API documentation.
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _main_window_layout = Instance(MainWindowLayout)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskWindowBackend' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_contents(self, parent):
         """ Create and return the TaskWindow's contents.
@@ -115,7 +115,7 @@ class TaskWindowBackend(MTaskWindowBackend):
             info.Show()
         self.window._aui_manager.Update()
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
         """ Returns a TaskLayout for the current state of the window.
@@ -135,9 +135,9 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._layout_state(self.window._active_state)
         self.window._aui_manager.Update()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _layout_state(self, state):
         """ Layout the dock panes in the specified TaskState using its
@@ -152,12 +152,12 @@ class TaskWindowBackend(MTaskWindowBackend):
         self._main_window_layout.state = state
         self._main_window_layout.set_layout(state.layout, self.window)
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def __main_window_layout_default(self):
         return TaskWindowLayout()
 
-    #### Signal handlers ######################################################
+    # Signal handlers -----------------------------------------------------#
 
     def _pane_close_requested(self, evt):
         pane = evt.GetPane()
@@ -185,14 +185,14 @@ class TaskWindowLayout(MainWindowLayout):
     """ A MainWindowLayout for a TaskWindow.
     """
 
-    #### 'TaskWindowLayout' interface #########################################
+    # 'TaskWindowLayout' interface -----------------------------------------
 
     consumed = List
     state = Instance("pyface.tasks.task_window.TaskState")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_dock_widget(self, pane):
         """ Returns the control associated with a PaneItem.

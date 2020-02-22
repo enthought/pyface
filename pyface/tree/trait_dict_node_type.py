@@ -11,7 +11,7 @@ from .node_type import NodeType
 class TraitDictNodeType(NodeType):
     """ The node type for a trait dictionary. """
 
-    #### 'TraitDictNodeType' interface ########################################
+    # 'TraitDictNodeType' interface ----------------------------------------
 
     # The type of object that provides the trait dictionary.
     klass = Any
@@ -22,9 +22,9 @@ class TraitDictNodeType(NodeType):
     # The trait name.
     trait_name = Str
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'NodeType' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def is_type_for(self, node):
         """ Returns True if this node type recognizes a node. """

@@ -28,7 +28,7 @@ class IImageResource(Interface):
     to create a toolkit-specific image on demand.
     """
 
-    #### 'ImageResource' interface ############################################
+    # 'ImageResource' interface --------------------------------------------
 
     #: The absolute path to the image.
     absolute_path = Unicode
@@ -40,16 +40,16 @@ class IImageResource(Interface):
     #: for the image (see the resource manager for more details).
     search_path = List
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, name, search_path=None):
         """ Creates a new image resource. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
         """ Creates a toolkit specific image for this resource.
@@ -125,14 +125,14 @@ class MImageResource(object):
     Implements: __init__(), create_image()
     """
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     #: The image-not-found image.  Note that it is not a trait.
     _image_not_found = None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, name, search_path=None):
         self.name = name
@@ -147,9 +147,9 @@ class MImageResource(object):
             _path = [resource_path()]
         self.search_path = _path + [resource_module()]
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ImageResource' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_image(self, size=None):
         """ Creates a toolkit specific image for this resource.
@@ -175,9 +175,9 @@ class MImageResource(object):
 
         return image
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_ref(self, size=None):
         """ Return the resource manager reference to the image.

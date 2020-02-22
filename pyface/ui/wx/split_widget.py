@@ -33,7 +33,7 @@ class SplitWidget(MSplitWidget, HasTraits):
     ISPlitWidget interface for the API documentation.
     """
 
-    #### 'ISplitWidget' interface #############################################
+    # 'ISplitWidget' interface ---------------------------------------------
 
     direction = Enum("vertical", "vertical", "horizontal")
 
@@ -43,9 +43,9 @@ class SplitWidget(MSplitWidget, HasTraits):
 
     rhs = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget. """
@@ -128,11 +128,11 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         return rhs
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_size(self, event):
         """ Called when the frame is resized. """

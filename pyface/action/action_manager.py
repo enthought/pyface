@@ -39,7 +39,7 @@ class ActionManager(HasTraits):
 
     """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     #: The Id of the default group.
     DEFAULT_GROUP = Constant("additions")
@@ -59,19 +59,19 @@ class ActionManager(HasTraits):
     #: Is the action manager visible?
     visible = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     #: fixme: We probably need more granular events than this!
     changed = Event
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     #: All of the contribution groups in the manager.
     _groups = List(Group)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new action manager.
@@ -126,16 +126,16 @@ class ActionManager(HasTraits):
 
                 group.append(arg)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait properties #####################################################
+    # Trait properties -----------------------------------------------------
 
     def _get_groups(self):
         return self._groups[:]
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _enabled_changed(self, trait_name, old, new):
         for group in self._groups:
@@ -145,7 +145,7 @@ class ActionManager(HasTraits):
         for group in self._groups:
             group.visible = new
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def append(self, item):
         """ Append an item to the manager.
@@ -308,9 +308,9 @@ class ActionManager(HasTraits):
         else:
             fn(item)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_default_group(self):
         """ Returns the manager's default group.
@@ -375,9 +375,9 @@ class ActionManager(HasTraits):
         else:
             return None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Debugging interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def dump(self, indent=""):
         """ Render a manager! """

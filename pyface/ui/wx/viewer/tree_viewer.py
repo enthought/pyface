@@ -35,7 +35,7 @@ class TreeViewer(ContentViewer):
     # The default tree style.
     STYLE = wx.TR_EDIT_LABELS | wx.TR_HAS_BUTTONS | wx.CLIP_CHILDREN
 
-    #### 'TreeViewer' interface ###############################################
+    # 'TreeViewer' interface -----------------------------------------------
 
     # The content provider provides the actual tree data.
     content_provider = Instance(TreeContentProvider)
@@ -56,7 +56,7 @@ class TreeViewer(ContentViewer):
     # Should the root of the tree be shown?
     show_root = Bool(True)
 
-    #### Events ####
+    # Events ----
 
     # An element has been activated (ie. double-clicked).
     element_activated = Event
@@ -79,9 +79,9 @@ class TreeViewer(ContentViewer):
     # A key was pressed while the tree is in focus.
     key_pressed = Event
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new tree viewer.
@@ -131,9 +131,9 @@ class TreeViewer(ContentViewer):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TreeViewer' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def is_expanded(self, element):
         """ Returns True if the element is expanded, otherwise False. """
@@ -211,9 +211,9 @@ class TreeViewer(ContentViewer):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_style(self):
         """ Returns the wx style flags for creating the tree control. """
@@ -391,7 +391,7 @@ class TreeViewer(ContentViewer):
 
         return
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _input_changed(self):
         """ Called when the tree's input has been changed. """
@@ -419,7 +419,7 @@ class TreeViewer(ContentViewer):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_right_down(self, event):
         """ Called when the right mouse button is clicked on the tree. """

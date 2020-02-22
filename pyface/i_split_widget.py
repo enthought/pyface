@@ -25,7 +25,7 @@ class ISplitWidget(Interface):
     vertically.
     """
 
-    #### 'ISplitWidget' interface #############################################
+    # 'ISplitWidget' interface ---------------------------------------------
 
     #: The direction in which the widget is split.
     #
@@ -43,9 +43,9 @@ class ISplitWidget(Interface):
     #: An optional callable that provides the right hand/bottom panel.
     rhs = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'ISplitWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_splitter(self, parent):
         """ Create the toolkit-specific control that represents the widget.

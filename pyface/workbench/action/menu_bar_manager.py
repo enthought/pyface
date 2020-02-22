@@ -12,14 +12,14 @@ from .action_controller import ActionController
 class MenuBarManager(BaseMenuBarManager):
     """ The menu bar manager for Envisage workbench windows. """
 
-    #### 'MenuBarManager' interface ###########################################
+    # 'MenuBarManager' interface -------------------------------------------
 
     # The workbench window that we are the menu bar manager for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MenuBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_menu_bar(self, parent):
         """ Creates a menu bar representation of the manager. """

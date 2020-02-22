@@ -12,7 +12,7 @@ from .workbench_action import WorkbenchAction
 class ToggleViewVisibilityAction(WorkbenchAction):
     """ An action that toggles a view's visibility (ie. hides/shows it). """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier (may be None).
     id = Delegate("view", modify=True)
@@ -23,14 +23,14 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     # The action's style.
     style = "toggle"
 
-    #### 'ViewAction' interface ###############################################
+    # 'ViewAction' interface -----------------------------------------------
 
     # The view that we toggle the visibility for.
     view = Instance(IView)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Called when the action is no longer required. """
@@ -47,11 +47,11 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def _view_changed(self, old, new):
         """ Static trait change handler. """
@@ -66,7 +66,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
 
         return
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def _add_view_listeners(self, view):
         """ Add listeners for trait events on a view. """

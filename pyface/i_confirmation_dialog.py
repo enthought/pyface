@@ -26,7 +26,7 @@ from pyface.i_image_resource import IImageResource
 class IConfirmationDialog(IDialog):
     """ The interface for a dialog that prompts the user for confirmation. """
 
-    #### 'IConfirmationDialog' interface ######################################
+    # 'IConfirmationDialog' interface -------------------------------------#
 
     #: Should the cancel button be displayed?
     cancel = Bool(False)

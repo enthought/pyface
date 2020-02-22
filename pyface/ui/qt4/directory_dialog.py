@@ -29,7 +29,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     IDirectoryDialog interface for the API documentation.
     """
 
-    #### 'IDirectoryDialog' interface #########################################
+    # 'IDirectoryDialog' interface -----------------------------------------
 
     default_path = Unicode
 
@@ -39,17 +39,17 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     path = Unicode
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         # In PyQt this is a canned dialog.
         pass
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def close(self):
         # Get the path of the chosen directory.
@@ -63,9 +63,9 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         # Let the window close as normal.
         super(DirectoryDialog, self).close()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         dlg = QtGui.QFileDialog(parent, self.title, self.default_path)

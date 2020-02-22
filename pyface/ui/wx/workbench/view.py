@@ -34,9 +34,9 @@ class View(MView):
     # in workbench_window_layout.py.
     closeable = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Create the toolkit-specific control that represents the part. """

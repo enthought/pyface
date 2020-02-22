@@ -44,7 +44,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
     """
 
-    #### 'MDIApplicationWindow' interface #####################################
+    # 'MDIApplicationWindow' interface -------------------------------------
 
     # The workarea background image.
     background_image = Instance(ImageResource, ImageResource("background"))
@@ -58,9 +58,9 @@ class MDIApplicationWindow(ApplicationWindow):
     # UPDATE: wx 2.6.1 does NOT fix this issue.
     _wx_offset = Tuple(Int, Int)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MDIApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_child_window(self, title=None, is_mdi=True, float=True):
         """ Create a child window. """
@@ -76,9 +76,9 @@ class MDIApplicationWindow(ApplicationWindow):
                 style = wx.DEFAULT_FRAME_STYLE
             return wx.Frame(self.control, -1, title, style=style)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Create the contents of the MDI window. """
@@ -125,9 +125,9 @@ class MDIApplicationWindow(ApplicationWindow):
 
         return control
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _tile_background_image(self, dc, width, height):
         """ Tiles the background image. """
@@ -160,7 +160,7 @@ class MDIApplicationWindow(ApplicationWindow):
 
         return
 
-    ##### wx event handlers ###################################################
+    ## wx event handlers ---------------------------------------------------
 
     def _on_size(self, event):
         """ Called when the frame is resized. """

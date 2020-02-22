@@ -25,16 +25,16 @@ from .wizard import Wizard
 class ChainedWizard(Wizard):
     """ A wizard model that can be chained with other wizards. """
 
-    #### 'ChainedWizard' interface ############################################
+    # 'ChainedWizard' interface --------------------------------------------
 
     # The wizard following this wizard in the chain.
     next_wizard = Instance(IWizard)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ChainedWizard' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait handlers. ######################################################
+    # Trait handlers. -----------------------------------------------------#
 
     def _controller_default(self):
         """ Provide a default controller. """
@@ -43,9 +43,9 @@ class ChainedWizard(Wizard):
 
         return ChainedWizardController()
 
-    #### Trait event handlers. ################################################
+    # Trait event handlers. ------------------------------------------------
 
-    #### Static ####
+    # Static ----
 
     def _next_wizard_changed(self, old, new):
         """ Handle the next wizard being changed. """

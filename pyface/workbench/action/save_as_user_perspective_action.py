@@ -17,7 +17,7 @@ from .workbench_action import WorkbenchAction
 class SaveAsUserPerspectiveAction(WorkbenchAction):
     """ An action that saves the active perspective as a user perspective. """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     # The action's unique identifier.
     id = "pyface.workbench.action.save_as_user_perspective_action"
@@ -25,9 +25,9 @@ class SaveAsUserPerspectiveAction(WorkbenchAction):
     # The action's name (displayed on menus/tool bar tools etc).
     name = "Save Perspective As..."
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, event):
         """ Perform the action. """

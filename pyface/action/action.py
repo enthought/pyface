@@ -34,7 +34,7 @@ class Action(HasTraits):
 
     """
 
-    #### 'Action' interface ###################################################
+    # 'Action' interface ---------------------------------------------------
 
     #: Keyboard accelerator (by default the action has NO accelerator).
     accelerator = Unicode
@@ -75,11 +75,11 @@ class Action(HasTraits):
     #: An (optional) callable to create the toolkit control for widget style.
     control_factory = Callable
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Action' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Initializers #########################################################
+    # Initializers ---------------------------------------------------------
 
     def _id_default(self):
         """ Initializes the 'id' trait.
@@ -88,7 +88,7 @@ class Action(HasTraits):
         """
         return self.name
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_control(self, parent):
         """ Called when creating a "widget" style action.

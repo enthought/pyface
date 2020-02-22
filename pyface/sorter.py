@@ -21,9 +21,9 @@ from traits.api import HasTraits
 class Sorter(HasTraits):
     """ Abstract base class for all sorters. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewerSorter' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def sort(self, widget, parent, nodes):
         """ Sorts a list of nodes IN PLACE.

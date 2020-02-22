@@ -14,7 +14,7 @@ from .workbench_window import WorkbenchWindow
 class IWorkbench(Interface):
     """ The workbench interface. """
 
-    #### 'IWorkbench' interface ###############################################
+    # 'IWorkbench' interface -----------------------------------------------
 
     # The active workbench window (the last one to get focus).
     active_window = Instance(WorkbenchWindow)
@@ -35,7 +35,7 @@ class IWorkbench(Interface):
     # All of the workbench windows created by the workbench.
     windows = List(WorkbenchWindow)
 
-    #### Workbench lifecycle events ####
+    # Workbench lifecycle events ----
 
     # Fired when the workbench is about to exit.
     #
@@ -50,7 +50,7 @@ class IWorkbench(Interface):
     # This is fired after the last open window has been closed.
     exited = Event
 
-    #### Window lifecycle events ####
+    # Window lifecycle events ----
 
     # Fired when a workbench window has been created.
     window_created = Event(WindowEvent)
@@ -67,9 +67,9 @@ class IWorkbench(Interface):
     # Fired when a workbench window has been closed.
     window_closed = Event(WindowEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbench' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_window(self, **kw):
         """ Factory method that creates a new workbench window. """

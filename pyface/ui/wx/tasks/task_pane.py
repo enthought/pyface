@@ -18,9 +18,9 @@ class TaskPane(MTaskPane):
     See the ITaskPane interface for API documentation.
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ITaskPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create(self, parent):
         """ Create and set the toolkit-specific control that represents the

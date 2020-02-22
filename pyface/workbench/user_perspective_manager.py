@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 class UserPerspectiveManager(HasTraits):
     """ Manages a set of user perspectives. """
 
-    #### 'UserPerspective' interface ##########################################
+    # 'UserPerspective' interface -----------------------------------------#
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
@@ -36,16 +36,16 @@ class UserPerspectiveManager(HasTraits):
     # The name of the user defined perspectives definition file.
     file_name = Property(Unicode)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Shadow trait for the 'id_to_perspective' property.
     _id_to_perspective = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'UserPerspective' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Properties ###########################################################
+    # Properties -----------------------------------------------------------
 
     def _get_next_id(self):
         """ Property getter. """
@@ -93,7 +93,7 @@ class UserPerspectiveManager(HasTraits):
 
         return os.path.join(self.state_location, "__user_perspective__")
 
-    #### Methods ##############################################################
+    # Methods -------------------------------------------------------------#
 
     def create_perspective(self, name, show_editor_area=True):
         """ Create a new (and empty) user-defined perspective. """
@@ -197,9 +197,9 @@ class UserPerspectiveManager(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _update_persistent_data(self):
         """ Update the persistent file information. """

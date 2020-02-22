@@ -39,12 +39,12 @@ class TaskWindow(ApplicationWindow):
     its tasks.
     """
 
-    #### IWindow interface ####################################################
+    # IWindow interface ----------------------------------------------------
 
     # Unless a title is specifically assigned, delegate to the active task.
     title = Property(Unicode, depends_on=["active_task.name", "_title"])
 
-    #### TaskWindow interface ################################################
+    # TaskWindow interface ------------------------------------------------
 
     # The pane (central or dock) in the active task that currently has focus.
     active_pane = Instance(ITaskPane)
@@ -69,16 +69,16 @@ class TaskWindow(ApplicationWindow):
     # the translation process, although this is not usually necessary.
     action_manager_builder_factory = Callable(TaskActionManagerBuilder)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _active_state = Instance("pyface.tasks.task_window.TaskState")
     _states = List(Instance("pyface.tasks.task_window.TaskState"))
     _title = Unicode
     _window_backend = Instance(TaskWindowBackend)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Widget' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def destroy(self):
         """ Overridden to ensure that all task panes are cleanly destroyed.
@@ -93,9 +93,9 @@ class TaskWindow(ApplicationWindow):
             self._destroy_state(state)
         super(TaskWindow, self).destroy()
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Window' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def open(self):
         """ Opens the window.
@@ -119,18 +119,18 @@ class TaskWindow(ApplicationWindow):
 
         return self.control is not None and not event.veto
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _create_contents(self, parent):
         """ Delegate to the TaskWindowBackend.
         """
         return self._window_backend.create_contents(parent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'TaskWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_task(self, task):
         """ Activates a task that has already been added to the window.
@@ -269,7 +269,7 @@ class TaskWindow(ApplicationWindow):
         state = self._get_state(id)
         return state.task if state else None
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_layout(self):
         """ Returns a TaskLayout (for the active task) that reflects the state
@@ -339,9 +339,9 @@ class TaskWindow(ApplicationWindow):
             else:
                 self.activate_task(state.task)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'TaskWindow' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _destroy_state(self, state):
         """ Destroy all controls associated with a Task state.
@@ -392,12 +392,12 @@ class TaskWindow(ApplicationWindow):
                 return state
         return None
 
-    #### Trait initializers ###################################################
+    # Trait initializers ---------------------------------------------------
 
     def __window_backend_default(self):
         return TaskWindowBackend(window=self)
 
-    #### Trait property getters/setters #######################################
+    # Trait property getters/setters ---------------------------------------
 
     def _get_title(self):
         if self._title or self.active_task is None:
@@ -407,7 +407,7 @@ class TaskWindow(ApplicationWindow):
     def _set_title(self, title):
         self._title = title
 
-    #### Trait change handlers ################################################
+    # Trait change handlers ------------------------------------------------
 
     def __active_state_changed(self, state):
         if state is None:

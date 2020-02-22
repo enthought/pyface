@@ -99,9 +99,9 @@ class TraitGridModel(GridModel):
     # be a no-argument function.
     row_factory = Trait(None, None, Function)
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Create a TraitGridModel object. """
 
@@ -144,9 +144,9 @@ class TraitGridModel(GridModel):
 
         return
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'GridModel' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
@@ -433,9 +433,9 @@ class TraitGridModel(GridModel):
         False otherwise. """
         return not self.is_column_read_only(col)
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # protected 'GridModel' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def _insert_rows(self, pos, num_rows):
         """ Inserts num_rows at pos and fires an event iff a factory method
         for new rows is defined. Otherwise returns 0. """
@@ -489,9 +489,9 @@ class TraitGridModel(GridModel):
 
         return new_rows
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # protected interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def _get_row(self, index):
         """ Return the object that corresponds to the row at index. Override
         this to handle very large data sets. """
@@ -578,9 +578,9 @@ class TraitGridModel(GridModel):
 
         return num_rows
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # trait handlers
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_row_name_trait_changed(self, new):
         """ Force the grid to refresh when any underlying trait changes. """
@@ -628,9 +628,9 @@ class TraitGridModel(GridModel):
         self.fire_content_changed()
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __get_data_column(self, col):
         """ Return a 1-d list of data from the column indexed by col. """

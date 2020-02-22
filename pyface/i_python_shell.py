@@ -24,7 +24,7 @@ from pyface.i_widget import IWidget
 class IPythonShell(IWidget):
     """ The interface for an interactive Python shell. """
 
-    #### 'IPythonShell' interface #############################################
+    # 'IPythonShell' interface ---------------------------------------------
 
     #: A command has been executed.
     command_executed = Event
@@ -32,9 +32,9 @@ class IPythonShell(IWidget):
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def interpreter(self):
         """ Get the shell's interpreter
@@ -110,9 +110,9 @@ class MPythonShell(object):
     Implements: bind(), _on_command_executed()
     """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IPythonShell' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def bind(self, name, value):
         """ Binds a name to a value in the interpreter's namespace.
@@ -126,9 +126,9 @@ class MPythonShell(object):
         """
         self.interpreter().locals[name] = value
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_command_executed(self):
         """ Called when a command has been executed in the shell. """

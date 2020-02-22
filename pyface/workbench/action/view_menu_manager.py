@@ -26,7 +26,7 @@ class ViewMenuManager(MenuManager):
 
     """
 
-    #### 'ActionManager' interface ############################################
+    # 'ActionManager' interface --------------------------------------------
 
     # All of the groups in the manager.
     groups = List(Group)
@@ -34,13 +34,13 @@ class ViewMenuManager(MenuManager):
     # The manager's unique identifier (if it has one).
     id = Str("View")
 
-    #### 'MenuManager' interface ##############################################
+    # 'MenuManager' interface ---------------------------------------------#
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
     name = Unicode("&View")
 
-    #### 'ViewMenuManager' interface ##########################################
+    # 'ViewMenuManager' interface -----------------------------------------#
 
     # Should the perspective menu be shown?
     show_perspective_menu = Bool(True)
@@ -48,14 +48,14 @@ class ViewMenuManager(MenuManager):
     # The workbench window that the menu is part of.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### 'Private' interface ##################################################
+    # 'Private' interface -------------------------------------------------#
 
     # The group containing the view hide/show actions.
     _view_group = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _groups_default(self):
         """ Trait initializer. """
@@ -76,9 +76,9 @@ class ViewMenuManager(MenuManager):
 
         return groups
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ViewMenuManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @on_trait_change(
         "window.active_perspective,window.active_part,"
@@ -96,9 +96,9 @@ class ViewMenuManager(MenuManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _clear_group(self, group):
         """ Remove all items in a group. """

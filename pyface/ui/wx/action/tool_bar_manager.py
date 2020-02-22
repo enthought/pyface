@@ -32,7 +32,7 @@ from pyface.action.action_manager import ActionManager
 class ToolBarManager(ActionManager):
     """ A tool bar manager realizes itself in errr, a tool bar control. """
 
-    #### 'ToolBarManager' interface ###########################################
+    # 'ToolBarManager' interface -------------------------------------------
 
     # Is the tool bar enabled?
     enabled = Bool(True)
@@ -55,14 +55,14 @@ class ToolBarManager(ActionManager):
     # Should we display the horizontal divider?
     show_divider = Bool(False)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -76,12 +76,12 @@ class ToolBarManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolBarManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait change handlers ################################################
-    #### Methods ##############################################################
+    # Trait change handlers ------------------------------------------------
+    # Methods -------------------------------------------------------------#
 
     def create_tool_bar(self, parent, controller=None, aui=False):
         """ Creates a tool bar. """
@@ -132,9 +132,9 @@ class ToolBarManager(ActionManager):
 
         return tool_bar
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _wx_add_tools(self, parent, tool_bar, controller):
         """ Adds tools for all items in the list of groups. """
@@ -201,9 +201,9 @@ class ToolBarManager(ActionManager):
 class _ToolBar(wx.ToolBar):
     """ The toolkit-specific tool bar implementation. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
@@ -224,9 +224,9 @@ class _ToolBar(wx.ToolBar):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
@@ -246,9 +246,9 @@ class _ToolBar(wx.ToolBar):
 class _AuiToolBar(aui.AuiToolBar):
     """ The toolkit-specific tool bar implementation for AUI windows. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, tool_bar_manager, parent, id, style):
         """ Constructor. """
@@ -333,7 +333,7 @@ class _AuiToolBar(aui.AuiToolBar):
                 break
         self.InsertToolItem(pos + 1, tool)
 
-    ##### Additional convenience functions for the normal AGW AUI toolbar
+    ## Additional convenience functions for the normal AGW AUI toolbar
 
     def AddLabelTool(
         self,
@@ -415,9 +415,9 @@ class _AuiToolBar(aui.AuiToolBar):
 
         aui.AuiToolBar.OnSize(self, event)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Trait change handlers.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """

@@ -1,9 +1,9 @@
 # System library imports.
 from pyface.qt import QtCore
 
-###############################################################################
+# ----------------------------------------------------------------------------
 # Functions.
-###############################################################################
+# ----------------------------------------------------------------------------
 
 
 def set_focus(control):
@@ -16,10 +16,10 @@ def set_focus(control):
 
     1. If the control itself accepts focus, use it. This is important since the
        control may have custom focus dispatching logic.
-       
+
     2. Otherwise, if there is a child widget of the control that previously had
        focus, use it.
-       
+
     3. Finally, have Qt determine the next item using its internal logic. Qt
        will only restrict itself to this widget's children if it is a Qt::Window
        or Qt::SubWindow, hence the hack below.

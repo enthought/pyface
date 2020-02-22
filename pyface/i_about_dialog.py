@@ -24,7 +24,7 @@ from pyface.image_resource import ImageResource
 class IAboutDialog(IDialog):
     """ The interface for a simple 'About' dialog. """
 
-    #### 'IAboutDialog' interface #############################################
+    # 'IAboutDialog' interface ---------------------------------------------
 
     #: Additional strings to be added to the dialog.
     additions = List(Unicode)

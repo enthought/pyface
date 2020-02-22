@@ -26,7 +26,7 @@ from .tool_palette import ToolPalette
 class ToolPaletteManager(ActionManager):
     """ A tool bar manager realizes itself in a tool palette bar control. """
 
-    #### 'ToolPaletteManager' interface #######################################
+    # 'ToolPaletteManager' interface ---------------------------------------
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))
@@ -34,14 +34,14 @@ class ToolPaletteManager(ActionManager):
     # Should we display the name of each tool bar tool under its image?
     show_tool_names = Bool(True)
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, *args, **traits):
         """ Creates a new tool bar manager. """
@@ -55,9 +55,9 @@ class ToolPaletteManager(ActionManager):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ToolPaletteManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_tool_palette(self, parent, controller=None):
         """ Creates a tool bar. """

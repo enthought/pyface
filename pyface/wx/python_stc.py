@@ -74,7 +74,7 @@ class PythonSTC(stc.StyledTextCtrl):
         self.SetEdgeColumn(78)
 
         # Setup a margin to hold fold markers
-        ###  WHAT IS THIS VALUE?  WHAT ARE THE OTHER FLAGS?  DOES IT MATTER?
+        #  WHAT IS THIS VALUE?  WHAT ARE THE OTHER FLAGS?  DOES IT MATTER?
         self.SetFoldFlags(16)
         # mic
         # self.SetMarginType(2, stc.STC_MARGIN_SYMBOL)

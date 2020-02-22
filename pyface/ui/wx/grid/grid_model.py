@@ -64,7 +64,7 @@ GridSortEvent = GridSortData
 class GridModel(HasPrivateTraits):
     """ Model for grid views. """
 
-    #### 'GridModel' interface ################################################
+    # 'GridModel' interface ------------------------------------------------
 
     # Fire when the structure of the underlying grid model has changed.
     structure_changed = Event
@@ -78,7 +78,7 @@ class GridModel(HasPrivateTraits):
     # The cell (row, col) the mouse is currently in.
     mouse_cell = Tuple(Int, Int)
 
-    #### Events ####
+    # Events ----
 
     # A row was inserted or appended to this model
     rows_added = Event
@@ -95,9 +95,9 @@ class GridModel(HasPrivateTraits):
     # Event fired when a cell is double-clicked on:
     dclick = Event  # = (row, column) that was double-clicked on
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'object' interface.
-    #########################################################################
+    -------------------------------------------------------------------------
     def __init__(self, **traits):
         """ Creates a new grid model. """
 
@@ -106,9 +106,9 @@ class GridModel(HasPrivateTraits):
 
         return
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MUST override the following
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
@@ -137,9 +137,9 @@ class GridModel(HasPrivateTraits):
         False otherwise."""
         raise NotImplementedError
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MAY override the following
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def get_cols_drag_value(self, cols):
         """ Return the value to use when the specified columns are dragged or
@@ -340,9 +340,9 @@ class GridModel(HasPrivateTraits):
             or 'center' for center alignment. """
         return None
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MAY NOT override the following
-    #########################################################################
+    -------------------------------------------------------------------------
 
     def fire_content_changed(self):
         """ Fires the appearance changed event. """
@@ -406,11 +406,11 @@ class GridModel(HasPrivateTraits):
 
         return True
 
-    #########################################################################
+    -------------------------------------------------------------------------
     # protected 'GridModel' interface -- Subclasses should override these
     #                                    if they wish to support the
     #                                    specific actions.
-    #########################################################################
+    -------------------------------------------------------------------------
     def _delete_rows(self, pos, num_rows):
         """ Implementation method for delete_rows. Should return the
         number of rows that were deleted. """

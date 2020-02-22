@@ -27,7 +27,7 @@ from .widget import Widget
 class ImageWidget(Widget):
     """ A clickable/draggable widget containing an image. """
 
-    #### 'ImageWidget' interface ##############################################
+    # 'ImageWidget' interface ---------------------------------------------#
 
     # The bitmap.
     bitmap = Any
@@ -35,7 +35,7 @@ class ImageWidget(Widget):
     # Is the widget selected?
     selected = Bool(False)
 
-    #### Events ####
+    # Events ----
 
     # A key was pressed while the tree is in focus.
     key_pressed = Event
@@ -58,13 +58,13 @@ class ImageWidget(Widget):
     # A right-click occurred on a node.
     node_right_clicked = Event
 
-    #### Private interface ####################################################
+    # Private interface ----------------------------------------------------
 
     _selected = Any
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, parent, **traits):
         """ Creates a new widget. """
@@ -102,11 +102,11 @@ class ImageWidget(Widget):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Private interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
-    #### Trait event handlers #################################################
+    # Trait event handlers -------------------------------------------------
 
     def _bitmap_changed(self, bitmap):
         """ Called when the widget's bitmap is changed. """
@@ -130,7 +130,7 @@ class ImageWidget(Widget):
 
         return
 
-    #### wx event handlers ####################################################
+    # wx event handlers ----------------------------------------------------
 
     def _on_enter_window(self, event):
         """ Called when the mouse enters the widget. """

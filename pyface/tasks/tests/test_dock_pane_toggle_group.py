@@ -93,7 +93,7 @@ class DockPaneToggleGroupTestCase(unittest.TestCase):
 
         return names
 
-    #### Tests ################################################################
+    # Tests ----------------------------------------------------------------
 
     def test_group_content_at_startup(self):
         # Check that there are 2 dock panes in the group at the beginning.

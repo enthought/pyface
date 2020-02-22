@@ -15,14 +15,14 @@ from .traits_ui_editor import TraitsUIEditor
 class EditorManager(HasTraits):
     """ The default editor manager. """
 
-    #### 'IEditorManager' interface ###########################################
+    # 'IEditorManager' interface -------------------------------------------
 
     # The workbench window that the editor manager manages editors for ;^)
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'object' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def __init__(self, **traits):
         """ Constructor. """
@@ -34,9 +34,9 @@ class EditorManager(HasTraits):
 
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorManager' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def add_editor(self, editor, kind):
         """ Registers an existing editor. """
@@ -84,9 +84,9 @@ class EditorManager(HasTraits):
 
         return None
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'Protected' 'EditorManager'  interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _is_editing(self, editor, obj, kind):
         """ Return True if the editor is editing the object. """

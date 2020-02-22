@@ -31,7 +31,7 @@ class IEditorAreaPane(ITaskPane):
     can be displayed side-by-side.
     """
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
     # The currently active editor.
     active_editor = Instance(IEditor)
@@ -51,9 +51,9 @@ class IEditorAreaPane(ITaskPane):
     # Whether to hide the tab bar when there is only a single editor.
     hide_tab_bar = Bool(False)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activates the specified editor in the pane.
@@ -124,7 +124,7 @@ class IEditorAreaPane(ITaskPane):
 
 class MEditorAreaPane(HasTraits):
 
-    #### 'IEditorAreaPane' interface ##########################################
+    # 'IEditorAreaPane' interface -----------------------------------------#
 
     active_editor = Instance(IEditor)
     editors = List(IEditor)
@@ -132,13 +132,13 @@ class MEditorAreaPane(HasTraits):
     file_dropped = Event(File)
     hide_tab_bar = Bool(False)
 
-    #### Protected traits #####################################################
+    # Protected traits -----------------------------------------------------
 
     _factory_map = Dict(Callable, List(Callable))
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IEditorAreaPane' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_editor(self, obj, factory=None):
         """ Creates an editor for an object.

@@ -8,9 +8,9 @@ from traits.api import HasTraits
 class ActionController(HasTraits):
     """ The default action controller for menus, menu bars and tool bars. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ActionController' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def perform(self, action, event):
         """ Control an action invocation.

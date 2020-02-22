@@ -39,7 +39,7 @@ class IWorkbenchWindowLayout(Interface):
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Events ####
+    # Events ----
 
     # Fired when an editor is about to be opened (or restored).
     editor_opening = Event(IEditor)
@@ -180,7 +180,7 @@ class IWorkbenchWindowLayout(Interface):
 
         """
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         """ Returns the state of the views.
@@ -215,7 +215,7 @@ class IWorkbenchWindowLayout(Interface):
 class MWorkbenchWindowLayout(HasTraits):
     """ Mixin containing common code for toolkit-specific implementations. """
 
-    #### 'IWorkbenchWindowLayout' interface ###################################
+    # 'IWorkbenchWindowLayout' interface -----------------------------------
 
     # The Id of the editor area.
     # FIXME v3: This is toolkit specific.
@@ -224,7 +224,7 @@ class MWorkbenchWindowLayout(HasTraits):
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
 
-    #### Events ####
+    # Events ----
 
     # Fired when an editor is about to be opened (or restored).
     editor_opening = Event(IEditor)
@@ -250,9 +250,9 @@ class MWorkbenchWindowLayout(HasTraits):
     # Fired when a view has been closed (*not* hidden!).
     view_closed = Event(IView)
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'IWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def activate_editor(self, editor):
         """ Activate an editor. """
@@ -334,7 +334,7 @@ class MWorkbenchWindowLayout(HasTraits):
 
         raise NotImplementedError
 
-    #### Methods for saving and restoring the layout ##########################
+    # Methods for saving and restoring the layout -------------------------#
 
     def get_view_memento(self):
         """ Returns the state of the views. """
@@ -366,9 +366,9 @@ class MWorkbenchWindowLayout(HasTraits):
         """
         return
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # Protected 'MWorkbenchWindowLayout' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def _get_editor_references(self):
         """ Returns a reference to every editor. """

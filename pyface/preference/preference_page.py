@@ -22,9 +22,9 @@ from traits.api import HasTraits
 class PreferencePage(HasTraits):
     """ Abstract base class for all preference pages. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'PreferencePage' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def create_control(self, parent):
         """ Creates the toolkit-specific control for the page. """

@@ -17,9 +17,9 @@
 class ResourceFactory(object):
     """ Default base-class for resource factories. """
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'ResourceFactory' interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """

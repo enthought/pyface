@@ -29,7 +29,7 @@ class IFileDialog(IDialog):
     """ The interface for a dialog that allows the user to open/save files etc.
     """
 
-    #### 'IFileDialog' interface ##############################################
+    # 'IFileDialog' interface ---------------------------------------------#
 
     #: The 'action' that the user is peforming on the directory.
     action = Enum("open", "save as")
@@ -91,9 +91,9 @@ class MFileDialog(object):
     #: A file dialog wildcard for Zip archives.
     WILDCARD_ZIP = "Zip files (*.zip)|*.zip|"
 
-    ###########################################################################
+    # ------------------------------------------------------------------------
     # 'MFileDialog' *CLASS* interface.
-    ###########################################################################
+    # ------------------------------------------------------------------------
 
     @classmethod
     def create_wildcard(cls, description, extension):
