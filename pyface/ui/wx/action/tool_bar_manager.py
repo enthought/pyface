@@ -19,7 +19,7 @@ import wx
 from traits.api import Bool, Enum, Instance, Str, Tuple
 
 
-from pyface.wx.aui import aui
+from pyface.wx.aui import aui as AUI
 from pyface.image_cache import ImageCache
 from pyface.action.action_manager import ActionManager
 
@@ -87,24 +87,26 @@ class ToolBarManager(ActionManager):
 
         # Determine the wx style for the tool bar based on any optional
         # settings.
-        style = wx.NO_BORDER | wx.TB_FLAT | wx.CLIP_CHILDREN
-
-        if self.show_tool_names:
-            style |= wx.TB_TEXT
-
-        if self.orientation == "horizontal":
-            style |= wx.TB_HORIZONTAL
-
-        else:
-            style |= wx.TB_VERTICAL
-
-        if not self.show_divider:
-            style |= wx.TB_NODIVIDER
-
-        # Create the control.
+        style = wx.NO_BORDER | wx.CLIP_CHILDREN
         if aui:
-            tool_bar = _AuiToolBar(self, parent, -1, style=style)
+            aui_style = AUI.AUI_TB_PLAIN_BACKGROUND
+            if self.show_tool_names:
+                aui_style |= AUI.AUI_TB_TEXT
+            if self.orientation != "horizontal":
+                aui_style |= AUI.AUI_TB_VERTICAL
+            if not self.show_divider:
+                style |= wx.TB_NODIVIDER
+            tool_bar = _AuiToolBar(self, parent, -1, style=style, agwStyle=aui_style)
         else:
+            style |= wx.TB_FLAT
+            if self.show_tool_names:
+                style |= wx.TB_TEXT
+            if self.orientation == "horizontal":
+                style |= wx.TB_HORIZONTAL
+            else:
+                style |= wx.TB_VERTICAL
+            if not self.show_divider:
+                style |= wx.TB_NODIVIDER
             tool_bar = _ToolBar(self, parent, -1, style=style)
 
         # fixme: Setting the tool bitmap size seems to be the only way to
@@ -227,17 +229,17 @@ class _ToolBar(wx.ToolBar):
         obj.window._wx_show_tool_bar(self, new)
 
 
-class _AuiToolBar(aui.AuiToolBar):
+class _AuiToolBar(AUI.AuiToolBar):
     """ The toolkit-specific tool bar implementation for AUI windows. """
 
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
 
-    def __init__(self, tool_bar_manager, parent, id, style):
+    def __init__(self, tool_bar_manager, parent, id, style, agwStyle):
         """ Constructor. """
 
-        aui.AuiToolBar.__init__(self, parent, -1, style=style)
+        super().__init__(parent, -1, style=style, agwStyle=agwStyle)
 
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
@@ -266,7 +268,7 @@ class _AuiToolBar(aui.AuiToolBar):
             for pos in range(self.GetToolsCount()):
                 tool = self.GetToolByPos(pos)
                 self.tool_map[tool.GetId()] = (pos, tool)
-        aui.AuiToolBar.Realize(self)
+        AUI.AuiToolBar.Realize(self)
         if len(self.initially_hidden_tool_ids) > 0:
             for tool_id in self.initially_hidden_tool_ids:
                 self.RemoveTool(tool_id)
@@ -381,11 +383,11 @@ class _AuiToolBar(aui.AuiToolBar):
 
         return False
 
-    FindById = aui.AuiToolBar.FindTool
+    FindById = AUI.AuiToolBar.FindTool
 
-    GetToolState = aui.AuiToolBar.GetToolToggled
+    GetToolState = AUI.AuiToolBar.GetToolToggled
 
-    GetToolsCount = aui.AuiToolBar.GetToolCount
+    GetToolsCount = AUI.AuiToolBar.GetToolCount
 
     def GetToolByPos(self, pos):
         return self._items[pos]
@@ -395,7 +397,7 @@ class _AuiToolBar(aui.AuiToolBar):
         if not hasattr(self, "_absolute_min_size"):
             return
 
-        aui.AuiToolBar.OnSize(self, event)
+        AUI.AuiToolBar.OnSize(self, event)
 
     # ------------------------------------------------------------------------
     # Trait change handlers.

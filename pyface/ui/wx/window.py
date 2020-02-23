@@ -62,6 +62,8 @@ class Window(MWindow, Widget):
     # FIXME v3: Str
     key_pressed = Event(KeyPressedEvent)
 
+    size = Property(Tuple)
+
     # Private interface ------------------------------------------------------
 
     # Shadow trait for position.

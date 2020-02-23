@@ -69,12 +69,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
-        # sizer = wx.BoxSizer(wx.HORIZONTAL)
-        # panel.SetSize((4000, 1400))
-        # sizer.SetSizeHints(panel)
-        # panel.SetSizer(sizer)
         panel.SetBackgroundColour("blue")
-
         return panel
 
     def _create_menu_bar(self, parent):
@@ -110,7 +105,6 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _size_default(self):
         """ Trait initialiser. """
-
         return (800, 600)
 
     # ------------------------------------------------------------------------

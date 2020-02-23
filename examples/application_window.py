@@ -11,13 +11,16 @@
 """ Application window example. """
 
 
-from pyface.api import ApplicationWindow, GUI, ImageResource
+from pyface.api import ApplicationWindow, GUI
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from pyface.action.api import StatusBarManager, ToolBarManager, Group
 
 
 class MainWindow(ApplicationWindow):
     """ The main application window. """
+
+    #: The initial size of the application window.
+    size = (800, 600)
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -49,21 +52,19 @@ class MainWindow(ApplicationWindow):
                 Group(exit_action, exit_action, id="c"),
                 Group(exit_action, test_action, exit_action, id="d"),
                 name="Tool Bar 1",
-                show_tool_names=False,
+                show_tool_names=True,
             ),
             ToolBarManager(
-                exit_action, name="Tool Bar 2", show_tool_names=False
+                exit_action, name="Tool Bar 2", show_tool_names=True
             ),
             ToolBarManager(
-                test_action, name="Tool Bar 3", show_tool_names=False
+                test_action, name="Tool Bar 3", show_tool_names=True
             ),
         ]
 
         # Add a status bar.
         self.status_bar_manager = StatusBarManager()
         self.status_bar_manager.message = "Example application window"
-
-        return
 
     def toggle(self):
         """ Toggle the visibility of the exit action and of the first 3 groups
