@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
 import unittest
 
 from pyface.fields.api import ComboField, SpinField, TextField

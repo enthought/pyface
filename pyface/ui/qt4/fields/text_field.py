@@ -11,7 +11,6 @@
 """ The Qt-specific implementation of the text field class """
 
 
-
 from traits.api import Trait, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField

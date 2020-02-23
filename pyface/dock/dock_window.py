@@ -1020,7 +1020,7 @@ class DockWindow(HasPrivateTraits):
                 )
 
         if len(actions) > 0:
-            actions.sort(key=attrgetter('name'))
+            actions.sort(key=attrgetter("name"))
             actions[0:0] = [Separator()]
 
         return Menu(

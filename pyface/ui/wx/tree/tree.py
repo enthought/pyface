@@ -19,7 +19,15 @@ import wx
 
 
 from traits.api import (
-    Any, Bool, Callable, Enum, Event, Instance, List, Property, Str
+    Any,
+    Bool,
+    Callable,
+    Enum,
+    Event,
+    Instance,
+    List,
+    Property,
+    Str,
 )
 
 
