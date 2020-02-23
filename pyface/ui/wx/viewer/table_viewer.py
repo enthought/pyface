@@ -33,13 +33,11 @@ class TableViewer(ContentViewer):
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Instance(TableLabelProvider, factory=TableLabelProvider)
+    label_provider = Instance(TableLabelProvider, ())
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
-    column_provider = Trait(
-        TableColumnProvider(), Instance(TableColumnProvider)
-    )
+    column_provider = Instance(TableColumnProvider, ())
 
     # The colours used to render odd and even numbered rows.
     even_row_background = Color("white")

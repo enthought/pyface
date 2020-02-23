@@ -15,7 +15,7 @@ with row/column labels as the index + 1."""
 
 
 from pyface.action.api import Action, Group, MenuManager, Separator
-from traits.api import HasTraits, Any, List, Str, Bool, Trait
+from traits.api import Either, Any, Instance, List
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 
 
@@ -32,10 +32,10 @@ class SimpleGridModel(GridModel):
     data = Any
 
     # The rows in the model.
-    rows = Trait(None, None, List(GridRow))
+    rows = Either(None, List(Instance(GridRow)))
 
     # The columns in the model.
-    columns = Trait(None, None, List(GridColumn))
+    columns = Either(None, List(Instance(GridColumn)))
 
     # ------------------------------------------------------------------------
     # 'object' interface.

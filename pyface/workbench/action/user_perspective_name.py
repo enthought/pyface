@@ -10,24 +10,14 @@
 """ Object with views for naming or renaming a user perspective. """
 
 
-from traits.api import Bool, HasTraits, Trait, TraitError, Constant
+from traits.api import Bool, HasTraits, Constant, String
 from traitsui.api import View, Item, VGroup
 
 
 # Trait definitions --------------------------------------------------------
 
-
-def not_empty_string(object, name, value):
-    """a not-empty string"""
-
-    if isinstance(value, str) and (value.strip() != ""):
-        return value
-
-    raise TraitError
-
-
 # Define a trait which can not be the empty string:
-NotEmptyString = Trait("", not_empty_string)
+NotEmptyString = String(minlen=1)
 
 
 class UserPerspectiveName(HasTraits):

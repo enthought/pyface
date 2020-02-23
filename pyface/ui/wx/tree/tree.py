@@ -18,8 +18,9 @@ import os
 import wx
 
 
-from traits.api import Any, Bool, Callable, Enum, Event, Instance
-from traits.api import List, Property, Callable, Str, Trait, Tuple
+from traits.api import (
+    Any, Bool, Callable, Enum, Event, Instance, List, Property, Str
+)
 
 
 from pyface.filter import Filter
@@ -149,7 +150,7 @@ class Tree(Widget):
     # An optional callback to detect the end of a label edit.  This is
     # useful because the callback will be invoked even if the node label was
     # not actually changed.
-    _label_edit_callback = Trait(None, Callable, None)
+    _label_edit_callback = Callable
 
     # Flag for allowing selection events to be ignored
     _ignore_selection_events = Bool(False)

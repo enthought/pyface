@@ -26,18 +26,18 @@ from traits.api import (
     List,
     Property,
     Str,
-    Trait,
+    Union,
     Tuple,
     Str,
 )
 
 # Trait definitions.
-SubSchema = Trait(
+SubSchema = Union(
     None,
-    Action,
-    ActionItem,
-    Group,
-    MenuManager,
+    Instance(Action),
+    Instance(ActionItem),
+    Instance(Group),
+    Instance(MenuManager),
     Instance("pyface.tasks.action.schema.GroupSchema"),
     Instance("pyface.tasks.action.schema.MenuSchema"),
     Instance("pyface.tasks.action.schema.Schema"),

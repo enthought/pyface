@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Dict, List, Trait
+from traits.api import Dict, Either, Instance, List
 
 
 from .grid_model import GridModel, GridRow
@@ -20,10 +20,10 @@ class CompositeGridModel(GridModel):
     a collection of other grid models. """
 
     # The models this model is comprised of.
-    data = List(GridModel)
+    data = List(Instance(GridModel))
 
     # The rows in the model.
-    rows = Trait(None, None, List(GridRow))
+    rows = Either(None, List(Instance(GridRow)))
 
     # The cached data indexes.
     _data_index = Dict
@@ -38,8 +38,6 @@ class CompositeGridModel(GridModel):
         super(CompositeGridModel, self).__init__(**traits)
 
         self._row_count = None
-
-        return
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface.
@@ -359,5 +357,3 @@ class CompositeGridModel(GridModel):
         results of the column lookups is wrong and needs to be invalidated.
         """
         self._data_index.clear()
-
-        return

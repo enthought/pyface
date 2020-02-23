@@ -15,7 +15,7 @@ import wx
 
 
 from pyface.action.api import ToolBarManager
-from traits.api import Trait, TraitDict, TraitEnum, TraitList
+from traits.api import Dict, Enum, Instance, List
 
 
 from .application_window import ApplicationWindow
@@ -30,15 +30,10 @@ class MultiToolbarWindow(ApplicationWindow):
     """
 
     # The toolbars in the order they were added to the window.
-    _tool_bar_managers = Trait([], TraitList(Trait(ToolBarManager)))
+    _tool_bar_managers = List(Instance(ToolBarManager))
 
     # Map of toolbar to screen location.
-    _tool_bar_locations = Trait(
-        {},
-        TraitDict(
-            Trait(ToolBarManager), TraitEnum("top", "bottom", "left", "right")
-        ),
-    )
+    _tool_bar_locations = Dict(Instance(ToolBarManager), Enum("top", "bottom", "left", "right"))
 
     # ------------------------------------------------------------------------
     # Protected 'Window' interface.
