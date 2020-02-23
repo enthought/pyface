@@ -21,7 +21,6 @@ except ImportError:  # Python 3.8 deprecation
 
 
 from traits.api import HasStrictTraits, Interface, Property
-import six
 
 
 class IClipboard(Interface):
@@ -104,7 +103,7 @@ class BaseClipboard(HasStrictTraits):
         return None
 
     def _set_data(self, data):
-        if isinstance(data, six.string_types):
+        if isinstance(data, str):
             self.text_data = data
         elif isinstance(data, Sequence):
             self.file_data = data

@@ -26,7 +26,6 @@ introspect module.
 from wx.py import introspect
 
 import types
-import six
 
 # The fixed function.
 def getAttributeNames(
@@ -86,9 +85,7 @@ def getAttributeNames(
     # new-style swig wrappings can result in non-string attributes
     # e.g. ITK http://www.itk.org/
     attributes = [
-        attribute
-        for attribute in attributes
-        if isinstance(attribute, six.string_types)
+        attribute for attribute in attributes if isinstance(attribute, str)
     ]
     attributes.sort(key=lambda x: x.upper())
     if not includeSingle:

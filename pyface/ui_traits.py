@@ -21,7 +21,6 @@ from traits.api import (
     TraitType,
 )
 from traits.trait_base import get_resource_path
-import six
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +36,7 @@ image_bitmap_cache = {}
 def convert_image(value, level=3):
     """ Converts a specified value to an ImageResource if possible.
     """
-    if not isinstance(value, six.string_types):
+    if not isinstance(value, str):
         return value
 
     key = value

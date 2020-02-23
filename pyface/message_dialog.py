@@ -10,8 +10,6 @@
 
 """ The implementation of a dialog that displays a message. """
 
-from __future__ import absolute_import
-
 
 # Convenience functions.
 def information(

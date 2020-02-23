@@ -20,7 +20,6 @@ from traits.api import Bool, provides, Unicode
 
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from .dialog import Dialog
-import six
 
 
 @provides(IDirectoryDialog)
@@ -56,7 +55,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
         files = self.control.selectedFiles()
 
         if files:
-            self.path = six.text_type(files[0])
+            self.path = str(files[0])
         else:
             self.path = ""
 

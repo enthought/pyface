@@ -11,14 +11,12 @@
 """ Abstract base class for all action managers. """
 
 
-from __future__ import print_function
 from traits.api import Bool, Constant, Event, HasTraits, Instance
 from traits.api import List, Property, Str
 
 
 from pyface.action.action_controller import ActionController
 from pyface.action.group import Group
-import six
 
 
 class ActionManager(HasTraits):
@@ -100,7 +98,7 @@ class ActionManager(HasTraits):
         for arg in args:
             # We allow a group to be defined by simply specifying a string (its
             # Id).
-            if isinstance(arg, six.string_types):
+            if isinstance(arg, str):
                 # Create a group with the specified Id.
                 arg = Group(id=arg)
 
@@ -343,7 +341,7 @@ class ActionManager(HasTraits):
             item.parent = self
 
         # 2) The item is a string.
-        elif isinstance(item, six.string_types):
+        elif isinstance(item, str):
             # Create a group with that Id.
             item = Group(id=item)
             item.parent = self

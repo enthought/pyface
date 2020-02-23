@@ -9,8 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-from __future__ import absolute_import
-
 from .node_event import NodeEvent
 from .node_monitor import NodeMonitor
 from .node_manager import NodeManager

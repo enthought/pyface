@@ -10,7 +10,6 @@
 
 """ The Wx-specific implementation of the text field class """
 
-from __future__ import print_function, absolute_import
 
 import wx
 

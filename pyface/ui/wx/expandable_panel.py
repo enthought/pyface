@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 """ A Layered panel. """
-from __future__ import absolute_import
 
 
 import wx

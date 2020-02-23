@@ -9,10 +9,10 @@
 # Thanks for using Enthought open source!
 
 """ Tests for the tabular editor tester. """
-from __future__ import absolute_import
+
 
 import unittest
-from six.moves import cStringIO as StringIO
+from io import StringIO
 import platform
 
 from pyface.qt import QtGui

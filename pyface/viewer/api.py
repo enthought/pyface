@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
 
 from .column_provider import ColumnProvider
 from .content_provider import ContentProvider

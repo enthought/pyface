@@ -16,7 +16,6 @@
 """
 
 
-from __future__ import print_function
 import wx, sys
 
 from traits.api import (

@@ -8,8 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import absolute_import
-
 
 from .advanced_editor_area_pane import AdvancedEditorAreaPane
 from .split_editor_area_pane import SplitEditorAreaPane

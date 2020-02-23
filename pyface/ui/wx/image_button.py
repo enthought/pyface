@@ -13,7 +13,7 @@
 """ An image and text-based control that can be used as a normal, radio or
     toolbar button.
 """
-from __future__ import absolute_import
+
 
 import wx
 from numpy import array, frombuffer, reshape, ravel, dtype

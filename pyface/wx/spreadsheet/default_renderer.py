@@ -8,13 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import print_function
 
 import types
 from string import atof
 import wx
 from wx.grid import PyGridCellRenderer
-import six
 
 
 class DefaultRenderer(PyGridCellRenderer):
@@ -91,7 +89,7 @@ class DefaultRenderer(PyGridCellRenderer):
         """ Adds three dots "..." to indicate the cell is truncated.
         """
         text = grid.model.GetValue(row, col)
-        if not isinstance(text, six.string_types):
+        if not isinstance(text, str):
             msg = 'Problem appending "..." to cell: %d %d' % (row, col)
             raise TypeError(msg)
 

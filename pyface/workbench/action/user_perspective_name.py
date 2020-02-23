@@ -12,7 +12,6 @@
 
 from traits.api import Bool, HasTraits, Trait, TraitError, Constant
 from traitsui.api import View, Item, VGroup
-import six
 
 
 # Trait definitions --------------------------------------------------------
@@ -21,7 +20,7 @@ import six
 def not_empty_string(object, name, value):
     """a not-empty string"""
 
-    if isinstance(value, six.string_types) and (value.strip() != ""):
+    if isinstance(value, str) and (value.strip() != ""):
         return value
 
     raise TraitError

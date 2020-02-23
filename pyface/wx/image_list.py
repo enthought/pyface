@@ -12,7 +12,6 @@
 
 
 import wx
-import six
 
 
 # fixme: rename to 'CachedImageList'?!?
@@ -47,7 +46,7 @@ class ImageList(wx.ImageList):
 
         # If the icon is a string then it is the filename of some kind of
         # image (e.g 'foo.gif', 'image/foo.png' etc).
-        if isinstance(filename, six.string_types):
+        if isinstance(filename, str):
             # Try the cache first.
             index = self._cache.get(filename)
             if index is None:

@@ -10,7 +10,6 @@
 
 """ The implementation of an IPython shell. """
 
-from __future__ import absolute_import
 
 # Import the toolkit specific version.
 try:

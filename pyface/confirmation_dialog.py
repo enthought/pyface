@@ -10,8 +10,6 @@
 
 """ The implementation of a dialog that prompts the user for confirmation. """
 
-from __future__ import absolute_import
-
 
 from .constant import NO
 

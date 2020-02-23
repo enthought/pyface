@@ -54,7 +54,6 @@ from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
 from .grid_model import GridModel
 from .combobox_focus_handler import ComboboxFocusHandler
-import six
 
 # Is this code running on MS Windows?
 is_win32 = sys.platform == "win32"
@@ -792,7 +791,7 @@ class Grid(Widget):
         evt.Skip()
         if evt.Dragging() and not evt.ControlDown():
             data = self.__get_drag_value()
-            if isinstance(data, six.string_types):
+            if isinstance(data, str):
                 file = abspath(data)
                 if exists(file):
                     FileDropSource(self._grid, file)
@@ -1671,12 +1670,12 @@ class _GridTableBase(GridTableBase):
         if row == self._grid._current_sorted_row:
             if self._grid._row_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    ulabel = str(label, "ascii") + u"  \u00ab"
                     label = ulabel.encode("latin-1")
                 else:
                     label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                ulabel = str(label, "ascii") + u"  \u00bb"
                 label = ulabel.encode("latin-1")
             else:
                 label += "  >>"
@@ -1691,12 +1690,12 @@ class _GridTableBase(GridTableBase):
         if col == self._grid._current_sorted_col:
             if self._grid._col_sort_reversed:
                 if is_win32:
-                    ulabel = six.text_type(label, "ascii") + u"  \u00ab"
+                    ulabel = str(label, "ascii") + u"  \u00ab"
                     label = ulabel.encode("latin-1")
                 else:
                     label += "  <<"
             elif is_win32:
-                ulabel = six.text_type(label, "ascii") + u"  \u00bb"
+                ulabel = str(label, "ascii") + u"  \u00bb"
                 label = ulabel.encode("latin-1")
             else:
                 label += "  >>"

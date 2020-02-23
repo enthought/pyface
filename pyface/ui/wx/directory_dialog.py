@@ -21,7 +21,6 @@ from traits.api import Bool, provides, Unicode
 
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
 from .dialog import Dialog
-import six
 
 
 @provides(IDirectoryDialog)
@@ -54,7 +53,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     def close(self):
         # Get the path of the chosen directory.
-        self.path = six.text_type(self.control.GetPath())
+        self.path = str(self.control.GetPath())
 
         # Let the window close as normal.
         super(DirectoryDialog, self).close()

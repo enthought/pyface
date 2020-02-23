@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 import unittest
-from six.moves.cPickle import dumps
+from pickle import dumps
 
 from pyface.qt import QtCore
 from ..mimedata import PyMimeData, str2bytes

@@ -12,13 +12,7 @@
 """
 
 
-import six
-
-if six.PY2:
-    from inspect import getargspec
-else:
-    # avoid deprecation warning
-    from inspect import getfullargspec as getargspec
+from inspect import getfullargspec
 
 
 import wx
@@ -268,7 +262,7 @@ class _MenuItem(HasTraits):
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it. This is also
             # useful as Traits UI controllers *never* require the event.
-            argspec = getargspec(self.controller.perform)
+            argspec = getfullargspec(self.controller.perform)
 
             # If the only arguments are 'self' and 'action' then don't pass
             # the event!
@@ -285,7 +279,7 @@ class _MenuItem(HasTraits):
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it.
-            argspec = getargspec(action.perform)
+            argspec = getfullargspec(action.perform)
 
             # If the only argument is 'self' then don't pass the event!
             if len(argspec.args) == 1:
@@ -513,7 +507,7 @@ class _Tool(HasTraits):
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it. This is also
             # useful as Traits UI controllers *never* require the event.
-            argspec = getargspec(self.controller.perform)
+            argspec = getfullargspec(self.controller.perform)
 
             # If the only arguments are 'self' and 'action' then don't pass
             # the event!
@@ -529,7 +523,7 @@ class _Tool(HasTraits):
             # Most of the time, action's do no care about the event (it
             # contains information about the time the event occurred etc), so
             # we only pass it if the perform method requires it.
-            argspec = getargspec(action.perform)
+            argspec = getfullargspec(action.perform)
 
             # If the only argument is 'self' then don't pass the event!
             if len(argspec.args) == 1:

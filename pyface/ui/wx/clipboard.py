@@ -10,7 +10,7 @@
 
 
 from io import BytesIO
-from six.moves.cPickle import dumps, load, loads
+from pickle import dumps, load, loads
 
 
 import wx
@@ -18,7 +18,6 @@ import wx
 
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
-import six
 
 # Data formats
 PythonObjectFormat = wx.DataFormat("PythonObject")
@@ -137,7 +136,7 @@ class Clipboard(BaseClipboard):
     def _set_file_data(self, data):
         if cb.Open():
             tfo = wx.FileDataObject()
-            if isinstance(data, six.string_types):
+            if isinstance(data, str):
                 tfo.AddFile(data)
             else:
                 for filename in data:

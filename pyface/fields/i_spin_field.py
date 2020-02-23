@@ -10,12 +10,7 @@
 
 """ The spin field interface. """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
+
 
 from traits.api import HasTraits, Int, Property, Range, Tuple
 

@@ -14,7 +14,6 @@ wxPython's wxStyledTextCtrl. The latest files are always available at the
 SourceForge project page at http://sourceforge.net/projects/pycrust/.
 Sponsored by Orbtech - Your source for Python programming expertise."""
 
-from __future__ import print_function
 
 __author__ = "Patrick K. O'Brien <pobrien@orbtech.com>"
 __cvsid__ = "$Id: shell.py,v 1.2 2003/06/13 17:59:34 dmorrill Exp $"
@@ -307,12 +306,12 @@ class Shell(wx.StyledTextCtrl):
 
         This simply sets "close", "exit" and "quit" to a helpful string.
         """
-        import six.moves.builtins
+        import builtins
 
-        six.moves.builtins.close = (
-            six.moves.builtins.exit
+        builtins.close = (
+            builtins.exit
         ) = (
-            six.moves.builtins.quit
+            builtins.quit
         ) = "Click on the close button to leave the application."
 
     def quit(self):
@@ -335,7 +334,7 @@ class Shell(wx.StyledTextCtrl):
         if startupScript and os.path.isfile(startupScript):
             startupText = "Startup script executed: " + startupScript
             self.push(
-                "print %s;execfile(%s)" % ("startupText", "startupScript")
+                "print(%s);exec(open(%s).read())" % ("startupText", "startupScript")
             )
         else:
             self.push("")

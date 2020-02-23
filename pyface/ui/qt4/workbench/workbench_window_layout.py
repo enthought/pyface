@@ -26,7 +26,6 @@ from traits.api import Instance, on_trait_change
 from pyface.message_dialog import error
 from pyface.workbench.i_workbench_window_layout import MWorkbenchWindowLayout
 from .split_tab_widget import SplitTabWidget
-import six
 
 
 # Logging.
@@ -327,7 +326,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Handle the title being changed """
         for editor in self.window.editors:
             if editor.control == control:
-                editor.name = six.text_type(title)
+                editor.name = str(title)
 
     def _qt4_editor_tab_spinner(self, editor, name, new):
         # Do we need to do this verification?

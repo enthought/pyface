@@ -12,7 +12,6 @@
 
 
 from logging import Handler
-import six
 
 
 class SplashScreenLogHandler(Handler):
@@ -40,4 +39,4 @@ class SplashScreenLogHandler(Handler):
         record : logging record instance
             The log record to be displayed.
         """
-        self._splash_screen.text = six.text_type(record.getMessage()) + u"..."
+        self._splash_screen.text = str(record.getMessage()) + u"..."

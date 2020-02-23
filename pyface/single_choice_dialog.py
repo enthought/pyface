@@ -10,7 +10,6 @@
 
 """ A dialog that allows the user to chose a single item from a list. """
 
-from __future__ import absolute_import
 
 from .constant import OK
 from .toolkit import toolkit_object

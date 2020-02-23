@@ -20,7 +20,6 @@ from .find_widget import FindWidget
 from .gutters import LineNumberWidget, StatusGutterWidget
 from .replace_widget import ReplaceWidget
 from .pygments_highlighter import PygmentsHighlighter
-import six
 
 
 class CodeWidget(QtGui.QPlainTextEdit):
@@ -134,7 +133,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
     def get_selected_text(self):
         """ Return the currently selected text.
         """
-        return six.text_type(self.textCursor().selectedText())
+        return str(self.textCursor().selectedText())
 
     def set_font(self, font):
         """ Set the new QFont.
@@ -370,7 +369,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         """
         cursor = self.textCursor()
         cursor.select(QtGui.QTextCursor.WordUnderCursor)
-        return six.text_type(cursor.selectedText())
+        return str(cursor.selectedText())
 
     # ------------------------------------------------------------------------
     # QWidget interface
@@ -702,7 +701,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
     def find_next(self):
         if not self.active_find_widget:
             self.enable_find()
-        search_text = six.text_type(self.active_find_widget.line_edit.text())
+        search_text = str(self.active_find_widget.line_edit.text())
         cursor = self.find_in_document(search_text=search_text)
 
         if cursor:
@@ -712,7 +711,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
     def find_prev(self):
         if not self.active_find_widget:
             self.enable_find()
-        search_text = six.text_type(self.active_find_widget.line_edit.text())
+        search_text = str(self.active_find_widget.line_edit.text())
         cursor = self.find_in_document(
             search_text=search_text, direction="backward"
         )
@@ -734,8 +733,8 @@ class AdvancedCodeWidget(QtGui.QWidget):
         return 0
 
     def replace_all(self):
-        search_text = six.text_type(self.replace.line_edit.text())
-        replace_text = six.text_type(self.replace.replace_edit.text())
+        search_text = str(self.replace.line_edit.text())
+        replace_text = str(self.replace.replace_edit.text())
 
         count = 0
         cursor = self.code.textCursor()

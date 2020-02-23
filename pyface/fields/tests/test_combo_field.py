@@ -8,16 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
+
 
 import unittest
 
-from six import text_type
 
 from pyface.image_resource import ImageResource
 from ..combo_field import ComboField
@@ -54,7 +48,7 @@ class TestComboField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget.value, "two")
 
     def test_combo_field_formatter(self):
-        self.widget.formatter = text_type
+        self.widget.formatter = str
         self.widget.values = [0, 1, 2, 3]
         self._create_widget_control()
 
@@ -67,7 +61,7 @@ class TestComboField(FieldMixin, unittest.TestCase):
     def test_combo_field_formatter_changed(self):
         self.widget.values = [1, 2, 3, 4]
         self.widget.value = 2
-        self.widget.formatter = text_type
+        self.widget.formatter = str
         self._create_widget_control()
 
         self.widget.formatter = "Number {}".format
@@ -78,7 +72,7 @@ class TestComboField(FieldMixin, unittest.TestCase):
 
     def test_combo_field_formatter_set(self):
         self.widget.values = [1, 2, 3, 4]
-        self.widget.formatter = text_type
+        self.widget.formatter = str
         self._create_widget_control()
 
         with self.assertTraitChanges(self.widget, "value", count=1):

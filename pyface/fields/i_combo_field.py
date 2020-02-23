@@ -10,14 +10,8 @@
 
 """ The text field interface. """
 
-from __future__ import (
-    absolute_import,
-    division,
-    print_function,
-    unicode_literals,
-)
 
-from six import text_type
+
 
 from traits.api import Callable, HasTraits, Enum, List
 
@@ -39,7 +33,7 @@ class IComboField(IField):
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource
     #: and string.
-    formatter = Callable(text_type, allow_none=False)
+    formatter = Callable(str, allow_none=False)
 
 
 class MComboField(HasTraits):
@@ -53,7 +47,7 @@ class MComboField(HasTraits):
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource
     #: and string.
-    formatter = Callable(text_type, allow_none=False)
+    formatter = Callable(str, allow_none=False)
 
     # ------------------------------------------------------------------------
     # object interface

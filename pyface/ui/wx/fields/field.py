@@ -10,7 +10,6 @@
 
 """ The Wx-specific implementation of the text field class """
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 from traits.api import Any, Instance, Unicode, provides
 

@@ -12,7 +12,7 @@
 """
 
 
-import six.moves.builtins
+import builtins
 import os
 import sys
 import types
@@ -32,7 +32,6 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 from pyface.i_python_shell import IPythonShell, MPythonShell
 from pyface.key_pressed_event import KeyPressedEvent
 from .widget import Widget
-import six
 
 
 @provides(IPythonShell)
@@ -115,7 +114,7 @@ class PythonShell(MPythonShell, Widget):
                 self.control.clearCommand()
                 self.control.write('# Executing "%s"\n' % path)
 
-            execfile(path, prog_ns, prog_ns)
+            exec(open(path).read(), prog_ns, prog_ns)
 
             if not hidden:
                 self.control.prompt()
@@ -188,7 +187,7 @@ class PythonShell(MPythonShell, Widget):
 
         if (
             hasattr(obj, "name")
-            and isinstance(obj.name, six.string_types)
+            and isinstance(obj.name, str)
             and len(obj.name) > 0
         ):
             py_name = python_name(obj.name)
@@ -308,7 +307,7 @@ class PyShell(PyShellBase):
         self.redirectStdout(False)
         self.redirectStderr(False)
         self.redirectStdin(False)
-        six.moves.builtins.raw_input = self.raw_input
+        builtins.raw_input = self.raw_input
         self.destroy()
         super(PyShellBase, self).Destroy()
 

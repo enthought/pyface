@@ -13,8 +13,7 @@
 """
 
 
-from __future__ import print_function
-import six.moves.builtins
+import builtins
 import codeop
 import re
 import sys
@@ -35,7 +34,6 @@ from pyface.wx.drag_and_drop import PythonDropTarget
 
 
 from .widget import Widget
-import six
 
 # Constants.
 IPYTHON_VERSION = tuple(map(int, IPython.Release.version_base.split(".")))
@@ -114,10 +112,10 @@ class IPython09Controller(IPythonController):
         def my_rawinput(x=None):
             return "\n"
 
-        old_rawinput = six.moves.builtins.raw_input
-        six.moves.builtins.raw_input = my_rawinput
+        old_rawinput = builtins.raw_input
+        builtins.raw_input = my_rawinput
         IPythonController.__init__(self, *args, **kwargs)
-        six.moves.builtins.raw_input = old_rawinput
+        builtins.raw_input = old_rawinput
 
         # XXX: This is bugware for IPython bug:
         # https://bugs.launchpad.net/ipython/+bug/270998
@@ -418,7 +416,7 @@ class IPythonWidget(Widget):
 
             if (
                 hasattr(obj, "name")
-                and isinstance(obj.name, six.string_types)
+                and isinstance(obj.name, str)
                 and len(obj.name) > 0
             ):
                 py_name = python_name(obj.name)
