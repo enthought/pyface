@@ -96,7 +96,9 @@ class ToolBarManager(ActionManager):
                 aui_style |= AUI.AUI_TB_VERTICAL
             if not self.show_divider:
                 style |= wx.TB_NODIVIDER
-            tool_bar = _AuiToolBar(self, parent, -1, style=style, agwStyle=aui_style)
+            tool_bar = _AuiToolBar(
+                self, parent, -1, style=style, agwStyle=aui_style
+            )
         else:
             style |= wx.TB_FLAT
             if self.show_tool_names:
