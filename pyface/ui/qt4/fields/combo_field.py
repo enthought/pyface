@@ -14,7 +14,6 @@
 """ The Qt-specific implementation of the combo field class """
 
 
-
 from traits.api import provides
 
 from pyface.fields.i_combo_field import IComboField, MComboField

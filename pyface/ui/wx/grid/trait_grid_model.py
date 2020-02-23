@@ -15,8 +15,10 @@ defining which traits will be shown in the columns and in which order. If this
 list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
+from functools import cmp_to_key
 
 from traits.api import (
+    Any,
     Bool,
     Callable,
     Dict,
@@ -78,7 +80,7 @@ class TraitGridModel(GridModel):
     inspected and every trait from that object gets a column."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = List(Instance(list))
+    data = List(Any)
 
     # The column definitions
     columns = Union(None, List(Union(None, Str, Instance(TraitGridColumn))))
@@ -215,36 +217,23 @@ class TraitGridModel(GridModel):
             column = self._auto_columns[col]
             name = self.__get_column_name(col)
             # by default we use cmp to sort on the traits
-            sorter = cmp
+            key = None
             if (
                 isinstance(column, TraitGridColumn)
                 and column.sorter is not None
             ):
-                sorter = column.sorter
+                key = cmp_to_key(column.sorter)
         except IndexError:
             return
 
-        # now sort the data appropriately
-        def sort_function(a, b):
-            if hasattr(a, name):
-                a_trait = getattr(a, name)
-            else:
-                a_trait = None
+        def key_function(a):
+            trait = getattr(a, name, None)
+            if key:
+                return key(trait)
 
-            if hasattr(b, name):
-                b_trait = getattr(b, name)
-            else:
-                b_trait = None
-
-            return sorter(a_trait, b_trait)
-
-        self.data.sort(sort_function)
-
-        if reverse:
-            self.data.reverse()
+        self.data.sort(key=key_function, reverse=reverse)
 
         # now fire an event to tell the grid we're sorted
-        print("firing sort event")
         self.column_sorted = GridSortEvent(index=col, reversed=reverse)
 
     def is_column_read_only(self, index):

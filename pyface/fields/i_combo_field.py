@@ -11,8 +11,6 @@
 """ The text field interface. """
 
 
-
-
 from traits.api import Callable, HasTraits, Enum, List
 
 from pyface.fields.i_field import IField

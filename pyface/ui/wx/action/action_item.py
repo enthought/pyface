@@ -100,7 +100,7 @@ class _MenuItem(HasTraits):
         if action.image is not None:
             try:
                 self.control.SetBitmap(action.image.create_bitmap())
-            except:
+            except Exception:
                 # Some platforms don't allow radio buttons to have
                 # bitmaps, so just ignore the exception if it happens
                 pass
@@ -345,7 +345,7 @@ class _Tool(HasTraits):
         else:
             from pyface.api import ImageResource
 
-            image = ImageResource("foo")
+            image = ImageResource("image_not_found")
             bmp = image.create_bitmap()
 
         kind = _STYLE_TO_KIND_MAP[action.style]

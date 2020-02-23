@@ -11,7 +11,6 @@
 """ The Wx-specific implementation of the combo field class """
 
 
-
 import wx
 
 from traits.api import provides

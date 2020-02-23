@@ -11,18 +11,13 @@
 """ A file explorer example. """
 
 
-import os, sys
+import os
 
-# Put the Enthought library on the Python path.
-sys.path.append(os.path.abspath(r"..\..\.."))
-
-
-from pyface.api import ApplicationWindow, GUI, PythonShell, SplashScreen
+from pyface.api import GUI, PythonShell, SplashScreen
 from pyface.api import SplitApplicationWindow, SplitPanel
-from pyface.action.api import Action, Group, MenuBarManager, MenuManager
+from pyface.action.api import Action, MenuBarManager, MenuManager
 from pyface.action.api import Separator, StatusBarManager, ToolBarManager
 from traits.api import Float, Str
-
 
 from file_filters import AllowOnlyFolders
 from file_sorters import FileSorter

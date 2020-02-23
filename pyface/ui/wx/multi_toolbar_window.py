@@ -33,7 +33,9 @@ class MultiToolbarWindow(ApplicationWindow):
     _tool_bar_managers = List(Instance(ToolBarManager))
 
     # Map of toolbar to screen location.
-    _tool_bar_locations = Dict(Instance(ToolBarManager), Enum("top", "bottom", "left", "right"))
+    _tool_bar_locations = Dict(
+        Instance(ToolBarManager), Enum("top", "bottom", "left", "right")
+    )
 
     # ------------------------------------------------------------------------
     # Protected 'Window' interface.

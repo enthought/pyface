@@ -14,7 +14,6 @@
 """ The Qt-specific implementation of the spin field class """
 
 
-
 from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField

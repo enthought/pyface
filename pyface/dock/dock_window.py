@@ -19,12 +19,12 @@
 """
 
 
-import shelve
+from operator import attrgetter
 import os
-import wx
+import shelve
 import sys
 
-from pyface.api import SystemMetrics
+import wx
 
 from traits.api import (
     HasPrivateTraits,
@@ -36,21 +36,15 @@ from traits.api import (
     List,
     Bool,
 )
-
 from traits.trait_base import traits_home
-
 from traitsui.api import View, HGroup, VGroup, Item, Handler, error
-
 from traitsui.helper import user_name_for
-
 from traitsui.menu import Menu, Action, Separator
-
 from traitsui.dockable_view_element import DockableViewElement
-
 from traitsui.dock_window_theme import dock_window_theme, DockWindowTheme
 
+from pyface.api import SystemMetrics
 from pyface.wx.drag_and_drop import PythonDropTarget, clipboard
-
 from pyface.message_dialog import error as warning
 
 from .dock_sizer import (
@@ -1026,7 +1020,7 @@ class DockWindow(HasPrivateTraits):
                 )
 
         if len(actions) > 0:
-            actions.sort(lambda l, r: cmp(l.name, r.name))
+            actions.sort(key=attrgetter("name"))
             actions[0:0] = [Separator()]
 
         return Menu(

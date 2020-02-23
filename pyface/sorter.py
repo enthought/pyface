@@ -10,6 +10,7 @@
 
 """ Base class for all sorters. """
 
+from functools import cmp_to_key
 
 from traits.api import HasTraits
 
@@ -34,42 +35,19 @@ class Sorter(HasTraits):
 
         # This creates a comparison function with the names 'widget' and
         # 'parent' bound to the corresponding arguments to this method.
-        def comparator(node_a, node_b):
+        def key(node):
             """ Comparator. """
 
-            return self.compare(widget, parent, node_a, node_b)
+            return self.key(widget, parent, node)
 
-        nodes.sort(comparator)
+        nodes.sort(key=key)
 
         return nodes
 
-    def compare(self, widget, parent, node_a, node_b):
-        """ Returns the result of comparing two nodes.
-
-        'widget' is the widget that we are sorting nodes for.
-        'parent' is the parent node.
-        'node_a' is the the first node to compare.
-        'node_b' is the the second node to compare.
-
-        """
-
-        # Get the category for each node.
-        category_a = self.category(widget, parent, node_a)
-        category_b = self.category(widget, parent, node_b)
-
-        # If they are not in the same category then return the result of
-        # comparing the categories.
-        if category_a != category_b:
-            result = cmp(category_a, category_b)
-
-        else:
-            label_a = widget.model.get_text(node_a)
-            label_b = widget.model.get_text(node_b)
-
-            # Compare the label text.
-            result = cmp(label_a, label_b)
-
-        return result
+    def key(self, widget, parent, node):
+        category = self.category(widget, parent, node)
+        text = widget.model.get_text(node)
+        return (category, text)
 
     def category(self, widget, parent, node):
         """ Returns the category (an integer) for an node.

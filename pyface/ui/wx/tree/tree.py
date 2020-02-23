@@ -19,7 +19,15 @@ import wx
 
 
 from traits.api import (
-    Any, Bool, Callable, Enum, Event, Instance, List, Property, Str
+    Any,
+    Bool,
+    Callable,
+    Enum,
+    Event,
+    Instance,
+    List,
+    Property,
+    Str,
 )
 
 
@@ -53,7 +61,7 @@ class _Tree(wx.TreeCtrl):
         """ Creates a new tree. """
 
         # Base class constructor.
-        wx.TreeCtrl.__init__(self, parent, wxid, style=style)
+        super().__init__(parent, wxid, style=style)
 
         # The tree that we are the toolkit-specific delegate for.
         self._tree = tree
@@ -76,7 +84,7 @@ class Tree(Widget):
     # 'Tree' interface -----------------------------------------------------
 
     # The tree's filters (empty if no filtering is required).
-    filters = List(Filter)
+    filters = List(Instance(Filter))
 
     # Mode for lines connecting tree nodes which emphasize hierarchy:
     # 'appearance' - only on when lines look good,
@@ -92,7 +100,7 @@ class Tree(Widget):
     root = Property(Any)
 
     # The objects currently selected in the tree.
-    selection = List()
+    selection = List(Any)
 
     # Selection mode.
     selection_mode = Enum("single", "extended")
@@ -115,7 +123,7 @@ class Tree(Widget):
     control_right_clicked = Event  # (Point)
 
     # A key was pressed while the tree has focus.
-    key_pressed = Event(KeyPressedEvent)
+    key_pressed = Event(Instance(KeyPressedEvent))
 
     # A node has been activated (ie. double-clicked).
     node_activated = Event  # (Any)
@@ -223,8 +231,6 @@ class Tree(Widget):
 
         # Listen for changes to the model.
         self._add_model_listeners(self.model)
-
-        return
 
     # ------------------------------------------------------------------------
     # 'Tree' interface.
@@ -546,7 +552,7 @@ class Tree(Widget):
         # any child frames that my be created in response to the event to
         # appear *behind* the parent window, which is, errrr, not great ;^)
         tree.Unbind(wx.EVT_LEFT_DCLICK)
-        # tree.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self._on_tree_item_activated, id=wxid)
+        tree.Unbind(wx.EVT_TREE_ITEM_ACTIVATED)
         tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSING)
         tree.Unbind(wx.EVT_TREE_ITEM_COLLAPSED)
         tree.Unbind(wx.EVT_TREE_ITEM_EXPANDING)
@@ -959,7 +965,7 @@ class Tree(Widget):
             alt_down=event.altDown,
             control_down=event.controlDown,
             shift_down=event.shiftDown,
-            key_code=event.keyCode,
+            key_code=event.KeyCode,
         )
 
         event.Skip()
@@ -1239,7 +1245,12 @@ class Tree(Widget):
         # surely?!? Was it happening just on one platform?!?
         if self.control is None:
             return
-        data = self.control.GetItemData(wxid)
+        try:
+            data = self.control.GetItemData(wxid)
+        except Exception:
+            # most likely control is in the process of being destroyed
+            data = None
+
         if data is not None:
             # The item data is a tuple.  The first element indicates whether or
             # not we have already populated the item with its children.  The
@@ -1248,5 +1259,3 @@ class Tree(Widget):
 
             # Remove the node.
             self._remove_node(wxid, node)
-
-        return

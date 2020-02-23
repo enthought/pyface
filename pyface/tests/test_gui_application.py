@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
 import os
 from shutil import rmtree
 from tempfile import mkdtemp

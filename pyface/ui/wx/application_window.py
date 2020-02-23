@@ -69,12 +69,7 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def _create_contents(self, parent):
         panel = wx.Panel(parent, -1, name="ApplicationWindow")
-        # sizer = wx.BoxSizer(wx.HORIZONTAL)
-        # panel.SetSize((4000, 1400))
-        # sizer.SetSizeHints(panel)
-        # panel.SetSizer(sizer)
         panel.SetBackgroundColour("blue")
-
         return panel
 
     def _create_menu_bar(self, parent):
@@ -104,15 +99,12 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             self.control.SetIcon(icon.create_icon())
 
-        return
-
     # ------------------------------------------------------------------------
     # 'Window' interface.
     # ------------------------------------------------------------------------
 
     def _size_default(self):
         """ Trait initialiser. """
-
         return (800, 600)
 
     # ------------------------------------------------------------------------
@@ -131,6 +123,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         self.control._aui_manager = self._aui_manager
 
         contents = self._create_contents(self.control)
+        self._aui_manager.AddPane(contents, aui.AuiPaneInfo().CenterPane())
 
         self._create_trim_widgets(self.control)
 

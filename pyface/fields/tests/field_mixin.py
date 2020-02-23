@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
 from traits.testing.unittest_tools import UnittestTools
 
 from pyface.action.api import Action, MenuManager

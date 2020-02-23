@@ -152,7 +152,7 @@ class Splitter(LayoutContainer):
         Union(
             Instance(PaneItem),
             Instance(Tabbed),
-            Instance("pyface.tasks.task_layout.Splitter")
+            Instance("pyface.tasks.task_layout.Splitter"),
         ),
         pretty_skip=True,
     )

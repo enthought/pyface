@@ -56,7 +56,7 @@ class ImageResource(MImageResource, HasTraits):
         ref = self._get_ref(size)
 
         if ref is not None:
-            icon = wx.Icon(self.absolute_path, wx.BITMAP_TYPE_ICO)
+            icon = wx.Icon(self.absolute_path, wx.BITMAP_TYPE_ANY)
         else:
             image = self._get_image_not_found_image()
 

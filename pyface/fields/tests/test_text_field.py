@@ -9,8 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
-
 import unittest
 
 from pyface.toolkit import toolkit

@@ -9,7 +9,6 @@
 # Thanks for using Enthought open source!
 
 
-
 import unittest
 
 from traits.api import Enum, HasTraits

@@ -11,7 +11,6 @@
 """ The spin field interface. """
 
 
-
 from traits.api import HasTraits, Int, Property, Range, Tuple
 
 from pyface.fields.i_field import IField

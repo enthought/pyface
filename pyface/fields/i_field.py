@@ -11,7 +11,6 @@
 """ The text field interface. """
 
 
-
 from traits.api import Any, HasTraits, Instance, Str
 
 from pyface.i_widget import IWidget
