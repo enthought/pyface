@@ -36,7 +36,7 @@ from pyface.action.api import (
     StatusBarManager,
     WindowAction,
 )
-from traits.api import Instance, Unicode
+from traits.api import Instance, Str
 
 PYTHON_DOCS = "https://docs.python.org/{}.{}".format(*sys.version_info[:2])
 
@@ -54,7 +54,7 @@ class OpenURLAction(Action):
     """ An action that opens a web page in the system's default browser. """
 
     #: The URL to open.
-    url = Unicode
+    url = Str()
 
     def perform(self, event=None):
         """ Open a URL in a web browser. """

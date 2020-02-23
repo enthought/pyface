@@ -26,7 +26,7 @@ class ImageWidget(Widget):
     # 'ImageWidget' interface ---------------------------------------------#
 
     # The bitmap.
-    bitmap = Any
+    bitmap = Any()
 
     # Is the widget selected?
     selected = Bool(False)
@@ -34,29 +34,29 @@ class ImageWidget(Widget):
     # Events ----
 
     # A key was pressed while the tree is in focus.
-    key_pressed = Event
+    key_pressed = Event()
 
     # A node has been activated (ie. double-clicked).
-    node_activated = Event
+    node_activated = Event()
 
     # A drag operation was started on a node.
-    node_begin_drag = Event
+    node_begin_drag = Event()
 
     # A (non-leaf) node has been collapsed.
-    node_collapsed = Event
+    node_collapsed = Event()
 
     # A (non-leaf) node has been expanded.
-    node_expanded = Event
+    node_expanded = Event()
 
     # A left-click occurred on a node.
-    node_left_clicked = Event
+    node_left_clicked = Event()
 
     # A right-click occurred on a node.
-    node_right_clicked = Event
+    node_right_clicked = Event()
 
     # Private interface ----------------------------------------------------
 
-    _selected = Any
+    _selected = Any()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

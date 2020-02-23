@@ -42,7 +42,7 @@ class PythonShell(MPythonShell, Widget):
 
     # 'IPythonShell' interface ---------------------------------------------
 
-    command_executed = Event
+    command_executed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

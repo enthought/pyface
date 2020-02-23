@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 from pyface.action.api import StatusBarManager
-from traits.api import Callable, HasTraits, Instance, List, Str, Unicode
+from traits.api import Callable, HasTraits, Instance, List, Str
 
 
 from .action.schema import MenuBarSchema, ToolBarSchema
@@ -26,10 +26,10 @@ class Task(HasTraits):
     """
 
     # The task's identifier.
-    id = Str
+    id = Str()
 
     # The task's user-visible name.
-    name = Unicode
+    name = Str()
 
     # The default layout to use for the task. If not overridden, only the
     # central pane is displayed.

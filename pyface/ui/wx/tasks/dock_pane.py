@@ -51,7 +51,7 @@ class DockPane(TaskPane, MDockPane):
     """
 
     # Keep a reference to the Aui pane name in order to update dock state
-    pane_name = Str
+    pane_name = Str()
 
     # Whether the title bar of the pane is currently visible.
     caption_visible = Bool(True)

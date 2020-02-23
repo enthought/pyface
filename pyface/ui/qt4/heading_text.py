@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Int, provides, Unicode
+from traits.api import Int, provides, Str
 
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
@@ -32,7 +32,7 @@ class HeadingText(MHeadingText, Widget):
 
     level = Int(1)
 
-    text = Unicode("Default")
+    text = Str("Default")
 
     # ------------------------------------------------------------------------
     # 'object' interface.

@@ -15,7 +15,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Enum, provides, Unicode
+from traits.api import Enum, provides, Str
 
 
 from pyface.i_message_dialog import IMessageDialog, MMessageDialog
@@ -38,11 +38,11 @@ class MessageDialog(MMessageDialog, Dialog):
 
     # 'IMessageDialog' interface -------------------------------------------
 
-    message = Unicode
+    message = Str()
 
-    informative = Unicode
+    informative = Str()
 
-    detail = Unicode
+    detail = Str()
 
     severity = Enum("information", "warning", "error")
 

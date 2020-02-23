@@ -15,7 +15,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Bool, provides, Unicode
+from traits.api import Bool, provides, Str
 
 
 from pyface.i_directory_dialog import IDirectoryDialog, MDirectoryDialog
@@ -30,13 +30,13 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     # 'IDirectoryDialog' interface -----------------------------------------
 
-    default_path = Unicode
+    default_path = Str()
 
-    message = Unicode
+    message = Str()
 
     new_directory = Bool(True)
 
-    path = Unicode
+    path = Str()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

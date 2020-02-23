@@ -11,13 +11,13 @@
 
 import unittest
 
-from traits.api import Any, HasTraits, Unicode
+from traits.api import Any, HasTraits, Str
 
 from ..splash_screen_log_handler import SplashScreenLogHandler
 
 
 class DummySplashScreen(HasTraits):
-    text = Unicode(u"original")
+    text = Str(u"original")
 
 
 class DummyRecord(object):

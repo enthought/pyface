@@ -15,7 +15,7 @@ with row/column labels as the index + 1."""
 
 
 from pyface.action.api import Action, Group, MenuManager, Separator
-from traits.api import HasTraits, Any, List, Str, Bool, Trait
+from traits.api import Union, Any, Instance, List
 from pyface.wx.drag_and_drop import clipboard as enClipboard
 
 
@@ -29,13 +29,13 @@ class SimpleGridModel(GridModel):
     with row/column labels as the index + 1."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = Any
+    data = Any()
 
     # The rows in the model.
-    rows = Trait(None, None, List(GridRow))
+    rows = Union(None, List(Instance(GridRow)))
 
     # The columns in the model.
-    columns = Trait(None, None, List(GridColumn))
+    columns = Union(None, List(Instance(GridColumn)))
 
     # ------------------------------------------------------------------------
     # 'object' interface.

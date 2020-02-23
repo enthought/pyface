@@ -16,7 +16,7 @@
 import wx.stc
 
 
-from traits.api import Bool, Event, provides, Unicode
+from traits.api import Bool, Event, provides, Str
 
 
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
@@ -35,13 +35,13 @@ class PythonEditor(MPythonEditor, Widget):
 
     dirty = Bool(False)
 
-    path = Unicode
+    path = Str()
 
     show_line_numbers = Bool(True)
 
     # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

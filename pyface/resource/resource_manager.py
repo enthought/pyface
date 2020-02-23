@@ -39,7 +39,7 @@ class ResourceManager(HasTraits):
 
     # A list of additional search paths. These paths are fallbacks, and hence
     # have lower priority than the paths provided by resource objects.
-    extra_paths = List
+    extra_paths = List()
 
     # The resource factory is responsible for actually creating resources.
     # This is used so that (for example) different GUI toolkits can create

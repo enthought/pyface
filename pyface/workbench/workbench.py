@@ -18,7 +18,7 @@ import os
 from traits.etsconfig.api import ETSConfig
 from pyface.api import NO
 from traits.api import Bool, Callable, Event, HasTraits, provides
-from traits.api import Instance, List, Unicode, Vetoable
+from traits.api import Instance, List, Str, Vetoable
 from traits.api import VetoableEvent
 
 
@@ -55,7 +55,7 @@ class Workbench(HasTraits):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Unicode
+    state_location = Str()
 
     # The optional undo manager.
     undo_manager = Instance("apptools.undo.api.IUndoManager")
@@ -75,10 +75,10 @@ class Workbench(HasTraits):
     # a) The 'exit' method being called.
     # b) The last open window being closed.
     #
-    exiting = VetoableEvent
+    exiting = VetoableEvent()
 
     # Fired when the workbench has exited.
-    exited = Event
+    exited = Event()
 
     # Window lifecycle events ---------------------------------------------#
 

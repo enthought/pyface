@@ -209,16 +209,16 @@ class FastZipFile(HasPrivateTraits):
     """
 
     #: The path to the zip file:
-    path = File
+    path = File()
 
     #: The open zip file object (if None, the file is closed):
     zf = Property
 
     #: The time stamp of when the zip file was most recently accessed:
-    time_stamp = Float
+    time_stamp = Float()
 
     #: The lock used to manage access to the 'zf' trait between the two threads:
-    access = Any
+    access = Any()
 
     # -- Public Methods ---------------------------------------------------------
 
@@ -307,13 +307,13 @@ class ImageInfo(HasPrivateTraits):
     volume = Instance("ImageVolume")
 
     #: The user friendly name of the image:
-    name = Str
+    name = Str()
 
     #: The full image name (e.g. '@standard:floppy'):
-    image_name = Str
+    image_name = Str()
 
     #: A description of the image:
-    description = Str
+    description = Str()
 
     #: The category that the image belongs to:
     category = Str("General")
@@ -322,10 +322,10 @@ class ImageInfo(HasPrivateTraits):
     keywords = List(Str)
 
     #: The image width (in pixels):
-    width = Int
+    width = Int()
 
     #: The image height (in pixels):
-    height = Int
+    height = Int()
 
     #: The border inset:
     border = HasBorder
@@ -493,7 +493,7 @@ class ImageVolumeInfo(HasPrivateTraits):
 class ImageVolume(HasPrivateTraits):
 
     #: The canonical name of this volume:
-    name = Str
+    name = Str()
 
     #: The list of volume descriptors that apply to this volume:
     info = List(ImageVolumeInfo)
@@ -508,7 +508,7 @@ class ImageVolume(HasPrivateTraits):
     aliases = List(Str)
 
     #: The path of the file that defined this volume:
-    path = File
+    path = File()
 
     #: Is the path a zip file?
     is_zip_file = Bool(True)
@@ -523,7 +523,7 @@ class ImageVolume(HasPrivateTraits):
     catalog = Property(depends_on="images")
 
     #: The time stamp of when the image library was last modified:
-    time_stamp = Str
+    time_stamp = Str()
 
     #: A read-only string containing the Python code needed to construct this
     #: ImageVolume object:
@@ -881,13 +881,13 @@ class ZipFileReference(ResourceReference):
     zip_file = Instance(FastZipFile)
 
     #: The volume name:
-    volume_name = Str
+    volume_name = Str()
 
     #: The file within the zip file:
-    file_name = Str
+    file_name = Str()
 
     #: The name of the cached image file:
-    cache_file = File
+    cache_file = File()
 
     # -- The 'ResourceReference' API --------------------------------------------
 
@@ -961,7 +961,7 @@ class ImageLibrary(HasPrivateTraits):
     # -- Private Traits ---------------------------------------------------------
 
     #: Mapping from a 'virtual' library name to a 'real' library name:
-    aliases = Dict
+    aliases = Dict()
 
     # -- Public methods ---------------------------------------------------------
 

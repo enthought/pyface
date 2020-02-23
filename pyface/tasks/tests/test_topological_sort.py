@@ -17,9 +17,9 @@ from pyface.tasks.topological_sort import before_after_sort, topological_sort
 
 class TestItem(HasTraits):
 
-    id = Int
-    before = Int
-    after = Int
+    id = Int()
+    before = Int()
+    after = Int()
 
     def __init__(self, id, **traits):
         super(TestItem, self).__init__(id=id, **traits)

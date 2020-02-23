@@ -18,7 +18,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, HasTraits, provides, Unicode
+from traits.api import Bool, HasTraits, provides, Str
 from pyface.util.guisupport import start_event_loop_qt4
 
 
@@ -41,7 +41,7 @@ class GUI(MGUI, HasTraits):
 
     started = Bool(False)
 
-    state_location = Unicode
+    state_location = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

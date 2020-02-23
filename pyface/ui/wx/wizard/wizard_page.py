@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
+from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
 from pyface.api import HeadingText
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
@@ -29,19 +29,19 @@ class WizardPage(MWizardPage, HasTraits):
 
     # 'IWizardPage' interface ---------------------------------------------#
 
-    id = Str
+    id = Str()
 
-    next_id = Str
+    next_id = Str()
 
     last_page = Bool(False)
 
     complete = Bool(False)
 
-    heading = Unicode
+    heading = Str()
 
-    subheading = Unicode
+    subheading = Str()
 
-    size = Tuple
+    size = Tuple()
 
     # ------------------------------------------------------------------------
     # 'IWizardPage' interface.

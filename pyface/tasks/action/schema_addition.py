@@ -17,7 +17,7 @@ class SchemaAddition(HasTraits):
 
     # The schema addition's identifier. This optional, but if left unspecified,
     # other schema additions will be unable to refer to this one.
-    id = Str
+    id = Str()
 
     # A callable to create the item. Should have the following signature:
     #    callable() -> Action | ActionItem | Group | MenuManager |
@@ -31,17 +31,17 @@ class SchemaAddition(HasTraits):
     # - To add an item to the menu bar: ``path = "MenuBar"``
     # - To add an item to the tool bar: ``path = "ToolBar"``
     # - To add an item to a sub-menu: ``path = "MenuBar/File/New"``
-    path = Str
+    path = Str()
 
     # The item appears after the item with this ID.
     # - for groups, this is the ID of another group.
     # - for menus and actions, this is the ID of another menu or action.
-    after = Str
+    after = Str()
 
     # The action appears before the item with this ID.
     # - for groups, this is the ID of another group.
     # - for menus and actions, this is the ID of another menu or action.
-    before = Str
+    before = Str()
 
     # The action appears at the absolute specified position first or last.
     # This is useful for example to keep the File menu the first menu in a

@@ -24,13 +24,13 @@ class IProgressDialog(IDialog):
     # 'IProgressDialog' interface ---------------------------------#
 
     #: The message to display in the dialog
-    message = Str
+    message = Str()
 
     #: The minimum progress value
-    min = Int
+    min = Int()
 
     #: The maximum progress value
-    max = Int
+    max = Int()
 
     #: The margin around the progress bar
     margin = Int(5)
@@ -45,7 +45,7 @@ class IProgressDialog(IDialog):
     show_percent = Bool(False)
 
     #: Label for the 'cancel' button
-    cancel_button_label = Str
+    cancel_button_label = Str()
 
     # ------------------------------------------------------------------------
     # 'IProgressDialog' interface.
@@ -83,7 +83,7 @@ class MProgressDialog(object):
 
     #: The progress bar toolkit object
     # XXX why not the control?
-    progress_bar = Any
+    progress_bar = Any()
 
     # ------------------------------------------------------------------------
     # 'IWindow' interface.

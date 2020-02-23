@@ -12,7 +12,7 @@
 
 
 
-from traits.api import Any, HasTraits, Instance, Unicode
+from traits.api import Any, HasTraits, Instance, Str
 
 from pyface.i_widget import IWidget
 
@@ -25,10 +25,10 @@ class IField(IWidget):
     """
 
     #: The value held by the field.
-    value = Any
+    value = Any()
 
     #: A tooltip for the field.
-    tooltip = Unicode
+    tooltip = Str()
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
@@ -44,10 +44,10 @@ class MField(HasTraits):
     """ The field mix-in. """
 
     #: The value held by the field.
-    value = Any
+    value = Any()
 
     #: A tooltip for the field.
-    tooltip = Unicode
+    tooltip = Str()
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")

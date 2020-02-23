@@ -36,20 +36,20 @@ class TestDock(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    button1 = Button
-    button2 = Button
-    button3 = Button
-    button4 = Button
-    button5 = Button
-    button6 = Button
-    button7 = Button
-    button8 = Button
-    button9 = Button
-    button10 = Button
-    button11 = Button
-    button12 = Button
-    code1 = Code
-    code2 = Code
+    button1 = Button()
+    button2 = Button()
+    button3 = Button()
+    button4 = Button()
+    button5 = Button()
+    button6 = Button()
+    button7 = Button()
+    button8 = Button()
+    button9 = Button()
+    button10 = Button()
+    button11 = Button()
+    button12 = Button()
+    code1 = Code()
+    code2 = Code()
 
     # ---------------------------------------------------------------------------
     #  Traits view definitions:

@@ -12,7 +12,7 @@
 
 
 from traits.api import Any, Bool, HasTraits, Instance, Interface
-from traits.api import List, provides, Str, Unicode
+from traits.api import List, provides, Str
 
 
 class IWorkbenchPart(Interface):
@@ -26,19 +26,19 @@ class IWorkbenchPart(Interface):
     # The toolkit-specific control that represents the part.
     #
     # The framework sets this to the value returned by 'create_control'.
-    control = Any
+    control = Any()
 
     # Does the part currently have the focus?
     has_focus = Bool(False)
 
     # The part's globally unique identifier.
-    id = Str
+    id = Str()
 
     # The part's name (displayed to the user).
-    name = Unicode
+    name = Str()
 
     # The current selection within the part.
-    selection = List
+    selection = List()
 
     # The workbench window that the part is in.
     #
@@ -81,19 +81,19 @@ class MWorkbenchPart(HasTraits):
     # The toolkit-specific control that represents the part.
     #
     # The framework sets this to the value returned by 'create_control'.
-    control = Any
+    control = Any()
 
     # Does the part currently have the focus?
     has_focus = Bool(False)
 
     # The part's globally unique identifier.
-    id = Str
+    id = Str()
 
     # The part's name (displayed to the user).
-    name = Unicode
+    name = Str()
 
     # The current selection within the part.
-    selection = List
+    selection = List()
 
     # The workbench window that the part is in.
     #

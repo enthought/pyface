@@ -222,7 +222,7 @@ class LayoutName(Handler):
     # ---------------------------------------------------------------------------
 
     # Name the user wants to assign to the layout:
-    name = Str
+    name = Str()
 
     # List of currently assigned names:
     names = List(Str)
@@ -280,7 +280,7 @@ class DockWindow(HasPrivateTraits):
     handler = Any(dock_window_handler)
 
     # The 'extra' arguments to be passed to each handler call:
-    handler_args = Tuple
+    handler_args = Tuple()
 
     # Close the parent window if the DockWindow becomes empty:
     auto_close = Bool(False)
@@ -295,7 +295,7 @@ class DockWindow(HasPrivateTraits):
     sizer = Property
 
     # The id used to identify this DockWindow:
-    id = Str
+    id = Str()
 
     # ---------------------------------------------------------------------------
     #  Initializes the object:
@@ -1323,11 +1323,11 @@ class ControlInfo(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     # Name to be edited:
-    name = Str
+    name = Str()
 
     # Has the user set the name of the control?
     user_name = Bool(False)
-    id = Str
+    id = Str()
 
     # Style of drag bar/tab:
     style = DockStyle

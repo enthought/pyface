@@ -104,7 +104,7 @@ class DockPaneAction(TaskAction):
     dock_pane = Property(Instance(TaskPane), depends_on="task")
 
     # The ID of the dock pane with which the action is associated.
-    dock_pane_id = Str
+    dock_pane_id = Str()
 
     # ------------------------------------------------------------------------
     # Protected interface.

@@ -8,10 +8,10 @@ class Person(HasTraits):
     """ A simple example of some object model! """
 
     # Age in years.
-    age = Int
+    age = Int()
 
     # Name.
-    name = Str
+    name = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

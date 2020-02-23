@@ -31,7 +31,7 @@ class GridRow(HasTraits):
     read_only = Bool(False)
 
     # The label for this column
-    label = Str
+    label = Str()
 
 
 # We specify the same info for rows and for columns, but add a GridColumn
@@ -62,10 +62,10 @@ class GridModel(HasPrivateTraits):
     # 'GridModel' interface ------------------------------------------------
 
     # Fire when the structure of the underlying grid model has changed.
-    structure_changed = Event
+    structure_changed = Event()
 
     # Fire when the content of the underlying grid model has changed.
-    content_changed = Event
+    content_changed = Event()
 
     # Column model is currently sorted on.
     column_sorted = Instance(GridSortData)
@@ -76,13 +76,13 @@ class GridModel(HasPrivateTraits):
     # Events ----
 
     # A row was inserted or appended to this model
-    rows_added = Event
+    rows_added = Event()
 
     # A column was inserted or appended to this model
-    columns_added = Event
+    columns_added = Event()
 
     # A row sort took place
-    row_sorted = Event
+    row_sorted = Event()
 
     # Event fired when a cell is clicked on:
     click = Event  # = (row, column) that was clicked on

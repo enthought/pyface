@@ -45,7 +45,7 @@ class FeatureBar(HasPrivateTraits):
     control = Instance(wx.Window)
 
     # Event posted when the user has completed using the FeatureBar:
-    completed = Event
+    completed = Event()
 
     # The background color for the FeatureBar:
     bg_color = Color(0xDBEEF7, allow_none=True)

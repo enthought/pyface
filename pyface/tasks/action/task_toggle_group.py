@@ -10,7 +10,7 @@
 
 
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, List, Instance, Property, Unicode, on_trait_change
+from traits.api import Any, List, Instance, Property, Str, on_trait_change
 
 
 from pyface.tasks.task import Task
@@ -24,13 +24,13 @@ class TaskToggleAction(Action):
     # 'Action' interface ---------------------------------------------------
 
     #: The user-visible name of the action, matches the task name.
-    name = Property(Unicode, depends_on="task.name")
+    name = Property(Str, depends_on="task.name")
 
     #: The action is a toggle menu item.
     style = "toggle"
 
     #: The tooltip to display for the menu item.
-    tooltip = Property(Unicode, depends_on="name")
+    tooltip = Property(Str, depends_on="name")
 
     # 'TaskActivateAction' interface ---------------------------------------
 
@@ -80,12 +80,12 @@ class TaskToggleGroup(Group):
     # 'ActionManager' interface --------------------------------------------
 
     id = "TaskToggleGroup"
-    items = List
+    items = List()
 
     # 'TaskChangeMenuManager' interface ------------------------------------
 
     # The ActionManager to which the group belongs.
-    manager = Any
+    manager = Any()
 
     # The window that contains the group.
     window = Instance(TaskWindow)

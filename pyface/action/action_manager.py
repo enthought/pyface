@@ -48,7 +48,7 @@ class ActionManager(HasTraits):
     groups = Property(List(Group))
 
     #: The manager's unique identifier (if it has one).
-    id = Str
+    id = Str()
 
     #: Is the action manager visible?
     visible = Bool(True)
@@ -56,7 +56,7 @@ class ActionManager(HasTraits):
     # Events ----
 
     #: fixme: We probably need more granular events than this!
-    changed = Event
+    changed = Event()
 
     # Private interface ----------------------------------------------------
 

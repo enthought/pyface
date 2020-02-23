@@ -42,15 +42,15 @@ class IEditor(IWorkbenchPart):
     # The object that the editor is editing.
     #
     # The framework sets this when the editor is created.
-    obj = Any
+    obj = Any()
 
     # Editor Lifecycle Events ---------------------------------------------#
 
     # Fired when the editor is closing.
-    closing = VetoableEvent
+    closing = VetoableEvent()
 
     # Fired when the editor is closed.
-    closed = Event
+    closed = Event()
 
     # Methods -------------------------------------------------------------#
 
@@ -80,21 +80,21 @@ class MEditor(MWorkbenchPart):
     # The object that the editor is editing.
     #
     # The framework sets this when the editor is created.
-    obj = Any
+    obj = Any()
 
     # Editor Lifecycle Events ---------------------------------------------#
 
     # Fired when the editor is opening.
-    opening = VetoableEvent
+    opening = VetoableEvent()
 
     # Fired when the editor has been opened.
-    open = Event
+    open = Event()
 
     # Fired when the editor is closing.
     closing = Event(VetoableEvent)
 
     # Fired when the editor is closed.
-    closed = Event
+    closed = Event()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

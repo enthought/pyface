@@ -36,10 +36,10 @@ class LayeredPanel(Widget):
     # "Layered Panel' interface --------------------------------------------
 
     # The toolkit-specific control of the currently displayed layer.
-    current_layer = Any
+    current_layer = Any()
 
     # The name of the currently displayed layer.
-    current_layer_name = Str
+    current_layer_name = Str()
 
     # The minimum for the panel, which is the maximum of the minimum
     # sizes of the layers

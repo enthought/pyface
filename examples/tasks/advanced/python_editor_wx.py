@@ -17,7 +17,7 @@ import wx
 import wx.stc
 
 
-from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
+from traits.api import Bool, Event, Instance, File, Str, Property, provides
 from pyface.tasks.api import Editor
 from pyface.wx.python_stc import PythonSTC, faces
 
@@ -36,19 +36,19 @@ class PythonEditor(Editor):
 
     obj = Instance(File)
 
-    path = Unicode
+    path = Str()
 
     dirty = Bool(False)
 
-    name = Property(Unicode, depends_on="path")
+    name = Property(Str, depends_on="path")
 
-    tooltip = Property(Unicode, depends_on="path")
+    tooltip = Property(Str, depends_on="path")
 
     show_line_numbers = Bool(True)
 
     # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

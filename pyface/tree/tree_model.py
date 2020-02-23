@@ -23,7 +23,7 @@ class TreeModel(HasTraits):
     # 'TreeModel' interface ------------------------------------------------
 
     # The root of the model.
-    root = Any
+    root = Any()
 
     # Fired when nodes in the tree have changed in some way that affects their
     # appearance but NOT their structure or position in the tree.

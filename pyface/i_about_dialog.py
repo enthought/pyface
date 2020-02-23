@@ -11,7 +11,7 @@
 """ The interface for a simple 'About' dialog. """
 
 
-from traits.api import Instance, List, Unicode
+from traits.api import Instance, List, Str
 
 
 from pyface.i_dialog import IDialog
@@ -24,10 +24,10 @@ class IAboutDialog(IDialog):
     # 'IAboutDialog' interface ---------------------------------------------
 
     #: Additional strings to be added to the dialog.
-    additions = List(Unicode)
+    additions = List(Str)
 
     #: Additional copyright strings to be added above the standard ones.
-    copyrights = List(Unicode)
+    copyrights = List(Str)
 
     #: The image displayed in the dialog.
     image = Instance(ImageResource, ImageResource("about"))

@@ -21,10 +21,10 @@ class IWidget(Interface):
     """
 
     #: The toolkit specific control that represents the widget.
-    control = Any
+    control = Any()
 
     #: The control's optional parent control.
-    parent = Any
+    parent = Any()
 
     #: Whether or not the control is visible
     visible = Bool(True)

@@ -43,8 +43,8 @@ class AnEditor(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    code1 = Code
-    code2 = Code
+    code1 = Code()
+    code2 = Code()
     name = Str("Mike Noggins")
     address = Str("1313 Drury Lane")
     shell = PythonValue
@@ -80,8 +80,8 @@ class AView(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    code1 = Code
-    code2 = Code
+    code1 = Code()
+    code2 = Code()
 
     # ---------------------------------------------------------------------------
     #  Traits view definitions:
@@ -200,7 +200,7 @@ class EnvisageDock(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    dummy = Int
+    dummy = Int()
 
     # ---------------------------------------------------------------------------
     #  Traits view definitions:

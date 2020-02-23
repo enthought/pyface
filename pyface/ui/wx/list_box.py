@@ -32,7 +32,7 @@ class ListBox(Widget):
     # Events.
 
     # An item has been activated.
-    item_activated = Event
+    item_activated = Event()
 
     # Default style.
     STYLE = wx.LB_SINGLE | wx.LB_HSCROLL | wx.LB_NEEDED_SB

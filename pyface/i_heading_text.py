@@ -11,7 +11,7 @@
 """ Heading text. """
 
 
-from traits.api import Instance, Int, Interface, Unicode
+from traits.api import Instance, Int, Interface, Str
 
 
 from pyface.i_image_resource import IImageResource
@@ -29,7 +29,7 @@ class IHeadingText(Interface):
     level = Int(1)
 
     #: The heading text.
-    text = Unicode("Default")
+    text = Str("Default")
 
     #: The background image.
     image = Instance(IImageResource)

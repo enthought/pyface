@@ -21,7 +21,7 @@ from traits.api import (
     Instance,
     List,
     Property,
-    Unicode,
+    Str,
     Vetoable,
     on_trait_change,
 )
@@ -50,7 +50,7 @@ class TaskWindow(ApplicationWindow):
     # IWindow interface ----------------------------------------------------
 
     # Unless a title is specifically assigned, delegate to the active task.
-    title = Property(Unicode, depends_on=["active_task.name", "_title"])
+    title = Property(Str, depends_on=["active_task.name", "_title"])
 
     # TaskWindow interface ------------------------------------------------
 
@@ -81,7 +81,7 @@ class TaskWindow(ApplicationWindow):
 
     _active_state = Instance("pyface.tasks.task_window.TaskState")
     _states = List(Instance("pyface.tasks.task_window.TaskState"))
-    _title = Unicode
+    _title = Str()
     _window_backend = Instance(TaskWindowBackend)
 
     # ------------------------------------------------------------------------

@@ -17,17 +17,15 @@ from that object gets a column."""
 
 
 from traits.api import (
-    Any,
     Bool,
     Callable,
     Dict,
-    Function,
+    Union,
     HasTraits,
+    Instance,
     Int,
     List,
     Str,
-    Trait,
-    TraitError,
     Type,
 )
 
@@ -40,20 +38,20 @@ class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
 
     # The trait name for this column. This takes precedence over method
-    name = Trait(None, None, Str)
+    name = Union(None, Str)
 
     # A method name to call to get the value for this column
-    method = Trait(None, None, Str)
+    method = Union(None, Str)
 
     # A method to be used to sort on this column
-    sorter = Trait(None, None, Callable)
+    sorter = Callable
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(key_trait=Type, value_trait=Trait("", Str, Callable))
+    formats = Dict(Type, Union(Str, Callable))
 
     # A name to designate the type of this column
-    typename = Trait(None, None, Str)
+    typename = Union(None, Str)
     # note: context menus should go in here as well? but we need
     #       more info than we have available at this point
 
@@ -64,10 +62,10 @@ class TraitGridSelection(HasTraits):
     """ Structure for holding specification information. """
 
     # The selected object
-    obj = Trait(HasTraits)
+    obj = Instance(HasTraits)
 
     # The specific trait selected on the object
-    trait_name = Trait(None, None, Str)
+    trait_name = Union(None, Str)
 
 
 # The meat.
@@ -80,20 +78,20 @@ class TraitGridModel(GridModel):
     inspected and every trait from that object gets a column."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = List()  # HasTraits)
+    data = List(Instance(list))
 
     # The column definitions
-    columns = Trait(None, None, List(Trait(None, Str, TraitGridColumn)))
+    columns = Union(None, List(Union(None, Str, Instance(TraitGridColumn))))
 
     # The trait to look at to get the row name
-    row_name_trait = Trait(None, None, Str)
+    row_name_trait = Union(None, Str)
 
     # Allow column sorting?
     allow_column_sort = Bool(True)
 
     # A factory to generate new rows. If this is not None then it must
     # be a no-argument function.
-    row_factory = Trait(None, None, Function)
+    row_factory = Callable
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -137,8 +135,6 @@ class TraitGridModel(GridModel):
 
         # attach a listener to the row_name_trait
         self.on_trait_change(self._on_row_name_trait_changed, "row_name_trait")
-
-        return
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface.
@@ -613,7 +609,6 @@ class TraitGridModel(GridModel):
         self.__manage_data_listeners(event.added)
 
         self.fire_content_changed()
-        return
 
     # ------------------------------------------------------------------------
     # private interface.
@@ -712,5 +707,3 @@ class TraitGridModel(GridModel):
                     col.on_trait_change(
                         self._on_columns_changed, remove=remove
                     )
-
-        return

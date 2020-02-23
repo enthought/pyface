@@ -33,26 +33,24 @@ class TableViewer(ContentViewer):
 
     # The label provider provides, err, the labels for the items in the table
     # (a label can have text and/or an image).
-    label_provider = Instance(TableLabelProvider, factory=TableLabelProvider)
+    label_provider = Instance(TableLabelProvider, ())
 
     # The column provider provides information about the columns in the table
     # (column headers, width etc).
-    column_provider = Trait(
-        TableColumnProvider(), Instance(TableColumnProvider)
-    )
+    column_provider = Instance(TableColumnProvider, ())
 
     # The colours used to render odd and even numbered rows.
     even_row_background = Color("white")
     odd_row_background = Color((245, 245, 255))
 
     # A row has been selected.
-    row_selected = Event
+    row_selected = Event()
 
     # A row has been activated.
-    row_activated = Event
+    row_activated = Event()
 
     # A drag operation was started on a node.
-    row_begin_drag = Event
+    row_begin_drag = Event()
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.

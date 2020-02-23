@@ -31,7 +31,7 @@ class BogusTask(Task):
     id = "tests.bogus_task"
     name = "Bogus Task"
 
-    dock_panes = List
+    dock_panes = List()
 
     def create_central_pane(self):
         return TaskPane(id="tests.bogus_task.central_pane")

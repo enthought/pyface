@@ -24,7 +24,7 @@ class IPythonShell(IWidget):
     # 'IPythonShell' interface ---------------------------------------------
 
     #: A command has been executed.
-    command_executed = Event
+    command_executed = Event()
 
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)

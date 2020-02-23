@@ -11,7 +11,7 @@
 """ A widget for editing Python code. """
 
 
-from traits.api import Bool, Event, Interface, Unicode
+from traits.api import Bool, Event, Interface, Str
 
 
 from pyface.key_pressed_event import KeyPressedEvent
@@ -26,7 +26,7 @@ class IPythonEditor(Interface):
     dirty = Bool(False)
 
     #: The pathname of the file being edited.
-    path = Unicode
+    path = Str()
 
     #: Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
@@ -34,7 +34,7 @@ class IPythonEditor(Interface):
     # Events ----
 
     #: The contents of the editor has changed.
-    changed = Event
+    changed = Event()
 
     #: A key has been pressed.
     key_pressed = Event(KeyPressedEvent)

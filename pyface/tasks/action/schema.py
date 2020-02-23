@@ -26,18 +26,18 @@ from traits.api import (
     List,
     Property,
     Str,
-    Trait,
+    Union,
     Tuple,
-    Unicode,
+    Str,
 )
 
 # Trait definitions.
-SubSchema = Trait(
+SubSchema = Union(
     None,
-    Action,
-    ActionItem,
-    Group,
-    MenuManager,
+    Instance(Action),
+    Instance(ActionItem),
+    Instance(Group),
+    Instance(MenuManager),
     Instance("pyface.tasks.action.schema.GroupSchema"),
     Instance("pyface.tasks.action.schema.MenuSchema"),
     Instance("pyface.tasks.action.schema.Schema"),
@@ -49,7 +49,7 @@ class Schema(HasTraits):
     """
 
     # The schema's identifier (unique within its parent schema).
-    id = Str
+    id = Str()
 
     def _id_default(self):
         return get_unique_id(self)
@@ -119,7 +119,7 @@ class MenuSchema(Schema):
     """
 
     # The menu's user visible name.
-    name = Unicode
+    name = Str()
 
     # Does the menu require a separator before the menu item?
     separator = Bool(False)
@@ -161,7 +161,7 @@ class ToolBarSchema(Schema):
 
     # The tool bar's user visible name. Note that this name may not be used on
     # all platforms.
-    name = Unicode("Tool Bar")
+    name = Str("Tool Bar")
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))

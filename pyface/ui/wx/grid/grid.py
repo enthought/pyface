@@ -137,28 +137,28 @@ class Grid(Widget):
     # Events ----
 
     # A cell has been activated (ie. double-clicked).
-    cell_activated = Event
+    cell_activated = Event()
 
     # The current selection has changed.
-    selection_changed = Event
+    selection_changed = Event()
 
     # A drag operation was started on a cell.
-    cell_begin_drag = Event
+    cell_begin_drag = Event()
 
     # A left-click occurred on a cell.
-    cell_left_clicked = Event
+    cell_left_clicked = Event()
 
     # A left-click occurred on a cell at specific location
     # Useful if the cell contains multiple controls though the hit test
     # is left to the consumer of the event
-    cell_left_clicked_location = Event
+    cell_left_clicked_location = Event()
 
     # A right-click occurred on a cell.
-    cell_right_clicked = Event
+    cell_right_clicked = Event()
 
     # protected variables to store the location of the clicked event
-    _x_clicked = Int
-    _y_clicked = Int
+    _x_clicked = Int()
+    _y_clicked = Int()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

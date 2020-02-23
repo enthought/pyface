@@ -15,7 +15,7 @@ from traits.api import Any, HasTraits
 class GridCellRenderer(HasTraits):
 
     # The toolkit-specific renderer for this cell.
-    renderer = Any
+    renderer = Any()
 
     # A handler to be invoked on right-button mouse clicks.
     def on_right_click(self, grid, row, col):

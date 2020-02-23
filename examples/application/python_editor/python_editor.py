@@ -28,7 +28,7 @@ from traits.api import (
     HasStrictTraits,
     Int,
     Property,
-    Unicode,
+    Str,
     cached_property,
 )
 from traitsui.api import (
@@ -45,10 +45,10 @@ class LineNumberDialog(HasStrictTraits):
     """ A simple line number dialog. """
 
     #: The total number of lines.
-    max_line = Int
+    max_line = Int()
 
     #: The entered line.
-    line = Int
+    line = Int()
 
     traits_view = View(
         Item(
@@ -64,7 +64,7 @@ class PythonEditor(TraitsEditor):
     """ Tasks Editor that provides a code editor via TraitsUI """
 
     #: The Python code being edited.
-    code = Unicode
+    code = Str()
 
     #: Whether or not undo operation is possible.
     can_undo = Property(Bool, depends_on="ui.history.undoable")
@@ -79,30 +79,30 @@ class PythonEditor(TraitsEditor):
     column = Int(1)
 
     #: The currently selected text, if any.
-    selection = Unicode
+    selection = Str()
 
     #: The length of the currently selected text.
     selection_length = Property(Int, depends_on="selection")
 
     #: The start of the currently selected text, if any.
-    selection_start = Int
+    selection_start = Int()
 
     #: The end of the currently selected text, if any.
-    selection_end = Int
+    selection_end = Int()
 
     #: The position of the last save in the history.
-    _last_save = Int
+    _last_save = Int()
 
     # IEditor traits ---------------------------------------------------------
 
     #: The file being edited.
-    obj = File
+    obj = File()
 
     #: The editor's user-visible name.
-    name = Property(Unicode, depends_on="obj")
+    name = Property(Str, depends_on="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Unicode, depends_on="obj")
+    tooltip = Property(Str, depends_on="obj")
 
     dirty = Property(Bool, depends_on=["obj", "_last_save", "ui.history.now"])
 

@@ -13,7 +13,7 @@ import os
 
 
 from traits.api import Any, HasTraits, List, Property, provides
-from traits.api import Unicode
+from traits.api import Str
 
 
 from pyface.i_image_resource import IImageResource, MImageResource
@@ -28,15 +28,15 @@ class ImageResource(MImageResource, HasTraits):
     # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
-    _ref = Any
+    _ref = Any()
 
     # 'ImageResource' interface --------------------------------------------
 
-    absolute_path = Property(Unicode)
+    absolute_path = Property(Str)
 
-    name = Unicode
+    name = Str()
 
-    search_path = List
+    search_path = List()
 
     # ------------------------------------------------------------------------
     # 'ImageResource' interface.

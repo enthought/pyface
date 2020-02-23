@@ -16,7 +16,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, provides, Unicode
+from traits.api import Bool, Event, provides, Str
 
 
 from pyface.i_python_editor import IPythonEditor, MPythonEditor
@@ -35,13 +35,13 @@ class PythonEditor(MPythonEditor, Widget):
 
     dirty = Bool(False)
 
-    path = Unicode
+    path = Str()
 
     show_line_numbers = Bool(True)
 
     # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 
@@ -188,7 +188,7 @@ class PythonEditorEventFilter(QtCore.QObject):
             and obj == self.__editor.control.code
             and event.type() == QtCore.QEvent.KeyPress
         ):
-            # Pyface doesn't seem to be Unicode aware.  Only keep the key code
+            # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = event.text()
             try:

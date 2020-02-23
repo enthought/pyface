@@ -115,7 +115,7 @@ class EnvisageDock(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    dummy = Int
+    dummy = Int()
 
     # ---------------------------------------------------------------------------
     #  Traits view definitions:

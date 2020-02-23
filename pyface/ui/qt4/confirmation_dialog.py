@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Dict, Enum, Instance, provides, Unicode
+from traits.api import Bool, Dict, Enum, Instance, provides, Str
 
 
 from pyface.i_confirmation_dialog import (
@@ -41,15 +41,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     image = Instance(ImageResource)
 
-    message = Unicode
+    message = Str()
 
-    informative = Unicode
+    informative = Str()
 
-    detail = Unicode
+    detail = Str()
 
-    no_label = Unicode
+    no_label = Str()
 
-    yes_label = Unicode
+    yes_label = Str()
 
     # If we create custom buttons with the various roles, then we need to
     # keep track of the buttons so we can see what the user clicked.  It's

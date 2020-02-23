@@ -26,7 +26,7 @@ from traits.api import Color, HasTraits, Int, Str
 class Details(HasTraits):
     """ Some test data. """
 
-    name = Str
+    name = Str()
     color = Color
 
 

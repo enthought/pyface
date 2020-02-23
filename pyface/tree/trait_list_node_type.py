@@ -22,13 +22,13 @@ class TraitListNodeType(NodeType):
     # 'TraitListNodeType' interface ----------------------------------------
 
     # The type of object that provides the trait list.
-    klass = Any
+    klass = Any()
 
     # The label text.
-    text = Str
+    text = Str()
 
     # The name of the trait.
-    trait_name = Str
+    trait_name = Str()
 
     # ------------------------------------------------------------------------
     # 'NodeType' interface.

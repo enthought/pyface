@@ -23,9 +23,9 @@ class Widget(MWidget, HasTraits):
 
     # 'IWidget' interface -------------------------------------------------#
 
-    control = Any
+    control = Any()
 
-    parent = Any
+    parent = Any()
 
     # ------------------------------------------------------------------------
     # 'IWidget' interface.

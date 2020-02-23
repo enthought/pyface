@@ -10,7 +10,7 @@
 
 
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, Instance, List, Property, Unicode, on_trait_change
+from traits.api import Any, Instance, List, Property, Str, on_trait_change
 
 
 class TaskWindowToggleAction(Action):
@@ -20,7 +20,7 @@ class TaskWindowToggleAction(Action):
     # 'Action' interface -----------------------------------------------------
 
     #: The name of the action for the window.
-    name = Property(Unicode, depends_on="window.title")
+    name = Property(Str, depends_on="window.title")
 
     #: The action is a toggle action.
     style = "toggle"
@@ -66,7 +66,7 @@ class TaskWindowToggleGroup(Group):
     id = "TaskWindowToggleGroup"
 
     #: The actions in the action group
-    items = List
+    items = List()
 
     # 'TaskWindowToggleGroup' interface --------------------------------------
 
@@ -74,7 +74,7 @@ class TaskWindowToggleGroup(Group):
     application = Instance("pyface.tasks.tasks_application.TasksApplication")
 
     #: The ActionManager to which the group belongs.
-    manager = Any
+    manager = Any()
 
     # -------------------------------------------------------------------------
     # 'Group' interface.

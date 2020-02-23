@@ -17,8 +17,8 @@ from traits.api import Event, HasStrictTraits
 class ExampleObject(HasStrictTraits):
     """ Test class; target for test_event_loop_until_traits_change. """
 
-    spam = Event
-    eggs = Event
+    spam = Event()
+    eggs = Event()
 
 
 class TestGuiTestAssistant(GuiTestAssistant, unittest.TestCase):

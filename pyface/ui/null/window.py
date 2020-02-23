@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Any, Event, Property, provides, Unicode
+from traits.api import Any, Event, Property, provides, Str
 from traits.api import Tuple
 
 
@@ -30,23 +30,23 @@ class Window(MWindow, Widget):
 
     size = Property(Tuple)
 
-    title = Unicode
+    title = Str()
 
     # Events -----
 
-    activated = Event
+    activated = Event()
 
-    closed = Event
+    closed = Event()
 
-    closing = Event
+    closing = Event()
 
-    deactivated = Event
+    deactivated = Event()
 
     key_pressed = Event(KeyPressedEvent)
 
-    opened = Event
+    opened = Event()
 
-    opening = Event
+    opening = Event()
 
     # Private interface ----------------------------------------------------
 

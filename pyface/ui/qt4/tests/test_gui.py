@@ -32,7 +32,7 @@ class SimpleApplication(HasStrictTraits):
     gui = Instance(IGUI)
 
     # Event fired after the event loop starts.
-    application_running = Event
+    application_running = Event()
 
     def __init__(self):
         super(HasStrictTraits, self).__init__()

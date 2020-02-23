@@ -40,7 +40,7 @@ class ActionItem(ActionManagerItem):
     action = Instance(Action)
 
     #: The toolkit specific control created for this item.
-    control = Any
+    control = Any()
 
     #: The toolkit specific Id of the control created for this item.
     #
@@ -48,7 +48,7 @@ class ActionItem(ActionManagerItem):
     #: are created as 'wxObjectPtr's which do not have Ids, and the Id is
     #: required to manipulate the state of a tool via the tool bar 8^(
     # FIXME v3: Why is this part of the public interface?
-    control_id = Any
+    control_id = Any()
 
     # Private interface ----------------------------------------------------
 

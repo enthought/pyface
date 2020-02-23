@@ -22,13 +22,13 @@ class SetattrAction(WorkbenchAction):
     # 'SetattrAction' interface --------------------------------------------
 
     # The object that we set the attribute on.
-    obj = Any
+    obj = Any()
 
     # The name of the attribute that we set.
-    attribute_name = Str
+    attribute_name = Str()
 
     # The value that we set the attribute to.
-    value = Any
+    value = Any()
 
     # ------------------------------------------------------------------------
     # 'Action' interface.

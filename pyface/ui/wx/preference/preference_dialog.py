@@ -49,10 +49,10 @@ class PreferenceDialog(SplitDialog):
     # Private interface ----------------------------------------------------
 
     # The preference pages in the dialog (they are created lazily).
-    _pages = Dict
+    _pages = Dict()
 
     # The current visible preference page.
-    _current_page = Any
+    _current_page = Any()
 
     # ------------------------------------------------------------------------
     # Protected 'Dialog' interface.

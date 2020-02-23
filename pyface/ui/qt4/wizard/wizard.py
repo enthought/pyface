@@ -20,7 +20,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Instance, List, Property, provides, Unicode
+from traits.api import Bool, Instance, List, Property, provides, Str
 from pyface.api import Dialog
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
@@ -45,7 +45,7 @@ class Wizard(MWizard, Dialog):
 
     # 'IWindow' interface -------------------------------------------------#
 
-    title = Unicode("Wizard")
+    title = Str("Wizard")
 
     # ------------------------------------------------------------------------
     # 'IWizard' interface.

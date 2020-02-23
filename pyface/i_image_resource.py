@@ -16,7 +16,7 @@ except ImportError:  # Python 3.8 deprecation
 
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
-from traits.api import Interface, List, Unicode
+from traits.api import Interface, List, Str
 
 
 class IImageResource(Interface):
@@ -29,14 +29,14 @@ class IImageResource(Interface):
     # 'ImageResource' interface --------------------------------------------
 
     #: The absolute path to the image.
-    absolute_path = Unicode
+    absolute_path = Str()
 
     #: The name of the image.
-    name = Unicode
+    name = Str()
 
     #: A list of directories, classes or instances that will be used to search
     #: for the image (see the resource manager for more details).
-    search_path = List
+    search_path = List()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

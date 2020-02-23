@@ -35,7 +35,7 @@ class TraitsUIEditor(Editor):
 
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
-    view = Str
+    view = Str()
 
     # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.

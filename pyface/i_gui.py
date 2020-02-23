@@ -16,7 +16,7 @@ import os
 
 
 from traits.etsconfig.api import ETSConfig
-from traits.api import Bool, Interface, Unicode
+from traits.api import Bool, Interface, Str
 
 
 # Logging.
@@ -38,7 +38,7 @@ class IGUI(Interface):
     #: A directory on the local file system that we can read and write to at
     #: will.  This is used to persist layout information etc.  Note that
     #: individual toolkits will have their own directory.
-    state_location = Unicode
+    state_location = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

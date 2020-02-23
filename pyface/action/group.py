@@ -42,7 +42,7 @@ class Group(HasTraits):
 
     #: The group's unique identifier (only needs to be unique within the action
     #: manager that the group belongs to).
-    id = Str
+    id = Str()
 
     #: All of the items in the group.
     items = Property

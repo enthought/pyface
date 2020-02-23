@@ -18,10 +18,10 @@ class GridColumn(HasTraits):
     """ A description of a column in a grid. """
 
     # Column header.
-    label = Str
+    label = Str()
 
     # Type name of data allowed in the column.
-    type = Str
+    type = Str()
 
     # Is the column read-only?
     readonly = Bool(False)

@@ -19,13 +19,13 @@ class NodeEvent(HasTraits):
     """ The event fired by the tree models/node monitors etc. """
 
     # The node that has changed.
-    node = Any
+    node = Any()
 
     # The nodes (if any) that have been inserted/removed/changed.
-    children = List
+    children = List()
 
     # The nodes (if any) that have been replaced.
-    old_children = List
+    old_children = List()
 
     # The starting index for nodes that have been inserted.
-    index = Int
+    index = Int()

@@ -155,7 +155,7 @@ class TaskWindowLayout(MainWindowLayout):
 
     # 'TaskWindowLayout' interface -----------------------------------------
 
-    consumed = List
+    consumed = List()
     state = Instance("pyface.tasks.task_window.TaskState")
 
     # ------------------------------------------------------------------------

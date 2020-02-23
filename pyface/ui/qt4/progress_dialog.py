@@ -14,7 +14,7 @@ import time
 
 from pyface.qt import QtGui, QtCore
 
-from traits.api import Bool, Instance, Int, Unicode, provides
+from traits.api import Bool, Instance, Int, Str, provides
 
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from .window import Window
@@ -32,16 +32,16 @@ class ProgressDialog(MProgressDialog, Window):
     progress_bar = Instance(QtGui.QProgressBar)
 
     #: The window title
-    title = Unicode
+    title = Str()
 
     #: The text message to display in the dialog
-    message = Unicode
+    message = Str()
 
     #: The minimum value of the progress range
-    min = Int
+    min = Int()
 
     #: The minimum value of the progress range
-    max = Int
+    max = Int()
 
     #: The margin around the progress bar
     margin = Int(5)
@@ -64,7 +64,7 @@ class ProgressDialog(MProgressDialog, Window):
     dialog_size = Instance(QtCore.QRect)
 
     #: Label for the 'cancel' button
-    cancel_button_label = Unicode("Cancel")
+    cancel_button_label = Str("Cancel")
 
     #: Whether or not the dialog was cancelled by the user
     _user_cancelled = Bool(False)

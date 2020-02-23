@@ -32,7 +32,7 @@ class IWorkbench(Interface):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Str
+    state_location = Str()
 
     # The optional undo manager.
     undo_manager = Instance("apptools.undo.api.IUndoManager")
@@ -51,12 +51,12 @@ class IWorkbench(Interface):
     #
     # a) The 'exit' method being called.
     # b) The last open window being closed.
-    exiting = VetoableEvent
+    exiting = VetoableEvent()
 
     # Fired when the workbench has exited.
     #
     # This is fired after the last open window has been closed.
-    exited = Event
+    exited = Event()
 
     # Window lifecycle events ----
 

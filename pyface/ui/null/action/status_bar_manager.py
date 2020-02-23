@@ -11,23 +11,23 @@
 """ A status bar manager realizes itself in a status bar control. """
 
 
-from traits.api import Any, HasTraits, List, Property, Str, Unicode
+from traits.api import Any, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
     """ A status bar manager realizes itself in a status bar control. """
 
     # The manager's unique identifier (if it has one).
-    id = Str
+    id = Str()
 
     # The message displayed in the first field of the status bar.
     message = Property
 
     # The messages to be displayed in the status bar fields.
-    messages = List(Unicode)
+    messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
-    status_bar = Any
+    status_bar = Any()
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.

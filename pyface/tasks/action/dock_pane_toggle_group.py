@@ -17,7 +17,7 @@ from traits.api import (
     List,
     on_trait_change,
     Property,
-    Unicode,
+    Str,
 )
 
 
@@ -34,9 +34,9 @@ class DockPaneToggleAction(Action):
 
     # 'Action' interface ---------------------------------------------------
 
-    name = Property(Unicode, depends_on="dock_pane.name")
+    name = Property(Str, depends_on="dock_pane.name")
     style = "toggle"
-    tooltip = Property(Unicode, depends_on="name")
+    tooltip = Property(Str, depends_on="name")
 
     # ------------------------------------------------------------------------
     # 'Action' interface.
@@ -85,7 +85,7 @@ class DockPaneToggleGroup(Group):
 
     id = "DockPaneToggleGroup"
 
-    items = List
+    items = List()
 
     # 'DockPaneToggleGroup' interface -------------------------------------#
 
