@@ -85,7 +85,7 @@ class DockPaneToggleGroup(Group):
 
     id = "DockPaneToggleGroup"
 
-    items = List
+    items = List()
 
     # 'DockPaneToggleGroup' interface -------------------------------------#
 

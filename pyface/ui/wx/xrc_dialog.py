@@ -42,7 +42,7 @@ class XrcDialog(Dialog):
     # 'XrcDialog' interface --------------------------------------------
 
     # Path to the xrc file relative to the class's module
-    xrc_file = Str
+    xrc_file = Str()
 
     # The ID of the dialog in the file
     id = Str("dialog")

@@ -19,7 +19,7 @@ class TaskWindowLayout(LayoutContainer):
     """
 
     # The ID of the active task. If unspecified, the first task will be active.
-    active_task = Str
+    active_task = Str()
 
     # The tasks contained in the window. If an ID is specified, the task will
     # use its default layout. Otherwise, it will use the specified TaskLayout.

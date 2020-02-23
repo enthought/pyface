@@ -39,11 +39,11 @@ class MessageDialog(MMessageDialog, Dialog):
 
     # 'IMessageDialog' interface -------------------------------------------
 
-    message = Str
+    message = Str()
 
-    informative = Str
+    informative = Str()
 
-    detail = Str
+    detail = Str()
 
     severity = Enum("information", "warning", "error")
 

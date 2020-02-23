@@ -24,7 +24,7 @@ class ListBoxModel(HasTraits):
     # Events ----
 
     #: Fired when the contents of the list have changed.
-    list_changed = Event
+    list_changed = Event()
 
     def get_item_count(self):
         """ Get the number of items in the list.

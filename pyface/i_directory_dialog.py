@@ -29,17 +29,17 @@ class IDirectoryDialog(IDialog):
     #: specific.
     # FIXME v3: The default should be the current directory.  (It seems wx is
     # the problem, although the file dialog does the right thing.)
-    default_path = Str
+    default_path = Str()
 
     #: The message to display in the dialog.  The default is toolkit specific.
-    message = Str
+    message = Str()
 
     #: True iff the dialog should include a button that allows the user to
     #: create a new directory.
     new_directory = Bool(True)
 
     #: The path of the chosen directory.
-    path = Str
+    path = Str()
 
 
 class MDirectoryDialog(object):

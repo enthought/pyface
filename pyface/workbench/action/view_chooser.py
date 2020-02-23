@@ -21,10 +21,10 @@ class Category(HasTraits):
     """ A view category. """
 
     # The name of the category.
-    name = Str
+    name = Str()
 
     # The views in the category.
-    views = List
+    views = List()
 
 
 class WorkbenchWindowTreeNode(TreeNode):
@@ -122,7 +122,7 @@ class ViewChooser(HasTraits):
 
     # The currently selected tree item (at any point in time this might be
     # either None, a view category, or a view).
-    selected = Any
+    selected = Any()
 
     # The selected view (None if the selected item is not a view).
     view = Instance(IView)

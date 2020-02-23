@@ -29,14 +29,14 @@ class IImageResource(Interface):
     # 'ImageResource' interface --------------------------------------------
 
     #: The absolute path to the image.
-    absolute_path = Str
+    absolute_path = Str()
 
     #: The name of the image.
-    name = Str
+    name = Str()
 
     #: A list of directories, classes or instances that will be used to search
     #: for the image (see the resource manager for more details).
-    search_path = List
+    search_path = List()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

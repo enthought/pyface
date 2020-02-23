@@ -45,7 +45,7 @@ class MainWindowLayout(HasTraits):
     # 'MainWindowLayout' interface -----------------------------------------
 
     # The QMainWindow control to lay out.
-    control = Any
+    control = Any()
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' interface.

@@ -101,18 +101,18 @@ class DockWindowFeature(HasPrivateTraits):
 
     # The tooltip to display when the pointer hovers over the image. The value
     # can be changed dynamically to reflect changes in the feature's state.
-    tooltip = Str
+    tooltip = Str()
 
     # The x-coordinate of a pointer event that occurred over the feature's
     # image. This can be used in cases where the event-handling for a feature is
     # sensitive to the position of the pointer relative to the feature image.
     # This is not normally the case, but the information is available if it is
     # needed.
-    x = Int
+    x = Int()
 
     # The y-coordinate of a pointer event that occurred over the feature's
     # image.
-    y = Int
+    y = Int()
 
     # A boolean value that specifies whether the shift key was being held down
     # when a mouse event occurred.

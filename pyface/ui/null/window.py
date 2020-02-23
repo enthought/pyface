@@ -30,23 +30,23 @@ class Window(MWindow, Widget):
 
     size = Property(Tuple)
 
-    title = Str
+    title = Str()
 
     # Events -----
 
-    activated = Event
+    activated = Event()
 
-    closed = Event
+    closed = Event()
 
-    closing = Event
+    closing = Event()
 
-    deactivated = Event
+    deactivated = Event()
 
     key_pressed = Event(KeyPressedEvent)
 
-    opened = Event
+    opened = Event()
 
-    opening = Event
+    opening = Event()
 
     # Private interface ----------------------------------------------------
 

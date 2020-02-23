@@ -29,7 +29,7 @@ class StatusBarManager(HasTraits):
     messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
-    status_bar = Any
+    status_bar = Any()
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.

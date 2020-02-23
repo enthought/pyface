@@ -30,7 +30,7 @@ class NodeMonitor(HasTraits):
     # 'NodeMonitor' interface ---------------------------------------------#
 
     # The node that we are monitoring.
-    node = Any
+    node = Any()
 
     # Events ----
 

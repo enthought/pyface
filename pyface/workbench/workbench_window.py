@@ -45,7 +45,7 @@ class WorkbenchWindow(ApplicationWindow):
     editor_manager = Instance(IEditorManager)
 
     # The current selection within the window.
-    selection = List
+    selection = List()
 
     # The workbench that the window belongs to.
     workbench = Instance("pyface.workbench.api.IWorkbench")
@@ -115,7 +115,7 @@ class WorkbenchWindow(ApplicationWindow):
     #    visible when the window last closed is shown. If this is not the empty
     #    string then the perspective with this Id is shown.
     #
-    default_perspective_id = Str
+    default_perspective_id = Str()
 
     # 'WorkbenchWindow' interface -----------------------------------------#
 

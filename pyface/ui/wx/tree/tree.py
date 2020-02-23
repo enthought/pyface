@@ -92,7 +92,7 @@ class Tree(Widget):
     root = Property(Any)
 
     # The objects currently selected in the tree.
-    selection = List
+    selection = List()
 
     # Selection mode.
     selection_mode = Enum("single", "extended")

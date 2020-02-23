@@ -34,7 +34,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Str
+    name = Str()
 
     # Does the menu require a separator before the menu item name?
     separator = Bool(True)

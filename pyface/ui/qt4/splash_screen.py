@@ -41,11 +41,11 @@ class SplashScreen(MSplashScreen, Window):
 
     show_log_messages = Bool(True)
 
-    text = Str
+    text = Str()
 
-    text_color = Any
+    text_color = Any()
 
-    text_font = Any
+    text_font = Any()
 
     text_location = Tuple(5, 5)
 

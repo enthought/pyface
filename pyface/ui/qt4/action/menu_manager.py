@@ -37,7 +37,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Str
+    name = Str()
 
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)

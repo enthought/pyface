@@ -19,7 +19,7 @@ class MainWindow(ApplicationWindow):
     my_timer = Any()
 
     # Count each time the timer task executes.
-    counter = Int
+    counter = Int()
 
     def __init__(self, **traits):
         """ Creates a new application window. """

@@ -34,7 +34,7 @@ class NodeManager(HasPrivateTraits):
 
     # fixme: Where should the system actions go?  The node tree, the node
     # tree model, here?!?
-    system_actions = List
+    system_actions = List()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

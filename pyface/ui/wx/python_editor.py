@@ -35,13 +35,13 @@ class PythonEditor(MPythonEditor, Widget):
 
     dirty = Bool(False)
 
-    path = Str
+    path = Str()
 
     show_line_numbers = Bool(True)
 
     # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

@@ -80,12 +80,12 @@ class TaskToggleGroup(Group):
     # 'ActionManager' interface --------------------------------------------
 
     id = "TaskToggleGroup"
-    items = List
+    items = List()
 
     # 'TaskChangeMenuManager' interface ------------------------------------
 
     # The ActionManager to which the group belongs.
-    manager = Any
+    manager = Any()
 
     # The window that contains the group.
     window = Instance(TaskWindow)

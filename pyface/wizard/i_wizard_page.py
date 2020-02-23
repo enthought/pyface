@@ -20,10 +20,10 @@ class IWizardPage(Interface):
     # 'IWizardPage' interface ---------------------------------------------#
 
     # The unique Id of the page within the wizard.
-    id = Str
+    id = Str()
 
     # The Id of the next page.
-    next_id = Str
+    next_id = Str()
 
     # Set if this is the last page of the wizard.  It can be ignored for
     # simple linear wizards.
@@ -33,13 +33,13 @@ class IWizardPage(Interface):
     complete = Bool(False)
 
     # The page heading.
-    heading = Str
+    heading = Str()
 
     # The page sub-heading.
-    subheading = Str
+    subheading = Str()
 
     # The size of the page.
-    size = Tuple
+    size = Tuple()
 
     # ------------------------------------------------------------------------
     # 'IWizardPage' interface.

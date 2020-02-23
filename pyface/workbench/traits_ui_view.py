@@ -30,7 +30,7 @@ class TraitsUIView(View):
 
     # The object that we povide a traits UI of (this defaults to the view
     # iteself ie. 'self').
-    obj = Any
+    obj = Any()
 
     # The traits UI that represents the view.
     #
@@ -39,7 +39,7 @@ class TraitsUIView(View):
 
     # The name of the traits UI view used to create the UI (if not specified,
     # the default traits UI view is used).
-    view = Str
+    view = Str()
 
     # ------------------------------------------------------------------------
     # 'IWorkbenchPart' interface.

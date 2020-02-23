@@ -42,15 +42,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     image = Instance(ImageResource)
 
-    message = Str
+    message = Str()
 
-    informative = Str
+    informative = Str()
 
-    detail = Str
+    detail = Str()
 
-    no_label = Str
+    no_label = Str()
 
-    yes_label = Str
+    yes_label = Str()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

@@ -22,7 +22,7 @@ class ActionEvent(HasTraits):
     # 'ActionEvent' interface ---------------------------------------------#
 
     #: When the action was performed (time.time()).
-    when = Float
+    when = Float()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

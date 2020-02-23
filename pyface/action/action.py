@@ -34,7 +34,7 @@ class Action(HasTraits):
     # 'Action' interface ---------------------------------------------------
 
     #: Keyboard accelerator (by default the action has NO accelerator).
-    accelerator = Str
+    accelerator = Str()
 
     #: Is the action checked?  This is only relevant if the action style is
     #: 'radio' or 'toggle'.
@@ -43,7 +43,7 @@ class Action(HasTraits):
     #: A longer description of the action (used for context sensitive help etc).
     #: If no description is specified, the tooltip is used instead (and if there
     #: is no tooltip, then well, maybe you just hate your users ;^).
-    description = Str
+    description = Str()
 
     #: Is the action enabled?
     enabled = Bool(True)
@@ -52,13 +52,13 @@ class Action(HasTraits):
     visible = Bool(True)
 
     #: The action's unique identifier (may be None).
-    id = Str
+    id = Str()
 
     #: The action's image (displayed on tool bar tools etc).
     image = Image
 
     #: The action's name (displayed on menus/tool bar tools etc).
-    name = Str
+    name = Str()
 
     #: An (optional) callable that will be invoked when the action is performed.
     on_perform = Callable
@@ -67,7 +67,7 @@ class Action(HasTraits):
     style = Enum("push", "radio", "toggle", "widget")
 
     #: A short description of the action used for tooltip text etc.
-    tooltip = Str
+    tooltip = Str()
 
     #: An (optional) callable to create the toolkit control for widget style.
     control_factory = Callable

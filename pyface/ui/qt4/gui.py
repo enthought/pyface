@@ -41,7 +41,7 @@ class GUI(MGUI, HasTraits):
 
     started = Bool(False)
 
-    state_location = Str
+    state_location = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

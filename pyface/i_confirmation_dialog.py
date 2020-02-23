@@ -35,19 +35,19 @@ class IConfirmationDialog(IDialog):
 
     #: The message displayed in the body of the dialog (use the inherited
     #: 'title' trait to set the title of the dialog itself).
-    message = Str
+    message = Str()
 
     #: Some informative text to display below the main message
-    informative = Str
+    informative = Str()
 
     #: Some additional details that can be exposed by the user
-    detail = Str
+    detail = Str()
 
     #: The label for the 'no' button.  The default is toolkit specific.
-    no_label = Str
+    no_label = Str()
 
     #: The label for the 'yes' button.  The default is toolkit specific.
-    yes_label = Str
+    yes_label = Str()
 
 
 class MConfirmationDialog(object):

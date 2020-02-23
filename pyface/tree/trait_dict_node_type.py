@@ -22,13 +22,13 @@ class TraitDictNodeType(NodeType):
     # 'TraitDictNodeType' interface ----------------------------------------
 
     # The type of object that provides the trait dictionary.
-    klass = Any
+    klass = Any()
 
     # The label text.
-    text = Str
+    text = Str()
 
     # The trait name.
-    trait_name = Str
+    trait_name = Str()
 
     # ------------------------------------------------------------------------
     # 'NodeType' interface.

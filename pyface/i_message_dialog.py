@@ -23,13 +23,13 @@ class IMessageDialog(IDialog):
     # 'IMessageDialog' interface -------------------------------------------
 
     #: The message to display in the dialog.
-    message = Str
+    message = Str()
 
     #: More information about the message to be displayed.
-    informative = Str
+    informative = Str()
 
     #: More detail about the message to be displayed in the dialog.
-    detail = Str
+    detail = Str()
 
     #: The severity of the message.
     severity = Enum("information", "warning", "error")

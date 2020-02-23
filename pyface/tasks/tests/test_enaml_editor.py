@@ -36,7 +36,7 @@ from pyface.tasks.api import EnamlEditor
 
 class DummyStrEditor(EnamlEditor):
 
-    obj = Str
+    obj = Str()
 
     def create_component(self):
         return Label(text=self.obj)

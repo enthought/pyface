@@ -44,7 +44,7 @@ class TreeItem(HasTraits):
     children = List(Instance("TreeItem"))
 
     # Arbitrary data associated with the item.
-    data = Any
+    data = Any()
 
     # Does the item have any children?
     has_children = Property(Bool)

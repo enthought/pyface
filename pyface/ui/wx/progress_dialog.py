@@ -37,7 +37,7 @@ class ProgressBar(Widget):
     direction = Enum("horizontal", "horizontal", "vertical")
 
     #: The maximum value for the progress bar.
-    _max = Int
+    _max = Int()
 
     def __init__(
         self,
@@ -85,16 +85,16 @@ class ProgressDialog(MProgressDialog, Window):
     progress_bar = Instance(ProgressBar)
 
     #: The window title
-    title = Str
+    title = Str()
 
     #: The text message to display in the dialog
     message = Property()
 
     #: The minimum value of the progress range
-    min = Int
+    min = Int()
 
     #: The minimum value of the progress range
-    max = Int
+    max = Int()
 
     #: The margin around the progress bar
     margin = Int(5)

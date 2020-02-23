@@ -13,7 +13,7 @@ class PythonBrowserPane(TraitsDockPane):
     # FileBrowserPane interface ----------------------------------------------
 
     # Fired when a file is double-clicked.
-    activated = Event
+    activated = Event()
 
     # The list of wildcard filters for filenames.
     filters = List(Str, ["*.py"])

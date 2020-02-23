@@ -34,19 +34,19 @@ class WizardPage(MWizardPage, HasTraits):
 
     # 'IWizardPage' interface ---------------------------------------------#
 
-    id = Str
+    id = Str()
 
-    next_id = Str
+    next_id = Str()
 
     last_page = Bool(False)
 
     complete = Bool(False)
 
-    heading = Str
+    heading = Str()
 
-    subheading = Str
+    subheading = Str()
 
-    size = Tuple
+    size = Tuple()
 
     # ------------------------------------------------------------------------
     # 'IWizardPage' interface.

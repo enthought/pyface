@@ -59,7 +59,7 @@ class ViewMenuManager(MenuManager):
     # 'Private' interface -------------------------------------------------#
 
     # The group containing the view hide/show actions.
-    _view_group = Any
+    _view_group = Any()
 
     # ------------------------------------------------------------------------
     # 'ActionManager' interface.

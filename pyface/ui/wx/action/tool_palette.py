@@ -34,20 +34,20 @@ PART = """<wxp module="wx" class="Panel"><param name="id" value="%s"><param name
 
 class ToolPalette(Widget):
 
-    tools = List
+    tools = List()
 
-    id_tool_map = Dict
+    id_tool_map = Dict()
 
-    tool_id_to_button_map = Dict
+    tool_id_to_button_map = Dict()
 
     button_size = Tuple((25, 25), Int, Int)
 
     is_realized = Bool(False)
 
-    tool_listeners = Dict
+    tool_listeners = Dict()
 
     # Maps a button id to its tool id.
-    button_tool_map = Dict
+    button_tool_map = Dict()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

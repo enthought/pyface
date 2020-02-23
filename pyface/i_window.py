@@ -31,33 +31,33 @@ class IWindow(IWidget):
     # 'IWindow' interface -----------------------------------------------------
 
     #: The position of the window.
-    position = Tuple
+    position = Tuple()
 
     #: The size of the window.
-    size = Tuple
+    size = Tuple()
 
     #: The window title.
-    title = Str
+    title = Str()
 
     # Window Events ----------------------------------------------------------
 
     #: The window has been opened.
-    opened = Event
+    opened = Event()
 
     #: The window is about to open.
-    opening = VetoableEvent
+    opening = VetoableEvent()
 
     #: The window has been activated.
-    activated = Event
+    activated = Event()
 
     #: The window has been closed.
-    closed = Event
+    closed = Event()
 
     #: The window is about to be closed.
-    closing = VetoableEvent
+    closing = VetoableEvent()
 
     #: The window has been deactivated.
-    deactivated = Event
+    deactivated = Event()
 
     #: A key was pressed while the window had focus.
     # FIXME v3: This smells of a hack. What's so special about key presses?

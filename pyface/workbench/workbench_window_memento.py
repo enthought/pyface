@@ -17,10 +17,10 @@ class WorkbenchWindowMemento(HasTraits):
     """ A memento for a workbench window. """
 
     # The Id of the active perspective.
-    active_perspective_id = Str
+    active_perspective_id = Str()
 
     # The memento for the editor area.
-    editor_area_memento = Any
+    editor_area_memento = Any()
 
     # Mementos for each perspective that has been seen.
     #
@@ -29,10 +29,10 @@ class WorkbenchWindowMemento(HasTraits):
     perspective_mementos = Dict(Str, Any)
 
     # The position of the window.
-    position = Tuple
+    position = Tuple()
 
     # The size of the window.
-    size = Tuple
+    size = Tuple()
 
     # Any extra data the toolkit implementation may want to keep.
     toolkit_data = Any()

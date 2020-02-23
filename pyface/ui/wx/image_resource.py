@@ -35,15 +35,15 @@ class ImageResource(MImageResource, HasTraits):
     # Private interface ----------------------------------------------------
 
     # The resource manager reference for the image.
-    _ref = Any
+    _ref = Any()
 
     # 'ImageResource' interface --------------------------------------------
 
     absolute_path = Property(Str)
 
-    name = Str
+    name = Str()
 
-    search_path = List
+    search_path = List()
 
     # ------------------------------------------------------------------------
     # 'ImageResource' interface.

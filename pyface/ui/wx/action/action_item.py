@@ -41,7 +41,7 @@ class _MenuItem(HasTraits):
     checked = Bool(False)
 
     # A controller object we delegate taking actions through (if any).
-    controller = Any
+    controller = Any()
 
     # Is the item enabled?
     enabled = Bool(True)
@@ -51,7 +51,7 @@ class _MenuItem(HasTraits):
 
     # The radio group we are part of (None if the menu item is not part of such
     # a group).
-    group = Any
+    group = Any()
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -298,7 +298,7 @@ class _Tool(HasTraits):
     checked = Bool(False)
 
     # A controller object we delegate taking actions through (if any).
-    controller = Any
+    controller = Any()
 
     # Is the item enabled?
     enabled = Bool(True)
@@ -308,7 +308,7 @@ class _Tool(HasTraits):
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
-    group = Any
+    group = Any()
 
     # ------------------------------------------------------------------------
     # 'object' interface.
@@ -540,7 +540,7 @@ class _PaletteTool(HasTraits):
 
     # The radio group we are part of (None if the tool is not part of such a
     # group).
-    group = Any
+    group = Any()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

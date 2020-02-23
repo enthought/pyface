@@ -38,10 +38,10 @@ class TaskFactory(HasStrictTraits):
 
     #: The task factory's unique identifier. This ID is assigned to all tasks
     #: created by the factory.
-    id = Str
+    id = Str()
 
     #: The task factory's user-visible name.
-    name = Str
+    name = Str()
 
     #: A callable with the following signature:
     #:

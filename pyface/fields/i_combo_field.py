@@ -28,7 +28,7 @@ class IComboField(IField):
     value = Enum(values="values")
 
     #: The list of available values for the combobox.
-    values = List
+    values = List()
 
     #: Callable that converts a value to text plus an optional icon.
     #: Should return either a uncode string or a tuple of image resource

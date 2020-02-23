@@ -20,7 +20,7 @@ class Person(HasTraits):
     """ Model class representing a person """
 
     #: the name of the person
-    name = Str
+    name = Str()
 
     #: the age of the person
     age = Int(18)

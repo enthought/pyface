@@ -72,7 +72,7 @@ class IPython09Controller(IPythonController):
     # In the parent class, this is a property that expects the
     # container to be a frame, thus it fails when modified.
     # The title of the IPython windows (not displayed in Envisage)
-    title = Str
+    title = Str()
 
     # Cached value of the banner for the IPython shell.
     # NOTE: The WxController object (declared in wx_frontend module) contains
@@ -330,7 +330,7 @@ class IPythonWidget(Widget):
 
     # 'IPythonShell' interface ---------------------------------------------
 
-    command_executed = Event
+    command_executed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

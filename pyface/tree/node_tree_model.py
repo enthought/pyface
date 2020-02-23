@@ -29,7 +29,7 @@ class NodeTreeModel(TreeModel):
     # Private interface ----------------------------------------------------
 
     # Node monitors.
-    _monitors = Dict
+    _monitors = Dict()
 
     # ------------------------------------------------------------------------
     # 'TreeModel' interface.

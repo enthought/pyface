@@ -66,7 +66,7 @@ class TaskWindowToggleGroup(Group):
     id = "TaskWindowToggleGroup"
 
     #: The actions in the action group
-    items = List
+    items = List()
 
     # 'TaskWindowToggleGroup' interface --------------------------------------
 
@@ -74,7 +74,7 @@ class TaskWindowToggleGroup(Group):
     application = Instance("pyface.tasks.tasks_application.TasksApplication")
 
     #: The ActionManager to which the group belongs.
-    manager = Any
+    manager = Any()
 
     # -------------------------------------------------------------------------
     # 'Group' interface.

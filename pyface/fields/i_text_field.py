@@ -21,38 +21,38 @@ class ITextField(IField):
     """ The text field interface. """
 
     #: The value held by the field.
-    value = Str
+    value = Str()
 
     #: Should the text trait be updated on user edits, or when done editing.
     update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
-    placeholder = Str
+    placeholder = Str()
 
     #: Display typed text, or one of several hidden "password" modes.
     echo = Enum("normal", "password")
 
     #: Whether or not the field is read-only.
-    read_only = Bool
+    read_only = Bool()
 
 
 class MTextField(HasTraits):
     """ The text field mix-in. """
 
     #: The value held by the field.
-    value = Str
+    value = Str()
 
     #: Should the value be updated on every keystroke, or when done editing.
     update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
-    placeholder = Str
+    placeholder = Str()
 
     #: Display typed text, or one of several hidden "password" modes.
     echo = Enum("normal", "password")
 
     #: Whether or not the field is read-only.
-    read_only = Bool
+    read_only = Bool()
 
     # ------------------------------------------------------------------------
     # Private interface

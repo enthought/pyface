@@ -81,7 +81,7 @@ class TaskWindow(ApplicationWindow):
 
     _active_state = Instance("pyface.tasks.task_window.TaskState")
     _states = List(Instance("pyface.tasks.task_window.TaskState"))
-    _title = Str
+    _title = Str()
     _window_backend = Instance(TaskWindowBackend)
 
     # ------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class ActionManagerItem(HasTraits):
 
     #: The item's unique identifier ('unique' in this case means unique within
     #: its group)
-    id = Str
+    id = Str()
 
     #: The group the item belongs to.
     parent = Instance("pyface.action.api.Group")

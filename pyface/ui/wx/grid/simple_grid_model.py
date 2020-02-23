@@ -29,7 +29,7 @@ class SimpleGridModel(GridModel):
     with row/column labels as the index + 1."""
 
     # A 2-dimensional list/array containing the grid data.
-    data = Any
+    data = Any()
 
     # The rows in the model.
     rows = Either(None, List(Instance(GridRow)))

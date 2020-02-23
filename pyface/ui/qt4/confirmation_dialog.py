@@ -41,15 +41,15 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     image = Instance(ImageResource)
 
-    message = Str
+    message = Str()
 
-    informative = Str
+    informative = Str()
 
-    detail = Str
+    detail = Str()
 
-    no_label = Str
+    no_label = Str()
 
-    yes_label = Str
+    yes_label = Str()
 
     # If we create custom buttons with the various roles, then we need to
     # keep track of the buttons so we can see what the user clicked.  It's

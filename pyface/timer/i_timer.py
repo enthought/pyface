@@ -62,7 +62,7 @@ class ITimer(Interface):
     expire = Either(None, Float)
 
     #: Whether or not the timer is currently running.
-    active = Bool
+    active = Bool()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -99,7 +99,7 @@ class IEventTimer(ITimer):
     # IEventTimer interface --------------------------------------------------
 
     #: A traits Event to fire when the callback happens.
-    timeout = Event
+    timeout = Event()
 
 
 class ICallbackTimer(ITimer):
@@ -111,10 +111,10 @@ class ICallbackTimer(ITimer):
     callback = Callable
 
     #: Positional arguments to give the callback.
-    args = Tuple
+    args = Tuple()
 
     #: Keyword arguments to give the callback.
-    kwargs = Dict
+    kwargs = Dict()
 
 
 @provides(ITimer)
@@ -148,10 +148,10 @@ class BaseTimer(ABCHasTraits):
     # Private interface ------------------------------------------------------
 
     #: Whether or not the timer is currently running.
-    _active = Bool
+    _active = Bool()
 
     #: The most recent start time.
-    _start_time = Float
+    _start_time = Float()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -265,7 +265,7 @@ class MEventTimer(HasTraits):
     # IEventTimer interface --------------------------------------------------
 
     #: A traits Event to fire when the callback happens.
-    timeout = Event
+    timeout = Event()
 
     # -------------------------------------------------------------------------
     # ITimer interface
@@ -289,10 +289,10 @@ class MCallbackTimer(HasTraits):
     callback = Callable
 
     #: Positional arguments to give the callback.
-    args = Tuple
+    args = Tuple()
 
     #: Keyword arguments to give the callback.
-    kwargs = Dict
+    kwargs = Dict()
 
     # -------------------------------------------------------------------------
     # ITimer interface

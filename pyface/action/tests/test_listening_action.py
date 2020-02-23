@@ -33,10 +33,10 @@ class WatchedObject(HasTraits):
     is_also_visible = Bool(True)
 
     #: Flag that is set when method called
-    was_called = Bool
+    was_called = Bool()
 
     #: Child object to test dotted lookup
-    child = Any
+    child = Any()
 
     def callback(self):
         self.was_called = True

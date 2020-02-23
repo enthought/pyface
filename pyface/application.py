@@ -90,21 +90,21 @@ class Application(HasStrictTraits):
     name = Str("Pyface Application")
 
     #: Human-readable company name
-    company = Str
+    company = Str()
 
     #: Human-readable description of the application
-    description = Str
+    description = Str()
 
     # Infrastructure ---------------------------------------------------------
 
     #: The application's globally unique identifier.
-    id = Str
+    id = Str()
 
     #: Application home directory (for preferences, logging, etc.)
-    home = Directory
+    home = Directory()
 
     #: User data directory (for user files, projects, etc)
-    user_data = Directory
+    user_data = Directory()
 
     # Application lifecycle --------------------------------------------------
 
@@ -120,7 +120,7 @@ class Application(HasStrictTraits):
 
     #: Fired when the application is starting. Called immediately before the
     #: stop method is run.
-    exiting = VetoableEvent
+    exiting = VetoableEvent()
 
     #: Fired when the application is starting. Called immediately before the
     #: stop method is run.

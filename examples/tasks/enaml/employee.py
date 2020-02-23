@@ -19,10 +19,10 @@ class Person(HasTraits):
     """
 
     # The last name of the person as a string
-    last_name = Str
+    last_name = Str()
 
     # The first name of the person as a string
-    first_name = Str
+    first_name = Str()
 
     # The date of birth of the person
     dob = Date(datetime.date(1970, 1, 1))
@@ -48,7 +48,7 @@ class Employer(Person):
     """
 
     # The name of the company
-    company_name = Str
+    company_name = Str()
 
 
 class Employee(Person):

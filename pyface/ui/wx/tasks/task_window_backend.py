@@ -30,7 +30,7 @@ class AUILayout(TaskLayout):
     """ The layout for a main window's dock area using AUI Perspectives
     """
 
-    perspective = Str
+    perspective = Str()
 
 
 class TaskWindowBackend(MTaskWindowBackend):
@@ -196,7 +196,7 @@ class TaskWindowLayout(MainWindowLayout):
 
     # 'TaskWindowLayout' interface -----------------------------------------
 
-    consumed = List
+    consumed = List()
     state = Instance("pyface.tasks.task_window.TaskState")
 
     # ------------------------------------------------------------------------

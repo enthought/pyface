@@ -38,7 +38,7 @@ class IGUI(Interface):
     #: A directory on the local file system that we can read and write to at
     #: will.  This is used to persist layout information etc.  Note that
     #: individual toolkits will have their own directory.
-    state_location = Str
+    state_location = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

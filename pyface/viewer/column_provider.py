@@ -22,7 +22,7 @@ class ColumnProvider(HasTraits):
     """
 
     # The number of columns.
-    column_count = Int
+    column_count = Int()
 
     # ------------------------------------------------------------------------
     # 'TableColumnProvider' interface.

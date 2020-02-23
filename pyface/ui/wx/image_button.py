@@ -57,7 +57,7 @@ class ImageButton(Widget):
     image = Instance(ImageResource, allow_none=True)
 
     # The (optional) label:
-    label = Str
+    label = Str()
 
     # Extra padding to add to both the left and right sides:
     width_padding = Range(0, 31, 7)
@@ -75,7 +75,7 @@ class ImageButton(Widget):
     selected = Bool(False)
 
     # Fired when a 'button' or 'toolbar' style control is clicked:
-    clicked = Event
+    clicked = Event()
 
     # ---------------------------------------------------------------------------
     #  Initializes the object:

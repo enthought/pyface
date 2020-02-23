@@ -40,7 +40,7 @@ class IDockPane(ITaskPane):
     movable = Bool(True)
 
     # The size of the dock pane. Note that this value is read-only.
-    size = Tuple
+    size = Tuple()
 
     # Whether the pane is currently visible.
     visible = Bool(False)
@@ -73,7 +73,7 @@ class MDockPane(HasTraits):
     floatable = Bool(True)
     floating = Bool(False)
     movable = Bool(True)
-    size = Tuple
+    size = Tuple()
     visible = Bool(False)
     caption_visible = Bool(True)
     dock_layer = Bool(0)

@@ -32,16 +32,16 @@ class ProgressDialog(MProgressDialog, Window):
     progress_bar = Instance(QtGui.QProgressBar)
 
     #: The window title
-    title = Str
+    title = Str()
 
     #: The text message to display in the dialog
-    message = Str
+    message = Str()
 
     #: The minimum value of the progress range
-    min = Int
+    min = Int()
 
     #: The minimum value of the progress range
-    max = Int
+    max = Int()
 
     #: The margin around the progress bar
     margin = Int(5)

@@ -30,19 +30,19 @@ class ListeningAction(Action):
 
     #: The (extended) name of the method to call. By default, the on_perform
     #: function will be called with the event.
-    method = Str
+    method = Str()
 
     #: The (extended) name of the attribute that determines whether the action
     #: is enabled. By default, the action is always enabled when an object is
     #: set.
-    enabled_name = Str
+    enabled_name = Str()
 
     #: The (extended) name of the attribute that determines whether the action
     #: is visible. By default, the action is always visible.
-    visible_name = Str
+    visible_name = Str()
 
     #: The object to which the names above apply.
-    object = Any
+    object = Any()
 
     # -------------------------------------------------------------------------
     # 'Action' interface.

@@ -17,7 +17,7 @@ class IPerspectiveItem(Interface):
     """ The interface for perspective items. """
 
     # The Id of the view to display in the perspective.
-    id = Str
+    id = Str()
 
     # The position of the view relative to the item specified in the
     # 'relative_to' trait.
@@ -36,7 +36,7 @@ class IPerspectiveItem(Interface):
     # The Id of the view to position relative to. If this is not specified
     # (or if no view exists with this Id) then the view will be placed relative
     # to the editor area.
-    relative_to = Str
+    relative_to = Str()
 
     # The width of the item (as a fraction of the window width).
     #

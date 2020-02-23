@@ -117,7 +117,7 @@ class TestDock(HasPrivateTraits):
     #  Trait definitions:
     # ---------------------------------------------------------------------------
 
-    dummy = Int
+    dummy = Int()
 
     # ---------------------------------------------------------------------------
     #  Traits view definitions:

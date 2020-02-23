@@ -30,27 +30,27 @@ class IFileDialog(IDialog):
     action = Enum("open", "save as")
 
     #: The default directory.
-    default_directory = Str
+    default_directory = Str()
 
     #: The default filename.
-    default_filename = Str
+    default_filename = Str()
 
     #: The default path (directory and filename) of the chosen file.  This is
     #: only used when the *default_directory* and *default_filename* are not set
     #: and is equivalent to setting both.
-    default_path = Str
+    default_path = Str()
 
     #: The directory containing the chosen file.
-    directory = Str
+    directory = Str()
 
     #: The name of the chosen file.
-    filename = Str
+    filename = Str()
 
     #: The path (directory and filename) of the chosen file.
-    path = Str
+    path = Str()
 
     #: The wildcard used to restrict the set of files.
-    wildcard = Str
+    wildcard = Str()
 
     #: The index of the selected wildcard.
     wildcard_index = Int(0)

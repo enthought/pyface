@@ -30,7 +30,7 @@ class IWorkbenchWindowLayout(Interface):
 
     # The Id of the editor area.
     # FIXME v3: This is toolkit specific.
-    editor_area_id = Str
+    editor_area_id = Str()
 
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")
@@ -215,7 +215,7 @@ class MWorkbenchWindowLayout(HasTraits):
 
     # The Id of the editor area.
     # FIXME v3: This is toolkit specific.
-    editor_area_id = Str
+    editor_area_id = Str()
 
     # The workbench window that this is the layout for.
     window = Instance("pyface.workbench.api.WorkbenchWindow")

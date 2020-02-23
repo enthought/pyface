@@ -54,7 +54,7 @@ class ExpandableHeader(Widget):
     # Events ----
 
     # The panel has been expanded or collapsed
-    panel_expanded = Event
+    panel_expanded = Event()
 
     _CARAT_X = 4
     _CARAT_Y = 2

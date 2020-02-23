@@ -194,4 +194,4 @@ class TaskLayout(DockLayout):
     """
 
     # The ID of the task for which this is a layout.
-    id = Str
+    id = Str()

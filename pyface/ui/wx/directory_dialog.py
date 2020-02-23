@@ -31,13 +31,13 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
 
     # 'IDirectoryDialog' interface -----------------------------------------
 
-    default_path = Str
+    default_path = Str()
 
-    message = Str
+    message = Str()
 
     new_directory = Bool(True)
 
-    path = Str
+    path = Str()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

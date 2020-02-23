@@ -38,20 +38,20 @@ class ISplashScreen(IWindow):
     show_log_messages = Bool(True)
 
     #: Optional text to display on top of the splash image.
-    text = Str
+    text = Str()
 
     #: The text color.
     # FIXME v3: When TraitsUI supports PyQt then change this to 'Color',
     # (unless that needs the toolkit to be selected too soon, in which case it
     # may need to stay as Any - or Str?)
     # text_color = WxColor('black')
-    text_color = Any
+    text_color = Any()
 
     #: The text font.
     # FIXME v3: When TraitsUI supports PyQt then change this back to
     # 'Font(None)' with the actual default being toolkit specific.
     # text_font = Font(None)
-    text_font = Any
+    text_font = Any()
 
     #: The x, y location where the text will be drawn.
     # FIXME v3: Remove this.

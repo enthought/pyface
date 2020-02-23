@@ -30,7 +30,7 @@ class StatusBarManager(HasTraits):
     messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
-    status_bar = Any
+    status_bar = Any()
 
     # Whether to show a size grip on the status bar.
     size_grip = Bool(False)

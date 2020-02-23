@@ -43,7 +43,7 @@ class TreeViewer(ContentViewer):
     selection_mode = Enum("single", "extended")
 
     # The currently selected elements.
-    selection = List
+    selection = List()
 
     # Should an image be shown for each element?
     show_images = Bool(True)
@@ -54,25 +54,25 @@ class TreeViewer(ContentViewer):
     # Events ----
 
     # An element has been activated (ie. double-clicked).
-    element_activated = Event
+    element_activated = Event()
 
     # A drag operation was started on an element.
-    element_begin_drag = Event
+    element_begin_drag = Event()
 
     # An element that has children has been collapsed.
-    element_collapsed = Event
+    element_collapsed = Event()
 
     # An element that has children has been expanded.
-    element_expanded = Event
+    element_expanded = Event()
 
     # A left-click occurred on an element.
-    element_left_clicked = Event
+    element_left_clicked = Event()
 
     # A right-click occurred on an element.
-    element_right_clicked = Event
+    element_right_clicked = Event()
 
     # A key was pressed while the tree is in focus.
-    key_pressed = Event
+    key_pressed = Event()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

@@ -35,13 +35,13 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     choices = List(Any)
 
     #: The object chosen, if any.
-    choice = Any
+    choice = Any()
 
     #: An optional attribute to use for the name of each object in the dialog.
-    name_attribute = Str
+    name_attribute = Str()
 
     #: The message to display to the user.
-    message = Str
+    message = Str()
 
     def set_dialog_choice(self, choice):
         if self.control is not None:

@@ -34,7 +34,7 @@ class PythonEditor(Editor):
 
     obj = Instance(File)
 
-    path = Str
+    path = Str()
 
     dirty = Bool(False)
 
@@ -46,7 +46,7 @@ class PythonEditor(Editor):
 
     # Events ----
 
-    changed = Event
+    changed = Event()
 
     key_pressed = Event(KeyPressedEvent)
 

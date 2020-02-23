@@ -31,7 +31,7 @@ class GridModel(HasTraits):
 
     # fixme : factor this default model into "SimpleGridModel" or similar
     # An optional 2-dimensional list/array containing the grid data.
-    data = Any
+    data = Any()
 
     # The rows in the model.
     rows = List(GridRow)
@@ -46,7 +46,7 @@ class GridModel(HasTraits):
     show_column_headers = Bool(True)
 
     # Fired when the data in the model has changed.
-    model_changed = Event
+    model_changed = Event()
 
     def __init__(self, **traits):
         """ Create a new grid model. """

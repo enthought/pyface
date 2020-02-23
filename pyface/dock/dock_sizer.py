@@ -365,7 +365,7 @@ class DockItem(HasPrivateTraits):
     # ---------------------------------------------------------------------------
 
     # The parent of this item:
-    parent = Any
+    parent = Any()
 
     # The DockWindow that owns this item:
     owner = Property(depends_on="parent")
@@ -383,7 +383,7 @@ class DockItem(HasPrivateTraits):
     drag_bounds = Bounds
 
     # The current tab state:
-    tab_state = Any
+    tab_state = Any()
 
     # The tab displayable version of the control's UI name:
     tab_name = Property(depends_on="name")
@@ -413,16 +413,16 @@ class DockItem(HasPrivateTraits):
     feature_popup_position = Property
 
     # The list of features for this item:
-    features = List
+    features = List()
 
     # The list of drag data compatible drop features for this item:
-    drop_features = List
+    drop_features = List()
 
     # Current active set of features:
     active_features = Property
 
     # The name of this item (implemented in subclasses):
-    # name = Str
+    # name = Str()
 
     # The control associated with this item (implemented in subclasses):
     # control = Instance( wx.Control )
@@ -1280,7 +1280,7 @@ class DockSplitter(DockItem):
     style = Enum("horizontal", "vertical")
 
     # Index of the splitter within its parent:
-    index = Int
+    index = Int()
 
     # Current state of the splitter (i.e. its position relative to the things
     # it splits):
@@ -1635,16 +1635,16 @@ class DockControl(DockItem):
 
     # The number of global DockWindowFeature's that were available the last
     # the time the feature set was checked:
-    num_features = Int
+    num_features = Int()
 
     # A feature associated with the DockControl has been changed:
-    feature_changed = Event
+    feature_changed = Event()
 
     # The image to display for this control:
     image = Instance(ImageResource, allow_none=True)
 
     # The UI name of this control:
-    name = Str
+    name = Str()
 
     # Has the user set the name of the control?
     user_name = Bool(False)
@@ -1653,7 +1653,7 @@ class DockControl(DockItem):
     object = Property
 
     # The id of this control:
-    id = Str
+    id = Str()
 
     # Style of drag bar/tab:
     style = DockStyle
@@ -1662,7 +1662,7 @@ class DockControl(DockItem):
     user_style = Bool(False)
 
     # Category of control when it is dragged out of the DockWindow:
-    export = Str
+    export = Str()
 
     # Is the control visible?
     visible = Bool(True)
@@ -1687,7 +1687,7 @@ class DockControl(DockItem):
     dock_controls = Property
 
     # Event fired when the control's notebook tab is activated by the user:
-    activated = Event
+    activated = Event()
 
     # ---------------------------------------------------------------------------
     #  Calculates the minimum size of the control:
@@ -2121,7 +2121,7 @@ class DockGroup(DockItem):
     # ---------------------------------------------------------------------------
 
     # The contents of the group:
-    contents = List
+    contents = List()
 
     # The UI name of this group:
     name = Property
@@ -2363,7 +2363,7 @@ class DockRegion(DockGroup):
     # ---------------------------------------------------------------------------
 
     # Index of the currently active 'contents' DockControl:
-    active = Int
+    active = Int()
 
     # Is the region drawn as a notebook or not:
     is_notebook = Property
@@ -2372,10 +2372,10 @@ class DockRegion(DockGroup):
     tab_scroll_index = Int(-1)
 
     # The index of the current leftmost visible tab:
-    left_tab = Int
+    left_tab = Int()
 
     # The current maximum value for 'left_tab':
-    max_tab = Int
+    max_tab = Int()
 
     # Contents have been modified property:
     modified = Property

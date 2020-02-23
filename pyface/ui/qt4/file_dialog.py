@@ -35,21 +35,21 @@ class FileDialog(MFileDialog, Dialog):
 
     action = Enum("open", "open files", "save as")
 
-    default_directory = Str
+    default_directory = Str()
 
-    default_filename = Str
+    default_filename = Str()
 
-    default_path = Str
+    default_path = Str()
 
-    directory = Str
+    directory = Str()
 
-    filename = Str
+    filename = Str()
 
-    path = Str
+    path = Str()
 
     paths = List(Str)
 
-    wildcard = Str
+    wildcard = Str()
 
     wildcard_index = Int(0)
 

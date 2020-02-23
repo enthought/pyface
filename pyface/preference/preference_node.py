@@ -31,16 +31,16 @@ class PreferenceNode(TreeItem):
     # 'PreferenceNode' interface -------------------------------------------
 
     # The node's unique Id.
-    id = Str
+    id = Str()
 
     # The node's image.
-    image = Str
+    image = Str()
 
     # The node name.
-    name = Str
+    name = Str()
 
     # The Id of the help topic for the node.
-    help_id = Str
+    help_id = Str()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

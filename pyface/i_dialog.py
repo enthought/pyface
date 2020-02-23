@@ -31,17 +31,17 @@ class IDialog(IWindow):
     # 'IDialog' interface -------------------------------------------------#
 
     #: The label for the 'cancel' button.  The default is toolkit specific.
-    cancel_label = Str
+    cancel_label = Str()
 
     #: The context sensitive help Id (the 'Help' button is only shown iff this
     #: is set).
-    help_id = Str
+    help_id = Str()
 
     #: The label for the 'help' button.  The default is toolkit specific.
-    help_label = Str
+    help_label = Str()
 
     #: The label for the 'ok' button.  The default is toolkit specific.
-    ok_label = Str
+    ok_label = Str()
 
     #: Is the dialog resizeable?
     resizeable = Bool(True)

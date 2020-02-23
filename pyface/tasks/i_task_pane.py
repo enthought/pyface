@@ -19,16 +19,16 @@ class ITaskPane(Interface):
     """
 
     #: The pane's identifier, unique within a Task.
-    id = Str
+    id = Str()
 
     #: The pane's user-visible name.
-    name = Str
+    name = Str()
 
     #: The toolkit-specific control that represents the pane.
-    control = Any
+    control = Any()
 
     #: Does the pane currently have focus?
-    has_focus = Bool
+    has_focus = Bool()
 
     #: The task with which the pane is associated. Set by the framework.
     task = Instance(Task)
@@ -57,8 +57,8 @@ class MTaskPane(HasTraits):
 
     # 'ITaskPane' interface ------------------------------------------------
 
-    id = Str
-    name = Str
-    control = Any
+    id = Str()
+    name = Str()
+    control = Any()
     has_focus = Bool(False)
     task = Instance(Task)

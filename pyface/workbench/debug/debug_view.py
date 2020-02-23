@@ -20,9 +20,9 @@ class DebugViewModel(HasTraits):
 
     # 'Model' interface ----------------------------------------------------
 
-    active_editor = Str
-    active_part = Str
-    active_view = Str
+    active_editor = Str()
+    active_part = Str()
+    active_view = Str()
 
     window = Instance(WorkbenchWindow)
 

@@ -26,7 +26,7 @@ class CompositeGridModel(GridModel):
     rows = Either(None, List(Instance(GridRow)))
 
     # The cached data indexes.
-    _data_index = Dict
+    _data_index = Dict()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

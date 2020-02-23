@@ -27,7 +27,7 @@ class IPythonEditor(IEditor):
     obj = Instance(File)
 
     # The pathname of the file being edited.
-    path = Str
+    path = Str()
 
     # Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)
@@ -35,7 +35,7 @@ class IPythonEditor(IEditor):
     # Events ----
 
     # The contents of the editor has changed.
-    changed = Event
+    changed = Event()
 
     # A key has been pressed.
     key_pressed = Event(KeyPressedEvent)

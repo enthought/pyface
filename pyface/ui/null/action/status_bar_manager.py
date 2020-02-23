@@ -18,7 +18,7 @@ class StatusBarManager(HasTraits):
     """ A status bar manager realizes itself in a status bar control. """
 
     # The manager's unique identifier (if it has one).
-    id = Str
+    id = Str()
 
     # The message displayed in the first field of the status bar.
     message = Property
@@ -27,7 +27,7 @@ class StatusBarManager(HasTraits):
     messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
-    status_bar = Any
+    status_bar = Any()
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.

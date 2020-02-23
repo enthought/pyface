@@ -54,7 +54,7 @@ class OpenURLAction(Action):
     """ An action that opens a web page in the system's default browser. """
 
     #: The URL to open.
-    url = Str
+    url = Str()
 
     def perform(self, event=None):
         """ Open a URL in a web browser. """

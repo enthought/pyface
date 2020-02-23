@@ -42,13 +42,13 @@ class Dialog(MDialog, Window):
 
     # 'IDialog' interface -------------------------------------------------#
 
-    cancel_label = Str
+    cancel_label = Str()
 
-    help_id = Str
+    help_id = Str()
 
-    help_label = Str
+    help_label = Str()
 
-    ok_label = Str
+    ok_label = Str()
 
     resizeable = Bool(True)
 

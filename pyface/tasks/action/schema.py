@@ -49,7 +49,7 @@ class Schema(HasTraits):
     """
 
     # The schema's identifier (unique within its parent schema).
-    id = Str
+    id = Str()
 
     def _id_default(self):
         return get_unique_id(self)
@@ -119,7 +119,7 @@ class MenuSchema(Schema):
     """
 
     # The menu's user visible name.
-    name = Str
+    name = Str()
 
     # Does the menu require a separator before the menu item?
     separator = Bool(False)

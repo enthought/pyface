@@ -44,13 +44,13 @@ class TableViewer(ContentViewer):
     odd_row_background = Color((245, 245, 255))
 
     # A row has been selected.
-    row_selected = Event
+    row_selected = Event()
 
     # A row has been activated.
-    row_activated = Event
+    row_activated = Event()
 
     # A drag operation was started on a node.
-    row_begin_drag = Event
+    row_begin_drag = Event()
 
     def __init__(self, parent, image_size=(16, 16), **traits):
         """ Creates a new table viewer.
