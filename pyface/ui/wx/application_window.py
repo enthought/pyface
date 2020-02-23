@@ -129,6 +129,7 @@ class ApplicationWindow(MApplicationWindow, Window):
         self.control._aui_manager = self._aui_manager
 
         contents = self._create_contents(self.control)
+        self._aui_manager.AddPane(contents, aui.AuiPaneInfo().CenterPane())
 
         self._create_trim_widgets(self.control)
 
