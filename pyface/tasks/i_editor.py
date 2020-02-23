@@ -16,7 +16,7 @@ from traits.api import (
     Interface,
     Instance,
     Property,
-    Unicode,
+    Str,
     Vetoable,
     VetoableEvent,
     cached_property,
@@ -28,10 +28,10 @@ class IEditor(Interface):
     """
 
     #: The editor's user-visible name.
-    name = Unicode
+    name = Str
 
     #: The tooltip to show for the editor's tab, if any.
-    tooltip = Unicode
+    tooltip = Str
 
     #: The toolkit-specific control that represents the editor.
     control = Any
@@ -81,8 +81,8 @@ class MEditor(HasTraits):
 
     # 'IEditor' interface -------------------------------------------------#
 
-    name = Unicode
-    tooltip = Unicode
+    name = Str
+    tooltip = Str
     control = Any
     obj = Any
     dirty = Bool(False)

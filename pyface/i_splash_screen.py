@@ -14,7 +14,7 @@
 import logging
 
 
-from traits.api import Any, Bool, Instance, Int, Tuple, Unicode
+from traits.api import Any, Bool, Instance, Int, Tuple, Str
 
 
 from pyface.image_resource import ImageResource
@@ -38,7 +38,7 @@ class ISplashScreen(IWindow):
     show_log_messages = Bool(True)
 
     #: Optional text to display on top of the splash image.
-    text = Unicode
+    text = Str
 
     #: The text color.
     # FIXME v3: When TraitsUI supports PyQt then change this to 'Color',

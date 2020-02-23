@@ -12,7 +12,7 @@
 
 
 from traits.api import Any, Bool, HasTraits, Instance, Interface
-from traits.api import List, provides, Str, Unicode
+from traits.api import List, provides, Str
 
 
 class IWorkbenchPart(Interface):
@@ -35,7 +35,7 @@ class IWorkbenchPart(Interface):
     id = Str
 
     # The part's name (displayed to the user).
-    name = Unicode
+    name = Str
 
     # The current selection within the part.
     selection = List
@@ -90,7 +90,7 @@ class MWorkbenchPart(HasTraits):
     id = Str
 
     # The part's name (displayed to the user).
-    name = Unicode
+    name = Str
 
     # The current selection within the part.
     selection = List

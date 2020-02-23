@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Bool, Instance, List, Property, provides, Unicode
+from traits.api import Bool, Instance, List, Property, provides, Str
 from pyface.api import Dialog, LayeredPanel
 from pyface.wizard.i_wizard import IWizard, MWizard
 from pyface.wizard.i_wizard_controller import IWizardController
@@ -39,7 +39,7 @@ class Wizard(MWizard, Dialog):
 
     # 'IWindow' interface -------------------------------------------------#
 
-    title = Unicode("Wizard")
+    title = Str("Wizard")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

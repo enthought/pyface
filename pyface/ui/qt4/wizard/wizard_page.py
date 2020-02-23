@@ -20,7 +20,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, HasTraits, provides, Str, Tuple, Unicode
+from traits.api import Bool, HasTraits, provides, Str, Tuple, Str
 from pyface.wizard.i_wizard_page import IWizardPage, MWizardPage
 
 
@@ -42,9 +42,9 @@ class WizardPage(MWizardPage, HasTraits):
 
     complete = Bool(False)
 
-    heading = Unicode
+    heading = Str
 
-    subheading = Unicode
+    subheading = Str
 
     size = Tuple
 

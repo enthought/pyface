@@ -18,7 +18,7 @@ import os
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Enum, Int, List, provides, Unicode
+from traits.api import Enum, Int, List, provides, Str
 
 
 from pyface.i_file_dialog import IFileDialog, MFileDialog
@@ -35,21 +35,21 @@ class FileDialog(MFileDialog, Dialog):
 
     action = Enum("open", "open files", "save as")
 
-    default_directory = Unicode
+    default_directory = Str
 
-    default_filename = Unicode
+    default_filename = Str
 
-    default_path = Unicode
+    default_path = Str
 
-    directory = Unicode
+    directory = Str
 
-    filename = Unicode
+    filename = Str
 
-    path = Unicode
+    path = Str
 
-    paths = List(Unicode)
+    paths = List(Str)
 
-    wildcard = Unicode
+    wildcard = Str
 
     wildcard_index = Int(0)
 

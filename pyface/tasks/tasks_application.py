@@ -23,7 +23,6 @@ from traits.api import (
     Instance,
     Property,
     Str,
-    Unicode,
     cached_property,
     on_trait_change,
 )
@@ -42,7 +41,7 @@ class TaskFactory(HasStrictTraits):
     id = Str
 
     #: The task factory's user-visible name.
-    name = Unicode
+    name = Str
 
     #: A callable with the following signature:
     #:

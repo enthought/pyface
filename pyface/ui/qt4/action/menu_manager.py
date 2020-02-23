@@ -18,7 +18,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, Unicode
+from traits.api import Instance, Str
 
 
 from pyface.action.action_manager import ActionManager
@@ -37,7 +37,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode
+    name = Str
 
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)

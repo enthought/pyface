@@ -11,7 +11,7 @@
 """ The Wx-specific implementation of the text field class """
 
 
-from traits.api import Any, Instance, Unicode, provides
+from traits.api import Any, Instance, Str, provides
 
 import wx
 
@@ -30,7 +30,7 @@ class Field(MField, Widget):
     value = Any
 
     #: A tooltip for the field.
-    tooltip = Unicode
+    tooltip = Str
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")

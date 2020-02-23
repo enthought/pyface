@@ -21,7 +21,7 @@ import wx.html
 import wx.lib.wxpTag
 
 
-from traits.api import Instance, List, provides, Unicode
+from traits.api import Instance, List, provides, Str
 
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
@@ -75,9 +75,9 @@ class AboutDialog(MAboutDialog, Dialog):
 
     # 'IAboutDialog' interface ---------------------------------------------
 
-    additions = List(Unicode)
+    additions = List(Str)
 
-    copyrights = List(Unicode)
+    copyrights = List(Str)
 
     image = Instance(ImageResource, ImageResource("about"))
 

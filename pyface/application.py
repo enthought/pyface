@@ -40,7 +40,7 @@ from traits.api import (
     HasStrictTraits,
     Instance,
     ReadOnly,
-    Unicode,
+    Str,
     Vetoable,
     VetoableEvent,
 )
@@ -87,18 +87,18 @@ class Application(HasStrictTraits):
     # Branding ----------------------------------------------------------------
 
     #: Human-readable application name
-    name = Unicode("Pyface Application")
+    name = Str("Pyface Application")
 
     #: Human-readable company name
-    company = Unicode
+    company = Str
 
     #: Human-readable description of the application
-    description = Unicode
+    description = Str
 
     # Infrastructure ---------------------------------------------------------
 
     #: The application's globally unique identifier.
-    id = Unicode
+    id = Str
 
     #: Application home directory (for preferences, logging, etc.)
     home = Directory

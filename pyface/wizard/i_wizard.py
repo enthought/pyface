@@ -11,7 +11,7 @@
 """ The interface for all pyface wizards. """
 
 
-from traits.api import Bool, Instance, List, Unicode
+from traits.api import Bool, Instance, List, Str
 from pyface.i_dialog import IDialog
 
 
@@ -37,7 +37,7 @@ class IWizard(IDialog):
     # 'IWindow' interface -------------------------------------------------#
 
     # The dialog title.
-    title = Unicode("Wizard")
+    title = Str("Wizard")
 
     # ------------------------------------------------------------------------
     # 'IWizard' interface.

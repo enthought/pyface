@@ -28,7 +28,7 @@ from traits.api import (
     HasStrictTraits,
     Int,
     Property,
-    Unicode,
+    Str,
     cached_property,
 )
 from traitsui.api import (
@@ -64,7 +64,7 @@ class PythonEditor(TraitsEditor):
     """ Tasks Editor that provides a code editor via TraitsUI """
 
     #: The Python code being edited.
-    code = Unicode
+    code = Str
 
     #: Whether or not undo operation is possible.
     can_undo = Property(Bool, depends_on="ui.history.undoable")
@@ -79,7 +79,7 @@ class PythonEditor(TraitsEditor):
     column = Int(1)
 
     #: The currently selected text, if any.
-    selection = Unicode
+    selection = Str
 
     #: The length of the currently selected text.
     selection_length = Property(Int, depends_on="selection")
@@ -99,10 +99,10 @@ class PythonEditor(TraitsEditor):
     obj = File
 
     #: The editor's user-visible name.
-    name = Property(Unicode, depends_on="obj")
+    name = Property(Str, depends_on="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Unicode, depends_on="obj")
+    tooltip = Property(Str, depends_on="obj")
 
     dirty = Property(Bool, depends_on=["obj", "_last_save", "ui.history.now"])
 

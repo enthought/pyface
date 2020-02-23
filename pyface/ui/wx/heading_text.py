@@ -16,7 +16,7 @@
 import wx
 
 
-from traits.api import Instance, Int, provides, Unicode
+from traits.api import Instance, Int, provides, Str
 
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
@@ -35,7 +35,7 @@ class HeadingText(MHeadingText, Widget):
 
     level = Int(1)
 
-    text = Unicode("Default")
+    text = Str("Default")
 
     image = Instance(ImageResource, ImageResource("heading_level_1"))
 

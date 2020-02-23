@@ -17,7 +17,7 @@ import sys
 import wx
 
 
-from traits.api import Bool, Enum, Int, provides, Str, Unicode
+from traits.api import Bool, Enum, Int, provides, Str
 
 
 from pyface.i_dialog import IDialog, MDialog
@@ -47,13 +47,13 @@ class Dialog(MDialog, Window):
 
     # 'IDialog' interface -------------------------------------------------#
 
-    cancel_label = Unicode
+    cancel_label = Str
 
     help_id = Str
 
-    help_label = Unicode
+    help_label = Str
 
-    ok_label = Unicode
+    ok_label = Str
 
     resizeable = Bool(True)
 
@@ -63,7 +63,7 @@ class Dialog(MDialog, Window):
 
     # 'IWindow' interface -------------------------------------------------#
 
-    title = Unicode("Dialog")
+    title = Str("Dialog")
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

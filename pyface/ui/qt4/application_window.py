@@ -24,7 +24,7 @@ from pyface.qt import QtGui
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Unicode
+from traits.api import Instance, List, on_trait_change, provides, Str
 
 
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
@@ -58,7 +58,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # 'IWindow' interface -------------------------------------------------#
 
     #: The window title.
-    title = Unicode("Pyface")
+    title = Str("Pyface")
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.

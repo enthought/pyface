@@ -20,7 +20,7 @@ import sys
 import wx
 
 
-from traits.api import Bool, HasTraits, provides, Unicode
+from traits.api import Bool, HasTraits, provides, Str
 from pyface.util.guisupport import start_event_loop_wx
 
 
@@ -40,7 +40,7 @@ class GUI(MGUI, HasTraits):
 
     started = Bool(False)
 
-    state_location = Unicode
+    state_location = Str
 
     # ------------------------------------------------------------------------
     # 'object' interface.

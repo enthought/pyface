@@ -12,7 +12,7 @@
 """
 
 
-from traits.api import Unicode
+from traits.api import Str
 
 
 from pyface.action.action_manager import ActionManager
@@ -30,7 +30,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode
+    name = Str
 
     # ------------------------------------------------------------------------
     # 'MenuManager' interface.

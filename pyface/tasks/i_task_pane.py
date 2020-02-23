@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Any, Bool, HasTraits, Interface, Instance, Str, Unicode
+from traits.api import Any, Bool, HasTraits, Interface, Instance, Str
 
 
 from pyface.tasks.task import Task
@@ -22,7 +22,7 @@ class ITaskPane(Interface):
     id = Str
 
     #: The pane's user-visible name.
-    name = Unicode
+    name = Str
 
     #: The toolkit-specific control that represents the pane.
     control = Any
@@ -58,7 +58,7 @@ class MTaskPane(HasTraits):
     # 'ITaskPane' interface ------------------------------------------------
 
     id = Str
-    name = Unicode
+    name = Str
     control = Any
     has_focus = Bool(False)
     task = Instance(Task)

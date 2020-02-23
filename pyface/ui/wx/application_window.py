@@ -22,7 +22,7 @@ from pyface.wx.aui import aui, PyfaceAuiManager
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Unicode
+from traits.api import Instance, List, on_trait_change, provides, Str
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -61,7 +61,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # seems to work however (e.g. 'def _size_default'). Hmmmm....
     ##     size = (800, 600)
 
-    title = Unicode("Pyface")
+    title = Str("Pyface")
 
     # ------------------------------------------------------------------------
     # Protected 'IApplicationWindow' interface.

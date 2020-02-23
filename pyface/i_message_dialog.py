@@ -11,7 +11,7 @@
 """ The interface for a dialog that displays a message. """
 
 
-from traits.api import Enum, Unicode
+from traits.api import Enum, Str
 
 
 from pyface.i_dialog import IDialog
@@ -23,13 +23,13 @@ class IMessageDialog(IDialog):
     # 'IMessageDialog' interface -------------------------------------------
 
     #: The message to display in the dialog.
-    message = Unicode
+    message = Str
 
     #: More information about the message to be displayed.
-    informative = Unicode
+    informative = Str
 
     #: More detail about the message to be displayed in the dialog.
-    detail = Unicode
+    detail = Str
 
     #: The severity of the message.
     severity = Enum("information", "warning", "error")

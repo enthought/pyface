@@ -52,7 +52,7 @@ from pyface.tasks.action.api import (
 from traits.api import (
     Instance,
     Property,
-    Unicode,
+    Str,
     cached_property,
     on_trait_change,
 )
@@ -67,7 +67,7 @@ class OpenURLAction(Action):
     """ An action that opens a web page in the system's default browser. """
 
     #: The URL to open.
-    url = Unicode
+    url = Str
 
     def perform(self, event=None):
         """ Open a URL in a web browser. """

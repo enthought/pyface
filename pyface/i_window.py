@@ -13,7 +13,7 @@
 """ The abstract interface for all pyface top-level windows. """
 
 
-from traits.api import Event, Tuple, Unicode, Vetoable, VetoableEvent
+from traits.api import Event, Tuple, Str, Vetoable, VetoableEvent
 
 
 from pyface.constant import NO
@@ -37,7 +37,7 @@ class IWindow(IWidget):
     size = Tuple
 
     #: The window title.
-    title = Unicode
+    title = Str
 
     # Window Events ----------------------------------------------------------
 
@@ -61,7 +61,7 @@ class IWindow(IWidget):
 
     #: A key was pressed while the window had focus.
     # FIXME v3: This smells of a hack. What's so special about key presses?
-    # FIXME v3: Unicode
+    # FIXME v3: Str
     key_pressed = Event(KeyPressedEvent)
 
     # -------------------------------------------------------------------------

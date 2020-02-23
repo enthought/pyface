@@ -11,7 +11,7 @@
 """ A status bar manager realizes itself in a status bar control. """
 
 
-from traits.api import Any, HasTraits, List, Property, Str, Unicode
+from traits.api import Any, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
@@ -24,7 +24,7 @@ class StatusBarManager(HasTraits):
     message = Property
 
     # The messages to be displayed in the status bar fields.
-    messages = List(Unicode)
+    messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
     status_bar = Any

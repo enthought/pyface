@@ -12,7 +12,7 @@
 """
 
 
-from traits.api import Bool, Unicode
+from traits.api import Bool, Str
 
 
 from pyface.i_dialog import IDialog
@@ -29,17 +29,17 @@ class IDirectoryDialog(IDialog):
     #: specific.
     # FIXME v3: The default should be the current directory.  (It seems wx is
     # the problem, although the file dialog does the right thing.)
-    default_path = Unicode
+    default_path = Str
 
     #: The message to display in the dialog.  The default is toolkit specific.
-    message = Unicode
+    message = Str
 
     #: True iff the dialog should include a button that allows the user to
     #: create a new directory.
     new_directory = Bool(True)
 
     #: The path of the chosen directory.
-    path = Unicode
+    path = Str
 
 
 class MDirectoryDialog(object):

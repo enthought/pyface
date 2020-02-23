@@ -14,7 +14,7 @@
 import sys
 
 
-from traits.api import Enum, Unicode, Int
+from traits.api import Enum, Str, Int
 
 
 from pyface.i_dialog import IDialog
@@ -30,27 +30,27 @@ class IFileDialog(IDialog):
     action = Enum("open", "save as")
 
     #: The default directory.
-    default_directory = Unicode
+    default_directory = Str
 
     #: The default filename.
-    default_filename = Unicode
+    default_filename = Str
 
     #: The default path (directory and filename) of the chosen file.  This is
     #: only used when the *default_directory* and *default_filename* are not set
     #: and is equivalent to setting both.
-    default_path = Unicode
+    default_path = Str
 
     #: The directory containing the chosen file.
-    directory = Unicode
+    directory = Str
 
     #: The name of the chosen file.
-    filename = Unicode
+    filename = Str
 
     #: The path (directory and filename) of the chosen file.
-    path = Unicode
+    path = Str
 
     #: The wildcard used to restrict the set of files.
-    wildcard = Unicode
+    wildcard = Str
 
     #: The index of the selected wildcard.
     wildcard_index = Int(0)

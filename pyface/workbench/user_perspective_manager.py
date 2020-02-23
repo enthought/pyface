@@ -16,7 +16,7 @@ import os
 
 from pyface.workbench.api import Perspective
 from traits.api import Any, Dict, HasTraits, Int, List, Property
-from traits.api import Unicode
+from traits.api import Str
 
 
 # Logging.
@@ -30,7 +30,7 @@ class UserPerspectiveManager(HasTraits):
 
     # A directory on the local file system that we can read and write to at
     # will. This is used to persist window layout information, etc.
-    state_location = Unicode
+    state_location = Str
 
     # Next available user perspective id.
     next_id = Property(Int)
@@ -42,7 +42,7 @@ class UserPerspectiveManager(HasTraits):
     perspectives = Property(List)
 
     # The name of the user defined perspectives definition file.
-    file_name = Property(Unicode)
+    file_name = Property(Str)
 
     # Private interface ----------------------------------------------------
 

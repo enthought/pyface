@@ -11,7 +11,7 @@
 """ A widget for editing Python code. """
 
 
-from traits.api import Bool, Event, Instance, File, Interface, Unicode
+from traits.api import Bool, Event, Instance, File, Interface, Str
 from pyface.tasks.i_editor import IEditor
 
 
@@ -27,7 +27,7 @@ class IPythonEditor(IEditor):
     obj = Instance(File)
 
     # The pathname of the file being edited.
-    path = Unicode
+    path = Str
 
     # Should line numbers be shown in the margin?
     show_line_numbers = Bool(True)

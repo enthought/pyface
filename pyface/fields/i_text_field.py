@@ -12,7 +12,7 @@
 
 
 
-from traits.api import Bool, Enum, HasTraits, Unicode
+from traits.api import Bool, Enum, HasTraits, Str
 
 from pyface.fields.i_field import IField
 
@@ -21,13 +21,13 @@ class ITextField(IField):
     """ The text field interface. """
 
     #: The value held by the field.
-    value = Unicode
+    value = Str
 
     #: Should the text trait be updated on user edits, or when done editing.
     update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
-    placeholder = Unicode
+    placeholder = Str
 
     #: Display typed text, or one of several hidden "password" modes.
     echo = Enum("normal", "password")
@@ -40,13 +40,13 @@ class MTextField(HasTraits):
     """ The text field mix-in. """
 
     #: The value held by the field.
-    value = Unicode
+    value = Str
 
     #: Should the value be updated on every keystroke, or when done editing.
     update_text = Enum("auto", "editing_finished")
 
     #: Placeholder text for an empty field.
-    placeholder = Unicode
+    placeholder = Str
 
     #: Display typed text, or one of several hidden "password" modes.
     echo = Enum("normal", "password")

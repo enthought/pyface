@@ -14,7 +14,7 @@ from functools import partial
 
 
 from traits.api import Bool, Callable, Enum, HasTraits, Str
-from traits.api import Unicode
+from traits.api import Str
 
 from pyface.ui_traits import Image
 
@@ -34,7 +34,7 @@ class Action(HasTraits):
     # 'Action' interface ---------------------------------------------------
 
     #: Keyboard accelerator (by default the action has NO accelerator).
-    accelerator = Unicode
+    accelerator = Str
 
     #: Is the action checked?  This is only relevant if the action style is
     #: 'radio' or 'toggle'.
@@ -43,7 +43,7 @@ class Action(HasTraits):
     #: A longer description of the action (used for context sensitive help etc).
     #: If no description is specified, the tooltip is used instead (and if there
     #: is no tooltip, then well, maybe you just hate your users ;^).
-    description = Unicode
+    description = Str
 
     #: Is the action enabled?
     enabled = Bool(True)
@@ -58,7 +58,7 @@ class Action(HasTraits):
     image = Image
 
     #: The action's name (displayed on menus/tool bar tools etc).
-    name = Unicode
+    name = Str
 
     #: An (optional) callable that will be invoked when the action is performed.
     on_perform = Callable
@@ -67,7 +67,7 @@ class Action(HasTraits):
     style = Enum("push", "radio", "toggle", "widget")
 
     #: A short description of the action used for tooltip text etc.
-    tooltip = Unicode
+    tooltip = Str
 
     #: An (optional) callable to create the toolkit control for widget style.
     control_factory = Callable

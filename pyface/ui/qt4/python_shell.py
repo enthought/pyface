@@ -581,7 +581,7 @@ class PyfacePythonWidget(PythonWidget):
     def keyPressEvent(self, event):
         """ Reimplemented to generate Pyface key press events.
         """
-        # Pyface doesn't seem to be Unicode aware.  Only keep the key code if it
+        # Pyface doesn't seem to be Str aware.  Only keep the key code if it
         # corresponds to a single Latin1 character.
         kstr = event.text()
         try:

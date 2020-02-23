@@ -11,7 +11,7 @@
 """ The interface for a page in a wizard. """
 
 
-from traits.api import Bool, Interface, Str, Tuple, Unicode
+from traits.api import Bool, Interface, Str, Tuple, Str
 
 
 class IWizardPage(Interface):
@@ -33,10 +33,10 @@ class IWizardPage(Interface):
     complete = Bool(False)
 
     # The page heading.
-    heading = Unicode
+    heading = Str
 
     # The page sub-heading.
-    subheading = Unicode
+    subheading = Str
 
     # The size of the page.
     size = Tuple

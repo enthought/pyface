@@ -14,7 +14,7 @@
 import wx
 
 
-from traits.api import Event, Property, Tuple, Unicode, VetoableEvent, provides
+from traits.api import Event, Property, Tuple, Str, VetoableEvent, provides
 
 
 from pyface.i_window import IWindow, MWindow
@@ -35,7 +35,7 @@ class Window(MWindow, Widget):
 
     size = Property(Tuple)
 
-    title = Unicode
+    title = Str
 
     # Window Events ----------------------------------------------------------
 
@@ -59,7 +59,7 @@ class Window(MWindow, Widget):
 
     #: A key was pressed while the window had focus.
     # FIXME v3: This smells of a hack. What's so special about key presses?
-    # FIXME v3: Unicode
+    # FIXME v3: Str
     key_pressed = Event(KeyPressedEvent)
 
     # Private interface ------------------------------------------------------

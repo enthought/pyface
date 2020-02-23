@@ -16,7 +16,7 @@
 import wx
 
 
-from traits.api import Unicode, Bool
+from traits.api import Str, Bool
 
 
 from pyface.action.action_manager import ActionManager
@@ -34,7 +34,7 @@ class MenuManager(ActionManager, ActionManagerItem):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode
+    name = Str
 
     # Does the menu require a separator before the menu item name?
     separator = Bool(True)

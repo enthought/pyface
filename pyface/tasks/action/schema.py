@@ -28,7 +28,7 @@ from traits.api import (
     Str,
     Trait,
     Tuple,
-    Unicode,
+    Str,
 )
 
 # Trait definitions.
@@ -119,7 +119,7 @@ class MenuSchema(Schema):
     """
 
     # The menu's user visible name.
-    name = Unicode
+    name = Str
 
     # Does the menu require a separator before the menu item?
     separator = Bool(False)
@@ -161,7 +161,7 @@ class ToolBarSchema(Schema):
 
     # The tool bar's user visible name. Note that this name may not be used on
     # all platforms.
-    name = Unicode("Tool Bar")
+    name = Str("Tool Bar")
 
     # The size of tool images (width, height).
     image_size = Tuple((16, 16))

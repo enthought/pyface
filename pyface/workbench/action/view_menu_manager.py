@@ -14,7 +14,7 @@ import logging
 
 
 from pyface.action.api import Group, MenuManager
-from traits.api import Any, Bool, Instance, List, Str, Unicode
+from traits.api import Any, Bool, Instance, List, Str
 from traits.api import on_trait_change
 
 
@@ -46,7 +46,7 @@ class ViewMenuManager(MenuManager):
 
     # The menu manager's name (if the manager is a sub-menu, this is what its
     # label will be).
-    name = Unicode("&View")
+    name = Str("&View")
 
     # 'ViewMenuManager' interface -----------------------------------------#
 

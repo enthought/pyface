@@ -21,7 +21,7 @@ import wx.adv
 
 
 from traits.api import Any, Bool, Font, Instance, Int, provides
-from traits.api import Tuple, Unicode
+from traits.api import Tuple, Str
 
 
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
@@ -44,7 +44,7 @@ class SplashScreen(MSplashScreen, Window):
 
     show_log_messages = Bool(True)
 
-    text = Unicode
+    text = Str
 
     text_color = Any
 

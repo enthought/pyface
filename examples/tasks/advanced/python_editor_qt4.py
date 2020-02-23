@@ -16,7 +16,7 @@ from os.path import basename
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Event, Instance, File, Unicode, Property, provides
+from traits.api import Bool, Event, Instance, File, Str, Property, provides
 from pyface.tasks.api import Editor
 
 
@@ -34,13 +34,13 @@ class PythonEditor(Editor):
 
     obj = Instance(File)
 
-    path = Unicode
+    path = Str
 
     dirty = Bool(False)
 
-    name = Property(Unicode, depends_on="path")
+    name = Property(Str, depends_on="path")
 
-    tooltip = Property(Unicode, depends_on="path")
+    tooltip = Property(Str, depends_on="path")
 
     show_line_numbers = Bool(True)
 
@@ -178,7 +178,7 @@ class PythonEditorEventFilter(QtCore.QObject):
             and obj == self.__editor.control.code
             and event.type() == QtCore.QEvent.KeyPress
         ):
-            # Pyface doesn't seem to be Unicode aware.  Only keep the key code
+            # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = event.text()
             try:

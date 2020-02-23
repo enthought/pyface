@@ -12,7 +12,7 @@
 
 
 
-from traits.api import Any, Instance, Unicode, provides
+from traits.api import Any, Instance, Str, provides
 
 from pyface.qt.QtCore import Qt
 from pyface.fields.i_field import IField, MField
@@ -30,7 +30,7 @@ class Field(MField, Widget):
     value = Any
 
     #: A tooltip for the field.
-    tooltip = Unicode
+    tooltip = Str
 
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")

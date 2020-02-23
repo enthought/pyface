@@ -15,7 +15,7 @@ import logging
 
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Callable, Constant, Delegate, Event, Instance
-from traits.api import List, Str, Tuple, Unicode, Vetoable, Undefined
+from traits.api import List, Str, Tuple, Str, Vetoable, Undefined
 from traits.api import on_trait_change, provides
 
 

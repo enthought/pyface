@@ -11,7 +11,7 @@
 """ The interface for a dialog that prompts the user for confirmation. """
 
 
-from traits.api import Bool, Enum, Instance, Unicode
+from traits.api import Bool, Enum, Instance, Str
 
 
 from pyface.constant import CANCEL, NO, YES
@@ -35,19 +35,19 @@ class IConfirmationDialog(IDialog):
 
     #: The message displayed in the body of the dialog (use the inherited
     #: 'title' trait to set the title of the dialog itself).
-    message = Unicode
+    message = Str
 
     #: Some informative text to display below the main message
-    informative = Unicode
+    informative = Str
 
     #: Some additional details that can be exposed by the user
-    detail = Unicode
+    detail = Str
 
     #: The label for the 'no' button.  The default is toolkit specific.
-    no_label = Unicode
+    no_label = Str
 
     #: The label for the 'yes' button.  The default is toolkit specific.
-    yes_label = Unicode
+    yes_label = Str
 
 
 class MConfirmationDialog(object):

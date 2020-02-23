@@ -11,7 +11,7 @@
 """ The abstract interface for all pyface dialogs. """
 
 
-from traits.api import Bool, Enum, Int, Str, Unicode
+from traits.api import Bool, Enum, Int, Str
 
 
 from pyface.constant import OK
@@ -31,17 +31,17 @@ class IDialog(IWindow):
     # 'IDialog' interface -------------------------------------------------#
 
     #: The label for the 'cancel' button.  The default is toolkit specific.
-    cancel_label = Unicode
+    cancel_label = Str
 
     #: The context sensitive help Id (the 'Help' button is only shown iff this
     #: is set).
     help_id = Str
 
     #: The label for the 'help' button.  The default is toolkit specific.
-    help_label = Unicode
+    help_label = Str
 
     #: The label for the 'ok' button.  The default is toolkit specific.
-    ok_label = Unicode
+    ok_label = Str
 
     #: Is the dialog resizeable?
     resizeable = Bool(True)

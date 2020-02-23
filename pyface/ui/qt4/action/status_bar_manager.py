@@ -17,7 +17,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Any, Bool, HasTraits, List, Property, Str, Unicode
+from traits.api import Any, Bool, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
@@ -27,7 +27,7 @@ class StatusBarManager(HasTraits):
     message = Property
 
     # The messages to be displayed in the status bar fields.
-    messages = List(Unicode)
+    messages = List(Str)
 
     # The toolkit-specific control that represents the status bar.
     status_bar = Any

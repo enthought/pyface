@@ -18,7 +18,7 @@ from traits.api import (
     Event,
     Property,
     Tuple,
-    Unicode,
+    Str,
     VetoableEvent,
     provides,
 )
@@ -44,7 +44,7 @@ class Window(MWindow, Widget):
 
     size_state = Enum("normal", "maximized")
 
-    title = Unicode
+    title = Str
 
     # Window Events ----------------------------------------------------------
 
@@ -241,7 +241,7 @@ class WindowEventFilter(QtCore.QObject):
             window._position = (pos.x(), pos.y())
 
         elif typ == QtCore.QEvent.KeyPress:
-            # Pyface doesn't seem to be Unicode aware.  Only keep the key code
+            # Pyface doesn't seem to be Str aware.  Only keep the key code
             # if it corresponds to a single Latin1 character.
             kstr = e.text()
             try:
