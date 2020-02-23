@@ -34,51 +34,33 @@ class ViewerSorter(HasTraits):
 
         # This creates a comparison function with the names 'viewer' and
         # 'parent' bound to the corresponding arguments to this method.
-        def comparator(element_a, element_b):
-            """ Comparator. """
+        def key(element):
+            """ Key function. """
+            return self.key(viewer, parent, element)
 
-            return self.compare(viewer, parent, element_a, element_b)
-
-        elements.sort(comparator)
+        elements.sort(key=key)
 
         return elements
 
-    def compare(self, viewer, parent, element_a, element_b):
+    def key(self, viewer, parent, element):
         """ Returns the result of comparing two elements.
 
         'viewer'    is the viewer that we are sorting elements for.
         'parent'    is the parent element.
-        'element_a' is the the first element to compare.
-        'element_b' is the the second element to compare.
+        'element'   is the the first element being sorted.
 
         """
 
-        # Get the category for each element.
-        category_a = self.category(viewer, parent, element_a)
-        category_b = self.category(viewer, parent, element_b)
+        # Get the category
+        category = self.category(viewer, parent, element)
 
-        # If they are not in the same category then return the result of
-        # comparing the categories.
-        if category_a != category_b:
-            result = cmp(category_a, category_b)
-
+        # Get the label
+        if hasattr(viewer, "label_provider"):
+            label = viewer.label_provider.get_text(viewer, element)
         else:
-            # Get the label text for each element.
-            #
-            # fixme: This is a hack until we decide whethwe we like the
-            # JFace(ish) or Swing(ish) models!
-            if hasattr(viewer, "label_provider"):
-                label_a = viewer.label_provider.get_text(viewer, element_a)
-                label_b = viewer.label_provider.get_text(viewer, element_b)
+            label = viewer.node_model.get_text(viewer, element)
 
-            else:
-                label_a = viewer.node_model.get_text(viewer, element_a)
-                label_b = viewer.node_model.get_text(viewer, element_b)
-
-            # Compare the label text.
-            result = cmp(label_a, label_b)
-
-        return result
+        return (category, label)
 
     def category(self, viewer, parent, element):
         """ Returns the category (an integer) for an element.
@@ -93,7 +75,6 @@ class ViewerSorter(HasTraits):
         By default all elements are given the same category (0).
 
         """
-
         return 0
 
     def is_sorter_trait(self, element, trait_name):
@@ -108,5 +89,4 @@ class ViewerSorter(HasTraits):
         By default we return False.
 
         """
-
         return False

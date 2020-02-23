@@ -29,7 +29,7 @@ class ToolBarManager(pyface.ToolBarManager):
     # 'ToolBarManager' interface.
     # ------------------------------------------------------------------------
 
-    def create_tool_bar(self, parent, controller=None):
+    def create_tool_bar(self, parent, controller=None, **kwargs):
         """ Creates a tool bar representation of the manager. """
 
         # The controller handles the invocation of every action.
@@ -37,7 +37,7 @@ class ToolBarManager(pyface.ToolBarManager):
             controller = ActionController(window=self.window)
 
         tool_bar = super(ToolBarManager, self).create_tool_bar(
-            parent, controller=controller
+            parent, controller=controller, **kwargs
         )
 
         return tool_bar

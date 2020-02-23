@@ -75,9 +75,6 @@ class ToolBarManager(ActionManager):
     # 'ToolBarManager' interface.
     # ------------------------------------------------------------------------
 
-    # Trait change handlers ------------------------------------------------
-    # Methods -------------------------------------------------------------#
-
     def create_tool_bar(self, parent, controller=None, aui=False):
         """ Creates a tool bar. """
 

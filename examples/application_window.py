@@ -11,7 +11,7 @@
 """ Application window example. """
 
 
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import ApplicationWindow, GUI, ImageResource
 from pyface.action.api import Action, MenuManager, MenuBarManager
 from pyface.action.api import StatusBarManager, ToolBarManager, Group
 

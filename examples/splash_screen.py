@@ -69,7 +69,10 @@ if __name__ == "__main__":
     window = MainWindow()
 
     # Simulate a busy window initialization.
-    time.sleep(5)
+    for i in range(5):
+        gui.process_events()
+        time.sleep(1)
+
     window.open()
 
     # Start the GUI event loop!
