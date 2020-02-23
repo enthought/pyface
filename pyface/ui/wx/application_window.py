@@ -104,8 +104,6 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             self.control.SetIcon(icon.create_icon())
 
-        return
-
     # ------------------------------------------------------------------------
     # 'Window' interface.
     # ------------------------------------------------------------------------
