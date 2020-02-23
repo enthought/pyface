@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Either, List, Str, Tuple, Enum
+from traits.api import Union, List, Str, Tuple, Enum, Instance
 
 
 from pyface.tasks.task_layout import LayoutContainer, TaskLayout
@@ -23,7 +23,7 @@ class TaskWindowLayout(LayoutContainer):
 
     # The tasks contained in the window. If an ID is specified, the task will
     # use its default layout. Otherwise, it will use the specified TaskLayout.
-    items = List(Either(Str, TaskLayout), pretty_skip=True)
+    items = List(Union(Str, Instance(TaskLayout)), pretty_skip=True)
 
     # The position of the window.
     position = Tuple(-1, -1)
