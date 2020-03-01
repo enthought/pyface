@@ -259,6 +259,13 @@ class PythonEditor(MPythonEditor, Widget):
 
         return stc
 
+    def destroy(self):
+        """ Destroy the toolkit control. """
+        if self.control is not None:
+            self.control.Unbind(wx.stc.EVT_STC_CHANGE)
+            self.control.Unbind(wx.EVT_CHAR)
+        super().destroy()
+
     # wx event handlers ----------------------------------------------------
 
     def _on_stc_changed(self, event):
