@@ -196,3 +196,5 @@ class DockWindowShell(HasPrivateTraits):
         if 0 < len(section.contents) < n:
             window.Layout()
             window.Refresh()
+
+        self.control.Unbind(wx.EVT_CLOSE)
