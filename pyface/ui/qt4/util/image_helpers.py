@@ -84,14 +84,14 @@ def array_to_QImage(array):
     else:
         raise ValueError("Array must be either RGB or RGBA values.")
 
-    bytesPerLine = 4 * width
+    bytes_per_line = 4 * width
 
     if channels == 3:
-        image = QImage(data.data, width, height, bytesPerLine,
+        image = QImage(data.data, width, height, bytes_per_line,
                        QImage.Format_RGB32)
 
     elif channels == 4:
-        image = QImage(data.data, width, height, bytesPerLine,
+        image = QImage(data.data, width, height, bytes_per_line,
                        QImage.Format_ARGB32)
     return image
 
