@@ -15,12 +15,14 @@ try:
 except Exception:
     np = None
 
+from pyface.qt import is_qt4
 from pyface.qt.QtGui import QColor, QImage, QPainter
 
 from ..image_helpers import QImage_to_array, array_to_QImage
 
 
 @unittest.skipIf(np is None, "NumPy is not available")
+@unittest.skipIf(is_qt4, "QImage.pixelFormat not supported on Qt4")
 class TestImageHelpers(unittest.TestCase):
 
     def test_qimage_to_array_rgb(self):
