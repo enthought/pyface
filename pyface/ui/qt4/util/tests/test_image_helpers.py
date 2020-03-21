@@ -10,13 +10,15 @@
 from __future__ import absolute_import, unicode_literals
 
 import unittest
+import sys
+
 try:
     import numpy as np
 except Exception:
     np = None
 
-from pyface.qt import is_qt4
-from pyface.qt.QtGui import QColor, QImage, QPainter
+from pyface.qt import is_qt4, qt_api
+from pyface.qt.QtGui import QColor, QImage
 
 from ..image_helpers import QImage_to_array, array_to_QImage
 
@@ -58,6 +60,10 @@ class TestImageHelpers(unittest.TestCase):
         with self.assertRaises(ValueError):
             array = QImage_to_array(qimage)
 
+    @unittest.skipIf(
+        qt_api == 'pyside2' and sys.platform == 'linux',
+        "Pyside2 QImage.pixel returns signed integers on linux"
+    )
     def test_array_to_qimage_rgb(self):
         array = np.empty((64, 32, 3), dtype='uint8')
         array[:, :, 0] = 0x44
@@ -74,6 +80,10 @@ class TestImageHelpers(unittest.TestCase):
             for i in range(32) for j in range(64)
         ))
 
+    @unittest.skipIf(
+        qt_api == 'pyside2' and sys.platform == 'linux',
+        "Pyside2 QImage.pixel returns signed integers on linux"
+    )
     def test_array_to_qimage_rgba(self):
         array = np.empty((64, 32, 4), dtype='uint8')
         array[:, :, 0] = 0x44
@@ -98,10 +108,10 @@ class TestImageHelpers(unittest.TestCase):
         array[:, :, 1] = 0x88
 
         with self.assertRaises(ValueError):
-            qimage = array_to_QImage(array)
+            array_to_QImage(array)
 
     def test_array_to_qimage_bad_ndim(self):
         array = np.full((64, 32), 0x44, dtype='uint8')
 
         with self.assertRaises(ValueError):
-            qimage = array_to_QImage(array)
+            array_to_QImage(array)
