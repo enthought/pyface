@@ -12,13 +12,11 @@
 
 
 import wx
-from wx.grid import GridCellEditor as PyGridCellEditor
+from wx.grid import GridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
 # Local imports:
 from .combobox_focus_handler import ComboboxFocusHandler
-
-wx_28 = float(wx.__version__[:3]) >= 2.8
 
 
 def get_control(control):
@@ -45,7 +43,7 @@ def pop_control(control, grid):
         pop_control(child_control, grid)
 
 
-class TraitGridCellAdapter(PyGridCellEditor):
+class TraitGridCellAdapter(GridCellEditor):
     """ Wrap a trait editor as a GridCellEditor object. """
 
     def __init__(
@@ -62,7 +60,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
     ):
         """ Build a new TraitGridCellAdapter object. """
 
-        PyGridCellEditor.__init__(self)
+        super().__init__()
         self._factory = trait_editor_factory
         self._style = style
         self._width = width
@@ -132,7 +130,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
         self._edit_width, self._edit_height = width, height
 
         # Set up the event handler for each window in the cell editor:
-        push_control(control, grid)
+        #push_control(control, grid)
 
         # Set up the first control found within the cell editor as the cell
         # editor control:
@@ -198,10 +196,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
             to set colours or fonts for the control.
         """
         if self.IsCreated():
-            if wx_28:
-                super(TraitGridCellAdapter, self).Show(show, attr)
-            else:
-                self.base_Show(show, attr)
+            super(TraitGridCellAdapter, self).Show(show, attr)
 
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
@@ -280,7 +275,7 @@ class TraitGridCellAdapter(PyGridCellEditor):
         )
 
     def dispose(self):
-        grid, _, _ = getattr(self, "_grid_info", (None, None, None))
-        pop_control(self._editor.control, grid)
         if self._editor is not None:
+            grid, _, _ = getattr(self, "_grid_info", (None, None, None))
+            pop_control(self._editor.control, grid)
             self._editor.dispose()

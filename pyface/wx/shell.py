@@ -37,7 +37,15 @@ from .drag_and_drop import clipboard as enClipboard
 
 sys.ps3 = "<-- "  # Input prompt.
 
-NAVKEYS = (WXK_END, WXK_LEFT, WXK_RIGHT, WXK_UP, WXK_DOWN, WXK_PRIOR, WXK_NEXT)
+NAVKEYS = (
+    wx.WXK_END,
+    wx.WXK_LEFT,
+    wx.WXK_RIGHT,
+    wx.WXK_UP,
+    wx.WXK_DOWN,
+    wx.WXK_PAGEUP,
+    wx.WXK_PAGEDOWN
+)
 
 if wxPlatform == "__WXMSW__":
     faces = {

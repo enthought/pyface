@@ -253,14 +253,7 @@ class PythonSTC(stc.StyledTextCtrl):
         if self.CallTipActive():
             self.CallTipCancel()
 
-        # KeyCode used to be a method.  Now it is an integer.
-        # Handle either case.
-        if type(event.KeyCode) is int:
-            # wx2.8+
-            key = event.KeyCode
-        else:
-            # wx2.6
-            key = event.KeyCode()
+        key = event.KeyCode
 
         if key == 32 and event.ControlDown():
             pos = self.GetCurrentPos()

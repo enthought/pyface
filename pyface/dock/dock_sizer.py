@@ -48,7 +48,6 @@ from .ifeature_tool import IFeatureTool
 
 
 # Define version dependent values:
-wx_26 = wx.__version__[:3] == "2.6"
 is_mac = sys.platform == "darwin"
 
 # -------------------------------------------------------------------------------
