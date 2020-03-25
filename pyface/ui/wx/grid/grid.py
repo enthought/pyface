@@ -405,11 +405,6 @@ class Grid(Widget):
         )
         otc(self._on_show_row_headers_changed, "show_row_headers", remove=True)
 
-        # It seems that the grid must be destroyed before disposing of
-        # _grid_table_base: otherwise, the grid can apparently generate an
-        # extra _GridTableBase.GetAttr call after _GridTableBase.dispose()
-        # has been called, leading to headaches and segfaults.
-        #grid.Destroy()
         self._grid_table_base.dispose()
         self._grid = None
 

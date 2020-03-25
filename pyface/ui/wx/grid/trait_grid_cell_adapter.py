@@ -15,9 +15,6 @@ import wx
 from wx.grid import GridCellEditor
 from wx import SIZE_ALLOW_MINUS_ONE
 
-# Local imports:
-from .combobox_focus_handler import ComboboxFocusHandler
-
 
 def get_control(control):
     if isinstance(control, wx.Control):
@@ -29,18 +26,6 @@ def get_control(control):
             return result
 
     return None
-
-
-def push_control(control, grid):
-    control.PushEventHandler(ComboboxFocusHandler(grid))
-    for child_control in control.GetChildren():
-        push_control(child_control, grid)
-
-
-def pop_control(control, grid):
-    control.PopEventHandler(ComboboxFocusHandler(grid))
-    for child_control in control.GetChildren():
-        pop_control(child_control, grid)
 
 
 class TraitGridCellAdapter(GridCellEditor):
@@ -129,9 +114,6 @@ class TraitGridCellAdapter(GridCellEditor):
 
         self._edit_width, self._edit_height = width, height
 
-        # Set up the event handler for each window in the cell editor:
-        #push_control(control, grid)
-
         # Set up the first control found within the cell editor as the cell
         # editor control:
         control = get_control(control)
@@ -196,7 +178,7 @@ class TraitGridCellAdapter(GridCellEditor):
             to set colours or fonts for the control.
         """
         if self.IsCreated():
-            super(TraitGridCellAdapter, self).Show(show, attr)
+            super().Show(show, attr)
 
     def PaintBackground(self, rect, attr):
         """ Draws the part of the cell not occupied by the edit control.  The
@@ -276,6 +258,4 @@ class TraitGridCellAdapter(GridCellEditor):
 
     def dispose(self):
         if self._editor is not None:
-            grid, _, _ = getattr(self, "_grid_info", (None, None, None))
-            pop_control(self._editor.control, grid)
             self._editor.dispose()
