@@ -86,13 +86,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.lhs is not None:
             lhs = self.lhs(parent)
-            if hasattr(wx, "WindowPtr"):
-                if not isinstance(lhs, (wx.Window, wx.WindowPtr)):
-                    lhs = lhs.control
-            else:
-                # wx 2.8 did away with WindowPtr
-                if not isinstance(lhs, wx.Window):
-                    lhs = lhs.control
+            if not isinstance(lhs, wx.Window):
+                lhs = lhs.control
 
         else:
             # Dummy implementation - override!
@@ -107,13 +102,8 @@ class SplitWidget(MSplitWidget, HasTraits):
 
         if self.rhs is not None:
             rhs = self.rhs(parent)
-            if hasattr(wx, "WindowPtr"):
-                if not isinstance(rhs, (wx.Window, wx.WindowPtr)):
-                    rhs = rhs.control
-            else:
-                # wx 2.8 did away with WindowPtr
-                if not isinstance(rhs, wx.Window):
-                    rhs = rhs.control
+            if not isinstance(rhs, wx.Window):
+                rhs = rhs.control
 
         else:
             # Dummy implementation - override!

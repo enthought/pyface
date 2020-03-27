@@ -180,12 +180,9 @@ class Tree(Widget):
         # Base class constructors.
         super(Tree, self).__init__(**traits)
 
-        # Get our wx Id.
-        wxid = wx.NewId()
-
         # Create the toolkit-specific control.
         self.control = tree = _Tree(
-            self, parent, wxid, style=self._get_style()
+            self, parent, style=self._get_style()
         )
 
         # Wire up the wx tree events.

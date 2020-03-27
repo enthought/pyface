@@ -74,7 +74,7 @@ class ToolPalette(Widget):
         Return an id that can be used to reference this tool in the future.
         """
 
-        wxid = wx.NewId()
+        wxid = wx.NewIdRef()
         params = (wxid, label, bmp, kind, tooltip, longtip)
         self.tools.append(params)
         self.id_tool_map[wxid] = params

@@ -51,9 +51,7 @@ from pyface.wx.drag_and_drop import (
 )
 from pyface.wx.drag_and_drop import clipboard as enClipboard, FileDropSource
 
-
 from .grid_model import GridModel
-from .combobox_focus_handler import ComboboxFocusHandler
 
 # Is this code running on MS Windows?
 is_win32 = sys.platform == "win32"
@@ -307,8 +305,6 @@ class Grid(Widget):
             window.Bind(wx.EVT_LEFT_DOWN, self._on_left_down)
             window.Bind(wx.EVT_LEFT_UP, self._on_left_up)
 
-        self._grid_window.Bind(wx.EVT_PAINT, self._on_grid_window_paint)
-
         # Initialize the row and column models:
         self.__initialize_rows(self.model)
         self.__initialize_columns(self.model)
@@ -409,11 +405,6 @@ class Grid(Widget):
         )
         otc(self._on_show_row_headers_changed, "show_row_headers", remove=True)
 
-        # It seems that the grid must be destroyed before disposing of
-        # _grid_table_base: otherwise, the grid can apparently generate an
-        # extra _GridTableBase.GetAttr call after _GridTableBase.dispose()
-        # has been called, leading to headaches and segfaults.
-        grid.Destroy()
         self._grid_table_base.dispose()
         self._grid = None
 
@@ -755,18 +746,6 @@ class Grid(Widget):
                     wx.wxEVT_COMMAND_BUTTON_CLICKED, control.GetId()
                 ),
             )
-
-    def _on_grid_window_paint(self, evt):
-
-        # fixme: this is a total h*ck to get rid of the scrollbars that appear
-        # on a grid under wx2.6 when it starts up. these appear whether or
-        # not needed, and disappear as soon as the grid is resized. hopefully
-        # we will be able to remove this egregious code on some future version
-        # of wx.
-        # self._grid.SetColSize(0, self._grid.GetColSize(0) + 1)
-        # self._grid.SetColSize(0, self._grid.GetColSize(0) - 1)
-
-        evt.Skip()
 
     def _on_left_down(self, evt):
         """ Called when the left mouse button is pressed.
@@ -1418,7 +1397,7 @@ class Grid(Widget):
         bottom_right = self._grid.GetSelectionBlockBottomRight()
         selection_mode = self._grid.GetSelectionMode()
 
-        if selection_mode == wxGrid.GridSelectRows:
+        if selection_mode == wxGrid.SelectRows:
             # handle rows differently. figure out which rows were
             # selected. turns out that in this case, wx adds a "block"
             # per row, so we have to cycle over the list returned by
@@ -1428,7 +1407,7 @@ class Grid(Widget):
                 bottom_point = bottom_right[i]
                 for row_index in range(top_point[0], bottom_point[0] + 1):
                     rows.append(row_index)
-        elif selection_mode == wxGrid.wxGridSelectColumns:
+        elif selection_mode == wxGrid.SelectColumns:
             # again, in this case we know that only whole columns can be
             # selected
             for i in range(len(top_left)):

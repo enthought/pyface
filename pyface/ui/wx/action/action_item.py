@@ -93,7 +93,7 @@ class _MenuItem(HasTraits):
             elif action.menu_role == "Quit":
                 self.control_id = wx.ID_EXIT
         else:
-            self.control_id = wx.NewId()
+            self.control_id = wx.ID_ANY
         self.control = wx.MenuItem(menu, self.control_id, label, longtip, kind)
 
         # If the action has an image then display it.
@@ -363,9 +363,8 @@ class _Tool(HasTraits):
             self.control = tool_bar.AddControl(widget, label)
             self.control_id = self.control.GetId()
         else:
-            self.control_id = wx.NewId()
             self.control = tool_bar.AddTool(
-                self.control_id,
+                wx.ID_ANY,
                 label,
                 bmp,
                 wx.NullBitmap,
@@ -374,6 +373,7 @@ class _Tool(HasTraits):
                 longtip,
                 None,
             )
+            self.control_id = self.control.GetId()
 
             # Set the initial checked state.
             tool_bar.ToggleTool(self.control_id, action.checked)

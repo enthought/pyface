@@ -19,34 +19,6 @@ from wx.grid import GridCellFloatRenderer, GridCellFloatEditor
 from wx.lib.mixins.grid import GridAutoEditMixin
 
 
-class ComboboxFocusHandler(wx.EvtHandler):
-    """ Workaround for combobox focus problems in wx 2.6."""
-
-    # This is copied from enthought/pyface/grid.combobox_focus_handler.py.
-    # Since this was the only thing that pyface.wx needed from pyface,
-    # and it's a temporary workaround for an outdated version of wx, we're just
-    # copying it here instead of introducing a dependency on a large package.
-
-    def __init__(self):
-        wx.EvtHandler.__init__(self)
-        self.Bind(wx.EVT_KILL_FOCUS, self._on_kill_focus)
-
-    def _on_kill_focus(self, evt):
-
-        # this is pretty egregious. somehow the combobox gives up focus
-        # as soon as it starts up, causing the grid to remove the editor.
-        # so we just don't let it give up focus. i suspect this will cause
-        # some other problem down the road, but it seems to work for now.
-        # fixme: remove this h*ck once the bug is fixed in wx.
-        editor = evt.GetEventObject()
-        if (
-            isinstance(editor, wx._controls.ComboBox)
-            and evt.GetWindow() is None
-        ):
-            return
-        evt.Skip()
-
-
 class AbstractGridView(Grid):
     """ Enthought's default spreadsheet view.
 
