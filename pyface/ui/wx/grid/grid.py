@@ -630,11 +630,11 @@ class Grid(Widget):
         # should we allow individual cells to be selected or only rows
         # or only columns
         if self.selection_mode == "cell":
-            self._grid.SetSelectionMode(wxGrid.GridSelectionModes.GridSelectCells)
+            self._grid.SetSelectionMode(wxGrid.SelectCells)
         elif self.selection_mode == "rows":
-            self._grid.SetSelectionMode(wxGrid.GridSelectionModes.GridSelectRows)
+            self._grid.SetSelectionMode(wxGrid.SelectRows)
         elif self.selection_mode == "cols":
-            self._grid.SetSelectionMode(wxGrid.GridSelectionModes.GridSelectColumns)
+            self._grid.SetSelectionMode(wxGrid.SelectColumns)
 
     def _on_column_label_height_changed(self):
         """ Handle a change to the column_label_height trait. """
@@ -1397,7 +1397,7 @@ class Grid(Widget):
         bottom_right = self._grid.GetSelectionBlockBottomRight()
         selection_mode = self._grid.GetSelectionMode()
 
-        if selection_mode == wxGrid.GridSelectionModes.GridSelectRows:
+        if selection_mode == wxGrid.SelectRows:
             # handle rows differently. figure out which rows were
             # selected. turns out that in this case, wx adds a "block"
             # per row, so we have to cycle over the list returned by
@@ -1407,7 +1407,7 @@ class Grid(Widget):
                 bottom_point = bottom_right[i]
                 for row_index in range(top_point[0], bottom_point[0] + 1):
                     rows.append(row_index)
-        elif selection_mode == wxGrid.GridSelectionModes.GridSelectColumns:
+        elif selection_mode == wxGrid.SelectColumns:
             # again, in this case we know that only whole columns can be
             # selected
             for i in range(len(top_left)):
@@ -1415,7 +1415,7 @@ class Grid(Widget):
                 bottom_point = bottom_right[i]
                 for col_index in range(top_point[1], bottom_point[1] + 1):
                     cols.append(col_index)
-        elif selection_mode == wxGrid.GridSelectionModes.GridSelectCells:
+        elif selection_mode == wxGrid.SelectCells:
             # this is the case where the selection_mode is cell, which also
             # allows complete columns or complete rows to be selected.
 

@@ -286,15 +286,15 @@ class GridModel(HasPrivateTraits):
         override the _set_value method instead.
         """
         # grids are passing only strings, this is temp workaraound
-        try:
-            val1 = int(value)
-        except:
+        if isinstance(value, str):
             try:
-                val1 = float(value)
-            except:
-                val1 = value
-        rows_appended = self._set_value(row, col, val1)
-        # rows_appended = self._set_value(row, col, value)
+                value = int(value)
+            except ValueError:
+                try:
+                    value = float(value)
+                except ValueError:
+                    value = value
+        rows_appended = self._set_value(row, col, value)
 
         self.fire_content_changed()
 

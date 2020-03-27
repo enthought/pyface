@@ -8,9 +8,13 @@
 #
 # Thanks for using Enthought open source!
 
+import logging
 
 from .checkbox_image_renderer import CheckboxImageRenderer
 from .grid_cell_renderer import GridCellRenderer
+
+
+logger = logging.getLogger(__name__)
 
 
 class CheckboxRenderer(GridCellRenderer):
@@ -30,7 +34,7 @@ class CheckboxRenderer(GridCellRenderer):
 
         try:
             grid.model.set_value(row, col, not value)
-        except:
-            pass
+        except Exception:
+            logger.exception("Can't set cell value")
 
         return True
