@@ -62,8 +62,8 @@ class MenuManager(ActionManager, ActionManagerItem):
     def add_to_menu(self, parent, menu, controller):
         """ Adds the item to a menu. """
 
-        id = wx.NewId()
         sub = self.create_menu(parent, controller)
+        id = sub.GetId()
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
         sub._id = id
