@@ -15,8 +15,6 @@
 """
 
 
-import wx
-
 # -------------------------------------------------------------------------------
 #  'IDockable' class:
 # -------------------------------------------------------------------------------
@@ -51,10 +49,9 @@ class IDockable(object):
     def dockable_get_control(self, parent):
         """ Gets a control that can be docked into a DockWindow.
         """
-        print("The 'IDockable.dockable_get_control' method must be overridden")
-        panel = wx.Panel(parent, -1)
-        panel.SetBackgroundColour(wx.RED)
-        return panel
+        raise NotImplementedError(
+            "The 'IDockable.dockable_get_control' method must be overridden"
+        )
 
     # ---------------------------------------------------------------------------
     #  Allows the object to override the default DockControl settings:
