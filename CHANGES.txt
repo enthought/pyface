@@ -2,6 +2,82 @@
 Pyface Changelog
 ================
 
+Release 7.0.0
+=============
+
+Pyface 7.0.0 is a major release which focuses on modernization of the
+codebase.  This release includes updating the WxPython backend to support
+WxPython 4, an effort led by Rob McMullen's first cut at support, with
+help from a number of other people.  It also updates the code to use new
+features of Traits 6, and just like Traits 6, this release drops support
+for Python 2.
+
+The release includes many bugfixes and a number of smaller incremental
+enhancements.  Other than the changed dependencies, Pyface 6 code should
+largely work unmodified under Pyface 7.
+
+Thanks to:
+
+David Baddeley, Mark Dickinson, Matt Hancock, Petr Kungurtsev, Midhun
+Madhusoodanan, Rob McMullen, Shoeb Mohammed, Rahul Poruri, Roberto Preste,
+reckoner, Jan von Rickenbach, Chiranth Siddappa, Joris Vankerschaver,
+Corran Webster.
+
+Change summary
+--------------
+
+Enhancements
+
+* Use Traits 6 features (#480, #494)
+* WxPython 4 support (#469, #473, #497, $499)
+* Remove six and other Python 2 code (#493)
+* Add utility functions for Qt images (#498)
+* Allow live update of Action images (#484)
+* Add Qt Multimedia APIs to pyface.qt (#485)
+* Allow additional copyright notices in the AboutDialog class (#467)
+* Replace default AboutDialog and Splashscreen images with Python logo (#454)
+* Allow etstool.py to run in non EDM environments (#443)
+* Add assertEventuallyTrueInGui method to GuiTestAssistant (#419)
+
+Fixes
+
+* Avoid imports of Wx in interface classes (#500`)
+* Code style cleanup (#490, #491)
+* Documentation fixes (#468)
+* SplitEditorAreaPane context menu cleanup (#435)
+* Remove deprecated Traits features (#457, #460)
+* Better Python 3 compatibility (#438, #455, #461, #477, #479)
+* Improved Qt support (#452)
+* Fix relative imports for Wx tasks (#448)
+* Ensure close button and escape key close message dialogs in Qt (#441)
+* Don't show context help button in Windows dialogs (#440)
+* Test improvements (#436)
+
+Release 6.1.2
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 6.1.1 release.
+
+Thanks to:
+
+Mark Dickinson, Prabhu Ramachandran, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Don't try to open directories in PythonEditorTask (#428)
+* Regression test for split editor area merge messages (#424)
+* Fix some comments that should be Traits doc-comments. (#426)
+* Fix some occurrences of PyFace (should be Pyface) (#420)
+* Use decorator form of classmethod and staticmethod. (#417)
+* Use equality rather than is when checking orientation. (#422)
+* Fix timer issues. (#409, #414, #415)
+* Remove use of etsdevtools in an example file. (#413)
+* Fix a questionable version check. (#411)
+* Fix error during tab completion on shell. (#410)
+
 Release 6.1.1
 =============
 
