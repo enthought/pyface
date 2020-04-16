@@ -11,8 +11,7 @@ import warnings
 
 warnings.warn(
     PendingDeprecationWarning(
-        "Workbench will be moved from pyface.workbench to apptools.workbench "
-        "in Pyface 7.0.0"
+        "Workbench will be moved from pyface.workbench to apptools.workbench at a future point"
     ),
     stacklevel=2,
 )
