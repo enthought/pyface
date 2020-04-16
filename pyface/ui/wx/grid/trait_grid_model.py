@@ -22,7 +22,7 @@ from traits.api import (
     Bool,
     Callable,
     Dict,
-    Union,
+    Either,
     HasTraits,
     Instance,
     Int,
@@ -40,20 +40,20 @@ class TraitGridColumn(GridColumn):
     """ Structure for holding column specifications in a TraitGridModel. """
 
     # The trait name for this column. This takes precedence over method
-    name = Union(None, Str)
+    name = Either(None, Str)
 
     # A method name to call to get the value for this column
-    method = Union(None, Str)
+    method = Either(None, Str)
 
     # A method to be used to sort on this column
     sorter = Callable
 
     # A dictionary of formats for the display of different types. If it is
     # defined as a callable, then that callable must accept a single argument.
-    formats = Dict(Type, Union(Str, Callable))
+    formats = Dict(Type, Either(Str, Callable))
 
     # A name to designate the type of this column
-    typename = Union(None, Str)
+    typename = Either(None, Str)
     # note: context menus should go in here as well? but we need
     #       more info than we have available at this point
 
@@ -67,7 +67,7 @@ class TraitGridSelection(HasTraits):
     obj = Instance(HasTraits)
 
     # The specific trait selected on the object
-    trait_name = Union(None, Str)
+    trait_name = Either(None, Str)
 
 
 # The meat.
@@ -83,10 +83,10 @@ class TraitGridModel(GridModel):
     data = List(Any)
 
     # The column definitions
-    columns = Union(None, List(Union(None, Str, Instance(TraitGridColumn))))
+    columns = Either(None, List(Either(None, Str, Instance(TraitGridColumn))))
 
     # The trait to look at to get the row name
-    row_name_trait = Union(None, Str)
+    row_name_trait = Either(None, Str)
 
     # Allow column sorting?
     allow_column_sort = Bool(True)

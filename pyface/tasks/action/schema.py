@@ -26,13 +26,13 @@ from traits.api import (
     List,
     Property,
     Str,
-    Union,
+    Either,
     Tuple,
     Str,
 )
 
 # Trait definitions.
-SubSchema = Union(
+SubSchema = Either(
     None,
     Instance(Action),
     Instance(ActionItem),
