@@ -41,7 +41,7 @@ Enhancements
 
 Fixes
 
-* Avoid imports of Wx in interface classes (#500`)
+* Avoid imports of Wx in interface classes (#500)
 * Code style cleanup (#490, #491)
 * Documentation fixes (#468)
 * SplitEditorAreaPane context menu cleanup (#435)
