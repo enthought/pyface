@@ -56,23 +56,29 @@ class StatusGutterWidget(GutterWidget):
 
         cw = self.parent()
 
-        pixels_per_block = self.height() / float(cw.blockCount())
+        pixels_per_block = self.fontMetrics().height()
 
         for line in self.info_lines:
             painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.QRect(
+                    0, line * pixels_per_block, self.width(), pixels_per_block
+                ),
                 QtCore.Qt.green,
             )
 
         for line in self.warn_lines:
             painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.QRect(
+                    0, line * pixels_per_block, self.width(), pixels_per_block
+                ),
                 QtCore.Qt.yellow,
             )
 
         for line in self.error_lines:
             painter.fillRect(
-                QtCore.QRect(0, line * pixels_per_block, self.width(), 3),
+                QtCore.QRect(
+                    0, line * pixels_per_block, self.width(), pixels_per_block
+                ),
                 QtCore.Qt.red,
             )
 
