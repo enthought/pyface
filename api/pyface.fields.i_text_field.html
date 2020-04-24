@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.fields.i_text_field module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.fields.i_text_field module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.fields package" href="pyface.fields.html" >
     <link rel="next" title="pyface.fields.spin_field module" href="pyface.fields.spin_field.html" >
     <link rel="prev" title="pyface.fields.i_spin_field module" href="pyface.fields.i_spin_field.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.fields.html" accesskey="U">pyface.fields package</a></li> 
@@ -90,36 +90,36 @@
 <p>The text field interface.</p>
 <dl class="class">
 <dt id="pyface.fields.i_text_field.ITextField">
-<em class="property">class </em><code class="descclassname">pyface.fields.i_text_field.</code><code class="descname">ITextField</code><a class="headerlink" href="#pyface.fields.i_text_field.ITextField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.fields.i_text_field.</code><code class="sig-name descname">ITextField</code><a class="headerlink" href="#pyface.fields.i_text_field.ITextField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.fields.i_field.html#pyface.fields.i_field.IField" title="pyface.fields.i_field.IField"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.fields.i_field.IField</span></code></a></p>
 <p>The text field interface.</p>
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.ITextField.value">
-<code class="descname">value</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">value</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The value held by the field.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.ITextField.update_text">
-<code class="descname">update_text</code><em class="property"> = Enum('auto', 'editing_finished')</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.update_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_text</code><em class="property"> = Enum(&quot;auto&quot;, &quot;editing_finished&quot;)</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.update_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should the text trait be updated on user edits, or when done editing.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.ITextField.placeholder">
-<code class="descname">placeholder</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.placeholder" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">placeholder</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.placeholder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder text for an empty field.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.ITextField.echo">
-<code class="descname">echo</code><em class="property"> = Enum('normal', 'password')</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.echo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">echo</code><em class="property"> = Enum(&quot;normal&quot;, &quot;password&quot;)</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.echo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display typed text, or one of several hidden “password” modes.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.ITextField.read_only">
-<code class="descname">read_only</code><em class="property"> = Bool</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.read_only" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_only</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.fields.i_text_field.ITextField.read_only" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the field is read-only.</p>
 </dd></dl>
 
@@ -127,36 +127,36 @@
 
 <dl class="class">
 <dt id="pyface.fields.i_text_field.MTextField">
-<em class="property">class </em><code class="descclassname">pyface.fields.i_text_field.</code><code class="descname">MTextField</code><a class="headerlink" href="#pyface.fields.i_text_field.MTextField" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.fields.i_text_field.</code><code class="sig-name descname">MTextField</code><a class="headerlink" href="#pyface.fields.i_text_field.MTextField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The text field mix-in.</p>
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.MTextField.value">
-<code class="descname">value</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">value</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The value held by the field.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.MTextField.update_text">
-<code class="descname">update_text</code><em class="property"> = Enum('auto', 'editing_finished')</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.update_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update_text</code><em class="property"> = Enum(&quot;auto&quot;, &quot;editing_finished&quot;)</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.update_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Should the value be updated on every keystroke, or when done editing.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.MTextField.placeholder">
-<code class="descname">placeholder</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.placeholder" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">placeholder</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.placeholder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder text for an empty field.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.MTextField.echo">
-<code class="descname">echo</code><em class="property"> = Enum('normal', 'password')</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.echo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">echo</code><em class="property"> = Enum(&quot;normal&quot;, &quot;password&quot;)</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.echo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display typed text, or one of several hidden “password” modes.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.fields.i_text_field.MTextField.read_only">
-<code class="descname">read_only</code><em class="property"> = Bool</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.read_only" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_only</code><em class="property"> = Bool()</em><a class="headerlink" href="#pyface.fields.i_text_field.MTextField.read_only" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not the field is read-only.</p>
 </dd></dl>
 
@@ -185,13 +185,11 @@
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -212,13 +210,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

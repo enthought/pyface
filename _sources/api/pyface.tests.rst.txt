@@ -2,16 +2,16 @@ pyface.tests package
 ====================
 
 .. automodule:: pyface.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.tests.test_new_toolkit
+   pyface.tests.test_new_toolkit
 
 Submodules
 ----------
@@ -49,4 +49,3 @@ Submodules
    pyface.tests.test_ui_traits
    pyface.tests.test_widget
    pyface.tests.test_window
-

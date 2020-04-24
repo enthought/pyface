@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_drop_handler module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.i_drop_handler module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_file_dialog module" href="pyface.i_file_dialog.html" >
     <link rel="prev" title="pyface.i_directory_dialog module" href="pyface.i_directory_dialog.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -88,53 +88,45 @@
 <span id="pyface-i-drop-handler-module"></span><h1>pyface.i_drop_handler module<a class="headerlink" href="#module-pyface.i_drop_handler" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.i_drop_handler.IDropHandler">
-<em class="property">class </em><code class="descclassname">pyface.i_drop_handler.</code><code class="descname">IDropHandler</code><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_drop_handler.</code><code class="sig-name descname">IDropHandler</code><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>Interface for a drop event handler, which provides API to check if the
 drop can be handled or not, and then handle it if possible.</p>
 <dl class="method">
 <dt id="pyface.i_drop_handler.IDropHandler.can_handle_drop">
-<code class="descname">can_handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether or not a drag event can be handled</p>
 <p>This is used to give feedback to the user about whether a drop is
 possible via the shape of the cursor or similar indicators.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>event</strong> (<em>drag event</em>) – A drag event with information about the object being dragged.</li>
-<li><strong>target</strong> (<em>toolkit widget</em>) – The widget that would be dropped on.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<em>drag event</em>) – A drag event with information about the object being dragged.</p></li>
+<li><p><strong>target</strong> (<em>toolkit widget</em>) – The widget that would be dropped on.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>can_drop</strong> – True if the current drop handler can handle the given drag
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>can_drop</strong> – True if the current drop handler can handle the given drag
 event occurring on the given target widget.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.i_drop_handler.IDropHandler.handle_drop">
-<code class="descname">handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_drop_handler.IDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs drop action when drop event occurs on target widget.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>event</strong> (<em>drop event</em>) – A drop event with information about the object being dropped.</li>
-<li><strong>target</strong> (<em>toolkit widget</em>) – The widget that would be dropped on</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<em>drop event</em>) – A drop event with information about the object being dropped.</p></li>
+<li><p><strong>target</strong> (<em>toolkit widget</em>) – The widget that would be dropped on</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -162,13 +154,11 @@ event occurring on the given target widget.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -189,13 +179,13 @@ event occurring on the given target widget.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

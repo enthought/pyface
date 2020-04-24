@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.tests.test_dock_pane_toggle_group module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.tasks.tests.test_dock_pane_toggle_group module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks.tests package" href="pyface.tasks.tests.html" >
     <link rel="next" title="pyface.tasks.tests.test_editor_area_pane module" href="pyface.tasks.tests.test_editor_area_pane.html" >
     <link rel="prev" title="pyface.tasks.tests.test_action_manager_builder module" href="pyface.tasks.tests.test_action_manager_builder.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" >pyface.tasks package</a></li>
@@ -90,17 +90,17 @@
 <span id="pyface-tasks-tests-test-dock-pane-toggle-group-module"></span><h1>pyface.tasks.tests.test_dock_pane_toggle_group module<a class="headerlink" href="#module-pyface.tasks.tests.test_dock_pane_toggle_group" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask">
-<em class="property">class </em><code class="descclassname">pyface.tasks.tests.test_dock_pane_toggle_group.</code><code class="descname">BogusTask</code><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tests.test_dock_pane_toggle_group.</code><code class="sig-name descname">BogusTask</code><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.tasks.task.html#pyface.tasks.task.Task" title="pyface.tasks.task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.task.Task</span></code></a></p>
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_central_pane">
-<code class="descname">create_central_pane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_central_pane" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_central_pane</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_central_pane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create and return the central pane, which must implement ITaskPane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_dock_panes">
-<code class="descname">create_dock_panes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_dock_panes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_dock_panes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.BogusTask.create_dock_panes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create and return the task’s dock panes (IDockPane instances).</p>
 <p>This method is called <em>after</em> create_central_pane() when the task is
 added to a TaskWindow.</p>
@@ -110,38 +110,38 @@ added to a TaskWindow.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase">
-<em class="property">class </em><code class="descclassname">pyface.tasks.tests.test_dock_pane_toggle_group.</code><code class="descname">DockPaneToggleGroupTestCase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tests.test_dock_pane_toggle_group.</code><code class="sig-name descname">DockPaneToggleGroupTestCase</code><span class="sig-paren">(</span><em class="sig-param">methodName='runTest'</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.setUp">
-<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.setUp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.setUp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hook method for setting up the test fixture before exercising it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.tearDown">
-<code class="descname">tearDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.tearDown" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tearDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.tearDown" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hook method for deconstructing the test fixture after testing it.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.get_dock_pane_toggle_action_names">
-<code class="descname">get_dock_pane_toggle_action_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.get_dock_pane_toggle_action_names" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_dock_pane_toggle_action_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.get_dock_pane_toggle_action_names" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_group_content_at_startup">
-<code class="descname">test_group_content_at_startup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_group_content_at_startup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">test_group_content_at_startup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_group_content_at_startup" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_added">
-<code class="descname">test_react_to_dock_pane_added</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_added" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">test_react_to_dock_pane_added</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_added" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_removed">
-<code class="descname">test_react_to_dock_pane_removed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_removed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">test_react_to_dock_pane_removed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tests.test_dock_pane_toggle_group.DockPaneToggleGroupTestCase.test_react_to_dock_pane_removed" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -169,13 +169,11 @@ added to a TaskWindow.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -196,13 +194,13 @@ added to a TaskWindow.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

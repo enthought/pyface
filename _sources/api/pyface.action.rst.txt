@@ -2,16 +2,16 @@ pyface.action package
 =====================
 
 .. automodule:: pyface.action
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.action.tests
+   pyface.action.tests
 
 Submodules
 ----------
@@ -36,4 +36,3 @@ Submodules
    pyface.action.tool_palette_manager
    pyface.action.traitsui_widget_action
    pyface.action.window_action
-

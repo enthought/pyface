@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.i_editor_area_pane module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.tasks.i_editor_area_pane module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.i_task_pane module" href="pyface.tasks.i_task_pane.html" >
     <link rel="prev" title="pyface.tasks.i_editor module" href="pyface.tasks.i_editor.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -89,7 +89,7 @@
 <span id="pyface-tasks-i-editor-area-pane-module"></span><h1>pyface.tasks.i_editor_area_pane module<a class="headerlink" href="#module-pyface.tasks.i_editor_area_pane" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane">
-<em class="property">class </em><code class="descclassname">pyface.tasks.i_editor_area_pane.</code><code class="descname">IEditorAreaPane</code><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_editor_area_pane.</code><code class="sig-name descname">IEditorAreaPane</code><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.tasks.i_task_pane.html#pyface.tasks.i_task_pane.ITaskPane" title="pyface.tasks.i_task_pane.ITaskPane"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.tasks.i_task_pane.ITaskPane</span></code></a></p>
 <p>A central pane that contains tabbed editors.</p>
 <p>There are currently two implementations of this interface in Tasks.
@@ -98,19 +98,19 @@ additionally permits arbitrary splitting of the editor area so that editors
 can be displayed side-by-side.</p>
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.activate_editor">
-<code class="descname">activate_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.activate_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">activate_editor</code><span class="sig-paren">(</span><em class="sig-param">editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.activate_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Activates the specified editor in the pane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.add_editor">
-<code class="descname">add_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.add_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_editor</code><span class="sig-paren">(</span><em class="sig-param">editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.add_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds an editor to the pane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.create_editor">
-<code class="descname">create_editor</code><span class="sig-paren">(</span><em>obj</em>, <em>factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.create_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.create_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an editor for an object.</p>
 <p>If a factory is specified, it will be used instead of the editor factory
 registry. Otherwise, this method will return None if a suitable factory
@@ -120,7 +120,7 @@ cannot be found in the registry.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.edit">
-<code class="descname">edit</code><span class="sig-paren">(</span><em>obj</em>, <em>factory=None</em>, <em>use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.edit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edit</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">factory=None</em>, <em class="sig-param">use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edit an object.</p>
 <p>This is a convenience method that creates and adds an editor for the
 specified object. If ‘use_existing’ is set and the object is already
@@ -131,30 +131,30 @@ not be created.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_editor">
-<code class="descname">get_editor</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the editor for an object.</p>
 <p>Returns None if the object is not being edited.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_factory">
-<code class="descname">get_factory</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_factory</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.get_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an editor factory suitable for editing an object.</p>
 <p>Returns None if there is no such editor factory.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.register_factory">
-<code class="descname">register_factory</code><span class="sig-paren">(</span><em>factory</em>, <em>filter</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.register_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">register_factory</code><span class="sig-paren">(</span><em class="sig-param">factory</em>, <em class="sig-param">filter</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.register_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers a factory for creating editors.</p>
-<dl class="docutils">
-<dt>The ‘factory’ parameter is a callabe of form:</dt>
-<dd>callable(editor_area=editor_area, obj=obj) -&gt; IEditor</dd>
+<dl class="simple">
+<dt>The ‘factory’ parameter is a callabe of form:</dt><dd><p>callable(editor_area=editor_area, obj=obj) -&gt; IEditor</p>
+</dd>
 </dl>
 <p>Often, factory will be a class that provides the ‘IEditor’ interface.</p>
-<dl class="docutils">
-<dt>The ‘filter’ parameter is a callable of form:</dt>
-<dd>callable(obj) -&gt; bool</dd>
+<dl class="simple">
+<dt>The ‘filter’ parameter is a callable of form:</dt><dd><p>callable(obj) -&gt; bool</p>
+</dd>
 </dl>
 <p>that indicates whether the editor factory is suitable for an object.</p>
 <p>If multiple factories apply to a single object, it is undefined which
@@ -165,13 +165,13 @@ to be selected.</p>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.remove_editor">
-<code class="descname">remove_editor</code><span class="sig-paren">(</span><em>editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.remove_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_editor</code><span class="sig-paren">(</span><em class="sig-param">editor</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.remove_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes an editor from the pane.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.IEditorAreaPane.unregister_factory">
-<code class="descname">unregister_factory</code><span class="sig-paren">(</span><em>factory</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.unregister_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unregister_factory</code><span class="sig-paren">(</span><em class="sig-param">factory</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.IEditorAreaPane.unregister_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unregisters a factory for creating editors.</p>
 </dd></dl>
 
@@ -179,41 +179,41 @@ to be selected.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane">
-<em class="property">class </em><code class="descclassname">pyface.tasks.i_editor_area_pane.</code><code class="descname">MEditorAreaPane</code><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.i_editor_area_pane.</code><code class="sig-name descname">MEditorAreaPane</code><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.create_editor">
-<code class="descname">create_editor</code><span class="sig-paren">(</span><em>obj</em>, <em>factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.create_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">factory=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.create_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an editor for an object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.edit">
-<code class="descname">edit</code><span class="sig-paren">(</span><em>obj</em>, <em>factory=None</em>, <em>use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.edit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edit</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">factory=None</em>, <em class="sig-param">use_existing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.edit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Edit an object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_editor">
-<code class="descname">get_editor</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_editor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_editor</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_editor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the editor for an object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_factory">
-<code class="descname">get_factory</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_factory</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.get_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an editor factory suitable for editing an object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.register_factory">
-<code class="descname">register_factory</code><span class="sig-paren">(</span><em>factory</em>, <em>filter</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.register_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">register_factory</code><span class="sig-paren">(</span><em class="sig-param">factory</em>, <em class="sig-param">filter</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.register_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers a factory for creating editors.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.i_editor_area_pane.MEditorAreaPane.unregister_factory">
-<code class="descname">unregister_factory</code><span class="sig-paren">(</span><em>factory</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.unregister_factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unregister_factory</code><span class="sig-paren">(</span><em class="sig-param">factory</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.i_editor_area_pane.MEditorAreaPane.unregister_factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unregisters a factory for creating editors.</p>
 </dd></dl>
 
@@ -242,13 +242,11 @@ to be selected.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -269,13 +267,13 @@ to be selected.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

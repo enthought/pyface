@@ -2,6 +2,6 @@ pyface.window module
 ====================
 
 .. automodule:: pyface.window
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -2,9 +2,9 @@ pyface.wizard package
 =====================
 
 .. automodule:: pyface.wizard
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -22,4 +22,3 @@ Submodules
    pyface.wizard.wizard
    pyface.wizard.wizard_controller
    pyface.wizard.wizard_page
-

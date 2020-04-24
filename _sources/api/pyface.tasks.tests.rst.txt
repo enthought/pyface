@@ -2,9 +2,9 @@ pyface.tasks.tests package
 ==========================
 
 .. automodule:: pyface.tasks.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -21,4 +21,3 @@ Submodules
    pyface.tasks.tests.test_task_window
    pyface.tasks.tests.test_tasks_application
    pyface.tasks.tests.test_topological_sort
-

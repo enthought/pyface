@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.util package &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.util package &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,9 +28,9 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
-    <link rel="next" title="pyface.util.grid package" href="pyface.util.grid.html" >
+    <link rel="next" title="pyface.util.tests package" href="pyface.util.tests.html" >
     <link rel="prev" title="pyface.tree.tree_model module" href="pyface.tree.tree_model.html" > 
   </head>
   <body>
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -64,7 +64,7 @@
            >modules</a>
       </li>
       <li class="active">
-        <a href="pyface.util.grid.html" title="pyface.util.grid package"
+        <a href="pyface.util.tests.html" title="pyface.util.tests package"
            accesskey="N">next</a>
       </li>
       <li class="active">
@@ -90,17 +90,6 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyface.util.grid.html">pyface.util.grid package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pyface.util.grid.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyface.util.grid.api.html">pyface.util.grid.api module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyface.util.grid.grid.html">pyface.util.grid.grid module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyface.util.grid.grid_column.html">pyface.util.grid.grid_column module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyface.util.grid.grid_model.html">pyface.util.grid.grid_model module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pyface.util.grid.grid_row.html">pyface.util.grid.grid_row module</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.tests.html">pyface.util.tests package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyface.util.tests.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="pyface.util.tests.test_id_helper.html">pyface.util.tests.test_id_helper module</a></li>
@@ -115,10 +104,8 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pyface.util.font_helper.html">pyface.util.font_helper module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.guisupport.html">pyface.util.guisupport module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.id_helper.html">pyface.util.id_helper module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pyface.util.python_stc.html">pyface.util.python_stc module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyface.util.testing.html">pyface.util.testing module</a></li>
 </ul>
 </div>
@@ -147,21 +134,19 @@
   <p class="topless"><a href="pyface.tree.tree_model.html"
                         title="previous chapter">pyface.tree.tree_model module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.util.grid.html"
-                        title="next chapter">pyface.util.grid package</a></p>
+  <p class="topless"><a href="pyface.util.tests.html"
+                        title="next chapter">pyface.util.tests package</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.util.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -182,13 +167,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

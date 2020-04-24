@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_gui module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.i_gui module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_heading_text module" href="pyface.i_heading_text.html" >
     <link rel="prev" title="pyface.i_file_dialog module" href="pyface.i_file_dialog.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,33 +89,33 @@
 <p>The interface of a pyface GUI.</p>
 <dl class="class">
 <dt id="pyface.i_gui.IGUI">
-<em class="property">class </em><code class="descclassname">pyface.i_gui.</code><code class="descname">IGUI</code><span class="sig-paren">(</span><em>splash_screen=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_gui.</code><code class="sig-name descname">IGUI</code><span class="sig-paren">(</span><em class="sig-param">splash_screen=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.Interface</span></code></p>
 <p>The interface of a pyface GUI.</p>
 <dl class="attribute">
 <dt id="pyface.i_gui.IGUI.busy">
-<code class="descname">busy</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.i_gui.IGUI.busy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">busy</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.i_gui.IGUI.busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the GUI busy (i.e. should the busy cursor, often an hourglass, be
 displayed)?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_gui.IGUI.started">
-<code class="descname">started</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.i_gui.IGUI.started" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">started</code><em class="property"> = Bool(False)</em><a class="headerlink" href="#pyface.i_gui.IGUI.started" title="Permalink to this definition">¶</a></dt>
 <dd><p>Has the GUI’s event loop been started?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_gui.IGUI.state_location">
-<code class="descname">state_location</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_gui.IGUI.state_location" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">state_location</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_gui.IGUI.state_location" title="Permalink to this definition">¶</a></dt>
 <dd><p>A directory on the local file system that we can read and write to at
 will.  This is used to persist layout information etc.  Note that
 individual toolkits will have their own directory.</p>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.allow_interrupt">
-<em class="property">static </em><code class="descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override SIGINT to prevent swallowing KeyboardInterrupt</p>
 <p>Override the SIGINT handler to ensure the process can be
 interrupted. This prevents GUI toolkits from swallowing
@@ -124,121 +124,99 @@ KeyboardInterrupt exceptions.</p>
 run interactively.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.invoke_after">
-<em class="property">classmethod </em><code class="descname">invoke_after</code><span class="sig-paren">(</span><em>millisecs</em>, <em>callable</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_after" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">invoke_after</code><span class="sig-paren">(</span><em class="sig-param">millisecs</em>, <em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call a callable after a specific delay in the main GUI thread.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>millisecs</strong> (<em>float</em>) – Delay in milliseconds</li>
-<li><strong>callable</strong> (<em>callable</em>) – Callable to be called after the delay</li>
-<li><strong>kwargs</strong> (<em>args</em><em>,</em>) – Arguments and keyword arguments to be used when calling.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>millisecs</strong> (<em>float</em>) – Delay in milliseconds</p></li>
+<li><p><strong>callable</strong> (<em>callable</em>) – Callable to be called after the delay</p></li>
+<li><p><strong>kwargs</strong> (<em>args</em><em>,</em>) – Arguments and keyword arguments to be used when calling.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.invoke_later">
-<em class="property">classmethod </em><code class="descname">invoke_later</code><span class="sig-paren">(</span><em>callable</em>, <em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_later" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">invoke_later</code><span class="sig-paren">(</span><em class="sig-param">callable</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.invoke_later" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call a callable in the main GUI thread.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>callable</strong> (<em>callable</em>) – Callable to be called after the delay</li>
-<li><strong>kwargs</strong> (<em>args</em><em>,</em>) – Arguments and keyword arguments to be used when calling.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callable</strong> (<em>callable</em>) – Callable to be called after the delay</p></li>
+<li><p><strong>kwargs</strong> (<em>args</em><em>,</em>) – Arguments and keyword arguments to be used when calling.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.set_trait_after">
-<em class="property">classmethod </em><code class="descname">set_trait_after</code><span class="sig-paren">(</span><em>millisecs</em>, <em>obj</em>, <em>trait_name</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_after" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">set_trait_after</code><span class="sig-paren">(</span><em class="sig-param">millisecs</em>, <em class="sig-param">obj</em>, <em class="sig-param">trait_name</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_after" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a trait after a specific delay in the main GUI thread.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>millisecs</strong> (<em>float</em>) – Delay in milliseconds</li>
-<li><strong>obj</strong> (<em>HasTraits instance</em>) – Object on which the trait is to be set</li>
-<li><strong>trait_name</strong> (<em>str</em>) – The name of the trait to set</li>
-<li><strong>new</strong> (<em>any</em>) – The value to set.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>millisecs</strong> (<em>float</em>) – Delay in milliseconds</p></li>
+<li><p><strong>obj</strong> (<em>HasTraits instance</em>) – Object on which the trait is to be set</p></li>
+<li><p><strong>trait_name</strong> (<em>str</em>) – The name of the trait to set</p></li>
+<li><p><strong>new</strong> (<em>any</em>) – The value to set.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.set_trait_later">
-<em class="property">classmethod </em><code class="descname">set_trait_later</code><span class="sig-paren">(</span><em>obj</em>, <em>trait_name</em>, <em>new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_later" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">set_trait_later</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">trait_name</em>, <em class="sig-param">new</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_trait_later" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets a trait in the main GUI thread.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>obj</strong> (<em>HasTraits instance</em>) – Object on which the trait is to be set</li>
-<li><strong>trait_name</strong> (<em>str</em>) – The name of the trait to set</li>
-<li><strong>new</strong> (<em>any</em>) – The value to set.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>HasTraits instance</em>) – Object on which the trait is to be set</p></li>
+<li><p><strong>trait_name</strong> (<em>str</em>) – The name of the trait to set</p></li>
+<li><p><strong>new</strong> (<em>any</em>) – The value to set.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.process_events">
-<em class="property">static </em><code class="descname">process_events</code><span class="sig-paren">(</span><em>allow_user_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.process_events" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">process_events</code><span class="sig-paren">(</span><em class="sig-param">allow_user_events=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.process_events" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process any pending GUI events.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>allow_user_events</strong> (<em>bool</em>) – If allow_user_events is <code class="docutils literal notranslate"><span class="pre">False</span></code> then user generated events are not
-processed.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>allow_user_events</strong> (<em>bool</em>) – If allow_user_events is <code class="docutils literal notranslate"><span class="pre">False</span></code> then user generated events are not
+processed.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="method">
 <dt id="pyface.i_gui.IGUI.set_busy">
-<em class="property">static </em><code class="descname">set_busy</code><span class="sig-paren">(</span><em>busy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_busy" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">set_busy</code><span class="sig-paren">(</span><em class="sig-param">busy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.set_busy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Specify if the GUI is busy.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>busy</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> is passed, the cursor is set to a ‘busy’ cursor.
-Passing <code class="docutils literal notranslate"><span class="pre">False</span></code> will reset the cursor to the default.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>busy</strong> (<em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> is passed, the cursor is set to a ‘busy’ cursor.
+Passing <code class="docutils literal notranslate"><span class="pre">False</span></code> will reset the cursor to the default.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.i_gui.IGUI.start_event_loop">
-<code class="descname">start_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.start_event_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.start_event_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the GUI event loop.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.i_gui.IGUI.stop_event_loop">
-<code class="descname">stop_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.stop_event_loop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_event_loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.IGUI.stop_event_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the GUI event loop.</p>
 </dd></dl>
 
@@ -246,14 +224,14 @@ Passing <code class="docutils literal notranslate"><span class="pre">False</span
 
 <dl class="class">
 <dt id="pyface.i_gui.MGUI">
-<em class="property">class </em><code class="descclassname">pyface.i_gui.</code><code class="descname">MGUI</code><a class="headerlink" href="#pyface.i_gui.MGUI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_gui.</code><code class="sig-name descname">MGUI</code><a class="headerlink" href="#pyface.i_gui.MGUI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IGUI interface.</p>
 <p>Implements: _default_state_location()</p>
-<dl class="staticmethod">
+<dl class="method">
 <dt id="pyface.i_gui.MGUI.allow_interrupt">
-<em class="property">static </em><code class="descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.MGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">allow_interrupt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_gui.MGUI.allow_interrupt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Override SIGINT to prevent swallowing KeyboardInterrupt</p>
 <p>Override the SIGINT handler to ensure the process can be
 interrupted. This prevents GUI toolkits from swallowing
@@ -287,13 +265,11 @@ run interactively.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -314,13 +290,13 @@ run interactively.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

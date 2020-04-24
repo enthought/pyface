@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.util.guisupport module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.util.guisupport module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,10 +28,10 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.util package" href="pyface.util.html" >
     <link rel="next" title="pyface.util.id_helper module" href="pyface.util.id_helper.html" >
-    <link rel="prev" title="pyface.util.font_helper module" href="pyface.util.font_helper.html" > 
+    <link rel="prev" title="pyface.util.tests.test_id_helper module" href="pyface.util.tests.test_id_helper.html" > 
   </head>
   <body>
   <div class="container">
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.util.html" accesskey="U">pyface.util package</a></li> 
@@ -69,7 +69,7 @@
            accesskey="N">next</a>
       </li>
       <li class="active">
-        <a href="pyface.util.font_helper.html" title="pyface.util.font_helper module"
+        <a href="pyface.util.tests.test_id_helper.html" title="pyface.util.tests.test_id_helper module"
            accesskey="P">previous</a>
       </li>
     </ul>
@@ -91,28 +91,28 @@
 <p>IPython’s GUI integration allows interative plotting and GUI usage in IPython
 session. IPython has two different types of GUI integration:</p>
 <ol class="arabic simple">
-<li>The terminal based IPython supports GUI event loops through Python’s
+<li><p>The terminal based IPython supports GUI event loops through Python’s
 PyOS_InputHook. PyOS_InputHook is a hook that Python calls periodically
 whenever raw_input is waiting for a user to type code. We implement GUI
 support in the terminal by setting PyOS_InputHook to a function that
 iterates the event loop for a short while. It is important to note that
 in this situation, the real GUI event loop is NOT run in the normal
-manner, so you can’t use the normal means to detect that it is running.</li>
-<li>In the two process IPython kernel/frontend, the GUI event loop is run in
+manner, so you can’t use the normal means to detect that it is running.</p></li>
+<li><p>In the two process IPython kernel/frontend, the GUI event loop is run in
 the kernel. In this case, the event loop is run in the normal manner by
 calling the function or method of the GUI toolkit that starts the event
-loop.</li>
+loop.</p></li>
 </ol>
 <p>In addition to starting the GUI event loops in one of these two ways, IPython
 will <em>always</em> create an appropriate GUI application object when GUi
 integration is enabled.</p>
 <p>If you want your GUI apps to run in IPython you need to do two things:</p>
 <ol class="arabic simple">
-<li>Test to see if there is already an existing main application object. If
+<li><p>Test to see if there is already an existing main application object. If
 there is, you should use it. If there is not an existing application object
-you should create one.</li>
-<li>Test to see if the GUI event loop is running. If it is, you should not
-start it. If the event loop is not running you may start it.</li>
+you should create one.</p></li>
+<li><p>Test to see if the GUI event loop is running. If it is, you should not
+start it. If the event loop is not running you may start it.</p></li>
 </ol>
 <p>This module contains functions for each toolkit that perform these things
 in a consistent manner. Because of how PyOS_InputHook runs the event loop
@@ -122,18 +122,18 @@ set These methods will return a false negative. That is, they will say the
 event loop is not running, when is actually is. To work around this limitation
 we proposed the following informal protocol:</p>
 <ul class="simple">
-<li>Whenever someone starts the event loop, they <em>must</em> set the <code class="docutils literal notranslate"><span class="pre">_in_event_loop</span></code>
+<li><p>Whenever someone starts the event loop, they <em>must</em> set the <code class="docutils literal notranslate"><span class="pre">_in_event_loop</span></code>
 attribute of the main application object to <code class="docutils literal notranslate"><span class="pre">True</span></code>. This should be done
-regardless of how the event loop is actually run.</li>
-<li>Whenever someone stops the event loop, they <em>must</em> set the <code class="docutils literal notranslate"><span class="pre">_in_event_loop</span></code>
-attribute of the main application object to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</li>
-<li>If you want to see if the event loop is running, you <em>must</em> use <code class="docutils literal notranslate"><span class="pre">hasattr</span></code>
+regardless of how the event loop is actually run.</p></li>
+<li><p>Whenever someone stops the event loop, they <em>must</em> set the <code class="docutils literal notranslate"><span class="pre">_in_event_loop</span></code>
+attribute of the main application object to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>If you want to see if the event loop is running, you <em>must</em> use <code class="docutils literal notranslate"><span class="pre">hasattr</span></code>
 to see if <code class="docutils literal notranslate"><span class="pre">_in_event_loop</span></code> attribute has been set. If it is set, you
 <em>must</em> use its value. If it has not been set, you can query the toolkit
-in the normal manner.</li>
-<li>If you want GUI support and no one else has created an application or
+in the normal manner.</p></li>
+<li><p>If you want GUI support and no one else has created an application or
 started the event loop you <em>must</em> do this. We don’t want projects to
-attempt to defer these things to someone else if they themselves need it.</li>
+attempt to defer these things to someone else if they themselves need it.</p></li>
 </ul>
 <p>The functions below implement this logic for each GUI toolkit. If you need
 to create custom application subclasses, you will likely have to modify this
@@ -141,37 +141,37 @@ code for your own purposes. This code can be copied into your own project
 so you don’t have to depend on IPython.</p>
 <dl class="function">
 <dt id="pyface.util.guisupport.get_app_wx">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">get_app_wx</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">get_app_wx</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new wx app or return an exiting one.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.util.guisupport.is_event_loop_running_wx">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">is_event_loop_running_wx</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">is_event_loop_running_wx</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the wx event loop running.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.util.guisupport.start_event_loop_wx">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">start_event_loop_wx</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">start_event_loop_wx</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_wx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the wx event loop in a consistent manner.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.util.guisupport.get_app_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">get_app_qt4</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">get_app_qt4</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.get_app_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new qt4 app or return an existing one.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.util.guisupport.is_event_loop_running_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">is_event_loop_running_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">is_event_loop_running_qt4</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.is_event_loop_running_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the qt4 event loop running.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.util.guisupport.start_event_loop_qt4">
-<code class="descclassname">pyface.util.guisupport.</code><code class="descname">start_event_loop_qt4</code><span class="sig-paren">(</span><em>app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.util.guisupport.</code><code class="sig-name descname">start_event_loop_qt4</code><span class="sig-paren">(</span><em class="sig-param">app=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.util.guisupport.start_event_loop_qt4" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start the qt4 event loop in a consistent manner.</p>
 </dd></dl>
 
@@ -187,8 +187,8 @@ so you don’t have to depend on IPython.</p>
               <img class="logo" src="../_static/img/e-logo.png" alt="Logo">
             </a></p>
   <h4>Previous topic</h4>
-  <p class="topless"><a href="pyface.util.font_helper.html"
-                        title="previous chapter">pyface.util.font_helper module</a></p>
+  <p class="topless"><a href="pyface.util.tests.test_id_helper.html"
+                        title="previous chapter">pyface.util.tests.test_id_helper module</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="pyface.util.id_helper.html"
                         title="next chapter">pyface.util.id_helper module</a></p>
@@ -198,13 +198,11 @@ so you don’t have to depend on IPython.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -225,13 +223,13 @@ so you don’t have to depend on IPython.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

@@ -2,9 +2,9 @@ pyface.viewer package
 =====================
 
 .. automodule:: pyface.viewer
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -28,4 +28,3 @@ Submodules
    pyface.viewer.viewer
    pyface.viewer.viewer_filter
    pyface.viewer.viewer_sorter
-

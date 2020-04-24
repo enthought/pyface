@@ -2,9 +2,9 @@ pyface.resource package
 =======================
 
 .. automodule:: pyface.resource
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -16,4 +16,3 @@ Submodules
    pyface.resource.resource_manager
    pyface.resource.resource_path
    pyface.resource.resource_reference
-

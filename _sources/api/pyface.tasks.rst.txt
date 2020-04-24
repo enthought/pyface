@@ -2,18 +2,18 @@ pyface.tasks package
 ====================
 
 .. automodule:: pyface.tasks
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.tasks.action
-    pyface.tasks.contrib
-    pyface.tasks.tests
+   pyface.tasks.action
+   pyface.tasks.contrib
+   pyface.tasks.tests
 
 Submodules
 ----------
@@ -47,4 +47,3 @@ Submodules
    pyface.tasks.traits_dock_pane
    pyface.tasks.traits_editor
    pyface.tasks.traits_task_pane
-

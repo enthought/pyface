@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.drop_handler module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.drop_handler module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,9 +28,9 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
-    <link rel="next" title="pyface.expandable_header module" href="pyface.expandable_header.html" >
+    <link rel="next" title="pyface.expandable_panel module" href="pyface.expandable_panel.html" >
     <link rel="prev" title="pyface.directory_dialog module" href="pyface.directory_dialog.html" > 
   </head>
   <body>
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -64,7 +64,7 @@
            >modules</a>
       </li>
       <li class="active">
-        <a href="pyface.expandable_header.html" title="pyface.expandable_header module"
+        <a href="pyface.expandable_panel.html" title="pyface.expandable_panel module"
            accesskey="N">next</a>
       </li>
       <li class="active">
@@ -88,60 +88,60 @@
 <span id="pyface-drop-handler-module"></span><h1>pyface.drop_handler module<a class="headerlink" href="#module-pyface.drop_handler" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.drop_handler.BaseDropHandler">
-<em class="property">class </em><code class="descclassname">pyface.drop_handler.</code><code class="descname">BaseDropHandler</code><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.drop_handler.</code><code class="sig-name descname">BaseDropHandler</code><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Basic drop handler</p>
 <dl class="attribute">
 <dt id="pyface.drop_handler.BaseDropHandler.on_can_handle">
-<code class="descname">on_can_handle</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.on_can_handle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_can_handle</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.on_can_handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the current drop handler can handle the given drag event
 occurring on the given target widget.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.drop_handler.BaseDropHandler.on_handle">
-<code class="descname">on_handle</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.on_handle" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_handle</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.on_handle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs drop action when drop event occurs on target widget.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.drop_handler.BaseDropHandler.can_handle_drop">
-<code class="descname">can_handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.drop_handler.BaseDropHandler.handle_drop">
-<code class="descname">handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.BaseDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.drop_handler.FileDropHandler">
-<em class="property">class </em><code class="descclassname">pyface.drop_handler.</code><code class="descname">FileDropHandler</code><a class="headerlink" href="#pyface.drop_handler.FileDropHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.drop_handler.</code><code class="sig-name descname">FileDropHandler</code><a class="headerlink" href="#pyface.drop_handler.FileDropHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Class to handle backward compatible file drop events</p>
 <dl class="attribute">
 <dt id="pyface.drop_handler.FileDropHandler.extensions">
-<code class="descname">extensions</code><em class="property"> = List(Str)</em><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.extensions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extensions</code><em class="property"> = List(Str)</em><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.extensions" title="Permalink to this definition">¶</a></dt>
 <dd><p>supported extensions</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.drop_handler.FileDropHandler.open_file">
-<code class="descname">open_file</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.open_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open_file</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.open_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when file is opened. Takes single argument: path of file</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.drop_handler.FileDropHandler.can_handle_drop">
-<code class="descname">can_handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.can_handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does the drop event contails file data with matching extensions</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.drop_handler.FileDropHandler.handle_drop">
-<code class="descname">handle_drop</code><span class="sig-paren">(</span><em>event</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">handle_drop</code><span class="sig-paren">(</span><em class="sig-param">event</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.drop_handler.FileDropHandler.handle_drop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open the file using the supplied callback</p>
 </dd></dl>
 
@@ -162,21 +162,19 @@ occurring on the given target widget.</p>
   <p class="topless"><a href="pyface.directory_dialog.html"
                         title="previous chapter">pyface.directory_dialog module</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pyface.expandable_header.html"
-                        title="next chapter">pyface.expandable_header module</a></p>
+  <p class="topless"><a href="pyface.expandable_panel.html"
+                        title="next chapter">pyface.expandable_panel module</a></p>
   <h3>This Page</h3>
   <div>
     <a href="../_sources/api/pyface.drop_handler.rst.txt"
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -197,13 +195,13 @@ occurring on the given target widget.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

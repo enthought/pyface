@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.resource.resource_manager module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.resource.resource_manager module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.resource package" href="pyface.resource.html" >
     <link rel="next" title="pyface.resource.resource_path module" href="pyface.resource.resource_path.html" >
     <link rel="prev" title="pyface.resource.resource_factory module" href="pyface.resource.resource_factory.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.resource.html" accesskey="U">pyface.resource package</a></li> 
@@ -92,25 +92,25 @@
 sounds etc.</p>
 <dl class="class">
 <dt id="pyface.resource.resource_manager.ResourceManager">
-<em class="property">class </em><code class="descclassname">pyface.resource.resource_manager.</code><code class="descname">ResourceManager</code><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.resource.resource_manager.</code><code class="sig-name descname">ResourceManager</code><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The default resource manager.</p>
 <p>A resource manager locates and loads application resources such as images
 and sounds etc.</p>
 <dl class="attribute">
 <dt id="pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS">
-<code class="descname">IMAGE_EXTENSIONS</code><em class="property"> = ['.png', '.jpg', '.bmp', '.gif', '.ico']</em><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">IMAGE_EXTENSIONS</code><em class="property"> = ['.png', '.jpg', '.bmp', '.gif', '.ico']</em><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.IMAGE_EXTENSIONS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyface.resource.resource_manager.ResourceManager.locate_image">
-<code class="descname">locate_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.locate_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">locate_image</code><span class="sig-paren">(</span><em class="sig-param">image_name</em>, <em class="sig-param">path</em>, <em class="sig-param">size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.locate_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Locates an image.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.resource.resource_manager.ResourceManager.load_image">
-<code class="descname">load_image</code><span class="sig-paren">(</span><em>image_name</em>, <em>path</em>, <em>size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_image</code><span class="sig-paren">(</span><em class="sig-param">image_name</em>, <em class="sig-param">path</em>, <em class="sig-param">size=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.resource.resource_manager.ResourceManager.load_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads an image.</p>
 </dd></dl>
 
@@ -139,13 +139,11 @@ and sounds etc.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -166,13 +164,13 @@ and sounds etc.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

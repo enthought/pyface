@@ -2,16 +2,16 @@ pyface.timer package
 ====================
 
 .. automodule:: pyface.timer
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.timer.tests
+   pyface.timer.tests
 
 Submodules
 ----------
@@ -22,4 +22,3 @@ Submodules
    pyface.timer.do_later
    pyface.timer.i_timer
    pyface.timer.timer
-
