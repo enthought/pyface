@@ -1,5 +1,5 @@
 ==========================================
-pyface: traits-capable windowing framework
+Pyface: Traits-capable Windowing Framework
 ==========================================
 
 .. image:: https://travis-ci.org/enthought/pyface.svg?branch=master
@@ -12,20 +12,17 @@ pyface: traits-capable windowing framework
     :target: https://codecov.io/github/enthought/pyface?branch=master
 
 
-The pyface project contains a toolkit-independent GUI abstraction layer,
+The Pyface project contains a toolkit-independent GUI abstraction layer,
 which is used to support the "visualization" features of the Traits package.
 Thus, you can write code in terms of the Traits API (views, items, editors,
-etc.), and let pyface and your selected toolkit and back-end take care of
+etc.), and let Pyface and your selected toolkit and back-end take care of
 the details of displaying them.
 
 The following GUI backends are supported:
 
-- wxPython
-- PyQt
-- PySide
-
-**Warning:** The default toolkit if none is supplied is ``qt4``.
-   This changed from ``wx`` in Pyface 5.0..
+- PyQt 4 and 5
+- PySide2
+- wxPython 4 (experimental)
 
 Documentation
 -------------

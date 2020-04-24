@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'pyface'
-copyright = '2008-2016, Enthought'
+copyright = '2008-2020, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
