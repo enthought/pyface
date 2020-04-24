@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_dialog module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.i_dialog module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_directory_dialog module" href="pyface.i_directory_dialog.html" >
     <link rel="prev" title="pyface.i_confirmation_dialog module" href="pyface.i_confirmation_dialog.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,78 +89,76 @@
 <p>The abstract interface for all pyface dialogs.</p>
 <dl class="class">
 <dt id="pyface.i_dialog.IDialog">
-<em class="property">class </em><code class="descclassname">pyface.i_dialog.</code><code class="descname">IDialog</code><a class="headerlink" href="#pyface.i_dialog.IDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_dialog.</code><code class="sig-name descname">IDialog</code><a class="headerlink" href="#pyface.i_dialog.IDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.i_window.html#pyface.i_window.IWindow" title="pyface.i_window.IWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_window.IWindow</span></code></a></p>
 <p>The abstract interface for all pyface dialogs.</p>
 <p>Usage: Sub-class this class and either override ‘_create_contents’ or
 more simply, just override the two methods that do the real work:-</p>
 <ol class="arabic simple">
-<li>‘_create_dialog_area’ creates the main content of the dialog.</li>
-<li>‘_create_buttons’     creates the dialog buttons.</li>
+<li><p>‘_create_dialog_area’ creates the main content of the dialog.</p></li>
+<li><p>‘_create_buttons’     creates the dialog buttons.</p></li>
 </ol>
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.cancel_label">
-<code class="descname">cancel_label</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_dialog.IDialog.cancel_label" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cancel_label</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_dialog.IDialog.cancel_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>The label for the ‘cancel’ button.  The default is toolkit specific.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.help_id">
-<code class="descname">help_id</code><em class="property"> = Str</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">help_id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The context sensitive help Id (the ‘Help’ button is only shown iff this
 is set).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.help_label">
-<code class="descname">help_label</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_label" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">help_label</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_dialog.IDialog.help_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>The label for the ‘help’ button.  The default is toolkit specific.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.ok_label">
-<code class="descname">ok_label</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_dialog.IDialog.ok_label" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">ok_label</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_dialog.IDialog.ok_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>The label for the ‘ok’ button.  The default is toolkit specific.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.resizeable">
-<code class="descname">resizeable</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.i_dialog.IDialog.resizeable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">resizeable</code><em class="property"> = Bool(True)</em><a class="headerlink" href="#pyface.i_dialog.IDialog.resizeable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Is the dialog resizeable?</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_dialog.IDialog.return_code">
-<code class="descname">return_code</code><em class="property"> = Int(OK)</em><a class="headerlink" href="#pyface.i_dialog.IDialog.return_code" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">return_code</code><em class="property"> = Int(OK)</em><a class="headerlink" href="#pyface.i_dialog.IDialog.return_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>The return code after the window is closed to indicate whether the dialog
 was closed via ‘Ok’ or ‘Cancel’).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.i_dialog.IDialog.open">
-<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.IDialog.open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.IDialog.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens the dialog.</p>
 <p>If the dialog is modal then the dialog’s event loop is entered and the
 dialog closed afterwards.  The ‘return_code’ trait is updated according
 to the button the user pressed and this value is also returned.</p>
 <p>If the dialog is non-modal the return_code trait is set to ‘OK’.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> – The value of the <code class="docutils literal notranslate"><span class="pre">return_code</span></code> trait.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>return_code</strong> – The value of the <code class="docutils literal notranslate"><span class="pre">return_code</span></code> trait.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>OK or CANCEL</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pyface.i_dialog.MDialog">
-<em class="property">class </em><code class="descclassname">pyface.i_dialog.</code><code class="descname">MDialog</code><a class="headerlink" href="#pyface.i_dialog.MDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_dialog.</code><code class="sig-name descname">MDialog</code><a class="headerlink" href="#pyface.i_dialog.MDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IDialog interface.</p>
@@ -168,22 +166,20 @@ implementations of the IDialog interface.</p>
 Reimplements: _add_event_listeners(), _create()</p>
 <dl class="method">
 <dt id="pyface.i_dialog.MDialog.open">
-<code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.MDialog.open" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_dialog.MDialog.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Opens the dialog.</p>
 <p>If the dialog is modal then the dialog’s event loop is entered and the
 dialog closed afterwards.  The ‘return_code’ trait is updated according
 to the button the user pressed and this value is also returned.</p>
 <p>If the dialog is non-modal the return_code trait is set to ‘OK’.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>return_code</strong> – The value of the <code class="docutils literal notranslate"><span class="pre">return_code</span></code> trait.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">OK or CANCEL</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>return_code</strong> – The value of the <code class="docutils literal notranslate"><span class="pre">return_code</span></code> trait.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>OK or CANCEL</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -211,13 +207,11 @@ to the button the user pressed and this value is also returned.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -238,13 +232,13 @@ to the button the user pressed and this value is also returned.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

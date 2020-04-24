@@ -2,6 +2,6 @@ pyface.sorter module
 ====================
 
 .. automodule:: pyface.sorter
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Pyface Changelog &mdash; pyface 6.1.2 documentation</title>
+    
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
+    <link rel="stylesheet" href="_static/enthought.css" type="text/css" >
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" >
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '6.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/copybutton.js"></script>
+    <script type="text/javascript" src="_static/js/wrap_on_dot.js"></script>
+    <link rel="shortcut icon" href="_static/img/favicon.ico">
+    <link rel="index" title="Index" href="genindex.html" >
+    <link rel="search" title="Search" href="search.html" >
+    <link rel="top" title="pyface 6.1.2 documentation" href="index.html" >
+    <link rel="prev" title="pyface.xrc_dialog module" href="api/pyface.xrc_dialog.html" > 
+  </head>
+  <body>
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="index.html">pyface 6.1.2 documentation</a></li>
+	 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="api/pyface.xrc_dialog.html" title="pyface.xrc_dialog module"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="pyface-changelog">
+<h1>Pyface Changelog<a class="headerlink" href="#pyface-changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="release-6-1-2">
+<h2>Release 6.1.2<a class="headerlink" href="#release-6-1-2" title="Permalink to this headline">¶</a></h2>
+<p>This is a bugfix release which fixes a number of minor issues with the 6.1.1 release.</p>
+<p>Thanks to:</p>
+<p>Mark Dickinson, Prabhu Ramachandran, Corran Webster.</p>
+<div class="section" id="change-summary">
+<h3>Change summary<a class="headerlink" href="#change-summary" title="Permalink to this headline">¶</a></h3>
+<p>Fixes</p>
+<ul class="simple">
+<li>Don’t try to open directories in PythonEditorTask (#428)</li>
+<li>Regression test for split editor area merge messages (#424)</li>
+<li>Fix some comments that should be Traits doc-comments. (#426)</li>
+<li>Fix some occurrences of PyFace (should be Pyface) (#420)</li>
+<li>Use decorator form of classmethod and staticmethod. (#417)</li>
+<li>Use equality rather than is when checking orientation. (#422)</li>
+<li>Fix timer issues. (#409, #414, #415)</li>
+<li>Remove use of etsdevtools in an example file. (#413)</li>
+<li>Fix a questionable version check. (#411)</li>
+<li>Fix error during tab completion on shell. (#410)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-6-1-1">
+<h2>Release 6.1.1<a class="headerlink" href="#release-6-1-1" title="Permalink to this headline">¶</a></h2>
+<p>This is a bugfix release which fixes a number of minor issues with the 6.1.0 release.</p>
+<p>Thanks to:</p>
+<p>David Baddeley, Christian Brodbeck, Mark Dickinson, Rahul Poruri, Corran Webster.</p>
+<div class="section" id="id1">
+<h3>Change summary<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Fixes</p>
+<ul class="simple">
+<li>Remove use of deprecated Traits get() method (#403)</li>
+<li>Fix pyqt5 webkit imports (#396)</li>
+<li>Remove use of cmp in fix_introspection_bug (#395)</li>
+<li>Update CI infrastructure (#394, #399)</li>
+<li>Update unittest imports (#391)</li>
+<li>Fix bug in argspec usage (#393)</li>
+<li>Fix regression in DoLaterTimer API (#389)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-6-1-0">
+<h2>Release 6.1.0<a class="headerlink" href="#release-6-1-0" title="Permalink to this headline">¶</a></h2>
+<p>This release introduces a number of new features and bugfixes.  The most
+prominent of these is a set of Application classes designed to smooth the
+transition between Tasks applications which use only Pyface, and those that
+take advantage of the Envisage plug-in framework.  Developers can now write
+a Pyface TasksApplication and then easily transition to an Envisage
+TasksApplication as the needs of their codebase grows.  This feature has been
+a few years in development, and thanks is due to Jonathan Rocher for helping
+push this through to completion.</p>
+<p>This release also includes a complete re-write of the Pyface timer code to
+make it easier to use and to provide a consistent and more Pythonic API
+shared by the different back-ends.  A backwards compatible API is still
+available, but users of the Pyface timer code are encouraged to update to
+the new API.</p>
+<p>ToolBars can now embed simple widgets, such as text fields, integer spinners,
+and comboboxes, as well as simple TraitsUI views.  This is provided via a
+new “widget” style for Actions as well as the utility subclasses FieldAction
+and TraitsUIWidgetAction.</p>
+<p>Although not visible to most users of Pyface, this release removes the use
+of 2to3 and now uses a unified codebase supported by the six library.  Thanks
+to Rahul Poruri for performing this transformation.  This should help
+significantly with ongoing development work in the coming years.</p>
+<p>We also include experimental support for PySide2 (also called “Qt for Python”).
+We are running CI tests using the 5.11 release of PySide2 with success on OS X
+and Linux for Python 3, but are experiencing failures with the 5.12 release.</p>
+<p>Finally, this release includes a number of bugfixes and minor enhancements
+which should improve the reliability and utility of the codebase.</p>
+<p>Thanks to:</p>
+<p>Martin Bergtholdt, Mark Dickinson, Robert Kern, Eric Larson, Gregory Lee,
+Eric McDonald, Rahul Poruri, Jonathan Rocher, Hamdi Sahloul, Roger Serwy,
+Brian Teague, Corran Webster, John Wiggins.</p>
+<p>Apologies to any contributors that have been omitted.</p>
+<div class="section" id="id2">
+<h3>Change summary<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Application classes (#334, #355, #345)</li>
+<li>New API for Timers (#340, #365)</li>
+<li>Support simple widgets in toolbars (#359, #360, #368)</li>
+<li>Experimental support of Pyside2 (#318, #335, #358)</li>
+<li>Support single codebase for Python 2 and 3 (#322, #351, #369, #370)</li>
+<li>Support ui dispatch for Traits even if TraitsUI not available (#363)</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Fix context menu behaviour (#356)</li>
+<li>Remove TraitsUI dependency in GuiTestAssistant (#366)</li>
+<li>Fixes for ProgressDialog (#357)</li>
+<li>Fixes for toolbar and statusbar life cycles (#332)</li>
+<li>Fixes for CI (#342)</li>
+<li>Fix usages of event_loop() in tests (#336)</li>
+<li>Fix SplitEditorAreaPane tab dragging on Qt5 (#327)</li>
+<li>Fix resource warnings in test suite from un-closed files (#326)</li>
+<li>Remove uses of deprecated HasTraits.set() method (#320)</li>
+<li>Add Qt5 support for deprecated Qt Style options that Mayavi needs (#323)</li>
+<li>Various fixes around Qt API selection (#319, #344, #347, #371, #376, #381)</li>
+<li>Fixes for setup.py (#380)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-6-0-0">
+<h2>Release 6.0.0<a class="headerlink" href="#release-6-0-0" title="Permalink to this headline">¶</a></h2>
+<p>This release introduces preliminary support for Qt5 via PyQt5, thanks to the
+work of Gregor Thalhammer which got the ball rolling.  Qt5 support is
+not yet robustly tested in deployed applications, so there may yet be bugs to
+find.  As part of this effort all occurences of old-style signals and slots
+have been removed; and this has greatly improved stability under Qt.</p>
+<p>In addition, thanks to the dedicated work of Rob McMullen, we now have Tasks
+support for wxPython.</p>
+<p>This release also features a great deal of work at the API level to disentangle
+the two-way dependencies between Pyface and TraitsUI.  This has involved moving
+a number of sub-packages between the two libraries, most notably the zipped
+image resource support and a number of trait definitions.  We have endeavored
+to keep backwards compatibility via stub modules in the original locations,
+but we can’t guarantee that there will be no issues with third party code
+caused by the change in locations.  We haven’t been able to remove all
+dependencies, but as of this release on the dock and workbench submodules have
+required dependencies on TraitsUI.</p>
+<p>Another long-desired feature was the ability to write toolkit backends for
+Pyface and TraitsUI that are not part of the main codebase.  This is now
+possible by contributing new toolkit backends to the “pyface.toolkit”
+pkg_resources entry point in a setup.py.  This work was accompanied by an
+overhaul of the toolkit discovery and loading infrastructure; in particular
+Pyface and TraitsUI now share the same code for performing these searches
+and loading the backends.</p>
+<p>Finally, the testing infrastructure has been overhauled to provide a one-stop
+location to run tests in self-contained environments using Enthought’s EDM
+package management tool.  Tests can be run from any python environment with the
+“edm” command available and the “click” library installed with the “etstool.py”
+script at the top level of the repository.  In particular:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">etstool</span><span class="o">.</span><span class="n">py</span> <span class="n">test_all</span>
+</pre></div>
+</div>
+<p>will run all relevant tests for all available toolkits in all supported
+python versions.  The TravisCI and Appveyor continuous integration tools have
+been updated to make use of these facilities as well.</p>
+<p>Thanks to Florian Bender, Kit Choi, Mark Dickinson, Simon Jagoe, Robert Kern,
+Rob McMullen, &#64;nprksh, Prabhu Ramachandran, Gregor Thalhammer, Senganal
+Thirunavukkarasu, Ioannis Tziakos, Joris Vankerscharver, and Corran Webster.
+Apologies to any contributors that have been omitted.</p>
+<div class="section" id="id3">
+<h3>Change summary<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Tasks support for wxPython (#223, #247)</li>
+<li>Qt5 Support (#170, #256, #264, #265, #268, #271, #279, #292)</li>
+<li>Disentangling Pyface and TraitsUI (#221, #250)</li>
+<li>EDM-based test runner (#243, #296, #298)</li>
+<li>Improved toolkit selection (#259, #260, #276, #304, #305)</li>
+<li>Move wxPython-specific code to pyface.wx (#261)</li>
+<li>Single choice dialog for Qt toolkit (was already in wx toolkit) (#217)</li>
+<li>Add ‘detail’ and ‘informative’ to window dialog helpers (#181)</li>
+<li>Code coverage reporting (#214)</li>
+<li>All Pyface widgets now have visible and enabled traits (#284)</li>
+<li>Allow “qt” as a synonym for “qt4” (#304)</li>
+<li>PythonShell widget history exposed via the API (#314)</li>
+<li>Experimental PySide2 support (#303)</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Documentation fixes (#220, #231)</li>
+<li>Testing and CI fixes (#224, #226, #239, #248, #252, #253, #257, #267, #270,
+#277, #278, #281, #283)</li>
+<li>Fix bug updating Tasks window titles (#225)</li>
+<li>Python 3 compatibility fixes (#228)</li>
+<li>Remove use of cmp in the AdvancedEditorAreaPane (#237)</li>
+<li>AutoPEP8 of Pyface codebase (#241)</li>
+<li>Minor WxPython fixes (#230, #269, #275, #294)</li>
+<li>Don’t use sendPostedEvents in Qt GUI.do_trait_later (#273)</li>
+<li>Fix ordering of items when appending to an ActionManager default group (#290)</li>
+<li>Explicit life-cycle for Qt event filters on Widgets (#300)</li>
+<li>Fixes to ensure demos and examples work (#308)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-5-1-0">
+<h2>Release 5.1.0<a class="headerlink" href="#release-5-1-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="change-summary-since-5-0-0">
+<h3>Change summary since 5.0.0<a class="headerlink" href="#change-summary-since-5-0-0" title="Permalink to this headline">¶</a></h3>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Added documentation on toolkit selection (#197)</li>
+<li>Clarify the purpose of LayoutContainer construction args (#189)</li>
+<li>Improve ETSConfig toolkit selection (#187)</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Fix restoring show_editor_area from saved perspective(#207)</li>
+<li>Fix WorkbenchWindowLayout in Python 3 (#206)</li>
+<li>Update SplitEditorAreaPane’s active editor when focus changes under Qt (#203, #204)</li>
+<li>Read-only CodeEditor should not allow adding newlines in View (#200)</li>
+<li>Fix exception when closing all docks in a workbench window (#199)</li>
+<li>Fix extended trait change description in qt dock pane (#194)</li>
+<li>Fix Qt Workbench dock widget control in a workbench window (#192)</li>
+<li>Fix double UnInit of AUI in ApplicationWindow under Wx (#184, #185)</li>
+<li>Fix IPythonWidget syntax error (#178, #186)</li>
+<li>Fix ProgressDialog timer labels #(183)</li>
+<li>Fix Qt CodeWidget when focus goes out of a widget (#176, #177)</li>
+<li>Fix Qt and Wx ProgressDialog for updating message (#176, #177)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-5-0-0">
+<h2>Release 5.0.0<a class="headerlink" href="#release-5-0-0" title="Permalink to this headline">¶</a></h2>
+<p>This release introduces preliminary support for Python 3 with the Qt toolkit!</p>
+<p>This is based in large part on the work of Yves Delley and Pradyun Gedam, but
+also owes a lot to Ioannis Tziakos for implementing container-based continuous
+integration and Prabhu Ramachandran and Corran Webster for tracking down the
+few remaining bugs.  Python 3 support is probably not yet ready for production
+use, but feedback and bug reports are welcome, and all future pull requests
+will be expected to work with Python 3.4 and later.  Python 3 support requires
+Traits 4.5 or greater, and TraitsUI 5.0 or greater.</p>
+<p>This release also bring support for wxPython 3.0, while dropping support for
+wxPython 2.6 and earlier.  There are also a couple of minor bug fixes detailed
+below.</p>
+<p>Finally, this release changes the default GUI toolkit from Wx to Qt.  This
+changes the behaviour of the library in the case where both WxPython and
+PyQt/PySide are installed and the user or code doesn’t specify the toolkit to
+use explicitly.</p>
+<div class="section" id="change-summary-since-4-5-2">
+<h3>Change summary since 4.5.2<a class="headerlink" href="#change-summary-since-4-5-2" title="Permalink to this headline">¶</a></h3>
+<p>Features</p>
+<ul class="simple">
+<li>Experimental support for Python 3 (#160, #161, #162, #163).</li>
+<li>Experimental support for wxPython 3 (#168).</li>
+</ul>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Make Qt 4 the default GUI toolkit (#172).</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Fix issue with reading unicode text from Qt clipboard (#159).</li>
+<li>Remove usage of <cite>logging.warn</cite> in favour of <cite>logger.warning</cite> (#167).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-4-5-2">
+<h2>Release 4.5.2<a class="headerlink" href="#release-4-5-2" title="Permalink to this headline">¶</a></h2>
+<p>This release includes a large number of additions to the test suite that
+provide at least basic smoke-test coverage of the core of the library.  There
+has also been work done to improve the continuous integration testing of
+the library.  Much more work needs to be done on this front, but the situation
+is improving.</p>
+<p>The process of adding these tests also discovered a number of minor bugs
+which have been fixed.</p>
+<p>Finally, this release warns that as of Pyface 5.0 the default GUI toolkit
+will switch from Wx to Qt.  This future update will change the behaviour of
+the library in the case where both WxPython and PyQt/PySide are installed and
+the user or code doesn’t specify the toolkit to use explicitly.</p>
+<div class="section" id="change-summary-since-4-5-1">
+<h3>Change summary since 4.5.1<a class="headerlink" href="#change-summary-since-4-5-1" title="Permalink to this headline">¶</a></h3>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Added many tests, increasing test coverage by about 10% (PR#147)</li>
+<li>Add continuous integration support for Windows and Qt via Appveyor (PR #154)</li>
+<li>Use Travis CI’s container infrastructure (PR #153)</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Stop TaskWindow layout running after window control destroyed (PR#156).</li>
+<li>Fix file execution for PythonShell on Windows with Qt backend (PR#147).</li>
+<li>Fix Group objects setting wrong trait when naming new Actions (PR#147).</li>
+<li>Fix ActionItem change handler for <cite>visible</cite> trait (PR#147).</li>
+<li>Fix failure to release application window from AUIManager in Wx (PR#147).</li>
+<li>Fix missing import for qt4 confirmation dialog (PR#147).</li>
+<li>Deprecate Wx as the default toolkit choice for Pyface (PR#150).</li>
+<li>Improve error handling in toolkit imports; fix some import errors which
+made the Qt PythonEditor unavailable; and make pygments a formal requirement
+rather than implicit (PR#144).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-4-5-1">
+<h2>Release 4.5.1<a class="headerlink" href="#release-4-5-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="change-summary-since-4-5-0">
+<h3>Change summary since 4.5.0<a class="headerlink" href="#change-summary-since-4-5-0" title="Permalink to this headline">¶</a></h3>
+<p>Fixes</p>
+<ul class="simple">
+<li>fix MANIFEST.in (PR#131).</li>
+<li>Fix incompatibility with Pygments 2.x, which was causing tracebacks
+during syntax highlighting (PR#136).</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-4-5-0">
+<h2>Release 4.5.0<a class="headerlink" href="#release-4-5-0" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="change-summary-since-4-4-0">
+<h3>Change summary since 4.4.0<a class="headerlink" href="#change-summary-since-4-4-0" title="Permalink to this headline">¶</a></h3>
+<p>Enhancements</p>
+<ul class="simple">
+<li>Add testing assistants (Qt) (PR#118).</li>
+<li>Support menus in toolbars (Qt) (PR#104).</li>
+<li>keybindings update for other editor area classes (PR#103).</li>
+<li>Change advanced editor area tab switching shortcut to Ctrl+PgUp/Down (PR#99).</li>
+<li>ToolBar: Listen to Action name changes for toolbar actions (PR#90).</li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li>Fix reference to attribute (PR#112).</li>
+<li>Fixed wx 2.9 incompatibility bug in ProgressDialog (PR#106).</li>
+<li>Qt CodeEditor pygments monkeypatch conflict with ipython (PR#100).</li>
+<li>Documentation fix (PR#95).</li>
+<li>Tooltip for first editor of SplitEditorAreaPane was broken (PR#108)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="release-4-4-0">
+<h2>Release 4.4.0<a class="headerlink" href="#release-4-4-0" title="Permalink to this headline">¶</a></h2>
+<p>This is a bug fix release. The biggest change in this release is support for the
+new adaptation mechanism in Traits 4.4.0.</p>
+<div class="section" id="change-summary-since-4-3-0">
+<h3>Change summary since 4.3.0<a class="headerlink" href="#change-summary-since-4-3-0" title="Permalink to this headline">¶</a></h3>
+<p>New features</p>
+<blockquote>
+<div><ul class="simple">
+<li>Support Enaml 0.8 (PR#92)</li>
+</ul>
+</div></blockquote>
+<p>Enhancements</p>
+<blockquote>
+<div><ul class="simple">
+<li>Improvements to SplitEditorAreaPane (PR#83).</li>
+</ul>
+</div></blockquote>
+<p>Fixes</p>
+<blockquote>
+<div><ul class="simple">
+<li>Fixed split editor area pane focus (PR#89).</li>
+<li>Fixed bug when a VSplitter contains an HSplitter (PR#88, issue#87)</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/img/e-logo.png" alt="Logo">
+            </a></p>
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pyface Changelog</a><ul>
+<li><a class="reference internal" href="#release-6-1-2">Release 6.1.2</a><ul>
+<li><a class="reference internal" href="#change-summary">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-6-1-1">Release 6.1.1</a><ul>
+<li><a class="reference internal" href="#id1">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-6-1-0">Release 6.1.0</a><ul>
+<li><a class="reference internal" href="#id2">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-6-0-0">Release 6.0.0</a><ul>
+<li><a class="reference internal" href="#id3">Change summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-1-0">Release 5.1.0</a><ul>
+<li><a class="reference internal" href="#change-summary-since-5-0-0">Change summary since 5.0.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-5-0-0">Release 5.0.0</a><ul>
+<li><a class="reference internal" href="#change-summary-since-4-5-2">Change summary since 4.5.2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-4-5-2">Release 4.5.2</a><ul>
+<li><a class="reference internal" href="#change-summary-since-4-5-1">Change summary since 4.5.1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-4-5-1">Release 4.5.1</a><ul>
+<li><a class="reference internal" href="#change-summary-since-4-5-0">Change summary since 4.5.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-4-5-0">Release 4.5.0</a><ul>
+<li><a class="reference internal" href="#change-summary-since-4-4-0">Change summary since 4.4.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#release-4-4-0">Release 4.4.0</a><ul>
+<li><a class="reference internal" href="#change-summary-since-4-3-0">Change summary since 4.3.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api/pyface.xrc_dialog.html"
+                        title="previous chapter">pyface.xrc_dialog module</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="_sources/changelog.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2008-2016, Enthought
+      </li>
+      <li>
+      Last updated on Jul 22, 2019.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

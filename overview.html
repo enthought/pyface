@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Overview &mdash; pyface 6.1.2 documentation</title>
+    <title>Overview &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="index.html" >
     <link rel="next" title="Toolkits" href="toolkits.html" >
     <link rel="prev" title="Welcome to the Pyface Documentation!" href="index.html" > 
   </head>
@@ -47,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.0.0 documentation</a></li>
 	 
     </ul>
               
@@ -90,23 +90,23 @@
 interface exposed to the users of the library and the actual implementation
 in terms of the underlying GUI library.  To achieve this, Pyface provides
 three types of object:</p>
-<dl class="docutils">
-<dt>Interfaces</dt>
-<dd>Interface classes express the public interface for Pyface widgets.  They
+<dl class="simple">
+<dt>Interfaces</dt><dd><p>Interface classes express the public interface for Pyface widgets.  They
 use <a class="reference external" href="http://docs.enthought.com/traits/traits_user_manual/advanced.html#interfaces">Trait’s Interfaces</a>
 to express this.  Interface objects are not meant to be instantiated, but
 should be used to express the types of objects that you expect in a
-toolkit-independent manner.</dd>
-<dt>Mixins</dt>
-<dd>Mixin classes provide concrete implementations of certain functionality
+toolkit-independent manner.</p>
+</dd>
+<dt>Mixins</dt><dd><p>Mixin classes provide concrete implementations of certain functionality
 for a widget that are not toolkit-dependent, or can be provided purely
 using other parts of the abstract interface.  Concrete implementations
 can choose to inherit from the mixin class to use that common
-functionality.</dd>
-<dt>Toolkit Implementations</dt>
-<dd>Each toolkit can provide classes that are full implementations of the
+functionality.</p>
+</dd>
+<dt>Toolkit Implementations</dt><dd><p>Each toolkit can provide classes that are full implementations of the
 abstract Interfaces using the widgets and other facilities provided by the
-toolkit.</dd>
+toolkit.</p>
+</dd>
 </dl>
 <p>In addition there is a class heirarchy othogonal to this specifying the
 relationship between different types of widgets. A “dialog” for example, is a
@@ -343,8 +343,8 @@ need such an application framework.</p>
 <p>Both these frameworks are designed to be extensible using Envisage plugins,
 and are currently documented as part of the Envisage project’s documentation.</p>
 <ul class="simple">
-<li><a class="reference external" href="http://docs.enthought.com/envisage/envisage_core_documentation/workbench.html">Workbench</a></li>
-<li><a class="reference external" href="http://docs.enthought.com/envisage/tasks_user_manual/index.html">Tasks</a></li>
+<li><p><a class="reference external" href="http://docs.enthought.com/envisage/envisage_core_documentation/workbench.html">Workbench</a></p></li>
+<li><p><a class="reference external" href="http://docs.enthought.com/envisage/tasks_user_manual/index.html">Tasks</a></p></li>
 </ul>
 <p>Examples of building simple applications in each framework are provided in the
 Pyface examples, and the APIs are auto-documented in these documents.</p>
@@ -443,13 +443,11 @@ libraries which can produce a toolkit-specific control.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -470,13 +468,13 @@ libraries which can produce a toolkit-specific control.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

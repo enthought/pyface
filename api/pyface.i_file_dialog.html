@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.i_file_dialog module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.i_file_dialog module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.i_gui module" href="pyface.i_gui.html" >
     <link rel="prev" title="pyface.i_drop_handler module" href="pyface.i_drop_handler.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,30 +89,30 @@
 <p>The interface for a dialog that allows the user to open/save files etc.</p>
 <dl class="class">
 <dt id="pyface.i_file_dialog.IFileDialog">
-<em class="property">class </em><code class="descclassname">pyface.i_file_dialog.</code><code class="descname">IFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_file_dialog.</code><code class="sig-name descname">IFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.i_dialog.html#pyface.i_dialog.IDialog" title="pyface.i_dialog.IDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.i_dialog.IDialog</span></code></a></p>
 <p>The interface for a dialog that allows the user to open/save files etc.</p>
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.action">
-<code class="descname">action</code><em class="property"> = Enum('open', 'save as')</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.action" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">action</code><em class="property"> = Enum(&quot;open&quot;, &quot;save as&quot;)</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.action" title="Permalink to this definition">¶</a></dt>
 <dd><p>The ‘action’ that the user is peforming on the directory.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.default_directory">
-<code class="descname">default_directory</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_directory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">default_directory</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>The default directory.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.default_filename">
-<code class="descname">default_filename</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_filename" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">default_filename</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>The default filename.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.default_path">
-<code class="descname">default_path</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">default_path</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.default_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>The default path (directory and filename) of the chosen file.  This is
 only used when the <em>default_directory</em> and <em>default_filename</em> are not set
 and is equivalent to setting both.</p>
@@ -120,31 +120,31 @@ and is equivalent to setting both.</p>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.directory">
-<code class="descname">directory</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.directory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">directory</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>The directory containing the chosen file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.filename">
-<code class="descname">filename</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.filename" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">filename</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.filename" title="Permalink to this definition">¶</a></dt>
 <dd><p>The name of the chosen file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.path">
-<code class="descname">path</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">path</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.path" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path (directory and filename) of the chosen file.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.wildcard">
-<code class="descname">wildcard</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wildcard</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard" title="Permalink to this definition">¶</a></dt>
 <dd><p>The wildcard used to restrict the set of files.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.IFileDialog.wildcard_index">
-<code class="descname">wildcard_index</code><em class="property"> = Int(0)</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard_index" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">wildcard_index</code><em class="property"> = Int(0)</em><a class="headerlink" href="#pyface.i_file_dialog.IFileDialog.wildcard_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>The index of the selected wildcard.</p>
 </dd></dl>
 
@@ -152,50 +152,46 @@ and is equivalent to setting both.</p>
 
 <dl class="class">
 <dt id="pyface.i_file_dialog.MFileDialog">
-<em class="property">class </em><code class="descclassname">pyface.i_file_dialog.</code><code class="descname">MFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.i_file_dialog.</code><code class="sig-name descname">MFileDialog</code><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The mixin class that contains common code for toolkit specific
 implementations of the IFileDialog interface.</p>
 <p>Implements: create_wildcard()</p>
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_PY">
-<code class="descname">WILDCARD_PY</code><em class="property"> = 'Python files (*.py)|*.py|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_PY" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WILDCARD_PY</code><em class="property"> = 'Python files (*.py)|*.py|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_PY" title="Permalink to this definition">¶</a></dt>
 <dd><p>A file dialog wildcard for Python files.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_TXT">
-<code class="descname">WILDCARD_TXT</code><em class="property"> = 'Text files (*.txt)|*.txt|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_TXT" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WILDCARD_TXT</code><em class="property"> = 'Text files (*.txt)|*.txt|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_TXT" title="Permalink to this definition">¶</a></dt>
 <dd><p>A file dialog wildcard for text files.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_ALL">
-<code class="descname">WILDCARD_ALL</code><em class="property"> = 'All files (*)|*'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ALL" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WILDCARD_ALL</code><em class="property"> = 'All files (*)|*'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ALL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.i_file_dialog.MFileDialog.WILDCARD_ZIP">
-<code class="descname">WILDCARD_ZIP</code><em class="property"> = 'Zip files (*.zip)|*.zip|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ZIP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">WILDCARD_ZIP</code><em class="property"> = 'Zip files (*.zip)|*.zip|'</em><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.WILDCARD_ZIP" title="Permalink to this definition">¶</a></dt>
 <dd><p>A file dialog wildcard for Zip archives.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="pyface.i_file_dialog.MFileDialog.create_wildcard">
-<em class="property">classmethod </em><code class="descname">create_wildcard</code><span class="sig-paren">(</span><em>description</em>, <em>extension</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.create_wildcard" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">create_wildcard</code><span class="sig-paren">(</span><em class="sig-param">description</em>, <em class="sig-param">extension</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.i_file_dialog.MFileDialog.create_wildcard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a wildcard for a given extension.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>description</strong> (<em>str</em>) – A human-readable description of the pattern.</li>
-<li><strong>extenstion</strong> (<em>list</em>) – The wildcard patterns for the extension.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>description</strong> (<em>str</em>) – A human-readable description of the pattern.</p></li>
+<li><p><strong>extenstion</strong> (<em>list</em>) – The wildcard patterns for the extension.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -223,13 +219,11 @@ implementations of the IFileDialog interface.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -250,13 +244,13 @@ implementations of the IFileDialog interface.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

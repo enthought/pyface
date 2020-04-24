@@ -2,9 +2,9 @@ pyface.action.tests package
 ===========================
 
 .. automodule:: pyface.action.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -21,4 +21,3 @@ Submodules
    pyface.action.tests.test_gui_application_action
    pyface.action.tests.test_listening_action
    pyface.action.tests.test_traitsui_widget_action
-

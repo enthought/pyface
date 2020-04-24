@@ -2,18 +2,18 @@ pyface.workbench package
 ========================
 
 .. automodule:: pyface.workbench
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.workbench.action
-    pyface.workbench.debug
-    pyface.workbench.tests
+   pyface.workbench.action
+   pyface.workbench.debug
+   pyface.workbench.tests
 
 Submodules
 ----------
@@ -42,4 +42,3 @@ Submodules
    pyface.workbench.workbench_window
    pyface.workbench.workbench_window_layout
    pyface.workbench.workbench_window_memento
-

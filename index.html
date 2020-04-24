@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Welcome to the Pyface Documentation! &mdash; pyface 6.1.2 documentation</title>
+    <title>Welcome to the Pyface Documentation! &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="#" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="#" >
     <link rel="next" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -97,15 +97,10 @@ project. Conversely, if you wish to use Traits without a UI, a “null” backen
 is automatically used in the absence of a real backend.</p>
 <p>Currently, the supported GUI toolkits are</p>
 <ul class="simple">
-<li>wxPython (&gt;= 2.8, including experimental support for WxPython 3.0)</li>
-<li>PySide</li>
-<li>PyQt (Qt4 only, but Qt5 support is in development)</li>
+<li><p>PySide2</p></li>
+<li><p>PyQt 4 and 5</p></li>
+<li><p>wxPython 4 (experimental)</p></li>
 </ul>
-<p>While all toolkits funtion with Pyface, integration with wxPython is currently
-more complete.  Future development, however, will be more focused on
-supporting Qt.</p>
-<p>The default toolkit if none is supplied is <code class="docutils literal notranslate"><span class="pre">qt4</span></code>. This changed from <code class="docutils literal notranslate"><span class="pre">wx</span></code> in
-Pyface 5.0.</p>
 <p>NOTE: Although the code in this library is BSD licensed, when the PyQt backend
 is used the more restrictive terms of PyQt’s GPL or proprietary licensing will
 likely apply to your code.</p>
@@ -116,19 +111,20 @@ likely apply to your code.</p>
 that signifies the GUI toolkit.</p>
 <p>The supported values of <strong>ETSConfig.toolkit</strong> are:</p>
 <ul class="simple">
-<li>‘qt4’: <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>, which provides Python
-bindings for the <a class="reference external" href="http://trolltech.com/products/qt">Qt</a> framework version 4.</li>
-<li>‘wx’: <a class="reference external" href="http://www.wxpython.org">wxPython</a>, which provides Python bindings
-for the <a class="reference external" href="http://wxwidgets.org">wxWidgets</a> toolkit.</li>
-<li>‘null’: A do-nothing toolkit, for situations where neither of the other
-toolkits is installed, but Traits is needed for non-UI purposes.</li>
+<li><p>‘qt4’ or ‘qt’: Pyside2 or <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>,
+which provide Python bindings for the <a class="reference external" href="http://www.qt.io">Qt</a> framework
+version 4 and 5.</p></li>
+<li><p>‘wx’: <a class="reference external" href="http://www.wxpython.org">wxPython 4</a>, which provides Python bindings
+for the <a class="reference external" href="http://wxwidgets.org">wxWidgets</a> toolkit.</p></li>
+<li><p>‘null’: A do-nothing toolkit, for situations where neither of the other
+toolkits is installed, but Traits is needed for non-UI purposes.</p></li>
 </ul>
 <p>The default behavior of Pyface is to search for available toolkit-specific
 packages in the order listed, and uses the first one it finds. The programmer or
 the user can override this behavior in any of several ways, in the following
 order of precedence:</p>
 <ol class="arabic">
-<li><p class="first">The program can explicitly set <strong>ETSConfig.toolkit</strong>. It must do this before
+<li><p>The program can explicitly set <strong>ETSConfig.toolkit</strong>. It must do this before
 importing from any other Enthought Tool Suite component, including
 traits.  For example, at the beginning of a program:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">traits.etsconfig.api</span> <span class="k">import</span> <span class="n">ETSConfig</span>
@@ -136,8 +132,7 @@ traits.  For example, at the beginning of a program:</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">The user can define a value for the ETS_TOOLKIT environment variable.</p>
-</li>
+<li><p>The user can define a value for the ETS_TOOLKIT environment variable.</p></li>
 </ol>
 </div>
 </div>
@@ -176,6 +171,7 @@ traits.  For example, at the beginning of a program:</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-7-0-0">Release 7.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-1-2">Release 6.1.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-1-1">Release 6.1.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-1-0">Release 6.1.0</a></li>
@@ -224,13 +220,11 @@ traits.  For example, at the beginning of a program:</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -251,13 +245,13 @@ traits.  For example, at the beginning of a program:</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

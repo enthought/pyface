@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.viewer.label_provider module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.viewer.label_provider module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.viewer package" href="pyface.viewer.html" >
     <link rel="next" title="pyface.viewer.table_column_provider module" href="pyface.viewer.table_column_provider.html" >
     <link rel="prev" title="pyface.viewer.default_tree_content_provider module" href="pyface.viewer.default_tree_content_provider.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.viewer.html" accesskey="U">pyface.viewer package</a></li> 
@@ -90,33 +90,33 @@
 <p>Abstract base class for label providers.</p>
 <dl class="class">
 <dt id="pyface.viewer.label_provider.LabelProvider">
-<em class="property">class </em><code class="descclassname">pyface.viewer.label_provider.</code><code class="descname">LabelProvider</code><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.viewer.label_provider.</code><code class="sig-name descname">LabelProvider</code><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>Abstract base class for label providers.</p>
 <p>By default an element has no label image, and ‘str’ is used to generate its
 label text.</p>
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.get_image">
-<code class="descname">get_image</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label image for an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.get_text">
-<code class="descname">get_text</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_text</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.get_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the label text for an element.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.set_text">
-<code class="descname">set_text</code><span class="sig-paren">(</span><em>tree</em>, <em>element</em>, <em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_text</code><span class="sig-paren">(</span><em class="sig-param">tree</em>, <em class="sig-param">element</em>, <em class="sig-param">text</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.set_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the text representation of a node.</p>
 <p>Returns True if setting the text succeeded, otherwise False.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.viewer.label_provider.LabelProvider.is_editable">
-<code class="descname">is_editable</code><span class="sig-paren">(</span><em>viewer</em>, <em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.is_editable" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_editable</code><span class="sig-paren">(</span><em class="sig-param">viewer</em>, <em class="sig-param">element</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.viewer.label_provider.LabelProvider.is_editable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can the label text be changed via the viewer?</p>
 </dd></dl>
 
@@ -145,13 +145,11 @@ label text.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -172,13 +170,13 @@ label text.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

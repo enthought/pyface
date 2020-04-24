@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Pyface Applications &mdash; pyface 6.1.2 documentation</title>
+    <title>Pyface Applications &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="index.html" >
     <link rel="next" title="pyface package" href="api/pyface.html" >
     <link rel="prev" title="Timers" href="timer.html" > 
   </head>
@@ -47,7 +47,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.0.0 documentation</a></li>
 	 
     </ul>
               
@@ -100,13 +100,13 @@ extensibility if that should be required.</p>
 <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a>.  The <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.run" title="pyface.application.Application.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.run()</span></code></a> method is the
 entry-point of the application, and performs the following steps:</p>
 <ol class="arabic simple">
-<li>calls the <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a> method to initialize the
-application’s state.</li>
-<li>if the start is successful, calls an internal <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code>
-method which does the actual work (such as running the GUI event loop).</li>
-<li>when the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code> method returns, calls
+<li><p>calls the <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a> method to initialize the
+application’s state.</p></li>
+<li><p>if the start is successful, calls an internal <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code>
+method which does the actual work (such as running the GUI event loop).</p></li>
+<li><p>when the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code> method returns, calls
 <a class="reference internal" href="api/pyface.application.html#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a> to release any resources used by the application
-and de-initialize as needed.</li>
+and de-initialize as needed.</p></li>
 </ol>
 <p>Subclasses of the base <a class="reference internal" href="api/pyface.application.html#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class will likely override all
 three of these methods, but <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui_application.GUIApplication</span></code></a>
@@ -188,17 +188,17 @@ windows.  The default behaviour is to call the
 <p>In most cases to use the base <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> class, you will want
 to:</p>
 <ul class="simple">
-<li>create a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code>
+<li><p>create a subclass of <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code>
 that at least overrides the
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">_create_contents()</span></code>
 method to create the desired user interface.  Ideally this window should be
-able to work without needing an application, as this helps with reusability.</li>
-<li>create a window factory function that taskes the application and arbitrary
+able to work without needing an application, as this helps with reusability.</p></li>
+<li><p>create a window factory function that taskes the application and arbitrary
 other keyword arguments and creates an instance of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ApplicationWindow</span></code> subclass along with
 any additional application-dependent state that is required. This can
 include application-dependent menus, toolbars, etc. as well as other state
-injected by from application.</li>
+injected by from application.</p></li>
 </ul>
 <p>While the <a class="reference internal" href="api/pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">GUIApplication</span></code></a> class can be used without subclassing, for
 complex applications it is likely that the a subclass will need to be used,
@@ -359,13 +359,11 @@ the dock panes.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -386,13 +384,13 @@ the dock panes.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

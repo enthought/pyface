@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.sizers.flow module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.sizers.flow module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.sizers package" href="pyface.sizers.html" >
     <link rel="next" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="prev" title="pyface.sizers package" href="pyface.sizers.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.sizers.html" accesskey="U">pyface.sizers package</a></li> 
@@ -89,17 +89,17 @@
 <span id="pyface-sizers-flow-module"></span><h1>pyface.sizers.flow module<a class="headerlink" href="#module-pyface.sizers.flow" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyface.sizers.flow.FlowSizer">
-<em class="property">class </em><code class="descclassname">pyface.sizers.flow.</code><code class="descname">FlowSizer</code><span class="sig-paren">(</span><em>orient=&lt;sphinx.ext.autodoc.importer._MockObject object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sphinx.ext.autodoc.importer._MockObject</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.sizers.flow.</code><code class="sig-name descname">FlowSizer</code><span class="sig-paren">(</span><em class="sig-param">orient=wx.HORIZONTAL</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">wx.PySizer</span></code></p>
 <dl class="method">
 <dt id="pyface.sizers.flow.FlowSizer.CalcMin">
-<code class="descname">CalcMin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer.CalcMin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">CalcMin</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer.CalcMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates the minimum size needed by the sizer.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.sizers.flow.FlowSizer.RecalcSizes">
-<code class="descname">RecalcSizes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer.RecalcSizes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">RecalcSizes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyface.sizers.flow.FlowSizer.RecalcSizes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Layout the contents of the sizer based on the sizer’s current size
 and position.</p>
 </dd></dl>
@@ -129,13 +129,11 @@ and position.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -156,13 +154,13 @@ and position.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

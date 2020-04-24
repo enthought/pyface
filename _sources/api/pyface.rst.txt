@@ -2,29 +2,29 @@ pyface package
 ==============
 
 .. automodule:: pyface
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.action
-    pyface.fields
-    pyface.image
-    pyface.preference
-    pyface.resource
-    pyface.sizers
-    pyface.tasks
-    pyface.tests
-    pyface.timer
-    pyface.tree
-    pyface.util
-    pyface.viewer
-    pyface.wizard
-    pyface.workbench
+   pyface.action
+   pyface.fields
+   pyface.image
+   pyface.preference
+   pyface.resource
+   pyface.sizers
+   pyface.tasks
+   pyface.tests
+   pyface.timer
+   pyface.tree
+   pyface.util
+   pyface.viewer
+   pyface.wizard
+   pyface.workbench
 
 Submodules
 ----------
@@ -43,7 +43,6 @@ Submodules
    pyface.dialog
    pyface.directory_dialog
    pyface.drop_handler
-   pyface.expandable_header
    pyface.expandable_panel
    pyface.file_dialog
    pyface.filter
@@ -72,9 +71,7 @@ Submodules
    pyface.i_system_metrics
    pyface.i_widget
    pyface.i_window
-   pyface.image_button
    pyface.image_cache
-   pyface.image_list
    pyface.image_resource
    pyface.image_widget
    pyface.ipython_widget
@@ -104,5 +101,3 @@ Submodules
    pyface.ui_traits
    pyface.widget
    pyface.window
-   pyface.xrc_dialog
-

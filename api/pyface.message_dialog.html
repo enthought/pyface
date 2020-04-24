@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.message_dialog module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.message_dialog module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.mimedata module" href="pyface.mimedata.html" >
     <link rel="prev" title="pyface.mdi_window_menu module" href="pyface.mdi_window_menu.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -89,68 +89,56 @@
 <p>The implementation of a dialog that displays a message.</p>
 <dl class="function">
 <dt id="pyface.message_dialog.information">
-<code class="descclassname">pyface.message_dialog.</code><code class="descname">information</code><span class="sig-paren">(</span><em>parent</em>, <em>message</em>, <em>title='Information'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.information" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">information</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Information'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience method to show an information message dialog.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</li>
-<li><strong>message</strong> (<em>str</em>) – The text of the message to display.</li>
-<li><strong>title</strong> (<em>str</em>) – The text of the dialog title.</li>
-<li><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
-“Show details”).</li>
-<li><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+“Show details”).</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.message_dialog.warning">
-<code class="descclassname">pyface.message_dialog.</code><code class="descname">warning</code><span class="sig-paren">(</span><em>parent</em>, <em>message</em>, <em>title='Warning'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.warning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">warning</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Warning'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.warning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to show a warning message dialog.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</li>
-<li><strong>message</strong> (<em>str</em>) – The text of the message to display.</li>
-<li><strong>title</strong> (<em>str</em>) – The text of the dialog title.</li>
-<li><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
-“Show details”).</li>
-<li><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+“Show details”).</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyface.message_dialog.error">
-<code class="descclassname">pyface.message_dialog.</code><code class="descname">error</code><span class="sig-paren">(</span><em>parent</em>, <em>message</em>, <em>title='Error'</em>, <em>detail=''</em>, <em>informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.error" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pyface.message_dialog.</code><code class="sig-name descname">error</code><span class="sig-paren">(</span><em class="sig-param">parent</em>, <em class="sig-param">message</em>, <em class="sig-param">title='Error'</em>, <em class="sig-param">detail=''</em>, <em class="sig-param">informative=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.message_dialog.error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function to show an error message dialog.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</li>
-<li><strong>message</strong> (<em>str</em>) – The text of the message to display.</li>
-<li><strong>title</strong> (<em>str</em>) – The text of the dialog title.</li>
-<li><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
-“Show details”).</li>
-<li><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent</strong> (<em>toolkit control</em><em> or </em><em>None</em>) – The toolkit control that should be the parent of the dialog.</p></li>
+<li><p><strong>message</strong> (<em>str</em>) – The text of the message to display.</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – The text of the dialog title.</p></li>
+<li><p><strong>detail</strong> (<em>str</em>) – Further details about the message (displayed when the user clicks
+“Show details”).</p></li>
+<li><p><strong>informative</strong> (<em>str</em>) – Explanatory text to display along with the message.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -176,13 +164,11 @@
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -203,13 +189,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

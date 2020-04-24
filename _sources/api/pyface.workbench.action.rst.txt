@@ -2,9 +2,9 @@ pyface.workbench.action package
 ===============================
 
 .. automodule:: pyface.workbench.action
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -31,4 +31,3 @@ Submodules
    pyface.workbench.action.view_chooser
    pyface.workbench.action.view_menu_manager
    pyface.workbench.action.workbench_action
-

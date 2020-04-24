@@ -2,16 +2,16 @@ pyface.fields package
 =====================
 
 .. automodule:: pyface.fields
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    pyface.fields.tests
+   pyface.fields.tests
 
 Submodules
 ----------
@@ -26,4 +26,3 @@ Submodules
    pyface.fields.i_text_field
    pyface.fields.spin_field
    pyface.fields.text_field
-

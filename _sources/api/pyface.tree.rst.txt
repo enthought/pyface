@@ -2,9 +2,9 @@ pyface.tree package
 ===================
 
 .. automodule:: pyface.tree
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -22,4 +22,3 @@ Submodules
    pyface.tree.trait_list_node_type
    pyface.tree.tree
    pyface.tree.tree_model
-

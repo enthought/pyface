@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.tasks.tasks_application module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.tasks.tasks_application module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.tasks package" href="pyface.tasks.html" >
     <link rel="next" title="pyface.tasks.topological_sort module" href="pyface.tasks.topological_sort.html" >
     <link rel="prev" title="pyface.tasks.task_window_layout module" href="pyface.tasks.task_window_layout.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.tasks.html" accesskey="U">pyface.tasks package</a></li> 
@@ -91,34 +91,35 @@
 the creation of tasks and corresponding windows.</p>
 <dl class="class">
 <dt id="pyface.tasks.tasks_application.TaskFactory">
-<em class="property">class </em><code class="descclassname">pyface.tasks.tasks_application.</code><code class="descname">TaskFactory</code><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TaskFactory</code><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasStrictTraits</span></code></p>
 <p>A factory for creating a Task with some additional metadata.</p>
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TaskFactory.id">
-<code class="descname">id</code><em class="property"> = Str</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.id" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">id</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.id" title="Permalink to this definition">¶</a></dt>
 <dd><p>The task factory’s unique identifier. This ID is assigned to all tasks
 created by the factory.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TaskFactory.name">
-<code class="descname">name</code><em class="property"> = Unicode</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">name</code><em class="property"> = Str()</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>The task factory’s user-visible name.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TaskFactory.factory">
-<code class="descname">factory</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.factory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">factory</code><em class="property"> = Callable</em><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.factory" title="Permalink to this definition">¶</a></dt>
 <dd><p>A callable with the following signature:</p>
 <blockquote>
-<div>callable(<a href="#id1"><span class="problematic" id="id2">**</span></a>traits) -&gt; Task</div></blockquote>
+<div><p>callable(<a href="#id1"><span class="problematic" id="id2">**</span></a>traits) -&gt; Task</p>
+</div></blockquote>
 <p>Often this attribute will simply be a Task subclass.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TaskFactory.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.create" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><em class="sig-param">**traits</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TaskFactory.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Task.</p>
 <p>The default implementation simply calls the ‘factory’ attribute.</p>
 </dd></dl>
@@ -127,86 +128,81 @@ created by the factory.</p>
 
 <dl class="class">
 <dt id="pyface.tasks.tasks_application.TasksApplication">
-<em class="property">class </em><code class="descclassname">pyface.tasks.tasks_application.</code><code class="descname">TasksApplication</code><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.tasks.tasks_application.</code><code class="sig-name descname">TasksApplication</code><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyface.gui_application.html#pyface.gui_application.GUIApplication" title="pyface.gui_application.GUIApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyface.gui_application.GUIApplication</span></code></a></p>
 <p>A base class for Pyface tasks applications.</p>
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.tasks">
-<code class="descname">tasks</code><em class="property"> = List(Instance(&quot;pyface.tasks.task.Task&quot;))</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.tasks" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tasks</code><em class="property"> = List(Instance(&quot;pyface.tasks.task.Task&quot;))</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of all running tasks</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.active_task">
-<code class="descname">active_task</code><em class="property"> = Property(depends_on='active_window.active_task')</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.active_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">active_task</code><em class="property"> = Property(depends_on=&quot;active_window.active_task&quot;)</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.active_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Currently active Task if any.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.task_factories">
-<code class="descname">task_factories</code><em class="property"> = List()</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.task_factories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">task_factories</code><em class="property"> = List()</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.task_factories" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of all application task factories.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.default_layout">
-<code class="descname">default_layout</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.default_layout" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">default_layout</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.default_layout" title="Permalink to this definition">¶</a></dt>
 <dd><p>The default layout for the application. If not specified, a single
 window will be created with the first available task factory.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.extra_actions">
-<code class="descname">extra_actions</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.extra_actions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extra_actions</code><em class="property"> = List( …</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.extra_actions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hook to add global schema additions to tasks/windows</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyface.tasks.tasks_application.TasksApplication.extra_dock_pane_factories">
-<code class="descname">extra_dock_pane_factories</code><em class="property"> = List(Callable)</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.extra_dock_pane_factories" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">extra_dock_pane_factories</code><em class="property"> = List(Callable)</em><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.extra_dock_pane_factories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hook to add global dock pane additions to tasks/windows</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TasksApplication.create_task">
-<code class="descname">create_task</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_task" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_task</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates the Task with the specified ID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>str</em>) – The id of the task factory to use.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">The new Task, or None if there is not a suitable TaskFactory.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – The id of the task factory to use.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The new Task, or None if there is not a suitable TaskFactory.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.tasks.tasks_application.TasksApplication.create_window">
-<code class="descname">create_window</code><span class="sig-paren">(</span><em>layout=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_window" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_window</code><span class="sig-paren">(</span><em class="sig-param">layout=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.tasks.tasks_application.TasksApplication.create_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect task to application and open task in a new window.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>layout</strong> (<em>TaskLayout instance</em><em> or </em><em>None</em>) – The pane layout for the window.</li>
-<li><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the window factory.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layout</strong> (<em>TaskLayout instance</em><em> or </em><em>None</em>) – The pane layout for the window.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments to pass to the window factory.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>window</strong> – The new TaskWindow.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ITaskWindow instance or None</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>window</strong> – The new TaskWindow.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ITaskWindow instance or None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -234,13 +230,11 @@ window will be created with the first available task factory.</p>
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -261,13 +255,13 @@ window will be created with the first available task factory.</p>
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

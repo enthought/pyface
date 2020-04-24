@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.action.action_controller module &mdash; pyface 6.1.2 documentation</title>
+    <title>pyface.action.action_controller module &mdash; pyface 7.0.0 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '6.1.2',
+        VERSION:     '7.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,7 +28,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 6.1.2 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.0.0 documentation" href="../index.html" >
     <link rel="up" title="pyface.action package" href="pyface.action.html" >
     <link rel="next" title="pyface.action.action_event module" href="pyface.action.action_event.html" >
     <link rel="prev" title="pyface.action.action module" href="pyface.action.action.html" > 
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 6.1.2 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.0.0 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" >pyface package</a></li>
           <li class="active"><a href="pyface.action.html" accesskey="U">pyface.action package</a></li> 
@@ -90,95 +90,83 @@
 <p>The default action controller for menus, menu bars and tool bars.</p>
 <dl class="class">
 <dt id="pyface.action.action_controller.ActionController">
-<em class="property">class </em><code class="descclassname">pyface.action.action_controller.</code><code class="descname">ActionController</code><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyface.action.action_controller.</code><code class="sig-name descname">ActionController</code><a class="headerlink" href="#pyface.action.action_controller.ActionController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">traits.has_traits.HasTraits</span></code></p>
 <p>The default action controller for menus, menu bars and tool bars.</p>
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.perform">
-<code class="descname">perform</code><span class="sig-paren">(</span><em>action</em>, <em>event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">perform</code><span class="sig-paren">(</span><em class="sig-param">action</em>, <em class="sig-param">event</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.perform" title="Permalink to this definition">¶</a></dt>
 <dd><p>Control an action invocation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>action</strong> (<em>Action instance</em>) – The action to perform.</li>
-<li><strong>event</strong> (<em>ActionEvent instance</em>) – The event that triggered the action.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action</strong> (<em>Action instance</em>) – The action to perform.</p></li>
+<li><p><strong>event</strong> (<em>ActionEvent instance</em>) – The event that triggered the action.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>result</strong> – The result of the action’s perform method (usually None).</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">any</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>result</strong> – The result of the action’s perform method (usually None).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>any</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_menu">
-<code class="descname">can_add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Can add an action to a menu</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) – The action to consider.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> – <a href="#id1"><span class="problematic" id="id2">``</span></a>True` if the action can be added to a menu/menubar.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action instance</em>) – The action to consider.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>can_add</strong> – <a href="#id1"><span class="problematic" id="id2">``</span></a>True` if the action can be added to a menu/menubar.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.add_to_menu">
-<code class="descname">add_to_menu</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_to_menu</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a menu/menubar.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) – The action added to the menu.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action instance</em>) – The action added to the menu.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.can_add_to_toolbar">
-<code class="descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.can_add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the action can be added to a toolbar.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) – The action to consider.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_add</strong> – <a href="#id3"><span class="problematic" id="id4">``</span></a>True` if the action can be added to a toolbar.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action instance</em>) – The action to consider.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>can_add</strong> – <a href="#id3"><span class="problematic" id="id4">``</span></a>True` if the action can be added to a toolbar.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyface.action.action_controller.ActionController.add_to_toolbar">
-<code class="descname">add_to_toolbar</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_to_toolbar</code><span class="sig-paren">(</span><em class="sig-param">action</em><span class="sig-paren">)</span><a class="headerlink" href="#pyface.action.action_controller.ActionController.add_to_toolbar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called when an action is added to the a toolbar.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> (<em>Action instance</em>) – The action added to the toolbar.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>Action instance</em>) – The action added to the toolbar.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -206,13 +194,11 @@
        rel="nofollow">Show Source</a>
   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -233,13 +219,13 @@
     <div class="row-fluid">
     <ul class="inline pull-left">
       <li>
-        &copy; Copyright 2008-2016, Enthought
+        &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 22, 2019.
+      Last updated on Apr 24, 2020.
       </li>
       <li>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.5.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
       </li>
     </ul>
     </div>

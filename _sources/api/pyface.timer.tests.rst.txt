@@ -2,9 +2,9 @@ pyface.timer.tests package
 ==========================
 
 .. automodule:: pyface.timer.tests
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -13,4 +13,3 @@ Submodules
 
    pyface.timer.tests.test_do_later
    pyface.timer.tests.test_timer
-
