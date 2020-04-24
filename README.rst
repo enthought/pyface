@@ -20,12 +20,9 @@ the details of displaying them.
 
 The following GUI backends are supported:
 
-- wxPython
-- PyQt
-- PySide
-
-**Warning:** The default toolkit if none is supplied is ``qt4``.
-   This changed from ``wx`` in Pyface 5.0..
+- PyQt 4 and 5
+- PySide2
+- wxPython 4 (experimental)
 
 Documentation
 -------------
