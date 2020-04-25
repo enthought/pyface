@@ -14,6 +14,7 @@
 from traits.api import Bool, Enum, HasTraits, Str
 
 from pyface.fields.i_field import IField
+from pyface.ui_traits import Alignment
 
 
 class ITextField(IField):
@@ -34,6 +35,9 @@ class ITextField(IField):
     #: Whether or not the field is read-only.
     read_only = Bool()
 
+    #: The alignment of the text in the field.
+    alignment = Alignment()
+
 
 class MTextField(HasTraits):
     """ The text field mix-in. """
@@ -53,6 +57,9 @@ class MTextField(HasTraits):
     #: Whether or not the field is read-only.
     read_only = Bool()
 
+    #: The alignment of the text in the field.
+    alignment = Alignment()
+
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------
@@ -62,6 +69,8 @@ class MTextField(HasTraits):
         self._set_control_value(self.value)
         self._set_control_placeholder(self.placeholder)
         self._set_control_read_only(self.read_only)
+        if self.alignment != 'default':
+            self._set_control_alignment(self.alignment)
 
         super(MTextField, self)._initialize_control()
 
@@ -77,6 +86,9 @@ class MTextField(HasTraits):
         self.on_trait_change(self._echo_updated, "echo", dispatch="ui")
         self.on_trait_change(
             self._read_only_updated, "read_only", dispatch="ui"
+        )
+        self.on_trait_change(
+            self._alignment_updated, "alignment", dispatch="ui",
         )
         if self.control is not None:
             if self.update_text == "editing_finished":
@@ -108,6 +120,9 @@ class MTextField(HasTraits):
         )
         self.on_trait_change(
             self._read_only_updated, "read_only", dispatch="ui", remove=True
+        )
+        self.on_trait_change(
+            self._alignment_updated, "alignment", dispatch="ui", remove=True
         )
         super(MTextField, self)._remove_event_listeners()
 
@@ -142,6 +157,14 @@ class MTextField(HasTraits):
         """ Toolkit specific method to set the control's read_only state. """
         raise NotImplementedError
 
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        raise NotImplementedError
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        raise NotImplementedError
+
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """
         raise NotImplementedError
@@ -159,6 +182,10 @@ class MTextField(HasTraits):
     def _read_only_updated(self):
         if self.control is not None:
             self._set_control_read_only(self.read_only)
+
+    def _alignment_updated(self):
+        if self.control is not None:
+            self._set_control_alignment(self.alignment)
 
     def _update_text_updated(self, new):
         """ Change how we listen to for updates to text value. """

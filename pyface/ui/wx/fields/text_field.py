@@ -19,6 +19,22 @@ from pyface.fields.i_text_field import ITextField, MTextField
 from .field import Field
 
 
+ALIGNMENT_TO_WX_ALIGNMENT = {
+    'default': wx.TE_LEFT,
+    'left': wx.TE_LEFT,
+    'center': wx.TE_CENTRE,
+    'right': wx.TE_RIGHT,
+}
+WX_ALIGNMENT_TO_ALIGNMENT = {
+    0: 'default',
+    wx.TE_LEFT: 'left',
+    wx.TE_CENTRE: 'center',
+    wx.TE_RIGHT: 'right',
+}
+
+ALIGNMENT_MASK = wx.TE_LEFT | wx.TE_CENTRE | wx.TE_RIGHT
+
+
 @provides(ITextField)
 class TextField(MTextField, Field):
     """ The Wx-specific implementation of the text field class """
@@ -87,6 +103,18 @@ class TextField(MTextField, Field):
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
         self.control.SetEditable(not read_only)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        alignment = self.control.GetWindowStyle() & ALIGNMENT_MASK
+        return WX_ALIGNMENT_TO_ALIGNMENT[alignment]
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's read_only state. """
+        other_styles = self.control.GetWindowStyle() & ~ALIGNMENT_MASK
+        window_style = other_styles | ALIGNMENT_TO_WX_ALIGNMENT[alignment]
+        self.control.SetWindowStyle(window_style)
+        self.control.Refresh()
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """

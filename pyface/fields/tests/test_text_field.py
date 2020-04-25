@@ -78,7 +78,7 @@ class TestTextField(FieldMixin, unittest.TestCase):
         self.assertEqual(self.widget._get_control_read_only(), True)
 
     @unittest.skipIf(
-        is_wx, "Can't change read_only mode for wx after control " "creation."
+        is_wx, "Can't change read_only mode for wx after control creation."
     )
     def test_text_field_readonly_change(self):
         self._create_widget_control()
@@ -87,3 +87,11 @@ class TestTextField(FieldMixin, unittest.TestCase):
         self.gui.process_events()
 
         self.assertEqual(self.widget._get_control_read_only(), True)
+
+    def test_text_field_alignment(self):
+        self._create_widget_control()
+
+        self.widget.alignment = 'right'
+        self.gui.process_events()
+
+        self.assertEqual(self.widget._get_control_alignment(), 'right')
