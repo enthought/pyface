@@ -12,7 +12,7 @@
 
 from datetime import time
 
-from traits.api import HasTraits, Property, Time, Tuple
+from traits.api import HasTraits, Time
 
 from pyface.fields.i_field import IField
 
