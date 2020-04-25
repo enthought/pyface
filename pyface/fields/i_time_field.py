@@ -24,14 +24,14 @@ class ITimeField(IField):
     """
 
     #: The current value of the time field
-    value = Time
+    value = Time()
 
 
 class MTimeField(HasTraits):
     """ Mixin class for TimeField implementations """
 
     #: The current value of the time field
-    value = Time
+    value = Time()
 
     # ------------------------------------------------------------------------
     # Private interface
