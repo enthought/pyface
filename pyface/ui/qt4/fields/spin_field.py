@@ -18,6 +18,9 @@ from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
 from pyface.qt.QtGui import QSpinBox
+from pyface.ui.qt4.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
 from .field import Field
 
 
@@ -61,3 +64,11 @@ class SpinField(MSpinField, Field):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         self.control.setRange(*bounds)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's alignment. """
+        return qalignment_to_alignment(self.control.alignment())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        self.control.setAlignment(alignment_to_qalignment(alignment))

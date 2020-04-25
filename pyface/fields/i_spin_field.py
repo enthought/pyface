@@ -14,6 +14,7 @@
 from traits.api import HasTraits, Int, Property, Range, Tuple
 
 from pyface.fields.i_field import IField
+from pyface.ui_traits import Alignment
 
 
 class ISpinField(IField):
@@ -34,6 +35,9 @@ class ISpinField(IField):
     #: The maximum value
     maximum = Property(Int, depends_on="bounds")
 
+    #: The alignment of the text in the field.
+    alignment = Alignment()
+
 
 class MSpinField(HasTraits):
 
@@ -48,6 +52,9 @@ class MSpinField(HasTraits):
 
     #: The maximum value for the spinner
     maximum = Property(Int, depends_on="bounds")
+
+    #: The alignment of the text in the field.
+    alignment = Alignment()
 
     # ------------------------------------------------------------------------
     # object interface
@@ -69,11 +76,16 @@ class MSpinField(HasTraits):
         super(MSpinField, self)._initialize_control()
         self._set_control_bounds(self.bounds)
         self._set_control_value(self.value)
+        if self.alignment != 'default':
+            self._set_control_alignment(self.alignment)
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MSpinField, self)._add_event_listeners()
         self.on_trait_change(self._bounds_updated, "bounds", dispatch="ui")
+        self.on_trait_change(
+            self._alignment_updated, "alignment", dispatch="ui",
+        )
         if self.control is not None:
             self._observe_control_value()
 
@@ -83,6 +95,9 @@ class MSpinField(HasTraits):
             self._observe_control_value(remove=True)
         self.on_trait_change(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
+        )
+        self.on_trait_change(
+            self._alignment_updated, "alignment", dispatch="ui", remove=True
         )
         super(MSpinField, self)._remove_event_listeners()
 
@@ -95,6 +110,14 @@ class MSpinField(HasTraits):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         raise NotImplementedError()
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        raise NotImplementedError
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's alignment. """
+        raise NotImplementedError
 
     # Trait property handlers -----------------------------------------------
 
@@ -130,3 +153,7 @@ class MSpinField(HasTraits):
     def _bounds_updated(self):
         if self.control is not None:
             self._set_control_bounds(self.bounds)
+
+    def _alignment_updated(self):
+        if self.control is not None:
+            self._set_control_alignment(self.alignment)

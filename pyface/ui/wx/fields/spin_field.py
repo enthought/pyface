@@ -19,6 +19,9 @@ import wx
 from traits.api import provides
 
 from pyface.fields.i_spin_field import ISpinField, MSpinField
+from pyface.ui.wx.util.alignment import (
+    get_alignment_style, set_alignment_style
+)
 from .field import Field
 
 
@@ -65,3 +68,14 @@ class SpinField(MSpinField, Field):
     def _set_control_bounds(self, bounds):
         """ Toolkit specific method to set the control's bounds. """
         self.control.SetRange(*bounds)
+
+    def _get_control_alignment(self):
+        """ Toolkit specific method to get the control's read_only state. """
+        return get_alignment_style(self.control.GetWindowStyle())
+
+    def _set_control_alignment(self, alignment):
+        """ Toolkit specific method to set the control's read_only state. """
+        old_style = self.control.GetWindowStyle()
+        new_style = set_alignment_style(alignment, old_style)
+        self.control.SetWindowStyle(new_style)
+        self.control.Refresh()

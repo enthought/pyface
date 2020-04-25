@@ -16,6 +16,9 @@ from traits.api import Trait, provides
 from pyface.fields.i_text_field import ITextField, MTextField
 from pyface.qt.QtCore import Qt
 from pyface.qt.QtGui import QLineEdit
+from pyface.ui.qt4.util.alignment import (
+    alignment_to_qalignment, qalignment_to_alignment
+)
 from .field import Field
 
 
@@ -112,13 +115,12 @@ class TextField(MTextField, Field):
         self.control.setReadOnly(read_only)
 
     def _get_control_alignment(self):
-        """ Toolkit specific method to get the control's read_only state. """
-        alignment = int(self.control.alignment() & ALIGNMENT_MASK)
-        return QALIGNMENT_TO_ALIGNMENT[alignment]
+        """ Toolkit specific method to get the control's alignment. """
+        return qalignment_to_alignment(self.control.alignment())
 
     def _set_control_alignment(self, alignment):
-        """ Toolkit specific method to set the control's read_only state. """
-        self.control.setAlignment(ALIGNMENT_TO_QALIGNMENT[alignment])
+        """ Toolkit specific method to set the control's alignment. """
+        self.control.setAlignment(alignment_to_qalignment(alignment))
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """
