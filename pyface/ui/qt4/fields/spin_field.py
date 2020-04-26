@@ -65,6 +65,14 @@ class SpinField(MSpinField, Field):
         """ Toolkit specific method to set the control's bounds. """
         self.control.setRange(*bounds)
 
+    def _get_control_wrap(self):
+        """ Toolkit specific method to get whether the control wraps. """
+        return self.control.wrapping()
+
+    def _set_control_wrap(self, wrap):
+        """ Toolkit specific method to set whether the control wraps. """
+        self.control.setWrapping(wrap)
+
     def _get_control_alignment(self):
         """ Toolkit specific method to get the control's alignment. """
         return qalignment_to_alignment(self.control.alignment())
