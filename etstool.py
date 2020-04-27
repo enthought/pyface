@@ -208,23 +208,6 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     environ["PYTHONUNBUFFERED"] = "1"
 
     commands = [
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.tests',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.action',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.fields',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.tasks',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.timer',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.util',
-        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.workbench',
-    ]
-    if toolkit == "wx":
-        commands.append(
-            '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.ui.wx',
-        )
-    elif toolkit in {"pyqt", "pyside2"}:
-        commands.append(
-            '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.ui.qt4',
-        )
-    commands = [
         '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface',
     ]
 
