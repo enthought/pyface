@@ -86,18 +86,16 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    "3.5": {"pyqt", "pyqt5"},
-    "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
+    "3.5": {"pyqt"},
+    "3.6": {"pyqt", "pyside2", "wx"},
 }
 
-dependencies = {"numpy", "pygments", "mock", "nose", "coverage", "traits"}
+dependencies = {"traits", "numpy", "pygments", "coverage"}
 
 extra_dependencies = {
-    "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build 1 of.4-12 appears to be bad
-    "pyqt5": {"pyqt5"},
+    "pyqt": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
     "null": set(),
@@ -115,10 +113,8 @@ doc_ignore = {
 }
 
 environment_vars = {
-    "pyside": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside"},
     "pyside2": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside2"},
-    "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt"},
-    "pyqt5": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
+    "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
     "wx": {"ETS_TOOLKIT": "wx"},
     "null": {"ETS_TOOLKIT": "null"},
 }
@@ -159,7 +155,7 @@ def install(edm, runtime, toolkit, environment):
         "{edm} run -e {environment} -- python setup.py clean --all",
         "{edm} run -e {environment} -- python setup.py install",
     ]
-    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
+    # pip install pyside2, because we don't have it in EDM yet
     if toolkit == "pyside2":
         commands.extend(
             [
@@ -200,7 +196,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     parameters = get_parameters(edm, runtime, toolkit, environment)
     if toolkit == "wx":
         parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+    elif toolkit in {"pyqt", "pyside2"}:
         parameters["exclude"] = "wx"
     else:
         parameters["exclude"] = "(wx|qt)"
@@ -212,7 +208,24 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     environ["PYTHONUNBUFFERED"] = "1"
 
     commands = [
-        "{edm} run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.tests',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.action',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.fields',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.tasks',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.timer',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.util',
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.workbench',
+    ]
+    if toolkit == "wx":
+        commands.append(
+            '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.ui.wx',
+        )
+    elif toolkit in {"pyqt", "pyside2"}:
+        commands.append(
+            '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface.ui.qt4',
+        )
+    commands = [
+        '{edm} run -e {environment} -- coverage run -p -m unittest discover -v -s pyface',
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong pyface
