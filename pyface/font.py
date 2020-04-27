@@ -146,10 +146,19 @@ styles = ['normal', 'italic', 'oblique']
 
 variants = ['small-caps', 'underline', 'strikethrough', 'overline']
 
+#: A trait for font families.
 FontFamily = List(Str, ['default'])
+
+#: A trait for font weights.
 FontWeight = Map(weights, default_value='normal')
+
+#: A trait for font stretch values.
 FontStretch = Map(stretches, default_value='normal')
+
+#: A trait for font styles.
 FontStyle = Enum(styles)
+
+#: A trait for font variant properties.
 FontVariants = Set(Enum(variants))
 
 
@@ -164,6 +173,8 @@ class FontSize(BaseCFloat):
     default_value = 12.0
 
     def validate(self, object, name, value):
+        if isinstance(value, str) and value.endswith('pt'):
+            value = value[:-2]
         value = sizes.get(value, value)
         return super().validate(object, name, value)
 
@@ -184,6 +195,11 @@ class FontParseError(ValueError):
     pass
 
 
+parser_synonyms = {
+    'slant': 'oblique'
+}
+
+
 def parse_font_description(description):
     """ An extremely relaxed parser for font descriptions.
 
@@ -196,6 +212,11 @@ def parse_font_description(description):
     description : str
         A text description of the font in a CSS-style format.
 
+    Returns
+    -------
+    properties : dict
+        A dictionary of font properties suitable for passing to a Font as
+        keyword arguments.
     """
     family = []
     weight = 'normal'
@@ -227,8 +248,10 @@ def parse_font_description(description):
                     f"Invalid font size {value!r} at position {index} in {description!r}"
                 )
         elif kind == 'NAME':
+            # substitute synonyms
+            value = parser_synonyms.get(value, value)
             if value.lower() in weights:
-                if weight is not 'normal':
+                if weight != 'normal':
                     raise FontParseError(
                         f"Weight declared twice in {description!r}"
                     )
@@ -306,20 +329,40 @@ class Font(HasStrictTraits):
     @classmethod
     def from_description(cls, description):
         """ An extremely lax 'parser' for CSS-style font descriptions.
+
+        Parameters
+        ----------
+        description : str
+            A font description in string form such as
+            'italic bold 14pt Helvetica, Arial, sans-serif' or
+            '36pt "Comic Sans"'
         """
         return cls(**parse_font_description(description))
 
     @classmethod
     def from_toolkit(cls, toolkit_font):
         """ Create a Font from a toolkit font object.
+
+        Parameters
+        ----------
+        toolkit_font : any
+            A toolkit font to be converted to a corresponding class instance,
+            within the limitations of the options supported by the class.
         """
         from pyface.toolkit import toolkit_object
-        toolkit_font_to_traits = toolkit_object('font:toolkit_font_to_traits')
+        toolkit_font_to_properties = toolkit_object(
+            'font:toolkit_font_to_properties')
 
-        return cls(**toolkit_font_to_traits(toolkit_font))
+        return cls(**toolkit_font_to_properties(toolkit_font))
 
     def to_toolkit(self):
         """ Create a toolkit font object from the Font instance.
+
+        Returns
+        -------
+        toolkit_font : any
+            A toolkit font which matches the property of the font as
+            closely as possible given the constraints of the toolkit.
         """
         from pyface.toolkit import toolkit_object
         font_to_toolkit_font = toolkit_object('font:font_to_toolkit_font')
@@ -361,10 +404,10 @@ class Font(HasStrictTraits):
 
 
 class PyfaceFont(TraitType):
-    """ A mapped trait that holds a Pyface Font.
+    """ A trait that holds a Pyface Font.
 
-    The mapped value is a corresponding toolkit font object, as close
-    as can be mapped by the toolkit.
+    The value can be assigned as a string, in which case it is parsed
+    as a font description and an appropriate font created for it.
     """
 
     #: The default value should be a tuple (factory, args, kwargs)

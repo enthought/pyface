@@ -1,3 +1,21 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
+"""
+Font conversion utilities
+
+This module provides facilities for converting between pyface Font objects
+and Qt QFont objects, trying to keep as much similarity as possible between
+them.
+"""
+
 from pyface.qt.QtGui import QFont
 
 
@@ -82,6 +100,100 @@ style_to_qt_style = {
 qt_style_to_style = {value: key for key, value in style_to_qt_style.items()}
 
 
+def font_to_toolkit_font(font):
+    """ Convert a Pyface font to a Qfont.
+
+    Parameters
+    ----------
+    font : pyface.font.Font
+        The Pyface font to convert.
+
+    Returns
+    -------
+    qt_font : QFont
+        The best matching Qt font.
+    """
+    qt_font = QFont()
+    families = []
+    default_family = None
+
+    for family in font.family:
+        if family not in generic_family_to_qt_family:
+            families.append(family)
+        elif default_family is None:
+            default_family = family
+
+    if families and hasattr(qt_font, 'setFamilies'):
+        # Qt 5.13 and later
+        qt_font.setFamilies(families)
+    elif families:
+        qt_font.setFamily(families[0])
+        # Note: possibily could use substitutions here,
+        # but not sure if global (which would be bad, so we don't)
+
+    if default_family is not None:
+        qt_font.setStyleHint(generic_family_to_qt_family[default_family])
+
+    qt_font.setPointSizeF(font.size)
+    qt_font.setWeight(weight_to_qt_weight[font.weight_])
+    qt_font.setStretch(stretch_to_qt_stretch[font.stretch_])
+    qt_font.setStyle(style_to_qt_style[font.style])
+    qt_font.setUnderline('underline' in font.variants)
+    qt_font.setStrikeOut('strikethrough' in font.variants)
+    qt_font.setOverline('overline' in font.variants)
+    if 'small-caps' in font.variants:
+        qt_font.setCapitalization(QFont.SmallCaps)
+    return qt_font
+
+
+def toolkit_font_to_properties(toolkit_font):
+    """ Convert a QFont to a dictionary of font properties.
+
+    Parameters
+    ----------
+    toolkit_font : QFont
+        The Qt QFont to convert.
+
+    Returns
+    -------
+    properties : dict
+        Font properties suitable for use in creating a Pyface Font.
+    """
+    family = []
+
+    if hasattr(toolkit_font, 'families'):
+        # Qt 5.13 and later
+        family = list(toolkit_font.families())
+    elif toolkit_font.family():
+        family.append(toolkit_font.family())
+    if toolkit_font.defaultFamily():
+        family.append(toolkit_font.defaultFamily())
+    family.append(qt_family_to_generic_family[toolkit_font.styleHint()])
+
+    size = toolkit_font.pointSizeF()
+    style = qt_style_to_style[toolkit_font.style()]
+    weight = map_to_nearest(toolkit_font.weight(), qt_weight_to_weight)
+    stretch = map_to_nearest(toolkit_font.stretch(), qt_stretch_to_stretch)
+    variants = set()
+    if toolkit_font.underline():
+        variants.add('underline')
+    if toolkit_font.strikeOut():
+        variants.add('strikethrough')
+    if toolkit_font.overline():
+        variants.add('overline')
+    if toolkit_font.capitalization() == QFont.SmallCaps:
+        variants.add('small-caps')
+
+    return {
+        'family': family,
+        'size': size,
+        'weight': weight,
+        'stretch': stretch,
+        'style': style,
+        'variants': variants,
+    }
+
+
 def map_to_nearest(target, mapping):
     """ Given mapping with keys from 0 and 99, return closes value.
 
@@ -111,83 +223,3 @@ def map_to_nearest(target, mapping):
             nearest = key
     return mapping[nearest]
 
-
-def font_to_toolkit_font(font):
-    """ Convert a Pyface font to a wx.font Font.
-
-    Wx fonts have no notion of stretch values or all-caps or overline variants,
-    so these are ignored when converting.
-
-    Parameters
-    ----------
-    font : pyface.font.Font
-        The Pyface font to convert.
-
-    Returns
-    -------
-    qt_font : QFont
-        The best matching Qt font.
-    """
-    qt_font = QFont()
-    families = []
-    default_family = None
-
-    for family in font.family:
-        if family not in generic_family_to_qt_family:
-            families.append(family)
-        elif default_family is None:
-            default_family = family
-
-    # Qt 5.13 and later
-    if families and hasattr(qt_font, 'setFamilies'):
-        qt_font.setFamilies(families)
-    elif families:
-        qt_font.setFamily(families[0])
-        # Note: possibily could use substitutions here,
-        # but not sure if global (which would be bad, so we don't)
-
-    if default_family is not None:
-        qt_font.setStyleHint(generic_family_to_qt_family[default_family])
-
-    qt_font.setPointSizeF(font.size)
-    qt_font.setWeight(weight_to_qt_weight[font.weight_])
-    qt_font.setStretch(stretch_to_qt_stretch[font.stretch_])
-    qt_font.setStyle(style_to_qt_style[font.style])
-    qt_font.setUnderline('underline' in font.variants)
-    qt_font.setStrikeOut('strikethrough' in font.variants)
-    qt_font.setOverline('overline' in font.variants)
-    if 'small-caps' in font.variants:
-        qt_font.setCapitalization(QFont.SmallCaps)
-    return qt_font
-
-
-def toolkit_font_to_traits(toolkit_font):
-    family = []
-    if toolkit_font.family():
-        family.append(toolkit_font.family())
-    if toolkit_font.defaultFamily():
-        family.append(toolkit_font.defaultFamily())
-    family.append(qt_family_to_generic_family[toolkit_font.styleHint()])
-
-    size = toolkit_font.pointSizeF()
-    style = qt_style_to_style[toolkit_font.style()]
-    weight = map_to_nearest(toolkit_font.weight(), qt_weight_to_weight)
-    stretch = map_to_nearest(toolkit_font.stretch(), qt_stretch_to_stretch)
-    variants = set()
-    if toolkit_font.underline():
-        variants.add('underline')
-    if toolkit_font.strikeOut():
-        variants.add('strikethrough')
-    if toolkit_font.overline():
-        variants.add('overline')
-    if toolkit_font.capitalization() == QFont.SmallCaps:
-        variants.add('small-caps')
-
-    return {
-        'family': family,
-        'size': size,
-        'weight': weight,
-        'stretch': stretch,
-        'style': style,
-        'variants': variants,
-    }

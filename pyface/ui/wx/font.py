@@ -1,4 +1,20 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
+"""
+Font conversion utilities
+
+This module provides facilities for converting between pyface Font objects
+and Wx Font objects, trying to keep as much similarity as possible between
+them.
+"""
 
 import wx
 
@@ -104,7 +120,19 @@ def font_to_toolkit_font(font):
     return wx_font
 
 
-def toolkit_font_to_traits(toolkit_font):
+def toolkit_font_to_properties(toolkit_font):
+    """ Convert a Wx Font to a dictionary of font properties.
+
+    Parameters
+    ----------
+    toolkit_font : wx.font.Font
+        The Wx font to convert.
+
+    Returns
+    -------
+    properties : dict
+        Font properties suitable for use in creating a Pyface Font.
+    """
     family = wx_family_to_generic_family[toolkit_font.GetFamily()]
     face = toolkit_font.GetFaceName()
     size = toolkit_font.GetFractionalPointSize()
