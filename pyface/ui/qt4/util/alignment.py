@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The Qt-specific implementation of the text field class """
+""" Qt alignment helper functions """
 
 from pyface.qt.QtCore import Qt
 
