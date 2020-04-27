@@ -15,6 +15,8 @@ defining which traits will be shown in the columns and in which order. If this
 list is not passed in, then the first object is inspected and every trait
 from that object gets a column."""
 
+import warnings
+
 from functools import cmp_to_key
 
 from traits.api import (
@@ -27,6 +29,7 @@ from traits.api import (
     Instance,
     Int,
     List,
+    on_trait_change,
     Str,
     Type,
 )
@@ -60,14 +63,40 @@ class TraitGridColumn(GridColumn):
     size = Int(-1)
 
 
+
+warnings.filterwarnings(
+    "ignore",
+    message=(
+        r".*The attribute named 'trait_name' of class TraitGridSelection .*"
+    ),
+    category=Warning,
+    module=".*pyface.ui.wx.grid.trait_grid_model.*",
+)
+
+
 class TraitGridSelection(HasTraits):
     """ Structure for holding specification information. """
 
     # The selected object
     obj = Instance(HasTraits)
 
-    # The specific trait selected on the object
-    trait_name = Either(None, Str)
+    # The trait name.
+    # Deprecated. Use 'attr_name' instead.
+    trait_name = Str()
+
+    # Name of the trait to be used.
+    attr_name = Str()
+
+    @on_trait_change("trait_name")
+    def _deprecate_trait_name(self, new):
+        warnings.warn(
+            (
+                "'trait_name' on {} is deprecated. "
+                "Use 'attr_name' instead.".format(type(self).__name__)
+            ),
+            DeprecationWarning,
+        )
+        self.attr_name = new
 
 
 # The meat.
@@ -359,8 +388,8 @@ class TraitGridModel(GridModel):
                 continue
 
             column = -1
-            if selection.trait_name is not None:
-                column = self._get_column_index_by_trait(selection.trait_name)
+            if selection.attr_name is not None:
+                column = self._get_column_index_by_trait(selection.attr_name)
                 if column is None:
                     continue
 

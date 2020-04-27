@@ -9,12 +9,21 @@
 # Thanks for using Enthought open source!
 """ The node type for a trait dictionary. """
 
+import warnings
 
-from traits.api import Any, Str
+from traits.api import Any, Str, on_trait_change
 
 
 from .node_type import NodeType
 
+warnings.filterwarnings(
+    "ignore",
+    message=(
+        r".*The attribute named 'trait_name' of class TraitDictNodeType .*"
+    ),
+    category=Warning,
+    module=".*pyface.tree.trait_dict_node_type.*",
+)
 
 class TraitDictNodeType(NodeType):
     """ The node type for a trait dictionary. """
@@ -28,7 +37,11 @@ class TraitDictNodeType(NodeType):
     text = Str()
 
     # The trait name.
+    # Deprecated. Use 'attr_name' instead.
     trait_name = Str()
+
+    # Name of the trait to be used.
+    attr_name = Str()
 
     # ------------------------------------------------------------------------
     # 'NodeType' interface.
@@ -41,7 +54,7 @@ class TraitDictNodeType(NodeType):
             isinstance(node, dict)
             and hasattr(node, "object")
             and isinstance(node.object, self.klass)
-            and node.name == self.trait_name
+            and node.name == self.attr_name
         )
 
         return is_type_for
@@ -65,3 +78,14 @@ class TraitDictNodeType(NodeType):
         """ Returns the label text for a node. """
 
         return self.text
+
+    @on_trait_change("trait_name")
+    def _deprecate_trait_name(self, new):
+        warnings.warn(
+            (
+                "'trait_name' on {} is deprecated. "
+                "Use 'attr_name' instead.".format(type(self).__name__)
+            ),
+            DeprecationWarning,
+        )
+        self.attr_name = new
