@@ -91,6 +91,7 @@ from traits.api import (
     BaseCFloat, DefaultValue, Enum, HasStrictTraits, List, Map, Set, Str,
     TraitError, TraitType
 )
+from traits.trait_type import NoDefaultSpecified
 
 weights = {str(i): i for i in range(100, 1001, 100)}
 weights.update({
@@ -136,7 +137,7 @@ sizes = {
     'xx-small': 7.0,
     'x-small': 9.0,
     'small': 10.0,
-    'medium': 12.0,
+    #'medium': 12.0,
     'large': 14.0,
     'x-large': 18.0,
     'xx-large': 20.0,
@@ -172,16 +173,24 @@ class FontSize(BaseCFloat):
     #: The default value for the trait.
     default_value = 12.0
 
+    def __init__(self, default_value=NoDefaultSpecified, **metadata):
+        if default_value != NoDefaultSpecified:
+            default_value = self.validate(None, None, default_value)
+        super().__init__(default_value, **metadata)
+
     def validate(self, object, name, value):
         if isinstance(value, str) and value.endswith('pt'):
             value = value[:-2]
         value = sizes.get(value, value)
-        return super().validate(object, name, value)
+        value = super().validate(object, name, value)
+        if value <= 0:
+            self.error(object, name, value)
+        return value
 
 
 font_tokens = [
-    r'(?P<WEIGHT>[1-9]00)',
-    r'(?P<SIZE>[0-9]+\.?[0-9]*(pt)?)',
+    r'(?P<SIZE>\d+\.?\d*pt)',
+    r'(?P<NUMBER>\d+\.?\d*)',
     r'(?P<NAME>[a-zA-Z\-]+)',
     r'(?P<QUOTED_NAME>"[^"]+"|\'[^\']+\')',
     r'(?P<COMMA>,)',
@@ -228,25 +237,32 @@ def parse_font_description(description):
         kind = token.lastgroup
         value = token.group()
         index = token.start()
-        if kind == 'WEIGHT':
-            if weight != 'normal':
-                raise FontParseError(
-                    f"Weight declared twice in {description!r}"
-                )
-            weight = value
-        elif kind == 'SIZE':
+        if kind == 'SIZE':
             if size != -1:
                 raise FontParseError(
                     f"Size declared twice in {description!r}"
                 )
-            if value.endswith('pt'):
-                value = value[:-2]
+            value = value[:-2]
             try:
                 size = float(value)
             except ValueError:
                 raise FontParseError(
                     f"Invalid font size {value!r} at position {index} in {description!r}"
                 )
+        elif kind == 'NUMBER':
+            if value in weights and weight == 'normal':
+                weight = value
+            elif size != -1:
+                raise FontParseError(
+                    f"Size declared twice in {description!r}"
+                )
+            else:
+                try:
+                    size = float(value)
+                except ValueError:
+                    raise FontParseError(
+                        f"Invalid font size {value!r} at position {index} in {description!r}"
+                    )
         elif kind == 'NAME':
             # substitute synonyms
             value = parser_synonyms.get(value, value)
@@ -280,9 +296,6 @@ def parse_font_description(description):
                         f"Variant {value!r} declared twice in {description!r}"
                     )
                 variant_set.add(value.lower())
-            elif value == 'pt':
-                # ignore
-                continue
             else:
                 # assume it is a font family name
                 family.append(value)
@@ -293,7 +306,7 @@ def parse_font_description(description):
                 f"Parse error {value!r} at {index} in {description!r}"
             )
     if len(family) == 0:
-        family = 'default'
+        family = ['default']
     if size == -1:
         size = 12.0
     return {

@@ -45,7 +45,7 @@ generic_family_to_qt_family = {
 }
 
 weight_to_qt_weight = {
-    100: QFont.Thin,
+    100: 0,
     200: QFont.ExtraLight,
     300: QFont.Light,
     400: QFont.Normal,
@@ -57,7 +57,7 @@ weight_to_qt_weight = {
     1000: 99,
 }
 qt_weight_to_weight = {
-    QFont.Thin: 'thin',
+    0: 'thin',
     QFont.ExtraLight: 'extra-light',
     QFont.Light: 'light',
     QFont.Normal: 'normal',
