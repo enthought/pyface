@@ -29,7 +29,7 @@ from traits.api import (
     Instance,
     Int,
     List,
-    on_trait_change,
+    Property,
     Str,
     Type,
 )
@@ -82,13 +82,12 @@ class TraitGridSelection(HasTraits):
 
     # The trait name.
     # Deprecated. Use 'attr_name' instead.
-    trait_name = Str()
+    trait_name = Property(Str())
 
     # Name of the trait to be used.
     attr_name = Str()
 
-    @on_trait_change("trait_name")
-    def _deprecate_trait_name(self, new):
+    def _get_trait_name(self):
         warnings.warn(
             (
                 "'trait_name' on {} is deprecated. "
@@ -96,7 +95,17 @@ class TraitGridSelection(HasTraits):
             ),
             DeprecationWarning,
         )
-        self.attr_name = new
+        return self.attr_name
+
+    def _set_trait_name(self, value):
+        warnings.warn(
+            (
+                "'trait_name' on {} is deprecated. "
+                "Use 'attr_name' instead.".format(type(self).__name__)
+            ),
+            DeprecationWarning,
+        )
+        self.attr_name = value
 
 
 # The meat.
