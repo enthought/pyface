@@ -12,5 +12,5 @@ from . import qt_api
 if qt_api == "pyqt5":
     from PyQt5.QtNetwork import *
 
-elise qt_api == "pyside2":
+else qt_api == "pyside2":
     from PySide2.QtNetwork import *
