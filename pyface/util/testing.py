@@ -8,6 +8,21 @@
 #
 # Thanks for using Enthought open source!
 from functools import wraps
+import re
+from unittest import TestSuite
+
+
+def filter_tests(test_suite, exclusion_pattern):
+    filtered_test_suite = TestSuite()
+    for item in test_suite:
+        if isinstance(item, TestSuite):
+            filtered = filter_tests(item, exclusion_pattern)
+            filtered_test_suite.addTest(filtered)
+        else:
+            match = re.search(exclusion_pattern, item.id())
+            if match is None:
+                filtered_test_suite.addTest(item)
+    return filtered_test_suite
 
 
 def has_traitsui():
