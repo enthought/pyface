@@ -29,7 +29,7 @@ ModalDialogTester = toolkit_object(
 )
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
-USING_QT = is_qt
+USING_QT = toolkit_object.toolkit == "qt4"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
