@@ -27,13 +27,8 @@ __extras_require__ = {
     "pyside2": ["pyside2", "shiboken2", "pygments"],
 }
 
+
 # ============================= Test Loader ==================================
-from os import environ
-from os.path import dirname
-from pyface.util.testing import filter_tests
-from unittest import TestSuite
-
-
 def load_tests(loader, standard_tests, pattern):
     """ Custom test loading function that enables test filtering using regex
     exclusion pattern.
@@ -53,6 +48,14 @@ def load_tests(loader, standard_tests, pattern):
         TestSuite representing all package tests that did not match specified
         exclusion pattern.
     """
+    from os import environ
+    from os.path import dirname
+    from pyface.util.testing import filter_tests
+    from unittest import TestSuite
+
+    # Make sure the right toolkit is up and running before importing tests
+    from pyface.toolkit import toolkit_object  # noqa: F401
+
     this_dir = dirname(__file__)
     package_tests = loader.discover(start_dir=this_dir, pattern=pattern)
 
