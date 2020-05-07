@@ -90,7 +90,7 @@ supported_combinations = {
     "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
 }
 
-dependencies = {"numpy", "pygments", "mock", "nose", "coverage", "traits"}
+dependencies = {"numpy", "pygments", "mock", "coverage", "traits"}
 
 extra_dependencies = {
     "pyside": {"pyside"},
