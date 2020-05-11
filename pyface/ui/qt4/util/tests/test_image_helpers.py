@@ -17,14 +17,13 @@ try:
 except Exception:
     np = None
 
-from pyface.qt import is_qt4, qt_api
+from pyface.qt import is_pyside
 from pyface.qt.QtGui import QColor, QImage
 
 from ..image_helpers import QImage_to_array, array_to_QImage
 
 
 @unittest.skipIf(np is None, "NumPy is not available")
-@unittest.skipIf(is_qt4, "QImage.pixelFormat not supported on Qt4")
 class TestImageHelpers(unittest.TestCase):
 
     def test_qimage_to_array_rgb(self):
@@ -61,7 +60,7 @@ class TestImageHelpers(unittest.TestCase):
             array = QImage_to_array(qimage)
 
     @unittest.skipIf(
-        qt_api == 'pyside2' and sys.platform == 'linux',
+        is_pyside and sys.platform == 'linux',
         "Pyside2 QImage.pixel returns signed integers on linux"
     )
     def test_array_to_qimage_rgb(self):
@@ -81,7 +80,7 @@ class TestImageHelpers(unittest.TestCase):
         ))
 
     @unittest.skipIf(
-        qt_api == 'pyside2' and sys.platform == 'linux',
+        is_pyside and sys.platform == 'linux',
         "Pyside2 QImage.pixel returns signed integers on linux"
     )
     def test_array_to_qimage_rgba(self):

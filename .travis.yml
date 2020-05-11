@@ -5,14 +5,14 @@ services:
 
 env:
   global:
-    - INSTALL_EDM_VERSION=2.0.0
+    - INSTALL_EDM_VERSION=2.4.1
       PYTHONUNBUFFERED="1"
 
 matrix:
   include:
-    - env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
+    - env: RUNTIME=3.6 TOOLKITS="pyqt pyside2 wx"
     - os: osx
-      env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
+      env: RUNTIME=3.6 TOOLKITS="pyqt pyside2 wx"
   fast_finish: true
 
 branches:

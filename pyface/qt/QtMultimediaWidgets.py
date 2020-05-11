@@ -15,10 +15,5 @@ from . import qt_api
 if qt_api == "pyqt5":
     from PyQt5.QtMultimediaWidgets import *
 
-elif qt_api == "pyside2":
-    from PySide2.QtMultimediaWidgets import *
-
 else:
-    warnings.warn(
-        "Qt 4 does not support QtMultimediaWidgets", DeprecationWarning
-    )
+    from PySide2.QtMultimediaWidgets import *
