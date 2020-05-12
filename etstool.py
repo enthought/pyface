@@ -89,7 +89,7 @@ supported_combinations = {
     "3.6": {"pyqt", "pyside2", "wx"},
 }
 
-dependencies = {"traits", "numpy", "pygments", "coverage", "nose"}
+dependencies = {"traits", "numpy", "pygments", "coverage"}
 
 extra_dependencies = {
     # XXX once pyside2 is available in EDM, we will want it here
@@ -197,12 +197,6 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
-    if toolkit == "wx":
-        parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyside2"}:
-        parameters["exclude"] = "wx"
-    else:
-        parameters["exclude"] = "(wx|qt)"
 
     if no_environment_vars:
         environ = {}
@@ -210,8 +204,16 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
         environ = environment_vars.get(toolkit, {}).copy()
     environ["PYTHONUNBUFFERED"] = "1"
 
+    if toolkit == "wx":
+        environ["EXCLUDE_TESTS"] = "qt"
+    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+        environ["EXCLUDE_TESTS"] = "wx"
+    else:
+        environ["EXCLUDE_TESTS"] = "(wx|qt)"
+
     commands = [
-        "{edm} run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
+        "{edm} run -e {environment} -- coverage run -p -m "
+        "unittest discover -v pyface",
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong pyface
