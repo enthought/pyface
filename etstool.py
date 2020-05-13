@@ -53,7 +53,7 @@ using::
 
     python etstool.py test_all
 
-Currently supported runtime values are ``2.7`` and ``3.5``, and currently
+Currently supported runtime values are ``3.6``, and currently
 supported toolkits are ``null``, ``pyqt``, ``pyside`` and ``wx``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case.
@@ -86,18 +86,15 @@ from contextlib import contextmanager
 import click
 
 supported_combinations = {
-    "3.5": {"pyqt", "pyqt5"},
-    "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
+    "3.6": {"pyqt", "pyside2", "wx"},
 }
 
-dependencies = {"numpy", "pygments", "mock", "nose", "coverage", "traits"}
+dependencies = {"traits", "numpy", "pygments", "coverage"}
 
 extra_dependencies = {
-    "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build 1 of.4-12 appears to be bad
-    "pyqt5": {"pyqt5"},
+    "pyqt": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
     "null": set(),
@@ -115,10 +112,8 @@ doc_ignore = {
 }
 
 environment_vars = {
-    "pyside": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside"},
     "pyside2": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside2"},
-    "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt"},
-    "pyqt5": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
+    "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
     "wx": {"ETS_TOOLKIT": "wx"},
     "null": {"ETS_TOOLKIT": "null"},
 }
@@ -159,7 +154,7 @@ def install(edm, runtime, toolkit, environment):
         "{edm} run -e {environment} -- python setup.py clean --all",
         "{edm} run -e {environment} -- python setup.py install",
     ]
-    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
+    # pip install pyside2, because we don't have it in EDM yet
     if toolkit == "pyside2":
         commands.extend(
             [
@@ -168,14 +163,18 @@ def install(edm, runtime, toolkit, environment):
             ]
         )
     elif toolkit == "wx":
-        if sys.platform != "linux":
+        if sys.platform == "darwin":
             commands.append(
-                "{edm} run -e {environment} -- pip install wxPython"
+                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"
             )
-        else:
+        elif sys.platform == "linux":
             # XXX this is mainly for TravisCI workers; need a generic solution
             commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04 wxPython"
+                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04/ wxPython<4.1"
+            )
+        else:
+            commands.append(
+                "{edm} run -e {environment} -- python -m pip install wxPython"
             )
 
     click.echo("Creating environment '{environment}'".format(**parameters))
@@ -198,12 +197,6 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
-    if toolkit == "wx":
-        parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
-        parameters["exclude"] = "wx"
-    else:
-        parameters["exclude"] = "(wx|qt)"
 
     if no_environment_vars:
         environ = {}
@@ -211,8 +204,16 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
         environ = environment_vars.get(toolkit, {}).copy()
     environ["PYTHONUNBUFFERED"] = "1"
 
+    if toolkit == "wx":
+        environ["EXCLUDE_TESTS"] = "qt"
+    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+        environ["EXCLUDE_TESTS"] = "wx"
+    else:
+        environ["EXCLUDE_TESTS"] = "(wx|qt)"
+
     commands = [
-        "{edm} run -e {environment} -- coverage run -p -m nose.core -v pyface --exclude={exclude} --nologcapture"
+        "{edm} run -e {environment} -- coverage run -p -m "
+        "unittest discover -v pyface",
     ]
 
     # We run in a tempdir to avoid accidentally picking up wrong pyface

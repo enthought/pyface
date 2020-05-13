@@ -9,16 +9,15 @@
 # Thanks for using Enthought open source!
 
 
-import platform
 import unittest
 
 from ..dialog import Dialog
 from ..constant import OK, CANCEL
 from ..toolkit import toolkit_object
 
-is_qt = toolkit_object.toolkit == "qt4"
-if is_qt:
-    from pyface.qt import qt_api
+is_pyqt = False
+if toolkit_object.toolkit == "qt4":
+    from pyface.qt import is_pyqt
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
@@ -27,9 +26,6 @@ ModalDialogTester = toolkit_object(
     "util.modal_dialog_tester:ModalDialogTester"
 )
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
-
-is_pyqt5 = is_qt and qt_api == "pyqt5"
-is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -134,11 +130,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_ok(self):
@@ -150,11 +142,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
@@ -166,11 +154,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_ok(self):
@@ -183,11 +167,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_cancel(self):
@@ -202,11 +182,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_help(self):
@@ -223,11 +199,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt5, "Dialog click tests don't work on pyqt5."
-    )  # noqa
-    @unittest.skipIf(
-        is_pyqt4_linux,
-        "Dialog click tests don't work reliably on linux.  Issue #282.",
+        is_pyqt, "Dialog click tests don't work on pyqt5."
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_help(self):

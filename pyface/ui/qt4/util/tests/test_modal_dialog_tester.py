@@ -26,10 +26,9 @@ from pyface.ui.qt4.util.modal_dialog_tester import ModalDialogTester
 from pyface.util.testing import skip_if_no_traitsui
 
 
-is_qt = toolkit_object.toolkit == "qt4"
-if is_qt:
-    from pyface.qt import qt_api
-is_pyqt5 = is_qt and qt_api == "pyqt5"
+is_pyqt = False
+if toolkit_object.toolkit == "qt4":
+    from pyface.qt import is_pyqt
 
 
 class MyClass(HasStrictTraits):
@@ -55,7 +54,7 @@ class MyClass(HasStrictTraits):
 
 
 @unittest.skipIf(
-    is_pyqt5, "ModalDialogTester not working on pyqt5. Issue #302"
+    is_pyqt, "ModalDialogTester not working on pyqt5. Issue #302"
 )
 class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
     """ Tests for the modal dialog tester. """
