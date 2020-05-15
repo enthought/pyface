@@ -19,7 +19,7 @@
 import sys
 
 
-from pyface.qt import QtCore, QtGui, is_pyqt
+from pyface.qt import QtCore, QtGui, qt_api
 
 from pyface.image_resource import ImageResource
 
@@ -302,7 +302,7 @@ class SplitTabWidget(QtGui.QSplitter):
         # It is possible for the C++ layer of this object to be deleted between
         # the time when the focus change signal is emitted and time when the
         # slots are dispatched by the Qt event loop. This may be a bug in PyQt4.
-        if is_pyqt:
+        if qt_api == "pyqt":
             import sip
 
             if sip.isdeleted(self):
