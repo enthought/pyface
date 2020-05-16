@@ -164,10 +164,11 @@ FontVariants = Set(Enum(variants))
 
 
 class FontSize(BaseCFloat):
-    """ Trait type for fonts.
+    """ Trait type for font sizes.
 
     The is a CFloat trait which also allows values which are keys of the
-    size dictionary.
+    size dictionary, and also ignores trailing 'pt' annotation in string
+    values.  The value stored is a float.
     """
 
     #: The default value for the trait.
@@ -320,6 +321,7 @@ def parse_font_description(description):
 
 
 class Font(HasStrictTraits):
+    """ A toolkit-independent font specification. """
 
     #: The preferred font families.
     family = FontFamily()
@@ -415,6 +417,19 @@ class Font(HasStrictTraits):
         )
         return f"{self.__class__.__name__}({trait_args})"
 
+    def __eq__(self, other):
+        if isinstance(other, Font):
+            return (
+                self.family == other.family
+                and self.weight == other.weight
+                and self.stretch == other.stretch
+                and self.style == other.style
+                and self.size == other.size
+                and self.variants == other.variants
+            )
+        else:
+            return NotImplemented
+
 
 class PyfaceFont(TraitType):
     """ A trait that holds a Pyface Font.
@@ -428,10 +443,15 @@ class PyfaceFont(TraitType):
 
     def __init__(self, value=None, **metadata):
         if isinstance(value, Font):
-            value = value.get_traits(value.editable_traits)
+            value = value.trait_get(value.editable_traits())
         if isinstance(value, str):
             value = parse_font_description(value)
         if isinstance(value, dict):
+            # freeze the family list and variant set
+            if 'family' in value:
+                value['family'] = tuple(value['family'])
+            if 'variants' in value:
+                value['variants'] = frozenset(value['variants'])
             default_value = (Font, (), value.copy())
         elif value is None:
             default_value = (Font, (), {})
@@ -443,7 +463,10 @@ class PyfaceFont(TraitType):
         if isinstance(value, Font):
             return value
         elif isinstance(value, str):
-            return Font(**parse_font_description(value))
+            try:
+                return Font.from_description(value)
+            except FontParseError:
+                self.error(object, name, value)
         else:
             self.error(object, name, value)
 

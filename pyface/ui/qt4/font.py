@@ -16,6 +16,7 @@ and Qt QFont objects, trying to keep as much similarity as possible between
 them.
 """
 
+from pyface.qt import is_qt4
 from pyface.qt.QtGui import QFont
 
 

@@ -13,7 +13,7 @@ import unittest
 from traits.api import HasStrictTraits, TraitError
 
 from ..font import (
-    Font, FontSize, FontParseError, parse_font_description, sizes, stretches,
+    Font, FontSize, FontParseError, PyfaceFont, parse_font_description, sizes, stretches,
     styles, variants, weights
 )
 
@@ -397,7 +397,6 @@ class TestParseFontDescription(unittest.TestCase):
         sub_cases = [
             'bold demibold',  # two weights
             'extra-condensed ultra-condensed',  # two stretches
-            'extra-condensed ultra-condensed',  # two stretches
             'small-caps small-caps',  # two styles
             '10pt 12pt',  # two sizes
             'default #*@&#*',  # bad token
@@ -406,3 +405,85 @@ class TestParseFontDescription(unittest.TestCase):
             with self.subTest(text=text):
                 with self.assertRaises(FontParseError):
                     parse_font_description(text)
+
+
+class TestPyfaceFontTrait(unittest.TestCase):
+
+    def test_simple_init(self):
+        trait = PyfaceFont()
+
+        self.assertEqual(trait.default_value, (Font, (), {}))
+
+    def test_dict_init(self):
+        trait = PyfaceFont({'size': 12, 'family': ["Comic Sans"]})
+
+        self.assertEqual(
+            trait.default_value,
+            (Font, (), {'size': 12, 'family': ("Comic Sans",)})
+        )
+
+    def test_str_init(self):
+        trait = PyfaceFont('12pt "Comic Sans"')
+
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'size': 12,
+                    'family': ("Comic Sans",),
+                    'weight': 'normal',
+                    'style': 'normal',
+                    'stretch': 'normal',
+                    'variants': frozenset(),
+                }
+            )
+        )
+
+    def test_font_init(self):
+        trait = PyfaceFont(Font(size='12pt', family=["Comic Sans"]))
+
+        self.assertEqual(
+            trait.default_value,
+            (
+                Font,
+                (),
+                {
+                    'size': 12,
+                    'family': ("Comic Sans",),
+                    'weight': 'normal',
+                    'style': 'normal',
+                    'stretch': 'normal',
+                    'variants': frozenset(),
+                }
+            )
+        )
+
+    def test_font_validate_str(self):
+        trait = PyfaceFont()
+
+        result = trait.validate(None, None, '12pt "Comic Sans"')
+
+        self.assertEqual(result, Font.from_description('12pt "Comic Sans"'))
+
+    def test_font_validate_font(self):
+        trait = PyfaceFont()
+        font = Font.from_description('12pt "Comic Sans"')
+
+        result = trait.validate(None, None, font)
+
+        self.assertIs(result, font)
+
+    def test_font_validate_invalid_type(self):
+        trait = PyfaceFont()
+
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, 12)
+
+    def test_font_validate_invalid_string(self):
+        trait = PyfaceFont()
+
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, 'default #*@&#*')
+
