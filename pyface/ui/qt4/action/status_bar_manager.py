@@ -17,7 +17,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Any, Bool, HasTraits, List, Property, Str
+from traits.api import Any, Bool, HasTraits, Int, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
@@ -37,6 +37,9 @@ class StatusBarManager(HasTraits):
 
     # Whether the status bar is visible.
     visible = Bool(True)
+
+    # Number of millisecond to display new messages for [default: indefinitely]
+    message_duration = Int
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.
@@ -126,4 +129,5 @@ class StatusBarManager(HasTraits):
         # decide to put all but the first message into separate widgets.  We
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
-        self.status_bar.showMessage("  ".join(self.messages))
+        self.status_bar.showMessage("  ".join(self.messages),
+                                    msecs=self.message_duration)
