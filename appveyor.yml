@@ -5,19 +5,19 @@ environment:
 
   global:
     PYTHONUNBUFFERED: "1"
-    INSTALL_EDM_VERSION: "2.4.1"
+    INSTALL_EDM_VERSION: "2.0.0"
 
   matrix:
     - RUNTIME: '3.6'
-      TOOLKITS: "wx"
+      TOOLKITS: "pyqt wx"
     - RUNTIME: '3.6'
-      TOOLKITS: "pyside2 pyqt"
+      TOOLKITS: "pyside2 pyqt5"
 
 matrix:
   fast_finish: true
   allow_failures:
     - RUNTIME: '3.6'
-      TOOLKITS: "pyside2 pyqt"
+      TOOLKITS: "pyside2 pyqt5"
 
 
 branches:

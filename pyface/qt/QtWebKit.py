@@ -9,7 +9,10 @@
 # Thanks for using Enthought open source!
 from . import qt_api
 
-if qt_api == "pyqt5":
+if qt_api == "pyqt":
+    from PyQt4.QtWebKit import *
+
+elif qt_api == "pyqt5":
     from PyQt5.QtWidgets import *
 
     try:
@@ -25,7 +28,7 @@ if qt_api == "pyqt5":
         from PyQt5.QtWebKit import *
         from PyQt5.QtWebKitWidgets import *
 
-else:
+elif qt_api == "pyside2":
     from PySide2.QtWidgets import *
 
     # WebKit is currently in flux in PySide2
@@ -40,3 +43,6 @@ else:
     except ImportError:
         from PySide2.QtWebKit import *
         from PySide2.QtWebKitWidgets import *
+
+else:
+    from PySide.QtWebKit import *

@@ -7,11 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
+import mock
 import tempfile
 import shutil
 import os
 import unittest
-from unittest import mock
 
 from traits.testing.unittest_tools import UnittestTools
 

@@ -9,8 +9,18 @@
 # Thanks for using Enthought open source!
 from . import qt_api
 
-if qt_api == "pyqt5":
-    from PyQt5.QtWidgets import *
+if qt_api == "pyqt":
+    from PyQt4.QtScript import *
+
+elif qt_api == "pyqt5":
+    import warnings
+
+    warnings.warn(DeprecationWarning("QtScript is not supported in PyQt5"))
+
+elif qt_api == "pyside2":
+    import warnings
+
+    warnings.warn(DeprecationWarning("QtScript is not supported in PyQt5"))
 
 else:
-    from PySide2.QtWidgets import *
+    from PySide.QtScript import *

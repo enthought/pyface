@@ -16,7 +16,7 @@ and Qt QImages in a standardized way.
 
 # Imports of numpy are deferred so we can keep it an optional dependency.
 
-from pyface.qt import is_pyqt
+from pyface.qt import qt_api
 from pyface.qt.QtGui import QImage
 
 
@@ -41,7 +41,7 @@ def QImage_to_array(qimage):
     width, height = qimage.width(), qimage.height()
     channels = qimage.pixelFormat().channelCount()
     data = qimage.bits()
-    if is_pyqt:
+    if qt_api in {'pyqt', 'pyqt5'}:
         data = data.asarray(width * height * channels)
     array = np.array(data, dtype='uint8')
     array.shape = (height, width, channels)

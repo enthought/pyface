@@ -18,9 +18,9 @@ class TestPyfaceQtImports(unittest.TestCase):
         import pyface.qt.QtGui
         import pyface.qt.QtNetwork
         import pyface.qt.QtOpenGL
+        import pyface.qt.QtScript
         import pyface.qt.QtSvg
         import pyface.qt.QtTest
         import pyface.qt.QtWebKit
-        import pyface.qt.QtWidgets
         import pyface.qt.QtMultimedia
         import pyface.qt.QtMultimediaWidgets
