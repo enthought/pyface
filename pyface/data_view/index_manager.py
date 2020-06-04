@@ -312,7 +312,7 @@ class IntIndexManager(AbstractIndexManager):
         """
         if id == 0:
             return Root
-        return int(id) - 1
+        return id - 1
 
     def id(self, index: t.Any) -> int:
         """ Given an index, return the corresponding id.
@@ -329,7 +329,7 @@ class IntIndexManager(AbstractIndexManager):
         """
         if index == Root:
             return 0
-        return int(index) + 1
+        return index + 1
 
 
 class TupleIndexManager(AbstractIndexManager):
@@ -338,7 +338,7 @@ class TupleIndexManager(AbstractIndexManager):
     _cache = Dict(Tuple, Tuple, {Root: Root}, can_reset=True)
 
     #: A dictionary that maps ids to the canonical version of the tuple.
-    _id_cache = Dict(Int, Tuple, {id(Root): Root}, can_reset=True)
+    _id_cache = Dict(Int, Tuple, {0: Root}, can_reset=True)
 
     def create_index(self, parent: t.Any, row: int) -> t.Any:
         """ Given a parent index and a row number, create an index.
@@ -427,5 +427,7 @@ class TupleIndexManager(AbstractIndexManager):
         index : index object
             The persistent index object associated with this id.
         """
+        if index == Root:
+            return 0
         canonical_index = self._cache.setdefault(index, index)
         return id(canonical_index)

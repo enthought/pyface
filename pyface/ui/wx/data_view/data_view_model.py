@@ -50,8 +50,8 @@ class DataViewModel(wxDataViewModel):
     def GetValue(self, item, column):
         row_index = self._to_row_index(item)
         column_index = [column]
-        value = self.model.get_text(row_index, column_index)
-        return value
+        text = self.model.get_text(row_index, column_index)
+        return text
 
     def SetValue(self, value, item, column):
         row_index = self._to_row_index(item)
@@ -70,12 +70,12 @@ class DataViewModel(wxDataViewModel):
     def _to_row_index(self, item):
         id = item.GetID()
         if id is None:
-            id = -1
-        index = self.model.index_manager.from_id(id)
+            id = 0
+        index = self.model.index_manager.from_id(int(id))
         return self.model.index_manager.to_sequence(index)
 
     def _to_index(self, item):
         id = item.GetID()
         if id is None:
             id = 0
-        return self.model.index_manager.from_id(id)
+        return self.model.index_manager.from_id(int(id))

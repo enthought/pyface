@@ -26,7 +26,7 @@ class MainWindow(ApplicationWindow):
 
     def _data_default(self):
         import numpy
-        return numpy.random.uniform(size=(1000000, 10))
+        return numpy.random.uniform(size=(100000, 10))
 
 
 # Application entry point.
