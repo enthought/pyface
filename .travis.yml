@@ -19,6 +19,10 @@ addons:
     - libpulse-mainloop-glib0
     # Wx dependencies
     - libsdl1.2debian
+  homebrew:
+    packages:
+    # Qt dependencies
+    - libxml2
 
 env:
   global:
