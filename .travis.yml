@@ -11,6 +11,7 @@ addons:
     - libglu1-mesa-dev
     - libxkbcommon-x11-0
     - libxcb-icccm4
+    - libxcb-image
     - pulseaudio
     - libpulse-mainloop-glib0
     # Wx dependencies
