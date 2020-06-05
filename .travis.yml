@@ -19,10 +19,6 @@ addons:
     - libpulse-mainloop-glib0
     # Wx dependencies
     - libsdl1.2debian
-  homebrew:
-    packages:
-    # Qt dependencies
-    - libxml2
 
 env:
   global:
@@ -44,6 +40,7 @@ cache:
 before_install:
   - mkdir -p "${HOME}/.cache/download"
   - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then ./install-edm-linux.sh; export PATH="${HOME}/edm/bin:${PATH}"; fi
+  - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then brew uninstall libxml2 && brew install libxml2; fi
   - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then ./install-edm-osx.sh; export PATH="${PATH}:/usr/local/bin"; fi
   - edm install -y wheel click coverage
 install:
