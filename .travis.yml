@@ -7,7 +7,13 @@ addons:
   apt:
     packages:
     # Qt dependencies
+    - libdbus-1-3
     - libglu1-mesa-dev
+    - libxkbcommon-x11-0
+    - pulseaudio
+    - libpulse-mainloop-glib0
+    # Wx dependencies
+    - libsdl
 
 env:
   global:
@@ -28,8 +34,6 @@ cache:
 before_install:
   - mkdir -p "${HOME}/.cache/download"
   - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then ./install-edm-linux.sh; export PATH="${HOME}/edm/bin:${PATH}"; fi
-  # libdbus and pulseaudio for Pyside2, libsdl for wxpython
-  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then sudo apt-get install -y libdbus-1-3 libsdl1.2debian pulseaudio libpulse-mainloop-glib0; fi
   - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then ./install-edm-osx.sh; export PATH="${PATH}:/usr/local/bin"; fi
   - edm install -y wheel click coverage
 install:
