@@ -10,6 +10,7 @@ addons:
     - libdbus-1-3
     - libglu1-mesa-dev
     - libxkbcommon-x11-0
+    - libxcb-icccm4
     - pulseaudio
     - libpulse-mainloop-glib0
     # Wx dependencies
