@@ -14,6 +14,8 @@ from .application import Application
 from .application_window import ApplicationWindow
 from .beep import beep
 from .clipboard import clipboard, Clipboard
+from .color import Color, PyfaceColor
+from .color_dialog import ColorDialog, get_color
 from .confirmation_dialog import confirm, ConfirmationDialog
 from .constant import OK, CANCEL, YES, NO
 from .dialog import Dialog
