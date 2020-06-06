@@ -91,3 +91,6 @@ is always a |Font| object.  This allows users to write code like::
 
     style = Style(font='bold 10pt "Comic Sans"')
     style.font = "italic 12pt Arial, Helvetic, sans-serif"
+
+
+.. |Font| replace:: :py:class:`~pyface.font.Font`

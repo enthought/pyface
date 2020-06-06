@@ -11,12 +11,11 @@
 """ The interface for a dialog that allows the user to select a font. """
 
 from pyface.font import PyfaceFont
-
 from pyface.i_dialog import IDialog
 
 
 class IFontDialog(IDialog):
-    """ The interface for a dialog that allows the user to open/save files etc.
+    """ The interface for a dialog that allows the user to select a font.
     """
 
     # 'IFontDialog' interface ---------------------------------------------#

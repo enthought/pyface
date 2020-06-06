@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" The interface for a dialog that allows the user to select a font. """
+""" A dialog that allows the user to select a font. """
 
 import wx
 

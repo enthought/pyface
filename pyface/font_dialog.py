@@ -8,10 +8,14 @@
 #
 # Thanks for using Enthought open source!
 
-""" The implementation of a dialog that allows the user to open/save files etc.
+""" The implementation of a dialog that allows the user to choose a font.
 """
 
 from .constant import OK
+from .toolkit import toolkit_object
+
+FontDialog = toolkit_object("font_dialog:FontDialog")
+
 
 def get_font(parent, font):
     """ Convenience function that displays a font dialog.
@@ -34,9 +38,3 @@ def get_font(parent, font):
         return dialog.font
     else:
         return None
-
-
-# Import the toolkit specific version.
-from .toolkit import toolkit_object
-
-FontDialog = toolkit_object("font_dialog:FontDialog")
