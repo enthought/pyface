@@ -15,10 +15,6 @@ matrix:
       env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
   fast_finish: true
 
-branches:
-  only:
-    - master
-
 cache:
   directories:
     - "~/.cache"
@@ -39,3 +35,9 @@ after_success:
   - edm run -- coverage combine
   - edm run -- pip install codecov
   - edm run -- codecov
+
+notifications:
+  slack:
+    secure: UmVaFtT5FQD5Pb5fQPxbQwLTPsvCJOY2Cr0xQVOAbkcl2pYeit7vf7d6f4ligGpve9QdgQjWRffQa7z0V+7O0xoWUaozZHuFZNsttWAldh0gBEBeFHHUvCiKrzV6AWetDE8LxWZsPV9oG/ZX7oVz8nNeYfH3lLhgqdPCL54L3SE=
+    on_success: change
+    on_failure: always
