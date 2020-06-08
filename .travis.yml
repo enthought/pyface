@@ -30,6 +30,7 @@ matrix:
   include:
     - env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
     - os: osx
+      # Obtain newer libxml2 for QtWebKit
       osx_image: xcode11.5
       env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
   fast_finish: true
