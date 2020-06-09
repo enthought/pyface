@@ -12,7 +12,7 @@ from itertools import combinations
 import logging
 
 
-from pyface.qt import QtCore, QtGui
+from pyface.qt import QtCore, QtGui, is_qt4
 
 
 from traits.api import Any, HasTraits
@@ -145,17 +145,22 @@ class MainWindowLayout(HasTraits):
                 child.hide()
                 self.control.removeDockWidget(child)
 
+        # track widths and heights of significant widgets
+        widths = {}
+        heights = {}
+
         # Perform the layout. This will assign fixed sizes to the dock widgets
         # to enforce size constraints specified in the PaneItems.
         for name, q_dock_area in AREA_MAP.items():
             sublayout = getattr(layout, name)
             if sublayout:
-                self.set_layout_for_area(
+                area_widths, area_heights = self.set_layout_for_area(
                     sublayout, q_dock_area, _toplevel_call=False
                 )
+                widths.update(area_widths)
+                heights.update(area_heights)
 
-        # Remove the fixed sizes once Qt activates the layout.
-        QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
+        self._resize_dock_panes(widths, heights)
 
     def set_layout_for_area(
         self, layout, q_dock_area, _toplevel_added=False, _toplevel_call=True
@@ -168,19 +173,39 @@ class MainWindowLayout(HasTraits):
         # the layout. (This is really only an issue for Splitter layouts, since
         # Tabbed layouts are, for our purposes, leaves.)
 
+        # track sizes to resizeDocks on Qt 5.6+
+        widths = {}
+        heights = {}
+
         if isinstance(layout, PaneItem):
             if not _toplevel_added:
                 widget = self._prepare_toplevel_for_item(layout)
                 if widget:
                     self.control.addDockWidget(q_dock_area, widget)
                     widget.show()
+                if layout.width > 0:
+                    widths[widget] = layout.width
+                if layout.height > 0:
+                    heights[widget] = layout.height
 
         elif isinstance(layout, Tabbed):
             active_widget = first_widget = None
+            width = layout.width
+            height = layout.height
+            widest_widget = None
+            tallest_widget = None
             for item in layout.items:
                 widget = self._prepare_toplevel_for_item(item)
                 if not widget:
                     continue
+
+                if item.width >= width:
+                    width = item.width
+                    widest_item = widget
+                if layout.height >= height:
+                    height = item.height
+                    tallest_item = widget
+
                 if item.id == layout.active_tab:
                     active_widget = widget
                 if first_widget:
@@ -189,7 +214,16 @@ class MainWindowLayout(HasTraits):
                     if not _toplevel_added:
                         self.control.addDockWidget(q_dock_area, widget)
                     first_widget = widget
+                    widest_widget = widget
+                    tallest_widget = widget
+
                 widget.show()
+
+            # Qt5 resizeDocks only wants one widget per tab
+            if width > 0 and widest_item is not None:
+                widths[widest_widget] = width
+            if height > 0 and tallest_item is not None:
+                heights[tallest_widget] = height
 
             # Activate the appropriate tab, if possible.
             if not active_widget:
@@ -215,21 +249,30 @@ class MainWindowLayout(HasTraits):
                 prev_widget = widget
                 widget.show()
 
+                if layout.width > 0 or item.width > 0:
+                    widths[widget] = max(layout.width, item.width)
+                if layout.height > 0 or item.height > 0:
+                    heights[widget] = max(layout.height, item.height)
+
             # Now we can recurse.
             for i, item in enumerate(layout.items):
-                self.set_layout_for_area(
+                item_widths, item_heights = self.set_layout_for_area(
                     item,
                     q_dock_area,
                     _toplevel_added=True,
                     _toplevel_call=False,
                 )
+                widths.update(item_widths)
+                heights.update(item_heights)
 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
 
-        # Remove the fixed sizes once Qt activates the layout.
+        # finalize the layout if we are the top-level widget
         if _toplevel_call:
-            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
+            self._resize_dock_panes(widths, heights)
+
+        return widths, heights
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
@@ -310,9 +353,11 @@ class MainWindowLayout(HasTraits):
                 )
             else:
                 if layout.width > 0:
-                    dock_widget.widget().setFixedWidth(layout.width)
+                    if is_qt4:
+                        dock_widget.widget().setFixedWidth(layout.width)
                 if layout.height > 0:
-                    dock_widget.widget().setFixedHeight(layout.height)
+                    if is_qt4:
+                        dock_widget.widget().setFixedHeight(layout.height)
             return dock_widget
 
         elif isinstance(layout, LayoutContainer):
@@ -320,6 +365,23 @@ class MainWindowLayout(HasTraits):
 
         else:
             raise MainWindowLayoutError("Leaves of layout must be PaneItems")
+
+    def _resize_dock_panes(self, widths, heights):
+        """ Resize the dock panes to the requested sizes. """
+        if is_qt4:
+            # Remove the fixed sizes once Qt activates the layout.
+            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
+        else:
+            self.control.resizeDocks(
+                list(widths.keys()),
+                list(widths.values()),
+                QtCore.Qt.Horizontal,
+            )
+            self.control.resizeDocks(
+                list(heights.keys()),
+                list(heights.values()),
+                QtCore.Qt.Vertical,
+            )
 
     def _reset_fixed_sizes(self):
         """ Clears any fixed sizes assined to QDockWidgets.
