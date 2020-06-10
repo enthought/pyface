@@ -36,6 +36,11 @@ class ReplaceWidget(FindWidget):
 
         self.setLayout(layout)
 
+    def disconnect_event_listeners(self):
+        close_button = self.findChild(QtGui.QPushButton)
+        if close_button is not None:
+            close_button.clicked.disconnect(self.hide)
+
     def _create_replace_control(self):
         control = QtGui.QWidget(self)
 

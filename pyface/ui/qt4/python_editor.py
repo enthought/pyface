@@ -113,6 +113,8 @@ class PythonEditor(MPythonEditor, Widget):
                 self._on_dirty_changed
             )
             self.control.code.textChanged.disconnect(self._on_text_changed)
+            # Disconnect signals from control and other dependent widgets
+            self.control.disconnect_event_listeners()
 
             if self._event_filter is not None:
                 self.control.code.removeEventFilter(self._event_filter)
