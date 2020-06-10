@@ -98,6 +98,20 @@ class ProgressDialog(MProgressDialog, Window):
         super(ProgressDialog, self).close()
 
     # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        if self.control is not None:
+            buttons = self.control.findChild(QtGui.QDialogButtonBox)
+            if self.can_cancel:
+                buttons.rejected.disconnect(self.control.reject)
+            if self.can_ok:
+                buttons.accepted.disconnect(self.control.accept)
+
+        super(ProgressDialog, self).destroy()
+
+    # -------------------------------------------------------------------------
     # IProgressDialog Interface
     # -------------------------------------------------------------------------
 

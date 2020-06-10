@@ -71,6 +71,17 @@ class AboutDialog(MAboutDialog, Dialog):
 
     image = Instance(ImageResource, ImageResource("about"))
 
+    # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        if self.control is not None:
+            buttons = self.control.findChild(QtGui.QDialogButtonBox)
+            buttons.accepted.disconnect(self.control.accept)
+
+        super(Dialog, self).destroy()
+
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
     # ------------------------------------------------------------------------
