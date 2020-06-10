@@ -80,7 +80,7 @@ class AboutDialog(MAboutDialog, Dialog):
             buttons = self.control.findChild(QtGui.QDialogButtonBox)
             buttons.accepted.disconnect(self.control.accept)
 
-        super(Dialog, self).destroy()
+        super(AboutDialog, self).destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
