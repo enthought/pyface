@@ -340,6 +340,28 @@ class ConsoleWidget(QtGui.QWidget):
     # 'ConsoleWidget' public interface
     # ---------------------------------------------------------------------------
 
+    def disconnect_event_listeners(self):
+        # Disconnect signals from __init__
+        for action in self.actions():
+            action_text = action.text()
+            if action_text == "Print":
+                action.triggered.disconnect(self.print_)
+            elif action_text == "Save as HTML/XML":
+                action.triggered.disconnect(self.export)
+            elif action_text == "Select All":
+                action.triggered.disconnect(self.select_all)
+        # Disconnect signals from _create_control
+        control = self._control
+        control.cursorPositionChanged.disconnect(self._cursor_position_changed)
+        control.customContextMenuRequested.disconnect(
+            self._custom_context_menu_requested
+        )
+        control.copyAvailable.disconnect(self.copy_available)
+        control.redoAvailable.disconnect(self.redo_available)
+        control.undoAvailable.disconnect(self.undo_available)
+        layout = control.document().documentLayout()
+        layout.documentSizeChanged.disconnect(self._adjust_scrollbars)
+
     def can_copy(self):
         """ Returns whether text can be copied to the clipboard.
         """
