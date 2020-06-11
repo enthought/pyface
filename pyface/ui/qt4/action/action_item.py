@@ -368,8 +368,31 @@ class _Tool(HasTraits):
 
     def _qt4_on_destroyed(self, control=None):
         """ Delete the reference to the control to avoid attempting to talk to
-        it again.
+        it again and disconnect action trait change handlers.
         """
+        action = self.item.action
+        action.on_trait_change(
+            self._on_action_enabled_changed, "enabled", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_visible_changed, "visible", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_checked_changed, "checked", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_name_changed, "name", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_accelerator_changed, "accelerator", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_image_changed, "image", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_tooltip_changed, "tooltip", remove=True
+        )
+
         self.control = None
 
     def _qt4_on_triggered(self):

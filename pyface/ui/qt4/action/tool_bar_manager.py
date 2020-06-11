@@ -169,6 +169,20 @@ class _ToolBar(QtGui.QToolBar):
         return
 
     # ------------------------------------------------------------------------
+    # `_ToolBar` interface.
+    # ------------------------------------------------------------------------
+
+    def disconnect_event_listeners(self):
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
+        )
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_visible_changed, "visible", remove=True
+        )
+        # Event listeners from downstream tools are removed just before
+        # destruction of their control.
+
+    # ------------------------------------------------------------------------
     # Trait change handlers.
     # ------------------------------------------------------------------------
 

@@ -116,6 +116,22 @@ class ApplicationWindow(MApplicationWindow, Window):
             self.control.setWindowIcon(icon.create_icon())
 
     # ------------------------------------------------------------------------
+    # 'Widget' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        if self.control is not None:
+            menu = self.control.findChild(QtGui.QMenu)
+            if menu is not None:
+                menu.disconnect_event_listeners()
+
+            toolbars = self.control.findChildren(QtGui.QToolBar)
+            for toolbar in toolbars:
+                toolbar.disconnect_event_listeners()
+
+        super(ApplicationWindow, self).destroy()
+
+    # ------------------------------------------------------------------------
     # 'Window' interface.
     # ------------------------------------------------------------------------
 

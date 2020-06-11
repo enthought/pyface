@@ -135,6 +135,23 @@ class _Menu(QtGui.QMenu):
     # '_Menu' interface.
     # ------------------------------------------------------------------------
 
+    def disconnect_event_listeners(self):
+        self._manager.on_trait_change(self.refresh, "changed", remove=True)
+        self._manager.on_trait_change(
+            self._on_enabled_changed, "enabled", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_visible_changed, "visible", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_name_changed, "name", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_image_changed, "image", remove=True
+        )
+        # Removes event listeners from downstream menu items
+        self.clear()
+
     def clear(self):
         """ Clears the items from the menu. """
 
