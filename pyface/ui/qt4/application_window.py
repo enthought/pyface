@@ -123,11 +123,17 @@ class ApplicationWindow(MApplicationWindow, Window):
         if self.control is not None:
             menus = self.control.findChildren(QtGui.QMenu)
             for menu in menus:
-                menu.disconnect_event_listeners()
+                try:
+                    menu.disconnect_event_listeners()
+                except AttributeError:
+                    continue
 
             toolbars = self.control.findChildren(QtGui.QToolBar)
             for toolbar in toolbars:
-                toolbar.disconnect_event_listeners()
+                try:
+                    toolbar.disconnect_event_listeners()
+                except AttributeError:
+                    continue
 
         super(ApplicationWindow, self).destroy()
 
