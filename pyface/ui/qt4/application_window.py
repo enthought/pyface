@@ -121,8 +121,8 @@ class ApplicationWindow(MApplicationWindow, Window):
 
     def destroy(self):
         if self.control is not None:
-            menu = self.control.findChild(QtGui.QMenu)
-            if menu is not None:
+            menus = self.control.findChildren(QtGui.QMenu)
+            for menu in menus:
                 menu.disconnect_event_listeners()
 
             toolbars = self.control.findChildren(QtGui.QToolBar)
