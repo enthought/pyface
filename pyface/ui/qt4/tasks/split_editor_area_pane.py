@@ -13,6 +13,7 @@ import sys
 
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
 from traits.api import (
+    Any,
     Bool,
     cached_property,
     Callable,
@@ -23,6 +24,7 @@ from traits.api import (
     Property,
     provides,
     Str,
+    Tuple,
 )
 from pyface.qt import is_qt4, QtCore, QtGui
 from pyface.action.api import Action, Group, MenuManager
@@ -68,6 +70,11 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     create_empty_widget = Callable
 
     # Private interface ---------------------------------------------------
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
 
     _private_drop_handlers = List(IDropHandler)
     _all_drop_handlers = Property(
@@ -126,6 +133,15 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
         for editor in self.editors[:]:
             self.remove_editor(editor)
+
+        if self.control is not None:
+            while self._connections_to_remove:
+                signal, handler = self._connections_to_remove.pop()
+                signal.disconnect(handler)
+
+        # Remove reference to active tabwidget so that it can be deleted
+        # together with the main control
+        self.active_tabwidget = None
 
         super(SplitEditorAreaPane, self).destroy()
 
@@ -304,17 +320,29 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
             prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._next_tab)
+        )
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._previous_tab)
+        )
 
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
+        self._connections_to_remove.append(
+            (mapper.mapped, self._activate_tab)
+        )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
+            self._connections_to_remove.append(
+                (shortcut.activated, mapper.map)
+            )
             mapper.setMapping(shortcut, i - 1)
 
     def _activate_tab(self, index):

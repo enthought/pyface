@@ -14,7 +14,10 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import DelegatesTo, Instance, on_trait_change, provides
+from traits.api import (
+    Any, Callable, DelegatesTo, Instance, List, on_trait_change, provides,
+    Tuple
+)
 
 
 from pyface.tasks.i_advanced_editor_area_pane import IAdvancedEditorAreaPane
@@ -40,6 +43,11 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     _main_window_layout = Instance(MainWindowLayout)
 
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
     # ------------------------------------------------------------------------
     # 'TaskPane' interface.
     # ------------------------------------------------------------------------
@@ -61,29 +69,48 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._next_tab)
+        )
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._previous_tab)
+        )
 
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self._activate_tab)
+        self._connections_to_remove.append(
+            (mapper.mapped, self._activate_tab)
+        )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
+            self._connections_to_remove.append(
+                (shortcut.activated, mapper.map)
+            )
             mapper.setMapping(shortcut, i - 1)
 
     def destroy(self):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         self.control.removeEventFilter(self._filter)
+        self.control.disconnect_event_listeners()
         self._filter = None
 
         for editor in self.editors:
             editor_widget = editor.control.parent()
             self.control.destroy_editor_widget(editor_widget)
             editor.editor_area = None
+        self.active_editor = None
+
+        if self.control is not None:
+            while self._connections_to_remove:
+                signal, handler = self._connections_to_remove.pop()
+                signal.disconnect(handler)
 
         super(AdvancedEditorAreaPane, self).destroy()
 
@@ -266,6 +293,11 @@ class EditorAreaWidget(QtGui.QMainWindow):
             QtCore.Qt.AllDockWidgetAreas, QtGui.QTabWidget.North
         )
 
+    def disconnect_event_listeners(self):
+        """ Disconnects focusChanged signal of the application """
+        app = QtGui.QApplication.instance()
+        app.focusChanged.disconnect(self._focus_changed)
+
     def add_editor_widget(self, editor_widget):
         """ Adds a dock widget to the editor area.
         """
@@ -292,6 +324,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """
         editor_widget.hide()
         editor_widget.removeEventFilter(self)
+        editor_widget.disconnect_event_listeners()
         editor_widget.editor.destroy()
         self.removeDockWidget(editor_widget)
 
@@ -598,6 +631,13 @@ class EditorWidget(QtGui.QDockWidget):
         self.dockLocationChanged.connect(self.update_title_bar)
         self.visibilityChanged.connect(self.update_title_bar)
 
+    def disconnect_event_listeners(self):
+        self.dockLocationChanged.disconnect(self.update_title_bar)
+        self.visibilityChanged.disconnect(self.update_title_bar)
+        title_bar = self.titleBarWidget()
+        if isinstance(title_bar, EditorTitleBarWidget):
+            title_bar.disconnect_event_listeners(self)
+
     def update_title(self):
         title = self.editor.editor_area._get_label(self.editor)
         self.setWindowTitle(title)
@@ -643,6 +683,10 @@ class EditorTitleBarWidget(QtGui.QTabBar):
         self.setTabsClosable(True)
 
         self.tabCloseRequested.connect(editor_widget.editor.close)
+
+    def disconnect_event_listeners(self, editor_widget):
+        # Assumes that the editor of editor_widget never changes
+        self.tabCloseRequested.disconnect(editor_widget.editor.close)
 
     def mousePressEvent(self, event):
         self.parent().parent()._drag_widget = self.parent()
