@@ -7,47 +7,20 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-
 import unittest
 
-
-from traits.etsconfig.api import ETSConfig
-from pyface.tasks.api import Editor, EditorAreaPane
+from pyface.tasks.api import Editor, AdvancedEditorAreaPane
 from pyface.toolkit import toolkit_object
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
-USING_WX = ETSConfig.toolkit not in ["", "qt4"]
-
-
-class EditorAreaPaneTestCase(unittest.TestCase):
-    @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
-    def test_create_editor(self):
-        """ Does creating an editor work?
-        """
-        area = EditorAreaPane()
-        area.register_factory(Editor, lambda obj: isinstance(obj, int))
-        self.assert_(isinstance(area.create_editor(0), Editor))
-
-    @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
-    def test_factories(self):
-        """ Does registering and unregistering factories work?
-        """
-        area = EditorAreaPane()
-        area.register_factory(Editor, lambda obj: isinstance(obj, int))
-        self.assertEqual(area.get_factory(0), Editor)
-        self.assertEqual(area.get_factory("foo"), None)
-
-        area.unregister_factory(Editor)
-        self.assertEqual(area.get_factory(0), None)
-
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
-class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
+class TestAdvancedEditorAreaPane(unittest.TestCase, GuiTestAssistant):
     def setUp(self):
         GuiTestAssistant.setUp(self)
-        self.area_pane = EditorAreaPane()
+        self.area_pane = AdvancedEditorAreaPane()
 
     def tearDown(self):
         if self.area_pane.control is not None:
@@ -62,6 +35,16 @@ class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.area_pane.destroy()
 
-
-if __name__ == "__main__":
-    unittest.main()
+    def test_create_destroy_with_editor(self):
+        # test that creating and destroying works as expected when there are
+        # editors
+        with self.event_loop():
+            self.area_pane.create(None)
+        with self.event_loop():
+            editor = self.area_pane.create_editor("Hello", Editor)
+        with self.event_loop():
+            self.area_pane.add_editor(editor)
+        with self.event_loop():
+            self.area_pane.activate_editor(editor)
+        with self.event_loop():
+            self.area_pane.destroy()
