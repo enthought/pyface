@@ -7,14 +7,14 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-"""
-Abstract Data Model
-===================
+
+""" Provides an AbstractDataModel ABC for Pyface data models.
 
 This module provides an ABC for all data view data models.  This specifies
 the API that the data view widgets expect, and which the underlying
 data is adapted to by the concrete implementations.  Data models are intended
-to be toolkit-independent
+to be toolkit-independent, and be able to adapt any approximately tabular or
+nested data structure to what the data view system expects.
 """
 from abc import abstractmethod
 
@@ -24,10 +24,44 @@ from .index_manager import AbstractIndexManager
 
 
 class AbstractDataModel(ABCHasStrictTraits):
-    """ Abstract base class for data models. """
+    """ Abstract base class for Pyface data models.
+
+    The data model API is intended to provide a common API for heirarchical
+    and tabular data.  This class is concerned with the structure, type and
+    values provided by the data, but not with how the data is presented.
+
+    Row and column indices are represented by sequences (usually lists) of
+    integers, specifying the index at each level of the heirarchy.  The root
+    row and column are represented by empty lists.
+
+    Subclasses need to implement the ``get_column_count``,
+    ``can_have_children`` and ``get_row_count`` methods to return the number
+    of columns in a particular row, as well as the heirarchical structure of
+    the rows.  Appropriate observers should be set up on the underlaying data
+    so that the ``structure_changed`` event is fired when the values returned
+    by these methods would change.
+
+    Subclasses also have to implement the ``get_value`` and ``get_value_type``
+    methods.  These expect a row and column index, with root values treated
+    specially: the root row corresponds to the values which will be displayed
+    in the column headers of the view, and the root column corresponds to the
+    values which will be displayed in the row headers of the view.
+    The ``get_value`` returns an arbitrary Python object corresponding to the
+    cell being viewed, and the ``get_value_type`` should return an instance of
+    an ``AbstractValueType`` that adapts the raw value to the data channels
+    that the data view expects (eg. text, color, icons, editable value, etc.).
+    Implementations should ensure that the ``values_changed`` event fires
+    whenever the data, or the way the data is presented, is updated.
+
+    If the data is to be editable then the subclass should override the
+    ``set_data`` method.  It should attempt to change the underlying data as a
+    side-effect, and return True on success and False on failure (for example,
+    setting an invalid value).
+    """
 
     #: The index manager that helps convert toolkit indices to data view
-    #: indices.
+    #: indices.  This should be an IntIndexManager for non-hierarchical data
+    #: or a TupleIndexManager for hierarchical data.
     index_manager = Instance(AbstractIndexManager)
 
     #: Event fired when the structure of the data changes.
@@ -36,9 +70,6 @@ class AbstractDataModel(ABCHasStrictTraits):
     #: Event fired when value changes without changes to structure.
     values_changed = Event()
 
-    #: Event fired when selection changes.
-    selection = Event()
-
     # Data structure methods
 
     @abstractmethod
@@ -46,7 +77,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         """ How many columns in the row of the data view model.
 
         The total number of columns in the table is given by the column
-        count of the Root row.
+        count of the root row.
 
         Parameters
         ----------
@@ -63,6 +94,8 @@ class AbstractDataModel(ABCHasStrictTraits):
     @abstractmethod
     def can_have_children(self, row):
         """ Whether or not a row can have child rows.
+
+        The root row should always return True.
 
         Parameters
         ----------
@@ -98,15 +131,16 @@ class AbstractDataModel(ABCHasStrictTraits):
     def get_value(self, row, column):
         """ Return the Python value for the row and column.
 
-        The values for column headers are returned by calling this method
-        with row as Root.
+        The values for column headers are returned by calling this method with
+        row equal to [].  The values for row headers are returned by calling
+        this method with column equal to [].
 
         Parameters
         ----------
         row : sequence of int
             The indices of the row as a sequence from root to leaf.
         column : sequence of int
-            The indices of the column as a sequence of length 1.
+            The indices of the column as a sequence of length 0 or 1.
 
         Returns
         -------
@@ -115,19 +149,22 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         raise NotImplementedError
 
-    @abstractmethod
     def set_value(self, row, column, value):
         """ Set the Python value for the row and column.
 
-        The values for column headers can be set by calling this method
-        with row as Root.
+        The default method assumes the data is read-only and always
+        returns False.
+
+        The values for column headers can be set by calling this method with
+        row equal to [].  The values for row headers can be set by calling
+        this method with column equal to [].
 
         Parameters
         ----------
         row : sequence of int
             The indices of the row as a sequence from root to leaf.
         column : sequence of int
-            The indices of the column as a sequence of length 1.
+            The indices of the column as a sequence of length 0 or 1.
         value : any
             The new value for the given row and column.
 
@@ -136,7 +173,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         success : bool
             Whether or not the value was set successfully.
         """
-        raise NotImplementedError
+        return False
 
     # Data channels
 
@@ -145,14 +182,15 @@ class AbstractDataModel(ABCHasStrictTraits):
         """ Return the text value for the row and column.
 
         The value type for column headers are returned by calling this method
-        with row as Root.
+        with row equal to [].  The value typess for row headers are returned
+        by calling this method with column equal to [].
 
         Parameters
         ----------
         row : sequence of int
             The indices of the row as a sequence from root to leaf.
         column : sequence of int
-            The indices of the column as a sequence of length 1.
+            The indices of the column as a sequence of length 0 or 1.
 
         Returns
         -------
@@ -160,6 +198,8 @@ class AbstractDataModel(ABCHasStrictTraits):
             The text to display in the given row and column.
         """
         raise NotImplementedError
+
+    # Convenience iterator methods
 
     def iter_rows(self, start=[]):
         """ Iterator that yields rows in preorder.
