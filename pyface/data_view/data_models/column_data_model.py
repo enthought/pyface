@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from abc import abstractmethod
 
 from traits.api import (
@@ -182,6 +192,28 @@ class ColumnDataModel(AbstractDataModel):
             return row_info.title
         obj = self.data[column[0]]
         return row_info.get_value(obj)
+
+    def can_set_value(self, row, column):
+        """ Whether the value in the indicated row and column can be set.
+
+        This returns False for row headers, but True for all other values.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
+        if column == []:
+            return False
+        else:
+            return True
 
     def set_value(self, row, column, value):
         row_info = self._row_info_object(row)

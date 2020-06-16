@@ -53,10 +53,13 @@ class AbstractDataModel(ABCHasStrictTraits):
     Implementations should ensure that the ``values_changed`` event fires
     whenever the data, or the way the data is presented, is updated.
 
+
     If the data is to be editable then the subclass should override the
     ``set_data`` method.  It should attempt to change the underlying data as a
     side-effect, and return True on success and False on failure (for example,
-    setting an invalid value).
+    setting an invalid value).  If the underlying data structure cannot be
+    listened to internally (such as a numpy array or Pandas data frame), this
+    method should also fire the values changed event with appropriate values.
     """
 
     #: The index manager that helps convert toolkit indices to data view
@@ -67,7 +70,10 @@ class AbstractDataModel(ABCHasStrictTraits):
     #: Event fired when the structure of the data changes.
     structure_changed = Event()
 
-    #: Event fired when value changes without changes to structure.
+    #: Event fired when value changes without changes to structure.  This
+    #: should be set to a 4-tuple of (start_row_index, start_column_index,
+    #: end_row_index, end_column_index) indicated the subset of data which
+    #: changed.
     values_changed = Event()
 
     # Data structure methods
@@ -149,6 +155,30 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         raise NotImplementedError
 
+    def can_set_value(self, row, column):
+        """ Whether the value in the indicated row and column can be set.
+
+        The default method assumes the data is read-only and always
+        returns False.
+
+        Whether or a column header can be set is returned by calling this
+        method with row equal to [].  Whether or a row header can be set
+        is returned by calling this method with column equal to [].
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
+        return False
+
     def set_value(self, row, column, value):
         """ Set the Python value for the row and column.
 
@@ -175,8 +205,6 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         return False
 
-    # Data channels
-
     @abstractmethod
     def get_value_type(self, row, column):
         """ Return the text value for the row and column.
@@ -194,8 +222,9 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Returns
         -------
-        text : str
-            The text to display in the given row and column.
+        value_type : AbstractValueType or None
+            The value type of the given row and column, or None if no value
+            should be displayed.
         """
         raise NotImplementedError
 

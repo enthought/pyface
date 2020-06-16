@@ -1,17 +1,25 @@
-from abc import abstractmethod
-import locale
-from math import inf
-import sys
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
-from traits.api import (
-    ABCHasStrictTraits, Any, Bool, Callable, Enum, Event, Int, Str, Float,
-    observe
-)
-from pyface.ui_traits import Image
+""" Provides an AbstractValueType ABC for Pyface data models.
 
+This module provides an ABC for data view value types, which are responsible
+for adapting raw data values as used by the data model's ``get_value`` and
+``set_value`` methods to the data channels that the data view expects, such
+as text, color, icons, etc.
 
-default_max = sys.maxsize
-default_min = -sys.maxsize + 1
+It is up to the data view to take this standardized data and determine what
+and how to actually display it.
+"""
+
+from traits.api import ABCHasStrictTraits, Event, Str, observe
 
 
 class AbstractValueType(ABCHasStrictTraits):
@@ -20,85 +28,153 @@ class AbstractValueType(ABCHasStrictTraits):
     The data channels are editor value, text, color, image, and description.
     The data channels are used by other parts of the code to produce the actual
     display.
+
+    Subclasses should mark traits that potentially affect the display of values
+    with ``update=True`` metdadata, or alternativelym fire the ``updated``
+    event when the state of the value type changes.
     """
 
     #: Fired when a change occurs that requires updating values.
     updated = Event
 
-    def is_valid(self, model, row, column, value):
-        return True
+    def can_edit(self, model, row, column):
+        """ Return whether or not the value can be edited.
 
-    def get_is_editable(self, model, row, column):
-        return False
+        The default implementation is that cells that can be set are
+        editable.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        can_edit : bool
+            Whether or not the value is editable.
+        """
+        return model.can_set_value(row, column)
 
     def get_editable(self, model, row, column):
+        """ Return a value suitable for editing.
+
+        The default implementation is to return the underlying data value
+        directly from the data model.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        value : any
+            The value to edit.
+        """
         return model.get_value(row, column)
 
     def set_editable(self, model, row, column, value):
+        """ Return a value suitable for editing.
+
+        The default implementation is to return the underlying data value
+        directly from the data model.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        value : any
+            The value to edit.
+        """
+        if not self.can_edit(model, row, column):
+            return False
         return model.set_value(row, column, value)
 
     def has_text(self, model, row, column):
+        """ Whether or not the value has a textual representation.
+
+        The default implementation returns True if ``get_text``
+        returns a non-empty value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        value : any
+            The value to edit.
+        """
         return self.get_text(model, row, column) != ""
 
     def get_text(self, model, row, column):
+        """ The textual representation of the underlying value.
+
+        The default implementation calls str() on the underlying value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        text : str
+            The value to edit.
+        """
         return str(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
-        """ Default behaviour does not allow setting the text. """
+        """ Set the textual representation of the underlying value.
+
+        This is provided primarily for backends which may not permit
+        non-text editing of values, in which case this provides an
+        alternative route to setting the value.  The default implementation
+        does not allow setting the text.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+        text : str
+            The text to set.
+
+        Returns
+        -------
+        success : bool
+            Whether or not the value was successfully set.
+        """
         return False
 
     @observe('+update')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """
         self.updated = True
-
-
-class BaseValueType(AbstractValueType):
-
-    #: Whether or not there is an editable value.
-    is_editable = Bool(True, update=True)
-
-    def get_is_editable(self, model, row, column):
-        return self.is_editable
-
-    def get_editable(self, model, row, column):
-        return model.get_value(row, column)
-
-    def set_editable(self, model, row, column, value):
-        return model.set_value(row, column, value)
-
-    def has_text(self, model, row, column):
-        return True
-
-    def get_text(self, model, row, column):
-        return self.text
-
-    def set_text(self, model, row, column, text):
-        """ Default behaviour does not allow setting the text. """
-        return False
-
-
-class NoneValue(AbstractValueType):
-
-    def is_valid(self, model, row, column, value):
-        return True
-
-    def get_is_editable(self, model, row, column):
-        return False
-
-    def has_text(self, model, row, column):
-        return False
-
-
-none_value = NoneValue()
-
-class ConstantValueType(AbstractValueType):
-
-    text = Str(update=True)
-
-    def has_text(self, model, row, column):
-        return self.text != ""
-
-    def get_text(self, model, row, column):
-        return self.text
-

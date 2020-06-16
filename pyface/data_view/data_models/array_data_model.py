@@ -7,20 +7,18 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-"""
-Array Data Model
-================
+""" Provides an N-dimensional array data model implementation.
 
-This module provides an a concrete implementation of a data model for a 2D
-numpy array.
+This module provides an a concrete implementation of a data model for an
+n-dim numpy array.
 """
 from traits.api import Array, Instance, observe
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
-from pyface.data_view.abstract_value_type import (
-    AbstractValueType, ConstantValueType, none_value
+from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.data_view.value_types.api import (
+    ConstantValue, FloatValue, IntValue, TextValue, no_value
 )
-from pyface.data_view.value_types.api import FloatValue, IntValue, TextValue
 from pyface.data_view.index_manager import TupleIndexManager
 
 
@@ -36,7 +34,7 @@ class ArrayDataModel(AbstractDataModel):
     #: The value type of the column titles.
     header_label_type = Instance(
         AbstractValueType,
-        factory=ConstantValueType,
+        factory=ConstantValue,
         kw={'text': "Index"},
     )
 
@@ -116,7 +114,7 @@ class ArrayDataModel(AbstractDataModel):
     # Data value methods
 
     def get_value(self, row, column):
-        """ How many child rows the row currently has.
+        """ Return the Python value for the row and column.
 
         Parameters
         ----------
@@ -131,13 +129,34 @@ class ArrayDataModel(AbstractDataModel):
         if row == []:
             return column[0]
         elif column == []:
-            # XXX not currently used
             return row[-1]
         else:
             index = tuple(row + column)
             if len(index) != len(self.data.shape):
-                return 0
+                return None
             return self.data[index]
+
+    def can_set_value(self, row, column):
+        """ Whether the value in the indicated row and column can be set.
+
+        This returns False for row and column headers, but True for all
+        array values.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
+        # can only set values when we have the full index
+        index = tuple(row + column)
+        return len(index) == self.data.ndim
 
     def set_value(self, row, column, value):
         """ Return the Python value for the row and column.
@@ -157,17 +176,33 @@ class ArrayDataModel(AbstractDataModel):
         value : any
             The value represented by the given row and column.
         """
-        if row == []:
+        index = tuple(row + column)
+        if len(index) < self.data.ndim:
             return False
-        elif column == []:
-            return False
-        else:
-            index = tuple(row + column)
-            self.data[index] = value
-            self.values_changed = (row, column, row, column)
-            return True
+
+        self.data[index] = value
+        self.values_changed = (row, column, row, column)
+        return True
 
     def get_value_type(self, row, column):
+        """ Return the text value for the row and column.
+
+        The value type for column headers are returned by calling this method
+        with row equal to [].  The value typess for row headers are returned
+        by calling this method with column equal to [].
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        text : str
+            The text to display in the given row and column.
+        """
         if row == []:
             if column == []:
                 return self.header_label_type
@@ -176,7 +211,7 @@ class ArrayDataModel(AbstractDataModel):
             # XXX not currently used
             return self.row_header_type
         elif len(row) < len(self.data.shape) - 1:
-            return none_value
+            return no_value
         else:
             return self.value_type
 

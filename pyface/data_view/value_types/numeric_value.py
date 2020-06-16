@@ -1,19 +1,26 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 import locale
 from math import inf
 
-from traits.api import (
-    Bool, Callable, Enum, Event, Int, Str, Float,
-    observe
-)
+from traits.api import Callable, Float
 
-from pyface.data_view.abstract_value_type import BaseValueType
+from .editable_value import EditableValue
 
 
 def format_locale(value):
     return "{:n}".format(value)
 
 
-class NumericValue(BaseValueType):
+class NumericValue(EditableValue):
     """ Data channels for a numeric value.
     """
 
@@ -42,11 +49,6 @@ class NumericValue(BaseValueType):
         # evaluate is needed to convert numpy types to python types so
         # Qt recognises them
         return self.evaluate(model.get_value(row, column))
-
-    def set_editable(self, model, row, column, value):
-        if not self.is_valid(model, row, column, value):
-            return False
-        return model.set_value(row, column, value)
 
     def get_text(self, model, row, column):
         return self.format(model.get_value(row, column))
