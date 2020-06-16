@@ -9,10 +9,12 @@ class TestTextValue(TestCase):
     def setUp(self):
         self.model = Mock()
         self.model.get_value = Mock(return_value="test")
+        self.model.can_set_value = Mock(return_value=True)
         self.model.set_value = Mock(return_value=True)
 
     def test_defaults(self):
         value = TextValue()
+        self.assertTrue(value.is_editable)
 
     def test_is_valid(self):
         value = TextValue()
