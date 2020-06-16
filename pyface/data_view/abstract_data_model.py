@@ -141,10 +141,10 @@ class AbstractDataModel(ABCHasStrictTraits):
     # Data channels
 
     @abstractmethod
-    def get_text(self, row, column):
+    def get_value_type(self, row, column):
         """ Return the text value for the row and column.
 
-        The text for column headers are returned by calling this method
+        The value type for column headers are returned by calling this method
         with row as Root.
 
         Parameters
@@ -159,126 +159,45 @@ class AbstractDataModel(ABCHasStrictTraits):
         text : str
             The text to display in the given row and column.
         """
-        return str(self.get_value(row, column))
-
-    @abstractmethod
-    def set_text(self, row, column, text):
-        """ Set the text value for the row and column.
-
-        The text for column headers can be set by calling this method
-        with row as Root.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
-        column : sequence of int
-            The indices of the column as a sequence of length 1.
-        text : str
-            The new text value for the given row and column.
-
-        Returns
-        -------
-        success : bool
-            Whether or not the value was set successfully.
-        """
         raise NotImplementedError
 
-'''
-    @abstractmethod
-    def get_checked(self, row, column):
-        return None
-
-    @abstractmethod
-    def set_checked(self, row, column, checked):
-        return None
-
-    @abstractmethod
-    def get_color(self, row, column):
-        return None
-
-    @abstractmethod
-    def get_image(self, row, column):
-        return None
-
-    @abstractmethod
-    def get_description(self, row, column):
-        return None
-
-    # interaction methods
-
-    # XXX these should perhaps live in a separate class
-
-    def get_enabled(self, row, column):
-        """ Whether or not the given cell is enabled for user interaction
-
-        Note that if the entire control is disabled then individual cells will
-        still be disabled independent of the value returned by this method.
+    def iter_rows(self, start=[]):
+        """ Iterator that yields rows in preorder.
 
         Parameters
         ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
-        column : sequence of int
-            The indices of the column as a sequence of length 1.
+        start : row index
+            The row to start at.  The iterator will yeild the row and all
+            child rows.
 
-        Returns
-        -------
-        enabled : bool
-            Whether the cell allows user interaction.
+        Yields
+        ------
+        row_index
+            The current row index.
         """
-        return True
+        yield start
+        if self.can_have_children(start):
+            for row in range(self.get_row_count(start)):
+                yield from self.iter_rows(start + [row])
 
-    def get_editable(self, row, column):
-        return False
+    def iter_items(self, start_row=[]):
+        """ Iterator that yields rows and columns in preorder.
 
-    @abstractmethod
-    def get_column_editor(self, column):
-        """ Return editor information for a column
-        """
-        # XXX needs to be a richer object
-        # eg should have bounds for spinbox, choices for Combo etc.
-        return "text"
-
-    @abstractmethod
-    def get_cell_editor(self, row, column):
-        """ Return editor information for the row and column.
-        """
-        return self.get_column_type(column)
-
-    def get_can_check(self, row, column):
-        return False
-
-    def get_can_drag(self, row, column):
-        return False
-
-    def get_can_drop(self, row, column):
-        return False
-
-    def get_can_select(self, row, column):
-        return True
-
-    def get_selection(self):
-        pass
-
-    def set_selection(self, items, ignore_missing=False):
-        """ Set the current selection to the given items.
-
-        If ``ignore_missing`` is ``True``, items that are not available in the
-        selection provider are silently ignored. If it is ``False`` (default),
-        an :class:`~.ValueError` should be raised.
+        Columns are iterated in order.
 
         Parameters
         ----------
-        items : list
-            List of items to be selected.
+        start : row index
+            The row to start at.  The iterator will yeild the row and all
+            child rows.
 
-        ignore_missing : bool
-            If ``False`` (default), the provider raises an exception if any
-            of the items in ``items`` is not available to be selected.
-            Otherwise, missing elements are silently ignored, and the rest
-            is selected.
+        Yields
+        ------
+        row_index, column_index
+            The current row and column indices.
         """
-        pass
-
-'''
+        for row in self.iter_rows():
+            if row != []:
+                yield row, []
+            for column in range(self.get_column_count(row)):
+                yield row, [column]

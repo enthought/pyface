@@ -16,18 +16,46 @@ numpy array.
 """
 from traits.api import Array, Instance, observe
 
-from .abstract_data_model import AbstractDataModel
-from .index_manager import IntIndexManager
+from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_value_type import (
+    AbstractValueType, ConstantValueType, none_value
+)
+from pyface.data_view.value_types.api import FloatValue, IntValue, TextValue
+from pyface.data_view.index_manager import TupleIndexManager
 
 
 class ArrayDataModel(AbstractDataModel):
 
     #: The array being displayed.
-    data = Array(shape=(None, None))
+    data = Array()
 
     #: The index manager that helps convert toolkit indices to data view
     #: indices.
-    index_manager = Instance(IntIndexManager, ())
+    index_manager = Instance(TupleIndexManager, args=())
+
+    #: The value type of the column titles.
+    header_label_type = Instance(
+        AbstractValueType,
+        factory=ConstantValueType,
+        kw={'text': "Index"},
+    )
+
+    #: The value type of the column titles.
+    column_header_type = Instance(
+        AbstractValueType,
+        factory=IntValue,
+        kw={'is_editable': False},
+    )
+
+    #: The value type of the column titles.
+    row_header_type = Instance(
+        AbstractValueType,
+        factory=IntValue,
+        kw={'is_editable': False},
+    )
+
+    #: The type of value being displayed in the data model.
+    value_type = Instance(AbstractValueType)
 
     # Data structure methods
 
@@ -62,7 +90,7 @@ class ArrayDataModel(AbstractDataModel):
         can_have_children : bool
             Whether or not the row can ever have child rows.
         """
-        if row == []:
+        if len(row) < len(self.data.shape) - 1:
             return True
         return False
 
@@ -81,8 +109,8 @@ class ArrayDataModel(AbstractDataModel):
         has_children : bool
             Whether or not the row currently has child rows.
         """
-        if row == []:
-            return self.data.shape[0]
+        if len(row) < len(self.data.shape) - 1:
+            return self.data.shape[len(row)]
         return 0
 
     # Data value methods
@@ -104,9 +132,12 @@ class ArrayDataModel(AbstractDataModel):
             return column[0]
         elif column == []:
             # XXX not currently used
-            return row[0]
+            return row[-1]
         else:
-            return self.data[row[0], column[0]]
+            index = tuple(row + column)
+            if len(index) != len(self.data.shape):
+                return 0
+            return self.data[index]
 
     def set_value(self, row, column, value):
         """ Return the Python value for the row and column.
@@ -129,80 +160,25 @@ class ArrayDataModel(AbstractDataModel):
         if row == []:
             return False
         elif column == []:
-            # XXX not used
             return False
         else:
-            self.data[row[0], column[0]] = value
-            self.values_changed = ((row, column), (row, column))
+            index = tuple(row + column)
+            self.data[index] = value
+            self.values_changed = (row, column, row, column)
             return True
 
-    def get_text(self, row, column):
-        """ Set the Python value for the row and column.
-
-        The values for column headers can be set by calling this method
-        with row as Root.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
-        column : sequence of int
-            The indices of the column as a sequence of length 1.
-        value : any
-            The new value for the given row and column.
-
-        Returns
-        -------
-        success : bool
-            Whether or not the value was set successfully.
-        """
-        return str(self.get_value(row, column))
-
-    def set_text(self, row, column, text):
-        """ Return the text value for the row and column.
-
-        The text for column headers are returned by calling this method
-        with row as Root.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
-        column : sequence of int
-            The indices of the column as a sequence of length 1.
-
-        Returns
-        -------
-        text : str
-            The text to display in the given row and column.
-        """
-        try:
-            value = self.data.dtype.type(text.strip())
-        except ValueError:
-            return False
-        return self.set_value(row, column, value)
-
-    def get_style(self, row, column):
-        """ Set the text value for the row and column.
-
-        The text for column headers can be set by calling this method
-        with row as Root.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
-        column : sequence of int
-            The indices of the column as a sequence of length 1.
-        text : str
-            The new text value for the given row and column.
-
-        Returns
-        -------
-        success : bool
-            Whether or not the value was set successfully.
-        """
-        raise NotImplementedError
+    def get_value_type(self, row, column):
+        if row == []:
+            if column == []:
+                return self.header_label_type
+            return self.column_header_type
+        elif column == []:
+            # XXX not currently used
+            return self.row_header_type
+        elif len(row) < len(self.data.shape) - 1:
+            return none_value
+        else:
+            return self.value_type
 
     # data update methods
 
@@ -211,8 +187,40 @@ class ArrayDataModel(AbstractDataModel):
         """ Handle the array being replaced with a new array. """
         if event.new.shape == event.old.shape:
             self.values_changed = (
-                ([0], [0]),
-                ([event.old.shape[0]], [event.old.shape[1]]),
+                ([0], [0], [event.old.shape[0]], [event.old.shape[1]])
             )
         else:
             self.structure_changed = True
+
+    @observe('value_type.updated', dispatch='ui')
+    def value_type_updated(self, event):
+        """ Handle the value type being updated. """
+        self.values_changed = (
+            ([0], [0], [self.data.shape[0]], [self.data.shape[1]])
+        )
+
+    @observe('column_header_type.updated', dispatch='ui')
+    def column_header_type_updated(self, event):
+        """ Handle the header type being updated. """
+        self.values_changed = (
+            ([], [0], [], [self.data.shape[1]])
+        )
+
+    @observe('row_header_type.updated', dispatch='ui')
+    def value_header_type_updated(self, event):
+        """ Handle the header type being updated. """
+        self.values_changed = (
+            ([0], [], [self.data.shape[0]], [])
+        )
+
+    def _value_type_default(self):
+        import numpy as np
+        scalar_type = self.data.dtype
+        if np.issubdtype(scalar_type, np.integer):
+            return IntValue()
+        elif np.issubdtype(scalar_type, np.floating):
+            return FloatValue()
+        elif np.issubdtype(scalar_type, np.character):
+            return TextValue()
+
+        return TextValue(is_editable=False)

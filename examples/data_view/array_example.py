@@ -1,7 +1,7 @@
 from traits.api import Array, Instance
 
 from pyface.api import ApplicationWindow, GUI
-from pyface.data_view.array_data_model import ArrayDataModel
+from pyface.data_view.data_models.array_data_model import ArrayDataModel
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
 
@@ -26,7 +26,7 @@ class MainWindow(ApplicationWindow):
 
     def _data_default(self):
         import numpy
-        return numpy.random.uniform(size=(100000, 10))
+        return numpy.random.uniform(size=(10000, 10, 10))*1000000
 
 
 # Application entry point.

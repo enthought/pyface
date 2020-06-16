@@ -25,6 +25,7 @@ class DataViewItemModel(QAbstractItemModel):
     def __init__(self, model, parent=None):
         super().__init__(parent)
         self.model = model
+        self.showRowHeader = True
 
     @property
     def model(self):
@@ -69,25 +70,24 @@ class DataViewItemModel(QAbstractItemModel):
         self.endResetModel()
 
     def on_values_changed(self, event):
-        if event.top == [] and event.bottom == []:
+        top, left, bottom, right = event.new
+        if top == [] and bottom == []:
             # this is a column header change
-            self.headerDataChanged(event.left[0], event.right[0])
-        elif event.left == [] and event.right == []:
+            self.headerDataChanged.emit(left[0], right[0])
+        elif left == [] and right == []:
             # this is a row header change
             # XXX this is currently not supported and not needed
             pass
         else:
-            top = []
-            bottom = []
-            for top_row, bottom_row in zip(event.new.top, event.new.bottom):
-                top.append(top_row)
-                bottom.append(bottom_row)
+            for i, (top_row, bottom_row) in enumerate(zip(top, bottom)):
                 if top_row != bottom_row:
                     break
+            top = top[:i+1]
+            bottom = bottom[:i+1]
 
-            top_left = self._to_model_index(top, event.left)
-            bottom_right = self._to_model_index(bottom, event.right)
-            self.dataChanged(top_left, bottom_right)
+            top_left = self._to_model_index(top, left)
+            bottom_right = self._to_model_index(bottom, right)
+            self.dataChanged.emit(top_left, bottom_right)
 
     # Structure methods
 
@@ -125,7 +125,7 @@ class DataViewItemModel(QAbstractItemModel):
     def columnCount(self, index):
         row_index = self._to_row_index(index)
         try:
-            return self.model.get_column_count(row_index)
+            return self.model.get_column_count(row_index) + 1
         except Exception:
             logger.exception("Error in columnCount")
 
@@ -134,33 +134,62 @@ class DataViewItemModel(QAbstractItemModel):
     def flags(self, index):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
+        value_type = self.model.get_value_type(row, column)
 
-        flags = Qt.ItemIsEnabled
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
         if not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
+
+        if value_type.get_is_editable(self.model, row, column):
+            flags |= Qt.ItemIsEditable
 
         return flags
 
     def data(self, index, role=Qt.DisplayRole):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
+        value_type = self.model.get_value_type(row, column)
 
         if role == Qt.DisplayRole:
-            return self.model.get_text(row, column)
+            if value_type.has_text(self.model, row, column):
+                return value_type.get_text(self.model, row, column)
+        elif role == Qt.EditRole:
+            if value_type.get_is_editable(self.model, row, column):
+                return value_type.get_editable(self.model, row, column)
 
         return None
+
+    def setData(self, index, value, role=Qt.EditRole):
+        row = self._to_row_index(index)
+        column = self._to_column_index(index)
+        value_type = self.model.get_value_type(row, column)
+
+        if role == Qt.EditRole:
+            if value_type.get_is_editable(self.model, row, column):
+                return value_type.set_editable(self.model, row, column, value)
+        elif role == Qt.TextRole:
+            if value_type.has_text(self.model, row, column):
+                return value_type.set_text(self.model, row, column, value)
+
+        return False
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal:
             row = []
-            column = [section]
+            if section == 0:
+                column = []
+            else:
+                column = [section - 1]
         else:
             # XXX not currently used, but here for symmetry and completeness
             row = [section]
             column = []
-        if role == Qt.DisplayRole:
-            return self.model.get_text(row, column)
 
+        value_type = self.model.get_value_type(row, column)
+
+        if role == Qt.DisplayRole:
+            if value_type.has_text(self.model, row, column):
+                return value_type.get_text(self.model, row, column)
 
     # Private utility methods
 
@@ -180,14 +209,21 @@ class DataViewItemModel(QAbstractItemModel):
         if not index.isValid():
             return []
         else:
-            return [index.column()]
+            column = index.column()
+            if column == 0:
+                return []
+            else:
+                return [column - 1]
 
     def _to_model_index(self, row_index, column_index):
-        if row_index == Root:
+        if len(row_index) == 0:
             return QModelIndex()
         index = self.model.index_manager.from_sequence(row_index[:-1])
         row = row_index[-1]
-        column = column_index[0]
+        if len(column_index) == 0:
+            column = 0
+        else:
+            column = column_index[0] + 1
 
-        model_index = self.createIndex(row, column, index)
+        return self.createIndex(row, column, index)
 

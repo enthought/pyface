@@ -4,26 +4,96 @@ from pyface.data_view.index_manager import Root
 from wx.dataview import DataViewItem, DataViewModel as wxDataViewModel
 
 
+type_hint_to_variant = {
+    'str': "string",
+    'int': "longlong",
+    'float': "double",
+    'bool': "bool",
+    'datetime': "datetime",
+    'container': "list",
+    'object': "void*",
+}
+
+
 # XXX This file is scaffolding and may need to be rewritten or expanded
 
 class DataViewModel(wxDataViewModel):
 
     def __init__(self, model):
         super().__init__()
-        self._model = model
+        self.model = model
 
     @property
     def model(self):
         return self._model
 
+    @model.setter
+    def model(self, model):
+        if hasattr(self, '_model'):
+            # disconnect trait listeners
+            self._model.observe(
+                self.on_structure_changed,
+                'structure_changed',
+                remove=True,
+            )
+            self._model.observe(
+                self.on_values_changed,
+                'values_changed',
+                remove=True,
+            )
+            self._model = model
+        else:
+            # model is being initialized
+            self._model = model
+
+        # hook up trait listeners
+        self._model.observe(
+            self.on_structure_changed,
+            'structure_changed',
+        )
+        self._model.observe(
+            self.on_values_changed,
+            'values_changed',
+        )
+
+    def on_structure_changed(self, event):
+        self.Cleared()
+
+    def on_values_changed(self, event):
+        top, left, bottom, right = event.new
+        if top == [] and bottom == []:
+            # this is a column header change, reset everything
+            self.Cleared()
+        elif left == [] and right == []:
+            # this is a row header change
+            # XXX this is currently not supported and not needed
+            pass
+        else:
+            for i, (top_row, bottom_row) in enumerate(zip(top, bottom)):
+                if top_row != bottom_row:
+                    break
+            top = top[:i+1]
+            bottom = bottom[:i+1]
+
+            if top == bottom and left == right:
+                # single value change
+                self.ValueChanged(self._to_item(top), left[0])
+            elif top == bottom:
+                # single item change
+                self.ItemChanged(self._to_item(top))
+            else:
+                # multiple item change
+                items = [self._to_item(top[:i] + [row]) for row in range(top[i], bottom[i]+1)]
+                self.ItemsChanged(items)
+
     def GetParent(self, item):
         index = self._to_index(item)
         if index == Root:
-            return None
+            return DataViewItem()
         parent, row = self.model.index_manager.get_parent_and_row(index)
         parent_id = self.model.index_manager.id(parent)
         if parent_id == 0:
-            return None
+            return DataViewItem()
         return DataViewItem(parent_id)
 
     def GetChildren(self, item, children):
@@ -40,8 +110,8 @@ class DataViewModel(wxDataViewModel):
         row_index = self._to_row_index(item)
         return self.model.can_have_children(row_index)
 
-    def HasContainerColumns(self, item):
-        return item.GetID() is not None
+    def HasValue(self, item, column):
+        return True
 
     def HasChildren(self, item):
         row_index = self._to_row_index(item)
@@ -50,22 +120,25 @@ class DataViewModel(wxDataViewModel):
     def GetValue(self, item, column):
         row_index = self._to_row_index(item)
         column_index = [column]
-        text = self.model.get_text(row_index, column_index)
-        return text
+        return self.model.get_text(row_index, column_index)
 
     def SetValue(self, value, item, column):
         row_index = self._to_row_index(item)
         column_index = [column]
         try:
-            self.model.set_text(row_index, column_index, value)
+            result = self.model.set_text(row_index, column_index, value)
         except Exception as exc:
             print(exc)
             # XXX log it
             return False
-        return True
+        return result
 
     def GetColumnCount(self):
         return self.model.get_column_count([])
+
+    def GetColumnType(self, column):
+        value_type = self.model.get_column_value_type([column])
+        return type_hint_to_variant.get(value_type.type_hint, "string")
 
     def _to_row_index(self, item):
         id = item.GetID()
@@ -73,6 +146,13 @@ class DataViewModel(wxDataViewModel):
             id = 0
         index = self.model.index_manager.from_id(int(id))
         return self.model.index_manager.to_sequence(index)
+
+    def _to_item(self, row_index):
+        if len(row_index) == 0:
+            return DataViewItem()
+        index = self.model.index_manager.from_sequence(row_index)
+        id = self.model.index_manager.id(index)
+        return DataViewItem(id)
 
     def _to_index(self, item):
         id = item.GetID()

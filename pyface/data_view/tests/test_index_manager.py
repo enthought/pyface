@@ -17,8 +17,6 @@ from ..index_manager import (
 
 class IndexManagerMixin:
 
-    index_manager: AbstractIndexManager
-
     def test_root_has_no_parent(self):
         with self.assertRaises(IndexError):
             self.index_manager.get_parent_and_row(Root)
@@ -157,7 +155,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
             with self.subTest(depth=depth):
                 index = self.index_manager.create_index(parent, row)
                 result = self.index_manager.to_sequence(index)
-                self.assertEquals(result, sequence[:depth+1])
+                self.assertEqual(result, sequence[:depth+1])
                 parent = index
 
     def test_complex_index_sequence_round_trip(self):

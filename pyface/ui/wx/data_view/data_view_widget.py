@@ -11,7 +11,8 @@
 from traits.api import Bool, Instance, observe, provides
 
 from wx.dataview import (
-    DataViewCtrl, DataViewModel as wxDataViewModel, DATAVIEW_CELL_EDITABLE
+    DataViewCtrl, DataViewModel as wxDataViewModel, DATAVIEW_CELL_EDITABLE,
+    EVT_DATAVIEW_ITEM_ACTIVATED
 )
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.i_data_view_widget import (
@@ -47,6 +48,30 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _create_item_model(self):
         self._item_model = DataViewModel(self.data_model)
+
+    def _add_event_listeners(self):
+        """ Set up toolkit-specific bindings for events """
+        super()._add_event_listeners()
+        self.control.Bind(EVT_DATAVIEW_ITEM_ACTIVATED, self.activated)
+
+    def _remove_event_listeners(self):
+        """ Remove toolkit-specific bindings for events """
+        self.control.Unbind(EVT_DATAVIEW_ITEM_ACTIVATED, self.activated)
+        super()._remove_event_listeners()
+
+    def destroy(self):
+        if self.control is not None:
+            # unhook things here
+            self._item_model = None
+        super().destroy()
+
+    def activated(self, event):
+        print('activated')
+        if self.control is not None:
+            print(event.GetPosition())
+            column = self.control.GetColumns()[event.GetColumn()]
+            print(event.GetColumn())
+            #self.control.EditItem(event.GetItem(), column)
 
     def _get_control_header_visible(self):
         """ Toolkit specific method to get the control's tooltip. """

@@ -3,11 +3,13 @@ from random import choice, randint
 from traits.api import HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI
-from pyface.data_view.column_data_model import (
-    AbstractRowInfo, ColumnDataModel, ObjectRowInfo
+from pyface.data_view.abstract_value_type import AbstractValueType, none_value
+from pyface.data_view.data_models.column_data_model import (
+    AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
 )
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
+from pyface.data_view.value_types.api import IntValue, TextValue
 
 
 class Address(HasStrictTraits):
@@ -28,17 +30,36 @@ class Person(HasStrictTraits):
     address = Instance(Address)
 
 
-row_info = ObjectRowInfo(
+row_info = HasTraitsRowInfo(
     title='People',
     value='name',
+    value_type=TextValue(),
     rows=[
-        ObjectRowInfo(title="Age", value="age"),
-        ObjectRowInfo(
+        HasTraitsRowInfo(
+            title="Age",
+            value="age",
+            value_type=IntValue(minimum=0),
+        ),
+        HasTraitsRowInfo(
             title="Address",
+            value_type=none_value,
+            value='address',
             rows=[
-                ObjectRowInfo(title="Street", value="address.street"),
-                ObjectRowInfo(title="City", value="address.city"),
-                ObjectRowInfo(title="Country", value="address.country"),
+                HasTraitsRowInfo(
+                    title="Street",
+                    value="address.street",
+                    value_type=TextValue(),
+                ),
+                HasTraitsRowInfo(
+                    title="City",
+                    value="address.city",
+                    value_type=TextValue(),
+                ),
+                HasTraitsRowInfo(
+                    title="Country",
+                    value="address.country",
+                    value_type=TextValue(),
+                ),
             ],
         ),
     ],
@@ -61,7 +82,7 @@ class MainWindow(ApplicationWindow):
             parent=parent,
             data_model=ColumnDataModel(
                 data=self.data,
-                row_info=self.row_info
+                row_info=self.row_info,
             ),
             #header_visible=False,
         )
