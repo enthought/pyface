@@ -154,9 +154,6 @@ class MainWindowLayout(HasTraits):
                     sublayout, q_dock_area, _toplevel_call=False
                 )
 
-        # Remove the fixed sizes once Qt activates the layout.
-        QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
-
     def set_layout_for_area(
         self, layout, q_dock_area, _toplevel_added=False, _toplevel_call=True
     ):
@@ -226,10 +223,6 @@ class MainWindowLayout(HasTraits):
 
         else:
             raise MainWindowLayoutError("Unknown layout item %r" % layout)
-
-        # Remove the fixed sizes once Qt activates the layout.
-        if _toplevel_call:
-            QtCore.QTimer.singleShot(0, self._reset_fixed_sizes)
 
     # ------------------------------------------------------------------------
     # 'MainWindowLayout' abstract interface.
@@ -309,10 +302,8 @@ class MainWindowLayout(HasTraits):
                     "Cannot retrieve dock widget for pane %r" % layout.id
                 )
             else:
-                if layout.width > 0:
-                    dock_widget.widget().setFixedWidth(layout.width)
-                if layout.height > 0:
-                    dock_widget.widget().setFixedHeight(layout.height)
+                sizeHint = lambda : QtCore.QSize(layout.width, layout.height)
+                dock_widget.widget().sizeHint = sizeHint
             return dock_widget
 
         elif isinstance(layout, LayoutContainer):
@@ -320,21 +311,6 @@ class MainWindowLayout(HasTraits):
 
         else:
             raise MainWindowLayoutError("Leaves of layout must be PaneItems")
-
-    def _reset_fixed_sizes(self):
-        """ Clears any fixed sizes assined to QDockWidgets.
-        """
-        if self.control is None:
-            return
-        QWIDGETSIZE_MAX = (1 << 24) - 1  # Not exposed by Qt bindings.
-        for child in self.control.children():
-            if isinstance(child, QtGui.QDockWidget):
-                child.widget().setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                child.widget().setMinimumSize(0, 0)
-                # QDockWidget somehow manages to set its own
-                # min/max sizes and hence that too needs to be reset.
-                child.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX)
-                child.setMinimumSize(0, 0)
 
 
 class MainWindowLayoutError(ValueError):
