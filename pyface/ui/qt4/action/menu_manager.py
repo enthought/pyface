@@ -42,6 +42,11 @@ class MenuManager(ActionManager, ActionManagerItem):
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
+    # Private interface ---------------------------------------------------#
+
+    #: Keep track of all created menus in order to properly dispose of them
+    _menus = []
+
     # ------------------------------------------------------------------------
     # 'MenuManager' interface.
     # ------------------------------------------------------------------------
@@ -56,7 +61,19 @@ class MenuManager(ActionManager, ActionManagerItem):
         if controller is None:
             controller = self.controller
 
-        return _Menu(self, parent, controller)
+        menu = _Menu(self, parent, controller)
+        self._menus.append(menu)
+
+        return menu
+
+    # ------------------------------------------------------------------------
+    # 'ActionManager' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._menus:
+            menu = self._menus.pop()
+            menu._remove_event_listeners()
 
     # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
@@ -131,11 +148,7 @@ class _Menu(QtGui.QMenu):
 
         return
 
-    # ------------------------------------------------------------------------
-    # '_Menu' interface.
-    # ------------------------------------------------------------------------
-
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         self._manager.on_trait_change(self.refresh, "changed", remove=True)
         self._manager.on_trait_change(
             self._on_enabled_changed, "enabled", remove=True
@@ -151,6 +164,10 @@ class _Menu(QtGui.QMenu):
         )
         # Removes event listeners from downstream menu items
         self.clear()
+
+    # ------------------------------------------------------------------------
+    # '_Menu' interface.
+    # ------------------------------------------------------------------------
 
     def clear(self):
         """ Clears the items from the menu. """
