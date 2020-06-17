@@ -152,6 +152,6 @@ to just indicate that the entire view needs updating::
 
 
 
-.. substitute:: AbstractDataModel :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
-.. substitute:: can_set_value :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value`
-.. substitute:: set_value :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel.set_value`
+.. |AbstractDataModel| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
+.. |can_set_value| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel.can_set_value`
+.. |set_value| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel.set_value`
