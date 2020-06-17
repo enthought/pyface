@@ -14,7 +14,9 @@ import time
 
 from pyface.qt import QtGui, QtCore
 
-from traits.api import Bool, Instance, Int, Str, provides
+from traits.api import (
+    Any, Bool, Callable, Instance, Int, List, Str, provides, Tuple
+)
 
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from .window import Window
@@ -81,6 +83,13 @@ class ProgressDialog(MProgressDialog, Window):
     #: The widget showing the estimated time remaining
     _remaining_control = Instance(QtGui.QLabel)
 
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
     # -------------------------------------------------------------------------
     # IWindow Interface
     # -------------------------------------------------------------------------
@@ -103,11 +112,9 @@ class ProgressDialog(MProgressDialog, Window):
 
     def destroy(self):
         if self.control is not None:
-            buttons = self.control.findChild(QtGui.QDialogButtonBox)
-            if self.can_cancel:
-                buttons.rejected.disconnect(self.control.reject)
-            if self.can_ok:
-                buttons.accepted.disconnect(self.control.accept)
+            while self._connections_to_remove:
+                signal, handler = self._connections_to_remove.pop()
+                signal.disconnect(handler)
 
         super(ProgressDialog, self).destroy()
 
@@ -196,8 +203,14 @@ class ProgressDialog(MProgressDialog, Window):
 
         if self.can_cancel:
             buttons.rejected.connect(dialog.reject)
+            self._connections_to_remove.append(
+                (buttons.rejected, dialog.reject)
+            )
         if self.can_ok:
             buttons.accepted.connect(dialog.accept)
+            self._connections_to_remove.append(
+                (buttons.accepted, dialog.accept)
+            )
 
         layout.addWidget(buttons)
 
