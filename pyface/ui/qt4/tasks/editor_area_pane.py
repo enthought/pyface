@@ -55,7 +55,13 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
         # Connect to the widget's signals.
         control.currentChanged.connect(self._update_active_editor)
+        self._connections_to_remove.append(
+            (control.currentChanged, self._update_active_editor)
+        )
         control.tabCloseRequested.connect(self._close_requested)
+        self._connections_to_remove.append(
+            (control.tabCloseRequested, self._close_requested)
+        )
 
         # Add shortcuts for scrolling through tabs.
         if sys.platform == "darwin":
@@ -101,9 +107,6 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             self.remove_editor(editor)
 
         if self.control is not None:
-            self.control.currentChanged.disconnect(self._update_active_editor)
-            self.control.tabCloseRequested.disconnect(self._close_requested)
-
             while self._connections_to_remove:
                 signal, handler = self._connections_to_remove.pop()
                 signal.disconnect(handler)
