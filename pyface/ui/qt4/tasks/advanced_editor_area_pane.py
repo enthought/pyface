@@ -98,7 +98,7 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
         """ Destroy the toolkit-specific control that represents the pane.
         """
         self.control.removeEventFilter(self._filter)
-        self.control.disconnect_event_listeners()
+        self.control._remove_event_listeners()
         self._filter = None
 
         for editor in self.editors:
@@ -293,7 +293,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
             QtCore.Qt.AllDockWidgetAreas, QtGui.QTabWidget.North
         )
 
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         """ Disconnects focusChanged signal of the application """
         app = QtGui.QApplication.instance()
         app.focusChanged.disconnect(self._focus_changed)
@@ -324,7 +324,7 @@ class EditorAreaWidget(QtGui.QMainWindow):
         """
         editor_widget.hide()
         editor_widget.removeEventFilter(self)
-        editor_widget.disconnect_event_listeners()
+        editor_widget._remove_event_listeners()
         editor_widget.editor.destroy()
         self.removeDockWidget(editor_widget)
 
@@ -631,7 +631,7 @@ class EditorWidget(QtGui.QDockWidget):
         self.dockLocationChanged.connect(self.update_title_bar)
         self.visibilityChanged.connect(self.update_title_bar)
 
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         self.dockLocationChanged.disconnect(self.update_title_bar)
         self.visibilityChanged.disconnect(self.update_title_bar)
 
