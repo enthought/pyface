@@ -634,9 +634,6 @@ class EditorWidget(QtGui.QDockWidget):
     def disconnect_event_listeners(self):
         self.dockLocationChanged.disconnect(self.update_title_bar)
         self.visibilityChanged.disconnect(self.update_title_bar)
-        title_bar = self.titleBarWidget()
-        if isinstance(title_bar, EditorTitleBarWidget):
-            title_bar.disconnect_event_listeners(self)
 
     def update_title(self):
         title = self.editor.editor_area._get_label(self.editor)
@@ -683,10 +680,6 @@ class EditorTitleBarWidget(QtGui.QTabBar):
         self.setTabsClosable(True)
 
         self.tabCloseRequested.connect(editor_widget.editor.close)
-
-    def disconnect_event_listeners(self, editor_widget):
-        # Assumes that the editor of editor_widget never changes
-        self.tabCloseRequested.disconnect(editor_widget.editor.close)
 
     def mousePressEvent(self, event):
         self.parent().parent()._drag_widget = self.parent()
