@@ -75,6 +75,8 @@ class MenuManager(ActionManager, ActionManagerItem):
             menu = self._menus.pop()
             menu._remove_event_listeners()
 
+        super(MenuManager, self).destroy()
+
     # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
     # ------------------------------------------------------------------------

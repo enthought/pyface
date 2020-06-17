@@ -121,6 +121,8 @@ class ToolBarManager(ActionManager):
             toolbar = self._toolbars.pop()
             toolbar._remove_event_listeners()
 
+        super(ToolBarManager, self).destroy()
+
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
