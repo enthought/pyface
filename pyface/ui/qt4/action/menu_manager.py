@@ -73,7 +73,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     def destroy(self):
         while self._menus:
             menu = self._menus.pop()
-            menu._remove_event_listeners()
+            menu.dispose()
 
         super(MenuManager, self).destroy()
 
@@ -150,7 +150,7 @@ class _Menu(QtGui.QMenu):
 
         return
 
-    def _remove_event_listeners(self):
+    def dispose(self):
         self._manager.on_trait_change(self.refresh, "changed", remove=True)
         self._manager.on_trait_change(
             self._on_enabled_changed, "enabled", remove=True

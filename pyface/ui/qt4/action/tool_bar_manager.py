@@ -119,7 +119,7 @@ class ToolBarManager(ActionManager):
     def destroy(self):
         while self._toolbars:
             toolbar = self._toolbars.pop()
-            toolbar._remove_event_listeners()
+            toolbar.dispose()
 
         super(ToolBarManager, self).destroy()
 
@@ -186,7 +186,7 @@ class _ToolBar(QtGui.QToolBar):
 
         return
 
-    def _remove_event_listeners(self):
+    def dispose(self):
         self.tool_bar_manager.on_trait_change(
             self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
         )
