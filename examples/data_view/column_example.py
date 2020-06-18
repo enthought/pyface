@@ -8,18 +8,19 @@
 #
 # Thanks for using Enthought open source!
 
+from functools import partial
 from random import choice, randint
 
 from traits.api import HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI
-from pyface.data_view.abstract_value_type import AbstractValueType, none_value
-from pyface.data_view.data_models.column_data_model import (
-    AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
-)
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import IntValue, TextValue
+from pyface.data_view.value_types.api import IntValue, TextValue, no_value
+
+from column_data_model import (
+    AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
+)
 
 
 class Address(HasStrictTraits):
@@ -52,7 +53,7 @@ row_info = HasTraitsRowInfo(
         ),
         HasTraitsRowInfo(
             title="Address",
-            value_type=none_value,
+            value_type=no_value,
             value='address',
             rows=[
                 HasTraitsRowInfo(
@@ -94,7 +95,6 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 row_info=self.row_info,
             ),
-            #header_visible=False,
         )
         self.data_view._create()
         return self.data_view.control
@@ -103,202 +103,63 @@ class MainWindow(ApplicationWindow):
         import numpy
         return numpy.random.uniform(size=(100000, 10))
 
+
 male_names = [
-    'Michael',
-    'Edward',
-    'Timothy',
-    'James',
-    'George',
-    'Ralph',
-    'David',
-    'Martin',
-    'Bryce',
-    'Richard',
-    'Eric',
-    'Travis',
-    'Robert',
-    'Bryan',
-    'Alan',
-    'Harold',
-    'John',
-    'Stephen',
-    'Gael',
-    'Frederic',
-    'Eli',
-    'Scott',
-    'Samuel',
-    'Alexander',
-    'Tobias',
-    'Sven',
-    'Peter',
-    'Albert',
-    'Thomas',
-    'Horatio',
-    'Julius',
-    'Henry',
-    'Walter',
-    'Woodrow',
-    'Dylan',
-    'Elmer']
+    'Michael', 'Edward', 'Timothy', 'James', 'George', 'Ralph', 'David',
+    'Martin', 'Bryce', 'Richard', 'Eric', 'Travis', 'Robert', 'Bryan',
+    'Alan', 'Harold', 'John', 'Stephen', 'Gael', 'Frederic', 'Eli', 'Scott',
+    'Samuel', 'Alexander', 'Tobias', 'Sven', 'Peter', 'Albert', 'Thomas',
+    'Horatio', 'Julius', 'Henry', 'Walter', 'Woodrow', 'Dylan', 'Elmer',
+]
 
 female_names = [
-    'Leah',
-    'Jaya',
-    'Katrina',
-    'Vibha',
-    'Diane',
-    'Lisa',
-    'Jean',
-    'Alice',
-    'Rebecca',
-    'Delia',
-    'Christine',
-    'Marie',
-    'Dorothy',
-    'Ellen',
-    'Victoria',
-    'Elizabeth',
-    'Margaret',
-    'Joyce',
-    'Sally',
-    'Ethel',
-    'Esther',
-    'Suzanne',
-    'Monica',
-    'Hortense',
-    'Samantha',
-    'Tabitha',
-    'Judith',
-    'Ariel',
-    'Helen',
-    'Mary',
-    'Jane',
-    'Janet',
-    'Jennifer',
-    'Rita',
-    'Rena',
-    'Rianna']
+    'Leah', 'Jaya', 'Katrina', 'Vibha', 'Diane', 'Lisa', 'Jean', 'Alice',
+    'Rebecca', 'Delia', 'Christine', 'Marie', 'Dorothy', 'Ellen', 'Victoria',
+    'Elizabeth', 'Margaret', 'Joyce', 'Sally', 'Ethel', 'Esther', 'Suzanne',
+    'Monica', 'Hortense', 'Samantha', 'Tabitha', 'Judith', 'Ariel', 'Helen',
+    'Mary', 'Jane', 'Janet', 'Jennifer', 'Rita', 'Rena', 'Rianna',
+]
 
 all_names = male_names + female_names
+any_name = partial(choice, all_names)
+age = partial(randint, 15, 72)
 
-male_name = lambda: choice(male_names)
-female_name = lambda: choice(female_names)
-any_name = lambda: choice(all_names)
-age = lambda: randint(15, 72)
 
-family_name = lambda: choice(['Jones',
-                              'Smith',
-                              'Thompson',
-                              'Hayes',
-                              'Thomas',
-                              'Boyle',
-                              "O'Reilly",
-                              'Lebowski',
-                              'Lennon',
-                              'Starr',
-                              'McCartney',
-                              'Harrison',
-                              'Harrelson',
-                              'Steinbeck',
-                              'Rand',
-                              'Hemingway',
-                              'Zhivago',
-                              'Clemens',
-                              'Heinlien',
-                              'Farmer',
-                              'Niven',
-                              'Van Vogt',
-                              'Sturbridge',
-                              'Washington',
-                              'Adams',
-                              'Bush',
-                              'Kennedy',
-                              'Ford',
-                              'Lincoln',
-                              'Jackson',
-                              'Johnson',
-                              'Eisenhower',
-                              'Truman',
-                              'Roosevelt',
-                              'Wilson',
-                              'Coolidge',
-                              'Mack',
-                              'Moon',
-                              'Monroe',
-                              'Springsteen',
-                              'Rigby',
-                              "O'Neil",
-                              'Philips',
-                              'Clinton',
-                              'Clapton',
-                              'Santana',
-                              'Midler',
-                              'Flack',
-                              'Conner',
-                              'Bond',
-                              'Seinfeld',
-                              'Costanza',
-                              'Kramer',
-                              'Falk',
-                              'Moore',
-                              'Cramdon',
-                              'Baird',
-                              'Baer',
-                              'Spears',
-                              'Simmons',
-                              'Roberts',
-                              'Michaels',
-                              'Stuart',
-                              'Montague',
-                              'Miller'])
+def family_name():
+    return choice([
+        'Jones', 'Smith', 'Thompson', 'Hayes', 'Thomas', 'Boyle', "O'Reilly",
+        'Lebowski', 'Lennon', 'Starr', 'McCartney', 'Harrison', 'Harrelson',
+        'Steinbeck', 'Rand', 'Hemingway', 'Zhivago', 'Clemens', 'Heinlien',
+        'Farmer', 'Niven', 'Van Vogt', 'Sturbridge', 'Washington', 'Adams',
+        'Bush', 'Kennedy', 'Ford', 'Lincoln', 'Jackson', 'Johnson',
+        'Eisenhower', 'Truman', 'Roosevelt', 'Wilson', 'Coolidge', 'Mack',
+        'Moon', 'Monroe', 'Springsteen', 'Rigby', "O'Neil", 'Philips',
+        'Clinton', 'Clapton', 'Santana', 'Midler', 'Flack', 'Conner', 'Bond',
+        'Seinfeld', 'Costanza', 'Kramer', 'Falk', 'Moore', 'Cramdon', 'Baird',
+        'Baer', 'Spears', 'Simmons', 'Roberts', 'Michaels', 'Stuart',
+        'Montague', 'Miller',
+    ])
 
-street = lambda: '%d %s %s' % (randint(11,
-                                        999),
-                                choice(['Spring',
-                                        'Summer',
-                                        'Moonlight',
-                                        'Winding',
-                                        'Windy',
-                                        'Whispering',
-                                        'Falling',
-                                        'Roaring',
-                                        'Hummingbird',
-                                        'Mockingbird',
-                                        'Bluebird',
-                                        'Robin',
-                                        'Babbling',
-                                        'Cedar',
-                                        'Pine',
-                                        'Ash',
-                                        'Maple',
-                                        'Oak',
-                                        'Birch',
-                                        'Cherry',
-                                        'Blossom',
-                                        'Rosewood',
-                                        'Apple',
-                                        'Peach',
-                                        'Blackberry',
-                                        'Strawberry',
-                                        'Starlight',
-                                        'Wilderness',
-                                        'Dappled',
-                                        'Beaver',
-                                        'Acorn',
-                                        'Pecan',
-                                        'Pheasant',
-                                        'Owl']),
-                                choice(['Way',
-                                        'Lane',
-                                        'Boulevard',
-                                        'Street',
-                                        'Drive',
-                                        'Circle',
-                                        'Avenue',
-                                        'Trail']))
 
-city = lambda: choice(['Boston', 'Cambridge', ])
-country = lambda: choice(['USA', 'UK'])
+def street():
+    number = randint(11, 999)
+    text_1 = choice([
+        'Spring', 'Summer', 'Moonlight', 'Winding', 'Windy', 'Whispering',
+        'Falling', 'Roaring', 'Hummingbird', 'Mockingbird', 'Bluebird',
+        'Robin', 'Babbling', 'Cedar', 'Pine', 'Ash', 'Maple', 'Oak', 'Birch',
+        'Cherry', 'Blossom', 'Rosewood', 'Apple', 'Peach', 'Blackberry',
+        'Strawberry', 'Starlight', 'Wilderness', 'Dappled', 'Beaver', 'Acorn',
+        'Pecan', 'Pheasant', 'Owl'
+    ])
+    text_2 = choice([
+        'Way', 'Lane', 'Boulevard', 'Street', 'Drive', 'Circle', 'Avenue',
+        'Trail',
+    ])
+    return '%d %s %s' % (number, text_1, text_2)
+
+
+city = partial(choice, ['Boston', 'Cambridge', ])
+country = partial(choice, ['USA', 'UK'])
 
 people = [
     Person(
