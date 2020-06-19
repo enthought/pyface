@@ -21,6 +21,11 @@ import wx
 from pyface.font import Font
 
 
+# font weight and size features changed in wxPython 4.1/wxWidgets 3.1
+wx_version = tuple(int(x) for x in wx.__version__.split('.')[:2])
+wx_python_4_1 = (wx_version >= (4, 1))
+
+
 wx_family_to_generic_family = {
     wx.FONTFAMILY_DEFAULT: 'default',
     wx.FONTFAMILY_DECORATIVE: 'fantasy',
@@ -45,30 +50,51 @@ generic_family_to_wx_family = {
     'typewriter': wx.FONTFAMILY_TELETYPE,
 }
 
-weight_to_wx_weight = {
-    100: wx.FONTWEIGHT_THIN,
-    200: wx.FONTWEIGHT_EXTRALIGHT,
-    300: wx.FONTWEIGHT_LIGHT,
-    400: wx.FONTWEIGHT_NORMAL,
-    500: wx.FONTWEIGHT_MEDIUM,
-    600: wx.FONTWEIGHT_SEMIBOLD,
-    700: wx.FONTWEIGHT_BOLD,
-    800: wx.FONTWEIGHT_EXTRABOLD,
-    900: wx.FONTWEIGHT_HEAVY,
-    1000: wx.FONTWEIGHT_EXTRAHEAVY,
-}
-wx_weight_to_weight = {
-    wx.FONTWEIGHT_THIN: 'thin',
-    wx.FONTWEIGHT_EXTRALIGHT: 'extra-light',
-    wx.FONTWEIGHT_LIGHT: 'light',
-    wx.FONTWEIGHT_NORMAL: 'normal',
-    wx.FONTWEIGHT_MEDIUM: 'medium',
-    wx.FONTWEIGHT_SEMIBOLD: 'semibold',
-    wx.FONTWEIGHT_BOLD: 'bold',
-    wx.FONTWEIGHT_EXTRABOLD: 'extra-bold',
-    wx.FONTWEIGHT_HEAVY: 'heavy',
-    wx.FONTWEIGHT_EXTRAHEAVY: 'extra-heavy',
-}
+if wx_python_4_1:
+    weight_to_wx_weight = {
+        100: wx.FONTWEIGHT_THIN,
+        200: wx.FONTWEIGHT_EXTRALIGHT,
+        300: wx.FONTWEIGHT_LIGHT,
+        400: wx.FONTWEIGHT_NORMAL,
+        500: wx.FONTWEIGHT_MEDIUM,
+        600: wx.FONTWEIGHT_SEMIBOLD,
+        700: wx.FONTWEIGHT_BOLD,
+        800: wx.FONTWEIGHT_EXTRABOLD,
+        900: wx.FONTWEIGHT_HEAVY,
+        1000: wx.FONTWEIGHT_EXTRAHEAVY,
+    }
+    wx_weight_to_weight = {
+        wx.FONTWEIGHT_THIN: 'thin',
+        wx.FONTWEIGHT_EXTRALIGHT: 'extra-light',
+        wx.FONTWEIGHT_LIGHT: 'light',
+        wx.FONTWEIGHT_NORMAL: 'normal',
+        wx.FONTWEIGHT_MEDIUM: 'medium',
+        wx.FONTWEIGHT_SEMIBOLD: 'semibold',
+        wx.FONTWEIGHT_BOLD: 'bold',
+        wx.FONTWEIGHT_EXTRABOLD: 'extra-bold',
+        wx.FONTWEIGHT_HEAVY: 'heavy',
+        wx.FONTWEIGHT_EXTRAHEAVY: 'extra-heavy',
+        wx.FONTWEIGHT_MAX: 'extra-heavy',
+    }
+else:
+    weight_to_wx_weight = {
+        100: wx.FONTWEIGHT_LIGHT,
+        200: wx.FONTWEIGHT_LIGHT,
+        300: wx.FONTWEIGHT_LIGHT,
+        400: wx.FONTWEIGHT_NORMAL,
+        500: wx.FONTWEIGHT_NORMAL,
+        600: wx.FONTWEIGHT_BOLD,
+        700: wx.FONTWEIGHT_BOLD,
+        800: wx.FONTWEIGHT_BOLD,
+        900: wx.FONTWEIGHT_MAX,
+        1000: wx.FONTWEIGHT_MAX,
+    }
+    wx_weight_to_weight = {
+        wx.FONTWEIGHT_LIGHT: 'light',
+        wx.FONTWEIGHT_NORMAL: 'normal',
+        wx.FONTWEIGHT_BOLD: 'bold',
+        wx.FONTWEIGHT_MAX: 'extra-heavy',
+    }
 
 style_to_wx_style = {
     'normal': wx.FONTSTYLE_NORMAL,
@@ -135,11 +161,14 @@ def toolkit_font_to_properties(toolkit_font):
     """
     family = wx_family_to_generic_family[toolkit_font.GetFamily()]
     face = toolkit_font.GetFaceName()
-    size = toolkit_font.GetFractionalPointSize()
+    if wx_python_4_1:
+        size = toolkit_font.GetFractionalPointSize()
+    else:
+        size = toolkit_font.GetPointSize()
     style = wx_style_to_style[toolkit_font.GetStyle()]
     weight = wx_weight_to_weight[toolkit_font.GetWeight()]
     variants = set()
-    if toolkit_font.GetUnderline():
+    if toolkit_font.GetUnderlined():
         variants.add('underline')
     if toolkit_font.GetStrikethrough():
         variants.add('strikethrough')
