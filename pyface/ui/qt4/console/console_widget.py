@@ -122,6 +122,11 @@ class ConsoleWidget(QtGui.QWidget):
         [QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O, QtCore.Qt.Key_V]
     )
 
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = []
+
     # ---------------------------------------------------------------------------
     # 'QObject' interface
     # ---------------------------------------------------------------------------
@@ -193,6 +198,7 @@ class ConsoleWidget(QtGui.QWidget):
             printkey = "Ctrl+Shift+P"
         action.setShortcut(printkey)
         action.triggered.connect(self.print_)
+        self._connections_to_remove.append((action.triggered, self.print_))
         self.addAction(action)
         self._print_action = action
 
@@ -200,6 +206,7 @@ class ConsoleWidget(QtGui.QWidget):
         action.setEnabled(self.can_export())
         action.setShortcut(QtGui.QKeySequence.Save)
         action.triggered.connect(self.export)
+        self._connections_to_remove.append((action.triggered, self.export))
         self.addAction(action)
         self._export_action = action
 
@@ -207,6 +214,7 @@ class ConsoleWidget(QtGui.QWidget):
         action.setEnabled(True)
         action.setShortcut(QtGui.QKeySequence.SelectAll)
         action.triggered.connect(self.select_all)
+        self._connections_to_remove.append((action.triggered, self.select_all))
         self.addAction(action)
         self._select_all_action = action
 
@@ -304,6 +312,11 @@ class ConsoleWidget(QtGui.QWidget):
 
         return super(ConsoleWidget, self).eventFilter(obj, event)
 
+    def _remove_event_listeners(self):
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
+
     # ---------------------------------------------------------------------------
     # 'QWidget' interface
     # ---------------------------------------------------------------------------
@@ -335,32 +348,6 @@ class ConsoleWidget(QtGui.QWidget):
             height = height * 2 + splitwidth
 
         return QtCore.QSize(width, height)
-
-    # ---------------------------------------------------------------------------
-    # 'ConsoleWidget' public interface
-    # ---------------------------------------------------------------------------
-
-    def disconnect_event_listeners(self):
-        # Disconnect signals from __init__
-        for action in self.actions():
-            action_text = action.text()
-            if action_text == "Print":
-                action.triggered.disconnect(self.print_)
-            elif action_text == "Save as HTML/XML":
-                action.triggered.disconnect(self.export)
-            elif action_text == "Select All":
-                action.triggered.disconnect(self.select_all)
-        # Disconnect signals from _create_control
-        control = self._control
-        control.cursorPositionChanged.disconnect(self._cursor_position_changed)
-        control.customContextMenuRequested.disconnect(
-            self._custom_context_menu_requested
-        )
-        control.copyAvailable.disconnect(self.copy_available)
-        control.redoAvailable.disconnect(self.redo_available)
-        control.undoAvailable.disconnect(self.undo_available)
-        layout = control.document().documentLayout()
-        layout.documentSizeChanged.disconnect(self._adjust_scrollbars)
 
     def can_copy(self):
         """ Returns whether text can be copied to the clipboard.
@@ -1078,12 +1065,28 @@ class ConsoleWidget(QtGui.QWidget):
 
         # Connect signals.
         control.cursorPositionChanged.connect(self._cursor_position_changed)
+        self._connections_to_remove.append(
+            (control.cursorPositionChanged, self._cursor_position_changed)
+        )
         control.customContextMenuRequested.connect(
             self._custom_context_menu_requested
         )
+        self._connections_to_remove.append(
+            (control.customContextMenuRequested,
+             self._custom_context_menu_requested)
+        )
         control.copyAvailable.connect(self.copy_available)
+        self._connections_to_remove.append(
+            (control.copyAvailable, self.copy_available)
+        )
         control.redoAvailable.connect(self.redo_available)
+        self._connections_to_remove.append(
+            (control.redoAvailable, self.redo_available)
+        )
         control.undoAvailable.connect(self.undo_available)
+        self._connections_to_remove.append(
+            (control.undoAvailable, self.undo_available)
+        )
 
         # Hijack the document size change signal to prevent Qt from adjusting
         # the viewport's scrollbar. We are relying on an implementation detail
@@ -1092,6 +1095,9 @@ class ConsoleWidget(QtGui.QWidget):
         layout = control.document().documentLayout()
         layout.documentSizeChanged.disconnect()
         layout.documentSizeChanged.connect(self._adjust_scrollbars)
+        self._connections_to_remove.append(
+            (layout.documentSizeChanged, self._adjust_scrollbars)
+        )
 
         # Configure the control.
         control.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)

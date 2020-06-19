@@ -41,11 +41,7 @@ class BracketMatcher(QtCore.QObject):
         self._text_edit = text_edit
         text_edit.cursorPositionChanged.connect(self._cursor_position_changed)
 
-    # --------------------------------------------------------------------------
-    # Public interface
-    # --------------------------------------------------------------------------
-
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         self._text_edit.cursorPositionChanged.disconnect(
             self._cursor_position_changed
         )

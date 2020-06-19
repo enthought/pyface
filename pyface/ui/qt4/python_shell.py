@@ -121,7 +121,7 @@ class PythonShell(MPythonShell, Widget):
             self.control.executed.disconnect(self._on_command_executed)
             self._event_filter.signal.disconnect(self._on_obj_drop)
 
-            self.control.disconnect_event_listeners()
+            self.control._remove_event_listeners()
 
         super(PythonShell, self)._remove_event_listeners()
 
@@ -202,6 +202,15 @@ class PythonWidget(HistoryConsoleWidget):
         # Display the banner and initial prompt.
         self.reset()
 
+    def _remove_event_listeners(self):
+        self.font_changed.disconnect(self._call_tip_widget.setFont)
+        document = self._control.document()
+        document.contentsChange.disconnect(self._document_contents_change)
+
+        self._bracket_matcher._remove_event_listeners()
+
+        super(PythonWidget, self)._remove_event_listeners()
+
     # --------------------------------------------------------------------------
     # file-like object interface
     # --------------------------------------------------------------------------
@@ -239,17 +248,6 @@ class PythonWidget(HistoryConsoleWidget):
         for line in lines:
             self.write(line, refresh=refresh)
 
-    # ---------------------------------------------------------------------------
-    # 'ConsoleWidget' public interface
-    # ---------------------------------------------------------------------------
-    def disconnect_event_listeners(self):
-        self.font_changed.disconnect(self._call_tip_widget.setFont)
-        document = self._control.document()
-        document.contentsChange.disconnect(self._document_contents_change)
-
-        self._bracket_matcher.disconnect_event_listeners()
-
-        super(PythonWidget, self).disconnect_event_listeners()
     # ---------------------------------------------------------------------------
     # 'ConsoleWidget' abstract interface
     # ---------------------------------------------------------------------------
