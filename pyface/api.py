@@ -19,6 +19,8 @@ from .constant import OK, CANCEL, YES, NO
 from .dialog import Dialog
 from .directory_dialog import DirectoryDialog
 from .file_dialog import FileDialog
+from .font import Font, PyfaceFont
+from .font_dialog import FontDialog, get_font
 from .filter import Filter
 from .gui import GUI
 from .gui_application import GUIApplication
