@@ -83,10 +83,9 @@ class AboutDialog(MAboutDialog, Dialog):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        if self.control is not None:
-            while self._connections_to_remove:
-                signal, handler = self._connections_to_remove.pop()
-                signal.disconnect(handler)
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
         super(AboutDialog, self).destroy()
 

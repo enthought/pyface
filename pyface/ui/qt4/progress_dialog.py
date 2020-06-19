@@ -111,10 +111,9 @@ class ProgressDialog(MProgressDialog, Window):
     # -------------------------------------------------------------------------
 
     def destroy(self):
-        if self.control is not None:
-            while self._connections_to_remove:
-                signal, handler = self._connections_to_remove.pop()
-                signal.disconnect(handler)
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
         super(ProgressDialog, self).destroy()
 
