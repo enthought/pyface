@@ -25,7 +25,7 @@ no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
-class TestFileDialog(unittest.TestCase, GuiTestAssistant):
+class TestFontDialog(unittest.TestCase, GuiTestAssistant):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
