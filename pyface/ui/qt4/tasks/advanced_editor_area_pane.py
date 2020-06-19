@@ -107,10 +107,9 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
             editor.editor_area = None
         self.active_editor = None
 
-        if self.control is not None:
-            while self._connections_to_remove:
-                signal, handler = self._connections_to_remove.pop()
-                signal.disconnect(handler)
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
         super(AdvancedEditorAreaPane, self).destroy()
 

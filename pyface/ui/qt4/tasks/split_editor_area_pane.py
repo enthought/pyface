@@ -134,10 +134,9 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
         for editor in self.editors[:]:
             self.remove_editor(editor)
 
-        if self.control is not None:
-            while self._connections_to_remove:
-                signal, handler = self._connections_to_remove.pop()
-                signal.disconnect(handler)
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
         # Remove reference to active tabwidget so that it can be deleted
         # together with the main control
