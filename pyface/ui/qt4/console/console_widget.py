@@ -349,6 +349,10 @@ class ConsoleWidget(QtGui.QWidget):
 
         return QtCore.QSize(width, height)
 
+    # ---------------------------------------------------------------------------
+    # 'ConsoleWidget' public interface
+    # ---------------------------------------------------------------------------
+
     def can_copy(self):
         """ Returns whether text can be copied to the clipboard.
         """
