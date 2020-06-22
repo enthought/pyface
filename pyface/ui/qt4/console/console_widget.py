@@ -122,11 +122,6 @@ class ConsoleWidget(QtGui.QWidget):
         [QtCore.Qt.Key_C, QtCore.Qt.Key_G, QtCore.Qt.Key_O, QtCore.Qt.Key_V]
     )
 
-    #: A list of connected Qt signals to be removed before destruction.
-    #: First item in the tuple is the Qt signal. The second item is the event
-    #: handler.
-    _connections_to_remove = []
-
     # ---------------------------------------------------------------------------
     # 'QObject' interface
     # ---------------------------------------------------------------------------
@@ -140,6 +135,11 @@ class ConsoleWidget(QtGui.QWidget):
             The parent for this widget.
         """
         super(ConsoleWidget, self).__init__(parent)
+
+        # A list of connected Qt signals to be removed before destruction.
+        # First item in the tuple is the Qt signal. The second item is the
+        # event handler.
+        self._connections_to_remove = []
 
         # Create the layout and underlying text widget.
         layout = QtGui.QStackedLayout(self)
