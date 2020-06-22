@@ -1,7 +1,7 @@
 Pyface DataViews
 =================
 
-The Pyface DataView API is allows visualization of heirarchical and
+The Pyface DataView API allows visualization of heirarchical and
 non-heirarchical tabular data.
 
 Data Models

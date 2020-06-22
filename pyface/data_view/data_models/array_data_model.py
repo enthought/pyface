@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 """ Provides an N-dimensional array data model implementation.
 
-This module provides an a concrete implementation of a data model for an
+This module provides a concrete implementation of a data model for an
 n-dim numpy array.
 """
 from traits.api import Array, Instance, observe

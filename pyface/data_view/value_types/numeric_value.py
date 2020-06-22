@@ -30,7 +30,7 @@ class NumericValue(EditableValue):
     #: The maximum value for the numeric value.
     maximum = Float(inf)
 
-    #: A function that converts to the a numeric type.
+    #: A function that converts to the numeric type.
     evaluate = Callable()
 
     #: A function that converts the required type to a string for display.

@@ -22,7 +22,7 @@ class EditableWithValid(EditableValue):
         return value >= 0
 
 
-class TestAbstractValueType(UnittestTools, TestCase):
+class TestEditableValue(UnittestTools, TestCase):
 
     def setUp(self):
         self.model = Mock()
