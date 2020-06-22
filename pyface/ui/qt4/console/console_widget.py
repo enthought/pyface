@@ -1099,9 +1099,8 @@ class ConsoleWidget(QtGui.QWidget):
         layout = control.document().documentLayout()
         layout.documentSizeChanged.disconnect()
         layout.documentSizeChanged.connect(self._adjust_scrollbars)
-        self._connections_to_remove.append(
-            (layout.documentSizeChanged, self._adjust_scrollbars)
-        )
+        # The document layout doesn't stay the same therefore its signal is
+        # not explicitly disconnected on destruction
 
         # Configure the control.
         control.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
