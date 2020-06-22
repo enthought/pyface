@@ -17,7 +17,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Enum, Instance, Str, Tuple
+from traits.api import Bool, Enum, Instance, List, Str, Tuple
 
 
 from pyface.image_cache import ImageCache
@@ -56,7 +56,7 @@ class ToolBarManager(ActionManager):
     _image_cache = Instance(ImageCache)
 
     #: Keep track of all created toolbars in order to properly dispose of them
-    _toolbars = []
+    _toolbars = List()
 
     # ------------------------------------------------------------------------
     # 'object' interface.

@@ -18,7 +18,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, Str
+from traits.api import Instance, List, Str
 
 
 from pyface.action.action_manager import ActionManager
@@ -45,7 +45,7 @@ class MenuManager(ActionManager, ActionManagerItem):
     # Private interface ---------------------------------------------------#
 
     #: Keep track of all created menus in order to properly dispose of them
-    _menus = []
+    _menus = List()
 
     # ------------------------------------------------------------------------
     # 'MenuManager' interface.
