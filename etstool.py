@@ -92,6 +92,11 @@ supported_combinations = {
 
 dependencies = {"traits", "numpy", "pygments", "coverage", "mock"}
 
+# NOTE : traitsui is always installed from source
+source_dependencies = {
+    "traits",
+}
+
 extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
@@ -134,6 +139,8 @@ edm_option = click.option(
     envvar="ETSTOOL_EDM",
 )
 
+github_url_fmt = "git+http://github.com/enthought/{0}.git#egg={0}"
+
 
 @click.group()
 def cli():
@@ -145,7 +152,8 @@ def cli():
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
-def install(edm, runtime, toolkit, environment):
+@click.option('--source/--no-source', default=False)
+def install(edm, runtime, toolkit, environment, source):
     """ Install project and dependencies into a clean EDM environment.
 
     """
@@ -184,6 +192,19 @@ def install(edm, runtime, toolkit, environment):
 
     click.echo("Creating environment '{environment}'".format(**parameters))
     execute(commands, parameters)
+
+    if source:
+        cmd_fmt = "edm plumbing remove-package --environment {environment} --force "
+        commands = [cmd_fmt+dependency for dependency in source_dependencies]
+        execute(commands, parameters)
+        source_pkgs = [github_url_fmt.format(pkg) for pkg in source_dependencies]
+        commands = [
+            "python -m pip install {pkg} --no-deps".format(pkg=pkg)
+            for pkg in source_pkgs
+        ]
+        commands = ["edm run -e {environment} -- " + command for command in commands]
+        execute(commands, parameters)
+
     click.echo("Done install")
 
 
