@@ -253,60 +253,63 @@ def parse_font_description(description):
         if kind == 'SIZE':
             if size != -1:
                 raise FontParseError(
-                    f"Size declared twice in {description!r}"
+                    "Size declared twice in {!r}".format(description)
                 )
             value = value[:-2]
             try:
                 size = float(value)
             except ValueError:
                 raise FontParseError(
-                    f"Invalid font size {value!r} at position {index} in {description!r}"
+                    "Invalid font size {!r} at position {} in {!r}".format(
+                        value, index, description)
                 )
         elif kind == 'NUMBER':
             if value in weights and weight == 'normal':
                 weight = value
             elif size != -1:
                 raise FontParseError(
-                    f"Size declared twice in {description!r}"
+                    "Size declared twice in {!r}".format(description)
                 )
             else:
                 try:
                     size = float(value)
                 except ValueError:
                     raise FontParseError(
-                        f"Invalid font size {value!r} at position {index} in {description!r}"
-                    )
+                        "Invalid font size {!r} at position {} in {!r}".format(
+                            value, index, description)
+                        )
         elif kind == 'NAME':
             # substitute synonyms
             value = parser_synonyms.get(value, value)
             if value.lower() in weights:
                 if weight != 'normal':
                     raise FontParseError(
-                        f"Weight declared twice in {description!r}"
+                        "Weight declared twice in {!r}".format(description)
                     )
                 weight = value.lower()
             elif value.lower() in stretches:
                 if stretch != 'normal':
                     raise FontParseError(
-                        f"Stretch declared twice in {description!r}"
+                        "Stretch declared twice in {!r}".format(description)
                     )
                 stretch = value.lower()
             elif value.lower() in sizes:
                 if size != -1:
                     raise FontParseError(
-                        f"Size declared twice in {description!r}"
+                        "Size declared twice in {!r}".format(description)
                     )
                 size = sizes[value.lower()]
             elif value.lower() in styles:
                 if style != 'normal':
                     raise FontParseError(
-                        f"Style declared twice in {description!r}"
+                        "Style declared twice in {!r}".format(description)
                     )
                 style = value.lower()
             elif value in variants:
                 if value.lower() in variant_set:
                     raise FontParseError(
-                        f"Variant {value!r} declared twice in {description!r}"
+                        "Variant {!r} declared twice in {!r}".format(
+                            value, description)
                     )
                 variant_set.add(value.lower())
             else:
@@ -316,7 +319,8 @@ def parse_font_description(description):
             family.append(value[1:-1])
         elif kind == 'MISMATCH':
             raise FontParseError(
-                f"Parse error {value!r} at {index} in {description!r}"
+                "Parse error {!r} at {} in {!r}".format(
+                    value, index, description)
             )
     if len(family) == 0:
         family = ['default']
@@ -412,7 +416,7 @@ class Font(HasStrictTraits):
         # if size is an integer
         if int(size) == size:
             size = int(size)
-        terms.append(f"{size}pt")
+        terms.append("{}pt".format(size))
         terms.append(
             ', '.join(
                 repr(family) if ' ' in family else family
@@ -424,10 +428,10 @@ class Font(HasStrictTraits):
     def __repr__(self):
         traits = self.trait_get(self.editable_traits())
         trait_args = ', '.join(
-            f"{name}={value!r}"
+            "{}={!r}".format(name, value)
             for name, value in traits.items()
         )
-        return f"{self.__class__.__name__}({trait_args})"
+        return "{}({})".format(self.__class__.__name__, trait_args)
 
     def __eq__(self, other):
         if isinstance(other, Font):
@@ -468,7 +472,7 @@ class PyfaceFont(TraitType):
         elif value is None:
             default_value = (Font, (), {})
         else:
-            raise TraitError(f"Invalid trait value {value!r}")
+            raise TraitError("Invalid trait value {!r}".format(value))
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
