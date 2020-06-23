@@ -36,7 +36,7 @@ def toolkit_color_to_rgba(color):
 
 
 def rgba_to_toolkit_color(rgba):
-    """ Convert a hex tuple to an RGBA tuple.
+    """ Convertan RGBA tuple to a hex tuple.
 
     Parameters
     ----------

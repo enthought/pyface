@@ -188,6 +188,10 @@ class TestParseHex(TestCase):
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 
+    def test_hex_bad(self):
+        result = parse_hex('#0c')
+        self.assertIsNone(result)
+
 
 class TestParseName(TestCase):
 
@@ -309,6 +313,17 @@ class TestColor(UnittestTools, TestCase):
         self.assertTrue(color_1 == color_2)
         self.assertFalse(color_1 != color_2)
 
+    def test_eq_not_eequal(self):
+        color_1 = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        color_2 = Color(rgba=(0.4, 0.4, 0.6, 0.8))
+        self.assertTrue(color_1 != color_2)
+        self.assertFalse(color_1 == color_2)
+
+    def test_eq_other(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        self.assertFalse(color == 1)
+        self.assertTrue(color != 1)
+
     def test_not_eq(self):
         color_1 = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         color_2 = Color(rgba=(0.0, 0.0, 0.0, 1.0))
@@ -369,6 +384,54 @@ class TestColor(UnittestTools, TestCase):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         color.rgb = (0.6, 0.8, 0.4)
         self.assertEqual(color.rgba, (0.6, 0.8, 0.4, 0.8))
+
+    def test_get_hsv(self):
+        color = Color(rgba=(0.48, 0.6, 0.528, 0.8))
+        self.assertEqual(color.hsv, (0.4000000000000001, 0.2, 0.6))
+
+    def test_set_hsv(self):
+        color = Color()
+        color.hsv = (0.4, 0.2, 0.6)
+        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 1.0))
+
+    def test_get_hsva(self):
+        color = Color(rgba=(0.48, 0.6, 0.528, 0.8))
+        self.assertEqual(color.hsva, (0.4000000000000001, 0.2, 0.6, 0.8))
+
+    def test_set_hsva(self):
+        color = Color()
+        color.hsva = (0.4, 0.2, 0.6, 0.8)
+        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 0.8))
+
+    def test_get_hls(self):
+        color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
+        self.assertEqual(
+            color.hls,
+            (0.39999999999999997, 0.2, 0.6)
+        )
+
+    def test_set_hls(self):
+        color = Color()
+        color.hls = (0.4, 0.2, 0.6)
+        self.assertEqual(
+            color.rgba,
+            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 1)
+        )
+
+    def test_get_hlsa(self):
+        color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
+        self.assertEqual(
+            color.hlsa,
+            (0.39999999999999997, 0.2, 0.6, 0.8),
+        )
+
+    def test_set_hlsa(self):
+        color = Color()
+        color.hlsa = (0.4, 0.2, 0.6, 0.8)
+        self.assertEqual(
+            color.rgba,
+            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 0.8)  # noqa: E501
+        )
 
 
 class TestPyfaceColor(TestCase):
@@ -462,6 +525,24 @@ class TestPyfaceColor(TestCase):
         self.assertEqual(
             validated, color
         )
+
+    def test_validate_rgb_list(self):
+        color = Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        trait = PyfaceColor()
+        validated = trait.validate(None, None, [0.4, 0.2, 0.6])
+        self.assertEqual(
+            validated, color
+        )
+
+    def test_validate_bad_string(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, "not a color")
+
+    def test_validate_bad_object(self):
+        trait = PyfaceColor()
+        with self.assertRaises(TraitError):
+            trait.validate(None, None, object())
 
     def test_info(self):
         trait = PyfaceColor()

@@ -45,9 +45,9 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        color_data = self.control.GetColorData()
-        wx_color = color_data.GetColor()
-        self.color = Color.from_toolkit(wx_color)
+        colour_data = self.control.GetColourData()
+        wx_colour = colour_data.GetColour()
+        self.color = Color.from_toolkit(wx_colour)
         super(ColorDialog, self).close()
 
     # ------------------------------------------------------------------------
@@ -55,9 +55,9 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
-        wx_color = self.color.to_toolkit()
-        data = wx.ColorData()
-        data.SetInitialColor(wx_color)
+        wx_colour = self.color.to_toolkit()
+        data = wx.ColourData()
+        data.SetInitialColour(wx_colour)
         data.SetChooseAlpha(self.show_alpha)
-        dialog = wx.ColorDialog(parent, data)
+        dialog = wx.ColourDialog(parent, data)
         return dialog

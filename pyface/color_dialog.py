@@ -35,7 +35,7 @@ def get_color(parent, color, show_alpha=False):
     color : Color or None
         The selected color, or None if the user made no selection.
     """
-    dialog = ColorDialog(color=color)
+    dialog = ColorDialog(parent=parent, color=color, show_alpha=show_alpha)
     result = dialog.open()
     if result == OK:
         return dialog.color

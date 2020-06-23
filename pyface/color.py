@@ -393,13 +393,10 @@ def parse_hex(text):
     else:
         return None
     maximum = (1 << 4 * step) - 1
-    try:
-        channels = ints_to_channels(
-            (int(text[i:i+step], 16) for i in range(0, len(text), step)),
-            maximum=maximum,
-        )
-    except ValueError:
-        return None
+    channels = ints_to_channels(
+        (int(text[i:i+step], 16) for i in range(0, len(text), step)),
+        maximum=maximum,
+    )
     space = 'rgb' if len(channels) == 3 else 'rgba'
     return space, channels
 
