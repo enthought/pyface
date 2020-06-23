@@ -82,10 +82,10 @@ class AbstractValueType(ABCHasStrictTraits):
         return model.get_value(row, column)
 
     def set_editable(self, model, row, column, value):
-        """ Return a value suitable for editing.
+        """ Set a value that is returned from editing.
 
-        The default implementation is to return the underlying data value
-        directly from the data model.
+        The default implementation is to set the value directly from the
+        data model.  Returns True if successful, False if it fails.
 
         Parameters
         ----------

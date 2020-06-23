@@ -55,3 +55,12 @@ class TestTextValue(TestCase):
 
         self.assertTrue(success)
         self.model.set_value.assert_called_once_with([0], [0], "test")
+
+    def test_set_text_no_set_value(self):
+        self.model.can_set_value = Mock(return_value=False)
+
+        value = TextValue()
+        success = value.set_text(self.model, [0], [0], "test")
+
+        self.assertFalse(success)
+        self.model.set_value.assert_not_called()

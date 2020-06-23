@@ -238,7 +238,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         ----------
         start : row index
             The row to start at.  The iterator will yeild the row and all
-            child rows.
+            descendant rows.
 
         Yields
         ------
@@ -259,7 +259,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         ----------
         start : row index
             The row to start at.  The iterator will yeild the row and all
-            child rows.
+            descendant rows and all column indices for those rows.
 
         Yields
         ------

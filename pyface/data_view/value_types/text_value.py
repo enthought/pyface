@@ -16,7 +16,7 @@ class TextValue(EditableValue):
     """
 
     def set_text(self, model, row, column, text):
-        """ Set the textual representation of the underlying value.
+        """ Set the text of the underlying value.
 
         Parameters
         ----------
@@ -34,4 +34,7 @@ class TextValue(EditableValue):
         success : bool
             Whether or not the value was successfully set.
         """
-        return model.set_value(row, column, text)
+        if model.can_set_value(row, column):
+            return model.set_value(row, column, text)
+
+        return False
