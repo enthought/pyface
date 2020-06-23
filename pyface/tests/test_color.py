@@ -169,12 +169,12 @@ class TestParseHex(TestCase):
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 
     def test_hex_6(self):
-        space, channels = parse_hex('#06c')
+        space, channels = parse_hex('#0066cc')
         self.assertEqual(space, 'rgb')
         self.assertEqual(channels, (0.0, 0.4, 0.8))
 
     def test_hex_8(self):
-        space, channels = parse_hex('#06cf')
+        space, channels = parse_hex('#0066ccff')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 

@@ -17,7 +17,7 @@ the user to specify a color.
 
 Pyface provides a |Color| class and a corresponding |PyfaceColor| trait-type
 that allows this sort of representation.  Internally, the |Color| class
-stores colors as a tuple of reg, green, blue and alpha values which range
+stores colors as a tuple of red, green, blue and alpha values which range
 from 0.0 through to 1.0, inclusive.  Helper properties allow the user to
 specify individual channel values, as well as specify colors in alternate
 color spaces, such as HSV or HLS::
@@ -56,7 +56,7 @@ accept them as values when initializing or modifying the trait::
 For interactions with the toolkit, the |Color.from_toolkit| and
 |Color.to_toolkit| methods allow conversion to and from the appropriate
 toolkit color objects, such as Qt's :py:class:`QColor` or
-:py:class:`wx.Colour`.  These are mst likely to be needed by internal
+:py:class:`wx.Colour`.  These are most likely to be needed by internal
 Pyface functionality, and should not be needed by developers who are
 building applications on top of Pyface.
 
