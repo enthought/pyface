@@ -78,8 +78,8 @@ are valid font descriptions, but "Helvetica bold 12pt" is not because the
 order of elements is wrong.
 
 The |Font| object also has a method :py:meth:`~!Font.to_toolkit` that
-produces a toolkit font specification, which is usually what controls and
-other toolkit-specific code excpect to be given.
+produces a toolkit font specification, which is usually what widgets and
+other toolkit-specific code expects to be given.
 
 While classes could simply use ``Instance(Font)`` whenever they want a
 font specification, Pyface also provides a |PyfaceFont| trait type that
@@ -94,3 +94,4 @@ is always a |Font| object.  This allows users to write code like::
 
 
 .. |Font| replace:: :py:class:`~pyface.font.Font`
+.. |PyfaceFont| replace:: :py:class:`~pyface.font.PyfaceFont`
