@@ -32,7 +32,7 @@ def get_font(parent, font):
     font : Font or None
         The selected font, or None if the user made no selection.
     """
-    dialog = FontDialog(font=font)
+    dialog = FontDialog(parent=parent, font=font)
     result = dialog.open()
     if result == OK:
         return dialog.font

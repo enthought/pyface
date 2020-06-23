@@ -113,6 +113,14 @@ class TestFont(unittest.TestCase):
         self.assertEqual(font.style, 'italic')
         self.assertEqual(font.variants, {'small-caps', 'underline'})
 
+    def test_family_sequence(self):
+        font = Font(family=('Helvetica', 'sans-serif'))
+        self.assertEqual(font.family, ['Helvetica', 'sans-serif'])
+
+    def test_variants_frozenset(self):
+        font = Font(variants=frozenset({'small-caps', 'underline'}))
+        self.assertEqual(font.variants, {'small-caps', 'underline'})
+
     def test_str(self):
         font = Font()
 

@@ -88,7 +88,7 @@ class.
 import re
 
 from traits.api import (
-    BaseCFloat, DefaultValue, Enum, HasStrictTraits, List, Map, Set, Str,
+    BaseCFloat, DefaultValue, Enum, HasStrictTraits, CList, Map, CSet, Str,
     TraitError, TraitType
 )
 from traits.trait_type import NoDefaultSpecified
@@ -150,7 +150,7 @@ styles = ['normal', 'italic', 'oblique']
 variants = ['small-caps', 'underline', 'strikethrough', 'overline']
 
 #: A trait for font families.
-FontFamily = List(Str, ['default'])
+FontFamily = CList(Str, ['default'])
 
 #: A trait for font weights.
 FontWeight = Map(weights, default_value='normal')
@@ -162,7 +162,7 @@ FontStretch = Map(stretches, default_value='normal')
 FontStyle = Enum(styles)
 
 #: A trait for font variant properties.
-FontVariants = Set(Enum(variants))
+FontVariants = CSet(Enum(variants))
 
 
 class FontSize(BaseCFloat):
@@ -189,6 +189,16 @@ class FontSize(BaseCFloat):
         if value <= 0:
             self.error(object, name, value)
         return value
+
+    def info(self):
+        info = (
+            "a positive float, a value that can convert to a positive float, "
+        )
+        info += ', '.join(repr(key) for key in sizes)
+        info += (
+            " or a string with a positive float value followed by 'pt'"
+        )
+        return info
 
 
 font_tokens = [

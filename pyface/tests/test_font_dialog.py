@@ -8,12 +8,12 @@
 #
 # Thanks for using Enthought open source!
 
-
 import unittest
 
 from ..font import Font
-from ..font_dialog import FontDialog
+from ..font_dialog import FontDialog, get_font
 from ..toolkit import toolkit_object
+
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
@@ -39,7 +39,7 @@ class TestFontDialog(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def test_font(self):
-        # test that creation and destruction works as expected
+        # test that the font trait works for strings
         self.dialog.font = "10pt Arial"
 
         self.assertEqual(self.dialog.font, Font.from_description("10pt Arial"))
@@ -62,3 +62,22 @@ class TestFontDialog(unittest.TestCase, GuiTestAssistant):
             self.dialog._create()
         with self.event_loop():
             self.dialog.close()
+
+
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
+class TestGetFont(unittest.TestCase, GuiTestAssistant):
+    def setUp(self):
+        GuiTestAssistant.setUp(self)
+
+    def tearDown(self):
+        GuiTestAssistant.tearDown(self)
+
+    @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
+    def test_close(self):
+        # test that cancel works as expected
+        tester = ModalDialogTester(
+            lambda: get_font(None, "10pt Arial")
+        )
+        tester.open_and_run(when_opened=lambda x: x.close(accept=False))
+
+        self.assertEqual(tester.result, None)
