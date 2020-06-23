@@ -94,6 +94,10 @@ from traits.api import (
 from traits.trait_type import NoDefaultSpecified
 
 weights = {str(i): i for i in range(100, 1001, 100)}
+
+# Note: we don't support 'medium' as an alias for weight 500 because it
+# conflicts with the usage of 'medium' as an alias for a 12pt font in the CSS
+# specification for font attributes.
 weights.update({
     'thin': 100,
     'extra-light': 200,
@@ -102,12 +106,10 @@ weights.update({
     'normal': 400,
     'regular': 400,
     'book': 400,
-    'medium': 500,
     'semibold': 600,
     'demibold': 600,
     'demi': 600,
     'bold': 700,
-    'heavy': 800,
     'extra-bold': 800,
     'ultra-bold': 800,
     'black': 900,
