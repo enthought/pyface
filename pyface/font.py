@@ -71,7 +71,7 @@ For example::
     '36pt "Comic Sans"'
 
 When converting numeric values to string synonyms for display, the nearest
-value will be chosen.  This may mean that text descriptions may not be not
+value will be chosen.  This may mean that text descriptions may not be
 idempotent when run through font selection multiple times.
 
 Font Specificiation Class
@@ -97,7 +97,7 @@ weights = {str(i): i for i in range(100, 1001, 100)}
 weights.update({
     'thin': 100,
     'extra-light': 200,
-    'ultra-ight': 200,
+    'ultra-light': 200,
     'light': 300,
     'normal': 400,
     'regular': 400,
@@ -137,7 +137,7 @@ sizes = {
     'xx-small': 7.0,
     'x-small': 9.0,
     'small': 10.0,
-    #'medium': 12.0,
+    'medium': 12.0,
     'large': 14.0,
     'x-large': 18.0,
     'xx-large': 20.0,
