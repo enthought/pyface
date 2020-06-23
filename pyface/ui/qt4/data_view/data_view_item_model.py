@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class DataViewItemModel(QAbstractItemModel):
+    """ A QAbstractItemModel that understands AbstractDataModels. """
 
     def __init__(self, model, parent=None):
         super().__init__(parent)

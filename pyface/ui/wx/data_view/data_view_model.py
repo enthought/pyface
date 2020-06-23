@@ -18,6 +18,7 @@ type_hint_to_variant = {
 # XXX This file is scaffolding and may need to be rewritten or expanded
 
 class DataViewModel(wxDataViewModel):
+    """ A wxDataViewModel that understands AbstractDataModels. """
 
     def __init__(self, model):
         super().__init__()
@@ -83,7 +84,10 @@ class DataViewModel(wxDataViewModel):
                 self.ItemChanged(self._to_item(top))
             else:
                 # multiple item change
-                items = [self._to_item(top[:i] + [row]) for row in range(top[i], bottom[i]+1)]
+                items = [
+                    self._to_item(top[:i] + [row])
+                    for row in range(top[i], bottom[i]+1)
+                ]
                 self.ItemsChanged(items)
 
     def GetParent(self, item):
