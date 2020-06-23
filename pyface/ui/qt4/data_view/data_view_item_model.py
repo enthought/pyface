@@ -10,6 +10,7 @@
 
 import logging
 
+from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.data_view.index_manager import Root
 from pyface.data_view.abstract_data_model import AbstractDataModel
@@ -137,7 +138,7 @@ class DataViewItemModel(QAbstractItemModel):
         value_type = self.model.get_value_type(row, column)
 
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
-        if not self.model.can_have_children(row):
+        if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
         if value_type and value_type.can_edit(self.model, row, column):

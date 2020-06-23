@@ -13,7 +13,7 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
-from ..editable_value import EditableValue
+from pyface.data_view.value_types.editable_value import EditableValue
 
 
 class EditableWithValid(EditableValue):

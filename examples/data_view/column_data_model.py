@@ -11,8 +11,8 @@
 from abc import abstractmethod
 
 from traits.api import (
-    ABCHasStrictTraits, Callable, ComparisonMode, Event, HasTraits, Instance,
-    List, Str, Tuple, observe
+    ABCHasStrictTraits, ComparisonMode, Event, HasTraits, Instance,
+    List, Str, observe
 )
 from traits.trait_base import xgetattr, xsetattr
 

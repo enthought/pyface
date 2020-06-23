@@ -14,7 +14,7 @@ from unittest.mock import Mock
 from traits.api import Str
 from traits.testing.unittest_tools import UnittestTools
 
-from ..abstract_value_type import AbstractValueType
+from pyface.data_view.abstract_value_type import AbstractValueType
 
 
 class ValueType(AbstractValueType):
@@ -51,6 +51,11 @@ class TestAbstractValueType(UnittestTools, TestCase):
         value_type = ValueType()
         result = value_type.set_editable(self.model, [0], [0], 2.0)
         self.assertFalse(result)
+
+    def test_has_text(self):
+        value_type = ValueType()
+        result = value_type.has_text(self.model, [0], [0])
+        self.assertTrue(result)
 
     def test_get_text(self):
         value_type = ValueType()

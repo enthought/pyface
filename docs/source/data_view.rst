@@ -32,18 +32,20 @@ displaying the value::
     def get_column_count(self, row):
         return 1
 
-The data is non-heirarchical, so on the root has children and the number
-of child rows of the root is the length of the dictionary::
+The data is non-heirarchical, so the root has children and no other
+rows have children::
 
     def can_have_children(self, row):
         if len(row) == 0:
             return True
         return False
 
+The number of child rows of the root is the length of the dictionary::
+
     def get_row_count(self, row):
         if len(row) == 0:
             return len(self.data)
-        return False
+        return 0
 
 Data Values
 ~~~~~~~~~~~
@@ -57,7 +59,7 @@ from the dictionary::
     def get_value(self, row, column):
         if len(row) == 0:
             # this is a column header
-            if len(row) == 0:
+            if len(column) == 0:
                 # title of the row headers
                 return self.keys_header
             else:
@@ -110,12 +112,12 @@ of |set_value| that updates the data in-place.  This would look something like::
         return len(row) != 0 and len(column) != 0:
 
     def set_value(self, row, column, value):
-        if len(row) == 0 or len(column) == 0:
-            return False
-        row_index = row[0]
-        key = list(self.data)[row_index]
-        self.data[key] = value
-        return True
+        if self.can_set_value(row, column):
+            row_index = row[0]
+            key = list(self.data)[row_index]
+            self.data[key] = value
+            return True
+        return False
 
 Update Events
 -------------

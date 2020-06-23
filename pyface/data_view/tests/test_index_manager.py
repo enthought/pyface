@@ -10,8 +10,8 @@
 
 from unittest import TestCase
 
-from ..index_manager import (
-    AbstractIndexManager, IntIndexManager, Root, TupleIndexManager,
+from pyface.data_view.index_manager import (
+    IntIndexManager, Root, TupleIndexManager,
 )
 
 
@@ -88,6 +88,18 @@ class TestIntIndexManager(IndexManagerMixin, TestCase):
 
     def tearDown(self):
         self.index_manager.reset()
+
+    def test_create_index_root(self):
+        result = self.index_manager.create_index(Root, 5)
+        self.assertEqual(result, 5)
+
+    def test_create_index_leaf(self):
+        with self.assertRaises(RuntimeError):
+            self.index_manager.create_index(5, 1)
+
+    def test_create_index_negative(self):
+        with self.assertRaises(IndexError):
+            self.index_manager.create_index(Root, -5)
 
 
 class TestTupleIndexManager(IndexManagerMixin, TestCase):

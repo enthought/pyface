@@ -8,14 +8,16 @@
 #
 # Thanks for using Enthought open source!
 
-from unittest import TestCase, expectedFailure
+from unittest import TestCase
 
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.value_types.api import FloatValue, IntValue, TextValue
-from ..array_data_model import ArrayDataModel
+from pyface.data_view.value_types.api import (
+    FloatValue, IntValue, TextValue, no_value
+)
+from pyface.data_view.data_models.array_data_model import ArrayDataModel
 
 
 @requires_numpy
@@ -23,7 +25,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
 
     def setUp(self):
         super().setUp()
-        self.array = np.arange(15.0).reshape(5, 3)
+        self.array = np.arange(30.0).reshape(5, 2, 3)
         self.model = ArrayDataModel(data=self.array)
         self.values_changed_event = None
         self.structure_changed_event = None
@@ -55,7 +57,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row in self.model.iter_rows():
             with self.subTest(row=row):
                 result = self.model.can_have_children(row)
-                if len(row) == 0:
+                if len(row) <= 1:
                     self.assertEqual(result, True)
                 else:
                     self.assertEqual(result, False)
@@ -66,6 +68,8 @@ class TestArrayDataModel(UnittestTools, TestCase):
                 result = self.model.get_row_count(row)
                 if len(row) == 0:
                     self.assertEqual(result, 5)
+                elif len(row) == 1:
+                    self.assertEqual(result, 2)
                 else:
                     self.assertEqual(result, 0)
 
@@ -73,28 +77,46 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
                 result = self.model.get_value(row, column)
-                if row == []:
+                if row == [] and column == []:
+                    self.assertIsNone(result)
+                elif row == []:
                     self.assertEqual(result, column[0])
                 elif column == []:
-                    self.assertEqual(result, row[0])
+                    self.assertEqual(result, row[-1])
+                elif len(row) == 1:
+                    self.assertIsNone(result)
                 else:
-                    self.assertEqual(result, self.array[row[0], column[0]])
+                    self.assertEqual(
+                        result,
+                        self.array[row[0], row[1], column[0]]
+                    )
 
     def test_set_value(self):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
-                if row == []:
+                if row == [] and column == []:
+                    result = self.model.set_value(row, column, 0)
+                    self.assertFalse(result)
+                elif row == []:
                     result = self.model.set_value(row, column, column[0] + 1)
                     self.assertFalse(result)
                 elif column == []:
-                    result = self.model.set_value(row, column, row[0] + 1)
+                    result = self.model.set_value(row, column, row[-1] + 1)
                     self.assertFalse(result)
+                elif len(row) == 1:
+                    value = 6.0 * row[-1] + 2 * column[0]
+                    with self.assertTraitDoesNotChange(
+                            self.model, "values_changed"):
+                        result = self.model.set_value(row, column, value)
                 else:
-                    value = 6.0 * row[0] + 2 * column[0]
+                    value = 6.0 * row[-1] + 2 * column[0]
                     with self.assertTraitChanges(self.model, "values_changed"):
                         result = self.model.set_value(row, column, value)
                     self.assertTrue(result)
-                    self.assertEqual(self.array[row[0], column[0]], value)
+                    self.assertEqual(
+                        self.array[row[0], row[1], column[0]],
+                        value,
+                    )
                     self.assertEqual(
                         self.values_changed_event.new,
                         (row, column, row, column)
@@ -104,12 +126,17 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
                 result = self.model.get_value_type(row, column)
-                if row == []:
+                if row == [] and column == []:
+                    self.assertIsInstance(result, AbstractValueType)
+                    self.assertIs(result, self.model.label_header_type)
+                elif row == []:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.column_header_type)
                 elif column == []:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.row_header_type)
+                elif len(row) == 1:
+                    self.assertIs(result, no_value)
                 else:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.value_type)
@@ -119,7 +146,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.data = 2 * self.array
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [5], [3])
+            ([0], [0], [4], [2])
         )
 
     def test_data_updated_new_shape(self):
@@ -132,7 +159,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.value_type = IntValue()
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [5], [3])
+            ([0], [0], [4], [2])
         )
 
     def test_type_attribute_updated(self):
@@ -140,7 +167,129 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.value_type.is_editable = False
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [5], [3])
+            ([0], [0], [4], [2])
+        )
+
+    def test_row_header_type_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.row_header_type = no_value
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([0], [], [4], [])
+        )
+
+    def test_row_header_attribute_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.row_header_type.format = str
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([0], [], [4], [])
+        )
+
+    def test_column_header_type_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.column_header_type = no_value
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([], [0], [], [2])
+        )
+
+    def test_column_header_type_attribute_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.column_header_type.format = str
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([], [0], [], [2])
+        )
+
+    def test_label_header_type_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.label_header_type = no_value
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([], [], [], [])
+        )
+
+    def test_label_header_type_attribute_updated(self):
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.label_header_type.text = "My Table"
+        self.assertEqual(
+            self.values_changed_event.new,
+            ([], [], [], [])
+        )
+    def test_iter_rows(self):
+        result = list(self.model.iter_rows())
+        self.assertEqual(
+            result,
+            [
+                [],
+                [0],
+                [0, 0],
+                [0, 1],
+                [1],
+                [1, 0],
+                [1, 1],
+                [2],
+                [2, 0],
+                [2, 1],
+                [3],
+                [3, 0],
+                [3, 1],
+                [4],
+                [4, 0],
+                [4, 1],
+            ]
+        )
+
+    def test_iter_rows_start(self):
+        result = list(self.model.iter_rows([2]))
+        self.assertEqual(
+            result,
+            [[2], [2, 0], [2, 1]]
+        )
+
+    def test_iter_rows_leaf(self):
+        result = list(self.model.iter_rows([2, 0]))
+        self.assertEqual(result, [[2, 0]])
+
+    def test_iter_items(self):
+        result = list(self.model.iter_items())
+        self.assertEqual(
+            result,
+            [
+                ([], []),
+                ([], [0]), ([], [1]), ([], [2]),
+                ([0], []),
+                ([0], [0]), ([0], [1]), ([0], [2]),
+                ([0, 0], []),
+                ([0, 0], [0]), ([0, 0], [1]), ([0, 0], [2]),
+                ([0, 1], []),
+                ([0, 1], [0]), ([0, 1], [1]), ([0, 1], [2]),
+                ([1], []),
+                ([1], [0]), ([1], [1]), ([1], [2]),
+                ([1, 0], []),
+                ([1, 0], [0]), ([1, 0], [1]), ([1, 0], [2]),
+                ([1, 1], []),
+                ([1, 1], [0]), ([1, 1], [1]), ([1, 1], [2]),
+                ([2], []),
+                ([2], [0]), ([2], [1]), ([2], [2]),
+                ([2, 0], []),
+                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
+                ([2, 1], []),
+                ([2, 1], [0]), ([2, 1], [1]), ([2, 1], [2]),
+                ([3], []),
+                ([3], [0]), ([3], [1]), ([3], [2]),
+                ([3, 0], []),
+                ([3, 0], [0]), ([3, 0], [1]), ([3, 0], [2]),
+                ([3, 1], []),
+                ([3, 1], [0]), ([3, 1], [1]), ([3, 1], [2]),
+                ([4], []),
+                ([4], [0]), ([4], [1]), ([4], [2]),
+                ([4, 0], []),
+                ([4, 0], [0]), ([4, 0], [1]), ([4, 0], [2]),
+                ([4, 1], []),
+                ([4, 1], [0]), ([4, 1], [1]), ([4, 1], [2]),
+            ]
         )
 
     def test_default_value_type(self):
@@ -153,5 +302,9 @@ class TestArrayDataModel(UnittestTools, TestCase):
         self.assertIsInstance(model.value_type, FloatValue)
 
         data = np.array([['a', 'b', 'c'], ['e', 'f', 'g']])
+        model = ArrayDataModel(data=data)
+        self.assertIsInstance(model.value_type, TextValue)
+
+        data = np.array([['a', 'b', 'c'], ['e', 'f', 'g']], dtype=object)
         model = ArrayDataModel(data=data)
         self.assertIsInstance(model.value_type, TextValue)

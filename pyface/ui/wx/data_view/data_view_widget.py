@@ -8,13 +8,12 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Bool, Instance, observe, provides
+from traits.api import Instance, observe, provides
 
 from wx.dataview import (
     DataViewCtrl, DataViewModel as wxDataViewModel, DATAVIEW_CELL_EDITABLE,
-    DATAVIEW_CELL_ACTIVATABLE, EVT_DATAVIEW_ITEM_ACTIVATED
+    DATAVIEW_CELL_ACTIVATABLE
 )
-from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
@@ -76,6 +75,3 @@ class DataViewWidget(MDataViewWidget, Widget):
     def update_item_model(self, event):
         if self._item_model is not None:
             self._item_model.model = event.new
-
-
-

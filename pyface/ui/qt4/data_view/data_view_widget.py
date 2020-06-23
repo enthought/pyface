@@ -51,6 +51,3 @@ class DataViewWidget(MDataViewWidget, Widget):
     def update_item_model(self, event):
         if self._item_model is not None:
             self._item_model.model = event.new
-
-
-

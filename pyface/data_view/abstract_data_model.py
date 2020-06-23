@@ -265,8 +265,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         row_index, column_index
             The current row and column indices.
         """
-        for row in self.iter_rows():
-            if row != []:
-                yield row, []
+        for row in self.iter_rows(start_row):
+            yield row, []
             for column in range(self.get_column_count(row)):
                 yield row, [column]

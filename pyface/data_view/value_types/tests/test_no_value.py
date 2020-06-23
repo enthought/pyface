@@ -11,7 +11,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from ..no_value import NoValue
+from pyface.data_view.value_types.no_value import NoValue
 
 
 class TestNoValue(TestCase):

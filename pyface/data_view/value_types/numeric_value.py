@@ -69,12 +69,3 @@ class IntValue(NumericValue):
 class FloatValue(NumericValue):
 
     evaluate = Callable(float)
-
-
-class ProportionValue(NumericValue):
-
-    minimum = 0.0
-
-    maximum = 1.0
-
-    evaluate = Callable(float)

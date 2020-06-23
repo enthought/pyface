@@ -238,8 +238,7 @@ class IntIndexManager(AbstractIndexManager):
     def create_index(self, parent: t.Any, row: int) -> t.Any:
         """ Given a parent index and a row number, create an index.
 
-        This method always raises RuntimeError, as the only persistent
-        index for an IntIndexManager is the Root, which has no parent.
+        This should only ever be called with Root as the parent.
 
         Parameters
         ----------
@@ -342,9 +341,6 @@ class TupleIndexManager(AbstractIndexManager):
 
     def create_index(self, parent: t.Any, row: int) -> t.Any:
         """ Given a parent index and a row number, create an index.
-
-        This method always raises RuntimeError, as the only persistent
-        index for an IntIndexManager is the Root, which has no parent.
 
         Parameters
         ----------

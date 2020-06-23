@@ -29,4 +29,3 @@ class ConstantValue(AbstractValueType):
 
     def get_text(self, model, row, column):
         return self.text
-

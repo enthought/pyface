@@ -13,7 +13,7 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
-from ..constant_value import ConstantValue
+from pyface.data_view.value_types.constant_value import ConstantValue
 
 
 class TestConstantValue(UnittestTools, TestCase):
@@ -39,7 +39,10 @@ class TestConstantValue(UnittestTools, TestCase):
 
     def test_get_text(self):
         value_type = ConstantValue(text="something")
-        self.assertEqual(value_type.get_text(self.model, [0], [0]), "something")
+        self.assertEqual(
+            value_type.get_text(self.model, [0], [0]),
+            "something"
+        )
 
     def test_text_changed(self):
         value_type = ConstantValue()

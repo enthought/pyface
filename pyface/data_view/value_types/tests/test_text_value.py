@@ -11,7 +11,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from ..text_value import TextValue
+from pyface.data_view.value_types.text_value import TextValue
 
 
 class TestTextValue(TestCase):
@@ -55,4 +55,3 @@ class TestTextValue(TestCase):
 
         self.assertTrue(success)
         self.model.set_value.assert_called_once_with([0], [0], "test")
-

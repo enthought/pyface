@@ -24,15 +24,15 @@ from pyface.data_view.index_manager import TupleIndexManager
 
 class ArrayDataModel(AbstractDataModel):
 
-    #: The array being displayed.
+    #: The array being displayed.  This must have dimension at least 2.
     data = Array()
 
     #: The index manager that helps convert toolkit indices to data view
     #: indices.
     index_manager = Instance(TupleIndexManager, args=())
 
-    #: The value type of the column titles.
-    header_label_type = Instance(
+    #: The value type of the label headers.
+    label_header_type = Instance(
         AbstractValueType,
         factory=ConstantValue,
         kw={'text': "Index"},
@@ -45,7 +45,7 @@ class ArrayDataModel(AbstractDataModel):
         kw={'is_editable': False},
     )
 
-    #: The value type of the column titles.
+    #: The value type of the row titles.
     row_header_type = Instance(
         AbstractValueType,
         factory=IntValue,
@@ -58,7 +58,7 @@ class ArrayDataModel(AbstractDataModel):
     # Data structure methods
 
     def get_column_count(self, row):
-        """ How many columns in the row of the data view model.
+        """ How many columns in a row of the data view model.
 
         The total number of columns in the table is given by the column
         count of the Root row.
@@ -88,7 +88,7 @@ class ArrayDataModel(AbstractDataModel):
         can_have_children : bool
             Whether or not the row can ever have child rows.
         """
-        if len(row) < len(self.data.shape) - 1:
+        if len(row) < self.data.ndim - 1:
             return True
         return False
 
@@ -107,7 +107,7 @@ class ArrayDataModel(AbstractDataModel):
         has_children : bool
             Whether or not the row currently has child rows.
         """
-        if len(row) < len(self.data.shape) - 1:
+        if len(row) < self.data.ndim - 1:
             return self.data.shape[len(row)]
         return 0
 
@@ -127,12 +127,14 @@ class ArrayDataModel(AbstractDataModel):
             The number of child rows that the row has.
         """
         if row == []:
+            if column == []:
+                return None
             return column[0]
         elif column == []:
             return row[-1]
         else:
             index = tuple(row + column)
-            if len(index) != len(self.data.shape):
+            if len(index) != self.data.ndim:
                 return None
             return self.data[index]
 
@@ -176,13 +178,13 @@ class ArrayDataModel(AbstractDataModel):
         value : any
             The value represented by the given row and column.
         """
-        index = tuple(row + column)
-        if len(index) < self.data.ndim:
-            return False
+        if self.can_set_value(row, column):
+            index = tuple(row + column)
+            self.data[index] = value
+            self.values_changed = (row, column, row, column)
+            return True
 
-        self.data[index] = value
-        self.values_changed = (row, column, row, column)
-        return True
+        return False
 
     def get_value_type(self, row, column):
         """ Return the text value for the row and column.
@@ -205,12 +207,11 @@ class ArrayDataModel(AbstractDataModel):
         """
         if row == []:
             if column == []:
-                return self.header_label_type
+                return self.label_header_type
             return self.column_header_type
         elif column == []:
-            # XXX not currently used
             return self.row_header_type
-        elif len(row) < len(self.data.shape) - 1:
+        elif len(row) < self.data.ndim - 1:
             return no_value
         else:
             return self.value_type
@@ -222,7 +223,7 @@ class ArrayDataModel(AbstractDataModel):
         """ Handle the array being replaced with a new array. """
         if event.new.shape == event.old.shape:
             self.values_changed = (
-                ([0], [0], [event.old.shape[0]], [event.old.shape[1]])
+                ([0], [0], [event.old.shape[0] - 1], [event.old.shape[-1] - 1])
             )
         else:
             self.structure_changed = True
@@ -231,21 +232,28 @@ class ArrayDataModel(AbstractDataModel):
     def value_type_updated(self, event):
         """ Handle the value type being updated. """
         self.values_changed = (
-            ([0], [0], [self.data.shape[0]], [self.data.shape[1]])
+            ([0], [0], [self.data.shape[0] - 1], [self.data.shape[-1] - 1])
         )
 
     @observe('column_header_type.updated', dispatch='ui')
     def column_header_type_updated(self, event):
         """ Handle the header type being updated. """
         self.values_changed = (
-            ([], [0], [], [self.data.shape[1]])
+            ([], [0], [], [self.data.shape[-1] - 1])
         )
 
     @observe('row_header_type.updated', dispatch='ui')
     def value_header_type_updated(self, event):
         """ Handle the header type being updated. """
         self.values_changed = (
-            ([0], [], [self.data.shape[0]], [])
+            ([0], [], [self.data.shape[0] - 1], [])
+        )
+
+    @observe('label_header_type.updated', dispatch='ui')
+    def label_header_type_updated(self, event):
+        """ Handle the header type being updated. """
+        self.values_changed = (
+            ([], [], [], [])
         )
 
     def _value_type_default(self):

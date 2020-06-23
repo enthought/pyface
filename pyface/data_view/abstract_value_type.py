@@ -19,7 +19,7 @@ It is up to the data view to take this standardized data and determine what
 and how to actually display it.
 """
 
-from traits.api import ABCHasStrictTraits, Event, Str, observe
+from traits.api import ABCHasStrictTraits, Event, observe
 
 
 class AbstractValueType(ABCHasStrictTraits):

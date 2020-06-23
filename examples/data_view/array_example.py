@@ -29,7 +29,6 @@ class MainWindow(ApplicationWindow):
         self.data_view = DataViewWidget(
             parent=parent,
             data_model=ArrayDataModel(data=self.data),
-            #header_visible=False,
         )
         self.data_view._create()
         return self.data_view.control

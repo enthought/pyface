@@ -11,7 +11,9 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from ..numeric_value import FloatValue, IntValue, NumericValue, format_locale
+from pyface.data_view.value_types.numeric_value import (
+    FloatValue, IntValue, NumericValue, format_locale
+)
 
 
 class TestNumericValue(TestCase):

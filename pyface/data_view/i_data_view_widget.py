@@ -12,7 +12,6 @@ from traits.api import Bool, HasStrictTraits, Instance
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.i_widget import IWidget
-from .data_view_item_model import DataViewItemModel
 
 
 class IDataViewWidget(IWidget):
@@ -58,6 +57,3 @@ class MDataViewWidget(HasStrictTraits):
     def _set_control_header_visible(self, tooltip):
         """ Toolkit specific method to set the visibility of the header. """
         raise NotImplementedError()
-
-
-

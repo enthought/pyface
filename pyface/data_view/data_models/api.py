@@ -8,4 +8,4 @@
 #
 # Thanks for using Enthought open source!
 
-from .array_data_model import ArrayDataModel
+from .array_data_model import ArrayDataModel  # noqa: F401
