@@ -292,6 +292,30 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ]
         )
 
+    def test_iter_items_start(self):
+        result = list(self.model.iter_items([2]))
+        self.assertEqual(
+            result,
+            [
+                ([2], []),
+                ([2], [0]), ([2], [1]), ([2], [2]),
+                ([2, 0], []),
+                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
+                ([2, 1], []),
+                ([2, 1], [0]), ([2, 1], [1]), ([2, 1], [2]),
+            ]
+        )
+
+    def test_iter_items_leaf(self):
+        result = list(self.model.iter_items([2, 0]))
+        self.assertEqual(
+            result,
+            [
+                ([2, 0], []),
+                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
+            ]
+        )
+
     def test_default_value_type(self):
         data = np.arange(15).reshape(5, 3)
         model = ArrayDataModel(data=data)

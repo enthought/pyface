@@ -73,7 +73,8 @@ class AbstractDataModel(ABCHasStrictTraits):
     #: Event fired when value changes without changes to structure.  This
     #: should be set to a 4-tuple of (start_row_index, start_column_index,
     #: end_row_index, end_column_index) indicated the subset of data which
-    #: changed.
+    #: changed.  These end values are inclusive, unlike standard Python
+    #: slicing notation.
     values_changed = Event()
 
     # Data structure methods
