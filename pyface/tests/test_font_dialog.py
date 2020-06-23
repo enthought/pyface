@@ -40,9 +40,9 @@ class TestFontDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_font(self):
         # test that creation and destruction works as expected
-        self.dialog.font = "10 pt Arial"
+        self.dialog.font = "10pt Arial"
 
-        self.assertEqual(self.dialog.font, Font.from_description("10 pt Arial"))
+        self.assertEqual(self.dialog.font, Font.from_description("10pt Arial"))
 
     def test_create(self):
         # test that creation and destruction works as expected
