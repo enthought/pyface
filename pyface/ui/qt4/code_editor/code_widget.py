@@ -610,8 +610,6 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.replace.replace_all_button.clicked.disconnect(self.replace_all)
 
         self.code.disconnect_event_listeners()
-        self.find.disconnect_event_listeners()
-        self.replace.disconnect_event_listeners()
 
     def lines(self):
         """ Return the number of lines.
