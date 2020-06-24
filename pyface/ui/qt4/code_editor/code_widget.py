@@ -93,7 +93,7 @@ class CodeWidget(QtGui.QPlainTextEdit):
         )
         self.backspace_key = QtGui.QKeySequence(QtCore.Qt.Key_Backspace)
 
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         self.blockCountChanged.disconnect(self.update_line_number_width)
         self.updateRequest.disconnect(self.update_line_numbers)
         self.cursorPositionChanged.disconnect(self.highlight_current_line)
@@ -593,7 +593,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
 
         self.setLayout(layout)
 
-    def disconnect_event_listeners(self):
+    def _remove_event_listeners(self):
         self.code.selectionChanged.disconnect(self._update_replace_enabled)
 
         self.find.line_edit.returnPressed.disconnect(self.find_next)
@@ -609,7 +609,7 @@ class AdvancedCodeWidget(QtGui.QWidget):
         self.replace.replace_button.clicked.disconnect(self.replace_next)
         self.replace.replace_all_button.clicked.disconnect(self.replace_all)
 
-        self.code.disconnect_event_listeners()
+        self.code._remove_event_listeners()
 
     def lines(self):
         """ Return the number of lines.
