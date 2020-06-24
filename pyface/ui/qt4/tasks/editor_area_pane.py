@@ -12,7 +12,7 @@ import sys
 
 
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
-from traits.api import on_trait_change, provides
+from traits.api import Any, Callable, List, on_trait_change, provides, Tuple
 
 
 from pyface.qt import QtCore, QtGui
@@ -32,6 +32,12 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     See the IEditorAreaPane interface for API documentation.
     """
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
 
     # ------------------------------------------------------------------------
     # 'TaskPane' interface.
@@ -49,7 +55,13 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
         # Connect to the widget's signals.
         control.currentChanged.connect(self._update_active_editor)
+        self._connections_to_remove.append(
+            (control.currentChanged, self._update_active_editor)
+        )
         control.tabCloseRequested.connect(self._close_requested)
+        self._connections_to_remove.append(
+            (control.tabCloseRequested, self._close_requested)
+        )
 
         # Add shortcuts for scrolling through tabs.
         if sys.platform == "darwin":
@@ -60,17 +72,29 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             prev_seq = "Ctrl+PgUp"
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(next_seq), self.control)
         shortcut.activated.connect(self._next_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._next_tab)
+        )
         shortcut = QtGui.QShortcut(QtGui.QKeySequence(prev_seq), self.control)
         shortcut.activated.connect(self._previous_tab)
+        self._connections_to_remove.append(
+            (shortcut.activated, self._previous_tab)
+        )
 
         # Add shortcuts for switching to a specific tab.
         mod = "Ctrl+" if sys.platform == "darwin" else "Alt+"
         mapper = QtCore.QSignalMapper(self.control)
         mapper.mapped.connect(self.control.setCurrentIndex)
+        self._connections_to_remove.append(
+            (mapper.mapped, self.control.setCurrentIndex)
+        )
         for i in range(1, 10):
             sequence = QtGui.QKeySequence(mod + str(i))
             shortcut = QtGui.QShortcut(sequence, self.control)
             shortcut.activated.connect(mapper.map)
+            self._connections_to_remove.append(
+                (shortcut.activated, mapper.map)
+            )
             mapper.setMapping(shortcut, i - 1)
 
     def destroy(self):
@@ -81,6 +105,10 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
         for editor in self.editors:
             self.remove_editor(editor)
+
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
 
         super(EditorAreaPane, self).destroy()
 
