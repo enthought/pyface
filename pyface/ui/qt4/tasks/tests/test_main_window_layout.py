@@ -24,6 +24,7 @@ except ImportError:
 
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 def create_dummy_dock_widget(parent):
@@ -48,6 +49,7 @@ def create_dummy_dock_widget(parent):
     "This test targets Qt specific MainWindowLayout. "
     "Current toolkit is not Qt."
 )
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
 class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
     """ Test Qt specific MainWindowLayout.
 
