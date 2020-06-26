@@ -11,8 +11,6 @@
 import unittest
 from unittest import mock
 
-from traits.etsconfig.api import ETSConfig
-
 from pyface.tasks.api import TaskLayout, PaneItem
 from pyface.toolkit import toolkit_object
 from pyface.window import Window
@@ -46,7 +44,7 @@ def create_dummy_dock_widget(parent):
 
 
 @unittest.skipIf(
-    ETSConfig.toolkit != "qt4",
+    toolkit_object.toolkit == "qt4",
     "This test targets Qt specific MainWindowLayout. "
     "Current toolkit is not Qt."
 )
