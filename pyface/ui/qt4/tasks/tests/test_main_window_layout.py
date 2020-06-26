@@ -19,7 +19,7 @@ try:
     from pyface.qt import QtGui
     from pyface.ui.qt4.tasks.main_window_layout import MainWindowLayout
 except ImportError:
-    if ETSConfig.toolkit == "qt4":
+    if toolkit_object.toolkit == "qt4":
         raise
 
 
@@ -44,7 +44,7 @@ def create_dummy_dock_widget(parent):
 
 
 @unittest.skipIf(
-    toolkit_object.toolkit == "qt4",
+    toolkit_object.toolkit != "qt4",
     "This test targets Qt specific MainWindowLayout. "
     "Current toolkit is not Qt."
 )
