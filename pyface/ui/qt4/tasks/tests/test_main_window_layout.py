@@ -18,6 +18,7 @@ from pyface.toolkit import toolkit_object
 from pyface.window import Window
 
 try:
+    from pyface.qt import QtGui
     from pyface.ui.qt4.tasks.main_window_layout import MainWindowLayout
 except ImportError:
     if ETSConfig.toolkit == "qt4":
@@ -38,7 +39,6 @@ def create_dummy_dock_widget(parent):
     -------
     dock_widget : QDockWidget
     """
-    from pyface.qt import QtGui
     dock_widget = QtGui.QDockWidget(parent)
     content_widget = QtGui.QWidget(parent)
     dock_widget.setWidget(content_widget)
@@ -59,7 +59,7 @@ class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
 
     def setUp(self):
         GuiTestAssistant.setUp(self)
-        self.window = Window()
+        self.window = Window(size=(500, 500))
         self.window._create()
 
     def tearDown(self):
@@ -69,12 +69,26 @@ class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
         del self.window
         GuiTestAssistant.tearDown(self)
 
-    def test_set_pane_item_layout_in_main_window_layout(self):
+    def setup_window_with_central_widget(self):
+        # Add a central widget to the main window.
+        # The main window takes ownership of the child widget.
+        central_widget = QtGui.QWidget(parent=self.window.control)
+        self.window.control.setCentralWidget(central_widget)
+
+    def test_set_pane_item_width_in_main_window_layout(self):
+        # Set the main window to be bigger than the dock and add a central
+        # widget so that the test is meaningful about the size of the dock
+        # widget. Otherwise the dock widget fills all the space in the window.
+        self.setup_window_with_central_widget()
+
+        # Set the dock widget expected width to be smaller than the window
+        # for a meaningful test.
+        expected_width = self.window.size[0] // 2
         window_layout = MainWindowLayout(control=self.window.control)
-        dock_layout = TaskLayout(left=PaneItem(width=200, height=400))
-
+        dock_layout = TaskLayout(
+            left=PaneItem(width=expected_width)
+        )
         dock_widget = create_dummy_dock_widget(parent=self.window.control)
-
         patch_get_dock_widget = mock.patch.object(
             MainWindowLayout, "_get_dock_widget",
             return_value=dock_widget,
@@ -86,7 +100,33 @@ class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
                 window_layout.set_layout(dock_layout)
 
         # then
-        dock_widget.widget().adjustSize()
         size = dock_widget.widget().size()
-        self.assertEqual(size.width(), 200)
-        self.assertEqual(size.height(), 400)
+        self.assertEqual(size.width(), expected_width)
+
+    def test_set_pane_item_height_in_main_window_layout(self):
+        # Set the main window to be bigger than the dock and add a central
+        # widget so that the test is meaningful about the size of the dock
+        # widget. Otherwise the dock widget fills all the space in the window.
+        self.setup_window_with_central_widget()
+
+        # Set the dock widget expected height to be smaller than the window
+        # for a meaningful test.
+        expected_height = self.window.size[1] // 2
+        window_layout = MainWindowLayout(control=self.window.control)
+        dock_layout = TaskLayout(
+            bottom=PaneItem(height=expected_height)
+        )
+        dock_widget = create_dummy_dock_widget(parent=self.window.control)
+        patch_get_dock_widget = mock.patch.object(
+            MainWindowLayout, "_get_dock_widget",
+            return_value=dock_widget,
+        )
+
+        # when
+        with self.event_loop():
+            with patch_get_dock_widget:
+                window_layout.set_layout(dock_layout)
+
+        # then
+        size = dock_widget.widget().size()
+        self.assertEqual(size.height(), expected_height)
