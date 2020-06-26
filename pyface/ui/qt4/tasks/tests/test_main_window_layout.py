@@ -76,9 +76,6 @@ class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
     def test_set_pane_item_width_in_main_window_layout(self):
         # Test the dock pane width is as expected.
 
-        # Set the main window to be bigger than the dock and add a central
-        # widget so that the test is meaningful about the size of the dock
-        # widget. Otherwise the dock widget fills all the space in the window.
         self.setup_window_with_central_widget()
 
         # Set the dock widget expected width to be smaller than the window
@@ -106,9 +103,6 @@ class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
     def test_set_pane_item_height_in_main_window_layout(self):
         # Test the dock pane height is as expected.
 
-        # Set the main window to be bigger than the dock and add a central
-        # widget so that the test is meaningful about the size of the dock
-        # widget. Otherwise the dock widget fills all the space in the window.
         self.setup_window_with_central_widget()
 
         # Set the dock widget expected height to be smaller than the window
