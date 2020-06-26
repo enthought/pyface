@@ -49,8 +49,7 @@ def create_dummy_dock_widget(parent):
     "This test targets Qt specific MainWindowLayout. "
     "Current toolkit is not Qt."
 )
-@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
-class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
+class TestMainWindowLayout(unittest.TestCase, GuiTestAssistant):
     """ Test Qt specific MainWindowLayout.
 
     Note that MainWindowLayout does not have a toolkit-agnostic interface
