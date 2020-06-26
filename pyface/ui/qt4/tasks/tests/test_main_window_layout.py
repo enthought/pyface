@@ -24,7 +24,6 @@ except ImportError:
 
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
-no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 def create_dummy_dock_widget(parent):
