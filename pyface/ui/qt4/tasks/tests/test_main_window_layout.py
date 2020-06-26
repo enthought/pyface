@@ -48,7 +48,7 @@ def create_dummy_dock_widget(parent):
 @unittest.skipIf(
     ETSConfig.toolkit != "qt4",
     "This test targets Qt specific MainWindowLayout. "
-    "Currently toolkit is not Qt."
+    "Current toolkit is not Qt."
 )
 class TestMainWindowLayout(GuiTestAssistant, unittest.TestCase):
     """ Test Qt specific MainWindowLayout.
