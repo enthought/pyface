@@ -45,9 +45,10 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        qcolor = self.control.selectedColor()
-        self.color = Color.from_toolkit(qcolor)
-        super(ColorDialog, self).close()
+        if self.control.result() == QtGui.QDialog.Accepted:
+            qcolor = self.control.selectedColor()
+            self.color = Color.from_toolkit(qcolor)
+        return super(ColorDialog, self).close()
 
     # ------------------------------------------------------------------------
     # 'IWindow' interface.

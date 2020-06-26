@@ -18,6 +18,9 @@ from pyface.color import Color, PyfaceColor
 from pyface.i_color_dialog import IColorDialog
 from .dialog import Dialog
 
+# The WxPython version in a convenient to compare form.
+wx_version = tuple(int(x) for x in wx.__version__.split('.')[:3])
+
 
 @provides(IColorDialog)
 class ColorDialog(Dialog):
@@ -29,7 +32,8 @@ class ColorDialog(Dialog):
     #: The color in the dialog.
     color = PyfaceColor()
 
-    #: Whether or not to allow the user to chose an alpha value.
+    #: Whether or not to allow the user to chose an alpha value.  Only works
+    #: for wxPython 4.1 and higher.
     show_alpha = Bool(False)
 
     # ------------------------------------------------------------------------
@@ -45,9 +49,10 @@ class ColorDialog(Dialog):
     # ------------------------------------------------------------------------
 
     def close(self):
-        colour_data = self.control.GetColourData()
-        wx_colour = colour_data.GetColour()
-        self.color = Color.from_toolkit(wx_colour)
+        if self.control.GetReturnCode() == wx.ID_OK:
+            colour_data = self.control.GetColourData()
+            wx_colour = colour_data.GetColour()
+            self.color = Color.from_toolkit(wx_colour)
         super(ColorDialog, self).close()
 
     # ------------------------------------------------------------------------
@@ -57,7 +62,8 @@ class ColorDialog(Dialog):
     def _create_control(self, parent):
         wx_colour = self.color.to_toolkit()
         data = wx.ColourData()
-        data.SetInitialColour(wx_colour)
-        data.SetChooseAlpha(self.show_alpha)
+        data.SetColour(wx_colour)
+        if wx_version >= (4, 1):
+            data.SetChooseAlpha(self.show_alpha)
         dialog = wx.ColourDialog(parent, data)
         return dialog
