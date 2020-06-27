@@ -39,6 +39,9 @@ class Field(MField, Widget):
     # IField interface
     # ------------------------------------------------------------------------
 
+    def show_context_menu(self, x, y):
+        """ Create and show the context menu at a position. """
+
     def _initialize_control(self):
         """ Perform any toolkit-specific initialization for the control. """
         self.control.SetToolTip(self.tooltip)

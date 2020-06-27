@@ -66,7 +66,7 @@ class FileDialog(MFileDialog, Dialog):
     # 'IWindow' interface.
     # ------------------------------------------------------------------------
 
-    def close(self):
+    def close(self, force=False):
         # Get the path of the chosen directory.
         self.path = str(self.control.GetPath())
         # Work around wx bug throwing exception on cancel of file dialog

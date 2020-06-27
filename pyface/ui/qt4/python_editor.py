@@ -86,6 +86,12 @@ class PythonEditor(MPythonEditor, Widget):
 
         self.dirty = False
 
+    # FIXME v3: This is very dependent on the underlying implementation.
+    def set_style(self, n, fore, back):
+        """ Set the foreground and background colors for a particular style and
+        set the font and size to default values.
+        """
+
     def select_line(self, lineno):
         """ Selects the specified line.
         """

@@ -182,6 +182,8 @@ class MWindow(object):
     # 'IWindow' interface.
     # -------------------------------------------------------------------------
 
+    key_pressed = Event(KeyPressedEvent)
+
     def open(self):
         """ Opens the window.
 

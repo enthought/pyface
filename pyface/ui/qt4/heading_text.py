@@ -15,10 +15,11 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Int, provides, Str
+from traits.api import Int, Instance, provides, Str
 
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
+from pyface.image_resource import ImageResource
 from .widget import Widget
 
 
@@ -33,6 +34,8 @@ class HeadingText(MHeadingText, Widget):
     level = Int(1)
 
     text = Str("Default")
+
+    image = Instance(ImageResource)
 
     # ------------------------------------------------------------------------
     # 'object' interface.

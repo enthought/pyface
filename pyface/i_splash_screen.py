@@ -82,7 +82,7 @@ class MSplashScreen(object):
             logger = logging.getLogger()
             logger.addHandler(self._log_handler)
 
-    def close(self):
+    def close(self, force=False):
         """ Close the window. """
 
         if self.show_log_messages:

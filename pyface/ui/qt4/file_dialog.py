@@ -84,7 +84,7 @@ class FileDialog(MFileDialog, Dialog):
     # 'IWindow' interface.
     # ------------------------------------------------------------------------
 
-    def close(self):
+    def close(self, force=False):
         # Get the path of the chosen directory.
         files = self.control.selectedFiles()
 

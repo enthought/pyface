@@ -31,5 +31,14 @@ class Widget(MWidget, HasTraits):
     # 'IWidget' interface.
     # ------------------------------------------------------------------------
 
+    def show(self, visible):
+        """ Show or hide the widget.
+
+        Parameter
+        ---------
+        visible : bool
+            Visible should be ``True`` if the widget should be shown.
+        """
+
     def destroy(self):
         self.control = None

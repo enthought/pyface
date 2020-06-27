@@ -72,7 +72,7 @@ class SingleChoiceDialog(MSingleChoiceDialog, Dialog):
     # 'IWindow' interface.
     # ------------------------------------------------------------------------
 
-    def close(self):
+    def close(self, force=False):
         """ Closes the window. """
 
         # Get the chosen object.

@@ -34,6 +34,9 @@ class Field(MField, Widget):
     #: An optional context menu for the field.
     context_menu = Instance("pyface.action.menu_manager.MenuManager")
 
+    def show_context_menu(self, x, y):
+        """ Create and show the context menu at a position. """
+
     # ------------------------------------------------------------------------
     # Private interface
     # ------------------------------------------------------------------------

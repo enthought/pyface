@@ -46,6 +46,8 @@ class Window(MWindow, Widget):
 
     title = Str()
 
+    key_pressed = Event(KeyPressedEvent)
+
     # Window Events ----------------------------------------------------------
 
     #: The window has been opened.

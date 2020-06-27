@@ -264,12 +264,50 @@ class MEventTimer(HasTraits):
 
     # IEventTimer interface --------------------------------------------------
 
+    # ITimer interface -------------------------------------------------------
+
+    #: The interval at which to call the callback in seconds.
+    interval = Range(low=0.0)
+
+    #: The number of times to repeat the callback, or None if no limit.
+    repeat = Either(None, Int)
+
+    #: The maximum length of time to run in seconds, or None if no limit.
+    expire = Either(None, Float)
+
+    #: Whether or not the timer is currently running.
+    active = Bool()
+
     #: A traits Event to fire when the callback happens.
     timeout = Event()
 
     # -------------------------------------------------------------------------
     # ITimer interface
     # -------------------------------------------------------------------------
+
+    @classmethod
+    def timer(cls, **traits):
+        """ Convenience method that creates and starts a timer.
+        """
+        pass
+
+    @classmethod
+    def single_shot(cls, **traits):
+        """ Convenience method that creates and starts a single-shot timer.
+        """
+        pass
+
+    def start(self):
+        """ Start the timer. """
+        pass
+
+    def stop(self):
+        """ Stop the timer. """
+        pass
+
+    def perform(self):
+        """ The method that will be called by the timer. """
+        pass
 
     # ITimer Protected methods -----------------------------------------------
 
@@ -282,6 +320,20 @@ class MEventTimer(HasTraits):
 class MCallbackTimer(HasTraits):
     """ Mixin for callback timer classes.
     """
+
+    # ITimer interface -------------------------------------------------------
+
+    #: The interval at which to call the callback in seconds.
+    interval = Range(low=0.0)
+
+    #: The number of times to repeat the callback, or None if no limit.
+    repeat = Either(None, Int)
+
+    #: The maximum length of time to run in seconds, or None if no limit.
+    expire = Either(None, Float)
+
+    #: Whether or not the timer is currently running.
+    active = Bool()
 
     # ICallbackTimer interface -----------------------------------------------
 
@@ -297,6 +349,30 @@ class MCallbackTimer(HasTraits):
     # -------------------------------------------------------------------------
     # ITimer interface
     # -------------------------------------------------------------------------
+
+    @classmethod
+    def timer(cls, **traits):
+        """ Convenience method that creates and starts a timer.
+        """
+        pass
+
+    @classmethod
+    def single_shot(cls, **traits):
+        """ Convenience method that creates and starts a single-shot timer.
+        """
+        pass
+
+    def start(self):
+        """ Start the timer. """
+        pass
+
+    def stop(self):
+        """ Stop the timer. """
+        pass
+
+    def perform(self):
+        """ The method that will be called by the timer. """
+        pass
 
     # ITimer Protected methods -----------------------------------------------
 

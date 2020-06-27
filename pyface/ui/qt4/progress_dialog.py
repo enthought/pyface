@@ -15,9 +15,10 @@ import time
 from pyface.qt import QtGui, QtCore
 
 from traits.api import (
-    Any, Bool, Callable, Instance, Int, List, Str, provides, Tuple
+    Any, Bool, Callable, Enum, Instance, Int, List, Str, provides, Tuple
 )
 
+from pyface.constant import OK
 from pyface.i_progress_dialog import IProgressDialog, MProgressDialog
 from .window import Window
 
@@ -83,6 +84,31 @@ class ProgressDialog(MProgressDialog, Window):
     #: The widget showing the estimated time remaining
     _remaining_control = Instance(QtGui.QLabel)
 
+    #: The label for the 'cancel' button.  The default is toolkit specific.
+    cancel_label = Str()
+
+    #: The context sensitive help Id (the 'Help' button is only shown iff this
+    #: is set).
+    help_id = Str()
+
+    #: The label for the 'help' button.  The default is toolkit specific.
+    help_label = Str()
+
+    #: The label for the 'ok' button.  The default is toolkit specific.
+    ok_label = Str()
+
+    #: Is the dialog resizeable?
+    resizeable = Bool(True)
+
+    #: The return code after the window is closed to indicate whether the dialog
+    #: was closed via 'Ok' or 'Cancel').
+    return_code = Int(OK)
+
+    #: The dialog style (is it modal or not).
+    # FIXME v3: It doesn't seem possible to use non-modal dialogs.  (How do you
+    # get access to the buttons?)
+    style = Enum("modal", "nonmodal")
+
     # Private interface ---------------------------------------------------#
 
     #: A list of connected Qt signals to be removed before destruction.
@@ -99,7 +125,7 @@ class ProgressDialog(MProgressDialog, Window):
         super(ProgressDialog, self).open()
         self._start_time = time.time()
 
-    def close(self):
+    def close(self, force=False):
         """ Closes the window. """
         self.progress_bar.destroy()
         self.progress_bar = None

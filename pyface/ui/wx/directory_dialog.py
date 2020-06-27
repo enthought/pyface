@@ -51,7 +51,7 @@ class DirectoryDialog(MDirectoryDialog, Dialog):
     # 'IWindow' interface.
     # ------------------------------------------------------------------------
 
-    def close(self):
+    def close(self, force=False):
         # Get the path of the chosen directory.
         self.path = str(self.control.GetPath())
 
