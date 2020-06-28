@@ -55,7 +55,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
 
     If the data is to be editable then the subclass should override the
-    ``set_data`` method.  It should attempt to change the underlying data as a
+    ``set_value`` method.  It should attempt to change the underlying data as a
     side-effect, and return True on success and False on failure (for example,
     setting an invalid value).  If the underlying data structure cannot be
     listened to internally (such as a numpy array or Pandas data frame), this
@@ -208,10 +208,10 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value_type(self, row, column):
-        """ Return the text value for the row and column.
+        """ Return the value type of the given row and column.
 
         The value type for column headers are returned by calling this method
-        with row equal to [].  The value typess for row headers are returned
+        with row equal to [].  The value types for row headers are returned
         by calling this method with column equal to [].
 
         Parameters

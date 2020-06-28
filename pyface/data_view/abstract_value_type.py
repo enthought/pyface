@@ -30,7 +30,7 @@ class AbstractValueType(ABCHasStrictTraits):
     display.
 
     Subclasses should mark traits that potentially affect the display of values
-    with ``update=True`` metdadata, or alternativelym fire the ``updated``
+    with ``update=True`` metdadata, or alternatively fire the ``updated``
     event when the state of the value type changes.
     """
 
@@ -95,11 +95,13 @@ class AbstractValueType(ABCHasStrictTraits):
             The row in the data model being queried.
         column : sequence of int
             The column in the data model being queried.
+        value : any
+            The value to set.
 
         Returns
         -------
-        value : any
-            The value to edit.
+        success : bool
+            Whether or not the value was successfully set.
         """
         if not self.can_edit(model, row, column):
             return False
@@ -122,8 +124,8 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        value : any
-            The value to edit.
+        has_text : bool
+            Whether or not the value has a textual representation.
         """
         return self.get_text(model, row, column) != ""
 
@@ -149,7 +151,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return str(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
-        """ Set the textual representation of the underlying value.
+        """ Set the text of the underlying value.
 
         This is provided primarily for backends which may not permit
         non-text editing of values, in which case this provides an

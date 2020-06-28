@@ -257,8 +257,7 @@ class IntIndexManager(AbstractIndexManager):
         IndexError
             Negative row values raise an IndexError exception.
         RuntimeError
-            The only persistent index for an IntIndexManager is the
-            root, so this method always raises.
+            If the parent is not the Root, a RuntimeError will be raised
         """
         if row < 0:
             raise IndexError("Row must be non-negative.  Got {}".format(row))
@@ -358,9 +357,6 @@ class TupleIndexManager(AbstractIndexManager):
         ------
         IndexError
             Negative row values raise an IndexError exception.
-        RuntimeError
-            The only persistent index for an IntIndexManager is the
-            root, so this method always raises.
         """
         if row < 0:
             raise IndexError("Row must be non-negative.  Got {}".format(row))
