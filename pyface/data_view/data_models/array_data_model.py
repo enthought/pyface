@@ -23,6 +23,22 @@ from pyface.data_view.index_manager import TupleIndexManager
 
 
 class ArrayDataModel(AbstractDataModel):
+    """ A data model for an n-dim array.
+
+    This data model presents the data from a multidimensional array
+    heirarchically by dimension.  The underlying array must be at least 2
+    dimensional.
+
+    Values are adapted by the ``value_type`` trait.  This provides sensible
+    default values for integer, float and text dtypes, but other dtypes may
+    need the user of the class to supply an appropriate value type class to
+    adapt values.
+
+    There are additional value types which provide data sources for row
+    headers, column headers, and the label of the row header column.  The
+    defaults are likely suitable for most cases, but can be overriden if
+    required.
+    """
 
     #: The array being displayed.  This must have dimension at least 2.
     data = Array()
@@ -31,7 +47,7 @@ class ArrayDataModel(AbstractDataModel):
     #: indices.
     index_manager = Instance(TupleIndexManager, args=())
 
-    #: The value type of the label headers.
+    #: The value type of the row index column header.
     label_header_type = Instance(
         AbstractValueType,
         factory=ConstantValue,
@@ -60,8 +76,8 @@ class ArrayDataModel(AbstractDataModel):
     def get_column_count(self, row):
         """ How many columns in a row of the data view model.
 
-        The total number of columns in the table is given by the column
-        count of the Root row.
+        The number of columns is always the size of the last dimension of the
+        array.
 
         Parameters
         ----------
@@ -77,6 +93,10 @@ class ArrayDataModel(AbstractDataModel):
 
     def can_have_children(self, row):
         """ Whether or not a row can have child rows.
+
+        A row is a leaf row if the length of the index is one less than
+        the dimension of the array: the final coordinate for the value will
+        be supplied by the column index.
 
         Parameters
         ----------
@@ -95,7 +115,8 @@ class ArrayDataModel(AbstractDataModel):
     def get_row_count(self, row):
         """ Whether or not the row currently has any child rows.
 
-        Subclasses may override this to provide a more direct implementation.
+        The number of rows in a non-leaf row is equal to the size of the
+        next dimension.
 
         Parameters
         ----------
@@ -163,9 +184,6 @@ class ArrayDataModel(AbstractDataModel):
     def set_value(self, row, column, value):
         """ Return the Python value for the row and column.
 
-        The values for column headers are returned by calling this method
-        with row as Root.
-
         Parameters
         ----------
         row : sequence of int
@@ -188,10 +206,6 @@ class ArrayDataModel(AbstractDataModel):
 
     def get_value_type(self, row, column):
         """ Return the text value for the row and column.
-
-        The value type for column headers are returned by calling this method
-        with row equal to [].  The value typess for row headers are returned
-        by calling this method with column equal to [].
 
         Parameters
         ----------
@@ -237,21 +251,21 @@ class ArrayDataModel(AbstractDataModel):
 
     @observe('column_header_type.updated', dispatch='ui')
     def column_header_type_updated(self, event):
-        """ Handle the header type being updated. """
+        """ Handle the column header type being updated. """
         self.values_changed = (
             ([], [0], [], [self.data.shape[-1] - 1])
         )
 
     @observe('row_header_type.updated', dispatch='ui')
     def value_header_type_updated(self, event):
-        """ Handle the header type being updated. """
+        """ Handle the value header type being updated. """
         self.values_changed = (
             ([0], [], [self.data.shape[0] - 1], [])
         )
 
     @observe('label_header_type.updated', dispatch='ui')
     def label_header_type_updated(self, event):
-        """ Handle the header type being updated. """
+        """ Handle the label header type being updated. """
         self.values_changed = (
             ([], [], [], [])
         )

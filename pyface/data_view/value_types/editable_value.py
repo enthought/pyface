@@ -74,24 +74,23 @@ class EditableValue(AbstractValueType):
         return model.can_set_value(row, column) and self.is_editable
 
     def set_editable(self, model, row, column, value):
-        """ Return whether or not the value can be edited.
-
-        A cell is editable if the underlying data can be set, and the
-        ``is_editable`` flag is set to True
+        """ Set the edited value.
 
         Parameters
         ----------
         model : AbstractDataModel
             The data model holding the data.
         row : sequence of int
-            The row in the data model being queried.
+            The row in the data model being set.
         column : sequence of int
-            The column in the data model being queried.
+            The column in the data model being set.
+        value : any
+            The value being set.
 
         Returns
         -------
-        can_edit : bool
-            Whether or not the value is editable.
+        success : bool
+            Whether or not the value was set successfully.
         """
         if not (self.can_edit(model, row, column)
                 and self.is_valid(model, row, column, value)):

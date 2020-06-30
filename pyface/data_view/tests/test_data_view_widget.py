@@ -16,7 +16,6 @@ from traits.testing.unittest_tools import UnittestTools
 
 from pyface.gui import GUI
 from pyface.window import Window
-from pyface.toolkit import toolkit_object
 
 from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.data_view_widget import DataViewWidget

@@ -32,6 +32,12 @@ class AbstractValueType(ABCHasStrictTraits):
     Subclasses should mark traits that potentially affect the display of values
     with ``update=True`` metdadata, or alternatively fire the ``updated``
     event when the state of the value type changes.
+
+    Each data channel is set up to have a method which returns whether there
+    is a value for the channel, a second method which returns the value,
+    and an optional third method which sets the channel value.  These methods
+    should not raise an Exception, eveen when called inappropriately (eg.
+    calling a "get" method after a "has" method has returned False).
     """
 
     #: Fired when a change occurs that requires updating values.
@@ -146,7 +152,7 @@ class AbstractValueType(ABCHasStrictTraits):
         Returns
         -------
         text : str
-            The value to edit.
+            The textual representation of the underlying value.
         """
         return str(model.get_value(row, column))
 
