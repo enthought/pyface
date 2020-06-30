@@ -217,6 +217,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ([], [], [], [])
         )
+
     def test_iter_rows(self):
         result = list(self.model.iter_rows())
         self.assertEqual(
