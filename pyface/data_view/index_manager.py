@@ -54,7 +54,6 @@ constraints required by the various toolkit APIs.
 """
 
 from abc import abstractmethod
-import typing as t
 
 from traits.api import ABCHasStrictTraits, Dict, Int, Tuple
 
@@ -68,7 +67,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
     """
 
     @abstractmethod
-    def create_index(self, parent: t.Any, row: int) -> t.Any:
+    def create_index(self, parent, row):
         """ Given a parent index and a row number, create an index.
 
         The internal structure of the index should not matter to
@@ -98,7 +97,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         raise NotImplementedError
 
     @abstractmethod
-    def get_parent_and_row(self, index: t.Any) -> t.Tuple[t.Any, int]:
+    def get_parent_and_row(self, index):
         """ Given an index object, return the parent index and row.
 
         Parameters
@@ -121,7 +120,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         """
         raise NotImplementedError
 
-    def from_sequence(self, indices: t.Sequence[int]) -> t.Any:
+    def from_sequence(self, indices):
         """ Given a sequence of indices, return the index object.
 
         The default implementation starts at the root and repeatedly calls
@@ -149,7 +148,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
             index = self.create_index(index, row)
         return index
 
-    def to_sequence(self, index: t.Any) -> t.List[int]:
+    def to_sequence(self, index):
         """ Given an index, return the corresponding sequence of row values.
 
         The default implementation repeatedly calls get_parent_and_row()
@@ -166,14 +165,14 @@ class AbstractIndexManager(ABCHasStrictTraits):
         sequence : list of int
             The row location at each level of the heirarchy.
         """
-        result: t.List[int] = []
+        result = ()
         while index != Root:
             index, row = self.get_parent_and_row(index)
-            result.insert(0, row)
+            result = (row,) + result
         return result
 
     @abstractmethod
-    def from_id(self, id: int) -> t.Any:
+    def from_id(self, id):
         """ Given an integer id, return the corresponding index.
 
         Parameters
@@ -189,7 +188,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         raise NotImplementedError
 
     @abstractmethod
-    def id(self, index: t.Any) -> int:
+    def id(self, index):
         """ Given an index, return the corresponding id.
 
         Parameters
@@ -235,7 +234,7 @@ class IntIndexManager(AbstractIndexManager):
     efficient.
     """
 
-    def create_index(self, parent: t.Any, row: int) -> t.Any:
+    def create_index(self, parent, row):
         """ Given a parent index and a row number, create an index.
 
         This should only ever be called with Root as the parent.
@@ -270,7 +269,7 @@ class IntIndexManager(AbstractIndexManager):
             )
         return row
 
-    def get_parent_and_row(self, index: t.Any) -> t.Tuple[t.Any, int]:
+    def get_parent_and_row(self, index):
         """ Given an index object, return the parent index and row.
 
         Parameters
@@ -295,7 +294,7 @@ class IntIndexManager(AbstractIndexManager):
             raise IndexError("Root index has no parent.")
         return Root, int(index)
 
-    def from_id(self, id: int) -> t.Any:
+    def from_id(self, id):
         """ Given an integer id, return the corresponding index.
 
         Parameters
@@ -312,7 +311,7 @@ class IntIndexManager(AbstractIndexManager):
             return Root
         return id - 1
 
-    def id(self, index: t.Any) -> int:
+    def id(self, index):
         """ Given an index, return the corresponding id.
 
         Parameters
@@ -338,7 +337,7 @@ class TupleIndexManager(AbstractIndexManager):
     #: A dictionary that maps ids to the canonical version of the tuple.
     _id_cache = Dict(Int, Tuple, {0: Root}, can_reset=True)
 
-    def create_index(self, parent: t.Any, row: int) -> t.Any:
+    def create_index(self, parent, row):
         """ Given a parent index and a row number, create an index.
 
         Parameters
@@ -366,7 +365,7 @@ class TupleIndexManager(AbstractIndexManager):
         self._id_cache[self.id(canonical_index)] = canonical_index
         return canonical_index
 
-    def get_parent_and_row(self, index: t.Any) -> t.Tuple[t.Any, int]:
+    def get_parent_and_row(self, index):
         """ Given an index object, return the parent index and row.
 
         Parameters
@@ -391,7 +390,7 @@ class TupleIndexManager(AbstractIndexManager):
             raise IndexError("Root index has no parent.")
         return index
 
-    def from_id(self, id: int) -> t.Any:
+    def from_id(self, id):
         """ Given an integer id, return the corresponding index.
 
         Parameters
@@ -406,7 +405,7 @@ class TupleIndexManager(AbstractIndexManager):
         """
         return self._id_cache[id]
 
-    def id(self, index: t.Any) -> int:
+    def id(self, index):
         """ Given an index, return the corresponding id.
 
         Parameters

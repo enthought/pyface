@@ -24,7 +24,7 @@ class IndexManagerMixin:
     def test_root_to_sequence(self):
         result = self.index_manager.to_sequence(Root)
 
-        self.assertEqual(result, [])
+        self.assertEqual(result, ())
 
     def test_root_from_sequence(self):
         result = self.index_manager.from_sequence([])
@@ -38,19 +38,19 @@ class IndexManagerMixin:
         self.assertIs(result, Root)
 
     def test_simple_sequence_round_trip(self):
-        sequence = [5]
+        sequence = (5,)
         index = self.index_manager.from_sequence(sequence)
         result = self.index_manager.to_sequence(index)
 
         self.assertEqual(result, sequence)
 
     def test_simple_sequence_invalid(self):
-        sequence = [-5]
+        sequence = (-5,)
         with self.assertRaises(IndexError):
             self.index_manager.from_sequence(sequence)
 
     def test_simple_sequence_to_parent_row(self):
-        sequence = [5]
+        sequence = (5,)
         index = self.index_manager.from_sequence(sequence)
         result = self.index_manager.get_parent_and_row(index)
 
@@ -70,7 +70,7 @@ class IndexManagerMixin:
         index = self.index_manager.create_index(Root, 5)
         result = self.index_manager.to_sequence(index)
 
-        self.assertEqual(result, [5])
+        self.assertEqual(result, (5,))
 
     def test_simple_id_round_trip(self):
         index = self.index_manager.create_index(Root, 5)
@@ -112,21 +112,21 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
         self.index_manager.reset()
 
     def test_complex_sequence_round_trip(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
         index = self.index_manager.from_sequence(sequence)
         result = self.index_manager.to_sequence(index)
 
         self.assertEqual(result, sequence)
 
     def test_complex_sequence_identical_index(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
         index_1 = self.index_manager.from_sequence(sequence[:])
         index_2 = self.index_manager.from_sequence(sequence[:])
 
         self.assertIs(index_1, index_2)
 
     def test_complex_sequence_to_parent_row(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
         index = self.index_manager.from_sequence(sequence)
 
         parent, row = self.index_manager.get_parent_and_row(index)
@@ -134,11 +134,11 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
         self.assertEqual(row, 10)
         self.assertIs(
             parent,
-            self.index_manager.from_sequence([5, 6, 7, 8, 9])
+            self.index_manager.from_sequence((5, 6, 7, 8, 9))
         )
 
     def test_complex_index_round_trip(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
 
         parent = Root
         for depth, row in enumerate(sequence):
@@ -150,7 +150,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
                 parent = index
 
     def test_complex_index_create_index_identical(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
 
         parent = Root
         for depth, row in enumerate(sequence):
@@ -161,7 +161,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
                 parent = index_1
 
     def test_complex_index_to_sequence(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
         parent = Root
         for depth, row in enumerate(sequence):
             with self.subTest(depth=depth):
@@ -181,7 +181,7 @@ class TestTupleIndexManager(IndexManagerMixin, TestCase):
                 parent = index
 
     def test_complex_index_id_round_trip(self):
-        sequence = [5, 6, 7, 8, 9, 10]
+        sequence = (5, 6, 7, 8, 9, 10)
         parent = Root
         for depth, row in enumerate(sequence):
             with self.subTest(depth=depth):

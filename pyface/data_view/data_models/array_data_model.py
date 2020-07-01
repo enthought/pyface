@@ -147,11 +147,11 @@ class ArrayDataModel(AbstractDataModel):
         row_count : non-negative int
             The number of child rows that the row has.
         """
-        if row == []:
-            if column == []:
+        if len(row) == 0:
+            if len(column) == 0:
                 return None
             return column[0]
-        elif column == []:
+        elif len(column) == 0:
             return row[-1]
         else:
             index = tuple(row + column)
@@ -219,11 +219,11 @@ class ArrayDataModel(AbstractDataModel):
         text : str
             The text to display in the given row and column.
         """
-        if row == []:
-            if column == []:
+        if len(row) == 0:
+            if len(column) == 0:
                 return self.label_header_type
             return self.column_header_type
-        elif column == []:
+        elif len(column) == 0:
             return self.row_header_type
         elif len(row) < self.data.ndim - 1:
             return no_value
@@ -237,7 +237,9 @@ class ArrayDataModel(AbstractDataModel):
         """ Handle the array being replaced with a new array. """
         if event.new.shape == event.old.shape:
             self.values_changed = (
-                ([0], [0], [event.old.shape[0] - 1], [event.old.shape[-1] - 1])
+                (
+                    (0,), (0,),
+                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,))
             )
         else:
             self.structure_changed = True
@@ -246,28 +248,28 @@ class ArrayDataModel(AbstractDataModel):
     def value_type_updated(self, event):
         """ Handle the value type being updated. """
         self.values_changed = (
-            ([0], [0], [self.data.shape[0] - 1], [self.data.shape[-1] - 1])
+            ((0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,))
         )
 
     @observe('column_header_type.updated', dispatch='ui')
     def column_header_type_updated(self, event):
         """ Handle the column header type being updated. """
         self.values_changed = (
-            ([], [0], [], [self.data.shape[-1] - 1])
+            ((), (0,), (), (self.data.shape[-1] - 1,))
         )
 
     @observe('row_header_type.updated', dispatch='ui')
     def value_header_type_updated(self, event):
         """ Handle the value header type being updated. """
         self.values_changed = (
-            ([0], [], [self.data.shape[0] - 1], [])
+            ((0,), (), (self.data.shape[0] - 1,), ())
         )
 
     @observe('label_header_type.updated', dispatch='ui')
     def label_header_type_updated(self, event):
         """ Handle the label header type being updated. """
         self.values_changed = (
-            ([], [], [], [])
+            ((), (), (), ())
         )
 
     def _value_type_default(self):

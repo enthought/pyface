@@ -22,10 +22,6 @@ from pyface.data_view.index_manager import TupleIndexManager
 from pyface.data_view.value_types.api import TextValue
 
 
-def id(obj):
-    return obj
-
-
 class AbstractRowInfo(ABCHasStrictTraits):
     """ Configuration for a data row in a ColumnDataModel.
     """
@@ -210,7 +206,7 @@ class ColumnDataModel(AbstractDataModel):
         can_set_value : bool
             Whether or not the value can be set.
         """
-        if column == []:
+        if len(column) == 0:
             return False
         else:
             return True

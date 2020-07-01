@@ -62,10 +62,10 @@ class DataViewModel(wxDataViewModel):
 
     def on_values_changed(self, event):
         top, left, bottom, right = event.new
-        if top == [] and bottom == []:
+        if top == () and bottom == ():
             # this is a column header change, reset everything
             self.Cleared()
-        elif left == [] and right == []:
+        elif left == () and right == ():
             # this is a row header change
             # XXX this is currently not supported and not needed
             pass
@@ -124,9 +124,9 @@ class DataViewModel(wxDataViewModel):
     def GetValue(self, item, column):
         row_index = self._to_row_index(item)
         if column == 0:
-            column_index = []
+            column_index = ()
         else:
-            column_index = [column - 1]
+            column_index = (column - 1,)
         value_type = self.model.get_value_type(row_index, column_index)
         if value_type.has_text(self.model, row_index, column_index):
             return value_type.get_text(self.model, row_index, column_index)
@@ -135,9 +135,9 @@ class DataViewModel(wxDataViewModel):
     def SetValue(self, value, item, column):
         row_index = self._to_row_index(item)
         if column == 0:
-            column_index = []
+            column_index = ()
         else:
-            column_index = [column - 1]
+            column_index = (column - 1,)
         try:
             result = self.model.set_text(row_index, column_index, value)
         except Exception as exc:
@@ -147,10 +147,10 @@ class DataViewModel(wxDataViewModel):
         return result
 
     def GetColumnCount(self):
-        return self.model.get_column_count([]) + 1
+        return self.model.get_column_count(()) + 1
 
     def GetColumnType(self, column):
-        value_type = self.model.get_value_type([], [column-1])
+        value_type = self.model.get_value_type((), (column-1,))
         return type_hint_to_variant.get(value_type.type_hint, "string")
 
     def _to_row_index(self, item):

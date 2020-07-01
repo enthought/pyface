@@ -231,7 +231,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     # Convenience iterator methods
 
-    def iter_rows(self, start_row=[]):
+    def iter_rows(self, start_row=()):
         """ Iterator that yields rows in preorder.
 
         Parameters
@@ -245,12 +245,13 @@ class AbstractDataModel(ABCHasStrictTraits):
         row_index
             The current row index.
         """
+        start_row = tuple(start_row)
         yield start_row
         if self.can_have_children(start_row):
             for row in range(self.get_row_count(start_row)):
-                yield from self.iter_rows(start_row + [row])
+                yield from self.iter_rows(start_row + (row,))
 
-    def iter_items(self, start_row=[]):
+    def iter_items(self, start_row=()):
         """ Iterator that yields rows and columns in preorder.
 
         This yields pairs of row, column for all rows in preorder
@@ -268,6 +269,6 @@ class AbstractDataModel(ABCHasStrictTraits):
             The current row and column indices.
         """
         for row in self.iter_rows(start_row):
-            yield row, []
+            yield row, ()
             for column in range(self.get_column_count(row)):
-                yield row, [column]
+                yield row, (column,)

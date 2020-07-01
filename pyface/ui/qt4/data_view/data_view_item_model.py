@@ -73,10 +73,10 @@ class DataViewItemModel(QAbstractItemModel):
 
     def on_values_changed(self, event):
         top, left, bottom, right = event.new
-        if top == [] and bottom == []:
+        if top == () and bottom == ():
             # this is a column header change
             self.headerDataChanged.emit(left[0], right[0])
-        elif left == [] and right == []:
+        elif left == () and right == ():
             # this is a row header change
             # XXX this is currently not supported and not needed
             pass
@@ -181,15 +181,15 @@ class DataViewItemModel(QAbstractItemModel):
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal:
-            row = []
+            row = ()
             if section == 0:
-                column = []
+                column = ()
             else:
-                column = [section - 1]
+                column = (section - 1,)
         else:
             # XXX not currently used, but here for symmetry and completeness
-            row = [section]
-            column = []
+            row = (section,)
+            column = ()
 
         value_type = self.model.get_value_type(row, column)
 
@@ -201,25 +201,25 @@ class DataViewItemModel(QAbstractItemModel):
 
     def _to_row_index(self, index):
         if not index.isValid():
-            row_index = []
+            row_index = ()
         else:
             parent = index.internalPointer()
             if parent == Root:
-                row_index = []
+                row_index = ()
             else:
                 row_index = self.model.index_manager.to_sequence(parent)
-            row_index.append(index.row())
+            row_index += (index.row(),)
         return row_index
 
     def _to_column_index(self, index):
         if not index.isValid():
-            return []
+            return ()
         else:
             column = index.column()
             if column == 0:
-                return []
+                return ()
             else:
-                return [column - 1]
+                return (column - 1,)
 
     def _to_model_index(self, row_index, column_index):
         if len(row_index) == 0:

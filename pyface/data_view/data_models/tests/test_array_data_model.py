@@ -77,11 +77,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
                 result = self.model.get_value(row, column)
-                if row == [] and column == []:
+                if len(row) == 0 and len(column) == 0:
                     self.assertIsNone(result)
-                elif row == []:
+                elif len(row) == 0:
                     self.assertEqual(result, column[0])
-                elif column == []:
+                elif len(column) == 0:
                     self.assertEqual(result, row[-1])
                 elif len(row) == 1:
                     self.assertIsNone(result)
@@ -94,13 +94,13 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def test_set_value(self):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
-                if row == [] and column == []:
+                if len(row) == 0 and len(column) == 0:
                     result = self.model.set_value(row, column, 0)
                     self.assertFalse(result)
-                elif row == []:
+                elif len(row) == 0:
                     result = self.model.set_value(row, column, column[0] + 1)
                     self.assertFalse(result)
-                elif column == []:
+                elif len(column) == 0:
                     result = self.model.set_value(row, column, row[-1] + 1)
                     self.assertFalse(result)
                 elif len(row) == 1:
@@ -126,13 +126,13 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
                 result = self.model.get_value_type(row, column)
-                if row == [] and column == []:
+                if len(row) == 0 and len(column) == 0:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.label_header_type)
-                elif row == []:
+                elif len(row) == 0:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.column_header_type)
-                elif column == []:
+                elif len(column) == 0:
                     self.assertIsInstance(result, AbstractValueType)
                     self.assertIs(result, self.model.row_header_type)
                 elif len(row) == 1:
@@ -146,7 +146,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.data = 2 * self.array
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [4], [2])
+            ((0,), (0,), (4,), (2,))
         )
 
     def test_data_updated_new_shape(self):
@@ -159,7 +159,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.value_type = IntValue()
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [4], [2])
+            ((0,), (0,), (4,), (2,))
         )
 
     def test_type_attribute_updated(self):
@@ -167,7 +167,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.value_type.is_editable = False
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [0], [4], [2])
+            ((0,), (0,), (4,), (2,))
         )
 
     def test_row_header_type_updated(self):
@@ -175,7 +175,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.row_header_type = no_value
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [], [4], [])
+            ((0,), (), (4,), ())
         )
 
     def test_row_header_attribute_updated(self):
@@ -183,7 +183,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.row_header_type.format = str
         self.assertEqual(
             self.values_changed_event.new,
-            ([0], [], [4], [])
+            ((0,), (), (4,), ())
         )
 
     def test_column_header_type_updated(self):
@@ -191,7 +191,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.column_header_type = no_value
         self.assertEqual(
             self.values_changed_event.new,
-            ([], [0], [], [2])
+            ((), (0,), (), (2,))
         )
 
     def test_column_header_type_attribute_updated(self):
@@ -199,7 +199,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.column_header_type.format = str
         self.assertEqual(
             self.values_changed_event.new,
-            ([], [0], [], [2])
+            ((), (0,), (), (2,))
         )
 
     def test_label_header_type_updated(self):
@@ -207,7 +207,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.label_header_type = no_value
         self.assertEqual(
             self.values_changed_event.new,
-            ([], [], [], [])
+            ((), (), (), ())
         )
 
     def test_label_header_type_attribute_updated(self):
@@ -215,7 +215,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.model.label_header_type.text = "My Table"
         self.assertEqual(
             self.values_changed_event.new,
-            ([], [], [], [])
+            ((), (), (), ())
         )
 
     def test_iter_rows(self):
@@ -223,97 +223,97 @@ class TestArrayDataModel(UnittestTools, TestCase):
         self.assertEqual(
             result,
             [
-                [],
-                [0],
-                [0, 0],
-                [0, 1],
-                [1],
-                [1, 0],
-                [1, 1],
-                [2],
-                [2, 0],
-                [2, 1],
-                [3],
-                [3, 0],
-                [3, 1],
-                [4],
-                [4, 0],
-                [4, 1],
+                (),
+                (0,),
+                (0, 0),
+                (0, 1),
+                (1,),
+                (1, 0),
+                (1, 1),
+                (2,),
+                (2, 0),
+                (2, 1),
+                (3,),
+                (3, 0),
+                (3, 1),
+                (4,),
+                (4, 0),
+                (4, 1),
             ]
         )
 
     def test_iter_rows_start(self):
-        result = list(self.model.iter_rows([2]))
+        result = list(self.model.iter_rows((2,)))
         self.assertEqual(
             result,
-            [[2], [2, 0], [2, 1]]
+            [(2,), (2, 0), (2, 1)]
         )
 
     def test_iter_rows_leaf(self):
         result = list(self.model.iter_rows([2, 0]))
-        self.assertEqual(result, [[2, 0]])
+        self.assertEqual(result, [(2, 0)])
 
     def test_iter_items(self):
         result = list(self.model.iter_items())
         self.assertEqual(
             result,
             [
-                ([], []),
-                ([], [0]), ([], [1]), ([], [2]),
-                ([0], []),
-                ([0], [0]), ([0], [1]), ([0], [2]),
-                ([0, 0], []),
-                ([0, 0], [0]), ([0, 0], [1]), ([0, 0], [2]),
-                ([0, 1], []),
-                ([0, 1], [0]), ([0, 1], [1]), ([0, 1], [2]),
-                ([1], []),
-                ([1], [0]), ([1], [1]), ([1], [2]),
-                ([1, 0], []),
-                ([1, 0], [0]), ([1, 0], [1]), ([1, 0], [2]),
-                ([1, 1], []),
-                ([1, 1], [0]), ([1, 1], [1]), ([1, 1], [2]),
-                ([2], []),
-                ([2], [0]), ([2], [1]), ([2], [2]),
-                ([2, 0], []),
-                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
-                ([2, 1], []),
-                ([2, 1], [0]), ([2, 1], [1]), ([2, 1], [2]),
-                ([3], []),
-                ([3], [0]), ([3], [1]), ([3], [2]),
-                ([3, 0], []),
-                ([3, 0], [0]), ([3, 0], [1]), ([3, 0], [2]),
-                ([3, 1], []),
-                ([3, 1], [0]), ([3, 1], [1]), ([3, 1], [2]),
-                ([4], []),
-                ([4], [0]), ([4], [1]), ([4], [2]),
-                ([4, 0], []),
-                ([4, 0], [0]), ([4, 0], [1]), ([4, 0], [2]),
-                ([4, 1], []),
-                ([4, 1], [0]), ([4, 1], [1]), ([4, 1], [2]),
+                ((), ()),
+                ((), (0,)), ((), (1,)), ((), (2,)),
+                ((0,), ()),
+                ((0,), (0,)), ((0,), (1,)), ((0,), (2,)),
+                ((0, 0), ()),
+                ((0, 0), (0,)), ((0, 0), (1,)), ((0, 0), (2,)),
+                ((0, 1), ()),
+                ((0, 1), (0,)), ((0, 1), (1,)), ((0, 1), (2,)),
+                ((1,), ()),
+                ((1,), (0,)), ((1,), (1,)), ((1,), (2,)),
+                ((1, 0), ()),
+                ((1, 0), (0,)), ((1, 0), (1,)), ((1, 0), (2,)),
+                ((1, 1), ()),
+                ((1, 1), (0,)), ((1, 1), (1,)), ((1, 1), (2,)),
+                ((2,), ()),
+                ((2,), (0,)), ((2,), (1,)), ((2,), (2,)),
+                ((2, 0), ()),
+                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
+                ((2, 1), ()),
+                ((2, 1), (0,)), ((2, 1), (1,)), ((2, 1), (2,)),
+                ((3,), ()),
+                ((3,), (0,)), ((3,), (1,)), ((3,), (2,)),
+                ((3, 0), ()),
+                ((3, 0), (0,)), ((3, 0), (1,)), ((3, 0), (2,)),
+                ((3, 1), ()),
+                ((3, 1), (0,)), ((3, 1), (1,)), ((3, 1), (2,)),
+                ((4,), ()),
+                ((4,), (0,)), ((4,), (1,)), ((4,), (2,)),
+                ((4, 0), ()),
+                ((4, 0), (0,)), ((4, 0), (1,)), ((4, 0), (2,)),
+                ((4, 1), ()),
+                ((4, 1), (0,)), ((4, 1), (1,)), ((4, 1), (2,)),
             ]
         )
 
     def test_iter_items_start(self):
-        result = list(self.model.iter_items([2]))
+        result = list(self.model.iter_items((2,)))
         self.assertEqual(
             result,
             [
-                ([2], []),
-                ([2], [0]), ([2], [1]), ([2], [2]),
-                ([2, 0], []),
-                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
-                ([2, 1], []),
-                ([2, 1], [0]), ([2, 1], [1]), ([2, 1], [2]),
+                ((2,), ()),
+                ((2,), (0,)), ((2,), (1,)), ((2,), (2,)),
+                ((2, 0), ()),
+                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
+                ((2, 1), ()),
+                ((2, 1), (0,)), ((2, 1), (1,)), ((2, 1), (2,)),
             ]
         )
 
     def test_iter_items_leaf(self):
-        result = list(self.model.iter_items([2, 0]))
+        result = list(self.model.iter_items((2, 0)))
         self.assertEqual(
             result,
             [
-                ([2, 0], []),
-                ([2, 0], [0]), ([2, 0], [1]), ([2, 0], [2]),
+                ((2, 0), ()),
+                ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
             ]
         )
 
