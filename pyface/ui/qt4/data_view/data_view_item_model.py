@@ -173,7 +173,7 @@ class DataViewItemModel(QAbstractItemModel):
         if role == Qt.EditRole:
             if value_type.can_edit(self.model, row, column):
                 return value_type.set_editable(self.model, row, column, value)
-        elif role == Qt.TextRole:
+        elif role == Qt.DisplayRole:
             if value_type.has_text(self.model, row, column):
                 return value_type.set_text(self.model, row, column, value)
 
