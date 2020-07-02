@@ -29,7 +29,7 @@ Change summary
 Enhancements
 
 * Use Traits 6 features (#480, #494)
-* WxPython 4 support (#469, #473, #497, $499)
+* WxPython 4 support (#469, #473, #497, #499)
 * Remove six and other Python 2 code (#493)
 * Add utility functions for Qt images (#498)
 * Allow live update of Action images (#484)
