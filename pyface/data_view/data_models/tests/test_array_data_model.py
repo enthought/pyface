@@ -48,10 +48,8 @@ class TestArrayDataModel(UnittestTools, TestCase):
         self.structure_changed_event = event
 
     def test_get_column_count(self):
-        for row in self.model.iter_rows():
-            with self.subTest(row=row):
-                result = self.model.get_column_count(row)
-                self.assertEqual(result, 3)
+        result = self.model.get_column_count()
+        self.assertEqual(result, 3)
 
     def test_can_have_children(self):
         for row in self.model.iter_rows():

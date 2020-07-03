@@ -29,7 +29,7 @@ Data Structure
 The keys are displayed in the row headers, so each row has one column
 displaying the value::
 
-    def get_column_count(self, row):
+    def get_column_count(self):
         return 1
 
 The data is non-heirarchical, so the root has children and no other

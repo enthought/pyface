@@ -80,21 +80,14 @@ class AbstractDataModel(ABCHasStrictTraits):
     # Data structure methods
 
     @abstractmethod
-    def get_column_count(self, row):
-        """ How many columns in the row of the data view model.
-
-        The total number of columns in the table is given by the column
-        count of the root row.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
+    def get_column_count(self):
+        """ How many columns in the data view model.
 
         Returns
         -------
         column_count : non-negative int
-            The number of columns that the row provides.
+            The number of columns that the data view provides.  This count
+            should not include the row header.
         """
         raise NotImplementedError
 
@@ -260,7 +253,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Parameters
         ----------
-        start : row index
+        start_row : row index
             The row to start iteration from.
 
         Yields

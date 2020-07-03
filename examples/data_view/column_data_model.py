@@ -169,7 +169,7 @@ class ColumnDataModel(AbstractDataModel):
     #: indices.
     index_manager = Instance(TupleIndexManager, args=())
 
-    def get_column_count(self, row):
+    def get_column_count(self):
         return len(self.data)
 
     def can_have_children(self, row):

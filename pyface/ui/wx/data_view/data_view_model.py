@@ -147,7 +147,7 @@ class DataViewModel(wxDataViewModel):
         return result
 
     def GetColumnCount(self):
-        return self.model.get_column_count(()) + 1
+        return self.model.get_column_count() + 1
 
     def GetColumnType(self, column):
         value_type = self.model.get_value_type((), (column-1,))

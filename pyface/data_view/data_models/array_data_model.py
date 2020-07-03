@@ -73,23 +73,19 @@ class ArrayDataModel(AbstractDataModel):
 
     # Data structure methods
 
-    def get_column_count(self, row):
-        """ How many columns in a row of the data view model.
+    def get_column_count(self):
+        """ How many columns in the data view model.
 
-        The number of columns is always the size of the last dimension of the
-        array.
-
-        Parameters
-        ----------
-        row : sequence of int
-            The indices of the row as a sequence from root to leaf.
+        The number of columns is the size of the last dimension of the array.
 
         Returns
         -------
         column_count : non-negative int
-            The number of columns that the row provides.
+            The number of columns in the data view model, which is the size of
+            the last dimension of the array.
         """
         return self.data.shape[-1]
+
 
     def can_have_children(self, row):
         """ Whether or not a row can have child rows.

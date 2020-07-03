@@ -127,7 +127,11 @@ class DataViewItemModel(QAbstractItemModel):
     def columnCount(self, index):
         row_index = self._to_row_index(index)
         try:
-            return self.model.get_column_count(row_index) + 1
+            # the number of columns is constant; leaf rows return 0
+            if self.model.can_have_children(row_index):
+                return self.model.get_column_count() + 1
+            else:
+                return 0
         except Exception:
             logger.exception("Error in columnCount")
 
