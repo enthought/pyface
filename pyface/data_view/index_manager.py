@@ -162,7 +162,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
         Returns
         -------
-        sequence : list of int
+        sequence : tuple of int
             The row location at each level of the heirarchy.
         """
         result = ()
