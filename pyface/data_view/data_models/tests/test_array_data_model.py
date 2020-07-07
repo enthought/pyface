@@ -26,7 +26,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def setUp(self):
         super().setUp()
         self.array = np.arange(30.0).reshape(5, 2, 3)
-        self.model = ArrayDataModel(data=self.array)
+        self.model = ArrayDataModel(data=self.array, value_type=FloatValue())
         self.values_changed_event = None
         self.structure_changed_event = None
         self.model.observe(self.model_values_changed, 'values_changed')
@@ -46,6 +46,12 @@ class TestArrayDataModel(UnittestTools, TestCase):
 
     def model_structure_changed(self, event):
         self.structure_changed_event = event
+
+    def test_data_1d(self):
+        array = np.arange(30.0)
+        model = ArrayDataModel(data=array, value_type=FloatValue())
+        self.assertEqual(model.data.ndim, 2)
+        self.assertEqual(model.data.shape, (1, 30))
 
     def test_get_column_count(self):
         result = self.model.get_column_count()
@@ -314,20 +320,3 @@ class TestArrayDataModel(UnittestTools, TestCase):
                 ((2, 0), (0,)), ((2, 0), (1,)), ((2, 0), (2,)),
             ]
         )
-
-    def test_default_value_type(self):
-        data = np.arange(15).reshape(5, 3)
-        model = ArrayDataModel(data=data)
-        self.assertIsInstance(model.value_type, IntValue)
-
-        data = np.arange(15.0).reshape(5, 3)
-        model = ArrayDataModel(data=data)
-        self.assertIsInstance(model.value_type, FloatValue)
-
-        data = np.array([['a', 'b', 'c'], ['e', 'f', 'g']])
-        model = ArrayDataModel(data=data)
-        self.assertIsInstance(model.value_type, TextValue)
-
-        data = np.array([['a', 'b', 'c'], ['e', 'f', 'g']], dtype=object)
-        model = ArrayDataModel(data=data)
-        self.assertIsInstance(model.value_type, TextValue)

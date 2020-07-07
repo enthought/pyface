@@ -12,7 +12,9 @@
 This module provides a concrete implementation of a data model for an
 n-dim numpy array.
 """
-from traits.api import Array, Instance, observe
+from collections.abc import Sequence
+
+from traits.api import Array, HasRequiredTraits, Instance, observe
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_value_type import AbstractValueType
@@ -22,7 +24,39 @@ from pyface.data_view.value_types.api import (
 from pyface.data_view.index_manager import TupleIndexManager
 
 
-class ArrayDataModel(AbstractDataModel):
+class _AtLeastTwoDArray(Array):
+    """ Trait type that holds an array that at least two dimensional.
+
+    This calls numpy.atleast_2d during validation to ensure that the value is
+    good.
+    """
+
+    def validate(self, object, name, value):
+        from numpy import atleast_2d
+        value = super().validate(object, name, value)
+        return atleast_2d(value)
+
+    def _default_for_dtype_and_shape(self, dtype, shape):
+        """ Invent a suitable default value for a given dtype and shape. """
+        from numpy import zeros
+
+        if shape is None:
+            value = zeros((0, 0), dtype)
+        else:
+            size = []
+            for item in shape:
+                if item is None:
+                    item = 0
+                elif isinstance(item, Sequence):
+                    # Given a (minimum-allowed-length, maximum-allowed_length)
+                    # pair for a particular axis, use the minimum.
+                    item = item[0]
+                size.append(item)
+            value = zeros(size, dtype)
+        return value
+
+
+class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     """ A data model for an n-dim array.
 
     This data model presents the data from a multidimensional array
@@ -41,7 +75,7 @@ class ArrayDataModel(AbstractDataModel):
     """
 
     #: The array being displayed.  This must have dimension at least 2.
-    data = Array()
+    data = _AtLeastTwoDArray()
 
     #: The index manager that helps convert toolkit indices to data view
     #: indices.
@@ -52,6 +86,7 @@ class ArrayDataModel(AbstractDataModel):
         AbstractValueType,
         factory=ConstantValue,
         kw={'text': "Index"},
+        allow_none=False,
     )
 
     #: The value type of the column titles.
@@ -59,6 +94,7 @@ class ArrayDataModel(AbstractDataModel):
         AbstractValueType,
         factory=IntValue,
         kw={'is_editable': False},
+        allow_none=False,
     )
 
     #: The value type of the row titles.
@@ -66,10 +102,11 @@ class ArrayDataModel(AbstractDataModel):
         AbstractValueType,
         factory=IntValue,
         kw={'is_editable': False},
+        allow_none=False,
     )
 
     #: The type of value being displayed in the data model.
-    value_type = Instance(AbstractValueType)
+    value_type = Instance(AbstractValueType, allow_none=False, required=True)
 
     # Data structure methods
 
@@ -85,7 +122,6 @@ class ArrayDataModel(AbstractDataModel):
             the last dimension of the array.
         """
         return self.data.shape[-1]
-
 
     def can_have_children(self, row):
         """ Whether or not a row can have child rows.
@@ -267,15 +303,3 @@ class ArrayDataModel(AbstractDataModel):
         self.values_changed = (
             ((), (), (), ())
         )
-
-    def _value_type_default(self):
-        import numpy as np
-        scalar_type = self.data.dtype
-        if np.issubdtype(scalar_type, np.integer):
-            return IntValue()
-        elif np.issubdtype(scalar_type, np.floating):
-            return FloatValue()
-        elif np.issubdtype(scalar_type, np.character):
-            return TextValue()
-
-        return TextValue(is_editable=False)

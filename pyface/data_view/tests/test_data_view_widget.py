@@ -19,6 +19,7 @@ from pyface.window import Window
 
 from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.data_view_widget import DataViewWidget
+from pyface.data_view.value_types.api import FloatValue
 
 
 @requires_numpy
@@ -38,7 +39,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
     def _create_widget(self):
         self.data = np.arange(30.0).reshape(5, 6)
-        self.model = ArrayDataModel(data=self.data)
+        self.model = ArrayDataModel(data=self.data, value_type=FloatValue())
         return DataViewWidget(
             parent=self.parent.control,
             data_model=self.model

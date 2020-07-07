@@ -14,6 +14,7 @@ from pyface.api import ApplicationWindow, GUI
 from pyface.data_view.data_models.array_data_model import ArrayDataModel
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
+from pyface.data_view.value_types.api import FloatValue
 
 
 class MainWindow(ApplicationWindow):
@@ -28,7 +29,10 @@ class MainWindow(ApplicationWindow):
 
         self.data_view = DataViewWidget(
             parent=parent,
-            data_model=ArrayDataModel(data=self.data),
+            data_model=ArrayDataModel(
+                data=self.data,
+                value_type=FloatValue(),
+            ),
         )
         self.data_view._create()
         return self.data_view.control
