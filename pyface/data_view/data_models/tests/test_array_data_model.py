@@ -47,6 +47,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
     def model_structure_changed(self, event):
         self.structure_changed_event = event
 
+    def test_no_data(self):
+        model = ArrayDataModel(value_type=FloatValue())
+        self.assertEqual(model.data.ndim, 2)
+        self.assertEqual(model.data.shape, (0, 0))
+
     def test_data_1d(self):
         array = np.arange(30.0)
         model = ArrayDataModel(data=array, value_type=FloatValue())
