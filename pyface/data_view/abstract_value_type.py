@@ -30,7 +30,7 @@ class AbstractValueType(ABCHasStrictTraits):
     display.
 
     Subclasses should mark traits that potentially affect the display of values
-    with ``update=True`` metdadata, or alternatively fire the ``updated``
+    with ``update_value_type=True`` metdadata, or alternatively fire the ``updated``
     event when the state of the value type changes.
 
     Each data channel is set up to have a method which returns whether there
@@ -180,7 +180,7 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         return False
 
-    @observe('+update')
+    @observe('+update_value_type')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """
         self.updated = True

@@ -18,7 +18,7 @@ class TextValue(EditableValue):
     """
 
     #: A function that converts the value to a string for display.
-    format = Callable(str, update=True)
+    format = Callable(str, update_value_type=True)
 
     #: A function that converts to a value from a display string.
     unformat = Callable(str)

@@ -21,7 +21,7 @@ from pyface.data_view.abstract_value_type import AbstractValueType
 class ValueType(AbstractValueType):
 
     #: a parameter which should fire the update trait
-    sample_parameter = Str(update=True)
+    sample_parameter = Str(update_value_type=True)
 
 
 class TestAbstractValueType(UnittestTools, TestCase):

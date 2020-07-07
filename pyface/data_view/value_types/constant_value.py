@@ -22,7 +22,7 @@ class ConstantValue(AbstractValueType):
     """
 
     #: The text value to display.
-    text = Str(update=True)
+    text = Str(update_value_type=True)
 
     def has_editor_value(self, model, row, column):
         return False

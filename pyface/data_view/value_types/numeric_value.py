@@ -35,7 +35,7 @@ class NumericValue(EditableValue):
     evaluate = Callable()
 
     #: A function that converts the required type to a string for display.
-    format = Callable(format_locale, update=True)
+    format = Callable(format_locale, update_value_type=True)
 
     #: A function that converts the required type from a display string.
     unformat = Callable(locale.delocalize)

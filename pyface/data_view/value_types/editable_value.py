@@ -25,7 +25,7 @@ class EditableValue(AbstractValueType):
 
     #: Whether or not the value is editable, assuming the underlying data can
     #: be set.
-    is_editable = Bool(True, update=True)
+    is_editable = Bool(True, update_value_type=True)
 
     def is_valid(self, model, row, column, value):
         """ Whether or not the value is valid for the data item specified.
