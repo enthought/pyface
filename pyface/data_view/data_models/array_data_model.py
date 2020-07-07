@@ -269,9 +269,8 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
         """ Handle the array being replaced with a new array. """
         if event.new.shape == event.old.shape:
             self.values_changed = (
-                (
                     (0,), (0,),
-                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,))
+                    (event.old.shape[0] - 1,), (event.old.shape[-1] - 1,)
             )
         else:
             self.structure_changed = True
@@ -280,26 +279,20 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     def value_type_updated(self, event):
         """ Handle the value type being updated. """
         self.values_changed = (
-            ((0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,))
+            (0,), (0,), (self.data.shape[0] - 1,), (self.data.shape[-1] - 1,)
         )
 
     @observe('column_header_type.updated', dispatch='ui')
     def column_header_type_updated(self, event):
         """ Handle the column header type being updated. """
-        self.values_changed = (
-            ((), (0,), (), (self.data.shape[-1] - 1,))
-        )
+        self.values_changed = ((), (0,), (), (self.data.shape[-1] - 1,))
 
     @observe('row_header_type.updated', dispatch='ui')
     def value_header_type_updated(self, event):
         """ Handle the value header type being updated. """
-        self.values_changed = (
-            ((0,), (), (self.data.shape[0] - 1,), ())
-        )
+        self.values_changed = ((0,), (), (self.data.shape[0] - 1,), ())
 
     @observe('label_header_type.updated', dispatch='ui')
     def label_header_type_updated(self, event):
         """ Handle the label header type being updated. """
-        self.values_changed = (
-            ((), (), (), ())
-        )
+        self.values_changed = ((), (), (), ())
