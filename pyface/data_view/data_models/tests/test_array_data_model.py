@@ -53,6 +53,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
         self.assertEqual(model.data.ndim, 2)
         self.assertEqual(model.data.shape, (1, 30))
 
+    def test_set_data_1d(self):
+        self.model.data = np.arange(30.0)
+        self.assertEqual(self.model.data.ndim, 2)
+        self.assertEqual(self.model.data.shape, (1, 30))
+
     def test_get_column_count(self):
         result = self.model.get_column_count()
         self.assertEqual(result, 3)
