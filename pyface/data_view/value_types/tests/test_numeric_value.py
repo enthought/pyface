@@ -40,29 +40,29 @@ class TestNumericValue(TestCase):
         value = NumericValue()
         self.assertFalse(value.is_valid(None, [0], [0], 'invalid'))
 
-    def test_get_editable(self):
+    def test_get_editor_value(self):
         value = NumericValue(evaluate=float)
-        editable = value.get_editable(self.model, [0], [0])
+        editable = value.get_editor_value(self.model, [0], [0])
 
         self.assertEqual(editable, 1.0)
 
-    def test_set_editable(self):
+    def test_set_editor_value(self):
         value = NumericValue(evaluate=float)
-        success = value.set_editable(self.model, [0], [0], 1.0)
+        success = value.set_editor_value(self.model, [0], [0], 1.0)
 
         self.assertTrue(success)
         self.model.set_value.assert_called_once_with([0], [0], 1.0)
 
-    def test_set_editable_invalid(self):
+    def test_set_editor_value_invalid(self):
         value = NumericValue(minimum=0.0, maximum=1.0)
-        success = value.set_editable(self.model, [0], [0], -1.0)
+        success = value.set_editor_value(self.model, [0], [0], -1.0)
 
         self.assertFalse(success)
         self.model.set_value.assert_not_called()
 
-    def test_set_editable_error(self):
+    def test_set_editor_value_error(self):
         value = NumericValue(minimum=0.0, maximum=1.0)
-        success = value.set_editable(self.model, [0], [0], 'invalid')
+        success = value.set_editor_value(self.model, [0], [0], 'invalid')
 
         self.assertFalse(success)
         self.model.set_value.assert_not_called()

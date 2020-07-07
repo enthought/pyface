@@ -30,15 +30,15 @@ class TestTextValue(TestCase):
         value = TextValue()
         self.assertTrue(value.is_valid(None, [0], [0], "test"))
 
-    def test_get_editable(self):
+    def test_get_editor_value(self):
         value = TextValue()
-        editable = value.get_editable(self.model, [0], [0])
+        editable = value.get_editor_value(self.model, [0], [0])
 
         self.assertEqual(editable, "test")
 
-    def test_set_editable(self):
+    def test_set_editor_value(self):
         value = TextValue()
-        success = value.set_editable(self.model, [0], [0], "test")
+        success = value.set_editor_value(self.model, [0], [0], "test")
 
         self.assertTrue(success)
         self.model.set_value.assert_called_once_with([0], [0], "test")

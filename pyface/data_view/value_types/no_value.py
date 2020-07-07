@@ -14,7 +14,7 @@ from pyface.data_view.abstract_value_type import AbstractValueType
 class NoValue(AbstractValueType):
     """ A ValueType that has no data in any channel. """
 
-    def can_edit(self, model, row, column):
+    def has_editor_value(self, model, row, column):
         return False
 
     def has_text(self, model, row, column):

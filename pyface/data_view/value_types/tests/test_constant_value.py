@@ -25,9 +25,9 @@ class TestConstantValue(UnittestTools, TestCase):
         value_type = ConstantValue()
         self.assertEqual(value_type.text, "")
 
-    def test_can_edit(self):
+    def test_has_editor_value(self):
         value_type = ConstantValue()
-        self.assertFalse(value_type.can_edit(self.model, [0], [0]))
+        self.assertFalse(value_type.has_editor_value(self.model, [0], [0]))
 
     def test_has_text(self):
         value_type = ConstantValue()

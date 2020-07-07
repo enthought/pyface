@@ -31,25 +31,25 @@ class TestAbstractValueType(UnittestTools, TestCase):
         self.model.can_set_value = Mock(return_value=True)
         self.model.set_value = Mock(return_value=True)
 
-    def test_can_edit(self):
+    def test_has_editor_value(self):
         value_type = ValueType()
-        result = value_type.can_edit(self.model, [0], [0])
+        result = value_type.has_editor_value(self.model, [0], [0])
         self.assertTrue(result)
 
-    def test_get_editable(self):
+    def test_get_editor_value(self):
         value_type = ValueType()
-        result = value_type.get_editable(self.model, [0], [0])
+        result = value_type.get_editor_value(self.model, [0], [0])
         self.assertEqual(result, 1.0)
 
-    def test_set_editable(self):
+    def test_set_editor_value(self):
         value_type = ValueType()
-        result = value_type.set_editable(self.model, [0], [0], 2.0)
+        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
         self.assertTrue(result)
 
-    def test_set_editable_can_edit_false(self):
+    def test_set_editor_value_has_editor_value_false(self):
         self.model.can_set_value = Mock(return_value=False)
         value_type = ValueType()
-        result = value_type.set_editable(self.model, [0], [0], 2.0)
+        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
         self.assertFalse(result)
 
     def test_has_text(self):

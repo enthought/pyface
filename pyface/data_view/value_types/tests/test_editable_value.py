@@ -39,29 +39,29 @@ class TestEditableValue(UnittestTools, TestCase):
         result = value_type.is_valid(self.model, [0], [0], 2.0)
         self.assertTrue(result)
 
-    def test_can_edit(self):
+    def test_has_editor_value(self):
         value_type = EditableValue()
-        result = value_type.can_edit(self.model, [0], [0])
+        result = value_type.has_editor_value(self.model, [0], [0])
         self.assertTrue(result)
 
-    def test_can_edit_not_editable(self):
+    def test_has_editor_value_not_editable(self):
         value_type = EditableValue(is_editable=False)
-        result = value_type.can_edit(self.model, [0], [0])
+        result = value_type.has_editor_value(self.model, [0], [0])
         self.assertFalse(result)
 
-    def test_set_editable(self):
+    def test_set_editor_value(self):
         value_type = EditableValue()
-        result = value_type.set_editable(self.model, [0], [0], 2.0)
+        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
         self.assertTrue(result)
 
-    def test_set_editable_not_editable(self):
+    def test_set_editor_value_not_editable(self):
         value_type = EditableValue(is_editable=False)
-        result = value_type.set_editable(self.model, [0], [0], 2.0)
+        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
         self.assertFalse(result)
 
-    def test_set_editable_not_valid(self):
+    def test_set_editor_value_not_valid(self):
         value_type = EditableWithValid()
-        result = value_type.set_editable(self.model, [0], [0], -1.0)
+        result = value_type.set_editor_value(self.model, [0], [0], -1.0)
         self.assertFalse(result)
 
     def test_is_editable_update(self):

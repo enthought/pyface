@@ -45,7 +45,7 @@ class NumericValue(EditableValue):
         except Exception:
             return False
 
-    def get_editable(self, model, row, column):
+    def get_editor_value(self, model, row, column):
         # evaluate is needed to convert numpy types to python types so
         # Qt recognises them
         return self.evaluate(model.get_value(row, column))
@@ -58,7 +58,7 @@ class NumericValue(EditableValue):
             value = self.evaluate(self.unformat(text))
         except ValueError:
             return False
-        return self.set_editable(model, row, column, value)
+        return self.set_editor_value(model, row, column, value)
 
 
 class IntValue(NumericValue):

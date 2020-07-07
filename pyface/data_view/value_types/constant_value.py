@@ -24,7 +24,7 @@ class ConstantValue(AbstractValueType):
     #: The text value to display.
     text = Str(update=True)
 
-    def can_edit(self, model, row, column):
+    def has_editor_value(self, model, row, column):
         return False
 
     def get_text(self, model, row, column):
