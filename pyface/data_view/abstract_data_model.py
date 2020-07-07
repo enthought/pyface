@@ -89,7 +89,7 @@ class AbstractDataModel(ABCHasStrictTraits):
             The number of columns that the data view provides.  This count
             should not include the row header.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def can_have_children(self, row):
@@ -107,7 +107,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         can_have_children : bool
             Whether or not the row can ever have child rows.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def get_row_count(self, row):
@@ -123,7 +123,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         row_count : non-negative int
             The number of child rows that the row has.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Data value methods
 
@@ -147,7 +147,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         value : any
             The value represented by the given row and column.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def can_set_value(self, row, column):
         """ Whether the value in the indicated row and column can be set.
@@ -220,7 +220,7 @@ class AbstractDataModel(ABCHasStrictTraits):
             The value type of the given row and column, or None if no value
             should be displayed.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Convenience iterator methods
 

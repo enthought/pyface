@@ -57,18 +57,18 @@ class AbstractRowInfo(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value(self, obj):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def can_set_value(self, obj):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def set_value(self, obj):
         return False
 
     @abstractmethod
     def get_observable(self, obj):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # trait observers
 

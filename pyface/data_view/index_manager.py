@@ -94,7 +94,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
             If asked to create a persistent index for a parent and row
             where that is not possible, a RuntimeError will be raised.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def get_parent_and_row(self, index):
@@ -118,7 +118,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
             If the Root object is passed as the index, this method will
             raise an IndexError, as it has no parent.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def from_sequence(self, indices):
         """ Given a sequence of indices, return the index object.
@@ -185,7 +185,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         index : index object
             The persistent index object associated with this id.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def id(self, index):
@@ -201,7 +201,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         index : index object
             The persistent index object associated with this id.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def reset(self):
         """ Reset any caches and other state.
