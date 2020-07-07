@@ -268,5 +268,5 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         for row in self.iter_rows(start_row):
             yield row, ()
-            for column in range(self.get_column_count(row)):
+            for column in range(self.get_column_count()):
                 yield row, (column,)
