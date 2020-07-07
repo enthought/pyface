@@ -37,6 +37,10 @@ class MainWindow(ApplicationWindow):
         import numpy
         return numpy.random.uniform(size=(10000, 10, 10))*1000000
 
+    def destroy(self):
+        self.data_view.destroy()
+        super().destroy()
+
 
 # Application entry point.
 if __name__ == "__main__":

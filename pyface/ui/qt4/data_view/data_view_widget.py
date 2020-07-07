@@ -47,6 +47,7 @@ class DataViewWidget(MDataViewWidget, Widget):
     def destroy(self):
         """ Perform any actions required to destroy the control.
         """
+        self.control.setModel(None)
         super().destroy()
         # ensure that we release the reference to the item model
         self._item_model = None
