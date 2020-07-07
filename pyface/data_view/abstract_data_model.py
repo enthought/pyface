@@ -26,7 +26,7 @@ from .index_manager import AbstractIndexManager
 class AbstractDataModel(ABCHasStrictTraits):
     """ Abstract base class for Pyface data models.
 
-    The data model API is intended to provide a common API for heirarchical
+    The data model API is intended to provide a common API for hierarchical
     and tabular data.  This class is concerned with the structure, type and
     values provided by the data, but not with how the data is presented.
 
@@ -36,7 +36,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
     Subclasses need to implement the ``get_column_count``,
     ``can_have_children`` and ``get_row_count`` methods to return the number
-    of columns in a particular row, as well as the heirarchical structure of
+    of columns in a particular row, as well as the hierarchical structure of
     the rows.  Appropriate observers should be set up on the underlaying data
     so that the ``structure_changed`` event is fired when the values returned
     by these methods would change.

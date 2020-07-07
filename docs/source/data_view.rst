@@ -1,8 +1,8 @@
 Pyface DataViews
 =================
 
-The Pyface DataView API allows visualization of heirarchical and
-non-heirarchical tabular data.
+The Pyface DataView API allows visualization of hierarchical and
+non-hierarchical tabular data.
 
 Data Models
 -----------
@@ -20,7 +20,7 @@ A data model for a dictionary could be implemented like this::
         index_manager = Instance(IntIndexManager, ())
 
 The index manager is an ``IntIndexManager`` because the data is
-non-heirarchical and this is more memory-efficient than the alternative
+non-hierarchical and this is more memory-efficient than the alternative
 ``TupleIndexManager``.
 
 Data Structure
@@ -32,7 +32,7 @@ displaying the value::
     def get_column_count(self):
         return 1
 
-The data is non-heirarchical, so the root has children and no other
+The data is non-hierarchical, so the root has children and no other
 rows have children::
 
     def can_have_children(self, row):

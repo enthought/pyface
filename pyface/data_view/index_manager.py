@@ -38,11 +38,11 @@ AbstractIndexManager
     An ABC that defines the API
 
 IntIndexManager
-    An efficient index manager for non-heirarchical data, such as
+    An efficient index manager for non-hierarchical data, such as
     lists and arrays.
 
 TupleIndexManager
-    An index manager that handles non-heirarchical data while trying
+    An index manager that handles non-hierarchical data while trying
     to be fast and memory efficient.
 
 The two concrete subclasses should be sufficient for most cases, but advanced
@@ -223,7 +223,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
 
 class IntIndexManager(AbstractIndexManager):
-    """ Efficient IndexManager for non-heirarchical indexes.
+    """ Efficient IndexManager for non-hierarchical indexes.
 
     This is a simple index manager for flat data structures.  The
     index values returned are either the Root, or simple integers

@@ -26,7 +26,7 @@ class ArrayDataModel(AbstractDataModel):
     """ A data model for an n-dim array.
 
     This data model presents the data from a multidimensional array
-    heirarchically by dimension.  The underlying array must be at least 2
+    hierarchically by dimension.  The underlying array must be at least 2
     dimensional.
 
     Values are adapted by the ``value_type`` trait.  This provides sensible
