@@ -75,7 +75,7 @@ class DataViewItemModel(QAbstractItemModel):
         top, left, bottom, right = event.new
         if top == () and bottom == ():
             # this is a column header change
-            self.headerDataChanged.emit(left[0], right[0])
+            self.headerDataChanged.emit(Qt.Horizontal, left[0], right[0])
         elif left == () and right == ():
             # this is a row header change
             # XXX this is currently not supported and not needed
@@ -114,7 +114,7 @@ class DataViewItemModel(QAbstractItemModel):
         index = self.createIndex(row, column, parent_index)
         return index
 
-    def rowCount(self, index):
+    def rowCount(self, index=QModelIndex()):
         row_index = self._to_row_index(index)
         try:
             if self.model.can_have_children(row_index):
@@ -124,16 +124,16 @@ class DataViewItemModel(QAbstractItemModel):
 
         return 0
 
-    def columnCount(self, index):
+    def columnCount(self, index=QModelIndex()):
         row_index = self._to_row_index(index)
         try:
             # the number of columns is constant; leaf rows return 0
             if self.model.can_have_children(row_index):
                 return self.model.get_column_count() + 1
-            else:
-                return 0
         except Exception:
             logger.exception("Error in columnCount")
+
+        return 0
 
     # Data methods
 
@@ -141,6 +141,8 @@ class DataViewItemModel(QAbstractItemModel):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
+        if row == () and column == ():
+            return 0
 
         flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
         if is_qt5 and not self.model.can_have_children(row):

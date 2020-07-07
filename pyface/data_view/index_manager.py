@@ -39,7 +39,7 @@ AbstractIndexManager
 
 IntIndexManager
     An efficient index manager for non-hierarchical data, such as
-    lists and arrays.
+    lists, tables and 2D arrays.
 
 TupleIndexManager
     An index manager that handles non-hierarchical data while trying
@@ -193,13 +193,13 @@ class AbstractIndexManager(ABCHasStrictTraits):
 
         Parameters
         ----------
-        id : int
-            An integer object id value.
+        index : index object
+            The persistent index object associated with this id.
 
         Returns
         -------
-        index : index object
-            The persistent index object associated with this id.
+        id : int
+            An integer object id value.
         """
         raise NotImplementedError()
 
