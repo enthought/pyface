@@ -13,6 +13,7 @@ from math import inf
 
 from traits.api import Callable, Float
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from .editable_value import EditableValue
 
 
@@ -120,16 +121,18 @@ class NumericValue(EditableValue):
         text : str
             The text to set.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was successfully set.
+        DataViewSetError
+            If the value cannot be set.
         """
         try:
             value = self.evaluate(self.unformat(text))
         except ValueError:
-            return False
-        return self.set_editor_value(model, row, column, value)
+            raise DataViewSetError(
+                "Can't evaluate value: {!r}".format(text)
+            )
+        self.set_editor_value(model, row, column, value)
 
 
 class IntValue(NumericValue):

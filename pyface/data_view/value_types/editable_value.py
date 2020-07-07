@@ -10,6 +10,7 @@
 
 from traits.api import Bool
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 
 
@@ -87,12 +88,12 @@ class EditableValue(AbstractValueType):
         value : any
             The value being set.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was set successfully.
+        DataViewSetError
+            If the value cannot be set.
         """
-        if not (self.has_editor_value(model, row, column)
-                and self.is_valid(model, row, column, value)):
-            return False
-        return model.set_value(row, column, value)
+        if self.is_valid(model, row, column, value):
+            model.set_value(row, column, value)
+        else:
+            raise DataViewSetError("Invalid value set: {!r}".format(value))

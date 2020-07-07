@@ -56,10 +56,10 @@ class TextValue(EditableValue):
         text : str
             The text to set.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was successfully set.
+        DataViewSetError
+            If the value cannot be set.
         """
         value = self.unformat(text)
-        return self.set_editor_value(model, row, column, value)
+        self.set_editor_value(model, row, column, value)

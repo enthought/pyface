@@ -13,6 +13,7 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.value_types.editable_value import EditableValue
 
 
@@ -28,7 +29,7 @@ class TestEditableValue(UnittestTools, TestCase):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1.0)
         self.model.can_set_value = Mock(return_value=True)
-        self.model.set_value = Mock(return_value=True)
+        self.model.set_value = Mock()
 
     def test_default(self):
         value_type = EditableValue()
@@ -51,18 +52,21 @@ class TestEditableValue(UnittestTools, TestCase):
 
     def test_set_editor_value(self):
         value_type = EditableValue()
-        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
-        self.assertTrue(result)
+        value_type.set_editor_value(self.model, [0], [0], 2.0)
+        self.model.set_value.assert_called_once_with([0], [0], 2.0)
 
-    def test_set_editor_value_not_editable(self):
+    def test_set_editor_value_set_value_raises(self):
+        self.model.set_value = Mock(side_effect=DataViewSetError)
         value_type = EditableValue(is_editable=False)
-        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
-        self.assertFalse(result)
+        with self.assertRaises(DataViewSetError):
+            value_type.set_editor_value(self.model, [0], [0], 2.0)
+        self.model.set_value.assert_called_once_with([0], [0], 2.0)
 
     def test_set_editor_value_not_valid(self):
         value_type = EditableWithValid()
-        result = value_type.set_editor_value(self.model, [0], [0], -1.0)
-        self.assertFalse(result)
+        with self.assertRaises(DataViewSetError):
+            value_type.set_editor_value(self.model, [0], [0], -1.0)
+        self.model.set_value.assert_not_called()
 
     def test_is_editable_update(self):
         value_type = EditableValue()

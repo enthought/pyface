@@ -104,13 +104,11 @@ class AbstractValueType(ABCHasStrictTraits):
         value : any
             The value to set.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was successfully set.
+        DataViewSetError
+            If the value cannot be set.
         """
-        if not self.has_editor_value(model, row, column):
-            return False
         return model.set_value(row, column, value)
 
     def has_text(self, model, row, column):

@@ -23,6 +23,11 @@ from traits.api import ABCHasStrictTraits, Event, Instance
 from .index_manager import AbstractIndexManager
 
 
+class DataViewSetError(ValueError):
+    """ An exception raised when setting a value fails. """
+    pass
+
+
 class AbstractDataModel(ABCHasStrictTraits):
     """ Abstract base class for Pyface data models.
 
@@ -192,12 +197,12 @@ class AbstractDataModel(ABCHasStrictTraits):
         value : any
             The new value for the given row and column.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was set successfully.
+        DataViewSetError
+            If the value cannot be set.
         """
-        return False
+        raise DataViewSetError()
 
     @abstractmethod
     def get_value_type(self, row, column):

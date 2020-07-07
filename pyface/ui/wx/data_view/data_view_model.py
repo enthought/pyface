@@ -1,7 +1,21 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
+import logging
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.index_manager import Root
 from wx.dataview import DataViewItem, DataViewModel as wxDataViewModel
+
+
+logger = logging.getLogger(__name__)
 
 
 type_hint_to_variant = {
@@ -139,12 +153,20 @@ class DataViewModel(wxDataViewModel):
         else:
             column_index = (column - 1,)
         try:
-            result = self.model.set_text(row_index, column_index, value)
-        except Exception as exc:
-            print(exc)
-            # XXX log it
+            value_type = self.model.get_value_type(row_index, column_index)
+            value_type.set_text(self.model, row_index, column_index, value)
+        except DataViewSetError:
             return False
-        return result
+        except Exception:
+            logger.exception(
+                "SetValue failed: row %r, column %r, value %r",
+                row_index,
+                column_index,
+                value,
+            )
+            return False
+        else:
+            return True
 
     def GetColumnCount(self):
         return self.model.get_column_count() + 1

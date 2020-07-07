@@ -14,6 +14,7 @@ from unittest.mock import Mock
 from traits.api import Str
 from traits.testing.unittest_tools import UnittestTools
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 
 
@@ -29,12 +30,18 @@ class TestAbstractValueType(UnittestTools, TestCase):
         self.model = Mock()
         self.model.get_value = Mock(return_value=1.0)
         self.model.can_set_value = Mock(return_value=True)
-        self.model.set_value = Mock(return_value=True)
+        self.model.set_value = Mock()
 
     def test_has_editor_value(self):
         value_type = ValueType()
         result = value_type.has_editor_value(self.model, [0], [0])
         self.assertTrue(result)
+
+    def test_has_editor_value_can_set_value_false(self):
+        self.model.can_set_value = Mock(return_value=False)
+        value_type = ValueType()
+        result = value_type.has_editor_value(self.model, [0], [0])
+        self.assertFalse(result)
 
     def test_get_editor_value(self):
         value_type = ValueType()
@@ -43,14 +50,15 @@ class TestAbstractValueType(UnittestTools, TestCase):
 
     def test_set_editor_value(self):
         value_type = ValueType()
-        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
-        self.assertTrue(result)
+        value_type.set_editor_value(self.model, [0], [0], 2.0)
+        self.model.set_value.assert_called_once_with([0], [0], 2.0)
 
-    def test_set_editor_value_has_editor_value_false(self):
-        self.model.can_set_value = Mock(return_value=False)
+    def test_set_editor_value_set_value_raises(self):
+        self.model.set_value = Mock(side_effect=DataViewSetError)
         value_type = ValueType()
-        result = value_type.set_editor_value(self.model, [0], [0], 2.0)
-        self.assertFalse(result)
+        with self.assertRaises(DataViewSetError):
+            value_type.set_editor_value(self.model, [0], [0], 2.0)
+        self.model.set_value.assert_called_once_with([0], [0], 2.0)
 
     def test_has_text(self):
         value_type = ValueType()

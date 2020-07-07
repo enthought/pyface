@@ -13,7 +13,7 @@ import logging
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.data_view.index_manager import Root
-from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_data_model import AbstractDataModel, DataViewSetError
 
 
 logger = logging.getLogger(__name__)
@@ -174,14 +174,26 @@ class DataViewItemModel(QAbstractItemModel):
         if not value_type:
             return False
 
-        if role == Qt.EditRole:
-            if value_type.has_editor_value(self.model, row, column):
-                return value_type.set_editor_value(self.model, row, column, value)
-        elif role == Qt.DisplayRole:
-            if value_type.has_text(self.model, row, column):
-                return value_type.set_text(self.model, row, column, value)
-
-        return False
+        try:
+            if role == Qt.EditRole:
+                if value_type.has_editor_value(self.model, row, column):
+                    value_type.set_editor_value(self.model, row, column, value)
+            elif role == Qt.DisplayRole:
+                if value_type.has_text(self.model, row, column):
+                    value_type.set_text(self.model, row, column, value)
+        except DataViewSetError:
+            return False
+        except Exception:
+            # unexpected error, log and persevere
+            logger.exception(
+                "setData failed: row %r, column %r, value %r",
+                row,
+                column,
+                value,
+            )
+            return False
+        else:
+            return True
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         if orientation == Qt.Horizontal:

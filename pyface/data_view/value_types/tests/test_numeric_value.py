@@ -11,6 +11,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.value_types.numeric_value import (
     FloatValue, IntValue, NumericValue, format_locale
 )
@@ -48,50 +49,41 @@ class TestNumericValue(TestCase):
 
     def test_set_editor_value(self):
         value = NumericValue(evaluate=float)
-        success = value.set_editor_value(self.model, [0], [0], 1.0)
-
-        self.assertTrue(success)
+        value.set_editor_value(self.model, [0], [0], 1.0)
         self.model.set_value.assert_called_once_with([0], [0], 1.0)
 
     def test_set_editor_value_invalid(self):
         value = NumericValue(minimum=0.0, maximum=1.0)
-        success = value.set_editor_value(self.model, [0], [0], -1.0)
-
-        self.assertFalse(success)
+        with self.assertRaises(DataViewSetError):
+            value.set_editor_value(self.model, [0], [0], -1.0)
         self.model.set_value.assert_not_called()
 
     def test_set_editor_value_error(self):
         value = NumericValue(minimum=0.0, maximum=1.0)
-        success = value.set_editor_value(self.model, [0], [0], 'invalid')
-
-        self.assertFalse(success)
+        with self.assertRaises(DataViewSetError):
+            value.set_editor_value(self.model, [0], [0], 'invalid')
         self.model.set_value.assert_not_called()
 
     def test_get_text(self):
         value = NumericValue()
         text = value.get_text(self.model, [0], [0])
-
         self.assertEqual(text, format_locale(1.0))
 
     def test_set_text(self):
         value = NumericValue(evaluate=float)
-        success = value.set_text(self.model, [0], [0], format_locale(1.1))
-
-        self.assertTrue(success)
+        value.set_text(self.model, [0], [0], format_locale(1.1))
         self.model.set_value.assert_called_once_with([0], [0], 1.1)
 
     def test_set_text_invalid(self):
         value = NumericValue(evaluate=float, minimum=0.0, maximum=1.0)
-        success = value.set_text(self.model, [0], [0], format_locale(1.1))
-
-        self.assertFalse(success)
+        with self.assertRaises(DataViewSetError):
+            value.set_text(self.model, [0], [0], format_locale(1.1))
         self.model.set_value.assert_not_called()
 
     def test_set_text_error(self):
         value = NumericValue(evaluate=float)
-        success = value.set_text(self.model, [0], [0], "invalid")
-
-        self.assertFalse(success)
+        with self.assertRaises(DataViewSetError):
+            value.set_text(self.model, [0], [0], "invalid")
         self.model.set_value.assert_not_called()
 
 
