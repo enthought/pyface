@@ -146,7 +146,7 @@ class DataViewItemModel(QAbstractItemModel):
         if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
-        if value_type and value_type.can_edit(self.model, row, column):
+        if value_type and value_type.has_editor_value(self.model, row, column):
             flags |= Qt.ItemIsEditable
 
         return flags
@@ -162,8 +162,8 @@ class DataViewItemModel(QAbstractItemModel):
             if value_type.has_text(self.model, row, column):
                 return value_type.get_text(self.model, row, column)
         elif role == Qt.EditRole:
-            if value_type.can_edit(self.model, row, column):
-                return value_type.get_editable(self.model, row, column)
+            if value_type.has_editor_value(self.model, row, column):
+                return value_type.get_editor_value(self.model, row, column)
 
         return None
 
@@ -175,8 +175,8 @@ class DataViewItemModel(QAbstractItemModel):
             return False
 
         if role == Qt.EditRole:
-            if value_type.can_edit(self.model, row, column):
-                return value_type.set_editable(self.model, row, column, value)
+            if value_type.has_editor_value(self.model, row, column):
+                return value_type.set_editor_value(self.model, row, column, value)
         elif role == Qt.DisplayRole:
             if value_type.has_text(self.model, row, column):
                 return value_type.set_text(self.model, row, column, value)

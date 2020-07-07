@@ -43,7 +43,7 @@ class AbstractValueType(ABCHasStrictTraits):
     #: Fired when a change occurs that requires updating values.
     updated = Event
 
-    def can_edit(self, model, row, column):
+    def has_editor_value(self, model, row, column):
         """ Return whether or not the value can be edited.
 
         The default implementation is that cells that can be set are
@@ -60,12 +60,12 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        can_edit : bool
+        has_editor_value : bool
             Whether or not the value is editable.
         """
         return model.can_set_value(row, column)
 
-    def get_editable(self, model, row, column):
+    def get_editor_value(self, model, row, column):
         """ Return a value suitable for editing.
 
         The default implementation is to return the underlying data value
@@ -87,7 +87,7 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         return model.get_value(row, column)
 
-    def set_editable(self, model, row, column, value):
+    def set_editor_value(self, model, row, column, value):
         """ Set a value that is returned from editing.
 
         The default implementation is to set the value directly from the
@@ -109,7 +109,7 @@ class AbstractValueType(ABCHasStrictTraits):
         success : bool
             Whether or not the value was successfully set.
         """
-        if not self.can_edit(model, row, column):
+        if not self.has_editor_value(model, row, column):
             return False
         return model.set_value(row, column, value)
 

@@ -51,7 +51,7 @@ class EditableValue(AbstractValueType):
 
     # AbstractValueType Interface --------------------------------------------
 
-    def can_edit(self, model, row, column):
+    def has_editor_value(self, model, row, column):
         """ Return whether or not the value can be edited.
 
         A cell is editable if the underlying data can be set, and the
@@ -68,12 +68,12 @@ class EditableValue(AbstractValueType):
 
         Returns
         -------
-        can_edit : bool
+        has_editor_value : bool
             Whether or not the value is editable.
         """
         return model.can_set_value(row, column) and self.is_editable
 
-    def set_editable(self, model, row, column, value):
+    def set_editor_value(self, model, row, column, value):
         """ Set the edited value.
 
         Parameters
@@ -92,7 +92,7 @@ class EditableValue(AbstractValueType):
         success : bool
             Whether or not the value was set successfully.
         """
-        if not (self.can_edit(model, row, column)
+        if not (self.has_editor_value(model, row, column)
                 and self.is_valid(model, row, column, value)):
             return False
         return model.set_value(row, column, value)
