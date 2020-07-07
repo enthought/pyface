@@ -40,11 +40,13 @@ class DataViewItemModel(QAbstractItemModel):
             self._model.observe(
                 self.on_structure_changed,
                 'structure_changed',
+                dispatch='ui',
                 remove=True,
             )
             self._model.observe(
                 self.on_values_changed,
                 'values_changed',
+                dispatch='ui',
                 remove=True,
             )
 
@@ -59,10 +61,12 @@ class DataViewItemModel(QAbstractItemModel):
         self._model.observe(
             self.on_structure_changed,
             'structure_changed',
+            dispatch='ui',
         )
         self._model.observe(
             self.on_values_changed,
             'values_changed',
+            dispatch='ui',
         )
 
     # model event listeners
