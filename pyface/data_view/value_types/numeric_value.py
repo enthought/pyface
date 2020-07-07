@@ -40,20 +40,91 @@ class NumericValue(EditableValue):
     unformat = Callable(locale.delocalize)
 
     def is_valid(self, model, row, column, value):
+        """ Whether or not the value within the specified range.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+        value : any
+            The value to validate.
+
+        Returns
+        -------
+        is_valid : bool
+            Whether or not the value is valid.
+        """
         try:
             return self.minimum <= value <= self.maximum
         except Exception:
             return False
 
     def get_editor_value(self, model, row, column):
+        """ Get the numerical value for the editor to use.
+
+        This uses the evaluate method to convert the underlying value to a
+        number.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        editor_value : number
+            Whether or not the value is editable.
+        """
         # evaluate is needed to convert numpy types to python types so
         # Qt recognises them
         return self.evaluate(model.get_value(row, column))
 
     def get_text(self, model, row, column):
+        """ Get the display text from the underlying value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        text : str
+            The text to display.
+        """
         return self.format(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
+        """ Set the text of the underlying value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+        text : str
+            The text to set.
+
+        Returns
+        -------
+        success : bool
+            Whether or not the value was successfully set.
+        """
         try:
             value = self.evaluate(self.unformat(text))
         except ValueError:
@@ -62,10 +133,14 @@ class NumericValue(EditableValue):
 
 
 class IntValue(NumericValue):
+    """ Data channels for an integer value.
+    """
 
     evaluate = Callable(int)
 
 
 class FloatValue(NumericValue):
+    """ Data channels for a floating point value.
+    """
 
     evaluate = Callable(float)

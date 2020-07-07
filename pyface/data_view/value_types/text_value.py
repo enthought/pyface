@@ -8,12 +8,39 @@
 #
 # Thanks for using Enthought open source!
 
+from traits.api import Callable
+
 from .editable_value import EditableValue
 
 
 class TextValue(EditableValue):
     """ Editable value that presents a string value.
     """
+
+    #: A function that converts the value to a string for display.
+    format = Callable(str, update=True)
+
+    #: A function that converts to a value from a display string.
+    unformat = Callable(str)
+
+    def get_text(self, model, row, column):
+        """ Get the display text from the underlying value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        text : str
+            The text to display.
+        """
+        return self.format(model.get_value(row, column))
 
     def set_text(self, model, row, column, text):
         """ Set the text of the underlying value.
@@ -34,7 +61,5 @@ class TextValue(EditableValue):
         success : bool
             Whether or not the value was successfully set.
         """
-        if model.can_set_value(row, column):
-            return model.set_value(row, column, text)
-
-        return False
+        value = self.unformat(text)
+        return self.set_editor_value(model, row, column, value)
