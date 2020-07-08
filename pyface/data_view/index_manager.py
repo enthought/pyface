@@ -194,12 +194,12 @@ class AbstractIndexManager(ABCHasStrictTraits):
         Parameters
         ----------
         index : index object
-            The persistent index object associated with this id.
+            The persistent index object.
 
         Returns
         -------
         id : int
-            An integer object id value.
+            The associated integer object id value.
         """
         raise NotImplementedError()
 
@@ -316,13 +316,13 @@ class IntIndexManager(AbstractIndexManager):
 
         Parameters
         ----------
-        id : int
-            An integer object id value.
+        index : index object
+            The persistent index object.
 
         Returns
         -------
-        index : index object
-            The persistent index object associated with this id.
+        id : int
+            The associated integer object id value.
         """
         if index == Root:
             return 0
@@ -410,13 +410,13 @@ class TupleIndexManager(AbstractIndexManager):
 
         Parameters
         ----------
-        id : int
-            An integer object id value.
+        index : index object
+            The persistent index object.
 
         Returns
         -------
-        index : index object
-            The persistent index object associated with this id.
+        id : int
+            The associated integer object id value.
         """
         if index == Root:
             return 0

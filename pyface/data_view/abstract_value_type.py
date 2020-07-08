@@ -173,10 +173,10 @@ class AbstractValueType(ABCHasStrictTraits):
         text : str
             The text to set.
 
-        Returns
+        Raises
         -------
-        success : bool
-            Whether or not the value was successfully set.
+        DataViewSetError
+            If the value cannot be set.
         """
         return False
 
