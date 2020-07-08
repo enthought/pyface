@@ -21,7 +21,7 @@ the tuples ``(0,)`` and ``(1,)`` give the two child rows of the root, while
 ``(0, 1)`` is the second child row of the first child of the root, and so on.
 
 Column indices follow a similar pattern, but only have the root and one level
-if child indices.
+of child indices.
 
 When interpreting these values, the root row ``()`` corresponds to the
 *column* headers, the root column ``()`` corresponds to the *row* headers.
@@ -200,6 +200,14 @@ raised:
    :start-line: 82
    :end-line: 89
 
+Even though a data value may be modifiable at the data model level, the
+value types also have the ability to control whether or not the value is
+editable.  For example, subclasses of |EditableValue|, such as |TextValue|
+and |IntValue| have an ``is_editable`` trait that controls whether the
+value should be editable in the view (presuming that the underlying value
+can be set).  Other value types can simply prevent editing by ensuring that
+the |has_editor_value| method returns ``False``.
+
 .. rubric:: Footnotes
 
 .. [#] A more sophisticated implementation might try to work out
@@ -212,6 +220,7 @@ raised:
 .. |AbstractIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.AbstractIndexManager`
 .. |AbstractDataModel| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
 .. |DataViewSetError| replace:: :py:class:`~pyface.data_view.abstract_data_model.DataViewSetError`
+.. |EditableValue| replace:: :py:class:`~pyface.data_view.value_types.editable_value.EditableValue`
 .. |IntIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.IntIndexManager`
 .. |IntValue| replace:: :py:class:`~pyface.data_view.value_types.numeric_value.IntValue`
 .. |TextValue| replace:: :py:class:`~pyface.data_view.value_types.text_value.TextValue`
@@ -222,4 +231,5 @@ raised:
 .. |get_row_count| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.get_row_count`
 .. |get_value| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.get_value`
 .. |get_value_type| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.get_value`
+.. |has_editor_value| replace:: :py:meth:`~pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value`
 .. |set_value| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.set_value`
