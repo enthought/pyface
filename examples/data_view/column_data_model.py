@@ -72,19 +72,19 @@ class AbstractRowInfo(ABCHasStrictTraits):
 
     # trait observers
 
-    @observe('title,title_type.updated', dispatch='ui')
+    @observe('title,title_type.updated')
     def title_updated(self, event):
         self.updated = (self, 'title', [])
 
-    @observe('value_type.updated', dispatch='ui')
+    @observe('value_type.updated')
     def value_type_updated(self, event):
         self.updated = (self, 'value', [])
 
-    @observe('rows.items', dispatch='ui')
+    @observe('rows.items')
     def rows_updated(self, event):
         self.updated = (self, 'rows', [])
 
-    @observe('rows:items:updated', dispatch='ui')
+    @observe('rows:items:updated')
     def row_item_updated(self, event):
         row = event.object
         row_info, part, row_index = event.new
@@ -114,7 +114,7 @@ class HasTraitsRowInfo(AbstractRowInfo):
     def get_observable(self):
         return self.value
 
-    @observe('value', dispatch='ui')
+    @observe('value')
     def value_type_updated(self, event):
         self.updated = (self, 'value', [])
 
@@ -147,7 +147,7 @@ class DictRowInfo(AbstractRowInfo):
     def get_observable(self):
         return self.value + '.items'
 
-    @observe('value,key', dispatch='ui')
+    @observe('value,key')
     def value_type_updated(self, event):
         self.updated = (self, 'value', [])
 
