@@ -209,8 +209,8 @@ class AbstractDataModel(ABCHasStrictTraits):
         """ Return the value type of the given row and column.
 
         The value type for column headers are returned by calling this method
-        with row equal to [].  The value types for row headers are returned
-        by calling this method with column equal to [].
+        with row equal to ().  The value types for row headers are returned
+        by calling this method with column equal to ().
 
         Parameters
         ----------

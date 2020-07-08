@@ -16,7 +16,7 @@ from collections.abc import Sequence
 
 from traits.api import Array, HasRequiredTraits, Instance, observe
 
-from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_data_model import AbstractDataModel, DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
     ConstantValue, FloatValue, IntValue, TextValue, no_value
@@ -232,12 +232,17 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
             index = tuple(row + column)
             self.data[index] = value
             self.values_changed = (row, column, row, column)
-            return True
-
-        return False
+        else:
+            raise DataViewSetError()
 
     def get_value_type(self, row, column):
-        """ Return the text value for the row and column.
+        """ Return the value type of the given row and column.
+
+        This method returns the value of ``column_header_type`` for column
+        headers, the value of ``row_header_type`` for row headers, the value
+        of ``label_header_type`` for the top-left corner value, the value of
+        ``value_type`` for all array values, and ``no_value`` for everything
+        else.
 
         Parameters
         ----------
@@ -248,8 +253,8 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
 
         Returns
         -------
-        text : str
-            The text to display in the given row and column.
+        value_type : AbstractValueType
+            The value type of the given row and column.
         """
         if len(row) == 0:
             if len(column) == 0:

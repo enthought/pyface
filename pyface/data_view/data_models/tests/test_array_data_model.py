@@ -13,6 +13,7 @@ from unittest import TestCase
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
+from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
     FloatValue, IntValue, TextValue, no_value
@@ -112,24 +113,24 @@ class TestArrayDataModel(UnittestTools, TestCase):
         for row, column in self.model.iter_items():
             with self.subTest(row=row, column=column):
                 if len(row) == 0 and len(column) == 0:
-                    result = self.model.set_value(row, column, 0)
-                    self.assertFalse(result)
+                    with self.assertRaises(DataViewSetError):
+                        self.model.set_value(row, column, 0)
                 elif len(row) == 0:
-                    result = self.model.set_value(row, column, column[0] + 1)
-                    self.assertFalse(result)
+                    with self.assertRaises(DataViewSetError):
+                        self.model.set_value(row, column, column[0] + 1)
                 elif len(column) == 0:
-                    result = self.model.set_value(row, column, row[-1] + 1)
-                    self.assertFalse(result)
+                    with self.assertRaises(DataViewSetError):
+                        self.model.set_value(row, column, row[-1] + 1)
                 elif len(row) == 1:
                     value = 6.0 * row[-1] + 2 * column[0]
                     with self.assertTraitDoesNotChange(
                             self.model, "values_changed"):
-                        result = self.model.set_value(row, column, value)
+                        with self.assertRaises(DataViewSetError):
+                            self.model.set_value(row, column, value)
                 else:
                     value = 6.0 * row[-1] + 2 * column[0]
                     with self.assertTraitChanges(self.model, "values_changed"):
-                        result = self.model.set_value(row, column, value)
-                    self.assertTrue(result)
+                        self.model.set_value(row, column, value)
                     self.assertEqual(
                         self.array[row[0], row[1], column[0]],
                         value,
