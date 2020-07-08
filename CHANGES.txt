@@ -2,6 +2,24 @@
 Pyface Changelog
 ================
 
+Release 7.0.1
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 7.0.0
+release.
+
+Thanks to:
+
+Kit Choi, Rahul Poruri, Pedro Rivotti, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Fix dock pane layout on Qt5. (#545)
+* Fix errors from incorrect QImage memory management. (#546)
+
 Release 7.0.0
 =============
 
