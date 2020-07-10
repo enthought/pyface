@@ -13,7 +13,9 @@ import logging
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.data_view.index_manager import Root
-from pyface.data_view.abstract_data_model import AbstractDataModel, DataViewSetError
+from pyface.data_view.abstract_data_model import (
+    AbstractDataModel, DataViewSetError
+)
 
 
 logger = logging.getLogger(__name__)
@@ -27,7 +29,7 @@ class DataViewItemModel(QAbstractItemModel):
     def __init__(self, model, parent=None):
         super().__init__(parent)
         self.model = model
-        self.showRowHeader = True
+        self.destroyed.connect(self._on_destroyed)
 
     @property
     def model(self):
@@ -35,39 +37,15 @@ class DataViewItemModel(QAbstractItemModel):
 
     @model.setter
     def model(self, model: AbstractDataModel):
+        self._disconnect_model_observers()
         if hasattr(self, '_model'):
-            # disconnect trait listeners
-            self._model.observe(
-                self.on_structure_changed,
-                'structure_changed',
-                dispatch='ui',
-                remove=True,
-            )
-            self._model.observe(
-                self.on_values_changed,
-                'values_changed',
-                dispatch='ui',
-                remove=True,
-            )
-
             self.beginResetModel()
             self._model = model
             self.endResetModel()
         else:
             # model is being initialized
             self._model = model
-
-        # hook up trait listeners
-        self._model.observe(
-            self.on_structure_changed,
-            'structure_changed',
-            dispatch='ui',
-        )
-        self._model.observe(
-            self.on_values_changed,
-            'values_changed',
-            dispatch='ui',
-        )
+        self._connect_model_observers()
 
     # model event listeners
 
@@ -220,6 +198,38 @@ class DataViewItemModel(QAbstractItemModel):
                 return value_type.get_text(self.model, row, column)
 
     # Private utility methods
+
+    def _on_destroyed(self):
+        self._disconnect_model_observers()
+        self._model = None
+
+    def _connect_model_observers(self):
+        if getattr(self, "_model", None) is not None:
+            self._model.observe(
+                self.on_structure_changed,
+                'structure_changed',
+                dispatch='ui',
+            )
+            self._model.observe(
+                self.on_values_changed,
+                'values_changed',
+                dispatch='ui',
+            )
+
+    def _disconnect_model_observers(self):
+        if getattr(self, "_model", None) is not None:
+            self._model.observe(
+                self.on_structure_changed,
+                'structure_changed',
+                dispatch='ui',
+                remove=True,
+            )
+            self._model.observe(
+                self.on_values_changed,
+                'values_changed',
+                dispatch='ui',
+                remove=True,
+            )
 
     def _to_row_index(self, index):
         if not index.isValid():
