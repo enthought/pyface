@@ -26,33 +26,14 @@ from pyface.data_view.index_manager import TupleIndexManager
 
 class _AtLeastTwoDArray(Array):
     """ Trait type that holds an array that at least two dimensional.
-
-    This calls numpy.atleast_2d during validation to ensure that the value is
-    good.
     """
 
     def validate(self, object, name, value):
-        from numpy import atleast_2d
         value = super().validate(object, name, value)
-        return atleast_2d(value)
-
-    def _default_for_dtype_and_shape(self, dtype, shape):
-        """ Invent a suitable default value for a given dtype and shape. """
-        from numpy import zeros
-
-        if shape is None:
-            value = zeros((0, 0), dtype)
-        else:
-            size = []
-            for item in shape:
-                if item is None:
-                    item = 0
-                elif isinstance(item, Sequence):
-                    # Given a (minimum-allowed-length, maximum-allowed_length)
-                    # pair for a particular axis, use the minimum.
-                    item = item[0]
-                size.append(item)
-            value = zeros(size, dtype)
+        if value.ndim == 0:
+            value = value.reshape((0, 0))
+        elif value.ndim == 1:
+            value = value.reshape((-1, 1))
         return value
 
 
@@ -301,3 +282,9 @@ class ArrayDataModel(AbstractDataModel, HasRequiredTraits):
     def label_header_type_updated(self, event):
         """ Handle the label header type being updated. """
         self.values_changed = ((), (), (), ())
+
+    # default array value
+
+    def _data_default(self):
+        from numpy import zeros
+        return zeros(shape=(0, 0))

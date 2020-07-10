@@ -52,6 +52,7 @@ class TestArrayDataModel(UnittestTools, TestCase):
         model = ArrayDataModel(value_type=FloatValue())
         self.assertEqual(model.data.ndim, 2)
         self.assertEqual(model.data.shape, (0, 0))
+        self.assertEqual(model.data.dtype, np.float)
         self.assertEqual(model.get_column_count(), 0)
         self.assertTrue(model.can_have_children(()))
         self.assertEqual(model.get_row_count(()), 0)
@@ -60,12 +61,25 @@ class TestArrayDataModel(UnittestTools, TestCase):
         array = np.arange(30.0)
         model = ArrayDataModel(data=array, value_type=FloatValue())
         self.assertEqual(model.data.ndim, 2)
-        self.assertEqual(model.data.shape, (1, 30))
+        self.assertEqual(model.data.shape, (30, 1))
+
+    def test_data_list(self):
+        data = list(range(30))
+        model = ArrayDataModel(data=data, value_type=FloatValue())
+        self.assertEqual(model.data.ndim, 2)
+        self.assertEqual(model.data.shape, (30, 1))
 
     def test_set_data_1d(self):
-        self.model.data = np.arange(30.0)
+        with self.assertTraitChanges(self.model, 'structure_changed'):
+            self.model.data = np.arange(30.0)
         self.assertEqual(self.model.data.ndim, 2)
-        self.assertEqual(self.model.data.shape, (1, 30))
+        self.assertEqual(self.model.data.shape, (30, 1))
+
+    def test_set_data_list(self):
+        with self.assertTraitChanges(self.model, 'structure_changed'):
+            self.model.data = list(range(30))
+        self.assertEqual(self.model.data.ndim, 2)
+        self.assertEqual(self.model.data.shape, (30, 1))
 
     def test_get_column_count(self):
         result = self.model.get_column_count()
