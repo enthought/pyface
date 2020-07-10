@@ -192,6 +192,8 @@ class PygmentsHighlighter(QtGui.QSyntaxHighlighter):
         if token in self._formats:
             return self._formats[token]
         result = None
+        while not self._style.styles_token(token):
+            token = token.parent
         for key, value in self._style.style_for_token(token).items():
             if value:
                 if result is None:
