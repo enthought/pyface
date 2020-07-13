@@ -19,6 +19,8 @@ Fixes
 
 * Fix dock pane layout on Qt5. (#545)
 * Fix errors from incorrect QImage memory management. (#546)
+* Fix CodeWidget handling of parsed tokens which caused TraitsUI CodeEditor to
+  fail when a different lexer was chosen (#566).
 
 Release 7.0.0
 =============
