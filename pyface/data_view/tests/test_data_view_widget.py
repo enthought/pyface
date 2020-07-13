@@ -24,6 +24,7 @@ from pyface.data_view.value_types.api import FloatValue
 
 @requires_numpy
 class TestWidget(unittest.TestCase, UnittestTools):
+
     def setUp(self):
         self.gui = GUI()
 
@@ -38,7 +39,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.gui.process_events()
 
     def _create_widget(self):
-        self.data = np.arange(30.0).reshape(5, 6)
+        self.data = np.arange(120.0).reshape(4, 5, 6)
         self.model = ArrayDataModel(data=self.data, value_type=FloatValue())
         return DataViewWidget(
             parent=self.parent.control,
@@ -48,7 +49,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
     def _create_widget_control(self):
         self.widget._create()
         self.addCleanup(self._destroy_widget)
-        self.widget.show(True)
+        self.parent.show(True)
         self.gui.process_events()
 
     def _destroy_parent(self):
@@ -70,6 +71,8 @@ class TestWidget(unittest.TestCase, UnittestTools):
     def test_header_visible(self):
         self._create_widget_control()
 
+        self.assertTrue(self.widget._get_control_header_visible())
+
         self.widget.header_visible = False
         self.gui.process_events()
 
@@ -80,3 +83,26 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         self._create_widget_control()
         self.assertFalse(self.widget._get_control_header_visible())
+
+    def test_selection_mode_none(self):
+        self._create_widget_control()
+
+        self.widget.selection_mode = "none"
+        self.assertEqual(self.widget._get_selection_mode(), "none")
+
+        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [])
+        self.assertEqual(self.widget._get_selection(), [])
+
+    def test_selection_mode_single(self):
+        self._create_widget_control()
+
+        self.assertEqual(self.widget._get_selection_mode(), "single")
+
+        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((2, 0), ())])
+        self.assertEqual(self.widget._get_selection(), [((2, 0), ())])

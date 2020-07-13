@@ -8,10 +8,19 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Bool, HasStrictTraits, Instance
+from contextlib import contextmanager
+import logging
+
+from traits.api import (
+    Bool, Enum, HasStrictTraits, Instance, List, Tuple, ComparisonMode
+)
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.i_widget import IWidget
+
+
+logger = logging.getLogger(__name__)
+logger.level = logging.DEBUG
 
 
 class IDataViewWidget(IWidget):
@@ -22,6 +31,15 @@ class IDataViewWidget(IWidget):
     #: The data model for the data view.
     data_model = Instance(AbstractDataModel, allow_none=False)
 
+    #: What can be selected.
+    selection_type = Enum("row", "column", "item")
+
+    #: How selections are modified.
+    selection_mode = Enum("none", "single", "contiguous", "extended")
+
+    #: The selected indices in the view.
+    selection = List(Tuple)
+
 
 class MDataViewWidget(HasStrictTraits):
 
@@ -31,15 +49,88 @@ class MDataViewWidget(HasStrictTraits):
     #: The data model for the data view.
     data_model = Instance(AbstractDataModel, allow_none=False)
 
-    def _add_event_listeners(self):
-        super()._add_event_listeners()
-        self.observe(
-            self._header_visible_updated, 'header_visible', dispatch='ui')
+    #: What can be selected.
+    selection_type = Enum("row", "column", "item")
 
-    def _remove_event_listeners(self):
+    #: How selections are modified.
+    selection_mode = Enum("single", "none", "extended")
+
+    #: The selected indices in the view.
+    selection = List(Tuple, comparison_mode=ComparisonMode.identity)
+
+    #: Whether the selection is currently being updated.
+    _selection_updating_flag = Bool
+
+    def _create(self):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
+        """
+        self.control = self._create_control(self.parent)
+        self._initialize_control()
+        self._add_event_listeners()
+
+        self.show(self.visible)
+        self.enable(self.enabled)
+
+    def _initialize_control(self):
+        logger.debug('Initializing DataViewWidget')
+        self._set_control_header_visible(self.header_visible)
+        self._set_selection_mode(self.selection_mode)
+        self._set_selection_type(self.selection_type)
+
+    def _add_event_listeners(self):
+        logger.debug('Adding DataViewWidget listeners')
+        super()._add_event_listeners()
         self.observe(
             self._header_visible_updated,
             'header_visible',
+            dispatch='ui',
+        )
+        self.observe(
+            self._selection_type_updated,
+            'selection_type',
+            dispatch='ui',
+        )
+        self.observe(
+            self._selection_mode_updated,
+            'selection_mode',
+            dispatch='ui',
+        )
+        self.observe(
+            self._selection_updated,
+            'selection.items',
+            dispatch='ui',
+        )
+        if self.control is not None:
+            self._observe_selection()
+
+    def _remove_event_listeners(self):
+        logger.debug('Removing DataViewWidget listeners')
+        if self.control is not None:
+            self._observe_selection(remove=True)
+        self.observe(
+            self._header_visible_updated,
+            'header_visible',
+            dispatch='ui',
+            remove=True,
+        )
+        self.observe(
+            self._selection_type_updated,
+            'selection_type',
+            dispatch='ui',
+            remove=True,
+        )
+        self.observe(
+            self._selection_mode_updated,
+            'selection_mode',
+            dispatch='ui',
+            remove=True,
+        )
+        self.observe(
+            self._selection_updated,
+            'selection.items',
             dispatch='ui',
             remove=True,
         )
@@ -54,6 +145,62 @@ class MDataViewWidget(HasStrictTraits):
         """ Toolkit specific method to get the visibility of the header. """
         raise NotImplementedError()
 
-    def _set_control_header_visible(self, tooltip):
+    def _set_control_header_visible(self, control_header_visible):
         """ Toolkit specific method to set the visibility of the header. """
         raise NotImplementedError()
+
+    def _selection_type_updated(self, event):
+        """ Observer for selection_type trait. """
+        if self.control is not None:
+            self._set_selection_type(event.new)
+
+    def _get_selection_type(self):
+        """ Toolkit specific method to get the selection type. """
+        raise NotImplementedError()
+
+    def _set_selection_type(self, selection_type):
+        """ Toolkit specific method to change the selection type. """
+        raise NotImplementedError()
+
+    def _selection_mode_updated(self, event):
+        """ Observer for selection_mode trait. """
+        if self.control is not None:
+            self._set_selection_mode(event.new)
+
+    def _get_selection_mode(self):
+        """ Toolkit specific method to get the selection mode. """
+        raise NotImplementedError()
+
+    def _set_selection_mode(self, selection_mode):
+        """ Toolkit specific method to change the selection mode. """
+        raise NotImplementedError()
+
+    def _selection_updated(self, event):
+        """ Observer for selection trait. """
+        if self.control is not None and not self._selection_updating_flag:
+            with self._selection_updating():
+                self._set_selection(self.selection)
+
+    def _get_selection(self):
+        """ Toolkit specific method to get the selection. """
+        raise NotImplementedError()
+
+    def _set_selection(self, selection):
+        """ Toolkit specific method to change the selection. """
+        raise NotImplementedError()
+
+    def _observe_selection(self, remove=False):
+        """ Toolkit specific method to watch for changes in the selection. """
+        raise NotImplementedError
+
+    @contextmanager
+    def _selection_updating(self):
+        """ Context manager to prevent loopback when updating selections. """
+        if self._selection_updating_flag:
+            yield
+        else:
+            self._selection_updating_flag = True
+            try:
+                yield
+            finally:
+                self._selection_updating_flag = False

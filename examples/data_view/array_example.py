@@ -20,7 +20,7 @@ from pyface.data_view.value_types.api import FloatValue
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    data = Array
+    data = Array()
 
     data_view = Instance(IDataViewWidget)
 
@@ -33,6 +33,8 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 value_type=FloatValue(),
             ),
+            selection_mode='extended',
+            selection_type='column',
         )
         self.data_view._create()
         return self.data_view.control
@@ -48,6 +50,10 @@ class MainWindow(ApplicationWindow):
 
 # Application entry point.
 if __name__ == "__main__":
+    import logging
+
+    logging.basicConfig(level=logging.DEBUG)
+
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

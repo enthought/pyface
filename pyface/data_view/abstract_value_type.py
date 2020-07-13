@@ -182,6 +182,9 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         raise DataViewSetError("Cannot set value.")
 
+    def is_selectable(self, model, row, column):
+        return True
+
     @observe('+update_value_type')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """
