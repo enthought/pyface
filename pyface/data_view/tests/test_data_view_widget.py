@@ -15,11 +15,15 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.unittest_tools import UnittestTools
 
 from pyface.gui import GUI
+from pyface.toolkit import toolkit
 from pyface.window import Window
 
 from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import FloatValue
+
+
+is_wx = (toolkit.toolkit == "wx")
 
 
 @requires_numpy
@@ -84,6 +88,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self._create_widget_control()
         self.assertFalse(self.widget._get_control_header_visible())
 
+    @unittest.skipIf(is_wx, "Selection mode none not supported")
     def test_selection_mode_none(self):
         self._create_widget_control()
 
@@ -97,6 +102,8 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.assertEqual(self.widget._get_selection(), [])
 
     def test_selection_mode_single(self):
+        self.widget.selection_mode = "single"
+
         self._create_widget_control()
 
         self.assertEqual(self.widget._get_selection_mode(), "single")
@@ -106,3 +113,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         self.assertEqual(self.widget.selection, [((2, 0), ())])
         self.assertEqual(self.widget._get_selection(), [((2, 0), ())])
+
+    def test_selection_mode_extended(self):
+        self._create_widget_control()
+
+        self.assertEqual(self.widget._get_selection_mode(), "extended")
+
+        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((1, 4), ()), ((2, 0), ())])
+        self.assertEqual(self.widget._get_selection(), [((1, 4), ()), ((2, 0), ())])

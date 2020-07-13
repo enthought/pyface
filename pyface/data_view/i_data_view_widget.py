@@ -35,7 +35,7 @@ class IDataViewWidget(IWidget):
     selection_type = Enum("row", "column", "item")
 
     #: How selections are modified.
-    selection_mode = Enum("none", "single", "contiguous", "extended")
+    selection_mode = Enum("extended", "none", "single")
 
     #: The selected indices in the view.
     selection = List(Tuple)
@@ -53,7 +53,7 @@ class MDataViewWidget(HasStrictTraits):
     selection_type = Enum("row", "column", "item")
 
     #: How selections are modified.
-    selection_mode = Enum("single", "none", "extended")
+    selection_mode = Enum("extended", "none", "single")
 
     #: The selected indices in the view.
     selection = List(Tuple, comparison_mode=ComparisonMode.identity)
