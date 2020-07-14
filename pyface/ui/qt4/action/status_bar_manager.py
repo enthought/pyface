@@ -17,7 +17,9 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Any, Bool, Float, HasTraits, List, Property, Str
+from traits.api import Any, Bool, Float, HasTraits, Instance, List, Property, \
+    Str
+from pyface.timer.api import Timer
 
 
 class StatusBarManager(HasTraits):
@@ -40,6 +42,8 @@ class StatusBarManager(HasTraits):
 
     # Number of seconds to display new messages for [default: indefinitely]
     message_duration_sec = Float
+
+    _timer = Instance(Timer)
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.
@@ -67,7 +71,6 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _get_message(self):
-
         if len(self.messages) > 0:
             message = self.messages[0]
         else:
@@ -119,11 +122,25 @@ class StatusBarManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def _show_messages(self):
-        """ Display the list of messages. """
+        """ Display the list of messages.
+
+        Note: not using the msecs argument of the `status_bar.showNessage`
+        method to keep this class' message trait in sync with the Qt widget.
+        """
+        def timed_action():
+            self.messages = []
+            self._timer.Stop()
+            self._timer = None
+
+        if self.status_bar is None:
+            return
 
         # FIXME v3: At the moment we just string them together but we may
         # decide to put all but the first message into separate widgets.  We
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
-        self.status_bar.showMessage("  ".join(self.messages),
-                                    msecs=self.message_duration_sec * 1000)
+        self.status_bar.showMessage("  ".join(self.messages))
+
+        # Schedule removing the message if needed:
+        if self.message_duration_sec > 0 and self._timer is None:
+            self._timer = Timer(self.message_duration_sec * 1000, timed_action)
