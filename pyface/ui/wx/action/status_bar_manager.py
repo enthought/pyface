@@ -101,7 +101,7 @@ class StatusBarManager(HasTraits):
         """ Sets the text displayed on the status bar. """
 
         def timed_action():
-            self.message = ""
+            self.messages = []
             self._timer.Stop()
             self._timer = None
 
