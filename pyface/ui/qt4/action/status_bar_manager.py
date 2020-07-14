@@ -17,7 +17,7 @@
 from pyface.qt import QtGui
 
 
-from traits.api import Any, Bool, HasTraits, Int, List, Property, Str
+from traits.api import Any, Bool, Float, HasTraits, List, Property, Str
 
 
 class StatusBarManager(HasTraits):
@@ -38,8 +38,8 @@ class StatusBarManager(HasTraits):
     # Whether the status bar is visible.
     visible = Bool(True)
 
-    # Number of millisecond to display new messages for [default: indefinitely]
-    message_duration = Int
+    # Number of seconds to display new messages for [default: indefinitely]
+    message_duration_sec = Float
 
     # ------------------------------------------------------------------------
     # 'StatusBarManager' interface.
@@ -52,11 +52,7 @@ class StatusBarManager(HasTraits):
             self.status_bar = QtGui.QStatusBar(parent)
             self.status_bar.setSizeGripEnabled(self.size_grip)
             self.status_bar.setVisible(self.visible)
-
-            if len(self.messages) > 1:
-                self._show_messages()
-            else:
-                self.status_bar.showMessage(self.message)
+            self._show_messages()
 
         return self.status_bar
 
@@ -130,4 +126,4 @@ class StatusBarManager(HasTraits):
         # probably also need to extend the API to allow a "message" to be a
         # widget - depends on what wx is capable of.
         self.status_bar.showMessage("  ".join(self.messages),
-                                    msecs=self.message_duration)
+                                    msecs=self.message_duration_sec * 1000)
