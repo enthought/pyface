@@ -48,7 +48,7 @@ _DIALOG_TEXT = """
       %s
       </p>
       <p>
-      Copyright &copy; 2003-2010 Enthought, Inc.<br>
+      Copyright &copy; 2003-2020 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
   </center>
