@@ -45,7 +45,7 @@ class SwitcherModel(HasTraits):
     def create_page(self, parent, index):
         """ Creates a page for the switcher panel. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class SwitcherControl(wx.Panel):

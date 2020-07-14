@@ -34,7 +34,7 @@ class ListBoxModel(HasTraits):
         item_count : int
             The number of items in the list.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_item_at(self, index):
         """ Returns the item at the specified index.
@@ -49,7 +49,7 @@ class ListBoxModel(HasTraits):
         label, item : str, any
             The user-visible string and model data of the item.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def fire_list_changed(self):
         """ Invoke this method when the list has changed. """

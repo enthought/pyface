@@ -870,12 +870,12 @@ class ConsoleWidget(QtGui.QWidget):
             Enter/Return key press, 'interactive' is True; otherwise, it is
             False.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _execute(self, source, hidden):
         """ Execute 'source'. If 'hidden', do not show any output.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _prompt_started_hook(self):
         """ Called immediately after a new prompt is displayed.

@@ -30,7 +30,7 @@ class EnamlPane(HasTraits):
         -------
         component : ToolkitObject
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # ------------------------------------------------------------------------
     # 'TaskPane'/'Editor' interface

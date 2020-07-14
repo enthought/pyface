@@ -122,7 +122,7 @@ class MWidget(object):
         control : toolkit control
             A control for the widget.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """

@@ -253,7 +253,7 @@ class ProgressDialog(MProgressDialog, Window):
         if not self.show_percent:
             return
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _create_timer(self, dialog, layout):
         if not self.show_time:
