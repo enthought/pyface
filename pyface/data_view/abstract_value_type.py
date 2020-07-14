@@ -21,6 +21,8 @@ and how to actually display it.
 
 from traits.api import ABCHasStrictTraits, Event, observe
 
+from .abstract_data_model import DataViewSetError
+
 
 class AbstractValueType(ABCHasStrictTraits):
     """ A value type converts raw data into data channels.
