@@ -88,39 +88,116 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self._create_widget_control()
         self.assertFalse(self.widget._get_control_header_visible())
 
-    @unittest.skipIf(is_wx, "Selection mode none not supported")
-    def test_selection_mode_none(self):
+    def test_selection_mode_change(self):
+        self._create_widget_control()
+        self.selection = [((1, 4), (2,)), ((2, 0), (4,))]
+
+        self.widget.selection_mode = "single"
+
+        self.assertEqual(self.widget._get_control_selection_mode(), "single")
+        self.assertEqual(self.widget.selection, [])
+
+        self.selection = [((1, 4), (2,))]
+        if not is_wx:
+            self.widget.selection_mode = "none"
+
+            self.assertEqual(self.widget._get_control_selection_mode(), "none")
+            self.assertEqual(self.widget.selection, [])
+
+        self.widget.selection_mode = "extended"
+
+        self.assertEqual(self.widget._get_control_selection_mode(), "extended")
+        self.assertEqual(self.widget.selection, [])
+
+    @unittest.skipIf(is_wx, "Selection type changing not supported")
+    def test_selection_type_change(self):
         self._create_widget_control()
 
-        self.widget.selection_mode = "none"
-        self.assertEqual(self.widget._get_selection_mode(), "none")
+        self.widget.selection_type = "column"
 
-        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
+        self.assertEqual(self.widget._get_control_selection_type(), "column")
+        self.assertEqual(self.widget.selection, [])
+
+        self.widget.selection_type = "item"
+
+        self.assertEqual(self.widget._get_control_selection_type(), "item")
+        self.assertEqual(self.widget.selection, [])
+
+        self.widget.selection_type = "row"
+
+        self.assertEqual(self.widget._get_control_selection_type(), "row")
+        self.assertEqual(self.widget.selection, [])
+
+    @unittest.skipIf(is_wx, "Selection mode 'none' not supported")
+    def test_selection_mode_none(self):
+        self.widget.selection_mode = "none"
+
+        self._create_widget_control()
+
+        self.assertEqual(self.widget._get_control_selection_mode(), "none")
+
+        self.widget.selection = []
         self.gui.process_events()
 
         self.assertEqual(self.widget.selection, [])
-        self.assertEqual(self.widget._get_selection(), [])
+        self.assertEqual(self.widget._get_control_selection(), [])
 
     def test_selection_mode_single(self):
         self.widget.selection_mode = "single"
 
         self._create_widget_control()
 
-        self.assertEqual(self.widget._get_selection_mode(), "single")
+        self.assertEqual(self.widget._get_control_selection_mode(), "single")
 
-        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
+        self.widget.selection = [((1, 4), ())]
+
         self.gui.process_events()
 
-        self.assertEqual(self.widget.selection, [((2, 0), ())])
-        self.assertEqual(self.widget._get_selection(), [((2, 0), ())])
+        self.assertEqual(self.widget.selection, [((1, 4), ())])
+        self.assertEqual(self.widget._get_control_selection(),  [((1, 4), ())])
 
     def test_selection_mode_extended(self):
         self._create_widget_control()
 
-        self.assertEqual(self.widget._get_selection_mode(), "extended")
+        self.assertEqual(self.widget._get_control_selection_mode(), "extended")
 
         self.widget.selection = [((1, 4), ()), ((2, 0), ())]
         self.gui.process_events()
 
         self.assertEqual(self.widget.selection, [((1, 4), ()), ((2, 0), ())])
-        self.assertEqual(self.widget._get_selection(), [((1, 4), ()), ((2, 0), ())])
+        self.assertEqual(
+            self.widget._get_control_selection(),
+            [((1, 4), ()), ((2, 0), ())],
+        )
+
+    @unittest.skipIf(is_wx, "Selection type 'column' not supported")
+    def test_selection_type_column(self):
+        self.widget.selection_type = "column"
+
+        self._create_widget_control()
+
+        self.assertEqual(self.widget._get_control_selection_type(), "column")
+
+        self.widget.selection = [((0,), (2,)), ((1,), (4,))]
+
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((0,), (2,)), ((1,), (4,))])
+        self.assertEqual(self.widget._get_control_selection(),  [((0,), (2,)), ((1,), (4,))])
+
+    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    def test_selection_type_item(self):
+        self.widget.selection_type = "item"
+
+        self._create_widget_control()
+
+        self.assertEqual(self.widget._get_control_selection_type(), "item")
+
+        self.widget.selection = [((1, 4), (2,)), ((2, 0), (4,))]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((1, 4), (2,)), ((2, 0), (4,))])
+        self.assertEqual(
+            self.widget._get_control_selection(),
+            [((1, 4), (2,)), ((2, 0), (4,))],
+        )

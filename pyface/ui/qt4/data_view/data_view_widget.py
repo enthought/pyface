@@ -10,7 +10,7 @@
 
 import logging
 
-from traits.api import Bool, Instance, observe, provides
+from traits.api import Bool, Enum, Instance, observe, provides
 
 from pyface.qt.QtCore import QAbstractItemModel
 from pyface.qt.QtGui import (
@@ -49,33 +49,31 @@ pyface_selection_modes = {
 class DataViewWidget(MDataViewWidget, Widget):
     """ The Qt implementation of the DataViewWidget. """
 
+    # IDataViewWidget Interface traits --------------------------------------
+
+    #: What can be selected.  Qt supports additional selection types.
+    selection_type = Enum("row", "column", "item")
+
+    #: How selections are modified.  Qt supports turning off selections.
+    selection_mode = Enum("extended", "none", "single")
+
+    # IWidget Interface traits ----------------------------------------------
+
     control = Instance(QAbstractItemView)
+
+    # Private traits --------------------------------------------------------
 
     #: The QAbstractItemModel instance used by the view.  This will
     #: usually be a DataViewItemModel subclass.
     _item_model = Instance(QAbstractItemModel)
 
-    def _create_control(self, parent):
-        """ Create the DataViewWidget's toolkit control. """
-        self._create_item_model()
-
-        control = QTreeView(parent)
-        control.setUniformRowHeights(True)
-        control.setAnimated(True)
-        control.setModel(self._item_model)
-        return control
+    # ------------------------------------------------------------------------
+    # IDataViewWidget Interface
+    # ------------------------------------------------------------------------
 
     def _create_item_model(self):
         """ Create the DataViewItemModel which wraps the data model. """
         self._item_model = DataViewItemModel(self.data_model)
-
-    def destroy(self):
-        """ Perform any actions required to destroy the control.
-        """
-        self.control.setModel(None)
-        super().destroy()
-        # ensure that we release the reference to the item model
-        self._item_model = None
 
     def _get_control_header_visible(self):
         """ Method to get the control's header visibility. """
@@ -85,27 +83,29 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Method to set the control's header visibility. """
         self.control.setHeaderHidden(not header_visible)
 
-    def _get_selection_type(self):
+    def _get_control_selection_type(self):
         """ Toolkit specific method to get the selection type. """
         qt_selection_type = self.control.selectionBehavior()
         return pyface_selection_types[qt_selection_type]
 
-    def _set_selection_type(self, selection_type):
+    def _set_control_selection_type(self, selection_type):
         """ Toolkit specific method to change the selection type. """
         qt_selection_type = qt_selection_types[selection_type]
         self.control.setSelectionBehavior(qt_selection_type)
+        self.selection = []
 
-    def _get_selection_mode(self):
+    def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
         qt_selection_mode = self.control.selectionMode()
         return pyface_selection_modes[qt_selection_mode]
 
-    def _set_selection_mode(self, selection_mode):
+    def _set_control_selection_mode(self, selection_mode):
         """ Toolkit specific method to change the selection mode. """
         qt_selection_mode = qt_selection_modes[selection_mode]
         self.control.setSelectionMode(qt_selection_mode)
+        self.selection = []
 
-    def _get_selection(self):
+    def _get_control_selection(self):
         """ Toolkit specific method to get the selection. """
         if self.selection_type == 'item':
             selection = [
@@ -132,12 +132,18 @@ class DataViewWidget(MDataViewWidget, Widget):
             selection = []
         return selection
 
-    def _set_selection(self, selection):
+    def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
-        if self.selection_mode == 'none':
-            selection = []
-        elif self.selection_mode == 'single':
-            selection = selection[-1:]
+        if self.selection_mode == 'none' and len(selection) != 0:
+            raise ValueError(
+                "Selection must be empty when selection_mode is 'none', "
+                "got {!r}".format(selection)
+            )
+        elif self.selection_mode == 'single' and len(selection) > 1:
+            raise ValueError(
+                "Selection must have at most one element when selection_mode "
+                "is 'single', got {!r}".format(selection)
+            )
 
         selection_model = self.control.selectionModel()
         select_flags = QItemSelectionModel.Select
@@ -150,18 +156,28 @@ class DataViewWidget(MDataViewWidget, Widget):
         elif self.selection_type == 'row':
             select_flags |= QItemSelectionModel.Rows
             for row, column in selection:
+                if column != ():
+                    raise ValueError(
+                        "Column values must be () for 'row' selection_type, "
+                        "got {!r}".format(column)
+                    )
                 index = self._item_model._to_model_index(row, (0,))
                 qt_selection.select(index, index)
         elif self.selection_type == 'column':
             select_flags |= QItemSelectionModel.Columns
             for row, column in selection:
+                if self.data_model.get_row_count(row) == 0:
+                    raise ValueError(
+                        "Row values must have children for 'column' "
+                        "selection_type."
+                    )
                 index = self._item_model._to_model_index(
                     row + (0,), column)
                 qt_selection.select(index, index)
         selection_model.clearSelection()
         selection_model.select(qt_selection, select_flags)
 
-    def _observe_selection(self, remove=False):
+    def _observe_control_selection(self, remove=False):
         selection_model = self.control.selectionModel()
         if remove:
             try:
@@ -174,11 +190,35 @@ class DataViewWidget(MDataViewWidget, Widget):
         else:
             selection_model.selectionChanged.connect(self._update_selection)
 
-    def _update_selection(self, selected, deselected):
-        with self._selection_updating():
-            self.selection = self._get_selection()
+    # ------------------------------------------------------------------------
+    # IWidget Interface
+    # ------------------------------------------------------------------------
+
+    def _create_control(self, parent):
+        """ Create the DataViewWidget's toolkit control. """
+        self._create_item_model()
+
+        control = QTreeView(parent)
+        control.setUniformRowHeights(True)
+        control.setAnimated(True)
+        control.setModel(self._item_model)
+        return control
+
+    def destroy(self):
+        """ Perform any actions required to destroy the control.
+        """
+        self.control.setModel(None)
+        super().destroy()
+        # ensure that we release the reference to the item model
+        self._item_model = None
+
+    # ------------------------------------------------------------------------
+    # Private methods
+    # ------------------------------------------------------------------------
+
+    # Trait observers
 
     @observe('data_model', dispatch='ui')
-    def update_item_model(self, event):
+    def _update_item_model(self, event):
         if self._item_model is not None:
             self._item_model.model = event.new

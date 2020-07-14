@@ -15,13 +15,13 @@ from traits.api import Constant, Enum, Instance, observe, provides
 from wx.dataview import (
     DataViewCtrl, DataViewItemArray, DataViewModel as wxDataViewModel,
     DATAVIEW_CELL_EDITABLE, DATAVIEW_CELL_ACTIVATABLE,
-    DV_MULTIPLE, DV_NO_HEADER, DV_SINGLE,
-    EVT_DATAVIEW_SELECTION_CHANGED,
+    DV_MULTIPLE, DV_NO_HEADER, EVT_DATAVIEW_SELECTION_CHANGED,
 )
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
 from pyface.ui.wx.widget import Widget
+
 from .data_view_model import DataViewModel
 
 
@@ -31,9 +31,115 @@ from .data_view_model import DataViewModel
 class DataViewWidget(MDataViewWidget, Widget):
     """ The Wx implementation of the DataViewWidget. """
 
+    # Private traits --------------------------------------------------------
+
     #: The QAbstractItemModel instance used by the view.  This will
     #: usually be a DataViewModel subclass.
     _item_model = Instance(wxDataViewModel)
+
+    # ------------------------------------------------------------------------
+    # IDataViewWidget Interface
+    # ------------------------------------------------------------------------
+
+    def _create_item_model(self):
+        """ Create the DataViewItemModel which wraps the data model. """
+        self._item_model = DataViewModel(self.data_model)
+
+    def _get_control_header_visible(self):
+        """ Method to get the control's header visibility. """
+        return not self.control.GetWindowStyleFlag() & DV_NO_HEADER
+
+    def _set_control_header_visible(self, header_visible):
+        """ Method to set the control's header visibility. """
+        old_visible = self._get_control_header_visible()
+        if header_visible != old_visible:
+            self.control.ToggleWindowStyle(DV_NO_HEADER)
+
+    def _get_control_selection_type(self):
+        """ Toolkit specific method to get the selection type. """
+        pass
+
+    def _set_control_selection_type(self, selection_type):
+        """ Toolkit specific method to change the selection type. """
+        pass
+
+    def _get_control_selection_mode(self):
+        """ Toolkit specific method to get the selection mode. """
+        if self.control.GetWindowStyleFlag() & DV_MULTIPLE:
+            return "extended"
+        else:
+            return "single"
+
+    def _set_control_selection_mode(self, selection_mode):
+        """ Toolkit specific method to change the selection mode. """
+        if selection_mode not in {'extended', 'single'}:
+            warnings.warn(
+                "{!r} selection_mode not supported in Wx".format(
+                    selection_mode
+                ),
+                RuntimeWarning,
+            )
+            return
+        old_mode = self._get_control_selection_mode()
+        if selection_mode != old_mode:
+            self.control.ToggleWindowStyle(DV_MULTIPLE)
+
+    def _get_control_selection(self):
+        """ Toolkit specific method to get the selection. """
+        return [
+            (self._item_model._to_row_index(item), ())
+            for item in self.control.GetSelections()
+        ]
+
+    def _set_control_selection(self, selection):
+        """ Toolkit specific method to change the selection. """
+        if self.selection_mode == 'none' and len(selection) != 0:
+            raise ValueError(
+                "Selection must be empty when selection_mode is 'none', "
+                "got {!r}".format(selection)
+            )
+        elif self.selection_mode == 'single' and len(selection) > 1:
+            raise ValueError(
+                "Selection must have at most one element when selection_mode "
+                "is 'single', got {!r}".format(selection)
+            )
+
+        wx_selection = DataViewItemArray()
+        if self.selection_type != "row":
+            warnings.warn(
+                "{!r} selection_type not supported in Wx".format(
+                    self.selection_type
+                ),
+                RuntimeWarning,
+            )
+            return
+
+        for row, column in selection:
+            if column != ():
+                raise ValueError(
+                    "Column values must be () for 'row' selection_type, "
+                    "got {!r}".format(column)
+                )
+            item = self._item_model._to_item(row)
+            wx_selection.append(item)
+        self.control.SetSelections(wx_selection)
+
+    def _observe_control_selection(self, remove=False):
+        """ Toolkit specific method to watch for changes in the selection. """
+        if remove:
+            self.control.Unbind(
+                EVT_DATAVIEW_SELECTION_CHANGED,
+                handler=self._update_selection,
+            )
+        else:
+            self.control.Bind(
+                EVT_DATAVIEW_SELECTION_CHANGED,
+                self._update_selection,
+            )
+
+    # ------------------------------------------------------------------------
+    # Widget Interface
+    # ------------------------------------------------------------------------
 
     def _create_control(self, parent):
         """ Create the DataViewWidget's toolkit control. """
@@ -60,95 +166,17 @@ class DataViewWidget(MDataViewWidget, Widget):
             )
         return control
 
-    def _create_item_model(self):
-        """ Create the DataViewItemModel which wraps the data model. """
-        self._item_model = DataViewModel(self.data_model)
-
     def destroy(self):
         """ Perform any actions required to destroy the control. """
         super().destroy()
         # ensure that we release the reference to the item model
         self._item_model = None
 
-    def _get_control_header_visible(self):
-        """ Method to get the control's header visibility. """
-        return not self.control.GetWindowStyleFlag() & DV_NO_HEADER
+    # ------------------------------------------------------------------------
+    # Private methods
+    # ------------------------------------------------------------------------
 
-    def _set_control_header_visible(self, header_visible):
-        """ Method to set the control's header visibility. """
-        old_visible = self._get_control_header_visible()
-        if header_visible != old_visible:
-            self.control.ToggleWindowStyle(DV_NO_HEADER)
-
-    def _get_selection_type(self):
-        """ Toolkit specific method to get the selection type. """
-        pass
-
-    def _set_selection_type(self, selection_type):
-        """ Toolkit specific method to change the selection type. """
-        pass
-
-    def _get_selection_mode(self):
-        """ Toolkit specific method to get the selection mode. """
-        if self.control.GetWindowStyleFlag() & DV_MULTIPLE:
-            return "extended"
-        else:
-            return "single"
-
-    def _set_selection_mode(self, selection_mode):
-        """ Toolkit specific method to change the selection mode. """
-        if selection_mode not in {'extended', 'single'}:
-            warnings.warn(
-                "{!r} selection_mode not supported in Wx".format(
-                    selection_mode
-                ),
-                RuntimeWarning,
-            )
-            return
-        old_mode = self._get_selection_mode()
-        if selection_mode != old_mode:
-            self.control.ToggleWindowStyle(DV_MULTIPLE)
-
-    def _get_selection(self):
-        """ Toolkit specific method to get the selection. """
-        return [
-            (self._item_model._to_row_index(item), ())
-            for item in self.control.GetSelections()
-        ]
-
-    def _set_selection(self, selection):
-        """ Toolkit specific method to change the selection. """
-        wx_selection = DataViewItemArray()
-        if self.selection_type != "row":
-            warnings.warn(
-                "{!r} selection_type not supported in Wx".format(
-                    self.selection_type
-                ),
-                RuntimeWarning,
-            )
-            return
-
-        for row, column in selection:
-            item = self._item_model._to_item(row)
-            wx_selection.append(item)
-        self.control.SetSelections(wx_selection)
-
-    def _observe_selection(self, remove=False):
-        """ Toolkit specific method to watch for changes in the selection. """
-        if remove:
-            self.control.Unbind(
-                EVT_DATAVIEW_SELECTION_CHANGED,
-                handler=self._update_selection,
-            )
-        else:
-            self.control.Bind(
-                EVT_DATAVIEW_SELECTION_CHANGED,
-                self._update_selection,
-            )
-
-    def _update_selection(self, event):
-        with self._selection_updating():
-            self.selection = self._get_selection()
+    # Trait observers
 
     @observe('data_model', dispatch='ui')
     def update_item_model(self, event):
