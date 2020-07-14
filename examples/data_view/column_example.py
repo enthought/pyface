@@ -95,6 +95,7 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 row_info=self.row_info,
             ),
+            selection_mode='single',
         )
         self.data_view._create()
         return self.data_view.control

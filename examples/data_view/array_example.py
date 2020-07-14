@@ -33,8 +33,6 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 value_type=FloatValue(),
             ),
-            selection_mode='extended',
-            selection_type='column',
         )
         self.data_view._create()
         return self.data_view.control
