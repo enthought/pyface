@@ -12,7 +12,8 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, ComparisonMode, Enum, HasStrictTraits, Instance, List, Tuple,
+    Bool, ComparisonMode, Enum, HasStrictTraits, Instance, List, Property,
+    TraitError, Tuple, cached_property,
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
@@ -60,15 +61,18 @@ class MDataViewWidget(HasStrictTraits):
     selection_mode = Enum("extended", "single")
 
     #: The selected indices in the view.
-    selection = List(Tuple, comparison_mode=ComparisonMode.identity)
+    selection = Property(depends_on='_selection[]')
 
     # Private traits --------------------------------------------------------
 
     #: Whether the selection is currently being updated.
     _selection_updating_flag = Bool
 
+    #: The selected indices in the view.
+    _selection = List(Tuple, comparison_mode=ComparisonMode.identity)
+
     # ------------------------------------------------------------------------
-    # IDataViewWidget Interface
+    # MDataViewWidget Interface
     # ------------------------------------------------------------------------
 
     def _header_visible_updated(self, event):
@@ -131,7 +135,7 @@ class MDataViewWidget(HasStrictTraits):
     def _update_selection(self, *args, **kwargs):
         if not self._selection_updating_flag:
             with self._selection_updating():
-                self.selection = self._get_control_selection()
+                self._selection = self._get_control_selection()
 
     # ------------------------------------------------------------------------
     # Widget Interface
@@ -178,7 +182,7 @@ class MDataViewWidget(HasStrictTraits):
         )
         self.observe(
             self._selection_updated,
-            'selection.items',
+            '_selection.items',
             dispatch='ui',
         )
         if self.control is not None:
@@ -208,7 +212,7 @@ class MDataViewWidget(HasStrictTraits):
         )
         self.observe(
             self._selection_updated,
-            'selection.items',
+            '_selection.items',
             dispatch='ui',
             remove=True,
         )
@@ -229,3 +233,58 @@ class MDataViewWidget(HasStrictTraits):
                 yield
             finally:
                 self._selection_updating_flag = False
+
+    # Trait property handlers
+
+    @cached_property
+    def _get_selection(self):
+        return self._selection
+
+    def _set_selection(self, selection):
+        if self.selection_mode == 'none' and len(selection) != 0:
+            raise TraitError(
+                "Selection must be empty when selection_mode is 'none', "
+                "got {!r}".format(selection)
+            )
+        elif self.selection_mode == 'single' and len(selection) > 1:
+            raise TraitError(
+                "Selection must have at most one element when selection_mode "
+                "is 'single', got {!r}".format(selection)
+            )
+
+        if self.selection_type == 'row':
+            for row, column in selection:
+                if column != ():
+                    raise TraitError(
+                        "Column values must be () when selection_type is "
+                        "'row', got {!r}".format(column)
+                    )
+                if not self.data_model.is_row_valid(row):
+                    raise TraitError(
+                        "Invalid row index {!r}".format(row)
+                    )
+        elif self.selection_type == 'column':
+            for row, column in selection:
+                if not (self.data_model.is_row_valid(row)
+                        and self.data_model.can_have_children(row)
+                        and self.data_model.get_row_count(row) > 0):
+                    raise TraitError(
+                        "Row values must have children when selection_type "
+                        "is 'column', got {!r}".format(column)
+                    )
+                if not self.data_model.is_column_valid(column):
+                    raise TraitError(
+                        "Invalid column index {!r}".format(column)
+                    )
+        else:
+            for row, column in selection:
+                if not self.data_model.is_row_valid(row):
+                    raise TraitError(
+                        "Invalid row index {!r}".format(row)
+                    )
+                if not self.data_model.is_column_valid(column):
+                    raise TraitError(
+                        "Invalid column index {!r}".format(column)
+                    )
+
+        self._selection = selection

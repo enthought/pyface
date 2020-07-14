@@ -107,15 +107,7 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _get_control_selection(self):
         """ Toolkit specific method to get the selection. """
-        if self.selection_type == 'item':
-            selection = [
-                (
-                    self._item_model._to_row_index(index),
-                    self._item_model._to_column_index(index),
-                )
-                for index in self.control.selectedIndexes()
-            ]
-        elif self.selection_type == 'row':
+        if self.selection_type == 'row':
             selection = []
             for index in self.control.selectedIndexes():
                 row = self._item_model._to_row_index(index)
@@ -129,50 +121,35 @@ class DataViewWidget(MDataViewWidget, Widget):
                 if (row, column) not in selection:
                     selection.append((row, column))
         else:
-            selection = []
+            selection = [
+                (
+                    self._item_model._to_row_index(index),
+                    self._item_model._to_column_index(index),
+                )
+                for index in self.control.selectedIndexes()
+            ]
         return selection
 
     def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
-        if self.selection_mode == 'none' and len(selection) != 0:
-            raise ValueError(
-                "Selection must be empty when selection_mode is 'none', "
-                "got {!r}".format(selection)
-            )
-        elif self.selection_mode == 'single' and len(selection) > 1:
-            raise ValueError(
-                "Selection must have at most one element when selection_mode "
-                "is 'single', got {!r}".format(selection)
-            )
-
         selection_model = self.control.selectionModel()
         select_flags = QItemSelectionModel.Select
         qt_selection = QItemSelection()
 
-        if self.selection_type == 'item':
-            for row, column in selection:
-                index = self._item_model._to_model_index(row, column)
-                qt_selection.select(index, index)
-        elif self.selection_type == 'row':
+        if self.selection_type == 'row':
             select_flags |= QItemSelectionModel.Rows
             for row, column in selection:
-                if column != ():
-                    raise ValueError(
-                        "Column values must be () for 'row' selection_type, "
-                        "got {!r}".format(column)
-                    )
                 index = self._item_model._to_model_index(row, (0,))
                 qt_selection.select(index, index)
         elif self.selection_type == 'column':
             select_flags |= QItemSelectionModel.Columns
             for row, column in selection:
-                if self.data_model.get_row_count(row) == 0:
-                    raise ValueError(
-                        "Row values must have children for 'column' "
-                        "selection_type."
-                    )
                 index = self._item_model._to_model_index(
                     row + (0,), column)
+                qt_selection.select(index, index)
+        else:
+            for row, column in selection:
+                index = self._item_model._to_model_index(row, column)
                 qt_selection.select(index, index)
         selection_model.clearSelection()
         selection_model.select(qt_selection, select_flags)

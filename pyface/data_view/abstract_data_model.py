@@ -232,7 +232,53 @@ class AbstractDataModel(ABCHasStrictTraits):
         """
         raise NotImplementedError()
 
-    # Convenience iterator methods
+    # Convenience methods
+
+    def is_row_valid(self, row):
+        """ Return whether or not the given row index refers to a valid row.
+
+        A row index is valid if every value in the tuple is between 0 and the
+        number of child rows of the parent.
+
+        Parameters
+        ----------
+        row : row index
+            The row to check.
+
+        Returns
+        -------
+        valid : bool
+            Whether or not the row index is valid.
+        """
+        for i, index in enumerate(row):
+            parent = row[:i]
+            if not self.can_have_children(parent):
+                return False
+            if not 0 <= index < self.get_row_count(parent):
+                return False
+        return True
+
+    def is_column_valid(self, column):
+        """ Return whether or not the given column index refers to a valid column.
+
+        A column index is valid if it is the root, or the valie is between 0 and
+        the number of columns in the model.
+
+        Parameters
+        ----------
+        column : column index
+            The column to check.
+
+        Returns
+        -------
+        valid : bool
+            Whether or not the column index is valid.
+        """
+        if len(column) != 1:
+            return len(column) == 0
+
+        index = column[0]
+        return 0 <= index < self.get_column_count()
 
     def iter_rows(self, start_row=()):
         """ Iterator that yields rows in preorder.

@@ -93,33 +93,8 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
-        if self.selection_mode == 'none' and len(selection) != 0:
-            raise ValueError(
-                "Selection must be empty when selection_mode is 'none', "
-                "got {!r}".format(selection)
-            )
-        elif self.selection_mode == 'single' and len(selection) > 1:
-            raise ValueError(
-                "Selection must have at most one element when selection_mode "
-                "is 'single', got {!r}".format(selection)
-            )
-
         wx_selection = DataViewItemArray()
-        if self.selection_type != "row":
-            warnings.warn(
-                "{!r} selection_type not supported in Wx".format(
-                    self.selection_type
-                ),
-                RuntimeWarning,
-            )
-            return
-
         for row, column in selection:
-            if column != ():
-                raise ValueError(
-                    "Column values must be () for 'row' selection_type, "
-                    "got {!r}".format(column)
-                )
             item = self._item_model._to_item(row)
             wx_selection.append(item)
         self.control.SetSelections(wx_selection)
