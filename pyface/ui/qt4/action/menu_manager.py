@@ -18,7 +18,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, Str
+from traits.api import Instance, List, Str
 
 
 from pyface.action.action_manager import ActionManager
@@ -42,6 +42,11 @@ class MenuManager(ActionManager, ActionManagerItem):
     # The default action for tool button when shown in a toolbar (Qt only)
     action = Instance(Action)
 
+    # Private interface ---------------------------------------------------#
+
+    #: Keep track of all created menus in order to properly dispose of them
+    _menus = List()
+
     # ------------------------------------------------------------------------
     # 'MenuManager' interface.
     # ------------------------------------------------------------------------
@@ -56,7 +61,21 @@ class MenuManager(ActionManager, ActionManagerItem):
         if controller is None:
             controller = self.controller
 
-        return _Menu(self, parent, controller)
+        menu = _Menu(self, parent, controller)
+        self._menus.append(menu)
+
+        return menu
+
+    # ------------------------------------------------------------------------
+    # 'ActionManager' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._menus:
+            menu = self._menus.pop()
+            menu.dispose()
+
+        super(MenuManager, self).destroy()
 
     # ------------------------------------------------------------------------
     # 'ActionManagerItem' interface.
@@ -130,6 +149,23 @@ class _Menu(QtGui.QMenu):
         self.menuAction().setVisible(self._manager.visible)
 
         return
+
+    def dispose(self):
+        self._manager.on_trait_change(self.refresh, "changed", remove=True)
+        self._manager.on_trait_change(
+            self._on_enabled_changed, "enabled", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_visible_changed, "visible", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_name_changed, "name", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_image_changed, "image", remove=True
+        )
+        # Removes event listeners from downstream menu items
+        self.clear()
 
     # ------------------------------------------------------------------------
     # '_Menu' interface.

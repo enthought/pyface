@@ -48,10 +48,6 @@ class MainWindow(ApplicationWindow):
 
 # Application entry point.
 if __name__ == "__main__":
-    import logging
-
-    logging.basicConfig(level=logging.DEBUG)
-
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

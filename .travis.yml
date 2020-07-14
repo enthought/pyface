@@ -3,6 +3,22 @@ dist: xenial
 services:
   - xvfb
 
+addons:
+  apt:
+    packages:
+    # Qt dependencies
+    - libxkbcommon-x11-0
+    - libxcb-icccm4
+    - libxcb-image0
+    - libxcb-keysyms1
+    - libxcb-randr0
+    - libxcb-render-util0
+    - libxcb-xinerama0
+    - pulseaudio
+    - libpulse-mainloop-glib0
+    # Wx dependencies
+    - libsdl1.2debian
+
 env:
   global:
     - INSTALL_EDM_VERSION=2.0.0
@@ -12,6 +28,8 @@ matrix:
   include:
     - env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
     - os: osx
+      # Obtain newer libxml2 for QtWebKit
+      osx_image: xcode11.5
       env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
   fast_finish: true
 
@@ -22,12 +40,11 @@ cache:
 before_install:
   - mkdir -p "${HOME}/.cache/download"
   - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then ./install-edm-linux.sh; export PATH="${HOME}/edm/bin:${PATH}"; fi
-  # libdbus, libxkb and pulseaudio for Pyside2, libsdl for wxpython
-  - if [[ ${TRAVIS_OS_NAME} == 'linux' ]]; then sudo apt-get install -y libdbus-1-3 libxkbcommon-x11-0 libsdl1.2debian pulseaudio libpulse-mainloop-glib0; fi
   - if [[ ${TRAVIS_OS_NAME} == 'osx' ]]; then ./install-edm-osx.sh; export PATH="${PATH}:/usr/local/bin"; fi
   - edm install -y wheel click coverage
 install:
   - for toolkit in ${TOOLKITS}; do edm run -- python etstool.py install --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
+  - if [[ ${TRAVIS_EVENT_TYPE} == 'cron' ]]; then for toolkit in ${TOOLKITS}; do edm run -- python etstool.py install --runtime=${RUNTIME} --toolkit=${toolkit} --source || exit; done; fi
 script:
   - for toolkit in ${TOOLKITS}; do edm run -- python etstool.py test --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
 

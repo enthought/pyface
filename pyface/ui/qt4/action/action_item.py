@@ -315,6 +315,7 @@ class _Tool(HasTraits):
             size = tool_bar.iconSize()
             image = action.image.create_icon((size.width(), size.height()))
             self.control = tool_bar.addAction(image, action.name)
+        tool_bar.tools.append(self)
 
         self.control.triggered.connect(self._qt4_on_triggered)
 
@@ -361,6 +362,30 @@ class _Tool(HasTraits):
         if controller is not None:
             self.controller = controller
             controller.add_to_toolbar(self)
+
+    def dispose(self):
+        action = self.item.action
+        action.on_trait_change(
+            self._on_action_enabled_changed, "enabled", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_visible_changed, "visible", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_checked_changed, "checked", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_name_changed, "name", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_accelerator_changed, "accelerator", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_image_changed, "image", remove=True
+        )
+        action.on_trait_change(
+            self._on_action_tooltip_changed, "tooltip", remove=True
+        )
 
     # ------------------------------------------------------------------------
     # Private interface.

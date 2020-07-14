@@ -21,7 +21,6 @@ from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
 from pyface.ui.wx.widget import Widget
-
 from .data_view_model import DataViewModel
 
 

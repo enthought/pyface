@@ -17,7 +17,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Enum, Instance, Str, Tuple
+from traits.api import Bool, Enum, Instance, List, Str, Tuple
 
 
 from pyface.image_cache import ImageCache
@@ -55,6 +55,9 @@ class ToolBarManager(ActionManager):
     # Cache of tool images (scaled to the appropriate size).
     _image_cache = Instance(ImageCache)
 
+    #: Keep track of all created toolbars in order to properly dispose of them
+    _toolbars = List()
+
     # ------------------------------------------------------------------------
     # 'object' interface.
     # ------------------------------------------------------------------------
@@ -87,6 +90,7 @@ class ToolBarManager(ActionManager):
 
         # Create the control.
         tool_bar = _ToolBar(self, parent)
+        self._toolbars.append(tool_bar)
         tool_bar.setObjectName(self.id)
         tool_bar.setWindowTitle(self.name)
 
@@ -107,6 +111,17 @@ class ToolBarManager(ActionManager):
         self._qt4_add_tools(parent, tool_bar, controller)
 
         return tool_bar
+
+    # ------------------------------------------------------------------------
+    # 'ActionManager' interface.
+    # ------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._toolbars:
+            toolbar = self._toolbars.pop()
+            toolbar.dispose()
+
+        super(ToolBarManager, self).destroy()
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -154,6 +169,9 @@ class _ToolBar(QtGui.QToolBar):
 
         QtGui.QToolBar.__init__(self, parent)
 
+        # List of tools
+        self.tools = []
+
         # Listen for changes to the tool bar manager's enablement and
         # visibility.
         self.tool_bar_manager = tool_bar_manager
@@ -167,6 +185,20 @@ class _ToolBar(QtGui.QToolBar):
         )
 
         return
+
+    def dispose(self):
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
+        )
+        self.tool_bar_manager.on_trait_change(
+            self._on_tool_bar_manager_visible_changed, "visible", remove=True
+        )
+        # Removes event listeners from downstream tools and clears their
+        # references
+        for item in self.tools:
+            item.dispose()
+
+        self.tools = []
 
     # ------------------------------------------------------------------------
     # Trait change handlers.

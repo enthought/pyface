@@ -118,8 +118,10 @@ class PythonShell(MPythonShell, Widget):
     def _remove_event_listeners(self):
         if self.control is not None:
             # Disconnect signals for events.
-            self.control.executed.connect(self._on_command_executed)
+            self.control.executed.disconnect(self._on_command_executed)
             self._event_filter.signal.disconnect(self._on_obj_drop)
+
+            self.control._remove_event_listeners()
 
         super(PythonShell, self)._remove_event_listeners()
 
@@ -199,6 +201,15 @@ class PythonWidget(HistoryConsoleWidget):
 
         # Display the banner and initial prompt.
         self.reset()
+
+    def _remove_event_listeners(self):
+        self.font_changed.disconnect(self._call_tip_widget.setFont)
+        document = self._control.document()
+        document.contentsChange.disconnect(self._document_contents_change)
+
+        self._bracket_matcher._remove_event_listeners()
+
+        super(PythonWidget, self)._remove_event_listeners()
 
     # --------------------------------------------------------------------------
     # file-like object interface
