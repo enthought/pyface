@@ -30,8 +30,8 @@ class AbstractValueType(ABCHasStrictTraits):
     display.
 
     Subclasses should mark traits that potentially affect the display of values
-    with ``update_value_type=True`` metdadata, or alternatively fire the ``updated``
-    event when the state of the value type changes.
+    with ``update_value_type=True`` metdadata, or alternatively fire the
+    ``updated`` event when the state of the value type changes.
 
     Each data channel is set up to have a method which returns whether there
     is a value for the channel, a second method which returns the value,
@@ -109,7 +109,7 @@ class AbstractValueType(ABCHasStrictTraits):
         DataViewSetError
             If the value cannot be set.
         """
-       model.set_value(row, column, value)
+        model.set_value(row, column, value)
 
     def has_text(self, model, row, column):
         """ Whether or not the value has a textual representation.

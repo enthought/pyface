@@ -58,13 +58,18 @@ class AbstractDataModel(ABCHasStrictTraits):
     Implementations should ensure that the ``values_changed`` event fires
     whenever the data, or the way the data is presented, is updated.
 
-
     If the data is to be editable then the subclass should override the
     ``set_value`` method.  It should attempt to change the underlying data as a
-    side-effect, and return True on success and False on failure (for example,
+    side-effect or raise DataViewSetError on failure (for example,
     setting an invalid value).  If the underlying data structure cannot be
-    listened to internally (such as a numpy array or Pandas data frame), this
-    method should also fire the values changed event with appropriate values.
+    listened to internally (such as a numpy array or Pandas data frame),
+    ``set_value`` should also fire the ``values_changed`` event with
+    appropriate values.
+
+    In the cases where the underlying data structure cannot be observed by
+    the usual traits mechanisms, the end-user of the code may be responsible
+    for ensuring that the ``structure_changed`` and ``values_changed`` events
+    are fired appropriately.
     """
 
     #: The index manager that helps convert toolkit indices to data view

@@ -11,6 +11,7 @@ The DataView API has a consistent way of indexing that uses tuples of integers
 to represent the rows and columns, as illustrated below:
 
 .. figure:: images/data_view_indices.png
+   :scale: 50
    :alt: an illustration of data view indices
 
    How DataView Indexing Works.
@@ -52,17 +53,23 @@ Data Models
 
 Data to be viewed needs to be exposed to the DataView infrastructure by
 creating a data model for it.  This is a class that implements the
-interface of |AbstractDataModel|.
+interface of |AbstractDataModel| to display values from a dictionary.
 
-A data model for a dictionary could be implemented like this:
+.. figure:: images/dict_data_model.png
+   :scale: 50
+   :alt: an illustration of the DictDataModel
+
+   The DictDataModel example.
+
+The basic traits for the model might look like this:
 
 .. literalinclude:: examples/dict_data_model.py
    :start-at: class DictDataModel
    :end-at:     index_manager =
 
 The base |AbstractDataModel| class requires you to provide an index manager
-so we use an |IntIndexManager| because the data is always non-hierarchical
-for this model.
+so we use an |IntIndexManager| because the data is non-hierarchical for this
+model.
 
 Data Structure
 ~~~~~~~~~~~~~~
