@@ -109,7 +109,7 @@ class AbstractValueType(ABCHasStrictTraits):
         DataViewSetError
             If the value cannot be set.
         """
-        return model.set_value(row, column, value)
+       model.set_value(row, column, value)
 
     def has_text(self, model, row, column):
         """ Whether or not the value has a textual representation.
@@ -178,7 +178,7 @@ class AbstractValueType(ABCHasStrictTraits):
         DataViewSetError
             If the value cannot be set.
         """
-        return False
+        raise DataViewSetError("Cannot set value.")
 
     @observe('+update_value_type')
     def update_value_type(self, event=None):

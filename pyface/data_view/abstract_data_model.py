@@ -36,7 +36,7 @@ class AbstractDataModel(ABCHasStrictTraits):
     values provided by the data, but not with how the data is presented.
 
     Row and column indices are represented by sequences (usually lists) of
-    integers, specifying the index at each level of the heirarchy.  The root
+    integers, specifying the index at each level of the hierarchy.  The root
     row and column are represented by empty lists.
 
     Subclasses need to implement the ``get_column_count``,
@@ -137,8 +137,8 @@ class AbstractDataModel(ABCHasStrictTraits):
         """ Return the Python value for the row and column.
 
         The values for column headers are returned by calling this method with
-        row equal to [].  The values for row headers are returned by calling
-        this method with column equal to [].
+        row equal to ().  The values for row headers are returned by calling
+        this method with column equal to ().
 
         Parameters
         ----------
@@ -161,8 +161,8 @@ class AbstractDataModel(ABCHasStrictTraits):
         returns False.
 
         Whether or a column header can be set is returned by calling this
-        method with row equal to [].  Whether or a row header can be set
-        is returned by calling this method with column equal to [].
+        method with row equal to ().  Whether or a row header can be set
+        is returned by calling this method with column equal to ().
 
         Parameters
         ----------
@@ -185,8 +185,8 @@ class AbstractDataModel(ABCHasStrictTraits):
         returns False.
 
         The values for column headers can be set by calling this method with
-        row equal to [].  The values for row headers can be set by calling
-        this method with column equal to [].
+        row equal to ().  The values for row headers can be set by calling
+        this method with column equal to ().
 
         Parameters
         ----------
@@ -253,7 +253,7 @@ class AbstractDataModel(ABCHasStrictTraits):
         """ Iterator that yields rows and columns in preorder.
 
         This yields pairs of row, column for all rows in preorder
-        and and all column indices for all rows, including [].
+        and and all column indices for all rows, including ().
         Columns are iterated in order.
 
         Parameters

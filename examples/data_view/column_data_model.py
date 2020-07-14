@@ -64,7 +64,7 @@ class AbstractRowInfo(ABCHasStrictTraits):
         raise NotImplementedError()
 
     def set_value(self, obj):
-        return False
+        return
 
     @abstractmethod
     def get_observable(self, obj):
@@ -107,9 +107,8 @@ class HasTraitsRowInfo(AbstractRowInfo):
 
     def set_value(self, obj, value):
         if not self.value:
-            return False
+            return
         xsetattr(obj, self.value, value)
-        return True
 
     def get_observable(self):
         return self.value
@@ -142,7 +141,6 @@ class DictRowInfo(AbstractRowInfo):
     def set_value(self, obj, value):
         data = xgetattr(obj, self.value, None)
         data[self.key] = value
-        return True
 
     def get_observable(self):
         return self.value + '.items'
@@ -214,9 +212,9 @@ class ColumnDataModel(AbstractDataModel):
     def set_value(self, row, column, value):
         row_info = self._row_info_object(row)
         if len(column) == 0:
-            return False
+            raise DataViewSetError("Cannot set value for row header.")
         obj = self.data[column[0]]
-        return row_info.set_value(obj, value)
+       row_info.set_value(obj, value)
 
     def get_value_type(self, row, column):
         row_info = self._row_info_object(row)

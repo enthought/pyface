@@ -103,6 +103,9 @@ class MainWindow(ApplicationWindow):
         import numpy
         return numpy.random.uniform(size=(100000, 10))
 
+    def destroy(self):
+        self.data_view.destroy()
+        super().destroy()
 
 male_names = [
     'Michael', 'Edward', 'Timothy', 'James', 'George', 'Ralph', 'David',

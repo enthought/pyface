@@ -72,8 +72,8 @@ class TestAbstractValueType(UnittestTools, TestCase):
 
     def test_set_text(self):
         value_type = ValueType()
-        result = value_type.set_text(self.model, [0], [0], "2.0")
-        self.assertFalse(result)
+        with self.assertRaises(DataViewSetError):
+            value_type.set_text(self.model, [0], [0], "2.0")
 
     def test_parameter_update(self):
         value_type = ValueType()

@@ -28,7 +28,7 @@ the parent object of the current object.
 
 The default representation of an index from the point of view of the
 data view infrastructure is a sequence of integers, giving the index at
-each level of the heirarchy.  DataViewModel classes can then use these
+each level of the hierarchy.  DataViewModel classes can then use these
 indices to identify objects in the underlying data model.
 
 There are three main classes defined in the module: AbstractIndexManager,
@@ -130,7 +130,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         Parameters
         ----------
         indices : sequence of int
-            The row location at each level of the heirarchy.
+            The row location at each level of the hierarchy.
 
         Returns
         -------
@@ -152,7 +152,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         """ Given an index, return the corresponding sequence of row values.
 
         The default implementation repeatedly calls get_parent_and_row()
-        to walk up the heirarchy and push the row values into the start
+        to walk up the hierarchy and push the row values into the start
         of the sequence.
 
         Parameters
@@ -163,7 +163,7 @@ class AbstractIndexManager(ABCHasStrictTraits):
         Returns
         -------
         sequence : tuple of int
-            The row location at each level of the heirarchy.
+            The row location at each level of the hierarchy.
         """
         result = ()
         while index != Root:
