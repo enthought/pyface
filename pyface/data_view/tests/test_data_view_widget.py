@@ -201,3 +201,28 @@ class TestWidget(unittest.TestCase, UnittestTools):
             self.widget._get_control_selection(),
             [((1, 4), (2,)), ((2, 0), (4,))],
         )
+
+    def test_selection_invalid_row(self):
+        self._create_widget_control()
+
+        self.widget.selection = [((7, 10), ())]
+
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((7, 10), ())])
+        self.assertEqual(self.widget._get_control_selection(),  [((7, 10), ())])
+
+    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    def test_selection_invalid_item(self):
+        self.widget.selection_type = 'item'
+        self._create_widget_control()
+
+        self.widget.selection = [((1, 4, 5, 6), (2,))]
+
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [((1, 4, 5, 6), (2,))])
+        self.assertEqual(
+            self.widget._get_control_selection(),
+            [((1, 4, 5, 6), (2,))]
+        )

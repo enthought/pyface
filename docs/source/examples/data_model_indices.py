@@ -73,6 +73,7 @@ if __name__ == '__main__':
     # Create and open the main window.
     window = MainWindow()
     window.open()
+    window.data_view.observe(print, "selection")
 
     # Start the GUI event loop!
     gui.start_event_loop()

@@ -29,6 +29,54 @@ When interpreting these values, the root row ``()`` corresponds to the
 The root row and column indices together refer to the cell in the top-left
 corner.
 
+Selections
+~~~~~~~~~~
+
+Implementers of the |IDataViewWidget| interface provide a |selection| trait
+that holds a list of tuples of selected row and column index values.  This
+trait is settable, so changes made to the trait are reflected in the selection
+in the view.
+
+The |selection_type| trait describes what gets selected when a user clicks
+on a cell.  It defaults to ``row``, which selects entire rows with one click,
+but implementations may optionally support ``item`` and ``column`` selection
+as well.
+
+In ``row`` selection type, the column values are all equal ``()`` (in other
+words, the indices of the appropriate row header), and users setting the
+values should adhere to that expectation.
+
+.. figure:: images/row_selection_type.png
+   :scale: 50
+   :alt: an illustration of row selection type
+
+   Row selection type.
+
+   This corresponds to the |selection| being set equal to
+   ``[((0,), ()), ((1, 0), ()), ((1, 2), ())]``.
+
+The ``column`` selection type only selects the column values that are children
+of a particular parent row, and so the row provided is that parent row.  Code
+which sets the value of the selection should adhere to that expectation.
+
+.. figure:: images/column_selection_type.png
+   :scale: 50
+   :alt: an illustration of column selection type
+
+   Column selection type.
+
+   This corresponds to the |selection| being set equal to
+   ``[((), (2,)), ((0,), (0,)), ((1,), (3,))]``.
+
+The |selection_mode| trait describes the behaviour of selections as the user
+interacts with them.  It defaults to ``extended``, which allows the user to
+extend the selection by shift-clicking or other similar platform-dependent
+interactions, but can also take the value ``single``, which restricts the
+user to at most one selected thing.
+
+A change to either the |selection_type| or the |selection_mode| results in the
+|selection| be cleared.
+
 
 Index Managers
 --------------
@@ -217,6 +265,7 @@ the |has_editor_value| method returns ``False``.
 .. |AbstractDataModel| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
 .. |DataViewSetError| replace:: :py:class:`~pyface.data_view.abstract_data_model.DataViewSetError`
 .. |EditableValue| replace:: :py:class:`~pyface.data_view.value_types.editable_value.EditableValue`
+.. |IDataViewWidget| replace:: :py:class:`~pyface.data_view.i_data_view_widget.IDataViewWidget`
 .. |IntIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.IntIndexManager`
 .. |IntValue| replace:: :py:class:`~pyface.data_view.value_types.numeric_value.IntValue`
 .. |TextValue| replace:: :py:class:`~pyface.data_view.value_types.text_value.TextValue`
@@ -228,4 +277,7 @@ the |has_editor_value| method returns ``False``.
 .. |get_value| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.get_value`
 .. |get_value_type| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.get_value`
 .. |has_editor_value| replace:: :py:meth:`~pyface.data_view.abstract_value_type.AbstractValueType.has_editor_value`
+.. |selection| replace:: :py:attr:`~pyface.data_view.i_data_view_widget.IDataViewWidget.selection`
+.. |selection_mode| replace:: :py:attr:`~pyface.data_view.i_data_view_widget.IDataViewWidget.selection_mode`
+.. |selection_type| replace:: :py:attr:`~pyface.data_view.i_data_view_widget.IDataViewWidget.selection_type`
 .. |set_value| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.set_value`
