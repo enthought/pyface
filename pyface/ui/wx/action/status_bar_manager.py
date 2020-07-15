@@ -58,6 +58,10 @@ class StatusBarManager(HasTraits):
         """ Removes a status bar. """
 
         if self.status_bar is not None:
+            if self._timer is not None:
+                self._timer.Stop()
+                self._timer = None
+
             self.status_bar.Destroy()
             self.status_bar._pyface_control = None
             self.status_bar = None
