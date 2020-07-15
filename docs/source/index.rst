@@ -12,7 +12,7 @@ Pyface
 
 Pyface enables programmers to interact with generic GUI objects, such as an
 "MDI Application Window", rather than with raw GUI widgets. (Pyface is named by
-analogy to JFace in Java.) Traits uses Pyface to implement views and editors
+analogy to JFace in Java.) TraitsUI uses Pyface to implement views and editors
 for displaying and editing Traits-based objects.
 
 Toolkit Backends
