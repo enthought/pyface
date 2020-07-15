@@ -4047,7 +4047,7 @@ class DockSizer(wx.Sizer):
         elif isinstance(contents, DockControl):
             self._contents = self._set_section([contents], True)
         else:
-            raise TypeError
+            raise TypeError()
 
         # Set the owner DockWindow for the top-level group (if possible)
         # so that it can notify the owner when the DockWindow becomes empty:
@@ -4069,7 +4069,7 @@ class DockSizer(wx.Sizer):
             elif isinstance(item, DockItem):
                 items.append(item)
             else:
-                raise TypeError
+                raise TypeError()
 
         return DockRegion(contents=items)
 
@@ -4083,7 +4083,7 @@ class DockSizer(wx.Sizer):
             elif isinstance(item, DockControl):
                 items.append(DockRegion(contents=[item]))
             else:
-                raise TypeError
+                raise TypeError()
         return DockSection(is_row=is_row).trait_set(contents=items)
 
     # ---------------------------------------------------------------------------
