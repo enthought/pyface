@@ -161,7 +161,7 @@ class DataViewWidget(MDataViewWidget, Widget):
                 selection_model.selectionChanged.disconnect(
                   self._update_selection
                 )
-            except TypeError:
+            except (TypeError, RuntimeError):
                 # has already been disconnected
                 logger.info("selectionChanged already disconnected")
         else:
