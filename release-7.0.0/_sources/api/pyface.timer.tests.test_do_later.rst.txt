@@ -1,0 +1,7 @@
+pyface.timer.tests.test\_do\_later module
+=========================================
+
+.. automodule:: pyface.timer.tests.test_do_later
+   :members:
+   :undoc-members:
+   :show-inheritance:
