@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 """ Reusable MVC-based components for Traits-based applications.
-    Part of the TraitsGUI project of the Enthought Tool Suite.
+    Part of the TraitsUI project of the Enthought Tool Suite.
 """
 
 try:
