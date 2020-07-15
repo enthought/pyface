@@ -54,9 +54,9 @@ class TreeContentProvider(ContentProvider):
     def get_children(self, element):
         """ Returns the children of an element. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def has_children(self, element):
         """ Returns True iff the element has children, otherwise False. """
 
-        raise NotImplementedError
+        raise NotImplementedError()

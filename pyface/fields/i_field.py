@@ -123,30 +123,30 @@ class MField(HasTraits):
 
     def _get_control_value(self):
         """ Toolkit specific method to get the control's value. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_value(self, value):
         """ Toolkit specific method to set the control's value. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _observe_control_value(self, remove=False):
         """ Toolkit specific method to change the control value observer. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_control_tooltip(self):
         """ Toolkit specific method to get the control's tooltip. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_tooltip(self, tooltip):
         """ Toolkit specific method to set the control's tooltip. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _observe_control_context_menu(self, remove=False):
         """ Toolkit specific method to change the control menu observer.
 
         This should use _handle_control_context_menu as the event handler.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _handle_control_context_menu(self, event):
         """ Handle a context menu event.
@@ -156,7 +156,7 @@ class MField(HasTraits):
 
         The function signature will likely vary from toolkit to toolkit.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Trait change handlers -------------------------------------------------
 

@@ -31,7 +31,7 @@ class EnamlDockPane(DockPane):
         -------
         component : ToolkitObject
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # ------------------------------------------------------------------------
     # 'IDockPane' interface.

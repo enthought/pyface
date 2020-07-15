@@ -68,7 +68,7 @@ class Schema(HasTraits):
         """ Create the appropriate pyface.action instance with the specified
             child items.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class ActionSchema(Schema):

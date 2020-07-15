@@ -120,31 +120,31 @@ class MTextField(HasTraits):
 
     def _get_control_placeholder(self):
         """ Toolkit specific method to set the control's placeholder. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_placeholder(self, placeholder):
         """ Toolkit specific method to set the control's placeholder. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_control_echo(self):
         """ Toolkit specific method to get the control's echo. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_echo(self, echo):
         """ Toolkit specific method to set the control's echo. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_control_read_only(self):
         """ Toolkit specific method to get the control's read_only state. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_read_only(self, read_only):
         """ Toolkit specific method to set the control's read_only state. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _observe_control_editing_finished(self, remove=False):
         """ Change observation of whether editing is finished. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Trait change handlers --------------------------------------------------
 
