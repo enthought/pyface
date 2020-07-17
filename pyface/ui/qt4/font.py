@@ -70,29 +70,6 @@ qt_weight_to_weight = {
     99: 'extra-heavy',
 }
 
-stretch_to_qt_stretch = {
-    100: QFont.UltraCondensed,
-    200: QFont.ExtraCondensed,
-    300: QFont.Condensed,
-    400: QFont.SemiCondensed,
-    500: QFont.Normal,
-    600: QFont.SemiExpanded,
-    700: QFont.Expanded,
-    800: QFont.ExtraExpanded,
-    900: QFont.UltraExpanded,
-}
-qt_stretch_to_stretch = {
-    QFont.UltraCondensed: 'ultra-condensed',
-    QFont.ExtraCondensed: 'extra-condensed',
-    QFont.Condensed: 'condensed',
-    QFont.SemiCondensed: 'semi-condensed',
-    QFont.Normal: 'normal',
-    QFont.SemiExpanded: 'semi-expanded',
-    QFont.Expanded: 'expanded',
-    QFont.ExtraExpanded: 'extra-expanded',
-    QFont.UltraExpanded: 'ultra-expanded',
-}
-
 style_to_qt_style = {
     'normal': QFont.StyleNormal,
     'oblique': QFont.StyleOblique,
@@ -137,7 +114,7 @@ def font_to_toolkit_font(font):
 
     qt_font.setPointSizeF(font.size)
     qt_font.setWeight(weight_to_qt_weight[font.weight_])
-    qt_font.setStretch(stretch_to_qt_stretch[font.stretch_])
+    qt_font.setStretch(font.stretch)
     qt_font.setStyle(style_to_qt_style[font.style])
     qt_font.setUnderline('underline' in font.variants)
     qt_font.setStrikeOut('strikethrough' in font.variants)
@@ -174,7 +151,7 @@ def toolkit_font_to_properties(toolkit_font):
     size = toolkit_font.pointSizeF()
     style = qt_style_to_style[toolkit_font.style()]
     weight = map_to_nearest(toolkit_font.weight(), qt_weight_to_weight)
-    stretch = map_to_nearest(toolkit_font.stretch(), qt_stretch_to_stretch)
+    stretch = toolkit_font.stretch()
     variants = set()
     if toolkit_font.underline():
         variants.add('underline')

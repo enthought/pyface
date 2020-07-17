@@ -38,9 +38,8 @@ Weight
 
 Stretch
     The amount of horizontal compression or expansion to apply to the glyphs.
-    These can be given as a number from 1 (most compressed) to 999 (most
-    expanded), with a number of synonyms such as 'condensed' and 'expanded'
-    available for those values.
+    These can be given as a percentage between 50% and 200%, or by strings
+    such as as 'condensed' and 'expanded' that correspond to those values.
 
 Style
     This selects either 'oblique' or 'italic' variants typefaces of the given
@@ -88,8 +87,8 @@ class.
 import re
 
 from traits.api import (
-    BaseCFloat, DefaultValue, Enum, HasStrictTraits, CList, Map, CSet, Str,
-    TraitError, TraitType
+    BaseCFloat, CList, CSet, DefaultValue, Enum, HasStrictTraits, Map, Range,
+    Str, TraitError, TraitType
 )
 from traits.trait_type import NoDefaultSpecified
 
@@ -118,21 +117,21 @@ weights.update({
 })
 
 stretches = {
-    'ultra-condensed': 100,
-    'ultracondensed': 100,
-    'extra-condensed': 200,
-    'extracondensed': 200,
-    'condensed': 300,
-    'semi-condensed': 400,
-    'semicondensed': 400,
-    'normal': 500,
-    'semi-expanded': 600,
-    'semiexpanded': 600,
-    'expanded': 700,
-    'extra-expanded': 800,
-    'extraexpanded': 800,
-    'ultra-expanded': 900,
-    'ultraexpanded': 900,
+    'ultra-condensed': 50,
+    'ultracondensed': 62.5,
+    'extra-condensed': 62.5,
+    'extracondensed': 62.5,
+    'condensed': 75,
+    'semi-condensed': 87.5,
+    'semicondensed': 87.5,
+    'normal': 100,
+    'semi-expanded': 112.5,
+    'semiexpanded': 112.5,
+    'expanded': 125,
+    'extra-expanded': 150,
+    'extraexpanded': 150,
+    'ultra-expanded': 200,
+    'ultraexpanded': 200,
 }
 
 sizes = {
@@ -156,7 +155,7 @@ FontFamily = CList(Str, ['default'])
 FontWeight = Map(weights, default_value='normal')
 
 #: A trait for font stretch values.
-FontStretch = Map(stretches, default_value='normal')
+#FontStretch = Range(50.0, 200.0, 100.0)
 
 #: A trait for font styles.
 FontStyle = Enum(styles)
@@ -165,12 +164,48 @@ FontStyle = Enum(styles)
 FontVariants = CSet(Enum(variants))
 
 
+class FontStretch(BaseCFloat):
+    """ Trait type for font stretches.
+
+    The is a CFloat trait which also allows values which are keys of the
+    stretch dictionary  Values must be floats between 50 and 200, inclusive.
+    """
+
+    #: The default value for the trait.
+    default_value = 100.0
+
+    def __init__(self, default_value=NoDefaultSpecified, **metadata):
+        if default_value != NoDefaultSpecified:
+            default_value = self.validate(None, None, default_value)
+        super().__init__(default_value, **metadata)
+
+    def validate(self, object, name, value):
+        if isinstance(value, str) and value.endswith('%'):
+            value = value[:-1]
+        value = stretches.get(value, value)
+        value = super().validate(object, name, value)
+        if not 50 <= value <= 200:
+            self.error(object, name, value)
+        return value
+
+    def info(self):
+        info = (
+            "a float from 50 to 200, "
+            "a value that can convert to a float from 50 to 200, "
+        )
+        info += ', '.join(repr(key) for key in sizes)
+        info += (
+            " or a string with a float value from 50 to 200 followed by '%'"
+        )
+        return info
+
+
 class FontSize(BaseCFloat):
     """ Trait type for font sizes.
 
     The is a CFloat trait which also allows values which are keys of the
-    size dictionary, and also ignores trailing 'pt' annotation in string
-    values.  The value stored is a float.
+    size dictionary, and also ignores trailing 'pt' ot 'px' annotation in
+    string values.  The value stored is a float.
     """
 
     #: The default value for the trait.
@@ -182,7 +217,8 @@ class FontSize(BaseCFloat):
         super().__init__(default_value, **metadata)
 
     def validate(self, object, name, value):
-        if isinstance(value, str) and value.endswith('pt'):
+        if isinstance(value, str) and (
+                    value.endswith('pt') or value.endswith('px')):
             value = value[:-2]
         value = sizes.get(value, value)
         value = super().validate(object, name, value)
@@ -196,13 +232,14 @@ class FontSize(BaseCFloat):
         )
         info += ', '.join(repr(key) for key in sizes)
         info += (
-            " or a string with a positive float value followed by 'pt'"
+            " or a string with a positive float value followed by 'pt' or 'px'"
         )
         return info
 
 
 font_tokens = [
-    r'(?P<SIZE>\d+\.?\d*pt)',
+    r'(?P<SIZE>\d+\.?\d*(pt|px))',
+    r'(?P<PERCENT>\d+\.?\d*%)',
     r'(?P<NUMBER>\d+\.?\d*)',
     r'(?P<NAME>[a-zA-Z\-]+)',
     r'(?P<QUOTED_NAME>"[^"]+"|\'[^\']+\')',
@@ -242,7 +279,7 @@ def parse_font_description(description):
     """
     family = []
     weight = 'normal'
-    stretch = 'normal'
+    stretch = 100
     size = -1
     style = 'normal'
     variant_set = set()
@@ -262,6 +299,13 @@ def parse_font_description(description):
                 raise FontParseError(
                     "Invalid font size {!r} at position {} in {!r}".format(
                         value, index, description)
+                )
+        elif kind == 'PERCENT':
+            if stretch == 100:
+                stretch = float(value[:-1])
+            else:
+                raise FontParseError(
+                    "Stretch declared twice in {!r}".format(description)
                 )
         elif kind == 'NUMBER':
             if value in weights and weight == 'normal':
@@ -288,11 +332,11 @@ def parse_font_description(description):
                     )
                 weight = value.lower()
             elif value.lower() in stretches:
-                if stretch != 'normal':
+                if stretch != 100:
                     raise FontParseError(
                         "Stretch declared twice in {!r}".format(description)
                     )
-                stretch = value.lower()
+                stretch = stretches[value.lower()]
             elif value.lower() in sizes:
                 if size != -1:
                     raise FontParseError(
@@ -410,8 +454,8 @@ class Font(HasStrictTraits):
         )
         if self.weight != 'normal':
             terms.append(self.weight)
-        if self.stretch != 'normal':
-            terms.append(self.stretch)
+        if self.stretch != 100:
+            terms.append("{:g}%".format(self.stretch))
         size = self.size
         # if size is an integer
         if int(size) == size:

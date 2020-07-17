@@ -90,7 +90,7 @@ class TestFont(unittest.TestCase):
         self.assertEqual(font.family, ['default'])
         self.assertEqual(font.size, 12.0)
         self.assertEqual(font.weight, 'normal')
-        self.assertEqual(font.stretch, 'normal')
+        self.assertEqual(font.stretch, 100)
         self.assertEqual(font.style, 'normal')
         self.assertEqual(font.variants, set())
 
@@ -108,8 +108,7 @@ class TestFont(unittest.TestCase):
         self.assertEqual(font.size, 14.0)
         self.assertEqual(font.weight, 'demibold')
         self.assertEqual(font.weight_, 600)
-        self.assertEqual(font.stretch, 'condensed')
-        self.assertEqual(font.stretch_, 300)
+        self.assertEqual(font.stretch, 75)
         self.assertEqual(font.style, 'italic')
         self.assertEqual(font.variants, {'small-caps', 'underline'})
 
@@ -142,7 +141,7 @@ class TestFont(unittest.TestCase):
 
         self.assertEqual(
             description,
-            "italic small-caps underline demibold condensed 14pt "
+            "italic small-caps underline demibold 75% 14pt "
             "'Comic Sans', decorative"
         )
 
@@ -156,8 +155,7 @@ class TestFont(unittest.TestCase):
         self.assertEqual(font.size, 14.0)
         self.assertEqual(font.weight, 'demibold')
         self.assertEqual(font.weight_, 600)
-        self.assertEqual(font.stretch, 'condensed')
-        self.assertEqual(font.stretch_, 300)
+        self.assertEqual(font.stretch, 75)
         self.assertEqual(font.style, 'italic')
         self.assertEqual(font.variants, {'small-caps', 'underline'})
 
@@ -233,7 +231,7 @@ class TestParseFontDescription(unittest.TestCase):
                 'family': ['default'],
                 'size': 12.0,
                 'weight': 'normal',
-                'stretch': 'normal',
+                'stretch': 100,
                 'style': 'normal',
                 'variants': set()
             }
@@ -250,7 +248,7 @@ class TestParseFontDescription(unittest.TestCase):
                 'family': ['Helvetica', 'sans-serif'],
                 'size': 18.0,
                 'weight': 'demibold',
-                'stretch': 'condensed',
+                'stretch': 75,
                 'style': 'italic',
                 'variants': set(variants)
             }
@@ -284,7 +282,7 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': family,
                         'size': 12.0,
                         'weight': 'normal',
-                        'stretch': 'normal',
+                        'stretch': 100,
                         'style': 'normal',
                         'variants': set(),
                     }
@@ -300,7 +298,7 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': ['default'],
                         'size': 12.0,
                         'weight': 'normal',
-                        'stretch': 'normal',
+                        'stretch': 100,
                         'style': style,
                         'variants': set(),
                     }
@@ -316,14 +314,14 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': ['default'],
                         'size': 12.0,
                         'weight': 'normal',
-                        'stretch': 'normal',
+                        'stretch': 100,
                         'style': 'normal',
                         'variants': {variant},
                     }
                 )
 
     def test_stretches(self):
-        for stretch in stretches:
+        for stretch, value in stretches.items():
             with self.subTest(stretch=stretch):
                 properties = parse_font_description(stretch)
                 self.assertEqual(
@@ -332,7 +330,7 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': ['default'],
                         'size': 12.0,
                         'weight': 'normal',
-                        'stretch': stretch,
+                        'stretch': value,
                         'style': 'normal',
                         'variants': set(),
                     }
@@ -349,7 +347,7 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': ['default'],
                         'size': 12.0,
                         'weight': weight,
-                        'stretch': 'normal',
+                        'stretch': 100,
                         'style': 'normal',
                         'variants': set(),
                     }
@@ -374,7 +372,7 @@ class TestParseFontDescription(unittest.TestCase):
                         'family': ['default'],
                         'size': point_size,
                         'weight': 'normal',
-                        'stretch': 'normal',
+                        'stretch': 100,
                         'style': 'normal',
                         'variants': set(),
                     }
@@ -394,7 +392,7 @@ class TestParseFontDescription(unittest.TestCase):
                 properties = parse_font_description(text)
                 expected = {
                     'family': ['default'],
-                    'stretch': 'normal',
+                    'stretch': 100,
                     'style': 'normal',
                     'variants': set(),
                 }
@@ -443,7 +441,7 @@ class TestPyfaceFontTrait(unittest.TestCase):
                     'family': ("Comic Sans",),
                     'weight': 'normal',
                     'style': 'normal',
-                    'stretch': 'normal',
+                    'stretch': 100,
                     'variants': frozenset(),
                 }
             )
@@ -462,7 +460,7 @@ class TestPyfaceFontTrait(unittest.TestCase):
                     'family': ("Comic Sans",),
                     'weight': 'normal',
                     'style': 'normal',
-                    'stretch': 'normal',
+                    'stretch': 100,
                     'variants': frozenset(),
                 }
             )
