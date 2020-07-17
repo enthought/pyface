@@ -199,7 +199,7 @@ While the GUI application window subclass looks like this::
                 name='&Help',
             )
         )
-    return window
+        return window
 
     def main():
         app = GUIApplication(
