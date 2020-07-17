@@ -176,8 +176,7 @@ class DataViewModel(wxDataViewModel):
         return self.model.get_column_count() + 1
 
     def GetColumnType(self, column):
-        value_type = self.model.get_value_type((), (column-1,))
-        return type_hint_to_variant.get(value_type.type_hint, "string")
+        return "string"
 
     def _to_row_index(self, item):
         id = item.GetID()
