@@ -12,10 +12,13 @@ import warnings
 
 from traits.api import Constant, Enum, Instance, observe, provides
 
+import wx
 from wx.dataview import (
-    DataViewCtrl, DataViewItemArray, DataViewModel as wxDataViewModel,
+    DataViewCtrl, DataViewEvent, DataViewItemArray,
+    DataViewModel as wxDataViewModel,
     DATAVIEW_CELL_EDITABLE, DATAVIEW_CELL_ACTIVATABLE,
     DV_MULTIPLE, DV_NO_HEADER, EVT_DATAVIEW_SELECTION_CHANGED,
+    wxEVT_DATAVIEW_SELECTION_CHANGED
 )
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
@@ -97,6 +100,10 @@ class DataViewWidget(MDataViewWidget, Widget):
             item = self._item_model._to_item(row)
             wx_selection.append(item)
         self.control.SetSelections(wx_selection)
+        event = DataViewEvent(
+            wxEVT_DATAVIEW_SELECTION_CHANGED
+        )
+        wx.PostEvent(self.control, event)
 
     def _observe_control_selection(self, remove=False):
         """ Toolkit specific method to watch for changes in the selection. """
