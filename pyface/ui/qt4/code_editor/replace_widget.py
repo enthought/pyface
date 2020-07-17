@@ -21,7 +21,7 @@ class ReplaceWidget(FindWidget):
         super(FindWidget, self).__init__(parent)
         self.adv_code_widget = weakref.ref(parent)
 
-        self.button_size = self.fontMetrics().width(u"Replace All") + 20
+        self.button_size = self.fontMetrics().width("Replace All") + 20
 
         form_layout = QtGui.QFormLayout()
         form_layout.addRow("Fin&d", self._create_find_control())

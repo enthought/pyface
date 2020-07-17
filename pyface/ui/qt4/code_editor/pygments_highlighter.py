@@ -71,7 +71,7 @@ def get_tokens_unprocessed(self, text, stack=("root",)):
                     pos += 1
                     statestack = ["root"]
                     statetokens = tokendefs["root"]
-                    yield pos, Text, u"\n"
+                    yield pos, Text, "\n"
                     continue
                 yield pos, Error, text[pos]
                 pos += 1
