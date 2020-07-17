@@ -284,7 +284,7 @@ class Workbench(HasTraits):
     def _create_window(self, **kw):
         """ Factory method that creates a new workbench window. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # ------------------------------------------------------------------------
     # Private interface.

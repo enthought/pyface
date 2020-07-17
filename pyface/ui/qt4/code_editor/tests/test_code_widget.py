@@ -31,6 +31,13 @@ class TestCodeWidget(unittest.TestCase):
     def tearDown(self):
         self.qapp.processEvents()
 
+    def test_different_lexer(self):
+        # Setting a different lexer should not fail.
+        # See enthought/traitsui#982
+        cw = CodeWidget(None, lexer="yaml")
+        text = "number: 1"
+        cw.setPlainText(text)
+
     def test_readonly_editor(self):
         cw = CodeWidget(None)
         text = "Some\nText"

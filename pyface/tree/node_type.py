@@ -67,7 +67,7 @@ class NodeType(HasPrivateTraits):
     def is_type_for(self, node):
         """ Returns True if a node is deemed to be of this type. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def allows_children(self, node):
         """ Does the node allow children (ie. a folder vs a file). """
@@ -166,7 +166,7 @@ class NodeType(HasPrivateTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
@@ -185,7 +185,7 @@ class NodeType(HasPrivateTraits):
     def drop(self, obj, data):
         """ Drops an object onto a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node. """

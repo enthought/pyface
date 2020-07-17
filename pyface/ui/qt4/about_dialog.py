@@ -17,7 +17,7 @@ import sys
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, List, provides, Str
+from traits.api import Any, Callable, Instance, List, provides, Str, Tuple
 
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
@@ -48,7 +48,7 @@ _DIALOG_TEXT = """
       %s
       </p>
       <p>
-      Copyright &copy; 2003-2010 Enthought, Inc.<br>
+      Copyright &copy; 2003-2020 Enthought, Inc.<br>
       Copyright &copy; 2007 Riverbank Computing Limited
       </p>
   </center>
@@ -70,6 +70,24 @@ class AboutDialog(MAboutDialog, Dialog):
     copyrights = List(Str)
 
     image = Instance(ImageResource, ImageResource("about"))
+
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
+    # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
+
+        super(AboutDialog, self).destroy()
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
@@ -99,6 +117,7 @@ class AboutDialog(MAboutDialog, Dialog):
             buttons.addButton(QtGui.QDialogButtonBox.Ok)
 
         buttons.accepted.connect(parent.accept)
+        self._connections_to_remove.append((buttons.accepted, parent.accept))
 
         lay = QtGui.QVBoxLayout()
         lay.addWidget(label)

@@ -178,6 +178,7 @@ if __name__ == "__main__":
         ],
         description="traits-capable windowing framework",
         long_description=open("README.rst").read(),
+        long_description_content_type="text/x-rst",
         download_url="https://github.com/enthought/pyface",
         install_requires=__requires__,
         extras_require=__extras_require__,

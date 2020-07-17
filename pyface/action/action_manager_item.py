@@ -56,7 +56,7 @@ class ActionManagerItem(HasTraits):
         controller : ActionController instance or None
             The controller to use.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def add_to_toolbar(self, parent, tool_bar, image_cache, controller):
         """ Adds the item to a tool bar.
@@ -74,4 +74,4 @@ class ActionManagerItem(HasTraits):
         show_labels : bool
             Should the toolbar item show a label.
         """
-        raise NotImplementedError
+        raise NotImplementedError()

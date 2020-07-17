@@ -169,12 +169,12 @@ class MainWindowLayout(HasTraits):
     def _get_dock_widget(self, pane):
         """ Returns the QDockWidget associated with a PaneItem.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_pane(self, dock_widget):
         """ Returns a PaneItem for a QDockWidget.
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _get_dock_pane(self, pane):
         """ Returns the DockPane associated with a PaneItem.

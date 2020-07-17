@@ -31,4 +31,4 @@ class ContentProvider(HasTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()

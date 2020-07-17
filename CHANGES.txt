@@ -2,6 +2,27 @@
 Pyface Changelog
 ================
 
+Release 7.0.1
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 7.0.0
+release.
+
+Thanks to:
+
+Aaron Ayres, Kit Choi, Rahul Poruri, Pedro Rivotti, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Fix copyright header in AboutDialog. (#573)
+* Fix dock pane layout on Qt5. (#545)
+* Fix errors from incorrect QImage memory management. (#546)
+* Fix CodeWidget handling of parsed tokens which caused TraitsUI CodeEditor to
+  fail when a different lexer was chosen (#566).
+
 Release 7.0.0
 =============
 
@@ -29,7 +50,7 @@ Change summary
 Enhancements
 
 * Use Traits 6 features (#480, #494)
-* WxPython 4 support (#469, #473, #497, $499)
+* WxPython 4 support (#469, #473, #497, #499)
 * Remove six and other Python 2 code (#493)
 * Add utility functions for Qt images (#498)
 * Allow live update of Action images (#484)

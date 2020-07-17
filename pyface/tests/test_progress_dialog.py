@@ -56,6 +56,14 @@ class TestProgressDialog(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.dialog.destroy()
 
+    def test_can_ok(self):
+        # test that creation works with can_ok
+        self.dialog.can_ok = True
+        with self.event_loop():
+            self.dialog._create()
+        with self.event_loop():
+            self.dialog.destroy()
+
     def test_show_time(self):
         # test that creation works with show_time
         self.dialog.show_time = True

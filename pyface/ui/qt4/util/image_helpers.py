@@ -96,5 +96,6 @@ def array_to_QImage(array):
     elif channels == 4:
         image = QImage(data.data, width, height, bytes_per_line,
                        QImage.Format_ARGB32)
+    image._numpy_data = data
     return image
 

@@ -89,6 +89,17 @@ class DockPane(TaskPane, MDockPane):
         # parent immediately!
         control.hide()
 
+    def destroy(self):
+        """ Destroy the toolkit-specific control that represents the pane.
+        """
+        if self.control is not None:
+            control = self.control
+            control.dockLocationChanged.disconnect(self._receive_dock_area)
+            control.topLevelChanged.disconnect(self._receive_floating)
+            control.visibilityChanged.disconnect(self._receive_visible)
+
+        super(DockPane, self).destroy()
+
     def set_focus(self):
         """ Gives focus to the control that represents the pane.
         """
