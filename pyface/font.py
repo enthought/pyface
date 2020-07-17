@@ -92,12 +92,12 @@ from traits.api import (
 )
 from traits.trait_type import NoDefaultSpecified
 
-weights = {str(i): i for i in range(100, 1001, 100)}
+WEIGHTS = {str(i): i for i in range(100, 1001, 100)}
 
 # Note: we don't support 'medium' as an alias for weight 500 because it
 # conflicts with the usage of 'medium' as an alias for a 12pt font in the CSS
 # specification for font attributes.
-weights.update({
+WEIGHTS.update({
     'thin': 100,
     'extra-light': 200,
     'ultra-light': 200,
@@ -116,7 +116,7 @@ weights.update({
     'extra-heavy': 1000,
 })
 
-stretches = {
+STRETCHES = {
     'ultra-condensed': 50,
     'ultracondensed': 62.5,
     'extra-condensed': 62.5,
@@ -134,7 +134,7 @@ stretches = {
     'ultraexpanded': 200,
 }
 
-sizes = {
+SIZES = {
     'xx-small': 7.0,
     'x-small': 9.0,
     'small': 10.0,
@@ -144,24 +144,24 @@ sizes = {
     'xx-large': 20.0,
 }
 
-styles = ['normal', 'italic', 'oblique']
+STYLES = ('normal', 'italic', 'oblique')
 
-variants = ['small-caps', 'underline', 'strikethrough', 'overline']
+VARIANTS = ['small-caps', 'underline', 'strikethrough', 'overline']
 
 #: A trait for font families.
 FontFamily = CList(Str, ['default'])
 
 #: A trait for font weights.
-FontWeight = Map(weights, default_value='normal')
+FontWeight = Map(WEIGHTS, default_value='normal')
 
 #: A trait for font stretch values.
 #FontStretch = Range(50.0, 200.0, 100.0)
 
 #: A trait for font styles.
-FontStyle = Enum(styles)
+FontStyle = Enum(STYLES)
 
 #: A trait for font variant properties.
-FontVariants = CSet(Enum(variants))
+FontVariants = CSet(Enum(VARIANTS))
 
 
 class FontStretch(BaseCFloat):
@@ -182,7 +182,7 @@ class FontStretch(BaseCFloat):
     def validate(self, object, name, value):
         if isinstance(value, str) and value.endswith('%'):
             value = value[:-1]
-        value = stretches.get(value, value)
+        value = STRETCHES.get(value, value)
         value = super().validate(object, name, value)
         if not 50 <= value <= 200:
             self.error(object, name, value)
@@ -193,7 +193,7 @@ class FontStretch(BaseCFloat):
             "a float from 50 to 200, "
             "a value that can convert to a float from 50 to 200, "
         )
-        info += ', '.join(repr(key) for key in sizes)
+        info += ', '.join(repr(key) for key in SIZES)
         info += (
             " or a string with a float value from 50 to 200 followed by '%'"
         )
@@ -220,7 +220,7 @@ class FontSize(BaseCFloat):
         if isinstance(value, str) and (
                     value.endswith('pt') or value.endswith('px')):
             value = value[:-2]
-        value = sizes.get(value, value)
+        value = SIZES.get(value, value)
         value = super().validate(object, name, value)
         if value <= 0:
             self.error(object, name, value)
@@ -230,7 +230,7 @@ class FontSize(BaseCFloat):
         info = (
             "a positive float, a value that can convert to a positive float, "
         )
-        info += ', '.join(repr(key) for key in sizes)
+        info += ', '.join(repr(key) for key in SIZES)
         info += (
             " or a string with a positive float value followed by 'pt' or 'px'"
         )
@@ -308,7 +308,7 @@ def parse_font_description(description):
                     "Stretch declared twice in {!r}".format(description)
                 )
         elif kind == 'NUMBER':
-            if value in weights and weight == 'normal':
+            if value in WEIGHTS and weight == 'normal':
                 weight = value
             elif size != -1:
                 raise FontParseError(
@@ -325,31 +325,31 @@ def parse_font_description(description):
         elif kind == 'NAME':
             # substitute synonyms
             value = parser_synonyms.get(value, value)
-            if value.lower() in weights:
+            if value.lower() in WEIGHTS:
                 if weight != 'normal':
                     raise FontParseError(
                         "Weight declared twice in {!r}".format(description)
                     )
                 weight = value.lower()
-            elif value.lower() in stretches:
+            elif value.lower() in STRETCHES:
                 if stretch != 100:
                     raise FontParseError(
                         "Stretch declared twice in {!r}".format(description)
                     )
-                stretch = stretches[value.lower()]
-            elif value.lower() in sizes:
+                stretch = STRETCHES[value.lower()]
+            elif value.lower() in SIZES:
                 if size != -1:
                     raise FontParseError(
                         "Size declared twice in {!r}".format(description)
                     )
-                size = sizes[value.lower()]
-            elif value.lower() in styles:
+                size = SIZES[value.lower()]
+            elif value.lower() in STYLES:
                 if style != 'normal':
                     raise FontParseError(
                         "Style declared twice in {!r}".format(description)
                     )
                 style = value.lower()
-            elif value in variants:
+            elif value in VARIANTS:
                 if value.lower() in variant_set:
                     raise FontParseError(
                         "Variant {!r} declared twice in {!r}".format(
@@ -449,7 +449,7 @@ class Font(HasStrictTraits):
         if self.style != 'normal':
             terms.append(self.style)
         terms.extend(
-            variant for variant in variants
+            variant for variant in VARIANTS
             if variant in self.variants
         )
         if self.weight != 'normal':

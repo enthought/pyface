@@ -13,8 +13,8 @@ import unittest
 from traits.api import HasStrictTraits, TraitError
 
 from ..font import (
-    Font, FontSize, FontParseError, PyfaceFont, parse_font_description, sizes, stretches,
-    styles, variants, weights
+    Font, FontSize, FontStretch, FontParseError, PyfaceFont,
+    parse_font_description, SIZES, STRETCHES, STYLES, VARIANTS, WEIGHTS
 )
 
 
@@ -27,7 +27,7 @@ class FontSizeDummy(HasStrictTraits):
     size_default_4 = FontSize("large")
 
 
-class TestFontTraits(unittest.TestCase):
+class TestFontSizeTrait(unittest.TestCase):
 
     def test_font_size_trait_defaults(self):
         dummy = FontSizeDummy()
@@ -81,6 +81,72 @@ class TestFontTraits(unittest.TestCase):
         with self.assertRaises(TraitError):
             dummy.size = "0pt"
 
+
+class FontStretchDummy(HasStrictTraits):
+
+    stretch = FontStretch()
+    stretch_default_1 = FontStretch(150)
+    stretch_default_2 = FontStretch("150.0")
+    stretch_default_3 = FontStretch("150.0%")
+    stretch_default_4 = FontStretch("expanded")
+
+
+class TestFontStretchTrait(unittest.TestCase):
+
+    def test_font_stretch_trait_defaults(self):
+        dummy = FontStretchDummy()
+
+        self.assertEqual(dummy.stretch, 100.0)
+        self.assertEqual(dummy.stretch_default_1, 150.0)
+        self.assertEqual(dummy.stretch_default_2, 150.0)
+        self.assertEqual(dummy.stretch_default_3, 150.0)
+        self.assertEqual(dummy.stretch_default_4, 125.0)
+
+    def test_font_stretch_trait_invalid_default(self):
+        with self.assertRaises(TraitError):
+            FontStretch("badvalue")
+
+        with self.assertRaises(TraitError):
+            FontStretch(49.5)
+
+        with self.assertRaises(TraitError):
+            FontStretch("49.5")
+
+        with self.assertRaises(TraitError):
+            FontStretch("49.5%")
+
+        with self.assertRaises(TraitError):
+            FontStretch(200.1)
+
+    def test_font_stretch_trait_validate(self):
+        dummy = FontStretchDummy()
+
+        dummy.stretch = 150.0
+        self.assertEqual(dummy.stretch, 150.0)
+
+        dummy.stretch = "125"
+        self.assertEqual(dummy.stretch, 125.0)
+
+        dummy.stretch = "50%"
+        self.assertEqual(dummy.stretch, 50.0)
+
+        dummy.stretch = "ultra-expanded"
+        self.assertEqual(dummy.stretch, 200.0)
+
+    def test_font_stretch_trait_invalid_validate(self):
+        dummy = FontStretchDummy()
+
+        with self.assertRaises(TraitError):
+            dummy.stretch = "badvalue"
+
+        with self.assertRaises(TraitError):
+            dummy.stretch = 49.5
+
+        with self.assertRaises(TraitError):
+            dummy.stretch = "200.1"
+
+        with self.assertRaises(TraitError):
+            dummy.stretch = "49.9%"
 
 class TestFont(unittest.TestCase):
 
@@ -250,7 +316,7 @@ class TestParseFontDescription(unittest.TestCase):
                 'weight': 'demibold',
                 'stretch': 75,
                 'style': 'italic',
-                'variants': set(variants)
+                'variants': set(VARIANTS)
             }
         )
 
@@ -289,7 +355,7 @@ class TestParseFontDescription(unittest.TestCase):
                 )
 
     def test_styles(self):
-        for style in styles:
+        for style in STYLES:
             with self.subTest(style=style):
                 properties = parse_font_description(style)
                 self.assertEqual(
@@ -305,7 +371,7 @@ class TestParseFontDescription(unittest.TestCase):
                 )
 
     def test_variants(self):
-        for variant in variants:
+        for variant in VARIANTS:
             with self.subTest(variant=variant):
                 properties = parse_font_description(variant)
                 self.assertEqual(
@@ -321,7 +387,7 @@ class TestParseFontDescription(unittest.TestCase):
                 )
 
     def test_stretches(self):
-        for stretch, value in stretches.items():
+        for stretch, value in STRETCHES.items():
             with self.subTest(stretch=stretch):
                 properties = parse_font_description(stretch)
                 self.assertEqual(
@@ -337,7 +403,7 @@ class TestParseFontDescription(unittest.TestCase):
                 )
 
     def test_weights(self):
-        sub_cases = weights
+        sub_cases = WEIGHTS
         for weight in sub_cases:
             with self.subTest(weight=weight):
                 properties = parse_font_description(weight)
@@ -362,7 +428,7 @@ class TestParseFontDescription(unittest.TestCase):
             '14.pt': 14.0,
             '14.5pt': 14.5
         }
-        sub_cases.update(sizes)
+        sub_cases.update(SIZES)
         for size, point_size in sub_cases.items():
             with self.subTest(size=size):
                 properties = parse_font_description(size)
