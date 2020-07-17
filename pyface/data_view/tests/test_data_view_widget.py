@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-
+import platform
 import unittest
 
 from traits.api import TraitError
@@ -25,6 +25,7 @@ from pyface.data_view.value_types.api import FloatValue
 
 
 is_wx = (toolkit.toolkit == "wx")
+is_linux = (platform.system() == "Linux")
 
 
 @requires_numpy
@@ -169,6 +170,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 4), ()), (2, 1), ()]
 
+    @unittest.skipIf(is_wx, "Selection mode 'extended' not supported in Wx and Linux")
     def test_selection_mode_extended(self):
         self._create_widget_control()
 
@@ -200,7 +202,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
             [((0,), (2,)), ((1,), (4,))]
         )
 
-    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'item' not supported")
     def test_selection_type_item(self):
         self.widget.selection_type = "item"
         self._create_widget_control()
@@ -296,16 +298,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
     def test_selection_updated(self):
         self._create_widget_control()
 
-        self.assertEqual(self.widget._get_control_selection_mode(), "extended")
-
         with self.assertTraitChanges(self.widget, 'selection'):
-            self.widget._set_control_selection([((1, 4), ()), ((2, 0), ())])
+            self.widget._set_control_selection([((1, 4), ())])
             self.gui.process_events()
 
-        self.assertEqual(self.widget.selection, [((1, 4), ()), ((2, 0), ())])
+        self.assertEqual(self.widget.selection, [((1, 4), ())])
         self.assertEqual(
             self.widget._get_control_selection(),
-            [((1, 4), ()), ((2, 0), ())],
+            [((1, 4), ())],
         )
 
     def test_selection_updating_context_manager(self):
