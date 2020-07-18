@@ -12,10 +12,7 @@ import unittest
 
 from traits.api import HasStrictTraits, TraitError
 
-from pyface.font import (
-    Font, FontSize, FontStretch,
-    SIZES, STRETCHES, STYLES, VARIANTS, WEIGHTS
-)
+from pyface.font import Font, FontSize, FontStretch, SIZES, STRETCHES
 
 
 class FontSizeDummy(HasStrictTraits):
@@ -108,6 +105,13 @@ class TestFontStretchTrait(unittest.TestCase):
         self.assertEqual(dummy.stretch_default_2, 150.0)
         self.assertEqual(dummy.stretch_default_3, 150.0)
         self.assertEqual(dummy.stretch_default_4, 125.0)
+
+    def test_font_stretches(self):
+        dummy = FontStretchDummy()
+        for stretch, value in STRETCHES.items():
+            with self.subTest(stretch=stretch):
+                dummy.stretch = stretch
+                self.assertEqual(dummy.stretch, value)
 
     def test_font_stretch_trait_invalid_default(self):
         with self.assertRaises(TraitError):

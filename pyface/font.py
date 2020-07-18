@@ -135,9 +135,6 @@ FontFamily = CList(Str, ['default'])
 #: A trait for font weights.
 FontWeight = Map(WEIGHTS, default_value='normal')
 
-#: A trait for font stretch values.
-#FontStretch = Range(50.0, 200.0, 100.0)
-
 #: A trait for font styles.
 FontStyle = Enum(STYLES)
 
