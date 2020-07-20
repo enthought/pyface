@@ -58,8 +58,13 @@ class TestChannelConversion(TestCase):
                 self.assertEqual(result, (value,))
 
 
-
 class TestColor(UnittestTools, TestCase):
+
+    def assert_tuple_almost_equal(self, tuple_1, tuple_2):
+        self.assertEqual(len(tuple_1), len(tuple_2))
+
+        for x, y in zip(tuple_1, tuple_2):
+            self.assertAlmostEqual(x, y)
 
     def test_init(self):
         color = Color()
@@ -83,25 +88,19 @@ class TestColor(UnittestTools, TestCase):
 
     def test_init_hsva(self):
         color = Color(hsva=(0.4, 0.2, 0.6, 0.8))
-        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 0.8))
+        self.assert_tuple_almost_equal(color.rgba, (0.48, 0.6, 0.528, 0.8))
 
     def test_init_hsv(self):
         color = Color(hsv=(0.4, 0.2, 0.6))
-        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 1.0))
+        self.assert_tuple_almost_equal(color.rgba, (0.48, 0.6, 0.528, 1.0))
 
     def test_init_hlsa(self):
         color = Color(hlsa=(0.4, 0.2, 0.6, 0.8))
-        self.assertEqual(
-            color.rgba,
-            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 0.8)  # noqa: E501
-        )
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8))
 
     def test_init_hls(self):
         color = Color(hls=(0.4, 0.2, 0.6))
-        self.assertEqual(
-            color.rgba,
-            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 1.0)  # noqa: E501
-        )
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 1.0))
 
     def test_toolkit_round_trip(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
@@ -125,7 +124,7 @@ class TestColor(UnittestTools, TestCase):
         self.assertTrue(color_1 == color_2)
         self.assertFalse(color_1 != color_2)
 
-    def test_eq_not_eequal(self):
+    def test_eq_not_equal(self):
         color_1 = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         color_2 = Color(rgba=(0.4, 0.4, 0.6, 0.8))
         self.assertTrue(color_1 != color_2)
@@ -199,48 +198,37 @@ class TestColor(UnittestTools, TestCase):
 
     def test_get_hsv(self):
         color = Color(rgba=(0.48, 0.6, 0.528, 0.8))
-        self.assertEqual(color.hsv, (0.4000000000000001, 0.2, 0.6))
+        self.assert_tuple_almost_equal(color.hsv, (0.4, 0.2, 0.6))
 
     def test_set_hsv(self):
         color = Color()
         color.hsv = (0.4, 0.2, 0.6)
-        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 1.0))
+        self.assert_tuple_almost_equal(color.rgba, (0.48, 0.6, 0.528, 1.0))
 
     def test_get_hsva(self):
         color = Color(rgba=(0.48, 0.6, 0.528, 0.8))
-        self.assertEqual(color.hsva, (0.4000000000000001, 0.2, 0.6, 0.8))
+        self.assert_tuple_almost_equal(color.hsva, (0.4, 0.2, 0.6, 0.8))
 
     def test_set_hsva(self):
         color = Color()
         color.hsva = (0.4, 0.2, 0.6, 0.8)
-        self.assertEqual(color.rgba, (0.48, 0.6, 0.528, 0.8))
+        self.assert_tuple_almost_equal(color.rgba, (0.48, 0.6, 0.528, 0.8))
 
     def test_get_hls(self):
         color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
-        self.assertEqual(
-            color.hls,
-            (0.39999999999999997, 0.2, 0.6)
-        )
+        self.assert_tuple_almost_equal(color.hls, (0.4, 0.2, 0.6))
 
     def test_set_hls(self):
         color = Color()
         color.hls = (0.4, 0.2, 0.6)
-        self.assertEqual(
-            color.rgba,
-            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 1)
-        )
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 1))
 
     def test_get_hlsa(self):
         color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
-        self.assertEqual(
-            color.hlsa,
-            (0.39999999999999997, 0.2, 0.6, 0.8),
-        )
+        self.assert_tuple_almost_equal(color.hlsa, (0.4, 0.2, 0.6, 0.8))
 
     def test_set_hlsa(self):
         color = Color()
         color.hlsa = (0.4, 0.2, 0.6, 0.8)
-        self.assertEqual(
-            color.rgba,
-            (0.07999999999999996, 0.32000000000000006, 0.17600000000000007, 0.8)  # noqa: E501
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8)
         )

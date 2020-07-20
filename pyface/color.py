@@ -116,16 +116,16 @@ class Color(HasStrictTraits):
     alpha = Property(Channel, depends_on='rgba')
 
     #: A tuple holding the hue, saturation, value, and alpha channels.
-    hsva = Property(AlphaChannelTuple, depends_on=['rgba'])
+    hsva = Property(AlphaChannelTuple, depends_on='rgba')
 
     #: A tuple holding the hue, saturation, and value channels.
-    hsv = Property(ChannelTuple, depends_on=['rgb'])
+    hsv = Property(ChannelTuple, depends_on='rgb')
 
     #: A tuple holding the hue, lightness, saturation, and alpha channels.
-    hlsa = Property(AlphaChannelTuple, depends_on=['rgba'])
+    hlsa = Property(AlphaChannelTuple, depends_on='rgba')
 
     #: A tuple holding the hue, lightness, and saturation channels.
-    hls = Property(ChannelTuple, depends_on=['rgb'])
+    hls = Property(ChannelTuple, depends_on='rgb')
 
     @classmethod
     def from_toolkit(cls, toolkit_color, **traits):
