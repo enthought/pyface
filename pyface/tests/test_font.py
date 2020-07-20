@@ -283,30 +283,3 @@ class TestFont(unittest.TestCase):
 
         # smoke test
         result = Font.from_toolkit(font.to_toolkit())
-
-    def test_toolkit_round_trip(self):
-        font = Font()
-        # after a round-trip, font should  correspond exactly to what is
-        # representable
-        stable_font = Font.from_toolkit(font.to_toolkit())
-
-        result = Font.from_toolkit(stable_font.to_toolkit())
-
-        self.assertEqual(result, stable_font)
-
-    def test_toolkit_round_trip_typical(self):
-        font = Font(
-            family=['Helvetica', 'sans-serif'],
-            size='large',
-            weight='demibold',
-            stretch='condensed',
-            style='italic',
-            variants={'small-caps', 'underline'},
-        )
-        # after a round-trip, font should  correspond exactly to what is
-        # representable
-        stable_font = Font.from_toolkit(font.to_toolkit())
-
-        result = Font.from_toolkit(stable_font.to_toolkit())
-
-        self.assertEqual(result, stable_font)
