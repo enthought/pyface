@@ -87,7 +87,7 @@ class PythonEditorTask(Task):
     id = "example.python_editor_task"
 
     #: The human-readable name of the task.
-    name = u"Python Editor"
+    name = "Python Editor"
 
     #: The currently active editor in the editor area, if any.
     active_editor = Property(

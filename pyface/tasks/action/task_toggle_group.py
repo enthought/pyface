@@ -62,7 +62,7 @@ class TaskToggleAction(Action):
         return self.task.name
 
     def _get_tooltip(self):
-        return u"Switch to the %s task." % self.name
+        return "Switch to the %s task." % self.name
 
     @on_trait_change("task.window.active_task")
     def _update_checked(self):

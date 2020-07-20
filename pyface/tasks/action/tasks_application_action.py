@@ -23,7 +23,7 @@ class TasksApplicationAction(GUIApplicationAction):
 class CreateTaskWindowAction(TasksApplicationAction):
     """ A standard 'New Window' menu action. """
 
-    name = u"New Window"
+    name = "New Window"
     accelerator = "Ctrl+N"
 
     #: The task window wayout to use when creating the new window.

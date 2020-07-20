@@ -42,12 +42,12 @@ class TestClipboard(unittest.TestCase):
         self.assertFalse(self.clipboard.has_object_data)
 
     def test_set_text_data_unicode(self):
-        self.clipboard.data = u"test"
+        self.clipboard.data = "test"
         self.assertTrue(self.clipboard.has_data)
         self.assertEqual(self.clipboard.data_type, "str")
-        self.assertEqual(self.clipboard.data, u"test")
+        self.assertEqual(self.clipboard.data, "test")
         self.assertTrue(self.clipboard.has_text_data)
-        self.assertEqual(self.clipboard.text_data, u"test")
+        self.assertEqual(self.clipboard.text_data, "test")
         self.assertFalse(self.clipboard.has_file_data)
         self.assertFalse(self.clipboard.has_object_data)
 

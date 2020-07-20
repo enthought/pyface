@@ -36,8 +36,8 @@ class PyMimeData(QtCore.QMimeData):
     """
 
     # The MIME type for instances.
-    MIME_TYPE = u"application/x-ets-qt4-instance"
-    NOPICKLE_MIME_TYPE = u"application/x-ets-qt4-instance-no-pickle"
+    MIME_TYPE = "application/x-ets-qt4-instance"
+    NOPICKLE_MIME_TYPE = "application/x-ets-qt4-instance-no-pickle"
 
     def __init__(self, data=None, pickle=True):
         """ Initialise the instance.

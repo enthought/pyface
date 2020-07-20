@@ -50,7 +50,7 @@ def main():
     parser.add_argument("files", nargs="*", help="the files to open")
     namespace = parser.parse_args()
     if len(namespace.files) == 0:
-        namespace.files.append(u"")
+        namespace.files.append("")
 
     # set up callback to open files once app is up and running
     def open_files():

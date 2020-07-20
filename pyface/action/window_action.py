@@ -48,6 +48,6 @@ class WindowAction(ListeningAction):
 class CloseWindowAction(WindowAction):
     """ Close the specified window """
 
-    name = u"Close"
+    name = "Close"
     accelerator = "Ctrl+W"
     method = "close"
