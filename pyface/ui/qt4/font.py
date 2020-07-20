@@ -174,8 +174,6 @@ def toolkit_font_to_properties(toolkit_font):
 def map_to_nearest(target, mapping):
     """ Given mapping with keys from 0 and 99, return closest value.
 
-    This is used to map back from
-
     Parameters
     ----------
     target : int

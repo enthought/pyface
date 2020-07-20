@@ -146,7 +146,7 @@ class FontStretch(BaseCFloat):
     """ Trait type for font stretches.
 
     The is a CFloat trait which also allows values which are keys of the
-    stretch dictionary  Values must be floats between 50 and 200, inclusive.
+    stretch dictionary.  Values must be floats between 50 and 200, inclusive.
     """
 
     #: The default value for the trait.
@@ -267,6 +267,7 @@ class Font(HasStrictTraits):
         return font_to_toolkit_font(self)
 
     def __str__(self):
+        """ Produce a CSS-style representation of the font. """
         terms = []
         if self.style != 'normal':
             terms.append(self.style)
