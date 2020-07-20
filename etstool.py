@@ -90,7 +90,7 @@ supported_combinations = {
     "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
 }
 
-dependencies = {"traits", "numpy", "pygments", "coverage", "mock"}
+dependencies = {"traits", "numpy", "pygments", "coverage"}
 
 # NOTE : traitsui is always installed from source
 source_dependencies = {

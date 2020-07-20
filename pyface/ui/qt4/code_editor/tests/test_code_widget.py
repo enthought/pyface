@@ -10,7 +10,7 @@
 
 
 import unittest
-import mock
+from unittest import mock
 
 
 from pyface.qt import QtCore, QtGui
