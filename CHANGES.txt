@@ -442,24 +442,6 @@ Fixes
  * Fixed bug when a VSplitter contains an HSplitter (PR#88, issue#87)
 
 
-
- TraitsGUI 3.3.1 (not yet released)
-==================================
-
-
-
-TraitsGUI 3.3.0 (Feb 24, 2010)
-==============================
-
-Enhancements
-------------
-
-
-Fixes
------
-
-
-
 TraitsGUI 3.1.0 (July 15, 2009)
 ===============================
 
