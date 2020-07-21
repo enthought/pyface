@@ -10,7 +10,7 @@
 
 from unittest import TestCase
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.color import Color, channels_to_ints, ints_to_channels
 
