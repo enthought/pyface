@@ -51,7 +51,7 @@ which will create, install, run tests, and then clean-up the environment.  And
 you can run tests in all supported runtimes and toolkits (with cleanup)
 using::
 
-    python etstool.py test_all
+    python etstool.py test-all
 
 Currently supported runtime values are ``2.7`` and ``3.5``, and currently
 supported toolkits are ``null``, ``pyqt``, ``pyside`` and ``wx``.  Not all
