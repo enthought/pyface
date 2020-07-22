@@ -43,3 +43,17 @@ Pyface depends on:
 * Pygments for syntax highlighting in the Qt code editor widget.
 
 * some widgets may have additional optional dependencies.
+
+.. end_of_long_description
+
+Running the Test Suite
+----------------------
+
+To run the test suite, you will need to install Git and
+`EDM <http://docs.enthought.com/edm/>`__ as well as have a Python environment
+which has install `Click <http://click.pocoo.org/>`__ available. You can then
+follow the instructions in ``etstool.py``.  In particular::
+
+    > python etstool.py test-all
+
+will run tests in all supported environments automatically.
