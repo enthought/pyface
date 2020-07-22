@@ -163,7 +163,7 @@ def install(edm, runtime, toolkit, environment, source):
         "{edm} install -y -e {environment} " + packages,
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
         "{edm} run -e {environment} -- python setup.py clean --all",
-        "{edm} run -e {environment} -- python setup.py install",
+        "{edm} run -e {environment} -- python setup.py install --quiet",
     ]
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
