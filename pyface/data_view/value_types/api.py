@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+from .color_value import ColorValue  # noqa: F401
 from .constant_value import ConstantValue  # noqa: F401
 from .editable_value import EditableValue  # noqa: F401
 from .no_value import NoValue, no_value  # noqa: F401

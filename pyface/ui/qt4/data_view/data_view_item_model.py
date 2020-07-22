@@ -12,6 +12,7 @@ import logging
 
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
+from pyface.qt.QtGui import QColor
 from pyface.data_view.index_manager import Root
 from pyface.data_view.abstract_data_model import (
     AbstractDataModel, DataViewSetError
@@ -21,6 +22,9 @@ from pyface.data_view.abstract_data_model import (
 logger = logging.getLogger(__name__)
 
 # XXX This file is scaffolding and may need to be rewritten
+
+WHITE = QColor(255, 255, 255)
+BLACK = QColor(0, 0, 0)
 
 
 class DataViewItemModel(QAbstractItemModel):
@@ -148,7 +152,17 @@ class DataViewItemModel(QAbstractItemModel):
         elif role == Qt.EditRole:
             if value_type.has_editor_value(self.model, row, column):
                 return value_type.get_editor_value(self.model, row, column)
-
+        elif role == Qt.BackgroundRole:
+            if value_type.has_color(self.model, row, column):
+                color = value_type.get_color(self.model, row, column)
+                return color.to_toolkit()
+        elif role == Qt.ForegroundRole:
+            if value_type.has_color(self.model, row, column):
+                color = value_type.get_color(self.model, row, column)
+                if color.is_dark:
+                    return WHITE
+                else:
+                    return BLACK
         return None
 
     def setData(self, index, value, role=Qt.EditRole):

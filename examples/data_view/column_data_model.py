@@ -16,7 +16,7 @@ from traits.api import (
 )
 from traits.trait_base import xgetattr, xsetattr
 
-from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_data_model import AbstractDataModel, DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.index_manager import TupleIndexManager
 from pyface.data_view.value_types.api import TextValue
@@ -214,7 +214,7 @@ class ColumnDataModel(AbstractDataModel):
         if len(column) == 0:
             raise DataViewSetError("Cannot set value for row header.")
         obj = self.data[column[0]]
-       row_info.set_value(obj, value)
+        row_info.set_value(obj, value)
 
     def get_value_type(self, row, column):
         row_info = self._row_info_object(row)

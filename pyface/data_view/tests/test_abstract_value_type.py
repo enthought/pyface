@@ -14,6 +14,7 @@ from unittest.mock import Mock
 from traits.api import Str
 from traits.testing.unittest_tools import UnittestTools
 
+from pyface.color import Color
 from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 
@@ -74,6 +75,16 @@ class TestAbstractValueType(UnittestTools, TestCase):
         value_type = ValueType()
         with self.assertRaises(DataViewSetError):
             value_type.set_text(self.model, [0], [0], "2.0")
+
+    def test_has_color(self):
+        value_type = ValueType()
+        result = value_type.has_color(self.model, [0], [0])
+        self.assertFalse(result)
+
+    def test_get_color(self):
+        value_type = ValueType()
+        result = value_type.get_color(self.model, [0], [0])
+        self.assertEqual(result, Color(rgb=(1.0, 1.0, 1.0)))
 
     def test_parameter_update(self):
         value_type = ValueType()

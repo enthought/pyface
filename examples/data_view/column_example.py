@@ -9,14 +9,17 @@
 # Thanks for using Enthought open source!
 
 from functools import partial
-from random import choice, randint
+from random import choice, randint, uniform
 
 from traits.api import HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI
+from pyface.color import Color
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import IntValue, TextValue, no_value
+from pyface.data_view.value_types.api import (
+    ColorValue, IntValue, TextValue, no_value
+)
 
 from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
@@ -38,6 +41,8 @@ class Person(HasStrictTraits):
 
     age = Int
 
+    favorite_color = Instance(Color)
+
     address = Instance(Address)
 
 
@@ -50,6 +55,11 @@ row_info = HasTraitsRowInfo(
             title="Age",
             value="age",
             value_type=IntValue(minimum=0),
+        ),
+        HasTraitsRowInfo(
+            title="Favorite Color",
+            value="favorite_color",
+            value_type=ColorValue(),
         ),
         HasTraitsRowInfo(
             title="Address",
@@ -127,6 +137,8 @@ all_names = male_names + female_names
 any_name = partial(choice, all_names)
 age = partial(randint, 15, 72)
 
+def favorite_color():
+    return Color(hsv=(uniform(0.0, 1.0), 1.0, 1.0))
 
 def family_name():
     return choice([
@@ -168,6 +180,7 @@ people = [
     Person(
         name='%s %s' % (any_name(), family_name()),
         age=age(),
+        favorite_color=favorite_color(),
         address=Address(
             street=street(),
             city=city(),
