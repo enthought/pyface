@@ -151,6 +151,7 @@ def cli():
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option('--source/--no-source', default=False)
+@click.option('--quiet/--no-quiet', default=True)
 def install(edm, runtime, toolkit, environment, source):
     """ Install project and dependencies into a clean EDM environment.
 
@@ -163,8 +164,15 @@ def install(edm, runtime, toolkit, environment, source):
         "{edm} install -y -e {environment} " + packages,
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
         "{edm} run -e {environment} -- python setup.py clean --all",
-        "{edm} run -e {environment} -- python setup.py install --quiet",
     ]
+    if quiet:
+        commands.append(
+            "{edm} run -e {environment} -- python setup.py install --quiet"
+        )
+    else:
+        commands.append(
+            "{edm} run -e {environment} -- python setup.py install"
+        )
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
         commands.extend(
