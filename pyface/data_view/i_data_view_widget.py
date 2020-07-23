@@ -10,11 +10,13 @@
 
 from contextlib import contextmanager
 import logging
+import sys
 
 from traits.api import (
     BaseTuple,
     Bool, ComparisonMode, Enum, HasStrictTraits, Instance, List,
     TraitError, Tuple,
+    observe,
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
@@ -90,6 +92,26 @@ class _Column(BaseTuple):
         return "valid column index"
 
 
+class _SelectionList(List):
+    """ Trait type to validate the length of the selection list
+    based on the value of selection_mode.
+    """
+
+    def validate(self, object, name, value):
+        value = super(_SelectionList, self).validate(object, name, value)
+        if object.selection_mode == "none" and len(value) != 0:
+            raise TraitError(
+                "Selection must be empty when selection_mode is 'none', "
+                "got {!r}".format(value)
+            )
+        if object.selection_mode == "single" and len(value) > 1:
+            raise TraitError(
+                "Selection must have at most one element when selection_mode "
+                "is 'single', got {!r}".format(value)
+            )
+        return value
+
+
 class IDataViewWidget(IWidget):
     """ Interface for data view widgets. """
 
@@ -127,7 +149,7 @@ class MDataViewWidget(HasStrictTraits):
     selection_mode = Enum("extended", "none", "single")
 
     #: The selected indices in the view.
-    selection = List(
+    selection = _SelectionList(
         Tuple(_Row, _Column), comparison_mode=ComparisonMode.identity
     )
 

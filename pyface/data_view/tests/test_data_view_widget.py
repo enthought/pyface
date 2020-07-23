@@ -256,6 +256,29 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection.append((row, column))
 
+    def test_selection_mode_single_max_length_validation(self):
+        self.widget.data_model.fake_get_row_count = lambda row: 10
+        self.widget.selection_type = "row"
+        self.widget.selection_mode = "single"
+        # this is okay
+        self.widget.selection = []
+        # this is okay
+        self.widget.selection = [((0, ), ())]
+        # this is okay too
+        self.widget.selection = [((1, ), ())]
+        # this is not okay
+        with self.assertRaises(TraitError):
+            self.widget.selection = [((0, ), ()), ((1, ), ())]
+
+    def test_selection_mode_none_max_length_validation(self):
+        self.widget.selection_type = "row"
+        self.widget.selection_mode = "none"
+        # this is okay
+        self.widget.selection = []
+        # this is not okay
+        with self.assertRaises(TraitError):
+            self.widget.selection = [((0, ), ())]
+
 
 @requires_numpy
 class TestWidget(unittest.TestCase, UnittestTools):
