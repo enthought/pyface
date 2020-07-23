@@ -152,7 +152,7 @@ def cli():
 @click.option("--environment", default=None, help="EDM environment to use")
 @click.option('--source/--no-source', default=False)
 @click.option('--quiet/--no-quiet', default=True)
-def install(edm, runtime, toolkit, environment, source):
+def install(edm, runtime, toolkit, environment, source, quiet):
     """ Install project and dependencies into a clean EDM environment.
 
     """
