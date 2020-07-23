@@ -152,10 +152,7 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         self.assertEqual(self.widget.control.header_visible, False)
         self.assertEqual(self.widget.control.selection_mode, "single")
         self.assertEqual(self.widget.control.selection_type, "row")
-
-        # FIXME: This is a bug?
-        with self.assertRaises(AssertionError):
-            self.assertEqual(self.widget.control.selection, [((1, ), ())])
+        self.assertEqual(self.widget.control.selection, [((1, ), ())])
 
     def test_selection_mode_single(self):
         self.widget.data_model.fake_can_have_children = lambda row: True

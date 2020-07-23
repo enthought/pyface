@@ -250,6 +250,7 @@ class MDataViewWidget(HasStrictTraits):
         self._set_control_header_visible(self.header_visible)
         self._set_control_selection_mode(self.selection_mode)
         self._set_control_selection_type(self.selection_type)
+        self._set_control_selection(self.selection)
 
     def _add_event_listeners(self):
         logger.debug('Adding DataViewWidget listeners')
