@@ -35,7 +35,7 @@ to run tests in that environment.  You can remove the environment with::
 
     python etstool.py cleanup --runtime=... --toolkit=...
 
-If you nned to make frequent changes to the source, it is often convenient
+If you need to make frequent changes to the source, it is often convenient
 to install the source in editable mode::
 
     python etstool.py install --editable --runtime=... --toolkit=...
@@ -68,7 +68,7 @@ installed by `pip`).
 
 Other changes to commands should be a straightforward change to the listed
 commands for each task. See the EDM documentation for more information about
-how to run commands within an EDM enviornment.
+how to run commands within an EDM environment.
 
 """
 
