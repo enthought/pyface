@@ -99,11 +99,11 @@ class IDataViewWidget(IWidget):
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
 
-    #: What can be selected.  Some backends may support more.
-    selection_type = Enum("row",)
+    #: What can be selected.
+    selection_type = Enum("row", "column", "item")
 
     #: How selections are modified.
-    selection_mode = Enum("extended", "single")
+    selection_mode = Enum("extended", "none", "single")
 
     #: The selected indices in the view.
     selection = List(Tuple)
@@ -124,7 +124,7 @@ class MDataViewWidget(HasStrictTraits):
     selection_type = Enum("row", "column", "item")
 
     #: How selections are modified.
-    selection_mode = Enum("extended", "single")
+    selection_mode = Enum("extended", "none", "single")
 
     #: The selected indices in the view.
     selection = List(
