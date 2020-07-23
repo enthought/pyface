@@ -92,7 +92,6 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Toolkit specific method to change the selection type. """
         qt_selection_type = qt_selection_types[selection_type]
         self.control.setSelectionBehavior(qt_selection_type)
-        self.selection = []
 
     def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
@@ -103,7 +102,6 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Toolkit specific method to change the selection mode. """
         qt_selection_mode = qt_selection_modes[selection_mode]
         self.control.setSelectionMode(qt_selection_mode)
-        self.selection = []
 
     def _get_control_selection(self):
         """ Toolkit specific method to get the selection. """

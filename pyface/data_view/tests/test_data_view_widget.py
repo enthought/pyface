@@ -344,14 +344,15 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
     def test_selection_mode_change(self):
         self._create_widget_control()
-        self.selection = [((1, 4), (2,)), ((2, 0), (4,))]
+        self.widget.selection_type = "item"
+        self.widget.selection = [((1, 4), (2,)), ((2, 0), (4,))]
 
         self.widget.selection_mode = "single"
 
         self.assertEqual(self.widget._get_control_selection_mode(), "single")
         self.assertEqual(self.widget.selection, [])
 
-        self.selection = [((1, 4), (2,))]
+        self.widget.selection = [((1, 4), (2,))]
         if not is_wx:
             self.widget.selection_mode = "none"
 
@@ -366,17 +367,20 @@ class TestWidget(unittest.TestCase, UnittestTools):
     @unittest.skipIf(is_wx, "Selection type changing not supported")
     def test_selection_type_change(self):
         self._create_widget_control()
+        self.widget.selection = [((1, 4), ())]
 
         self.widget.selection_type = "column"
 
         self.assertEqual(self.widget._get_control_selection_type(), "column")
         self.assertEqual(self.widget.selection, [])
 
+        self.widget.selection = [((1, ), (0, ))]
         self.widget.selection_type = "item"
 
         self.assertEqual(self.widget._get_control_selection_type(), "item")
         self.assertEqual(self.widget.selection, [])
 
+        self.widget.selection = [((1, 4), (2, ))]
         self.widget.selection_type = "row"
 
         self.assertEqual(self.widget._get_control_selection_type(), "row")
