@@ -35,13 +35,10 @@ to run tests in that environment.  You can remove the environment with::
 
     python etstool.py cleanup --runtime=... --toolkit=...
 
-If you make changes you will either need to remove and re-install the
-environment or manually update the environment using ``edm``, as
-the install performs a ``python setup.py install`` rather than a ``develop``,
-so changes in your code will not be automatically mirrored in the test
-environment.  You can update with a command like::
+If you nned to make frequent changes to the source, it is often convenient
+to install the source in editable mode::
 
-    edm run --environment ... -- python setup.py install
+    python etstool.py install --editable --runtime=... --toolkit=...
 
 You can run all three tasks at once with::
 
@@ -150,8 +147,13 @@ def cli():
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
+@click.option(
+    "--editable/--not-editable",
+    default=False,
+    help="Install main package in 'editable' mode?  [default: --not-editable]",
+)
 @click.option('--source/--no-source', default=False)
-def install(edm, runtime, toolkit, environment, source):
+def install(edm, runtime, toolkit, environment, editable, source):
     """ Install project and dependencies into a clean EDM environment.
 
     """
@@ -165,6 +167,14 @@ def install(edm, runtime, toolkit, environment, source):
         "{edm} run -e {environment} -- python setup.py clean --all",
         "{edm} run -e {environment} -- python setup.py install",
     ]
+
+    # Install local source
+    install_pyface = "{edm} run -e {environment} -- pip install "
+    if editable:
+        install_pyface += "--editable "
+    install_pyface += "."
+    commands.append(install_pyface)
+
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
         commands.extend(
