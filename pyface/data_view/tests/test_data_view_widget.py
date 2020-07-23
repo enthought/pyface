@@ -181,6 +181,9 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
 
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
+
     def test_selection_mode_single_column_type_row_invalid(self):
         self.widget.data_model.fake_can_have_children = lambda row: True
         self.widget.data_model.fake_get_row_count = lambda row: 0
@@ -198,6 +201,9 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
 
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
+
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
 
     def test_selection_mode_single_column_type_row_invalid_no_children(self):
         self.widget.data_model.fake_can_have_children = lambda row: False
@@ -217,6 +223,9 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
 
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
+
     def test_selection_mode_single_row_type_column_invalid(self):
         self.widget.selection_mode = "single"
         self.widget.selection_type = "row"
@@ -229,6 +238,9 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
 
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
+
     def test_selection_mode_single_column_invalid(self):
         self.widget.selection_mode = "single"
         self.widget.selection_type = "column"
@@ -240,6 +252,9 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
 
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
+
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
 
 
 @requires_numpy
@@ -453,6 +468,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 2), (2,))]
 
+    def test_selection_type_row_invalid_column_append(self):
+        self._create_widget_control()
+
+        with self.assertRaises(TraitError):
+            self.widget.selection.append(((1, 2), (2,)))
+
+        self.assertEqual(self.widget.selection, [])
+
     @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
     def test_selection_type_item_invalid_row_too_big(self):
         self.widget.selection_type = 'item'
@@ -508,6 +531,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         with self.assertRaises(TraitError):
             self.widget.selection = [((), (10,))]
+
+    @unittest.skipIf(is_wx, "Selection mode 'column' not supported")
+    def test_selection_type_column_invalid_column_with_append(self):
+        self.widget.selection_type = 'column'
+        self._create_widget_control()
+
+        with self.assertRaises(TraitError):
+            self.widget.selection.append(((), (10,)))
 
     def test_selection_updated(self):
         self._create_widget_control()
