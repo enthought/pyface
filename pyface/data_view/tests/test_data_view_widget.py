@@ -11,7 +11,15 @@
 import platform
 import unittest
 
-from traits.api import TraitError
+from traits.api import (
+    Callable,
+    provides,
+    TraitError,
+)
+from traits.observation.api import (
+    pop_exception_handler,
+    push_exception_handler,
+)
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from traits.testing.unittest_tools import UnittestTools
 
@@ -19,13 +27,219 @@ from pyface.gui import GUI
 from pyface.toolkit import toolkit
 from pyface.window import Window
 
+from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import FloatValue
+from pyface.data_view.i_data_view_widget import (
+    IDataViewWidget, MDataViewWidget,
+)
+from pyface.data_view.value_types.api import FloatValue, TextValue
+from pyface.ui.null.widget import Widget as NullWidget
 
 
 is_wx = (toolkit.toolkit == "wx")
 is_linux = (platform.system() == "Linux")
+
+
+class FakeDataModel(AbstractDataModel):
+
+    fake_get_column_count = Callable()
+
+    fake_can_have_children = Callable()
+
+    fake_get_row_count = Callable()
+
+    fake_get_value = Callable()
+
+    fake_get_value_type = Callable()
+
+    def get_column_count(self):
+        return self.fake_get_column_count()
+
+    def can_have_children(self, row):
+        return self.fake_can_have_children(row)
+
+    def get_row_count(self, row):
+        return self.fake_get_row_count(row)
+
+    def get_value(self, row, column):
+        return self.fake_get_value(row, column)
+
+    def get_value_type(self, row, column):
+        return self.fake_get_value_type(row, column)
+
+
+class FakeControl:
+
+    def __init__(self):
+        self.header_visible = False
+        self.selection_type = "row"
+        self.selection_mode = "none"
+        self.selection = []
+
+
+@provides(IDataViewWidget)
+class FakeWidget(MDataViewWidget, NullWidget):
+
+    def _get_control_header_visible(self):
+        return self.control_header_visible
+
+    def _set_control_header_visible(self, header_visible):
+        self.control.header_visible = header_visible
+
+    def _get_control_selection_type(self):
+        return self.control.selection_type
+
+    def _set_control_selection_type(self, selection_type):
+        self.control.selection_type = selection_type
+
+    def _get_control_selection_mode(self):
+        return self.control.selection_mode
+
+    def _set_control_selection_mode(self, selection_mode):
+        self.control.selection_mode = selection_mode
+
+    def _get_control_selection(self):
+        return self.control.selection
+
+    def _set_control_selection(self, selection):
+        self.control.selection = selection
+
+    def _observe_control_selection(self, remove=False):
+        pass
+
+    def _create_control(self, parent):
+        return FakeControl()
+
+
+class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
+    """ Test MDataViewWidget with a fake data model and without a real
+    GUI toolkit.
+    """
+
+    def setUp(self):
+        push_exception_handler(reraise_exceptions=True)
+        self.addCleanup(pop_exception_handler)
+
+        self.data_model = FakeDataModel(
+            fake_get_column_count=lambda: 1,
+            fake_get_row_count=lambda row: 1,
+            fake_can_have_children=lambda row: True,
+            fake_get_value=lambda row, column: None,
+            fake_get_value_type=lambda row, column: TextValue(),
+        )
+        self.widget = FakeWidget(
+            parent=None,
+            data_model=self.data_model,
+        )
+
+    def test_lifecycle(self):
+        self.widget._create()
+        self.widget.destroy()
+
+    def test_init_state(self):
+        self.widget.header_visible = False
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "row"
+        self.widget.data_model.fake_can_have_children = lambda row: True
+        self.widget.data_model.fake_get_row_count = lambda row: 2
+        self.widget.selection = [((1, ), ())]
+
+        self.assertIsNone(self.widget.control)
+
+        self.widget._create()
+
+        self.assertEqual(self.widget.control.header_visible, False)
+        self.assertEqual(self.widget.control.selection_mode, "single")
+        self.assertEqual(self.widget.control.selection_type, "row")
+
+        # FIXME: This is a bug?
+        with self.assertRaises(AssertionError):
+            self.assertEqual(self.widget.control.selection, [((1, ), ())])
+
+    def test_selection_mode_single(self):
+        self.widget.data_model.fake_can_have_children = lambda row: True
+        self.widget.data_model.fake_get_row_count = lambda row: 5
+        self.widget.selection_mode = "single"
+
+        # this should not fail.
+        self.widget.selection = [((1, 4), ())]
+
+    def test_selection_mode_single_row_invalid(self):
+        self.widget.data_model.fake_can_have_children = lambda row: True
+        self.widget.data_model.fake_get_row_count = lambda row: 1
+
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "row"
+
+        row = (1, 4)
+        column = ()
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+        # this is why the selection is not accepted
+        self.assertFalse(self.widget.data_model.is_row_valid(row))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_column_type_row_invalid(self):
+        self.widget.data_model.fake_can_have_children = lambda row: True
+        self.widget.data_model.fake_get_row_count = lambda row: 0
+
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "column"
+
+        row = ()
+        column = (0, )
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+        self.assertTrue(self.widget.data_model.can_have_children(row))
+        # this is why the index is not accepted
+        self.assertEqual(self.widget.data_model.get_row_count(row), 0)
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_column_type_row_invalid_no_children(self):
+        self.widget.data_model.fake_can_have_children = lambda row: False
+        self.widget.data_model.fake_get_row_count = lambda row: 10
+
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "column"
+
+        row = ()
+        column = (0, )
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+        self.assertGreater(self.widget.data_model.get_row_count(row), 0)
+        # this is why the selection is not accepted
+        self.assertFalse(self.widget.data_model.can_have_children(row))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_row_type_column_invalid(self):
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "row"
+
+        row = (0, )
+        column = (0, )  # bad because selection type is row
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_column_invalid(self):
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "column"
+
+        row = (0, )
+        column = (1, )  # bad because it is invalid
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertFalse(self.widget.data_model.is_column_valid(column))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
 
 
 @requires_numpy

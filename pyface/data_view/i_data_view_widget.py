@@ -55,7 +55,7 @@ class MDataViewWidget(HasStrictTraits):
     header_visible = Bool(True)
 
     #: What can be selected.
-    selection_type = Enum("row")
+    selection_type = Enum("row", "column")
 
     #: How selections are modified.
     selection_mode = Enum("extended", "single")

@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Any, HasTraits, provides
+from traits.api import Any, Bool, HasTraits, provides
 
 
 from pyface.i_widget import IWidget, MWidget
@@ -27,9 +27,20 @@ class Widget(MWidget, HasTraits):
 
     parent = Any()
 
+    #: Whether or not the control is visible
+    visible = Bool(True)
+
+    #: Whether or not the control is enabled
+    enabled = Bool(True)
     # ------------------------------------------------------------------------
     # 'IWidget' interface.
     # ------------------------------------------------------------------------
+
+    def show(self, visible):
+        pass
+
+    def enable(self, enabled):
+        pass
 
     def destroy(self):
         self.control = None
