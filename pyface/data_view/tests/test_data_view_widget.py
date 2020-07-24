@@ -444,6 +444,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         self.widget.selection_mode = next(modes)
         self._create_widget_control()
+        self.assertEqual(self.widget._get_control_selection_mode(), "extended")
 
         def change_selection_type(event):
             self.widget.selection_mode = next(modes)
@@ -459,16 +460,18 @@ class TestWidget(unittest.TestCase, UnittestTools):
         # switch from "extended" to "single"
         self.widget.selection = [((0,), ()), ((1,), ())]
         self.gui.process_events()
+        self.assertEqual(self.widget._get_control_selection_mode(), "single")
+        self.assertEqual(self.widget.selection, [])
         # switch from "single" to "extended"
         self.widget.selection = [((1,), ())]
         self.gui.process_events()
+        self.assertEqual(self.widget._get_control_selection_mode(), "extended")
         # switch from "extended" to "single" again
-        self.widget.selection = [((0,), ()), ((1,), ())]
+        self.widget.selection.extend([((0,), ()), ((1,), ())])
         self.gui.process_events()
-
-        self.assertEqual(self.widget.selection, [])
         self.assertEqual(self.widget._get_control_selection_mode(), "single")
         self.assertEqual(self.widget._get_control_selection(), [])
+        self.assertEqual(self.widget.selection, [])
 
     @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column(self):
@@ -511,6 +514,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         self.widget.selection_type = next(types)
         self._create_widget_control()
+        self.assertEqual(self.widget._get_control_selection_type(), "column")
 
         def change_selection_type(event):
             self.widget.selection_type = next(types)
@@ -526,13 +530,18 @@ class TestWidget(unittest.TestCase, UnittestTools):
         # Switch from "column" to "row"
         self.widget.selection = [((0,), (2,)), ((1,), (4,))]
         self.gui.process_events()
+        self.assertEqual(self.widget.selection, [])
+        self.assertEqual(self.widget._get_control_selection_type(), "row")
+        self.assertEqual(self.widget._get_control_selection(), [])
         # Switch from "row" to "column"
         self.widget.selection = [((1,), ()), ((2,), ())]
         self.gui.process_events()
+        self.assertEqual(self.widget.selection, [])
+        self.assertEqual(self.widget._get_control_selection_type(), "column")
+        self.assertEqual(self.widget._get_control_selection(), [])
         # Switch from "column" to "row" again
         self.widget.selection = [((0,), (2,)), ((1,), (4,))]
         self.gui.process_events()
-
         self.assertEqual(self.widget.selection, [])
         self.assertEqual(self.widget._get_control_selection_type(), "row")
         self.assertEqual(self.widget._get_control_selection(), [])
