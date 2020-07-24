@@ -42,6 +42,15 @@ class _Row(BaseTuple):
         if not object.data_model.is_row_valid(row):
             raise TraitError("Invalid row index {!r}".format(row))
 
+        if object.selection_type == 'item':
+            can_have_children = object.data_model.can_have_children(row)
+            have_rows = object.data_model.get_row_count(row) > 0
+            if can_have_children and have_rows:
+                raise TraitError(
+                    "Row values must have no children when selection_type "
+                    "is 'item', got {!r}".format(row)
+                )
+
         if object.selection_type == 'column':
             can_have_children = object.data_model.can_have_children(row)
             have_rows = object.data_model.get_row_count(row) > 0
@@ -76,6 +85,14 @@ class _Column(BaseTuple):
                 info=(
                     "Column values must be () when selection_type is "
                     "'row', got {!r}".format(column)
+                )
+            )
+
+        if object.selection_type == 'item' and column == ():
+            raise TraitError(
+                info=(
+                    "Column index cannot be empty when selection_type is "
+                    "'item', got {!r}".format(column)
                 )
             )
 

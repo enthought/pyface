@@ -254,6 +254,61 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection.append((row, column))
 
+    def test_selection_mode_single_item_type(self):
+
+        def can_have_children(row):
+            return row == ()
+
+        self.widget.data_model.fake_can_have_children = can_have_children
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "item"
+
+        row = (0, )
+        column = (0, )
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+        self.assertFalse(self.widget.data_model.can_have_children(row))
+
+        # This is ok
+        self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_item_type_column_not_accepted(self):
+
+        def can_have_children(row):
+            return row == ()
+
+        self.widget.data_model.fake_can_have_children = can_have_children
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "item"
+
+        # this refers to a column, not an item
+        row = ()
+        column = (0, )
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+        self.assertTrue(self.widget.data_model.can_have_children(row))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+    def test_selection_mode_single_item_type_row_not_accepted(self):
+
+        def can_have_children(row):
+            return row == ()
+
+        self.widget.data_model.fake_can_have_children = can_have_children
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "item"
+
+        # this refers to a row, not an item
+        row = (0, )
+        column = ()
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
     def test_selection_mode_single_max_length_validation(self):
         self.widget.data_model.fake_get_row_count = lambda row: 10
         self.widget.selection_type = "row"
