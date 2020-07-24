@@ -447,6 +447,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.assertEqual(self.widget._get_control_selection_mode(), "extended")
 
         def change_selection_type(event):
+            print(event)
             self.widget.selection_mode = next(modes)
 
         self.widget.observe(
@@ -461,11 +462,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.widget.selection = [((0,), ()), ((1,), ())]
         self.gui.process_events()
         self.assertEqual(self.widget._get_control_selection_mode(), "single")
+        self.assertEqual(self.widget._get_control_selection(), [])
         self.assertEqual(self.widget.selection, [])
         # switch from "single" to "extended"
         self.widget.selection = [((1,), ())]
         self.gui.process_events()
         self.assertEqual(self.widget._get_control_selection_mode(), "extended")
+        self.assertEqual(self.widget._get_control_selection(), [])
+        self.assertEqual(self.widget.selection, [])
         # switch from "extended" to "single" again
         self.widget.selection.extend([((0,), ()), ((1,), ())])
         self.gui.process_events()
