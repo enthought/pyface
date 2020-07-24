@@ -163,7 +163,7 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         # this should not fail.
         self.widget.selection = [((1, 4), ())]
 
-    def test_selection_mode_single_row_invalid(self):
+    def test_selection_mode_single_row_type_row_invalid(self):
         self.widget.data_model.fake_can_have_children = lambda row: True
         self.widget.data_model.fake_get_row_count = lambda row: 1
 
@@ -175,6 +175,21 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         self.assertTrue(self.widget.data_model.is_column_valid(column))
         # this is why the selection is not accepted
         self.assertFalse(self.widget.data_model.is_row_valid(row))
+
+        with self.assertRaises(TraitError):
+            self.widget.selection = [(row, column)]
+
+        with self.assertRaises(TraitError):
+            self.widget.selection.append((row, column))
+
+    def test_selection_mode_single_row_type_column_invalid(self):
+        self.widget.selection_mode = "single"
+        self.widget.selection_type = "row"
+
+        row = (0, )
+        column = (0, )  # bad because selection type is row
+        self.assertTrue(self.widget.data_model.is_row_valid(row))
+        self.assertTrue(self.widget.data_model.is_column_valid(column))
 
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
@@ -217,21 +232,6 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         self.assertGreater(self.widget.data_model.get_row_count(row), 0)
         # this is why the selection is not accepted
         self.assertFalse(self.widget.data_model.can_have_children(row))
-
-        with self.assertRaises(TraitError):
-            self.widget.selection = [(row, column)]
-
-        with self.assertRaises(TraitError):
-            self.widget.selection.append((row, column))
-
-    def test_selection_mode_single_row_type_column_invalid(self):
-        self.widget.selection_mode = "single"
-        self.widget.selection_type = "row"
-
-        row = (0, )
-        column = (0, )  # bad because selection type is row
-        self.assertTrue(self.widget.data_model.is_row_valid(row))
-        self.assertTrue(self.widget.data_model.is_column_valid(column))
 
         with self.assertRaises(TraitError):
             self.widget.selection = [(row, column)]
