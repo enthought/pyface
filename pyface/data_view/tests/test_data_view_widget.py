@@ -239,7 +239,7 @@ class TestMDataViewWidgetWithFakeDataModel(unittest.TestCase):
         with self.assertRaises(TraitError):
             self.widget.selection.append((row, column))
 
-    def test_selection_mode_single_column_invalid(self):
+    def test_selection_mode_single_column_type_column_invalid(self):
         self.widget.selection_mode = "single"
         self.widget.selection_type = "column"
 
