@@ -395,6 +395,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self._create_widget_control()
         self.assertFalse(self.widget._get_control_header_visible())
 
+    def test_init_selection(self):
+        self.widget.selection = [((1, ), ())]
+        self._create_widget_control()
+
+        self.assertEqual(
+            self.widget._get_control_selection(), [((1, ), ())]
+        )
+
     def test_selection_mode_change(self):
         self._create_widget_control()
         self.widget.selection_type = "item"
