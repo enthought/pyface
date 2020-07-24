@@ -179,7 +179,9 @@ class MDataViewWidget(HasStrictTraits):
         """ Observer for selection_type trait. """
         if self.control is not None:
             self._set_control_selection_type(event.new)
-            self.selection = []
+            with self._selection_updating():
+                self.selection.clear()
+                self._set_control_selection(self.selection)
 
     def _get_control_selection_type(self):
         """ Toolkit specific method to get the selection type. """
@@ -193,7 +195,9 @@ class MDataViewWidget(HasStrictTraits):
         """ Observer for selection_mode trait. """
         if self.control is not None:
             self._set_control_selection_mode(event.new)
-            self.selection = []
+            with self._selection_updating():
+                self.selection.clear()
+                self._set_control_selection(self.selection)
 
     def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
@@ -205,7 +209,7 @@ class MDataViewWidget(HasStrictTraits):
 
     def _selection_updated(self, event):
         """ Observer for selection trait. """
-        if self.control is not None and not self._selection_updating_flag:
+        if self.control is not None:
             with self._selection_updating():
                 self._set_control_selection(self.selection)
 

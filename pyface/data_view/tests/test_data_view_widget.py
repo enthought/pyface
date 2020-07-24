@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+from itertools import cycle
 import platform
 import unittest
 
@@ -438,6 +439,37 @@ class TestWidget(unittest.TestCase, UnittestTools):
             [((1, 4), ()), ((2, 0), ())],
         )
 
+    def test_selection_mode_change_when_selection_change(self):
+        modes = cycle(["extended", "single"])
+
+        self.widget.selection_mode = next(modes)
+        self._create_widget_control()
+
+        def change_selection_type(event):
+            self.widget.selection_mode = next(modes)
+
+        self.widget.observe(
+            change_selection_type, "selection.items", dispatch="ui")
+        self.addCleanup(
+            self.widget.observe,
+            change_selection_type, "selection.items", dispatch="ui",
+            remove=True,
+        )
+
+        # switch from "extended" to "single"
+        self.widget.selection = [((0,), ()), ((1,), ())]
+        self.gui.process_events()
+        # switch from "single" to "extended"
+        self.widget.selection = [((1,), ())]
+        self.gui.process_events()
+        # switch from "extended" to "single" again
+        self.widget.selection = [((0,), ()), ((1,), ())]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [])
+        self.assertEqual(self.widget._get_control_selection_mode(), "single")
+        self.assertEqual(self.widget._get_control_selection(), [])
+
     @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column(self):
         self.widget.selection_type = "column"
@@ -473,6 +505,37 @@ class TestWidget(unittest.TestCase, UnittestTools):
             self.widget._get_control_selection(),
             [((1, 4), (2,)), ((2, 0), (4,))],
         )
+
+    def test_selection_type_change_when_selection_change(self):
+        types = cycle(["column", "row"])
+
+        self.widget.selection_type = next(types)
+        self._create_widget_control()
+
+        def change_selection_type(event):
+            self.widget.selection_type = next(types)
+
+        self.widget.observe(
+            change_selection_type, "selection.items", dispatch="ui")
+        self.addCleanup(
+            self.widget.observe,
+            change_selection_type, "selection.items", dispatch="ui",
+            remove=True,
+        )
+
+        # Switch from "column" to "row"
+        self.widget.selection = [((0,), (2,)), ((1,), (4,))]
+        self.gui.process_events()
+        # Switch from "row" to "column"
+        self.widget.selection = [((1,), ()), ((2,), ())]
+        self.gui.process_events()
+        # Switch from "column" to "row" again
+        self.widget.selection = [((0,), (2,)), ((1,), (4,))]
+        self.gui.process_events()
+
+        self.assertEqual(self.widget.selection, [])
+        self.assertEqual(self.widget._get_control_selection_type(), "row")
+        self.assertEqual(self.widget._get_control_selection(), [])
 
     def test_selection_type_row_invalid_row_big(self):
         self._create_widget_control()
