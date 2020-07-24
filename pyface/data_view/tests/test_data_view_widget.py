@@ -513,6 +513,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
             [((1, 4), (2,)), ((2, 0), (4,))],
         )
 
+    @unittest.skipIf(is_wx, "Changing selection type is not supported for wx.")
     def test_selection_type_change_when_selection_change(self):
         types = cycle(["column", "row"])
 

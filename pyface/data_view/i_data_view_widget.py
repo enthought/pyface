@@ -224,7 +224,10 @@ class MDataViewWidget(HasStrictTraits):
     def _update_selection(self, *args, **kwargs):
         if not self._selection_updating_flag:
             with self._selection_updating():
-                self.selection = self._get_control_selection()
+                new = self._get_control_selection()
+                old = self.selection
+                if new != old:
+                    self.selection = new
 
     # ------------------------------------------------------------------------
     # Widget Interface
