@@ -446,15 +446,15 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self._create_widget_control()
         self.assertEqual(self.widget._get_control_selection_mode(), "extended")
 
-        def change_selection_type(event):
+        def change_selection_mode(event):
             if self.widget.selection:
                 self.widget.selection_mode = next(modes)
 
         self.widget.observe(
-            change_selection_type, "selection.items", dispatch="ui")
+            change_selection_mode, "selection.items", dispatch="ui")
         self.addCleanup(
             self.widget.observe,
-            change_selection_type, "selection.items", dispatch="ui",
+            change_selection_mode, "selection.items", dispatch="ui",
             remove=True,
         )
 
