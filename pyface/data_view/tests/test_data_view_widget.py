@@ -447,8 +447,8 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.assertEqual(self.widget._get_control_selection_mode(), "extended")
 
         def change_selection_type(event):
-            print(event)
-            self.widget.selection_mode = next(modes)
+            if self.widget.selection:
+                self.widget.selection_mode = next(modes)
 
         self.widget.observe(
             change_selection_type, "selection.items", dispatch="ui")
@@ -521,7 +521,8 @@ class TestWidget(unittest.TestCase, UnittestTools):
         self.assertEqual(self.widget._get_control_selection_type(), "column")
 
         def change_selection_type(event):
-            self.widget.selection_type = next(types)
+            if self.widget.selection:
+                self.widget.selection_type = next(types)
 
         self.widget.observe(
             change_selection_type, "selection.items", dispatch="ui")
