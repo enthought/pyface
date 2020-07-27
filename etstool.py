@@ -159,21 +159,22 @@ def install(edm, runtime, toolkit, environment, editable, source):
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
-    # edm commands to setup the development environment
-    commands = [
-        "{edm} environments create {environment} --force --version={runtime}",
-        "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
-        "{edm} run -e {environment} -- python setup.py clean --all",
-        "{edm} run -e {environment} -- python setup.py install",
-    ]
 
     # Install local source
     install_pyface = "{edm} run -e {environment} -- pip install "
     if editable:
         install_pyface += "--editable "
     install_pyface += "."
-    commands.append(install_pyface)
+
+    # edm commands to setup the development environment
+    commands = [
+        "{edm} environments create {environment} --force --version={runtime}",
+        "{edm} install -y -e {environment} " + packages,
+        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- python setup.py clean --all",
+        install_pyface,
+    ]
+
 
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
