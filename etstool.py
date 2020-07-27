@@ -179,7 +179,6 @@ def install(edm, runtime, toolkit, environment, editable, source):
         install_pyface,
     ])
 
-
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
         commands.extend(
