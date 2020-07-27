@@ -101,7 +101,7 @@ extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt^=4.12.1"}, 
+    "pyqt": {"pyqt<4.12"}, # FIXME: build of 4.12-1 appears to be bad 
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -158,13 +158,17 @@ def install(edm, runtime, toolkit, environment, source):
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
     # edm commands to setup the development environment
-    commands = [
-        "{edm} environments create {environment} --force --version={runtime}",
+    if sys.platform == 'linux':
+         commands = ["edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}"]
+     else:
+         commands = ["edm environments create {environment} --force --version={runtime}"]
+
+    commands.extend([
         "{edm} install -y -e {environment} " + packages,
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
         "{edm} run -e {environment} -- python setup.py clean --all",
         "{edm} run -e {environment} -- python setup.py install",
-    ]
+    ])
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
         commands.extend(
