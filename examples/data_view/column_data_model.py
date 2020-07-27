@@ -214,7 +214,7 @@ class ColumnDataModel(AbstractDataModel):
         if len(column) == 0:
             raise DataViewSetError("Cannot set value for row header.")
         obj = self.data[column[0]]
-       row_info.set_value(obj, value)
+        row_info.set_value(obj, value)
 
     def get_value_type(self, row, column):
         row_info = self._row_info_object(row)
