@@ -177,7 +177,7 @@ if __name__ == "__main__":
             if len(c.split()) > 0
         ],
         description="traits-capable windowing framework",
-        long_description=open("README.rst").read(),
+        long_description=open("README.rst").read().split(".. end_of_long_description")[0],
         long_description_content_type="text/x-rst",
         download_url="https://github.com/enthought/pyface",
         install_requires=__requires__,
