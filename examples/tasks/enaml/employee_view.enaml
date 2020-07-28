@@ -30,7 +30,7 @@ enamldef EmployeeForm(Form):
         text = 'Password'
     Field:
         echo_mode << 'password' if not pw_cb.checked else 'normal'
-        text :: print('Password:'), text
+        text :: print("Password:{}".format(text))
     Label:
         text = 'Show Password:'
     CheckBox: pw_cb:
