@@ -20,7 +20,7 @@ else:
         from enaml.widgets.api import Label
         from traits_enaml.testing.gui_test_assistant import GuiTestAssistant
     except ImportError:
-        SKIP_REASON = "Enaml not installed"
+        SKIP_REASON = "traits_enaml not installed"
 
 if SKIP_REASON is not None:
     # Dummy class so that the TestEnamlTaskPane class definition below
