@@ -635,7 +635,7 @@ class DockItem(HasPrivateTraits):
         """
         dc.DestroyClippingRegion()
         if self._save_clip != no_clip:
-            dc.SetClippingRegion(*self._save_clip)
+            dc.SetClippingRegion(*self._save_clip[1:])
         self._save_clip = None
 
     # ---------------------------------------------------------------------------
