@@ -19,16 +19,8 @@ from pyface.qt import QtCore
 #  'PyMimeData' class:
 # -------------------------------------------------------------------------------
 
-if sys.version_info[0] < 3:
-
-    def str2bytes(s):
-        return s
-
-
-else:
-
-    def str2bytes(s):
-        return bytes(s, "ascii")
+def str2bytes(s):
+    return bytes(s, "ascii")
 
 
 class PyMimeData(QtCore.QMimeData):
