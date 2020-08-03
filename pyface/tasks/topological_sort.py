@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from collections.abc import OrderedDict, defaultdict
+from collections import OrderedDict, defaultdict
 import logging
 
 # Logging.

@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from collections.abc import defaultdict
+from collections import defaultdict
 import logging
 
 
