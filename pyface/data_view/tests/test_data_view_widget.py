@@ -17,11 +17,17 @@ from traits.testing.unittest_tools import UnittestTools
 from pyface.gui import GUI
 from pyface.window import Window
 
-from pyface.data_view.data_models.api import ArrayDataModel
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import FloatValue
+from pyface.util.testing import (
+    is_traits_version_ge,
+    requires_traits_min_version,
+)
+if is_traits_version_ge("6.1"):
+    from pyface.data_view.data_models.api import ArrayDataModel
+    from pyface.data_view.data_view_widget import DataViewWidget
+    from pyface.data_view.value_types.api import FloatValue
 
 
+@requires_traits_min_version("6.1")
 @requires_numpy
 class TestWidget(unittest.TestCase, UnittestTools):
     def setUp(self):

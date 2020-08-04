@@ -14,16 +14,22 @@ from unittest.mock import Mock
 from traits.api import Str
 from traits.testing.unittest_tools import UnittestTools
 
-from pyface.data_view.abstract_data_model import DataViewSetError
-from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.util.testing import (
+    is_traits_version_ge,
+    requires_traits_min_version,
+)
+if is_traits_version_ge("6.1"):
+    from pyface.data_view.abstract_data_model import DataViewSetError
+    from pyface.data_view.abstract_value_type import AbstractValueType
 
 
-class ValueType(AbstractValueType):
+    class ValueType(AbstractValueType):
 
-    #: a parameter which should fire the update trait
-    sample_parameter = Str(update_value_type=True)
+        #: a parameter which should fire the update trait
+        sample_parameter = Str(update_value_type=True)
 
 
+@requires_traits_min_version("6.1")
 class TestAbstractValueType(UnittestTools, TestCase):
 
     def setUp(self):

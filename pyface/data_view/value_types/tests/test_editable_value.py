@@ -13,16 +13,22 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
-from pyface.data_view.abstract_data_model import DataViewSetError
-from pyface.data_view.value_types.editable_value import EditableValue
+from pyface.util.testing import (
+    is_traits_version_ge,
+    requires_traits_min_version,
+)
+if is_traits_version_ge("6.1"):
+    from pyface.data_view.abstract_data_model import DataViewSetError
+    from pyface.data_view.value_types.editable_value import EditableValue
 
 
-class EditableWithValid(EditableValue):
+    class EditableWithValid(EditableValue):
 
-    def is_valid(self, model, row, column, value):
-        return value >= 0
+        def is_valid(self, model, row, column, value):
+            return value >= 0
 
 
+@requires_traits_min_version("6.1")
 class TestEditableValue(UnittestTools, TestCase):
 
     def setUp(self):

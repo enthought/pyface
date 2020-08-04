@@ -7,9 +7,19 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
+import contextlib
 from functools import wraps
+import operator
 import re
-from unittest import TestSuite
+import unittest
+from unittest import (
+    mock,
+    TestSuite,
+)
+
+from packaging.version import Version
+
+from traits import __version__ as TRAITS_VERSION
 
 
 def filter_tests(test_suite, exclusion_pattern):
@@ -49,3 +59,31 @@ def skip_if_no_traitsui(test):
             self.skipTest("Can't import traitsui.")
 
     return new_test
+
+
+def is_traits_version_ge(version):
+    """ Return true if the traits version is greater than or equal to the
+    required value.
+
+    Parameters
+    ----------
+    version : str
+        Version to be parsed. e.g. "6.0"
+    """
+    traits_version = Version(TRAITS_VERSION)
+    given_version = Version(version)
+    return traits_version >= given_version
+
+
+def requires_traits_min_version(version):
+    """ Decorator factory for tests that require a minimum version of traits.
+
+    Parameters
+    ----------
+    version : str
+        Version to be parsed. e.g. "6.0"
+    """
+    return unittest.skipUnless(
+        is_traits_version_ge(version),
+        "Test requires Traits >= {}".format(version)
+    )
