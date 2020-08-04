@@ -22,7 +22,6 @@ if is_traits_version_ge("6.1"):
     from pyface.data_view.abstract_data_model import DataViewSetError
     from pyface.data_view.abstract_value_type import AbstractValueType
 
-
     class ValueType(AbstractValueType):
 
         #: a parameter which should fire the update trait

@@ -21,7 +21,6 @@ if is_traits_version_ge("6.1"):
     from pyface.data_view.abstract_data_model import DataViewSetError
     from pyface.data_view.value_types.editable_value import EditableValue
 
-
     class EditableWithValid(EditableValue):
 
         def is_valid(self, model, row, column, value):
