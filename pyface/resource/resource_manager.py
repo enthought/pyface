@@ -14,7 +14,7 @@ sounds etc.
 """
 
 
-import collections.abc, glob, inspect, os, sys, types
+import collections, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 

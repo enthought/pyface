@@ -14,9 +14,10 @@
 
 """ The interface for manipulating the toolkit clipboard.
 """
-
-from collections.abc import Sequence
-
+try:
+    from collections.abc import Sequence
+except ImportError:  # Python 3.8 deprecation
+    from collections import Sequence
 
 
 from traits.api import HasStrictTraits, Interface, Property
