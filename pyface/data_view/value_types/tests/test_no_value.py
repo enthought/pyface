@@ -11,9 +11,15 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pyface.data_view.value_types.no_value import NoValue
+from pyface.util.testing import (
+    is_traits_version_ge,
+    requires_traits_min_version,
+)
+if is_traits_version_ge("6.1"):
+    from pyface.data_view.value_types.no_value import NoValue
 
 
+@requires_traits_min_version("6.1")
 class TestNoValue(TestCase):
 
     def setUp(self):

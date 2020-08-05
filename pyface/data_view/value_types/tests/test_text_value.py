@@ -11,10 +11,15 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pyface.data_view.abstract_data_model import DataViewSetError
-from pyface.data_view.value_types.text_value import TextValue
+from pyface.util.testing import (
+    is_traits_version_ge,
+    requires_traits_min_version,
+)
+if is_traits_version_ge("6.1"):
+    from pyface.data_view.value_types.text_value import TextValue
 
 
+@requires_traits_min_version("6.1")
 class TestTextValue(TestCase):
 
     def setUp(self):

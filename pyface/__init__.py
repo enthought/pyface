@@ -25,6 +25,7 @@ __extras_require__ = {
     "pyqt5": ["pyqt>=5", "pygments"],
     "pyside": ["pyside>=1.2", "pygments"],
     "pyside2": ["pyside2", "shiboken2", "pygments"],
+    "test": ["packaging"],
 }
 
 
