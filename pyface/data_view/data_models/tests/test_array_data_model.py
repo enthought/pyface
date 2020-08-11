@@ -13,21 +13,14 @@ from unittest import TestCase
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
-from pyface.util.testing import (
-    is_traits_version_ge,
-    requires_traits_min_version,
+from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.data_view.value_types.api import (
+    FloatValue, IntValue, no_value
 )
-
-if is_traits_version_ge("6.1"):
-    from pyface.data_view.abstract_data_model import DataViewSetError
-    from pyface.data_view.abstract_value_type import AbstractValueType
-    from pyface.data_view.value_types.api import (
-        FloatValue, IntValue, no_value
-    )
-    from pyface.data_view.data_models.array_data_model import ArrayDataModel
+from pyface.data_view.data_models.array_data_model import ArrayDataModel
 
 
-@requires_traits_min_version("6.1")
 @requires_numpy
 class TestArrayDataModel(UnittestTools, TestCase):
 

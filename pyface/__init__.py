@@ -51,7 +51,7 @@ def load_tests(loader, standard_tests, pattern):
     """
     from os import environ
     from os.path import dirname
-    from pyface.util.testing import filter_tests
+    from pyface.util.testing import filter_tests, is_traits_version_ge
     from unittest import TestSuite
 
     # Make sure the right toolkit is up and running before importing tests
@@ -60,13 +60,26 @@ def load_tests(loader, standard_tests, pattern):
     this_dir = dirname(__file__)
     package_tests = loader.discover(start_dir=this_dir, pattern=pattern)
 
-    exclusion_pattern = environ.get("EXCLUDE_TESTS", None)
-    if exclusion_pattern is None:
-        return package_tests
+    # List of regular expression for filtering test using the test id.
+    exclusion_patterns = []
+
+    # Environment variable for skipping more tests.
+    # e.g. etstool.py in the source tree root sets this to skip packages for
+    # specific toolkit
+    additional_exclude = environ.get("EXCLUDE_TESTS", None)
+    if additional_exclude is not None:
+        exclusion_patterns.append(additional_exclude)
+
+    # Only data_view requires Traits 6.1.
+    # We will skip tests in data_view package in Traits 6.0 environment
+    # Remove this when Traits 6.0 is dropped for the entire code base.
+    if not is_traits_version_ge("6.1"):
+        exclusion_patterns.append("\.data_view\.")
 
     filtered_package_tests = TestSuite()
     for test_suite in package_tests:
-        filtered_test_suite = filter_tests(test_suite, exclusion_pattern)
-        filtered_package_tests.addTest(filtered_test_suite)
+        for exclusion_pattern in exclusion_patterns:
+            test_suite = filter_tests(test_suite, exclusion_pattern)
+        filtered_package_tests.addTest(test_suite)
 
     return filtered_package_tests

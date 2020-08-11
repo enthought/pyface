@@ -11,7 +11,6 @@ import contextlib
 from functools import wraps
 import operator
 import re
-import unittest
 from unittest import (
     mock,
     TestSuite,
@@ -73,17 +72,3 @@ def is_traits_version_ge(version):
     traits_version = Version(TRAITS_VERSION)
     given_version = Version(version)
     return traits_version >= given_version
-
-
-def requires_traits_min_version(version):
-    """ Decorator factory for tests that require a minimum version of traits.
-
-    Parameters
-    ----------
-    version : str
-        Version to be parsed. e.g. "6.0"
-    """
-    return unittest.skipUnless(
-        is_traits_version_ge(version),
-        "Test requires Traits >= {}".format(version)
-    )
