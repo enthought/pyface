@@ -63,7 +63,8 @@ class MDataViewWidget(HasStrictTraits):
     #: as supported by the toolkit.
     selection_mode = Enum("extended", "single")
 
-    #: The selected indices in the view.
+    #: The selected indices in the view.  This should never be mutated, any
+    #: changes should be by replacement of the entire list.
     selection = Property(depends_on='_selection[]')
 
     # Private traits --------------------------------------------------------
@@ -71,7 +72,8 @@ class MDataViewWidget(HasStrictTraits):
     #: Whether the selection is currently being updated.
     _selection_updating_flag = Bool
 
-    #: The selected indices in the view.
+    #: The selected indices in the view.  This should never be mutated, any
+    #: changes should be by replacement of the entire list.
     _selection = List(Tuple, comparison_mode=ComparisonMode.identity)
 
     # ------------------------------------------------------------------------

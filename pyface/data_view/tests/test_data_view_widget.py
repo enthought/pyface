@@ -92,14 +92,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
     def test_selection_mode_change(self):
         self._create_widget_control()
-        self.widget.selection = [((1, 4), (2,)), ((2, 0), (4,))]
+        self.widget.selection = [((1, 4), ()), ((2, 0), ())]
 
         self.widget.selection_mode = "single"
 
         self.assertEqual(self.widget._get_control_selection_mode(), "single")
         self.assertEqual(self.widget.selection, [])
 
-        self.widget.selection = [((1, 4), (2,))]
+        self.widget.selection = [((1, 4), ())]
         if not is_wx:
             self.widget.selection_mode = "none"
 
