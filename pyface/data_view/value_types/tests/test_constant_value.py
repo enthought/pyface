@@ -13,15 +13,9 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
-from pyface.util.testing import (
-    is_traits_version_ge,
-    requires_traits_min_version,
-)
-if is_traits_version_ge("6.1"):
-    from pyface.data_view.value_types.constant_value import ConstantValue
+from pyface.data_view.value_types.constant_value import ConstantValue
 
 
-@requires_traits_min_version("6.1")
 class TestConstantValue(UnittestTools, TestCase):
 
     def setUp(self):

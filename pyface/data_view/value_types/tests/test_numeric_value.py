@@ -11,18 +11,12 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pyface.util.testing import (
-    is_traits_version_ge,
-    requires_traits_min_version,
+from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.value_types.numeric_value import (
+    FloatValue, IntValue, NumericValue, format_locale
 )
-if is_traits_version_ge("6.1"):
-    from pyface.data_view.abstract_data_model import DataViewSetError
-    from pyface.data_view.value_types.numeric_value import (
-        FloatValue, IntValue, NumericValue, format_locale
-    )
 
 
-@requires_traits_min_version("6.1")
 class TestNumericValue(TestCase):
 
     def setUp(self):
@@ -93,7 +87,6 @@ class TestNumericValue(TestCase):
         self.model.set_value.assert_not_called()
 
 
-@requires_traits_min_version("6.1")
 class TestIntValue(TestCase):
 
     def test_defaults(self):
@@ -101,7 +94,6 @@ class TestIntValue(TestCase):
         self.assertIs(value.evaluate, int)
 
 
-@requires_traits_min_version("6.1")
 class TestFloatValue(TestCase):
 
     def test_defaults(self):
