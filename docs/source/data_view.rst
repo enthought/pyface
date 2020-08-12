@@ -77,6 +77,9 @@ user to at most one selected thing.
 A change to either the |selection_type| or the |selection_mode| results in the
 |selection| be cleared.
 
+Note: with the current implementations, the |selection| list should not be
+mutated, rather the entire list should be replaced on every change.  This
+restriction may be relaxed in the future.
 
 Index Managers
 --------------
