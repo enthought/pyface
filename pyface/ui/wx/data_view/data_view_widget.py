@@ -106,17 +106,6 @@ class DataViewWidget(MDataViewWidget, Widget):
             item = self._item_model._to_item(row)
             wx_selection.append(item)
         self.control.SetSelections(wx_selection)
-        if wx.VERSION >= (4, 1) and len(wx_selection) > 0:
-            event = DataViewEvent(
-                wxEVT_DATAVIEW_SELECTION_CHANGED,
-                self.control,
-                wx_selection[-1],
-            )
-        else:
-            event = DataViewEvent(
-                wxEVT_DATAVIEW_SELECTION_CHANGED,
-            )
-        wx.PostEvent(self.control, event)
 
     def _observe_control_selection(self, remove=False):
         """ Toolkit specific method to watch for changes in the selection. """
