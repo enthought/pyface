@@ -106,7 +106,7 @@ class DataViewWidget(MDataViewWidget, Widget):
             item = self._item_model._to_item(row)
             wx_selection.append(item)
         self.control.SetSelections(wx_selection)
-        if wx.VERSION >= (4, 1):
+        if wx.VERSION >= (4, 1) and len(wx_selection) > 0:
             event = DataViewEvent(
                 wxEVT_DATAVIEW_SELECTION_CHANGED,
                 self.control,
