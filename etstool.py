@@ -107,7 +107,7 @@ extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad 
+    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -244,12 +244,6 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
-    if toolkit == "wx":
-        parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
-        parameters["exclude"] = "wx"
-    else:
-        parameters["exclude"] = "(wx|qt)"
 
     if no_environment_vars:
         environ = {}
@@ -257,12 +251,17 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
         environ = environment_vars.get(toolkit, {}).copy()
     environ["PYTHONUNBUFFERED"] = "1"
 
-    if toolkit == "wx":
-        environ["EXCLUDE_TESTS"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
-        environ["EXCLUDE_TESTS"] = "wx"
+    if TRAITS_VERSION_REQUIRES:
+        exclude = ['data_view']
     else:
-        environ["EXCLUDE_TESTS"] = "(wx|qt)"
+        exclude = []
+    if toolkit == "wx":
+        exclude.append("qt")
+    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+        exclude.append("wx")
+    else:
+        exclude.extend(['wx', 'qt'])
+    environ["EXCLUDE_TESTS"] = '({})'.format('|'.join(exclude))
 
     commands = [
         "{edm} run -e {environment} -- coverage run -p -m "
