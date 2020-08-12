@@ -92,14 +92,14 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
     def test_selection_mode_change(self):
         self._create_widget_control()
-        self.selection = [((1, 4), (2,)), ((2, 0), (4,))]
+        self.widget.selection = [((1, 4), (2,)), ((2, 0), (4,))]
 
         self.widget.selection_mode = "single"
 
         self.assertEqual(self.widget._get_control_selection_mode(), "single")
         self.assertEqual(self.widget.selection, [])
 
-        self.selection = [((1, 4), (2,))]
+        self.widget.selection = [((1, 4), (2,))]
         if not is_wx:
             self.widget.selection_mode = "none"
 
@@ -170,7 +170,10 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 4), ()), (2, 1), ()]
 
-    @unittest.skipIf(is_wx, "Selection mode 'extended' not supported in Wx and Linux")
+    @unittest.skipIf(
+        is_wx and is_linux,
+        "Selection mode 'extended' not supported in Wx and Linux",
+    )
     def test_selection_mode_extended(self):
         self._create_widget_control()
 
@@ -239,7 +242,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 2), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'item' not supported")
     def test_selection_type_item_invalid_row_too_big(self):
         self.widget.selection_type = 'item'
         self._create_widget_control()
@@ -247,7 +250,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 10), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'item' not supported")
     def test_selection_type_item_invalid_row_too_long(self):
         self.widget.selection_type = 'item'
         self._create_widget_control()
@@ -255,7 +258,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 4, 5, 6), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'item' not supported")
     def test_selection_type_item_invalid_column(self):
         self.widget.selection_type = 'item'
         self._create_widget_control()
@@ -263,7 +266,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 2), (10,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'item' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column_invalid_row_too_long(self):
         self.widget.selection_type = 'column'
         self._create_widget_control()
@@ -271,7 +274,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 4, 5, 6), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'column' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column_invalid_row_too_big(self):
         self.widget.selection_type = 'column'
         self._create_widget_control()
@@ -279,7 +282,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((10,), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'column' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column_invalid_row_not_parent(self):
         self.widget.selection_type = 'column'
         self._create_widget_control()
@@ -287,7 +290,7 @@ class TestWidget(unittest.TestCase, UnittestTools):
         with self.assertRaises(TraitError):
             self.widget.selection = [((1, 2), (2,))]
 
-    @unittest.skipIf(is_wx, "Selection mode 'column' not supported")
+    @unittest.skipIf(is_wx, "Selection type 'column' not supported")
     def test_selection_type_column_invalid_column(self):
         self.widget.selection_type = 'column'
         self._create_widget_control()

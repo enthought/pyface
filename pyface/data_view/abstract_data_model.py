@@ -242,8 +242,8 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Parameters
         ----------
-        row : row index
-            The row to check.
+        row : sequence of int
+            The row to check as indices of the row from root to leaf.
 
         Returns
         -------
@@ -261,12 +261,12 @@ class AbstractDataModel(ABCHasStrictTraits):
     def is_column_valid(self, column):
         """ Return whether or not the given column index refers to a valid column.
 
-        A column index is valid if it is the root, or the valie is between 0 and
+        A column index is valid if it is the root, or the value is between 0 and
         the number of columns in the model.
 
         Parameters
         ----------
-        column : column index
+        column :  sequence of int
             The column to check.
 
         Returns
@@ -274,24 +274,23 @@ class AbstractDataModel(ABCHasStrictTraits):
         valid : bool
             Whether or not the column index is valid.
         """
-        if len(column) != 1:
-            return len(column) == 0
+        if len(column) == 1:
+            return 0 <= column[0] < self.get_column_count()
 
-        index = column[0]
-        return 0 <= index < self.get_column_count()
+        return len(column) == 0
 
     def iter_rows(self, start_row=()):
         """ Iterator that yields rows in preorder.
 
         Parameters
         ----------
-        start_row : row index
+        start_row : sequence of int
             The row to start at.  The iterator will yeild the row and all
             descendant rows.
 
         Yields
         ------
-        row_index
+        row_index : sequence of int
             The current row index.
         """
         start_row = tuple(start_row)
@@ -309,7 +308,7 @@ class AbstractDataModel(ABCHasStrictTraits):
 
         Parameters
         ----------
-        start_row : row index
+        start_row : sequence of int
             The row to start iteration from.
 
         Yields

@@ -54,10 +54,13 @@ class MDataViewWidget(HasStrictTraits):
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
 
-    #: What can be selected.
+    #: What can be selected.  Implementations may optionally allow "column"
+    #: and "item" selection types.
     selection_type = Enum("row")
 
-    #: How selections are modified.
+    #: How selections are modified.  Implementations may optionally allow
+    #: "none" for no selection, or possibly other multiple selection modes
+    #: as supported by the toolkit.
     selection_mode = Enum("extended", "single")
 
     #: The selected indices in the view.
@@ -81,37 +84,77 @@ class MDataViewWidget(HasStrictTraits):
             self._set_control_header_visible(event.new)
 
     def _get_control_header_visible(self):
-        """ Toolkit specific method to get the visibility of the header. """
+        """ Toolkit specific method to get the visibility of the header.
+
+        Returns
+        -------
+        control_header_visible : bool
+            Whether or not the control's header is visible.
+        """
         raise NotImplementedError()
 
     def _set_control_header_visible(self, control_header_visible):
-        """ Toolkit specific method to set the visibility of the header. """
+        """ Toolkit specific method to set the visibility of the header.
+
+        Parameters
+        ----------
+        control_header_visible : bool
+            Whether or not the control's header is visible.
+        """
         raise NotImplementedError()
 
     def _selection_type_updated(self, event):
         """ Observer for selection_type trait. """
         if self.control is not None:
             self._set_control_selection_type(event.new)
+            self.selection = []
 
     def _get_control_selection_type(self):
-        """ Toolkit specific method to get the selection type. """
+        """ Toolkit specific method to get the selection type.
+
+        Returns
+        -------
+        selection_type : str
+            The type of selection the control is using.
+        """
         raise NotImplementedError()
 
     def _set_control_selection_type(self, selection_type):
-        """ Toolkit specific method to change the selection type. """
+        """ Toolkit specific method to change the selection type.
+
+        Parameters
+        ----------
+        selection_type : str
+            The type of selection the control is using.
+        """
         raise NotImplementedError()
 
     def _selection_mode_updated(self, event):
         """ Observer for selection_mode trait. """
         if self.control is not None:
             self._set_control_selection_mode(event.new)
+            self.selection = []
 
     def _get_control_selection_mode(self):
-        """ Toolkit specific method to get the selection mode. """
+        """ Toolkit specific method to get the selection mode.
+
+        Returns
+        -------
+        selection_mode : str
+            The selection mode the control is using (eg. single vs. extended
+            selection).
+        """
         raise NotImplementedError()
 
     def _set_control_selection_mode(self, selection_mode):
-        """ Toolkit specific method to change the selection mode. """
+        """ Toolkit specific method to change the selection mode.
+
+        Parameters
+        ----------
+        selection_mode : str
+            The selection mode the control is using (eg. single vs. extended
+            selection).
+        """
         raise NotImplementedError()
 
     def _selection_updated(self, event):
@@ -121,11 +164,23 @@ class MDataViewWidget(HasStrictTraits):
                 self._set_control_selection(self.selection)
 
     def _get_control_selection(self):
-        """ Toolkit specific method to get the selection. """
+        """ Toolkit specific method to get the selection.
+
+        Returns
+        -------
+        selection : list of pairs of row and column indices
+            The selected elements of the control.
+        """
         raise NotImplementedError()
 
     def _set_control_selection(self, selection):
-        """ Toolkit specific method to change the selection. """
+        """ Toolkit specific method to change the selection.
+
+        Parameters
+        ----------
+        selection : list of pairs of row and column indices
+            The selected elements of the control.
+        """
         raise NotImplementedError()
 
     def _observe_control_selection(self, remove=False):
@@ -161,6 +216,7 @@ class MDataViewWidget(HasStrictTraits):
         self._set_control_header_visible(self.header_visible)
         self._set_control_selection_mode(self.selection_mode)
         self._set_control_selection_type(self.selection_type)
+        self._set_control_selection(self.selection)
 
     def _add_event_listeners(self):
         logger.debug('Adding DataViewWidget listeners')

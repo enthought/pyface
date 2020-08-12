@@ -59,11 +59,17 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _get_control_selection_type(self):
         """ Toolkit specific method to get the selection type. """
-        pass
+        return "row"
 
     def _set_control_selection_type(self, selection_type):
         """ Toolkit specific method to change the selection type. """
-        pass
+        if selection_type != "row":
+            warnings.warn(
+                "{!r} selection_type not supported in Wx".format(
+                    selection_type
+                ),
+                RuntimeWarning,
+            )
 
     def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
