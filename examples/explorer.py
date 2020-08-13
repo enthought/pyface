@@ -8,7 +8,8 @@
 #
 # Thanks for using Enthought open source!
 
-""" A file explorer example. """
+""" A file explorer example. 
+    Note: This demo only works on the wx backend. """
 
 
 import os
