@@ -8,8 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-""" Mulit-tool bar example. 
-    Note: This demo only works on the wx backend. """
+""" Mulit-tool bar example.
+    Note: This demo only works on the wx backend.
+"""
 
 
 import os, sys
