@@ -186,10 +186,19 @@ class MDataViewWidget(HasStrictTraits):
         raise NotImplementedError()
 
     def _observe_control_selection(self, remove=False):
-        """ Toolkit specific method to watch for changes in the selection. """
+        """ Toolkit specific method to watch for changes in the selection.
+
+        The _update_selection method is available as a toolkit-independent
+        callback when the selection changes.
+        """
         raise NotImplementedError()
 
     def _update_selection(self, *args, **kwargs):
+        """ Handle a toolkit even that  changes the selection.
+
+        This is designed to be usable as a callback for a toolkit event
+        or signal handler, so it accepts any arguments.
+        """
         if not self._selection_updating_flag:
             with self._selection_updating():
                 self._selection = self._get_control_selection()
