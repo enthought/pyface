@@ -182,9 +182,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
         ]
     else:
         commands = [
-            "edm environments create {environment} "
-            "--force "
-            "--version={runtime}"
+            "edm environments create {environment} --force --version={runtime}"
         ]
 
     commands.extend([
