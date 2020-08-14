@@ -10,6 +10,7 @@
 
 import unittest
 
+from traits.trait_list_object import TraitList
 from traits.testing.api import UnittestTools
 
 from pyface.data_view.abstract_data_model import DataViewSetError
@@ -186,6 +187,63 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                 DataItem(a=i+1, b=20*(i+1), c=str(i)) for i in range(10)
             ]
         self.assertTrue(self.structure_changed_event.new)
+
+    def test_data_items_updated_item_added(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "structure_changed"):
+            self.model.data += [DataItem(a=100, b=200, c="a string")]
+        self.assertTrue(self.structure_changed_event.new)
+
+    def test_data_items_updated_item_replaced(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.data[1] = DataItem(a=100, b=200, c="a string")
+        self.assertEqual(self.values_changed_event.new, ((1,), (), (1,), ()))
+
+    def test_data_items_updated_item_replaced_negative(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.data[-2] = DataItem(a=100, b=200, c="a string")
+        self.assertEqual(self.values_changed_event.new, ((8,), (), (8,), ()))
+
+    def test_data_items_updated_items_replaced(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.data[1:3] = [
+                DataItem(a=100, b=200, c="a string"),
+                DataItem(a=200, b=300, c="another string"),
+            ]
+        self.assertEqual(self.values_changed_event.new, ((1,), (), (2,), ()))
+
+    def test_data_items_updated_slice_replaced(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.data[1:4:2] = [
+                DataItem(a=100, b=200, c="a string"),
+                DataItem(a=200, b=300, c="another string"),
+            ]
+        self.assertEqual(self.values_changed_event.new, ((1,), (), (3,), ()))
+
+    def test_data_items_updated_reverse_slice_replaced(self):
+        self.model.data = TraitList([
+            DataItem(a=i, b=10*i, c=str(i)) for i in range(10)
+        ])
+        with self.assertTraitChanges(self.model, "values_changed"):
+            self.model.data[3:1:-1] = [
+                DataItem(a=100, b=200, c="a string"),
+                DataItem(a=200, b=300, c="another string"),
+            ]
+        self.assertEqual(self.values_changed_event.new, ((2,), (), (3,), ()))
 
     def test_row_header_data_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):

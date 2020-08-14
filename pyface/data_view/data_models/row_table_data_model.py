@@ -13,6 +13,7 @@ This module provides a concrete implementation of a data model for the
 case of row-oriented data.
 """
 from traits.api import Any, ComparisonMode, Instance, List, observe
+from traits.observation.api import trait
 
 from pyface.data_view.abstract_data_model import (
     AbstractDataModel, DataViewSetError
@@ -96,9 +97,23 @@ class RowTableDataModel(AbstractDataModel):
     def _data_default(self):
         return []
 
-    @observe('data')
+    @observe("data")
     def _update_data(self, event):
         self.structure_changed = True
+
+    @observe(trait("data", notify=False).list_items(optional=True))
+    def _update_data_items(self, event):
+        if len(event.added) != len(event.removed):
+            # number of rows has changed
+            self.structure_changed = True
+        else:
+            if isinstance(event.index, int):
+                start = event.index
+                stop = min(event.index + len(event.added), len(self.data)) - 1
+            else:
+                start = event.index.start
+                stop = min(event.index.stop, len(self.data)) - 1
+            self.values_changed = ((start,), (), (stop,), ())
 
     @observe('row_header_data')
     def _update_row_header_data(self, event):
