@@ -310,12 +310,12 @@ class _Table(wx.ListCtrl):  # (ULC.UltimateListCtrl):#
 
         # Set up attributes to show alternate rows with a different background
         # colour.
-        self._even_row_attribute = wx.ItemAttr()
+        self._even_row_attribute = wx.ListItemAttr()
         self._even_row_attribute.SetBackgroundColour(
             self._viewer.even_row_background
         )
 
-        self._odd_row_attribute = wx.ItemAttr()
+        self._odd_row_attribute = wx.ListItemAttr()
         self._odd_row_attribute.SetBackgroundColour(
             self._viewer.odd_row_background
         )
