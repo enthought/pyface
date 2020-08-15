@@ -15,10 +15,10 @@ related classes for extracting data from an object in a consistent way.
 """
 
 from abc import abstractmethod
-from collections import Hashable
+from collections.abc import Hashable, MutableMapping, MutableSequence
 
 from traits.api import (
-    ABCHasStrictTraits, Any, Event, Instance, Int, Str, observe
+    ABCHasStrictTraits, Event, Instance, Int, Str, observe
 )
 from traits.trait_base import xgetattr, xsetattr
 
@@ -48,12 +48,50 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
     @abstractmethod
     def get_value(self, obj):
+        """ Return a value for the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+
+        Returns
+        -------
+        value : any
+            The data value contained in the object.
+        """
         raise NotImplementedError()
 
     def can_set_value(self, obj):
+        """ Return whether the value can be set on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
         return False
 
     def set_value(self, obj, value):
+        """ Set the value on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+        value : any
+            The data value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If setting the value fails.
+        """
         raise DataViewSetError(
             "Cannot set {!r} column of {!r}.".format(self.title, obj)
         )
@@ -61,11 +99,11 @@ class AbstractDataAccessor(ABCHasStrictTraits):
     # trait observers
 
     @observe('title,title_type.updated')
-    def title_updated(self, event):
+    def _title_updated(self, event):
         self.updated = (self, 'title')
 
     @observe('value_type.updated')
-    def value_type_updated(self, event):
+    def _value_type_updated(self, event):
         self.updated = (self, 'value')
 
 
@@ -80,9 +118,33 @@ class AttributeDataAccessor(AbstractDataAccessor):
     attr = Str()
 
     def get_value(self, obj):
+        """ Return the attribute value for the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+
+        Returns
+        -------
+        value : any
+            The data value contained in the object's attribute.
+        """
         return xgetattr(obj, self.attr, None)
 
     def can_set_value(self, obj):
+        """ Return whether the value can be set on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
         return self.attr != ''
 
     def set_value(self, obj, value):
@@ -93,7 +155,7 @@ class AttributeDataAccessor(AbstractDataAccessor):
         xsetattr(obj, self.attr, value)
 
     @observe('attr')
-    def attr_updated(self, event):
+    def _attr_updated(self, event):
         self.updated = (self, 'value')
 
     def _title_default(self):
@@ -104,24 +166,62 @@ class AttributeDataAccessor(AbstractDataAccessor):
 
 
 class IndexDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that presents an index on an object.
+    """ DataAccessor that presents an index on a sequence object.
 
     This is suitable for use with a sequence.
     """
 
-    #: The extended trait name of the trait holding the value.
+    #: The index in a sequence which holds the value.
     index = Int()
 
     def get_value(self, obj):
+        """ Return the indexed value for the provided object.
+
+        Parameters
+        ----------
+        obj : sequence
+            The object that contains the data.
+
+        Returns
+        -------
+        value : any
+            The data value contained in the object at the index.
+        """
         try:
             return obj[self.index]
         except IndexError:
             return None
 
     def can_set_value(self, obj):
-        return 0 <= self.index < len(obj)
+        """ Return whether the value can be set on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
+        return isinstance(obj, MutableSequence) and 0 <= self.index < len(obj)
 
     def set_value(self, obj, value):
+        """ Set the value on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+        value : any
+            The data value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If setting the value fails.
+        """
         if not self.can_set_value(obj):
             raise DataViewSetError(
                 "Cannot set {!r} index of {!r}.".format(self.index, obj)
@@ -129,7 +229,7 @@ class IndexDataAccessor(AbstractDataAccessor):
         obj[self.index] = value
 
     @observe('index')
-    def index_updated(self, event):
+    def _index_updated(self, event):
         self.updated = (self, 'value')
 
     def _title_default(self):
@@ -138,21 +238,61 @@ class IndexDataAccessor(AbstractDataAccessor):
 
 
 class KeyDataAccessor(AbstractDataAccessor):
-    """ DataAccessor that presents an item on an object.
+    """ DataAccessor that presents an item on a mapping object.
 
     This is suitable for use with a mapping, such as a dictionary.
     """
 
-    #: The extended trait name of the trait holding the value.
-    key = Any()
+    #: The key in the mapping holding the value.
+    key = Instance(Hashable)
 
     def get_value(self, obj):
+        """ Return the key's value for the provided object.
+
+        Parameters
+        ----------
+        obj : mapping
+            The object that contains the data.
+
+        Returns
+        -------
+        value : any
+            The data value contained in the given key of the object.
+        """
         return obj.get(self.key, None)
 
     def can_set_value(self, obj):
-        return isinstance(self.key, Hashable)
+        """ Set the value on the provided object.
+
+        Parameters
+        ----------
+        obj : mapping
+            The object that contains the data.
+        value : any
+            The data value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If setting the value fails.
+        """
+        return isinstance(obj, MutableMapping)
 
     def set_value(self, obj, value):
+        """ Set the value on the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            The object that contains the data.
+        value : any
+            The data value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If setting the value fails.
+        """
         if not self.can_set_value(obj):
             raise DataViewSetError(
                 "Cannot set {!r} key of {!r}.".format(self.key, obj)
@@ -160,7 +300,7 @@ class KeyDataAccessor(AbstractDataAccessor):
         obj[self.key] = value
 
     @observe('key')
-    def key_updated(self, event):
+    def _key_updated(self, event):
         self.updated = (self, 'value')
 
     def _title_default(self):

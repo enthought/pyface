@@ -12,13 +12,16 @@ import unittest
 
 from traits.trait_list_object import TraitList
 from traits.testing.api import UnittestTools
+from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
 from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
     FloatValue, IntValue, TextValue, no_value
 )
-from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
+from pyface.data_view.data_models.data_accessors import (
+    AttributeDataAccessor, IndexDataAccessor, KeyDataAccessor
+)
 from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
 
 
@@ -112,7 +115,7 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
                     attr = self.model.column_data[column[0]].attr
                     self.assertEqual(result, attr.title())
                 elif len(column) == 0:
-                    self.assertEqual(result, row[-1])
+                    self.assertEqual(result, row[0])
                 else:
                     attr = self.model.column_data[column[0]].attr
                     self.assertEqual(
@@ -269,6 +272,28 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
             ((), (), (), ())
         )
 
+    def test_no_data_row_header_data_update(self):
+        model = RowTableDataModel(
+            row_header_data=AttributeDataAccessor(
+                attr='a',
+                value_type=IntValue(),
+            ),
+            column_data=[
+                AttributeDataAccessor(
+                    attr='b',
+                    value_type=IntValue(),
+                ),
+                AttributeDataAccessor(
+                    attr='c',
+                    value_type=TextValue(),
+                )
+            ]
+        )
+
+        # check that updating accessors is safe with empty data
+        with self.assertTraitDoesNotChange(model, 'values_changed'):
+            model.row_header_data.attr = 'b'
+
     def test_column_data_updated(self):
         with self.assertTraitChanges(self.model, "structure_changed"):
             self.model.column_data = [
@@ -296,6 +321,27 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
             ((0,), (0,), (9,), (0,))
         )
 
+    def test_no_data_column_data_update(self):
+        model = RowTableDataModel(
+            row_header_data=AttributeDataAccessor(
+                attr='a',
+                value_type=IntValue(),
+            ),
+            column_data=[
+                AttributeDataAccessor(
+                    attr='b',
+                    value_type=IntValue(),
+                ),
+                AttributeDataAccessor(
+                    attr='c',
+                    value_type=TextValue(),
+                )
+            ]
+        )
+
+        with self.assertTraitDoesNotChange(model, 'values_changed'):
+            model.column_data[0].attr = 'a'
+
     def test_column_data_title_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.column_data[0].updated = (self.model.column_data[0], 'title')
@@ -303,3 +349,81 @@ class TestRowTableDataModel(UnittestTools, unittest.TestCase):
             self.values_changed_event.new,
             ((), (0,), (), (0,))
         )
+
+    def test_list_tuple_data(self):
+        data = [
+            (i, 10*i, str(i)) for i in range(10)
+        ]
+        model = RowTableDataModel(
+            data=data,
+            row_header_data=IndexDataAccessor(
+                index=0,
+                value_type=IntValue(),
+            ),
+            column_data=[
+                IndexDataAccessor(
+                    index=1,
+                    value_type=IntValue(),
+                ),
+                IndexDataAccessor(
+                    index=2,
+                    value_type=TextValue(),
+                )
+            ]
+        )
+
+        for row, column in model.iter_items():
+            with self.subTest(row=row, column=column):
+                result = model.get_value(row, column)
+                if len(row) == 0 and len(column) == 0:
+                    self.assertEqual(result, '0')
+                elif len(row) == 0:
+                    index = model.column_data[column[0]].index
+                    self.assertEqual(result, str(index))
+                elif len(column) == 0:
+                    self.assertEqual(result, row[0])
+                else:
+                    index = model.column_data[column[0]].index
+                    self.assertEqual(
+                        result,
+                        data[row[0]][index]
+                    )
+
+    def test_list_dict_data(self):
+        data = [
+            {'a': i, 'b': 10*i, 'c': str(i)} for i in range(10)
+        ]
+        model = RowTableDataModel(
+            data=data,
+            row_header_data=KeyDataAccessor(
+                key='a',
+                value_type=IntValue(),
+            ),
+            column_data=[
+                KeyDataAccessor(
+                    key='b',
+                    value_type=IntValue(),
+                ),
+                KeyDataAccessor(
+                    key='c',
+                    value_type=TextValue(),
+                )
+            ]
+        )
+
+        for row, column in model.iter_items():
+            with self.subTest(row=row, column=column):
+                result = model.get_value(row, column)
+                if len(row) == 0 and len(column) == 0:
+                    self.assertEqual(result, 'A')
+                elif len(row) == 0:
+                    key = model.column_data[column[0]].key
+                    self.assertEqual(result, str(key).title())
+                elif len(column) == 0:
+                    self.assertEqual(result, data[row[0]]['a'])
+                else:
+                    key = model.column_data[column[0]].key
+                    self.assertEqual(
+                        result,
+                        data[row[0]][key]
+                    )

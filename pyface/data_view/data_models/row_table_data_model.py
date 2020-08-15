@@ -10,9 +10,11 @@
 """ A row-oriented data model implementation.
 
 This module provides a concrete implementation of a data model for the
-case of row-oriented data.
+case of non-hierarchical, row-oriented data.
 """
-from traits.api import Any, ComparisonMode, Instance, List, observe
+from collections.abc import Sequence
+
+from traits.api import ComparisonMode, Instance, List, observe
 from traits.observation.api import trait
 
 from pyface.data_view.abstract_data_model import (
@@ -23,24 +25,36 @@ from pyface.data_view.data_models.data_accessors import AbstractDataAccessor
 
 
 class RowTableDataModel(AbstractDataModel):
-    """ A data model that presents a list of objects as rows.
+    """ A data model that presents a sequence of objects as rows.
+
+    The data is expected to be a sequence of row objects, each object
+    providing values for the columns via an AbstractDataAccessor subclass.
+    Concrete implementations can be found in the data_accessors module that
+    get data from attributes, indices of sequences, and keys of mappings,
+    but for more complex situations, custom accessors can be defined.
     """
 
-    #: A sequence of objects to display in columns.
-    data = Any()
+    #: A sequence of objects to display as rows.
+    data = Instance(
+        Sequence,
+        comparison_mode=ComparisonMode.identity,
+        allow_none=False,
+    )
 
     #: An object which describes how to map data for the row headers.
-    row_header_data = Instance(AbstractDataAccessor)
+    row_header_data = Instance(AbstractDataAccessor, allow_none=False)
 
     #: An object which describes how to map data for each column.
     column_data = List(
-        Instance(AbstractDataAccessor),
+        Instance(AbstractDataAccessor, allow_none=False),
         comparison_mode=ComparisonMode.identity,
     )
 
     #: The index manager that helps convert toolkit indices to data view
     #: indices.
-    index_manager = Instance(IntIndexManager, args=())
+    index_manager = Instance(IntIndexManager, args=(), allow_none=False)
+
+    # Data structure methods
 
     def get_column_count(self):
         return len(self.column_data)
@@ -53,6 +67,8 @@ class RowTableDataModel(AbstractDataModel):
             return len(self.data)
         else:
             return 0
+
+    # Data value methods
 
     def get_value(self, row, column):
         if len(column) == 0:
@@ -94,8 +110,7 @@ class RowTableDataModel(AbstractDataModel):
             return column_data.title_type
         return column_data.value_type
 
-    def _data_default(self):
-        return []
+    # data update methods
 
     @observe("data")
     def _update_data(self, event):
@@ -122,7 +137,8 @@ class RowTableDataModel(AbstractDataModel):
     @observe('row_header_data:updated')
     def _update_row_header_data_event(self, event):
         if event.new[1] == 'value':
-            self.values_changed = ((0,), (), (len(self.data) - 1,), ())
+            if len(self.data) > 0:
+                self.values_changed = ((0,), (), (len(self.data) - 1,), ())
         else:
             self.values_changed = ((), (), (), ())
 
@@ -134,8 +150,14 @@ class RowTableDataModel(AbstractDataModel):
     def _update_column_data(self, event):
         index = self.column_data.index(event.new[0])
         if event.new[1] == 'value':
-            self.values_changed = (
-                (0,), (index,), (len(self.data) - 1,), (index,)
-            )
+            if len(self.data) > 0:
+                self.values_changed = (
+                    (0,), (index,), (len(self.data) - 1,), (index,)
+                )
         else:
             self.values_changed = ((), (index,), (), (index,))
+
+    # default data value
+
+    def _data_default(self):
+        return []

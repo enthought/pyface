@@ -8,8 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
+from types import MappingProxyType
 import unittest
 
+from traits.api import TraitError
 from traits.testing.api import UnittestTools
 
 from pyface.data_view.abstract_data_model import DataViewSetError
@@ -222,6 +224,14 @@ class TestIndexDataAccessor(unittest.TestCase, DataAccessorMixin):
 
         self.assertFalse(can_set)
 
+    def test_can_set_value_immuatble(self):
+        accessor = self.create_accessor()
+        obj = ('zero', 'one', 'two', 'three')
+
+        can_set = accessor.can_set_value(obj)
+
+        self.assertFalse(can_set)
+
     def test_set_value(self):
         accessor = self.create_accessor()
         obj = ['zero', 'one', 'two', 'three']
@@ -269,6 +279,11 @@ class TestKeyDataAccessor(unittest.TestCase, DataAccessorMixin):
         self.assertIsInstance(accessor.title_type, TextValue)
         self.assertEqual(accessor.title, 'One')
 
+    def test_unhashable_error(self):
+        accessor = self.create_accessor()
+        with self.assertRaises(TraitError):
+            accessor.key = []
+
     def test_get_value(self):
         accessor = self.create_accessor()
         obj = {'one': 'a', 'two': 'b'}
@@ -303,10 +318,10 @@ class TestKeyDataAccessor(unittest.TestCase, DataAccessorMixin):
 
         self.assertTrue(can_set)
 
-    def test_can_set_value_false(self):
+    def test_can_set_value_immutable(self):
         accessor = self.create_accessor()
-        accessor.key = []
-        obj = {'one': 'a', 'two': 'b'}
+        # TODO: eventually replace with frozenmap in 3.9
+        obj = MappingProxyType({'one': 'a', 'two': 'b'})
 
         can_set = accessor.can_set_value(obj)
 
@@ -331,8 +346,8 @@ class TestKeyDataAccessor(unittest.TestCase, DataAccessorMixin):
 
     def test_set_value_error(self):
         accessor = KeyDataAccessor()
-        accessor.key = []
-        obj = {'one': 'a', 'two': 'b'}
+        accessor.key = 'one'
+        obj = MappingProxyType({'one': 'a', 'two': 'b'})
 
         with self.assertRaises(DataViewSetError):
             accessor.set_value(obj, 'new_value')
