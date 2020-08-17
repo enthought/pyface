@@ -16,7 +16,7 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
-    FloatValue, IntValue, TextValue, no_value
+    FloatValue, IntValue, no_value
 )
 from pyface.data_view.data_models.array_data_model import ArrayDataModel
 

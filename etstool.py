@@ -87,7 +87,16 @@ supported_combinations = {
     "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
 }
 
-dependencies = {"traits", "numpy", "pygments", "coverage"}
+# Traits version requirement (empty string to mean no specific requirement).
+# The requirement is to be interpreted by EDM
+TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
+
+dependencies = {
+    "traits" + TRAITS_VERSION_REQUIRES,
+    "numpy",
+    "pygments",
+    "coverage",
+}
 
 # NOTE : traitsui is always installed from source
 source_dependencies = {
@@ -98,7 +107,7 @@ extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build 1 of.4-12 appears to be bad
+    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad 
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -159,21 +168,25 @@ def install(edm, runtime, toolkit, environment, editable, source):
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
-    # edm commands to setup the development environment
-    commands = [
-        "{edm} environments create {environment} --force --version={runtime}",
-        "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
-        "{edm} run -e {environment} -- python setup.py clean --all",
-        "{edm} run -e {environment} -- python setup.py install",
-    ]
 
     # Install local source
     install_pyface = "{edm} run -e {environment} -- pip install "
     if editable:
         install_pyface += "--editable "
     install_pyface += "."
-    commands.append(install_pyface)
+
+    # edm commands to setup the development environment
+    if sys.platform == 'linux':
+         commands = ["edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}"]
+    else:
+        commands = ["edm environments create {environment} --force --version={runtime}"]
+
+    commands.extend([
+        "{edm} install -y -e {environment} " + packages,
+        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- python setup.py clean --all",
+        install_pyface,
+    ])
 
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":

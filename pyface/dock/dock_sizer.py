@@ -622,7 +622,7 @@ class DockItem(HasPrivateTraits):
     def begin_draw(self, dc, ox=0, oy=0):
         """ Prepares for drawing into a device context.
         """
-        self._save_clip = dc.GetClippingBox()
+        self._save_clip = dc.GetClippingRect()
         x, y, dx, dy = self.bounds
         dc.SetClippingRegion(x + ox, y + oy, dx, dy)
 
