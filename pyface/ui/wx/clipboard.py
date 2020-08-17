@@ -44,7 +44,7 @@ def _ensure_clipboard():
         try:
             yield
         finally:
-            cb.UsePrimarySelection(False)
+            cb.UsePrimarySelection(True)
     else:
         yield
 
@@ -58,13 +58,14 @@ class Clipboard(BaseClipboard):
 
     def _get_has_data(self):
         result = False
-        if cb.Open():
-            result = (
-                cb.IsSupported(TextFormat)
-                or cb.IsSupported(FileFormat)
-                or cb.IsSupported(PythonObjectFormat)
-            )
-            cb.Close()
+        with _ensure_clipboard():
+            if cb.Open():
+                result = (
+                    cb.IsSupported(TextFormat)
+                    or cb.IsSupported(FileFormat)
+                    or cb.IsSupported(PythonObjectFormat)
+                )
+                cb.Close()
         return result
 
     # ---------------------------------------------------------------------------
@@ -104,8 +105,8 @@ class Clipboard(BaseClipboard):
         return self._has_this_data(PythonObjectFormat)
 
     def _get_object_type(self):
+        result = ""
         with _ensure_clipboard():
-            result = ""
             if cb.Open():
                 try:
                     if cb.IsSupported(PythonObjectFormat):
@@ -182,7 +183,8 @@ class Clipboard(BaseClipboard):
 
     def _has_this_data(self, format):
         result = False
-        if cb.Open():
-            result = cb.IsSupported(format)
-            cb.Close()
-        return result
+        with _ensure_clipboard():
+            if cb.Open():
+                result = cb.IsSupported(format)
+                cb.Close()
+            return result
