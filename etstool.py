@@ -107,7 +107,7 @@ extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad 
+    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -177,13 +177,17 @@ def install(edm, runtime, toolkit, environment, editable, source):
 
     # edm commands to setup the development environment
     if sys.platform == 'linux':
-         commands = ["edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}"]
+        commands = [
+            "edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}",  # noqa: E501
+        ]
     else:
-        commands = ["edm environments create {environment} --force --version={runtime}"]
+        commands = [
+            "edm environments create {environment} --force --version={runtime}"
+        ]
 
     commands.extend([
         "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         "{edm} run -e {environment} -- python setup.py clean --all",
         install_pyface,
     ])
@@ -199,12 +203,12 @@ def install(edm, runtime, toolkit, environment, editable, source):
     elif toolkit == "wx":
         if sys.platform == "darwin":
             commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"
+                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"  # noqa: E501
             )
         elif sys.platform == "linux":
             # XXX this is mainly for TravisCI workers; need a generic solution
             commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04/ wxPython<4.1"
+                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04/ wxPython<4.1"  # noqa: E501
             )
         else:
             commands.append(
@@ -215,15 +219,21 @@ def install(edm, runtime, toolkit, environment, editable, source):
     execute(commands, parameters)
 
     if source:
-        cmd_fmt = "edm plumbing remove-package --environment {environment} --force "
-        commands = [cmd_fmt+dependency for dependency in source_dependencies.keys()]
+        cmd_fmt = (
+            "edm plumbing remove-package --environment {environment} --force "
+        )
+        commands = [
+            cmd_fmt+dependency for dependency in source_dependencies.keys()
+        ]
         execute(commands, parameters)
         source_pkgs = source_dependencies.values()
         commands = [
             "python -m pip install {pkg} --no-deps".format(pkg=pkg)
             for pkg in source_pkgs
         ]
-        commands = ["edm run -e {environment} -- " + command for command in commands]
+        commands = [
+            "edm run -e {environment} -- " + command for command in commands
+        ]
         execute(commands, parameters)
 
     click.echo("Done install")
@@ -359,7 +369,7 @@ def api_docs(edm, runtime, toolkit, environment):
     ignore = " ".join(doc_ignore)
     commands = [
         "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",  # noqa: E501
     ]
     click.echo(
         "Installing documentation tools in  '{environment}'".format(
