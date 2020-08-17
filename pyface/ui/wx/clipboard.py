@@ -9,9 +9,9 @@
 # Thanks for using Enthought open source!
 
 
+from contextlib import contextmanager
 from io import BytesIO
 from pickle import dumps, load, loads
-
 
 import wx
 
@@ -26,6 +26,27 @@ FileFormat = wx.DataFormat(wx.DF_FILENAME)
 
 # Shortcuts
 cb = wx.TheClipboard
+
+
+@contextmanager
+def _ensure_clipboard():
+    """ Ensure use of X11 clipboard rather than primary selection on X11.
+
+    X11 allows pasting from either the clipboard or the primary selection.
+    This context manager ensures that the clipboard is always used for Pyface,
+    no matter what the wider application state is currently using.
+
+    On non-X11 platforms this does nothing.
+    """
+    using_primary = cb.IsUsingPrimarySelection()
+    if using_primary:
+        cb.UsePrimarySelection(False)
+        try:
+            yield
+        finally:
+            cb.UsePrimarySelection(False)
+    else:
+        yield
 
 
 @provides(IClipboard)
@@ -52,49 +73,52 @@ class Clipboard(BaseClipboard):
 
     def _get_object_data(self):
         result = None
-        if cb.Open():
-            try:
-                if cb.IsSupported(PythonObjectFormat):
-                    cdo = wx.CustomDataObject(PythonObjectFormat)
-                    if cb.GetData(cdo):
-                        file = BytesIO(cdo.GetData())
-                        klass = load(file)
-                        result = load(file)
-            finally:
-                cb.Close()
+        with _ensure_clipboard():
+            if cb.Open():
+                try:
+                    if cb.IsSupported(PythonObjectFormat):
+                        cdo = wx.CustomDataObject(PythonObjectFormat)
+                        if cb.GetData(cdo):
+                            file = BytesIO(cdo.GetData())
+                            klass = load(file)
+                            result = load(file)
+                finally:
+                    cb.Close()
         return result
 
     def _set_object_data(self, data):
-        if cb.Open():
-            try:
-                cdo = wx.CustomDataObject(PythonObjectFormat)
-                cdo.SetData(dumps(data.__class__) + dumps(data))
-                # fixme: There seem to be cases where the '-1' value creates
-                # pickles that can't be unpickled (e.g. some TraitDictObject's)
-                # cdo.SetData(dumps(data, -1))
-                cb.SetData(cdo)
-            finally:
-                cb.Close()
-                cb.Flush()
+        with _ensure_clipboard():
+            if cb.Open():
+                try:
+                    cdo = wx.CustomDataObject(PythonObjectFormat)
+                    cdo.SetData(dumps(data.__class__) + dumps(data))
+                    # fixme: There seem to be cases where the '-1' value creates
+                    # pickles that can't be unpickled (e.g. some TraitDictObject's)
+                    # cdo.SetData(dumps(data, -1))
+                    cb.SetData(cdo)
+                finally:
+                    cb.Close()
+                    cb.Flush()
 
     def _get_has_object_data(self):
         return self._has_this_data(PythonObjectFormat)
 
     def _get_object_type(self):
-        result = ""
-        if cb.Open():
-            try:
-                if cb.IsSupported(PythonObjectFormat):
-                    cdo = wx.CustomDataObject(PythonObjectFormat)
-                    if cb.GetData(cdo):
-                        try:
-                            # We may not be able to load the required class:
-                            result = loads(cdo.GetData())
-                        except:
-                            pass
-            finally:
-                cb.Close()
-        return result
+        with _ensure_clipboard():
+            result = ""
+            if cb.Open():
+                try:
+                    if cb.IsSupported(PythonObjectFormat):
+                        cdo = wx.CustomDataObject(PythonObjectFormat)
+                        if cb.GetData(cdo):
+                            try:
+                                # We may not be able to load the required class:
+                                result = loads(cdo.GetData())
+                            except:
+                                pass
+                finally:
+                    cb.Close()
+            return result
 
     # ---------------------------------------------------------------------------
     #  'text_data' property methods:
@@ -102,19 +126,21 @@ class Clipboard(BaseClipboard):
 
     def _get_text_data(self):
         result = ""
-        if cb.Open():
-            if cb.IsSupported(TextFormat):
-                tdo = wx.TextDataObject()
-                if cb.GetData(tdo):
-                    result = tdo.GetText()
-            cb.Close()
-        return result
+        with _ensure_clipboard():
+            if cb.Open():
+                if cb.IsSupported(TextFormat):
+                    tdo = wx.TextDataObject()
+                    if cb.GetData(tdo):
+                        result = tdo.GetText()
+                cb.Close()
+            return result
 
     def _set_text_data(self, data):
-        if cb.Open():
-            cb.SetData(wx.TextDataObject(str(data)))
-            cb.Close()
-            cb.Flush()
+        with _ensure_clipboard():
+            if cb.Open():
+                cb.SetData(wx.TextDataObject(str(data)))
+                cb.Close()
+                cb.Flush()
 
     def _get_has_text_data(self):
         return self._has_this_data(TextFormat)
@@ -124,26 +150,28 @@ class Clipboard(BaseClipboard):
     # ---------------------------------------------------------------------------
 
     def _get_file_data(self):
-        result = []
-        if cb.Open():
-            if cb.IsSupported(FileFormat):
-                tfo = wx.FileDataObject()
-                if cb.GetData(tfo):
-                    result = tfo.GetFilenames()
-            cb.Close()
-        return result
+        with _ensure_clipboard():
+            result = []
+            if cb.Open():
+                if cb.IsSupported(FileFormat):
+                    tfo = wx.FileDataObject()
+                    if cb.GetData(tfo):
+                        result = tfo.GetFilenames()
+                cb.Close()
+            return result
 
     def _set_file_data(self, data):
-        if cb.Open():
-            tfo = wx.FileDataObject()
-            if isinstance(data, str):
-                tfo.AddFile(data)
-            else:
-                for filename in data:
-                    tfo.AddFile(filename)
-            cb.SetData(tfo)
-            cb.Close()
-            cb.Flush()
+        with _ensure_clipboard():
+            if cb.Open():
+                tfo = wx.FileDataObject()
+                if isinstance(data, str):
+                    tfo.AddFile(data)
+                else:
+                    for filename in data:
+                        tfo.AddFile(filename)
+                cb.SetData(tfo)
+                cb.Close()
+                cb.Flush()
 
     def _get_has_file_data(self):
         return self._has_this_data(FileFormat)
