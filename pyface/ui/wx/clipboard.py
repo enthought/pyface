@@ -11,13 +11,16 @@
 
 from contextlib import contextmanager
 from io import BytesIO
+import logging
 from pickle import dumps, load, loads
 
 import wx
 
-
 from traits.api import provides
 from pyface.i_clipboard import IClipboard, BaseClipboard
+
+
+logger = logging.getLogger(__name__)
 
 # Data formats
 PythonObjectFormat = wx.DataFormat("PythonObject")
@@ -49,8 +52,33 @@ def _ensure_clipboard():
         yield
 
 
+@contextmanager
+def _close_clipboard(flush=False):
+    """ Ensures clipboard is closed and (optionally) flushed.
+
+    Parameters
+    ----------
+    flush : bool
+        Whether or not to flush the clipboard.  Should be true when setting
+        data to the clipboard.
+    """
+    try:
+        yield
+    finally:
+        cb.Close()
+        if flush:
+            cb.Flush()
+
+
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
+    """ WxPython implementation of the IClipboard interface.
+
+    Python object data is transmitted as bytes consisting of the pickled class
+    object followed by the corresponding pickled instance object.  This means
+    that copy/paste of Python objects may not work unless compatible Python
+    libraries are available at the pasting location.
+    """
 
     # ---------------------------------------------------------------------------
     #  'data' property methods:
@@ -60,12 +88,12 @@ class Clipboard(BaseClipboard):
         result = False
         with _ensure_clipboard():
             if cb.Open():
-                result = (
-                    cb.IsSupported(TextFormat)
-                    or cb.IsSupported(FileFormat)
-                    or cb.IsSupported(PythonObjectFormat)
-                )
-                cb.Close()
+                with _close_clipboard():
+                    result = (
+                        cb.IsSupported(TextFormat)
+                        or cb.IsSupported(FileFormat)
+                        or cb.IsSupported(PythonObjectFormat)
+                    )
         return result
 
     # ---------------------------------------------------------------------------
@@ -76,30 +104,25 @@ class Clipboard(BaseClipboard):
         result = None
         with _ensure_clipboard():
             if cb.Open():
-                try:
+                with _close_clipboard():
                     if cb.IsSupported(PythonObjectFormat):
                         cdo = wx.CustomDataObject(PythonObjectFormat)
                         if cb.GetData(cdo):
                             file = BytesIO(cdo.GetData())
-                            klass = load(file)
+                            _ = load(file)
                             result = load(file)
-                finally:
-                    cb.Close()
         return result
 
     def _set_object_data(self, data):
         with _ensure_clipboard():
             if cb.Open():
-                try:
+                with _close_clipboard(flush=True):
                     cdo = wx.CustomDataObject(PythonObjectFormat)
                     cdo.SetData(dumps(data.__class__) + dumps(data))
                     # fixme: There seem to be cases where the '-1' value creates
                     # pickles that can't be unpickled (e.g. some TraitDictObject's)
                     # cdo.SetData(dumps(data, -1))
                     cb.SetData(cdo)
-                finally:
-                    cb.Close()
-                    cb.Flush()
 
     def _get_has_object_data(self):
         return self._has_this_data(PythonObjectFormat)
@@ -108,18 +131,16 @@ class Clipboard(BaseClipboard):
         result = ""
         with _ensure_clipboard():
             if cb.Open():
-                try:
+                with _close_clipboard():
                     if cb.IsSupported(PythonObjectFormat):
                         cdo = wx.CustomDataObject(PythonObjectFormat)
                         if cb.GetData(cdo):
                             try:
                                 # We may not be able to load the required class:
                                 result = loads(cdo.GetData())
-                            except:
-                                pass
-                finally:
-                    cb.Close()
-            return result
+                            except Exception:
+                                logger.exception("Cannot load data from clipboard.")
+        return result
 
     # ---------------------------------------------------------------------------
     #  'text_data' property methods:
@@ -129,19 +150,18 @@ class Clipboard(BaseClipboard):
         result = ""
         with _ensure_clipboard():
             if cb.Open():
-                if cb.IsSupported(TextFormat):
-                    tdo = wx.TextDataObject()
-                    if cb.GetData(tdo):
-                        result = tdo.GetText()
-                cb.Close()
+                with _close_clipboard():
+                    if cb.IsSupported(TextFormat):
+                        tdo = wx.TextDataObject()
+                        if cb.GetData(tdo):
+                            result = tdo.GetText()
             return result
 
     def _set_text_data(self, data):
         with _ensure_clipboard():
             if cb.Open():
-                cb.SetData(wx.TextDataObject(str(data)))
-                cb.Close()
-                cb.Flush()
+                with _close_clipboard(flush=True):
+                    cb.SetData(wx.TextDataObject(str(data)))
 
     def _get_has_text_data(self):
         return self._has_this_data(TextFormat)
@@ -154,25 +174,24 @@ class Clipboard(BaseClipboard):
         with _ensure_clipboard():
             result = []
             if cb.Open():
-                if cb.IsSupported(FileFormat):
-                    tfo = wx.FileDataObject()
-                    if cb.GetData(tfo):
-                        result = tfo.GetFilenames()
-                cb.Close()
+                with _close_clipboard():
+                    if cb.IsSupported(FileFormat):
+                        tfo = wx.FileDataObject()
+                        if cb.GetData(tfo):
+                            result = tfo.GetFilenames()
             return result
 
     def _set_file_data(self, data):
         with _ensure_clipboard():
             if cb.Open():
-                tfo = wx.FileDataObject()
-                if isinstance(data, str):
-                    tfo.AddFile(data)
-                else:
-                    for filename in data:
-                        tfo.AddFile(filename)
-                cb.SetData(tfo)
-                cb.Close()
-                cb.Flush()
+                with _close_clipboard(flush=True):
+                    tfo = wx.FileDataObject()
+                    if isinstance(data, str):
+                        tfo.AddFile(data)
+                    else:
+                        for filename in data:
+                            tfo.AddFile(filename)
+                    cb.SetData(tfo)
 
     def _get_has_file_data(self):
         return self._has_this_data(FileFormat)
@@ -185,6 +204,7 @@ class Clipboard(BaseClipboard):
         result = False
         with _ensure_clipboard():
             if cb.Open():
-                result = cb.IsSupported(format)
-                cb.Close()
-            return result
+                with _close_clipboard():
+                    result = cb.IsSupported(format)
+
+        return result
