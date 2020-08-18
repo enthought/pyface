@@ -72,6 +72,13 @@ def _close_clipboard(flush=False):
 
 @provides(IClipboard)
 class Clipboard(BaseClipboard):
+    """ WxPython implementation of the IClipboard interface.
+
+    Python object data is transmitted as bytes consisting of the pickled class
+    object followed by the corresponding pickled instance object.  This means
+    that copy/paste of Python objects may not work unless compatible Python
+    libraries are available at the pasting location.
+    """
 
     # ---------------------------------------------------------------------------
     #  'data' property methods:
