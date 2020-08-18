@@ -194,6 +194,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((0,), (0,), (4,), (2,))
         )
 
+    def test_type_updated_empty(self):
+        self.model.data = np.empty((0, 0, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.value_type = IntValue()
+
     def test_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.value_type.is_editable = False
@@ -201,6 +206,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((0,), (0,), (4,), (2,))
         )
+
+    def test_type_attribute_updated_empty(self):
+        self.model.data = np.empty((0, 0, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.value_type.is_editable = False
 
     def test_row_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
@@ -210,6 +220,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((0,), (), (4,), ())
         )
 
+    def test_row_header_type_updated_empty(self):
+        self.model.data = np.empty((0, 4, 2), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.row_header_type = no_value
+
     def test_row_header_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.row_header_type.format = str
@@ -217,6 +232,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((0,), (), (4,), ())
         )
+
+    def test_row_header_attribute_updated_empty(self):
+        self.model.data = np.empty((0, 4, 2), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.row_header_type.format = str
 
     def test_column_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
@@ -226,6 +246,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((), (0,), (), (2,))
         )
 
+    def test_row_header_type_updated_empty(self):
+        self.model.data = np.empty((2, 4, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.column_header_type = no_value
+
     def test_column_header_type_attribute_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
             self.model.column_header_type.format = str
@@ -233,6 +258,11 @@ class TestArrayDataModel(UnittestTools, TestCase):
             self.values_changed_event.new,
             ((), (0,), (), (2,))
         )
+
+    def test_column_header_attribute_updated_empty(self):
+        self.model.data = np.empty((2, 4, 0), dtype='int')
+        with self.assertTraitDoesNotChange(self.model, "values_changed"):
+            self.model.column_header_type.format = str
 
     def test_label_header_type_updated(self):
         with self.assertTraitChanges(self.model, "values_changed"):
