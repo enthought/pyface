@@ -112,12 +112,20 @@ class TestAttributeDataAccessor(unittest.TestCase, DataAccessorMixin):
 
     def test_get_value_missing(self):
         accessor = self.create_accessor()
-        accessor.attr = 'other_attr'
+        accessor.attr = ''
         obj = AttributeDummy('test_value')
 
         value = accessor.get_value(obj)
 
         self.assertIsNone(value)
+
+    def test_get_value_error(self):
+        accessor = self.create_accessor()
+        accessor.attr = 'other_attr'
+        obj = AttributeDummy('test_value')
+
+        with self.assertRaises(AttributeError):
+            accessor.get_value(obj)
 
     def test_can_set_value(self):
         accessor = self.create_accessor()
@@ -204,9 +212,8 @@ class TestIndexDataAccessor(unittest.TestCase, DataAccessorMixin):
         accessor.index = 10
         obj = ['zero', 'one', 'two', 'three']
 
-        value = accessor.get_value(obj)
-
-        self.assertIsNone(value)
+        with self.assertRaises(IndexError):
+            accessor.get_value(obj)
 
     def test_can_set_value(self):
         accessor = self.create_accessor()
