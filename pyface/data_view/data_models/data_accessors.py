@@ -18,7 +18,7 @@ from abc import abstractmethod
 from collections.abc import Hashable, MutableMapping, MutableSequence
 
 from traits.api import (
-    ABCHasStrictTraits, Event, Instance, Int, Str, observe
+    ABCHasStrictTraits, Any, Event, Instance, Int, Str, observe
 )
 from traits.trait_base import xgetattr, xsetattr
 
@@ -112,10 +112,15 @@ class AttributeDataAccessor(AbstractDataAccessor):
 
     This is suitable for use with Python objects, including HasTraits
     classes.
+
+    If the attr trait is empty, then the default value is used.
     """
 
     #: The extended attribute name of the trait holding the value.
     attr = Str()
+
+    #: A default value to be used if attr is the empty string.
+    default = Any()
 
     def get_value(self, obj):
         """ Return the attribute value for the provided object.
@@ -130,7 +135,9 @@ class AttributeDataAccessor(AbstractDataAccessor):
         value : any
             The data value contained in the object's attribute.
         """
-        return xgetattr(obj, self.attr, None)
+        if not self.attr:
+            return self.default
+        return xgetattr(obj, self.attr)
 
     def can_set_value(self, obj):
         """ Return whether the value can be set on the provided object.
@@ -145,10 +152,10 @@ class AttributeDataAccessor(AbstractDataAccessor):
         can_set_value : bool
             Whether or not the value can be set.
         """
-        return self.attr != ''
+        return bool(self.attr)
 
     def set_value(self, obj, value):
-        if not self.attr:
+        if not self.can_set_value(obj):
             raise DataViewSetError(
                 "Attribute is not specified for {!r}".format(self)
             )
@@ -187,10 +194,7 @@ class IndexDataAccessor(AbstractDataAccessor):
         value : any
             The data value contained in the object at the index.
         """
-        try:
-            return obj[self.index]
-        except IndexError:
-            return None
+        return obj[self.index]
 
     def can_set_value(self, obj):
         """ Return whether the value can be set on the provided object.
