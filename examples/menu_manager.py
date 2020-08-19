@@ -8,6 +8,8 @@
 #
 # Thanks for using Enthought open source!
 
+""" Menu Manager example. """
+
 
 import os, sys
 
