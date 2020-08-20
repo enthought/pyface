@@ -12,10 +12,11 @@ import logging
 
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
-from pyface.data_view.index_manager import Root
-from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.data_view_errors import (
+    DataViewGetError, DataViewSetError
 )
+from pyface.data_view.index_manager import Root
 
 
 logger = logging.getLogger(__name__)
@@ -139,15 +140,27 @@ class DataViewItemModel(QAbstractItemModel):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
-        if not value_type:
-            return None
+        try:
+            if not value_type:
+                return None
 
-        if role == Qt.DisplayRole:
-            if value_type.has_text(self.model, row, column):
-                return value_type.get_text(self.model, row, column)
-        elif role == Qt.EditRole:
-            if value_type.has_editor_value(self.model, row, column):
-                return value_type.get_editor_value(self.model, row, column)
+            if role == Qt.DisplayRole:
+                if value_type.has_text(self.model, row, column):
+                    return value_type.get_text(self.model, row, column)
+            elif role == Qt.EditRole:
+                if value_type.has_editor_value(self.model, row, column):
+                    return value_type.get_editor_value(self.model, row, column)
+        except DataViewGetError:
+            # expected error, return no value, don't log
+            return None
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get data failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
 
         return None
 

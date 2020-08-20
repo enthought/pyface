@@ -13,7 +13,7 @@ from math import inf
 
 from traits.api import Callable, Float
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from .editable_value import EditableValue
 
 

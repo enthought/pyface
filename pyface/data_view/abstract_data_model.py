@@ -20,12 +20,8 @@ from abc import abstractmethod
 
 from traits.api import ABCHasStrictTraits, Event, Instance
 
+from .data_view_errors import DataViewSetError
 from .index_manager import AbstractIndexManager
-
-
-class DataViewSetError(ValueError):
-    """ An exception raised when setting a value fails. """
-    pass
 
 
 class AbstractDataModel(ABCHasStrictTraits):
@@ -156,6 +152,13 @@ class AbstractDataModel(ABCHasStrictTraits):
         -------
         value : any
             The value represented by the given row and column.
+
+        Raises
+        -------
+        DataViewGetError
+            If the value cannot be accessed in an expected way.  If this is
+            raised then the error will be ignored and not logged by the
+            data view infrastructure.
         """
         raise NotImplementedError()
 
