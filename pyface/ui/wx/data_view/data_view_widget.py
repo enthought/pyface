@@ -8,6 +8,8 @@
 #
 # Thanks for using Enthought open source!
 
+import logging
+
 from traits.api import Instance, observe, provides
 
 from wx.dataview import (
@@ -17,8 +19,12 @@ from wx.dataview import (
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
+from pyface.data_view.data_view_errors import DataViewGetError
 from pyface.ui.wx.widget import Widget
 from .data_view_model import DataViewModel
+
+
+logger = logging.getLogger(__name__)
 
 
 # XXX This file is scaffolding and may need to be rewritten
@@ -42,15 +48,32 @@ class DataViewWidget(MDataViewWidget, Widget):
 
         # create columns for view
         value_type = self._item_model.model.get_value_type([], [])
-        control.AppendTextColumn(
-            value_type.get_text(self._item_model.model, [], []),
-            0,
-            mode=DATAVIEW_CELL_ACTIVATABLE,
-        )
+        try:
+            text = value_type.get_text(self._item_model.model, [], [])
+        except DataViewGetError:
+            text = ''
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception("get header data failed: column ()")
+            raise
+        control.AppendTextColumn(text, 0, mode=DATAVIEW_CELL_ACTIVATABLE)
+
         for column in range(self._item_model.GetColumnCount()-1):
             value_type = self._item_model.model.get_value_type([], [column])
+            try:
+                text = value_type.get_text(self._item_model.model, [], [column])
+            except DataViewGetError:
+                text = ''
+            except Exception:
+                # unexpected error, log and raise
+                logger.exception(
+                    "get header data failed: column (%r,)",
+                    column,
+                )
+                raise
+
             control.AppendTextColumn(
-                value_type.get_text(self._item_model.model, [], [column]),
+                text,
                 column+1,
                 mode=DATAVIEW_CELL_EDITABLE,
             )

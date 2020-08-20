@@ -131,8 +131,20 @@ class DataViewItemModel(QAbstractItemModel):
         if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
-        if value_type and value_type.has_editor_value(self.model, row, column):
-            flags |= Qt.ItemIsEditable
+        try:
+            if value_type and value_type.has_editor_value(self.model, row, column):
+                flags |= Qt.ItemIsEditable
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get flags failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
 
         return flags
 
@@ -151,8 +163,8 @@ class DataViewItemModel(QAbstractItemModel):
                 if value_type.has_editor_value(self.model, row, column):
                     return value_type.get_editor_value(self.model, row, column)
         except DataViewGetError:
-            # expected error, return no value, don't log
-            return None
+            # expected error, ignore
+            pass
         except Exception:
             # unexpected error, log and raise
             logger.exception(
@@ -206,9 +218,23 @@ class DataViewItemModel(QAbstractItemModel):
 
         value_type = self.model.get_value_type(row, column)
 
-        if role == Qt.DisplayRole:
-            if value_type.has_text(self.model, row, column):
-                return value_type.get_text(self.model, row, column)
+        try:
+            if role == Qt.DisplayRole:
+                if value_type.has_text(self.model, row, column):
+                    return value_type.get_text(self.model, row, column)
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get header data failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
+
+        return None
 
     # Private utility methods
 
