@@ -91,11 +91,11 @@ class MComboField(HasTraits):
 
     def _get_control_text_values(self):
         """ Toolkit specific method to get the control's text values. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def _set_control_values(self, values):
         """ Toolkit specific method to set the control's values. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # Trait change handlers --------------------------------------------------
 

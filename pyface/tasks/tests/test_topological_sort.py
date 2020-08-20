@@ -81,7 +81,7 @@ class TopologicalSortTestCase(unittest.TestCase):
         """
         pairs = [(1, 2), (3, 5), (4, 6), (1, 3), (1, 4), (1, 6), (2, 4)]
         result, has_cycles = topological_sort(pairs)
-        self.assert_(not has_cycles)
+        self.assertTrue(not has_cycles)
         self.assertEqual(result, [1, 2, 3, 4, 5, 6])
 
     def test_topological_sort_2(self):
@@ -89,7 +89,7 @@ class TopologicalSortTestCase(unittest.TestCase):
         """
         pairs = [(1, 2), (1, 3), (2, 4), (3, 4), (5, 6), (4, 5)]
         result, has_cycles = topological_sort(pairs)
-        self.assert_(not has_cycles)
+        self.assertTrue(not has_cycles)
         self.assertEqual(result, [1, 2, 3, 4, 5, 6])
 
     def test_topological_sort_3(self):
@@ -97,7 +97,7 @@ class TopologicalSortTestCase(unittest.TestCase):
         """
         pairs = [(1, 2), (2, 3), (3, 1)]
         result, has_cycles = topological_sort(pairs)
-        self.assert_(has_cycles)
+        self.assertTrue(has_cycles)
 
 
 if __name__ == "__main__":

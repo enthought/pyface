@@ -8,6 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
+""" Example showing DataView for ArrayDataModel. """
+
+
 from traits.api import Array, Instance
 
 from pyface.api import ApplicationWindow, GUI

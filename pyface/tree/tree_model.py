@@ -55,12 +55,12 @@ class TreeModel(HasTraits):
 
         """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_children(self, node):
         """ Returns the children of a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_drag_value(self, node):
         """ Get the value that is dragged for a node.
@@ -79,7 +79,7 @@ class TreeModel(HasTraits):
     def drop(self, node, obj):
         """ Drops an object onto a node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_image(self, node, selected, expanded):
         """ Returns the label image for a node.

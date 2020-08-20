@@ -58,11 +58,6 @@ qt_api = None
 for api_name, module in QtAPIs:
     if module in sys.modules:
         qt_api = api_name
-        if qt_api == "pyqt" and sys.version_info[0] <= 2:
-            # set the PyQt4 APIs
-            # this is a likely place for failure - pyface really wants to be
-            # imported first, before eg. matplotlib
-            prepare_pyqt4()
         break
 else:
     # does our environment give us a preferred API?

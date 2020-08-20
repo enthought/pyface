@@ -107,30 +107,30 @@ class GridModel(HasPrivateTraits):
 
     def get_column_count(self):
         """ Return the number of columns for this table. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_column_name(self, index):
         """ Return the name of the column specified by the
         (zero-based) index. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_row_count(self):
         """ Return the number of rows for this table. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_row_name(self, index):
         """ Return the name of the row specified by the
         (zero-based) index. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_value(self, row, col):
         """ Return the value stored in the table at (row, col). """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_cell_empty(self, row, col):
         """ Returns True if the cell at (row, col) has a None value,
         False otherwise."""
-        raise NotImplementedError
+        raise NotImplementedError()
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface -- Subclasses MAY override the following
@@ -176,7 +176,7 @@ class GridModel(HasPrivateTraits):
 
     def no_column_sort(self):
         """ Turn off any column sorting of the model data. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_column_read_only(self, index):
         """ Return True if the column specified by the zero-based index
@@ -222,7 +222,7 @@ class GridModel(HasPrivateTraits):
 
     def no_row_sort(self):
         """ Turn off any row sorting of the model data. """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def is_row_read_only(self, index):
         """ Return True if the row specified by the zero-based index
@@ -231,7 +231,7 @@ class GridModel(HasPrivateTraits):
 
     def get_type(self, row, col):
         """ Return the value stored in the table at (row, col). """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_cell_drag_value(self, row, col):
         """ Return the value to use when the specified cell is dragged or

@@ -17,16 +17,17 @@ addons:
     - pulseaudio
     - libpulse-mainloop-glib0
     # Wx dependencies
-    - libsdl1.2debian
+    - libsdl2-2.0-0
 
 env:
   global:
-    - INSTALL_EDM_VERSION=2.0.0
+    - INSTALL_EDM_VERSION=3.0.1
       PYTHONUNBUFFERED="1"
 
 matrix:
   include:
     - env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
+    - env: RUNTIME=3.6 TOOLKITS="pyqt5 wx" TRAITS_REQUIRES="^=6.0"
     - os: osx
       # Obtain newer libxml2 for QtWebKit
       osx_image: xcode11.5

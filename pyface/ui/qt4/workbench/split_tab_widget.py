@@ -1020,7 +1020,7 @@ class _DragableTabBar(QtGui.QTabBar):
     def _setCurrentTabText(self):
         idx = self.currentIndex()
         text = self._title_edit.text()
-        self.setTabText(idx, u"\u25b6" + text)
+        self.setTabText(idx, "\u25b6" + text)
         self._root.tabTextChanged.emit(self.parent().widget(idx), text)
 
     def _resize_title_edit_to_current_tab(self):

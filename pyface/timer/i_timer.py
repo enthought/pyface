@@ -35,12 +35,7 @@ from traits.api import (
     provides,
 )
 
-if sys.version_info[:2] < (3, 3):
-    import timeit
-
-    perf_counter = timeit.default_timer
-else:
-    perf_counter = time.perf_counter
+perf_counter = time.perf_counter
 
 
 class ITimer(Interface):

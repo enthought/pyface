@@ -78,7 +78,7 @@ class TestSingleChoiceDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_message(self):
         # test that creation and destruction works as expected with message
-        self.dialog.message = u"This is the message"
+        self.dialog.message = "This is the message"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():

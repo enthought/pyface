@@ -146,6 +146,8 @@ if __name__ == "__main__":
     data = read_module("__init__")
     __requires__ = data["__requires__"]
     __extras_require__ = data["__extras_require__"]
+    with open("README.rst", "r", encoding="utf-8") as readme:
+        LONG_DESCRIPTION=readme.read().split(".. end_of_long_description")[0]
 
     setup(
         name="pyface",
@@ -177,7 +179,8 @@ if __name__ == "__main__":
             if len(c.split()) > 0
         ],
         description="traits-capable windowing framework",
-        long_description=open("README.rst").read(),
+        long_description=LONG_DESCRIPTION,
+        long_description_content_type="text/x-rst",
         download_url="https://github.com/enthought/pyface",
         install_requires=__requires__,
         extras_require=__extras_require__,

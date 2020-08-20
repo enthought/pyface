@@ -58,7 +58,7 @@ class PreferenceNode(TreeItem):
     def create_page(self):
         """ Creates the preference page for this node. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def lookup(self, id):
         """ Returns the child of this node with the specified Id.

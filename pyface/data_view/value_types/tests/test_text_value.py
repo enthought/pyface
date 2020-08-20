@@ -11,7 +11,6 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.value_types.text_value import TextValue
 
 

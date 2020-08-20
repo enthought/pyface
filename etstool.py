@@ -35,13 +35,10 @@ to run tests in that environment.  You can remove the environment with::
 
     python etstool.py cleanup --runtime=... --toolkit=...
 
-If you make changes you will either need to remove and re-install the
-environment or manually update the environment using ``edm``, as
-the install performs a ``python setup.py install`` rather than a ``develop``,
-so changes in your code will not be automatically mirrored in the test
-environment.  You can update with a command like::
+If you need to make frequent changes to the source, it is often convenient
+to install the source in editable mode::
 
-    edm run --environment ... -- python setup.py install
+    python etstool.py install --editable --runtime=... --toolkit=...
 
 You can run all three tasks at once with::
 
@@ -51,7 +48,7 @@ which will create, install, run tests, and then clean-up the environment.  And
 you can run tests in all supported runtimes and toolkits (with cleanup)
 using::
 
-    python etstool.py test_all
+    python etstool.py test-all
 
 Currently supported runtime values are ``2.7`` and ``3.5``, and currently
 supported toolkits are ``null``, ``pyqt``, ``pyside`` and ``wx``.  Not all
@@ -71,7 +68,7 @@ installed by `pip`).
 
 Other changes to commands should be a straightforward change to the listed
 commands for each task. See the EDM documentation for more information about
-how to run commands within an EDM enviornment.
+how to run commands within an EDM environment.
 
 """
 
@@ -90,7 +87,16 @@ supported_combinations = {
     "3.6": {"pyqt", "pyqt5", "pyside2", "wx"},
 }
 
-dependencies = {"traits", "numpy", "pygments", "coverage", "mock"}
+# Traits version requirement (empty string to mean no specific requirement).
+# The requirement is to be interpreted by EDM
+TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
+
+dependencies = {
+    "traits" + TRAITS_VERSION_REQUIRES,
+    "numpy",
+    "pygments",
+    "coverage",
+}
 
 # NOTE : traitsui is always installed from source
 source_dependencies = {
@@ -101,7 +107,7 @@ extra_dependencies = {
     "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
-    "pyqt": {"pyqt<4.12"},  # FIXME: build 1 of.4-12 appears to be bad
+    "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
     "wx": set(),
@@ -150,21 +156,42 @@ def cli():
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
+@click.option(
+    "--editable/--not-editable",
+    default=False,
+    help="Install main package in 'editable' mode?  [default: --not-editable]",
+)
 @click.option('--source/--no-source', default=False)
-def install(edm, runtime, toolkit, environment, source):
+def install(edm, runtime, toolkit, environment, editable, source):
     """ Install project and dependencies into a clean EDM environment.
 
     """
     parameters = get_parameters(edm, runtime, toolkit, environment)
     packages = " ".join(dependencies | extra_dependencies.get(toolkit, set()))
+
+    # Install local source
+    install_pyface = "{edm} run -e {environment} -- pip install "
+    if editable:
+        install_pyface += "--editable "
+    install_pyface += "."
+
     # edm commands to setup the development environment
-    commands = [
-        "{edm} environments create {environment} --force --version={runtime}",
+    if sys.platform == 'linux':
+        commands = [
+            "edm environments create {environment} --platform=rh6-x86_64 --force --version={runtime}",  # noqa: E501
+        ]
+    else:
+        commands = [
+            "edm environments create {environment} --force --version={runtime}"
+        ]
+
+    commands.extend([
         "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         "{edm} run -e {environment} -- python setup.py clean --all",
-        "{edm} run -e {environment} -- python setup.py install",
-    ]
+        install_pyface,
+    ])
+
     # pip install pyqt5 and pyside2, because we don't have them in EDM yet
     if toolkit == "pyside2":
         commands.extend(
@@ -176,12 +203,12 @@ def install(edm, runtime, toolkit, environment, source):
     elif toolkit == "wx":
         if sys.platform == "darwin":
             commands.append(
-                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"
+                "{edm} run -e {environment} -- python -m pip install wxPython<4.1"  # noqa: E501
             )
         elif sys.platform == "linux":
             # XXX this is mainly for TravisCI workers; need a generic solution
             commands.append(
-                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-14.04/ wxPython<4.1"
+                "{edm} run -e {environment} -- pip install -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/ wxPython<4.1"  # noqa: E501
             )
         else:
             commands.append(
@@ -192,15 +219,21 @@ def install(edm, runtime, toolkit, environment, source):
     execute(commands, parameters)
 
     if source:
-        cmd_fmt = "edm plumbing remove-package --environment {environment} --force "
-        commands = [cmd_fmt+dependency for dependency in source_dependencies.keys()]
+        cmd_fmt = (
+            "edm plumbing remove-package --environment {environment} --force "
+        )
+        commands = [
+            cmd_fmt+dependency for dependency in source_dependencies.keys()
+        ]
         execute(commands, parameters)
         source_pkgs = source_dependencies.values()
         commands = [
             "python -m pip install {pkg} --no-deps".format(pkg=pkg)
             for pkg in source_pkgs
         ]
-        commands = ["edm run -e {environment} -- " + command for command in commands]
+        commands = [
+            "edm run -e {environment} -- " + command for command in commands
+        ]
         execute(commands, parameters)
 
     click.echo("Done install")
@@ -336,7 +369,7 @@ def api_docs(edm, runtime, toolkit, environment):
     ignore = " ".join(doc_ignore)
     commands = [
         "{edm} install -y -e {environment} " + packages,
-        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",
+        "{edm} run -e {environment} -- pip install -r doc-src-requirements.txt --no-dependencies",  # noqa: E501
     ]
     click.echo(
         "Installing documentation tools in  '{environment}'".format(

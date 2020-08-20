@@ -96,7 +96,6 @@ class TestImageHelpers(unittest.TestCase):
         self.assertEqual(qimage.width(), 32)
         self.assertEqual(qimage.height(), 64)
         self.assertEqual(qimage.format(), QImage.Format_ARGB32)
-        print(hex(qimage.pixel(1, 1)))
         self.assertTrue(all(
             qimage.pixel(i, j) == 0xee4488cc
             for i in range(32) for j in range(64)

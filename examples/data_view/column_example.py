@@ -8,6 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
+""" Example showing DataView for ColumnDataModel using row info. """
+
+
 from functools import partial
 from random import choice, randint
 

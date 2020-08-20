@@ -25,7 +25,7 @@ class PreferencePage(HasTraits):
     def create_control(self, parent):
         """ Creates the toolkit-specific control for the page. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def restore_defaults(self):
         """ Restore the default preferences. """

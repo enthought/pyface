@@ -8,8 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-import mock
+
 import unittest
+from unittest import mock
 
 from pyface.ui.qt4.workbench.split_tab_widget import SplitTabWidget
 from pyface.ui.qt4.workbench.workbench_window_layout import (

@@ -2,6 +2,27 @@
 Pyface Changelog
 ================
 
+Release 7.0.1
+=============
+
+This is a bugfix release which fixes a number of minor issues with the 7.0.0
+release.
+
+Thanks to:
+
+Aaron Ayres, Kit Choi, Rahul Poruri, Pedro Rivotti, Corran Webster.
+
+Change summary
+--------------
+
+Fixes
+
+* Fix copyright header in AboutDialog. (#573)
+* Fix dock pane layout on Qt5. (#545)
+* Fix errors from incorrect QImage memory management. (#546)
+* Fix CodeWidget handling of parsed tokens which caused TraitsUI CodeEditor to
+  fail when a different lexer was chosen (#566).
+
 Release 7.0.0
 =============
 
@@ -419,3 +440,25 @@ Fixes
 
  * Fixed split editor area pane focus (PR#89).
  * Fixed bug when a VSplitter contains an HSplitter (PR#88, issue#87)
+
+
+TraitsGUI 3.1.0 (July 15, 2009)
+===============================
+
+Enhancements
+------------
+
+  * Removed Theming support from DockWindows. Borders and tabs are now drawn using lines instead of stretching images.
+
+ * Changed default font to use the system font
+
+ * Moved pyface.wx.clipboard to Pyface
+
+ * Moved the grid package out of pyface and into pyface.ui.wx, left deprecated warnings
+
+
+Fixes
+-----
+
+ * Improved info shown to the user if toolkits don't work as expected
+

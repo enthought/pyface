@@ -9,5 +9,5 @@
 # Thanks for using Enthought open source!
 
 """ Support for managing resources such as images and sounds.
-    Part of the TraitsGUI project of the Enthought Tool Suite.
+    Part of the TraitsUI project of the Enthought Tool Suite.
 """

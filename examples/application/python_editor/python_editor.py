@@ -53,7 +53,7 @@ class LineNumberDialog(HasStrictTraits):
     traits_view = View(
         Item(
             "line",
-            label=u"Line Number:",
+            label="Line Number:",
             editor=RangeEditor(low=1, high_name="max_line", mode="spinner"),
         ),
         buttons=OKCancelButtons,
@@ -131,7 +131,7 @@ class PythonEditor(TraitsEditor):
                 self.code = fp.read()
             self.obj = path
         else:
-            self.code = u""
+            self.code = ""
 
         if self.ui is not None:
             # reset history
