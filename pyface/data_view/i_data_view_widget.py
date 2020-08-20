@@ -21,7 +21,6 @@ from pyface.i_widget import IWidget
 
 
 logger = logging.getLogger(__name__)
-logger.level = logging.DEBUG
 
 
 class IDataViewWidget(IWidget):
@@ -33,10 +32,13 @@ class IDataViewWidget(IWidget):
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
 
-    #: What can be selected.  Some backends may support more.
+    #: What can be selected.  Implementations may optionally allow "column"
+    #: and "item" selection types.
     selection_type = Enum("row",)
 
-    #: How selections are modified.
+    #: How selections are modified.  Implementations may optionally allow
+    #: "none" for no selection, or possibly other multiple selection modes
+    #: as supported by the toolkit.
     selection_mode = Enum("extended", "single")
 
     #: The selected indices in the view.
@@ -189,7 +191,9 @@ class MDataViewWidget(HasStrictTraits):
         """ Toolkit specific method to watch for changes in the selection.
 
         The _update_selection method is available as a toolkit-independent
-        callback when the selection changes.
+        callback when the selection changes, but particular toolkits may
+        choose to implement their own callbacks with similar functionality
+        if appropriate.
         """
         raise NotImplementedError()
 
