@@ -182,6 +182,50 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         raise DataViewSetError("Cannot set value.")
 
+    def has_image(self, model, row, column):
+        """ Whether or not the value has an image associated with it.
+
+        The default implementation returns True if ``get_image``
+        returns a non-None value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_image : bool
+            Whether or not the value has an image associated with it.
+        """
+        return self.get_image(model, row, column) is not None
+
+    def get_image(self, model, row, column):
+        """ An image associated with the underlying value.
+
+        The default implementation returns None.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        text : toolkit Image or None
+            The image associated with the underlying value, or None if there
+            is no image.
+        """
+        return None
+
     @observe('+update_value_type')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """

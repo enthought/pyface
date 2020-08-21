@@ -8,9 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Str
+from traits.api import Instance, Str
 
 from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.i_image_resource import IImageResource
 
 
 class ConstantValue(AbstractValueType):
@@ -24,8 +25,16 @@ class ConstantValue(AbstractValueType):
     #: The text value to display.
     text = Str(update_value_type=True)
 
+    #: The image value to display.
+    image = Instance(IImageResource, update_value_type=True)
+
     def has_editor_value(self, model, row, column):
         return False
 
     def get_text(self, model, row, column):
         return self.text
+
+    def get_image(self, model, row, column):
+        if isinstance(self.image, IImageResource):
+            return self.image.create_image()
+        return None
