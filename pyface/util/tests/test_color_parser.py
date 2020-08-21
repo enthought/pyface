@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from ..color_parser import (
     ColorParseError, channels_to_ints, color_table, ints_to_channels,
-    parse_functional, parse_hex, parse_name, parse_text,
+    parse_hex, parse_name, parse_text,
 )
 
 
@@ -47,109 +47,6 @@ class TestChannelConversion(TestCase):
                     maximum=65535,
                 )
                 self.assertEqual(result, (value,))
-
-
-class TestParseFunctional(TestCase):
-
-    def test_4_tuple_normalized(self):
-        space, channels = parse_functional('(0.4, 0.4, 0.0, 1.0)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_4_tuple_bytes(self):
-        space, channels = parse_functional('(102, 102, 0, 255)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_4_tuple_no_comma(self):
-        space, channels = parse_functional('(0.4 0.4 0.0 1.0)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_rgba_normalized(self):
-        space, channels = parse_functional('rgba(0.4, 0.4, 0.0, 1.0)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_rgba_bytes(self):
-        space, channels = parse_functional('rgba(102, 102, 0, 255)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_rgba_no_comma(self):
-        space, channels = parse_functional('rgba(0.4 0.4 0.0 1.0)')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_hsva_normalized(self):
-        space, channels = parse_functional('hsva(0.4, 0.4, 0.0, 1.0)')
-        self.assertEqual(space, 'hsva')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_hsva_bytes(self):
-        space, channels = parse_functional('hsva(102, 102, 0, 255)')
-        self.assertEqual(space, 'hsva')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_hlsa_normalized(self):
-        space, channels = parse_functional('hlsa(0.4, 0.4, 0.0, 1.0)')
-        self.assertEqual(space, 'hlsa')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_hlsa_bytes(self):
-        space, channels = parse_functional('hlsa(102, 102, 0, 255)')
-        self.assertEqual(space, 'hlsa')
-        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
-
-    def test_3_tuple_normalized(self):
-        space, channels = parse_functional('(0.4, 0.4, 0.0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_3_tuple_bytes(self):
-        space, channels = parse_functional('(102, 102, 0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_3_tuple_no_comma(self):
-        space, channels = parse_functional('(0.4 0.4 0.0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_rgb_normalized(self):
-        space, channels = parse_functional('rgb(0.4, 0.4, 0.0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_rgb_bytes(self):
-        space, channels = parse_functional('rgb(102, 102, 0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_rgb_no_comma(self):
-        space, channels = parse_functional('rgb(0.4 0.4 0.0)')
-        self.assertEqual(space, 'rgb')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_hsv_normalized(self):
-        space, channels = parse_functional('hsv(0.4, 0.4, 0.0)')
-        self.assertEqual(space, 'hsv')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_hsv_bytes(self):
-        space, channels = parse_functional('hsv(102, 102, 0)')
-        self.assertEqual(space, 'hsv')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_hls_normalized(self):
-        space, channels = parse_functional('hls(0.4, 0.4, 0.0)')
-        self.assertEqual(space, 'hls')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
-
-    def test_hls_bytes(self):
-        space, channels = parse_functional('hls(102, 102, 0)')
-        self.assertEqual(space, 'hls')
-        self.assertEqual(channels, (0.4, 0.4, 0.0))
 
 
 class TestParseHex(TestCase):
@@ -218,11 +115,6 @@ class TestParseText(TestCase):
 
     def test_hex(self):
         space, channels = parse_text('#663399ff')
-        self.assertEqual(space, 'rgba')
-        self.assertEqual(channels, (0.4, 0.2, 0.6, 1.0))
-
-    def test_functional(self):
-        space, channels = parse_text('rgba(0.4, 0.2, 0.6, 1.0)')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.4, 0.2, 0.6, 1.0))
 

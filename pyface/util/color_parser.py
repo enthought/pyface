@@ -8,29 +8,21 @@
 #
 # Thanks for using Enthought open source!
 
-""" Color classes and corresponding trait types for Pyface.
+""" Color string parser for Pyface.
 
-The base Color class holds red, green, blue and alpha channel values as
-a tuple of normalized values from 0.0 to 1.0.  Various property traits
-pull out the individual channel values and supply values for the HSV
-and HSL colour spaces (with and without alpha).
+The ``parse_text`` function allows the creation of Color objects from
+CSS-style strings, including all the CSS names colours or hex strings starting
+with "#".  If there is no match, a ColorParseError is raises.
 
-The ``from_str`` classmethod allows the creation of Color objects from
-CSS-style strings, including all the CSS names colours, hex strings starting
-with "#", and ``rgba()``-style functional notations.
-
-The ``from_toolkit`` and ``to_toolkit`` methods allow conversion to and
-from native toolkit color objects.
-
-The PyfaceColor trait is a trait which holds a Color instance.  The traits
-also validate strings that are accepted by the ``from_str`` method and
-Sequences or numpy arrays of values between 0.0 and 1.0 of length 3 or 4.
+The ``parse_name`` and ``parse_hex`` methods parse the respective formats.
 
 A dictionary of named colours is available as the color_table module-level
 dictionary.  This dictionary holds all CSS colour names, plus a number of
-other names such as "transparent".  Additional names that give colours
-useful for painting in widgets are also injected by the toolkits when they
-are initialized.
+other names such as "transparent".
+
+Additionally, two utility functions ``channels_to_ints`` and
+``ints_to_channels`` are provided to assist in converting between floating
+point and integer values.
 """
 
 import re
@@ -193,45 +185,6 @@ color_table = {
     "none": (0.0, 0.0, 0.0, 0.0),
 }
 
-# Regular expression matching a 3-channel functional representation.
-three_channel_functional = re.compile(
-    r"""
-    \s*                             # optional space
-    (?P<space>rgb|hsv|hls|)         # function type
-    s*\(s*                          # open parens with optional space
-    (?P<channel_0>\d+(\.\d*)?)        # first channel value
-    (\s*,\s*|\s+)                   # comma with optional space or space
-    (?P<channel_1>\d+(\.\d*)?)        # second channel value
-    (\s*,\s*|\s+)                   # comma with optional space or space
-    (?P<channel_2>\d+(\.\d*)?)        # third channel value
-    \s*,?\s*                        # optional space and comma
-    \)                              # close parens
-    \s*                             # optional space
-    """,
-    flags=re.VERBOSE | re.IGNORECASE,
-)
-
-# Regular expression matching a 4-channel functional representation.
-four_channel_functional = re.compile(
-    r"""
-    \s*                             # optional space
-    (?P<space>rgba|hsva|hlsa|)      # function type
-    s*\(s*                          # open parens with optional space
-    (?P<channel_0>\d+(\.\d*)?)      # first channel value
-    (\s*,\s*|\s+)                   # comma with optional space or space
-    (?P<channel_1>\d+(\.\d*)?)      # second channel value
-    (\s*,\s*|\s+)                   # comma with optional space or space
-    (?P<channel_2>\d+(\.\d*)?)      # third channel value
-    (\s*,\s*|\s+)                   # comma with optional space or space
-    (?P<channel_3>\d+(\.\d*)?)      # fourth channel value
-    \s*,?\s*                        # optional space and comma
-    \)                              # close parens
-    \s*                             # optional space
-    """,
-    flags=re.VERBOSE | re.IGNORECASE,
-)
-
-
 # Translation table for stripping extraneous characters out of names.
 ignored = str.maketrans({' ': None, '-': None, '_': None})
 
@@ -303,53 +256,6 @@ def parse_name(text):
     return None
 
 
-def parse_functional(text):
-    """ Parse a functional form of a color.
-
-    Parameters
-    ----------
-    text : str
-        A string holding a CSS functional representation, including "rgb()",
-        "rgba()", "hsv()", "hsva()", "hls()", "hlsa()".  Channel values are
-        expected to be in the range 0.0 to 1.0, inclusive, but if values over
-        1.0 are observed then they will be assumed to be from 0 to 255.
-        Commas separating the channel values are optional, as in the CSS
-        specification.
-
-    Returns
-    -------
-    result : (space, channels), or None
-        Either a tuple of the form (space, channels), where space is one of
-        'rgb' or 'rgba', and channels is a tuple of 3 or 4 floating point
-        values between 0.0 and 1.0, inclusive; or None if no hex
-        representation could be found.
-    """
-    match = three_channel_functional.match(text)
-    if match is not None:
-        space = match['space']
-        if not space:
-            space = 'rgb'
-        channels = (match['channel_0'], match['channel_1'], match['channel_2'])
-    else:
-        match = four_channel_functional.match(text)
-        if match is not None:
-            space = match['space']
-            if not space:
-                space = 'rgba'
-            channels = (
-                match['channel_0'],
-                match['channel_1'],
-                match['channel_2'],
-                match['channel_3'],
-            )
-        else:
-            return None
-    channels = tuple(float(x) for x in channels)
-    if any(x > 1.0 for x in channels):
-        channels = ints_to_channels(channels)
-    return space, channels
-
-
 def parse_hex(text):
     """ Parse a hex form of a color.
 
@@ -364,9 +270,9 @@ def parse_hex(text):
     -------
     result : (space, channels), or None
         Either a tuple of the form (space, channels), where space is one of
-        'rgb', 'rgba', 'hsv', 'hsva', 'hls', or 'hlsa' and channels is a
-        tuple of 3 or 4 floating point values between 0.0 and 1.0, includive;
-        or None if no functional representation could be matched.
+        'rgb' or 'rgba' and channels is a tuple of 3 or 4 floating point
+        values between 0.0 and 1.0, inclusive; or None if no hex
+        representation could be matched.
     """
     text = text.strip()
     if re.match("#[0-9a-fA-F]+", text) is None:
@@ -409,18 +315,11 @@ def parse_text(text):
         - a hex representation of the color in the form '#RGB', '#RGBA',
           '#RRGGBB', '#RRGGBBAA', '#RRRRGGGGBBBB', or '#RRRRGGGGBBBBAAAA'.
 
-        - a CSS functional representation, including "rgb()", "rgba()",
-          "hsv()", "hsva()", "hls()", "hlsa()".  Channel values are expected
-          to be in the range 0.0 to 1.0, inclusive.
-
-        - a tuple of rgb or rgba values, eg. '(0.6, 0.2, 0.4, 1.0)'.  Channel
-          values are expected to be in the range 0.0 to 1.0, inclusive.
-
     Returns
     -------
     space : str
         A string describing the color space for the channels.  Will be one of
-        'rgb', 'rgba', 'hsv', 'hsva', 'hls', 'hlsa'.
+        'rgb' or 'rgba'.
     channels : tuple of floats
         The channel values as a tuple of 3 or 4 floating point values between
         0.0 and 1.0, includive.
@@ -431,7 +330,7 @@ def parse_text(text):
         If the string cannot be converted to a valid color.
     """
     result = None
-    for parser in parse_name, parse_functional, parse_hex:
+    for parser in parse_name, parse_hex:
         result = parser(text)
         if result is not None:
             return result

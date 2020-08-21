@@ -106,14 +106,6 @@ class Color(HasStrictTraits):
             - a hex representation of the color in the form '#RGB', '#RGBA',
               '#RRGGBB', '#RRGGBBAA', '#RRRRGGGGBBBB', or '#RRRRGGGGBBBBAAAA'.
 
-            - a CSS functional representation, including "rgb()", "rgba()",
-              "hsv()", "hsva()", "hls()", "hlsa()".  Channel values are
-              expected to be in the range 0.0 to 1.0, inclusive.
-
-            - a tuple of rgb or rgba values, eg. '(0.6, 0.2, 0.4, 1.0)'.
-              Channel values are expected to be in the range 0.0 to 1.0,
-              inclusive.
-
         **traits
             Any additional trait values to be passed as keyword arguments.
 
