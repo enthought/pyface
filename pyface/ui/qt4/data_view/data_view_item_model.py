@@ -148,6 +148,9 @@ class DataViewItemModel(QAbstractItemModel):
         elif role == Qt.EditRole:
             if value_type.has_editor_value(self.model, row, column):
                 return value_type.get_editor_value(self.model, row, column)
+        elif role == Qt.DecorationRole:
+            if value_type.has_image(self.model, row, column):
+                return value_type.get_image(self.model, row, column)
 
         return None
 
