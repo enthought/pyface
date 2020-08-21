@@ -182,6 +182,49 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         raise DataViewSetError("Cannot set value.")
 
+    def has_tooltip(self, model, row, column):
+        """ Whether or not the value has a tooltip.
+
+        The default implementation returns True if ``get_tooltip``
+        returns a non-empty value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_tooltip : bool
+            Whether or not the value has a textual representation.
+        """
+        return self.get_tooltip(model, row, column) != ""
+
+    def get_tooltip(self, model, row, column):
+        """ The tooltip for the underlying value.
+
+        The default implementation returns an empty string.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        tooltip : str
+            The textual representation of the underlying value.
+        """
+        return ""
+
     @observe('+update_value_type')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """
