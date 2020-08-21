@@ -25,9 +25,11 @@ from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
 )
 
+flags = {
+    'UK': ImageResource('gb.png'),
+    'USA': ImageResource('us.png'),
+}
 
-uk_flag = ImageResource('gb.png')
-us_flag = ImageResource('us.png')
 
 class Address(HasStrictTraits):
 
@@ -54,7 +56,7 @@ class CountryValue(TextValue):
     def get_image(self, model, row, column):
         value = model.get_value(row, column)
         if value in self.flags:
-            return self.flags[value].create_image()
+            return self.flags[value]
         return None
 
 
@@ -87,10 +89,7 @@ row_info = HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
                     value_type=CountryValue(
-                        flags={
-                            'UK': uk_flag,
-                            'USA': us_flag,
-                        }
+                        flags=flags,
                     ),
                 ),
             ],

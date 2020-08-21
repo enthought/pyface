@@ -14,6 +14,7 @@ from unittest.mock import Mock
 from traits.testing.unittest_tools import UnittestTools
 
 from pyface.data_view.value_types.constant_value import ConstantValue
+from pyface.image_resource import ImageResource
 
 
 class TestConstantValue(UnittestTools, TestCase):
@@ -49,3 +50,26 @@ class TestConstantValue(UnittestTools, TestCase):
         with self.assertTraitChanges(value_type, 'updated'):
             value_type.text = 'something'
         self.assertEqual(value_type.text, 'something')
+
+    def test_has_image(self):
+        value_type = ConstantValue()
+        self.assertFalse(value_type.has_image(self.model, [0], [0]))
+
+    def test_has_image_true(self):
+        value_type = ConstantValue(image="question")
+        self.assertTrue(value_type.has_image(self.model, [0], [0]))
+
+    def test_get_image(self):
+        image = ImageResource("question")
+        value_type = ConstantValue(image=image)
+        self.assertEqual(
+            value_type.get_image(self.model, [0], [0]),
+            image
+        )
+
+    def test_image_changed(self):
+        value_type = ConstantValue()
+        image = ImageResource("question")
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.image = image
+        self.assertEqual(value_type.image, image)

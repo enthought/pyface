@@ -220,7 +220,7 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        text : toolkit Image or None
+        image : IImageResource or None
             The image associated with the underlying value, or None if there
             is no image.
         """
