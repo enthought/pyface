@@ -67,10 +67,6 @@ class TestColor(UnittestTools, TestCase):
         color = Color.from_str('#663399ff')
         self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 1.0))
 
-    def test_from_str_functional(self):
-        color = Color.from_str('rgba(0.4, 0.2, 0.6, 1.0)')
-        self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 1.0))
-
     def test_toolkit_round_trip(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         toolkit_color = color.to_toolkit()
