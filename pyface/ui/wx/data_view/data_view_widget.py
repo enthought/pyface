@@ -33,6 +33,12 @@ from .data_view_model import DataViewModel
 class DataViewWidget(MDataViewWidget, Widget):
     """ The Wx implementation of the DataViewWidget. """
 
+    #: What can be selected.
+    selection_type = Enum("row")
+
+    #: How selections are modified.
+    selection_mode = Enum("extended", "single")
+
     # Private traits --------------------------------------------------------
 
     #: The QAbstractItemModel instance used by the view.  This will

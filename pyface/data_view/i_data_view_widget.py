@@ -56,15 +56,6 @@ class MDataViewWidget(HasStrictTraits):
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
 
-    #: What can be selected.  Implementations may optionally allow "column"
-    #: and "item" selection types.
-    selection_type = Enum("row")
-
-    #: How selections are modified.  Implementations may optionally allow
-    #: "none" for no selection, or possibly other multiple selection modes
-    #: as supported by the toolkit.
-    selection_mode = Enum("extended", "single")
-
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
     selection = Property(depends_on='_selection[]')
