@@ -72,7 +72,7 @@ class MDataViewWidget(HasStrictTraits):
     # Private traits --------------------------------------------------------
 
     #: Whether the selection is currently being updated.
-    _selection_updating_flag = Bool
+    _selection_updating_flag = Bool()
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
