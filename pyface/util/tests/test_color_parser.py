@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from ..color_parser import (
     ColorParseError, channels_to_ints, color_table, ints_to_channels,
-    parse_hex, parse_name, parse_text,
+    _parse_hex, _parse_name, parse_text,
 )
 
 
@@ -52,37 +52,37 @@ class TestChannelConversion(TestCase):
 class TestParseHex(TestCase):
 
     def test_hex_3(self):
-        space, channels = parse_hex('#06c')
+        space, channels = _parse_hex('#06c')
         self.assertEqual(space, 'rgb')
         self.assertEqual(channels, (0.0, 0.4, 0.8))
 
     def test_hex_4(self):
-        space, channels = parse_hex('#06cf')
+        space, channels = _parse_hex('#06cf')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 
     def test_hex_6(self):
-        space, channels = parse_hex('#0066cc')
+        space, channels = _parse_hex('#0066cc')
         self.assertEqual(space, 'rgb')
         self.assertEqual(channels, (0.0, 0.4, 0.8))
 
     def test_hex_8(self):
-        space, channels = parse_hex('#0066ccff')
+        space, channels = _parse_hex('#0066ccff')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 
     def test_hex_12(self):
-        space, channels = parse_hex('#00006666cccc')
+        space, channels = _parse_hex('#00006666cccc')
         self.assertEqual(space, 'rgb')
         self.assertEqual(channels, (0.0, 0.4, 0.8))
 
     def test_hex_16(self):
-        space, channels = parse_hex('#00006666ccccffff')
+        space, channels = _parse_hex('#00006666ccccffff')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.0, 0.4, 0.8, 1.0))
 
     def test_hex_bad(self):
-        result = parse_hex('#0c')
+        result = _parse_hex('#0c')
         self.assertIsNone(result)
 
 
@@ -91,17 +91,17 @@ class TestParseName(TestCase):
     def test_names(self):
         for name, value in color_table.items():
             with self.subTest(color=name):
-                space, channels = parse_name(name)
+                space, channels = _parse_name(name)
                 self.assertEqual(space, 'rgba')
                 self.assertEqual(channels, value)
 
     def test_name_space(self):
-        space, channels = parse_name('rebecca purple')
+        space, channels = _parse_name('rebecca purple')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.4, 0.2, 0.6, 1.0))
 
     def test_name_capitals(self):
-        space, channels = parse_name('RebeccaPurple')
+        space, channels = _parse_name('RebeccaPurple')
         self.assertEqual(space, 'rgba')
         self.assertEqual(channels, (0.4, 0.2, 0.6, 1.0))
 

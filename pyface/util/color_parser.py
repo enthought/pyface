@@ -12,9 +12,7 @@
 
 The ``parse_text`` function allows the creation of Color objects from
 CSS-style strings, including all the CSS names colours or hex strings starting
-with "#".  If there is no match, a ColorParseError is raises.
-
-The ``parse_name`` and ``parse_hex`` methods parse the respective formats.
+with "#".  If there is no match, a ColorParseError is raised.
 
 A dictionary of named colours is available as the color_table module-level
 dictionary.  This dictionary holds all CSS colour names, plus a number of
@@ -231,7 +229,7 @@ def ints_to_channels(values, maximum=255):
     return tuple(value / maximum for value in values)
 
 
-def parse_name(text):
+def _parse_name(text):
     """ Parse a color name.
 
     Parameters
@@ -256,7 +254,7 @@ def parse_name(text):
     return None
 
 
-def parse_hex(text):
+def _parse_hex(text):
     """ Parse a hex form of a color.
 
     Parameters
@@ -330,7 +328,7 @@ def parse_text(text):
         If the string cannot be converted to a valid color.
     """
     result = None
-    for parser in parse_name, parse_hex:
+    for parser in _parse_hex, _parse_name:
         result = parser(text)
         if result is not None:
             return result
