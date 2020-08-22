@@ -66,7 +66,6 @@ class TestClipboard(unittest.TestCase):
         self.assertFalse(self.clipboard.has_text_data)
         self.assertFalse(self.clipboard.has_object_data)
 
-    @unittest.skip(is_wx)
     def test_set_object_data(self):
         data = TestObject(foo="bar", baz=1)
         self.clipboard.data = data
