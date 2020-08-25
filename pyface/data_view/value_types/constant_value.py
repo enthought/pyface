@@ -24,8 +24,14 @@ class ConstantValue(AbstractValueType):
     #: The text value to display.
     text = Str(update_value_type=True)
 
+    #: The tooltip value to display.
+    tooltip = Str(update_value_type=True)
+
     def has_editor_value(self, model, row, column):
         return False
 
     def get_text(self, model, row, column):
         return self.text
+
+    def get_tooltip(self, model, row, column):
+        return self.tooltip

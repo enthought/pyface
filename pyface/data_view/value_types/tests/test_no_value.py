@@ -26,3 +26,7 @@ class TestNoValue(TestCase):
     def test_has_text(self):
         value_type = NoValue()
         self.assertFalse(value_type.has_text(self.model, [0], [0]))
+
+    def test_has_tooltip(self):
+        value_type = NoValue()
+        self.assertFalse(value_type.has_tooltip(self.model, [0], [0]))

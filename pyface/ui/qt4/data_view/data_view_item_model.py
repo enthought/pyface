@@ -148,6 +148,9 @@ class DataViewItemModel(QAbstractItemModel):
         elif role == Qt.EditRole:
             if value_type.has_editor_value(self.model, row, column):
                 return value_type.get_editor_value(self.model, row, column)
+        elif role == Qt.ToolTipRole:
+            if value_type.has_tooltip(self.model, row, column):
+                return value_type.get_tooltip(self.model, row, column)
 
         return None
 
