@@ -23,7 +23,7 @@ from pyface.data_view.value_types.api import FloatValue
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    data = Array
+    data = Array()
 
     data_view = Instance(IDataViewWidget)
 

@@ -46,7 +46,6 @@ if __name__ == '__main__':
     from pyface.data_view.data_view_widget import DataViewWidget
     from pyface.data_view.value_types.api import TextValue
 
-
     class MainWindow(ApplicationWindow):
         """ The main application window. """
 
@@ -66,13 +65,13 @@ if __name__ == '__main__':
             self.data_view.destroy()
             super().destroy()
 
-
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
     # Create and open the main window.
     window = MainWindow()
     window.open()
+    window.data_view.observe(print, "selection")
 
     # Start the GUI event loop!
     gui.start_event_loop()
