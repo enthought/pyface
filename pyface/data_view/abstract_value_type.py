@@ -21,7 +21,7 @@ and how to actually display it.
 
 from traits.api import ABCHasStrictTraits, Event, observe
 
-from .abstract_data_model import DataViewSetError
+from .data_view_errors import DataViewSetError
 
 
 class AbstractValueType(ABCHasStrictTraits):
