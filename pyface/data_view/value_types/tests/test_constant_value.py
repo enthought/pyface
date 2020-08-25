@@ -25,6 +25,7 @@ class TestConstantValue(UnittestTools, TestCase):
     def test_defaults(self):
         value_type = ConstantValue()
         self.assertEqual(value_type.text, "")
+        self.assertEqual(value_type.tooltip, "")
 
     def test_has_editor_value(self):
         value_type = ConstantValue()
@@ -78,3 +79,24 @@ class TestConstantValue(UnittestTools, TestCase):
         with self.assertTraitChanges(value_type, 'updated'):
             value_type.image = image
         self.assertEqual(value_type.image, image)
+
+    def test_has_tooltip(self):
+        value_type = ConstantValue()
+        self.assertFalse(value_type.has_tooltip(self.model, [0], [0]))
+
+    def test_has_tooltip_true(self):
+        value_type = ConstantValue(tooltip="something")
+        self.assertTrue(value_type.has_tooltip(self.model, [0], [0]))
+
+    def test_get_tooltip(self):
+        value_type = ConstantValue(tooltip="something")
+        self.assertEqual(
+            value_type.get_tooltip(self.model, [0], [0]),
+            "something"
+        )
+
+    def test_tooltip_changed(self):
+        value_type = ConstantValue()
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.tooltip = 'something'
+        self.assertEqual(value_type.tooltip, 'something')

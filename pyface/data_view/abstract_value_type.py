@@ -226,6 +226,26 @@ class AbstractValueType(ABCHasStrictTraits):
         from pyface.image_resource import ImageResource
         return ImageResource("image_not_found")
 
+    def has_tooltip(self, model, row, column):
+        """ Whether or not the value has a tooltip.
+
+        The default implementation returns True if ``get_tooltip``
+        returns a non-empty value.
+        has_tooltip : bool
+            Whether or not the value has a textual representation.
+        """
+        return self.get_tooltip(model, row, column) != ""
+
+    def get_tooltip(self, model, row, column):
+        """ The tooltip for the underlying value.
+
+        The default implementation returns an empty string.
+
+        tooltip : str
+            The textual representation of the underlying value.
+        """
+        return ""
+
     @observe('+update_value_type')
     def update_value_type(self, event=None):
         """ Fire update event when marked traits change. """

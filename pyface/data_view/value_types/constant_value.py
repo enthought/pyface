@@ -28,6 +28,9 @@ class ConstantValue(AbstractValueType):
     #: The image value to display.
     image = Image(update_value_type=True)
 
+    #: The tooltip value to display.
+    tooltip = Str(update_value_type=True)
+
     def has_editor_value(self, model, row, column):
         return False
 
@@ -41,3 +44,6 @@ class ConstantValue(AbstractValueType):
         if self.image is not None:
             return self.image
         return super().get_image(model, row, column)
+
+    def get_tooltip(self, model, row, column):
+        return self.tooltip

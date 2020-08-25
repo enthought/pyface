@@ -23,6 +23,9 @@ class NoValue(AbstractValueType):
     def has_image(self, model, row, column):
         return False
 
+    def has_tooltip(self, model, row, column):
+        return False
+
 
 #: Standard instance of the NoValue class, since it has no state.
 no_value = NoValue()
