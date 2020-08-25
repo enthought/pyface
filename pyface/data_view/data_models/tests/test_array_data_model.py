@@ -280,6 +280,37 @@ class TestArrayDataModel(UnittestTools, TestCase):
             ((), (), (), ())
         )
 
+    def test_is_row_valid(self):
+        # valid rows are valid
+        for row in self.model.iter_rows():
+            with self.subTest(row=row):
+                result = self.model.is_row_valid(row)
+                self.assertTrue(result)
+
+    def test_is_row_valid_big(self):
+        result = self.model.is_row_valid((5,))
+        self.assertFalse(result)
+
+    def test_is_row_valid_long(self):
+        result = self.model.is_row_valid((1, 1, 1))
+        self.assertFalse(result)
+
+    def test_is_column_valid(self):
+        # valid columns are valid
+        columns = [()] + [(i,) for i in range(3)]
+        for column in columns:
+            with self.subTest(column=column):
+                result = self.model.is_column_valid(column)
+                self.assertTrue(result)
+
+    def test_is_column_valid_big(self):
+        result = self.model.is_column_valid((3,))
+        self.assertFalse(result)
+
+    def test_is_column_valid_long(self):
+        result = self.model.is_column_valid((1, 1))
+        self.assertFalse(result)
+
     def test_iter_rows(self):
         result = list(self.model.iter_rows())
         self.assertEqual(

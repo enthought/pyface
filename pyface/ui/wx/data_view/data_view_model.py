@@ -18,17 +18,6 @@ from wx.dataview import DataViewItem, DataViewModel as wxDataViewModel
 logger = logging.getLogger(__name__)
 
 
-type_hint_to_variant = {
-    'str': "string",
-    'int': "longlong",
-    'float': "double",
-    'bool': "bool",
-    'datetime': "datetime",
-    'container': "list",
-    'object': "void*",
-}
-
-
 # XXX This file is scaffolding and may need to be rewritten or expanded
 
 class DataViewModel(wxDataViewModel):
