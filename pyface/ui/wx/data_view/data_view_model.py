@@ -178,6 +178,7 @@ class DataViewModel(wxDataViewModel):
         return self.model.get_column_count() + 1
 
     def GetColumnType(self, column):
+        # XXX This may need refinement when we deal with different editor types
         return "string"
 
     def _to_row_index(self, item):
