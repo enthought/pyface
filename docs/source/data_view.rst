@@ -68,6 +68,12 @@ which sets the value of the selection should adhere to that expectation.
    This corresponds to the |selection| being set equal to
    ``[((), (2,)), ((0,), (0,)), ((1,), (3,))]``.
 
+The ``item`` selection type potentially allows any index, specified by both,
+row and column indices. This can include row and column headers provided that
+the view supports selecting them (which is likely dependent on the underlying
+toolkit and platform's capabilities); in these cases the selected values are
+just the values in the header cells, not the entire row or column.
+
 The |selection_mode| trait describes the behaviour of selections as the user
 interacts with them.  It defaults to ``extended``, which allows the user to
 extend the selection by shift-clicking or other similar platform-dependent
