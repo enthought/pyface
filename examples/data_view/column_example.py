@@ -14,9 +14,9 @@
 from functools import partial
 from random import choice, randint
 
-from traits.api import HasStrictTraits, Instance, Int, Str, List
+from traits.api import Dict, HasStrictTraits, Instance, Int, Str, List
 
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import IntValue, TextValue, no_value
@@ -24,6 +24,11 @@ from pyface.data_view.value_types.api import IntValue, TextValue, no_value
 from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
 )
+
+flags = {
+    'UK': ImageResource('gb.png'),
+    'USA': ImageResource('us.png'),
+}
 
 
 class Address(HasStrictTraits):
@@ -42,6 +47,17 @@ class Person(HasStrictTraits):
     age = Int
 
     address = Instance(Address)
+
+
+class CountryValue(TextValue):
+
+    flags = Dict(Str, Image, update_value_type=True)
+
+    def get_image(self, model, row, column):
+        value = model.get_value(row, column)
+        if value in self.flags:
+            return self.flags[value]
+        return None
 
 
 row_info = HasTraitsRowInfo(
@@ -72,7 +88,9 @@ row_info = HasTraitsRowInfo(
                 HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
-                    value_type=TextValue(),
+                    value_type=CountryValue(
+                        flags=flags,
+                    ),
                 ),
             ],
         ),

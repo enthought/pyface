@@ -10,6 +10,7 @@
 
 import logging
 
+from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.data_view.index_manager import Root
@@ -148,6 +149,14 @@ class DataViewItemModel(QAbstractItemModel):
         elif role == Qt.EditRole:
             if value_type.has_editor_value(self.model, row, column):
                 return value_type.get_editor_value(self.model, row, column)
+        elif role == Qt.DecorationRole:
+            if value_type.has_image(self.model, row, column):
+                image = value_type.get_image(self.model, row, column)
+                if isinstance(image, IImageResource):
+                    return image.create_image()
+        elif role == Qt.ToolTipRole:
+            if value_type.has_tooltip(self.model, row, column):
+                return value_type.get_tooltip(self.model, row, column)
 
         return None
 
