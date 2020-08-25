@@ -53,11 +53,13 @@ class CountryValue(TextValue):
 
     flags = Dict(Str, Image, update_value_type=True)
 
+    def has_image(self, model, row, column):
+        value = model.get_value(row, column)
+        return value in self.flags
+
     def get_image(self, model, row, column):
         value = model.get_value(row, column)
-        if value in self.flags:
-            return self.flags[value]
-        return None
+        return self.flags[value]
 
 
 row_info = HasTraitsRowInfo(
