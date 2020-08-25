@@ -74,6 +74,16 @@ class TestAbstractValueType(UnittestTools, TestCase):
         with self.assertRaises(DataViewSetError):
             value_type.set_text(self.model, [0], [0], "2.0")
 
+    def test_has_image(self):
+        value_type = ValueType()
+        result = value_type.has_image(self.model, [0], [0])
+        self.assertFalse(result)
+
+    def test_get_image(self):
+        value_type = ValueType()
+        result = value_type.get_image(self.model, [0], [0])
+        self.assertEqual(result.name, "image_not_found")
+
     def test_parameter_update(self):
         value_type = ValueType()
         with self.assertTraitChanges(value_type, 'updated', count=1):

@@ -182,11 +182,11 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         raise DataViewSetError("Cannot set value.")
 
-    def has_tooltip(self, model, row, column):
-        """ Whether or not the value has a tooltip.
+    def has_image(self, model, row, column):
+        """ Whether or not the value has an image associated with it.
 
-        The default implementation returns True if ``get_tooltip``
-        returns a non-empty value.
+        The default implementation returns True if ``get_image``
+        returns a non-None value.
 
         Parameters
         ----------
@@ -199,6 +199,38 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
+        has_image : bool
+            Whether or not the value has an image associated with it.
+        """
+        return False
+
+    def get_image(self, model, row, column):
+        """ An image associated with the underlying value.
+
+        The default implementation returns None.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        image : IImageResource
+            The image associated with the underlying value.
+        """
+        from pyface.image_resource import ImageResource
+        return ImageResource("image_not_found")
+
+    def has_tooltip(self, model, row, column):
+        """ Whether or not the value has a tooltip.
+
+        The default implementation returns True if ``get_tooltip``
+        returns a non-empty value.
         has_tooltip : bool
             Whether or not the value has a textual representation.
         """
@@ -209,17 +241,6 @@ class AbstractValueType(ABCHasStrictTraits):
 
         The default implementation returns an empty string.
 
-        Parameters
-        ----------
-        model : AbstractDataModel
-            The data model holding the data.
-        row : sequence of int
-            The row in the data model being queried.
-        column : sequence of int
-            The column in the data model being queried.
-
-        Returns
-        -------
         tooltip : str
             The textual representation of the underlying value.
         """

@@ -11,6 +11,7 @@
 from traits.api import Str
 
 from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.ui_traits import Image
 
 
 class ConstantValue(AbstractValueType):
@@ -24,6 +25,9 @@ class ConstantValue(AbstractValueType):
     #: The text value to display.
     text = Str(update_value_type=True)
 
+    #: The image value to display.
+    image = Image(update_value_type=True)
+
     #: The tooltip value to display.
     tooltip = Str(update_value_type=True)
 
@@ -32,6 +36,14 @@ class ConstantValue(AbstractValueType):
 
     def get_text(self, model, row, column):
         return self.text
+
+    def has_image(self, model, row, column):
+        return self.image is not None
+
+    def get_image(self, model, row, column):
+        if self.image is not None:
+            return self.image
+        return super().get_image(model, row, column)
 
     def get_tooltip(self, model, row, column):
         return self.tooltip
