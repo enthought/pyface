@@ -67,6 +67,11 @@ class TestConstantValue(UnittestTools, TestCase):
             image
         )
 
+    def test_get_image_none(self):
+        value_type = ConstantValue()
+        image = value_type.get_image(self.model, [0], [0])
+        self.assertEqual(image.name, "image_not_found")
+
     def test_image_changed(self):
         value_type = ConstantValue()
         image = ImageResource("question")

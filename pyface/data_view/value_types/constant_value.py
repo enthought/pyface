@@ -11,7 +11,6 @@
 from traits.api import Str
 
 from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.i_image_resource import IImageResource
 from pyface.ui_traits import Image
 
 
@@ -35,7 +34,10 @@ class ConstantValue(AbstractValueType):
     def get_text(self, model, row, column):
         return self.text
 
+    def has_image(self, model, row, column):
+        return self.image is not None
+
     def get_image(self, model, row, column):
-        if isinstance(self.image, IImageResource):
+        if self.image is not None:
             return self.image
-        return None
+        return super().get_image(model, row, column)

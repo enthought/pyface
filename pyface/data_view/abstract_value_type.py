@@ -202,7 +202,7 @@ class AbstractValueType(ABCHasStrictTraits):
         has_image : bool
             Whether or not the value has an image associated with it.
         """
-        return self.get_image(model, row, column) is not None
+        return False
 
     def get_image(self, model, row, column):
         """ An image associated with the underlying value.
@@ -220,11 +220,11 @@ class AbstractValueType(ABCHasStrictTraits):
 
         Returns
         -------
-        image : IImageResource or None
-            The image associated with the underlying value, or None if there
-            is no image.
+        image : IImageResource
+            The image associated with the underlying value.
         """
-        return None
+        from pyface.image_resource import ImageResource
+        return ImageResource("image_not_found")
 
     @observe('+update_value_type')
     def update_value_type(self, event=None):
