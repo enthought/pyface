@@ -162,7 +162,7 @@ class TaskWindow(ApplicationWindow):
             self._active_state = state
             task.activated()
         elif not state:
-            logger.warn(
+            logger.warning(
                 "Cannot activate task %r: task does not belong to the "
                 "window." % task
             )
@@ -220,7 +220,7 @@ class TaskWindow(ApplicationWindow):
             self._destroy_state(state)
             self._states.remove(state)
         else:
-            logger.warn(
+            logger.warning(
                 "Cannot remove task %r: task does not belong to the "
                 "window." % task
             )
@@ -332,7 +332,7 @@ class TaskWindow(ApplicationWindow):
             if state:
                 state.layout = layout
             else:
-                logger.warn(
+                logger.warning(
                     "Cannot apply layout for task %r: task does not "
                     "belong to the window." % layout.id
                 )

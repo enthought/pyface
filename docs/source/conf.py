@@ -150,7 +150,7 @@ try:
 except ImportError as exc:
     import warnings
     msg = "Can't find Enthought Sphinx Theme, using default.\nException was:\n{}"
-    warnings.warn(RuntimeWarning(msg.format(exc)))
+    warnings.warning(RuntimeWarning(msg.format(exc)))
 
     # old defaults
     html_logo = "e-logo-rev.jpg"

@@ -362,7 +362,7 @@ class WorkbenchWindow(ApplicationWindow):
         editor = self.create_editor(obj, kind)
 
         if editor is None:
-            logger.warn("no editor for object %s", obj)
+            logger.warning("no editor for object %s", obj)
 
         self.add_editor(editor)
         self.activate_editor(editor)
@@ -614,7 +614,7 @@ class WorkbenchWindow(ApplicationWindow):
 
         # If we have no known perspectives, make a new blank one up.
         else:
-            logger.warn("no known perspectives - creating a new one")
+            logger.warning("no known perspectives - creating a new one")
             perspective = Perspective()
 
         return perspective
@@ -632,7 +632,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn("default perspective %s no longer available", id)
+                logger.warning("default perspective %s no longer available", id)
 
         else:
             perspective = None
@@ -652,7 +652,7 @@ class WorkbenchWindow(ApplicationWindow):
         if len(id) > 0:
             perspective = self.get_perspective_by_id(id)
             if perspective is None:
-                logger.warn("previous perspective %s no longer available", id)
+                logger.warning("previous perspective %s no longer available", id)
 
         else:
             perspective = None
