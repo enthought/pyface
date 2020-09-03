@@ -60,7 +60,7 @@ class ViewSetStructureHandler(SetStructureHandler):
             control = window_layout._wx_get_view_control(view)
 
         else:
-            logger.warn("could not restore view [%s]", id)
+            logger.warning("could not restore view [%s]", id)
             control = None
 
         return control

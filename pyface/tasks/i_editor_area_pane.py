@@ -173,7 +173,7 @@ class MEditorAreaPane(HasTraits):
         # If not, create an editor for it.
         editor = self.create_editor(obj, factory)
         if editor is None:
-            logger.warn("Cannot create editor for obj %r", obj)
+            logger.warning("Cannot create editor for obj %r", obj)
 
         else:
             self.add_editor(editor)

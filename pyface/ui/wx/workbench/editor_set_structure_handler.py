@@ -70,7 +70,7 @@ class EditorSetStructureHandler(SetStructureHandler):
             window.editors.append(editor)
 
         except:
-            logger.warn("could not restore editor [%s]", id)
+            logger.warning("could not restore editor [%s]", id)
             control = None
 
         return control
