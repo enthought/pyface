@@ -15,8 +15,10 @@ from traits.api import Array, Instance
 
 from pyface.api import ApplicationWindow, GUI
 from pyface.data_view.data_models.array_data_model import ArrayDataModel
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.exporters.row_exporter import RowExporter
+from pyface.data_view.data_formats import table_format, csv_format, npy_format
 from pyface.data_view.data_view_widget import DataViewWidget
+from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.value_types.api import FloatValue
 
 
@@ -36,6 +38,12 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 value_type=FloatValue(),
             ),
+            selection_mode='extended',
+            exporters=[
+                RowExporter(format=table_format),
+                RowExporter(format=csv_format),
+                RowExporter(format=npy_format),
+            ]
         )
         self.data_view._create()
         return self.data_view.control

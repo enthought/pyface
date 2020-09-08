@@ -17,8 +17,10 @@ from random import choice, randint
 from traits.api import Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.exporters.row_exporter import RowExporter
+from pyface.data_view.data_formats import table_format, csv_format
 from pyface.data_view.data_view_widget import DataViewWidget
+from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.value_types.api import IntValue, TextValue, no_value
 
 from column_data_model import (
@@ -118,7 +120,18 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 row_info=self.row_info,
             ),
-            selection_mode='single',
+            selection_mode='extended',
+            exporters=[
+                RowExporter(
+                    format=table_format,
+                    column_headers=True,
+                    row_headers=True,
+                ),
+                RowExporter(
+                    format=csv_format,
+                    column_headers=True,
+                ),
+            ]
         )
         self.data_view._create()
         return self.data_view.control
