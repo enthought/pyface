@@ -10,7 +10,7 @@
 
 import logging
 
-from traits.api import Bool, Enum, Instance, observe, provides
+from traits.api import Bool, Enum, Instance, List, observe, provides
 
 from pyface.qt.QtCore import QAbstractItemModel
 from pyface.qt.QtGui import (
@@ -20,6 +20,7 @@ from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
+from pyface.data_view.i_data_wrapper import DataFormat
 from pyface.ui.qt4.widget import Widget
 from .data_view_item_model import DataViewItemModel
 
@@ -73,7 +74,11 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _create_item_model(self):
         """ Create the DataViewItemModel which wraps the data model. """
-        self._item_model = DataViewItemModel(self.data_model)
+        self._item_model = DataViewItemModel(
+            self.data_model,
+            self.selection_type,
+            self.exporters,
+        )
 
     def _get_control_header_visible(self):
         """ Method to get the control's header visibility. """
@@ -92,6 +97,7 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Toolkit specific method to change the selection type. """
         qt_selection_type = qt_selection_types[selection_type]
         self.control.setSelectionBehavior(qt_selection_type)
+        self._item_model.selectionType = selection_type
 
     def _get_control_selection_mode(self):
         """ Toolkit specific method to get the selection mode. """
@@ -105,28 +111,13 @@ class DataViewWidget(MDataViewWidget, Widget):
 
     def _get_control_selection(self):
         """ Toolkit specific method to get the selection. """
+        indices = self.control.selectedIndexes()
         if self.selection_type == 'row':
-            selection = []
-            for index in self.control.selectedIndexes():
-                row = self._item_model._to_row_index(index)
-                if (row, ()) not in selection:
-                    selection.append((row, ()))
+            return self._item_model._extract_rows(indices)
         elif self.selection_type == 'column':
-            selection = []
-            for index in self.control.selectedIndexes():
-                row = self._item_model._to_row_index(index)[:-1]
-                column = self._item_model._to_column_index(index)
-                if (row, column) not in selection:
-                    selection.append((row, column))
+            return self._item_model._extract_columns(indices)
         else:
-            selection = [
-                (
-                    self._item_model._to_row_index(index),
-                    self._item_model._to_column_index(index),
-                )
-                for index in self.control.selectedIndexes()
-            ]
-        return selection
+            return self._item_model._extract_indices(indices)
 
     def _set_control_selection(self, selection):
         """ Toolkit specific method to change the selection. """
@@ -176,6 +167,7 @@ class DataViewWidget(MDataViewWidget, Widget):
         control = QTreeView(parent)
         control.setUniformRowHeights(True)
         control.setAnimated(True)
+        control.setDragEnabled(True)
         control.setModel(self._item_model)
         return control
 
@@ -197,3 +189,8 @@ class DataViewWidget(MDataViewWidget, Widget):
     def _update_item_model(self, event):
         if self._item_model is not None:
             self._item_model.model = event.new
+
+    @observe('exporters.items', dispatch='ui')
+    def _update_exporters(self, event):
+        if self._item_model is not None:
+            self._item_model.exporters = self.exporters
