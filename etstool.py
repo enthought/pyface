@@ -244,6 +244,23 @@ def install(edm, runtime, toolkit, environment, editable, source):
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
+def shell(edm, runtime, toolkit, environment):
+    """ Create a shell into the EDM development environment
+    (aka 'activate' it).
+
+    """
+    parameters = get_parameters(edm ,runtime, toolkit, environment)
+    commands = [
+        "{edm} shell -e {environment}",
+    ]
+    execute(commands, parameters)
+
+
+@cli.command()
+@edm_option
+@click.option("--runtime", default="3.6", help="Python version to use")
+@click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
+@click.option("--environment", default=None, help="EDM environment to use")
 @click.option(
     "--no-environment-vars",
     is_flag=True,
