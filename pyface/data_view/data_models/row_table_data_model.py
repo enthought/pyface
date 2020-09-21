@@ -57,12 +57,45 @@ class RowTableDataModel(AbstractDataModel):
     # Data structure methods
 
     def get_column_count(self):
+        """ How many columns in the data view model.
+
+        Returns
+        -------
+        column_count : non-negative int
+            The number of columns that the data view provides.
+        """
         return len(self.column_data)
 
     def can_have_children(self, row):
+        """ Whether or not a row can have child rows.
+
+        Only the root has children.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+
+        Returns
+        -------
+        can_have_children : bool
+            Whether or not the row can ever have child rows.
+        """
         return len(row) == 0
 
     def get_row_count(self, row):
+        """ How many child rows the row currently has.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+
+        Returns
+        -------
+        row_count : non-negative int
+            The number of child rows that the row has.
+        """
         if len(row) == 0:
             return len(self.data)
         else:
@@ -71,6 +104,23 @@ class RowTableDataModel(AbstractDataModel):
     # Data value methods
 
     def get_value(self, row, column):
+        """ Return the Python value for the row and column.
+
+        This uses the row_header_data and column_data accessors to extract
+        values for the row and column.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        value : any
+            The value represented by the given row and column.
+        """
         if len(column) == 0:
             column_data = self.row_header_data
         else:
@@ -81,6 +131,23 @@ class RowTableDataModel(AbstractDataModel):
         return column_data.get_value(obj)
 
     def can_set_value(self, row, column):
+        """ Whether the value in the indicated row and column can be set.
+
+        This uses the row_header_data and column_data accessors to determine
+        if the value may be changed.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        can_set_value : bool
+            Whether or not the value can be set.
+        """
         if len(row) == 0:
             return False
         if len(column) == 0:
@@ -91,6 +158,25 @@ class RowTableDataModel(AbstractDataModel):
         return column_data.can_set_value(obj)
 
     def set_value(self, row, column, value):
+        """ Set the Python value for the row and column.
+
+        This uses the row_header_data and column_data accessors to set
+        the value.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+        value : any
+            The new value for the given row and column.
+
+        Raises
+        -------
+        DataViewSetError
+            If the value cannot be set.
+        """
         if len(row) == 0:
             raise DataViewSetError("Can't set column titles.")
         if len(column) == 0:
@@ -102,6 +188,24 @@ class RowTableDataModel(AbstractDataModel):
         self.values_changed = (row, column, row, column)
 
     def get_value_type(self, row, column):
+        """ Return the value type of the given row and column.
+
+        This uses the row_header_data and column_data accessors to get
+        the value type.
+
+        Parameters
+        ----------
+        row : sequence of int
+            The indices of the row as a sequence from root to leaf.
+        column : sequence of int
+            The indices of the column as a sequence of length 0 or 1.
+
+        Returns
+        -------
+        value_type : AbstractValueType or None
+            The value type of the given row and column, or None if no value
+            should be displayed.
+        """
         if len(column) == 0:
             column_data = self.row_header_data
         else:
