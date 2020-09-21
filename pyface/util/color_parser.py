@@ -244,7 +244,7 @@ def _parse_name(text):
     -------
     result : (space, channels), or None
         Either a tuple of the form ('rgba', channels), where channels is a
-        tuple of 4 floating point values between 0.0 and 1.0, includive;
+        tuple of 4 floating point values between 0.0 and 1.0, inclusive;
         or None if there is no matching color name.
     """
     text = text.lower()
@@ -320,7 +320,7 @@ def parse_text(text):
         'rgb' or 'rgba'.
     channels : tuple of floats
         The channel values as a tuple of 3 or 4 floating point values between
-        0.0 and 1.0, includive.
+        0.0 and 1.0, inclusive.
 
     Raises
     ------
