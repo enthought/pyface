@@ -18,6 +18,7 @@ from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.value_types.api import IntValue, TextValue
 from pyface.data_view.data_models.data_accessors import (
     AttributeDataAccessor,
+    ConstantDataAccessor,
     IndexDataAccessor,
     KeyDataAccessor,
 )
@@ -71,6 +72,62 @@ class DataAccessorMixin(UnittestTools):
         self.assertEqual(self.accessor_event.new, (accessor, 'value'))
 
 
+class TestConstantDataAccessor(unittest.TestCase, DataAccessorMixin):
+
+    def create_accessor(self):
+        return ConstantDataAccessor(
+            title='Test',
+            value='test',
+            value_type=TextValue(),
+        )
+
+    def test_defaults(self):
+        accessor = ConstantDataAccessor()
+
+        self.assertEqual(accessor.value, None)
+        self.assertIsNone(accessor.value_type)
+        self.assertIsInstance(accessor.title_type, TextValue)
+        self.assertEqual(accessor.title, '')
+
+    def test_typical_defaults(self):
+        accessor = self.create_accessor()
+
+        self.assertIsInstance(accessor.title_type, TextValue)
+        self.assertEqual(accessor.title, 'Test')
+
+    def test_get_value(self):
+        accessor = self.create_accessor()
+        obj = object()
+
+        value = accessor.get_value(obj)
+
+        self.assertEqual(value, 'test')
+
+    def test_can_set_value(self):
+        accessor = self.create_accessor()
+        obj = object()
+
+        can_set = accessor.can_set_value(obj)
+
+        self.assertFalse(can_set)
+
+    def test_set_value_error(self):
+        accessor = self.create_accessor()
+        obj = object()
+
+        with self.assertRaises(DataViewSetError):
+            accessor.set_value(obj, 'new_value')
+
+    def test_value_updated(self):
+        accessor = self.create_accessor()
+        accessor.observe(self.accessor_observer, 'updated')
+
+        with self.assertTraitChanges(accessor, 'updated', count=1):
+            accessor.value = 'other_value'
+
+        self.assertEqual(self.accessor_event.new, (accessor, 'value'))
+
+
 class TestAttributeDataAccessor(unittest.TestCase, DataAccessorMixin):
 
     def create_accessor(self):
@@ -115,9 +172,8 @@ class TestAttributeDataAccessor(unittest.TestCase, DataAccessorMixin):
         accessor.attr = ''
         obj = AttributeDummy('test_value')
 
-        value = accessor.get_value(obj)
-
-        self.assertIsNone(value)
+        with self.assertRaises(AttributeError):
+            accessor.get_value(obj)
 
     def test_get_value_error(self):
         accessor = self.create_accessor()
@@ -299,14 +355,13 @@ class TestKeyDataAccessor(unittest.TestCase, DataAccessorMixin):
 
         self.assertEqual(value, 'a')
 
-    def test_get_value_out_of_bounds(self):
+    def test_get_value_missing(self):
         accessor = self.create_accessor()
         accessor.key = 'three'
         obj = {'one': 'a', 'two': 'b'}
 
-        value = accessor.get_value(obj)
-
-        self.assertIsNone(value)
+        with self.assertRaises(KeyError):
+            accessor.get_value(obj)
 
     def test_can_set_value(self):
         accessor = self.create_accessor()

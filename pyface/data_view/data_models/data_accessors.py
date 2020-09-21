@@ -107,20 +107,42 @@ class AbstractDataAccessor(ABCHasStrictTraits):
         self.updated = (self, 'value')
 
 
+class ConstantDataAccessor(AbstractDataAccessor):
+    """ DataAccessor that returns a constant value.
+    """
+
+    #: The value to return.
+    value = Any()
+
+    def get_value(self, obj):
+        """ Return the value ignoring the provided object.
+
+        Parameters
+        ----------
+        obj : any
+            An object.
+
+        Returns
+        -------
+        value : any
+            The data value contained in this class' value trait.
+        """
+        return self.value
+
+    @observe('value')
+    def _value_updated(self, event):
+        self.updated = (self, 'value')
+
+
 class AttributeDataAccessor(AbstractDataAccessor):
     """ DataAccessor that presents an extended attribute on an object.
 
     This is suitable for use with Python objects, including HasTraits
     classes.
-
-    If the attr trait is empty, then the default value is used.
     """
 
     #: The extended attribute name of the trait holding the value.
     attr = Str()
-
-    #: A default value to be used if attr is the empty string.
-    default = Any()
 
     def get_value(self, obj):
         """ Return the attribute value for the provided object.
@@ -135,8 +157,6 @@ class AttributeDataAccessor(AbstractDataAccessor):
         value : any
             The data value contained in the object's attribute.
         """
-        if not self.attr:
-            return self.default
         return xgetattr(obj, self.attr)
 
     def can_set_value(self, obj):
@@ -263,7 +283,7 @@ class KeyDataAccessor(AbstractDataAccessor):
         value : any
             The data value contained in the given key of the object.
         """
-        return obj.get(self.key, None)
+        return obj[self.key]
 
     def can_set_value(self, obj):
         """ Set the value on the provided object.
