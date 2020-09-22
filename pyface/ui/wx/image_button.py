@@ -20,8 +20,8 @@ from numpy import array, frombuffer, reshape, ravel, dtype
 
 from traits.api import Bool, Str, Range, Enum, Instance, Event
 
+from pyface.ui_traits import Image
 from .widget import Widget
-from .image_resource import ImageResource
 
 # -------------------------------------------------------------------------------
 #  Constants:
@@ -54,7 +54,7 @@ class ImageButton(Widget):
     # ---------------------------------------------------------------------------
 
     # The image:
-    image = Instance(ImageResource, allow_none=True)
+    image = Image()
 
     # The (optional) label:
     label = Str()

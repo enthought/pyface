@@ -12,21 +12,18 @@
 """ Enthought pyface package component
 """
 
-
 import sys
-
 
 import wx
 import wx.html
 import wx.lib.wxpTag
 
-
-from traits.api import Instance, List, provides, Str
-
+from traits.api import List, provides, Str
 
 from pyface.i_about_dialog import IAboutDialog, MAboutDialog
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .dialog import Dialog
+from .image_resource import ImageResource
 
 
 _DIALOG_TEXT = """
@@ -79,7 +76,7 @@ class AboutDialog(MAboutDialog, Dialog):
 
     copyrights = List(Str)
 
-    image = Instance(ImageResource, ImageResource("about"))
+    image = Image(ImageResource("about"))
 
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.

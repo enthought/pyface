@@ -12,8 +12,8 @@
 
 
 from traits.api import Any, HasPrivateTraits, Instance, List
-from pyface.api import ImageResource
-from pyface.action.api import Action, ActionManagerItem, Group
+from pyface.api import Image, ImageResource
+from pyface.action.api import Action, Group
 from pyface.action.api import MenuManager
 
 
@@ -37,14 +37,14 @@ class NodeType(HasPrivateTraits):
     node_manager = Instance("pyface.tree.node_manager.NodeManager")
 
     # The image used to represent nodes that DO NOT allow children.
-    image = Instance(ImageResource)
+    image = Image()
 
     # The image used to represent nodes that allow children and are NOT
     # expanded.
-    closed_image = Instance(ImageResource)
+    closed_image = Image()
 
     # The image used to represent nodes that allow children and ARE expanded.
-    open_image = Instance(ImageResource)
+    open_image = Image()
 
     # The default actions/groups/menus available on nodes of this type (shown
     # on the context menu).

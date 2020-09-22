@@ -25,8 +25,9 @@ from traits.api import Tuple, Str
 
 
 from pyface.i_splash_screen import ISplashScreen, MSplashScreen
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.wx.util.font_helper import new_font_like
+from .image_resource import ImageResource
 from .window import Window
 
 
@@ -38,7 +39,7 @@ class SplashScreen(MSplashScreen, Window):
 
     # 'ISplashScreen' interface --------------------------------------------
 
-    image = Instance(ImageResource, ImageResource("splash"))
+    image = Image(ImageResource("splash"))
 
     log_level = Int(DEBUG)
 

@@ -20,8 +20,9 @@ from traits.api import Instance, Int, provides, Str
 
 
 from pyface.i_heading_text import IHeadingText, MHeadingText
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from pyface.wx.util.font_helper import new_font_like
+from .image_resource import ImageResource
 from .widget import Widget
 
 
@@ -37,7 +38,7 @@ class HeadingText(MHeadingText, Widget):
 
     text = Str("Default")
 
-    image = Instance(ImageResource, ImageResource("heading_level_1"))
+    image = Image(ImageResource("heading_level_1"))
 
     # ------------------------------------------------------------------------
     # 'object' interface.

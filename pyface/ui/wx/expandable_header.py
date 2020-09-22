@@ -15,11 +15,10 @@ provides a visual indicator of the current state, a text label, and a
 
 import wx
 
-
-from traits.api import Instance, Event, Str, Bool
-
+from traits.api import Event, Str, Bool
 
 from pyface.wx.util.font_helper import new_font_like
+from pyface.ui_traits import Image
 from .image_resource import ImageResource
 from .widget import Widget
 
@@ -29,31 +28,30 @@ class ExpandableHeader(Widget):
     provides a visual indicator of the current state, a text label, and a
     'remove' button. """
 
-    # The title of the panel.
+    #: The title of the panel.
     title = Str("Panel")
 
-    # The carat image to show when the panel is collapsed.
-    collapsed_carat_image = Instance(
-        ImageResource, ImageResource("carat_closed")
-    )
-    # The carat image to show when the panel is expanded.
-    expanded_carat_image = Instance(ImageResource, ImageResource("carat_open"))
-    # The backing header image when the mouse is elsewhere
-    header_bar_image = Instance(ImageResource, ImageResource("panel_gradient"))
-    # The backing header image when the mouse is over
-    header_mouseover_image = Instance(
-        ImageResource, ImageResource("panel_gradient_over")
-    )
+    #: The carat image to show when the panel is collapsed.
+    collapsed_carat_image = Image(ImageResource("carat_closed"))
 
-    # The carat image to show when the panel is expanded.
-    remove_image = Instance(ImageResource, ImageResource("close"))
+    #: The carat image to show when the panel is expanded.
+    expanded_carat_image = Image(ImageResource("carat_open"))
 
-    # Represents the current state of the button. True means pressed.
+    #: The backing header image when the mouse is elsewhere
+    header_bar_image = Image(ImageResource("panel_gradient"))
+
+    #: The backing header image when the mouse is over
+    header_mouseover_image = Image(ImageResource("panel_gradient_over"))
+
+    #: The carat image to show when the panel is expanded.
+    remove_image = Image(ImageResource("close"))
+
+    #: Represents the current state of the button. True means pressed.
     state = Bool(False)
 
     # Events ----
 
-    # The panel has been expanded or collapsed
+    #: The panel has been expanded or collapsed
     panel_expanded = Event()
 
     _CARAT_X = 4

@@ -28,7 +28,7 @@ from traits.api import Instance, List, on_trait_change, provides, Str
 
 
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .window import Window
 
 
@@ -41,7 +41,7 @@ class ApplicationWindow(MApplicationWindow, Window):
     # 'IApplicationWindow' interface ---------------------------------------
 
     #: The icon to display in the application window title bar.
-    icon = Instance(ImageResource)
+    icon = Image()
 
     #: The menu bar manager for the window.
     menu_bar_manager = Instance(MenuBarManager)

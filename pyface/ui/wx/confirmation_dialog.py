@@ -15,17 +15,16 @@
 
 import wx
 
-
 from traits.api import Bool, Enum, Instance, provides, Str
-
 
 from pyface.i_confirmation_dialog import (
     IConfirmationDialog,
     MConfirmationDialog,
 )
 from pyface.constant import CANCEL, YES, NO
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .dialog import Dialog
+from .image_resource import ImageResource
 
 
 @provides(IConfirmationDialog)
@@ -40,7 +39,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     default = Enum(NO, YES, CANCEL)
 
-    image = Instance(ImageResource)
+    image = Image()
 
     message = Str()
 

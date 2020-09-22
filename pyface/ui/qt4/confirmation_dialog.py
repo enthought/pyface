@@ -15,7 +15,7 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Dict, Enum, Instance, provides, Str
+from traits.api import Bool, Dict, Enum, provides, Str
 
 
 from pyface.i_confirmation_dialog import (
@@ -23,7 +23,7 @@ from pyface.i_confirmation_dialog import (
     MConfirmationDialog,
 )
 from pyface.constant import CANCEL, YES, NO
-from pyface.image_resource import ImageResource
+from pyface.ui_traits import Image
 from .dialog import Dialog, _RESULT_MAP
 
 
@@ -39,7 +39,7 @@ class ConfirmationDialog(MConfirmationDialog, Dialog):
 
     default = Enum(NO, YES, CANCEL)
 
-    image = Instance(ImageResource)
+    image = Image()
 
     message = Str()
 
