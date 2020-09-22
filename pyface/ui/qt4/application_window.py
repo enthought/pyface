@@ -29,6 +29,7 @@ from traits.api import Instance, List, on_trait_change, provides, Str
 
 from pyface.i_application_window import IApplicationWindow, MApplicationWindow
 from pyface.ui_traits import Image
+from .image_resource import ImageResource
 from .window import Window
 
 
