@@ -14,6 +14,7 @@ from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_view_errors import (
     DataViewGetError, DataViewSetError
 )
@@ -23,6 +24,15 @@ from pyface.data_view.index_manager import Root
 logger = logging.getLogger(__name__)
 
 # XXX This file is scaffolding and may need to be rewritten
+
+set_check_state_map = {
+    Qt.Checked: CheckState.CHECKED,
+    Qt.Unchecked: CheckState.UNCHECKED,
+}
+get_check_state_map = {
+    CheckState.CHECKED: Qt.Checked,
+    CheckState.UNCHECKED: Qt.Unchecked,
+}
 
 
 class DataViewItemModel(QAbstractItemModel):
@@ -133,8 +143,14 @@ class DataViewItemModel(QAbstractItemModel):
             flags |= Qt.ItemNeverHasChildren
 
         try:
-            if value_type and value_type.has_editor_value(self.model, row, column):
-                flags |= Qt.ItemIsEditable
+            if value_type:
+                if value_type.has_editor_value(self.model, row, column):
+                    flags |= Qt.ItemIsEditable
+                if (
+                    value_type.has_check_state(self.model, row, column)
+                    and self.model.can_set_value(row, column)
+                ):
+                    flags |= Qt.ItemIsUserCheckable
         except DataViewGetError:
             # expected error, ignore
             pass
@@ -168,6 +184,10 @@ class DataViewItemModel(QAbstractItemModel):
                     image = value_type.get_image(self.model, row, column)
                     if isinstance(image, IImageResource):
                         return image.create_image()
+            elif role == Qt.CheckStateRole:
+                if value_type.has_check_state(self.model, row, column):
+                    value = value_type.get_check_state(self.model, row, column)
+                    return get_check_state_map[value]
             elif role == Qt.ToolTipRole:
                 if value_type.has_tooltip(self.model, row, column):
                     return value_type.get_tooltip(self.model, row, column)
@@ -199,6 +219,11 @@ class DataViewItemModel(QAbstractItemModel):
             elif role == Qt.DisplayRole:
                 if value_type.has_text(self.model, row, column):
                     value_type.set_text(self.model, row, column, value)
+            elif role == Qt.CheckStateRole:
+                if value_type.has_check_state(self.model, row, column):
+                    state = set_check_state_map[value]
+                    value_type.set_check_state(self.model, row, column, state)
+
         except DataViewSetError:
             return False
         except Exception:

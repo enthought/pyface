@@ -14,12 +14,14 @@
 from functools import partial
 from random import choice, randint
 
-from traits.api import Dict, HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.value_types.api import IntValue, TextValue, no_value
+from pyface.data_view.value_types.api import (
+    BoolValue, IntValue, TextValue, no_value
+)
 
 from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
@@ -46,6 +48,8 @@ class Person(HasStrictTraits):
 
     age = Int
 
+    contacted = Bool
+
     address = Instance(Address)
 
 
@@ -71,6 +75,11 @@ row_info = HasTraitsRowInfo(
             title="Age",
             value="age",
             value_type=IntValue(minimum=0),
+        ),
+        HasTraitsRowInfo(
+            title="Contacted",
+            value="contacted",
+            value_type=BoolValue(true_text="Yes", false_text="No"),
         ),
         HasTraitsRowInfo(
             title="Address",

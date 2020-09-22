@@ -19,9 +19,18 @@ It is up to the data view to take this standardized data and determine what
 and how to actually display it.
 """
 
+from enum import IntEnum
+
 from traits.api import ABCHasStrictTraits, Event, observe
 
 from .data_view_errors import DataViewSetError
+
+
+class CheckState(IntEnum):
+    "Possible checkbox states"
+    # XXX in the future this may need a "partial" state
+    UNCHECKED = 0
+    CHECKED = 1
 
 
 class AbstractValueType(ABCHasStrictTraits):
@@ -225,6 +234,76 @@ class AbstractValueType(ABCHasStrictTraits):
         """
         from pyface.image_resource import ImageResource
         return ImageResource("image_not_found")
+
+    def has_check_state(self, model, row, column):
+        """ Whether or not the value has checked state.
+
+        The default implementation returns False.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        has_check_state : bool
+            Whether or not the value has a checked state.
+        """
+        return False
+
+    def get_check_state(self, model, row, column):
+        """ The textual representation of the underlying value.
+
+        The default implementation returns "checked" if the value is
+        truthy, or "unchecked" if the value is falsey.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
+        check_state : CheckState
+            The current checked state.
+        """
+        return (
+            CheckState.CHECKED
+            if model.get_value(row, column)
+            else CheckState.UNCHECKED
+        )
+
+    def set_check_state(self, model, row, column, check_state):
+        """ Set the checked state of the underlying value.
+
+        The default implementation does not allow setting the checked state.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+        check_state : CheckState
+            The check state value to set.
+
+        Raises
+        -------
+        DataViewSetError
+            If the value cannot be set.
+        """
+        raise DataViewSetError("Cannot set check state.")
 
     def has_tooltip(self, model, row, column):
         """ Whether or not the value has a tooltip.
