@@ -45,7 +45,6 @@ class BoolValue(AbstractValueType):
     def get_text(self, model, row, column):
         """ The textual representation of the underlying value.
 
-        The default implementation calls str() on the underlying value.
 
         Parameters
         ----------
@@ -68,7 +67,7 @@ class BoolValue(AbstractValueType):
     def has_check_state(self, model, row, column):
         """ Whether or not the value has checked state.
 
-        The default implementation returns False.
+        The default implementation returns True.
 
         Parameters
         ----------
