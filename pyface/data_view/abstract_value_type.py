@@ -28,7 +28,7 @@ from .data_view_errors import DataViewSetError
 
 class CheckState(IntEnum):
     "Possible checkbox states"
-    # XXX in the future this may need a "partial" state
+    # XXX in the future this may need a "partial" state, see Pyface #695
     UNCHECKED = 0
     CHECKED = 1
 
