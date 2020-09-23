@@ -95,6 +95,11 @@ class TestAbstractValueType(UnittestTools, TestCase):
         result = value_type.get_check_state(self.model, [0], [0])
         self.assertEqual(result, CheckState.CHECKED)
 
+    def test_set_check_state(self):
+        value_type = ValueType()
+        with self.assertRaises(DataViewSetError):
+            value_type.set_check_state(self.model, [0], [0])
+
     def test_parameter_update(self):
         value_type = ValueType()
         with self.assertTraitChanges(value_type, 'updated', count=1):

@@ -257,7 +257,7 @@ class AbstractValueType(ABCHasStrictTraits):
         return False
 
     def get_check_state(self, model, row, column):
-        """ The textual representation of the underlying value.
+        """ The state of the item check box.
 
         The default implementation returns "checked" if the value is
         truthy, or "unchecked" if the value is falsey.
