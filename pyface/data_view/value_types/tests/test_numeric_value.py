@@ -11,7 +11,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.value_types.numeric_value import (
     FloatValue, IntValue, NumericValue, format_locale
 )

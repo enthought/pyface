@@ -10,13 +10,16 @@
 
 import logging
 
+from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QModelIndex, Qt
 from pyface.qt.QtGui import QColor
-from pyface.data_view.index_manager import Root
-from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_value_type import CheckState
+from pyface.data_view.data_view_errors import (
+    DataViewGetError, DataViewSetError
 )
+from pyface.data_view.index_manager import Root
 
 
 logger = logging.getLogger(__name__)
@@ -25,6 +28,15 @@ logger = logging.getLogger(__name__)
 
 WHITE = QColor(255, 255, 255)
 BLACK = QColor(0, 0, 0)
+
+set_check_state_map = {
+    Qt.Checked: CheckState.CHECKED,
+    Qt.Unchecked: CheckState.UNCHECKED,
+}
+get_check_state_map = {
+    CheckState.CHECKED: Qt.Checked,
+    CheckState.UNCHECKED: Qt.Unchecked,
+}
 
 
 class DataViewItemModel(QAbstractItemModel):
@@ -134,8 +146,26 @@ class DataViewItemModel(QAbstractItemModel):
         if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
-        if value_type and value_type.has_editor_value(self.model, row, column):
-            flags |= Qt.ItemIsEditable
+        try:
+            if value_type:
+                if value_type.has_editor_value(self.model, row, column):
+                    flags |= Qt.ItemIsEditable
+                if (
+                    value_type.has_check_state(self.model, row, column)
+                    and self.model.can_set_value(row, column)
+                ):
+                    flags |= Qt.ItemIsUserCheckable
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get flags failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
 
         return flags
 
@@ -143,26 +173,51 @@ class DataViewItemModel(QAbstractItemModel):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
         value_type = self.model.get_value_type(row, column)
-        if not value_type:
-            return None
+        try:
+            if not value_type:
+                return None
 
-        if role == Qt.DisplayRole:
-            if value_type.has_text(self.model, row, column):
-                return value_type.get_text(self.model, row, column)
-        elif role == Qt.EditRole:
-            if value_type.has_editor_value(self.model, row, column):
-                return value_type.get_editor_value(self.model, row, column)
-        elif role == Qt.BackgroundRole:
-            if value_type.has_color(self.model, row, column):
-                color = value_type.get_color(self.model, row, column)
-                return color.to_toolkit()
-        elif role == Qt.ForegroundRole:
-            if value_type.has_color(self.model, row, column):
-                color = value_type.get_color(self.model, row, column)
-                if color.is_dark:
-                    return WHITE
-                else:
-                    return BLACK
+            if role == Qt.DisplayRole:
+                if value_type.has_text(self.model, row, column):
+                    return value_type.get_text(self.model, row, column)
+            elif role == Qt.EditRole:
+                if value_type.has_editor_value(self.model, row, column):
+                    return value_type.get_editor_value(self.model, row, column)
+            elif role == Qt.DecorationRole:
+                if value_type.has_image(self.model, row, column):
+                    image = value_type.get_image(self.model, row, column)
+                    if isinstance(image, IImageResource):
+                        return image.create_image()
+            elif role == Qt.BackgroundRole:
+                if value_type.has_color(self.model, row, column):
+                    color = value_type.get_color(self.model, row, column)
+                    return color.to_toolkit()
+            elif role == Qt.ForegroundRole:
+                if value_type.has_color(self.model, row, column):
+                    color = value_type.get_color(self.model, row, column)
+                    if color.is_dark:
+                        return WHITE
+                    else:
+                        return BLACK
+            elif role == Qt.CheckStateRole:
+                if value_type.has_check_state(self.model, row, column):
+                    value = value_type.get_check_state(self.model, row, column)
+                    return get_check_state_map[value]
+            elif role == Qt.ToolTipRole:
+                if value_type.has_tooltip(self.model, row, column):
+                    return value_type.get_tooltip(self.model, row, column)
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get data failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
+
         return None
 
     def setData(self, index, value, role=Qt.EditRole):
@@ -179,6 +234,11 @@ class DataViewItemModel(QAbstractItemModel):
             elif role == Qt.DisplayRole:
                 if value_type.has_text(self.model, row, column):
                     value_type.set_text(self.model, row, column, value)
+            elif role == Qt.CheckStateRole:
+                if value_type.has_check_state(self.model, row, column):
+                    state = set_check_state_map[value]
+                    value_type.set_check_state(self.model, row, column, state)
+
         except DataViewSetError:
             return False
         except Exception:
@@ -207,9 +267,23 @@ class DataViewItemModel(QAbstractItemModel):
 
         value_type = self.model.get_value_type(row, column)
 
-        if role == Qt.DisplayRole:
-            if value_type.has_text(self.model, row, column):
-                return value_type.get_text(self.model, row, column)
+        try:
+            if role == Qt.DisplayRole:
+                if value_type.has_text(self.model, row, column):
+                    return value_type.get_text(self.model, row, column)
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get header data failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
+
+        return None
 
     # Private utility methods
 

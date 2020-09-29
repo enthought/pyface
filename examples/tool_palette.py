@@ -8,6 +8,8 @@
 #
 # Thanks for using Enthought open source!
 
+""" Example of a Tool Palette. """
+
 
 import wx
 

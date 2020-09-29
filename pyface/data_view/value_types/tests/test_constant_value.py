@@ -15,6 +15,7 @@ from traits.testing.unittest_tools import UnittestTools
 
 from pyface.color import Color
 from pyface.data_view.value_types.constant_value import ConstantValue
+from pyface.image_resource import ImageResource
 
 
 class TestConstantValue(UnittestTools, TestCase):
@@ -25,6 +26,7 @@ class TestConstantValue(UnittestTools, TestCase):
     def test_defaults(self):
         value_type = ConstantValue()
         self.assertEqual(value_type.text, "")
+        self.assertEqual(value_type.tooltip, "")
 
     def test_has_editor_value(self):
         value_type = ConstantValue()
@@ -93,3 +95,52 @@ class TestConstantValue(UnittestTools, TestCase):
             value_type.get_color(self.model, [0], [0]),
             Color(rgba=(0.4, 0.2, 0.6, 0.8))
         )
+
+    def test_has_image(self):
+        value_type = ConstantValue()
+        self.assertFalse(value_type.has_image(self.model, [0], [0]))
+
+    def test_has_image_true(self):
+        value_type = ConstantValue(image="question")
+        self.assertTrue(value_type.has_image(self.model, [0], [0]))
+
+    def test_get_image(self):
+        image = ImageResource("question")
+        value_type = ConstantValue(image=image)
+        self.assertEqual(
+            value_type.get_image(self.model, [0], [0]),
+            image
+        )
+
+    def test_get_image_none(self):
+        value_type = ConstantValue()
+        image = value_type.get_image(self.model, [0], [0])
+        self.assertEqual(image.name, "image_not_found")
+
+    def test_image_changed(self):
+        value_type = ConstantValue()
+        image = ImageResource("question")
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.image = image
+        self.assertEqual(value_type.image, image)
+
+    def test_has_tooltip(self):
+        value_type = ConstantValue()
+        self.assertFalse(value_type.has_tooltip(self.model, [0], [0]))
+
+    def test_has_tooltip_true(self):
+        value_type = ConstantValue(tooltip="something")
+        self.assertTrue(value_type.has_tooltip(self.model, [0], [0]))
+
+    def test_get_tooltip(self):
+        value_type = ConstantValue(tooltip="something")
+        self.assertEqual(
+            value_type.get_tooltip(self.model, [0], [0]),
+            "something"
+        )
+
+    def test_tooltip_changed(self):
+        value_type = ConstantValue()
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.tooltip = 'something'
+        self.assertEqual(value_type.tooltip, 'something')

@@ -10,7 +10,7 @@
 
 from traits.api import Bool
 
-from pyface.data_view.abstract_data_model import DataViewSetError
+from pyface.data_view.data_view_errors import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
 
 

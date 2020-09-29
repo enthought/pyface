@@ -10,7 +10,52 @@
 
 from unittest import TestCase
 
-from pyface.util.color_helpers import is_dark, relative_luminance
+from pyface.util.color_helpers import (
+    channels_to_ints, ints_to_channels, is_dark, relative_luminance
+)
+
+
+class TestChannelConversion(TestCase):
+
+    def test_ints_to_channels(self):
+        values = (102, 102, 0, 255)
+        channels = ints_to_channels(values)
+        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
+
+    def test_ints_to_channels_maximum(self):
+        values = (6, 6, 0, 15)
+        channels = ints_to_channels(values, maximum=15)
+        self.assertEqual(channels, (0.4, 0.4, 0.0, 1.0))
+
+    def test_channels_to_ints(self):
+        channels = (0.4, 0.4, 0.0, 1.0)
+        values = channels_to_ints(channels)
+        self.assertEqual(values, (102, 102, 0, 255))
+
+    def test_channels_to_ints_maximum(self):
+        channels = (0.4, 0.4, 0.0, 1.0)
+        values = channels_to_ints(channels, maximum=15)
+        self.assertEqual(values, (6, 6, 0, 15))
+
+    def test_round_trip(self):
+        """ Test to assert stability of values through round-trips """
+        for value in range(256):
+            with self.subTest(int=value):
+                result = channels_to_ints(ints_to_channels([value]))
+                self.assertEqual(result, (value,))
+
+    def test_round_trip_maximum(self):
+        """ Test to assert stability of values through round-trips """
+        for value in range(65536):
+            with self.subTest(int=value):
+                result = channels_to_ints(
+                    ints_to_channels(
+                        [value],
+                        maximum=65535,
+                    ),
+                    maximum=65535,
+                )
+                self.assertEqual(result, (value,))
 
 
 class TestRelativeLuminance(TestCase):

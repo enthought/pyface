@@ -25,49 +25,8 @@ from traits.api import (
     Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
-from pyface.util.color_helpers import is_dark
-
-
-def channels_to_ints(channels, maximum=255):
-    """ Convert an iterable of floating point channel values to integers.
-
-    Values are rounded to the nearest integer, rather than truncated.
-
-    Parameters
-    ----------
-    channels : iterable of float
-        An iterable of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    values : tuple of int
-        A tuple of values as integers between 0 and max, inclusive.
-    """
-    return tuple(int(round(channel * maximum)) for channel in channels)
-
-
-def ints_to_channels(values, maximum=255):
-    """ Convert an iterable of integers to floating point channel values.
-
-    Parameters
-    ----------
-    values : tuple of int
-        An iterable of values as integers between 0 and max, inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    channels : iterable of float
-        A tuple of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    """
-    return tuple(value / maximum for value in values)
+from pyface.util.color_helpers import channels_to_ints, ints_to_channels, is_dark
+from pyface.util.color_parser import parse_text
 
 
 #: A trait holding a single channel value.
@@ -131,6 +90,40 @@ class Color(HasStrictTraits):
 
     #: Whether the color is dark for contrast purposes.
     is_dark = Property(Bool, depends_on='rgba')
+
+    @classmethod
+    def from_str(cls, text, **traits):
+        """ Create a new Color object from a string.
+
+        Parameters
+        ----------
+        text : str
+            A string holding the representation of the color.  This can be:
+
+            - a color name, including all CSS color names, plus any additional
+              names found in pyface.color.color_table.  The names are
+              normalized to lower case and stripped of whitespace, hyphens and
+              underscores.
+
+            - a hex representation of the color in the form '#RGB', '#RGBA',
+              '#RRGGBB', '#RRGGBBAA', '#RRRRGGGGBBBB', or '#RRRRGGGGBBBBAAAA'.
+
+        **traits
+            Any additional trait values to be passed as keyword arguments.
+
+        Raises
+        ------
+        ColorParseError
+            If the string cannot be converted to a valid color.
+        """
+        space, channels = parse_text(text)
+        if space in traits:
+            raise TypeError(
+                "from_str() got multiple values for keyword argument "
+                + repr(space)
+            )
+        traits[space] = channels
+        return cls(**traits)
 
     @classmethod
     def from_toolkit(cls, toolkit_color, **traits):

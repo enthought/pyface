@@ -11,7 +11,11 @@
 
 import unittest
 
+from traits.etsconfig.api import ETSConfig
+
 from ..clipboard import clipboard
+
+is_wx = (ETSConfig.toolkit == 'wx')
 
 
 class TestObject(object):

@@ -8,6 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
+""" Example showing DataView for ArrayDataModel. """
+
+
 from traits.api import Array, Instance
 
 from pyface.api import ApplicationWindow, GUI
@@ -20,7 +23,7 @@ from pyface.data_view.value_types.api import FloatValue
 class MainWindow(ApplicationWindow):
     """ The main application window. """
 
-    data = Array
+    data = Array()
 
     data_view = Instance(IDataViewWidget)
 

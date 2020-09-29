@@ -8,10 +8,20 @@
 #
 # Thanks for using Enthought open source!
 
-from .bool_value import BoolValue  # noqa: F401
-from .color_value import ColorValue  # noqa: F401
-from .constant_value import ConstantValue  # noqa: F401
-from .editable_value import EditableValue  # noqa: F401
-from .no_value import NoValue, no_value  # noqa: F401
-from .numeric_value import FloatValue, IntValue, NumericValue  # noqa: F401
-from .text_value import TextValue  # noqa: F401
+""" Provide an Exception classes for the the DataView code.
+"""
+
+
+class DataViewError(ValueError):
+    """ The base exception class for DataView errors. """
+    pass
+
+
+class DataViewGetError(DataViewError):
+    """ An exception raised when getting a value fails. """
+    pass
+
+
+class DataViewSetError(DataViewError):
+    """ An exception raised when setting a value fails. """
+    pass

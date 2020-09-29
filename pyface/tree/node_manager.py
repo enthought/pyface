@@ -96,7 +96,7 @@ class NodeManager(HasPrivateTraits):
                 node_type = None
 
         if node_type is None:
-            logger.warn("no node type for %s" % str(node))
+            logger.warning("no node type for %s" % str(node))
 
         return node_type
 

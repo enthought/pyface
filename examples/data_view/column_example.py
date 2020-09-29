@@ -8,22 +8,30 @@
 #
 # Thanks for using Enthought open source!
 
+""" Example showing DataView for ColumnDataModel using row info. """
+
+
 from functools import partial
 from random import choice, randint, uniform
 
-from traits.api import HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.color import Color
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import (
-    ColorValue, IntValue, TextValue, no_value
+    BoolValue, ColorValue, IntValue, TextValue, no_value
 )
 
 from column_data_model import (
     AbstractRowInfo, ColumnDataModel, HasTraitsRowInfo
 )
+
+flags = {
+    'UK': ImageResource('gb.png'),
+    'USA': ImageResource('us.png'),
+}
 
 
 class Address(HasStrictTraits):
@@ -43,7 +51,22 @@ class Person(HasStrictTraits):
 
     favorite_color = Instance(Color)
 
+    contacted = Bool
+
     address = Instance(Address)
+
+
+class CountryValue(TextValue):
+
+    flags = Dict(Str, Image, update_value_type=True)
+
+    def has_image(self, model, row, column):
+        value = model.get_value(row, column)
+        return value in self.flags
+
+    def get_image(self, model, row, column):
+        value = model.get_value(row, column)
+        return self.flags[value]
 
 
 row_info = HasTraitsRowInfo(
@@ -60,6 +83,11 @@ row_info = HasTraitsRowInfo(
             title="Favorite Color",
             value="favorite_color",
             value_type=ColorValue(),
+        ),
+        HasTraitsRowInfo(
+            title="Contacted",
+            value="contacted",
+            value_type=BoolValue(true_text="Yes", false_text="No"),
         ),
         HasTraitsRowInfo(
             title="Address",
@@ -79,7 +107,9 @@ row_info = HasTraitsRowInfo(
                 HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
-                    value_type=TextValue(),
+                    value_type=CountryValue(
+                        flags=flags,
+                    ),
                 ),
             ],
         ),
@@ -105,6 +135,7 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 row_info=self.row_info,
             ),
+            selection_mode='single',
         )
         self.data_view._create()
         return self.data_view.control
@@ -116,6 +147,7 @@ class MainWindow(ApplicationWindow):
     def destroy(self):
         self.data_view.destroy()
         super().destroy()
+
 
 male_names = [
     'Michael', 'Edward', 'Timothy', 'James', 'George', 'Ralph', 'David',
@@ -137,8 +169,10 @@ all_names = male_names + female_names
 any_name = partial(choice, all_names)
 age = partial(randint, 15, 72)
 
+
 def favorite_color():
     return Color(hsv=(uniform(0.0, 1.0), 1.0, 1.0))
+
 
 def family_name():
     return choice([

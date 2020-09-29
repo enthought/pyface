@@ -12,6 +12,7 @@ from traits.api import Instance, Str, observe
 
 from pyface.color import Color
 from pyface.data_view.abstract_value_type import AbstractValueType
+from pyface.ui_traits import Image
 
 
 class ConstantValue(AbstractValueType):
@@ -27,6 +28,12 @@ class ConstantValue(AbstractValueType):
 
     #: The color value to display or None if no color.
     color = Instance(Color)
+
+    #: The image value to display.
+    image = Image(update_value_type=True)
+
+    #: The tooltip value to display.
+    tooltip = Str(update_value_type=True)
 
     def has_editor_value(self, model, row, column):
         return False
@@ -76,6 +83,17 @@ class ConstantValue(AbstractValueType):
             The color associated with the cell.
         """
         return self.color
+
+    def has_image(self, model, row, column):
+        return self.image is not None
+
+    def get_image(self, model, row, column):
+        if self.image is not None:
+            return self.image
+        return super().get_image(model, row, column)
+
+    def get_tooltip(self, model, row, column):
+        return self.tooltip
 
     @observe('color.rgba')
     def _color_updated(self, event):
