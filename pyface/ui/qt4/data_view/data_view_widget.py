@@ -75,7 +75,7 @@ class DataViewTreeView(QTreeView):
                 if drop_handler.can_handle_drop(event, self):
                     event.acceptProposedAction()
                     return
-        super().dragEnterEvent(event)
+        super().dragLeaveEvent(event)
 
     def dropEvent(self, event):
         if self._widget is not None:
