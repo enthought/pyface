@@ -72,7 +72,7 @@ class TestColor(UnittestTools, TestCase):
         self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 0.5))
 
     def test_from_str_duplicate_argument(self):
-        self.assertRaises(TypeError):
+        with self.assertRaises(TypeError):
             Color.from_str('rebeccapurple', rgba=(1.0, 1.0, 1.0, 1.0))
 
     def test_toolkit_round_trip(self):
