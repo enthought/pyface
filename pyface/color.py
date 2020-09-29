@@ -115,6 +115,11 @@ class Color(HasStrictTraits):
             If the string cannot be converted to a valid color.
         """
         space, channels = parse_text(text)
+        if space in traits:
+            raise TypeError(
+                "from_str() got multiple values for keyword argument "
+                + repr(space)
+            )
         traits[space] = channels
         return cls(**traits)
 

@@ -67,6 +67,14 @@ class TestColor(UnittestTools, TestCase):
         color = Color.from_str('#663399ff')
         self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 1.0))
 
+    def test_from_str_extra_argument(self):
+        color = Color.from_str('#663399', alpha=0.5)
+        self.assertEqual(color.rgba, (0.4, 0.2, 0.6, 0.5))
+
+    def test_from_str_duplicate_argument(self):
+        self.assertRaises(TypeError):
+            Color.from_str('rebeccapurple', rgba=(1.0, 1.0, 1.0, 1.0))
+
     def test_toolkit_round_trip(self):
         color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
         toolkit_color = color.to_toolkit()
