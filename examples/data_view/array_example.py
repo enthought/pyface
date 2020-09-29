@@ -10,14 +10,21 @@
 
 """ Example showing DataView for ArrayDataModel. """
 
+import logging
 
-from traits.api import Array, Instance
+import numpy as np
+
+from traits.api import Array, Instance, observe
 
 from pyface.api import ApplicationWindow, GUI
+from pyface.drop_handler import FileDropHandler
 from pyface.data_view.data_models.array_data_model import ArrayDataModel
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import FloatValue
+
+
+logger = logging.getLogger(__name__)
 
 
 class MainWindow(ApplicationWindow):
@@ -26,6 +33,12 @@ class MainWindow(ApplicationWindow):
     data = Array()
 
     data_view = Instance(IDataViewWidget)
+
+    def load_data(self, path):
+        try:
+            self.data = np.load(path)
+        except Exception:
+            logger.exception()
 
     def _create_contents(self, parent):
         """ Creates the left hand side or top depending on the style. """
@@ -36,21 +49,30 @@ class MainWindow(ApplicationWindow):
                 data=self.data,
                 value_type=FloatValue(),
             ),
+            drop_handlers=[
+                FileDropHandler(extensions=['.npy'], open_file=self.load_data),
+            ],
         )
         self.data_view._create()
         return self.data_view.control
-
-    def _data_default(self):
-        import numpy
-        return numpy.random.uniform(size=(10000, 10, 10))*1000000
 
     def destroy(self):
         self.data_view.destroy()
         super().destroy()
 
+    @observe('data')
+    def _data_updated(self, event):
+        if self.data_view is not None:
+            self.data_view.data_model.data = self.data
+
+    def _data_default(self):
+        return np.random.uniform(size=(10000, 10, 10))*1000000
+
 
 # Application entry point.
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 

@@ -17,6 +17,7 @@ from traits.api import (
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.i_drop_handler import IDropHandler
 from pyface.i_widget import IWidget
 
 
@@ -31,6 +32,12 @@ class IDataViewWidget(IWidget):
 
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
+
+    #: The global drop handlers for the data view.  These are intended to
+    #: handle drop actions which either affect the whole data view, or where
+    #: the data handler can work out how to change the underlying data without
+    #: additional input.
+    drop_handlers = List(Instance(IDropHandler))
 
     #: What can be selected.  Implementations may optionally allow "column"
     #: and "item" selection types.
@@ -55,6 +62,12 @@ class MDataViewWidget(HasStrictTraits):
 
     #: Whether or not the column headers are visible.
     header_visible = Bool(True)
+
+    #: The global drop handlers for the data view.  These are intended to
+    #: handle drop actions which either affect the whole data view, or where
+    #: the data handler can work out how to change the underlying data without
+    #: additional input.
+    drop_handlers = List(Instance(IDropHandler))
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
