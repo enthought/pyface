@@ -21,7 +21,7 @@ from pyface.data_view.data_models.row_table_data_model import (
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.value_types.api import (
-    BoolValue, ColorValue, ConstantValue, IntValue, TextValue
+    BoolValue, ColorValue, IntValue, TextValue
 )
 
 from example_data import (
