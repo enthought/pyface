@@ -8,18 +8,28 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import HasStrictTraits, Instance, Int, Str, List
+import logging
+
+from traits.api import Bool, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI
+from pyface.color import Color
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
 from pyface.data_view.data_models.row_table_data_model import (
     RowTableDataModel
 )
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.i_data_view_widget import IDataViewWidget
-from pyface.data_view.value_types.api import ConstantValue, IntValue, TextValue
+from pyface.data_view.value_types.api import (
+    BoolValue, ColorValue, ConstantValue, IntValue, TextValue
+)
 
-from example_data import any_name, family_name, age, street, city, country
+from example_data import (
+    any_name, family_name, favorite_color, age, street, city, country
+)
+
+
+logger = logging.getLogger(__name__)
 
 
 # The data model
@@ -39,6 +49,10 @@ class Person(HasStrictTraits):
 
     age = Int()
 
+    favorite_color = Instance(Color)
+
+    contacted = Bool
+
     address = Instance(Address, ())
 
 
@@ -52,6 +66,14 @@ column_data = [
     AttributeDataAccessor(
         attr="age",
         value_type=IntValue(minimum=0),
+    ),
+    AttributeDataAccessor(
+        attr="favorite_color",
+        value_type=ColorValue(),
+    ),
+    AttributeDataAccessor(
+        attr="contacted",
+        value_type=BoolValue(),
     ),
     AttributeDataAccessor(
         attr="address.street",
@@ -92,18 +114,21 @@ class MainWindow(ApplicationWindow):
         return self.data_view.control
 
     def _data_default(self):
+        logger.info("Initializing data")
         people = [
             Person(
                 name='%s %s' % (any_name(), family_name()),
                 age=age(),
+                favorite_color=favorite_color(),
                 address=Address(
                     street=street(),
                     city=city(),
                     country=country(),
                 ),
             )
-            for i in range(100000)
+            for i in range(10000)
         ]
+        logger.info("Data initialized")
         return people
 
     def destroy(self):
@@ -112,6 +137,8 @@ class MainWindow(ApplicationWindow):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
 
@@ -121,3 +148,4 @@ if __name__ == '__main__':
 
     # Start the GUI event loop!
     gui.start_event_loop()
+    logger.info("Shutting down")
