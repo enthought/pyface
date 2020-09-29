@@ -292,7 +292,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
         environ["EXCLUDE_TESTS"] = "(wx|qt)"
 
     commands = [
-        "{edm} run -e {environment} -- coverage run -p -m "
+        "{edm} run -e {environment} -- python -Xfaulthandler -m coverage run -p -m "
         "unittest discover -v pyface",
     ]
 
