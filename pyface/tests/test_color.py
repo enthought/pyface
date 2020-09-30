@@ -203,5 +203,8 @@ class TestColor(UnittestTools, TestCase):
     def test_set_hlsa(self):
         color = Color()
         color.hlsa = (0.4, 0.2, 0.6, 0.8)
-        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8)
-        )
+        self.assert_tuple_almost_equal(color.rgba, (0.08, 0.32, 0.176, 0.8))
+
+    def test_get_is_dark(self):
+        color = Color(rgba=(0.08, 0.32, 0.176, 0.8))
+        self.assertTrue(color.is_dark)
