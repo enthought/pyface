@@ -17,9 +17,9 @@ from ..constant import OK
 from ..toolkit import toolkit_object
 from ..window import Window
 
-is_pyqt = False
-if toolkit_object.toolkit == "qt4":
-    from pyface.qt import is_pyqt
+is_qt = toolkit_object.toolkit == "qt4"
+if is_qt:
+    from pyface.qt import qt_api
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
@@ -29,7 +29,10 @@ ModalDialogTester = toolkit_object(
 )
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
 
-USING_QT = toolkit_object.toolkit == "qt4"
+is_pyqt5 = is_qt and qt_api == "pyqt5"
+is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
+
+USING_QT = is_qt
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -86,7 +89,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -94,7 +97,7 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_message(self):
         # test that creation and destruction works as expected with message
-        self.dialog.message = u"This is the message"
+        self.dialog.message = "This is the message"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -102,8 +105,8 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_informative(self):
         # test that creation and destruction works with informative
-        self.dialog.message = u"This is the message"
-        self.dialog.informative = u"This is the additional message"
+        self.dialog.message = "This is the message"
+        self.dialog.informative = "This is the additional message"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -111,9 +114,9 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_detail(self):
         # test that creation and destruction works with detail
-        self.dialog.message = u"This is the message"
-        self.dialog.informative = u"This is the additional message"
-        self.dialog.detail = u"This is the detail"
+        self.dialog.message = "This is the message"
+        self.dialog.informative = "This is the additional message"
+        self.dialog.detail = "This is the detail"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -136,7 +139,11 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
             self.dialog.destroy()
 
     @unittest.skipIf(
-        is_pyqt, "Message dialog click tests don't work on pyqt5."
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_accept(self):
@@ -148,7 +155,11 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Message dialog click tests don't work on pyqt5."
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_close(self):
@@ -160,7 +171,11 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Message dialog click tests don't work on pyqt5."
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_ok(self):
@@ -173,15 +188,19 @@ class TestMessageDialog(unittest.TestCase, GuiTestAssistant):
     @unittest.skipIf(USING_QT, "Can't change OK label in Qt")
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         # test that OK works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Message dialog click tests don't work on pyqt5."
+        is_pyqt5, "Message dialog click tests don't work on pyqt5."
+    )
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Message dialog click tests don't work reliably on linux.  Issue #282.",
     )
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_parent(self):

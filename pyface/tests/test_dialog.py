@@ -9,15 +9,16 @@
 # Thanks for using Enthought open source!
 
 
+import platform
 import unittest
 
 from ..dialog import Dialog
 from ..constant import OK, CANCEL
 from ..toolkit import toolkit_object
 
-is_pyqt = False
-if toolkit_object.toolkit == "qt4":
-    from pyface.qt import is_pyqt
+is_qt = toolkit_object.toolkit == "qt4"
+if is_qt:
+    from pyface.qt import qt_api
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
@@ -26,6 +27,9 @@ ModalDialogTester = toolkit_object(
     "util.modal_dialog_tester:ModalDialogTester"
 )
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
+
+is_pyqt5 = is_qt and qt_api == "pyqt5"
+is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -71,7 +75,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_ok_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -79,7 +83,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_cancel_renamed(self):
         # test that creation and destruction works as expected with cancel_label
-        self.dialog.cancel_label = u"I Don't Think So"
+        self.dialog.cancel_label = "I Don't Think So"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -96,7 +100,7 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
     def test_create_help_label(self):
         # test that creation and destruction works as expected with help
         self.dialog.help_id = "test_help"
-        self.dialog.help_label = u"Assistance"
+        self.dialog.help_label = "Assistance"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -130,7 +134,11 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_ok(self):
@@ -142,7 +150,11 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
@@ -154,40 +166,52 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_ok(self):
-        self.dialog.ok_label = u"Sure"
+        self.dialog.ok_label = "Sure"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
 
         self.assertEqual(tester.result, OK)
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_cancel(self):
-        self.dialog.cancel_label = u"I Don't Think So"
+        self.dialog.cancel_label = "I Don't Think So"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(
-            when_opened=lambda x: x.click_widget(u"I Don't Think So")
+            when_opened=lambda x: x.click_widget("I Don't Think So")
         )
 
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_help(self):
         def click_help_and_close(tester):
-            tester.click_widget(u"Help")
+            tester.click_widget("Help")
             tester.close(accept=True)
 
         self.dialog.help_id = "help_test"
@@ -199,16 +223,20 @@ class TestDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, OK)
 
     @unittest.skipIf(
-        is_pyqt, "Dialog click tests don't work on pyqt5."
+        is_pyqt5, "Dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_help(self):
         def click_help_and_close(tester):
-            tester.click_widget(u"Assistance")
+            tester.click_widget("Assistance")
             tester.close(accept=True)
 
         self.dialog.help_id = "help_test"
-        self.dialog.help_label = u"Assistance"
+        self.dialog.help_label = "Assistance"
         # test that OK works as expected if renames
         tester = ModalDialogTester(self.dialog.open)
         tester.open_and_wait(when_opened=click_help_and_close)

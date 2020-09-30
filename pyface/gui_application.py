@@ -258,12 +258,8 @@ class GUIApplication(Application):
 
     def _about_dialog_default(self):
         """ Default AboutDialog """
-        from sys import version_info
-
-        if (version_info.major, version_info.minor) >= (3, 2):
-            from html import escape
-        else:
-            from cgi import escape
+        from html import escape
+        
         from pyface.about_dialog import AboutDialog
 
         additions = [

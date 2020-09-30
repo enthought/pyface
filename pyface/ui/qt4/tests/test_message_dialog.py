@@ -24,10 +24,10 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
     def test_escape_button_no_details(self):
         dialog = MessageDialog(
             parent=None,
-            title=u"Dialog title",
-            message=u"Printer on fire",
-            informative=u"Your printer is on fire",
-            severity=u"error",
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            severity="error",
             size=(600, 400),
         )
 
@@ -41,11 +41,11 @@ class TestMessageDialog(GuiTestAssistant, unittest.TestCase):
     def test_escape_button_with_details(self):
         dialog = MessageDialog(
             parent=None,
-            title=u"Dialog title",
-            message=u"Printer on fire",
-            informative=u"Your printer is on fire",
-            details=u"Temperature exceeds 1000 degrees",
-            severity=u"error",
+            title="Dialog title",
+            message="Printer on fire",
+            informative="Your printer is on fire",
+            details="Temperature exceeds 1000 degrees",
+            severity="error",
             size=(600, 400),
         )
 

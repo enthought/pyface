@@ -19,16 +19,8 @@ from pyface.qt import QtCore
 #  'PyMimeData' class:
 # -------------------------------------------------------------------------------
 
-if sys.version_info[0] < 3:
-
-    def str2bytes(s):
-        return s
-
-
-else:
-
-    def str2bytes(s):
-        return bytes(s, "ascii")
+def str2bytes(s):
+    return bytes(s, "ascii")
 
 
 class PyMimeData(QtCore.QMimeData):
@@ -36,8 +28,8 @@ class PyMimeData(QtCore.QMimeData):
     """
 
     # The MIME type for instances.
-    MIME_TYPE = u"application/x-ets-qt4-instance"
-    NOPICKLE_MIME_TYPE = u"application/x-ets-qt4-instance-no-pickle"
+    MIME_TYPE = "application/x-ets-qt4-instance"
+    NOPICKLE_MIME_TYPE = "application/x-ets-qt4-instance-no-pickle"
 
     def __init__(self, data=None, pickle=True):
         """ Initialise the instance.

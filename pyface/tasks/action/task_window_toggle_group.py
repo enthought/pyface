@@ -45,7 +45,7 @@ class TaskWindowToggleAction(Action):
     def _get_name(self):
         if self.window.title:
             return self.window.title
-        return u""
+        return ""
 
     @on_trait_change("window:activated")
     def _window_activated(self):

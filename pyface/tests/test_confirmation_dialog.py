@@ -9,6 +9,7 @@
 # Thanks for using Enthought open source!
 
 
+import platform
 import unittest
 
 from ..confirmation_dialog import ConfirmationDialog, confirm
@@ -17,10 +18,9 @@ from ..image_resource import ImageResource
 from ..toolkit import toolkit_object
 from ..window import Window
 
-is_pyqt = False
-if toolkit_object.toolkit == "qt4":
-    from pyface.qt import is_pyqt
-
+is_qt = toolkit_object.toolkit == "qt4"
+if is_qt:
+    from pyface.qt import qt_api
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
@@ -29,6 +29,9 @@ ModalDialogTester = toolkit_object(
     "util.modal_dialog_tester:ModalDialogTester"
 )
 no_modal_dialog_tester = ModalDialogTester.__name__ == "Unimplemented"
+
+is_pyqt5 = is_qt and qt_api == "pyqt5"
+is_pyqt4_linux = is_qt and qt_api == "pyqt" and platform.system() == "Linux"
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
@@ -87,7 +90,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_yes_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -95,7 +98,7 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
 
     def test_create_no_renamed(self):
         # test that creation and destruction works as expected with ok_label
-        self.dialog.no_label = u"No Way"
+        self.dialog.no_label = "No Way"
         with self.event_loop():
             self.dialog._create()
         with self.event_loop():
@@ -164,7 +167,11 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_yes(self):
@@ -176,20 +183,28 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, YES)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_yes(self):
-        self.dialog.yes_label = u"Sure"
+        self.dialog.yes_label = "Sure"
         # test that Yes works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Sure"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Sure"))
 
         self.assertEqual(tester.result, YES)
         self.assertEqual(self.dialog.return_code, YES)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_no(self):
@@ -201,20 +216,28 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, NO)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_renamed_no(self):
-        self.dialog.no_label = u"No way"
+        self.dialog.no_label = "No way"
         # test that No works as expected if renamed
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"No way"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("No way"))
 
         self.assertEqual(tester.result, NO)
         self.assertEqual(self.dialog.return_code, NO)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
@@ -227,15 +250,19 @@ class TestConfirmationDialog(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(self.dialog.return_code, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel_renamed(self):
         self.dialog.cancel = True
-        self.dialog.cancel_label = u"Back"
+        self.dialog.cancel_label = "Back"
         # test that Cancel works as expected
         tester = ModalDialogTester(self.dialog.open)
-        tester.open_and_wait(when_opened=lambda x: x.click_widget(u"Back"))
+        tester.open_and_wait(when_opened=lambda x: x.click_widget("Back"))
 
         self.assertEqual(tester.result, CANCEL)
         self.assertEqual(self.dialog.return_code, CANCEL)
@@ -275,7 +302,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_yes(self):
@@ -286,7 +317,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, YES)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_no(self):
@@ -297,7 +332,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, NO)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_cancel(self):
@@ -310,7 +349,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, CANCEL)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_title(self):
@@ -323,7 +366,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, NO)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_default_yes(self):
@@ -336,7 +383,11 @@ class TestConfirm(unittest.TestCase, GuiTestAssistant):
         self.assertEqual(tester.result, YES)
 
     @unittest.skipIf(
-        is_pyqt, "Confirmation dialog click tests don't work on pyqt5."
+        is_pyqt5, "Confirmation dialog click tests don't work on pyqt5."
+    )  # noqa
+    @unittest.skipIf(
+        is_pyqt4_linux,
+        "Confirmation dialog click tests don't work reliably on linux.  Issue #282.",
     )  # noqa
     @unittest.skipIf(no_modal_dialog_tester, "ModalDialogTester unavailable")
     def test_default_cancel(self):

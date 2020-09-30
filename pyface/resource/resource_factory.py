@@ -21,9 +21,9 @@ class ResourceFactory(object):
     def image_from_file(self, filename):
         """ Creates an image from the data in the specified filename. """
 
-        raise NotImplemented
+        raise NotImplementedError()
 
     def image_from_data(self, data):
         """ Creates an image from the specified data. """
 
-        raise NotImplemented
+        raise NotImplementedError()

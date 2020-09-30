@@ -15,8 +15,9 @@
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Bool, Enum, Int, provides, Str
-
+from traits.api import (
+    Any, Bool, Callable, Enum, Int, List, provides, Str, Tuple
+)
 
 from pyface.i_dialog import IDialog, MDialog
 from pyface.constant import OK, CANCEL, YES, NO
@@ -60,6 +61,13 @@ class Dialog(MDialog, Window):
 
     title = Str("Dialog")
 
+    # Private interface ---------------------------------------------------#
+
+    #: A list of connected Qt signals to be removed before destruction.
+    #: First item in the tuple is the Qt signal. The second item is the event
+    #: handler.
+    _connections_to_remove = List(Tuple(Any, Callable))
+
     # ------------------------------------------------------------------------
     # Protected 'IDialog' interface.
     # ------------------------------------------------------------------------
@@ -77,6 +85,7 @@ class Dialog(MDialog, Window):
 
         btn.setDefault(True)
         btn.clicked.connect(self.control.accept)
+        self._connections_to_remove.append((btn.clicked, self.control.accept))
 
         # 'Cancel' button.
         if self.cancel_label:
@@ -87,6 +96,7 @@ class Dialog(MDialog, Window):
             btn = buttons.addButton(QtGui.QDialogButtonBox.Cancel)
 
         btn.clicked.connect(self.control.reject)
+        self._connections_to_remove.append((btn.clicked, self.control.reject))
 
         # 'Help' button.
         # FIXME v3: In the original code the only possible hook into the help
@@ -138,6 +148,17 @@ class Dialog(MDialog, Window):
         retval = dialog.exec_()
         return _RESULT_MAP[retval]
 
+    # -------------------------------------------------------------------------
+    # 'IWidget' interface.
+    # -------------------------------------------------------------------------
+
+    def destroy(self):
+        while self._connections_to_remove:
+            signal, handler = self._connections_to_remove.pop()
+            signal.disconnect(handler)
+
+        super(Dialog, self).destroy()
+
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
@@ -149,6 +170,9 @@ class Dialog(MDialog, Window):
         # MDialog's open method. For 'nonmodal', we do it here.
         if self.style == "nonmodal":
             dlg.finished.connect(self._finished_fired)
+            self._connections_to_remove.append(
+                (dlg.finished, self._finished_fired)
+            )
 
         if self.size != (-1, -1):
             dlg.resize(*self.size)

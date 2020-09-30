@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+
 import unittest
 from unittest import mock
 

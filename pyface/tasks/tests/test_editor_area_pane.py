@@ -13,6 +13,10 @@ import unittest
 
 from traits.etsconfig.api import ETSConfig
 from pyface.tasks.api import Editor, EditorAreaPane
+from pyface.toolkit import toolkit_object
+
+GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
+no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 USING_WX = ETSConfig.toolkit not in ["", "qt4"]
 
@@ -24,7 +28,7 @@ class EditorAreaPaneTestCase(unittest.TestCase):
         """
         area = EditorAreaPane()
         area.register_factory(Editor, lambda obj: isinstance(obj, int))
-        self.assert_(isinstance(area.create_editor(0), Editor))
+        self.assertTrue(isinstance(area.create_editor(0), Editor))
 
     @unittest.skipIf(USING_WX, "EditorAreaPane is not implemented in WX")
     def test_factories(self):
@@ -37,6 +41,26 @@ class EditorAreaPaneTestCase(unittest.TestCase):
 
         area.unregister_factory(Editor)
         self.assertEqual(area.get_factory(0), None)
+
+
+@unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")
+class TestEditorAreaPane(unittest.TestCase, GuiTestAssistant):
+    def setUp(self):
+        GuiTestAssistant.setUp(self)
+        self.area_pane = EditorAreaPane()
+
+    def tearDown(self):
+        if self.area_pane.control is not None:
+            with self.delete_widget(self.area_pane.control):
+                self.area_pane.destroy()
+        GuiTestAssistant.tearDown(self)
+
+    def test_create_destroy(self):
+        # test that creating and destroying works as expected
+        with self.event_loop():
+            self.area_pane.create(None)
+        with self.event_loop():
+            self.area_pane.destroy()
 
 
 if __name__ == "__main__":

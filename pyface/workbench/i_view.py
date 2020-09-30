@@ -94,7 +94,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         """ Trait initializer. """
 
         id = "%s.%s" % (type(self).__module__, type(self).__name__)
-        logger.warn("view %s has no Id - using <%s>" % (self, id))
+        logger.warning("view %s has no Id - using <%s>" % (self, id))
 
         # If no Id is specified then use the name.
         return id
@@ -103,7 +103,7 @@ class MView(MWorkbenchPart, PerspectiveItem):
         """ Trait initializer. """
 
         name = camel_case_to_words(type(self).__name__)
-        logger.warn("view %s has no name - using <%s>" % (self, name))
+        logger.warning("view %s has no name - using <%s>" % (self, name))
 
         return name
 

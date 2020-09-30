@@ -468,7 +468,7 @@ class Tree(Widget):
         except KeyError:
             # fixme: No, really, this is a serious one... How do we get in this
             # situation.  It came up when using the canvas stuff...
-            logger.warn("removing node: %s" % str(node))
+            logger.warning("removing node: %s" % str(node))
 
     def _get_style(self):
         """ Returns the wx style flags for creating the tree control. """

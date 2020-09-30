@@ -64,7 +64,7 @@ class DockPaneToggleAction(Action):
         return self.dock_pane.name
 
     def _get_tooltip(self):
-        return u"Toggles the visibility of the %s pane." % self.name
+        return "Toggles the visibility of the %s pane." % self.name
 
     @on_trait_change("dock_pane.visible")
     def _update_checked(self):

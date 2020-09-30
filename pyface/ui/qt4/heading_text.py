@@ -57,8 +57,6 @@ class HeadingText(MHeadingText, Widget):
         self.control = QtGui.QLabel(parent)
         self._set_text(self.text)
 
-        self.control.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.control.setFrameShadow(QtGui.QFrame.Raised)
         self.control.setSizePolicy(
             QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed
         )

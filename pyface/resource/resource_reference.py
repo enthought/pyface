@@ -35,7 +35,7 @@ class ResourceReference(HasTraits):
     def load(self):
         """ Loads the resource. """
 
-        raise NotImplementedError
+        raise NotImplementedError()
 
 
 class ImageReference(ResourceReference):

@@ -13,7 +13,7 @@ import gc
 import threading
 
 
-from unittest import mock
+import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
