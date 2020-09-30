@@ -13,6 +13,7 @@ import logging
 from pyface.i_image_resource import IImageResource
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import QAbstractItemModel, QMimeData, QModelIndex, Qt
+from pyface.qt.QtGui import QColor
 from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_view_errors import (
@@ -25,6 +26,9 @@ from .data_wrapper import DataWrapper
 logger = logging.getLogger(__name__)
 
 # XXX This file is scaffolding and may need to be rewritten
+
+WHITE = QColor(255, 255, 255)
+BLACK = QColor(0, 0, 0)
 
 set_check_state_map = {
     Qt.Checked: CheckState.CHECKED,
@@ -187,6 +191,17 @@ class DataViewItemModel(QAbstractItemModel):
                     image = value_type.get_image(self.model, row, column)
                     if isinstance(image, IImageResource):
                         return image.create_image()
+            elif role == Qt.BackgroundRole:
+                if value_type.has_color(self.model, row, column):
+                    color = value_type.get_color(self.model, row, column)
+                    return color.to_toolkit()
+            elif role == Qt.ForegroundRole:
+                if value_type.has_color(self.model, row, column):
+                    color = value_type.get_color(self.model, row, column)
+                    if color.is_dark:
+                        return WHITE
+                    else:
+                        return BLACK
             elif role == Qt.CheckStateRole:
                 if value_type.has_check_state(self.model, row, column):
                     value = value_type.get_check_state(self.model, row, column)

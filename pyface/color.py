@@ -22,12 +22,11 @@ from native toolkit color objects.
 import colorsys
 
 from traits.api import (
-    HasStrictTraits, Property, Range, Tuple, cached_property
+    Bool, HasStrictTraits, Property, Range, Tuple, cached_property
 )
 
-from pyface.util.color_parser import (  # noqa: F401
-    channels_to_ints, ints_to_channels, parse_text
-)
+from pyface.util.color_helpers import channels_to_ints, ints_to_channels, is_dark
+from pyface.util.color_parser import parse_text
 
 
 #: A trait holding a single channel value.
@@ -88,6 +87,9 @@ class Color(HasStrictTraits):
 
     #: A tuple holding the hue, lightness, and saturation channels.
     hls = Property(ChannelTuple, depends_on='rgb')
+
+    #: Whether the color is dark for contrast purposes.
+    is_dark = Property(Bool, depends_on='rgba')
 
     @classmethod
     def from_str(cls, text, **traits):
@@ -254,3 +256,7 @@ class Color(HasStrictTraits):
         h, l, s = value
         r, g, b = colorsys.hls_to_rgb(h, l, s)
         self.rgb = (r, g, b)
+
+    @cached_property
+    def _get_is_dark(self):
+        return is_dark(self.rgb)

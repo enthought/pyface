@@ -13,6 +13,7 @@ from unittest.mock import Mock
 
 from traits.testing.unittest_tools import UnittestTools
 
+from pyface.color import Color
 from pyface.data_view.value_types.constant_value import ConstantValue
 from pyface.image_resource import ImageResource
 
@@ -51,6 +52,43 @@ class TestConstantValue(UnittestTools, TestCase):
         with self.assertTraitChanges(value_type, 'updated'):
             value_type.text = 'something'
         self.assertEqual(value_type.text, 'something')
+
+    def test_has_color_default(self):
+        value_type = ConstantValue()
+        self.assertFalse(value_type.has_color(self.model, [0], [0]))
+
+    def test_has_color(self):
+        value_type = ConstantValue(color=Color(rgba=(0.4, 0.2, 0.6, 0.8)))
+        self.assertTrue(value_type.has_color(self.model, [0], [0]))
+
+    def test_get_color_default(self):
+        value_type = ConstantValue()
+        self.assertIsNone(value_type.get_color(self.model, [0], [0]))
+
+    def test_get_color(self):
+        value_type = ConstantValue(color='rebeccapurple')
+        self.assertEqual(
+            value_type.get_color(self.model, [0], [0]),
+            Color(rgba=(0.4, 0.2, 0.6, 1.0))
+        )
+
+    def test_get_color_changed(self):
+        value_type = ConstantValue()
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.color = Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        self.assertEqual(
+            value_type.get_color(self.model, [0], [0]),
+            Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        )
+
+    def test_get_color_rgba_changed(self):
+        value_type = ConstantValue(color=Color())
+        with self.assertTraitChanges(value_type, 'updated'):
+            value_type.color.rgba = (0.4, 0.2, 0.6, 0.8)
+        self.assertEqual(
+            value_type.get_color(self.model, [0], [0]),
+            Color(rgba=(0.4, 0.2, 0.6, 0.8))
+        )
 
     def test_has_image(self):
         value_type = ConstantValue()

@@ -10,7 +10,13 @@
 
 
 """ Defines common traits used within the pyface library. """
+from collections.abc import Sequence
 import logging
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 from traits.api import (
     ABCHasStrictTraits,
@@ -21,6 +27,9 @@ from traits.api import (
     TraitType,
 )
 from traits.trait_base import get_resource_path
+
+from pyface.color import Color
+from pyface.util.color_parser import ColorParseError
 
 
 logger = logging.getLogger(__name__)
@@ -120,6 +129,54 @@ class Image(TraitType):
         from traitsui.editors.api import ImageEditor
 
         return ImageEditor()
+
+
+# -------------------------------------------------------------------------------
+#  Color
+# -------------------------------------------------------------------------------
+
+
+class PyfaceColor(TraitType):
+    """ A Trait which casts strings and tuples to a PyfaceColor value.
+    """
+
+    #: The default value should be a tuple (factory, args, kwargs)
+    default_value_type = DefaultValue.callable_and_args
+
+    def __init__(self, value=None, **metadata):
+        if value is not None:
+            color = self.validate(None, None, value)
+            default_value = (Color, (), {'rgba': color.rgba})
+        else:
+            default_value = (Color, (), {})
+        super().__init__(default_value, **metadata)
+
+    def validate(self, object, name, value):
+        if isinstance(value, Color):
+            return value
+        if isinstance(value, str):
+            try:
+                return Color.from_str(value)
+            except ColorParseError:
+                self.error(object, name, value)
+        is_array = (
+            np is not None
+            and isinstance(value, (np.ndarray, np.void))
+        )
+        if is_array or isinstance(value, Sequence):
+            channels = tuple(value)
+            if len(channels) == 4:
+                return Color(rgba=channels)
+            elif len(channels) == 3:
+                return Color(rgb=channels)
+
+        self.error(object, name, value)
+
+    def info(self):
+        return (
+            "a Pyface Color, a #-hexadecimal rgb or rgba string,  a standard "
+            "color name, or a sequence of RGBA or RGB values between 0 and 1"
+        )
 
 
 # -------------------------------------------------------------------------------

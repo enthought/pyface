@@ -23,6 +23,7 @@ from enum import IntEnum
 
 from traits.api import ABCHasStrictTraits, Event, observe
 
+from pyface.color import Color
 from .data_view_errors import DataViewSetError
 
 
@@ -190,6 +191,25 @@ class AbstractValueType(ABCHasStrictTraits):
             If the value cannot be set.
         """
         raise DataViewSetError("Cannot set value.")
+
+    def has_color(self, model, row, column):
+        """ Whether or not the value has color data.
+
+        has_color : bool
+            Whether or not the value has data-associated color
+            values.
+        """
+        return False
+
+    def get_color(self, model, row, column):
+        """ Get data-associated colour values for the given item.
+
+        The default implementation returns white.
+
+        color : Color instance
+            The color associated with the cell.
+        """
+        return Color(rgba=(1.0, 1.0, 1.0, 1.0))
 
     def has_image(self, model, row, column):
         """ Whether or not the value has an image associated with it.

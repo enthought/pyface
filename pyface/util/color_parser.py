@@ -25,6 +25,8 @@ point and integer values.
 
 import re
 
+from .color_helpers import ints_to_channels
+
 
 #: A dictionary mapping known color names to rgba tuples.
 color_table = {
@@ -185,48 +187,6 @@ color_table = {
 
 # Translation table for stripping extraneous characters out of names.
 ignored = str.maketrans({' ': None, '-': None, '_': None})
-
-
-def channels_to_ints(channels, maximum=255):
-    """ Convert an iterable of floating point channel values to integers.
-
-    Values are rounded to the nearest integer, rather than truncated.
-
-    Parameters
-    ----------
-    channels : iterable of float
-        An iterable of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    values : tuple of int
-        A tuple of values as integers between 0 and max, inclusive.
-    """
-    return tuple(int(round(channel * maximum)) for channel in channels)
-
-
-def ints_to_channels(values, maximum=255):
-    """ Convert an iterable of integers to floating point channel values.
-
-    Parameters
-    ----------
-    values : tuple of int
-        An iterable of values as integers between 0 and max, inclusive.
-    maximum : int
-        The maximum value of the integer range.  Common values are 15,
-        65535 or 255, which is the default.
-
-    Returns
-    -------
-    channels : iterable of float
-        A tuple of channel values, each value between 0.0 and 1.0,
-        inclusive.
-    """
-    return tuple(value / maximum for value in values)
 
 
 def _parse_name(text):
