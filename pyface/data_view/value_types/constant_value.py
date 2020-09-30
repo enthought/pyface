@@ -8,9 +8,9 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import Instance, Str, observe
+from traits.api import Str, Union, observe
 
-from pyface.color import Color
+from pyface.ui_traits import PyfaceColor
 from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.ui_traits import Image
 
@@ -27,7 +27,7 @@ class ConstantValue(AbstractValueType):
     text = Str(update_value_type=True)
 
     #: The color value to display or None if no color.
-    color = Instance(Color)
+    color = Union(None, PyfaceColor)
 
     #: The image value to display.
     image = Image(update_value_type=True)
