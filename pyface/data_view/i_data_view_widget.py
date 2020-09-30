@@ -37,7 +37,7 @@ class IDataViewWidget(IWidget):
     #: handle drop actions which either affect the whole data view, or where
     #: the data handler can work out how to change the underlying data without
     #: additional input.
-    drop_handlers = List(Instance(IDropHandler))
+    drop_handlers = List(Instance(IDropHandler, allow_none=False))
 
     #: What can be selected.  Implementations may optionally allow "column"
     #: and "item" selection types.
@@ -67,7 +67,7 @@ class MDataViewWidget(HasStrictTraits):
     #: handle drop actions which either affect the whole data view, or where
     #: the data handler can work out how to change the underlying data without
     #: additional input.
-    drop_handlers = List(Instance(IDropHandler))
+    drop_handlers = List(Instance(IDropHandler, allow_none=False))
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.

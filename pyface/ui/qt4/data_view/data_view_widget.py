@@ -51,41 +51,41 @@ class DataViewTreeView(QTreeView):
     _widget = None
 
     def dragEnterEvent(self, event):
-        if self._widget is not None:
-            widget = self._widget
-            for drop_handler in widget.drop_handlers:
-                if drop_handler.can_handle_drop(event, self):
-                    event.acceptProposedAction()
-                    return
-        super().dragEnterEvent(event)
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragEnterEvent(event)
 
     def dragMoveEvent(self, event):
-        if self._widget is not None:
-            widget = self._widget
-            for drop_handler in widget.drop_handlers:
-                if drop_handler.can_handle_drop(event, self):
-                    event.acceptProposedAction()
-                    return
-        super().dragMoveEvent(event)
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
 
     def dragLeaveEvent(self, event):
-        if self._widget is not None:
-            widget = self._widget
-            for drop_handler in widget.drop_handlers:
-                if drop_handler.can_handle_drop(event, self):
-                    event.acceptProposedAction()
-                    return
-        super().dragLeaveEvent(event)
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragLeaveEvent(event)
 
     def dropEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            drop_handler.handle_drop(event, self)
+            event.acceptProposedAction()
+        else:
+            super().dropEvent(event)
+
+    def _get_drop_handler(self, event):
         if self._widget is not None:
             widget = self._widget
             for drop_handler in widget.drop_handlers:
                 if drop_handler.can_handle_drop(event, self):
-                    drop_handler.handle_drop(event, self)
-                    event.acceptProposedAction()
-                    return
-        super().dropEvent(event)
+                    return drop_handler
+        return None
 
 
 @provides(IDataViewWidget)
