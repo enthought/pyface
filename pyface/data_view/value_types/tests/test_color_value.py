@@ -37,35 +37,45 @@ class TestColorValue(TestCase):
     def test_get_editor_value(self):
         value = ColorValue()
         editable = value.get_editor_value(self.model, [0], [0])
-        self.assertEqual(editable, Color(rgba=(0.4, 0.2, 0.6, 0.8)))
+        self.assertEqual(editable, "#663399CC")
 
     def test_set_editor_value(self):
         value = ColorValue()
-        value.set_editor_value(self.model, [0], [0], Color())
-        self.model.set_value.assert_called_once_with([0], [0], Color())
+        value.set_editor_value(self.model, [0], [0], "#3399CC66")
+        self.model.set_value.assert_called_once_with(
+            [0],
+            [0],
+            Color(rgba=(0.2, 0.6, 0.8, 0.4)),
+        )
 
     def test_get_text(self):
         value = ColorValue()
         editable = value.get_text(self.model, [0], [0])
         self.assertEqual(editable, "#663399CC")
 
-    @expectedFailure
     def test_set_text(self):
         value = ColorValue()
         value.set_text(self.model, [0], [0], "red")
-        self.model.set_value.assert_called_once_with([0], [0], Color(red=1.0))
+        self.model.set_value.assert_called_once_with(
+            [0],
+            [0],
+            Color(rgba=(1.0, 0.0, 0.0, 1.0)),
+        )
 
     def test_set_text_error(self):
         value = ColorValue()
         with self.assertRaises(DataViewSetError):
             value.set_text(self.model, [0], [0], "not a real color")
 
-    @expectedFailure
     def test_set_text_no_set_value(self):
         self.model.can_set_value = Mock(return_value=False)
         value = ColorValue()
         value.set_text(self.model, [0], [0], "red")
-        self.model.set_value.assert_called_once_with([0], [0], Color(red=1.0))
+        self.model.set_value.assert_called_once_with(
+            [0],
+            [0],
+            Color(rgba=(1.0, 0.0, 0.0, 1.0)),
+        )
 
     def test_get_color(self):
         value = ColorValue()

@@ -53,12 +53,6 @@ class TestConstantValue(UnittestTools, TestCase):
             value_type.text = 'something'
         self.assertEqual(value_type.text, 'something')
 
-    def test_text_changed(self):
-        value_type = ConstantValue()
-        with self.assertTraitChanges(value_type, 'updated'):
-            value_type.text = 'something'
-        self.assertEqual(value_type.text, 'something')
-
     def test_has_color_default(self):
         value_type = ConstantValue()
         self.assertFalse(value_type.has_color(self.model, [0], [0]))
@@ -72,10 +66,10 @@ class TestConstantValue(UnittestTools, TestCase):
         self.assertIsNone(value_type.get_color(self.model, [0], [0]))
 
     def test_get_color(self):
-        value_type = ConstantValue(color=Color(rgba=(0.4, 0.2, 0.6, 0.8)))
+        value_type = ConstantValue(color='rebeccapurple')
         self.assertEqual(
             value_type.get_color(self.model, [0], [0]),
-            Color(rgba=(0.4, 0.2, 0.6, 0.8))
+            Color(rgba=(0.4, 0.2, 0.6, 1.0))
         )
 
     def test_get_color_changed(self):

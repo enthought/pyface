@@ -44,7 +44,7 @@ class ColorValue(EditableValue):
         """
         return isinstance(value, Color)
 
-    def get_editable(self, model, row, column):
+    def get_editor_value(self, model, row, column):
         """ Get the editable representation of the underlying value.
 
         The default uses a text hex representation of the color.
@@ -65,7 +65,7 @@ class ColorValue(EditableValue):
         """
         return model.get_value(row, column).hex()
 
-    def set_editable(self, model, row, column, value):
+    def set_editor_value(self, model, row, column, value):
         """ Set the editable representation of the underlying value.
 
         The default expects a string that can be parsed to a color value.
@@ -90,7 +90,7 @@ class ColorValue(EditableValue):
             color = Color.from_str(value)
         except Exception:
             raise DataViewSetError()
-        return super().set_editable(model, row, column, color)
+        return super().set_editor_value(model, row, column, color)
 
     def get_text(self, model, row, column):
         """ Get the textual representation of the underlying value.
@@ -130,7 +130,7 @@ class ColorValue(EditableValue):
         success : bool
             Whether or not the value was successfully set.
         """
-        return self.set_editable(model, row, column, text)
+        return self.set_editor_value(model, row, column, text)
 
     def has_color(self, model, row, column):
         """ Whether or not the value has color data.

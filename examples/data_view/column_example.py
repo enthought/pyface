@@ -10,14 +10,12 @@
 
 """ Example showing DataView for ColumnDataModel using row info. """
 
-from functools import partial
 import logging
-from random import choice, randint, uniform
 
 from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
-from pyface.color import Color
+from pyface.ui_traits import PyfaceColor
 from pyface.data_view.i_data_view_widget import IDataViewWidget
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import (
@@ -42,22 +40,22 @@ flags = {
 
 class Address(HasStrictTraits):
 
-    street = Str
+    street = Str()
 
-    city = Str
+    city = Str()
 
-    country = Str
+    country = Str()
 
 
 class Person(HasStrictTraits):
 
-    name = Str
+    name = Str()
 
-    age = Int
+    age = Int()
 
-    favorite_color = Instance(Color)
+    favorite_color = PyfaceColor()
 
-    contacted = Bool
+    contacted = Bool()
 
     address = Instance(Address)
 

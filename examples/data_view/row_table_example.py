@@ -13,7 +13,7 @@ import logging
 from traits.api import Bool, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI
-from pyface.color import Color
+from pyface.ui_traits import PyfaceColor
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
 from pyface.data_view.data_models.row_table_data_model import (
     RowTableDataModel
@@ -49,9 +49,9 @@ class Person(HasStrictTraits):
 
     age = Int()
 
-    favorite_color = Instance(Color)
+    favorite_color = PyfaceColor()
 
-    contacted = Bool
+    contacted = Bool()
 
     address = Instance(Address, ())
 
