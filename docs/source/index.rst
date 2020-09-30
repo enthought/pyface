@@ -75,5 +75,6 @@ Contents
    Toolkits <toolkits>
    Submodules <submodules>
    Pyface Applications <applications>
+   Pyface Trait Types <traits>
    API Documentation <api/pyface>
    Change Log <changelog>
