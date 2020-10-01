@@ -10,13 +10,13 @@
 
 import logging
 
-from traits.api import Bool, Enum, Instance, observe, provides
+from traits.api import Callable, Enum, Instance, observe, provides
 
-from pyface.qt.QtCore import QAbstractItemModel
+from pyface.qt.QtCore import QAbstractItemModel, QEvent, QObject
 from pyface.qt.QtGui import (
-    QAbstractItemView, QItemSelection, QItemSelectionModel, QTreeView
+    QAbstractItemView, QItemSelection, QItemSelectionModel, QPalette,
+    QTreeView
 )
-from pyface.data_view.abstract_data_model import AbstractDataModel
 from pyface.data_view.i_data_view_widget import (
     IDataViewWidget, MDataViewWidget
 )
@@ -45,9 +45,55 @@ pyface_selection_modes = {
 }
 
 
+class DataViewTreeView(QTreeView):
+    """ QTreeView subclass that handles drag and drop via DropHandlers. """
+
+    _widget = None
+
+    def dragEnterEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragEnterEvent(event)
+
+    def dragMoveEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
+
+    def dragLeaveEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            event.acceptProposedAction()
+        else:
+            super().dragLeaveEvent(event)
+
+    def dropEvent(self, event):
+        drop_handler = self._get_drop_handler(event)
+        if drop_handler is not None:
+            drop_handler.handle_drop(event, self)
+            event.acceptProposedAction()
+        else:
+            super().dropEvent(event)
+
+    def _get_drop_handler(self, event):
+        if self._widget is not None:
+            widget = self._widget
+            for drop_handler in widget.drop_handlers:
+                if drop_handler.can_handle_drop(event, self):
+                    return drop_handler
+        return None
+
+
 @provides(IDataViewWidget)
 class DataViewWidget(MDataViewWidget, Widget):
     """ The Qt implementation of the DataViewWidget. """
+
+    #: Factory for the underlying Qt control, to facilitate replacement
+    control_factory = Callable(DataViewTreeView)
 
     # IDataViewWidget Interface traits --------------------------------------
 
@@ -173,19 +219,26 @@ class DataViewWidget(MDataViewWidget, Widget):
         """ Create the DataViewWidget's toolkit control. """
         self._create_item_model()
 
-        control = QTreeView(parent)
+        control = self.control_factory(parent)
+        control._widget = self
         control.setUniformRowHeights(True)
         control.setAnimated(True)
         control.setModel(self._item_model)
+        control.setAcceptDrops(True)
+        control.setDropIndicatorShown(True)
         return control
 
     def destroy(self):
         """ Perform any actions required to destroy the control.
         """
-        self.control.setModel(None)
+        if self.control is not None:
+            self.control.setModel(None)
+
+            # ensure that we release references
+            self.control._widget = None
+            self._item_model = None
+
         super().destroy()
-        # ensure that we release the reference to the item model
-        self._item_model = None
 
     # ------------------------------------------------------------------------
     # Private methods
