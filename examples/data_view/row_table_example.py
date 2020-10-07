@@ -10,9 +10,9 @@
 
 import logging
 
-from traits.api import Bool, HasStrictTraits, Instance, Int, Str, List
+from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
-from pyface.api import ApplicationWindow, GUI
+from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.ui_traits import PyfaceColor
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
 from pyface.data_view.data_models.row_table_data_model import (
@@ -30,6 +30,13 @@ from example_data import (
 
 
 logger = logging.getLogger(__name__)
+
+
+flags = {
+    'Canada': ImageResource('ca.png'),
+    'UK': ImageResource('gb.png'),
+    'USA': ImageResource('us.png'),
+}
 
 
 # The data model
@@ -54,6 +61,19 @@ class Person(HasStrictTraits):
     contacted = Bool()
 
     address = Instance(Address, ())
+
+
+class CountryValue(TextValue):
+
+    flags = Dict(Str, Image, update_value_type=True)
+
+    def has_image(self, model, row, column):
+        value = model.get_value(row, column)
+        return value in self.flags
+
+    def get_image(self, model, row, column):
+        value = model.get_value(row, column)
+        return self.flags[value]
 
 
 row_header_data = AttributeDataAccessor(
@@ -85,7 +105,7 @@ column_data = [
     ),
     AttributeDataAccessor(
         attr="address.country",
-        value_type=TextValue(),
+        value_type=CountryValue(flags=flags),
     ),
 ]
 

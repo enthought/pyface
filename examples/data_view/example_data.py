@@ -90,4 +90,4 @@ def city():
 
 
 def country():
-    return choice(['Canada', 'United States', 'United Kingdom'])
+    return choice(['Canada', 'USA', 'UK'])

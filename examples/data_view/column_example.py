@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 flags = {
+    'Canada': ImageResource('ca.png'),
     'UK': ImageResource('gb.png'),
     'USA': ImageResource('us.png'),
 }
@@ -113,9 +114,7 @@ row_info = HasTraitsRowInfo(
                 HasTraitsRowInfo(
                     title="Country",
                     value="address.country",
-                    value_type=CountryValue(
-                        flags=flags,
-                    ),
+                    value_type=CountryValue(flags=flags),
                 ),
             ],
         ),
