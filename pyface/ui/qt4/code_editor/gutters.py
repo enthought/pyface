@@ -96,9 +96,17 @@ class LineNumberWidget(GutterWidget):
         ndigits = max(
             self.min_char_width, int(math.floor(math.log10(nlines) + 1))
         )
-        width = max(
-            self.fontMetrics().width("0" * ndigits) + 3, self.min_width
-        )
+        # QFontMetrics.width() is deprecated and Qt docs suggest using
+        # horizontalAdvance() instead, but is only available since Qt 5.11
+        if QtCore.__version_info__ >= (5, 11):
+            width = max(
+                self.fontMetrics().horizontalAdvance("0" * ndigits) + 3,
+                self.min_width
+            )
+        else:
+            width = max(
+                self.fontMetrics().width("0" * ndigits) + 3, self.min_width
+            )
         return width
 
     def sizeHint(self):

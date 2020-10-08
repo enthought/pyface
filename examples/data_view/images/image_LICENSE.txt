@@ -11,5 +11,6 @@ released under a 3 clause BSD license.
 Files and orginal authors:
 ----------------------------------------------------------------------------
 examples/data_view/images:
+      ca.png | FamFamFam Flags
       gb.png | FamFamFam Flags
       us.png | FamFamFam Flags
