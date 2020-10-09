@@ -89,10 +89,10 @@ def to_csv_row(data, delimiter=',', encoding='utf-8', **kwargs):
     raw_data : bytes
         The serialized data as a bytestring.
     """
-    with StringIO() as fp:
-        writer = csv.writer(fp, delimiter=delimiter, **kwargs)
-        writer.writerow(data)
-        return fp.getvalue().encode(encoding)
+    fp = StringIO()
+    writer = csv.writer(fp, delimiter=delimiter, **kwargs)
+    writer.writerow(data)
+    return fp.getvalue().encode(encoding)
 
 
 def from_csv_row(raw_data, delimiter=',', encoding='utf-8', **kwargs):
@@ -116,10 +116,9 @@ def from_csv_row(raw_data, delimiter=',', encoding='utf-8', **kwargs):
     data : list of str
         The data extracted as a list of strings.
     """
-    with StringIO(raw_data.decode(encoding)) as fp:
-        reader = csv.reader(fp, delimiter=delimiter, **kwargs)
-        data = next(reader)
-    return data
+    fp = StringIO(raw_data.decode(encoding))
+    reader = csv.reader(fp, delimiter=delimiter, **kwargs)
+    return next(reader)
 
 
 def to_csv_column(data, delimiter=',', encoding='utf-8', **kwargs):
@@ -142,11 +141,11 @@ def to_csv_column(data, delimiter=',', encoding='utf-8', **kwargs):
     raw_data : bytes
         The serialized data as a bytestring.
     """
-    with StringIO() as fp:
-        writer = csv.writer(fp, delimiter=delimiter, **kwargs)
-        for row in data:
-            writer.writerow([row])
-        return fp.getvalue().encode(encoding)
+    fp = StringIO()
+    writer = csv.writer(fp, delimiter=delimiter, **kwargs)
+    for row in data:
+        writer.writerow([row])
+    return fp.getvalue().encode(encoding)
 
 
 def from_csv_column(raw_data, delimiter=',', encoding='utf-8', **kwargs):
@@ -170,10 +169,9 @@ def from_csv_column(raw_data, delimiter=',', encoding='utf-8', **kwargs):
     data : list of str
         The data extracted as a list of strings.
     """
-    with StringIO(raw_data.decode(encoding)) as fp:
-        reader = csv.reader(fp, delimiter=delimiter, **kwargs)
-        data = [row[0] for row in reader]
-    return data
+    fp = StringIO(raw_data.decode(encoding))
+    reader = csv.reader(fp, delimiter=delimiter, **kwargs)
+    return [row[0] for row in reader]
 
 
 text_row_format = DataFormat(
@@ -212,11 +210,11 @@ def to_csv(data, delimiter=',', encoding='utf-8', **kwargs):
     raw_data : bytes
         The serialized data as a bytestring.
     """
-    with StringIO() as fp:
-        writer = csv.writer(fp, delimiter=delimiter, **kwargs)
-        for row in data:
-            writer.writerow(row)
-        return fp.getvalue().encode(encoding)
+    fp = StringIO()
+    writer = csv.writer(fp, delimiter=delimiter, **kwargs)
+    for row in data:
+        writer.writerow(row)
+    return fp.getvalue().encode(encoding)
 
 
 def from_csv(raw_data, delimiter=',', encoding='utf-8', **kwargs):
@@ -238,10 +236,9 @@ def from_csv(raw_data, delimiter=',', encoding='utf-8', **kwargs):
     data : list of list of str
         The data extracted as a list of lists of strings.
     """
-    with StringIO(raw_data.decode(encoding)) as fp:
-        reader = csv.reader(fp, delimiter=delimiter, **kwargs)
-        data = list(reader)
-    return data
+    fp = StringIO(raw_data.decode(encoding))
+    reader = csv.reader(fp, delimiter=delimiter, **kwargs)
+    return list(reader)
 
 
 def to_npy(data):
@@ -257,12 +254,12 @@ def to_npy(data):
     raw_data : bytes
         The serialized data as a bytestring.
     """
-    from numpy import save, atleast_2d
+    import numpy as np
 
-    data = atleast_2d(data)
-    with BytesIO() as fp:
-        save(fp, data, allow_pickle=False)
-        return fp.getvalue()
+    data = np.atleast_2d(data)
+    fp = BytesIO()
+    np.save(fp, data, allow_pickle=False)
+    return fp.getvalue()
 
 
 def from_npy(raw_data):
@@ -278,10 +275,10 @@ def from_npy(raw_data):
     data : list of list of str
         The data extracted as a list of lists of strings.
     """
-    from numpy import load
+    import numpy as np
 
-    with BytesIO(raw_data) as fp:
-        return load(fp, allow_pickle=False)
+    fp = BytesIO(raw_data)
+    return np.load(fp, allow_pickle=False)
 
 
 table_format = DataFormat(
