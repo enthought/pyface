@@ -108,7 +108,7 @@ class PaneItem(LayoutItem):
 
     # The ID of the item. If the item refers to a TaskPane, this is the ID of
     # that TaskPane.
-    id = Union(Str, Int, default="", pretty_skip=True)
+    id = Union(Str, Int, default_value="", pretty_skip=True)
 
     # The width of the pane in pixels. If not specified, the pane will be sized
     # according to its size hint.
@@ -136,7 +136,7 @@ class Tabbed(LayoutContainer):
 
     # The ID of the TaskPane which is active in layout. If not specified, the
     # first pane is active.
-    active_tab = Union(Str, Int, default="")
+    active_tab = Union(Str, Int, default_value="")
 
 
 class Splitter(LayoutContainer):
