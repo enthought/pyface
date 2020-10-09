@@ -44,9 +44,9 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # suggest using screens() instead, but screens in not available in qt4
         # see issue: enthought/pyface#721
         if is_qt5:
-            return QtGui.QApplication.instance().screens()[0].geometry().width()
+            return QtGui.QApplication.instance().screens()[0].availableGeometry().width()
         else:
-            return QtGui.QApplication.instance().desktop().screenGeometry().width()
+            return QtGui.QApplication.instance().desktop().availableGeometry().width()
 
     def _get_screen_height(self):
         # QDesktopWidget.screenGeometry(int screen) is deprecated and Qt docs
@@ -54,11 +54,11 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # see issue: enthought/pyface#721
         if is_qt5:
             return (
-                QtGui.QApplication.instance().screens()[0].geometry().height()
+                QtGui.QApplication.instance().screens()[0].availableGeometry().height()
             )
         else:
             return (
-                QtGui.QApplication.instance().desktop().screenGeometry().height()
+                QtGui.QApplication.instance().desktop().availableGeometry().height()
             )
 
     def _get_dialog_background_color(self):
