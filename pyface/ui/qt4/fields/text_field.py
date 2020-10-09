@@ -11,7 +11,7 @@
 """ The Qt-specific implementation of the text field class """
 
 
-from traits.api import Trait, provides
+from traits.api import Map, provides
 
 from pyface.fields.i_text_field import ITextField, MTextField
 from pyface.qt.QtGui import QLineEdit
@@ -29,7 +29,7 @@ QT_ECHO_MODE_TO_ECHO = {
 }
 
 # mapped trait for Qt line edit echo modes
-Echo = Trait("normal", ECHO_TO_QT_ECHO_MODE)
+Echo = Map(ECHO_TO_QT_ECHO_MODE, default_value="normal")
 
 
 @provides(ITextField)
