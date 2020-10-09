@@ -23,7 +23,6 @@ from traits.api import (
     Bool,
     Callable,
     Dict,
-    Either,
     Event,
     Float,
     HasTraits,
@@ -32,6 +31,7 @@ from traits.api import (
     Property,
     Range,
     Tuple,
+    Union,
     provides,
 )
 
@@ -51,10 +51,10 @@ class ITimer(Interface):
     interval = Range(low=0.0)
 
     #: The number of times to repeat the callback, or None if no limit.
-    repeat = Either(None, Int)
+    repeat = Union(None, Int)
 
     #: The maximum length of time to run in seconds, or None if no limit.
-    expire = Either(None, Float)
+    expire = Union(None, Float)
 
     #: Whether or not the timer is currently running.
     active = Bool()
@@ -132,10 +132,10 @@ class BaseTimer(ABCHasTraits):
     interval = Range(low=0.0, value=0.05)
 
     #: The number of times to repeat the callback, or None if no limit.
-    repeat = Either(None, Int)
+    repeat = Union(None, Int)
 
     #: The maximum length of time to run in seconds, or None if no limit.
-    expire = Either(None, Float)
+    expire = Union(None, Float)
 
     #: Property that controls the state of the timer.
     active = Property(Bool, depends_on="_active")

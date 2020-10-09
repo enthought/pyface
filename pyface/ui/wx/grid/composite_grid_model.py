@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 
-from traits.api import Dict, Either, Instance, List
+from traits.api import Dict, Instance, List, Union
 
 
 from .grid_model import GridModel, GridRow
@@ -23,7 +23,7 @@ class CompositeGridModel(GridModel):
     data = List(Instance(GridModel))
 
     # The rows in the model.
-    rows = Either(None, List(Instance(GridRow)))
+    rows = Union(None, List(Instance(GridRow)))
 
     # The cached data indexes.
     _data_index = Dict()
