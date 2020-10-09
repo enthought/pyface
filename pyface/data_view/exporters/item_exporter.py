@@ -1,3 +1,12 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
 
 from pyface.data_view.abstract_data_exporter import AbstractDataExporter
 from pyface.data_view.data_view_errors import DataViewGetError
@@ -43,5 +52,7 @@ class ItemExporter(AbstractDataExporter):
         data : any
             The data, of a type that can be serialized by the format.
         """
+        if len(indices) != 1:
+            raise DataViewGetError("ItemExporter can only export single values")
         row, column = indices[0]
         return self.get_value(model, row, column)

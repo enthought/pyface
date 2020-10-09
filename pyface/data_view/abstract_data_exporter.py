@@ -1,3 +1,13 @@
+# (C) Copyright 2005-2020 Enthought, Inc., Austin, TX
+# All rights reserved.
+#
+# This software is provided without warranty under the terms of the BSD
+# license included in LICENSE.txt and may be redistributed only under
+# the conditions described in the aforementioned license. The license
+# is also available online at http://www.enthought.com/licenses/BSD.txt
+#
+# Thanks for using Enthought open source!
+
 from abc import abstractmethod
 
 from traits.api import ABCHasStrictTraits, Bool, Instance
@@ -9,7 +19,10 @@ from pyface.data_view.i_data_wrapper import DataFormat
 class AbstractDataExporter(ABCHasStrictTraits):
     """ ABC for classes that export data from a data view.
 
-    This is used by the
+    Concrete classes should implement the ``get_data`` method so that
+    it produces a value that can be serialized using the provided
+    ``format``.  Some convenience methods are provided to get
+    text values, as that is a common use-case.
     """
 
     #: The DataFormat used to serialize the exported data.

@@ -13,7 +13,7 @@ from io import BytesIO, StringIO
 import os
 import json
 
-from .i_data_wrapper import DataFormat, text_format
+from pyface.data_view.i_data_wrapper import DataFormat, text_format
 
 
 # Scalar formats
