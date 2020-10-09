@@ -133,7 +133,10 @@ class TestWidget(unittest.TestCase, UnittestTools):
 
         if "column" in selection_types:
             self.widget.selection_type = "column"
-            self.assertEqual(self.widget._get_control_selection_type(), "column")
+            self.assertEqual(
+                self.widget._get_control_selection_type(),
+                "column",
+            )
             self.assertEqual(self.widget.selection, [])
 
         if "item" in selection_types:
