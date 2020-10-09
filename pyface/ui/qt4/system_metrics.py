@@ -54,11 +54,11 @@ class SystemMetrics(MSystemMetrics, HasTraits):
         # see issue: enthought/pyface#721
         if is_qt5:
             return (
-                QtGui.QApplication.instance().screens()[0].geometry().height()
+                QtGui.QApplication.instance().screens()[0].availableGeometry().height()
             )
         else:
             return (
-                QtGui.QApplication.instance().desktop().screenGeometry().height()
+                QtGui.QApplication.instance().desktop().availableGeometry().height()
             )
 
     def _get_dialog_background_color(self):
