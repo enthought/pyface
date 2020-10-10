@@ -11,7 +11,7 @@
 """ The base interface for all pyface widgets. """
 
 
-from traits.api import Any, Bool, Interface
+from traits.api import Any, Bool, HasTraits, Interface
 
 
 class IWidget(Interface):
