@@ -90,7 +90,7 @@ class IWidget(Interface):
         """ Remove toolkit-specific bindings for events """
 
 
-class MWidget(object):
+class MWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
     """

@@ -16,7 +16,7 @@ import os
 
 
 from traits.etsconfig.api import ETSConfig
-from traits.api import Bool, Interface, Str
+from traits.api import Bool, HasTraits, Interface, Str
 
 
 # Logging.
@@ -159,7 +159,7 @@ class IGUI(Interface):
         """ Stop the GUI event loop. """
 
 
-class MGUI(object):
+class MGUI(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IGUI interface.
 

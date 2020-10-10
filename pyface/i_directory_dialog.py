@@ -12,7 +12,7 @@
 """
 
 
-from traits.api import Bool, Str
+from traits.api import Bool, HasTraits, Str
 
 
 from pyface.i_dialog import IDialog
@@ -42,7 +42,7 @@ class IDirectoryDialog(IDialog):
     path = Str()
 
 
-class MDirectoryDialog(object):
+class MDirectoryDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDirectoryDialog interface.
     """

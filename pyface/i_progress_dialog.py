@@ -11,7 +11,7 @@
 """ The interface for a dialog that allows the user to open/save files etc. """
 
 
-from traits.api import Any, Bool, Int, Str
+from traits.api import Any, Bool, HasTraits, Int, Str
 
 
 from pyface.i_dialog import IDialog
@@ -74,7 +74,7 @@ class IProgressDialog(IDialog):
         """
 
 
-class MProgressDialog(object):
+class MProgressDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IProgressDialog interface.
 

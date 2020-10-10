@@ -11,7 +11,7 @@
 """ The interface for all pyface wizards. """
 
 
-from traits.api import Bool, Instance, List, Str
+from traits.api import Bool, HasTraits, Instance, List, Str
 from pyface.i_dialog import IDialog
 
 
@@ -50,7 +50,7 @@ class IWizard(IDialog):
         """ Return to the previous page in the wizard. """
 
 
-class MWizard(object):
+class MWizard(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWizard interface.
 

@@ -11,7 +11,7 @@
 """ Mix-in class for split widgets. """
 
 
-from traits.api import Callable, Enum, Float, Interface
+from traits.api import Callable, Enum, Float, HasTraits, Interface
 
 
 class ISplitWidget(Interface):
@@ -86,7 +86,7 @@ class ISplitWidget(Interface):
         """
 
 
-class MSplitWidget(object):
+class MSplitWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISplitWidget interface.
     """

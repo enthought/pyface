@@ -11,7 +11,7 @@
 """ The interface for a simple 'About' dialog. """
 
 
-from traits.api import Instance, List, Str
+from traits.api import HasTraits, Instance, List, Str
 
 
 from pyface.i_dialog import IDialog
@@ -33,7 +33,7 @@ class IAboutDialog(IDialog):
     image = Instance(ImageResource, ImageResource("about"))
 
 
-class MAboutDialog(object):
+class MAboutDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IAboutDialog interface.
     """

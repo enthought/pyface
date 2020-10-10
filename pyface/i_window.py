@@ -13,7 +13,7 @@
 """ The abstract interface for all pyface top-level windows. """
 
 
-from traits.api import Event, Tuple, Str, Vetoable, VetoableEvent
+from traits.api import Event, HasTraits, Tuple, Str, Vetoable, VetoableEvent
 
 
 from pyface.constant import NO
@@ -170,7 +170,7 @@ class IWindow(IWidget):
         """
 
 
-class MWindow(object):
+class MWindow(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWindow interface.
 
