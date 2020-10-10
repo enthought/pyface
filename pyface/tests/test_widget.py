@@ -53,6 +53,11 @@ class TestWidget(unittest.TestCase, UnittestTools):
     def test_create(self):
         # create is not Implemented
         with self.assertRaises(NotImplementedError):
+            self.widget.create()
+
+    def test__create(self):
+        # _create is not Implemented
+        with self.assertRaises(NotImplementedError):
             self.widget._create()
 
     def test_destroy(self):
@@ -99,7 +104,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_lifecycle(self):
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
         with self.event_loop():
             self.widget.destroy()
 
@@ -107,14 +112,14 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
         self.widget.visible = False
         self.widget.enabled = False
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
 
         self.assertFalse(self.widget.control.isVisible())
         self.assertFalse(self.widget.control.isEnabled())
 
     def test_show(self):
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "visible", count=1):
             with self.event_loop():
@@ -124,7 +129,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_visible(self):
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "visible", count=1):
             with self.event_loop():
@@ -134,7 +139,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_enable(self):
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "enabled", count=1):
             with self.event_loop():
@@ -144,7 +149,7 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
     def test_enabled(self):
         with self.event_loop():
-            self.widget._create()
+            self.widget.create()
 
         with self.assertTraitChanges(self.widget, "enabled", count=1):
             with self.event_loop():
