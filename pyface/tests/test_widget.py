@@ -11,8 +11,10 @@
 
 import unittest
 
+from traits.api import Any, Bool
 from traits.testing.unittest_tools import UnittestTools
 
+from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 from ..widget import Widget
 
@@ -21,6 +23,10 @@ no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 
 class ConcreteWidget(Widget):
+
+    # a trait for testing connection of observeres
+    flag = Bool(widget_observer='_flag_updated')
+
     def _create_control(self, parent):
         if toolkit_object.toolkit == "wx":
             import wx
@@ -37,6 +43,9 @@ class ConcreteWidget(Widget):
         else:
             control = None
         return control
+
+    def _flag_updated(self, event):
+        self.flag_event = event
 
 
 class TestWidget(unittest.TestCase, UnittestTools):
@@ -82,6 +91,36 @@ class TestWidget(unittest.TestCase, UnittestTools):
             self.widget.enabled = False
 
         self.assertFalse(self.widget.enabled)
+
+    def test_widget_observers(self):
+        self.window = ApplicationWindow()
+        self.window._create()
+
+        self.widget = ConcreteWidget(parent=self.window.control)
+        self.widget._create()
+
+        try:
+            with self.assertTraitChanges(self.widget, "flag", count=1):
+                self.widget.flag = True
+
+            flag_event = getattr(self.widget, 'flag_event', None)
+            self.assertIsNotNone(flag_event)
+            self.assertEqual(flag_event.object, self.widget)
+            self.assertEqual(flag_event.name, "flag")
+            self.assertEqual(flag_event.old, False)
+            self.assertEqual(flag_event.new, True)
+
+            self.widget.flag_event = None
+
+            self.widget.destroy()
+
+            with self.assertTraitChanges(self.widget, "flag", count=1):
+                self.widget.flag = False
+
+            self.assertIsNone(self.widget.flag_event)
+
+        finally:
+            self.window.destroy()
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")

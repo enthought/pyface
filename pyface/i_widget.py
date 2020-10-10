@@ -91,13 +91,17 @@ class IWidget(Interface):
         """ Remove toolkit-specific bindings for events """
 
 
-class MWidget(object):
+class MWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
     """
 
     def destroy(self):
-        """ Destroy the control if it exists. """
+        """ Destroy the control if it exists.
+
+        Subclasses of this mixin should ensure that they call super()
+        if they override this method.
+        """
         if self.control is not None:
             self._remove_event_listeners()
             self.control = None
@@ -111,12 +115,17 @@ class MWidget(object):
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
+
+        Subclasses of this mixin should ensure that they call super()
+        if they override this method.
         """
         self.control = self._create_control(self.parent)
         self._add_event_listeners()
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
+
+        Subclasses of this mixin should implement this method.
 
         Parameters
         ----------
@@ -141,9 +150,7 @@ class MWidget(object):
         super() to ensure superclass listeners are also connected.
         """
         for name, trait in self.traits(widget_observer=not_none).items():
-            observer = trait.widget_observer
-            if isinstance(observer, str):
-                observer = getattr(self, observer)
+            observer = getattr(self, trait.widget_observer)
             self.observe(observer, name, dispatch='ui')
 
     def _remove_event_listeners(self):
