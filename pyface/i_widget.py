@@ -12,6 +12,7 @@
 
 
 from traits.api import Any, Bool, HasTraits, Interface
+from traits.trait_base import not_none
 
 
 class IWidget(Interface):
@@ -95,6 +96,12 @@ class MWidget(object):
     implementations of the IWidget interface.
     """
 
+    def destroy(self):
+        """ Destroy the control if it exists. """
+        if self.control is not None:
+            self._remove_event_listeners()
+            self.control = None
+
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
@@ -125,9 +132,31 @@ class MWidget(object):
         raise NotImplementedError()
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        pass
+        """ Set up toolkit-specific bindings for events and trait observers
+
+        The default implementation sets up observers for all traits with
+        the `widget_observer` metadata.
+
+        Subclasses should override with additional listeners, but must call
+        super() to ensure superclass listeners are also connected.
+        """
+        for name, trait in self.traits(widget_observer=not_none).items():
+            observer = trait.widget_observer
+            if isinstance(observer, str):
+                observer = getattr(self, observer)
+            self.observe(observer, name, dispatch='ui')
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        pass
+        """ Remove toolkit-specific bindings for events and trait observers
+
+        The default implementation removes up observers for all traits with
+        the `widget_observer` metadata.
+
+        Subclasses should override with additional listeners, but must call
+        super() to ensure superclass listeners are also removed.
+        """
+        for name, trait in self.traits(widget_observer=not_none).items():
+            observer = trait.widget_observer
+            if isinstance(observer, str):
+                observer = getattr(self, observer)
+            self.observe(observer, name, dispatch='ui', remove=True)
