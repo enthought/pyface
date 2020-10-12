@@ -17,6 +17,7 @@ from traits.api import (
 )
 
 from pyface.data_view.abstract_data_model import AbstractDataModel
+from pyface.data_view.abstract_data_exporter import AbstractDataExporter
 from pyface.i_drop_handler import IDropHandler
 from pyface.i_widget import IWidget
 
@@ -51,6 +52,9 @@ class IDataViewWidget(IWidget):
     #: The selected indices in the view.
     selection = List(Tuple)
 
+    #: Exporters available for the DataViewWidget.
+    exporters = List(Instance(AbstractDataExporter))
+
 
 class MDataViewWidget(HasStrictTraits):
     """ Mixin class for data view widgets. """
@@ -72,6 +76,9 @@ class MDataViewWidget(HasStrictTraits):
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
     selection = Property(depends_on='_selection[]')
+
+    #: Exporters available for the DataViewWidget.
+    exporters = List(Instance(AbstractDataExporter))
 
     # Private traits --------------------------------------------------------
 
