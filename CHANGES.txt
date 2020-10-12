@@ -46,7 +46,6 @@ Features
 
 * Add :mod:`data_view <pyface.data_view>` subpackage for visualizing
   hierarchical and non-hierarchical data. (#619, #661, #682, #683, #694, #709)
-
 * Add :class:`Color <pyface.color.Color>` and
   :class:`PyfaceColor <pyface.ui_traits.PyfaceColor>` trait type.
   (#608, #710, #703)
