@@ -7,8 +7,8 @@ Release 7.1.0
 
 Released: 2020-10-XX
 
-Pyface 7.1.0 introduces a few new and major features and fixes to deprecation
-warnings. There are also internal cleanups to Qt signal connection logic that
+Pyface 7.1.0 introduces a few new features and fixes to deprecation warnings.
+There are also internal cleanups to Qt signal connection logic that
 should be invisible to users.
 
 This release should be compatible with Traits 6.0+. Users are encouraged to
