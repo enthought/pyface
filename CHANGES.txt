@@ -5,8 +5,6 @@ Pyface Changelog
 Release 7.1.0
 =============
 
-Released: 2020-10-XX
-
 Pyface 7.1.0 introduces a few new features and fixes to deprecation warnings.
 There are also internal cleanups to Qt signal connection logic that
 should be invisible to users.
