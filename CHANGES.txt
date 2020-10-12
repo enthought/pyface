@@ -51,7 +51,7 @@ Features
 
 * Add :class:`Color <pyface.color.Color>` and
   :class:`PyfaceColor <pyface.ui_traits.PyfaceColor>` trait type
-  (#608, #619, #710, #703).
+  (#608, #710, #703).
 
 Fixes
 
