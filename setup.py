@@ -15,7 +15,7 @@ import subprocess
 from setuptools import setup, find_packages
 
 MAJOR = 7
-MINOR = 1
+MINOR = 2
 MICRO = 0
 
 IS_RELEASED = False
