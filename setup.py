@@ -26,6 +26,11 @@ MICRO = 0
 PRERELEASE = ""
 IS_RELEASED = False
 
+# If this file is part of a Git export (for example created with "git archive",
+# or downloaded from GitHub), ARCHIVE_COMMIT_HASH gives the full hash of the
+# commit that was exported.
+ARCHIVE_COMMIT_HASH = "$Format:%H$"
+
 # Templates for version strings.
 RELEASED_VERSION = "{major}.{minor}.{micro}{prerelease}"
 UNRELEASED_VERSION = "{major}.{minor}.{micro}{prerelease}.dev{dev}"
@@ -170,6 +175,36 @@ def git_version():
     return version, git_revision
 
 
+def archive_version():
+    """
+    Construct version information for an archive.
+
+    Returns
+    -------
+    version : str
+        Package version.
+    git_revision : str
+        The full commit hash for the current Git revision.
+
+    Raises
+    ------
+    ValueError
+        If this does not appear to be an archive.
+    """
+    if "$" in ARCHIVE_COMMIT_HASH:
+        raise ValueError("This does not appear to be an archive.")
+
+    version_template = RELEASED_VERSION if IS_RELEASED else UNRELEASED_VERSION
+    version = version_template.format(
+        major=MAJOR,
+        minor=MINOR,
+        micro=MICRO,
+        prerelease=PRERELEASE,
+        dev="-unknown",
+    )
+    return version, ARCHIVE_COMMIT_HASH
+
+
 def write_version_file(version, git_revision, filename=VERSION_FILE):
     """
     Write version information to the version file.
@@ -233,6 +268,12 @@ def resolve_version():
         # it to the version file, overwriting any existing information.
         version = git_version()
         print("Computed package version: {}".format(version))
+        print("Writing version to version file {}.".format(VERSION_FILE))
+        write_version_file(*version)
+    elif "$" not in ARCHIVE_COMMIT_HASH:
+        # This is a source archive.
+        version = archive_version()
+        print("Archive package version: {}".format(version))
         print("Writing version to version file {}.".format(VERSION_FILE))
         write_version_file(*version)
     elif os.path.isfile(VERSION_FILE):
