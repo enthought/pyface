@@ -18,7 +18,10 @@ from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
     FloatValue, IntValue, no_value
 )
-from pyface.data_view.data_models.array_data_model import ArrayDataModel
+# This import results in an error without numpy installed
+# see enthought/pyface#742
+if np is not None:
+    from pyface.data_view.data_models.api import ArrayDataModel
 
 
 @requires_numpy
