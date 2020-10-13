@@ -15,7 +15,7 @@ from traits.testing.optional_dependencies import numpy as np, requires_numpy
 from pyface.qt.QtCore import QMimeData
 # This import results in an error without numpy installed
 # see enthought/pyface#742
-if np is not none:
+if np is not None:
     from pyface.data_view.data_models.api import ArrayDataModel
 from pyface.data_view.exporters.row_exporter import RowExporter
 from pyface.data_view.data_formats import table_format
