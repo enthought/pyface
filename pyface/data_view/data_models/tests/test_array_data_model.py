@@ -10,6 +10,7 @@
 
 from unittest import TestCase
 
+from traits.api import TraitError
 from traits.testing.unittest_tools import UnittestTools
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
 
@@ -18,7 +19,12 @@ from pyface.data_view.abstract_value_type import AbstractValueType
 from pyface.data_view.value_types.api import (
     FloatValue, IntValue, no_value
 )
-from pyface.data_view.data_models.array_data_model import ArrayDataModel
+# This import results in an error without numpy installed
+# see enthought/pyface#742
+try:
+    from pyface.data_view.data_models.api import ArrayDataModel
+except TraitError:
+    pass
 
 
 @requires_numpy

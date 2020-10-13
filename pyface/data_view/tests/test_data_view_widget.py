@@ -19,7 +19,12 @@ from pyface.gui import GUI
 from pyface.toolkit import toolkit
 from pyface.window import Window
 
-from pyface.data_view.data_models.api import ArrayDataModel
+# This import results in an error without numpy installed
+# see enthought/pyface#742
+try:
+    from pyface.data_view.data_models.api import ArrayDataModel
+except TraitError:
+    pass
 from pyface.data_view.data_view_widget import DataViewWidget
 from pyface.data_view.value_types.api import FloatValue
 
