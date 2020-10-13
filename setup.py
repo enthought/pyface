@@ -74,7 +74,7 @@ GIT = "git"
 
 
 def read_module(module, package="pyface"):
-    """ Read a simple .py file from in a safe way.
+    """ Read a simple .py file from package in a safe way.
 
     It would be simpler to import the file, but that can be problematic in an
     unknown system, so we exec the file instead and extract the variables.
