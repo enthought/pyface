@@ -52,6 +52,8 @@ Features
 
 Fixes
 
+* Use availableGeometry for screen size in Qt to match TraitsUI behavior (#727)
+* Fix deprecation warnings from Qt SystemMetrics (#719)
 * Fix QFontMetrics.width deprecation warning. (#715)
 * Remove border for heading text in Qt. (#692)
 * Replacing ListItemAttr with ItemAttr to avoid deprecation warning. (#670)
