@@ -52,3 +52,14 @@ class TestApi(unittest.TestCase):
             IntIndexManager,
             TupleIndexManager,
         )
+
+    def test_api_items_count(self):
+        # This test helps developer to keep the above list
+        # up-to-date. Bump the number when the API content changes.
+        from pyface.data_view import api
+        items_in_api = {
+            name
+            for name in dir(api)
+            if not name.startswith("_")
+        }
+        self.assertEqual(len(items_in_api), 35)

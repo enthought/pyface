@@ -35,3 +35,23 @@ class TestApi(unittest.TestCase):
         from pyface.data_view.data_models.api import (  # noqa: F401
             ArrayDataModel,
         )
+
+    def test_api_items_count(self):
+        # This test helps developer to keep the above list
+        # up-to-date. Bump the number when the API content changes.
+        from pyface.data_view.data_models import api
+
+        expected_count = 6
+        try:
+            import numpy  # noqa: F401
+        except ImportError:
+            pass
+        else:
+            expected_count += 1
+
+        items_in_api = {
+            name
+            for name in dir(api)
+            if not name.startswith("_")
+        }
+        self.assertEqual(len(items_in_api), expected_count)
