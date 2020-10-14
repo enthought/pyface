@@ -26,7 +26,7 @@ class TestApi(unittest.TestCase):
         )
 
     def test_import_with_numpy_dependency(self):
-        # These objects that require NumPy.
+        # These objects require NumPy.
         try:
             import numpy  # noqa: F401
         except ImportError:
