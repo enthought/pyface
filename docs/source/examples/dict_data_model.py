@@ -10,11 +10,9 @@
 
 from traits.api import ComparisonMode, Dict, Instance, Str, observe
 
-from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+from pyface.data_view.api import (
+    AbstractDataModel, AbstractValueType, DataViewSetError, IntIndexManager
 )
-from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.index_manager import IntIndexManager
 
 
 class DictDataModel(AbstractDataModel):
@@ -121,7 +119,6 @@ if __name__ == '__main__':
     from pyface.data_view.data_view_widget import DataViewWidget
     from pyface.data_view.value_types.api import IntValue, TextValue
 
-
     class MainWindow(ApplicationWindow):
         """ The main application window. """
 
@@ -143,7 +140,6 @@ if __name__ == '__main__':
         def destroy(self):
             self.data_view.destroy()
             super().destroy()
-
 
     # Create the GUI (this does NOT start the GUI event loop).
     gui = GUI()
