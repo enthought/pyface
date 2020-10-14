@@ -8,9 +8,5 @@
 #
 # Thanks for using Enthought open source!
 
-from .array_data_model import ArrayDataModel  # noqa: F401
-from .data_accessors import (  # noqa: F401
-    AbstractDataAccessor, AttributeDataAccessor, ConstantDataAccessor,
-    IndexDataAccessor, KeyDataAccessor
-)
-from .row_table_data_model import RowTableDataModel  # noqa: F401
+from .item_exporter import ItemExporter
+from .row_exporter import RowExporter
