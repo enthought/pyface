@@ -15,10 +15,10 @@ import logging
 from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
-from pyface.data_view.exporters.row_exporter import RowExporter
-from pyface.data_view.data_formats import table_format, csv_format
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.api import (
+    DataViewWidget, IDataViewWidget, table_format, csv_format
+)
+from pyface.data_view.exporters.api import RowExporter
 from pyface.data_view.value_types.api import (
     BoolValue, ColorValue, IntValue, TextValue, no_value
 )

@@ -16,11 +16,9 @@ from traits.api import (
 )
 from traits.trait_base import xgetattr, xsetattr
 
-from pyface.data_view.abstract_data_model import (
-    AbstractDataModel, DataViewSetError
+from pyface.data_view.api import (
+    AbstractDataModel, AbstractValueType, DataViewSetError, TupleIndexManager
 )
-from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.index_manager import TupleIndexManager
 from pyface.data_view.value_types.api import TextValue
 
 
