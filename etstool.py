@@ -123,6 +123,7 @@ doc_ignore = {
     "pyface/dock/*",
     "pyface/util/fix_introspect_bug.py",
     "pyface/grid/*",
+    "*/tests",
 }
 
 environment_vars = {
