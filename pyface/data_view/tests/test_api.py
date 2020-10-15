@@ -45,12 +45,11 @@ class TestApi(unittest.TestCase):
             DataViewWidget,
             DataWrapper,
             IDataViewWidget,
-            MDataViewWidget,
             IDataWrapper,
-            MDataWrapper,
             AbstractIndexManager,
             IntIndexManager,
             TupleIndexManager,
+            DataFormat,
         )
 
     def test_api_items_count(self):
@@ -62,4 +61,4 @@ class TestApi(unittest.TestCase):
             for name in dir(api)
             if not name.startswith("_")
         }
-        self.assertEqual(len(items_in_api), 35)
+        self.assertEqual(len(items_in_api), 34)
