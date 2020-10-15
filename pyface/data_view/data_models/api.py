@@ -8,7 +8,14 @@
 #
 # Thanks for using Enthought open source!
 
-from .array_data_model import ArrayDataModel  # noqa: F401
+try:
+    import numpy  # noqa: F401
+except ImportError:
+    pass
+else:
+    del numpy
+    from .array_data_model import ArrayDataModel  # noqa: F401
+
 from .data_accessors import (  # noqa: F401
     AbstractDataAccessor, AttributeDataAccessor, ConstantDataAccessor,
     IndexDataAccessor, KeyDataAccessor
