@@ -11,7 +11,9 @@
 # All configuration values have a default value; values that are commented out
 # serve to show the default value.
 
-import sys, os
+import os
+import runpy
+import sys
 
 # General configuration
 # ---------------------
@@ -39,10 +41,10 @@ copyright = '2008-2020, Enthought'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
-d = {}
-with open(os.path.join('..', '..', 'pyface', '_version.py')) as fp:
-    exec (fp.read(), d)
-version = release = d['full_version']
+version_py = os.path.join('..', '..', 'pyface', '_version.py')
+version_content = runpy.run_path(version_py)
+version = ".".join(version_content["version"].split(".", 2)[:2])
+release = version
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
