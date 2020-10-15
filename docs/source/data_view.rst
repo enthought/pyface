@@ -4,6 +4,10 @@ Pyface DataViews
 The Pyface DataView API allows visualization of hierarchical and
 non-hierarchical tabular data.
 
+.. note::
+   As of Pyface 7.1.0, the public API for DataView is provisional and may
+   change in the future minor releases through until Pyface 8.0
+
 Indexing
 --------
 
