@@ -274,7 +274,8 @@ it corresponds to the keys or the values.  The code looks like this:
    :end-at: return value
 
 Conversion of values into data channels is done by providing a value type
-for each cell.  The |get_value_type| method provides an appropriate data
+for each cell that implements the |AbstractValueType| interface.  The
+|get_value_type| method is expected to provide an appropriate data
 type for each item in the table.  For this data model we have three value
 types: the column headers, the keys and the values.
 
@@ -295,6 +296,20 @@ value types:
 .. literalinclude:: examples/dict_data_model.py
    :start-at: def get_value_type
    :end-at: return self.value_type
+
+The |AbstractValueType| interface provides getters (and in some cases setters)
+for various data channels the most obvious of these is the text to display
+in an item, but channels allow checked state, image, color and tooltips
+to also be associated with a value.  How (or even if) these values are
+displayed or used is up to the implementation of the |IDataViewWidget|.
+
+As noted above, the DataView API provides a number of pre-definited value
+type implementations that cover common cases, but where they do not meet the
+needs of a particular design, developers should create their own
+implementations with the desired properties.
+
+Invalid Values
+~~~~~~~~~~~~~~
 
 If no valid value can be generated for some *expected* reason, value
 generation code can raise a |DataViewGetError| exception.  This error
@@ -383,6 +398,7 @@ the |has_editor_value| method returns ``False``.
 .. |AbstractIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.AbstractIndexManager`
 .. |AbstractDataModel| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
 .. |AbstractDataExporter| replace:: :py:class:`~pyface.data_view.abstract_data_exporter.AbstractDataExporter`
+.. |AbstractValueType| replace:: :py:class:`~pyface.data_view.abstract_value_type.AbstractValueType`
 .. |DataFormat| replace:: :py:class:`~pyface.data_view.i_data_wrapper.DataFormat`
 .. |DataViewGetError| replace:: :py:class:`~pyface.data_view.data_view_errors.DataViewGetError`
 .. |DataViewSetError| replace:: :py:class:`~pyface.data_view.data_view_errors.DataViewSetError`
