@@ -14,12 +14,10 @@ from traits.api import Bool, Dict, HasStrictTraits, Instance, Int, Str, List
 
 from pyface.api import ApplicationWindow, GUI, Image, ImageResource
 from pyface.ui_traits import PyfaceColor
-from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
-from pyface.data_view.data_models.row_table_data_model import (
-    RowTableDataModel
+from pyface.data_view.data_models.api import (
+    AttributeDataAccessor, RowTableDataModel
 )
-from pyface.data_view.data_view_widget import DataViewWidget
-from pyface.data_view.i_data_view_widget import IDataViewWidget
+from pyface.data_view.api import DataViewWidget, IDataViewWidget
 from pyface.data_view.value_types.api import (
     BoolValue, ColorValue, IntValue, TextValue
 )

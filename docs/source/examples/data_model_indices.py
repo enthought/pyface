@@ -10,8 +10,7 @@
 
 from traits.api import Instance, Int, List
 
-from pyface.data_view.abstract_data_model import AbstractDataModel
-from pyface.data_view.index_manager import TupleIndexManager
+from pyface.data_view.api import AbstractDataModel, TupleIndexManager
 
 
 class IndexDataModel(AbstractDataModel):
