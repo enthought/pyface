@@ -26,11 +26,9 @@ from pyface.data_view.data_view_errors import (  # noqa: 401
 )
 from pyface.data_view.data_view_widget import DataViewWidget  # noqa: 401
 from pyface.data_view.data_wrapper import DataWrapper  # noqa: 401
-from pyface.data_view.i_data_view_widget import (  # noqa: 401
-    IDataViewWidget, MDataViewWidget
-)
+from pyface.data_view.i_data_view_widget import IDataViewWidget  # noqa: 401
 from pyface.data_view.i_data_wrapper import (  # noqa: 401
-    DataFormat, IDataWrapper, MDataWrapper, text_format
+    DataFormat, IDataWrapper, text_format
 )
 from pyface.data_view.index_manager import (  # noqa: 401
     AbstractIndexManager, IntIndexManager, TupleIndexManager
