@@ -296,6 +296,13 @@ value types:
    :start-at: def get_value_type
    :end-at: return self.value_type
 
+If no valid value can be generated for some *expected* reason, value
+generation code can raise a |DataViewGetError| exception.  This error
+will be handled and silently ignored by the DataView code, and no value
+will be displayed.  Any other errors raised by value generation are
+assumed to be unexpected and will be logged and re-raised, which is
+likely to cause an application crash.
+
 Handling Updates
 ~~~~~~~~~~~~~~~~
 
@@ -377,6 +384,7 @@ the |has_editor_value| method returns ``False``.
 .. |AbstractDataModel| replace:: :py:class:`~pyface.data_view.abstract_data_model.AbstractDataModel`
 .. |AbstractDataExporter| replace:: :py:class:`~pyface.data_view.abstract_data_exporter.AbstractDataExporter`
 .. |DataFormat| replace:: :py:class:`~pyface.data_view.i_data_wrapper.DataFormat`
+.. |DataViewGetError| replace:: :py:class:`~pyface.data_view.data_view_errors.DataViewGetError`
 .. |DataViewSetError| replace:: :py:class:`~pyface.data_view.data_view_errors.DataViewSetError`
 .. |EditableValue| replace:: :py:class:`~pyface.data_view.value_types.editable_value.EditableValue`
 .. |FileDropHandler| replace:: :py:class:`~pyface.drop_handler.FileDropHandler`
