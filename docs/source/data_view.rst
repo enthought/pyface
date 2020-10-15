@@ -8,6 +8,8 @@ non-hierarchical tabular data.
    As of Pyface 7.1.0, the public API for DataView is provisional and may
    change in the future minor releases through until Pyface 8.0
 
+.. See enthought/pyface#756 for removing the note.
+
 Indexing
 --------
 
