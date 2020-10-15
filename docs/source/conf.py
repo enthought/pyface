@@ -226,9 +226,11 @@ autodoc_mock_imports = [
     'IPython.frontend.wx.wx_frontend',
 ]
 
+
 def autodoc_skip_member(app, what, name, obj, skip, options):
     # Skip load_tests
     return skip or name == "load_tests"
+
 
 def setup(app):
     app.connect('autodoc-skip-member', autodoc_skip_member)
