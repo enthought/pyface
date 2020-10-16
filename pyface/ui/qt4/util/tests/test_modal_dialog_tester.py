@@ -16,7 +16,7 @@ from io import StringIO
 import platform
 
 from pyface.qt import QtGui
-from pyface.api import Dialog, GUI, MessageDialog, OK, CANCEL
+from pyface.api import Dialog, MessageDialog, OK, CANCEL
 from pyface.toolkit import toolkit_object
 from traits.api import HasStrictTraits
 
@@ -53,7 +53,7 @@ class MyClass(HasStrictTraits):
         return True
 
 
-class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
+class TestModalDialogTester(GuiTestAssistant, unittest.TestCase):
     """ Tests for the modal dialog tester. """
 
     # Tests ----------------------------------------------------------------
@@ -115,7 +115,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     self.fail()
             finally:
                 tester.close()
-                GUI.process_events()
+                self.gui.process_events()
 
         with self.assertRaises(AssertionError):
             alt_stderr = StringIO
@@ -134,7 +134,7 @@ class TestModalDialogTester(unittest.TestCase, GuiTestAssistant):
                     1 / 0
             finally:
                 tester.close()
-                GUI.process_events()
+                self.gui.process_events()
 
         with self.assertRaises(ZeroDivisionError):
             alt_stderr = StringIO
