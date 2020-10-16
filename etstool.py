@@ -415,7 +415,7 @@ def api_docs(edm, runtime, toolkit, environment):
 
     os.chdir("docs")
     command = (
-        "edm run -e {environment} -- sphinx-build -b html "
+        "{edm} run -e {environment} -- sphinx-build -b html "
         "-d build/doctrees "
         "source "
         "build/html"
