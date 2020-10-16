@@ -105,8 +105,7 @@ source_dependencies = {
 
 extra_dependencies = {
     "pyside": {"pyside"},
-    # XXX once pyside2 is available in EDM, we will want it here
-    "pyside2": set(),
+    "pyside2": {"pyside2"},
     "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
     "pyqt5": {"pyqt5"},
     # XXX once wxPython 4 is available in EDM, we will want it here
@@ -193,15 +192,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
         install_pyface,
     ])
 
-    # pip install pyqt5 and pyside2, because we don't have them in EDM yet
-    if toolkit == "pyside2":
-        commands.extend(
-            [
-                "{edm} run -e {environment} -- pip install shiboken2",
-                "{edm} run -e {environment} -- pip install pyside2",
-            ]
-        )
-    elif toolkit == "wx":
+    if toolkit == "wx":
         if sys.platform == "darwin":
             commands.append(
                 "{edm} run -e {environment} -- python -m pip install wxPython<4.1"  # noqa: E501
