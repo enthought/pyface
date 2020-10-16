@@ -103,11 +103,11 @@ To provide cross-platform and cross-toolkit compatibility, drag and drop
 operations require the data that is being exported or imported to be
 converted to or from a bytestring in some MIME type.
 
-The DataView infrastsructure provides a |DataFormat| named tuple to
+The DataView infrastructure provides a |DataFormat| named tuple to
 encapsulate the process of converting different data objects to bytes.
 For string objects this conversion might be as simple as encoding the
 text as UTF-8 and declaring it to be a ``text/plain`` MIME type, but for
-more complex structures there  is serialization and deserialization which
+more complex structures there is serialization and deserialization which
 needs to occur.  The |DataFormat| objects are expected to provide the
 mimetype of the data, a function to serialize an object, and a function
 to deserialize bytes.
