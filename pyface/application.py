@@ -14,8 +14,8 @@ applications, the :py:class:`Application` class does not have any explicit
 dependency on GUI code, and can be used for CLI or server applications.
 
 Usual usage is to subclass :py:class:`Application`, overriding at least the
-:py:method:`Application._run` method, but usually the
-:py:method:`Application.start` and :py:method:`Application.stop`
+:py:meth:`Application._run` method, but usually the
+:py:meth:`Application.start` and :py:meth:`Application.stop`
 methods as well.
 
 However the class can be used as-is by listening to the

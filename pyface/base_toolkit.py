@@ -48,7 +48,7 @@ Note that there is no requirement for new toolkit implementations to use this
 Default toolkit loading logic
 -----------------------------
 
-The :py_func:`find_toolkit` function uses the following logic when attempting
+The :py:func:`find_toolkit` function uses the following logic when attempting
 to load toolkits:
 
 - if ETSConfig.toolkit is set, try to load a plugin with a matching name.
