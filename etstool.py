@@ -185,8 +185,13 @@ def install(edm, runtime, toolkit, environment, editable, source):
             "edm environments create {environment} --force --version={runtime}"
         ]
 
+    if toolkit == "pyside2":
+        additional_repositories = "--add-repository enthought/lgpl"
+    else:
+        additional_repositories = ""
+
     commands.extend([
-        "{edm} install -y -e {environment} " + packages,
+        "{edm} install -y -e {environment} " + packages + " " + additional_repositories,
         "{edm} run -e {environment} -- pip install -r ci-src-requirements.txt --no-dependencies",  # noqa: E501
         "{edm} run -e {environment} -- python setup.py clean --all",
         install_pyface,
