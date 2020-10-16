@@ -378,7 +378,7 @@ def update(edm, runtime, toolkit, environment):
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
-def api_docs(edm, runtime, toolkit, environment):
+def docs(edm, runtime, toolkit, environment):
     """ Autogenerate documentation
 
     """
