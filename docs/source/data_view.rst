@@ -135,9 +135,9 @@ to a |DataFormat| that will perform the actual serialization and provides
 the MIME type.
 
 In practice, users will usually use a standard data exporter, such as the
-|ItemDataExporter| or |RowDataExporter|.  Some care should be taken that
+|ItemExporter| or |RowExporter|.  Some care should be taken that
 the data exporter provides data in the shape that the |DataFormat| expects.
-For example, the |ItemDataExporter| works best when paired with scalar data
+For example, the |ItemExporter| works best when paired with scalar data
 formats.  In many cases all that is needed to enable dragging data from a
 DataViewWidget is to configure it appropriately:
 
@@ -409,8 +409,8 @@ the |has_editor_value| method returns ``False``.
 .. |IDropHandler| replace:: :py:class:`~pyface.i_drop_handler.IDropHandler`
 .. |IntIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.IntIndexManager`
 .. |IntValue| replace:: :py:class:`~pyface.data_view.value_types.numeric_value.IntValue`
-.. |ItemDataExporter| replace:: :py:class:`~pyface.data_view.exporters.item_data_exporter.ItemDataExporter`
-.. |RowDataExporter| replace:: :py:class:`~pyface.data_view.exporters.row_data_exporter.RowDataExporter`
+.. |ItemExporter| replace:: :py:class:`~pyface.data_view.exporters.item_exporter.ItemExporter`
+.. |RowExporter| replace:: :py:class:`~pyface.data_view.exporters.row_exporter.RowExporter`
 .. |TextValue| replace:: :py:class:`~pyface.data_view.value_types.text_value.TextValue`
 .. |TupleIndexManager| replace:: :py:class:`~pyface.data_view.index_manager.TupleIndexManager`
 .. |can_have_children| replace:: :py:meth:`~pyface.data_view.abstract_data_model.AbstractDataModel.can_have_children`
