@@ -48,7 +48,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a menu/menubar.
+            ``True`` if the action can be added to a menu/menubar.
         """
         return True
 
@@ -73,7 +73,7 @@ class ActionController(HasTraits):
         Returns
         -------
         can_add : bool
-            ``True` if the action can be added to a toolbar.
+            ``True`` if the action can be added to a toolbar.
         """
         return True
 

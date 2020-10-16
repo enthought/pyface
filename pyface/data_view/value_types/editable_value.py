@@ -19,7 +19,7 @@ class EditableValue(AbstractValueType):
 
     This class provides two things beyond the base AbstractValueType:
     a trait ``is_editable`` which allows toggling editing state on and
-    off, and an ``is_valid` method that is used for validation before
+    off, and an ``is_valid`` method that is used for validation before
     setting a value.
     """
 

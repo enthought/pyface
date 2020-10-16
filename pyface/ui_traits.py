@@ -284,6 +284,7 @@ class HasMargin(TraitType):
     def get_default_value(self):
         """ Returns a tuple of the form:
                 (default_value_type, default_value)
+
             which describes the default value for this trait.
         """
         dv = self.default_value
