@@ -47,7 +47,7 @@ toolkit object.  For all built-in toolkits, this is an instance of the
 backends may use their own objects.  The toolkit object for the toolkit that
 has been selected can be found as :py:obj:`pyface.toolkit.toolkit_object`.
 
-This is a callable object which expects to be given the an identifier for the
+This is a callable object which expects to be given an identifier for the
 widget in the form of a relative module name and the object name, separated by
 a ``':'``.  This is most often used when creating new widget types for Pyface.
 The API module for the new widget class typically looks something like this::

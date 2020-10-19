@@ -6,13 +6,6 @@ pyface.action package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-   pyface.action.tests
-
 Submodules
 ----------
 

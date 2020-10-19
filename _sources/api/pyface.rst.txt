@@ -12,13 +12,13 @@ Subpackages
 .. toctree::
 
    pyface.action
+   pyface.data_view
    pyface.fields
    pyface.image
    pyface.preference
    pyface.resource
    pyface.sizers
    pyface.tasks
-   pyface.tests
    pyface.timer
    pyface.tree
    pyface.util
@@ -38,6 +38,7 @@ Submodules
    pyface.base_toolkit
    pyface.beep
    pyface.clipboard
+   pyface.color
    pyface.confirmation_dialog
    pyface.constant
    pyface.dialog

@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Pyface Changelog &mdash; pyface 7.0.1 documentation</title>
+    <title>Pyface Changelog &mdash; pyface 7.1 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.0.1',
+        VERSION:     '7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.0.1 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.1 documentation" href="index.html" >
     <link rel="prev" title="pyface.window module" href="api/pyface.window.html" > 
   </head>
   <body>
@@ -48,7 +48,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.0.1 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.1 documentation</a></li>
 	 
     </ul>
               
@@ -81,6 +81,84 @@
             
   <div class="section" id="pyface-changelog">
 <h1>Pyface Changelog<a class="headerlink" href="#pyface-changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="release-7-1-0">
+<h2>Release 7.1.0<a class="headerlink" href="#release-7-1-0" title="Permalink to this headline">¶</a></h2>
+<p>Pyface 7.1.0 introduces a few new features and fixes to deprecation warnings.
+There are also internal cleanups to Qt signal connection logic that
+should be invisible to users.</p>
+<p>This release should be compatible with Traits 6.0+. Users are encouraged to
+upgrade to Traits 6.1+ to stay current as future releases of Pyface will stop
+supporting Traits 6.0.</p>
+<div class="section" id="highlights-of-this-release">
+<h3>Highlights of this release<a class="headerlink" href="#highlights-of-this-release" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>A new <a class="reference internal" href="api/pyface.data_view.html#module-pyface.data_view" title="pyface.data_view"><code class="xref py py-mod docutils literal notranslate"><span class="pre">data_view</span></code></a> subpackage has been introduced to
+support visualization of hierarchical and non-hierarchical tabular data. See
+<a class="reference internal" href="data_view.html#data-view"><span class="std std-ref">Pyface DataViews</span></a> section of the user manual for an introduction. Additional
+examples are also added to the source distribution. Please note that as of
+this release the API is provisional.</p></li>
+<li><p>A new <a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> class and a corresponding
+<a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor" title="pyface.ui_traits.PyfaceColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceColor</span></code></a> trait type have been
+introduced to support representing colors via a toolkit independent API. See
+<a class="reference internal" href="traits.html#ui-trait-types"><span class="std std-ref">Trait Types</span></a> section of the user manual for further details.</p></li>
+</ul>
+</div>
+<div class="section" id="detailed-changes">
+<h3>Detailed changes<a class="headerlink" href="#detailed-changes" title="Permalink to this headline">¶</a></h3>
+<p>More than 70 PRs went into this release. Thanks to:</p>
+<ul class="simple">
+<li><p>Aaron Ayres</p></li>
+<li><p>Ieva Cernyte</p></li>
+<li><p>Mark Dickinson</p></li>
+<li><p>Kit Yan Choi</p></li>
+<li><p>Rahul Poruri</p></li>
+<li><p>Corran Webster</p></li>
+</ul>
+<p>Note that the following list is not exhaustive. Some PRs references have been
+omitted.</p>
+<p>Features</p>
+<ul class="simple">
+<li><p>Add <a class="reference internal" href="api/pyface.data_view.html#module-pyface.data_view" title="pyface.data_view"><code class="xref py py-mod docutils literal notranslate"><span class="pre">data_view</span></code></a> subpackage for visualizing
+hierarchical and non-hierarchical data. (#619, #661, #682, #683, #694, #709)</p></li>
+<li><p>Add <a class="reference internal" href="api/pyface.color.html#pyface.color.Color" title="pyface.color.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> and
+<a class="reference internal" href="api/pyface.ui_traits.html#pyface.ui_traits.PyfaceColor" title="pyface.ui_traits.PyfaceColor"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyfaceColor</span></code></a> trait type.
+(#608, #710, #703)</p></li>
+</ul>
+<p>Fixes</p>
+<ul class="simple">
+<li><p>Use availableGeometry for screen size in Qt to match TraitsUI behavior (#727)</p></li>
+<li><p>Fix deprecation warnings from Qt SystemMetrics (#719)</p></li>
+<li><p>Fix QFontMetrics.width deprecation warning. (#715)</p></li>
+<li><p>Remove border for heading text in Qt. (#692)</p></li>
+<li><p>Replacing ListItemAttr with ItemAttr to avoid deprecation warning. (#670)</p></li>
+<li><p>Fix wx/linux clipboard test failures. (#676)</p></li>
+</ul>
+<p>Build and continuous integration</p>
+<ul class="simple">
+<li><p>Add CI job targeting traits 6.0. (#656)</p></li>
+<li><p>Fix extras_requires for PyQt5. (#659)</p></li>
+<li><p>Updated edm version in travis and appveyor config files. (#618)</p></li>
+</ul>
+<p>Documentation</p>
+<ul class="simple">
+<li><p>Add documentation for the new PyfaceColor trait and Color class. (#710)</p></li>
+<li><p>Add documentation for DataView. (#543, #574, #763)</p></li>
+<li><p>Remove all enaml examples. (#652)</p></li>
+<li><p>Fix some Sphinx warnings while building documentation. (#769)</p></li>
+</ul>
+<p>Maintenance and code organization</p>
+<ul class="simple">
+<li><p>Disconnect slots to Qt signals when cleaning up widgets. (#536, #542, #540)</p></li>
+<li><p>Disconnect trait change handlers when cleaning up ApplicationWindow widgets.
+(#541)</p></li>
+<li><p>Remove conditionals on python version. (#635)</p></li>
+<li><p>Remove a print call in test. (#657)</p></li>
+<li><p>Remove all of the u prefix on strings. (#604)</p></li>
+<li><p>Use collections.abc instead of collections. (#477)</p></li>
+<li><p>Use unittest discover for running tests. (#515)</p></li>
+</ul>
+</div>
+</div>
 <div class="section" id="release-7-0-1">
 <h2>Release 7.0.1<a class="headerlink" href="#release-7-0-1" title="Permalink to this headline">¶</a></h2>
 <p>This is a bugfix release which fixes a number of minor issues with the 7.0.0
@@ -120,7 +198,7 @@ Corran Webster.</p>
 <p>Enhancements</p>
 <ul class="simple">
 <li><p>Use Traits 6 features (#480, #494)</p></li>
-<li><p>WxPython 4 support (#469, #473, #497, $499)</p></li>
+<li><p>WxPython 4 support (#469, #473, #497, #499)</p></li>
 <li><p>Remove six and other Python 2 code (#493)</p></li>
 <li><p>Add utility functions for Qt images (#498)</p></li>
 <li><p>Allow live update of Action images (#484)</p></li>
@@ -482,6 +560,32 @@ new adaptation mechanism in Traits 4.4.0.</p>
 </div></blockquote>
 </div>
 </div>
+<div class="section" id="traitsgui-3-1-0-july-15-2009">
+<h2>TraitsGUI 3.1.0 (July 15, 2009)<a class="headerlink" href="#traitsgui-3-1-0-july-15-2009" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enhancements">
+<h3>Enhancements<a class="headerlink" href="#enhancements" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li><p>Removed Theming support from DockWindows. Borders and tabs are now drawn using lines instead of stretching images.</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>Changed default font to use the system font</p></li>
+<li><p>Moved pyface.wx.clipboard to Pyface</p></li>
+<li><p>Moved the grid package out of pyface and into pyface.ui.wx, left deprecated warnings</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="fixes">
+<h3>Fixes<a class="headerlink" href="#fixes" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p>Improved info shown to the user if toolkits don’t work as expected</p></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
 </div>
 
 
@@ -496,6 +600,11 @@ new adaptation mechanism in Traits 4.4.0.</p>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Pyface Changelog</a><ul>
+<li><a class="reference internal" href="#release-7-1-0">Release 7.1.0</a><ul>
+<li><a class="reference internal" href="#highlights-of-this-release">Highlights of this release</a></li>
+<li><a class="reference internal" href="#detailed-changes">Detailed changes</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#release-7-0-1">Release 7.0.1</a><ul>
 <li><a class="reference internal" href="#change-summary">Change summary</a></li>
 </ul>
@@ -544,6 +653,11 @@ new adaptation mechanism in Traits 4.4.0.</p>
 <li><a class="reference internal" href="#change-summary-since-4-3-0">Change summary since 4.3.0</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#traitsgui-3-1-0-july-15-2009">TraitsGUI 3.1.0 (July 15, 2009)</a><ul>
+<li><a class="reference internal" href="#enhancements">Enhancements</a></li>
+<li><a class="reference internal" href="#fixes">Fixes</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -585,7 +699,7 @@ new adaptation mechanism in Traits 4.4.0.</p>
         &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 15, 2020.
+      Last updated on Oct 19, 2020.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

@@ -13,7 +13,6 @@ Subpackages
 
    pyface.workbench.action
    pyface.workbench.debug
-   pyface.workbench.tests
 
 Submodules
 ----------
