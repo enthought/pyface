@@ -30,4 +30,7 @@ class TestDataWrapper(TestCase):
         toolkit_data = data_wrapper.toolkit_data
 
         self.assertEqual(set(toolkit_data.formats()), {'text/plain'})
-        self.assertEqual(toolkit_data.data('text/plain'), b'hello world')
+        self.assertEqual(
+            toolkit_data.data('text/plain').data(),
+            b'hello world'
+        )
