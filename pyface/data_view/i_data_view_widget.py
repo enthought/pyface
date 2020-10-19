@@ -53,7 +53,10 @@ class IDataViewWidget(IWidget):
     selection = List(Tuple)
 
     #: Exporters available for the DataViewWidget.
-    exporters = List(Instance(AbstractDataExporter))
+    exporters = List(
+        Instance(AbstractDataExporter),
+        comparison_mode=ComparisonMode.identity,
+    )
 
 
 class MDataViewWidget(HasStrictTraits):
@@ -78,7 +81,10 @@ class MDataViewWidget(HasStrictTraits):
     selection = Property(depends_on='_selection[]')
 
     #: Exporters available for the DataViewWidget.
-    exporters = List(Instance(AbstractDataExporter))
+    exporters = List(
+        Instance(AbstractDataExporter),
+        comparison_mode=ComparisonMode.identity,
+    )
 
     # Private traits --------------------------------------------------------
 

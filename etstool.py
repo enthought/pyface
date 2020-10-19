@@ -123,6 +123,7 @@ doc_ignore = {
     "pyface/dock/*",
     "pyface/util/fix_introspect_bug.py",
     "pyface/grid/*",
+    "*/tests",
 }
 
 environment_vars = {
@@ -377,7 +378,7 @@ def update(edm, runtime, toolkit, environment):
 @click.option("--runtime", default="3.6", help="Python version to use")
 @click.option("--toolkit", default="pyqt", help="Toolkit and API to use")
 @click.option("--environment", default=None, help="EDM environment to use")
-def api_docs(edm, runtime, toolkit, environment):
+def docs(edm, runtime, toolkit, environment):
     """ Autogenerate documentation
 
     """
@@ -413,12 +414,17 @@ def api_docs(edm, runtime, toolkit, environment):
     click.echo("Done regenerating API docs")
 
     os.chdir("docs")
-    commands = ["{edm} run -e {environment} -- make html"]
+    command = (
+        "{edm} run -e {environment} -- sphinx-build -b html "
+        "-d build/doctrees "
+        "source "
+        "build/html"
+    )
     click.echo(
         "Building documentation in  '{environment}'".format(**parameters)
     )
     try:
-        execute(commands, parameters)
+        execute([command], parameters)
     finally:
         os.chdir("..")
     click.echo("Done building documentation")

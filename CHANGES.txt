@@ -67,7 +67,10 @@ Build and continuous integration
 
 Documentation
 
+* Add documentation for the new PyfaceColor trait and Color class. (#710)
+* Add documentation for DataView. (#543, #574, #763)
 * Remove all enaml examples. (#652)
+* Fix some Sphinx warnings while building documentation. (#769)
 
 Maintenance and code organization
 
