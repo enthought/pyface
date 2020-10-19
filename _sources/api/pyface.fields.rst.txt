@@ -6,13 +6,6 @@ pyface.fields package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-   pyface.fields.tests
-
 Submodules
 ----------
 

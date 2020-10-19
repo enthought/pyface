@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>pyface.application module &mdash; pyface 7.0.1 documentation</title>
+    <title>pyface.application module &mdash; pyface 7.1 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '7.0.1',
+        VERSION:     '7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="../_static/img/favicon.ico">
     <link rel="index" title="Index" href="../genindex.html" >
     <link rel="search" title="Search" href="../search.html" >
-    <link rel="top" title="pyface 7.0.1 documentation" href="../index.html" >
+    <link rel="top" title="pyface 7.1 documentation" href="../index.html" >
     <link rel="up" title="pyface package" href="pyface.html" >
     <link rel="next" title="pyface.application_window module" href="pyface.application_window.html" >
     <link rel="prev" title="pyface.api module" href="pyface.api.html" > 
@@ -50,7 +50,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="../index.html">pyface 7.0.1 documentation</a></li>
+        <li class="active"><a href="../index.html">pyface 7.1 documentation</a></li>
 	
           <li class="active"><a href="pyface.html" accesskey="U">pyface package</a></li> 
     </ul>
@@ -93,8 +93,8 @@ and similar applications.  Although the primary use cases are for GUI
 applications, the <a class="reference internal" href="#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a> class does not have any explicit
 dependency on GUI code, and can be used for CLI or server applications.</p>
 <p>Usual usage is to subclass <a class="reference internal" href="#pyface.application.Application" title="pyface.application.Application"><code class="xref py py-class docutils literal notranslate"><span class="pre">Application</span></code></a>, overriding at least the
-<a href="#id1"><span class="problematic" id="id2">:py:method:`Application._run`</span></a> method, but usually the
-<a href="#id3"><span class="problematic" id="id4">:py:method:`Application.start`</span></a> and <a href="#id5"><span class="problematic" id="id6">:py:method:`Application.stop`</span></a>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Application._run()</span></code> method, but usually the
+<a class="reference internal" href="#pyface.application.Application.start" title="pyface.application.Application.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.start()</span></code></a> and <a class="reference internal" href="#pyface.application.Application.stop" title="pyface.application.Application.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Application.stop()</span></code></a>
 methods as well.</p>
 <p>However the class can be used as-is by listening to the
 <a class="reference internal" href="#pyface.application.Application.application_initialized" title="pyface.application.Application.application_initialized"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Application.application_initialized</span></code></a> event and performing
@@ -335,7 +335,7 @@ stored.</p>
         &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 15, 2020.
+      Last updated on Oct 19, 2020.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

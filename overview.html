@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Overview &mdash; pyface 7.0.1 documentation</title>
+    <title>Overview &mdash; pyface 7.1 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.0.1',
+        VERSION:     '7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.0.1 documentation" href="index.html" >
+    <link rel="top" title="pyface 7.1 documentation" href="index.html" >
     <link rel="next" title="Toolkits" href="toolkits.html" >
     <link rel="prev" title="Welcome to the Pyface Documentation!" href="index.html" > 
   </head>
@@ -49,7 +49,7 @@
               
     <ul class="nav nav-pills pull-left">
 	
-        <li class="active"><a href="index.html">pyface 7.0.1 documentation</a></li>
+        <li class="active"><a href="index.html">pyface 7.1 documentation</a></li>
 	 
     </ul>
               
@@ -85,7 +85,7 @@
           <div class="body" id="spc-section-body" role="main">
             
   <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="pyface-concepts">
 <h2>Pyface Concepts<a class="headerlink" href="#pyface-concepts" title="Permalink to this headline">¶</a></h2>
 <p>The basic purpose of Pyface is to provide an abstraction layer between the
@@ -296,7 +296,7 @@ define a very simple Python editor application with menus:</p>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_editor</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
                 <span class="c1"># If you are trying to save to a file that doesn&#39;t exist,</span>
                 <span class="c1"># open up a FileDialog with a &#39;save as&#39; action.</span>
                 <span class="n">dlg</span> <span class="o">=</span> <span class="n">FileDialog</span><span class="p">(</span>
@@ -473,7 +473,7 @@ libraries which can produce a toolkit-specific control.</p>
         &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 15, 2020.
+      Last updated on Oct 19, 2020.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.

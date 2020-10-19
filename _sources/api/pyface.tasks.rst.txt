@@ -13,7 +13,6 @@ Subpackages
 
    pyface.tasks.action
    pyface.tasks.contrib
-   pyface.tasks.tests
 
 Submodules
 ----------

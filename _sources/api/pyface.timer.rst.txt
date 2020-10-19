@@ -6,13 +6,6 @@ pyface.timer package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-
-   pyface.timer.tests
-
 Submodules
 ----------
 

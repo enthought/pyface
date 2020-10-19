@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     
-    <title>Welcome to the Pyface Documentation! &mdash; pyface 7.0.1 documentation</title>
+    <title>Welcome to the Pyface Documentation! &mdash; pyface 7.1 documentation</title>
     
     <link rel="stylesheet" type="text/css" href="_static/css/spc-bootstrap.css">
     <link rel="stylesheet" type="text/css" href="_static/css/spc-extend.css">
@@ -13,7 +13,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '7.0.1',
+        VERSION:     '7.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         LINK_SUFFIX: '',
@@ -30,7 +30,7 @@
     <link rel="shortcut icon" href="_static/img/favicon.ico">
     <link rel="index" title="Index" href="genindex.html" >
     <link rel="search" title="Search" href="search.html" >
-    <link rel="top" title="pyface 7.0.1 documentation" href="#" >
+    <link rel="top" title="pyface 7.1 documentation" href="#" >
     <link rel="next" title="Overview" href="overview.html" > 
   </head>
   <body>
@@ -79,24 +79,24 @@
             
   <div class="section" id="welcome-to-the-pyface-documentation">
 <h1>Welcome to the Pyface Documentation!<a class="headerlink" href="#welcome-to-the-pyface-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Pyface contains a toolkit-independent GUI abstraction layers, used to support
-the “visualization” features of the Traits package. Thus, you can write code
-in the abstraction of the Pyface API and the selected toolkit and backend take
-care of the details of displaying them.</p>
+<p>Pyface contains toolkit-independent GUI abstraction layers, used to support
+the TraitsUI package. Thus, you can write code in the abstraction of the
+Pyface API and the selected toolkit and backend take care of the details of
+displaying them.</p>
 <div class="section" id="pyface">
 <h2>Pyface<a class="headerlink" href="#pyface" title="Permalink to this headline">¶</a></h2>
 <p>Pyface enables programmers to interact with generic GUI objects, such as an
 “MDI Application Window”, rather than with raw GUI widgets. (Pyface is named by
-analogy to JFace in Java.) Traits uses Pyface to implement views and editors
+analogy to JFace in Java.) TraitsUI uses Pyface to implement views and editors
 for displaying and editing Traits-based objects.</p>
 </div>
 <div class="section" id="toolkit-backends">
 <h2>Toolkit Backends<a class="headerlink" href="#toolkit-backends" title="Permalink to this headline">¶</a></h2>
-<p>Traits and Pyface define APIs that are independent of any GUI toolkit. However,
-in order to actually produce user interfaces with them, you must install a
-supported Python-based GUI toolkit and the appropriate toolkit-specific backend
-project. Conversely, if you wish to use Traits without a UI, a “null” backend
-is automatically used in the absence of a real backend.</p>
+<p>TraitsUI and Pyface define APIs that are independent of any GUI toolkit.
+However, in order to actually produce user interfaces with them, you must
+install a supported Python-based GUI toolkit and the appropriate
+toolkit-specific backend project. Conversely, a “null” backend is
+automatically used in the absence of a real backend.</p>
 <p>Currently, the supported GUI toolkits are</p>
 <ul class="simple">
 <li><p>PySide2</p></li>
@@ -104,8 +104,8 @@ is automatically used in the absence of a real backend.</p>
 <li><p>wxPython 4 (experimental)</p></li>
 </ul>
 <p>NOTE: Although the code in this library is BSD licensed, when the PyQt backend
-is used the more restrictive terms of PyQt’s GPL or proprietary licensing will
-likely apply to your code.</p>
+is used, the more restrictive terms of PyQt’s GPL or proprietary licensing
+will likely apply to your code.</p>
 <div class="section" id="toolkit-backend-selection">
 <h3>Toolkit Backend Selection<a class="headerlink" href="#toolkit-backend-selection" title="Permalink to this headline">¶</a></h3>
 <p>Selecting the backend to use is possible via the singleton object <strong>ETSConfig</strong>
@@ -113,13 +113,13 @@ likely apply to your code.</p>
 that signifies the GUI toolkit.</p>
 <p>The supported values of <strong>ETSConfig.toolkit</strong> are:</p>
 <ul class="simple">
-<li><p>‘qt4’ or ‘qt’: Pyside2 or <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>,
+<li><p>‘qt4’ or ‘qt’: PySide2 or <a class="reference external" href="http://riverbankcomputing.co.uk/pyqt/">PyQt</a>,
 which provide Python bindings for the <a class="reference external" href="http://www.qt.io">Qt</a> framework
 version 4 and 5.</p></li>
 <li><p>‘wx’: <a class="reference external" href="http://www.wxpython.org">wxPython 4</a>, which provides Python bindings
 for the <a class="reference external" href="http://wxwidgets.org">wxWidgets</a> toolkit.</p></li>
 <li><p>‘null’: A do-nothing toolkit, for situations where neither of the other
-toolkits is installed, but Traits is needed for non-UI purposes.</p></li>
+toolkits is installed.</p></li>
 </ul>
 <p>The default behavior of Pyface is to search for available toolkit-specific
 packages in the order listed, and uses the first one it finds. The programmer or
@@ -156,9 +156,10 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="toolkits.html#toolkit-entrypoints">Toolkit Entrypoints</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="submodules.html">Submodules</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="fields.html">Fields</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timer.html">Timers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="widgets.html">Widgets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="widgets.html#lifecycle">Lifecycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="widgets.html#basic-interface">Basic Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="widgets.html#iwidget-subclasses">IWidget Subclasses</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="applications.html">Pyface Applications</a><ul>
@@ -167,12 +168,23 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="applications.html#tasksapplication-interface">TasksApplication Interface</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="traits.html">Pyface Trait Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="traits.html#colors">Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="submodules.html">Submodules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_view.html">Data View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fields.html">Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="timer.html">Timers</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="api/pyface.html">API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api/pyface.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/pyface.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#release-7-1-0">Release 7.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-7-0-1">Release 7.0.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-7-0-0">Release 7.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-6-1-2">Release 6.1.2</a></li>
@@ -185,6 +197,7 @@ traits.  For example, at the beginning of a program:</p>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-5-1">Release 4.5.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-5-0">Release 4.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#release-4-4-0">Release 4.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#traitsgui-3-1-0-july-15-2009">TraitsGUI 3.1.0 (July 15, 2009)</a></li>
 </ul>
 </li>
 </ul>
@@ -251,7 +264,7 @@ traits.  For example, at the beginning of a program:</p>
         &copy; Copyright 2008-2020, Enthought
       </li>
       <li>
-      Last updated on Jul 15, 2020.
+      Last updated on Oct 19, 2020.
       </li>
       <li>
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 2.3.1.
