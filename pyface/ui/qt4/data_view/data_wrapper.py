@@ -47,7 +47,7 @@ class DataWrapper(MDataWrapper):
         mimedata : bytes
             The mime media data as bytes.
         """
-        return self.toolkit_data.data(mimetype)
+        return self.toolkit_data.data(mimetype).data()
 
     def set_mimedata(self, mimetype, raw_data):
         """ Set raw data for the given media type.
