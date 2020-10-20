@@ -1,3 +1,6 @@
+
+.. _data-view:
+
 Pyface DataViews
 =================
 
