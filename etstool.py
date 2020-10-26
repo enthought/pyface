@@ -101,6 +101,7 @@ dependencies = {
 
 source_dependencies = {
     "traits": "git+http://github.com/enthought/traits.git#egg=traits",
+    "traitsui": "git+http://github.com/enthought/traitsui.git#egg=traitsui",
 }
 
 extra_dependencies = {
