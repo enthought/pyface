@@ -2,6 +2,88 @@
 Pyface Changelog
 ================
 
+Release 7.1.0
+=============
+
+Pyface 7.1.0 introduces a few new features and fixes to deprecation warnings.
+There are also internal cleanups to Qt signal connection logic that
+should be invisible to users.
+
+This release should be compatible with Traits 6.0+. Users are encouraged to
+upgrade to Traits 6.1+ to stay current as future releases of Pyface will stop
+supporting Traits 6.0.
+
+Highlights of this release
+--------------------------
+
+* A new :mod:`data_view <pyface.data_view>` subpackage has been introduced to
+  support visualization of hierarchical and non-hierarchical tabular data. See
+  :ref:`data-view` section of the user manual for an introduction. Additional
+  examples are also added to the source distribution. Please note that as of
+  this release the API is provisional.
+
+* A new :class:`Color <pyface.color.Color>` class and a corresponding
+  :class:`PyfaceColor <pyface.ui_traits.PyfaceColor>` trait type have been
+  introduced to support representing colors via a toolkit independent API. See
+  :ref:`ui-trait-types` section of the user manual for further details.
+
+Detailed changes
+----------------
+
+More than 70 PRs went into this release. Thanks to:
+
+* Aaron Ayres
+* Ieva Cernyte
+* Mark Dickinson
+* Kit Yan Choi
+* Rahul Poruri
+* Corran Webster
+
+Note that the following list is not exhaustive. Some PRs references have been
+omitted.
+
+Features
+
+* Add :mod:`data_view <pyface.data_view>` subpackage for visualizing
+  hierarchical and non-hierarchical data. (#619, #661, #682, #683, #694, #709)
+* Add :class:`Color <pyface.color.Color>` and
+  :class:`PyfaceColor <pyface.ui_traits.PyfaceColor>` trait type.
+  (#608, #710, #703)
+
+Fixes
+
+* Use availableGeometry for screen size in Qt to match TraitsUI behavior (#727)
+* Fix deprecation warnings from Qt SystemMetrics (#719)
+* Fix QFontMetrics.width deprecation warning. (#715)
+* Remove border for heading text in Qt. (#692)
+* Replacing ListItemAttr with ItemAttr to avoid deprecation warning. (#670)
+* Fix wx/linux clipboard test failures. (#676)
+
+Build and continuous integration
+
+* Add CI job targeting traits 6.0. (#656)
+* Fix extras_requires for PyQt5. (#659)
+* Updated edm version in travis and appveyor config files. (#618)
+
+Documentation
+
+* Add documentation for the new PyfaceColor trait and Color class. (#710)
+* Add documentation for DataView. (#543, #574, #763)
+* Remove all enaml examples. (#652)
+* Fix some Sphinx warnings while building documentation. (#769)
+
+Maintenance and code organization
+
+* Disconnect slots to Qt signals when cleaning up widgets. (#536, #542, #540)
+* Disconnect trait change handlers when cleaning up ApplicationWindow widgets.
+  (#541)
+* Remove conditionals on python version. (#635)
+* Remove a print call in test. (#657)
+* Remove all of the u prefix on strings. (#604)
+* Use collections.abc instead of collections. (#477)
+* Use unittest discover for running tests. (#515)
+
+
 Release 7.0.1
 =============
 

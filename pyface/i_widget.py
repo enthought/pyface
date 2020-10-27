@@ -39,8 +39,8 @@ class IWidget(Interface):
     def show(self, visible):
         """ Show or hide the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         visible : bool
             Visible should be ``True`` if the widget should be shown.
         """
@@ -48,8 +48,8 @@ class IWidget(Interface):
     def enable(self, enabled):
         """ Enable or disable the widget.
 
-        Parameter
-        ---------
+        Parameters
+        ----------
         enabled : bool
             The enabled state to set the widget to.
         """

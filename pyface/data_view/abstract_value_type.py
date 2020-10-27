@@ -330,6 +330,18 @@ class AbstractValueType(ABCHasStrictTraits):
 
         The default implementation returns True if ``get_tooltip``
         returns a non-empty value.
+
+        Parameters
+        ----------
+        model : AbstractDataModel
+            The data model holding the data.
+        row : sequence of int
+            The row in the data model being queried.
+        column : sequence of int
+            The column in the data model being queried.
+
+        Returns
+        -------
         has_tooltip : bool
             Whether or not the value has a textual representation.
         """

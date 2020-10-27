@@ -12,7 +12,7 @@
 """
 This module provides the toolkit object for the current backend toolkit
 
-See :py_func:`pyface.base_toolkit.find_toolkit` for details on the loading
+See :py:func:`pyface.base_toolkit.find_toolkit` for details on the loading
 algorithm.
 """
 

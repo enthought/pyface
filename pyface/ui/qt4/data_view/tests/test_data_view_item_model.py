@@ -57,7 +57,7 @@ class TestDataViewItemModel(TestCase):
         self.assertIsInstance(mime_data, QMimeData)
         self.assertTrue(mime_data.hasFormat('text/plain'))
 
-        raw_data = mime_data.data('text/plain')
+        raw_data = mime_data.data('text/plain').data()
         data = table_format.deserialize(bytes(raw_data))
         np.testing.assert_array_equal(
             data,

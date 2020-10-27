@@ -194,7 +194,7 @@ class GuiTestAssistant(UnittestTools):
             The extended trait name of trait changes to listen to.
         condition : callable
             A callable to determine if the stop criteria have been met. This
-            should accept no arguments.
+            takes obj as the only argument.
         count : int
             The expected number of times the event should be fired. The default
             is to expect one event.
