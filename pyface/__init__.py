@@ -74,7 +74,7 @@ def load_tests(loader, standard_tests, pattern):
     # We will skip tests in data_view package in Traits 6.0 environment
     # Remove this when Traits 6.0 is dropped for the entire code base.
     if not is_traits_version_ge("6.1"):
-        exclusion_patterns.append("\.data_view\.")
+        exclusion_patterns.append(r"\.data_view\.")
 
     filtered_package_tests = TestSuite()
     for test_suite in package_tests:
