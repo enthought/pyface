@@ -46,6 +46,8 @@ class ItemDelegate(HasStrictTraits):
     is_delegate_for = Callable()
 
     # Callable(value) -> boolean
+    # Note that the value has already been transformed by the corresponding
+    # converter, e.g. from_text.
     validator = Callable(default_value=lambda value: True)
 
     # Callable(any) -> str
@@ -141,21 +143,23 @@ class NewDataViewItemModel(DataViewItemModel):
 
         delegate = self._get_delegate(row, column)
 
-        if not delegate.validator(value):
-            return False
-
         if role == Qt.EditRole and delegate.from_text is not None:
             return self._set_value_with_exception(
                 row=row,
                 column=column,
-                value=delegate.from_text(value)
+                value=value,
+                mapper=delegate.from_text,
+                validator=delegate.validator,
             )
 
         if role == Qt.CheckStateRole and delegate.from_check_state is not None:
             value = self.set_check_state_map[value]
             return self._set_value_with_exception(
-                row=row, column=column,
-                value=delegate.from_check_state(value)
+                row=row,
+                column=column,
+                value=value,
+                mapper=delegate.from_check_state,
+                validator=delegate.validator,
             )
 
         return False
@@ -188,7 +192,7 @@ class NewDataViewItemModel(DataViewItemModel):
                 return delegate
         return ItemDelegate()
 
-    def _set_value_with_exception(self, row, column, value):
+    def _set_value_with_exception(self, row, column, value, mapper, validator):
         """ Set model value with exception handling.
 
         Returns
@@ -197,7 +201,10 @@ class NewDataViewItemModel(DataViewItemModel):
             If setting the value was successful.
         """
         try:
-            self.model.set_value(row, column, value)
+            mapped_value = mapper(value)
+            if not validator(mapped_value):
+                return False
+            self.model.set_value(row, column, mapped_value)
         except DataViewSetError:
             return False
         except Exception:
@@ -240,22 +247,26 @@ class DataItem:
         self.d = d
 
 
-def basic_to_check_state(value):
+def bool_to_check_state(value):
+    """ Basic mapping from value to CheckState."""
     if bool(value):
         return CheckState.CHECKED
     return CheckState.UNCHECKED
 
 
-def basic_from_check_state(value):
+def check_state_to_bool(value):
+    """ Basic mapping from CheckState back to bool."""
     return value == CheckState.CHECKED
 
 
-def validate_int(value):
+def text_to_int(text):
+    """ Cast text to int."""
     try:
-        int(value)
+        return int(text)
     except ValueError:
-        return False
-    return True
+        raise DataViewSetError(
+            "Can't evaluate value: {!r}".format(text)
+        )
 
 
 class MainWindow(ApplicationWindow):
@@ -284,7 +295,7 @@ def create_model_and_delegates():
             a="Hello", b=50, c=True, d="red",
         ),
         DataItem(
-            a="Name", b=3, c=True, d="green",
+            a="Hi", b=3, c=True, d="green",
         ),
         DataItem(
             a="Hey", b=3, c=True, d="black",
@@ -321,21 +332,22 @@ def create_model_and_delegates():
             is_delegate_for=(
                 lambda model, row, column: row != () and column == ()
             ),
+            validator=lambda value: value.startswith("H"),
             from_text=lambda text: text,
         ),
         ItemDelegate(
             is_delegate_for=(
                 lambda model, row, column: column == (0, )
             ),
-            validator=lambda value: validate_int and int(value) < 100,
-            from_text=lambda text: int(text),
+            validator=lambda value: value < 100,
+            from_text=text_to_int,
         ),
         ItemDelegate(
             is_delegate_for=(
                 lambda model, row, column: column == (1, )
             ),
-            to_check_state=basic_to_check_state,
-            from_check_state=basic_from_check_state,
+            to_check_state=bool_to_check_state,
+            from_check_state=check_state_to_bool,
         ),
         ItemDelegate(
             is_delegate_for=(
