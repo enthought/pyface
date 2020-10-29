@@ -253,6 +253,13 @@ class MainWindow(ApplicationWindow):
 
 
 def create_model_and_delegates():
+    """ Return a DataModel and a list of ItemDelegate for the widget.
+
+    Returns
+    -------
+    model : AbstractDataModel
+    delegates : list of ItemDelegate
+    """
     objects = [
         DataItem(
             a="Hello", b=50, c=True, d="red",
@@ -275,12 +282,22 @@ def create_model_and_delegates():
             attr="d",
         ),
     ]
+
+    model =  NewDataModel(
+        data=objects,
+        row_header_data=AttributeDataAccessor(
+            title='People',
+            attr='a',
+        ),
+        column_data=column_data,
+    )
+
     delegates = [
         ItemDelegate(
             is_delegate_for=(
                 lambda model, row, column: column == (0, )
             ),
-            validator=validate_int,
+            validator=lambda value: validate_int and int(value) < 100,
             from_text=lambda text: int(text),
         ),
         ItemDelegate(
@@ -298,14 +315,6 @@ def create_model_and_delegates():
         ),
     ]
 
-    model =  NewDataModel(
-        data=objects,
-        row_header_data=AttributeDataAccessor(
-            title='People',
-            attr='a',
-        ),
-        column_data=column_data,
-    )
     return model, delegates
 
 
