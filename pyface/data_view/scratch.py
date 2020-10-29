@@ -32,7 +32,11 @@ class DataItem:
 
 class NewDataModel(RowTableDataModel):
     """ A model for the data structure.
+
     In Qt world, this maps to a QAbstractItemModel.
+
+    It is responsible for the getting and setting of data values.
+    It is also responsible for validating values before setting them.
     """
 
     def get_value_type(self, row, column):
@@ -51,8 +55,14 @@ class ItemDelegate(HasStrictTraits):
     # Callable(model, row, column) -> boolean
     is_delegate_for = Callable()
 
+    # Callable(value) -> boolean
+    validator = Callable(default_value=lambda value: True)
+
     # Callable(any) -> str
     to_text = Callable(default_value=str, allow_none=True)
+
+    # Callable(str) -> any
+    from_text = Callable(default_value=None, allow_none=True)
 
     # Callable(any) -> CheckState
     to_check_state = Callable(default_value=None, allow_none=True)
@@ -96,6 +106,10 @@ class NewDataViewItemModel(DataViewItemModel):
             flags |= Qt.ItemNeverHasChildren
 
         delegate = self._get_delegate(row, column)
+
+        if delegate.from_text is not None:
+            flags |= Qt.ItemIsEditable
+
         if delegate.to_check_state is not None:
             flags |= Qt.ItemIsEditable
             flags |= Qt.ItemIsUserCheckable
@@ -122,6 +136,16 @@ class NewDataViewItemModel(DataViewItemModel):
         column = self._to_column_index(index)
 
         delegate = self._get_delegate(row, column)
+
+        if not delegate.validator(value):
+            return False
+
+        if role == Qt.EditRole and delegate.from_text is not None:
+            return self._set_value_with_exception(
+                row=row,
+                column=column,
+                value=delegate.from_text(value)
+            )
 
         if role == Qt.CheckStateRole and delegate.from_check_state is not None:
             value = self.set_check_state_map[value]
@@ -195,36 +219,37 @@ def basic_from_check_state(value):
     return value == CheckState.CHECKED
 
 
+def validate_int(value):
+    try:
+        int(value)
+    except ValueError:
+        return False
+    return True
+
+
 class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
+        data_model, delegates = create_model_and_delegates()
         widget = NewDataViewWidget(
             parent=parent,
-            data_model=create_model(),
-            delegates=[
-                ItemDelegate(
-                    is_delegate_for=(
-                        lambda model, row, column: column == (1, )
-                    ),
-                    to_check_state=basic_to_check_state,
-                    from_check_state=basic_from_check_state,
-                )
-            ]
+            data_model=data_model,
+            delegates=delegates,
         )
         widget._create()
         return widget.control
 
 
-def create_model():
+def create_model_and_delegates():
     objects = [
         DataItem(
-            a="Hello", b="World", c=True,
+            a="Hello", b=50, c=True,
         ),
         DataItem(
-            a=2, b=3, c=True,
+            a="Name", b=3, c=True,
         ),
         DataItem(
-            a=2, b=3, c=True,
+            a="Hey", b=3, c=True,
         ),
     ]
     column_data = [
@@ -235,7 +260,24 @@ def create_model():
             attr="c",
         ),
     ]
-    return NewDataModel(
+    delegates = [
+        ItemDelegate(
+            is_delegate_for=(
+                lambda model, row, column: column == (0, )
+            ),
+            validator=validate_int,
+            from_text=lambda text: int(text),
+        ),
+        ItemDelegate(
+            is_delegate_for=(
+                lambda model, row, column: column == (1, )
+            ),
+            to_check_state=basic_to_check_state,
+            from_check_state=basic_from_check_state,
+        ),
+    ]
+
+    model =  NewDataModel(
         data=objects,
         row_header_data=AttributeDataAccessor(
             title='People',
@@ -243,6 +285,7 @@ def create_model():
         ),
         column_data=column_data,
     )
+    return model, delegates
 
 
 def run():
