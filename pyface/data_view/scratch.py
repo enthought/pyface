@@ -28,7 +28,6 @@ class NewDataModel(RowTableDataModel):
     In Qt world, this maps to a QAbstractItemModel.
 
     It is responsible for the getting and setting of data values.
-    It is also responsible for validating values before setting them.
     """
 
     def get_value_type(self, row, column):
