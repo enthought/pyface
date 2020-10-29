@@ -14,7 +14,7 @@ from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
 # Use Qt implementations for proof-of-concept purposes.
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import Qt
-from pyface.qt.QtGui import QColor
+from pyface.qt.QtGui import QColor, QStyledItemDelegate
 from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
 from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 
@@ -64,6 +64,10 @@ class ItemDelegate(HasStrictTraits):
 
     # Callable(any) -> Color
     to_bg_color = Callable(default_value=None, allow_none=True)
+
+
+class QtCustomItemDelegate(QStyledItemDelegate):
+    pass
 
 
 class NewDataViewItemModel(DataViewItemModel):
@@ -232,6 +236,13 @@ class NewDataViewWidget(DataViewWidget):
             self.exporters,
             delegates=self.delegates,
         )
+
+
+    def _create_control(self, parent):
+        """ Create the DataViewWidget's toolkit control. """
+        control = super()._create_control(parent)
+        control.setItemDelegate(QtCustomItemDelegate(control))
+        return control
 
 
 # --------------------------------------------------------------------
