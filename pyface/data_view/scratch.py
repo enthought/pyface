@@ -33,8 +33,7 @@ class NewDataModel(RowTableDataModel):
     """
 
     def get_value_type(self, row, column):
-        # raise RuntimeError("Remove value type from model.")
-        return TextValue()
+        raise RuntimeError("Remove value type from model.")
 
 
 class ItemDelegate(HasStrictTraits):
@@ -163,6 +162,25 @@ class NewDataViewItemModel(DataViewItemModel):
 
         return False
 
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        """ Reimplemented headerData to use delegates instead of ValueType."""
+        if orientation == Qt.Horizontal:
+            row = ()
+            if section == 0:
+                column = ()
+            else:
+                column = (section - 1,)
+        else:
+            # XXX not currently used, but here for symmetry and completeness
+            row = (section,)
+            column = ()
+
+        delegate = self._get_delegate(row, column)
+        value = self.model.get_value(row, column)
+        if role == Qt.DisplayRole and delegate.to_text is not None:
+            return delegate.to_text(value)
+        return None
+
     # Private methods
 
     def _get_delegate(self, row, column):
@@ -289,7 +307,6 @@ def create_model_and_delegates():
     model =  NewDataModel(
         data=objects,
         row_header_data=AttributeDataAccessor(
-            title='People',
             attr='a',
         ),
         column_data=column_data,
@@ -298,7 +315,13 @@ def create_model_and_delegates():
     delegates = [
         ItemDelegate(
             is_delegate_for=(
-                lambda model, row, column: column == ()
+                lambda model, row, column: row == ()
+            ),
+            to_text=lambda value: "HEADER " + str(value)
+        ),
+        ItemDelegate(
+            is_delegate_for=(
+                lambda model, row, column: row != () and column == ()
             ),
             from_text=lambda text: text,
         ),
