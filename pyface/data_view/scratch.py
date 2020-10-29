@@ -122,6 +122,9 @@ class NewDataViewItemModel(DataViewItemModel):
         if role == Qt.DisplayRole and delegate.to_text is not None:
             return delegate.to_text(value)
 
+        if role == Qt.EditRole and delegate.to_text is not None:
+            return delegate.to_text(value)
+
         if role == Qt.CheckStateRole and delegate.to_check_state is not None:
             return self.get_check_state_map[delegate.to_check_state(value)]
 
@@ -293,6 +296,12 @@ def create_model_and_delegates():
     )
 
     delegates = [
+        ItemDelegate(
+            is_delegate_for=(
+                lambda model, row, column: column == ()
+            ),
+            from_text=lambda text: text,
+        ),
         ItemDelegate(
             is_delegate_for=(
                 lambda model, row, column: column == (0, )
