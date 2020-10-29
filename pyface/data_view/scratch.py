@@ -9,6 +9,8 @@ from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
 from pyface.data_view.value_types.api import TextValue   # placeholder for now.
 
 # Use Qt implementations for proof-of-concept purposes.
+from pyface.qt import is_qt5
+from pyface.qt.QtCore import Qt
 from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
 from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 
@@ -32,7 +34,7 @@ class NewDataModel(RowTableDataModel):
         return TextValue()
 
 
-class ValueDelegate(HasStrictTraits):
+class ItemDelegate(HasStrictTraits):
     """ This replaces ValueType, and will play the role of providing
     custom renderer.
 
@@ -44,7 +46,40 @@ class ValueDelegate(HasStrictTraits):
 
 class NewDataViewItemModel(DataViewItemModel):
     """ Override functionality of DataViewItemModel."""
-    pass
+
+    def flags(self, index):
+        row = self._to_row_index(index)
+        column = self._to_column_index(index)
+        value_type = self.model.get_value_type(row, column)
+        if row == () and column == ():
+            return Qt.ItemIsEnabled
+
+        flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled
+        if is_qt5 and not self.model.can_have_children(row):
+            flags |= Qt.ItemNeverHasChildren
+
+        try:
+            if value_type:
+                if value_type.has_editor_value(self.model, row, column):
+                    flags |= Qt.ItemIsEditable
+                if (
+                    value_type.has_check_state(self.model, row, column)
+                    and self.model.can_set_value(row, column)
+                ):
+                    flags |= Qt.ItemIsUserCheckable
+        except DataViewGetError:
+            # expected error, ignore
+            pass
+        except Exception:
+            # unexpected error, log and raise
+            logger.exception(
+                "get flags failed: row %r, column %r",
+                row,
+                column,
+            )
+            raise
+
+        return flags
 
 
 class NewDataViewWidget(DataViewWidget):
@@ -56,6 +91,11 @@ class NewDataViewWidget(DataViewWidget):
             self.selection_type,
             self.exporters,
         )
+
+
+# --------------------------------------------------------------------
+# The following setup is for manual testing this proof-of-concept.
+# --------------------------------------------------------------------
 
 
 class MainWindow(ApplicationWindow):
@@ -91,7 +131,7 @@ def create_model():
     ]
     return NewDataModel(
         data=objects,
-        row_header_data = AttributeDataAccessor(
+        row_header_data=AttributeDataAccessor(
             title='People',
             attr='a',
         ),
