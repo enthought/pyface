@@ -22,14 +22,6 @@ from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 logger = logging.getLogger(__name__)
 
 
-class DataItem:
-
-    def __init__(self, a, b, c):
-        self.a = a
-        self.b = b
-        self.c = c
-
-
 class NewDataModel(RowTableDataModel):
     """ A model for the data structure.
 
@@ -207,6 +199,13 @@ class NewDataViewWidget(DataViewWidget):
 # --------------------------------------------------------------------
 # The following setup is for manual testing this proof-of-concept.
 # --------------------------------------------------------------------
+
+class DataItem:
+
+    def __init__(self, a, b, c):
+        self.a = a
+        self.b = b
+        self.c = c
 
 
 def basic_to_check_state(value):
