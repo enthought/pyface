@@ -10,7 +10,6 @@ from pyface.data_view.api import DataViewSetError, DataViewGetError
 from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
 from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
-from pyface.data_view.value_types.api import TextValue   # placeholder for now.
 
 # Use Qt implementations for proof-of-concept purposes.
 from pyface.qt import is_qt5
