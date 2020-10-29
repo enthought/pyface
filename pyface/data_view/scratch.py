@@ -5,7 +5,7 @@ from traits.api import Bool, List, Instance, HasStrictTraits, Dict, Callable
 
 from pyface.api import ApplicationWindow, GUI
 
-
+from pyface.color import Color
 from pyface.data_view.api import DataViewSetError, DataViewGetError
 from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
@@ -15,6 +15,7 @@ from pyface.data_view.value_types.api import TextValue   # placeholder for now.
 # Use Qt implementations for proof-of-concept purposes.
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import Qt
+from pyface.qt.QtGui import QColor
 from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
 from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 
@@ -61,6 +62,9 @@ class ItemDelegate(HasStrictTraits):
 
     # Callable(CheckState) -> any
     from_check_state = Callable(default_value=None, allow_none=True)
+
+    # Callable(any) -> Color
+    to_bg_color = Callable(default_value=None, allow_none=True)
 
 
 class NewDataViewItemModel(DataViewItemModel):
@@ -120,6 +124,14 @@ class NewDataViewItemModel(DataViewItemModel):
 
         if role == Qt.CheckStateRole and delegate.to_check_state is not None:
             return self.get_check_state_map[delegate.to_check_state(value)]
+
+        if role == Qt.BackgroundRole and delegate.to_bg_color is not None:
+            return delegate.to_bg_color(value).to_toolkit()
+
+        if role == Qt.ForegroundRole and delegate.to_bg_color is not None:
+            color = delegate.to_bg_color(value)
+            return QColor(255, 255, 255) if color.is_dark else QColor(0, 0, 0)
+
         return None
 
     def setData(self, index, value, role=Qt.EditRole):
@@ -202,10 +214,11 @@ class NewDataViewWidget(DataViewWidget):
 
 class DataItem:
 
-    def __init__(self, a, b, c):
+    def __init__(self, a, b, c, d):
         self.a = a
         self.b = b
         self.c = c
+        self.d = d
 
 
 def basic_to_check_state(value):
@@ -242,13 +255,13 @@ class MainWindow(ApplicationWindow):
 def create_model_and_delegates():
     objects = [
         DataItem(
-            a="Hello", b=50, c=True,
+            a="Hello", b=50, c=True, d="red",
         ),
         DataItem(
-            a="Name", b=3, c=True,
+            a="Name", b=3, c=True, d="green",
         ),
         DataItem(
-            a="Hey", b=3, c=True,
+            a="Hey", b=3, c=True, d="black",
         ),
     ]
     column_data = [
@@ -257,6 +270,9 @@ def create_model_and_delegates():
         ),
         AttributeDataAccessor(
             attr="c",
+        ),
+        AttributeDataAccessor(
+            attr="d",
         ),
     ]
     delegates = [
@@ -273,6 +289,12 @@ def create_model_and_delegates():
             ),
             to_check_state=basic_to_check_state,
             from_check_state=basic_from_check_state,
+        ),
+        ItemDelegate(
+            is_delegate_for=(
+                lambda model, row, column: column == (2, )
+            ),
+            to_bg_color=Color.from_str,
         ),
     ]
 
