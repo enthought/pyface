@@ -1,7 +1,12 @@
 import enum
+from functools import partial
+import itertools
 import logging
 
-from traits.api import Bool, List, Instance, HasStrictTraits, Dict, Callable
+from traits.api import (
+    Any, Bool, Event, List, Instance, HasStrictTraits, Dict, Callable, observe,
+    Property, Str
+)
 
 from pyface.api import ApplicationWindow, GUI
 
@@ -10,11 +15,14 @@ from pyface.data_view.api import DataViewSetError, DataViewGetError
 from pyface.data_view.abstract_value_type import CheckState
 from pyface.data_view.data_models.data_accessors import AttributeDataAccessor
 from pyface.data_view.data_models.row_table_data_model import RowTableDataModel
+from pyface.fields.api import ComboField
 
 # Use Qt implementations for proof-of-concept purposes.
 from pyface.qt import is_qt5
 from pyface.qt.QtCore import Qt
-from pyface.qt.QtGui import QColor, QStyledItemDelegate
+from pyface.qt.QtGui import (
+    QColor, QStyledItemDelegate, QTextEdit, QComboBox,
+)
 from pyface.ui.qt4.data_view.data_view_item_model import DataViewItemModel
 from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 
@@ -34,6 +42,65 @@ class NewDataModel(RowTableDataModel):
         raise RuntimeError("Remove value type from model.")
 
 
+class Handle(HasStrictTraits):
+    """ This is an object given to an BaseItemEditor for getting and
+    setting values.
+    """
+
+    value = Property()
+
+    _model = Any()
+
+    _row = Any()
+
+    _column = Any()
+
+    _delegate = Any()
+
+    def __init__(self, *, model, row, column, delegate):
+        super().__init__()
+        self._model = model
+        self._row = row
+        self._column = column
+        self._delegate = delegate
+
+    def _get_value(self):
+        return self._model.get_value(self._row, self._column)
+
+    def _set_value(self, value):
+        if not self._delegate.validator(value):
+            return
+        self._model.set_value(self._row, self._column, value)
+
+
+class BaseItemEditor(HasStrictTraits):
+
+    editing_finished = Event()
+
+    handle = Instance(Handle)
+
+    def create(self, parent):
+        raise NotImplementedError("This method must return a widget control.")
+
+
+class TraitsUIEditorItemEditor(BaseItemEditor):
+    """ An implementation of a BaseItemEditor that allows any TraitsUI
+    editor to be used as the item editor.
+    """
+
+    editor_factory = Any()
+
+    style = Str("simple")
+
+    def create(self, parent):
+        from traitsui.api import UI, default_handler
+        ui = UI(handler=default_handler())
+        factory = getattr(self.editor_factory, self.style + "_editor")
+        editor = factory(ui, self.handle, "value", "", parent)
+        editor.prepare(parent)
+        return editor.control
+
+
 class ItemDelegate(HasStrictTraits):
     """ This replaces ValueType, and will play the role of providing
     custom renderer.
@@ -46,8 +113,8 @@ class ItemDelegate(HasStrictTraits):
     is_delegate_for = Callable()
 
     # Callable(value) -> boolean
-    # Note that the value has already been transformed by the corresponding
-    # converter, e.g. from_text.
+    # Note that the value has already been transformed back to the business
+    # specifiv value as is found on the data model.
     validator = Callable(default_value=lambda value: True)
 
     # Callable(any) -> str
@@ -65,9 +132,46 @@ class ItemDelegate(HasStrictTraits):
     # Callable(any) -> Color
     to_bg_color = Callable(default_value=None, allow_none=True)
 
+    # Callable(parent, Handle) -> ItemEditor
+    item_editor_factory = Callable(default_value=None, allow_none=True)
+
 
 class QtCustomItemDelegate(QStyledItemDelegate):
-    pass
+    """ Custom implementation of the QAbstractItemDelegate.
+
+    It uses the item_editor_factory from the ItemDelegate object to create
+    new editor.
+    """
+
+    def createEditor(self, parent, option, index):
+        """ Reimplemented to return the editor for a given index."""
+
+        item_model = index.model()
+        row = item_model._to_row_index(index)
+        column = item_model._to_column_index(index)
+        data_model = item_model.model
+        delegate = item_model._get_delegate(row, column)
+        if delegate.item_editor_factory is not None:
+            item_editor = delegate.item_editor_factory(
+                handle=Handle(
+                    model=data_model,
+                    row=row,
+                    column=column,
+                    delegate=delegate,
+                )
+            )
+            control = item_editor.create(parent)
+            control.setFocusPolicy(Qt.StrongFocus)
+            control.setAutoFillBackground(True)
+            control.setParent(parent)
+            return control
+
+        return super().createEditor(parent, option, index)
+
+    def updateEditorGeometry(self, editor, option, index):
+        """ Update the editor's geometry.
+        """
+        editor.setGeometry(option.rect)
 
 
 class NewDataViewItemModel(DataViewItemModel):
@@ -107,6 +211,9 @@ class NewDataViewItemModel(DataViewItemModel):
         delegate = self._get_delegate(row, column)
 
         if delegate.from_text is not None:
+            flags |= Qt.ItemIsEditable
+
+        if delegate.item_editor_factory is not None:
             flags |= Qt.ItemIsEditable
 
         if delegate.to_check_state is not None:
@@ -251,11 +358,12 @@ class NewDataViewWidget(DataViewWidget):
 
 class DataItem:
 
-    def __init__(self, a, b, c, d):
+    def __init__(self, a, b, c, d, e):
         self.a = a
         self.b = b
         self.c = c
         self.d = d
+        self.e = e
 
 
 def bool_to_check_state(value):
@@ -293,6 +401,18 @@ class MainWindow(ApplicationWindow):
         return widget.control
 
 
+def is_row_header(model, row, column):
+    return row == ()
+
+
+def is_column_header(model, row, column):
+    return column == ()
+
+
+def is_column_index(index):
+    return lambda model, row, column: column == (index, )
+
+
 def create_model_and_delegates():
     """ Return a DataModel and a list of ItemDelegate for the widget.
 
@@ -301,18 +421,22 @@ def create_model_and_delegates():
     model : AbstractDataModel
     delegates : list of ItemDelegate
     """
+
+    values = itertools.cycle(zip(
+        ["Hello", "Hi", "Hey"],
+        [1, 2, 3],
+        [True, False, True],
+        [Color.from_str("green"), Color.from_str("green"), Color.from_str("black")],
+        ["green", "green", "black"],
+    ))
     objects = [
-        DataItem(
-            a="Hello", b=50, c=True, d="red",
-        ),
-        DataItem(
-            a="Hi", b=3, c=True, d="green",
-        ),
-        DataItem(
-            a="Hey", b=3, c=True, d="black",
-        ),
+        DataItem(*next(values))
+        for _ in range(1000)
     ]
     column_data = [
+        AttributeDataAccessor(
+            attr="b",
+        ),
         AttributeDataAccessor(
             attr="b",
         ),
@@ -322,9 +446,12 @@ def create_model_and_delegates():
         AttributeDataAccessor(
             attr="d",
         ),
+        AttributeDataAccessor(
+            attr="e",
+        ),
     ]
 
-    model =  NewDataModel(
+    model = NewDataModel(
         data=objects,
         row_header_data=AttributeDataAccessor(
             attr='a',
@@ -332,39 +459,62 @@ def create_model_and_delegates():
         column_data=column_data,
     )
 
+    # demonstrate using TraitsUI editor
+    from traitsui.api import (
+        EnumEditor, TextEditor, RangeEditor, ProgressEditor
+    )
+
     delegates = [
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: row == ()
-            ),
+            is_delegate_for=is_row_header,
             to_text=lambda value: "HEADER " + str(value)
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: row != () and column == ()
-            ),
+            is_delegate_for=is_column_header,
             validator=lambda value: value.startswith("H"),
             from_text=lambda text: text,
+            item_editor_factory=partial(
+                TraitsUIEditorItemEditor,
+                editor_factory=TextEditor(),
+                style="custom",
+            ),
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: column == (0, )
-            ),
+            is_delegate_for=is_column_index(0),
             validator=lambda value: value < 100,
-            from_text=text_to_int,
+            item_editor_factory=partial(
+                TraitsUIEditorItemEditor,
+                editor_factory=RangeEditor(low=0, high=100),
+            )
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: column == (1, )
-            ),
+            is_delegate_for=is_column_index(1),
+            validator=lambda value: value < 100,
+            item_editor_factory=partial(
+                TraitsUIEditorItemEditor,
+                editor_factory=ProgressEditor(min=0, max=100),
+            )
+        ),
+        ItemDelegate(
+            is_delegate_for=is_column_index(2),
             to_check_state=bool_to_check_state,
             from_check_state=check_state_to_bool,
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: column == (2, )
-            ),
-            to_bg_color=Color.from_str,
+            is_delegate_for=is_column_index(3),
+            to_bg_color=lambda value: value,
+            to_text=lambda value: value.hex(),
+        ),
+        ItemDelegate(
+            is_delegate_for=is_column_index(4),
+            item_editor_factory=partial(
+                TraitsUIEditorItemEditor,
+                # How are the allowed values going to react to changes
+                # on the object?
+                editor_factory=EnumEditor(
+                    values=["green", "red", "black"],
+                ),
+            )
         ),
     ]
 
