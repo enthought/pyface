@@ -41,6 +41,14 @@ class NewDataModel(RowTableDataModel):
     def get_value_type(self, row, column):
         raise RuntimeError("Remove value type from model.")
 
+    def get_data_accessor(self, row, column):
+        """ Return the AbstractDataAccessor used for the given row and column.
+        """
+        if len(column) == 0:
+            return self.row_header_data
+        else:
+            return self.column_data[column[0]]
+
 
 class Handle(HasStrictTraits):
     """ This is an object given to an BaseItemEditor for getting and
@@ -496,17 +504,29 @@ def create_model_and_delegates():
             )
         ),
         ItemDelegate(
-            is_delegate_for=is_column_index(2),
+            is_delegate_for=(
+                lambda model, row, column: (
+                    model.get_data_accessor(row, column).attr == "c"
+                )
+            ),
             to_check_state=bool_to_check_state,
             from_check_state=check_state_to_bool,
         ),
         ItemDelegate(
-            is_delegate_for=is_column_index(3),
+            is_delegate_for=(
+                lambda model, row, column: (
+                    model.get_data_accessor(row, column).attr == "d"
+                )
+            ),
             to_bg_color=lambda value: value,
             to_text=lambda value: value.hex(),
         ),
         ItemDelegate(
-            is_delegate_for=is_column_index(4),
+            is_delegate_for=(
+                lambda model, row, column: (
+                    model.get_data_accessor(row, column).attr == "e"
+                )
+            ),
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 # How are the allowed values going to react to changes
