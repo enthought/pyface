@@ -76,7 +76,7 @@ class Handle(HasStrictTraits):
         return self.model.get_value(self.row, self.column)
 
     def _set_value(self, value):
-        if not self.delegate.validator(value):
+        if not self.delegate.validator(self, value):
             return
         self.model.set_value(self.row, self.column, value)
 
@@ -120,27 +120,29 @@ class ItemDelegate(HasStrictTraits):
     # Callable(model, row, column) -> boolean
     is_delegate_for = Callable()
 
-    # Callable(value) -> boolean
+    # Callable(Handle, value) -> boolean
     # Note that the value has already been transformed back to the business
     # specifiv value as is found on the data model.
-    validator = Callable(default_value=lambda value: True)
+    validator = Callable(default_value=lambda _, value: True)
 
-    # Callable(any) -> str
-    to_text = Callable(default_value=str, allow_none=True)
+    # Callable(Handle, any) -> str
+    to_text = Callable(
+        default_value=lambda _, value: str(value), allow_none=True
+    )
 
-    # Callable(str) -> any
+    # Callable(Handle, str) -> any
     from_text = Callable(default_value=None, allow_none=True)
 
-    # Callable(any) -> CheckState
+    # Callable(Handle, any) -> CheckState
     to_check_state = Callable(default_value=None, allow_none=True)
 
-    # Callable(CheckState) -> any
+    # Callable(Handle, CheckState) -> any
     from_check_state = Callable(default_value=None, allow_none=True)
 
-    # Callable(any) -> Color
+    # Callable(Handle, any) -> Color
     to_bg_color = Callable(default_value=None, allow_none=True)
 
-    # Callable(any) -> Color
+    # Callable(Handle, any) -> Color
     to_fg_color = Callable(allow_none=True)
 
     # Callable(parent, Handle) -> ItemEditor
@@ -149,8 +151,8 @@ class ItemDelegate(HasStrictTraits):
     def _to_fg_color_default(self):
         if self.to_bg_color is not None:
 
-            def to_fg_color(value):
-                bg_color = self.to_bg_color(value)
+            def to_fg_color(handle, value):
+                bg_color = self.to_bg_color(handle, value)
                 if bg_color.is_dark:
                     return Color.from_str("white")
                 return Color.from_str("black")
@@ -175,15 +177,9 @@ class QtCustomItemDelegate(QStyledItemDelegate):
         column = item_model._to_column_index(index)
         data_model = item_model.model
         delegate = item_model._get_delegate(row, column)
+        handle = item_model._get_handle_for_delegate(row, column, delegate)
         if delegate.item_editor_factory is not None:
-            item_editor = delegate.item_editor_factory(
-                handle=Handle(
-                    model=data_model,
-                    row=row,
-                    column=column,
-                    delegate=delegate,
-                )
-            )
+            item_editor = delegate.item_editor_factory(handle=handle)
             control = item_editor.create(parent)
             control.setFocusPolicy(Qt.StrongFocus)
             control.setAutoFillBackground(True)
@@ -221,6 +217,15 @@ class NewDataViewItemModel(DataViewItemModel):
         # The delegates include logic previously supported by ValueType.
         self.delegates = [] if delegates is None else delegates
 
+    def _get_handle_for_delegate(self, row, column, delegate):
+        """ Create an instance of Handle for delegates to use."""
+        return Handle(
+            model=self.model,
+            row=row,
+            column=column,
+            delegate=delegate,
+        )
+
     def flags(self, index):
         """ Reimplemented flags to use delegates instead of ValueType."""
         row = self._to_row_index(index)
@@ -252,21 +257,24 @@ class NewDataViewItemModel(DataViewItemModel):
         value = self.model.get_value(row, column)
 
         delegate = self._get_delegate(row, column)
+        handle = self._get_handle_for_delegate(row, column, delegate)
 
         if role == Qt.DisplayRole and delegate.to_text is not None:
-            return delegate.to_text(value)
+            return delegate.to_text(handle, value)
 
         if role == Qt.EditRole and delegate.to_text is not None:
-            return delegate.to_text(value)
+            return delegate.to_text(handle, value)
 
         if role == Qt.CheckStateRole and delegate.to_check_state is not None:
-            return self.get_check_state_map[delegate.to_check_state(value)]
+            return self.get_check_state_map[
+                delegate.to_check_state(handle, value)
+            ]
 
         if role == Qt.BackgroundRole and delegate.to_bg_color is not None:
-            return delegate.to_bg_color(value).to_toolkit()
+            return delegate.to_bg_color(handle, value).to_toolkit()
 
         if role == Qt.ForegroundRole and delegate.to_fg_color is not None:
-            return delegate.to_fg_color(value).to_toolkit()
+            return delegate.to_fg_color(handle, value).to_toolkit()
 
         return None
 
@@ -276,24 +284,21 @@ class NewDataViewItemModel(DataViewItemModel):
         column = self._to_column_index(index)
 
         delegate = self._get_delegate(row, column)
+        handle = self._get_handle_for_delegate(row, column, delegate)
 
         if role == Qt.EditRole and delegate.from_text is not None:
             return self._set_value_with_exception(
-                row=row,
-                column=column,
+                handle=handle,
                 value=value,
                 mapper=delegate.from_text,
-                validator=delegate.validator,
             )
 
         if role == Qt.CheckStateRole and delegate.from_check_state is not None:
             value = self.set_check_state_map[value]
             return self._set_value_with_exception(
-                row=row,
-                column=column,
+                handle=handle,
                 value=value,
                 mapper=delegate.from_check_state,
-                validator=delegate.validator,
             )
 
         return False
@@ -312,9 +317,10 @@ class NewDataViewItemModel(DataViewItemModel):
             column = ()
 
         delegate = self._get_delegate(row, column)
+        handle = self._get_handle_for_delegate(row, column, delegate)
         value = self.model.get_value(row, column)
         if role == Qt.DisplayRole and delegate.to_text is not None:
-            return delegate.to_text(value)
+            return delegate.to_text(handle, value)
         return None
 
     # Private methods
@@ -326,7 +332,7 @@ class NewDataViewItemModel(DataViewItemModel):
                 return delegate
         return ItemDelegate()
 
-    def _set_value_with_exception(self, row, column, value, mapper, validator):
+    def _set_value_with_exception(self, handle, value, mapper):
         """ Set model value with exception handling.
 
         Returns
@@ -335,18 +341,18 @@ class NewDataViewItemModel(DataViewItemModel):
             If setting the value was successful.
         """
         try:
-            mapped_value = mapper(value)
-            if not validator(mapped_value):
+            mapped_value = mapper(handle, value)
+            if not handle.delegate.validator(handle, mapped_value):
                 return False
-            self.model.set_value(row, column, mapped_value)
+            self.model.set_value(handle.row, handle.column, mapped_value)
         except DataViewSetError:
             return False
         except Exception:
             # unexpected error, log and persevere
             logger.exception(
                 "setData failed: row %r, column %r, value %r",
-                row,
-                column,
+                handle.row,
+                handle.column,
                 value,
             )
             return False
@@ -388,19 +394,19 @@ class DataItem:
         self.d = d
 
 
-def bool_to_check_state(value):
+def bool_to_check_state(handle, value):
     """ Basic mapping from value to CheckState."""
     if bool(value):
         return CheckState.CHECKED
     return CheckState.UNCHECKED
 
 
-def check_state_to_bool(value):
+def check_state_to_bool(handle, value):
     """ Basic mapping from CheckState back to bool."""
     return value == CheckState.CHECKED
 
 
-def text_to_int(text):
+def text_to_int(handle, text):
     """ Cast text to int."""
     try:
         return int(text)
@@ -488,12 +494,15 @@ def create_model_and_delegates():
     delegates = [
         ItemDelegate(
             is_delegate_for=is_row_header,
-            to_text=lambda value: "HEADER " + str(value)
+            to_text=lambda _, value: "HEADER " + str(value)
         ),
         ItemDelegate(
             is_delegate_for=is_column_header,
-            validator=lambda value: value.startswith("H"),
-            from_text=lambda text: text,
+            validator=lambda _, value: value.startswith("H"),
+            from_text=lambda _, text: text,
+            to_bg_color=lambda handle, _: (
+                Color.from_str(handle.model.data[handle.row[0]].d)
+            ),
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 editor_factory=TextEditor(),
@@ -502,7 +511,7 @@ def create_model_and_delegates():
         ),
         ItemDelegate(
             is_delegate_for=is_column_index(0),
-            validator=lambda value: value < 100,
+            validator=lambda _, value: value < 100,
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 editor_factory=RangeEditor(low=0, high=100),
@@ -510,7 +519,7 @@ def create_model_and_delegates():
         ),
         ItemDelegate(
             is_delegate_for=is_column_index(1),
-            validator=lambda value: value < 100,
+            validator=lambda _, value: value < 100,
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 editor_factory=ProgressEditor(min=0, max=100),
@@ -527,11 +536,11 @@ def create_model_and_delegates():
         ),
         ItemDelegate(
             is_delegate_for=is_column_index(3),
-            to_bg_color=Color.from_str,
+            to_bg_color=lambda _, value: Color.from_str(value),
         ),
         ItemDelegate(
             is_delegate_for=is_column_index(4),
-            to_fg_color=Color.from_str,
+            to_fg_color=lambda _, value: Color.from_str(value),
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 # How are the allowed values going to react to changes
