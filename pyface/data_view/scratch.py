@@ -140,8 +140,24 @@ class ItemDelegate(HasStrictTraits):
     # Callable(any) -> Color
     to_bg_color = Callable(default_value=None, allow_none=True)
 
+    # Callable(any) -> Color
+    to_fg_color = Callable(allow_none=True)
+
     # Callable(parent, Handle) -> ItemEditor
     item_editor_factory = Callable(default_value=None, allow_none=True)
+
+    def _to_fg_color_default(self):
+        if self.to_bg_color is not None:
+
+            def to_fg_color(value):
+                bg_color = self.to_bg_color(value)
+                if bg_color.is_dark:
+                    return Color.from_str("white")
+                return Color.from_str("black")
+
+            return to_fg_color
+
+        return None
 
 
 class QtCustomItemDelegate(QStyledItemDelegate):
@@ -249,9 +265,8 @@ class NewDataViewItemModel(DataViewItemModel):
         if role == Qt.BackgroundRole and delegate.to_bg_color is not None:
             return delegate.to_bg_color(value).to_toolkit()
 
-        if role == Qt.ForegroundRole and delegate.to_bg_color is not None:
-            color = delegate.to_bg_color(value)
-            return QColor(255, 255, 255) if color.is_dark else QColor(0, 0, 0)
+        if role == Qt.ForegroundRole and delegate.to_fg_color is not None:
+            return delegate.to_fg_color(value).to_toolkit()
 
         return None
 
@@ -516,12 +531,13 @@ def create_model_and_delegates():
         ),
         ItemDelegate(
             is_delegate_for=is_column_index(4),
+            to_fg_color=Color.from_str,
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 # How are the allowed values going to react to changes
                 # on the object?
                 editor_factory=EnumEditor(
-                    values=["green", "red", "black"],
+                    values=["green", "blue", "black"],
                 ),
             )
         ),
