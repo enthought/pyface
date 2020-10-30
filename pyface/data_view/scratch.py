@@ -57,28 +57,28 @@ class Handle(HasStrictTraits):
 
     value = Property()
 
-    _model = Any()
+    model = Any()
 
-    _row = Any()
+    row = Any()
 
-    _column = Any()
+    column = Any()
 
-    _delegate = Any()
+    delegate = Any()
 
     def __init__(self, *, model, row, column, delegate):
         super().__init__()
-        self._model = model
-        self._row = row
-        self._column = column
-        self._delegate = delegate
+        self.model = model
+        self.row = row
+        self.column = column
+        self.delegate = delegate
 
     def _get_value(self):
-        return self._model.get_value(self._row, self._column)
+        return self.model.get_value(self.row, self.column)
 
     def _set_value(self, value):
-        if not self._delegate.validator(value):
+        if not self.delegate.validator(value):
             return
-        self._model.set_value(self._row, self._column, value)
+        self.model.set_value(self.row, self.column, value)
 
 
 class BaseItemEditor(HasStrictTraits):
