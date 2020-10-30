@@ -366,12 +366,11 @@ class NewDataViewWidget(DataViewWidget):
 
 class DataItem:
 
-    def __init__(self, a, b, c, d, e):
+    def __init__(self, a, b, c, d):
         self.a = a
         self.b = b
         self.c = c
         self.d = d
-        self.e = e
 
 
 def bool_to_check_state(value):
@@ -434,7 +433,6 @@ def create_model_and_delegates():
         ["Hello", "Hi", "Hey"],
         [1, 2, 3],
         [True, False, True],
-        [Color.from_str("green"), Color.from_str("green"), Color.from_str("black")],
         ["green", "green", "black"],
     ))
     objects = [
@@ -455,7 +453,7 @@ def create_model_and_delegates():
             attr="d",
         ),
         AttributeDataAccessor(
-            attr="e",
+            attr="d",
         ),
     ]
 
@@ -513,20 +511,11 @@ def create_model_and_delegates():
             from_check_state=check_state_to_bool,
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: (
-                    model.get_data_accessor(row, column).attr == "d"
-                )
-            ),
-            to_bg_color=lambda value: value,
-            to_text=lambda value: value.hex(),
+            is_delegate_for=is_column_index(3),
+            to_bg_color=Color.from_str,
         ),
         ItemDelegate(
-            is_delegate_for=(
-                lambda model, row, column: (
-                    model.get_data_accessor(row, column).attr == "e"
-                )
-            ),
+            is_delegate_for=is_column_index(4),
             item_editor_factory=partial(
                 TraitsUIEditorItemEditor,
                 # How are the allowed values going to react to changes
