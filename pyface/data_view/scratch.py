@@ -252,11 +252,15 @@ class ItemDelegate(HasStrictTraits):
     is_editable = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> str
+    # This converts data model value to text, e.g. for display.
+    # This cannot be none.
     to_text = Callable(
-        default_value=lambda _, value: str(value), allow_none=True
+        default_value=lambda _, value: str(value), allow_none=False
     )
 
     # Callable(ItemHandle, str) -> any
+    # This converts textual value to a value the data model can understand
+    # and set. e.g. this is used when the value is edited as text.
     from_text = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> CheckState
@@ -268,10 +272,12 @@ class ItemDelegate(HasStrictTraits):
     # Callable(ItemHandle, CheckState) -> any
     # This converts the state of a checkbox in an item to a value the data
     # model understands. Note that checkbox functionality is not supported
-    # in headers.
+    # in headers. If set, the value can be edited by the checkbox even if
+    # is_editable says no.
     from_check_state = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> Color
+    # The default value is None, which means there are no background colors.
     to_bg_color = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> Color
@@ -739,10 +745,7 @@ def create_model():
             # bool.
             value_item_delegate=ItemDelegate(
                 to_check_state=bool_to_check_state,
-                validator=lambda _, value: isinstance(value, bool),
-                from_text=lambda _, value: (
-                    {"true": True, "false": False}.get(value.lower())
-                ),
+                is_editable=lambda _: False,
                 from_check_state=check_state_to_bool,
             ),
         ),
