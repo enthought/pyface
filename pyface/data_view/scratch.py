@@ -744,6 +744,7 @@ def create_model():
             # This shows the checkbox along with editing text to be converted to
             # bool.
             value_item_delegate=ItemDelegate(
+                to_text=lambda _, value: {True: "Yes", False: "No"}[value],
                 to_check_state=bool_to_check_state,
                 is_editable=lambda _: False,
                 from_check_state=check_state_to_bool,
