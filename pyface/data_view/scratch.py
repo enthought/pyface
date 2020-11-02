@@ -358,8 +358,6 @@ class QtCustomItemDelegate(QStyledItemDelegate):
                 # this simply calls editor.deleteLater
                 super().destroyEditor(editor, index)
 
-            self.sizeHintChanged.emit(index)
-
 
 class NewDataViewItemModel(DataViewItemModel):
     """ Override functionality of Qt DataViewItemModel."""
