@@ -147,6 +147,18 @@ class TraitsUIItemObject(HasStrictTraits):
 class TraitsUIItemEditorFactory(BaseItemEditorFactory):
     """ An implementation of a BaseItemEditorFactory that allows any TraitsUI
     editor to be used as the item editor.
+
+    The factory does not require if the editor value to come from an HasTraits
+    object. The flip side of that lack of information is that if the value
+    refers to a trait, the TraitType information is not available and some
+    TraitsUI editors use the trait type to deduce the default editor.
+    That might be an acceptable limitation if it can always be easily overcome.
+
+    For example, when editing a list using ListEditor, one needs to
+    define the ListEditor like this:
+
+        ListEditor(trait_handler=List(Str()))
+
     """
 
     # Editor factory for creating TraitsUI editor.
@@ -620,11 +632,11 @@ class Person(HasStrictTraits):
 
     favorite_bg_color = Enum(values="bg_color_choices")
 
-    bg_color_choices = List(["red", "blue", "black"])
+    bg_color_choices = List(Str(), ["red", "blue", "black"])
 
     favorite_fg_color = Enum(values="fg_color_choices")
 
-    fg_color_choices = List(["yellow", "grey", "white"])
+    fg_color_choices = List(Str(), ["yellow", "grey", "white"])
 
     greeting = Str("Hello")
 
@@ -644,7 +656,7 @@ def create_model():
 
     # demonstrate using TraitsUI editor in ItemDelegate
     from traitsui.api import (
-        EnumEditor, TextEditor, RangeEditor, InstanceEditor
+        EnumEditor, TextEditor, RangeEditor, InstanceEditor, ListEditor
     )
 
     names = itertools.cycle(["John", "Mary", "Peter"])
@@ -723,6 +735,23 @@ def create_model():
             ),
         ),
         NewAttributeDataAccessor(
+            attr="bg_color_choices",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "bg color choices",
+            ),
+            value_item_delegate=ItemDelegate(
+                to_text=lambda _, value: next(iter(value), ""),
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    editor_factory=ListEditor(
+                        # Otherwise the editor does not know what
+                        # item editor to use.
+                        trait_handler=List(Str()),
+                    ),
+                ),
+            ),
+        ),
+        NewAttributeDataAccessor(
             attr="favorite_fg_color",
             title="this 'title' trait is redundant",
             title_item_delegate=ItemDelegate(
@@ -733,6 +762,23 @@ def create_model():
             value_item_delegate=ItemDelegate(
                 validator=validate_is_color_name,
                 from_text=lambda _, value: value,
+            ),
+        ),
+        NewAttributeDataAccessor(
+            attr="fg_color_choices",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "fg color choices",
+            ),
+            value_item_delegate=ItemDelegate(
+                to_text=lambda _, value: next(iter(value), ""),
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    editor_factory=ListEditor(
+                        # Otherwise the editor does not know what
+                        # item editor to use.
+                        trait_handler=List(Str()),
+                    ),
+                ),
             ),
         ),
         NewAttributeDataAccessor(
