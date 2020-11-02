@@ -638,7 +638,8 @@ class Person(HasStrictTraits):
 
     married = Bool()
 
-    child = Instance("Person")
+    # Instance of Person as well.
+    child = Any()
 
 
 def create_model():
