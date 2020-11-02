@@ -30,24 +30,27 @@ from pyface.ui.qt4.data_view.data_view_widget import DataViewWidget
 logger = logging.getLogger(__name__)
 
 
-class NewDataModel(RowTableDataModel):
-    """ A model for the data structure.
+class NewRowTableDataModel(RowTableDataModel):
+    """ Overridden RowTableDataModel to demonstrate proposed changes.
 
-    In Qt world, this maps to a QAbstractItemModel.
-
-    It is responsible for the getting and setting of data values.
+    The get_value_type is overridden to ensure that AbstractValueType are not
+    used.
     """
 
     def get_value_type(self, row, column):
         raise RuntimeError("Remove value type from model.")
 
-    def get_data_accessor(self, row, column):
-        """ Return the AbstractDataAccessor used for the given row and column.
+    def get_item_delegate(self, row, column):
+        """ Return the ItemDelegate that holds the information about how
+        an item is displayed and edited.
         """
         if len(column) == 0:
-            return self.row_header_data
+            column_data = self.row_header_data
         else:
-            return self.column_data[column[0]]
+            column_data = self.column_data[column[0]]
+        if len(row) == 0:
+            return column_data.title_item_delegate
+        return column_data.value_item_delegate
 
 
 class ItemHandle(HasStrictTraits):
@@ -239,12 +242,7 @@ class ItemDelegate(HasStrictTraits):
     QAbstractItemView, there is only one QAbstractItemDelegate, whose task
     is to manage display and editing of every item.
 
-    This object is responsible for a subset of items only. The subset is
-    defined by is_delegate_for.
     """
-
-    # Callable(model, row, column) -> boolean
-    is_delegate_for = Callable()
 
     # Callable(ItemHandle, value) -> boolean
     # Note that the value has already been transformed back to the business
@@ -307,8 +305,7 @@ class QtCustomItemDelegate(QStyledItemDelegate):
         item_model = index.model()
         row = item_model._to_row_index(index)
         column = item_model._to_column_index(index)
-        data_model = item_model.model
-        delegate = item_model._get_delegate(row, column)
+        delegate = item_model.model.get_item_delegate(row, column)
         if delegate.item_editor_factory is not None:
             item_handle = item_model._get_handle_for_delegate(
                 row, column, delegate
@@ -393,17 +390,6 @@ class NewDataViewItemModel(DataViewItemModel):
         CheckState.UNCHECKED: Qt.Unchecked,
     }
 
-    def __init__(
-        self, model, selection_type, exporters, parent=None,
-        delegates=None,
-    ):
-        """ Reimplemented to allow a list of delegates to be used by the
-        model.
-        """
-        super().__init__(model, selection_type, exporters, parent)
-        # The delegates include logic previously supported by ValueType.
-        self.delegates = [] if delegates is None else delegates
-
     def _get_handle_for_delegate(self, row, column, delegate):
         """ Create an instance of ItemHandle for delegates to use."""
         return ItemHandle(
@@ -424,7 +410,7 @@ class NewDataViewItemModel(DataViewItemModel):
         if is_qt5 and not self.model.can_have_children(row):
             flags |= Qt.ItemNeverHasChildren
 
-        delegate = self._get_delegate(row, column)
+        delegate = self.model.get_item_delegate(row, column)
 
         if any((
                 delegate.from_text is not None,
@@ -444,7 +430,7 @@ class NewDataViewItemModel(DataViewItemModel):
         column = self._to_column_index(index)
         value = self.model.get_value(row, column)
 
-        delegate = self._get_delegate(row, column)
+        delegate = self.model.get_item_delegate(row, column)
         item_handle = self._get_handle_for_delegate(row, column, delegate)
 
         if role == Qt.DisplayRole and delegate.to_text is not None:
@@ -471,7 +457,7 @@ class NewDataViewItemModel(DataViewItemModel):
         row = self._to_row_index(index)
         column = self._to_column_index(index)
 
-        delegate = self._get_delegate(row, column)
+        delegate = self.model.get_item_delegate(row, column)
         item_handle = self._get_handle_for_delegate(row, column, delegate)
 
         if (role == Qt.EditRole
@@ -506,7 +492,7 @@ class NewDataViewItemModel(DataViewItemModel):
             row = (section,)
             column = ()
 
-        delegate = self._get_delegate(row, column)
+        delegate = self.model.get_item_delegate(row, column)
         item_handle = self._get_handle_for_delegate(row, column, delegate)
         value = self.model.get_value(row, column)
         if role == Qt.DisplayRole and delegate.to_text is not None:
@@ -514,13 +500,6 @@ class NewDataViewItemModel(DataViewItemModel):
         return None
 
     # Private methods
-
-    def _get_delegate(self, row, column):
-        """ Find the delegate for the given row and column index."""
-        for delegate in self.delegates:
-            if delegate.is_delegate_for(self.model, row, column):
-                return delegate
-        return ItemDelegate()
 
     def _set_value_with_exception(self, item_handle, value, mapper):
         """ Set model value with exception handling.
@@ -565,14 +544,11 @@ class NewDataViewItemModel(DataViewItemModel):
 class NewDataViewWidget(DataViewWidget):
     """ Override to provide a different DataViewItemModel."""
 
-    delegates = List(Instance(ItemDelegate))
-
     def _create_item_model(self):
         self._item_model = NewDataViewItemModel(
             self.data_model,
             self.selection_type,
             self.exporters,
-            delegates=self.delegates,
         )
 
 
@@ -588,6 +564,21 @@ class NewDataViewWidget(DataViewWidget):
 
         return control
 
+
+class NewAttributeDataAccessor(AttributeDataAccessor):
+    """ Overridden AttributeDataAccessor to demonstrate passing
+    ItemDelegate from NewRowTableDataModel.get_item_delegate.
+    """
+
+    # Item delegate for the title (column header)
+    # Default is a delegate for displaying the value's text representation.
+    # Note that this makes the 'title' trait redundant.
+    title_item_delegate = Instance(ItemDelegate, ())
+
+    # Item delegate for the value.
+    # Default is a delegate for displaying the value's text representation
+    # with no editing allowed.
+    value_item_delegate = Instance(ItemDelegate, ())
 
 # --------------------------------------------------------------------
 # The following setup is for manual testing this proof-of-concept.
@@ -637,26 +628,13 @@ def validate_is_color_name(item_handle, text):
 class MainWindow(ApplicationWindow):
 
     def _create_contents(self, parent):
-        data_model, delegates = create_model_and_delegates()
+        data_model = create_model()
         widget = NewDataViewWidget(
             parent=parent,
             data_model=data_model,
-            delegates=delegates,
         )
         widget._create()
         return widget.control
-
-
-def is_row_header(model, row, column):
-    return column == ()
-
-
-def is_column_header(model, row, column):
-    return row == ()
-
-
-def is_column_index(index):
-    return lambda model, row, column: column == (index, )
 
 
 class Person(HasStrictTraits):
@@ -689,14 +667,18 @@ class Person(HasStrictTraits):
         return self
 
 
-def create_model_and_delegates():
+def create_model():
     """ Return a DataModel and a list of ItemDelegate for the widget.
 
     Returns
     -------
     model : AbstractDataModel
-    delegates : list of ItemDelegate
     """
+
+    # demonstrate using TraitsUI editor in ItemDelegate
+    from traitsui.api import (
+        EnumEditor, TextEditor, RangeEditor, InstanceEditor
+    )
 
     names = itertools.cycle(["John", "Mary", "Peter"])
     bg_colors = itertools.cycle(["red", "blue", "black"])
@@ -710,181 +692,127 @@ def create_model_and_delegates():
         for _ in range(1000)
     ]
     column_data = [
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
             attr="age",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "range editor",
+            ),
+            # This shows using the RangeEditor as custom editor.
+            value_item_delegate=ItemDelegate(
+                validator=lambda _, value: value <= 100,
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    editor_factory=RangeEditor(low=0, high=100),
+                )
+            ),
         ),
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
             attr="age",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "not editable",
+            ),
+            # default value_item_delegate is a non-editable text.
         ),
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
             attr="married",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "editable bool",
+            ),
+            # This shows the checkbox along with editing text to be converted to
+            # bool.
+            value_item_delegate=ItemDelegate(
+                to_check_state=bool_to_check_state,
+                validator=lambda _, value: isinstance(value, bool),
+                from_text=lambda _, value: (
+                    {"true": True, "false": False}.get(value.lower())
+                ),
+                from_check_state=check_state_to_bool,
+            ),
         ),
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
             attr="favorite_bg_color",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "bg color",
+            ),
+            # This shows using EnumEditor and having the options dynamically
+            # updated.
+            value_item_delegate=ItemDelegate(
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    style="custom",
+                    editor_factory=EnumEditor(
+                        mode="radio",
+                        name="person.bg_color_choices",
+                    ),
+                    context_getter=lambda handle: (
+                        {"person": handle.model.data[handle.row[0]]}
+                    ),
+                )
+            ),
         ),
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
             attr="favorite_fg_color",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "fg color",
+            ),
+            # Edit fg color with text. TraitError may occur but it won't crash
+            # the application and the value is not edited in that case.
+            value_item_delegate=ItemDelegate(
+                validator=validate_is_color_name,
+                from_text=lambda _, value: value,
+            ),
         ),
-        # How else can the cell be used for editing the whole row?
-        AttributeDataAccessor(
+        NewAttributeDataAccessor(
+            # This edits the Person instance with the InstanceEditor.
+            # This _self trait is a hack!
+            # How else can the cell be used for editing the object used for
+            # the whole row? This is probably not a common use case, though.
+            # This is done here just to show we can use the InstanceEditor.
             attr="_self",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "instance editor",
+            ),
+            value_item_delegate=ItemDelegate(
+                to_text=lambda _, value: value.name,
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    style="custom",
+                    editor_factory=InstanceEditor(),
+                ),
+            ),
         ),
     ]
 
-    model = NewDataModel(
+    model = NewRowTableDataModel(
         data=objects,
-        row_header_data=AttributeDataAccessor(
+        row_header_data=NewAttributeDataAccessor(
             attr='greeting',
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "multi-line text",
+            ),
+            # This shows using the custom multi-line text editor.
+            value_item_delegate=ItemDelegate(
+                validator=lambda _, value: len(value) > 0,
+                to_bg_color=lambda item_handle, _: (
+                    Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_bg_color)
+                ),
+                to_fg_color=lambda item_handle, _: (
+                    Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_fg_color)
+                ),
+                item_editor_factory=TraitsUIItemEditorFactory(
+                    editor_factory=TextEditor(),
+                    style="custom",
+                ),
+            ),
         ),
         column_data=column_data,
     )
 
-    # demonstrate using TraitsUI editor
-    from traitsui.api import (
-        EnumEditor, TextEditor, RangeEditor, InstanceEditor
-    )
-
-    # Problem with the pattern of using a list of is_delegate_for:
-    # It is easy to make mistakes and have two is_delegate_for returning
-    # true for the same (row, column) index. The first one ends up being used
-    # and the second one is silently ignored.
-    # It is laborious and error-prone to maintain is_delegate_for when a new
-    # column is added.
-    # The first issue should be resolved by not using a list, but a
-    # function that returns an ItemDelegate for the given (row, column) index.
-    # The second issue should be resolved by having a front-facing function
-    # that put together how to access value for a column and how to present
-    # those values for that column.
-
-    delegates = [
-        # This shows customization of the header.
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_row_header(*args)
-            ),
-            to_text=lambda _, value: "multi-line text",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(0)(*args)
-            ),
-            to_text=lambda _, value: "range editor",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(1)(*args)
-            ),
-            to_text=lambda _, value: "not editable",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(2)(*args)
-            ),
-            to_text=lambda _, value: "editable bool",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(3)(*args)
-            ),
-            to_text=lambda _, value: "bg color",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(4)(*args)
-            ),
-            to_text=lambda _, value: "fg color",
-        ),
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                is_column_header(*args) and is_column_index(5)(*args)
-            ),
-            to_text=lambda _, value: "instance editor",
-        ),
-        # This shows using the custom multi-line text editor.
-        # It also shows setting background colour not directly from the cell
-        # value but from data related to the row.
-        ItemDelegate(
-            is_delegate_for=is_row_header,
-            validator=lambda _, value: len(value) > 0,
-            to_bg_color=lambda item_handle, _: (
-                Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_bg_color)
-            ),
-            to_fg_color=lambda item_handle, _: (
-                Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_fg_color)
-            ),
-            item_editor_factory=TraitsUIItemEditorFactory(
-                editor_factory=TextEditor(),
-                style="custom",
-            ),
-        ),
-        # This shows using the RangeEditor as custom editor.
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                not is_column_header(*args) and is_column_index(0)(*args)
-            ),
-            validator=lambda _, value: value <= 100,
-            item_editor_factory=TraitsUIItemEditorFactory(
-                editor_factory=RangeEditor(low=0, high=100),
-            )
-        ),
-        #
-        #
-        # The item for column index 1 is not defined, the default
-        # is just ItemDelegate(), which is not editable.
-        #
-        #
-        # This shows the checkbox along with editing text to be converted to
-        # bool.
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                not is_column_header(*args) and is_column_index(2)(*args)
-            ),
-            to_check_state=bool_to_check_state,
-            validator=lambda _, value: isinstance(value, bool),
-            from_text=lambda _, value: (
-                {"true": True, "false": False}.get(value.lower())
-            ),
-            from_check_state=check_state_to_bool,
-        ),
-        # This shows using EnumEditor and having the options dynamically
-        # updated.
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                not is_column_header(*args) and is_column_index(3)(*args)
-            ),
-            item_editor_factory=TraitsUIItemEditorFactory(
-                style="custom",
-                editor_factory=EnumEditor(
-                    mode="radio",
-                    name="person.bg_color_choices",
-                ),
-                context_getter=lambda handle: (
-                    {"person": handle.model.data[handle.row[0]]}
-                ),
-            )
-        ),
-        # Edit fg color with text. TraitError may occur.
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                not is_column_header(*args) and is_column_index(4)(*args)
-            ),
-            validator=validate_is_color_name,
-            from_text=lambda _, value: value,
-        ),
-        # For the Person instance
-        ItemDelegate(
-            is_delegate_for=lambda *args: (
-                not is_column_header(*args) and is_column_index(5)(*args)
-            ),
-            to_text=lambda _, value: value.name,
-            item_editor_factory=TraitsUIItemEditorFactory(
-                style="custom",
-                editor_factory=InstanceEditor(),
-            ),
-        ),
-    ]
-
-    return model, delegates
+    return model
 
 
 def run():
