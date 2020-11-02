@@ -655,16 +655,7 @@ class Person(HasStrictTraits):
 
     married = Bool()
 
-    # FIXME: RowDataModel assumes each column must be accessing and modifying
-    # a member of the object. If I want a cell for editing the whole object
-    # (see use of InstanceEditor), I have to add this hook...
-    _self = Property()
-
-    def _set__self(self, value):
-        pass
-
-    def _get__self(self):
-        return self
+    child = Instance("Person")
 
 
 def create_model():
@@ -681,6 +672,7 @@ def create_model():
     )
 
     names = itertools.cycle(["John", "Mary", "Peter"])
+    child_names = itertools.cycle(["Paul", "Joey", "Alex"])
     bg_colors = itertools.cycle(["red", "blue", "black"])
     fg_colors = itertools.cycle(["yellow", "grey", "white"])
     objects = [
@@ -688,9 +680,11 @@ def create_model():
             name=next(names),
             favorite_bg_color=next(bg_colors),
             favorite_fg_color=next(fg_colors),
+            child=Person(name=next(child_names)),
         )
         for _ in range(1000)
     ]
+
     column_data = [
         NewAttributeDataAccessor(
             attr="age",
@@ -767,14 +761,10 @@ def create_model():
         ),
         NewAttributeDataAccessor(
             # This edits the Person instance with the InstanceEditor.
-            # This _self trait is a hack!
-            # How else can the cell be used for editing the object used for
-            # the whole row? This is probably not a common use case, though.
-            # This is done here just to show we can use the InstanceEditor.
-            attr="_self",
+            attr="child",
             title="this 'title' trait is redundant",
             title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "instance editor",
+                to_text=lambda _, value: "child",
             ),
             value_item_delegate=ItemDelegate(
                 to_text=lambda _, value: value.name,
