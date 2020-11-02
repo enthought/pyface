@@ -537,12 +537,6 @@ class NewDataViewWidget(DataViewWidget):
         """ Create the DataViewWidget's toolkit control. """
         control = super()._create_control(parent)
         control.setItemDelegate(QtCustomItemDelegate(control))
-
-        # Why are we limiting the height before???
-        # With the sizeHintChanged signal in the item delegate, the row
-        # can change size after editing.
-        control.setUniformRowHeights(False)
-
         return control
 
 
