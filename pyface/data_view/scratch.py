@@ -53,40 +53,19 @@ class NewRowTableDataModel(RowTableDataModel):
         return column_data.value_item_delegate
 
 
-class ItemHandle(HasStrictTraits):
+class ItemHandle:
     """ This is an object given to delegates and item editors for
     displaying and editing item value.
     """
 
-    # Proxy for accessing and modifying value on the data model.
-    # This is particularly useful for custom editor because its changes can
-    # be observed.
-    value = Property()
-
-    # Reference to the AbstractDataModel responsible for this item.
-    model = Any()
-
-    # Which row index this item refers to.
-    row = Any()
-
-    # Which column index this item refers to.
-    column = Any()
-
-    # ItemDelegate object used for this item.
-    delegate = Any()
-
     def __init__(self, *, model, row, column, delegate):
-        super().__init__()
         self.model = model
         self.row = row
         self.column = column
         self.delegate = delegate
 
-    def _get_value(self):
-        return self.model.get_value(self.row, self.column)
-
-    def _set_value(self, value):
-        """ Set model value with exception handling.
+    def set_value(self, value):
+        """ Set model value with validation and exception handling.
 
         Parameters
         ----------
@@ -189,7 +168,12 @@ class TraitsUIItemEditorFactory(BaseItemEditorFactory):
         """
         from traitsui.api import UI, Handler
 
-        holder_object = TraitsUIItemObject(value=item_handle.value)
+        # Hold the value in a separate object to defer committing changes.
+        holder_object = TraitsUIItemObject(
+            value=item_handle.model.get_value(
+                item_handle.row, item_handle.column
+            ),
+        )
 
         if self.context_getter is not None:
             context = self.context_getter(item_handle)
@@ -217,9 +201,9 @@ class TraitsUIItemEditorFactory(BaseItemEditorFactory):
             Widget returned by create.
         item_handle : ItemHandle
             The commit action is achieved by assigning value to
-            ItemHandle.value.
+            ItemHandle.set_value.
         """
-        item_handle.value = control._editor.object.value
+        item_handle.set_value(control._editor.object.value)
 
     def destroy(self, control):
         """ Implement how to dispose the control created.
@@ -326,7 +310,6 @@ class QtCustomItemDelegate(QStyledItemDelegate):
         return super().createEditor(parent, option, index)
 
     # The base class setEditorData is good enough.
-    # The editor gets value from ItemHandle.value
 
     def setModelData(self, editor, model, index):
         """
