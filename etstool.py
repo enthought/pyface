@@ -93,14 +93,15 @@ TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
 
 dependencies = {
     "traits" + TRAITS_VERSION_REQUIRES,
+    "traitsui",
     "numpy",
     "pygments",
     "coverage",
 }
 
-# NOTE : traitsui is always installed from source
 source_dependencies = {
     "traits": "git+http://github.com/enthought/traits.git#egg=traits",
+    "traitsui": "git+http://github.com/enthought/traitsui.git#egg=traitsui",
 }
 
 extra_dependencies = {
