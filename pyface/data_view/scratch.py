@@ -245,6 +245,12 @@ class ItemDelegate(HasStrictTraits):
     # specifiv value as is found on the data model.
     validator = Callable(default_value=lambda _, value: True)
 
+    # Callable(ItemHandle) -> boolean
+    # Whether the item is editable. If the callable is unset, then the
+    # editable state is deferred by the existence of any of the 'from_text',
+    # 'from_check_state', 'item_editor_factory' callables.
+    is_editable = Callable(default_value=None, allow_none=True)
+
     # Callable(ItemHandle, any) -> str
     to_text = Callable(
         default_value=lambda _, value: str(value), allow_none=True
@@ -404,12 +410,21 @@ class NewDataViewItemModel(DataViewItemModel):
             flags |= Qt.ItemNeverHasChildren
 
         delegate = self.model.get_item_delegate(row, column)
+        item_handle = self._get_handle_for_delegate(row, column, delegate)
 
-        if any((
+        has_editors = any((
                 delegate.from_text is not None,
                 delegate.item_editor_factory is not None,
                 delegate.from_check_state is not None,
-        )):
+        ))
+        editable = (
+            (delegate.is_editable is None and has_editors)
+            or (
+                delegate.is_editable is not None
+                and delegate.is_editable(item_handle)
+            )
+        )
+        if editable:
             flags |= Qt.ItemIsEditable
 
         if delegate.to_check_state is not None:
@@ -630,6 +645,10 @@ class Person(HasStrictTraits):
 
     age = Int()
 
+    # This demonstrates overriding editable state.
+    # If false, the range editor for editing age cannot be open.
+    is_age_editable = Bool(True)
+
     favorite_bg_color = Enum(values="bg_color_choices")
 
     bg_color_choices = List(Str(), ["red", "blue", "black"])
@@ -678,11 +697,14 @@ def create_model():
             attr="age",
             title="this 'title' trait is redundant",
             title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "range editor",
+                to_text=lambda _, value: "age",
             ),
             # This shows using the RangeEditor as custom editor.
             value_item_delegate=ItemDelegate(
                 validator=lambda _, value: value <= 100,
+                is_editable=lambda handle: (
+                    handle.model.data[handle.row[0]].is_age_editable
+                ),
                 item_editor_factory=TraitsUIItemEditorFactory(
                     editor_factory=RangeEditor(low=0, high=100),
                 )
@@ -692,15 +714,26 @@ def create_model():
             attr="age",
             title="this 'title' trait is redundant",
             title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "not editable",
+                to_text=lambda _, value: "read only",
             ),
             # default value_item_delegate is a non-editable text.
+        ),
+        NewAttributeDataAccessor(
+            attr="is_age_editable",
+            title="this 'title' trait is redundant",
+            title_item_delegate=ItemDelegate(
+                to_text=lambda _, value: "can edit age?",
+            ),
+            value_item_delegate=ItemDelegate(
+                to_check_state=bool_to_check_state,
+                from_check_state=check_state_to_bool,
+            ),
         ),
         NewAttributeDataAccessor(
             attr="married",
             title="this 'title' trait is redundant",
             title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "editable bool",
+                to_text=lambda _, value: "married",
             ),
             # This shows the checkbox along with editing text to be converted to
             # bool.
