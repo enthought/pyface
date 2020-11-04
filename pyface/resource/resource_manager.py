@@ -113,15 +113,12 @@ class ResourceManager(HasTraits):
             # If we come across a reference to a module, use pkg_resources
             # to try and find the image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
-                from pkg_resources import resource_string
-
+                from importlib_resources import files
                 for path in subdirs:
                     for extension in extensions:
                         searchpath = "%s/%s%s" % (path, basename, extension)
                         try:
-                            data = resource_string(
-                                dirname.__name__, searchpath
-                            )
+                            data = files(dirname.__name__).joinpath(searchpath).read_bytes()
                             return ImageReference(
                                 self.resource_factory, data=data
                             )
