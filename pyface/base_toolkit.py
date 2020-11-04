@@ -23,8 +23,8 @@ Which toolkit to use is specified via the :py:mod:`traits.etsconfig.etsconfig`
 package, but if this is not explicitly set by an application at startup or via
 environment variables, there needs to be a way of discovering and loading any
 available working toolkit implementations.  The default mechanism is via the
-now-standard :py:mod:`pkg_resources` and :py:mod:`setuptools` "entry point"
-system.
+now-standard :py:mod:`importlib_metadata` and :py:mod:`setuptools`
+"entry point" system.
 
 This module provides three things:
 
@@ -65,8 +65,14 @@ to load toolkits:
 
 import logging
 import os
-import pkg_resources
 import sys
+
+try:
+    # Starting Python 3.8, importlib.metadata is available in the Python
+    # standard library.
+    import importlib.metadata as importlib_metadata
+except ImportError:
+    import importlib_metadata
 
 from traits.api import HasTraits, List, ReadOnly, Str, TraitError
 from traits.etsconfig.api import ETSConfig
@@ -207,7 +213,10 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
         If no toolkit is found, or if the toolkit cannot be loaded for some
         reason.
     """
-    plugins = list(pkg_resources.iter_entry_points(entry_point, toolkit_name))
+    entry_point_group = importlib_metadata.entry_points()[entry_point]
+    plugins = [
+        plugin for plugin in entry_point_group if plugin.name == toolkit_name
+    ]
     if len(plugins) == 0:
         msg = "No {} plugin found for toolkit {}"
         msg = msg.format(entry_point, toolkit_name)
@@ -269,8 +278,7 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
         return import_toolkit(ETSConfig.toolkit, entry_point)
 
     entry_points = [
-        plugin
-        for plugin in pkg_resources.iter_entry_points(entry_point)
+        plugin for plugin in importlib_metadata.entry_points()[entry_point]
         if toolkits is None or plugin.name in toolkits
     ]
     for plugin in sorted(entry_points, key=priorities):
