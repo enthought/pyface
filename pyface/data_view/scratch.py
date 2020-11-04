@@ -248,7 +248,10 @@ class ItemDelegate(HasStrictTraits):
     # Callable(ItemHandle) -> boolean
     # Whether the item is editable. If the callable is unset, then the
     # editable state is deferred by the existence of any of the 'from_text',
-    # 'from_check_state', 'item_editor_factory' callables.
+    # 'from_check_state', 'item_editor_factory' callables. If this is set,
+    # this would disable editing, making functions like from_check_state
+    # unused. This is useful for dynamically disabling editing capability
+    # of an item.
     is_editable = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> str
@@ -272,8 +275,8 @@ class ItemDelegate(HasStrictTraits):
     # Callable(ItemHandle, CheckState) -> any
     # This converts the state of a checkbox in an item to a value the data
     # model understands. Note that checkbox functionality is not supported
-    # in headers. If set, the value can be edited by the checkbox even if
-    # is_editable says no.
+    # in headers. If is_editable returns true, this callable will not be
+    # used.
     from_check_state = Callable(default_value=None, allow_none=True)
 
     # Callable(ItemHandle, any) -> Color
@@ -473,6 +476,10 @@ class NewDataViewItemModel(DataViewItemModel):
 
         delegate = self.model.get_item_delegate(row, column)
         item_handle = self._get_handle_for_delegate(row, column, delegate)
+
+        if (delegate.is_editable is not None
+                and not delegate.is_editable(item_handle)):
+            return False
 
         if (role == Qt.EditRole
                 and isinstance(value, str)
@@ -744,9 +751,12 @@ def create_model():
             # This shows the checkbox along with editing text to be converted to
             # bool.
             value_item_delegate=ItemDelegate(
+                is_editable=lambda handle: (
+                    # only editable if the person has come of age.
+                    handle.model.data[handle.row[0]].age >= 18
+                ),
                 to_text=lambda _, value: {True: "Yes", False: "No"}[value],
                 to_check_state=bool_to_check_state,
-                is_editable=lambda _: False,
                 from_check_state=check_state_to_bool,
             ),
         ),
