@@ -704,143 +704,31 @@ def create_model():
     column_data = [
         NewAttributeDataAccessor(
             attr="age",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "age",
-            ),
-            # This shows using the RangeEditor as custom editor.
-            value_item_delegate=ItemDelegate(
-                validator=lambda _, value: value <= 100,
-                is_editable=lambda handle: (
-                    handle.model.data[handle.row[0]].is_age_editable
-                ),
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    editor_factory=RangeEditor(low=0, high=100),
-                )
-            ),
         ),
         NewAttributeDataAccessor(
             attr="age",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "read only",
-            ),
-            # default value_item_delegate is a non-editable text.
         ),
         NewAttributeDataAccessor(
             attr="is_age_editable",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "can edit age?",
-            ),
-            value_item_delegate=ItemDelegate(
-                from_text=lambda _, value: (
-                    {"true": True, "false": False}[value.lower()]
-                ),
-                to_check_state=bool_to_check_state,
-                from_check_state=check_state_to_bool,
-            ),
         ),
         NewAttributeDataAccessor(
             attr="married",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "married",
-            ),
-            # This shows the checkbox along with editing text to be converted to
-            # bool.
-            value_item_delegate=ItemDelegate(
-                is_editable=lambda handle: (
-                    # only editable if the person has come of age.
-                    handle.model.data[handle.row[0]].age >= 18
-                ),
-                to_text=lambda _, value: {True: "Yes", False: "No"}[value],
-                to_check_state=bool_to_check_state,
-                from_check_state=check_state_to_bool,
-            ),
         ),
         NewAttributeDataAccessor(
             attr="favorite_bg_color",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "bg color",
-            ),
-            # This shows using EnumEditor and having the options dynamically
-            # updated.
-            value_item_delegate=ItemDelegate(
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    style="custom",
-                    editor_factory=EnumEditor(
-                        mode="radio",
-                        name="person.bg_color_choices",
-                    ),
-                    context_getter=lambda handle: (
-                        {"person": handle.model.data[handle.row[0]]}
-                    ),
-                )
-            ),
         ),
         NewAttributeDataAccessor(
             attr="bg_color_choices",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "bg color choices",
-            ),
-            value_item_delegate=ItemDelegate(
-                to_text=lambda _, value: next(iter(value), ""),
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    editor_factory=ListEditor(
-                        # Otherwise the editor does not know what
-                        # item editor to use.
-                        trait_handler=List(Str()),
-                    ),
-                ),
-            ),
         ),
         NewAttributeDataAccessor(
             attr="favorite_fg_color",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "fg color",
-            ),
-            # Edit fg color with text. TraitError may occur but it won't crash
-            # the application and the value is not edited in that case.
-            value_item_delegate=ItemDelegate(
-                validator=validate_is_color_name,
-                from_text=lambda _, value: value,
-            ),
         ),
         NewAttributeDataAccessor(
             attr="fg_color_choices",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "fg color choices",
-            ),
-            value_item_delegate=ItemDelegate(
-                to_text=lambda _, value: next(iter(value), ""),
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    editor_factory=ListEditor(
-                        # Otherwise the editor does not know what
-                        # item editor to use.
-                        trait_handler=List(Str()),
-                    ),
-                ),
-            ),
         ),
         NewAttributeDataAccessor(
             # This edits the Person instance with the InstanceEditor.
             attr="child",
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "child",
-            ),
-            value_item_delegate=ItemDelegate(
-                to_text=lambda _, value: value.name,
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    style="custom",
-                    editor_factory=InstanceEditor(),
-                ),
-            ),
         ),
     ]
 
@@ -848,24 +736,6 @@ def create_model():
         data=objects,
         row_header_data=NewAttributeDataAccessor(
             attr='greeting',
-            title="this 'title' trait is redundant",
-            title_item_delegate=ItemDelegate(
-                to_text=lambda _, value: "multi-line text",
-            ),
-            # This shows using the custom multi-line text editor.
-            value_item_delegate=ItemDelegate(
-                validator=lambda _, value: len(value) > 0,
-                to_bg_color=lambda item_handle, _: (
-                    Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_bg_color)
-                ),
-                to_fg_color=lambda item_handle, _: (
-                    Color.from_str(item_handle.model.data[item_handle.row[0]].favorite_fg_color)
-                ),
-                item_editor_factory=TraitsUIItemEditorFactory(
-                    editor_factory=TextEditor(),
-                    style="custom",
-                ),
-            ),
         ),
         column_data=column_data,
     )

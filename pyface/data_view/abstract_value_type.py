@@ -55,6 +55,9 @@ class AbstractValueType(ABCHasStrictTraits):
     #: Fired when a change occurs that requires updating values.
     updated = Event
 
+    def __init__(self, *args, **kwargs):
+        raise RuntimeError("I am not used!")
+
     def has_editor_value(self, model, row, column):
         """ Return whether or not the value can be edited.
 

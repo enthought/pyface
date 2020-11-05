@@ -24,7 +24,6 @@ from traits.trait_base import xgetattr, xsetattr
 
 from pyface.data_view.abstract_data_model import DataViewSetError
 from pyface.data_view.abstract_value_type import AbstractValueType
-from pyface.data_view.value_types.api import TextValue
 
 
 class AbstractDataAccessor(ABCHasStrictTraits):
@@ -36,7 +35,9 @@ class AbstractDataAccessor(ABCHasStrictTraits):
 
     #: The value type of the title of this accessor, suitable for use in a
     #: header.
-    title_type = Instance(AbstractValueType, factory=TextValue)
+    # the TextValue factory is removed here because I want to make sure none
+    # of the AbstractValueType is used anywhere. The trait type instantiates it
+    title_type = Instance(AbstractValueType)
 
     #: The value type of the data accessed.
     value_type = Instance(AbstractValueType)
