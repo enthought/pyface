@@ -175,7 +175,7 @@ def install(edm, runtime, toolkit, environment, editable, source):
     install_pyface = "{edm} run -e {environment} -- pip install "
     if editable:
         install_pyface += "--editable "
-    install_pyface += "."
+    install_pyface += ". --no-deps"
 
     # edm commands to setup the development environment
     if sys.platform == 'linux':
