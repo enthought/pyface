@@ -18,7 +18,7 @@ except ImportError:
     __version__ = "not-built"
 
 
-__requires__ = ["traits>=6"]
+__requires__ = ["importlib-metadata", "traits>=6"]
 __extras_require__ = {
     "wx": ["wxpython>=4", "numpy"],
     "pyqt": ["pyqt>=4.10", "pygments"],
