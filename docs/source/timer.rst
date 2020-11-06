@@ -103,7 +103,7 @@ seconds for the timer to run (which could potentially mean that the timer never
 gets performed).
 
 For example, a timer which repeats every 0.5 seconds and runs no more than 10
-times and for no longer than 10 seconds can be started like this:
+times and for no longer than 10 seconds can be started like this -
 
 .. code-block:: python
 
@@ -112,7 +112,7 @@ times and for no longer than 10 seconds can be started like this:
 
 :py:class:`~pyface.timer.timer.PyfaceTimer` also provides two convenience class
 methods for creating and starting a timer in one line.  The above example
-could instead be written as::
+could instead be written as -
 
 .. code-block:: python
 
@@ -121,7 +121,7 @@ could instead be written as::
 For the common case of a "single-shot" timer that is only performed once,
 there is the :py:meth:`~pyface.timer.timer.PyfaceTimer.single_shot` class
 method that creates a timer that will be called once after the specified
-interval::
+interval -
 
 .. code-block:: python
 
