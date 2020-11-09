@@ -185,7 +185,12 @@ class RowTableDataModel(AbstractDataModel):
             column_data = self.column_data[column[0]]
         obj = self.data[row[0]]
         column_data.set_value(obj, value)
-        self.values_changed = (row, column, row, column)
+
+        # If setting the value causes other value to change,
+        # those cells need to update too.
+        self.values_changed = (
+            (0, ), (), (len(self.data) - 1, ), (len(self.column_data) - 1, )
+        )
 
     def get_value_type(self, row, column):
         """ Return the value type of the given row and column.
