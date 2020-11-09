@@ -13,6 +13,13 @@ from traits.api import (
 
 
 class BaseItemEditorFactory:
+    """ Base class for implementing a custom item editor.
+
+    This can be made an interface instead, but with this being a public
+    library API, using a base class is more flexible. It is hard to add
+    features to a published interface, but it is easier to add
+    features to a published base class.
+    """
 
     def create(self, parent, item_handle):
         """ Create the toolkit specific object as the custom editor.

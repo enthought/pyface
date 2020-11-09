@@ -223,6 +223,8 @@ class PersonValue(AbstractValueType):
 
 
 class Person(HasStrictTraits):
+    """ This object represents the business/domain specific data model.
+    """
 
     name = Str()
 
@@ -251,6 +253,12 @@ class Person(HasStrictTraits):
 
 
 def create_model():
+    """ Return the data model to be used with the DataViewWidget.
+
+    Returns
+    -------
+    model : AbstractDataModel
+    """
     names = itertools.cycle(["John", "Mary", "Peter"])
     child_names = itertools.cycle(["Paul", "Joey", "Alex"])
     bg_colors = itertools.cycle(["red", "blue", "black"])
@@ -371,6 +379,7 @@ def create_model():
 
 
 class MainWindow(ApplicationWindow):
+    """ This view is not so dumb. """
 
     def _create_contents(self, parent):
 

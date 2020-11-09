@@ -49,6 +49,8 @@ def check_state_to_bool(item_handle, value):
 
 
 def validate_fg_color(item_handle, text):
+    """ validator for editing the foreground color as text.
+    """
     try:
         Color.from_str(text)
     except Exception:
@@ -58,20 +60,9 @@ def validate_fg_color(item_handle, text):
         return text in person.fg_color_choices
 
 
-class MainWindow(ApplicationWindow):
-
-    def _create_contents(self, parent):
-        data_model = create_model()
-        widget = NewDataViewWidget(
-            parent=parent,
-            data_model=data_model,
-            selection_mode='none',
-        )
-        widget._create()
-        return widget.control
-
-
 class Person(HasStrictTraits):
+    """ This object represents the business/domain specific data model.
+    """
 
     name = Str()
 
@@ -100,7 +91,10 @@ class Person(HasStrictTraits):
 
 
 def create_model():
-    """ Return a DataModel and a list of ItemDelegate for the widget.
+    """ Return the object to be used with the DataViewWidget.
+
+    This object is close to the Presentation Model described by Martin Fowler.
+    This makes the GUI toolkit specific view really dumb.
 
     Returns
     -------
@@ -357,6 +351,20 @@ def create_model():
     )
 
     return model
+
+
+class MainWindow(ApplicationWindow):
+    """ This is the very dumb 'View' """
+
+    def _create_contents(self, parent):
+        data_model = create_model()
+        widget = NewDataViewWidget(
+            parent=parent,
+            data_model=data_model,
+            selection_mode='none',
+        )
+        widget._create()
+        return widget.control
 
 
 def run():
