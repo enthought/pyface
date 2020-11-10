@@ -24,6 +24,28 @@ The following GUI backends are supported:
 - PySide2
 - wxPython 4 (experimental)
 
+Installation
+------------
+
+GUI backends are marked as optional dependencies of Pyface. Some features
+or infrastructures may also require additional dependencies.
+
+To install with PySide2 dependencies::
+
+    $ pip install pyface[pyside2]
+
+To install with PyQt5 dependencies::
+
+    $ pip install pyface[pyqt5]
+
+To install with wxPython dependencies (experimental)::
+
+    $ pip install pyface[wx]
+
+To install with additional test dependencies::
+
+    $ pip install pyface[test]
+
 Documentation
 -------------
 
