@@ -38,7 +38,7 @@ To install with PyQt5 dependencies::
 
     $ pip install pyface[pyqt5]
 
-To install with wxPython dependencies (experimental)::
+To install with wxPython4 dependencies (experimental)::
 
     $ pip install pyface[wx]
 
