@@ -28,17 +28,13 @@ from .image_resource import ImageResource
 from .key_pressed_event import KeyPressedEvent
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-
 try:
-    import pygments
-except ImportError:
-    # pygments is a runtime dependency for PythonEditor and PythonShell in Qt.
-    pass
-else:
-    del pygments
     from .python_editor import PythonEditor
     from .python_shell import PythonShell
-
+except ImportError as _exception:
+    # Excuse pygments dependency (for Qt), otherwise re-raise
+    if _exception.name != "pygments":
+        raise
 from .sorter import Sorter
 from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
