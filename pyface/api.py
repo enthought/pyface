@@ -28,8 +28,16 @@ from .image_resource import ImageResource
 from .key_pressed_event import KeyPressedEvent
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-from .python_editor import PythonEditor
-from .python_shell import PythonShell
+
+try:
+    import pygments
+except ImportError:
+    pass
+else:
+    del pygments
+    from .python_editor import PythonEditor
+    from .python_shell import PythonShell
+
 from .sorter import Sorter
 from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
