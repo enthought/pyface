@@ -32,6 +32,7 @@ from .progress_dialog import ProgressDialog
 try:
     import pygments
 except ImportError:
+    # pygments is a runtime dependency for PythonEditor and PythonShell in Qt.
     pass
 else:
     del pygments
