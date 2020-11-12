@@ -28,13 +28,16 @@ from .image_resource import ImageResource
 from .key_pressed_event import KeyPressedEvent
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-try:
+
+from .util._optional_dependencies import optional_import as _optional_import
+
+# Excuse pygments dependency (for Qt), otherwise re-raise
+with _optional_import("pygments", msg="PythonEditor not available"):
     from .python_editor import PythonEditor
+
+with _optional_import("pygments", msg="PythonShell not available"):
     from .python_shell import PythonShell
-except ImportError as _exception:
-    # Excuse pygments dependency (for Qt), otherwise re-raise
-    if _exception.name != "pygments":
-        raise
+
 from .sorter import Sorter
 from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
