@@ -21,7 +21,7 @@ class TestOptionalImport(unittest.TestCase):
     """ Test optional import context manager """
 
     def test_optional_import(self):
-        # Test excusing dependency on 'some_random.path'
+        # Test excusing dependency and the logging behaviour
 
         with self.assertLogs(TARGET_LOGGER_NAME, level="DEBUG") as log_context:
             with optional_import("random_missing_lib", "fail to import"):
