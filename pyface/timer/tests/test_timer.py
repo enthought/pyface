@@ -422,7 +422,15 @@ class TestTimer(TestCase, GuiTestAssistant):
 
         self.assertFalse(timer.IsRunning())
 
-        self.assertEqual(handler.count, 4)
+        # If it should fail, fail with the time intervals between each call
+        # for debugging purposes.
+        time_intervals = [
+            y - x for x, y in zip(handler.times[:-1], handler.times[1:])
+        ]
+        self.assertEqual(
+            handler.count, 4,
+            "Time intervals between calls: {}".format(time_intervals)
+        )
 
         expected_times = [start_time + 0.2 * i + 0.2 for i in range(4)]
 
