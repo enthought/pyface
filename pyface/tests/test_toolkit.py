@@ -7,8 +7,14 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-import pkg_resources
 import unittest
+
+try:
+    # Starting Python 3.8, importlib.metadata is available in the Python
+    # standard library.
+    from importlib.metadata import entry_points
+except ImportError:
+    from importlib_metadata import entry_points
 
 import pyface.toolkit
 
@@ -27,13 +33,7 @@ class TestToolkit(unittest.TestCase):
 
     def test_core_plugins(self):
         # test that we can see appropriate core entrypoints
-        plugins = set(
-            entry_point.name
-            for entry_point in pkg_resources.iter_entry_points(
-                "pyface.toolkits"
-            )
-        )
-
+        plugins = {ep.name for ep in entry_points()['pyface.toolkits']}
         self.assertLessEqual({"qt4", "wx", "qt", "null"}, plugins)
 
     def test_toolkit_object(self):

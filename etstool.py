@@ -92,6 +92,7 @@ supported_combinations = {
 TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
 
 dependencies = {
+    "importlib_metadata",
     "traits" + TRAITS_VERSION_REQUIRES,
     "traitsui",
     "numpy",
