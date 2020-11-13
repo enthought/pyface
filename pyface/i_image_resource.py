@@ -13,7 +13,7 @@ from collections.abc import Sequence
 
 from pyface.resource_manager import resource_manager
 from pyface.resource.resource_path import resource_module, resource_path
-from traits.api import Interface, List, Str
+from traits.api import HasTraits, Interface, List, Str
 
 
 class IImageResource(Interface):
@@ -113,7 +113,7 @@ class IImageResource(Interface):
         """
 
 
-class MImageResource(object):
+class MImageResource(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IImageResource interface.
 

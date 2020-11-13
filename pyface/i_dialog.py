@@ -11,7 +11,7 @@
 """ The abstract interface for all pyface dialogs. """
 
 
-from traits.api import Bool, Enum, Int, Str
+from traits.api import Bool, Enum, HasTraits, Int, Str
 
 
 from pyface.constant import OK
@@ -134,7 +134,7 @@ class IDialog(IWindow):
         """
 
 
-class MDialog(object):
+class MDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IDialog interface.
 

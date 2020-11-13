@@ -11,7 +11,7 @@
 """ A widget for editing Python code. """
 
 
-from traits.api import Bool, Event, Interface, Str
+from traits.api import Bool, Event, HasTraits, Interface, Str
 
 
 from pyface.key_pressed_event import KeyPressedEvent
@@ -77,7 +77,7 @@ class IPythonEditor(Interface):
         """
 
 
-class MPythonEditor(object):
+class MPythonEditor(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonEditor interface.
 

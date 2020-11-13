@@ -11,7 +11,7 @@
 """ The interface for an interactive Python shell. """
 
 
-from traits.api import Event
+from traits.api import Event, HasTraits
 
 
 from pyface.key_pressed_event import KeyPressedEvent
@@ -100,7 +100,7 @@ class IPythonShell(IWidget):
         """
 
 
-class MPythonShell(object):
+class MPythonShell(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IPythonShell interface.
 

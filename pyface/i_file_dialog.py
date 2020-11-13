@@ -14,7 +14,7 @@
 import sys
 
 
-from traits.api import Enum, Str, Int
+from traits.api import Enum, HasTraits, Int, Str
 
 
 from pyface.i_dialog import IDialog
@@ -56,7 +56,7 @@ class IFileDialog(IDialog):
     wildcard_index = Int(0)
 
 
-class MFileDialog(object):
+class MFileDialog(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IFileDialog interface.
 

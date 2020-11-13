@@ -11,7 +11,7 @@
 """ The interface for a page in a wizard. """
 
 
-from traits.api import Bool, Interface, Str, Tuple, Str
+from traits.api import Bool, HasTraits, Interface, Str, Tuple, Str
 
 
 class IWizardPage(Interface):
@@ -63,7 +63,7 @@ class IWizardPage(Interface):
         """ Creates the actual page content. """
 
 
-class MWizardPage(object):
+class MWizardPage(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWizardPage interface.
 

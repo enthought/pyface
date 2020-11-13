@@ -11,7 +11,7 @@
 """ Heading text. """
 
 
-from traits.api import Instance, Int, Interface, Str
+from traits.api import HasTraits, Instance, Int, Interface, Str
 
 
 from pyface.i_image_resource import IImageResource
@@ -35,7 +35,7 @@ class IHeadingText(Interface):
     image = Instance(IImageResource)
 
 
-class MHeadingText(object):
+class MHeadingText(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IHeadingText interface.
     """

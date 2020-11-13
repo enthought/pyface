@@ -14,7 +14,7 @@
 import logging
 
 
-from traits.api import Any, Bool, Instance, Int, Tuple, Str
+from traits.api import Any, Bool, HasTraits, Instance, Int, Tuple, Str
 
 
 from pyface.image_resource import ImageResource
@@ -58,7 +58,7 @@ class ISplashScreen(IWindow):
     text_location = Tuple(5, 5)
 
 
-class MSplashScreen(object):
+class MSplashScreen(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the ISplashScreen interface.
 
