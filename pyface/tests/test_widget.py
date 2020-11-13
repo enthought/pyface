@@ -11,8 +11,10 @@
 
 import unittest
 
+from traits.api import Instance
 from traits.testing.unittest_tools import UnittestTools
 
+from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 from ..widget import Widget
 
@@ -37,6 +39,28 @@ class ConcreteWidget(Widget):
         else:
             control = None
         return control
+
+
+class MainWindow(ApplicationWindow):
+
+    widget = Instance(ConcreteWidget)
+
+    def _create_contents(self, parent):
+        """ Create and return the window's contents.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control to be used as the parent for
+            widgets in the contents.
+
+        Returns
+        -------
+        control : toolkit control
+            A control to be used for contents of the window.
+        """
+        self.widget = ConcreteWidget(parent=parent)
+        self.widget._create()
+        return self.widget.control
 
 
 class TestWidget(unittest.TestCase, UnittestTools):
@@ -131,6 +155,43 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
                 self.widget.visible = False
 
         self.assertFalse(self.widget.control.isVisible())
+
+    def test_contents_visible(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+        finally:
+            window.destroy()
+
+    def test_contents_hidden(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+                window.widget.visible = False
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+        finally:
+            window.destroy()
 
     def test_enable(self):
         with self.event_loop():
