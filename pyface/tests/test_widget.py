@@ -21,6 +21,8 @@ from ..widget import Widget
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
+is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
+
 
 class ConcreteWidget(Widget):
     def _create_control(self, parent):
@@ -30,7 +32,7 @@ class ConcreteWidget(Widget):
             control = wx.Window(parent)
             control.Enable(self.enabled)
             control.Show(self.visible)
-        elif toolkit_object.toolkit == "qt4":
+        elif toolkit_object.toolkit in {"qt4", "qt"}:
             from pyface.qt import QtGui
 
             control = QtGui.QWidget(parent)
@@ -190,6 +192,38 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
             with self.assertTraitDoesNotChange(window.widget, "visible"):
                 with self.event_loop():
                     window.visible = True
+        finally:
+            window.destroy()
+
+    @unittest.skipUnless(is_qt, "Qt-specific test of hidden state")
+    def test_contents_hide_external_change(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertFalse(window.widget.control.isHidden())
+
+            with self.assertTraitChanges(window.widget, "visible"):
+                with self.event_loop():
+                    window.widget.control.hide()
+
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertTrue(window.widget.control.isHidden())
+
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertTrue(window.widget.control.isHidden())
         finally:
             window.destroy()
 

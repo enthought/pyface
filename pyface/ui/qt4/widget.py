@@ -105,6 +105,10 @@ class Widget(MWidget, HasTraits):
 class WidgetEventFilter(QtCore.QObject):
     """ An internal class that watches for certain events on behalf of the
     Widget instance.
+
+    This filter watches for show and hide events to make sure that visible
+    state of the widget is the opposite of Qt's isHidden() state.  This is
+    needed in case other code hides the toolkit widget
     """
 
     def __init__(self, widget):
@@ -121,7 +125,9 @@ class WidgetEventFilter(QtCore.QObject):
 
         event_type = event.type()
 
-        if event_type in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
-            widget.visible = widget.control.isVisible()
+        if event_type == QtCore.QEvent.Show:
+            widget.visible = True
+        elif event_type == QtCore.QEvent.Hide and widget.control.isHidden():
+            widget.visible = False
 
         return False
