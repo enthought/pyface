@@ -224,8 +224,11 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
         raise RuntimeError(msg)
     elif len(plugins) > 1:
         msg = "multiple %r plugins found for toolkit %r: %s"
-        modules = ", ".join(plugin.module_name for plugin in plugins)
-        logger.warning(msg, entry_point, toolkit_name, modules)
+        module_names = []
+        for plugin in plugins:
+            module_names.append(plugin.value.split(":")[0])
+        module_names = ", ".join(module_names)
+        logger.warning(msg, entry_point, toolkit_name, module_names)
 
     for plugin in plugins:
         try:
@@ -233,7 +236,8 @@ def import_toolkit(toolkit_name, entry_point="pyface.toolkits"):
             return toolkit_object
         except (ImportError, AttributeError) as exc:
             msg = "Could not load plugin %r from %r"
-            logger.info(msg, plugin.name, plugin.module_name)
+            module_name = plugin.value.split(":")[0]
+            logger.info(msg, plugin.name, module_name)
             logger.debug(exc, exc_info=True)
 
     msg = "No {} plugin could be loaded for {}"
@@ -288,7 +292,8 @@ def find_toolkit(entry_point, toolkits=None, priorities=default_priorities):
                 return toolkit
         except (ImportError, AttributeError, RuntimeError) as exc:
             msg = "Could not load %s plugin %r from %r"
-            logger.info(msg, entry_point, plugin.name, plugin.module_name)
+            module_name = plugin.value.split(":")[0]
+            logger.info(msg, entry_point, plugin.name, module_name)
             logger.debug(exc, exc_info=True)
 
     # if all else fails, try to import the null toolkit.
