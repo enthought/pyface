@@ -422,9 +422,14 @@ class TestTimer(TestCase, GuiTestAssistant):
 
         self.assertFalse(timer.IsRunning())
 
-        self.assertEqual(handler.count, 4)
-
-        expected_times = [start_time + 0.2 * i + 0.2 for i in range(4)]
+        # The callback may be called more than 4 times depending
+        # on the order when condition timer in event_loop_unit_condition
+        # is called relative to the Timer here. Timer accuracy also depends
+        # on whether the event loop is interrupted by the system.
+        # The objective is that the timer should not be called too frequently.
+        expected_times = [
+            start_time + 0.2 * i + 0.2 for i in range(handler.count)
+        ]
 
         self.assertTrue(
             all(

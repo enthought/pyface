@@ -92,6 +92,7 @@ supported_combinations = {
 TRAITS_VERSION_REQUIRES = os.environ.get("TRAITS_REQUIRES", "")
 
 dependencies = {
+    "importlib_metadata",
     "importlib_resources>=1.1.0",
     "traits" + TRAITS_VERSION_REQUIRES,
     "traitsui",
