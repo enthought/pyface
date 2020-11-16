@@ -72,6 +72,43 @@ class BaseItemEditorFactory:
         raise NotImplementedError("No custom behaviour is implemented.")
 
 
+class FileDialogItemEditorFactory(BaseItemEditorFactory, HasStrictTraits):
+    """ Implementation for setting a file path from the system file dialog.
+
+    We can probably use ``FileDialog`` from pyface, then this factory can
+    write toolkit agnostic code.
+    """
+
+    # Either 'open' or 'save'
+    mode = Str("open")
+
+    def create(self, parent, item_handle):
+        from pyface.qt import QtGui
+        dlg = QtGui.QFileDialog(parent)
+        value = item_handle.model.get_value(
+            item_handle.row, item_handle.column
+        )
+        if value:
+            dlg.selectFile(value)
+
+        if self.mode == "open":
+            dlg.setAcceptMode(dlg.AcceptOpen)
+        elif self.mode == "save":
+            dlg.setAcceptMode(dlg.AcceptSave)
+        dlg.setModal(True)
+        return dlg
+
+    def commit(self, control, handle):
+        from pyface.qt import QtGui
+        if control.result() == QtGui.QDialog.Accepted:
+            files = control.selectedFiles()
+            if files:
+                handle.set_value(files[0])
+            # warn about more than one file.
+
+    # Use default destroy implementation.
+
+
 class TraitsUIItemObject(HasStrictTraits):
     """ Object to hold the value being edited so that it does not immediately
     set on the data model. This delay effect only works when the editing occurs
