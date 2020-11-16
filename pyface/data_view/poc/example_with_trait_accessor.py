@@ -142,6 +142,13 @@ class TraitedAttributeDataAccessor(AttributeDataAccessor):
     extra_delegate_settings = Dict()
 
     def get_value_item_delegate(self, object):
+        """ Return an instance of ItemDelegate for displaying and editing
+        the attribute (defined on this accessor) for the given object.
+
+        Returns
+        -------
+        value_item_delegate : ItemDelegate
+        """
         context_object, name = _xget_context(object, self.attr)
         trait = context_object.trait(name=name)
         delegate_settings = (
