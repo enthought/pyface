@@ -95,7 +95,6 @@ class FileDialogItemEditorFactory(BaseItemEditorFactory, HasStrictTraits):
             dlg.setAcceptMode(dlg.AcceptOpen)
         elif self.mode == "save":
             dlg.setAcceptMode(dlg.AcceptSave)
-        dlg.setModal(True)
         return dlg
 
     def commit(self, control, handle):
