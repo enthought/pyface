@@ -32,10 +32,12 @@ from .progress_dialog import ProgressDialog
 from .util._optional_dependencies import optional_import as _optional_import
 
 # Excuse pygments dependency (for Qt), otherwise re-raise
-with _optional_import("pygments", msg="PythonEditor not available"):
+with _optional_import(
+        "pygments", msg="PythonEditor not available due to missing pygments."):
     from .python_editor import PythonEditor
 
-with _optional_import("pygments", msg="PythonShell not available"):
+with _optional_import(
+        "pygments", msg="PythonShell not available due to missing pygments."):
     from .python_shell import PythonShell
 
 from .sorter import Sorter
