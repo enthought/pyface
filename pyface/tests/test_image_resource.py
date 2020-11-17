@@ -30,8 +30,7 @@ is_pyqt4_windows = (
 
 
 SEARCH_PATH = os.fspath(files("pyface") / "images")
-IMAGE_DIR = files("pyface.tests") / "images"
-IMAGE_PATH = os.fspath(IMAGE_DIR / "core.png")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class TestImageResource(unittest.TestCase):
