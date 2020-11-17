@@ -9,12 +9,10 @@
 # Thanks for using Enthought open source!
 """ Tests for the _optional_dependencies module """
 
+import logging
 import unittest
 
 from pyface.util._optional_dependencies import optional_import
-
-#: Name of the logger used for logging debug messages from optional_import
-TARGET_LOGGER_NAME = "pyface"
 
 
 class TestOptionalImport(unittest.TestCase):
@@ -22,9 +20,10 @@ class TestOptionalImport(unittest.TestCase):
 
     def test_optional_import(self):
         # Test excusing dependency and the logging behaviour
-
-        with self.assertLogs(TARGET_LOGGER_NAME, level="DEBUG") as log_context:
-            with optional_import("random_missing_lib", "fail to import"):
+        logger = logging.getLogger(self.id())
+        with self.assertLogs(logger, level="DEBUG") as log_context:
+            with optional_import(
+                    "random_missing_lib", "fail to import", logger):
                 # assume this library is not importable.
                 import random_missing_lib   # noqa: F401
 
@@ -33,6 +32,7 @@ class TestOptionalImport(unittest.TestCase):
 
     def test_optional_import_reraise(self):
         # Test if the import error was about something else, reraise
+        logger = logging.getLogger(self.id())
         with self.assertRaises(ImportError):
-            with optional_import("some_random_lib", ""):
+            with optional_import("some_random_lib", "", logger):
                 import some_random_missing_lib   # noqa: F401

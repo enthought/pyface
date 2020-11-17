@@ -11,14 +11,10 @@
 """ Utilities for handling optional import dependencies."""
 
 import contextlib
-import logging
-
-
-_PYFACE_LOGGER = logging.getLogger("pyface")
 
 
 @contextlib.contextmanager
-def optional_import(dependency_name, msg):
+def optional_import(dependency_name, msg, logger):
     """ Context manager for capturing ImportError for a particular optional
     dependency. If such an error occurs, it will be silenced and a debug
     message will be logged.
@@ -30,11 +26,13 @@ def optional_import(dependency_name, msg):
         If matched, the ImportError will be silenced
     msg : str
         Log message to be emitted.
+    logger : Logger
+        Logger to use for logging messages.
     """
     try:
         yield
     except ImportError as exception:
         if exception.name == dependency_name:
-            _PYFACE_LOGGER.debug(msg, exc_info=True)
+            logger.debug(msg, exc_info=True)
         else:
             raise
