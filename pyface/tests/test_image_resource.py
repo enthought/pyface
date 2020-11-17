@@ -11,7 +11,6 @@
 
 import os
 import platform
-import pkg_resources
 import unittest
 
 from importlib_resources import files

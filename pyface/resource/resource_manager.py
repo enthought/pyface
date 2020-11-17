@@ -112,8 +112,8 @@ class ResourceManager(HasTraits):
 
         for dirname in resource_path:
 
-            # If we come across a reference to a module, use pkg_resources
-            # to try and find the image inside of an .egg, .zip, etc.
+            # If we come across a reference to a module, try and find the
+            # image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
                 for path in subdirs:
                     for extension in extensions:
