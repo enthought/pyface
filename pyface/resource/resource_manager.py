@@ -17,6 +17,8 @@ import collections.abc, glob, inspect, os, sys, types
 from os.path import join
 from zipfile import is_zipfile, ZipFile
 
+from importlib_resources import files
+
 from traits.api import HasTraits, Instance, List
 from traits.util.resource import get_path
 
@@ -110,17 +112,17 @@ class ResourceManager(HasTraits):
 
         for dirname in resource_path:
 
-            # If we come across a reference to a module, use pkg_resources
-            # to try and find the image inside of an .egg, .zip, etc.
+            # If we come across a reference to a module, try and find the
+            # image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
-                from pkg_resources import resource_string
-
                 for path in subdirs:
                     for extension in extensions:
                         searchpath = "%s/%s%s" % (path, basename, extension)
                         try:
-                            data = resource_string(
-                                dirname.__name__, searchpath
+                            data = (
+                                files(dirname.__name__)
+                                .joinpath(searchpath)
+                                .read_bytes()
                             )
                             return ImageReference(
                                 self.resource_factory, data=data

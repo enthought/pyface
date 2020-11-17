@@ -11,8 +11,9 @@
 
 import os
 import platform
-import pkg_resources
 import unittest
+
+from importlib_resources import files
 
 import pyface
 import pyface.tests
@@ -28,9 +29,8 @@ is_pyqt4_windows = (
 )
 
 
-SEARCH_PATH = pkg_resources.resource_filename("pyface", "images")
-IMAGE_DIR = pkg_resources.resource_filename(__name__, "images")
-IMAGE_PATH = os.path.join(IMAGE_DIR, "core.png")
+SEARCH_PATH = os.fspath(files("pyface") / "images")
+IMAGE_PATH = os.fspath(files("pyface.tests") / "images" / "core.png")
 
 
 class TestImageResource(unittest.TestCase):
