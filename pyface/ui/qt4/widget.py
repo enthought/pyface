@@ -125,9 +125,7 @@ class WidgetEventFilter(QtCore.QObject):
 
         event_type = event.type()
 
-        if event_type == QtCore.QEvent.Show:
-            widget.visible = True
-        elif event_type == QtCore.QEvent.Hide and widget.control.isHidden():
-            widget.visible = False
+        if event_type in {QtCore.QEvent.Show, QtCore.QEvent.Hide}:
+            widget.visible = not widget.control.isHidden()
 
         return False
