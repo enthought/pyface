@@ -73,13 +73,13 @@ class Widget(MWidget, HasTraits):
             self.control.setEnabled(enabled)
 
     def destroy(self):
-        self._remove_event_listeners()
         if self.control is not None:
             self.control.hide()
             self.control.deleteLater()
-            self.control = None
+        super().destroy()
 
     def _add_event_listeners(self):
+        super()._add_event_listeners()
         self.control.installEventFilter(self._event_filter)
 
     def _remove_event_listeners(self):
@@ -87,6 +87,7 @@ class Widget(MWidget, HasTraits):
             if self.control is not None:
                 self.control.removeEventFilter(self._event_filter)
             self._event_filter = None
+        super()._remove_event_listeners()
 
     # Trait change handlers --------------------------------------------------
 

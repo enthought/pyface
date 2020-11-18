@@ -12,6 +12,7 @@
 
 
 from traits.api import Any, Bool, HasTraits, Interface
+from traits.trait_base import not_none
 
 
 class IWidget(Interface):
@@ -95,6 +96,16 @@ class MWidget(HasTraits):
     implementations of the IWidget interface.
     """
 
+    def destroy(self):
+        """ Destroy the control if it exists.
+
+        Subclasses of this mixin should ensure that they call super()
+        if they override this method.
+        """
+        if self.control is not None:
+            self._remove_event_listeners()
+            self.control = None
+
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
@@ -104,12 +115,17 @@ class MWidget(HasTraits):
 
         This method should create the control and assign it to the
         :py:attr:``control`` trait.
+
+        Subclasses of this mixin should ensure that they call super()
+        if they override this method.
         """
         self.control = self._create_control(self.parent)
         self._add_event_listeners()
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
+
+        Subclasses of this mixin should implement this method.
 
         Parameters
         ----------
@@ -125,9 +141,29 @@ class MWidget(HasTraits):
         raise NotImplementedError()
 
     def _add_event_listeners(self):
-        """ Set up toolkit-specific bindings for events """
-        pass
+        """ Set up toolkit-specific bindings for events and trait observers
+
+        The default implementation sets up observers for all traits with
+        the `widget_observer` metadata.
+
+        Subclasses should override with additional listeners, but must call
+        super() to ensure superclass listeners are also connected.
+        """
+        for name, trait in self.traits(widget_observer=not_none).items():
+            observer = getattr(self, trait.widget_observer)
+            self.observe(observer, name, dispatch='ui')
 
     def _remove_event_listeners(self):
-        """ Remove toolkit-specific bindings for events """
-        pass
+        """ Remove toolkit-specific bindings for events and trait observers
+
+        The default implementation removes up observers for all traits with
+        the `widget_observer` metadata.
+
+        Subclasses should override with additional listeners, but must call
+        super() to ensure superclass listeners are also removed.
+        """
+        for name, trait in self.traits(widget_observer=not_none).items():
+            observer = trait.widget_observer
+            if isinstance(observer, str):
+                observer = getattr(self, observer)
+            self.observe(observer, name, dispatch='ui', remove=True)
