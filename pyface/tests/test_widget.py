@@ -11,13 +11,17 @@
 
 import unittest
 
+from traits.api import Instance
 from traits.testing.unittest_tools import UnittestTools
 
+from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
 from ..widget import Widget
 
 GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
+
+is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
 
 
 class ConcreteWidget(Widget):
@@ -28,7 +32,7 @@ class ConcreteWidget(Widget):
             control = wx.Window(parent)
             control.Enable(self.enabled)
             control.Show(self.visible)
-        elif toolkit_object.toolkit == "qt4":
+        elif toolkit_object.toolkit in {"qt4", "qt"}:
             from pyface.qt import QtGui
 
             control = QtGui.QWidget(parent)
@@ -37,6 +41,28 @@ class ConcreteWidget(Widget):
         else:
             control = None
         return control
+
+
+class MainWindow(ApplicationWindow):
+
+    widget = Instance(ConcreteWidget)
+
+    def _create_contents(self, parent):
+        """ Create and return the window's contents.
+        Parameters
+        ----------
+        parent : toolkit control
+            The window's toolkit control to be used as the parent for
+            widgets in the contents.
+
+        Returns
+        -------
+        control : toolkit control
+            A control to be used for contents of the window.
+        """
+        self.widget = ConcreteWidget(parent=parent)
+        self.widget._create()
+        return self.widget.control
 
 
 class TestWidget(unittest.TestCase, UnittestTools):
@@ -131,6 +157,139 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
                 self.widget.visible = False
 
         self.assertFalse(self.widget.control.isVisible())
+
+    def test_contents_visible(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+
+            # widget visible trait stays True when parent is hidden
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            # widget visible trait stays True when parent is shown
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+        finally:
+            window.destroy()
+
+    def test_contents_hidden(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+                window.widget.visible = False
+
+            # widget visible trait stays False when parent is hidden
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            # widget visible trait stays False when parent is shown
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+        finally:
+            window.destroy()
+
+    @unittest.skipUnless(is_qt, "Qt-specific test of hidden state")
+    def test_contents_hide_external_change(self):
+        window = MainWindow()
+        window._create()
+
+        try:
+            with self.event_loop():
+                window.open()
+
+            # widget visibile trait stays True when parent is hidden
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = False
+
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertFalse(window.widget.control.isHidden())
+
+            # widget visibile trait becomes False when widget is hidden
+            with self.assertTraitChanges(window.widget, "visible"):
+                with self.event_loop():
+                    window.widget.control.hide()
+
+            self.assertFalse(window.widget.visible)
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertTrue(window.widget.control.isHidden())
+
+            # widget visibile trait stays False when parent is shown
+            with self.assertTraitDoesNotChange(window.widget, "visible"):
+                with self.event_loop():
+                    window.visible = True
+
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertTrue(window.widget.control.isHidden())
+        finally:
+            window.destroy()
+
+    @unittest.skipUnless(is_qt, "Qt-specific test of hidden state")
+    def test_show_widget_with_parent_is_invisible_qt(self):
+        # Test setting the widget visible to true when its parent visibility
+        # is false.
+        window = MainWindow()
+        window._create()
+
+        try:
+            # given
+            with self.event_loop():
+                window.open()
+                window.widget.visible = False
+
+            with self.event_loop():
+                window.visible = False
+
+            # when
+            with self.event_loop():
+                window.widget.visible = True
+
+            # then
+            self.assertTrue(window.widget.visible)
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertFalse(window.widget.control.isHidden())
+
+        finally:
+            window.destroy()
+
+    @unittest.skipUnless(is_qt, "Qt-specific test of hidden state")
+    def test_show_widget_then_parent_is_invisible_qt(self):
+        # Test showing the widget when the parent is also visible, and then
+        # make the parent invisible
+        window = MainWindow()
+        window._create()
+
+        try:
+            # given
+            with self.event_loop():
+                window.open()
+                window.visible = True
+
+            with self.event_loop():
+                window.widget.visible = True
+
+            # when
+            with self.event_loop():
+                window.visible = False
+
+            # then
+            self.assertTrue(window.widget.visible)
+            self.assertFalse(window.widget.control.isVisible())
+            self.assertFalse(window.widget.control.isHidden())
+
+        finally:
+            window.destroy()
 
     def test_enable(self):
         with self.event_loop():
