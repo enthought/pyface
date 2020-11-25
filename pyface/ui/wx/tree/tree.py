@@ -182,7 +182,7 @@ class Tree(Widget):
 
         # Create the toolkit-specific control.
         self.control = tree = _Tree(
-            self, parent, style=self._get_style()
+            self, parent, wxid=wx.ID_ANY, style=self._get_style()
         )
 
         # Wire up the wx tree events.
