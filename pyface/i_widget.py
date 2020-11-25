@@ -54,19 +54,19 @@ class IWidget(Interface):
             The enabled state to set the widget to.
         """
 
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        This method should create the control and assign it to the
+        :py:attr:``control`` trait.
+        """
+
     def destroy(self):
         """ Destroy the control if it exists. """
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
     # ------------------------------------------------------------------------
-
-    def _create(self):
-        """ Creates the toolkit specific control.
-
-        This method should create the control and assign it to the
-        :py:attr:``control`` trait.
-        """
 
     def _create_control(self, parent):
         """ Create toolkit specific control that represents the widget.
@@ -94,6 +94,13 @@ class MWidget(HasTraits):
     """ The mixin class that contains common code for toolkit specific
     implementations of the IWidget interface.
     """
+
+    def create(self):
+        """ Creates the toolkit specific control.
+
+        The default implementation simply calls _create()
+        """
+        self._create()
 
     # ------------------------------------------------------------------------
     # Protected 'IWidget' interface.
