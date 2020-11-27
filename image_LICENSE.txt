@@ -5,6 +5,7 @@ Project                 License                   File
 ----------------------------------------------------------------------------
 Eclipse                 Eclipse Public License    image_LICENSE_Eclipse.txt
 Enthought               BSD 3-Clause              LICENSE.txt
+FamFamFam Flags         Public Domain             http://www.famfamfam.com/lab/icons/flags/
 GV (Gael Varoquaux)     Public Domain             N/A
 Nuvola                  LGPL                      image_LICENSE_Nuvola.txt
 OOo                     LGPL                      image_LICENSE_OOo.txt
@@ -26,6 +27,11 @@ examples/application/python_editor/images:
 examples/application/python_shell/images:
                     python_icon.png | PSF
                     python_logo.png | PSF
+
+examples/data_view/images:
+                             ca.png | FamFamFam Flags
+                             gb.png | FamFamFam Flags
+                             us.png | FamFamFam Flags
 
 pyface/action/images:
                          action.png | Eclipse
