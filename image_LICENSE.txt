@@ -108,6 +108,11 @@ pyface/images:
 pyface/tests/images:
                            core.png | Nuvola
 
+pyface/tree/images:
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola
+
 pyface/ui/wx/grid/images:
                         checked.png | GV
                 image_not_found.png | Nuvola
