@@ -48,6 +48,10 @@ examples/tasks/advanced/images:
                   document_open.png | Oxygen
                   document_save.png | Oxygen
 
+examples/tasks/basic/images:
+                  document_open.png | Oxygen
+                  document_save.png | Oxygen
+
 pyface/action/images:
                          action.png | Eclipse
 
