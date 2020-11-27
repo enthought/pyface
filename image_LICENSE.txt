@@ -43,6 +43,11 @@ examples/images:
                        document.png | GV
                     open_folder.png | Nuvola
 
+examples/tasks/advanced/images:
+                   document_new.png | Oxygen
+                  document_open.png | Oxygen
+                  document_save.png | Oxygen
+
 pyface/action/images:
                          action.png | Eclipse
 
