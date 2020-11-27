@@ -55,18 +55,6 @@ examples/tasks/basic/images:
 pyface/action/images:
                          action.png | Eclipse
 
-pyface/images:
-                          about.jpg | Enthought
-                     background.jpg | Enthought
-                    caret_close.png | Enthought
-                     caret_open.png | Enthought
-                          close.png | GV
-                image_not_found.png | Nuvola
-                 panel_gradient.png | Enthought
-            panel_gradient_over.png | Enthought
-                       question.png | GV
-                         splash.png | Enthought
-
 pyface/dock/images:
             bar_feature_changed.png | Enthought
            bar_feature_disabled.png | Enthought
@@ -123,21 +111,3 @@ pyface/ui/wx/images:
                     application.ico | Enthought
                 heading_level_1.png | Enthought
                         warning.png | GV
-
-pyface/tree/images:
-                  closed_folder.png | Nuvola
-                       document.png | GV
-                    open_folder.png | Nuvola
-
-examples/images:
-            closed_folder_24x24.png | Nuvola
-                  closed_folder.png | Nuvola
-                       document.png | GV
-                    open_folder.png | Nuvola
-
-examples/dock/images:
-                         folder.png | Nuvola
-                           gear.png | Nuvola
-
-examples/workbench/images:
-                        example.ico | Enthought
