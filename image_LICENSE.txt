@@ -37,6 +37,12 @@ examples/dock/images:
                          folder.png | Nuvola
                            gear.png | Nuvola
 
+examples/images:
+            closed_folder_24x24.png | Nuvola
+                  closed_folder.png | Nuvola
+                       document.png | GV
+                    open_folder.png | Nuvola
+
 pyface/action/images:
                          action.png | Eclipse
 
