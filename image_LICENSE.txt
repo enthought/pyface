@@ -33,6 +33,10 @@ examples/data_view/images:
                              gb.png | FamFamFam Flags
                              us.png | FamFamFam Flags
 
+examples/dock/images:
+                         folder.png | Nuvola
+                           gear.png | Nuvola
+
 pyface/action/images:
                          action.png | Eclipse
 
