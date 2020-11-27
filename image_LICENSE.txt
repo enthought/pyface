@@ -56,40 +56,17 @@ pyface/action/images:
                          action.png | Eclipse
 
 pyface/dock/images:
-            bar_feature_changed.png | Enthought
-           bar_feature_disabled.png | Enthought
-               bar_feature_drop.png | Enthought
-            bar_feature_no_drop.png | Enthought
-             bar_feature_normal.png | Enthought
                      close_drag.png | GV
                       close_tab.png | GV
                    feature_tool.png | GV
-                      sh_bottom.png | Enthought
-                      sh_middle.png | Enthought
-                         sh_top.png | Enthought
-                          shell.ico | Enthought
-                        sv_left.png | Enthought
-                      sv_middle.png | Enthought
-                       sv_right.png | Enthought
-            tab_feature_changed.png | Enthought
-           tab_feature_disabled.png | Enthought
-               tab_feature_drop.png | Enthought
             tab_feature_no_drop.png | OOo
              tab_feature_normal.png | OOo
-                   tab_scroll_l.png | Enthought
-                  tab_scroll_lr.png | Enthought
-                   tab_scroll_r.png | Enthought
                          window.png | Eclipse
 
 pyface/images:
                           about.jpg | Python Software Foundation
-                     background.jpg | Enthought
-                    caret_close.png | Enthought
-                     caret_open.png | Enthought
                           close.png | GV
                 image_not_found.png | Nuvola
-                 panel_gradient.png | Enthought
-            panel_gradient_over.png | Enthought
                        question.png | GV
                          splash.png | Python Software Foundation
 
@@ -108,6 +85,4 @@ pyface/ui/wx/grid/images:
                       unchecked.png | GV
 
 pyface/ui/wx/images:
-                    application.ico | Enthought
-                heading_level_1.png | Enthought
                         warning.png | GV
