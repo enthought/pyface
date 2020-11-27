@@ -23,6 +23,10 @@ examples/application/python_editor/images:
                     python_icon.png | PSF
                     python_logo.png | PSF
 
+examples/application/python_shell/images:
+                    python_icon.png | PSF
+                    python_logo.png | PSF
+
 pyface/action/images:
                          action.png | Eclipse
 
