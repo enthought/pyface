@@ -119,6 +119,11 @@ pyface/ui/wx/grid/images:
                      table_edit.png | OOo
                       unchecked.png | GV
 
+pyface/ui/wx/images:
+                    application.ico | Enthought
+                heading_level_1.png | Enthought
+                        warning.png | GV
+
 pyface/tree/images:
                   closed_folder.png | Nuvola
                        document.png | GV
