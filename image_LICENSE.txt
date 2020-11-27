@@ -105,6 +105,9 @@ pyface/images:
                        question.png | GV
                          splash.png | Python Software Foundation
 
+pyface/tests/images:
+                           core.png | Nuvola
+
 pyface/ui/wx/grid/images:
                         checked.png | GV
                 image_not_found.png | Nuvola
