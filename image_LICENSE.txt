@@ -93,6 +93,18 @@ pyface/dock/images:
                    tab_scroll_r.png | Enthought
                          window.png | Eclipse
 
+pyface/images:
+                          about.jpg | Python Software Foundation
+                     background.jpg | Enthought
+                    caret_close.png | Enthought
+                     caret_open.png | Enthought
+                          close.png | GV
+                image_not_found.png | Nuvola
+                 panel_gradient.png | Enthought
+            panel_gradient_over.png | Enthought
+                       question.png | GV
+                         splash.png | Python Software Foundation
+
 pyface/ui/wx/grid/images:
                         checked.png | GV
                 image_not_found.png | Nuvola
