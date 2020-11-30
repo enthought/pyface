@@ -36,12 +36,12 @@ class ICommand(Interface):
     #### 'ICommand' interface #################################################
 
     # This is the data on which the command operates.
-    data = Any
+    data = Any()
 
     # This is the name of the command as it will appear in any GUI element.  It
     # may include '&' which will be automatically removed whenever it is
     # inappropriate.
-    name = Str
+    name = Str()
 
     ###########################################################################
     # 'ICommand' interface.

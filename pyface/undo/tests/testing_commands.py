@@ -17,7 +17,7 @@ class SimpleCommand(AbstractCommand):
 
     name = "Increment by 1"
 
-    data = Int
+    data = Int()
 
     def do(self):
         self.redo()

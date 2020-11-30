@@ -63,12 +63,12 @@ class UndoManager(HasTraits):
     # This is the sequence number of the next command to be performed.  It is
     # incremented immediately before a command is invoked (by its 'do()'
     # method).
-    sequence_nr = Int
+    sequence_nr = Int()
 
     # This event is fired when the index of a command stack changes.  The value
     # of the event is the stack that has changed.  Note that it may not be the
     # active stack.
-    stack_updated = Event
+    stack_updated = Event()
 
     # This is the name of the command that can be undone.  It will be empty if
     # there is no command that can be undone.  It is maintained by the undo

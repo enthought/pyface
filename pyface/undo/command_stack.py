@@ -53,7 +53,7 @@ class _StackEntry(HasTraits):
     command = Instance(ICommand)
 
     # The sequence number of the entry.
-    sequence_nr = Int
+    sequence_nr = Int()
 
 
 class _MacroCommand(AbstractCommand):
