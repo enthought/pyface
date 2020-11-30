@@ -36,14 +36,14 @@ class CommandAction(Action):
 
     #### 'CommandAction' interface ############################################
 
-    # The command to create when the action is performed.
+    #: The command to create when the action is performed.
     command = Callable()
 
-    # The command stack onto which the command will be pushed when the action
-    # is performed.
+    #: The command stack onto which the command will be pushed when the action
+    #: is performed.
     command_stack = Instance(ICommandStack)
 
-    # This is the data on which the command operates.
+    #: This is the data on which the command operates.
     data = Any()
 
     ###########################################################################

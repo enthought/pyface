@@ -46,33 +46,33 @@ class UndoManager(HasTraits):
 
     #### 'IUndoManager' interface #############################################
 
-    # This is the currently active command stack and may be None.  Typically it
-    # is set when some sort of editor becomes active.
+    #: This is the currently active command stack and may be None. Typically it
+    #: is set when some sort of editor becomes active.
     active_stack = Instance("apptools.undo.api.ICommandStack")
 
-    # This reflects the clean state of the currently active command stack.  It
-    # is intended to support a "document modified" indicator in the GUI.  It is
-    # maintained by the undo manager.
+    #: This reflects the clean state of the currently active command stack. It
+    #: is intended to support a "document modified" indicator in the GUI. It is
+    #: maintained by the undo manager.
     active_stack_clean = Property(Bool)
 
-    # This is the name of the command that can be redone.  It will be empty if
-    # there is no command that can be redone.  It is maintained by the undo
-    # manager.
+    #: This is the name of the command that can be redone. It will be empty if
+    #: there is no command that can be redone. It is maintained by the undo
+    #: manager.
     redo_name = Property(Str)
 
-    # This is the sequence number of the next command to be performed.  It is
-    # incremented immediately before a command is invoked (by its 'do()'
-    # method).
+    #: This is the sequence number of the next command to be performed. It is
+    #: incremented immediately before a command is invoked (by its 'do()'
+    #: method).
     sequence_nr = Int()
 
-    # This event is fired when the index of a command stack changes.  The value
-    # of the event is the stack that has changed.  Note that it may not be the
-    # active stack.
+    #: This event is fired when the index of a command stack changes. The value
+    #: of the event is the stack that has changed. Note that it may not be the
+    #: active stack.
     stack_updated = Event()
 
-    # This is the name of the command that can be undone.  It will be empty if
-    # there is no command that can be undone.  It is maintained by the undo
-    # manager.
+    #: This is the name of the command that can be undone. It will be empty if
+    #: there is no command that can be undone. It is maintained by the undo
+    #: manager.
     undo_name = Property(Str)
 
     ###########################################################################

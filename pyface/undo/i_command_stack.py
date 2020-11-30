@@ -37,23 +37,23 @@ class ICommandStack(Interface):
 
     #### 'ICommandStack' interface ############################################
 
-    # This is the clean state of the stack.  Its value changes as commands are
-    # undone and redone.  It can also be explicity set to mark the current
-    # stack position as being clean (when the data is saved to disk for
-    # example).
+    #: This is the clean state of the stack.  Its value changes as commands are
+    #: undone and redone.  It can also be explicity set to mark the current
+    #: stack position as being clean (when the data is saved to disk for
+    #: example).
     clean = Bool()
 
-    # This is the name of the command that can be redone.  It will be empty if
-    # there is no command that can be redone.  It is maintained by the undo
-    # stack.
+    #: This is the name of the command that can be redone.  It will be empty if
+    #: there is no command that can be redone.  It is maintained by the undo
+    #: stack.
     redo_name = Str()
 
-    # This is the undo manager that manages this stack.
+    #: This is the undo manager that manages this stack.
     undo_manager = Instance(IUndoManager)
 
-    # This is the name of the command that can be undone.  It will be empty if
-    # there is no command that can be undone.  It is maintained by the undo
-    # stack.
+    #: This is the name of the command that can be undone.  It will be empty if
+    #: there is no command that can be undone.  It is maintained by the undo
+    #: stack.
     undo_name = Str()
 
     ###########################################################################

@@ -37,7 +37,7 @@ class AbstractCommandStackAction(Action):
 
     #### 'AbstractCommandStackAction' interface ###############################
 
-    # The undo manager.
+    #: The undo manager.
     undo_manager = Instance(IUndoManager)
 
     ###########################################################################

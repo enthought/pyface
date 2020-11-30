@@ -46,13 +46,13 @@ class _StackEntry(HasTraits):
 
     #### '_StackEntry' interface ##############################################
 
-    # Set if the entry corresponds to a clean point on the stack.
+    #: Set if the entry corresponds to a clean point on the stack.
     clean = Bool(False)
 
-    # The command instance.
+    #: The command instance.
     command = Instance(ICommand)
 
-    # The sequence number of the entry.
+    #: The sequence number of the entry.
     sequence_nr = Int()
 
 
@@ -61,7 +61,7 @@ class _MacroCommand(AbstractCommand):
 
     #### '_MacroCommand' interface ############################################
 
-    # The commands that make up this macro.
+    #: The commands that make up this macro.
     macro_commands = List(Instance(ICommand))
 
     ###########################################################################
@@ -108,23 +108,23 @@ class CommandStack(HasTraits):
 
     #### 'ICommandStack' interface ############################################
 
-    # This is the clean state of the stack.  Its value changes as commands are
-    # undone and redone.  It can also be explicity set to mark the current
-    # stack position as being clean (when the data is saved to disk for
-    # example).
+    #: This is the clean state of the stack.  Its value changes as commands are
+    #: undone and redone.  It can also be explicity set to mark the current
+    #: stack position as being clean (when the data is saved to disk for
+    #: example).
     clean = Property(Bool)
 
-    # This is the name of the command that can be redone.  It will be empty if
-    # there is no command that can be redone.  It is maintained by the undo
-    # stack.
+    #: This is the name of the command that can be redone.  It will be empty if
+    #: there is no command that can be redone.  It is maintained by the undo
+    #: stack.
     redo_name = Property(Str)
 
-    # This is the undo manager that manages this stack.
+    #: This is the undo manager that manages this stack.
     undo_manager = Instance(IUndoManager)
 
-    # This is the name of the command that can be undone.  It will be empty if
-    # there is no command that can be undone.  It is maintained by the undo
-    # stack.
+    #: This is the name of the command that can be undone.  It will be empty if
+    #: there is no command that can be undone.  It is maintained by the undo
+    #: stack.
     undo_name = Property(Str)
 
     #### Private interface ####################################################
