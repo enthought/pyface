@@ -36,6 +36,8 @@ class IUndoManager(Interface):
 
     # This is the currently active command stack and may be None.  Typically it
     # is set when some sort of editor becomes active.
+    # IUndoManager and ICommandStack depend on one another, hence we can't
+    # directly import ICommandStack and use it here.
     active_stack = Instance("apptools.undo.api.ICommandStack")
 
     # This reflects the clean state of the currently active command stack.  It
