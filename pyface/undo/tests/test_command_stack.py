@@ -56,6 +56,18 @@ class TestCommandStack(unittest.TestCase):
             for i in range(n):
                 self.stack.undo()
 
+    def test_undo_redo_sequence_nr(self):
+        n = 4
+        for i in range(n):
+            self.stack.push(self.command)
+        self.assertEqual(self.stack._index, 3)
+        # undo back to the 1st command in the stack
+        self.stack.undo(1)
+        self.assertEqual(self.stack._index, 0)
+        # redo back to the 3rd command in the stack
+        self.stack.redo(3)
+        self.assertEqual(self.stack._index, 2)
+
     def test_undo_unnamed_command(self):
         unnamed_command = UnnamedCommand()
         with self.assert_n_commands_pushed(self.stack, 1):
@@ -131,6 +143,14 @@ class TestCommandStack(unittest.TestCase):
         self.stack.clean = True
         self.stack.redo()
         self.assertFalse(self.stack.clean)
+
+    def test_clear(self):
+        n = 5
+        for _ in range(n):
+            self.stack.push(self.command)
+        self.stack.clear()
+        self.assertEqual(self.stack._stack, [])
+        self.assertTrue(self.stack.clean)
 
     # Assertion helpers -------------------------------------------------------
 
