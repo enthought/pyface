@@ -8,6 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
+import logging as _logging
 
 from .about_dialog import AboutDialog
 from .application import Application
@@ -28,13 +29,22 @@ from .image_resource import ImageResource
 from .key_pressed_event import KeyPressedEvent
 from .message_dialog import error, information, warning, MessageDialog
 from .progress_dialog import ProgressDialog
-try:
+
+from .util._optional_dependencies import optional_import as _optional_import
+
+# Excuse pygments dependency (for Qt), otherwise re-raise
+with _optional_import(
+        "pygments",
+        msg="PythonEditor not available due to missing pygments.",
+        logger=_logging.getLogger(__name__)):
     from .python_editor import PythonEditor
+
+with _optional_import(
+        "pygments",
+        msg="PythonShell not available due to missing pygments.",
+        logger=_logging.getLogger(__name__)):
     from .python_shell import PythonShell
-except ImportError as _exception:
-    # Excuse pygments dependency (for Qt), otherwise re-raise
-    if _exception.name != "pygments":
-        raise
+
 from .sorter import Sorter
 from .single_choice_dialog import choose_one, SingleChoiceDialog
 from .splash_screen import SplashScreen
