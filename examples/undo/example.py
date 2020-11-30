@@ -72,10 +72,7 @@ def main(argv):
     gui = GUI()
 
     # Create the workbench.
-    workbench = ExampleUndo(
-        state_location=gui.state_location,
-        undo_manager=UndoManager()
-    )
+    workbench = ExampleUndo(state_location=gui.state_location)
 
     window = workbench.create_window(position=(300, 300), size=(400, 300))
     window.open()
