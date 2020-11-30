@@ -68,7 +68,8 @@ class ExampleUndoWindow(WorkbenchWindow):
 
     def __undo_menu_default(self):
         """ Trait initialiser. """
-
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        print(self.workbench)
         undo_manager = self.workbench.undo_manager
 
         undo_action = UndoAction(undo_manager=undo_manager)

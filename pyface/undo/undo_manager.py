@@ -48,7 +48,7 @@ class UndoManager(HasTraits):
 
     #: This is the currently active command stack and may be None. Typically it
     #: is set when some sort of editor becomes active.
-    active_stack = Instance("apptools.undo.api.ICommandStack")
+    active_stack = Instance("pyface.undo.api.ICommandStack")
 
     #: This reflects the clean state of the currently active command stack. It
     #: is intended to support a "document modified" indicator in the GUI. It is

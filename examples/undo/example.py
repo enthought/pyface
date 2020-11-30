@@ -29,6 +29,7 @@ import logging
 # Enthought library imports.
 from pyface.api import GUI, YES
 from pyface.workbench.api import Workbench
+from pyface.undo.api import UndoManager
 
 # Local imports.
 from example_undo_window import ExampleUndoWindow
@@ -71,7 +72,10 @@ def main(argv):
     gui = GUI()
 
     # Create the workbench.
-    workbench = ExampleUndo(state_location=gui.state_location)
+    workbench = ExampleUndo(
+        state_location=gui.state_location,
+        undo_manager=UndoManager()
+    )
 
     window = workbench.create_window(position=(300, 300), size=(400, 300))
     window.open()
