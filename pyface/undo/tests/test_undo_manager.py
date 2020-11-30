@@ -8,7 +8,6 @@
 #
 # Thanks for using Enthought open source!
 
-from contextlib import contextmanager
 import unittest
 
 from traits.testing.api import UnittestTools
@@ -36,7 +35,8 @@ class TestUndoManager(unittest.TestCase, UnittestTools):
         self.assertEqual(self.stack_a._index, -1)
         self.stack_a.push(self.command)
         self.assertEqual(self.stack_a._index, 0)
-        with self.assertTraitChanges(self.undo_manager,'stack_updated', count=1):
+        with self.assertTraitChanges(
+                self.undo_manager, 'stack_updated', count=1):
             self.undo_manager.undo()
         self.assertEqual(self.stack_a._index, -1)
 
@@ -45,7 +45,8 @@ class TestUndoManager(unittest.TestCase, UnittestTools):
         self.stack_a.push(self.command)
         self.undo_manager.undo()
         self.assertEqual(self.stack_a._index, -1)
-        with self.assertTraitChanges(self.undo_manager,'stack_updated', count=1):
+        with self.assertTraitChanges(
+                self.undo_manager, 'stack_updated', count=1):
             self.undo_manager.redo()
         self.assertEqual(self.stack_a._index, 0)
 
