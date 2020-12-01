@@ -2,6 +2,67 @@
 Pyface Changelog
 ================
 
+Release 7.2.0
+=============
+
+Pyface 7.2.0 is a minor release which introduces a variety of bug fixes,
+documentation updates, and other code maintenance. The most significant change
+introduced by this release is the addition of undo/redo functionality from the
+undo subpackage copied from apptools.
+
+This release should still be compatible with Traits 6.0+. Users are encouraged
+to upgrade to Traits 6.1+ to stay current as future releases of Pyface will
+stop supporting Traits 6.0.
+
+Highlights of this release
+--------------------------
+
+* New :mod:`undo <pyface.undo>` subpackage that has been copied over from
+  apptools (soon to be deprecated in apptools)
+
+Detailed changes
+----------------
+
+Thanks to:
+
+* Aaron Ayres
+* Mark Dickinson
+* Kit Yan Choi
+* Rahul Poruri
+* Corran Webster
+
+Features
+
+* Copy Undo over from apptools (#813)
+
+Fixes
+
+* Add wx_id parameter to __init__ for Tree to avoid errors (#810)
+* Fix Qt widget visibility (#807)
+* Fix sporadic Timer test failure on OSX + Qt (#799)
+* Fix invalid escape sequence deprecation warning at compile time (#788)
+
+Build and continuous integration
+
+* Remove macOS builds from Travis CI configuration (#820)
+* Run pip install with no deps (#792)
+* Don't install traitsui from git source (#787)
+
+Documentation
+
+* Add installation instruction on README (#797)
+* Fix code formatting in timers docs (#794)
+* Rename version folders for built documentation (#783)
+
+Maintenance and code organization
+
+* Delete unused requirements file (#817)
+* Dont include ALL txt files from root directory (#816)
+* Log debug message if import PythonShell and PythonEditor fail in api.py (#801)
+* Make pygments optional for pyface.api (#796)
+* Use importlib_resources instead of pkg_resources for resource files (#791)
+* Use importlib_metadata instead of pkg_resources for toolkit entry points (#790)
+
 Release 7.1.0
 =============
 
