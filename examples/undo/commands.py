@@ -47,7 +47,7 @@ class LabelIncrementSizeCommand(AbstractCommand):
 
     #### Private interface ####################################################
 
-    _incremented_by = Int
+    _incremented_by = Int()
 
     ###########################################################################
     # 'ICommand' interface.
@@ -90,7 +90,7 @@ class LabelDecrementSizeCommand(AbstractCommand):
 
     #### Private interface ####################################################
 
-    _decremented_by = Int
+    _decremented_by = Int()
 
     ###########################################################################
     # 'ICommand' interface.

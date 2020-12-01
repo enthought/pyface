@@ -28,7 +28,7 @@ class TestRedoAction(unittest.TestCase):
 
         self.command = SimpleCommand()
 
-    def test_udpate(self):
+    def test_update(self):
         redo_action = RedoAction(command=self.command, undo_manager=self.undo_manager)
         self.stack.push(self.command)
         self.undo_manager.undo()

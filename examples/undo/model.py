@@ -33,7 +33,7 @@ class Label(HasTraits):
     #### 'Label' interface ####################################################
 
     # The name.
-    name = Str
+    name = Str()
 
     # The size in points.
     size = Int(18)

@@ -8,5 +8,4 @@
 #
 # Thanks for using Enthought open source!
 """ Supports undoing and scripting application commands.
-    Part of the AppTools project of the Enthought Tool Suite.
 """
