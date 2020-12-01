@@ -35,7 +35,7 @@ class IWorkbench(Interface):
     state_location = Str()
 
     # The optional undo manager.
-    undo_manager = Instance("apptools.undo.api.IUndoManager")
+    undo_manager = Instance("pyface.undo.api.IUndoManager")
 
     # The user defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
