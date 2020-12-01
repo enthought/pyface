@@ -42,7 +42,7 @@ The following are the concepts supported by the framework.
   done and undone.  It may be explicitly set, for example when the data being
   manipulated by the commands is saved to disk.
 
-  Canned PyFace actions are provided as wrappers around command stack methods
+  PyFace actions are provided as wrappers around command stack methods
   to implement common menu items.
 
 - Undo Manager
