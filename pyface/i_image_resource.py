@@ -139,8 +139,8 @@ class MImageResource(HasTraits):
         elif search_path is not None:
             _path = [search_path]
         else:
-            _path = [resource_path()]
-        self.search_path = _path + [resource_module()]
+            _path = []
+        self.search_path = _path + [resource_path(), resource_module()]
 
     # ------------------------------------------------------------------------
     # 'ImageResource' interface.
