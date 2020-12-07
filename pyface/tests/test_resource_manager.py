@@ -11,10 +11,14 @@
 
 from collections.abc import Sequence
 import os
+import runpy
+import shutil
+import tempfile
+import textwrap
 import unittest
 
-from ..resource_manager import PyfaceResourceFactory
-from ..resource_manager import ResourceManager
+from pyface.resource_manager import PyfaceResourceFactory
+from pyface.resource_manager import ResourceManager
 
 IMAGE_PATH = os.path.join(os.path.dirname(__file__), "images", "core.png")
 
@@ -47,3 +51,31 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         resource_manager = ResourceManager()
         img_ref = resource_manager.locate_image("core.png", sequence)
         self.assertEqual(IMAGE_PATH, img_ref.filename)
+
+    def test_load_from_main_missing_search_path(self):
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            images_dir = os.path.join(tmp_dir, "images")
+            os.makedirs(images_dir)
+            shutil.copyfile(IMAGE_PATH, os.path.join(images_dir, "random.png"))
+            script_path = os.path.join(tmp_dir, "main.py")
+
+            non_existing_dir = os.path.join(tmp_dir, "not_a_dir")
+            code = textwrap.dedent(f"""\
+                from pyface.api import ImageResource
+
+                image = ImageResource(
+                    'random.png', search_path={non_existing_dir!r}
+                )
+            """)
+
+            with open(script_path, "w", encoding="utf-8") as fp:
+                fp.write(code)
+
+            image = runpy.run_path(script_path, run_name="__main__")["image"]
+
+            # Should not fail
+            image.create_image()
+
+            # The image should be found.
+            self.assertIsNotNone(image._get_ref())
