@@ -127,7 +127,7 @@ class ResourceManager(HasTraits):
                             return ImageReference(
                                 self.resource_factory, data=data
                             )
-                        except IOError:
+                        except (IOError, TypeError):
                             pass
                 else:
                     continue
