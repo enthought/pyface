@@ -13,6 +13,7 @@ from collections.abc import Sequence
 import os
 import unittest
 
+import pyface     # a package with images as package resources
 from ..resource import resource_manager
 from ..resource_manager import PyfaceResourceFactory
 from ..resource_manager import ResourceManager
@@ -48,6 +49,11 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         resource_manager = ResourceManager()
         img_ref = resource_manager.locate_image("core.png", sequence)
         self.assertEqual(IMAGE_PATH, img_ref.filename)
+
+    def test_locate_image_with_module(self):
+        resource_manager = ResourceManager()
+        image_ref = resource_manager.locate_image("close.png", [pyface])
+        self.assertGreater(len(image_ref.data), 0)
 
 
 class TestHelperFunc(unittest.TestCase):
