@@ -255,7 +255,7 @@ class ResourceManager(HasTraits):
         return resource_path
 
 
-def _get_package_data(package_name, rel_path):
+def _get_package_data(module, rel_path):
     """ Return data in bytes.
 
     Raises
@@ -266,7 +266,7 @@ def _get_package_data(package_name, rel_path):
         If the path referenced does not resolve to an existing file.
     """
     return (
-        files(package_name).joinpath(rel_path).read_bytes()
+        files(module.__name__).joinpath(rel_path).read_bytes()
     )
 
 
@@ -277,9 +277,7 @@ def _get_resource_data(module, basename, subdirs, extensions):
         for extension in extensions:
             searchpath = "%s/%s%s" % (path, basename, extension)
             try:
-                return _get_package_data(
-                    module.__name__, searchpath
-                )
+                return _get_package_data(module, searchpath)
             except IOError:
                 pass
     raise FileNotFoundError(

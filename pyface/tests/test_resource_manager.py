@@ -10,7 +10,10 @@
 
 
 from collections.abc import Sequence
+import importlib.util
 import os
+import shutil
+import tempfile
 import unittest
 
 import pyface     # a package with images as package resources
@@ -62,13 +65,21 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         )
         self.assertIsNone(image_ref)
 
+    def test_locate_image_with_name_being_dunder_main(self):
+        # When a module is __main__, we will fall back to use __file__
 
-class TestHelperFunc(unittest.TestCase):
+        # given a module from which there is an image in the same folder
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            shutil.copyfile(IMAGE_PATH, os.path.join(tmp_dir, "random.png"))
+            py_filepath = os.path.join(tmp_dir, "tmp.py")
+            with open(py_filepath, "w", encoding="utf-8"):
+                pass
+            spec = importlib.util.spec_from_file_location(
+                "__main__", py_filepath
+            )
+            module = importlib.util.module_from_spec(spec)
 
-    def test_get_package_data_module_not_found_error(self):
-        with self.assertRaises(ModuleNotFoundError):
-            resource_manager._get_package_data("a", "b/c")
+            resource_manager = ResourceManager()
+            image_ref = resource_manager.load_image("random.png", [module])
 
-    def test_get_package_data_io_error(self):
-        with self.assertRaises(FileNotFoundError):
-            resource_manager._get_package_data("pyface", "b/c")
+            self.assertIsNotNone(image_ref)
