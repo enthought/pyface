@@ -136,21 +136,16 @@ class ResourceManager(HasTraits):
             # If we come across a reference to a module, try and find the
             # image inside of an .egg, .zip, etc.
             if isinstance(dirname, types.ModuleType):
-                for path in subdirs:
-                    for extension in extensions:
-                        searchpath = "%s/%s%s" % (path, basename, extension)
-                        try:
-                            data = _get_package_data(
-                                dirname.__name__, searchpath
-                            )
-                        except IOError:
-                            pass
-                        else:
-                            return ImageReference(
-                                self.resource_factory, data=data
-                            )
-                else:
+                try:
+                    data = _get_resource_data(
+                        dirname, basename, subdirs, extensions
+                    )
+                except IOError:
                     continue
+                else:
+                    return ImageReference(
+                        self.resource_factory, data=data
+                    )
 
             # Is there anything resembling the image name in the directory?
             for path in subdirs:
@@ -272,4 +267,21 @@ def _get_package_data(package_name, rel_path):
     """
     return (
         files(package_name).joinpath(rel_path).read_bytes()
+    )
+
+
+def _get_resource_data(module, basename, subdirs, extensions):
+    """ Return the package data from the given module and search paths.
+    """
+    for path in subdirs:
+        for extension in extensions:
+            searchpath = "%s/%s%s" % (path, basename, extension)
+            try:
+                return _get_package_data(
+                    module.__name__, searchpath
+                )
+            except IOError:
+                pass
+    raise FileNotFoundError(
+        "No data can be found for the given module and search paths."
     )
