@@ -119,15 +119,19 @@ class ResourceManager(HasTraits):
                     for extension in extensions:
                         searchpath = "%s/%s%s" % (path, basename, extension)
                         try:
-                            data = (
-                                files(dirname.__name__)
-                                .joinpath(searchpath)
-                                .read_bytes()
-                            )
+                            if dirname.__name__ != '__main__':
+                                pkg = dirname.__name__
+                                data = (
+                                    files(pkg)
+                                    .joinpath(searchpath)
+                                    .read_bytes()
+                                )
+                            else:
+                                data = self._helper(dirname.__name__, searchpath)
                             return ImageReference(
                                 self.resource_factory, data=data
                             )
-                        except (IOError, TypeError):
+                        except IOError:
                             pass
                 else:
                     continue
@@ -211,6 +215,26 @@ class ResourceManager(HasTraits):
                             pass
 
         return None
+
+    def _helper(self, module, searchpath):
+        try:
+            mod = sys.modules[module]
+        except KeyError:
+            __import__(module)
+            mod = sys.modules[module]
+        loader = getattr(mod, '__loader__', None)
+        # effectively have NullProvider(module) now
+        module_path = os.path.dirname(getattr(mod, '__file__', ''))
+        print("MODULE_PATH: ", module_path)
+        if searchpath:
+            temp = os.path.join(module_path, *searchpath.split('/'))
+        else:
+            temp = module_path
+        if hasattr(loader, 'get_data'):
+            output = loader.get_data(temp)
+        else:
+            output = None
+        return output
 
     def _get_resource_path(self, object):
         """ Returns the resource path for an object. """
