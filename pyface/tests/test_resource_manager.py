@@ -55,6 +55,13 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         image_ref = resource_manager.locate_image("close.png", [pyface])
         self.assertGreater(len(image_ref.data), 0)
 
+    def test_locate_image_with_module_missing_file(self):
+        resource_manager = ResourceManager()
+        image_ref = resource_manager.locate_image(
+            "does_not_exist.png", [pyface]
+        )
+        self.assertIsNone(image_ref)
+
 
 class TestHelperFunc(unittest.TestCase):
 
