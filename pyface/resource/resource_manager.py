@@ -276,10 +276,9 @@ def _get_package_data(module, rel_path):
 
     Raises
     ------
-    ModuleNotFoundError
-        If the package name cannot be resolved.
-    FileNotFoundError
-        If the path referenced does not resolve to an existing file.
+    OSError
+        If the path referenced does not resolve to an existing file or the
+        file cannot be read.
     """
 
     if module.__name__ == "__main__":
@@ -307,14 +306,25 @@ def _get_resource_data(module, subdirs, filenames):
         string to represent more nested subdirectories.
     filenames : list of str
         File names to try.
+
+    Returns
+    -------
+    data : bytes
+        Loaded data in bytes.
+
+    Raises
+    ------
+    OSError
+        If the path referenced does not resolve to an existing file or the
+        file cannot be read.
     """
     for path in subdirs:
         for filename in filenames:
             searchpath = "%s/%s" % (path, filename)
             try:
                 return _get_package_data(module, searchpath)
-            except IOError:
+            except OSError:
                 pass
-    raise FileNotFoundError(
-        "No data can be found for the given module and search paths."
+    raise OSError(
+        "Unable to load data for the given module and search paths."
     )
