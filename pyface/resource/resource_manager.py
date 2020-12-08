@@ -50,7 +50,28 @@ class ResourceManager(HasTraits):
     # ------------------------------------------------------------------------
 
     def locate_image(self, image_name, path, size=None):
-        """ Locates an image. """
+        """ Locates an image.
+
+        Parameters
+        ----------
+        image_name : str
+            Name of the image file.
+        path : list of (str or ModuleType)
+            Paths from which image files will be searched. Note that for each
+            path, a subdirectory named 'images' will be search first.
+            The first match will be returned.
+        size : tuple of (m: int, n: int), optional
+            Specific size of the image requested. If provided, then
+            the subdirectory ``images/{m}x{n}`` will be searched first,
+            followed by the ``images`` subdirectory and its containing folder.
+            Default is None.
+
+        Returns
+        -------
+        image_ref : ImageReference or None
+            ImageReference to the image found, or None if no matching images
+            are found.
+        """
 
         if not isinstance(path, collections.abc.Sequence):
             path = [path]
