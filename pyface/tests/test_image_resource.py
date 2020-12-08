@@ -11,6 +11,10 @@
 
 import os
 import platform
+import runpy
+import shutil
+import tempfile
+import textwrap
 import unittest
 
 from importlib_resources import files
@@ -111,3 +115,37 @@ class TestImageResource(unittest.TestCase):
             os.path.join(SEARCH_PATH, "splash.png"),
         )
         self.assertEqual(size, (601, 203))
+
+    def test_create_image_from_main(self):
+        # When ImageResource is defined in a script, the module name is
+        # __main__. Even if all search paths fail, the module calculated from
+        # the caller's stack (``resource_module()``) is used for locating the
+        # images.
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            images_dir = os.path.join(tmp_dir, "images")
+            os.makedirs(images_dir)
+            shutil.copyfile(IMAGE_PATH, os.path.join(images_dir, "random.png"))
+            script_path = os.path.join(tmp_dir, "main.py")
+
+            non_existing_dir = os.path.join(tmp_dir, "not_a_dir")
+            code = textwrap.dedent(f"""\
+                import os
+                from pyface.api import ImageResource
+
+                image = ImageResource(
+                    'random.png', search_path={non_existing_dir!r}
+                )
+            """)
+
+            with open(script_path, "w", encoding="utf-8") as fp:
+                fp.write(code)
+
+            context = runpy.run_path(script_path, run_name="__main__")
+            image = context["image"]
+
+            # Should not fail
+            image.create_image()
+
+            # The image should be found.
+            self.assertIsNotNone(image._get_ref())
