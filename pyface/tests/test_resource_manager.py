@@ -13,6 +13,7 @@ from collections.abc import Sequence
 import os
 import unittest
 
+from ..resource import resource_manager
 from ..resource_manager import PyfaceResourceFactory
 from ..resource_manager import ResourceManager
 
@@ -47,3 +48,14 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         resource_manager = ResourceManager()
         img_ref = resource_manager.locate_image("core.png", sequence)
         self.assertEqual(IMAGE_PATH, img_ref.filename)
+
+
+class TestHelperFunc(unittest.TestCase):
+
+    def test_get_package_data_module_not_found_error(self):
+        with self.assertRaises(ModuleNotFoundError):
+            resource_manager._get_package_data("a", "b/c")
+
+    def test_get_package_data_io_error(self):
+        with self.assertRaises(FileNotFoundError):
+            resource_manager._get_package_data("pyface", "b/c")

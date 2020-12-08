@@ -119,16 +119,15 @@ class ResourceManager(HasTraits):
                     for extension in extensions:
                         searchpath = "%s/%s%s" % (path, basename, extension)
                         try:
-                            data = (
-                                files(dirname.__name__)
-                                .joinpath(searchpath)
-                                .read_bytes()
-                            )
-                            return ImageReference(
-                                self.resource_factory, data=data
+                            data = _get_package_data(
+                                dirname.__name__, searchpath
                             )
                         except IOError:
                             pass
+                        else:
+                            return ImageReference(
+                                self.resource_factory, data=data
+                            )
                 else:
                     continue
 
@@ -238,3 +237,18 @@ class ResourceManager(HasTraits):
                 break
 
         return resource_path
+
+
+def _get_package_data(package_name, rel_path):
+    """ Return data in bytes.
+
+    Raises
+    ------
+    ModuleNotFoundError
+        If the package name cannot be resolved.
+    FileNotFoundError
+        If the path referenced does not resolve to an existing file.
+    """
+    return (
+        files(package_name).joinpath(rel_path).read_bytes()
+    )
