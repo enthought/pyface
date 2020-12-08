@@ -131,6 +131,8 @@ class ResourceManager(HasTraits):
         else:
             subdirs = ["images/%dx%d" % (size[0], size[1]), "images", ""]
 
+        image_filenames = [basename + extension for extension in extensions]
+
         for dirname in resource_path:
 
             # If we come across a reference to a module, try and find the
@@ -138,7 +140,7 @@ class ResourceManager(HasTraits):
             if isinstance(dirname, types.ModuleType):
                 try:
                     data = _get_resource_data(
-                        dirname, basename, subdirs, extensions
+                        dirname, subdirs, image_filenames
                     )
                 except IOError:
                     continue
@@ -291,12 +293,24 @@ def _get_package_data(module, rel_path):
     )
 
 
-def _get_resource_data(module, basename, subdirs, extensions):
+def _get_resource_data(module, subdirs, filenames):
     """ Return the package data from the given module and search paths.
+
+    Parameters
+    ----------
+    module : ModuleType
+        A module representing from which package data will be discovered.
+        If the module name is "__main__", then its "__file__" attribute is
+        used for locating the directory from which package data is loaded.
+    subdirs : list of str
+        Name of subdirectories to try. Each value can be a "/"-separated
+        string to represent more nested subdirectories.
+    filenames : list of str
+        File names to try.
     """
     for path in subdirs:
-        for extension in extensions:
-            searchpath = "%s/%s%s" % (path, basename, extension)
+        for filename in filenames:
+            searchpath = "%s/%s" % (path, filename)
             try:
                 return _get_package_data(module, searchpath)
             except IOError:
