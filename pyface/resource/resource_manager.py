@@ -258,6 +258,20 @@ class ResourceManager(HasTraits):
 def _get_package_data(module, rel_path):
     """ Return data in bytes.
 
+    Parameters
+    ----------
+    module : ModuleType
+        A module representing from which package data will be discovered.
+        If the module name is "__main__", then its "__file__" attribute is
+        used for locating the directory from which package data is loaded.
+    rel_path : str
+        "/"-separated path for loading data file.
+
+    Returns
+    -------
+    data : bytes
+        Loaded data in bytes.
+
     Raises
     ------
     ModuleNotFoundError
