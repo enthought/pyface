@@ -265,6 +265,13 @@ def _get_package_data(module, rel_path):
     FileNotFoundError
         If the path referenced does not resolve to an existing file.
     """
+
+    if module.__name__ == "__main__":
+        module_dir_path = os.path.dirname(module.__file__)
+        path = os.path.join(module_dir_path, *rel_path.split("/"))
+        with open(path, "rb") as fp:
+            return fp.read()
+
     return (
         files(module.__name__).joinpath(rel_path).read_bytes()
     )

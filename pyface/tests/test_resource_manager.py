@@ -79,7 +79,9 @@ class TestPyfaceResourceFactory(unittest.TestCase):
             )
             module = importlib.util.module_from_spec(spec)
 
-            resource_manager = ResourceManager()
+            resource_manager = ResourceManager(
+                resource_factory=PyfaceResourceFactory()
+            )
             image_ref = resource_manager.load_image("random.png", [module])
 
             self.assertIsNotNone(image_ref)
