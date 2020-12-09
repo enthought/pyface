@@ -143,7 +143,7 @@ class ResourceManager(HasTraits):
                     data = _find_resource_data(
                         dirname, subdirs, image_filenames
                     )
-                except IOError:
+                except OSError:
                     continue
                 else:
                     return ImageReference(
