@@ -58,7 +58,7 @@ class Workbench(HasTraits):
     state_location = Str()
 
     # The optional undo manager.
-    undo_manager = Instance("apptools.undo.api.IUndoManager")
+    undo_manager = Instance("pyface.undo.api.IUndoManager")
 
     # The user-defined perspectives manager.
     user_perspective_manager = Instance(UserPerspectiveManager)
@@ -266,7 +266,7 @@ class Workbench(HasTraits):
 
         # We make sure the undo package is entirely optional.
         try:
-            from apptools.undo.api import UndoManager
+            from pyface.undo.api import UndoManager
         except ImportError:
             return None
 
