@@ -37,7 +37,6 @@ Features
 
 Fixes
 
-* Fix loading resource images from a module that is not a package (#836)
 * Add wx_id parameter to __init__ for Tree to avoid errors (#810)
 * Fix Qt widget visibility (#807)
 * Fix sporadic Timer test failure on OSX + Qt (#799)
