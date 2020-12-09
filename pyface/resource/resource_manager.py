@@ -291,7 +291,7 @@ def _get_package_data(module, rel_path):
             return fp.read()
 
     return (
-        files(module.__name__).joinpath(rel_path).read_bytes()
+        files(module).joinpath(rel_path).read_bytes()
     )
 
 
