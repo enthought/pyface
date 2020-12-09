@@ -53,8 +53,8 @@ class TestPyfaceResourceFactory(unittest.TestCase):
         self.assertEqual(IMAGE_PATH, img_ref.filename)
 
     def test_locate_image_with_module(self):
-        # images/close.png is included in pyface package data.
-        # ResourceManager can find it via package resources
+        # ResourceManager should be able to find the images/close.png which
+        # is included in pyface package data.
         resource_manager = ResourceManager()
         image_ref = resource_manager.locate_image("close.png", [pyface])
         self.assertGreater(len(image_ref.data), 0)
