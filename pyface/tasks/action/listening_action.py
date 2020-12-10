@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 
 """ This module exists purely for backwards compatibility.
-Please use pyface.action.listening_action.ListeningAction instead.
+Please use :class:`pyface.action.listening_action.ListeningAction` instead.
 """
 
 from pyface.action.listening_action import ListeningAction

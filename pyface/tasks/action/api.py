@@ -10,10 +10,10 @@
 
 """
 
-API for the ``pyface.tasks.action`` submodule.
+API for the ``pyface.tasks.action`` subpackage.
 
-ActionSchema, subclasses and aliases
-------------------------------------
+ActionSchemas and aliases
+-------------------------
 
 - :class:`~.ActionSchema`
 - :class:`~.GroupSchema`
@@ -40,8 +40,8 @@ Tasks-specific Action Manager factory
 
 - :class:`~.TaskActionManagerBuilder`
 
-Tasks-specific Action subclasses
---------------------------------
+Tasks-specific Actions
+----------------------
 
 - :class:`~.CentralPaneAction`
 - :class:`~.DockPaneAction`

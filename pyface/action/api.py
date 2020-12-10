@@ -11,10 +11,10 @@
 
 """
 
-API for the ``pyface.action`` submodule.
+API for the ``pyface.action`` subpackage.
 
-Action and subclasses
----------------------
+Actions
+-------
 
 - :class:`~.Action`
 - :class:`~.FieldAction`
@@ -33,29 +33,24 @@ Action Event
 
 - :class:`~.ActionEvent`
 
-Action Manager and subclasses
------------------------------
+Action Managers
+---------------
 
 - :class:`~.ActionManager`
-
-Toolkit-specific subclasses:
-
 - ``MenuManager``
 - ``MenuBarManager``
+- ``StatusBarManager``
 - ``ToolBarManager``
 - ``ToolPaletteManager``, only for the Wx toolkit.
-- ``StatusBarManager``. Note that the ``StatusBarManager`` is not actually an
-  ``ActionManager`` subclass but it is listed here given it's similarily in
-  function to the other subclasses.
 
-Action Manager item and subclasses
-----------------------------------
+Action Manager Items
+--------------------
 
 - :class:`~.ActionManagerItem`
 - :class:`~.ActionItem`
 
-Group and subclasses
---------------------
+Layout support
+--------------
 
 - :class:`~.Group`
 - :class:`~.Separator`
