@@ -7,7 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Import the toolkit specific version.
+
+""" Toolkit-specific implementation of the ``DockPane``. """
+
 from pyface.toolkit import toolkit_object
 
 DockPane = toolkit_object("tasks.dock_pane:DockPane")

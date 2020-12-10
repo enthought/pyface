@@ -7,7 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Import the toolkit specific version.
+
+""" Toolkit-specific implementation of the ``TaskPane``. """
+
 from pyface.toolkit import toolkit_object
 
 TaskPane = toolkit_object("tasks.task_pane:TaskPane")
