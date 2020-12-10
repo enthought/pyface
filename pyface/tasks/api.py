@@ -8,6 +8,54 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.tasks`` submodule.
+
+Tasks-specific Interfaces
+-------------------------
+- :class:`~.IDockPane`
+- :class:`~.IEditor`
+- :class:`~.IEditorAreaPane`
+- :class:`~.ITaskPane`
+
+Tasks, Tasks Application and related classes
+--------------------------------------------
+
+- :class:`~.AdvancedEditorAreaPane`
+- :class:`~.DockPane`
+- :class:`~.Editor`
+- :class:`~.EditorAreaPane`
+- :class:`~.SplitEditorAreaPane`
+- :class:`~.Task`
+- :class:`~.TasksApplication`
+- :class:`~.TaskFactory`
+- :class:`~.TaskPane`
+- :class:`~.TaskWindow`
+
+Tasks layout
+------------
+- :class:`~.TaskLayout`
+- :class:`~.TaskWindowLayout`
+- :class:`~.PaneItem`
+- :class:`~.Tabbed`
+- :class:`~.Splitter`
+- :class:`~.HSplitter`
+- :class:`~.VSplitter`
+
+Traits-specific Tasks classes
+-----------------------------
+- :class:`~.TraitsDockPane`
+- :class:`~.TraitsEditor`
+- :class:`~.TraitsTaskPane`
+
+Enaml-specific Tasks functionality
+----------------------------------
+- :class:`~.EnamlDockPane`
+- :class:`~.EnamlEditor`
+- :class:`~.EnamlTaskPane`
+
+"""
 
 from .advanced_editor_area_pane import AdvancedEditorAreaPane
 from .split_editor_area_pane import SplitEditorAreaPane
