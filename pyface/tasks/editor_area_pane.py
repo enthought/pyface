@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``EditorAreaPane``. """
+""" Toolkit-specific implementation of the ``EditorAreaPane``.
+
+- :attr:`~.EditorAreaPane`
+"""
 
 from pyface.toolkit import toolkit_object
 

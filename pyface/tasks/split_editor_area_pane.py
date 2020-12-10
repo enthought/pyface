@@ -10,6 +10,9 @@
 
 """ Toolkit-specific implementation of the ``SplitEditorAreaPane`` and
 ``EditorAreaWidget``.
+
+- :attr:`~.SplitEditorAreaPane`
+- :attr:`~.EditorAreaWidget`
 """
 
 from pyface.toolkit import toolkit_object

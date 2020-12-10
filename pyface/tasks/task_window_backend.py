@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``TaskWindowBackend``. """
+""" Toolkit-specific implementation of the ``TaskWindowBackend``.
+
+- :attr:`~.TaskWindowBackend`
+"""
 
 from pyface.toolkit import toolkit_object
 

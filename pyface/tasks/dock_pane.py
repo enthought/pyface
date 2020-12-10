@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``DockPane``. """
+""" Toolkit-specific implementation of the ``DockPane``.
+
+- :attr:`~.DockPane`
+"""
 
 from pyface.toolkit import toolkit_object
 

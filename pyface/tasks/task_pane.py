@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``TaskPane``. """
+""" Toolkit-specific implementation of the ``TaskPane``.
+
+- :attr:`~.TaskPane`
+"""
 
 from pyface.toolkit import toolkit_object
 
