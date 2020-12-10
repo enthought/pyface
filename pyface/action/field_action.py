@@ -18,7 +18,7 @@ from .action_event import ActionEvent
 class FieldAction(Action):
     """ A widget action containing an IField
 
-    When the value in the field is changed, the `on_peform` method is called
+    When the value in the field is changed, the `on_perform` method is called
     with the new value as the argument.
     """
 

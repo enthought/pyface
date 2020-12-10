@@ -31,7 +31,7 @@ class ActionEvent(HasTraits):
     def __init__(self, **traits):
         """ Creates a new action event.
 
-        Note: Every keyword argument becoames a public attribute of the event.
+        Note: Every keyword argument becomes a public attribute of the event.
         """
         # Base-class constructor.
         super(ActionEvent, self).__init__(**traits)

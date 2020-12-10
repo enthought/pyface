@@ -27,7 +27,7 @@ class TaskWindowToggleAction(Action):
 
     # 'TaskWindowToggleAction' interface -------------------------------------
 
-    # The window to use for this action.
+    #: The window to use for this action.
     window = Instance("pyface.tasks.task_window.TaskWindow")
 
     # -------------------------------------------------------------------------

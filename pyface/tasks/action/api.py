@@ -8,6 +8,57 @@
 #
 # Thanks for using Enthought open source!
 
+"""
+
+API for the ``pyface.tasks.action`` submodule.
+
+ActionSchema, subclasses and aliases
+------------------------------------
+
+- :class:`~.ActionSchema`
+- :class:`~.GroupSchema`
+- :class:`~.MenuSchema`
+- :class:`~.MenuBarSchema`
+- :class:`~.ToolBarSchema`
+- :attr:`~.SGroup`
+- :attr:`~.SMenu`
+- :attr:`~.SMenuBar`
+- :attr:`~.SToolBar`
+
+Schema Addition
+---------------
+
+- :class:`~.SchemaAddition`
+
+Tasks-specific Action Controller
+--------------------------------
+
+- :class:`~.TaskActionController`
+
+Tasks-specific Action Manager factory
+-------------------------------------
+
+- :class:`~.TaskActionManagerBuilder`
+
+Tasks-specific Action subclasses
+--------------------------------
+
+- :class:`~.CentralPaneAction`
+- :class:`~.DockPaneAction`
+- :class:`~.EditorAction`
+- :class:`~.TaskAction`
+- :class:`~.TaskWindowAction`
+- :class:`~.TasksApplicationAction`
+
+Useful Tasks Actions and Groups
+-------------------------------
+
+- :class:`~.DockPaneToggleGroup`
+- :class:`~.TaskToggleGroup`
+- :class:`~.TaskWindowToggleGroup`
+- :class:`~.CreateTaskWindowAction`
+
+"""
 
 from .dock_pane_toggle_group import DockPaneToggleGroup
 from .schema import (
