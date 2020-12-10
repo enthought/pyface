@@ -8,7 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" A status bar manager realizes itself in a status bar control. """
+""" A toolkit-specific status bar manager that realizes itself in a status bar
+control.
+
+- :attr:`~.StatusBarManager`
+"""
 
 
 # Import the toolkit specific version.

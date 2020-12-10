@@ -8,7 +8,10 @@
 #
 # Thanks for using Enthought open source!
 
-""" A menu manager realizes itself in a menu control. """
+""" A toolkit-specific menu manager that realizes itself in a menu control.
+
+- :attr:`~.MenuManager`
+"""
 
 
 # Import the toolkit specific version.

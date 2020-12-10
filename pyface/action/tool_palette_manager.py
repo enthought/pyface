@@ -8,7 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" A tool bar manager realizes itself in a tool palette control. """
+""" A toolkit-specific tool bar manager that realizes itself in a tool palette
+control.
+
+- :attr:`~.ToolPaletteManager`
+"""
 
 
 # Import the toolkit specific version.
