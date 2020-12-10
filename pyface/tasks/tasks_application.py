@@ -44,7 +44,7 @@ class TaskFactory(HasStrictTraits):
 
     #: A callable with the following signature:
     #:
-    #:     callable(**traits) -> Task
+    #:     callable(\**traits) -> Task
     #:
     #: Often this attribute will simply be a Task subclass.
     factory = Callable
