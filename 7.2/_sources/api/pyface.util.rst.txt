@@ -1,0 +1,18 @@
+pyface.util package
+===================
+
+.. automodule:: pyface.util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   pyface.util.color_helpers
+   pyface.util.color_parser
+   pyface.util.guisupport
+   pyface.util.id_helper
+   pyface.util.testing
