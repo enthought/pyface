@@ -26,7 +26,7 @@ class TaskActionController(ActionController):
 
     # TaskActionController interface ---------------------------------------
 
-    # The task that this is the controller for.
+    #: The task that this is the controller for.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------

@@ -30,10 +30,10 @@ class TaskActionManagerBuilder(HasTraits):
     with any additions provided by the task.
     """
 
-    # The controller to assign to the menubar and toolbars.
+    #: The controller to assign to the menubar and toolbars.
     controller = Instance(ActionController)
 
-    # The Task to build menubars and toolbars for.
+    #: The Task to build menubars and toolbars for.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------

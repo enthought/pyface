@@ -32,8 +32,9 @@ class TaskToggleAction(Action):
     #: The tooltip to display for the menu item.
     tooltip = Property(Str, depends_on="name")
 
-    # 'TaskActivateAction' interface ---------------------------------------
+    # 'TaskToggleAction' interface -----------------------------------------
 
+    #: The Task with which the action is associated.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------
@@ -82,12 +83,12 @@ class TaskToggleGroup(Group):
     id = "TaskToggleGroup"
     items = List()
 
-    # 'TaskChangeMenuManager' interface ------------------------------------
+    # 'TaskToggleGroup' interface ------------------------------------------
 
-    # The ActionManager to which the group belongs.
+    #: The ActionManager to which the group belongs.
     manager = Any()
 
-    # The window that contains the group.
+    #: The window that contains the group.
     window = Instance(TaskWindow)
 
     # ------------------------------------------------------------------------

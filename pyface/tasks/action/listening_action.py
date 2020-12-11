@@ -7,6 +7,9 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Backward compatibility import
+
+""" This module exists purely for backwards compatibility.
+Please use :class:`pyface.action.listening_action.ListeningAction` instead.
+"""
 
 from pyface.action.listening_action import ListeningAction

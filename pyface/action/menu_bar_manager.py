@@ -8,7 +8,11 @@
 #
 # Thanks for using Enthought open source!
 
-""" A menu bar manager realizes itself in errr, a menu bar control. """
+""" A toolkit-specific menu bar manager that realizes itself in a menu bar
+control.
+
+- :attr:`~.MenuBarManager`
+"""
 
 
 # Import the toolkit specific version.

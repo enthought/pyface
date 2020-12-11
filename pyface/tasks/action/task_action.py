@@ -29,7 +29,7 @@ class TaskAction(ListeningAction):
 
     # TaskAction interface -------------------------------------------------
 
-    # The Task with which the action is associated. Set by the framework.
+    #: The Task with which the action is associated. Set by the framework.
     task = Instance(Task)
 
     # ------------------------------------------------------------------------
@@ -73,7 +73,7 @@ class CentralPaneAction(TaskAction):
 
     # CentralPaneAction interface -----------------------------------------#
 
-    # The central pane with which the action is associated.
+    #: The central pane with which the action is associated.
     central_pane = Property(Instance(TaskPane), depends_on="task")
 
     # ------------------------------------------------------------------------
@@ -100,10 +100,10 @@ class DockPaneAction(TaskAction):
 
     # DockPaneAction interface ---------------------------------------------
 
-    # The dock pane with which the action is associated. Set by the framework.
+    #: The dock pane with which the action is associated. Set by the framework.
     dock_pane = Property(Instance(TaskPane), depends_on="task")
 
-    # The ID of the dock pane with which the action is associated.
+    #: The ID of the dock pane with which the action is associated.
     dock_pane_id = Str()
 
     # ------------------------------------------------------------------------
@@ -130,7 +130,7 @@ class EditorAction(CentralPaneAction):
 
     # EditorAction interface -----------------------------------------------
 
-    # The active editor in the central pane with which the action is associated.
+    #: The active editor in the central pane with which the action is associated.
     active_editor = Property(
         Instance(Editor), depends_on="central_pane.active_editor"
     )
