@@ -23,6 +23,8 @@ import sys
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
+    # Link to code in sphinx generated API docs
+    "sphinx.ext.viewcode",
     'traits.util.trait_documenter'
 ]
 
