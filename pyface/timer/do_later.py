@@ -55,7 +55,10 @@ def do_after(interval, callable, *args, **kwargs):
         The time interval in milliseconds to wait before calling.
     callable : callable
         The callable to call.
-    *args, \**kwargs : tuple, dict
+    \*args
+        Positional arguments to be passed through to the callable.
+    \*\*kwargs
+        Keyword arguments to be passed through to the callable.
         Arguments to be passed through to the callable.
     """
     return CallbackTimer.single_shot(
