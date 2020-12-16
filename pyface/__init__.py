@@ -22,7 +22,7 @@ __requires__ = ["importlib-metadata", "importlib-resources>=1.1.0", "traits>=6"]
 __extras_require__ = {
     "wx": ["wxpython>=4", "numpy"],
     "pyqt": ["pyqt>=4.10", "pygments"],
-    "pyqt5": ["pyqt5", "pygments"],
+    "pyqt5": ["pyqt5", "PyQtWebEngine", "pygments"],
     "pyside": ["pyside>=1.2", "pygments"],
     "pyside2": ["pyside2", "shiboken2", "pygments"],
     "test": ["packaging"],
