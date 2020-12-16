@@ -22,6 +22,19 @@
 # Description: <Enthought undo package component>
 # ------------------------------------------------------------------------------
 
+"""
+
+API for ``pyface.undo.action``.
+
+CommandAction and useful subclasses
+-----------------------------------
+
+- :class:`~.CommandAction`
+- :class:`~.RedoAction`
+- :class:`~.UndoAction`
+
+"""
+
 from .command_action import CommandAction
 from .redo_action import RedoAction
 from .undo_action import UndoAction
