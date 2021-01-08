@@ -7,7 +7,11 @@
 # is also available online at http://www.enthought.com/licenses/BSD.txt
 #
 # Thanks for using Enthought open source!
-# Import the toolkit specific version.
+
+"""
+- :attr:`~.TaskWindowBackend`
+"""
+
 from pyface.toolkit import toolkit_object
 
 TaskWindowBackend = toolkit_object(

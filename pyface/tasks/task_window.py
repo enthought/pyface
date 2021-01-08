@@ -49,32 +49,32 @@ class TaskWindow(ApplicationWindow):
 
     # IWindow interface ----------------------------------------------------
 
-    # Unless a title is specifically assigned, delegate to the active task.
+    #: Unless a title is specifically assigned, delegate to the active task.
     title = Property(Str, depends_on=["active_task.name", "_title"])
 
     # TaskWindow interface ------------------------------------------------
 
-    # The pane (central or dock) in the active task that currently has focus.
+    #: The pane (central or dock) in the active task that currently has focus.
     active_pane = Instance(ITaskPane)
 
-    # The active task for this window.
+    #: The active task for this window.
     active_task = Instance(Task)
 
-    # The list of all tasks currently attached to this window. All panes of the
-    # inactive tasks are hidden.
+    #: The list of all tasks currently attached to this window. All panes of
+    #: the inactive tasks are hidden.
     tasks = List(Task)
 
-    # The central pane of the active task, which is always visible.
+    #: The central pane of the active task, which is always visible.
     central_pane = Instance(ITaskPane)
 
-    # The list of all dock panes in the active task, which may or may not be
-    # visible.
+    #: The list of all dock panes in the active task, which may or may not be
+    #: visible.
     dock_panes = List(IDockPane)
 
-    # The factory for the window's TaskActionManagerBuilder, which is
-    # instantiated to translate menu and tool bar schemas into Pyface action
-    # managers. This attribute can overridden to introduce custom logic into
-    # the translation process, although this is not usually necessary.
+    #: The factory for the window's TaskActionManagerBuilder, which is
+    #: instantiated to translate menu and tool bar schemas into Pyface action
+    #: managers. This attribute can overridden to introduce custom logic into
+    #: the translation process, although this is not usually necessary.
     action_manager_builder_factory = Callable(TaskActionManagerBuilder)
 
     # Protected traits -----------------------------------------------------

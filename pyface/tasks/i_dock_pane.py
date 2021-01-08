@@ -21,28 +21,28 @@ class IDockPane(ITaskPane):
     general, be moved, resized, and hidden by the user.
     """
 
-    # If enabled, the pane will have a button to close it, and a visibility
-    # toggle button will be added to the View menu. Otherwise, the pane's
-    # visibility will only be adjustable programmatically, though the 'visible'
-    # attribute.
+    #: If enabled, the pane will have a button to close it, and a visibility
+    #: toggle button will be added to the View menu. Otherwise, the pane's
+    #: visibility will only be adjustable programmatically, though the
+    #: 'visible' attribute.
     closable = Bool(True)
 
-    # The dock area in which the pane is currently present.
+    #: The dock area in which the pane is currently present.
     dock_area = Enum("left", "right", "top", "bottom")
 
-    # Whether the pane can be detached from the main window.
+    #: Whether the pane can be detached from the main window.
     floatable = Bool(True)
 
-    # Whether the pane is currently detached from the main window.
+    #: Whether the pane is currently detached from the main window.
     floating = Bool(False)
 
-    # Whether the pane can be moved from one dock area to another.
+    #: Whether the pane can be moved from one dock area to another.
     movable = Bool(True)
 
-    # The size of the dock pane. Note that this value is read-only.
+    #: The size of the dock pane. Note that this value is read-only.
     size = Tuple()
 
-    # Whether the pane is currently visible.
+    #: Whether the pane is currently visible.
     visible = Bool(False)
 
     # ------------------------------------------------------------------------

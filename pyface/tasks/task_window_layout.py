@@ -18,19 +18,21 @@ class TaskWindowLayout(LayoutContainer):
     """ The layout of a TaskWindow.
     """
 
-    # The ID of the active task. If unspecified, the first task will be active.
+    #: The ID of the active task. If unspecified, the first task will be
+    #: active.
     active_task = Str()
 
-    # The tasks contained in the window. If an ID is specified, the task will
-    # use its default layout. Otherwise, it will use the specified TaskLayout.
+    #: The tasks contained in the window. If an ID is specified, the task will
+    #: use its default layout. Otherwise, it will use the specified TaskLayout
     items = List(Either(Str, Instance(TaskLayout)), pretty_skip=True)
 
-    # The position of the window.
+    #: The position of the window.
     position = Tuple(-1, -1)
 
-    # The size of the window.
+    #: The size of the window.
     size = Tuple(800, 600)
 
+    #: Whether or not the application is maximized.
     size_state = Enum("normal", "maximized")
 
     def get_active_task(self):
