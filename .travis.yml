@@ -44,11 +44,6 @@ install:
 script:
   - for toolkit in ${TOOLKITS}; do edm run -- python etstool.py test --runtime=${RUNTIME} --toolkit=${toolkit} || exit; done
 
-after_success:
-  - edm run -- coverage combine
-  - edm run -- pip install codecov
-  - edm run -- codecov
-
 notifications:
   slack:
     secure: UmVaFtT5FQD5Pb5fQPxbQwLTPsvCJOY2Cr0xQVOAbkcl2pYeit7vf7d6f4ligGpve9QdgQjWRffQa7z0V+7O0xoWUaozZHuFZNsttWAldh0gBEBeFHHUvCiKrzV6AWetDE8LxWZsPV9oG/ZX7oVz8nNeYfH3lLhgqdPCL54L3SE=
