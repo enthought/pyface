@@ -36,7 +36,8 @@ class Task(HasTraits):
     default_layout = Instance(TaskLayout, ())
 
     #: A list of extra IDockPane factories for the task. These dock panes are
-    #: used in conjunction with the dock panes returned by create_dock_panes().
+    #: used in conjunction with the dock panes returned by
+    #: create_dock_panes().
     extra_dock_pane_factories = List(Callable)
 
     #: The window to which the task is attached. Set by the framework.

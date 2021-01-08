@@ -8,8 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``AdvancedEditorAreaPane``.
-
+"""
 - :attr:`~.AdvancedEditorAreaPane`
 """
 

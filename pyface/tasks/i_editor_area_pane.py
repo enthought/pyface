@@ -49,9 +49,10 @@ class IEditorAreaPane(ITaskPane):
     editors = List(IEditor)
 
     #: A list of extensions for file types to accept via drag and drop.
-    #: Note: This functionality is provided because it is very common, but drag
-    #: and drop support is in general highly toolkit-specific. If more
-    #: sophisticated support is required, subclass an editor area implementation.
+    #: Note: This functionality is provided because it is very common, but
+    #: drag and drop support is in general highly toolkit-specific. If more
+    #: sophisticated support is required, subclass an editor area
+    #: implementation.
     file_drop_extensions = List(Str)
 
     #: A file with a supported extension was dropped into the editor area.

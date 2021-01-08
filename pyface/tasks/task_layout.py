@@ -110,8 +110,8 @@ class PaneItem(LayoutItem):
     #: that TaskPane.
     id = Either(Str, Int, default="", pretty_skip=True)
 
-    #: The width of the pane in pixels. If not specified, the pane will be sized
-    #: according to its size hint.
+    #: The width of the pane in pixels. If not specified, the pane will be
+    #: sized according to its size hint.
     width = Int(-1)
 
     #: The height of the pane in pixels. If not specified, the pane will be
@@ -183,8 +183,8 @@ class DockLayout(LayoutItem):
     bottom = Either(Instance(PaneItem), Instance(Tabbed), Instance(Splitter))
 
     #: Assignments of dock areas to the window's corners. By default, the top
-    #: and bottom dock areas extend into both of the top and both of the bottom
-    #: corners, respectively.
+    #: and bottom dock areas extend into both of the top and both of the
+    #: bottom corners, respectively.
     top_left_corner = Enum("top", "left")
     top_right_corner = Enum("top", "right")
     bottom_left_corner = Enum("bottom", "left")

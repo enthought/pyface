@@ -8,9 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-""" Toolkit-specific implementation of the ``SplitEditorAreaPane`` and
-``EditorAreaWidget``.
-
+"""
 - :attr:`~.SplitEditorAreaPane`
 - :attr:`~.EditorAreaWidget`
 """

@@ -23,8 +23,8 @@ class IDockPane(ITaskPane):
 
     #: If enabled, the pane will have a button to close it, and a visibility
     #: toggle button will be added to the View menu. Otherwise, the pane's
-    #: visibility will only be adjustable programmatically, though the 'visible'
-    #: attribute.
+    #: visibility will only be adjustable programmatically, though the
+    #: 'visible' attribute.
     closable = Bool(True)
 
     #: The dock area in which the pane is currently present.

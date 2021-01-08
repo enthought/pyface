@@ -23,7 +23,8 @@ class TraitsEditor(Editor):
     #: The model object to view. If not specified, the editor is used instead.
     model = Instance(HasTraits)
 
-    #: The UI object associated with the Traits view, if it has been constructed.
+    #: The UI object associated with the Traits view, if it has been
+    #: constructed.
     ui = Instance("traitsui.ui.UI")
 
     # ------------------------------------------------------------------------

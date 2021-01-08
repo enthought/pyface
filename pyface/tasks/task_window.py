@@ -60,8 +60,8 @@ class TaskWindow(ApplicationWindow):
     #: The active task for this window.
     active_task = Instance(Task)
 
-    #: The list of all tasks currently attached to this window. All panes of the
-    #: inactive tasks are hidden.
+    #: The list of all tasks currently attached to this window. All panes of
+    #: the inactive tasks are hidden.
     tasks = List(Task)
 
     #: The central pane of the active task, which is always visible.

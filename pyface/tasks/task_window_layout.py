@@ -18,11 +18,12 @@ class TaskWindowLayout(LayoutContainer):
     """ The layout of a TaskWindow.
     """
 
-    #: The ID of the active task. If unspecified, the first task will be active.
+    #: The ID of the active task. If unspecified, the first task will be
+    #: active.
     active_task = Str()
 
     #: The tasks contained in the window. If an ID is specified, the task will
-    #: use its default layout. Otherwise, it will use the specified TaskLayout.
+    #: use its default layout. Otherwise, it will use the specified TaskLayout
     items = List(Either(Str, Instance(TaskLayout)), pretty_skip=True)
 
     #: The position of the window.
