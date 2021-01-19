@@ -38,8 +38,8 @@ if _app is None:
         # pyface.qt.QtWebKit tries QtWebEngineWidgets first, but
         # if QtWebEngineWidgets is present, it must be imported prior to
         # creating a QCoreApplication instance, otherwise importing
-        # QtWebEngineWidgets later would fail. Import it here first before
-        # creating the instance.
+        # QtWebEngineWidgets later would fail (see enthought/pyface#581).
+        # Import it here first before creating the instance.
         from pyface.qt import QtWebKit
     except ImportError:
         # This error will be raised in the context where
