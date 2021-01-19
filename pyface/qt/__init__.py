@@ -14,7 +14,6 @@ import os
 import sys
 
 QtAPIs = [
-    ("pyside", "PySide"),
     ("pyside2", "PySide2"),
     ("pyqt5", "PyQt5"),
     ("pyqt", "PyQt4"),
@@ -43,16 +42,16 @@ if qt_api is None:
         except ImportError:
             continue
     else:
-        raise ImportError("Cannot import PySide, PySide2, PyQt5 or PyQt4")
+        raise ImportError("Cannot import PySide2, PyQt5 or PyQt4")
 
 # otherwise check QT_API value is valid
 elif qt_api not in {api_name for api_name, module in QtAPIs}:
     msg = (
         "Invalid Qt API %r, valid values are: "
-        + "'pyside, 'pyside2', 'pyqt' or 'pyqt5'"
+        + "'pyside2', 'pyqt' or 'pyqt5'"
     ) % qt_api
     raise RuntimeError(msg)
 
 # useful constants
-is_qt4 = qt_api in {"pyqt", "pyside"}
+is_qt4 = qt_api in {"pyqt"}
 is_qt5 = qt_api in {"pyqt5", "pyside2"}
