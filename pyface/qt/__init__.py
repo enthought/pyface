@@ -21,37 +21,6 @@ QtAPIs = [
 ]
 
 
-def prepare_pyqt4():
-    """ Set PySide compatible APIs. """
-    # This is not needed for Python 3 and can be removed when we no longer
-    # support Python 2.
-    try:
-        # required for PyQt >= 4.12.2
-        from PyQt4 import sip
-    except ImportError:
-        import sip
-    try:
-        sip.setapi("QDate", 2)
-        sip.setapi("QDateTime", 2)
-        sip.setapi("QString", 2)
-        sip.setapi("QTextStream", 2)
-        sip.setapi("QTime", 2)
-        sip.setapi("QUrl", 2)
-        sip.setapi("QVariant", 2)
-    except ValueError as exc:
-        # most likely caused by something else setting the API version
-        # before us: try to give a better error message to direct the user
-        # how to fix.
-        msg = exc.args[0]
-        msg += (
-            ". Pyface expects PyQt API 2 under Python 2. "
-            "Either import Pyface before any other Qt-using packages, "
-            "or explicitly set the API before importing any other "
-            "Qt-using packages."
-        )
-        raise ValueError(msg)
-
-
 qt_api = None
 
 # have we already imported a Qt API?
@@ -62,17 +31,11 @@ for api_name, module in QtAPIs:
 else:
     # does our environment give us a preferred API?
     qt_api = os.environ.get("QT_API")
-    if qt_api == "pyqt":
-        # set the PyQt4 APIs
-        prepare_pyqt4()
 
 # if we have no preference, is a Qt API available? Or fail with ImportError.
 if qt_api is None:
     for api_name, module in QtAPIs:
         try:
-            if api_name == "pyqt":
-                # set the PyQt4 APIs
-                prepare_pyqt4()
             importlib.import_module(module)
             importlib.import_module(".QtCore", module)
             qt_api = api_name
