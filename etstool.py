@@ -51,7 +51,7 @@ using::
     python etstool.py test-all
 
 Currently supported runtime values include ``3.6``, and currently
-supported toolkits are ``null``, ``pyqt``, ``pyside`` and ``wx``.  Not all
+supported toolkits are ``null``, ``pyqt``, and ``wx``.  Not all
 combinations of toolkits and runtimes will work, but the tasks will fail with
 a clear error if that is the case.
 
@@ -106,7 +106,6 @@ source_dependencies = {
 }
 
 extra_dependencies = {
-    "pyside": {"pyside"},
     # XXX once pyside2 is available in EDM, we will want it here
     "pyside2": set(),
     "pyqt": {"pyqt<4.12"},  # FIXME: build of 4.12-1 appears to be bad
@@ -129,7 +128,6 @@ doc_ignore = {
 }
 
 environment_vars = {
-    "pyside": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside"},
     "pyside2": {"ETS_TOOLKIT": "qt4", "QT_API": "pyside2"},
     "pyqt": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt"},
     "pyqt5": {"ETS_TOOLKIT": "qt4", "QT_API": "pyqt5"},
@@ -279,7 +277,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
     parameters = get_parameters(edm, runtime, toolkit, environment)
     if toolkit == "wx":
         parameters["exclude"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+    elif toolkit in {"pyqt", "pyqt5", "pyside2"}:
         parameters["exclude"] = "wx"
     else:
         parameters["exclude"] = "(wx|qt)"
@@ -292,7 +290,7 @@ def test(edm, runtime, toolkit, environment, no_environment_vars=False):
 
     if toolkit == "wx":
         environ["EXCLUDE_TESTS"] = "qt"
-    elif toolkit in {"pyqt", "pyqt5", "pyside", "pyside2"}:
+    elif toolkit in {"pyqt", "pyqt5", "pyside2"}:
         environ["EXCLUDE_TESTS"] = "wx"
     else:
         environ["EXCLUDE_TESTS"] = "(wx|qt)"

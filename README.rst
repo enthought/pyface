@@ -54,7 +54,7 @@ Prerequisites
 
 Pyface depends on:
 
-* a GUI toolkit: one of PySide, PyQt or WxPython
+* a GUI toolkit: one of PySide2, PyQt4, PyQt5 or WxPython
 
 * `Traits <https://github.com/enthought/traits>`_
 
