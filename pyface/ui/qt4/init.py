@@ -34,6 +34,17 @@ if qt_api == "pyqt":
 _app = QtGui.QApplication.instance()
 
 if _app is None:
+    try:
+        # pyface.qt.QtWebKit tries QtWebEngineWidgets first, but
+        # if QtWebEngineWidgets is present, it must be imported prior to
+        # creating a QCoreApplication instance, otherwise importing
+        # QtWebEngineWidgets later would fail (see enthought/pyface#581).
+        # Import it here first before creating the instance.
+        from pyface.qt import QtWebKit
+    except ImportError:
+        # This error will be raised in the context where
+        # QtWebKit/QtWebEngine widgets are required.
+        pass
     _app = QtGui.QApplication(sys.argv)
 
 
