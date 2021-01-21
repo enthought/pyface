@@ -38,6 +38,7 @@ class ConcreteWidget(Widget):
             control = QtGui.QWidget(parent)
             control.setEnabled(self.enabled)
             control.setVisible(self.visible)
+            control.setFocusPolicy(QtGui.StrongFocus)
         else:
             control = None
         return control
