@@ -9,6 +9,7 @@
 # Thanks for using Enthought open source!
 
 
+import sys
 import unittest
 
 from traits.api import Instance
@@ -22,6 +23,7 @@ GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
+is_linux = (sys.platform == "linux")
 
 
 class ConcreteWidget(Widget):
@@ -318,6 +320,10 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
 
         self.assertFalse(self.widget.control.isEnabled())
 
+    @unittest.skipIf(
+        is_linux,
+        "Linux keyboard focus is False unless window is active",
+    )
     def test_focus(self):
         with self.event_loop():
             self.widget.create()
