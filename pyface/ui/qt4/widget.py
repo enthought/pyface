@@ -76,7 +76,7 @@ class Widget(MWidget, HasTraits):
         """ Set the keyboard focus to this widget.
         """
         if self.control is not None:
-            self.setFocus()
+            self.control.setFocus()
 
     def has_focus(self):
         """ Does the widget currently have keyboard focus?
@@ -86,7 +86,10 @@ class Widget(MWidget, HasTraits):
         focus_state : bool
             Whether or not the widget has keyboard focus.
         """
-        return self.hasFocus()
+        return (
+            self.control is not None
+            and self.control.hasFocus()
+        )
 
     def destroy(self):
         self._remove_event_listeners()
