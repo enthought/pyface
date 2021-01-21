@@ -315,3 +315,12 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
                 self.widget.enabled = False
 
         self.assertFalse(self.widget.control.isEnabled())
+
+    def test_focus(self):
+        with self.event_loop():
+            self.widget.create()
+
+        with self.event_loop():
+            self.widget.focus()
+
+        self.assertTrue(self.widget.control.has_focus())
