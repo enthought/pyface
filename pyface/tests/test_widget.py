@@ -34,11 +34,12 @@ class ConcreteWidget(Widget):
             control.Show(self.visible)
         elif toolkit_object.toolkit in {"qt4", "qt"}:
             from pyface.qt import QtGui
+            from pyface.qt.QtCore import Qt
 
             control = QtGui.QWidget(parent)
             control.setEnabled(self.enabled)
             control.setVisible(self.visible)
-            control.setFocusPolicy(QtGui.StrongFocus)
+            control.setFocusPolicy(Qt.StrongFocus)
         else:
             control = None
         return control
