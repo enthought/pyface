@@ -12,7 +12,7 @@ from contextlib import contextmanager
 
 
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
-from traits.api import Bool, on_trait_change, Property, provides, Tuple
+from traits.api import Bool, observe, Property, provides, Tuple
 
 
 from pyface.qt import QtCore, QtGui
@@ -61,10 +61,10 @@ class DockPane(TaskPane, MDockPane):
         control.setObjectName(self.task.id + ":" + self.id)
 
         # Configure the dock widget according to the DockPane settings.
-        self._set_dock_features()
-        self._set_dock_title()
-        self._set_floating()
-        self._set_visible()
+        self._set_dock_features(None)
+        self._set_dock_title(None)
+        self._set_floating(None)
+        self._set_visible(None)
 
         # Connect signal handlers for updating DockPane traits.
         control.dockLocationChanged.connect(self._receive_dock_area)
@@ -138,8 +138,8 @@ class DockPane(TaskPane, MDockPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("dock_area")
-    def _set_dock_area(self):
+    @observe("dock_area")
+    def _set_dock_area(self, event):
         if self.control is not None and not self._receiving:
             # Only attempt to adjust the area if the task is active.
             main_window = self.task.window.control
@@ -150,8 +150,8 @@ class DockPane(TaskPane, MDockPane):
                     AREA_MAP[self.dock_area], self.control
                 )
 
-    @on_trait_change("closable,floatable,movable")
-    def _set_dock_features(self):
+    @observe("closable,floatable,movable")
+    def _set_dock_features(self, event):
         if self.control is not None:
             features = QtGui.QDockWidget.NoDockWidgetFeatures
             if self.closable:
@@ -162,18 +162,18 @@ class DockPane(TaskPane, MDockPane):
                 features |= QtGui.QDockWidget.DockWidgetMovable
             self.control.setFeatures(features)
 
-    @on_trait_change("name")
-    def _set_dock_title(self):
+    @observe("name")
+    def _set_dock_title(self, event):
         if self.control is not None:
             self.control.setWindowTitle(self.name)
 
-    @on_trait_change("floating")
-    def _set_floating(self):
+    @observe("floating")
+    def _set_floating(self, event):
         if self.control is not None and not self._receiving:
             self.control.setFloating(self.floating)
 
-    @on_trait_change("visible")
-    def _set_visible(self):
+    @observe("visible")
+    def _set_visible(self, event):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)
 
