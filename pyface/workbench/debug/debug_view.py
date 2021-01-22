@@ -11,7 +11,7 @@
 
 
 from pyface.workbench.api import View, WorkbenchWindow
-from traits.api import HasTraits, Instance, Str, on_trait_change
+from traits.api import HasTraits, Instance, Str, observe
 from traitsui.api import View as TraitsView
 
 
@@ -30,9 +30,7 @@ class DebugViewModel(HasTraits):
     # 'Model' interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change(
-        "window.active_editor", "window.active_part", "window.active_view"
-    )
+    @observe("window.active_editor,window.active_part,window.active_view")
     def refresh(self):
         """ Refresh the model. """
 
