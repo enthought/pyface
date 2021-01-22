@@ -23,7 +23,7 @@ from traits.api import (
     Property,
     Str,
     Vetoable,
-    on_trait_change,
+    observe,
 )
 
 
@@ -431,13 +431,13 @@ class TaskWindow(ApplicationWindow):
             self.status_bar_manager = state.status_bar_manager
             self.tool_bar_managers = state.tool_bar_managers
 
-    @on_trait_change("central_pane.has_focus, dock_panes.has_focus")
-    def _focus_updated(self, obj, name, old, new):
-        if name == "has_focus" and new:
-            self.active_pane = obj
+    @observe("central_pane.has_focus, dock_panes:items:has_focus")
+    def _focus_updated(self, event):
+        if event.new:
+            self.active_pane = event.object
 
-    @on_trait_change("_states[]")
-    def _states_updated(self):
+    @observe("_states.items")
+    def _states_updated(self, event):
         self.tasks = [state.task for state in self._states]
 
 
