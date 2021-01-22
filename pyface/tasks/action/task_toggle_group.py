@@ -10,7 +10,7 @@
 
 
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, List, Instance, Property, Str, on_trait_change
+from traits.api import Any, List, Instance, Property, Str, observe
 
 
 from pyface.tasks.task import Task
@@ -65,8 +65,8 @@ class TaskToggleAction(Action):
     def _get_tooltip(self):
         return "Switch to the %s task." % self.name
 
-    @on_trait_change("task.window.active_task")
-    def _update_checked(self):
+    @observe("task.window.active_task")
+    def _update_checked(self, event):
         if self.task:
             window = self.task.window
             self.checked = (
