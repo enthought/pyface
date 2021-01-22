@@ -21,7 +21,7 @@ from pyface.api import (
     OK,
     CANCEL,
 )
-from traits.api import on_trait_change, Property, Instance
+from traits.api import observe, Property, Instance
 
 
 from example_panes import PythonScriptBrowserPane
@@ -185,12 +185,12 @@ class ExampleTask(Task):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
-        event.veto = not close
+        event.new.veto = not close
 
     # Trait property getter/setters ----------------------------------------
 

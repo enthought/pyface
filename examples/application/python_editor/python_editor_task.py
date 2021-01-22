@@ -54,7 +54,7 @@ from traits.api import (
     Property,
     Str,
     cached_property,
-    on_trait_change,
+    observe,
 )
 
 from python_browser_pane import PythonBrowserPane
@@ -333,15 +333,15 @@ class PythonEditorTask(Task):
 
     # Trait change handlers --------------------------------------------------
 
-    @on_trait_change("window:closing")
+    @observe("window:closing")
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
-        event.veto = not close
+        event.new.veto = not close
 
-    @on_trait_change("active_editor.name")
-    def _change_title(self):
+    @observe("active_editor.name")
+    def _change_title(self, event):
         """ Update the window title when the active editor changes.
         """
         if self.window.active_task == self:
@@ -350,8 +350,8 @@ class PythonEditorTask(Task):
             else:
                 self.window.title = self.name
 
-    @on_trait_change("active_editor.[line,column,selection_length]")
-    def _update_status(self):
+    @observe("active_editor.[line,column,selection_length]")
+    def _update_status(self, event):
         if self.active_editor is not None:
             editor = self.active_editor
             if editor.selection_length:
