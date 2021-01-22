@@ -20,7 +20,7 @@ from traits.api import (
     Dict,
     Instance,
     List,
-    on_trait_change,
+    observe,
     Property,
     provides,
     Str,
@@ -379,15 +379,15 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("editors:[dirty, name]")
-    def _update_label(self, editor, name, new):
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabText(index, self._get_label(editor))
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        index = self.active_tabwidget.indexOf(event.object.control)
+        self.active_tabwidget.setTabText(index, self._get_label(event.object))
 
-    @on_trait_change("editors:tooltip")
-    def _update_tooltip(self, editor, name, new):
-        index = self.active_tabwidget.indexOf(editor.control)
-        self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        index = self.active_tabwidget.indexOf(event.object.control)
+        self.active_tabwidget.setTabToolTip(index, self._get_label(event.object))
 
     # Signal handlers -----------------------------------------------------#
 
