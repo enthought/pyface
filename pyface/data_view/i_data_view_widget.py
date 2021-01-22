@@ -12,7 +12,7 @@ from contextlib import contextmanager
 import logging
 
 from traits.api import (
-    Bool, ComparisonMode, Enum, HasStrictTraits, Instance, List, Property,
+    Bool, Enum, HasStrictTraits, Instance, List, Property,
     TraitError, Tuple, cached_property,
 )
 
@@ -53,10 +53,7 @@ class IDataViewWidget(IWidget):
     selection = List(Tuple)
 
     #: Exporters available for the DataViewWidget.
-    exporters = List(
-        Instance(AbstractDataExporter),
-        comparison_mode=ComparisonMode.identity,
-    )
+    exporters = List(Instance(AbstractDataExporter))
 
 
 class MDataViewWidget(HasStrictTraits):
@@ -81,10 +78,7 @@ class MDataViewWidget(HasStrictTraits):
     selection = Property(depends_on='_selection[]')
 
     #: Exporters available for the DataViewWidget.
-    exporters = List(
-        Instance(AbstractDataExporter),
-        comparison_mode=ComparisonMode.identity,
-    )
+    exporters = List(Instance(AbstractDataExporter))
 
     # Private traits --------------------------------------------------------
 
@@ -93,7 +87,7 @@ class MDataViewWidget(HasStrictTraits):
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
-    _selection = List(Tuple, comparison_mode=ComparisonMode.identity)
+    _selection = List(Tuple)
 
     # ------------------------------------------------------------------------
     # MDataViewWidget Interface

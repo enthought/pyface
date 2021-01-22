@@ -25,7 +25,6 @@ import logging
 from traits.api import (
     Bool,
     Callable,
-    ComparisonMode,
     Instance,
     List,
     ReadOnly,
@@ -86,7 +85,7 @@ class GUIApplication(Application):
     active_window = Instance(IWindow)
 
     #: List of all open windows in the application
-    windows = List(Instance(IWindow), comparison_mode=ComparisonMode.identity)
+    windows = List(Instance(IWindow))
 
     #: The Pyface GUI instance for the application
     gui = ReadOnly
