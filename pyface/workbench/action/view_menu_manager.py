@@ -15,7 +15,7 @@ import logging
 
 from pyface.action.api import Group, MenuManager
 from traits.api import Any, Bool, Instance, List, Str
-from traits.api import on_trait_change
+from traits.api import observe
 
 
 from .perspective_menu_manager import PerspectiveMenuManager
@@ -88,10 +88,7 @@ class ViewMenuManager(MenuManager):
     # 'ViewMenuManager' interface.
     # ------------------------------------------------------------------------
 
-    @on_trait_change(
-        "window.active_perspective,window.active_part,"
-        "window.views,window.views_items"
-    )
+    @observe("window.active_perspective,window.active_part,window.views.items")
     def refresh(self):
         """ Refreshes the checked state of the actions in the menu. """
 
