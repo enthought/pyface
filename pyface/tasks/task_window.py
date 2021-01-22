@@ -431,7 +431,7 @@ class TaskWindow(ApplicationWindow):
             self.status_bar_manager = state.status_bar_manager
             self.tool_bar_managers = state.tool_bar_managers
 
-    @observe("central_pane.has_focus, dock_panes:items:has_focus")
+    @observe("central_pane:has_focus, dock_panes:items:has_focus")
     def _focus_updated(self, event):
         if event.new:
             self.active_pane = event.object
