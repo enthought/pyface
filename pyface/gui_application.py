@@ -25,13 +25,14 @@ import logging
 from traits.api import (
     Bool,
     Callable,
+    ComparisonMode,
     Instance,
     List,
     ReadOnly,
     Tuple,
     Undefined,
     Vetoable,
-    on_trait_change,
+    observe,
 )
 
 from .application import Application
@@ -85,7 +86,7 @@ class GUIApplication(Application):
     active_window = Instance(IWindow)
 
     #: List of all open windows in the application
-    windows = List(Instance(IWindow))
+    windows = List(Instance(IWindow), comparison_mode=ComparisonMode.identity)
 
     #: The Pyface GUI instance for the application
     gui = ReadOnly
@@ -280,22 +281,22 @@ class GUIApplication(Application):
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change("windows:activated")
-    def _on_activate_window(self, window, trait, old, new):
+    @observe("windows:items:activated")
+    def _on_activate_window(self, event):
         """ Listener that tracks currently active window.
         """
-        if window in self.windows:
-            self.active_window = window
+        if event.object in self.windows:
+            self.active_window = event.object
 
-    @on_trait_change("windows:deactivated")
-    def _on_deactivate_window(self, window, trait, old, new):
+    @observe("windows:items:deactivated")
+    def _on_deactivate_window(self, event):
         """ Listener that tracks currently active window.
         """
         self.active_window = None
 
-    @on_trait_change("windows:closed")
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
-        if window in self.windows:
-            self.windows.remove(window)
+        if event.object in self.windows:
+            self.windows.remove(event.object)
