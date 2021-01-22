@@ -27,7 +27,7 @@ env:
 matrix:
   include:
     - env: RUNTIME=3.6 TOOLKITS="pyqt pyqt5 pyside2 wx"
-    - env: RUNTIME=3.6 TOOLKITS="pyqt5 wx" TRAITS_REQUIRES="^=6.0"
+    - env: RUNTIME=3.6 TOOLKITS="pyqt5 wx" TRAITS_REQUIRES="^=6.1"
   fast_finish: true
 
 cache:
