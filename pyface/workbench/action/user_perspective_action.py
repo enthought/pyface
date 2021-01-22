@@ -10,7 +10,7 @@
 """ The base class for user perspective actions. """
 
 
-from traits.api import on_trait_change
+from traits.api import observe
 
 
 from .workbench_action import WorkbenchAction
@@ -48,8 +48,8 @@ class UserPerspectiveAction(WorkbenchAction):
 
         return (id[:19] == "__user_perspective_") and (id[-2:] == "__")
 
-    @on_trait_change("window.active_perspective")
-    def _refresh_enabled(self):
+    @observe("window.active_perspective")
+    def _refresh_enabled(self, event):
         """ Refresh the enabled state of the action. """
 
         self.enabled = (
