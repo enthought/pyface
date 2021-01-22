@@ -10,7 +10,7 @@
 
 
 from pyface.action.api import Action, ActionItem, Group
-from traits.api import Any, Instance, List, Property, Str, on_trait_change
+from traits.api import Any, Instance, List, Property, Str, observe
 
 
 class TaskWindowToggleAction(Action):
@@ -47,12 +47,12 @@ class TaskWindowToggleAction(Action):
             return self.window.title
         return ""
 
-    @on_trait_change("window:activated")
-    def _window_activated(self):
+    @observe("window:activated")
+    def _window_activated(self, event):
         self.checked = True
 
-    @on_trait_change("window:deactivated")
-    def _window_deactivated(self):
+    @observe("window:deactivated")
+    def _window_deactivated(self, event):
         self.checked = False
 
 
