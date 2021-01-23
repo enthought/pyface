@@ -9,7 +9,7 @@
 # Thanks for using Enthought open source!
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 from pyface.tasks.api import Task
 from ..task_window import TaskWindow
 

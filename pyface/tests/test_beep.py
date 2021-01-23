@@ -11,7 +11,7 @@
 
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..beep import beep
 

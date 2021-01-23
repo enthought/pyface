@@ -17,7 +17,7 @@ import unittest.mock as mock
 
 from pyface.qt.QtGui import QApplication
 from pyface.ui.qt4.gui import GUI
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 from traits.testing.unittest_tools import (
     _TraitsChangeCollector as TraitsChangeCollector,
 )

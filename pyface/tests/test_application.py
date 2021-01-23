@@ -15,7 +15,7 @@ from tempfile import mkdtemp
 from unittest import TestCase
 
 from traits.api import Bool
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..application import ApplicationExit, Application
 
