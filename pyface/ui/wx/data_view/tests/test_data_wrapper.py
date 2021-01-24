@@ -12,10 +12,10 @@ import unittest
 
 try:
     import wx
-    from pyface.ui.wx.data_view.data_wrapper import DataWrapper
 except ImportError:
     wx_available = False
 else:
+    from pyface.ui.wx.data_view.data_wrapper import DataWrapper
     wx_available = True
 
 @unittest.skipUnless(wx_available, "Test requires wx")
