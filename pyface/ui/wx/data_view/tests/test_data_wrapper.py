@@ -18,6 +18,7 @@ else:
     from pyface.ui.wx.data_view.data_wrapper import DataWrapper
     wx_available = True
 
+
 @unittest.skipUnless(wx_available, "Test requires wx")
 class TestDataWrapper(unittest.TestCase):
 
