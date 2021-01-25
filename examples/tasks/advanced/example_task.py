@@ -190,7 +190,8 @@ class ExampleTask(Task):
         """ Prompt the user to save when exiting.
         """
         close = self._prompt_for_save()
-        event.new.veto = not close
+        window = event.new
+        window.veto = not close
 
     # Trait property getter/setters ----------------------------------------
 

@@ -181,8 +181,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
-        index = self.control.indexOf(event.object.control)
-        self.control.setTabText(index, self._get_label(event.object))
+        editor = event.object
+        index = self.control.indexOf(editor.control)
+        self.control.setTabText(index, self._get_label(editor))
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
