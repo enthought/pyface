@@ -426,7 +426,7 @@ class DockWindow(HasPrivateTraits):
             from feature_bar import FeatureBar
 
             self._feature_bar = fb = FeatureBar(parent=self.control)
-            fb.on_trait_change(self._feature_bar_closed, "completed")
+            fb.observe(self._feature_bar_closed, "completed")
 
         fb.dock_control = dock_control
         fb.show()
@@ -435,7 +435,7 @@ class DockWindow(HasPrivateTraits):
     #  Handles closing the feature bar:
     # ---------------------------------------------------------------------------
 
-    def _feature_bar_closed(self):
+    def _feature_bar_closed(self, _=None):
         fb = self._feature_bar
         fb.dock_control.feature_bar_closed()
         fb.hide()
