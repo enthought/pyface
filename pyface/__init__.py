@@ -21,7 +21,7 @@ except ImportError:
 __requires__ = [
     "importlib-metadata",
     "importlib-resources>=1.1.0",
-    "traits>=6.1"
+    "traits>=6.2"
 ]
 __extras_require__ = {
     "wx": ["wxpython>=4", "numpy"],
