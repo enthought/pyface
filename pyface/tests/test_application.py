@@ -89,11 +89,11 @@ class TestApplication(TestCase, UnittestTools):
         self.application_events = []
 
     def event_listener(self, event):
-        self.application_events.append(event)
+        self.application_events.append(event.new)
 
     def connect_listeners(self, app):
         for event in EVENTS:
-            app.on_trait_change(self.event_listener, event)
+            app.observe(self.event_listener, event)
 
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
