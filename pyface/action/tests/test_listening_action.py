@@ -12,7 +12,7 @@
 import unittest
 
 from traits.api import Any, Bool, HasTraits
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..listening_action import ListeningAction
 from ..action_event import ActionEvent

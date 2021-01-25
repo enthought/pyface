@@ -13,7 +13,7 @@ import unittest
 
 from traits.api import TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.gui import GUI
 from pyface.toolkit import toolkit

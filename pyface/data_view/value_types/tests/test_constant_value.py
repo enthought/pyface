@@ -11,7 +11,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.color import Color
 from pyface.data_view.value_types.constant_value import ConstantValue

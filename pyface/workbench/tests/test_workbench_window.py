@@ -14,7 +14,7 @@ import os
 import unittest
 from unittest import mock
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.workbench.perspective import Perspective
 from pyface.workbench.api import Workbench

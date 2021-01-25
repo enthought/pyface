@@ -12,7 +12,7 @@
 import unittest
 
 from traits.api import Enum, HasTraits
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.gui import GUI
 from pyface.toolkit import toolkit

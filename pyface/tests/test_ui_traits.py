@@ -14,7 +14,7 @@ import unittest
 
 from traits.api import DefaultValue, HasTraits, TraitError
 from traits.testing.optional_dependencies import numpy as np, requires_numpy
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..color import Color
 from ..i_image_resource import IImageResource

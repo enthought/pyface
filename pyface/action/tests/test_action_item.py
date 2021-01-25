@@ -11,7 +11,7 @@
 
 import unittest
 
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from pyface.image_cache import ImageCache
 from pyface.toolkit import toolkit_object

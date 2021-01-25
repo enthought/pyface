@@ -13,7 +13,7 @@ import sys
 import unittest
 
 from traits.api import Instance
-from traits.testing.unittest_tools import UnittestTools
+from traits.testing.api import UnittestTools
 
 from ..application_window import ApplicationWindow
 from ..toolkit import toolkit_object
