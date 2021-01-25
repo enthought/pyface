@@ -93,7 +93,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         except AttributeError:
             pass
         self.editors.append(editor)
-        self._update_tab_bar(None)
+        self._update_tab_bar()
 
         # The EVT_AUINOTEBOOK_PAGE_CHANGED event is not sent when the first
         # editor is added.
@@ -109,7 +109,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.RemovePage(index)
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar(None)
+        self._update_tab_bar()
         if not self.editors:
             self.active_editor = None
 
@@ -173,7 +173,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             self.active_editor = self._get_editor_with_control(control)
 
     @observe("hide_tab_bar")
-    def _update_tab_bar(self, event):
+    def _update_tab_bar(self, _=None):
         if self.control is not None:
             visible = (
                 self.control.GetPageCount() > 1 if self.hide_tab_bar else True

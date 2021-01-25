@@ -61,10 +61,10 @@ class DockPane(TaskPane, MDockPane):
         control.setObjectName(self.task.id + ":" + self.id)
 
         # Configure the dock widget according to the DockPane settings.
-        self._set_dock_features(None)
-        self._set_dock_title(None)
-        self._set_floating(None)
-        self._set_visible(None)
+        self._set_dock_features()
+        self._set_dock_title()
+        self._set_floating()
+        self._set_visible()
 
         # Connect signal handlers for updating DockPane traits.
         control.dockLocationChanged.connect(self._receive_dock_area)
@@ -139,7 +139,7 @@ class DockPane(TaskPane, MDockPane):
     # Trait change handlers ------------------------------------------------
 
     @observe("dock_area")
-    def _set_dock_area(self, event):
+    def _set_dock_area(self, _=None):
         if self.control is not None and not self._receiving:
             # Only attempt to adjust the area if the task is active.
             main_window = self.task.window.control
@@ -151,7 +151,7 @@ class DockPane(TaskPane, MDockPane):
                 )
 
     @observe("closable,floatable,movable")
-    def _set_dock_features(self, event):
+    def _set_dock_features(self, _=None):
         if self.control is not None:
             features = QtGui.QDockWidget.NoDockWidgetFeatures
             if self.closable:
@@ -163,17 +163,17 @@ class DockPane(TaskPane, MDockPane):
             self.control.setFeatures(features)
 
     @observe("name")
-    def _set_dock_title(self, event):
+    def _set_dock_title(self, _=None):
         if self.control is not None:
             self.control.setWindowTitle(self.name)
 
     @observe("floating")
-    def _set_floating(self, event):
+    def _set_floating(self, _=None):
         if self.control is not None and not self._receiving:
             self.control.setFloating(self.floating)
 
     @observe("visible")
-    def _set_visible(self, event):
+    def _set_visible(self, _=None):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)
 
