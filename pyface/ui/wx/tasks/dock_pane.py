@@ -199,7 +199,7 @@ class DockPane(TaskPane, MDockPane):
         )
 
     @observe("dock_area")
-    def _set_dock_area(self):
+    def _set_dock_area(self, event):
         logger.debug("trait change: dock_area")
         if self.control is not None:
             info = self.get_pane_info()

@@ -346,8 +346,9 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
     def _qt4_active_editor_changed(self, event):
         """ Handle change of active editor """
         # Reset tab title to foreground color
-        if event.new is not None:
-            self._qt4_editor_area.setTabTextColor(event.new.control)
+        editor = event.new 
+        if editor is not None:
+            self._qt4_editor_area.setTabTextColor(editor.control)
 
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
