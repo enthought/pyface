@@ -46,7 +46,7 @@ class SimpleWizardPage(WizardPage):
         """ Create the wizard page. """
 
         details = Details(color=self.color)
-        details.on_trait_change(self._on_name_changed, "name")
+        details.observe(self._on_name_changed, "name")
 
         return details.edit_traits(parent=parent, kind="subpanel").control
 
@@ -56,10 +56,10 @@ class SimpleWizardPage(WizardPage):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_name_changed(self, new):
+    def _on_name_changed(self, event):
         """ Called when the name has been changed. """
 
-        self.complete = len(new.strip()) > 0
+        self.complete = len(event.new.strip()) > 0
 
         return
 

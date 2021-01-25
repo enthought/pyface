@@ -19,7 +19,7 @@ sys.path.append(os.path.abspath(r"..\..\.."))
 
 from pyface.api import GUI, PythonShell, SplitApplicationWindow
 from traits.api import Float, Str
-
+from traits.observation.api import match
 
 from file_node_tree import node_manager
 from pyface.tree.api import NodeTree, NodeTreeModel
@@ -47,7 +47,10 @@ class MainWindow(SplitApplicationWindow):
         model.root = os.path.abspath(os.curdir)
 
         self._tree = NodeTree(parent, model=model)
-        self._tree.on_trait_change(self._on_tree_anytrait_changed)
+        self._tree.observe(
+            self._on_tree_anytrait_changed,
+            match(lambda name, ctrait: True)
+        )
 
         return self._tree.control
 
@@ -66,10 +69,10 @@ class MainWindow(SplitApplicationWindow):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_tree_anytrait_changed(self, tree, trait_name, old, new):
+    def _on_tree_anytrait_changed(self, event):
         """ Called when any trait on the tree has changed. """
 
-        print("trait", trait_name, "value", new)
+        print("trait", event.name, "value", event.new)
 
         return
 

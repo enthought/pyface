@@ -145,7 +145,7 @@ class MainWindow(SplitApplicationWindow):
             filters=[AllowOnlyFolders()],
         )
 
-        tree_viewer.on_trait_change(self._on_selection_changed, "selection")
+        tree_viewer.observe(self._on_selection_changed, "selection")
 
         return tree_viewer.control
 
@@ -171,9 +171,9 @@ class MainWindow(SplitApplicationWindow):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_selection_changed(self, selection):
+    def _on_selection_changed(self, event):
         """ Called when the selection in the tree is changed. """
-
+        selection = event.new
         if len(selection) > 0:
             self._table_viewer.input = selection[0]
 
