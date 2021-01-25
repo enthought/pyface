@@ -381,13 +381,15 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
-        index = self.active_tabwidget.indexOf(event.object.control)
-        self.active_tabwidget.setTabText(index, self._get_label(event.object))
+        editor = event.object
+        index = self.active_tabwidget.indexOf(editor.control)
+        self.active_tabwidget.setTabText(index, self._get_label(editor))
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
-        index = self.active_tabwidget.indexOf(event.object.control)
-        self.active_tabwidget.setTabToolTip(index, self._get_label(event.object))
+        editor = event.object
+        index = self.active_tabwidget.indexOf(editor.control)
+        self.active_tabwidget.setTabToolTip(index, self._get_label(editor))
 
     # Signal handlers -----------------------------------------------------#
 

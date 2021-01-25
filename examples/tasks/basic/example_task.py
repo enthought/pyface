@@ -152,5 +152,6 @@ class ExampleTask(Task):
     def _prompt_on_close(self, event):
         """ Prompt the user to save when exiting.
         """
+        window = event.new
         if not self._prompt_for_save():
-            event.new.veto = True
+            window.veto = True

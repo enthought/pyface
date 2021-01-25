@@ -187,8 +187,9 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
-        index = self.control.indexOf(event.object.control)
-        self.control.setTabToolTip(index, event.object.tooltip)
+        editor = event.object
+        index = self.control.indexOf(editor.control)
+        self.control.setTabToolTip(index, editor.tooltip)
 
     # Signal handlers -----------------------------------------------------#
 

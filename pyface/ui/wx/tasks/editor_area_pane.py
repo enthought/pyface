@@ -139,12 +139,14 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
-        index = self.control.GetPageIndex(event.object.control)
-        self.control.SetPageText(index, self._get_label(event.object))
+        editor = event.object
+        index = self.control.GetPageIndex(editor.control)
+        self.control.SetPageText(index, self._get_label(editor))
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
-        self.control.SetPageToolTip(event.objecet.control, event.object.tooltip)
+        editor = event.object
+        self.control.SetPageToolTip(editor.control, editor.tooltip)
 
     # Signal handlers -----------------------------------------------------#
 
