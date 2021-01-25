@@ -42,16 +42,16 @@ class _wxLabelEditor(Editor):
         self._set_text(w)
         self._set_size_and_style(w)
 
-        self.obj.on_trait_change(self._update_text, 'text')
-        self.obj.on_trait_change(self._update_size, 'size')
-        self.obj.on_trait_change(self._update_style, 'style')
+        self.obj.observe(self._update_text, 'text')
+        self.obj.observe(self._update_size, 'size')
+        self.obj.observe(self._update_style, 'style')
 
         return w
 
     def _name_default(self):
         return self.obj.text
 
-    def _update_text(self):
+    def _update_text(self, _=None):
         self._set_text(self.control)
 
     def _set_text(self, w):
@@ -64,10 +64,10 @@ class _wxLabelEditor(Editor):
             )
         )
 
-    def _update_size(self):
+    def _update_size(self, _=None):
         self._set_size_and_style(self.control)
 
-    def _update_style(self):
+    def _update_style(self, _=None):
         self._set_size_and_style(self.control)
 
     def _set_size_and_style(self, w):
@@ -103,16 +103,16 @@ class _PyQt4LabelEditor(Editor):
         self._set_size(w)
         self._set_style(w)
 
-        self.obj.on_trait_change(self._update_text, 'text')
-        self.obj.on_trait_change(self._update_size, 'size')
-        self.obj.on_trait_change(self._update_style, 'style')
+        self.obj.observe(self._update_text, 'text')
+        self.obj.oberve(self._update_size, 'size')
+        self.obj.observe(self._update_style, 'style')
 
         return w
 
     def _name_default(self):
         return self.obj.text
 
-    def _update_text(self):
+    def _update_text(self, _=None):
         self._set_text(self.control)
 
     def _set_text(self, w):
@@ -124,7 +124,7 @@ class _PyQt4LabelEditor(Editor):
             )
         )
 
-    def _update_size(self):
+    def _update_size(self, _=None):
         self._set_size(self.control)
 
     def _set_size(self, w):
@@ -134,7 +134,7 @@ class _PyQt4LabelEditor(Editor):
 
         self._set_text(w)
 
-    def _update_style(self):
+    def _update_style(self, _=None):
         self._set_style(self.control)
 
     def _set_style(self, w):

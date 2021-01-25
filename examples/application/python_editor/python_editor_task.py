@@ -292,11 +292,12 @@ class PythonEditorTask(Task):
         """
         browser = PythonBrowserPane()
 
-        def handler(path):
+        def handler(event):
+            path = event.new
             if os.path.isfile(path):
                 return self.create_editor(path)
 
-        browser.on_trait_change(handler, "activated")
+        browser.observe(handler, "activated")
         return [browser]
 
     # -------------------------------------------------------------------------

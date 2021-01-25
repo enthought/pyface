@@ -53,12 +53,12 @@ def main():
         namespace.files.append("")
 
     # set up callback to open files once app is up and running
-    def open_files():
+    def open_files(_=None):
         """ Open files once app is active. """
         for path in namespace.files:
             app.active_task.create_editor(path)
 
-    app.on_trait_change(open_files, "application_initialized")
+    app.observe(open_files, "application_initialized")
 
     # invoke the mainloop
     app.run()
