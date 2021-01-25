@@ -54,6 +54,19 @@ class IWidget(Interface):
             The enabled state to set the widget to.
         """
 
+    def focus(self):
+        """ Set the keyboard focus to this widget.
+        """
+
+    def has_focus(self):
+        """ Does the widget currently have keyboard focus?
+
+        Returns
+        -------
+        focus_state : bool
+            Whether or not the widget has keyboard focus.
+        """
+
     def create(self):
         """ Creates the toolkit specific control.
 

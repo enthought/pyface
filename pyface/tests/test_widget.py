@@ -9,6 +9,7 @@
 # Thanks for using Enthought open source!
 
 
+import sys
 import unittest
 
 from traits.api import Instance
@@ -22,6 +23,7 @@ GuiTestAssistant = toolkit_object("util.gui_test_assistant:GuiTestAssistant")
 no_gui_test_assistant = GuiTestAssistant.__name__ == "Unimplemented"
 
 is_qt = (toolkit_object.toolkit in {"qt4", "qt"})
+is_linux = (sys.platform == "linux")
 
 
 class ConcreteWidget(Widget):
@@ -34,10 +36,12 @@ class ConcreteWidget(Widget):
             control.Show(self.visible)
         elif toolkit_object.toolkit in {"qt4", "qt"}:
             from pyface.qt import QtGui
+            from pyface.qt.QtCore import Qt
 
             control = QtGui.QWidget(parent)
             control.setEnabled(self.enabled)
             control.setVisible(self.visible)
+            control.setFocusPolicy(Qt.StrongFocus)
         else:
             control = None
         return control
@@ -315,3 +319,18 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
                 self.widget.enabled = False
 
         self.assertFalse(self.widget.control.isEnabled())
+
+    @unittest.skipIf(
+        is_linux,
+        "Linux keyboard focus is False unless window is active",
+    )
+    def test_focus(self):
+        with self.event_loop():
+            self.widget.create()
+
+        self.assertFalse(self.widget.has_focus())
+
+        with self.event_loop():
+            self.widget.focus()
+
+        self.assertTrue(self.widget.has_focus())
