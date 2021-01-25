@@ -328,6 +328,8 @@ class TestConcreteWidget(unittest.TestCase, GuiTestAssistant):
         with self.event_loop():
             self.widget.create()
 
+        self.assertFalse(self.widget.has_focus())
+
         with self.event_loop():
             self.widget.focus()
 
