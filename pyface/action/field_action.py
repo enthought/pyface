@@ -49,15 +49,16 @@ class FieldAction(Action):
         """
         field = self.field_type(parent=parent, **self.field_defaults)
         field._create()
-        field.on_trait_change(self.value_updated, "value")
+        field.observe(self.value_updated, "value")
         field.control._field = field
         return field.control
 
-    def value_updated(self, value):
+    def value_updated(self, event):
         """ Handle changes to the field value by calling perform.
 
         The event passed to `perform` has the `value` as an attribute.
         """
+        value = event.new
         action_event = ActionEvent(value=value)
         self.perform(action_event)
 
