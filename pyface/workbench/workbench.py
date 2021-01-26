@@ -405,7 +405,7 @@ class Workbench(HasTraits):
 
     def _on_window_closed(self, event):
         """ Dynamic trait change handler. """
-        wnidow = event.object
+        window = event.object
         self.windows.remove(window)
 
         # Event notification.
