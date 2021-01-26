@@ -257,7 +257,7 @@ class GuiTestAssistant(UnittestTools):
                 condition.set()
 
         def make_handler(trait):
-            def handler():
+            def handler(_=None):
                 set_event(trait)
 
             return handler
@@ -265,7 +265,7 @@ class GuiTestAssistant(UnittestTools):
         handlers = {trait: make_handler(trait) for trait in traits}
 
         for trait, handler in handlers.items():
-            traits_object.on_trait_change(handler, trait)
+            traits_object.observe(handler, trait)
         try:
             with self.event_loop_until_condition(
                 condition=condition.is_set, timeout=timeout
@@ -273,7 +273,7 @@ class GuiTestAssistant(UnittestTools):
                 yield
         finally:
             for trait, handler in handlers.items():
-                traits_object.on_trait_change(handler, trait, remove=True)
+                traits_object.observe(handler, trait, remove=True)
 
     @contextlib.contextmanager
     def event_loop_with_timeout(self, repeat=2, timeout=10.0):
