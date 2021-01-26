@@ -172,12 +172,12 @@ class ChainedWizardController(WizardController):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(
+            old.observe(
                 self._on_page_complete, "complete", remove=True
             )
 
         if new is not None:
-            new.on_trait_change(self._on_page_complete, "complete")
+            new.observe(self._on_page_complete, "complete")
 
         if self.next_controller is not None:
             self.next_controller.current_page = new
@@ -188,12 +188,12 @@ class ChainedWizardController(WizardController):
         """ Called when the next controller is changed. """
 
         if old is not None:
-            old.on_trait_change(
+            old.observe(
                 self._on_controller_complete, "complete", remove=True
             )
 
         if new is not None:
-            new.on_trait_change(self._on_controller_complete, "complete")
+            new.observe(self._on_controller_complete, "complete")
 
         self._update()
 
@@ -201,12 +201,12 @@ class ChainedWizardController(WizardController):
 
     # Dynamic ----
 
-    def _on_controller_complete(self, obj, trait_name, old, new):
+    def _on_controller_complete(self, _=None):
         """ Called when the next controller's complete state changes. """
 
         self._update()
 
-    def _on_page_complete(self, obj, trait_name, old, new):
+    def _on_page_complete(self, _=None):
         """ Called when the current page is complete. """
 
         self._update()
