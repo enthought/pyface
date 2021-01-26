@@ -140,22 +140,30 @@ class _Menu(QtGui.QMenu):
         self.refresh()
 
         # Listen to the manager being updated.
-        self._manager.observe(self.refresh, "changed")
-        self._manager.observe(self._on_enabled_changed, "enabled")
-        self._manager.observe(self._on_visible_changed, "visible")
-        self._manager.observe(self._on_name_changed, "name")
-        self._manager.observe(self._on_image_changed, "image")
+        self._manager.on_trait_change(self.refresh, "changed")
+        self._manager.on_trait_change(self._on_enabled_changed, "enabled")
+        self._manager.on_trait_change(self._on_visible_changed, "visible")
+        self._manager.on_trait_change(self._on_name_changed, "name")
+        self._manager.on_trait_change(self._on_image_changed, "image")
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
         return
 
     def dispose(self):
-        self._manager.observe(self.refresh, "changed", remove=True)
-        self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
-        self._manager.observe(self._on_visible_changed, "visible", remove=True)
-        self._manager.observe(self._on_name_changed, "name", remove=True)
-        self._manager.observe(self._on_image_changed, "image", remove=True)
+        self._manager.on_trait_change(self.refresh, "changed", remove=True)
+        self._manager.on_trait_change(
+            self._on_enabled_changed, "enabled", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_visible_changed, "visible", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_name_changed, "name", remove=True
+        )
+        self._manager.on_trait_change(
+            self._on_image_changed, "image", remove=True
+        )
         # Removes event listeners from downstream menu items
         self.clear()
 
@@ -178,7 +186,7 @@ class _Menu(QtGui.QMenu):
 
         return self.isEmpty()
 
-    def refresh(self, _=None):
+    def refresh(self):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()
@@ -207,25 +215,25 @@ class _Menu(QtGui.QMenu):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _on_enabled_changed(self, event):
+    def _on_enabled_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(event.new)
+        self.setEnabled(new)
 
-    def _on_visible_changed(self, event):
+    def _on_visible_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setVisible(event.new)
+        self.menuAction().setVisible(new)
 
-    def _on_name_changed(self, event):
+    def _on_name_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setText(event.new)
+        self.menuAction().setText(new)
 
-    def _on_image_changed(self, event):
+    def _on_image_changed(self, obj, trait_name, old, new):
         """ Dynamic trait change handler. """
 
-        self.menuAction().setIcon(event.new.create_icon())
+        self.menuAction().setIcon(new.create_icon())
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
