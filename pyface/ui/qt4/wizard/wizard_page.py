@@ -117,7 +117,7 @@ class _WizardPage(QtGui.QWizardPage):
 
         self.pyface_wizard = None
 
-        page.on_trait_change(self._on_complete_changed, "complete")
+        page.observe(self._on_complete_changed, "complete")
         self._page = page
 
     def initializePage(self):
@@ -137,7 +137,7 @@ class _WizardPage(QtGui.QWizardPage):
 
         return self._page.complete
 
-    def _on_complete_changed(self):
+    def _on_complete_changed(self, _=None):
         """ The trait handler for when the page's completion state changes. """
 
         self.completeChanged.emit()
