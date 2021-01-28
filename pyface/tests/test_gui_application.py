@@ -107,7 +107,8 @@ class TestingApp(GUIApplication):
     @observe("windows:items:opening")
     def _on_activate_window(self, event):
         if self.veto_open_window:
-            event.new.veto = self.veto_open_window
+            window = event.new
+            window.veto = self.veto_open_window
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")

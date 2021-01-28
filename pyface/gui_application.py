@@ -284,8 +284,9 @@ class GUIApplication(Application):
     def _on_activate_window(self, event):
         """ Listener that tracks currently active window.
         """
-        if event.object in self.windows:
-            self.active_window = event.object
+        window = event.object
+        if window in self.windows:
+            self.active_window = window
 
     @observe("windows:items:deactivated")
     def _on_deactivate_window(self, event):
@@ -297,5 +298,6 @@ class GUIApplication(Application):
     def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
-        if event.object in self.windows:
-            self.windows.remove(event.object)
+        window = event.object
+        if window in self.windows:
+            self.windows.remove(window)

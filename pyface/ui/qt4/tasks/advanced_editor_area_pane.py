@@ -208,11 +208,13 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     @observe("editors:items:[dirty, name]")
     def _update_label(self, event):
-        event.object.control.parent().update_title()
+        editor = event.object
+        editor.control.parent().update_title()
 
     @observe("editors:items:tooltip")
     def _update_tooltip(self, event):
-        event.object.control.parent().update_tooltip()
+        editor = event.object
+        editor.control.parent().update_tooltip()
 
 
 # ----------------------------------------------------------------------------
