@@ -31,7 +31,7 @@ from traits.api import (
     Tuple,
     Undefined,
     Vetoable,
-    on_trait_change,
+    observe,
 )
 
 from .application import Application
@@ -280,22 +280,24 @@ class GUIApplication(Application):
 
     # Trait listeners --------------------------------------------------------
 
-    @on_trait_change("windows:activated")
-    def _on_activate_window(self, window, trait, old, new):
+    @observe("windows:items:activated")
+    def _on_activate_window(self, event):
         """ Listener that tracks currently active window.
         """
+        window = event.object
         if window in self.windows:
             self.active_window = window
 
-    @on_trait_change("windows:deactivated")
-    def _on_deactivate_window(self, window, trait, old, new):
+    @observe("windows:items:deactivated")
+    def _on_deactivate_window(self, event):
         """ Listener that tracks currently active window.
         """
         self.active_window = None
 
-    @on_trait_change("windows:closed")
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
+        window = event.object
         if window in self.windows:
             self.windows.remove(window)

@@ -22,7 +22,7 @@ from pyface.wx.aui import aui, PyfaceAuiManager
 
 from pyface.action.api import MenuBarManager, StatusBarManager
 from pyface.action.api import ToolBarManager
-from traits.api import Instance, List, on_trait_change, provides, Str
+from traits.api import Instance, List, observe, provides, Str
 from pyface.i_application_window import IApplicationWindow
 from pyface.i_application_window import MApplicationWindow
 from pyface.image_resource import ImageResource
@@ -229,8 +229,8 @@ class ApplicationWindow(MApplicationWindow, Window):
                 old.remove_status_bar(self.control)
             self._create_status_bar(self.control)
 
-    @on_trait_change("tool_bar_manager, tool_bar_managers")
-    def _update_tool_bar_managers(self):
+    @observe("tool_bar_manager, tool_bar_managers.items")
+    def _update_tool_bar_managers(self, event):
         if self.control is not None:
             self._create_tool_bar(self.control)
 

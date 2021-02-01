@@ -15,8 +15,7 @@ from pyface.qt import QtCore, QtGui
 
 
 from traits.api import (
-    Any, Callable, DelegatesTo, Instance, List, on_trait_change, provides,
-    Tuple
+    Any, Callable, DelegatesTo, Instance, List, observe, provides, Tuple
 )
 
 
@@ -207,12 +206,14 @@ class AdvancedEditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("editors:[dirty, name]")
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         editor.control.parent().update_title()
 
-    @on_trait_change("editors:tooltip")
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         editor.control.parent().update_tooltip()
 
 

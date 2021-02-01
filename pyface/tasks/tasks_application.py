@@ -23,7 +23,7 @@ from traits.api import (
     Property,
     Str,
     cached_property,
-    on_trait_change,
+    observe,
 )
 
 from pyface.gui_application import GUIApplication
@@ -172,15 +172,14 @@ class TasksApplication(GUIApplication):
 
     # Destruction utilities ---------------------------------------------------
 
-    @on_trait_change("windows:closed")
-    def _on_window_closed(self, window, trait, old, new):
+    @observe("windows:items:closed")
+    def _on_window_closed(self, event):
         """ Listener that ensures window handles are released when closed.
         """
+        window = event.object
         if getattr(window, "active_task", None) in self.tasks:
             self.tasks.remove(window.active_task)
-        super(TasksApplication, self)._on_window_closed(
-            window, trait, old, new
-        )
+        super(TasksApplication, self)._on_window_closed(event)
 
     # Trait initializers and property getters ---------------------------------
 

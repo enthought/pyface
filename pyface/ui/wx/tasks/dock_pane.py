@@ -15,7 +15,7 @@ import logging
 from pyface.tasks.i_dock_pane import IDockPane, MDockPane
 from traits.api import (
     Bool,
-    on_trait_change,
+    observe,
     Property,
     provides,
     Tuple,
@@ -198,8 +198,8 @@ class DockPane(TaskPane, MDockPane):
             "info: dock_area=%s dir=%s" % (self.dock_area, info.dock_direction)
         )
 
-    @on_trait_change("dock_area")
-    def _set_dock_area(self):
+    @observe("dock_area")
+    def _set_dock_area(self, event):
         logger.debug("trait change: dock_area")
         if self.control is not None:
             info = self.get_pane_info()
@@ -213,8 +213,8 @@ class DockPane(TaskPane, MDockPane):
         info.CaptionVisible(self.caption_visible)
         info.Layer(self.dock_layer)
 
-    @on_trait_change("closable,floatable,movable,caption_visible,dock_layer")
-    def _set_dock_features(self):
+    @observe("closable,floatable,movable,caption_visible,dock_layer")
+    def _set_dock_features(self, event):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_features(info)
@@ -223,8 +223,8 @@ class DockPane(TaskPane, MDockPane):
     def update_dock_title(self, info):
         info.Caption(self.name)
 
-    @on_trait_change("name")
-    def _set_dock_title(self):
+    @observe("name")
+    def _set_dock_title(self, event):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_dock_title(info)
@@ -238,8 +238,8 @@ class DockPane(TaskPane, MDockPane):
         else:
             info.Dock()
 
-    @on_trait_change("floating")
-    def _set_floating(self):
+    @observe("floating")
+    def _set_floating(self, event):
         if self.control is not None:
             info = self.get_pane_info()
             self.update_floating(info)
@@ -251,8 +251,8 @@ class DockPane(TaskPane, MDockPane):
         else:
             info.Hide()
 
-    @on_trait_change("visible")
-    def _set_visible(self):
+    @observe("visible")
+    def _set_visible(self, event):
         logger.debug(
             "_set_visible %s on pane=%s, control=%s"
             % (self.visible, self.pane_name, self.control)

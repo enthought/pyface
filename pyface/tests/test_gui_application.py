@@ -14,7 +14,7 @@ from shutil import rmtree
 from tempfile import mkdtemp
 import unittest
 
-from traits.api import Bool, on_trait_change
+from traits.api import Bool, observe
 
 from ..application_window import ApplicationWindow
 from ..gui_application import GUIApplication
@@ -104,10 +104,11 @@ class TestingApp(GUIApplication):
         if self.exit_prepared_error:
             raise Exception("Exit preparation failed")
 
-    @on_trait_change("windows:opening")
+    @observe("windows:items:opening")
     def _on_activate_window(self, event):
         if self.veto_open_window:
-            event.veto = self.veto_open_window
+            window = event.new
+            window.veto = self.veto_open_window
 
 
 @unittest.skipIf(no_gui_test_assistant, "No GuiTestAssistant")

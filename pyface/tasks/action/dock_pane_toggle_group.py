@@ -15,7 +15,7 @@ from traits.api import (
     cached_property,
     Instance,
     List,
-    on_trait_change,
+    observe,
     Property,
     Str,
 )
@@ -66,13 +66,13 @@ class DockPaneToggleAction(Action):
     def _get_tooltip(self):
         return "Toggles the visibility of the %s pane." % self.name
 
-    @on_trait_change("dock_pane.visible")
-    def _update_checked(self):
+    @observe("dock_pane.visible")
+    def _update_checked(self, event):
         if self.dock_pane:
             self.checked = self.dock_pane.visible
 
-    @on_trait_change("dock_pane.closable")
-    def _update_visible(self):
+    @observe("dock_pane.closable")
+    def _update_visible(self, event):
         if self.dock_pane:
             self.visible = self.dock_pane.closable
 
@@ -119,8 +119,8 @@ class DockPaneToggleGroup(Group):
 
     # Private interface ----------------------------------------------------
 
-    @on_trait_change("dock_panes[]")
-    def _dock_panes_updated(self):
+    @observe("dock_panes.items")
+    def _dock_panes_updated(self, event):
         """Recreate the group items when dock panes have been added/removed.
         """
 

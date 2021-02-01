@@ -16,7 +16,7 @@ import logging
 from pyface.api import ApplicationWindow, GUI
 from traits.api import Callable, Constant, Delegate, Event, Instance
 from traits.api import List, Str, Tuple, Str, Vetoable, Undefined
-from traits.api import on_trait_change, provides
+from traits.api import observe, provides
 
 
 from .i_editor import IEditor
@@ -849,16 +849,15 @@ class WorkbenchWindow(ApplicationWindow):
 
     # Dynamic ----
 
-    @on_trait_change("layout.editor_closed")
-    def _on_editor_closed(self, editor):
+    @observe("layout:editor_closed")
+    def _on_editor_closed(self, event):
         """ Dynamic trait change handler. """
 
-        if editor is None or editor is Undefined:
+        if event.new is None or event.new is Undefined:
             return
-
-        index = self.editors.index(editor)
+        index = self.editors.index(event.new)
         del self.editors[index]
-        if editor is self.active_editor:
+        if event.new is self.active_editor:
             if len(self.editors) > 0:
                 index = min(index, len(self.editors) - 1)
                 # If the user closed the editor manually then this method is
@@ -873,31 +872,30 @@ class WorkbenchWindow(ApplicationWindow):
 
         return
 
-    @on_trait_change("editors.has_focus")
-    def _on_editor_has_focus_changed(self, obj, trait_name, old, new):
+    @observe("editors:items:has_focus")
+    def _on_editor_has_focus_changed(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "has_focus" and new:
-            self.active_editor = obj
+        if event.new:
+            self.active_editor = event.object
 
         return
 
-    @on_trait_change("views.has_focus")
-    def _has_focus_changed_for_view(self, obj, trait_name, old, new):
+    @observe("views:items:has_focus")
+    def _has_focus_changed_for_view(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "has_focus" and new:
-            self.active_view = obj
+        if event.new:
+            self.active_view = event.object
 
         return
 
-    @on_trait_change("views.visible")
-    def _visible_changed_for_view(self, obj, trait_name, old, new):
+    @observe("views:items:visible")
+    def _visible_changed_for_view(self, event):
         """ Dynamic trait change handler. """
 
-        if trait_name == "visible":
-            if not new:
-                if obj is self.active_view:
-                    self.active_view = None
+        if not event.new:
+            if event.object is self.active_view:
+                self.active_view = None
 
         return

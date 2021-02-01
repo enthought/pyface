@@ -13,7 +13,7 @@ import logging
 
 
 from pyface.tasks.i_editor_area_pane import IEditorAreaPane, MEditorAreaPane
-from traits.api import on_trait_change, provides
+from traits.api import observe, provides
 
 
 import wx
@@ -93,7 +93,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         except AttributeError:
             pass
         self.editors.append(editor)
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
 
         # The EVT_AUINOTEBOOK_PAGE_CHANGED event is not sent when the first
         # editor is added.
@@ -109,7 +109,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.RemovePage(index)
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
         if not self.editors:
             self.active_editor = None
 
@@ -137,13 +137,15 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
 
     # Trait change handlers ------------------------------------------------
 
-    @on_trait_change("editors:[dirty, name]")
-    def _update_label(self, editor, name, new):
+    @observe("editors:items:[dirty, name]")
+    def _update_label(self, event):
+        editor = event.object
         index = self.control.GetPageIndex(editor.control)
         self.control.SetPageText(index, self._get_label(editor))
 
-    @on_trait_change("editors:tooltip")
-    def _update_tooltip(self, editor, name, new):
+    @observe("editors:items:tooltip")
+    def _update_tooltip(self, event):
+        editor = event.object
         self.control.SetPageToolTip(editor.control, editor.tooltip)
 
     # Signal handlers -----------------------------------------------------#
@@ -172,8 +174,8 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
             control = self.control.GetPage(index)
             self.active_editor = self._get_editor_with_control(control)
 
-    @on_trait_change("hide_tab_bar")
-    def _update_tab_bar(self):
+    @observe("hide_tab_bar")
+    def _update_tab_bar(self, event):
         if self.control is not None:
             visible = (
                 self.control.GetPageCount() > 1 if self.hide_tab_bar else True

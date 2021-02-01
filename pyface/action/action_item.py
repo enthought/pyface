@@ -11,7 +11,7 @@
 """ An action manager item that represents an actual action. """
 
 
-from traits.api import Any, Instance, List, Property, Str, on_trait_change
+from traits.api import Any, Instance, List, Property, Str, observe
 
 
 from pyface.action.action import Action
@@ -72,11 +72,11 @@ class ActionItem(ActionManagerItem):
     def _visible_changed(self, trait_name, old, new):
         self.action.visible = new
 
-    @on_trait_change("_wrappers.control")
-    def _on_destroy(self, object, name, old, new):
+    @observe("_wrappers:items:control")
+    def _on_destroy(self, event):
         """ Handle the destruction of the wrapper. """
-        if name == "control" and new is None:
-            self._wrappers.remove(object)
+        if event.new is None:
+            self._wrappers.remove(event.object)
 
     # ------------------------------------------------------------------------
     # 'ActionItem' interface.

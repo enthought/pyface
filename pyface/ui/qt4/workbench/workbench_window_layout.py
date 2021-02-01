@@ -20,7 +20,7 @@ import logging
 from pyface.qt import QtCore, QtGui
 
 
-from traits.api import Instance, on_trait_change
+from traits.api import Instance, observe
 
 
 from pyface.message_dialog import error
@@ -342,12 +342,13 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
                 editor.control, QtCore.Qt.red
             )
 
-    @on_trait_change("window:active_editor")
-    def _qt4_active_editor_changed(self, old, new):
+    @observe("window:active_editor")
+    def _qt4_active_editor_changed(self, event):
         """ Handle change of active editor """
         # Reset tab title to foreground color
-        if new is not None:
-            self._qt4_editor_area.setTabTextColor(new.control)
+        editor = event.new 
+        if editor is not None:
+            self._qt4_editor_area.setTabTextColor(editor.control)
 
     def _qt4_view_focus_changed(self, old, new):
         """ Handle the change of focus for a view. """
