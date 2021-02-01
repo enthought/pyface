@@ -49,7 +49,7 @@ class MainWindow(SplitApplicationWindow):
         self._tree = NodeTree(parent, model=model)
         self._tree.observe(
             self._on_tree_anytrait_changed,
-            match(lambda name, ctrait: True)
+            match(lambda name, ctrait: True)  # listen to all traits
         )
 
         return self._tree.control
