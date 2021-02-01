@@ -199,7 +199,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
     def test_basic(self):
         handler = ConditionHandler()
-        timer = CallbackTimer(callback=handler.callback)
+        timer = CallbackTimer(
+            callback=handler.callback, kwargs={'event': None}
+        )
 
         self.assertIsNone(timer.repeat)
         self.assertFalse(timer.active)
@@ -215,7 +217,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
     def test_timer_method(self):
         handler = ConditionHandler()
 
-        timer = CallbackTimer.timer(callback=handler.callback)
+        timer = CallbackTimer.timer(
+            callback=handler.callback, kwargs={'event': None}
+        )
         try:
             self.assertTrue(timer.active)
             self.event_loop_helper.event_loop()
@@ -227,7 +231,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
     def test_single_shot_method(self):
         handler = ConditionHandler()
 
-        timer = CallbackTimer.single_shot(callback=handler.callback)
+        timer = CallbackTimer.single_shot(
+            callback=handler.callback, kwargs={'event': None}
+        )
         try:
             self.assertTrue(timer.active)
             self.event_loop_helper.event_loop_until_condition(
@@ -241,7 +247,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
     def test_set_active(self):
         handler = ConditionHandler()
-        timer = CallbackTimer(callback=handler.callback)
+        timer = CallbackTimer(
+            callback=handler.callback, kwargs={'event': None}
+        )
 
         self.assertIsNone(timer.repeat)
         self.assertFalse(timer.active)
@@ -256,7 +264,9 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
     def test_timeout_event(self):
         handler = ConditionHandler()
-        timer = CallbackTimer(callback=handler.callback)
+        timer = CallbackTimer(
+            callback=handler.callback, kwargs={'event': None}
+        )
 
         timer.start()
         try:
@@ -268,7 +278,11 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
 
     def test_repeat(self):
         handler = ConditionHandler()
-        timer = CallbackTimer(callback=handler.callback, repeat=4)
+        timer = CallbackTimer(
+            callback=handler.callback,
+            kwargs={'event': None},
+            repeat=4
+        )
 
         timer.start()
         try:
@@ -283,7 +297,10 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
     def test_interval(self):
         handler = ConditionHandler()
         timer = CallbackTimer(
-            callback=handler.callback, repeat=4, interval=0.1
+            callback=handler.callback,
+            kwargs={'event': None},
+            repeat=4,
+            interval=0.1
         )
 
         timer.start()
@@ -315,7 +332,10 @@ class TestCallbackTimer(TestCase, GuiTestAssistant):
     def test_expire(self):
         handler = ConditionHandler()
         timer = CallbackTimer(
-            callback=handler.callback, interval=0.1, expire=1.0
+            callback=handler.callback,
+            kwargs={'event': None},
+            interval=0.1,
+            expire=1.0
         )
 
         timer.start()
@@ -369,7 +389,7 @@ class TestTimer(TestCase, GuiTestAssistant):
     def test_basic(self):
         handler = ConditionHandler()
 
-        timer = Timer(250, handler.callback)
+        timer = Timer(250, handler.callback, event=None)
         try:
             self.assertTrue(timer.IsRunning())
             self.event_loop_helper.event_loop()
@@ -382,7 +402,7 @@ class TestTimer(TestCase, GuiTestAssistant):
     def test_restart(self):
         handler = ConditionHandler()
 
-        timer = Timer(20, handler.callback)
+        timer = Timer(20, handler.callback, event=None)
         timer.Stop()
 
         # Ensure that it is indeed stopped.
@@ -410,7 +430,7 @@ class TestTimer(TestCase, GuiTestAssistant):
         handler = ConditionHandler()
 
         start_time = perf_counter()
-        timer = Timer(250, handler.callback)
+        timer = Timer(250, handler.callback, event=None)
         try:
             self.assertTrue(timer.IsRunning())
             self.event_loop_helper.event_loop_until_condition(
