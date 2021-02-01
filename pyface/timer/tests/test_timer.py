@@ -25,7 +25,12 @@ class ConditionHandler(object):
         self.times = []
         self.called = False
 
-    def callback(self, event):
+    def callback(self):
+        self.times.append(perf_counter())
+        self.count += 1
+        self.called = True
+
+    def _callback(self, event):
         self.times.append(perf_counter())
         self.count += 1
         self.called = True
@@ -74,7 +79,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_single_shot_method(self):
         timer = EventTimer.single_shot()
         handler = ConditionHandler()
-        timer.observe(handler.callback, "timeout")
+        timer.observe(handler._callback, "timeout")
         try:
             self.assertTrue(timer.active)
             self.event_loop_helper.event_loop_until_condition(
@@ -103,7 +108,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_timeout_event(self):
         timer = EventTimer()
         handler = ConditionHandler()
-        timer.observe(handler.callback, "timeout")
+        timer.observe(handler._callback, "timeout")
 
         timer.start()
         try:
@@ -116,7 +121,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_repeat(self):
         timer = EventTimer(repeat=4)
         handler = ConditionHandler()
-        timer.observe(handler.callback, "timeout")
+        timer.observe(handler._callback, "timeout")
 
         timer.start()
         try:
@@ -131,7 +136,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_interval(self):
         timer = EventTimer(repeat=4, interval=0.1)
         handler = ConditionHandler()
-        timer.observe(handler.callback, "timeout")
+        timer.observe(handler._callback, "timeout")
 
         timer.start()
         try:
@@ -162,7 +167,7 @@ class TestEventTimer(TestCase, GuiTestAssistant):
     def test_expire(self):
         timer = EventTimer(expire=1.0, interval=0.1)
         handler = ConditionHandler()
-        timer.observe(handler.callback, "timeout")
+        timer.observe(handler._callback, "timeout")
 
         timer.start()
         try:
