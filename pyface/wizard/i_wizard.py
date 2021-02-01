@@ -138,7 +138,7 @@ class MWizard(HasTraits):
         if event.new is not None:
             event.new.observe(self._update, "complete")
 
-        self._update()
+        self._update(event=None)
 
     def _on_closed_changed(self):
         """ Called when the wizard is closed. """
