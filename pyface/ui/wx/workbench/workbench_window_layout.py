@@ -715,7 +715,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
         """ Static trait change handler. """
 
         if old is not None:
-            old.observee(
+            old.observe(
                 self._wx_on_editor_area_size_changed,
                 "editor_area_size",
                 remove=True,
