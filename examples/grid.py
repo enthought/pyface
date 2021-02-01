@@ -93,7 +93,7 @@ class MainWindow(SplitApplicationWindow):
 
         self._grid.observe(
             self._on_grid_anytrait_changed,
-            match(lambda name, ctrait: True)
+            match(lambda name, ctrait: True)  # listen to all traits
         )
 
         return grid.control
