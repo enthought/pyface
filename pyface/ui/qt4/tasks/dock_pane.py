@@ -139,7 +139,7 @@ class DockPane(TaskPane, MDockPane):
     # Trait change handlers ------------------------------------------------
 
     @observe("dock_area")
-    def _set_dock_area(self, _=None):
+    def _set_dock_area(self, event):
         if self.control is not None and not self._receiving:
             # Only attempt to adjust the area if the task is active.
             main_window = self.task.window.control
@@ -151,7 +151,7 @@ class DockPane(TaskPane, MDockPane):
                 )
 
     @observe("closable,floatable,movable")
-    def _set_dock_features(self, _=None):
+    def _set_dock_features(self, event):
         if self.control is not None:
             features = QtGui.QDockWidget.NoDockWidgetFeatures
             if self.closable:
@@ -163,17 +163,17 @@ class DockPane(TaskPane, MDockPane):
             self.control.setFeatures(features)
 
     @observe("name")
-    def _set_dock_title(self, _=None):
+    def _set_dock_title(self, event):
         if self.control is not None:
             self.control.setWindowTitle(self.name)
 
     @observe("floating")
-    def _set_floating(self, _=None):
+    def _set_floating(self, event):
         if self.control is not None and not self._receiving:
             self.control.setFloating(self.floating)
 
     @observe("visible")
-    def _set_visible(self, _=None):
+    def _set_visible(self, event):
         if self.control is not None and not self._receiving:
             self.control.setVisible(self.visible)
 

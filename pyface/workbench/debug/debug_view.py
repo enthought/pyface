@@ -31,7 +31,7 @@ class DebugViewModel(HasTraits):
     # ------------------------------------------------------------------------
 
     @observe("window.active_editor,window.active_part,window.active_view")
-    def refresh(self):
+    def refresh(self, event):
         """ Refresh the model. """
 
         self.active_editor = self._get_id(self.window.active_editor)

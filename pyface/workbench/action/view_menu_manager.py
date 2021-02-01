@@ -89,7 +89,7 @@ class ViewMenuManager(MenuManager):
     # ------------------------------------------------------------------------
 
     @observe("window.active_perspective,window.active_part,window.views.items")
-    def refresh(self):
+    def refresh(self, event):
         """ Refreshes the checked state of the actions in the menu. """
 
         logger.debug("refreshing view menu")
