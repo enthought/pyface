@@ -129,7 +129,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         index = self.control.addTab(editor.control, self._get_label(editor))
         self.control.setTabToolTip(index, editor.tooltip)
         self.editors.append(editor)
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
 
         # The 'currentChanged' signal, used below, is not emitted when the first
         # editor is added.
@@ -143,7 +143,7 @@ class EditorAreaPane(TaskPane, MEditorAreaPane):
         self.control.removeTab(self.control.indexOf(editor.control))
         editor.destroy()
         editor.editor_area = None
-        self._update_tab_bar()
+        self._update_tab_bar(event=None)
         if not self.editors:
             self.active_editor = None
 

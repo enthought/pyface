@@ -61,10 +61,10 @@ class DockPane(TaskPane, MDockPane):
         control.setObjectName(self.task.id + ":" + self.id)
 
         # Configure the dock widget according to the DockPane settings.
-        self._set_dock_features()
-        self._set_dock_title()
-        self._set_floating()
-        self._set_visible()
+        self._set_dock_features(event=None)
+        self._set_dock_title(event=None)
+        self._set_floating(event=None)
+        self._set_visible(event=None)
 
         # Connect signal handlers for updating DockPane traits.
         control.dockLocationChanged.connect(self._receive_dock_area)
