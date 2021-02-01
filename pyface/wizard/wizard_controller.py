@@ -170,7 +170,7 @@ class WizardController(HasTraits):
 
     # Dynamic ----
 
-    def _on_page_complete(self, _=None):
+    def _on_page_complete(self, event):
         """ Called when the current page is complete. """
 
         self._update()

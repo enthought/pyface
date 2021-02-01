@@ -101,7 +101,7 @@ class TaskWindowToggleGroup(Group):
             items.append(ActionItem(action=action))
         return items
 
-    def _rebuild(self, _=None):
+    def _rebuild(self, event):
         # Clear out the old group, then build the new one.
         for item in self.items:
             item.destroy()

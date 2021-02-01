@@ -105,7 +105,7 @@ class TaskToggleGroup(Group):
             ]
         return items
 
-    def _rebuild(self, _=None):
+    def _rebuild(self, event):
         # Clear out the old group, then build the new one.
         self.destroy()
         self.items = self._get_items()

@@ -527,7 +527,7 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # Save the dock window.
             view._qt4_dock = dw
 
-            def on_name_changed(_=None):
+            def on_name_changed(event):
                 view._qt4_dock.setWindowTitle(view.name)
 
             view.observe(on_name_changed, "name")

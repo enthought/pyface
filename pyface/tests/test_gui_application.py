@@ -129,7 +129,8 @@ class TestGUIApplication(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def event_listener(self, event):
-        self.application_events.append(event.new)
+        application_event = event.new
+        self.application_events.append(application_event)
 
     def connect_listeners(self, app):
         for event in EVENTS:

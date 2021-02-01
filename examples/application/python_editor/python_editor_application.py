@@ -53,7 +53,7 @@ def main():
         namespace.files.append("")
 
     # set up callback to open files once app is up and running
-    def open_files(_=None):
+    def open_files(event):
         """ Open files once app is active. """
         for path in namespace.files:
             app.active_task.create_editor(path)

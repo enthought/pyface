@@ -435,7 +435,7 @@ class DockWindow(HasPrivateTraits):
     #  Handles closing the feature bar:
     # ---------------------------------------------------------------------------
 
-    def _feature_bar_closed(self, _=None):
+    def _feature_bar_closed(self, event):
         fb = self._feature_bar
         fb.dock_control.feature_bar_closed()
         fb.hide()

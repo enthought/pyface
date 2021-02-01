@@ -51,7 +51,7 @@ class _wxLabelEditor(Editor):
     def _name_default(self):
         return self.obj.text
 
-    def _update_text(self, _=None):
+    def _update_text(self, event):
         self._set_text(self.control)
 
     def _set_text(self, w):
@@ -64,10 +64,10 @@ class _wxLabelEditor(Editor):
             )
         )
 
-    def _update_size(self, _=None):
+    def _update_size(self, event):
         self._set_size_and_style(self.control)
 
-    def _update_style(self, _=None):
+    def _update_style(self, event):
         self._set_size_and_style(self.control)
 
     def _set_size_and_style(self, w):
@@ -112,7 +112,7 @@ class _PyQt4LabelEditor(Editor):
     def _name_default(self):
         return self.obj.text
 
-    def _update_text(self, _=None):
+    def _update_text(self, event):
         self._set_text(self.control)
 
     def _set_text(self, w):
@@ -124,7 +124,7 @@ class _PyQt4LabelEditor(Editor):
             )
         )
 
-    def _update_size(self, _=None):
+    def _update_size(self, event):
         self._set_size(self.control)
 
     def _set_size(self, w):
@@ -134,7 +134,7 @@ class _PyQt4LabelEditor(Editor):
 
         self._set_text(w)
 
-    def _update_style(self, _=None):
+    def _update_style(self, event):
         self._set_style(self.control)
 
     def _set_style(self, w):

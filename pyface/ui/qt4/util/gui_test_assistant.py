@@ -257,7 +257,7 @@ class GuiTestAssistant(UnittestTools):
                 condition.set()
 
         def make_handler(trait):
-            def handler(_=None):
+            def handler(event):
                 set_event(trait)
 
             return handler

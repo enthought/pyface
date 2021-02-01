@@ -57,7 +57,7 @@ class TestGui(unittest.TestCase):
 
         application_running = []
 
-        def exit_app(_=None):
+        def exit_app(event):
             # Record whether the event loop is running or not, then exit.
             application_running.append(is_event_loop_running_qt4())
             application.stop()

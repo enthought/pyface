@@ -201,12 +201,12 @@ class ChainedWizardController(WizardController):
 
     # Dynamic ----
 
-    def _on_controller_complete(self, _=None):
+    def _on_controller_complete(self, event):
         """ Called when the next controller's complete state changes. """
 
         self._update()
 
-    def _on_page_complete(self, _=None):
+    def _on_page_complete(self, event):
         """ Called when the current page is complete. """
 
         self._update()

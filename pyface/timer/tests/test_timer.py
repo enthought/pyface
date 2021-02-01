@@ -25,7 +25,7 @@ class ConditionHandler(object):
         self.times = []
         self.called = False
 
-    def callback(self, _=None):
+    def callback(self, event):
         self.times.append(perf_counter())
         self.count += 1
         self.called = True
