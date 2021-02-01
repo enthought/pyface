@@ -68,16 +68,17 @@ class TestingApp(TasksApplication):
         super(TestingApp, self).start()
 
         window = self.windows[0]
-        window.on_trait_change(self._on_window_closing, "closing")
+        window.observe(self._on_window_closing, "closing")
         return True
 
     def stop(self):
         super(TestingApp, self).stop()
         return self.stop_cleanly
 
-    def _on_window_closing(self, window, trait, old, new):
+    def _on_window_closing(self, event):
+        window = event.new
         if self.veto_close_window and not self.exit_vetoed:
-            new.veto = True
+            window.veto = True
             self.exit_vetoed = True
 
     def _exiting_fired(self, event):
@@ -110,11 +111,12 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         GuiTestAssistant.tearDown(self)
 
     def event_listener(self, event):
-        self.application_events.append(event)
+        application_event = event.new
+        self.application_events.append(application_event)
 
     def connect_listeners(self, app):
         for event in EVENTS:
-            app.on_trait_change(self.event_listener, event)
+            app.observe(self.event_listener, event)
 
     def test_defaults(self):
         from traits.etsconfig.api import ETSConfig
@@ -130,7 +132,7 @@ class TestApplication(unittest.TestCase, GuiTestAssistant):
         app = TasksApplication()
         self.connect_listeners(app)
         window = ApplicationWindow()
-        app.on_trait_change(lambda: app.add_window(window), "started")
+        app.observe(lambda _: app.add_window(window), "started")
 
         with self.assertMultiTraitChanges([app], EVENTS, []):
             self.gui.invoke_after(1000, app.exit)

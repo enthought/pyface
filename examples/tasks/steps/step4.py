@@ -36,7 +36,7 @@ from pyface.tasks.action.api import (
     TaskAction,
     TaskToggleGroup,
 )
-from traits.api import on_trait_change, Property, Instance
+from traits.api import Property, Instance
 
 
 class ExamplePane(DockPane):

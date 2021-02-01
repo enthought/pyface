@@ -157,12 +157,12 @@ class WizardController(HasTraits):
         """ Called when the current page is changed. """
 
         if old is not None:
-            old.on_trait_change(
+            old.observe(
                 self._on_page_complete, "complete", remove=True
             )
 
         if new is not None:
-            new.on_trait_change(self._on_page_complete, "complete")
+            new.observe(self._on_page_complete, "complete")
 
         self._update()
 
@@ -170,7 +170,7 @@ class WizardController(HasTraits):
 
     # Dynamic ----
 
-    def _on_page_complete(self, obj, trait_name, old, new):
+    def _on_page_complete(self, event):
         """ Called when the current page is complete. """
 
         self._update()

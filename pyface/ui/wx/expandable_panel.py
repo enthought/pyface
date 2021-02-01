@@ -126,7 +126,7 @@ class ExpandablePanel(Widget):
         heading = ExpandableHeader(panel, self, title=text)
         sizer.Add(heading.control, 1, wx.EXPAND)
 
-        heading.on_trait_change(self._on_button, "panel_expanded")
+        heading.observe(self._on_button, "panel_expanded")
 
         # Resize the panel to match the sizer's minimum size.
         sizer.Fit(panel)
@@ -141,7 +141,7 @@ class ExpandablePanel(Widget):
     def _on_button(self, event):
         """ called when one of the expand/contract buttons is pressed. """
 
-        header = event
+        header = event.new
         name = header.title
         visible = header.state
 

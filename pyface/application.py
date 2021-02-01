@@ -22,11 +22,11 @@ However the class can be used as-is by listening to the
 :py:attr:`Application.application_initialized` event and performing
 appropriate work there::
 
-    def do_work():
+    def do_work(event):
         print("Hello world")
 
     app = Application()
-    app.on_trait_change(do_work, 'application_initialized')
+    app.observe(do_work, 'application_initialized')
 
 """
 

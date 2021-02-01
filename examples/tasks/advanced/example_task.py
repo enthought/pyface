@@ -100,8 +100,8 @@ class ExampleTask(Task):
         """ Create the file browser and connect to its double click event.
         """
         browser = PythonScriptBrowserPane()
-        handler = lambda: self._open_file(browser.selected_file)
-        browser.on_trait_change(handler, "activated")
+        handler = lambda _: self._open_file(browser.selected_file)
+        browser.observe(handler, "activated")
         return [browser]
 
     # ------------------------------------------------------------------------

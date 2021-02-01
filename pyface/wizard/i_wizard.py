@@ -109,7 +109,7 @@ class MWizard(HasTraits):
         # page?
         self.controller.current_page = page
 
-    def _update(self):
+    def _update(self, event):
         """ Enables/disables buttons depending on the state of the wizard. """
 
         pass
@@ -121,26 +121,24 @@ class MWizard(HasTraits):
     def _initialize_controller(self, controller):
         """ Initializes the wizard controller. """
 
-        controller.on_trait_change(self._update, "complete")
+        controller.observe(self._update, "complete")
 
-        controller.on_trait_change(
-            self._on_current_page_changed, "current_page"
-        )
+        controller.observe(self._on_current_page_changed, "current_page")
 
         return
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_current_page_changed(self, obj, trait_name, old, new):
+    def _on_current_page_changed(self, event):
         """ Called when the current page is changed. """
 
-        if old is not None:
-            old.on_trait_change(self._update, "complete", remove=True)
+        if event.old is not None:
+            event.old.observe(self._update, "complete", remove=True)
 
-        if new is not None:
-            new.on_trait_change(self._update, "complete")
+        if event.new is not None:
+            event.new.observe(self._update, "complete")
 
-        self._update()
+        self._update(event=None)
 
     def _on_closed_changed(self):
         """ Called when the wizard is closed. """

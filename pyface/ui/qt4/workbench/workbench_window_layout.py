@@ -328,16 +328,18 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             if editor.control == control:
                 editor.name = str(title)
 
-    def _qt4_editor_tab_spinner(self, editor, name, new):
+    def _qt4_editor_tab_spinner(self, event):
+        editor = event.object
+
         # Do we need to do this verification?
         tw, tidx = self._qt4_editor_area._tab_widget(editor.control)
 
-        if new:
+        if event.new:
             tw.show_button(tidx)
         else:
             tw.hide_button(tidx)
 
-        if not new and not editor == self.window.active_editor:
+        if not event.new and not editor == self.window.active_editor:
             self._qt4_editor_area.setTabTextColor(
                 editor.control, QtCore.Qt.red
             )
@@ -443,14 +445,15 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             editor.control = editor.create_control(self.window.control)
             editor.control.setObjectName(editor.id)
 
-            editor.on_trait_change(self._qt4_editor_tab_spinner, "_loading")
+            editor.observe(self._qt4_editor_tab_spinner, "_loading")
 
             self.editor_opened = editor
 
-        def on_name_changed(editor, trait_name, old, new):
+        def on_name_changed(event):
+            editor = event.object
             self._qt4_editor_area.setWidgetTitle(editor.control, editor.name)
 
-        editor.on_trait_change(on_name_changed, "name")
+        editor.observe(on_name_changed, "name")
 
         self._qt4_monitor(editor.control)
 
@@ -525,10 +528,10 @@ class WorkbenchWindowLayout(MWorkbenchWindowLayout):
             # Save the dock window.
             view._qt4_dock = dw
 
-            def on_name_changed():
+            def on_name_changed(event):
                 view._qt4_dock.setWindowTitle(view.name)
 
-            view.on_trait_change(on_name_changed, "name")
+            view.observe(on_name_changed, "name")
 
         # Make sure the view control exists.
         if view.control is None:

@@ -105,7 +105,7 @@ class TaskToggleGroup(Group):
             ]
         return items
 
-    def _rebuild(self):
+    def _rebuild(self, event):
         # Clear out the old group, then build the new one.
         self.destroy()
         self.items = self._get_items()
@@ -116,7 +116,7 @@ class TaskToggleGroup(Group):
     # Trait initializers ---------------------------------------------------
 
     def _items_default(self):
-        self.window.on_trait_change(self._rebuild, "tasks[]")
+        self.window.observe(self._rebuild, "tasks.items")
         return self._get_items()
 
     def _manager_default(self):

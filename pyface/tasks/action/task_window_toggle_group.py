@@ -85,8 +85,8 @@ class TaskWindowToggleGroup(Group):
         """
         super(TaskWindowToggleGroup, self).destroy()
         if self.application:
-            self.application.on_trait_change(
-                self._rebuild, "windows[]", remove=True
+            self.application.observe(
+                self._rebuild, "windows.items", remove=True
             )
 
     # -------------------------------------------------------------------------
@@ -101,7 +101,7 @@ class TaskWindowToggleGroup(Group):
             items.append(ActionItem(action=action))
         return items
 
-    def _rebuild(self):
+    def _rebuild(self, event):
         # Clear out the old group, then build the new one.
         for item in self.items:
             item.destroy()
@@ -113,7 +113,7 @@ class TaskWindowToggleGroup(Group):
     # Trait initializers -----------------------------------------------------
 
     def _items_default(self):
-        self.application.on_trait_change(self._rebuild, "windows[]")
+        self.application.observe(self._rebuild, "windows.items")
         return self._get_items()
 
     def _manager_default(self):
