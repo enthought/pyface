@@ -138,6 +138,7 @@ class _MenuItem(HasTraits):
         action.observe(self._on_action_visible_changed, "visible", remove=True)
         action.observe(self._on_action_checked_changed, "checked", remove=True)
         action.observe(self._on_action_name_changed, "name", remove=True)
+        action.observe(self._on_action_image_changed, "image", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.
@@ -395,6 +396,12 @@ class _Tool(HasTraits):
             self.controller = controller
             controller.add_to_toolbar(self)
 
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_visible_changed, "visible", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
+
     # ------------------------------------------------------------------------
     # Private interface.
     # ------------------------------------------------------------------------
@@ -584,6 +591,11 @@ class _PaletteTool(HasTraits):
         action.observe(self._on_action_checked_changed, "checked")
 
         return
+
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
 
     # ------------------------------------------------------------------------
     # Private interface.

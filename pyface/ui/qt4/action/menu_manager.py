@@ -144,7 +144,7 @@ class _Menu(QtGui.QMenu):
         self._manager.observe(self._on_enabled_changed, "enabled")
         self._manager.observe(self._on_visible_changed, "visible")
         self._manager.observe(self._on_name_changed, "name")
-        self._manager.observe(self._on_image_changed, "image")
+        #self._manager.observe(self._on_image_changed, "image")
         self.setEnabled(self._manager.enabled)
         self.menuAction().setVisible(self._manager.visible)
 
@@ -155,7 +155,7 @@ class _Menu(QtGui.QMenu):
         self._manager.observe(self._on_enabled_changed, "enabled", remove=True)
         self._manager.observe(self._on_visible_changed, "visible", remove=True)
         self._manager.observe(self._on_name_changed, "name", remove=True)
-        self._manager.observe(self._on_image_changed, "image", remove=True)
+        #self._manager.observe(self._on_image_changed, "image", remove=True)
         # Removes event listeners from downstream menu items
         self.clear()
 

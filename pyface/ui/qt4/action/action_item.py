@@ -582,3 +582,8 @@ class _PaletteTool(HasTraits):
         action.perform(action_event)
 
         return
+
+    def dispose(self):
+        action = self.item.action
+        action.observe(self._on_action_enabled_changed, "enabled", remove=True)
+        action.observe(self._on_action_checked_changed, "checked", remove=True)
