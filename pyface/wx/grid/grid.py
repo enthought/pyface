@@ -54,7 +54,7 @@ class Grid(wxGrid):
         #
         # fixme: We should create a default model if one is not supplied.
         self.SetTable(model._grid_table_base, True)
-        model.on_trait_change(self._on_model_changed, "model_changed")
+        model.observe(self._on_model_changed, "model_changed")
 
         self.Bind(wx.grid.EVT_GRID_CELL_CHANGE, self._on_cell_change)
         self.Bind(wx.grid.EVT_GRID_SELECT_CELL, self._on_select_cell)

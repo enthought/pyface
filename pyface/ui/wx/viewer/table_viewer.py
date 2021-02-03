@@ -93,7 +93,7 @@ class TableViewer(ContentViewer):
 
         # We use a dynamic handler instead of a static handler here, as we
         # don't want to react if the input is set in the constructor.
-        self.on_trait_change(self._on_input_changed, "input")
+        self.observe(self._on_input_changed, "input")
 
         return
 
