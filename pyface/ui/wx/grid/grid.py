@@ -226,39 +226,39 @@ class Grid(Widget):
         grid.Bind(grid_movers.EVT_GRID_COL_MOVE, self._on_col_move)
         grid.Bind(grid_movers.EVT_GRID_ROW_MOVE, self._on_row_move)
 
-        smotc = self.model.on_trait_change
-        otc = self.on_trait_change
-        smotc(self._on_model_content_changed, "content_changed")
-        smotc(self._on_model_structure_changed, "structure_changed")
-        smotc(self._on_row_sort, "row_sorted")
-        smotc(self._on_column_sort, "column_sorted")
-        otc(self._on_new_model, "model")
+        smobs = self.model.observe
+        obs = self.observe
+        smobs(self._on_model_content_changed, "content_changed")
+        smobs(self._on_model_structure_changed, "structure_changed")
+        smobs(self._on_row_sort, "row_sorted")
+        smobs(self._on_column_sort, "column_sorted")
+        obs(self._on_new_model, "model")
 
         # hook up style trait handlers - note that we have to use
         # dynamic notification hook-ups because these handlers should
         # not be called until after the control object is initialized.
         # static trait notifiers get called when the object inits.
-        otc(self._on_enable_lines_changed, "enable_lines")
-        otc(self._on_grid_line_color_changed, "grid_line_color")
-        otc(self._on_default_label_font_changed, "default_label_font")
-        otc(self._on_default_label_bg_color_changed, "default_label_bg_color")
-        otc(
+        obs(self._on_enable_lines_changed, "enable_lines")
+        obs(self._on_grid_line_color_changed, "grid_line_color")
+        obs(self._on_default_label_font_changed, "default_label_font")
+        obs(self._on_default_label_bg_color_changed, "default_label_bg_color")
+        obs(
             self._on_default_label_text_color_changed,
             "default_label_text_color",
         )
-        otc(self._on_selection_bg_color_changed, "selection_bg_color")
-        otc(self._on_selection_text_color_changed, "selection_text_color")
-        otc(self._on_default_cell_font_changed, "default_cell_font")
-        otc(
+        obs(self._on_selection_bg_color_changed, "selection_bg_color")
+        obs(self._on_selection_text_color_changed, "selection_text_color")
+        obs(self._on_default_cell_font_changed, "default_cell_font")
+        obs(
             self._on_default_cell_text_color_changed, "default_cell_text_color"
         )
-        otc(self._on_default_cell_bg_color_changed, "default_cell_bg_color")
-        otc(self._on_read_only_changed, "read_only_changed")
-        otc(self._on_selection_mode_changed, "selection_mode")
-        otc(self._on_column_label_height_changed, "column_label_height")
-        otc(self._on_row_label_width_changed, "row_label_width")
-        otc(self._on_show_column_headers_changed, "show_column_headers")
-        otc(self._on_show_row_headers_changed, "show_row_headers")
+        obs(self._on_default_cell_bg_color_changed, "default_cell_bg_color")
+        obs(self._on_read_only_changed, "read_only_changed")
+        obs(self._on_selection_mode_changed, "selection_mode")
+        obs(self._on_column_label_height_changed, "column_label_height")
+        obs(self._on_row_label_width_changed, "row_label_width")
+        obs(self._on_show_column_headers_changed, "show_column_headers")
+        obs(self._on_show_row_headers_changed, "show_row_headers")
 
         # Initialize wx handlers:
         self._notify_select = True
@@ -347,63 +347,63 @@ class Grid(Widget):
             window.Unbind(wx.EVT_LEFT_DOWN)
             window.Unbind(wx.EVT_LEFT_UP)
 
-        otc = self.on_trait_change
-        otc(self._on_enable_lines_changed, "enable_lines", remove=True)
-        otc(self._on_grid_line_color_changed, "grid_line_color", remove=True)
-        otc(
+        obs = self.observe
+        obs(self._on_enable_lines_changed, "enable_lines", remove=True)
+        obs(self._on_grid_line_color_changed, "grid_line_color", remove=True)
+        obs(
             self._on_default_label_font_changed,
             "default_label_font",
             remove=True,
         )
-        otc(
+        obs(
             self._on_default_label_bg_color_changed,
             "default_label_bg_color",
             remove=True,
         )
-        otc(
+        obs(
             self._on_default_label_text_color_changed,
             "default_label_text_color",
             remove=True,
         )
-        otc(
+        obs(
             self._on_selection_bg_color_changed,
             "selection_bg_color",
             remove=True,
         )
-        otc(
+        obs(
             self._on_selection_text_color_changed,
             "selection_text_color",
             remove=True,
         )
-        otc(
+        obs(
             self._on_default_cell_font_changed,
             "default_cell_font",
             remove=True,
         )
-        otc(
+        obs(
             self._on_default_cell_text_color_changed,
             "default_cell_text_color",
             remove=True,
         )
-        otc(
+        obs(
             self._on_default_cell_bg_color_changed,
             "default_cell_bg_color",
             remove=True,
         )
-        otc(self._on_read_only_changed, "read_only_changed", remove=True)
-        otc(self._on_selection_mode_changed, "selection_mode", remove=True)
-        otc(
+        obs(self._on_read_only_changed, "read_only_changed", remove=True)
+        obs(self._on_selection_mode_changed, "selection_mode", remove=True)
+        obs(
             self._on_column_label_height_changed,
             "column_label_height",
             remove=True,
         )
-        otc(self._on_row_label_width_changed, "row_label_width", remove=True)
-        otc(
+        obs(self._on_row_label_width_changed, "row_label_width", remove=True)
+        obs(
             self._on_show_column_headers_changed,
             "show_column_headers",
             remove=True,
         )
-        otc(self._on_show_row_headers_changed, "show_row_headers", remove=True)
+        obs(self._on_show_row_headers_changed, "show_row_headers", remove=True)
 
         self._grid_table_base.dispose()
         self._grid = None
@@ -412,7 +412,7 @@ class Grid(Widget):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_new_model(self):
+    def _on_new_model(self, event):
         """ When we get a new model reinitialize grid match to that model. """
 
         self._grid_table_base.model = self.model
@@ -426,12 +426,12 @@ class Grid(Widget):
             # the rows looks like crap.
             self._grid.AutoSizeColumns(False)
 
-    def _on_model_content_changed(self):
+    def _on_model_content_changed(self, event):
         """ A notification method called when the data in the underlying
             model changes. """
         self._grid.ForceRefresh()
 
-    def _on_model_structure_changed(self, *arg, **kw):
+    def _on_model_structure_changed(self, event):
         """ A notification method called when the underlying model has
         changed. Responsible for making sure the view object updates
         correctly. """
@@ -510,16 +510,16 @@ class Grid(Widget):
         grid.AdjustScrollbars()
         self._refresh()
 
-    def _on_row_sort(self, evt):
+    def _on_row_sort(self, event):
         """ Handles a row_sorted event from the underlying model. """
 
         # First grab the new data out of the event:
-        if evt.index < 0:
+        if event.new.index < 0:
             self._current_sorted_row = None
         else:
-            self._current_sorted_row = evt.index
+            self._current_sorted_row = event.new.index
 
-        self._row_sort_reversed = evt.reversed
+        self._row_sort_reversed = event.new.reversed
 
         # Since the label may have changed we may need to autosize again:
         # fixme: when we change how we represent the sorted column
@@ -527,18 +527,18 @@ class Grid(Widget):
         self.__autosize()
 
         # Make sure everything updates to reflect the changes:
-        self._on_model_structure_changed()
+        self._on_model_structure_changed(event=None)
 
-    def _on_column_sort(self, evt):
+    def _on_column_sort(self, event):
         """ Handles a column_sorted event from the underlying model. """
 
         # first grab the new data out of the event
-        if evt.index < 0:
+        if event.new.index < 0:
             self._current_sorted_col = None
         else:
-            self._current_sorted_col = evt.index
+            self._current_sorted_col = event.new.index
 
-        self._col_sort_reversed = evt.reversed
+        self._col_sort_reversed = event.new.reversed
 
         # since the label may have changed we may need to autosize again
         # fixme: when we change how we represent the sorted column
@@ -546,17 +546,17 @@ class Grid(Widget):
         self.__autosize()
 
         # make sure everything updates to reflect the changes
-        self._on_model_structure_changed()
+        self._on_model_structure_changed(event=None)
 
-    def _on_enable_lines_changed(self):
+    def _on_enable_lines_changed(self, event):
         """ Handle a change to the enable_lines trait. """
         self._grid.EnableGridLines(self.enable_lines)
 
-    def _on_grid_line_color_changed(self):
+    def _on_grid_line_color_changed(self, event):
         """ Handle a change to the enable_lines trait. """
         self._grid.SetGridLineColour(self.grid_line_color)
 
-    def _on_default_label_font_changed(self):
+    def _on_default_label_font_changed(self, event):
         """ Handle a change to the default_label_font trait. """
 
         font = self.default_label_font
@@ -566,7 +566,7 @@ class Grid(Widget):
 
         self._grid.SetLabelFont(font)
 
-    def _on_default_label_text_color_changed(self):
+    def _on_default_label_text_color_changed(self, event):
         """ Handle a change to the default_cell_text_color trait. """
 
         if self.default_label_text_color is not None:
@@ -574,7 +574,7 @@ class Grid(Widget):
             self._grid.SetLabelTextColour(color)
             self._grid.ForceRefresh()
 
-    def _on_default_label_bg_color_changed(self):
+    def _on_default_label_bg_color_changed(self, event):
         """ Handle a change to the default_cell_text_color trait. """
 
         if self.default_label_bg_color is not None:
@@ -582,24 +582,24 @@ class Grid(Widget):
             self._grid.SetLabelBackgroundColour(color)
             self._grid.ForceRefresh()
 
-    def _on_selection_bg_color_changed(self):
+    def _on_selection_bg_color_changed(self, event):
         """ Handle a change to the selection_bg_color trait. """
         if self.selection_bg_color is not None:
             self._grid.SetSelectionBackground(self.selection_bg_color)
 
-    def _on_selection_text_color_changed(self):
+    def _on_selection_text_color_changed(self, event):
         """ Handle a change to the selection_text_color trait. """
         if self.selection_text_color is not None:
             self._grid.SetSelectionForeground(self.selection_text_color)
 
-    def _on_default_cell_font_changed(self):
+    def _on_default_cell_font_changed(self, event):
         """ Handle a change to the default_cell_font trait. """
 
         if self.default_cell_font is not None:
             self._grid.SetDefaultCellFont(self.default_cell_font)
             self._grid.ForceRefresh()
 
-    def _on_default_cell_text_color_changed(self):
+    def _on_default_cell_text_color_changed(self, event):
         """ Handle a change to the default_cell_text_color trait. """
 
         if self.default_cell_text_color is not None:
@@ -607,7 +607,7 @@ class Grid(Widget):
             self._grid.SetDefaultCellTextColour(color)
             self._grid.ForceRefresh()
 
-    def _on_default_cell_bg_color_changed(self):
+    def _on_default_cell_bg_color_changed(self, event):
         """ Handle a change to the default_cell_bg_color trait. """
 
         if self.default_cell_bg_color is not None:
@@ -615,7 +615,7 @@ class Grid(Widget):
             self._grid.SetDefaultCellBackgroundColour(color)
             self._grid.ForceRefresh()
 
-    def _on_read_only_changed(self):
+    def _on_read_only_changed(self, event):
         """ Handle a change to the read_only trait. """
 
         # should the whole grid be read-only?
@@ -624,7 +624,7 @@ class Grid(Widget):
         else:
             self._grid.EnableEditing(True)
 
-    def _on_selection_mode_changed(self):
+    def _on_selection_mode_changed(self, event):
         """ Handle a change to the selection_mode trait. """
 
         # should we allow individual cells to be selected or only rows
@@ -636,20 +636,20 @@ class Grid(Widget):
         elif self.selection_mode == "cols":
             self._grid.SetSelectionMode(wxGrid.SelectColumns)
 
-    def _on_column_label_height_changed(self):
+    def _on_column_label_height_changed(self, event):
         """ Handle a change to the column_label_height trait. """
 
         # handle setting for height of column labels
         if self.column_label_height is not None:
             self._grid.SetColLabelSize(self.column_label_height)
 
-    def _on_row_label_width_changed(self):
+    def _on_row_label_width_changed(self, event):
         """ Handle a change to the row_label_width trait. """
         # handle setting for width of row labels
         if self.row_label_width is not None:
             self._grid.SetRowLabelSize(self.row_label_width)
 
-    def _on_show_column_headers_changed(self):
+    def _on_show_column_headers_changed(self, event):
         """ Handle a change to the show_column_headers trait. """
 
         if not self.show_column_headers:
@@ -657,7 +657,7 @@ class Grid(Widget):
         else:
             self._grid.SetColLabelSize(self.column_label_height)
 
-    def _on_show_row_headers_changed(self):
+    def _on_show_row_headers_changed(self, event):
         """ Handle a change to the show_row_headers trait. """
 
         if not self.show_row_headers:
@@ -1254,10 +1254,10 @@ class Grid(Widget):
     def __initialize_fonts(self):
         """ Initialize the label fonts. """
 
-        self._on_default_label_font_changed()
-        self._on_default_cell_font_changed()
-        self._on_default_cell_text_color_changed()
-        self._on_grid_line_color_changed()
+        self._on_default_label_font_changed(event=None)
+        self._on_default_cell_font_changed(event=None)
+        self._on_default_cell_text_color_changed(event=None)
+        self._on_grid_line_color_changed(event=None)
 
         self._grid.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)
         self._grid.SetRowLabelAlignment(wx.ALIGN_RIGHT, wx.ALIGN_CENTRE)
@@ -1310,18 +1310,18 @@ class Grid(Widget):
     def __initialize_style_settings(self, event=None):
 
         # make sure all the handlers for traits defining styles get called
-        self._on_enable_lines_changed()
-        self._on_read_only_changed()
-        self._on_selection_mode_changed()
-        self._on_column_label_height_changed()
-        self._on_row_label_width_changed()
-        self._on_show_column_headers_changed()
-        self._on_show_row_headers_changed()
-        self._on_default_cell_bg_color_changed()
-        self._on_default_label_bg_color_changed()
-        self._on_default_label_text_color_changed()
-        self._on_selection_bg_color_changed()
-        self._on_selection_text_color_changed()
+        self._on_enable_lines_changed(event=None)
+        self._on_read_only_changed(event=None)
+        self._on_selection_mode_changed(event=None)
+        self._on_column_label_height_changed(event=None)
+        self._on_row_label_width_changed(event=None)
+        self._on_show_column_headers_changed(event=None)
+        self._on_show_row_headers_changed(event=None)
+        self._on_default_cell_bg_color_changed(event=None)
+        self._on_default_label_bg_color_changed(event=None)
+        self._on_default_label_text_color_changed(event=None)
+        self._on_selection_bg_color_changed(event=None)
+        self._on_selection_text_color_changed(event=None)
 
     def __get_drag_value(self):
         """ Calculates the drag value based on the current selection. """
