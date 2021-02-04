@@ -17,6 +17,7 @@ import logging
 
 from pyface.action.action import Action
 from traits.api import Any, Str
+from traits.observation.api import trait
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -58,11 +59,15 @@ class ListeningAction(Action):
         if self.object:
             if self.enabled_name:
                 self.object.observe(
-                    self._enabled_update, self.enabled_name, remove=True
+                    self._enabled_update,
+                    trait(self.enabled_name, optional=True),
+                    remove=True
                 )
             if self.visible_name:
                 self.object.observe(
-                    self._visible_update, self.visible_name, remove=True
+                    self._visible_update,
+                    trait(self.visible_name, optional=True),
+                    remove=True
                 )
 
     def perform(self, event=None):
@@ -123,11 +128,10 @@ class ListeningAction(Action):
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
-            if name:
-                if old:
-                    old.observe(method, name, remove=True)
-                if new:
-                    new.observe(method, name)
+            if old:
+                old.observe(method, trait(name, optional=True), remove=True)
+            if new:
+                new.observe(method, trait(name, optional=True))
             method(event=None)
 
     def _enabled_update(self, event):
