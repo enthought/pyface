@@ -47,10 +47,10 @@ class ListBox(Widget):
         self._create_control(parent)
 
         # Listen for changes to the model.
-        self.model.on_trait_change(self._on_model_changed, "list_changed")
+        self.model.observe(self._on_model_changed, "list_changed")
 
     def dispose(self):
-        self.model.on_trait_change(
+        self.model.observe(
             self._on_model_changed, "list_changed", remove=True
         )
         self.model.dispose()
