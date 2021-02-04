@@ -206,11 +206,11 @@ class _ToolBar(wx.ToolBar):
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible"
         )
 
@@ -220,15 +220,15 @@ class _ToolBar(wx.ToolBar):
     # Trait change handlers.
     # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_enable_tool_bar(self, new)
+        obj.window._wx_enable_tool_bar(self, event.new)
 
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        obj.window._wx_show_tool_bar(self, new)
+        obj.window._wx_show_tool_bar(self, event.new)
 
 
 class _AuiToolBar(AUI.AuiToolBar):
@@ -247,11 +247,11 @@ class _AuiToolBar(AUI.AuiToolBar):
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible"
         )
 
@@ -405,20 +405,20 @@ class _AuiToolBar(AUI.AuiToolBar):
     # Trait change handlers.
     # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
         try:
-            obj.controller.task.window._wx_enable_tool_bar(self, new)
+            obj.controller.task.window._wx_enable_tool_bar(self, event.new)
         except:
 
             pass
 
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
         try:
-            obj.controller.task.window._wx_show_tool_bar(self, new)
+            obj.controller.task.window._wx_show_tool_bar(self, event.new)
         except:
 
             pass
