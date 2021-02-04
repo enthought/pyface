@@ -53,14 +53,17 @@ class ListeningAction(Action):
 
         Removes all the task listeners.
         """
+        print(self.enabled_name)
 
         if self.object:
-            self.object.on_trait_change(
-                self._enabled_update, self.enabled_name, remove=True
-            )
-            self.object.on_trait_change(
-                self._visible_update, self.visible_name, remove=True
-            )
+            if self.enabled_name:
+                self.object.observe(
+                    self._enabled_update, self.enabled_name, remove=True
+                )
+            if self.visible_name:
+                self.object.observe(
+                    self._visible_update, self.visible_name, remove=True
+                )
 
     def perform(self, event=None):
         """ Call the appropriate function.
@@ -102,19 +105,19 @@ class ListeningAction(Action):
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._enabled_update, old, remove=True)
+                obj.observe(self._enabled_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._enabled_update, new)
-        self._enabled_update()
+                obj.observe(self._enabled_update, new)
+        self._enabled_update(event=None)
 
     def _visible_name_changed(self, old, new):
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._visible_update, old, remove=True)
+                obj.observe(self._visible_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._visible_update, new)
-        self._visible_update()
+                obj.observe(self._visible_update, new)
+        self._visible_update(event=None)
 
     def _object_changed(self, old, new):
         for kind in ("enabled", "visible"):
@@ -122,12 +125,12 @@ class ListeningAction(Action):
             name = getattr(self, "%s_name" % kind)
             if name:
                 if old:
-                    old.on_trait_change(method, name, remove=True)
+                    old.observe(method, name, remove=True)
                 if new:
-                    new.on_trait_change(method, name)
-            method()
+                    new.observe(method, name)
+            method(event=None)
 
-    def _enabled_update(self):
+    def _enabled_update(self, event):
         if self.enabled_name:
             if self.object:
                 self.enabled = bool(
@@ -138,7 +141,7 @@ class ListeningAction(Action):
         else:
             self.enabled = bool(self.object)
 
-    def _visible_update(self):
+    def _visible_update(self, event):
         if self.visible_name:
             if self.object:
                 self.visible = bool(
