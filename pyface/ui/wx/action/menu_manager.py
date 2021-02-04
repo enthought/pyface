@@ -103,7 +103,7 @@ class _Menu(wx.Menu):
         self.menu_items = []
 
         # Create the menu structure.
-        self.refresh()
+        self.refresh(event=None)
 
         # Listen to the manager being updated.
         self._manager.observe(self.refresh, "changed")
@@ -139,7 +139,7 @@ class _Menu(wx.Menu):
 
         return self.GetMenuItemCount() == 0
 
-    def refresh(self):
+    def refresh(self, event):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()
@@ -167,7 +167,7 @@ class _Menu(wx.Menu):
     # Private interface.
     # ------------------------------------------------------------------------
 
-    def _on_enabled_changed(self, obj, trait_name, old, new):
+    def _on_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
         # fixme: Nasty hack to allow enabling/disabling of menus.
@@ -176,7 +176,7 @@ class _Menu(wx.Menu):
         # we don't give them an '_id'...
 
         if hasattr(self, "_id"):
-            self._menu.Enable(self._id, new)
+            self._menu.Enable(self._id, event.new)
 
     def _add_group(self, parent, group, previous_non_empty_group=None):
         """ Adds a group to a menu. """
