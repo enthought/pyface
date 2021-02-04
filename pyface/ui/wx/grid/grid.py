@@ -347,7 +347,16 @@ class Grid(Widget):
             window.Unbind(wx.EVT_LEFT_DOWN)
             window.Unbind(wx.EVT_LEFT_UP)
 
+        smobs = self.model.observe
         obs = self.observe
+        smobs(self._on_model_content_changed, "content_changed", remove=True)
+        smobs(
+            self._on_model_structure_changed, "structure_changed", remove=True
+        )
+        smobs(self._on_row_sort, "row_sorted", remove=True)
+        smobs(self._on_column_sort, "column_sorted", remove=True)
+        obs(self._on_new_model, "model", remove=True)
+
         obs(self._on_enable_lines_changed, "enable_lines", remove=True)
         obs(self._on_grid_line_color_changed, "grid_line_color", remove=True)
         obs(
