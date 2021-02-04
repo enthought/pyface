@@ -122,21 +122,21 @@ class TraitGridModel(GridModel):
                 self._auto_columns = []
 
         # attach trait handlers to the list object
-        self.on_trait_event(self._on_data_changed, "data")
-        self.on_trait_event(self._on_data_items_changed, "data_items")
+        self.observe(self._on_data_changed, "data")
+        self.observe(self._on_data_items_changed, "data:items")
 
         # attach appropriate trait handlers to objects in the list
         self.__manage_data_listeners(self.data)
 
         # attach a listener to the column definitions so we refresh when
         # they change
-        self.on_trait_change(self._on_columns_changed, "columns")
-        self.on_trait_event(self._on_columns_items_changed, "columns_items")
+        self.observe(self._on_columns_changed, "columns")
+        self.observe(self._on_columns_items_changed, "columns:items")
         # attach listeners to the column definitions themselves
         self.__manage_column_listeners(self.columns)
 
         # attach a listener to the row_name_trait
-        self.on_trait_change(self._on_row_name_trait_changed, "row_name_trait")
+        self.observe(self._on_row_name_trait_changed, "row_name_trait")
 
     # ------------------------------------------------------------------------
     # 'GridModel' interface.
@@ -559,13 +559,13 @@ class TraitGridModel(GridModel):
     # trait handlers
     # ------------------------------------------------------------------------
 
-    def _on_row_name_trait_changed(self, new):
+    def _on_row_name_trait_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
 
-    def _on_columns_changed(self, object, name, old, new):
+    def _on_columns_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
-        self.__manage_column_listeners(old, remove=True)
+        self.__manage_column_listeners(event.old, remove=True)
         self.__manage_column_listeners(self.columns)
         self._auto_columns = self.columns
         self.fire_structure_changed()
@@ -577,14 +577,14 @@ class TraitGridModel(GridModel):
         self.__manage_column_listeners(event.added)
         self.fire_structure_changed()
 
-    def _on_contained_trait_changed(self, new):
+    def _on_contained_trait_changed(self, event):
         """ Force the grid to refresh when any underlying trait changes. """
         self.fire_content_changed()
 
-    def _on_data_changed(self, object, name, old, new):
+    def _on_data_changed(self, event):
         """ Force the grid to refresh when the underlying list changes. """
 
-        self.__manage_data_listeners(old, remove=True)
+        self.__manage_data_listeners(event.old, remove=True)
         self.__manage_data_listeners(self.data)
         self.fire_structure_changed()
 
@@ -684,7 +684,7 @@ class TraitGridModel(GridModel):
         # attach appropriate trait handlers to objects in the list
         if list is not None:
             for item in list:
-                item.on_trait_change(
+                item.observe(
                     self._on_contained_trait_changed, remove=remove
                 )
 
@@ -693,6 +693,6 @@ class TraitGridModel(GridModel):
         if collist is not None:
             for col in collist:
                 if isinstance(col, TraitGridColumn):
-                    col.on_trait_change(
+                    col.observe(
                         self._on_columns_changed, remove=remove
                     )
