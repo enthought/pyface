@@ -69,8 +69,8 @@ class MComboField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MComboField, self)._add_event_listeners()
-        self.on_trait_change(
-            self._values_updated, "values[],formatter", dispatch="ui"
+        self.observe(
+            self._values_updated, "values.items,formatter", dispatch="ui"
         )
         if self.control is not None:
             self._observe_control_value()
@@ -79,9 +79,9 @@ class MComboField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
             self._observe_control_value(remove=True)
-        self.on_trait_change(
+        self.observe(
             self._values_updated,
-            "values[],formatter",
+            "values.items,formatter",
             dispatch="ui",
             remove=True,
         )
@@ -99,6 +99,6 @@ class MComboField(HasTraits):
 
     # Trait change handlers --------------------------------------------------
 
-    def _values_updated(self):
+    def _values_updated(self, event):
         if self.control is not None:
             self._set_control_values(self.values)
