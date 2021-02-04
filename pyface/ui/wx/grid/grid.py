@@ -1037,31 +1037,6 @@ class Grid(Widget):
         # has meaning to the edit control.
         key_code = evt.GetKeyCode()
 
-        # if (key_code == wx.WXK_RETURN) and not evt.ControlDown():
-        #    evt.Skip()#self._move_to_next_cell(evt.ShiftDown())
-
-        # elif (key_code == wx.WXK_TAB) and not evt.ControlDown():
-        #    if evt.ShiftDown():
-        #        # fixme: in a split window the shift tab is being eaten
-        #        # by tabbing between the splits
-        #        self._move_to_previous_cell()
-
-        #    else:
-        #        self._move_to_next_cell()
-
-        # elif key_code == ASCII_C:
-        #    data = self.__get_drag_value()
-        # deposit the data in our singleton clipboard
-        #    enClipboard.data = data
-
-        # build a wxCustomDataObject to notify the system clipboard
-        # that some in-process data is available
-        #    data_object = wx.CustomDataObject(PythonObject)
-        #    data_object.SetData('dummy')
-        #    if TheClipboard.Open():
-        #        TheClipboard.SetData(data_object)
-        #        TheClipboard.Close()
-
         evt.Skip()
 
     def _move_to_next_cell(self, expandSelection=False):
@@ -1334,34 +1309,9 @@ class Grid(Widget):
 
     def __get_drag_value(self):
         """ Calculates the drag value based on the current selection. """
-        # fixme: The following line seems like a more useful implementation than
-        # the previous commented out version below, but I am leaving the old
-        # version in the code for now just in case. If anyone sees this comment
-        # after 1/1/2009, it should be safe to delete this comment and the
-        # commented out code below...
         return self.model.get_cell_drag_value(
             self._grid.GetGridCursorRow(), self._grid.GetGridCursorCol()
         )
-
-        ###rows, cols = self.__get_selected_rows_and_cols()
-        ###
-        ###if len(rows) > 0:
-        #    rows.sort()
-        #    value = self.model.get_rows_drag_value(rows)
-        #    if len(rows) == 1 and len(value) == 1:
-        #        value = value[0]
-        ###elif len(cols) > 0:
-        #    cols.sort()
-        #    value = self.model.get_cols_drag_value(cols)
-        #    if len(cols) == 1 and len(value) == 1:
-        #        value = value[0]
-        ###else:
-        #    # our final option -- grab the cell that the cursor is currently in
-        #    row = self._grid.GetGridCursorRow()
-        #    col = self._grid.GetGridCursorCol()
-        #    value = self.model.get_cell_drag_value(row, col)
-        ###
-        ###return value
 
     def __get_selection(self):
         """ Returns a list of values for the current selection. """
@@ -1397,9 +1347,7 @@ class Grid(Widget):
         rows = self._grid.GetSelectedRows()
         cols = self._grid.GetSelectedCols()
 
-        # because wx is retarded we have to check this as well -- why
-        # the blazes can't they come up with one Q#$%@$#% API to manage
-        # selections??? makes me want to put the smack on somebody.
+        # because of wx we have to check this as well
         # note that all this malarkey is working on the assumption that
         # only entire rows or entire columns or single cells are selected.
         top_left = self._grid.GetSelectionBlockTopLeft()
