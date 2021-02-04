@@ -125,13 +125,13 @@ class TableViewer(ContentViewer):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_input_changed(self, obj, trait_name, old, new):
+    def _on_input_changed(self,event):
         """ Called when the input is changed. """
 
         # Update the table contents.
         self._update_contents()
 
-        if old is None:
+        if event.old is None:
             self._update_column_widths()
 
         return

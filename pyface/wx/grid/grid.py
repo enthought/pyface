@@ -216,9 +216,9 @@ class Grid(wxGrid):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_model_changed(self, message):
+    def _on_model_changed(self, event):
         """ Called when the model has changed. """
-
+        message = event.new
         self.BeginBatch()
         self.ProcessTableMessage(message)
         self.EndBatch()
