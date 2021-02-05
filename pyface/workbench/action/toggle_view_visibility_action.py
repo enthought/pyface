@@ -68,7 +68,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         if new is not None:
             self._add_view_listeners(new)
 
-        self._refresh_checked(event=None)
+        self._refresh_checked()
 
         return
 
@@ -86,7 +86,7 @@ class ToggleViewVisibilityAction(WorkbenchAction):
         view.observe(self._refresh_checked, "visible", remove=True)
         view.observe(self._refresh_checked, "window", remove=True)
 
-    def _refresh_checked(self, event):
+    def _refresh_checked(self, event=None):
         """ Refresh the checked state of the action. """
 
         self.checked = (

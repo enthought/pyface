@@ -940,7 +940,7 @@ class Tree(Widget):
 
     def _on_structure_changed(self, event):
         """ Called when the structure of a node has changed drastically. """
-        nodee_event = event.new
+        node_event = event.new
         self.refresh(node_event.node)
 
         return

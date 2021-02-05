@@ -125,7 +125,7 @@ class TableViewer(ContentViewer):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_input_changed(self,event):
+    def _on_input_changed(self, event):
         """ Called when the input is changed. """
 
         # Update the table contents.

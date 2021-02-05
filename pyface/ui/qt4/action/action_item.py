@@ -218,7 +218,6 @@ class _MenuItem(HasTraits):
 
     def _on_action_enabled_changed(self, event):
         """ Called when the enabled trait is changed on an action. """
-        print('HEYYYYYYYYYYYYYYYYY')
         action = event.object
         if self.control is not None:
             self.control.setEnabled(action.enabled)

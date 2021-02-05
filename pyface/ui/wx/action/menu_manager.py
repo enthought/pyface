@@ -139,7 +139,7 @@ class _Menu(wx.Menu):
 
         return self.GetMenuItemCount() == 0
 
-    def refresh(self, event):
+    def refresh(self, event=None):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()

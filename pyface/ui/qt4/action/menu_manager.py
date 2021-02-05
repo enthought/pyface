@@ -178,7 +178,7 @@ class _Menu(QtGui.QMenu):
 
         return self.isEmpty()
 
-    def refresh(self, _=None):
+    def refresh(self, event=None):
         """ Ensures that the menu reflects the state of the manager. """
 
         self.clear()

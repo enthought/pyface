@@ -54,7 +54,6 @@ class ListeningAction(Action):
 
         Removes all the task listeners.
         """
-        print(self.enabled_name)
 
         if self.object:
             if self.enabled_name:
