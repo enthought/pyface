@@ -34,9 +34,9 @@ class DockPaneToggleAction(Action):
 
     # 'Action' interface ---------------------------------------------------
 
-    name = Property(Str, depends_on="dock_pane.name")
+    name = Property(Str, observe="dock_pane.name")
     style = "toggle"
-    tooltip = Property(Str, depends_on="name")
+    tooltip = Property(Str, observe="name")
 
     # ------------------------------------------------------------------------
     # 'Action' interface.
@@ -89,7 +89,7 @@ class DockPaneToggleGroup(Group):
 
     # 'DockPaneToggleGroup' interface -------------------------------------#
 
-    task = Property(depends_on="parent.controller")
+    task = Property(observe="parent.controller")
 
     @cached_property
     def _get_task(self):
@@ -100,7 +100,7 @@ class DockPaneToggleGroup(Group):
 
         return manager.controller.task
 
-    dock_panes = Property(depends_on="task.window._states.dock_panes")
+    dock_panes = Property(observe="task.window._states.items.dock_panes")
 
     @cached_property
     def _get_dock_panes(self):

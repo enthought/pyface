@@ -88,7 +88,7 @@ class MEditor(HasTraits):
     dirty = Bool(False)
 
     editor_area = Instance("pyface.tasks.i_editor_area_pane.IEditorAreaPane")
-    is_active = Property(Bool, depends_on="editor_area.active_editor")
+    is_active = Property(Bool, observe="editor_area.active_editor")
     has_focus = Bool(False)
 
     closing = VetoableEvent()

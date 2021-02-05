@@ -25,7 +25,7 @@ class WindowAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="window")
+    object = Property(observe="window")
 
     # 'WindowAction' interface -----------------------------------------------
 

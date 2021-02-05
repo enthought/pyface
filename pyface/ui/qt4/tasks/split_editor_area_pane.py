@@ -79,7 +79,7 @@ class SplitEditorAreaPane(TaskPane, MEditorAreaPane):
     _private_drop_handlers = List(IDropHandler)
     _all_drop_handlers = Property(
         List(IDropHandler),
-        depends_on=["drop_handlers", "_private_drop_handlers"],
+        observe=["drop_handlers", "_private_drop_handlers"],
     )
 
     def __private_drop_handlers_default(self):

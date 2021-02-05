@@ -71,7 +71,7 @@ class TasksApplication(GUIApplication):
     tasks = List(Instance("pyface.tasks.task.Task"))
 
     #: Currently active Task if any.
-    active_task = Property(depends_on="active_window.active_task")
+    active_task = Property(observe="active_window.active_task")
 
     #: List of all application task factories.
     task_factories = List()

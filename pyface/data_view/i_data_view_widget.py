@@ -75,7 +75,7 @@ class MDataViewWidget(HasStrictTraits):
 
     #: The selected indices in the view.  This should never be mutated, any
     #: changes should be by replacement of the entire list.
-    selection = Property(depends_on='_selection[]')
+    selection = Property(observe='_selection.items')
 
     #: Exporters available for the DataViewWidget.
     exporters = List(Instance(AbstractDataExporter))

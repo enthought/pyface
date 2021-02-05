@@ -67,10 +67,10 @@ class PythonEditor(TraitsEditor):
     code = Str()
 
     #: Whether or not undo operation is possible.
-    can_undo = Property(Bool, depends_on="ui.history.undoable")
+    can_undo = Property(Bool, observe="ui.history.undoable")
 
     #: Whether or not redo operation is possible.
-    can_redo = Property(Bool, depends_on="ui.history.redoable")
+    can_redo = Property(Bool, observe="ui.history.redoable")
 
     #: The current cursor line.
     line = Int(1)
@@ -82,7 +82,7 @@ class PythonEditor(TraitsEditor):
     selection = Str()
 
     #: The length of the currently selected text.
-    selection_length = Property(Int, depends_on="selection")
+    selection_length = Property(Int, observe="selection")
 
     #: The start of the currently selected text, if any.
     selection_start = Int()
@@ -99,12 +99,12 @@ class PythonEditor(TraitsEditor):
     obj = File()
 
     #: The editor's user-visible name.
-    name = Property(Str, depends_on="obj")
+    name = Property(Str, observe="obj")
 
     #: The tooltip for the editor.
-    tooltip = Property(Str, depends_on="obj")
+    tooltip = Property(Str, observe="obj")
 
-    dirty = Property(Bool, depends_on=["obj", "_last_save", "ui.history.now"])
+    dirty = Property(Bool, observe=["obj", "_last_save", "ui.history.now"])
 
     # -------------------------------------------------------------------------
     # PythonTextEditor interface

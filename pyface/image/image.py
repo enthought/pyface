@@ -520,7 +520,7 @@ class ImageVolume(HasPrivateTraits):
     images = List(ImageInfo)
 
     #: A dictionary mapping image names to ImageInfo objects:
-    catalog = Property(depends_on="images")
+    catalog = Property(observe="images")
 
     #: The time stamp of when the image library was last modified:
     time_stamp = Str()
@@ -956,7 +956,7 @@ class ImageLibrary(HasPrivateTraits):
     catalog = Dict(Str, ImageVolume)
 
     #: The list of available images in the library:
-    images = Property(List, depends_on="volumes.images")
+    images = Property(List, observe="volumes.items.images")
 
     # -- Private Traits ---------------------------------------------------------
 

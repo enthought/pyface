@@ -24,13 +24,13 @@ class TaskToggleAction(Action):
     # 'Action' interface ---------------------------------------------------
 
     #: The user-visible name of the action, matches the task name.
-    name = Property(Str, depends_on="task.name")
+    name = Property(Str, observe="task.name")
 
     #: The action is a toggle menu item.
     style = "toggle"
 
     #: The tooltip to display for the menu item.
-    tooltip = Property(Str, depends_on="name")
+    tooltip = Property(Str, observe="name")
 
     # 'TaskToggleAction' interface -----------------------------------------
 
