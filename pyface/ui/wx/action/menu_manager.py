@@ -103,7 +103,7 @@ class _Menu(wx.Menu):
         self.menu_items = []
 
         # Create the menu structure.
-        self.refresh(event=None)
+        self.refresh()
 
         # Listen to the manager being updated.
         self._manager.observe(self.refresh, "changed")

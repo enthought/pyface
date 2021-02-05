@@ -110,7 +110,7 @@ class ListeningAction(Action):
                 obj.observe(self._enabled_update, old, remove=True)
             if new:
                 obj.observe(self._enabled_update, new)
-        self._enabled_update(event=None)
+        self._enabled_update()
 
     def _visible_name_changed(self, old, new):
         obj = self.object
@@ -119,7 +119,7 @@ class ListeningAction(Action):
                 obj.observe(self._visible_update, old, remove=True)
             if new:
                 obj.observe(self._visible_update, new)
-        self._visible_update(event=None)
+        self._visible_update()
 
     def _object_changed(self, old, new):
         for kind in ("enabled", "visible"):
@@ -129,9 +129,9 @@ class ListeningAction(Action):
                 old.observe(method, trait(name, optional=True), remove=True)
             if new:
                 new.observe(method, trait(name, optional=True))
-            method(event=None)
+            method()
 
-    def _enabled_update(self, event):
+    def _enabled_update(self, event=None):
         if self.enabled_name:
             if self.object:
                 self.enabled = bool(
@@ -142,7 +142,7 @@ class ListeningAction(Action):
         else:
             self.enabled = bool(self.object)
 
-    def _visible_update(self, event):
+    def _visible_update(self, event=None):
         if self.visible_name:
             if self.object:
                 self.visible = bool(
