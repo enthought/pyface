@@ -134,7 +134,7 @@ class PreferenceDialog(SplitDialog):
             content_provider=DefaultTreeContentProvider(),
         )
 
-        tree_viewer.on_trait_change(self._on_selection_changed, "selection")
+        tree_viewer.observe(self._on_selection_changed, "selection")
 
         return tree_viewer.control
 
@@ -181,9 +181,9 @@ class PreferenceDialog(SplitDialog):
     # Trait event handlers.
     # ------------------------------------------------------------------------
 
-    def _on_selection_changed(self, selection):
+    def _on_selection_changed(self, event):
         """ Called when a node in the tree is selected. """
-
+        selection = event.new
         if len(selection) > 0:
             # The tree is in single selection mode.
             node = selection[0]

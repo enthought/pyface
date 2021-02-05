@@ -73,7 +73,7 @@ class MSpinField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MSpinField, self)._add_event_listeners()
-        self.on_trait_change(self._bounds_updated, "bounds", dispatch="ui")
+        self.observe(self._bounds_updated, "bounds", dispatch="ui")
         if self.control is not None:
             self._observe_control_value()
 
@@ -81,7 +81,7 @@ class MSpinField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None:
             self._observe_control_value(remove=True)
-        self.on_trait_change(
+        self.observe(
             self._bounds_updated, "bounds", dispatch="ui", remove=True
         )
         super(MSpinField, self)._remove_event_listeners()
@@ -127,6 +127,6 @@ class MSpinField(HasTraits):
 
     # Trait change handlers --------------------------------------------------
 
-    def _bounds_updated(self):
+    def _bounds_updated(self, event):
         if self.control is not None:
             self._set_control_bounds(self.bounds)

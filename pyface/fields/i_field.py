@@ -58,9 +58,9 @@ class MField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MField, self)._add_event_listeners()
-        self.on_trait_change(self._value_updated, "value", dispatch="ui")
-        self.on_trait_change(self._tooltip_updated, "tooltip", dispatch="ui")
-        self.on_trait_change(
+        self.observe(self._value_updated, "value", dispatch="ui")
+        self.observe(self._tooltip_updated, "tooltip", dispatch="ui")
+        self.observe(
             self._context_menu_updated, "context_menu", dispatch="ui"
         )
         if self.control is not None and self.context_menu is not None:
@@ -70,13 +70,13 @@ class MField(HasTraits):
         """ Remove toolkit-specific bindings for events """
         if self.control is not None and self.context_menu is not None:
             self._observe_control_context_menu(remove=True)
-        self.on_trait_change(
+        self.observe(
             self._value_updated, "value", dispatch="ui", remove=True
         )
-        self.on_trait_change(
+        self.observe(
             self._tooltip_updated, "tooltip", dispatch="ui", remove=True
         )
-        self.on_trait_change(
+        self.observe(
             self._context_menu_updated,
             "context_menu",
             dispatch="ui",
@@ -160,17 +160,20 @@ class MField(HasTraits):
 
     # Trait change handlers -------------------------------------------------
 
-    def _value_updated(self, value):
+    def _value_updated(self, event):
+        value = event.new
         if self.control is not None:
             self._set_control_value(value)
 
-    def _tooltip_updated(self, tooltip):
+    def _tooltip_updated(self, event):
+        tooltip = event.new
         if self.control is not None:
             self._set_control_tooltip(tooltip)
 
-    def _context_menu_updated(self, old, new):
+    def _context_menu_updated(self, event):
+        
         if self.control is not None:
-            if new is None:
+            if event.new is None:
                 self._observe_control_context_menu(remove=True)
-            if old is None:
+            if event.old is None:
                 self._observe_control_context_menu()

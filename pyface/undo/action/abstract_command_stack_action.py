@@ -49,7 +49,7 @@ class AbstractCommandStackAction(Action):
 
         super(AbstractCommandStackAction, self).__init__(**traits)
 
-        self.undo_manager.on_trait_event(
+        self.undo_manager.observe(
             self._on_stack_updated, "stack_updated"
         )
 
@@ -68,7 +68,7 @@ class AbstractCommandStackAction(Action):
 
         """
 
-        self.undo_manager.on_trait_event(
+        self.undo_manager.observe(
             self._on_stack_updated, "stack_updated", remove=True
         )
 
@@ -85,9 +85,9 @@ class AbstractCommandStackAction(Action):
     # Private interface.
     ###########################################################################
 
-    def _on_stack_updated(self, stack):
+    def _on_stack_updated(self, event):
         """ Handle changes to the state of a command stack. """
-
+        stack = event.new
         # Ignore unless it is the active stack.
         if stack is self.undo_manager.active_stack:
             self._update_action()

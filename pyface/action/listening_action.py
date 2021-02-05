@@ -17,6 +17,7 @@ import logging
 
 from pyface.action.action import Action
 from traits.api import Any, Str
+from traits.observation.api import trait
 
 # Logging.
 logger = logging.getLogger(__name__)
@@ -55,11 +56,15 @@ class ListeningAction(Action):
         """
 
         if self.object:
-            self.object.on_trait_change(
-                self._enabled_update, self.enabled_name, remove=True
+            self.object.observe(
+                self._enabled_update,
+                trait(self.enabled_name, optional=True),
+                remove=True
             )
-            self.object.on_trait_change(
-                self._visible_update, self.visible_name, remove=True
+            self.object.observe(
+                self._visible_update,
+                trait(self.visible_name, optional=True),
+                remove=True
             )
 
     def perform(self, event=None):
@@ -102,32 +107,31 @@ class ListeningAction(Action):
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._enabled_update, old, remove=True)
+                obj.observe(self._enabled_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._enabled_update, new)
+                obj.observe(self._enabled_update, new)
         self._enabled_update()
 
     def _visible_name_changed(self, old, new):
         obj = self.object
         if obj is not None:
             if old:
-                obj.on_trait_change(self._visible_update, old, remove=True)
+                obj.observe(self._visible_update, old, remove=True)
             if new:
-                obj.on_trait_change(self._visible_update, new)
+                obj.observe(self._visible_update, new)
         self._visible_update()
 
     def _object_changed(self, old, new):
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
-            if name:
-                if old:
-                    old.on_trait_change(method, name, remove=True)
-                if new:
-                    new.on_trait_change(method, name)
+            if old:
+                old.observe(method, trait(name, optional=True), remove=True)
+            if new:
+                new.observe(method, trait(name, optional=True))
             method()
 
-    def _enabled_update(self):
+    def _enabled_update(self, event=None):
         if self.enabled_name:
             if self.object:
                 self.enabled = bool(
@@ -138,7 +142,7 @@ class ListeningAction(Action):
         else:
             self.enabled = bool(self.object)
 
-    def _visible_update(self):
+    def _visible_update(self, event=None):
         if self.visible_name:
             if self.object:
                 self.visible = bool(

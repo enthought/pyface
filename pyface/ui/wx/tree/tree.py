@@ -500,36 +500,28 @@ class Tree(Widget):
         """ Adds listeners for model changes. """
 
         # Listen for changes to the model.
-        model.on_trait_change(self._on_root_changed, "root")
-        model.on_trait_change(self._on_nodes_changed, "nodes_changed")
-        model.on_trait_change(self._on_nodes_inserted, "nodes_inserted")
-        model.on_trait_change(self._on_nodes_removed, "nodes_removed")
-        model.on_trait_change(self._on_nodes_replaced, "nodes_replaced")
-        model.on_trait_change(self._on_structure_changed, "structure_changed")
+        model.observe(self._on_root_changed, "root")
+        model.observe(self._on_nodes_changed, "nodes_changed")
+        model.observe(self._on_nodes_inserted, "nodes_inserted")
+        model.observe(self._on_nodes_removed, "nodes_removed")
+        model.observe(self._on_nodes_replaced, "nodes_replaced")
+        model.observe(self._on_structure_changed, "structure_changed")
 
     def _remove_model_listeners(self, model):
         """ Removes listeners for model changes. """
 
         # Unhook the model event listeners.
-        model.on_trait_change(self._on_root_changed, "root", remove=True)
+        model.observe(self._on_root_changed, "root", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_changed, "nodes_changed", remove=True
-        )
+        model.observe(self._on_nodes_changed, "nodes_changed", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_inserted, "nodes_inserted", remove=True
-        )
+        model.observe(self._on_nodes_inserted, "nodes_inserted", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_removed, "nodes_removed", remove=True
-        )
+        model.observe(self._on_nodes_removed, "nodes_removed", remove=True)
 
-        model.on_trait_change(
-            self._on_nodes_replaced, "nodes_replaced", remove=True
-        )
+        model.observe(self._on_nodes_replaced, "nodes_replaced", remove=True)
 
-        model.on_trait_change(
+        model.observe(
             self._on_structure_changed, "structure_changed", remove=True
         )
 
@@ -817,9 +809,9 @@ class Tree(Widget):
 
     # Trait event handlers -------------------------------------------------
 
-    def _on_root_changed(self, root):
+    def _on_root_changed(self, event):
         """ Called when the root of the model has changed. """
-
+        root = event.new
         # Delete everything...
         if self.control is not None:
             self.control.DeleteAllItems()
@@ -832,20 +824,19 @@ class Tree(Widget):
 
     def _on_nodes_changed(self, event):
         """ Called when nodes have been changed. """
-
-        self._update_node(self._get_wxid(event.node), event.node)
-
-        for child in event.children:
+        node_event = event.new
+        self._update_node(self._get_wxid(node_event.node), node_event.node)
+        for child in node_event.children:
             cid = self._get_wxid(child)
             if cid is not None:
                 self._update_node(cid, child)
 
     def _on_nodes_inserted(self, event):
         """ Called when nodes have been inserted. """
-
-        parent = event.node
-        children = event.children
-        index = event.index
+        node_event = event.new
+        parent = node_event.node
+        children = node_event.children
+        index = node_event.index
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
@@ -889,14 +880,14 @@ class Tree(Widget):
 
     def _on_nodes_removed(self, event):
         """ Called when nodes have been removed. """
-
-        parent = event.node
-        children = event.children
+        node_event = event.new
+        parent = node_event.node
+        children = node_event.children
 
         # Has the node actually appeared in the tree yet?
         pid = self._get_wxid(parent)
         if pid is not None:
-            for child in event.children:
+            for child in node_event.children:
                 cid = self._get_wxid(child)
                 if cid is not None:
                     self.control.Delete(cid)
@@ -907,8 +898,9 @@ class Tree(Widget):
 
     def _on_nodes_replaced(self, event):
         """ Called when nodes have been replaced. """
-
-        for old_child, new_child in zip(event.old_children, event.children):
+        node_event = event.new
+        old_new_children = zip(node_event.old_children, node_event.children)
+        for old_child, new_child in old_new_children:
             cid = self._get_wxid(old_child)
             if cid is not None:
                 # Remove listeners from the old node.
@@ -948,8 +940,8 @@ class Tree(Widget):
 
     def _on_structure_changed(self, event):
         """ Called when the structure of a node has changed drastically. """
-
-        self.refresh(event.node)
+        node_event = event.new
+        self.refresh(node_event.node)
 
         return
 

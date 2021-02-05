@@ -136,7 +136,7 @@ class ToolBarManager(ActionManager):
                 # Is a separator required?
                 if previous_non_empty_group is not None and group.separator:
                     separator = tool_bar.addSeparator()
-                    group.on_trait_change(
+                    group.observe(
                         self._separator_visibility_method(separator), "visible"
                     )
 
@@ -154,7 +154,7 @@ class ToolBarManager(ActionManager):
 
     def _separator_visibility_method(self, separator):
         """ Method to return closure to set visibility of group separators. """
-        return lambda visible: separator.setVisible(visible)
+        return lambda event: separator.setVisible(event.new)
 
 
 class _ToolBar(QtGui.QToolBar):
@@ -176,21 +176,21 @@ class _ToolBar(QtGui.QToolBar):
         # visibility.
         self.tool_bar_manager = tool_bar_manager
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled"
         )
 
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible"
         )
 
         return
 
     def dispose(self):
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_enabled_changed, "enabled", remove=True
         )
-        self.tool_bar_manager.on_trait_change(
+        self.tool_bar_manager.observe(
             self._on_tool_bar_manager_visible_changed, "visible", remove=True
         )
         # Removes event listeners from downstream tools and clears their
@@ -204,14 +204,14 @@ class _ToolBar(QtGui.QToolBar):
     # Trait change handlers.
     # ------------------------------------------------------------------------
 
-    def _on_tool_bar_manager_enabled_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_enabled_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setEnabled(new)
+        self.setEnabled(event.new)
 
-    def _on_tool_bar_manager_visible_changed(self, obj, trait_name, old, new):
+    def _on_tool_bar_manager_visible_changed(self, event):
         """ Dynamic trait change handler. """
 
-        self.setVisible(new)
+        self.setVisible(event.new)
 
         return

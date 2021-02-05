@@ -77,16 +77,16 @@ class ToggleViewVisibilityAction(WorkbenchAction):
     def _add_view_listeners(self, view):
         """ Add listeners for trait events on a view. """
 
-        view.on_trait_change(self._refresh_checked, "visible")
-        view.on_trait_change(self._refresh_checked, "window")
+        view.observe(self._refresh_checked, "visible")
+        view.observe(self._refresh_checked, "window")
 
     def _remove_view_listeners(self, view):
         """ Add listeners for trait events on a view. """
 
-        view.on_trait_change(self._refresh_checked, "visible", remove=True)
-        view.on_trait_change(self._refresh_checked, "window", remove=True)
+        view.observe(self._refresh_checked, "visible", remove=True)
+        view.observe(self._refresh_checked, "window", remove=True)
 
-    def _refresh_checked(self):
+    def _refresh_checked(self, event=None):
         """ Refresh the checked state of the action. """
 
         self.checked = (

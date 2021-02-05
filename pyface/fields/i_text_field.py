@@ -68,16 +68,10 @@ class MTextField(HasTraits):
     def _add_event_listeners(self):
         """ Set up toolkit-specific bindings for events """
         super(MTextField, self)._add_event_listeners()
-        self.on_trait_change(
-            self._update_text_updated, "update_text", dispatch="ui"
-        )
-        self.on_trait_change(
-            self._placeholder_updated, "placeholder", dispatch="ui"
-        )
-        self.on_trait_change(self._echo_updated, "echo", dispatch="ui")
-        self.on_trait_change(
-            self._read_only_updated, "read_only", dispatch="ui"
-        )
+        self.observe(self._update_text_updated, "update_text", dispatch="ui")
+        self.observe(self._placeholder_updated, "placeholder", dispatch="ui")
+        self.observe(self._echo_updated, "echo", dispatch="ui")
+        self.observe(self._read_only_updated, "read_only", dispatch="ui")
         if self.control is not None:
             if self.update_text == "editing_finished":
                 self._observe_control_editing_finished()
@@ -91,22 +85,22 @@ class MTextField(HasTraits):
                 self._observe_control_editing_finished(remove=True)
             else:
                 self._observe_control_value(remove=True)
-        self.on_trait_change(
+        self.observe(
             self._update_text_updated,
             "update_text",
             dispatch="ui",
             remove=True,
         )
-        self.on_trait_change(
+        self.observe(
             self._placeholder_updated,
             "placeholder",
             dispatch="ui",
             remove=True,
         )
-        self.on_trait_change(
+        self.observe(
             self._echo_updated, "echo", dispatch="ui", remove=True
         )
-        self.on_trait_change(
+        self.observe(
             self._read_only_updated, "read_only", dispatch="ui", remove=True
         )
         super(MTextField, self)._remove_event_listeners()
@@ -148,22 +142,22 @@ class MTextField(HasTraits):
 
     # Trait change handlers --------------------------------------------------
 
-    def _placeholder_updated(self):
+    def _placeholder_updated(self, event):
         if self.control is not None:
             self._set_control_placeholder(self.placeholder)
 
-    def _echo_updated(self):
+    def _echo_updated(self, event):
         if self.control is not None:
             self._set_control_echo(self.echo)
 
-    def _read_only_updated(self):
+    def _read_only_updated(self, event):
         if self.control is not None:
             self._set_control_read_only(self.read_only)
 
-    def _update_text_updated(self, new):
+    def _update_text_updated(self, event):
         """ Change how we listen to for updates to text value. """
         if self.control is not None:
-            if new == "editing_finished":
+            if event.new == "editing_finished":
                 self._observe_control_value(remove=True)
                 self._observe_control_editing_finished()
             else:
