@@ -56,18 +56,16 @@ class ListeningAction(Action):
         """
 
         if self.object:
-            if self.enabled_name:
-                self.object.observe(
-                    self._enabled_update,
-                    trait(self.enabled_name, optional=True),
-                    remove=True
-                )
-            if self.visible_name:
-                self.object.observe(
-                    self._visible_update,
-                    trait(self.visible_name, optional=True),
-                    remove=True
-                )
+            self.object.observe(
+                self._enabled_update,
+                trait(self.enabled_name, optional=True),
+                remove=True
+            )
+            self.object.observe(
+                self._visible_update,
+                trait(self.visible_name, optional=True),
+                remove=True
+            )
 
     def perform(self, event=None):
         """ Call the appropriate function.
