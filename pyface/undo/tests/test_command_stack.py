@@ -67,9 +67,12 @@ class TestCommandStack(unittest.TestCase):
     def test_n_merge_command_pushed(self):
         n = 4
         with self.assert_n_commands_pushed(self.stack, 1):
+            self.command = MergeableCommand()
+            self.stack.push(self.command)
             for i in range(n):
                 command = MergeableCommand()
                 self.stack.push(command)
+        self.assertEqual(self.command.amount, n+1)
 
     def test_merge_after_undo(self):
         with self.assert_n_commands_pushed(self.stack, 2):
@@ -82,15 +85,11 @@ class TestCommandStack(unittest.TestCase):
             command = MergeableCommand()
             self.stack.push(command)
 
-    def test_merge_after_n_undo(self):
-        with self.assert_n_commands_pushed(self.stack, 1):
-            n = 4
-            for i in range(n):
-                command = MergeableCommand()
-                self.stack.push(command)
-            n = 4
-            for i in range(n):
-                self.stack.undo()
+    def test_merge_after_clean(self):
+        with self.assert_n_commands_pushed(self.stack, 2):
+            command = MergeableCommand()
+            self.stack.push(command)
+            self.stack.clean = True
             command = MergeableCommand()
             self.stack.push(command)
 

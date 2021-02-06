@@ -51,5 +51,6 @@ class MergeableCommand(SimpleCommand):
     def merge(self, other):
         if not isinstance(other, MergeableCommand):
             return False
+        self.data += other.amount
         self.amount += other.amount
         return True
