@@ -12,7 +12,9 @@ from contextlib import contextmanager
 import unittest
 
 from pyface.undo.api import CommandStack, UndoManager
-from pyface.undo.tests.testing_commands import SimpleCommand, UnnamedCommand
+from pyface.undo.tests.testing_commands import (
+    MergeableCommand, SimpleCommand, UnnamedCommand,
+)
 
 
 class TestCommandStack(unittest.TestCase):
@@ -38,6 +40,59 @@ class TestCommandStack(unittest.TestCase):
         with self.assert_n_commands_pushed(self.stack, n):
             for i in range(n):
                 self.stack.push(self.command)
+
+    def test_push_after_undo(self):
+        with self.assert_n_commands_pushed(self.stack, 1):
+            self.stack.push(self.command)
+            self.stack.undo()
+            self.stack.push(self.command)
+
+    def test_push_after_n_undo(self):
+        with self.assert_n_commands_pushed(self.stack, 1):
+            n = 4
+            for i in range(n):
+                self.stack.push(self.command)
+            n = 4
+            for i in range(n):
+                self.stack.undo()
+            self.stack.push(self.command)
+
+    # Command merging tests ---------------------------------------------------
+
+    def test_1_merge_command_pushed(self):
+        self.command = MergeableCommand()
+        with self.assert_n_commands_pushed(self.stack, 1):
+            self.stack.push(self.command)
+
+    def test_n_merge_command_pushed(self):
+        n = 4
+        with self.assert_n_commands_pushed(self.stack, 1):
+            for i in range(n):
+                command = MergeableCommand()
+                self.stack.push(command)
+
+    def test_merge_after_undo(self):
+        with self.assert_n_commands_pushed(self.stack, 2):
+            self.stack.push(self.command)
+            command = MergeableCommand()
+            self.stack.push(command)
+            command = SimpleCommand()
+            self.stack.push(command)
+            self.stack.undo()
+            command = MergeableCommand()
+            self.stack.push(command)
+
+    def test_merge_after_n_undo(self):
+        with self.assert_n_commands_pushed(self.stack, 1):
+            n = 4
+            for i in range(n):
+                command = MergeableCommand()
+                self.stack.push(command)
+            n = 4
+            for i in range(n):
+                self.stack.undo()
+            command = MergeableCommand()
+            self.stack.push(command)
 
     # Undo/Redo tests ---------------------------------------------------------
 
