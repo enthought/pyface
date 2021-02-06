@@ -185,7 +185,7 @@ class CommandStack(HasTraits):
 
         # See if the command can be merged with the previous one.
         if len(self._macro_stack) == 0:
-            if self._index >= 0:
+            if self._index >= 0 and not self._stack[self._index].clean:
                 merged = self._stack[self._index].command.merge(command)
             else:
                 merged = False
@@ -201,6 +201,9 @@ class CommandStack(HasTraits):
 
         # Do nothing more if the command was merged.
         if merged:
+            if len(self._macro_stack) == 0:
+                del self._stack[self._index+1:]
+            self.undo_manager.stack_updated = self
             return result
 
         # Only update the command stack if there is no current macro.
