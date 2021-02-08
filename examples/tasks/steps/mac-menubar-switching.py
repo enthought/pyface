@@ -51,7 +51,7 @@ class ExampleTask(Task):
     name = "Multi-Tab Editor"
 
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     editor_area = Instance(IEditorAreaPane)

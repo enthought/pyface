@@ -28,7 +28,7 @@ class GUIApplicationAction(ListeningAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application")
+    object = Property(observe="application")
 
     # 'WindowAction' interface -----------------------------------------------
 
@@ -53,7 +53,7 @@ class ActiveWindowAction(GUIApplicationAction):
 
     # 'ListeningAction' interface --------------------------------------------
 
-    object = Property(depends_on="application.active_window")
+    object = Property(observe="application.active_window")
 
     # ------------------------------------------------------------------------
     # Protected interface.

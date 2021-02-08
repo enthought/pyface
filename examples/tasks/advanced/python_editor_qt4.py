@@ -38,9 +38,9 @@ class PythonEditor(Editor):
 
     dirty = Bool(False)
 
-    name = Property(Str, depends_on="path")
+    name = Property(Str, observe="path")
 
-    tooltip = Property(Str, depends_on="path")
+    tooltip = Property(Str, observe="path")
 
     show_line_numbers = Bool(True)
 

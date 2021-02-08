@@ -16,7 +16,7 @@ import logging
 
 
 from pyface.action.action import Action
-from traits.api import Any, Str
+from traits.api import Any, Str, Undefined
 from traits.observation.api import trait
 
 # Logging.
@@ -125,7 +125,7 @@ class ListeningAction(Action):
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
-            if old:
+            if old and old is not Undefined:
                 old.observe(method, trait(name, optional=True), remove=True)
             if new:
                 new.observe(method, trait(name, optional=True))

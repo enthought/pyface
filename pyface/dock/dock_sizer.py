@@ -367,7 +367,7 @@ class DockItem(HasPrivateTraits):
     parent = Any()
 
     # The DockWindow that owns this item:
-    owner = Property(depends_on="parent")
+    owner = Property(observe="parent")
 
     # Bounds of the item:
     bounds = Bounds
@@ -385,10 +385,10 @@ class DockItem(HasPrivateTraits):
     tab_state = Any()
 
     # The tab displayable version of the control's UI name:
-    tab_name = Property(depends_on="name")
+    tab_name = Property(observe="name")
 
     # Width of the item's tab:
-    tab_width = Property(depends_on="control, tab_state, tab_name")
+    tab_width = Property(observe="control, tab_state, tab_name")
 
     # The DockWindowTheme for this item's DockWindow:
     theme = Property

@@ -91,7 +91,7 @@ class PythonEditorTask(Task):
 
     #: The currently active editor in the editor area, if any.
     active_editor = Property(
-        Instance(IEditor), depends_on="editor_area.active_editor"
+        Instance(IEditor), observe="editor_area.active_editor"
     )
 
     #: The editor area for this task.

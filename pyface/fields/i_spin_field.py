@@ -29,10 +29,10 @@ class ISpinField(IField):
     bounds = Tuple(Int, Int)
 
     #: The minimum value
-    minimum = Property(Int, depends_on="bounds")
+    minimum = Property(Int, observe="bounds")
 
     #: The maximum value
-    maximum = Property(Int, depends_on="bounds")
+    maximum = Property(Int, observe="bounds")
 
 
 class MSpinField(HasTraits):
@@ -44,10 +44,10 @@ class MSpinField(HasTraits):
     bounds = Tuple(Int, Int)
 
     #: The minimum value for the spinner
-    minimum = Property(Int, depends_on="bounds")
+    minimum = Property(Int, observe="bounds")
 
     #: The maximum value for the spinner
-    maximum = Property(Int, depends_on="bounds")
+    maximum = Property(Int, observe="bounds")
 
     # ------------------------------------------------------------------------
     # object interface

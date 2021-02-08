@@ -138,7 +138,7 @@ class BaseTimer(ABCHasTraits):
     expire = Either(None, Float)
 
     #: Property that controls the state of the timer.
-    active = Property(Bool, depends_on="_active")
+    active = Property(Bool, observe="_active")
 
     # Private interface ------------------------------------------------------
 

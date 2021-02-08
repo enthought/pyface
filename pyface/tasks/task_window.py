@@ -50,7 +50,7 @@ class TaskWindow(ApplicationWindow):
     # IWindow interface ----------------------------------------------------
 
     #: Unless a title is specifically assigned, delegate to the active task.
-    title = Property(Str, depends_on=["active_task.name", "_title"])
+    title = Property(Str, observe=["active_task.name", "_title"])
 
     # TaskWindow interface ------------------------------------------------
 
