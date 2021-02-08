@@ -8,7 +8,7 @@
 #
 # Thanks for using Enthought open source!
 
-from traits.api import ComparisonMode, Dict, Instance, Str, observe
+from traits.api import Dict, Instance, Str, observe
 
 from pyface.data_view.api import (
     AbstractDataModel, AbstractValueType, DataViewSetError, IntIndexManager
@@ -19,7 +19,7 @@ class DictDataModel(AbstractDataModel):
     """ A data model that provides data from a dictionary. """
 
     #: The dictionary containing the data.
-    data = Dict(comparison_mode=ComparisonMode.identity)
+    data = Dict()
 
     #: The index manager.  Because the data is flat, we use the
     #: IntIndexManager.
