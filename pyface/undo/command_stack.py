@@ -199,9 +199,11 @@ class CommandStack(HasTraits):
         # Execute the command.
         result = command.do()
 
-        # Do nothing more if the command was merged.
+        # Update the stack state for a merged command.
         if merged:
             if len(self._macro_stack) == 0:
+                # If not in macro mode, remove everything after the current
+                # command from the stack.
                 del self._stack[self._index+1:]
             self.undo_manager.stack_updated = self
             return result
