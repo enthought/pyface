@@ -31,3 +31,26 @@ class SimpleCommand(AbstractCommand):
 
 class UnnamedCommand(SimpleCommand):
     name = ""
+
+
+class MergeableCommand(SimpleCommand):
+
+    name = "Increment"
+
+    amount = Int(1)
+
+    def do(self):
+        self.redo()
+
+    def redo(self):
+        self.data += self.amount
+
+    def undo(self):
+        self.data -= self.amount
+
+    def merge(self, other):
+        if not isinstance(other, MergeableCommand):
+            return False
+        self.data += other.amount
+        self.amount += other.amount
+        return True
