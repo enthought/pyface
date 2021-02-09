@@ -84,7 +84,7 @@ class TestCommandStack(UnittestTools, unittest.TestCase):
             for i in range(n):
                 command = MergeableCommand()
                 with self.assertTraitChanges(self.stack.undo_manager,
-                                         'stack_updated', count=1):
+                                             'stack_updated', count=1):
                     self.stack.push(command)
         self.assertEqual(self.command.amount, n+1)
 
