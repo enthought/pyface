@@ -56,16 +56,14 @@ class ListeningAction(Action):
         """
 
         if self.object:
-            self.object.observe(
-                self._enabled_update,
-                trait(self.enabled_name, optional=True),
-                remove=True
-            )
-            self.object.observe(
-                self._visible_update,
-                trait(self.visible_name, optional=True),
-                remove=True
-            )
+            if self.enabled_name:
+                self.object.observe(
+                    self._enabled_update, self.enabled_name, remove=True
+                )
+            if self.visible_name:
+                self.object.observe(
+                    self._visible_update, self.visible_name, remove=True
+                )
 
     def perform(self, event=None):
         """ Call the appropriate function.
@@ -125,11 +123,12 @@ class ListeningAction(Action):
         for kind in ("enabled", "visible"):
             method = getattr(self, "_%s_update" % kind)
             name = getattr(self, "%s_name" % kind)
-            if old and old is not Undefined:
-                old.observe(method, trait(name, optional=True), remove=True)
-            if new:
-                new.observe(method, trait(name, optional=True))
-            method()
+            if name:
+                if old and old is not Undefined:
+                    old.observe(method, name, remove=True)
+                if new:
+                    new.observe(method, name)
+                method()
 
     def _enabled_update(self, event=None):
         if self.enabled_name:
