@@ -26,7 +26,7 @@ Actions
 Action Controller
 -----------------
 
-- :class:`~.ActionController`
+- :class:`~pyface.action.action_controller.ActionController`
 
 Action Event
 ------------

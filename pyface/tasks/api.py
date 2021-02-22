@@ -15,7 +15,7 @@ API for the ``pyface.tasks`` submodule.
 Tasks-specific Interfaces
 -------------------------
 - :class:`~.IDockPane`
-- :class:`~.IEditor`
+- :class:`~pyface.tasks.i_editor.IEditor`
 - :class:`~.IEditorAreaPane`
 - :class:`~.ITaskPane`
 
